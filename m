@@ -1,76 +1,86 @@
-From: Yann Droneaud <ydroneaud@opteya.com>
-Subject: Re: git rebase fail with CRLF conversion
-Date: Fri, 21 Jun 2013 16:29:54 +0200
-Organization: OPTEYA
-Message-ID: <05ece7ca52df8ac8cd082cab4926487a@meuh.org>
-References: <fb20a7d711fdd218f58f1f2090b1c515@meuh.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/16] Cleanup {branches,remotes}-file cruft
+Date: Fri, 21 Jun 2013 07:32:16 -0700
+Message-ID: <7vsj0bo7pr.fsf@alter.siamese.dyndns.org>
+References: <1371813160-4200-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 21 16:30:01 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, akpm@linux-foundation.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 21 16:32:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uq2Lh-0006aR-4V
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 16:30:01 +0200
+	id 1Uq2O0-00016t-Aj
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Jun 2013 16:32:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161520Ab3FUO35 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Jun 2013 10:29:57 -0400
-Received: from mx-out.ocsa-data.net ([194.36.166.37]:60390 "EHLO
-	mx-out.ocsa-data.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161512Ab3FUO34 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jun 2013 10:29:56 -0400
-Received: from [192.168.111.12] (helo=rc.ouvaton.coop)
-	by mx-out.ocsa-data.net with esmtpa (Exim - FreeBSD Rulez)
-	id 1Uq2La-000L0N-7u
-	for <git@vger.kernel.org>; Fri, 21 Jun 2013 16:29:54 +0200
-In-Reply-To: <fb20a7d711fdd218f58f1f2090b1c515@meuh.org>
-X-Sender: ydroneaud@opteya.com
-User-Agent: Roundcube Webmail/0.8.4
-X-abuse-contact: abuse@ocsa-data.net
+	id S1423059Ab3FUOcU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jun 2013 10:32:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46665 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422890Ab3FUOcT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jun 2013 10:32:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE48829835;
+	Fri, 21 Jun 2013 14:32:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RdTx/d2O2Otpoffg3EbCtjhlF4M=; b=ukDc+o
+	56hDVh+NXqdWriys3p6YiQUd6TYH6b71orLry+TzGzJQXyVw3ldnZbR6k4za+tMS
+	xV4+Yrgjg+QWlVSeXlLXXHjv1AxSXiMKMChiYOS19SzEDJMwAnjMveDj1wLpQPB3
+	BCzGgAz/tAF+RW5a4zKLQLn0YXkKwqDsgnmgk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=U2y+r9PZ2RkJiI/EPEi7KC5aYLIzae4M
+	7XcTU8lq+B49cx6TsoqpNFRRLz2NHcqg73oK1MK2LtzkyUF7BHnpHFOHdwn7vukh
+	U0brSUaMGH1PPAWSBq1Tu+yJJWpl5OvElBHyQxa3DsVcRo16BWebLcxsTGSwCVoN
+	xGgR7IjjKOE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A256129834;
+	Fri, 21 Jun 2013 14:32:18 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 24F4329832;
+	Fri, 21 Jun 2013 14:32:18 +0000 (UTC)
+In-Reply-To: <1371813160-4200-1-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Fri, 21 Jun 2013 16:42:24 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 600B56DC-DA7F-11E2-9008-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228619>
 
-Le 21.06.2013 15:41, Yann Droneaud a =C3=A9crit=C2=A0:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
->
-> In thoses two latter cases, running "git add" does not fail with a
-> fatal error: it does nothing.
-> I need to run "touch test" to make "git add" fail with error "fatal:
-> CRLF would be replaced by LF in test.
->
+> This is a cleanup operation to get rid of the historical
+> $GIT_DIR/{branches,remotes} cruft.  Mostly no-brainers that don't
+> deserve a second look.
 
-While searching on the Internet, I've found other people complaining of=
-=20
-a similar error
+Only reacting to "no-brainer".
 
-http://stackoverflow.com/questions/5074136/git-rebase-fails-your-local-=
-changes-to-the-following-files-would-be-overwritte
+The last time I hinted removal of .git/branches/, Andrew Morton
+reminded me that there are those who use Git primarily to fetch from
+many dozens of other people's branches, to maintain his own quilt
+patch series on top of, and never push anything back.  To them,
+being able to say
 
-The workaround, "git config --global core.trustctime false", might=20
-suggest there's a race somewhere while rebasing.
+    $ echo the-repository-url#the-branch >.git/branches/the-subsys
+    $ rm .git/branches/the-subsys
 
-BTW, I forgot to describe my environnment:
+has been a much easier and simpler way than "git config".  The only
+thing they do with them is essentially:
 
-- GNU/Linux
-- Fedora 18 x86_64
-- git version 1.8.1.4
-- git version 1.8.3.1.448.gfb7dfaa
+    $ git fetch the-subsys
+    ... use FETCH_HEAD to integrate it to a larger whole
+    ... against which his remaining quilt queue is rebuilt
 
->
-> I believe "git rebase" should not fail here, but more, it must not
-> fail in a different fashion randomly.
->
-
-Regards.
-
---=20
-Yann Droneaud
-OPTEYA
+I myself thought that replacing the established work process of
+these people to the one that instead uses "git config" should be
+simple enough even back then, and in the longer term, these old
+mechanisms will become disused so that we can remove them, but
+deciding _when_ is the good time is not a no-brainer at all.
