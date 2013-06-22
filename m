@@ -1,124 +1,59 @@
-From: John Keeping <john@keeping.me.uk>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [PATCH] help: introduce man.viewer = eman
-Date: Sat, 22 Jun 2013 12:59:38 +0100
-Message-ID: <20130622115938.GF4676@serenity.lan>
-References: <1371901409-8319-1-git-send-email-artagnon@gmail.com>
+Date: Sat, 22 Jun 2013 17:35:01 +0530
+Message-ID: <CALkWK0m6V9ULgeA81yK2WuoLgf6n4q8_BS-D4VHpTYJMQiG95Q@mail.gmail.com>
+References: <1371901409-8319-1-git-send-email-artagnon@gmail.com> <20130622115938.GF4676@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>,
 	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 22 13:59:53 2013
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sat Jun 22 14:05:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqMTx-0000OA-AP
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 13:59:53 +0200
+	id 1UqMZe-0006aO-LR
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 14:05:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756087Ab3FVL7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Jun 2013 07:59:49 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:53245 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754586Ab3FVL7t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Jun 2013 07:59:49 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 19FD5CDA59B;
-	Sat, 22 Jun 2013 12:59:48 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
-	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CABOzGvI+FLJ; Sat, 22 Jun 2013 12:59:47 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id C2A2CCDA5BA;
-	Sat, 22 Jun 2013 12:59:40 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <1371901409-8319-1-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756125Ab3FVMFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Jun 2013 08:05:43 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:46751 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756024Ab3FVMFm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Jun 2013 08:05:42 -0400
+Received: by mail-ie0-f169.google.com with SMTP id 10so21866266ied.0
+        for <git@vger.kernel.org>; Sat, 22 Jun 2013 05:05:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=A98Kn1jKlwP1yDf+X9KDIrOsq0cKVWRwhS0MnXUBteA=;
+        b=NtxpJr+tLemIWv0z16AjV1OqZiJmaBBeqHXB+pUZepu+Kc2rY0Xvty8xSlisaNqFHy
+         XBYKbdkF0Pg6XJULo1YIKmvAKZGmdwtyKYFwh1Iqs3J/LxDDimvRY0zM1oYD781JHLIE
+         x8P3t6voOjh+Ynlw0WsHigfNA8bNuNFLzem1nnG+wbiFoQ+g5KxRv1G2bu9G9CBEkPpd
+         Jh8furgpIR9mArKnTkC6CUHVcRQVq3OwUAUwrFDAT8jD69XWkYJuiD+jDLmgRgGC0Ko8
+         eCUA2eTRoI9RJIJ07dT+uoTgp/LvQO8QQTSz0UfKCSOixE+w9u2JT5bETLWdcGN97HBs
+         DgQA==
+X-Received: by 10.42.190.74 with SMTP id dh10mr8042633icb.35.1371902741935;
+ Sat, 22 Jun 2013 05:05:41 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Sat, 22 Jun 2013 05:05:01 -0700 (PDT)
+In-Reply-To: <20130622115938.GF4676@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228701>
 
-On Sat, Jun 22, 2013 at 05:13:29PM +0530, Ramkumar Ramachandra wrote:
-> Corresponding to woman.
-> 
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  Documentation/git-help.txt |  3 +++
->  builtin/help.c             | 11 ++++++++---
->  2 files changed, 11 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-> index b21e9d7..0cb4c46 100644
-> --- a/Documentation/git-help.txt
-> +++ b/Documentation/git-help.txt
-> @@ -104,6 +104,9 @@ The 'man.viewer' config variable will be checked if the 'man' format
->  is chosen. The following values are currently supported:
->  
->  * "man": use the 'man' program as usual,
-> +* "eman": use 'emacsclient' to launch the "man" mode in emacs
-> +(this only works starting with emacsclient versions 22), on systems
-> +with man,
->  * "woman": use 'emacsclient' to launch the "woman" mode in emacs
->  (this only works starting with emacsclient versions 22),
->  * "konqueror": use 'kfmclient' to open the man page in a new konqueror
-> diff --git a/builtin/help.c b/builtin/help.c
-> index 062957f..7cb44e0 100644
-> --- a/builtin/help.c
-> +++ b/builtin/help.c
-> @@ -120,7 +120,7 @@ static int check_emacsclient_version(void)
->  	return 0;
->  }
->  
-> -static void exec_woman_emacs(const char *path, const char *page)
-> +static void exec_woman_emacs(const char *path, const char *page, int eman)
->  {
->  	if (!check_emacsclient_version()) {
->  		/* This works only with emacsclient version >= 22. */
-> @@ -128,7 +128,10 @@ static void exec_woman_emacs(const char *path, const char *page)
->  
->  		if (!path)
->  			path = "emacsclient";
-> -		strbuf_addf(&man_page, "(woman \"%s\")", page);
-> +		if (eman)
-> +			strbuf_addf(&man_page, "(man \"%s\")", page);
-> +		else
-> +			strbuf_addf(&man_page, "(woman \"%s\")", page);
+John Keeping wrote:
+> Would it be nicer to pass a string in here instead of a flag?  Then this
+> becomes:
+>
+>         strbuf_addf(&man_page, "(%s \"%s\")", command, page);
+>
+> You should probably also rename this function to "exec_emacsclient" or
+> something as well now that it doesn't just launch woman.
 
-Would it be nicer to pass a string in here instead of a flag?  Then this
-becomes:
-
-	strbuf_addf(&man_page, "(%s \"%s\")", command, page);
-
-You should probably also rename this function to "exec_emacsclient" or
-something as well now that it doesn't just launch woman.
-
->  		execlp(path, "emacsclient", "-e", man_page.buf, (char *)NULL);
->  		warning(_("failed to exec '%s': %s"), path, strerror(errno));
->  	}
-> @@ -341,8 +344,10 @@ static void exec_viewer(const char *name, const char *page)
->  
->  	if (!strcasecmp(name, "man"))
->  		exec_man_man(info, page);
-> +	else if (!strcasecmp(name, "eman"))
-> +		exec_woman_emacs(info, page, 1);
->  	else if (!strcasecmp(name, "woman"))
-> -		exec_woman_emacs(info, page);
-> +		exec_woman_emacs(info, page, 0);
->  	else if (!strcasecmp(name, "konqueror"))
->  		exec_man_konqueror(info, page);
->  	else if (info)
-> -- 
-> 1.8.3.1.487.g3e7a5b4.dirty
+Sure, will do both.
