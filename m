@@ -1,59 +1,95 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] help: introduce man.viewer = eman
-Date: Sat, 22 Jun 2013 17:35:01 +0530
-Message-ID: <CALkWK0m6V9ULgeA81yK2WuoLgf6n4q8_BS-D4VHpTYJMQiG95Q@mail.gmail.com>
-References: <1371901409-8319-1-git-send-email-artagnon@gmail.com> <20130622115938.GF4676@serenity.lan>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 1/2] completion: handle unstuck form of base git options
+Date: Sat, 22 Jun 2013 14:30:33 +0200
+Message-ID: <20130622123033.GI20052@goldbirke>
+References: <adafd1a0c0d7d059d215d9fd1ea68579525efe6e.1371900318.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sat Jun 22 14:05:47 2013
+X-From: git-owner@vger.kernel.org Sat Jun 22 14:30:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqMZe-0006aO-LR
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 14:05:46 +0200
+	id 1UqMxo-0008Dk-2a
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 14:30:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756125Ab3FVMFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Jun 2013 08:05:43 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:46751 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756024Ab3FVMFm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Jun 2013 08:05:42 -0400
-Received: by mail-ie0-f169.google.com with SMTP id 10so21866266ied.0
-        for <git@vger.kernel.org>; Sat, 22 Jun 2013 05:05:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=A98Kn1jKlwP1yDf+X9KDIrOsq0cKVWRwhS0MnXUBteA=;
-        b=NtxpJr+tLemIWv0z16AjV1OqZiJmaBBeqHXB+pUZepu+Kc2rY0Xvty8xSlisaNqFHy
-         XBYKbdkF0Pg6XJULo1YIKmvAKZGmdwtyKYFwh1Iqs3J/LxDDimvRY0zM1oYD781JHLIE
-         x8P3t6voOjh+Ynlw0WsHigfNA8bNuNFLzem1nnG+wbiFoQ+g5KxRv1G2bu9G9CBEkPpd
-         Jh8furgpIR9mArKnTkC6CUHVcRQVq3OwUAUwrFDAT8jD69XWkYJuiD+jDLmgRgGC0Ko8
-         eCUA2eTRoI9RJIJ07dT+uoTgp/LvQO8QQTSz0UfKCSOixE+w9u2JT5bETLWdcGN97HBs
-         DgQA==
-X-Received: by 10.42.190.74 with SMTP id dh10mr8042633icb.35.1371902741935;
- Sat, 22 Jun 2013 05:05:41 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Sat, 22 Jun 2013 05:05:01 -0700 (PDT)
-In-Reply-To: <20130622115938.GF4676@serenity.lan>
+	id S932341Ab3FVMak convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Jun 2013 08:30:40 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:50670 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932169Ab3FVMaj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Jun 2013 08:30:39 -0400
+Received: from localhost6.localdomain6 (f051195150.adsl.alicedsl.de [78.51.195.150])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0Mb5Ch-1UbJBJ0Sip-00K520; Sat, 22 Jun 2013 14:30:34 +0200
+Content-Disposition: inline
+In-Reply-To: <adafd1a0c0d7d059d215d9fd1ea68579525efe6e.1371900318.git.john@keeping.me.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:2OojMbPXgZ9A4G5zfJvpyoyEoEfzVwEh7RXizyfX3pr
+ 5em6bFSEG5MLvLbaJ8i7lkBaVlXyYniAgzgBqJPaIXClPQQ8PZ
+ 6nEMKFjGCEJvVBNZjMcCnzjmXNwi1ftrq08L+cwHsRDFBNdakR
+ Zdp1pQIzt6t13RiCEKjrhMWn5UrDs3yG6csKATHfxDE3Wptf2v
+ WnYmBxS/hydcqqoCD/9jcYjNhNasp3RXgH6X5QeIKbcGin8q6J
+ AJ0CONWfpDSsANPI6Y95J9lOXLyfudtMkfCUOozONaGyM3syv6
+ rTeGJXlavXJ3RBn+YcTom5QE339tSl3/FtJbkJz6HBUAKe4ihr
+ SxFcPTopfeYheqI+/o2ICdM/l5vzqQa6lc8c/nSwv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228702>
 
-John Keeping wrote:
-> Would it be nicer to pass a string in here instead of a flag?  Then this
-> becomes:
->
->         strbuf_addf(&man_page, "(%s \"%s\")", command, page);
->
-> You should probably also rename this function to "exec_emacsclient" or
-> something as well now that it doesn't just launch woman.
+Hi,
 
-Sure, will do both.
+On Sat, Jun 22, 2013 at 12:25:17PM +0100, John Keeping wrote:
+> git-completion.bash's parsing of the command name relies on everythin=
+g
+> preceding it starting with '-' unless it is the "-c" option.  This
+> allows users to use the stuck form of "--work-tree=3D<path>" and
+> "--namespace=3D<path>" but not the unstuck forms "--work-tree <path>"=
+ and
+> "--namespace <path>".  Fix this.
+
+I never use these commands, so I looked up what --namespace means.
+While doing so I noticed that --exec-path takes a path just like these
+options, so that option should be handled similarly as well.
+
+Otherwise it makes sense.
+
+
+G=E1bor
+
+
+> Similarly, the completion only handles the stuck form "--git-dir=3D<p=
+ath>"
+> and not "--git-dir <path>", so fix this as well.
+>=20
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>  contrib/completion/git-completion.bash | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
+ion/git-completion.bash
+> index 6c3bafe..8fbf941 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -2492,9 +2492,10 @@ __git_main ()
+>  		i=3D"${words[c]}"
+>  		case "$i" in
+>  		--git-dir=3D*) __git_dir=3D"${i#--git-dir=3D}" ;;
+> +		--git-dir)   ((c++)) ; __git_dir=3D"${words[c]}" ;;
+>  		--bare)      __git_dir=3D"." ;;
+>  		--help) command=3D"help"; break ;;
+> -		-c) c=3D$((++c)) ;;
+> +		-c|--work-tree|--namespace) ((c++)) ;;
+>  		-*) ;;
+>  		*) command=3D"$i"; break ;;
+>  		esac
+> --=20
+> 1.8.3.1.676.gaae6535
+>=20
