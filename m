@@ -1,58 +1,106 @@
 From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 3/4] git-prompt.sh: do not print duplicate clean color code
-Date: Sat, 22 Jun 2013 15:26:40 +0200
-Message-ID: <20130622132640.GL20052@goldbirke>
+Subject: Re: [PATCH 4/4] git-prompt.sh: add missing information in comments
+Date: Sat, 22 Jun 2013 15:40:26 +0200
+Message-ID: <20130622134026.GM20052@goldbirke>
 References: <cover.1371780085.git.erdavila@gmail.com>
- <a44fecc0b75c3eacc24675aa4ec4e3a3c95c84ad.1371780085.git.erdavila@gmail.com>
+ <8fcf64a70e63761f3982e1be05be0a2bb1fb68bf.1371780085.git.erdavila@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, felipe.contreras@gmail.com,
 	artagnon@gmail.com, s.oosthoek@xs4all.nl, gitster@pobox.com
 To: "Eduardo R. D'Avila" <erdavila@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 22 15:27:33 2013
+X-From: git-owner@vger.kernel.org Sat Jun 22 15:40:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqNql-0003XI-WA
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 15:27:32 +0200
+	id 1UqO3i-0000vu-N9
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 15:40:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756258Ab3FVN11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Jun 2013 09:27:27 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:64020 "EHLO
+	id S1756263Ab3FVNkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Jun 2013 09:40:43 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:58993 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756185Ab3FVN10 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Jun 2013 09:27:26 -0400
+	with ESMTP id S1756178Ab3FVNkn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Jun 2013 09:40:43 -0400
 Received: from localhost6.localdomain6 (f051195150.adsl.alicedsl.de [78.51.195.150])
-	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
-	id 0MbgoP-1UXTXg1jq1-00Jjgx; Sat, 22 Jun 2013 15:26:41 +0200
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0M9vhI-1V1LLn0G7s-00B428; Sat, 22 Jun 2013 15:40:27 +0200
 Content-Disposition: inline
-In-Reply-To: <a44fecc0b75c3eacc24675aa4ec4e3a3c95c84ad.1371780085.git.erdavila@gmail.com>
+In-Reply-To: <8fcf64a70e63761f3982e1be05be0a2bb1fb68bf.1371780085.git.erdavila@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:F0iuR/hFtjkD0xMfV0OQ2iH0nywfDn2RuxoaoD8IOy2
- p30/13SAdsZ9S055rhJW9Cpm0RVMm0SHpxOyQ5gRnGoQcHgzlT
- bWJxQ2UukMTlxroInemlVUho8ip7LW6hJ1KKe4Ypb4QYc4J0pL
- XWqA1PR0c16AntwRVM9Ju7f79aDr579xnGmPf49t4eZvdKWUGS
- +GEvm8JWFyTjDSrFiuEnHnGErcDB9J574rEc1GdJJx5BhD2Ms4
- 43kKCdN2N1rCXczCb4SKa5GfUc4vrUpgYujSPzbaBsXqFbi6W7
- g6IQx80jkpHmXmE4XzL05vbMRtbfuS8uOSz8ot0vW7p8T97umY
- SflTQepncrMBFtQI2/3hemVYXoZu/u+NsSlTcr0B+
+X-Provags-ID: V02:K0:HjrL7Pxvrsmp9GzRmkT6d0jv2+qJe4dtzj6305vIiS3
+ zBoT88Eu3QYiNOemeIXLYHSNJi7T6/cdlo0jFjsJxB3YGl6fTG
+ QxzjXJD1oCPBi/Ny3OA2qq4Sk9IPqguIoI89TcSAaCXyyS6UMJ
+ pNCk1a7clqcGJhwUCWGh2o66233W8unSY0KuKF/gDlFM+lR6sz
+ pn55iyjumrcBUdt9QH63TLUviaOBFyB7PZ25SRwHvOVSL0yAMI
+ 0P6SpV38PUMswqYEdAk0XOH/Aig2KH9UvuB1cVjMlQLrNjIXl2
+ R/lRDoqkz+Rvll/cJLJmxkeOs6F8EGgV+2H3ptCEXO5t+9pfhQ
+ HN5mGGcJ3QlIgm8K0GUsYUHU/RjunCeu6/vakk7KW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228707>
 
-On Thu, Jun 20, 2013 at 11:25:28PM -0300, Eduardo R. D'Avila wrote:
-> Do not print a duplicate clean color code when there
-> is no other indicators other than the current branch
-> in colored prompt.
+On Thu, Jun 20, 2013 at 11:25:29PM -0300, Eduardo R. D'Avila wrote:
+> Mention that the command below is needed for prompt
+> in ZSH with PS1:
+>   setopt PROMPT_SUBST
+> 
+> Make it clear that colored prompt is only available
+> in PROMPT_COMMAND mode.
 > 
 > Signed-off-by: Eduardo R. D'Avila <erdavila@gmail.com>
+> ---
+> 5	4	contrib/completion/git-prompt.sh
+>  contrib/completion/git-prompt.sh | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index 70515cc..3ab2a69 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -13,10 +13,10 @@
+>  #    3a) Change your PS1 to call __git_ps1 as
+>  #        command-substitution:
+>  #        Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+> -#        ZSH:  PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+> +#        ZSH:  setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+>  #        the optional argument will be used as format string.
+> -#    3b) Alternatively, if you are using bash, __git_ps1 can be
+> -#        used for PROMPT_COMMAND with two parameters, <pre> and
+> +#    3b) Alternatively, if you are using Bash or ZSH, __git_ps1 can
+> +#        be used for PROMPT_COMMAND with two parameters, <pre> and
 
-Great.  I wanted to point out in the previous versions of this series
-that the patch claiming to refactor coloring actually touches the test
-script because it silently fixes the clean color code duplication.
-Thanks for splitting that patch before I even managed to find the time
-to mention it ;)
+The git-prompt script only supports bash and zsh, so that "if you are
+using Bash or ZSH" part doesn't say much, does it?  Furthermore, zsh
+doesn't have PROMPT_COMMAND but a similar facility.  So how about
+something like this instead?
+
+#    3b) Alternatively, __git_ps1 can be used for PROMPT_COMMAND in
+#        Bash or for precmd in ZSH with two parameters, <pre> and
+
+
+>  #        <post>, which are strings you would put in $PS1 before
+>  #        and after the status string generated by the git-prompt
+>  #        machinery.  e.g.
+> @@ -78,7 +78,8 @@
+>  #
+>  # If you would like a colored hint about the current dirty state, set
+>  # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
+> -# the colored output of "git status -sb".
+> +# the colored output of "git status -sb" and are available only when
+> +# using __git_ps1 for PROMPT_COMMAND.
+
+Likewise:
+
+# using __git_ps1 for PROMPT_COMMAND or precmd.
+
+>  
+>  # __gitdir accepts 0 or 1 arguments (i.e., location)
+>  # returns location of .git repo
+> -- 
+> 1.8.3.1.487.g28387b2
+> 
