@@ -1,76 +1,83 @@
-From: =?utf-8?b?w5h5c3RlaW4=?= Walle <oystwa@gmail.com>
-Subject: Re: [PATCH 2/4] git-prompt.sh: refactor colored prompt code
-Date: Sat, 22 Jun 2013 14:37:03 +0000 (UTC)
-Message-ID: <loom.20130622T162818-125@post.gmane.org>
-References: <cover.1371780085.git.erdavila@gmail.com> <354a860e12a3463ce5d031c0dc46d095841f717d.1371780085.git.erdavila@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 22 16:37:37 2013
+From: "W. Trevor King" <wking@tremily.us>
+Subject: [PATCH v2 2/4] doc/clone: Pick more compelling paths for the
+ --reference example
+Date: Sat, 22 Jun 2013 10:46:25 -0400
+Message-ID: <79c2444a4fc73cbf699f571351780ce59f5d8785.1371911897.git.wking@tremily.us>
+References: <7vppvhye6s.fsf@alter.siamese.dyndns.org>
+ <cover.1371911897.git.wking@tremily.us>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 22 16:46:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqOwa-0002aM-5g
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 16:37:36 +0200
+	id 1UqP5K-0003Nh-DY
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 16:46:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755896Ab3FVOhX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Jun 2013 10:37:23 -0400
-Received: from plane.gmane.org ([80.91.229.3]:55491 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754920Ab3FVOhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Jun 2013 10:37:22 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1UqOwJ-0002Is-MB
-	for git@vger.kernel.org; Sat, 22 Jun 2013 16:37:19 +0200
-Received: from 147.137.202.84.customer.cdi.no ([84.202.137.147])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 22 Jun 2013 16:37:19 +0200
-Received: from oystwa by 147.137.202.84.customer.cdi.no with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 22 Jun 2013 16:37:19 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 84.202.137.147 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu Chromium/25.0.1364.160 Chrome/25.0.1364.160 Safari/537.22)
+	id S1756082Ab3FVOqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Jun 2013 10:46:34 -0400
+Received: from vms173011pub.verizon.net ([206.46.173.11]:50188 "EHLO
+	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751479Ab3FVOqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Jun 2013 10:46:33 -0400
+Received: from odin.tremily.us ([unknown] [72.68.80.60])
+ by vms173011.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MOS007WOUDJCT10@vms173011.mailsrvcs.net> for
+ git@vger.kernel.org; Sat, 22 Jun 2013 09:46:32 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 9A146A3D87D; Sat,
+ 22 Jun 2013 10:46:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1371912391; bh=YCWc2O4eCOhhduh9a+av5aBx/j4LodeVGXGTduqoy88=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:	 References;
+	b=imhHTfIX10DVvoAgrgI8Qk7Xoz6payaGD/Hbq5UnK4FWFX1ZVqa1EM615+v8Kq1CY
+ uQ7UyRuuqNQT/tCTEjCaOM4mcDTXdJt9sYjVcN9oducOM0tMQFUMlqHZSpkKfczcKB
+ 4boRGJmp5zpa5NpUiAHu6g7gT9jquOEDXP4dC1ys=
+X-Mailer: git-send-email 1.8.1.5
+In-reply-to: <cover.1371911897.git.wking@tremily.us>
+In-reply-to: <cover.1371911897.git.wking@tremily.us>
+References: <cover.1371911897.git.wking@tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228709>
 
-Eduardo R. D'Avila <erdavila <at> gmail.com> writes:
+From: "W. Trevor King" <wking@tremily.us>
 
-> +		local c_red=3D'\[\e[31m\]'
-> +		local c_green=3D'\[\e[32m\]'
-> +		local c_lblue=3D'\[\e[1;34m\]'
-> +		local c_clear=3D'\[\e[0m\]'
->  	fi
-> -	local c_red=3D'\e[31m'
-> -	local c_green=3D'\e[32m'
-> -	local c_lblue=3D'\e[1;34m'
-> -	local c_clear=3D'\e[0m'
+There may be times when using one of your local repositories as a
+reference for a new clone make sense, but the implied version-bump in
+the old example isn't one of them.  I think a more intuitive example
+is multi-user system with a central reference clone, and the new paths
+hint at this use case.
 
-I've gotten the impression it's better to use tput to generate the esca=
-pe=20
-sequences instead of hardcoding them. So something like:
+Signed-off-by: W. Trevor King <wking@tremily.us>
+---
+ Documentation/git-clone.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-	local c_red=3D'\['"$(tput setaf 1)"'\]'
-	local c_green=3D'\['"$(tput setaf 2)"'\]'
-	local c_green=3D'\['"$(tput setaf 4)"'\]'
-	local c_clear=3D'\['"$(tput sgr0)"'\]'
-
-which is technically cleaner, if not visually.
-=20
-The problem with that approach is that tput will be run several times f=
-or=20
-each prompt, so it would be best if the color variables were global. An=
-other=20
-thing is that you rely on tput being available.
-
-=C3=98sse
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index cec6fc1..bf05ada 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -257,10 +257,10 @@ $ git show-branch
+ * Clone from upstream while borrowing from an existing local directory:
+ +
+ ------------
+-$ git clone --reference my2.6 \
+-	git://git.kernel.org/pub/scm/.../linux-2.7 \
+-	my2.7
+-$ cd my2.7
++$ git clone --reference /git/linux.git \
++	git://git.kernel.org/pub/scm/.../linux.git \
++	my-linux
++$ cd my-linux
+ ------------
+ 
+ 
+-- 
+1.8.3
