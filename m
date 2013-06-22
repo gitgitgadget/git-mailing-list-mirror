@@ -1,74 +1,78 @@
 From: "W. Trevor King" <wking@tremily.us>
-Subject: [PATCH v2 0/4] Update linux-2.6.git location and related examples
-Date: Sat, 22 Jun 2013 10:46:23 -0400
-Message-ID: <cover.1371911897.git.wking@tremily.us>
+Subject: [PATCH v2 1/4] doc/clone: Remove the '--bare -l -s' example
+Date: Sat, 22 Jun 2013 10:46:24 -0400
+Message-ID: <fb9dc74892299d30e4b313353fddf663cc28b212.1371911897.git.wking@tremily.us>
 References: <7vppvhye6s.fsf@alter.siamese.dyndns.org>
+ <cover.1371911897.git.wking@tremily.us>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	David Aguilar <davvid@gmail.com>,
 	"W. Trevor King" <wking@tremily.us>
 To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 22 16:46:48 2013
+X-From: git-owner@vger.kernel.org Sat Jun 22 16:46:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqP5T-0003WR-2e
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 16:46:47 +0200
+	id 1UqP5Y-0003fn-1l
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 16:46:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755139Ab3FVOqd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Jun 2013 10:46:33 -0400
-Received: from vms173011pub.verizon.net ([206.46.173.11]:50188 "EHLO
-	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751308Ab3FVOqc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Jun 2013 10:46:32 -0400
+	id S1758216Ab3FVOqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Jun 2013 10:46:48 -0400
+Received: from vms173003pub.verizon.net ([206.46.173.3]:61184 "EHLO
+	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756368Ab3FVOqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Jun 2013 10:46:47 -0400
 Received: from odin.tremily.us ([unknown] [72.68.80.60])
- by vms173011.mailsrvcs.net
+ by vms173003.mailsrvcs.net
  (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MOS0063CUDJZF20@vms173011.mailsrvcs.net> for
+ with ESMTPA id <0MOS00KKAUDJOHB0@vms173003.mailsrvcs.net> for
  git@vger.kernel.org; Sat, 22 Jun 2013 09:46:32 -0500 (CDT)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 45950A3D873; Sat,
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 6B301A3D878; Sat,
  22 Jun 2013 10:46:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1371912391; bh=dRSq/foMdqK/vf4iuVYGlllVyAkq9+JgLFdp+1eRrEg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i7ENOumBrXv9bT9z61VpcPr7NSCRINYs9agWdRawg32HpqtDS4eacE2w3mWV9VG89
- 2S+PjO6TtPFp2645COe34GFhwO4yIgz1tIYaBS+oDgbG3bITTk/8ZMQ8C0x5KBEdpl
- 7fVF4O3vazZEV2e9mDxuTYDI6X0EUjjEx8KDE4vE=
+	t=1371912391; bh=ceNVmvuzVRCedJx9DusLhcdIH3bQdH77T03bYAZF+4M=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:	 References;
+	b=LEmAbd7jdh3trjIZPDb3dt/7GGp2+H0m5YcXa0R1sEL0RBLbnc8Xl+sfjCQTMDSaQ
+ lW7qEkEdj0LsP1VwJoo8+j68Xep+oxSR2YlGTFN3UecoIGTTbOSSXk80oLCTR1Z+oz
+ 828Q5OKu49S/10hHRBcpaQV/maBpMc8D5v5YLnp4=
 X-Mailer: git-send-email 1.8.1.5
-In-reply-to: <7vppvhye6s.fsf@alter.siamese.dyndns.org>
+In-reply-to: <cover.1371911897.git.wking@tremily.us>
+In-reply-to: <cover.1371911897.git.wking@tremily.us>
+References: <cover.1371911897.git.wking@tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228713>
 
 From: "W. Trevor King" <wking@tremily.us>
 
-David and Junio mentioned that I'd missed a few 2.6 references in my
-initial pass.  Here's a second attempt that does some deeper reworking
-of the effected sections.  Each deeper rewrite gets its own patch and
-motivation, with the final patch making all the superficial changes
-that were not fixed in the earlier patches.
+There are other examples in git-clone.txt demonstrating both '--bare'
+and '-l -s'.
 
-I've dropped the download size update (2/2 in v1), which Junio has
-queued separately.  I also rebased the series on maint-1.8.2, since
-that's where the size update landed.  I only touch low-churn areas
-though, so this series should apply to any recent branch.
+Signed-off-by: W. Trevor King <wking@tremily.us>
+---
+ Documentation/git-clone.txt | 7 -------
+ 1 file changed, 7 deletions(-)
 
-W. Trevor King (4):
-  doc/clone: Remove the '--bare -l -s' example
-  doc/clone: Pick more compelling paths for the --reference example
-  Documentation: Update the NFS remote examples to use the staging repo
-  Documentation: Update 'linux-2.6.git' -> 'linux.git'
-
- Documentation/git-clone.txt          | 19 ++++++-------------
- Documentation/git-fast-export.txt    |  2 +-
- Documentation/git-remote.txt         | 25 ++++++++++++++++---------
- Documentation/technical/racy-git.txt |  6 +++---
- Documentation/user-manual.txt        | 34 ++++++++++++++++++++--------------
- t/perf/README                        |  2 +-
- 6 files changed, 47 insertions(+), 41 deletions(-)
-
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 5c16e31..cec6fc1 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -271,13 +271,6 @@ $ git clone --bare -l /home/proj/.git /pub/scm/proj.git
+ ------------
+ 
+ 
+-* Create a repository on the kernel.org machine that borrows from Linus:
+-+
+-------------
+-$ git clone --bare -l -s /pub/scm/.../torvalds/linux-2.6.git \
+-    /pub/scm/.../me/subsys-2.6.git
+-------------
+-
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 -- 
 1.8.3
