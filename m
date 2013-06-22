@@ -1,69 +1,97 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 1/2] completion: handle unstuck form of base git options
-Date: Sat, 22 Jun 2013 14:35:33 +0200
-Message-ID: <20130622123533.GJ20052@goldbirke>
-References: <adafd1a0c0d7d059d215d9fd1ea68579525efe6e.1371900318.git.john@keeping.me.uk>
- <20130622123033.GI20052@goldbirke>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH 2/2] user-manual: Update download size for Git and the
+ kernel
+Date: Sat, 22 Jun 2013 08:40:33 -0400
+Message-ID: <20130622124033.GG5615@odin.tremily.us>
+References: <cover.1371606791.git.wking@tremily.us>
+ <deb78c114d068ab3f9e28bcd019c3e29ad7b770c.1371606791.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sat Jun 22 14:35:44 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary="w/VI3ydZO+RcZ3Ux"
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 22 14:41:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqN2a-0005Ls-Lr
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 14:35:41 +0200
+	id 1UqN7t-0002td-QY
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 14:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932267Ab3FVMfg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Jun 2013 08:35:36 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:64097 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756024Ab3FVMff (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Jun 2013 08:35:35 -0400
-Received: from localhost6.localdomain6 (f051195150.adsl.alicedsl.de [78.51.195.150])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0MJVXP-1Uspsk2SZn-002qK3; Sat, 22 Jun 2013 14:35:33 +0200
-Content-Disposition: inline
-In-Reply-To: <20130622123033.GI20052@goldbirke>
+	id S932367Ab3FVMky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Jun 2013 08:40:54 -0400
+Received: from vms173011pub.verizon.net ([206.46.173.11]:45790 "EHLO
+	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932282Ab3FVMkx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Jun 2013 08:40:53 -0400
+Received: from odin.tremily.us ([unknown] [72.68.80.60])
+ by vms173011.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MOS00CN2OJMCN70@vms173011.mailsrvcs.net> for
+ git@vger.kernel.org; Sat, 22 Jun 2013 07:40:34 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id CA99EA3D755; Sat,
+ 22 Jun 2013 08:40:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1371904833; bh=20kwVs6Qbyu3zizFPJ5v/CQC5f/LeeLqaLvsFFgexqE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Y8dwzR8xD+ojXi4s/kRfiGYJBBMJNi05c2XiS+YCzXcT56m70DuBekjC1F88Eq9/+
+ /mV/09VLU4b36ceELdSBDXpXsiqxDuJ+uGnzze/nI4A6NNJIF30gu10ia96+U9KSpT
+ 8WF1vywUZOzC7SHEwVyW6xJBI2vjQx7NUvOweIj4=
+Content-disposition: inline
+In-reply-to: <deb78c114d068ab3f9e28bcd019c3e29ad7b770c.1371606791.git.wking@tremily.us>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
 User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:0SK1K5oP172m1V7azIQfvuOWbQTq38gIZfAf4niF9Rz
- kbyIX2UuHHQYfxcbjyY2LDSLIQSJi77lDH6H7uAdxdVdiGHVIE
- UELfjqW//5CJi/CKc6x37tj3+7ZSUDZRGVp3VV+v8+A/xAzSI4
- yBI+JGrPCQyjeEyuAuggIVcOPRXNEg9Jde9V6gh592lE0EFIxK
- fKcyvB9nrSToMrsXDNt0ge5WwxKJ3h5LW5IpeZEKMn3t4zhaBh
- x42K6yEfhxHOzQTiiIp0kV22dcCKeSLVpe4vQctiE5lNqM+OHK
- lTx0Wjv6Gy4Q/cnXsxVd+cywAuU2fBb56A9NiVGGZnEzhFzZMR
- c4ATUG8n1SBbJQb45XKjTxfFl/L5Q325AKkKq/GAi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228703>
-
-On Sat, Jun 22, 2013 at 02:30:33PM +0200, SZEDER G=E1bor wrote:
-> Hi,
->=20
-> On Sat, Jun 22, 2013 at 12:25:17PM +0100, John Keeping wrote:
-> > git-completion.bash's parsing of the command name relies on everyth=
-ing
-> > preceding it starting with '-' unless it is the "-c" option.  This
-> > allows users to use the stuck form of "--work-tree=3D<path>" and
-> > "--namespace=3D<path>" but not the unstuck forms "--work-tree <path=
->" and
-> > "--namespace <path>".  Fix this.
->=20
-> I never use these commands, so I looked up what --namespace means.
-> While doing so I noticed that --exec-path takes a path just like thes=
-e
-> options, so that option should be handled similarly as well.
-
-Never mind, I misunderstood the docs: --exec-path either takes a path
-as --exec-path=3D<path> or it doesn't take one at all, but there is no
-'--exec-path <path>'.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228704>
 
 
-G=E1bor
+--w/VI3ydZO+RcZ3Ux
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Jun 18, 2013 at 09:55:22PM -0400, W. Trevor King wrote:
+> They've grown since d19fbc3 (Documentation: add git user's manual,
+> 2007-01-07) when the stats were initially added.  I've rounded
+> download sizes up to the nearest power of ten MiB to decrease the
+> precision and give a bit of growing room.  Exact sizes:
+
+Oops, I meant =E2=80=9Cmultiple of ten MiB=E2=80=9D not =E2=80=9Cpower of t=
+en MiB=E2=80=9D :p.  Not
+that this wording is likely to cause major confusion ;).
+
+Cheers,
+Trevor
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--w/VI3ydZO+RcZ3Ux
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRxZs/AAoJEKKfehoaNkbtvyAQALHQi59/baO/g/eQ0P8uO9qF
+ILyP2gf4UD0ihcCssZTiPEjqTojn/++CxyAchffhcHOKgHONq5AkR65Z7+NV0jcL
+yctNjV+BahxSZQTPYBozbJq7Tf3h0lbNKxZFYF4bD/QrXzvEDpUVlDlv3ePONUdH
+2m1OaW0K3j3GIJHWa1YjgG1kztuvmcWg/2fHvcl4X0X1CIFIx7RoKYAuGr+r3z5F
+xIoxQ79pVtDzzp0C/UT6ivOCqx0TlZ8Ssj12F7XOK1ZMGIQu9VRZrXpvZtZRB4UM
+UjFEO4qTrg7HtH1pzgKy4VRVJ6K20LIp7oVzNtS7jY7QU/2ozxa80U5kDOHRlWrj
+Dc4qB3Mu1HX/G6w2DSxQ0FohYFM4k7POmMr+Vev95mXrZFIuMSkye+ghzRfoCtym
+usX6zxwnUK07+NhAp449jjVK2iF33c8p6h3YGBEGW3i0jzymyCgM6s/zkgwaHHVD
+P7NQd80wpWDSLpjSzAb1qFUxiPE6lhSO1nqFiEb5atvtz9iDD0qXtOA/DJV2uv4n
+/DRMxbDZlx5XOMamdJFEIfVAMneEggkN9FgdumR2prRjU5fdXAeRhe/pax0j19BE
+XkzjGxhkHPWRCuGqhZycqtCqtr3bP0jxpxNexip1Yn3sqj+w4yPazmvJGFeY3k6g
+0SrkLImW0jY8yjS7svGy
+=VSmL
+-----END PGP SIGNATURE-----
+
+--w/VI3ydZO+RcZ3Ux--
