@@ -1,65 +1,70 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 06/16] t/t5505-remote: test url-with-# in branches-file
-Date: Sat, 22 Jun 2013 12:46:59 +0530
-Message-ID: <CALkWK0kKtORPf2pZR+owrBenOgyk5Ymfr+Fnd5HggovL1mvCdg@mail.gmail.com>
+Subject: Re: [PATCH 05/16] remote: remove dead code in read_branches_file()
+Date: Sat, 22 Jun 2013 13:06:34 +0530
+Message-ID: <CALkWK0mYmhnOL-F+StuKWSeQ48EsQSAnS0_6u-B8KKq+RrOW5A@mail.gmail.com>
 References: <1371813160-4200-1-git-send-email-artagnon@gmail.com>
- <1371813160-4200-7-git-send-email-artagnon@gmail.com> <7vwqpnjdyf.fsf@alter.siamese.dyndns.org>
+ <1371813160-4200-6-git-send-email-artagnon@gmail.com> <7v1u7vkslz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 22 09:17:45 2013
+X-From: git-owner@vger.kernel.org Sat Jun 22 09:37:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqI4u-0001BK-AP
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 09:17:44 +0200
+	id 1UqIO9-0006Kg-IL
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Jun 2013 09:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751674Ab3FVHRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Jun 2013 03:17:40 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:55171 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751152Ab3FVHRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Jun 2013 03:17:39 -0400
-Received: by mail-ie0-f170.google.com with SMTP id e11so21401015iej.1
-        for <git@vger.kernel.org>; Sat, 22 Jun 2013 00:17:39 -0700 (PDT)
+	id S1751152Ab3FVHhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Jun 2013 03:37:16 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:62697 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750828Ab3FVHhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Jun 2013 03:37:15 -0400
+Received: by mail-ie0-f179.google.com with SMTP id c10so21036607ieb.38
+        for <git@vger.kernel.org>; Sat, 22 Jun 2013 00:37:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=+CgR+Bjcvv0UXtFEYMjzdtTN0+s0lJ+pM5AkwnHbeQE=;
-        b=ecNiywvw5V5dnEcJUyYs8RuBLzRF1kQikDlFwCk1wz+ZD94Btyk8ro3YVagIXqJFpo
-         SOGCZyD4r7R1Ysr8vROqIie6BVSxq1un1kFRyJKtDLzIiq8gugdsCmmxxQcSo1c1cWVq
-         wVnoy1Jdmm4UcUrQRc6inzAGOeFQg6R4BbiX/QPmC7DZZAB8oC0IAYjeEOOFbU/FCmIW
-         UZ67O/hogIlPOEIa8g/oNsczVryit7r9ODnT+DvY1HM+HtIHZa9ml5WmUo0+C2pDsUZn
-         RXidFiHgSbcYtHgwTc4L34UOeQkFL8lCZMan8gVoLBgWzljanqpfhPXdv1AmZEKA+1UB
-         5Iaw==
-X-Received: by 10.43.88.3 with SMTP id ay3mr4104531icc.61.1371885459209; Sat,
- 22 Jun 2013 00:17:39 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Sat, 22 Jun 2013 00:16:59 -0700 (PDT)
-In-Reply-To: <7vwqpnjdyf.fsf@alter.siamese.dyndns.org>
+        bh=cfG9005bISzscQP0t3sld/lZxYTM+QR+Hoa94s0CBXs=;
+        b=t/e3VtLB1buDh9+h1Z8TsYsuLiTL7xVTnzwGslwlNn+DVhwOxPo/IgZZr8H065EpWx
+         ab3NcHXeoIA4m+qbJVDCdnYPvLdJtY1zUD/AEbi0pBKo8ucTqonRQQ8mhbaBlDgHmwF7
+         hcfzsjq2lHPuLbt/WmqUDURC6ILKper2pZVqUOsOARPCmBgTqX7BZ7rHhOLBUilCad98
+         VB/xLJaQ65an2ZQM8SdlvbnYJlM1GV6e7O6o70zSxMeMkc1OADKMg3YVSSdnTYhRGm3g
+         7QBM8dL8NlcDjxf0sgMYaA3L8zARio0tteIKIIpmLojoszEaSWZruzPETbanjuAloEPF
+         meOA==
+X-Received: by 10.50.107.65 with SMTP id ha1mr837433igb.50.1371886634466; Sat,
+ 22 Jun 2013 00:37:14 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Sat, 22 Jun 2013 00:36:34 -0700 (PDT)
+In-Reply-To: <7v1u7vkslz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228675>
 
 Junio C Hamano wrote:
->> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
->> index fd0a81e..93e11c8 100755
->> --- a/t/t5505-remote.sh
->> +++ b/t/t5505-remote.sh
->> @@ -702,27 +702,42 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/branches' '
->>       )
->>  '
->>
->> -test_expect_success 'remote prune to cause a dangling symref' '
->> +test_expect_success 'migrate a remote from named file in $GIT_DIR/branches (2)' '
->>       git clone one seven &&
->> +     origin_url=$(pwd)/one &&
->
-> The variable assigned here does not seem to get used.  Is this needed?
+> As far as I can tell, that valid-remote-nick was done in df93e33c
+> (Validate nicknames of remote branches to prohibit confusing ones,
+> 2008-02-15), and back in that version, the codepath and the feature
+> that wants to see a slash and do magical things, which is described
+> by this comment you are removing:
 
-Silly error carried over from copy-pasting.  Fixed.
+It's a bad hack, in my opinion.  When I say git fetch ../foomery, it
+should catch the pattern at transport_get() and not even attempt to
+look up a remote in the first place.  I will attempt to clean this up
+soon.
+
+> So it appears that back then (and througout to today), nobody uses
+> that "partial URL" feature which is specific (and was a rather nice
+> invention/legacy by Cogito) to .git/branches file.
+
+It's quite a cute feature, even if a bit magical.
+
+> Reminds me of the strategy to deprecate functionality in X (cf.
+> http://lwn.net/Articles/536520/) ;-)
+
+Leaving dead code around to confuse readers? :\
