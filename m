@@ -1,147 +1,142 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH v4 7/8] test-lib: allow prefixing a custom string before "ok N" etc.
-Date: Sun, 23 Jun 2013 20:12:58 +0200
-Message-ID: <46f94f8f48ebf4a42d3f0f3dbf1566caacd9720c.1372010917.git.trast@inf.ethz.ch>
-References: <cover.1372010917.git.trast@inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add--interactive: respect diff.algorithm
+Date: Sun, 23 Jun 2013 12:19:05 -0700
+Message-ID: <7v8v20fxee.fsf@alter.siamese.dyndns.org>
+References: <20130610142825.GI22905@serenity.lan>
+	<7v38sphiiw.fsf@alter.siamese.dyndns.org>
+	<20130610211140.GD13333@sigill.intra.peff.net>
+	<20130610214638.GK22905@serenity.lan>
+	<20130610215656.GA28345@sigill.intra.peff.net>
+	<20130612184410.GB23890@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, Fredrik Gustafsson <iveqy@iveqy.com>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 23 20:13:48 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Jun 23 21:19:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqonM-0007pi-80
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Jun 2013 20:13:48 +0200
+	id 1Uqpof-0002OQ-Qt
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Jun 2013 21:19:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752275Ab3FWSN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Jun 2013 14:13:28 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:34489 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752230Ab3FWSNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Jun 2013 14:13:08 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 23 Jun
- 2013 20:12:58 +0200
-Received: from hexa.v.cablecom.net (46.126.8.85) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 23 Jun
- 2013 20:13:03 +0200
-X-Mailer: git-send-email 1.8.3.1.727.gcbe3af3
-In-Reply-To: <cover.1372010917.git.trast@inf.ethz.ch>
-X-Originating-IP: [46.126.8.85]
+	id S1751110Ab3FWTTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Jun 2013 15:19:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46657 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750879Ab3FWTTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jun 2013 15:19:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D107D2AFB9;
+	Sun, 23 Jun 2013 19:19:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=c6lXgd8P9wvyzagPylJtcUXVeMc=; b=aOJNrt
+	nfad+0KxfAxrQhrSfVTQ8tgbA3yt3hLW02UWxOwDYmbd0oZLyjFvREmvSPouuyYR
+	pFmcUxnfCcgaFr7jHrLm5NY+o6BrdSLgi69gRVjEAErJM3MvjBHzvDI7Rd+FO37f
+	eWYpb8gHyTLcnwq+ZTWk2TWTSNKTWxRQi99Sc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZanDIDW0Y0TVS/KmCJA5VMvZoWdObZil
+	bKPiNiLHh27CAi2ISuqq6WXYvl3ypWXcQ6boT6RQcPSq9vxUdo2W0P8CfVGn9oFI
+	hskHCW6sfJ+FsKM4nj//FkxdgCr/AWLLT+1V4Rb+GFS2PXxAXs0NecZcb2lbLXkT
+	aoFurWtiB1Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C43492AFB8;
+	Sun, 23 Jun 2013 19:19:07 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 183352AFB7;
+	Sun, 23 Jun 2013 19:19:07 +0000 (UTC)
+In-Reply-To: <20130612184410.GB23890@serenity.lan> (John Keeping's message of
+	"Wed, 12 Jun 2013 19:44:10 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C63413FC-DC39-11E2-990E-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228757>
 
-This is not really meant for external use, and thus not documented. It
-allows the next commit to neatly distinguish between sub-tests and the
-main run.
+John Keeping <john@keeping.me.uk> writes:
 
-The format is intentionally not valid TAP.  The use in the next commit
-would not result in anything valid either way, and it seems better to
-make it obvious.
+>> > +my $diff_algorithm = ($repo->config('diff.algorithm') or 'default');
+>> > +
+>> >  my $use_readkey = 0;
+>> >  my $use_termcap = 0;
+>> >  my %term_escapes;
+>> > @@ -731,6 +733,9 @@ sub run_git_apply {
+>> >  sub parse_diff {
+>> >  	my ($path) = @_;
+>> >  	my @diff_cmd = split(" ", $patch_mode_flavour{DIFF});
+>> > +	if ($diff_algorithm ne "default") {
+>> > +		push @diff_cmd, "--diff-algorithm=${diff_algorithm}";
+>> > +	}
 
-Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+This is not exactly sanitary for "stash -p", whose DIFF element is
+defined like so:
+
+	'stash' => {
+		DIFF => 'diff-index -p HEAD',
+
+and you will end up appending an option after a non-option argument,
+
+It may happen to be accepted by the command line parser which is
+overly lax, but we would want to tighten it in the longer term.
+
+As a band-aid, we could do something like the attached patch, but
+for the longer term, we might need to rethink the way the tweaking
+of the command line is done by $patch_mode_revision.
+
+-- >8 --
+Subject: add -i: add extra options at the right place in "diff" command line
+
+Appending "--diff-algorithm=histogram" at the end of canned command
+line for various modes of "diff" is correct for most of them but not
+for "stash" that has a non-option already wired in, like so:
+
+	'stash' => {
+		DIFF => 'diff-index -p HEAD',
+
+Appending an extra option after non-option may happen to work due to
+overly lax command line parser, but that is not something we should
+rely on.  Instead, splice in the extra argument immediately after a
+'-p' option, which is an option to ask for textual diff output that
+has to be in all variants.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/test-lib.sh | 27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ git-add--interactive.perl | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index a926828..682459b 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -209,6 +209,9 @@ do
- 	--root=*)
- 		root=$(expr "z$1" : 'z[^=]*=\(.*\)')
- 		shift ;;
-+	--statusprefix=*)
-+		statusprefix=$(expr "z$1" : 'z[^=]*=\(.*\)')
-+		shift ;;
- 	*)
- 		echo "error: unknown test option '$1'" >&2; exit 1 ;;
- 	esac
-@@ -316,12 +319,12 @@ trap 'die' EXIT
- 
- test_ok_ () {
- 	test_success=$(($test_success + 1))
--	say_color "" "ok $test_count - $@"
-+	say_color "" "${statusprefix}ok $test_count - $@"
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 5310959..b50551a 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -730,11 +730,23 @@ sub run_git_apply {
+ 	return close $fh;
  }
  
- test_failure_ () {
- 	test_failure=$(($test_failure + 1))
--	say_color error "not ok $test_count - $1"
-+	say_color error "${statusprefix}not ok $test_count - $1"
- 	shift
- 	echo "$@" | sed -e 's/^/#	/'
- 	test "$immediate" = "" || { GIT_EXIT_OK=t; exit 1; }
-@@ -329,12 +332,12 @@ test_failure_ () {
- 
- test_known_broken_ok_ () {
- 	test_fixed=$(($test_fixed+1))
--	say_color error "ok $test_count - $@ # TODO known breakage vanished"
-+	say_color error "${statusprefix}ok $test_count - $@ # TODO known breakage vanished"
- }
- 
- test_known_broken_failure_ () {
- 	test_broken=$(($test_broken+1))
--	say_color warn "not ok $test_count - $@ # TODO known breakage"
-+	say_color warn "${statusprefix}not ok $test_count - $@ # TODO known breakage"
- }
- 
- test_debug () {
-@@ -458,8 +461,8 @@ test_skip () {
- 			of_prereq=" of $test_prereq"
- 		fi
- 
--		say_color skip >&3 "skipping test: $@"
--		say_color skip "ok $test_count # skip $1 (missing $missing_prereq${of_prereq})"
-+		say_color skip >&3 "${statusprefix}skipping test: $@"
-+		say_color skip "${statusprefix}ok $test_count # skip $1 (missing $missing_prereq${of_prereq})"
- 		: true
- 		;;
- 	*)
-@@ -497,11 +500,11 @@ test_done () {
- 
- 	if test "$test_fixed" != 0
- 	then
--		say_color error "# $test_fixed known breakage(s) vanished; please update test(s)"
-+		say_color error "${statusprefix}# $test_fixed known breakage(s) vanished; please update test(s)"
- 	fi
- 	if test "$test_broken" != 0
- 	then
--		say_color warn "# still have $test_broken known breakage(s)"
-+		say_color warn "${statusprefix}# still have $test_broken known breakage(s)"
- 	fi
- 	if test "$test_broken" != 0 || test "$test_fixed" != 0
- 	then
-@@ -524,9 +527,9 @@ test_done () {
- 		then
- 			if test $test_remaining -gt 0
- 			then
--				say_color pass "# passed all $msg"
-+				say_color pass "${statusprefix}# passed all $msg"
- 			fi
--			say "1..$test_count$skip_all"
-+			say "${statusprefix}1..$test_count$skip_all"
- 		fi
- 
- 		test -d "$remove_trash" &&
-@@ -540,8 +543,8 @@ test_done () {
- 	*)
- 		if test $test_external_has_tap -eq 0
- 		then
--			say_color error "# failed $test_failure among $msg"
--			say "1..$test_count"
-+			say_color error "${statusprefix}# failed $test_failure among $msg"
-+			say "${statusprefix}1..$test_count"
- 		fi
- 
- 		exit 1 ;;
--- 
-1.8.3.1.727.gcbe3af3
++# The command array must have a single "-p" to ask for output in the
++# patch form.  Splice additional options immediately after it; we
++# should not be randomly appending them, as some of the canned command.
++# has non-option argument like HEAD already on it.
++
++sub splice_diff_options {
++	my $diff_cmd = shift;
++	@$diff_cmd = map {
++		($_ eq '-p') ? ($_, @_) : $_;		
++	} @$diff_cmd;
++}
++
+ sub parse_diff {
+ 	my ($path) = @_;
+ 	my @diff_cmd = split(" ", $patch_mode_flavour{DIFF});
+ 	if (defined $diff_algorithm) {
+-		push @diff_cmd, "--diff-algorithm=${diff_algorithm}";
++		splice_diff_options(\@diff_cmd, "--diff-algorithm=${diff_algorithm}");
+ 	}
+ 	if (defined $patch_mode_revision) {
+ 		push @diff_cmd, $patch_mode_revision;
