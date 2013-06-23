@@ -1,149 +1,179 @@
-From: Eric Lindsey <elindsey@ucsd.edu>
-Subject: git subtree pull incorrectly reports merge conflict
-Date: Sat, 22 Jun 2013 16:59:59 -0700
-Message-ID: <CANFFsAZ-Q--3Kx_rYgkALd=nvo6r24sNpNQeHQdALYHhDwBxPQ@mail.gmail.com>
+From: Dave Abrahams <dave@boostpro.com>
+Subject: Re: fast-import bug?
+Date: Sat, 22 Jun 2013 19:16:48 -0700
+Message-ID: <m2txkp1shb.fsf@cube.gateway.2wire.net>
+References: <m2zjuj2504.fsf@cube.gateway.2wire.net>
+	<20130622102157.GE4676@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 23 02:09:57 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Jun 23 07:52:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqXsT-0002zR-0r
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Jun 2013 02:09:57 +0200
+	id 1UqdEH-0000MF-Gu
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Jun 2013 07:52:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751766Ab3FWAJi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Jun 2013 20:09:38 -0400
-Received: from iport-c2-out.ucsd.edu ([132.239.0.174]:58386 "EHLO
-	iport-c2-out.ucsd.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751487Ab3FWAJh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Jun 2013 20:09:37 -0400
-X-Greylist: delayed 576 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Jun 2013 20:09:37 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=ucsd.edu; i=elindsey@ucsd.edu; q=dns/txt;
-  s=041709-iport; t=1371946177; x=1403482177;
-  h=mime-version:date:message-id:subject:from:to;
-  bh=W+m0T5pMIymaPd7MNDdYVytBqZa7Ov5spxIwmaG2hNA=;
-  b=h7w2LNkna1KmPapK1R3A4+D0zAie6NIhcDUQGqJ3GOI6KTit6Fer7KZy
-   zCLWklThAh6Lp2iXDjQv59XwYUZhPFflUeY4tCRrqYf5KnSWXR+uVt16r
-   phYks8BmTzPKO6EtOOBFroAHu+NCLfmg+zpO98ei0gqi5o8m9C8JXCNwK
-   s=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvMFAGI5xlGE7/kU/2dsb2JhbABbgwkBea1FAYpwh3UIFnSDSV0SAQUBFogtnCiCfpRWiAePbINNA4khjiKGDolRFimBJoMw
-X-IronPort-AV: E=Sophos;i="4.87,920,1363158000"; 
-   d="scan'208";a="1010038225"
-X-Spam-Status: No
-X-Spam-Level: 
-Received: from smtp-tpcs.ucsd.edu ([132.239.249.20])
-  by iport-c2-out.ucsd.edu with ESMTP; 22 Jun 2013 17:00:00 -0700
-Received: from mail-we0-f178.google.com (mail-we0-f178.google.com [74.125.82.178])
-	(using TLSv1 with cipher RC4-SHA (128/128 bits))
-	(No client certificate requested)
-	by smtp-tpcs.ucsd.edu (Postfix) with ESMTPSA id 789F77FF16
-	for <git@vger.kernel.org>; Sat, 22 Jun 2013 17:00:00 -0700 (PDT)
-Received: by mail-we0-f178.google.com with SMTP id u53so7421465wes.9
-        for <git@vger.kernel.org>; Sat, 22 Jun 2013 16:59:59 -0700 (PDT)
+	id S1750942Ab3FWFwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Jun 2013 01:52:31 -0400
+Received: from mail-gh0-f173.google.com ([209.85.160.173]:33878 "EHLO
+	mail-gh0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750879Ab3FWFwa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jun 2013 01:52:30 -0400
+Received: by mail-gh0-f173.google.com with SMTP id g16so2921630ghb.32
+        for <git@vger.kernel.org>; Sat, 22 Jun 2013 22:52:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=W+m0T5pMIymaPd7MNDdYVytBqZa7Ov5spxIwmaG2hNA=;
-        b=jTExF1dLzksa0DmuOdzR/lfHvb5l3HNQCAjVgee+rGA9wWQFeOg4Askknbffe1xf1e
-         GMY5QHRmIssoEuSbqUgHgbJnG60bGSjP3Da0oObiUdY778/DkZxFvEBYNfzGZRY/irR8
-         kJ2w7vgDJQH2RegmhB529XqjH+fFRHtxxgAkMXmEfdxqFahumsuuwuHOR7hFTRI86KPV
-         fhLSh6I1uM/NLaxrQVJjDadXkYFFDMZSdhcASypwiCYkCigUqMKPz1iCL0lNAhLUlZLd
-         wE1Wk65aN8OXBe6BUE2vKGUfBPzprvmos4YFMX20jVKykYRT14AvHarnmhp+2clcc0/4
-         5E1A==
-X-Received: by 10.180.11.146 with SMTP id q18mr2471771wib.50.1371945599104;
- Sat, 22 Jun 2013 16:59:59 -0700 (PDT)
-Received: by 10.180.183.230 with HTTP; Sat, 22 Jun 2013 16:59:59 -0700 (PDT)
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-gm-message-state;
+        bh=OgKovlJ2e+DCljiVHw/Fg/gOXkp1o4+kHiGDeYdqn0g=;
+        b=LOA1nGKkKDyz8nhFmtB8ZOkDcS++o9rtbbKK4Gy014Jcvef+r8kvcGXYTg6bK3OfqS
+         lTfiuAket7Ja9rFjb8tFuEWkwpqV3/1vlkXMEL14qYQiKy6tQEktPkSvPahvjBcLpRq1
+         e92VWsZhlMRpeU2thOTwt4z1BrIZdEWpm3Lfwq0n2U54ZPUhcQLQ+xuFYzrwqCpbMSFY
+         rwxyrMSgLuw5f3gAP9YuwK6R9YRkJVjTFAPRk8iZOg5LmLsyJP/j2jmFTYfmklde907q
+         NWP3HLFL3lk2zUlgN+Krc6JvIBuXl3TSKxjF0vum59+erxCY3Aey+26wOM/c/npd5Cue
+         sbDw==
+X-Received: by 10.236.24.226 with SMTP id x62mr10584680yhx.124.1371966749451;
+        Sat, 22 Jun 2013 22:52:29 -0700 (PDT)
+Received: from pluto.boostpro.com (107-219-149-247.lightspeed.sntcca.sbcglobal.net. [107.219.149.247])
+        by mx.google.com with ESMTPSA id q7sm21450836yhm.8.2013.06.22.22.52.27
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 22 Jun 2013 22:52:28 -0700 (PDT)
+Received: by pluto.boostpro.com (Postfix, from userid 501)
+	id 5A5E025984A4; Sat, 22 Jun 2013 19:16:48 -0700 (PDT)
+In-Reply-To: <20130622102157.GE4676@serenity.lan> (John Keeping's message of
+	"Sat, 22 Jun 2013 11:21:58 +0100")
+User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.2.93 (darwin)
+X-Gm-Message-State: ALoCoQmRILFybjEnceSuuEQLa4yoMCEUY9fAxDhlnzf2Av4If/Vad49s95V+Ysku6wlI+kn3EpyA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228719>
-
-I'm having trouble pulling changes from a repo that was imported as a
-subtree with 'git subtree add'. The issue occurs when I have
-previously used 'git subtree push' from within the project directory,
-then pushed changes to the remote repo again from somewhere else (from
-another project also using it as a subtree, or directly with 'git
-push' -- doesn't matter). When I go back to the initial project, 'git
-subtree pull' has a merge conflict, and fails to merge the new
-changes. The reported conflict is half-empty, so I can't see why there
-is any conflict at all.
-
-I've found an odd workaround, where calling "subtree pull" immediately
-after the "subtree push" from the project directory seems to keep
-things in sync and prevent the later conflict (see the script below).
-I'm stumped as to why running a pull should find any changes right
-after a push, but this is what happens. So it seems like a bug, unless
-I'm missing a critical step somewhere -- I'm fairly new to git still.
-
-I've pasted a script below that reproduces the problem in a simple
-case, for my version of git (1.8.3.1, installed via homebrew on OS X
-10.8.4).
-
-Thanks,
-Eric
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228720>
 
 
-#start from scratch
-rm -rf foo bar foo.git
+on Sat Jun 22 2013, John Keeping <john-AT-keeping.me.uk> wrote:
 
-# create remote repo. for foo (bare)
-mkdir foo.git
-cd foo.git
-git init --bare
-cd ..
+> On Fri, Jun 21, 2013 at 02:21:47AM -0700, Dave Abrahams wrote:
+>> The docs for fast-import seem to imply that I can use "ls" to get the
+>> SHA1 of a commit for which I have a mark:
+>> 
+>>        Reading from a named tree
+>>            The <dataref> can be a mark reference (:<idnum>) or the full 40-byte
+>
+>>            SHA-1 of a Git tag, commit, or tree object, preexisting or waiting to
+>>            be written. The path is relative to the top level of the tree named by
+>>            <dataref>.
+>> 
+>>                        'ls' SP <dataref> SP <path> LF
+>> 
+>>        See filemodify above for a detailed description of <path>.
+>> 
+>>        Output uses the same format as git ls-tree <tree> -- <path>:
+>> 
+>>            <mode> SP ('blob' | 'tree' | 'commit') SP <dataref> HT <path> LF
+>> 
+>>        The <dataref> represents the blob, tree, or commit object at <path> and
+>>                                                    ^^^^^^
+>>        can be used in later cat-blob, filemodify, or ls commands.
+>> 
+>> but I can't get it to work.  It's not entirely clear it's supposed to
+>> work.  What path would I pass?  Passing an empty path simply causes git
+>> to report "missing ".
+>
+> Which version of Git are you using?  
 
-#create library foo and push to remote repo
-mkdir foo
-cd foo
-echo "this is a test file" > test.foo
-git init
-git add .
-git commit -m "initial commit to foo"
-git remote add origin ../foo.git
-git push origin master
-cd ..
+,----[ git --version ]
+| git version 1.8.3.1
+`----
 
-#create a project that uses foo as subtree
-mkdir bar
-cd bar
-git init
-echo "test" > test.bar
-git add .
-git commit -m "initial commit to bar"
-git subtree add --prefix=foo ../foo.git master
-echo "modify foo from bar" >> foo/test.foo
-git add foo/test.foo
-git commit -m "update foo from bar"
-git subtree push --prefix=foo ../foo.git master
-### if I uncomment the next line, final 'subtree pull' doesn't fail... why?
-#git subtree pull --prefix=foo ../foo.git master -m "pull right after push"
-cd ..
+> I just tried this and get the error
+> "fatal: Empty path component found in input", 
 
-#now update foo from elsewhere
-cd foo
-git pull origin master
-echo "modify foo from foo" >> test.foo
-git add test.foo
-git commit -m "update foo again"
-git push origin master
-cd ..
+I get that too.
 
-# try to pull update from project bar
-cd bar
-git subtree pull --prefix=foo ../foo.git master -m "pull foo"
+> which seems to be from commit 178e1de (fast-import: don't allow 'ls'
+> of path with empty components, 2012-03-09), which is included in Git
+> 1.7.9.5.
 
-#above command fails to merge, and the reported conflict is half-empty.
-#resulting contents of bar/foo/test.foo are:
+Yes, that's at least part of the issue.  I notice git-fast-import
+rejects the root path "" for other commands, e.g. when used as the
+source of a filecopy we get the same issue.  I also note that the docs
+don't make it clear that quoting the path is mandatory if it might turn
+out to be empty.
 
-#this is a test file
-#modify foo from bar
-#<<<<<<< HEAD
-#=======
-#modify foo from foo
-#>>>>>>> f0a24eeb1614228a1368ae23112ff4923dcf557e
+> It seems to be slightly more complicated than that though, because after
+> allowing empty trees I get the "missing" message for the root tree.
+
+Yeah, I've tried to patch Git to solve this but ran into that problem
+and gave up.
+
+> This seems to be because its mode is 0 and not S_IFDIR.
+
+Aha.
+
+> With the patch below, things are working as I expect 
+
+Awesome; works for me, too!
+
+> but I don't understand why the mode of the root is not set correctly
+> at this point.  Perhaps someone more familiar with fast-import will
+> have some insight...
+
+Yeah... there's no bug tracker for Git, right?  So if nobody pays
+attention to this thread, the problem will persist?
+
+> -- >8 --
+> diff --git a/fast-import.c b/fast-import.c
+> index 23f625f..bcce651 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -1626,6 +1626,15 @@ del_entry:
+>  	return 1;
+>  }
+>
+> +static void copy_tree_entry(struct tree_entry *dst, struct tree_entry *src)
+> +{
+> +	memcpy(dst, src, sizeof(*dst));
+> +	if (src->tree && is_null_sha1(src->versions[1].sha1))
+> +		dst->tree = dup_tree_content(src->tree);
+> +	else
+> +		dst->tree = NULL;
+> +}
+> +
+>  static int tree_content_get(
+>  	struct tree_entry *root,
+>  	const char *p,
+> @@ -1651,11 +1660,7 @@ static int tree_content_get(
+>  		e = t->entries[i];
+>  		if (e->name->str_len == n && !strncmp_icase(p, e->name->str_dat, n)) {
+>  			if (!slash1) {
+> -				memcpy(leaf, e, sizeof(*leaf));
+> -				if (e->tree && is_null_sha1(e->versions[1].sha1))
+> -					leaf->tree = dup_tree_content(e->tree);
+> -				else
+> -					leaf->tree = NULL;
+> +				copy_tree_entry(leaf, e);
+>  				return 1;
+>  			}
+>  			if (!S_ISDIR(e->versions[1].mode))
+> @@ -3065,7 +3070,11 @@ static void parse_ls(struct branch *b)
+>  			die("Garbage after path in: %s", command_buf.buf);
+>  		p = uq.buf;
+>  	}
+> -	tree_content_get(root, p, &leaf);
+> +	if (!*p) {
+> +		copy_tree_entry(&leaf, root);
+> +		leaf.versions[1].mode = S_IFDIR;
+> +	} else
+> +		tree_content_get(root, p, &leaf);
+>  	/*
+>  	 * A directory in preparation would have a sha1 of zero
+>  	 * until it is saved.  Save, for simplicity.
+
+-- 
+Dave Abrahams
