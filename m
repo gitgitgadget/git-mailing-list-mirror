@@ -1,7 +1,7 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH v4 4/8] test-lib: self-test that --verbose works
-Date: Sun, 23 Jun 2013 20:12:55 +0200
-Message-ID: <9c6ca931db165476d6fb449632884f6515b0840f.1372010917.git.trast@inf.ethz.ch>
+Subject: [PATCH v4 2/8] test-lib: refactor $GIT_SKIP_TESTS matching
+Date: Sun, 23 Jun 2013 20:12:53 +0200
+Message-ID: <271eaadb01fd16324eea440e56c404266fcce2ff.1372010917.git.trast@inf.ethz.ch>
 References: <cover.1372010917.git.trast@inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -14,21 +14,21 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqonK-0007pi-6b
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Jun 2013 20:13:46 +0200
+	id 1UqonJ-0007pi-5S
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Jun 2013 20:13:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752309Ab3FWSNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Jun 2013 14:13:34 -0400
+	id S1752277Ab3FWSNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Jun 2013 14:13:30 -0400
 Received: from edge20.ethz.ch ([82.130.99.26]:39655 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751799Ab3FWSNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Jun 2013 14:13:06 -0400
+	id S1752018Ab3FWSNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jun 2013 14:13:04 -0400
 Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
  (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 23 Jun
- 2013 20:12:47 +0200
+ 2013 20:12:46 +0200
 Received: from hexa.v.cablecom.net (46.126.8.85) by CAS11.d.ethz.ch
  (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 23 Jun
- 2013 20:13:01 +0200
+ 2013 20:13:00 +0200
 X-Mailer: git-send-email 1.8.3.1.727.gcbe3af3
 In-Reply-To: <cover.1372010917.git.trast@inf.ethz.ch>
 X-Originating-IP: [46.126.8.85]
@@ -36,99 +36,82 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228752>
 
-t0000 contains some light self-tests of test-lib.sh, but --verbose was
-not covered.  Add a test.
+It's already used twice, and we will have more of the same kind of
+matching in a minute.
 
-The only catch is that the presence of a test harness influences the
-output (specifically, the presence of some empty lines).  So we need
-to unset TEST_HARNESS or set it to a known value.  Leaving it unset
-leads to spurious test failures in the final summary, which come from
-the subtest.  So we always set it.
-
+Helped-by: Johannes Sixt <j6t@kdbg.org>
 Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
 ---
- t/t0000-basic.sh | 37 ++++++++++++++++++++++++++++++++++++-
- t/test-lib.sh    |  2 ++
- 2 files changed, 38 insertions(+), 1 deletion(-)
+ t/test-lib.sh | 41 ++++++++++++++++++++++++-----------------
+ 1 file changed, 24 insertions(+), 17 deletions(-)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 0f13180..4b4103f 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -47,8 +47,13 @@ test_expect_failure 'pretend we have a known breakage' '
- 
- run_sub_test_lib_test () {
- 	name="$1" descr="$2" # stdin is the body of the test code
-+	shift 2
- 	mkdir "$name" &&
- 	(
-+		# Pretend we're a test harness.  This prevents
-+		# test-lib from writing the counts to a file that will
-+		# later be summarized, showing spurious "failed" tests
-+		export HARNESS_ACTIVE=t &&
- 		cd "$name" &&
- 		cat >"$name.sh" <<-EOF &&
- 		#!$SHELL_PATH
-@@ -65,7 +70,7 @@ run_sub_test_lib_test () {
- 		cat >>"$name.sh" &&
- 		chmod +x "$name.sh" &&
- 		export TEST_DIRECTORY &&
--		./"$name.sh" >out 2>err
-+		./"$name.sh" "$@" >out 2>err
- 	)
- }
- 
-@@ -215,6 +220,36 @@ test_expect_success 'pretend we have a mix of all possible results' "
- 	EOF
- "
- 
-+test_expect_success 'test --verbose' '
-+	test_must_fail run_sub_test_lib_test \
-+		test-verbose "test verbose" --verbose <<-\EOF &&
-+	test_expect_success "passing test" true
-+	test_expect_success "test with output" "echo foo"
-+	test_expect_success "failing test" false
-+	test_done
-+	EOF
-+	mv test-verbose/out test-verbose/out+
-+	grep -v "^Initialized empty" test-verbose/out+ >test-verbose/out &&
-+	check_sub_test_lib_test test-verbose <<-\EOF
-+	> expecting success: true
-+	> Z
-+	> ok 1 - passing test
-+	> Z
-+	> expecting success: echo foo
-+	> foo
-+	> Z
-+	> ok 2 - test with output
-+	> Z
-+	> expecting success: false
-+	> Z
-+	> not ok 3 - failing test
-+	> #	false
-+	> Z
-+	> # failed 1 among 3 test(s)
-+	> 1..3
-+	EOF
-+'
-+
- test_set_prereq HAVEIT
- haveit=no
- test_expect_success HAVEIT 'test runs if prerequisite is satisfied' '
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index e99b0ea..10827a4 100644
+index 35da859..4fa141a 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -414,6 +414,8 @@ test_at_end_hook_ () {
- test_done () {
- 	GIT_EXIT_OK=t
+@@ -328,6 +328,20 @@ test_debug () {
+ 	test "$debug" = "" || eval "$1"
+ }
  
-+	# Note: t0000 relies on $HARNESS_ACTIVE disabling the .counts
-+	# output file
- 	if test -z "$HARNESS_ACTIVE"
++match_pattern_list () {
++	arg="$1"
++	shift
++	test -z "$*" && return 1
++	for pattern_
++	do
++		case "$arg" in
++		$pattern_)
++			return 0
++		esac
++	done
++	return 1
++}
++
+ test_eval_ () {
+ 	# This is a separate function because some tests use
+ 	# "return" to end a test_expect_success block early.
+@@ -358,14 +372,10 @@ test_run_ () {
+ test_skip () {
+ 	test_count=$(($test_count+1))
+ 	to_skip=
+-	for skp in $GIT_SKIP_TESTS
+-	do
+-		case $this_test.$test_count in
+-		$skp)
+-			to_skip=t
+-			break
+-		esac
+-	done
++	if match_pattern_list $this_test.$test_count $GIT_SKIP_TESTS
++	then
++		to_skip=t
++	fi
+ 	if test -z "$to_skip" && test -n "$test_prereq" &&
+ 	   ! test_have_prereq "$test_prereq"
  	then
- 		test_results_dir="$TEST_OUTPUT_DIRECTORY/test-results"
+@@ -630,15 +640,12 @@ cd -P "$TRASH_DIRECTORY" || exit 1
+ 
+ this_test=${0##*/}
+ this_test=${this_test%%-*}
+-for skp in $GIT_SKIP_TESTS
+-do
+-	case "$this_test" in
+-	$skp)
+-		say_color info >&3 "skipping test $this_test altogether"
+-		skip_all="skip all tests in $this_test"
+-		test_done
+-	esac
+-done
++if match_pattern_list "$this_test" $GIT_SKIP_TESTS
++then
++	say_color info >&3 "skipping test $this_test altogether"
++	skip_all="skip all tests in $this_test"
++	test_done
++fi
+ 
+ # Provide an implementation of the 'yes' utility
+ yes () {
 -- 
 1.8.3.1.727.gcbe3af3
