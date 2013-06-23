@@ -1,100 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] remote: Add warnings about mixin --mirror and other remotes
-Date: Sun, 23 Jun 2013 15:33:18 -0700
-Message-ID: <7vmwqge9u9.fsf@alter.siamese.dyndns.org>
-References: <1371809051-29988-1-git-send-email-dennis@kaarsemaker.net>
-	<1371809051-29988-2-git-send-email-dennis@kaarsemaker.net>
-	<7v8v23mhjy.fsf@alter.siamese.dyndns.org>
-	<1371994516.24315.8.camel@localhost>
-	<7vvc54ed53.fsf@alter.siamese.dyndns.org>
-	<1372023811.24315.15.camel@localhost>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: detached HEAD before root commit - possible?
+Date: Mon, 24 Jun 2013 00:55:05 +0200
+Message-ID: <20130623225505.GO20052@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Mon Jun 24 00:33:27 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 24 00:55:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uqsqd-0002jJ-8j
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 00:33:27 +0200
+	id 1UqtBi-0001eb-Rc
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 00:55:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751944Ab3FWWdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Jun 2013 18:33:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49916 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751606Ab3FWWdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Jun 2013 18:33:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C2062A82E;
-	Sun, 23 Jun 2013 22:33:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iGPuByWxhBOIWOTIIvEGrnqNzZ4=; b=Oh2Xqa
-	mC2sOxy798KGM2EaEudPChJ05G+RT9O8tDxPwhRR2Q7Uq8TvFo+o+qCCXQXgW2cX
-	p/E7iPW3rvT/p00NftPuvMJ1lH6/ZItyZIvhcXOQmq+nxrsNorqz11bhznBrFndc
-	ZCu3Ent4ESEFKxZniT+JLo0avLD7/byXEacxI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Abxu3vNEnAWKZvU03+H/s0Ox9vxhrHEZ
-	eLeOqTYuJSi4echGT8sK63br8OYa4WoC8D5fvtjXl9kwEq1Sn4DfkHjpmM6nd/YH
-	wjVVJ8iTIv9RzerGxcOu3ufOGaPRKzQyuR11rzwvIXuvxEOpsG3IOTP7SSk7LtkV
-	ga5Bz6wZH9I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 526422A82D;
-	Sun, 23 Jun 2013 22:33:20 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D8E822A82B;
-	Sun, 23 Jun 2013 22:33:19 +0000 (UTC)
-In-Reply-To: <1372023811.24315.15.camel@localhost> (Dennis Kaarsemaker's
-	message of "Sun, 23 Jun 2013 23:43:31 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E7CE5430-DC54-11E2-9030-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752015Ab3FWWzI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Jun 2013 18:55:08 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:50718 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751803Ab3FWWzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jun 2013 18:55:07 -0400
+Received: from localhost6.localdomain6 (g227076062.adsl.alicedsl.de [92.227.76.62])
+	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
+	id 0MHaGK-1Urya5238W-003fRU; Mon, 24 Jun 2013 00:55:05 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:maGQCavN8Rg4/ZYSGd1/cfgp4413O+J72zZjf7xQUBn
+ RU9qFSZ58iD6CYgXz6HK9y7LuKHlS/F1GFMc+GAlOTfpWFa0Fj
+ HYkAHLlaW3sGno1NYS9FdkgjgJ81PD1rDzcn4rtx6DCVevdnT8
+ Z+u0x3txvZ8B8xgUNTygkP5Acx5l3g9DYQQzx2klCau+rDW0jj
+ zMBekbCql5/Yd+u+9wNxMJSx1cBzGbBT9JWvF5pfDEK7grxy8A
+ R3gL0S2GJ3NG4FlfoaWI0ED5mtRNUtyCIVzLmSOlnbNYV+DLlx
+ 5aC5YosrYTZYcf/6+BEqyIKe/LBzosWVECLy63xZod1eYNNOeA
+ Txae7rcuX0v4QkOmsI6HKa5yx9twVXD8ANfQBZGNa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228765>
 
-Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+I suspect that detaching HEAD before a root commit is not possible by
+design.  What would HEAD contain then!?  'git checkout' seems to
+corroborate:
 
-> On zo, 2013-06-23 at 14:22 -0700, Junio C Hamano wrote:
->> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
->> 
->> > Equality for
->> > wildcards is allowed and tested for, so do we really want to 'outlaw'
->> > equality of non-wildcard refspecs?
->> 
->> I am not sure what you mean by "equality for wildcards is allowed".
->> Do you mean this pair of remote definition is sane and not warned?
->> 
->> 	[remote "one"]
->>         	fetch = refs/heads/*:refs/remotes/mixed/*
->> 
->> 	[remote "two"]
->>         	fetch = refs/heads/*:refs/remotes/mixed/*
->
-> I personally don't consider them very sane and didn't originally support
-> that. But this behavior is tested for in t5505-remote.sh test 27, which
-> started failing until I stopped warning for equal refspecs. This support
-> for "alt remotes" in prune was added by c175a7ad in 2008. The commit
-> message for that commit give a plausible reason for using them.
+$ git init
+Initialized empty Git repository in /tmp/test/.git/
+$ git checkout --detach
+fatal: You are on a branch yet to be born
 
-I actually do not read it that way.  What it wanted to do primarily
-was to avoid pruning "refs/remotes/alt/*" based on what it observed
-at the remote named "alt", when the refs fetched from that remote is
-set to update "refs/remotes/origin/*".
+Are there some plumbing commands and options that would still allow
+this, or can I rely on that that it's impossible?
 
-The example in the log message is a special case where two
-physically different remotes are actually copies of a single logical
-repository, so in that narrow use case, it may be OK, but it is an
-unusual thing to do and we should "warn" about it, I think.
 
-In any case, I've been assuming in this discussion "allow" is to
-silently accept, and overlaps are "warned" but not "rejected".  So
-if you meant by 'outlaw' to die and refuse to run, that is not what
-I meant.
+Thanks,
+G=E1bor
