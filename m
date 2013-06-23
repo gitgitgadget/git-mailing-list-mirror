@@ -1,93 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] remote: Add warnings about mixin --mirror and other remotes
-Date: Sun, 23 Jun 2013 14:22:00 -0700
-Message-ID: <7vvc54ed53.fsf@alter.siamese.dyndns.org>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH 1/3] remote: Add warnings about mixin --mirror and other
+ remotes
+Date: Sun, 23 Jun 2013 23:43:31 +0200
+Message-ID: <1372023811.24315.15.camel@localhost>
 References: <1371809051-29988-1-git-send-email-dennis@kaarsemaker.net>
-	<1371809051-29988-2-git-send-email-dennis@kaarsemaker.net>
-	<7v8v23mhjy.fsf@alter.siamese.dyndns.org>
-	<1371994516.24315.8.camel@localhost>
+	 <1371809051-29988-2-git-send-email-dennis@kaarsemaker.net>
+	 <7v8v23mhjy.fsf@alter.siamese.dyndns.org>
+	 <1371994516.24315.8.camel@localhost>
+	 <7vvc54ed53.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Sun Jun 23 23:22:13 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 23 23:43:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uqrjd-00037D-52
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Jun 2013 23:22:09 +0200
+	id 1Uqs4T-0001BZ-90
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Jun 2013 23:43:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751267Ab3FWVWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Jun 2013 17:22:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51799 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751125Ab3FWVWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Jun 2013 17:22:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE2962A9D3;
-	Sun, 23 Jun 2013 21:22:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ra45flFcxnLydBTx+oK2HxAOWN0=; b=Mf3Jwt
-	RznQHXPaOatJQCnOZGK2hgXUHnwgTWgG2F5GQnHY3Hk2TDnAg/gIhqy7mlA9flmT
-	SSZguwKp0FjxgTTwo6Y5QrDdWCsbra8ayuYBBG/1GWCvT86sWNo81ibObHkQireb
-	ImngxJsE0mS0Lw9EDOCKLrp4mGm8o42w6LVnk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cdvmSVXCifkO3U1FLfsSfDdLljQN8zF4
-	h46HpEILCv/hgRjfdqTUbpfeBbXRtvjCsSmcVIIUpsxMIR9a6XQM09XHNWdUh2UA
-	k0xtgT7p8ljGuh4tVR3fuddjX6JNLol2epqeqnob3hZkU11UMKaDcillhs7m0V/N
-	+R4QK8C5nuA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C508C2A9D2;
-	Sun, 23 Jun 2013 21:22:02 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44E592A9D0;
-	Sun, 23 Jun 2013 21:22:02 +0000 (UTC)
-In-Reply-To: <1371994516.24315.8.camel@localhost> (Dennis Kaarsemaker's
-	message of "Sun, 23 Jun 2013 15:35:16 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F227A936-DC4A-11E2-96EB-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751754Ab3FWVnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Jun 2013 17:43:37 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:48090 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751437Ab3FWVng (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jun 2013 17:43:36 -0400
+Received: by mail-wi0-f171.google.com with SMTP id hj3so2012209wib.16
+        for <git@vger.kernel.org>; Sun, 23 Jun 2013 14:43:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :content-type:x-mailer:mime-version:content-transfer-encoding
+         :x-gm-message-state;
+        bh=lpfqUBzl3pbjxKuX5JdwYGriI9ymlLDEejsSF/PcEfE=;
+        b=ZS1hnBZO+L6/llzSloH2BGN/nIpmX6dNx+G16CBSQk4ATF3C193YQrTFyIwuhpJrfq
+         qNdwub+0X+2pgG4SCmd8LZajTJSvI6m9W1jLuz6GtoEjfW6OHaA8/IgSA2vHujiSl2b8
+         8tJlK5DT7y0Joo1/0IWnnMuo7vDPyshtSmryfgJEIY1iSRimnE9noDh0o7R9y0Z+jtPu
+         jelE2PGB+qEXS9rEvpZqIYHRIRP0mIpUpRroh6eG/UsMNxNDOTiQNvD01/ZGr6ybAzMw
+         MXsFDiSPmYLEFjXg66C0DG1jTU9BVPz4h1/KtIaaawHNSiyBjCHicc3uEoF7d/3bZnY/
+         IoPw==
+X-Received: by 10.194.157.99 with SMTP id wl3mr14842067wjb.76.1372023815434;
+        Sun, 23 Jun 2013 14:43:35 -0700 (PDT)
+Received: from [10.42.1.4] (82-168-11-8.ip.telfort.nl. [82.168.11.8])
+        by mx.google.com with ESMTPSA id fs8sm12587948wib.0.2013.06.23.14.43.32
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 23 Jun 2013 14:43:33 -0700 (PDT)
+In-Reply-To: <7vvc54ed53.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 3.6.2-0ubuntu0.1 
+X-Gm-Message-State: ALoCoQlpszbdwOn4ETBEPGtEUYjzKGhvOnvNHKNUOtTBO9V8Z6F8pARlhVoClal2xVzF8ohuLnXv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228762>
 
-Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+On zo, 2013-06-23 at 14:22 -0700, Junio C Hamano wrote:
+> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+> 
+> > Equality for
+> > wildcards is allowed and tested for, so do we really want to 'outlaw'
+> > equality of non-wildcard refspecs?
+> 
+> I am not sure what you mean by "equality for wildcards is allowed".
+> Do you mean this pair of remote definition is sane and not warned?
+> 
+> 	[remote "one"]
+>         	fetch = refs/heads/*:refs/remotes/mixed/*
+> 
+> 	[remote "two"]
+>         	fetch = refs/heads/*:refs/remotes/mixed/*
 
-> Equality for
-> wildcards is allowed and tested for, so do we really want to 'outlaw'
-> equality of non-wildcard refspecs?
+I personally don't consider them very sane and didn't originally support
+that. But this behavior is tested for in t5505-remote.sh test 27, which
+started failing until I stopped warning for equal refspecs. This support
+for "alt remotes" in prune was added by c175a7ad in 2008. The commit
+message for that commit give a plausible reason for using them.
 
-I am not sure what you mean by "equality for wildcards is allowed".
-Do you mean this pair of remote definition is sane and not warned?
+> For non-wildcard ones, I think these pairs are both suspects for
+> possible clashes and want to be warned.
+> 
+> (1) literal-vs-literal
+> 
+> 	[remote "one"]
+>         	fetch = refs/heads/master:refs/heads/origin
+> 
+> 	[remote "two"]
+>         	fetch = refs/heads/master:refs/heads/origin
 
-	[remote "one"]
-        	fetch = refs/heads/*:refs/remotes/mixed/*
+I agree, but c175a7ad would disagree.
 
-	[remote "two"]
-        	fetch = refs/heads/*:refs/remotes/mixed/*
+> (2) literal-vs-wildcard
+> 
+> 	[remote "one"]
+>         	fetch = refs/heads/*:refs/remotes/origin/*
+> 
+> 	[remote "two"]
+>         	fetch = refs/heads/master:refs/remotes/origin/master
+> 
 
-For non-wildcard ones, I think these pairs are both suspects for
-possible clashes and want to be warned.
-
-(1) literal-vs-literal
-
-	[remote "one"]
-        	fetch = refs/heads/master:refs/heads/origin
-
-	[remote "two"]
-        	fetch = refs/heads/master:refs/heads/origin
-
-(2) literal-vs-wildcard
-
-	[remote "one"]
-        	fetch = refs/heads/*:refs/remotes/origin/*
-
-	[remote "two"]
-        	fetch = refs/heads/master:refs/remotes/origin/master
+Agreed and was already covered in v1.
+-- 
+Dennis Kaarsemaker
+www.kaarsemaker.net
