@@ -1,179 +1,147 @@
-From: Dave Abrahams <dave@boostpro.com>
-Subject: Re: fast-import bug?
-Date: Sat, 22 Jun 2013 19:16:48 -0700
-Message-ID: <m2txkp1shb.fsf@cube.gateway.2wire.net>
-References: <m2zjuj2504.fsf@cube.gateway.2wire.net>
-	<20130622102157.GE4676@serenity.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-daemon: have --no-syslog
+Date: Sat, 22 Jun 2013 23:21:03 -0700
+Message-ID: <7v38s9jqk0.fsf@alter.siamese.dyndns.org>
+References: <20130622174122.GA6496@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Jun 23 07:52:50 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 23 08:21:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqdEH-0000MF-Gu
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Jun 2013 07:52:49 +0200
+	id 1Uqdg0-0001ko-Fj
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Jun 2013 08:21:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750942Ab3FWFwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Jun 2013 01:52:31 -0400
-Received: from mail-gh0-f173.google.com ([209.85.160.173]:33878 "EHLO
-	mail-gh0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750879Ab3FWFwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Jun 2013 01:52:30 -0400
-Received: by mail-gh0-f173.google.com with SMTP id g16so2921630ghb.32
-        for <git@vger.kernel.org>; Sat, 22 Jun 2013 22:52:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=OgKovlJ2e+DCljiVHw/Fg/gOXkp1o4+kHiGDeYdqn0g=;
-        b=LOA1nGKkKDyz8nhFmtB8ZOkDcS++o9rtbbKK4Gy014Jcvef+r8kvcGXYTg6bK3OfqS
-         lTfiuAket7Ja9rFjb8tFuEWkwpqV3/1vlkXMEL14qYQiKy6tQEktPkSvPahvjBcLpRq1
-         e92VWsZhlMRpeU2thOTwt4z1BrIZdEWpm3Lfwq0n2U54ZPUhcQLQ+xuFYzrwqCpbMSFY
-         rwxyrMSgLuw5f3gAP9YuwK6R9YRkJVjTFAPRk8iZOg5LmLsyJP/j2jmFTYfmklde907q
-         NWP3HLFL3lk2zUlgN+Krc6JvIBuXl3TSKxjF0vum59+erxCY3Aey+26wOM/c/npd5Cue
-         sbDw==
-X-Received: by 10.236.24.226 with SMTP id x62mr10584680yhx.124.1371966749451;
-        Sat, 22 Jun 2013 22:52:29 -0700 (PDT)
-Received: from pluto.boostpro.com (107-219-149-247.lightspeed.sntcca.sbcglobal.net. [107.219.149.247])
-        by mx.google.com with ESMTPSA id q7sm21450836yhm.8.2013.06.22.22.52.27
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 22 Jun 2013 22:52:28 -0700 (PDT)
-Received: by pluto.boostpro.com (Postfix, from userid 501)
-	id 5A5E025984A4; Sat, 22 Jun 2013 19:16:48 -0700 (PDT)
-In-Reply-To: <20130622102157.GE4676@serenity.lan> (John Keeping's message of
-	"Sat, 22 Jun 2013 11:21:58 +0100")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/24.2.93 (darwin)
-X-Gm-Message-State: ALoCoQmRILFybjEnceSuuEQLa4yoMCEUY9fAxDhlnzf2Av4If/Vad49s95V+Ysku6wlI+kn3EpyA
+	id S1750778Ab3FWGVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Jun 2013 02:21:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38411 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750734Ab3FWGVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jun 2013 02:21:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58AC525928;
+	Sun, 23 Jun 2013 06:21:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dDLtvyQ+cXi45wW4/jozaupgLb0=; b=sqmFzx
+	WZsZMdXOpT1XH2UozFWtgexZ8nCDKan98QiajZsyvBZEX7mMwTf796TWvWf8Sl5k
+	Fgh8tSyAIa3sEYq2+tvFpqpFrHXlv6W//C75fP3w+zCDeUOAk5UWZPr43ojrMbgM
+	WLY5cmvYeI7g6QtDhmZS2l5EPjplBXoRDiMs0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eP+ca7/+tch0nvQp3VG4DU7ONWeWeUVl
+	KgDbwGSw1egPEkrBbwoSmYygyDFDkLmg34a014niVvWictpY0nvq30sRQx6Q6FWz
+	bYl45xlafhzgy/qJdU3Zi3wDzT82uD0MWvpxAuaN1ubnTeERZfClOGas8xB6Qx61
+	4hIse8C4Fec=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F09325927;
+	Sun, 23 Jun 2013 06:21:07 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E44A25926;
+	Sun, 23 Jun 2013 06:21:06 +0000 (UTC)
+In-Reply-To: <20130622174122.GA6496@inner.h.apk.li> (Andreas Krey's message of
+	"Sat, 22 Jun 2013 19:41:22 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 164A9A90-DBCD-11E2-BA75-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228721>
 
+Andreas Krey <a.krey@gmx.de> writes:
 
-on Sat Jun 22 2013, John Keeping <john-AT-keeping.me.uk> wrote:
-
-> On Fri, Jun 21, 2013 at 02:21:47AM -0700, Dave Abrahams wrote:
->> The docs for fast-import seem to imply that I can use "ls" to get the
->> SHA1 of a commit for which I have a mark:
->> 
->>        Reading from a named tree
->>            The <dataref> can be a mark reference (:<idnum>) or the full 40-byte
+> Some people run inetds that collect stderr of the spawned programs.
+> Give them 'git-daemon --inetd --no-syslog' to keep error output
+> on stderr.
 >
->>            SHA-1 of a Git tag, commit, or tree object, preexisting or waiting to
->>            be written. The path is relative to the top level of the tree named by
->>            <dataref>.
->> 
->>                        'ls' SP <dataref> SP <path> LF
->> 
->>        See filemodify above for a detailed description of <path>.
->> 
->>        Output uses the same format as git ls-tree <tree> -- <path>:
->> 
->>            <mode> SP ('blob' | 'tree' | 'commit') SP <dataref> HT <path> LF
->> 
->>        The <dataref> represents the blob, tree, or commit object at <path> and
->>                                                    ^^^^^^
->>        can be used in later cat-blob, filemodify, or ls commands.
->> 
->> but I can't get it to work.  It's not entirely clear it's supposed to
->> work.  What path would I pass?  Passing an empty path simply causes git
->> to report "missing ".
+> Signed-off-by: Andreas Krey <a.krey@gmx.de>
+> ---
+
+Are there examples of other daemon programs outside Git that have
+this particular support to help such inetd implementations?
+
+I would like to know how widely this kind of workaround is done, and
+also what they call the option, as a quick sanity check.
+
+Thanks.
+
+>  Documentation/git-daemon.txt |  4 ++++
+>  daemon.c                     | 14 +++++++++++---
+>  2 files changed, 15 insertions(+), 3 deletions(-)
 >
-> Which version of Git are you using?  
-
-,----[ git --version ]
-| git version 1.8.3.1
-`----
-
-> I just tried this and get the error
-> "fatal: Empty path component found in input", 
-
-I get that too.
-
-> which seems to be from commit 178e1de (fast-import: don't allow 'ls'
-> of path with empty components, 2012-03-09), which is included in Git
-> 1.7.9.5.
-
-Yes, that's at least part of the issue.  I notice git-fast-import
-rejects the root path "" for other commands, e.g. when used as the
-source of a filecopy we get the same issue.  I also note that the docs
-don't make it clear that quoting the path is mandatory if it might turn
-out to be empty.
-
-> It seems to be slightly more complicated than that though, because after
-> allowing empty trees I get the "missing" message for the root tree.
-
-Yeah, I've tried to patch Git to solve this but ran into that problem
-and gave up.
-
-> This seems to be because its mode is 0 and not S_IFDIR.
-
-Aha.
-
-> With the patch below, things are working as I expect 
-
-Awesome; works for me, too!
-
-> but I don't understand why the mode of the root is not set correctly
-> at this point.  Perhaps someone more familiar with fast-import will
-> have some insight...
-
-Yeah... there's no bug tracker for Git, right?  So if nobody pays
-attention to this thread, the problem will persist?
-
-> -- >8 --
-> diff --git a/fast-import.c b/fast-import.c
-> index 23f625f..bcce651 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -1626,6 +1626,15 @@ del_entry:
->  	return 1;
->  }
->
-> +static void copy_tree_entry(struct tree_entry *dst, struct tree_entry *src)
-> +{
-> +	memcpy(dst, src, sizeof(*dst));
-> +	if (src->tree && is_null_sha1(src->versions[1].sha1))
-> +		dst->tree = dup_tree_content(src->tree);
-> +	else
-> +		dst->tree = NULL;
-> +}
+> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+> index 223f731..007d3fc 100644
+> --- a/Documentation/git-daemon.txt
+> +++ b/Documentation/git-daemon.txt
+> @@ -113,6 +113,10 @@ OPTIONS
+>  	Log to syslog instead of stderr. Note that this option does not imply
+>  	--verbose, thus by default only error conditions will be logged.
+>  
+> +--no-syslog::
+> +	Disable the implicit --syslog of --inetd and --deatch, thus keeping
+> +	error output on stderr.
 > +
->  static int tree_content_get(
->  	struct tree_entry *root,
->  	const char *p,
-> @@ -1651,11 +1660,7 @@ static int tree_content_get(
->  		e = t->entries[i];
->  		if (e->name->str_len == n && !strncmp_icase(p, e->name->str_dat, n)) {
->  			if (!slash1) {
-> -				memcpy(leaf, e, sizeof(*leaf));
-> -				if (e->tree && is_null_sha1(e->versions[1].sha1))
-> -					leaf->tree = dup_tree_content(e->tree);
-> -				else
-> -					leaf->tree = NULL;
-> +				copy_tree_entry(leaf, e);
->  				return 1;
->  			}
->  			if (!S_ISDIR(e->versions[1].mode))
-> @@ -3065,7 +3070,11 @@ static void parse_ls(struct branch *b)
->  			die("Garbage after path in: %s", command_buf.buf);
->  		p = uq.buf;
+>  --user-path::
+>  --user-path=<path>::
+>  	Allow {tilde}user notation to be used in requests.  When
+> diff --git a/daemon.c b/daemon.c
+> index 6aeddcb..2f5d5bf 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -1196,7 +1196,6 @@ int main(int argc, char **argv)
+>  		}
+>  		if (!strcmp(arg, "--inetd")) {
+>  			inetd_mode = 1;
+> -			log_syslog = 1;
+>  			continue;
+>  		}
+>  		if (!strcmp(arg, "--verbose")) {
+> @@ -1207,6 +1206,10 @@ int main(int argc, char **argv)
+>  			log_syslog = 1;
+>  			continue;
+>  		}
+> +		if (!strcmp(arg, "--no-syslog")) {
+> +			log_syslog = -1;
+> +			continue;
+> +		}
+>  		if (!strcmp(arg, "--export-all")) {
+>  			export_all_trees = 1;
+>  			continue;
+> @@ -1263,7 +1266,6 @@ int main(int argc, char **argv)
+>  		}
+>  		if (!strcmp(arg, "--detach")) {
+>  			detach = 1;
+> -			log_syslog = 1;
+>  			continue;
+>  		}
+>  		if (!prefixcmp(arg, "--user=")) {
+> @@ -1309,6 +1311,12 @@ int main(int argc, char **argv)
+>  		usage(daemon_usage);
 >  	}
-> -	tree_content_get(root, p, &leaf);
-> +	if (!*p) {
-> +		copy_tree_entry(&leaf, root);
-> +		leaf.versions[1].mode = S_IFDIR;
-> +	} else
-> +		tree_content_get(root, p, &leaf);
->  	/*
->  	 * A directory in preparation would have a sha1 of zero
->  	 * until it is saved.  Save, for simplicity.
-
--- 
-Dave Abrahams
+>  
+> +	if ((inetd_mode || detach) && log_syslog == 0)
+> +		log_syslog = 1;
+> +
+> +	if (log_syslog == -1)
+> +		log_syslog = 0;
+> +
+>  	if (log_syslog) {
+>  		openlog("git-daemon", LOG_PID, LOG_DAEMON);
+>  		set_die_routine(daemon_die);
+> @@ -1337,7 +1345,7 @@ int main(int argc, char **argv)
+>  		die("base-path '%s' does not exist or is not a directory",
+>  		    base_path);
+>  
+> -	if (inetd_mode) {
+> +	if (inetd_mode && log_syslog) {
+>  		if (!freopen("/dev/null", "w", stderr))
+>  			die_errno("failed to redirect stderr to /dev/null");
+>  	}
