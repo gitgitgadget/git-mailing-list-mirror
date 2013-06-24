@@ -1,114 +1,129 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [PATCH] push: give early feedback
-Date: Mon, 24 Jun 2013 20:04:19 +0200
-Message-ID: <20130624180419.GC26287@paksenarrion.iveqy.com>
-References: <1372095662-24527-1-git-send-email-artagnon@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 20:04:33 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] stage: remove unused, unreferenced builtin-alias
+Date: Mon, 24 Jun 2013 23:42:26 +0530
+Message-ID: <1372097546-27721-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 24 20:16:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrB7w-00087m-3k
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:04:32 +0200
+	id 1UrBJ2-0000go-CI
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:16:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752641Ab3FXSE2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 14:04:28 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:53708 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752470Ab3FXSE1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 14:04:27 -0400
-Received: by mail-la0-f42.google.com with SMTP id eb20so10835771lab.1
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 11:04:25 -0700 (PDT)
+	id S1753603Ab3FXSPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 14:15:53 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:43960 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753119Ab3FXSPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 14:15:51 -0400
+Received: by mail-pb0-f42.google.com with SMTP id un1so11378746pbc.1
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 11:15:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=yj5vOLf41KVYYSXVECMU74dLwZWhzyOdFnYq7gQ1GM0=;
-        b=gSyW9VrAqdxGHkZLgjKhAdPwNFASGbu08F2c43E1AG3o946a/Si5SKztDkXxTL7kma
-         Wj1VuYXQVqxeVPT3j4CfcPgUvV7wvLdPkobE55JIgwZ0rTtsGmlxZjrgEqzUfadoJ8G2
-         lhGSxqk/VRhGTep34Hp482sboBCNnarlBLoFyvQBocd9y4jod8uZykAv48lM9y9Y9bVg
-         qiHxJciyFL8g5Rto+vvMphsTLeUNUeg5jyTUhVP1jfe94f24SJTmmF5RL7vIi8EduVvd
-         p+Y1q4XfrRMPG7jbbPYWUAhSIFy+CYvei3nvsiKmez5mRE1LCxY5UX+guo3j0O4M7GRn
-         Tu5g==
-X-Received: by 10.152.4.232 with SMTP id n8mr12058713lan.29.1372097065684;
-        Mon, 24 Jun 2013 11:04:25 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id x8sm7223230lae.10.2013.06.24.11.04.24
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=HX/NrsloazNAElXlSO3JvSKk8mlL41oYzSlNQdUbigo=;
+        b=XyU5zUC1s85uJ5KZM/nedMcas9+BrgSibI6ZARgbsRa0DKVOWhWwyZxY92g+MBjMF8
+         jN0P93sVW06Hf5oBZl+QnNMw1ExDhlD/iJkGz5o/Jc8YigdZG+/teGZ309zyI8Svjtt/
+         7Kj8ba5a05OEWHhOHK2wU8E2u126rhqJQeeyXABo2oc8D8XL99TBYzVfIL3nd2CTtg0I
+         FpHv64CqsV2wDj7AMoBcPkKjCxNsZNrH9JzDtnLUuPSRm/lx7hSWdyE92z6utqtr7SLw
+         zNdGCqxD94Vt1p0CYulr6iYuLhC1TtDkHo947vQppx94kEvFB3JWzRMB9DmFFiJqUVgR
+         KoOQ==
+X-Received: by 10.68.134.103 with SMTP id pj7mr24579797pbb.171.1372097750664;
+        Mon, 24 Jun 2013 11:15:50 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.185.186])
+        by mx.google.com with ESMTPSA id ue9sm11062496pab.7.2013.06.24.11.15.48
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 24 Jun 2013 11:04:25 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UrB7j-0007ca-6T; Mon, 24 Jun 2013 20:04:19 +0200
-Content-Disposition: inline
-In-Reply-To: <1372095662-24527-1-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 24 Jun 2013 11:15:49 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.550.g54d55ef
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228886>
 
-On Mon, Jun 24, 2013 at 11:11:02PM +0530, Ramkumar Ramachandra wrote:
-> There are many configuration variables that determine exactly what a
-> push does.  Give the user early feedback so that she has a chance to
-> abort if she doesn't mean to push those refspecs to that destination
-> like:
->=20
->   $ git push
->   # pushing refspecs 'master next' to ram (^C to abort)
->=20
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  Goes without saying: this is an early preview.
->=20
->  builtin/push.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->=20
-> diff --git a/builtin/push.c b/builtin/push.c
-> index 2d84d10..085d5ab 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -330,6 +330,7 @@ static int do_push(const char *repo, int flags)
->  {
->  	int i, errs;
->  	struct remote *remote =3D pushremote_get(repo);
-> +	struct strbuf sb =3D STRBUF_INIT;
->  	const char **url;
->  	int url_nr;
-> =20
-> @@ -375,6 +376,11 @@ static int do_push(const char *repo, int flags)
->  	}
->  	errs =3D 0;
->  	url_nr =3D push_url_of_remote(remote, &url);
-> +
-> +	for (i =3D 0; i < refspec_nr; i++)
-> +		strbuf_addf(&sb, "%s%s", refspec[i], i =3D=3D refspec_nr - 1 ? "":=
- " ");
-> +	printf("# pushing refspecs '%s' to %s (^C to abort)\n", sb.buf, rem=
-ote->name);
-> +
+11920d2 (Add a built-in alias for 'stage' to the 'add' command,
+2008-12-01) added a the 'git stage' command which simply calls
+cmd_add().  Since then, no references to it have been made anywhere on
+the internet; there is no evidence that anyone even knows about its
+existence.  It is a long-lost forgotten command that only serves the
+purpose of preventing the user from having a custom alias.stage to do
+something useful.  Remove it.
 
-How about a strbuf_release here?
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ I just found out about its existence.
 
-Can you really be sure that refspec_nr is set here?
+ Documentation/git-stage.txt | 23 -----------------------
+ Makefile                    |  3 +--
+ git.c                       |  1 -
+ 3 files changed, 1 insertion(+), 26 deletions(-)
+ delete mode 100644 Documentation/git-stage.txt
 
->  	if (url_nr) {
->  		for (i =3D 0; i < url_nr; i++) {
->  			struct transport *transport =3D
-> --=20
-> 1.8.3.1.549.g1f3a412.dirty
-
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
-
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+diff --git a/Documentation/git-stage.txt b/Documentation/git-stage.txt
+deleted file mode 100644
+index ba3fe0d..0000000
+--- a/Documentation/git-stage.txt
++++ /dev/null
+@@ -1,23 +0,0 @@
+-git-stage(1)
+-==============
+-
+-NAME
+-----
+-git-stage - Add file contents to the staging area
+-
+-
+-SYNOPSIS
+---------
+-[verse]
+-'git stage' args...
+-
+-
+-DESCRIPTION
+------------
+-
+-This is a synonym for linkgit:git-add[1].  Please refer to the
+-documentation of that command.
+-
+-GIT
+----
+-Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index 79f961e..33ea9df 100644
+--- a/Makefile
++++ b/Makefile
+@@ -597,7 +597,6 @@ BUILT_INS += git-merge-subtree$X
+ BUILT_INS += git-peek-remote$X
+ BUILT_INS += git-repo-config$X
+ BUILT_INS += git-show$X
+-BUILT_INS += git-stage$X
+ BUILT_INS += git-status$X
+ BUILT_INS += git-whatchanged$X
+ 
+@@ -2527,7 +2526,7 @@ check-docs::
+ 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
+ 		git-merge-resolve | git-merge-subtree | \
+ 		git-fsck-objects | git-init-db | \
+-		git-remote-* | git-stage | \
++		git-remote-* | \
+ 		git-?*--?* ) continue ;; \
+ 		esac ; \
+ 		test -f "Documentation/$$v.txt" || \
+diff --git a/git.c b/git.c
+index 4359086..38bffdb 100644
+--- a/git.c
++++ b/git.c
+@@ -408,7 +408,6 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "show", cmd_show, RUN_SETUP },
+ 		{ "show-branch", cmd_show_branch, RUN_SETUP },
+ 		{ "show-ref", cmd_show_ref, RUN_SETUP },
+-		{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "stripspace", cmd_stripspace },
+ 		{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
+-- 
+1.8.3.1.550.g54d55ef
