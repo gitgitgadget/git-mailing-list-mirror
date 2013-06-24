@@ -1,59 +1,93 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC 3/4] git-mw: Adding git-mw.perl script
-Date: Mon, 24 Jun 2013 16:26:21 +0200
-Message-ID: <vpqsj07vb3m.fsf@anie.imag.fr>
-References: <1371118039-18925-1-git-send-email-benoit.person@ensimag.fr>
-	<1371118039-18925-4-git-send-email-benoit.person@ensimag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
+Date: Mon, 24 Jun 2013 07:55:09 -0700
+Message-ID: <7v8v1zd0du.fsf@alter.siamese.dyndns.org>
+References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
+	<1372077912-18625-2-git-send-email-artagnon@gmail.com>
+	<vpqhagnwraj.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>,
-	Jeff King <peff@peff.net>
-To: benoit.person@ensimag.fr
-X-From: git-owner@vger.kernel.org Mon Jun 24 16:26:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 24 16:55:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur7j3-0004UF-GR
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 16:26:37 +0200
+	id 1Ur8As-0002M0-D7
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 16:55:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751204Ab3FXO0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 10:26:32 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43395 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750875Ab3FXO0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 10:26:32 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5OEQKY5015668
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 24 Jun 2013 16:26:20 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Ur7io-0005ZO-1K; Mon, 24 Jun 2013 16:26:22 +0200
-In-Reply-To: <1371118039-18925-4-git-send-email-benoit.person@ensimag.fr>
-	(benoit person's message of "Thu, 13 Jun 2013 12:07:18 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 24 Jun 2013 16:26:21 +0200 (CEST)
+	id S1752255Ab3FXOzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 10:55:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34139 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751854Ab3FXOzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 10:55:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 910622A4A9;
+	Mon, 24 Jun 2013 14:55:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Ox4+wmFKqp8BpvjBmzusaC8b+hY=; b=feCV9Q
+	x7iRJGMcB3DYdxORrWAD+Jr970VKct/EzFJB0itA1PkOwo0YWNLDrTGw+Fa1GCHe
+	Lg4IReeKyn/T09Unsf70CMZikM29xrm0j9UxznQWnw98OnN9ATRamBJViGV5UNYd
+	unH3iqGApxhOKPvSHWtqg6cXD8IuF7kwfNZtA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oO7DnU+HMhvQVnirbQAX8FP6mkh6o0uv
+	7AK+wOTCO6QJgUl2+BbTHAefTNyogu04H+js01SCgG/KunQeZu2n2qDyIRK7moPn
+	0UI9tef9maRCu2Rmsij7/M+uFzeaEm3jITxSnv7mt7p1JFl9rp+3r/zgMHHI1XH4
+	kJsHteFYcZk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87CC32A4A8;
+	Mon, 24 Jun 2013 14:55:11 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BFF5D2A4A5;
+	Mon, 24 Jun 2013 14:55:10 +0000 (UTC)
+In-Reply-To: <vpqhagnwraj.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	24 Jun 2013 15:51:16 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 116FFF1C-DCDE-11E2-B7B3-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228818>
 
-benoit.person@ensimag.fr writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> diff --git a/contrib/mw-to-git/git-mw.perl b/contrib/mw-to-git/git-mw.perl
-> new file mode 100644
-> index 0000000..a2f0aa1
-> --- /dev/null
-> +++ b/contrib/mw-to-git/git-mw.perl
+> I really don't like this. If we go for a solution looking explicitely at
+> argv[], we should at least iterate over it (also not satisfactory
+> because --porcelain could be the argument of another switch).
 
-*.perl scripts are usually executable in Git's tree (although it's
-usually better to run the non-*.perl version).
+Ram, thanks for a report.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I won't comment on what is the correct way to see if "--porcelain"
+is given by the caller before I have enough time to think about it,
+but we did read configurattion even when "--porcelain"is given
+before the topic was merged, and I think it was done for a good
+reason.
+
+Configuration related to the output format (like color=always) must
+be ignored under "--porcelain", but if we do not read core-ish
+configuration variables (e.g. core.crlf) that affect the logic to
+list what is changed what is not, we would not give the right
+result, no?
+
+So checking "--porcelain" option and skipping configuration may not
+be a solution but merely trading one regression with another.
+
+For now, I'll revert the merge and see if people can come up with a
+reasonable way forward.  My knee-jerk reaction is that, because the
+"--porcelain" output was designed to be extensible and scripts
+reading from it is expected to ignore what it does not understand,
+if the setting of status.branch is a problem, the reading side is
+buggy and needs to be fixed.
+
+Do we have in-core reader that does not behave well when one or both
+of these configuration variables are set (perhaps something related
+to submodule?)???
