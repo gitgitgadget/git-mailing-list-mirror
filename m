@@ -1,129 +1,245 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] stage: remove unused, unreferenced builtin-alias
-Date: Mon, 24 Jun 2013 23:42:26 +0530
-Message-ID: <1372097546-27721-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 24 20:16:02 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
+Date: Mon, 24 Jun 2013 11:16:56 -0700
+Message-ID: <7vk3lj9xwn.fsf@alter.siamese.dyndns.org>
+References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
+	<1372077912-18625-2-git-send-email-artagnon@gmail.com>
+	<vpqhagnwraj.fsf@anie.imag.fr>
+	<CALkWK0=F_i95S+53eZmOAJtA+jG=jvi5-sDc3BgW3rNQo=n3Ng@mail.gmail.com>
+	<vpqhagnv9xq.fsf@anie.imag.fr>
+	<7vk3ljbh5r.fsf@alter.siamese.dyndns.org>
+	<vpq7ghjtpv1.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 24 20:17:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrBJ2-0000go-CI
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:16:00 +0200
+	id 1UrBK7-0001jh-GM
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:17:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753603Ab3FXSPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 14:15:53 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:43960 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753119Ab3FXSPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 14:15:51 -0400
-Received: by mail-pb0-f42.google.com with SMTP id un1so11378746pbc.1
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 11:15:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=HX/NrsloazNAElXlSO3JvSKk8mlL41oYzSlNQdUbigo=;
-        b=XyU5zUC1s85uJ5KZM/nedMcas9+BrgSibI6ZARgbsRa0DKVOWhWwyZxY92g+MBjMF8
-         jN0P93sVW06Hf5oBZl+QnNMw1ExDhlD/iJkGz5o/Jc8YigdZG+/teGZ309zyI8Svjtt/
-         7Kj8ba5a05OEWHhOHK2wU8E2u126rhqJQeeyXABo2oc8D8XL99TBYzVfIL3nd2CTtg0I
-         FpHv64CqsV2wDj7AMoBcPkKjCxNsZNrH9JzDtnLUuPSRm/lx7hSWdyE92z6utqtr7SLw
-         zNdGCqxD94Vt1p0CYulr6iYuLhC1TtDkHo947vQppx94kEvFB3JWzRMB9DmFFiJqUVgR
-         KoOQ==
-X-Received: by 10.68.134.103 with SMTP id pj7mr24579797pbb.171.1372097750664;
-        Mon, 24 Jun 2013 11:15:50 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.185.186])
-        by mx.google.com with ESMTPSA id ue9sm11062496pab.7.2013.06.24.11.15.48
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 24 Jun 2013 11:15:49 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.550.g54d55ef
+	id S1752350Ab3FXSRB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 14:17:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55304 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751592Ab3FXSQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 14:16:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 72DE42B5E7;
+	Mon, 24 Jun 2013 18:16:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yK2DDt4F8TCnp4DHECfN+DkQCJ8=; b=roSt/r
+	GEZPvyv26fL1M1gbL1qCn54TFppBS4OhFxEYx3Rrn1faFsR1db/OxjJhfodFMF0n
+	UdvI3p1Lmv6yO3q8sfETAWuHf3a95m6xZRUkjPbINS+epKRY0Jpt1HNe14dEk1jY
+	qGJIsvuIQZgWGHaAueex9VYCpuw7poGPKVqg8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YT1LmG0s1RO4Uiv8Xtir/q5CSys8TBks
+	j490d/kz5iZ4i/VkubqlU4w2dYur8xOgrjaO8HL775Br5l5G7UYfG0f8RvyLZ5AK
+	P+CjRzwWdrbehSAb62kTx2gHovcalHQzv4BzhPmniK92h2XoUKmGkgMLZ3LSDVC2
+	eWtTFeqQV7M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 672E42B5E6;
+	Mon, 24 Jun 2013 18:16:58 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A62082B5E5;
+	Mon, 24 Jun 2013 18:16:57 +0000 (UTC)
+In-Reply-To: <vpq7ghjtpv1.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	24 Jun 2013 18:50:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 41B593FA-DCFA-11E2-BC6B-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228887>
 
-11920d2 (Add a built-in alias for 'stage' to the 'add' command,
-2008-12-01) added a the 'git stage' command which simply calls
-cmd_add().  Since then, no references to it have been made anywhere on
-the internet; there is no evidence that anyone even knows about its
-existence.  It is a long-lost forgotten command that only serves the
-purpose of preventing the user from having a custom alias.stage to do
-something useful.  Remove it.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- I just found out about its existence.
+>> "First read config, override with command line" is what we always
+>> do.  One recent workaround with selective exception I can think of
+>> offhand is in diff config parser 6c374008 (diff_opt: track whether
+>> flags have been set explicitly, 2013-05-10), but I am fairly sure
+>> there are others.
+>
+> That was the one I had in mind.
 
- Documentation/git-stage.txt | 23 -----------------------
- Makefile                    |  3 +--
- git.c                       |  1 -
- 3 files changed, 1 insertion(+), 26 deletions(-)
- delete mode 100644 Documentation/git-stage.txt
+If we want to continue that tried-and-proven approach as a
+short-term fix, a patch may look like this.
 
-diff --git a/Documentation/git-stage.txt b/Documentation/git-stage.txt
-deleted file mode 100644
-index ba3fe0d..0000000
---- a/Documentation/git-stage.txt
-+++ /dev/null
-@@ -1,23 +0,0 @@
--git-stage(1)
--==============
--
--NAME
------
--git-stage - Add file contents to the staging area
--
--
--SYNOPSIS
----------
--[verse]
--'git stage' args...
--
--
--DESCRIPTION
-------------
--
--This is a synonym for linkgit:git-add[1].  Please refer to the
--documentation of that command.
--
--GIT
-----
--Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index 79f961e..33ea9df 100644
---- a/Makefile
-+++ b/Makefile
-@@ -597,7 +597,6 @@ BUILT_INS += git-merge-subtree$X
- BUILT_INS += git-peek-remote$X
- BUILT_INS += git-repo-config$X
- BUILT_INS += git-show$X
--BUILT_INS += git-stage$X
- BUILT_INS += git-status$X
- BUILT_INS += git-whatchanged$X
+We use "unspecified" value to initialize the main variables
+(status_format global and s->show_branch), and also prepare
+"from-config" counterpart variables.  After we read both, we figure
+out which one should be used, while resetting the main variables to
+their default if neither mechanism touched them.
+
+ builtin/commit.c  | 55 ++++++++++++++++++++++++++++++++++++++++++++++---------
+ t/t7508-status.sh |  5 +++++
+ wt-status.c       |  1 +
+ 3 files changed, 52 insertions(+), 9 deletions(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 0da944f..a535eb2 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -111,12 +111,14 @@ static int show_ignored_in_status;
+ static const char *only_include_assumed;
+ static struct strbuf message = STRBUF_INIT;
  
-@@ -2527,7 +2526,7 @@ check-docs::
- 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
- 		git-merge-resolve | git-merge-subtree | \
- 		git-fsck-objects | git-init-db | \
--		git-remote-* | git-stage | \
-+		git-remote-* | \
- 		git-?*--?* ) continue ;; \
- 		esac ; \
- 		test -f "Documentation/$$v.txt" || \
-diff --git a/git.c b/git.c
-index 4359086..38bffdb 100644
---- a/git.c
-+++ b/git.c
-@@ -408,7 +408,6 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "show", cmd_show, RUN_SETUP },
- 		{ "show-branch", cmd_show_branch, RUN_SETUP },
- 		{ "show-ref", cmd_show_ref, RUN_SETUP },
--		{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
- 		{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
- 		{ "stripspace", cmd_stripspace },
- 		{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
--- 
-1.8.3.1.550.g54d55ef
+-static enum {
++static enum status_format {
+ 	STATUS_FORMAT_NONE = 0,
+ 	STATUS_FORMAT_LONG,
+ 	STATUS_FORMAT_SHORT,
+-	STATUS_FORMAT_PORCELAIN
+-} status_format;
++	STATUS_FORMAT_PORCELAIN,
++
++	STATUS_FORMAT_UNSPECIFIED
++} status_format = STATUS_FORMAT_UNSPECIFIED;
+ 
+ static int opt_parse_m(const struct option *opt, const char *arg, int unset)
+ {
+@@ -457,6 +459,9 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
+ 	case STATUS_FORMAT_PORCELAIN:
+ 		wt_porcelain_print(s);
+ 		break;
++	case STATUS_FORMAT_UNSPECIFIED:
++		die("BUG: finalize_deferred_config() should have been called");
++		break;
+ 	case STATUS_FORMAT_NONE:
+ 	case STATUS_FORMAT_LONG:
+ 		wt_status_print(s);
+@@ -958,6 +963,33 @@ static const char *read_commit_message(const char *name)
+ 	return logmsg_reencode(commit, NULL, out_enc);
+ }
+ 
++/*
++ * Enumerate what needs to be propagated when --porcelain
++ * is not in effect here.
++ */
++static struct status_deferred_config {
++	enum status_format status_format;
++	int show_branch;
++} status_deferred_config = {
++	STATUS_FORMAT_UNSPECIFIED,
++	-1 /* unspecified */
++};
++
++static void finalize_deferred_config(struct wt_status *s)
++{
++	int use_deferred_config = (status_format != STATUS_FORMAT_PORCELAIN);
++
++	if (use_deferred_config && status_format == STATUS_FORMAT_UNSPECIFIED)
++		status_format = status_deferred_config.status_format;
++	if (status_format == STATUS_FORMAT_UNSPECIFIED)
++		status_format = STATUS_FORMAT_NONE;
++
++	if (use_deferred_config && s->show_branch < 0)
++		s->show_branch = status_deferred_config.show_branch;
++	if (s->show_branch < 0)
++		s->show_branch = 0;
++}
++
+ static int parse_and_validate_options(int argc, const char *argv[],
+ 				      const struct option *options,
+ 				      const char * const usage[],
+@@ -968,6 +1000,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 	int f = 0;
+ 
+ 	argc = parse_options(argc, argv, prefix, options, usage, 0);
++	finalize_deferred_config(s);
+ 
+ 	if (force_author && !strchr(force_author, '>'))
+ 		force_author = find_author_by_nickname(force_author);
+@@ -1112,13 +1145,13 @@ static int git_status_config(const char *k, const char *v, void *cb)
+ 	}
+ 	if (!strcmp(k, "status.short")) {
+ 		if (git_config_bool(k, v))
+-			status_format = STATUS_FORMAT_SHORT;
++			status_deferred_config.status_format = STATUS_FORMAT_SHORT;
+ 		else
+-			status_format = STATUS_FORMAT_NONE;
++			status_deferred_config.status_format = STATUS_FORMAT_NONE;
+ 		return 0;
+ 	}
+ 	if (!strcmp(k, "status.branch")) {
+-		s->show_branch = git_config_bool(k, v);
++		status_deferred_config.show_branch = git_config_bool(k, v);
+ 		return 0;
+ 	}
+ 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
+@@ -1163,8 +1196,8 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 		OPT__VERBOSE(&verbose, N_("be verbose")),
+ 		OPT_SET_INT('s', "short", &status_format,
+ 			    N_("show status concisely"), STATUS_FORMAT_SHORT),
+-		OPT_BOOLEAN('b', "branch", &s.show_branch,
+-			    N_("show branch information")),
++		OPT_BOOL('b', "branch", &s.show_branch,
++			 N_("show branch information")),
+ 		OPT_SET_INT(0, "porcelain", &status_format,
+ 			    N_("machine-readable output"),
+ 			    STATUS_FORMAT_PORCELAIN),
+@@ -1197,6 +1230,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 			     builtin_status_options,
+ 			     builtin_status_usage, 0);
+ 	finalize_colopts(&s.colopts, -1);
++	finalize_deferred_config(&s);
+ 
+ 	if (s.null_termination) {
+ 		if (status_format == STATUS_FORMAT_NONE)
+@@ -1232,6 +1266,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	case STATUS_FORMAT_PORCELAIN:
+ 		wt_porcelain_print(&s);
+ 		break;
++	case STATUS_FORMAT_UNSPECIFIED:
++		die("BUG: finalize_deferred_config() should have been called");
++		break;
+ 	case STATUS_FORMAT_NONE:
+ 	case STATUS_FORMAT_LONG:
+ 		s.verbose = verbose;
+@@ -1400,7 +1437,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOLEAN(0, "dry-run", &dry_run, N_("show what would be committed")),
+ 		OPT_SET_INT(0, "short", &status_format, N_("show status concisely"),
+ 			    STATUS_FORMAT_SHORT),
+-		OPT_BOOLEAN(0, "branch", &s.show_branch, N_("show branch information")),
++		OPT_BOOL(0, "branch", &s.show_branch, N_("show branch information")),
+ 		OPT_SET_INT(0, "porcelain", &status_format,
+ 			    N_("machine-readable output"), STATUS_FORMAT_PORCELAIN),
+ 		OPT_SET_INT(0, "long", &status_format,
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index 498332c..ac3d0fe 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -1378,6 +1378,11 @@ test_expect_success '"status.branch=true" weaker than "--no-branch"' '
+ 	test_cmp expected_nobranch actual
+ '
+ 
++test_expect_success '"status.branch=true" weaker than "--porcelain"' '
++       git -c status.branch=true status --porcelain >actual &&
++       test_cmp expected_nobranch actual
++'
++
+ test_expect_success '"status.branch=false" same as "--no-branch"' '
+ 	git -c status.branch=false status -s >actual &&
+ 	test_cmp expected_nobranch actual
+diff --git a/wt-status.c b/wt-status.c
+index bf84a86..6778755 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -127,6 +127,7 @@ void wt_status_prepare(struct wt_status *s)
+ 	s->change.strdup_strings = 1;
+ 	s->untracked.strdup_strings = 1;
+ 	s->ignored.strdup_strings = 1;
++	s->show_branch = -1;  /* unspecified */
+ }
+ 
+ static void wt_status_print_unmerged_header(struct wt_status *s)
