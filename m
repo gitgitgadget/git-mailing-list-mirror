@@ -1,87 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
-Date: Mon, 24 Jun 2013 10:16:28 -0700
-Message-ID: <7v1u7rbf9v.fsf@alter.siamese.dyndns.org>
-References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
-	<1372077912-18625-2-git-send-email-artagnon@gmail.com>
-	<vpqhagnwraj.fsf@anie.imag.fr>
-	<CALkWK0=F_i95S+53eZmOAJtA+jG=jvi5-sDc3BgW3rNQo=n3Ng@mail.gmail.com>
-	<vpqhagnv9xq.fsf@anie.imag.fr>
-	<7vk3ljbh5r.fsf@alter.siamese.dyndns.org>
-	<vpq7ghjtpv1.fsf@anie.imag.fr>
+Subject: Re: [PATCH 4/6] t/t5528-push-default: generalize test_push_*
+Date: Mon, 24 Jun 2013 10:21:58 -0700
+Message-ID: <7vwqpja0g9.fsf@alter.siamese.dyndns.org>
+References: <1372048388-16742-1-git-send-email-gitster@pobox.com>
+	<1372048388-16742-5-git-send-email-gitster@pobox.com>
+	<CALKQrgeSbY3spjTp_m7kgt4TkFi8B5pNpLQ8wvDD+qkCYa+Mww@mail.gmail.com>
+	<7v7ghkdl2p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 24 19:16:43 2013
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Jun 24 19:22:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrANd-0004CJ-QG
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 19:16:42 +0200
+	id 1UrASu-0008Vf-HE
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 19:22:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751179Ab3FXRQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 13:16:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43322 "EHLO
+	id S1752183Ab3FXRWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 13:22:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36727 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751129Ab3FXRQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 13:16:37 -0400
+	id S1751806Ab3FXRWC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 13:22:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2C5D2B4A3;
-	Mon, 24 Jun 2013 17:16:36 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45F462B734;
+	Mon, 24 Jun 2013 17:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aVgowi4AUoNk8pHeuJgMxZsti8U=; b=L6nDxp
-	JVsJNzO7dW/xzQXiRJty73/TrQzp2pYGnar0wjVrKVxodnmbEkXGm5+0jQ+7hlo8
-	JJMBrWOF61dftdqAKLYfjnM3a/SEdSpfhupLe94JkmwscP5xnCRzzlkDK/gk155i
-	+1cAyvBn5az4SJsUlmkCCGaUYRH5+qCO5jRHg=
+	:content-type; s=sasl; bh=lZ3DeNRri3vX6IT6YUjQysFpoyg=; b=wOpEpG
+	eetYmPAvJ8wD39vshg8RzpX/Ft/IdvBuc0bQGP6PeR/etxaNRAiPf6w+47JOseja
+	+PHflpDyKQTpa/TP5pl7B6h2zPzNQgOLuLUPxApNadY9TjjT7mVKV9y1PrT7aTTB
+	KxyvHxq3tYpnGFka+dqhD9JfNsS4uCEVllacQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uzDRHM4E9cbqn6bJsyLIokY9x3BcPqxC
-	T5zT4eU2bl1tkInryxiX7VZknYFsBC/Paaj32z6cGr6Aw8pOC2vgz4ZJ6GJX4Op1
-	NumlEDKu/Il5ksqOtIwUailyBJD/5sCIPLQ8c7XDt+v/26tlFbzd5O1+8sYdvMzG
-	IpDJrRD8aSo=
+	:content-type; q=dns; s=sasl; b=X8god9qT14CQFT2SIttpGsJEqXYo6gmD
+	nep3RCefDNnPyf8i8GqNBjk81qtGTvasP3FPpzXoqMej2sDzb44taVFKqFMGMqYg
+	rLSMDRB9w4GR0lgldp7l6W0hNpeiEnksB6+gPFRCvm0ywcuZ+pKKxWUKXg24F0NK
+	ToZTdBL085Q=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B720A2B4A1;
-	Mon, 24 Jun 2013 17:16:36 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05DB62B733;
+	Mon, 24 Jun 2013 17:22:01 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 159C72B49D;
-	Mon, 24 Jun 2013 17:16:35 +0000 (UTC)
-In-Reply-To: <vpq7ghjtpv1.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
-	24 Jun 2013 18:50:26 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 48E7F2B730;
+	Mon, 24 Jun 2013 17:22:00 +0000 (UTC)
+In-Reply-To: <7v7ghkdl2p.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 24 Jun 2013 00:28:14 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D312D00A-DCF1-11E2-BC4F-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 94513DEC-DCF2-11E2-B973-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228879>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Scripts that want the branch information can use --branch.
-> Scripts that do not have absolutely nothing to gain in getting this
-> extra output (only extra parser complexity).
+> Johan Herland <johan@herland.net> writes:
+>
+>>> +       git --git-dir="${3:-repo1}" log -1 --format='%h %s' "$2" >actual &&
+>>
+>> Isn't  ${3:-repo1} a bashism?
+>
+> I do not think so.  But now I looked at it again, I think I would
+> use ${3-repo1} form in this case myself.  No caller passes an empty
+> string to the third place.
 
-OK, I could buy that.
+Actually, because the caller blindly does this:
 
-I personally have always _assumed_ that the way the "--porcelain"
-output was meant to evolve was to make sure scripts are robust to
-ignore what it does not care about, so that we allow people to add
-more types of information without breaking the syntax, but script
-writers have been assuming otherwise and there is no clearly written
-rule in the documentation, so it is too late to enforce it now.
+    # $3 = [optional] repo to check for actual output (repo1 by default)
+    test_push_success () {
+            git -c push.default="$1" push &&
+            check_pushed_commit HEAD "$2" "$3"
+    }
 
-That means after we add more and more other options like --branch
-that enrich the output in several years, scripts that want to use
-the enriched data need to pass tons of options to get what they
-want, which is not very nice, but at least it won't break the status
-quo, and "ask for only what you use" is a good principle for scripts
-anyway.
+where it should be doing something like this:
 
-Thanks for a sanity check.
+            check_pushed_commit HEAD "$2" ${3+"$3"}
+
+if it wants $3 to be "optional", ${3:-repo1} is needed here to work
+it around.
+
+So I'll leave it as-is for now.
