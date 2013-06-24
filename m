@@ -1,70 +1,101 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/6] Reroll of rr/triangular-push-fix
-Date: Mon, 24 Jun 2013 19:21:05 +0530
-Message-ID: <CALkWK0=L4X=5UrCPygoUeLo9byvRKh4bez0DVB5iqatLvdEEfA@mail.gmail.com>
-References: <1372048388-16742-1-git-send-email-gitster@pobox.com>
- <CALkWK0kDwMq-ADRPShOdCy2Vh+zj9J9A0A4CFv21aKZFeiMs+w@mail.gmail.com> <7vli60c4gu.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
+Date: Mon, 24 Jun 2013 15:51:16 +0200
+Message-ID: <vpqhagnwraj.fsf@anie.imag.fr>
+References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
+	<1372077912-18625-2-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 15:51:50 2013
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 15:53:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur7BO-0002i4-7M
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 15:51:50 +0200
+	id 1Ur7Cf-0003hY-Fo
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 15:53:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751269Ab3FXNvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 09:51:46 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:52223 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751253Ab3FXNvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 09:51:45 -0400
-Received: by mail-ie0-f171.google.com with SMTP id qd12so24958392ieb.16
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 06:51:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=QypKcoX4tSkPx8K8uy3FoGM1N9fH+0nn8Vomuah0WZw=;
-        b=Fs9g+knJbZSkZYdGUAk0SxFS/9Kk6IQSMIkiJWp35lZT1FUc4RRW3apbrsa+KZ77iJ
-         kGrwEEF2P6MYxxXg82dWpQjM4Kk9zQhDn0LGMpzJpEKq56UwjZ7SIf7WfuzAA2Ct6YQw
-         jBjtV1dTTBhYfAMZvYEFGBXLTXcWqvJk7+jkZTSRIl8oh1Z/Y3H8i3EWad/oiStGG3a+
-         2FZOUQWxLB4a82NcJ2gOGPmD8c2VxXZGmxeLxLyD7sdOsrX/71BmtZ+dFwnksZZpYWVH
-         qB+9P2LKDayEq4dfnkWb8pJJrUgw8kxjgPWvgfdUat8MudxorJrFkNPXfVeuvcffl+l6
-         7Ntw==
-X-Received: by 10.50.47.105 with SMTP id c9mr5546916ign.50.1372081905377; Mon,
- 24 Jun 2013 06:51:45 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Mon, 24 Jun 2013 06:51:05 -0700 (PDT)
-In-Reply-To: <7vli60c4gu.fsf@alter.siamese.dyndns.org>
+	id S1751275Ab3FXNxE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 09:53:04 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50650 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751250Ab3FXNxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 09:53:03 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5ODpEff031709
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 24 Jun 2013 15:51:14 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Ur7Aq-0004bG-A2; Mon, 24 Jun 2013 15:51:16 +0200
+In-Reply-To: <1372077912-18625-2-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Mon, 24 Jun 2013 18:15:11 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 24 Jun 2013 15:51:15 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228812>
 
-Junio C Hamano wrote:
-> 'simple' is supposed to be an easy and safe default to help new
-> people.  Your original patch to change its semantics for the central
-> workflow from the current 'make sure upstream is set and set to the
-> same name' to 'anything goes' is making the mode more dangerous than
-> the corresponding 'upstream'.  Such a mode may have its place, but
-> labelling such a mode with rough edges as 'simple' and forcing it on
-> new people _is_ stupid, IMHO.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Oh, I agree that "anything goes" was the wrong approach.  However, I
-think a sane default for branch.$branch.merge is a good way forward.
+> Contrary to its description, the output of
+>
+>   $ git status --porcelain
+>
+> now depends on the configuration variables status.short and
+> status.branch.
 
-> In any case, the good news is, if you start strict, and if it turns
-> out to be stricter than necessary, it is easier to loosen it later,
-> because nobody would be relying on an operation to _fail_.
+Ouch, indeed :-(.
 
-Okay,  I will quote you if you raise issues about "preserving how it
-has historically been functioning" when I complete the upstream-fix
-topic.
+> The correct solution is therefore to skip the config parser completely
+> when --porcelain is given.  Unfortunately, to determine that --porcelain
+> is given, we have to run the command-line option parser.  Running the
+> command-line option parser before the config parser is undesirable, as
+> configuration variables would override options on the command-line.  As
+> a fair compromise, check that argv[1] is equal to the string
+> "--porcelain" and skip the config parser in this case.
 
-There's no need to stall this series then: [1/6] to [5/6] largely look
-good-to-merge; drop [6/6], as it needs more thought.
+I really don't like this. If we go for a solution looking explicitely at
+argv[], we should at least iterate over it (also not satisfactory
+because --porcelain could be the argument of another switch).
+
+I think it's possible to have an actually robust solution, either
+
+* running the CLI parser after, if --porcelain is given, reset the
+  effect of the variables. Not very clean because we'd have to reset all
+  the variables to their default, and there is a risk of forgetting one.
+
+* Or, running the CLI parser before, but with different variables to
+  specify what the command-line says and what will actually be done,
+  with something like
+
+  actual_short = 0;
+  switch (command_line_short) {
+  case yes:
+          actual_short = 1;
+          break;
+  case no:
+          actual_short = 0;
+          break;
+  case unset: /* nothing */
+  }
+  switch (config_short) {
+  // same
+  }
+
+> ---
+>  builtin/commit.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+
+No time to contribute one now myself, but this would really deserve a
+test.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
