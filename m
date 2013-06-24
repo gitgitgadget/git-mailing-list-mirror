@@ -1,162 +1,102 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCHv3 16/16] bash prompt: mention that PROMPT_COMMAND mode is
- faster
-Date: Mon, 24 Jun 2013 18:39:26 +0200
-Message-ID: <1372091966-19315-17-git-send-email-szeder@ira.uka.de>
-References: <1372091966-19315-1-git-send-email-szeder@ira.uka.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
+Date: Mon, 24 Jun 2013 18:50:26 +0200
+Message-ID: <vpq7ghjtpv1.fsf@anie.imag.fr>
+References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
+	<1372077912-18625-2-git-send-email-artagnon@gmail.com>
+	<vpqhagnwraj.fsf@anie.imag.fr>
+	<CALkWK0=F_i95S+53eZmOAJtA+jG=jvi5-sDc3BgW3rNQo=n3Ng@mail.gmail.com>
+	<vpqhagnv9xq.fsf@anie.imag.fr>
+	<7vk3ljbh5r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eduardo D'Avila <erdavila@gmail.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 24 18:46:27 2013
+Content-Type: text/plain
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 18:50:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur9uF-0005Hz-KE
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 18:46:19 +0200
+	id 1Ur9yR-0000FL-5f
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 18:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753211Ab3FXQqP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 12:46:15 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:57665 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753079Ab3FXQqO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 12:46:14 -0400
-Received: from localhost6.localdomain6 (f050230012.adsl.alicedsl.de [78.50.230.12])
-	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
-	id 0MdZRA-1UcmHa341c-00PeiK; Mon, 24 Jun 2013 18:46:06 +0200
-X-Mailer: git-send-email 1.8.3.1.599.gbe80ec9
-In-Reply-To: <1372091966-19315-1-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V02:K0:3bZMViLyFNFir7LMJx3cYnU0W4NjeJ06NmkpT0+Gmiw
- 6zdZKY0keZBuvy+hbffvvxxNnuwdyobQLx+REx5K7enAV5AwhV
- SvgB497Ue5rZQTPisSVxt2jROz+qDjid9bri166Vi2wIxBVWBy
- drIKf73Mo/hobAAbcFlZ/2i7xWHfi56HwHEImsK2xNg+CcLhzr
- eVz0n57fZO1R9znhtP+YyDGOjJD8HMtX+ToeDvksaCUNPmGkK0
- Iqa5brACebIp9sea8aA8DAw08f2HT5AglMks5R1kpbnNeHWZkK
- Pt7eel1RTu+9aqqCRNZujBXSa67CI/SkHoHHcLH0qssPEqdkLN
- WQjXIVpoDXksbJRvrYHubAed2lqXmv3fZYVB3wP2F3kaxIODpJ
- dRbnG/d1Nre8w==
+	id S1752267Ab3FXQuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 12:50:35 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:45162 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750964Ab3FXQue (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 12:50:34 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5OGoO1G032380
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 24 Jun 2013 18:50:24 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Ur9yE-0000mN-DR; Mon, 24 Jun 2013 18:50:26 +0200
+In-Reply-To: <7vk3ljbh5r.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 24 Jun 2013 09:35:44 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 24 Jun 2013 18:50:24 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228869>
 
-__git_ps1() is usually added to the prompt inside a command
-substitution, imposing the overhead of fork()ing a subshell.  Using
-__git_ps1() for $PROMPT_COMMAND is slightly faster, because it avoids
-that command substitution.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Mention this in the comments about setting up the git prompt.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>>> Basically, having the CLI parser and the config parser flip two
+>>> different sets of variables, so we can discriminate who set what.
+>>> What annoys me is that this is the first instance of such a
+>>> requirement.
+>>
+>> I don't think it's the first instance, but I can't remember precise
+>> examples.
+>
+> "First read config, override with command line" is what we always
+> do.  One recent workaround with selective exception I can think of
+> offhand is in diff config parser 6c374008 (diff_opt: track whether
+> flags have been set explicitly, 2013-05-10), but I am fairly sure
+> there are others.
 
-The whole series speeds up the bash prompt on Windows/MSysGit
-considerably.  Here are some timing results in three scenarios, each
-repeated 10 times:
+That was the one I had in mind.
 
-At the top of the work tree, before:
+>>> The approach I'm currently tilting towards is extending the
+>>> parse-options API to allow parsing one special option early.  I would
+>>> argue that this is a good feature that we should have asked for when
+>>> we saw 6758af89e (Merge branch 'jn/git-cmd-h-bypass-setup',
+>>> 2010-12-10).  What do you think?
+>>
+>> That's an option too, yes. But probably not easy to implement :-(.
+>
+> Isn't it essentially your second option (running the CLI parser
+> before once, then read config, and then run the CLI parser for
+> real)?
 
-    $ time for i in {0..9} ; do prompt=3D"$(__git_ps1)" ; done
+Not really. The first run should be a kind of dry-run, except for the
+--porcelain part.
 
-    real    0m1.716s
-    user    0m0.301s
-    sys     0m0.772s
+> In any case, I am still not convinced yet that status.short is a
+> real problem if --porcelain readers trip with "## branchname"
+> output.  Isn't it that the readers are broken and need fixing?
 
-  After:
+Before introducing status.short, scripts could call "git status
+--porcelain" and get some output. They had no way to know whether
+something would be added in the future. Now, they can run the same
+command and get a different output. To me, that's exactly what we're
+trying to avoid in plumbing.
 
-    real    0m0.687s
-    user    0m0.075s
-    sys     0m0.396s
+The configuration file here is really meant for the user, not for
+scripts. Scripts that want the branch information can use --branch.
+Scripts that do not have absolutely nothing to gain in getting this
+extra output (only extra parser complexity).
 
-  After, from $PROMPT_COMMAND:
-
-    $ time for i in {0..9} ; do __git_ps1 '\h:\w' '$ ' ; done
-
-    real    0m0.546s
-    user    0m0.075s
-    sys     0m0.181s
-
-At the top of the work tree, detached head, before:
-
-    real    0m2.574s
-    user    0m0.376s
-    sys     0m1.207s
-
-  After:
-
-    real    0m1.139s
-    user    0m0.151s
-    sys     0m0.500s
-
-  After, from $PROMPT_COMMAND:
-
-    real    0m1.030s
-    user    0m0.245s
-    sys     0m0.336s
-
-In a subdirectory, during rebase, stash status indicator enabled,
-before:
-
-    real    0m3.557s
-    user    0m0.495s
-    sys     0m1.767s
-
-  After:
-
-    real    0m0.717s
-    user    0m0.120s
-    sys     0m0.300s
-
-  After, from $PROMPT_COMMAND:
-
-    real    0m0.577s
-    user    0m0.047s
-    sys     0m0.258s
-
-On Linux the speedup ratio is comparable to Windows, but overall it
-was about an order of magnitude faster to begin with.  The last case
-from above, repeated 100 times, before:
-
-    $ time for i in {0..99} ; do prompt=3D"$(__git_ps1)" ; done
-
-    real    0m2.806s
-    user    0m0.180s
-    sys     0m0.264s
-
-  After:
-
-    real    0m0.857s
-    user    0m0.020s
-    sys     0m0.028s
-
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- contrib/completion/git-prompt.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
-prompt.sh
-index 7152ae49..daed6a1d 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -15,11 +15,11 @@
- #        Bash: PS1=3D'[\u@\h \W$(__git_ps1 " (%s)")]\$ '
- #        ZSH:  PS1=3D'[%n@%m %c$(__git_ps1 " (%s)")]\$ '
- #        the optional argument will be used as format string.
--#    3b) Alternatively, if you are using bash, __git_ps1 can be
--#        used for PROMPT_COMMAND with two parameters, <pre> and
--#        <post>, which are strings you would put in $PS1 before
--#        and after the status string generated by the git-prompt
--#        machinery.  e.g.
-+#    3b) Alternatively, for a slighly faster prompt, if you are
-+#        using bash, __git_ps1 can be used for PROMPT_COMMAND
-+#        with two parameters, <pre> and <post>, which are strings
-+#        you would put in $PS1 before and after the status string
-+#        generated by the git-prompt machinery.  e.g.
- #        Bash: PROMPT_COMMAND=3D'__git_ps1 "\u@\h:\w" "\\\$ "'
- #        ZSH:  precmd () { __git_ps1 "%n" ":%~$ " "|%s" }
- #        will show username, at-sign, host, colon, cwd, then
---=20
-1.8.3.1.599.g4459181
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
