@@ -1,70 +1,97 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v3 6/7] rebase: write better reflog messages
-Date: Mon, 24 Jun 2013 13:42:09 +0530
-Message-ID: <CALkWK0meLtmSFNSXPxkz4dnXQ_wgNPdUbB-7TL3iqL0JOg5Qmw@mail.gmail.com>
-References: <1371629089-27008-1-git-send-email-artagnon@gmail.com>
- <1371629089-27008-7-git-send-email-artagnon@gmail.com> <7vfvw8dw9m.fsf@alter.siamese.dyndns.org>
- <CALkWK0kj3UOx8sq+h=L0giUC-vn+h3by9o_6YbjA8ArRXZfgZw@mail.gmail.com> <7vtxkoc557.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] push: honor branch.*.push
+Date: Mon, 24 Jun 2013 01:17:47 -0700
+Message-ID: <7vhagndis4.fsf@alter.siamese.dyndns.org>
+References: <1372048388-16742-1-git-send-email-gitster@pobox.com>
+	<1372048388-16742-7-git-send-email-gitster@pobox.com>
+	<CALkWK0=aDkCMB3ROSuH1crTmQKjCFyCmvJfvOTiQnBo4+NckBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 10:12:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 10:17:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur1tP-0002HO-QV
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 10:12:56 +0200
+	id 1Ur1yE-0006LH-Lm
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 10:17:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753124Ab3FXIMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 04:12:51 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:42716 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753058Ab3FXIMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 04:12:50 -0400
-Received: by mail-ie0-f176.google.com with SMTP id ar20so24038777iec.21
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 01:12:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=VeKYnKxYZ+2PoP0Oh0JBpMd5ou9iHamD0z7AAMQktWA=;
-        b=wI2/OUCoDmkly0EYeIJ/n+zG9rwfvG1ha9h9tAE0C0L9eSnpRvq2OfUuhyA0gnjGnY
-         BCffsJdMvsa97KX6ibF7hSZUrFe/IRaF0oXgk7ViNm710aOM1V0C771L1+CK83tvlNui
-         hX/lmy6mw1bXylnZGDB/SXw/bNnkYbhXvezUNAh60pvYDO27HZpb2iJziRHGSzXzy1NI
-         +OgmL9MIbp5hton11lne6OMzMCIJUfQvGmmy0wVDgFRthGytAqaGiQLXycZHAYIPYvkl
-         FcIK0D1NKel5PfKRnDiveoGXkzKOAx4orW6jvukSnk5oCV9RmiYKc9bo61KtHpM25vda
-         fS0A==
-X-Received: by 10.42.190.74 with SMTP id dh10mr11108903icb.35.1372061569985;
- Mon, 24 Jun 2013 01:12:49 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Mon, 24 Jun 2013 01:12:09 -0700 (PDT)
-In-Reply-To: <7vtxkoc557.fsf@alter.siamese.dyndns.org>
+	id S1753015Ab3FXIRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 04:17:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54362 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752951Ab3FXIRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 04:17:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D44E82806A;
+	Mon, 24 Jun 2013 08:17:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OhuoUbEnyB8lI2LVo1JH79CPk6c=; b=nnoTIV
+	kKyakicx1elN+W0HPFB2EDcl1yZiD6g1DulHYlUK58P3hgXh2f2OdKQ9JTSthY6w
+	Ld+3U39fEPubqdQrx5+KDBEENmgdlkQqcSfYwcsdN3nxqM9efDc0GBMJThfs4YDj
+	52ozPMzYyctBRHG+3lpPEmGiKcLehH+/rq2GY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qF4i017rtP6/xv+vv3kWTOAiguPbAUGV
+	d3eLUPwabHLp08PyUx6nn8Nr6fAulTkNlEgroXF/o26tnl6h5nQyIucfj1YrVqMS
+	oazxDkIajayD9lMam/Is+ey3mD02heYf87YJbyOL1kcuzHt/KLSzxhj1kZddOaQ8
+	fv9qlELroqg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CADF528069;
+	Mon, 24 Jun 2013 08:17:49 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4FFB428065;
+	Mon, 24 Jun 2013 08:17:49 +0000 (UTC)
+In-Reply-To: <CALkWK0=aDkCMB3ROSuH1crTmQKjCFyCmvJfvOTiQnBo4+NckBA@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 24 Jun 2013 13:28:09 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8ED27396-DCA6-11E2-B56E-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228794>
 
-Junio C Hamano wrote:
-> So you are forcing people to maintain _two_ variables, instead of
-> just _one_, without making anything simpler.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+> Junio C Hamano wrote:
+>> @@ -194,7 +203,14 @@ static int is_workflow_triagular(struct remote *remote)
+>>  static void setup_default_push_refspecs(struct remote *remote)
+>>  {
+>>         struct branch *branch = branch_get(NULL);
+>> -       int triangular = is_workflow_triagular(remote);
+>> +       int triangular;
+>> +
+>> +       if (branch->push_name) {
+>> +               setup_per_branch_push(branch);
+>> +               return;
+>> +       }
 >
-> What's so hard to understand why it is a wrong design?
+> The most obvious question comes first: what result can I expect when
+> this interacts with remote.<name>.push?
 
-Fine.  Let's say I buy your argument about one-variable versus
-two-variables: how do you solve the existing problems that are solved
-by overriding GIT_REFLOG_ACTION that I pointed out?
+Now you bring it up, the branch.*.push may want to be more specific
+(when I am on _this_ branch, do this) than remote.*.push (when I am
+pushing to that remote, I want this to happen in general), but this
+default codepath would not be exercised when you have remote.*.push,
+so the logic may need to be moved higher up in the foodchain.
 
-> If you truly think this is "inconsequential", that unfortunately
-> convinces me that you cannot yet be trusted enough to give you
-> latitude to design interfaces that span multiple programs X-<.
+> Also, you managed to throw out all safety out the window.  What
+> happens when the user does:
+>
+>   # on branch master, derived from origin
+>   $ git push ram
+>
+> And branch.master.push is set to next?  Will you let her shoot herself
+> in the foot like this?
 
-*shrug* I certainly don't think one-variable versus two-variables
-warrants this much discussion.
+It is not shooting in the foot, if branch.master.push is explicitly
+set to update next.  I do not see any issue in that part.
 
-I don't have anything to win or lose: I designed a solution to the
-problem which I think is reasonable; you don't.  Fine.  Show me an
-alternative that doesn't involve rewriting half of the rebase
-infrastructure in a series that fixes checkout-dash.
+But the relative strength betweenh branch.*.push and remote.*.push
+may need to be thought out.  I haven't.
