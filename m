@@ -1,102 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 6/7] rebase: write better reflog messages
-Date: Mon, 24 Jun 2013 00:57:40 -0700
-Message-ID: <7vtxkoc557.fsf@alter.siamese.dyndns.org>
-References: <1371629089-27008-1-git-send-email-artagnon@gmail.com>
-	<1371629089-27008-7-git-send-email-artagnon@gmail.com>
-	<7vfvw8dw9m.fsf@alter.siamese.dyndns.org>
-	<CALkWK0kj3UOx8sq+h=L0giUC-vn+h3by9o_6YbjA8ArRXZfgZw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 6/6] push: honor branch.*.push
+Date: Mon, 24 Jun 2013 13:28:09 +0530
+Message-ID: <CALkWK0=aDkCMB3ROSuH1crTmQKjCFyCmvJfvOTiQnBo4+NckBA@mail.gmail.com>
+References: <1372048388-16742-1-git-send-email-gitster@pobox.com> <1372048388-16742-7-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 09:57:55 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 09:58:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur1el-0007AA-6m
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 09:57:47 +0200
+	id 1Ur1fq-0007x0-9K
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 09:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752931Ab3FXH5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 03:57:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64374 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752785Ab3FXH5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 03:57:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 70CB127708;
-	Mon, 24 Jun 2013 07:57:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ncTviQQ7s655fZ9CX8zfXeobkyo=; b=rj77dY
-	EiYgwK/inIzjgnLiff4cZh9fNIXCK9pKbh/7TcpPkxmnl9hqJZfU3BvMFZv2C7GR
-	toWY+9k+TUgLFKzJ6jAtxP3aCCPdLM8VYNTlDsocqdhvr1m7sW23WDSqv9l0kPzJ
-	1ppB5gmZuoKfj3lVys0xJ7bJEi5lFryak228Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Q//MPXT2jJIleRgg9wDosVtPiie0BPfp
-	ZU0MxF23LzoBi1kR8ScWMInYitMuuQoSRTSKaLsZRDvCq+TXivHIBFE775fQ1Eh6
-	Zy5THOkWCRJNw+sry3hbHbPjXGS3V2M6Y2y1g5ldbfIPqY0qID94Y7pG+VWdCInL
-	2J4xVBo5aM0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 673D927707;
-	Mon, 24 Jun 2013 07:57:42 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE18427706;
-	Mon, 24 Jun 2013 07:57:41 +0000 (UTC)
-In-Reply-To: <CALkWK0kj3UOx8sq+h=L0giUC-vn+h3by9o_6YbjA8ArRXZfgZw@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Mon, 24 Jun 2013 12:37:46 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BF24BD40-DCA3-11E2-A9BB-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753109Ab3FXH6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 03:58:50 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:58472 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752928Ab3FXH6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 03:58:49 -0400
+Received: by mail-ie0-f182.google.com with SMTP id s9so24328018iec.27
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 00:58:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=amSVBI39/GczRBX+4ba7KbSVeAzoK4nlApGtVex2jbs=;
+        b=UuMxGACwynnbRMINVqpYOWkIoblzq0siPOaYLxKLL+nE620p9mqYkiAN9TW9BrF/YD
+         hTVjAGMo3YqSupH2HkHADpypVAvDu9JassIMWzIm3zzkY/tkkDji4+5zZbwvf5NcJV0q
+         mzbip6zpXzkqeQjM4N95P8X1Lq+dmS8uv/xUqNfNYgKKJt1V2dvgMC3eWrzAjXR4+0fq
+         4TQswUPzVMgBAADBWsVcKSSn6tj6DJSme1D06mkK4u1tX+fLJAhaSQPSHAuESPPj6n8E
+         9SDDR/dcsz1HNKwq4GmiQn3rsXaBD1qgqYoVHuxJtFD7m8F3vRk3YV1YpaXnYiNFxQU6
+         9rNQ==
+X-Received: by 10.50.107.65 with SMTP id ha1mr4816294igb.50.1372060729291;
+ Mon, 24 Jun 2013 00:58:49 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Mon, 24 Jun 2013 00:58:09 -0700 (PDT)
+In-Reply-To: <1372048388-16742-7-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228790>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Junio C Hamano wrote:
+> @@ -194,7 +203,14 @@ static int is_workflow_triagular(struct remote *remote)
+>  static void setup_default_push_refspecs(struct remote *remote)
+>  {
+>         struct branch *branch = branch_get(NULL);
+> -       int triangular = is_workflow_triagular(remote);
+> +       int triangular;
+> +
+> +       if (branch->push_name) {
+> +               setup_per_branch_push(branch);
+> +               return;
+> +       }
 
->>> +     # always reset GIT_REFLOG_ACTION before calling any external
->>> +     # scripts; they have no idea about our base_reflog_action
->>> +     GIT_REFLOG_ACTION="$base_reflog_action"
->>>       git am $git_am_opt --rebasing --resolvemsg="$resolvemsg"
->>
->> Why does this reroll still use this base_reflog_action convention?
->
-> Because it's simple and it makes sense.
+The most obvious question comes first: what result can I expect when
+this interacts with remote.<name>.push?
 
-Without $base_reflog_action hack, you have to make sure
-GIT_REFLOG_ACTION is reasonably pristine when you call out other
-people.  Even with $base_reflog_action, you still have to do the
-same "keep GIT_REFLOG_ACTION pristine" like this one.  And in
-addition, you have to maintain $base_reflog_action as if it is a
-read-only variable [*1*].
+Why did you design this feature like this?  Will the user _not_ want
+refspec mapping except when pushing out the current branch with a
+plain "git push"?
 
-So you are forcing people to maintain _two_ variables, instead of
-just _one_, without making anything simpler.
+Also, you managed to throw out all safety out the window.  What
+happens when the user does:
 
-What's so hard to understand why it is a wrong design?
+  # on branch master, derived from origin
+  $ git push ram
 
-> ... and we're discussing absolutely trivial inconsequential rubbish
-> once again.  In any case, I've given up on arguing with you as it is
-> clear that I can't possibly win.  Do whatever you want.
-
-It is not about winning or losing.
-
-If you truly think this is "inconsequential", that unfortunately
-convinces me that you cannot yet be trusted enough to give you
-latitude to design interfaces that span multiple programs X-<.
-
-
-[Footnote]
-
-*1* The original orig_reflog_action you borrowed from was bad enough
-but it had an excuse that it was confined within the leaf level of
-the callchain.  It was merely done as a way to stash the vanilla
-action name (e.g. "rebase -i" before it is specialized into "rebase
--i pick" etc) away, so that it can easily "lose" the speciailzation
-from GIT_REFLOG_ACTION while preparing for the next operation.
+And branch.master.push is set to next?  Will you let her shoot herself
+in the foot like this?
