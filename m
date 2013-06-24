@@ -1,8 +1,8 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/6] t/t5528-push-default: remove redundant test_config lines
-Date: Sun, 23 Jun 2013 21:33:03 -0700
-Message-ID: <1372048388-16742-2-git-send-email-gitster@pobox.com>
-References: <1372048388-16742-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH 0/6] Reroll of rr/triangular-push-fix
+Date: Sun, 23 Jun 2013 21:33:02 -0700
+Message-ID: <1372048388-16742-1-git-send-email-gitster@pobox.com>
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Mon Jun 24 06:33:32 2013
 Return-path: <git-owner@vger.kernel.org>
@@ -10,80 +10,95 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UqyT5-00045x-HJ
+	id 1UqyT5-00045x-0R
 	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 06:33:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751295Ab3FXEdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 00:33:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44326 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750990Ab3FXEdM (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751102Ab3FXEdM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 24 Jun 2013 00:33:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40898 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750990Ab3FXEdL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 00:33:11 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76550265A3
-	for <git@vger.kernel.org>; Mon, 24 Jun 2013 04:33:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Pta0
-	agxL0zM07Upyctu40Ek+ruk=; b=MXsSVFLLJ7LMej8ZEM5fXQN/Iq2goJ9iLnn2
-	fl7Rf/HIYsvZVIx5pcBVb57UaqIodMzIVGKOHMopEXw/UvKTsBr7Clj704LIRW0a
-	TOOrliuEhoim2NPbS522TEk9JTv2BfLVpK9rjXzA7+ujwlVVrQOhM30nizIM+5Tf
-	1MMkAC4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=M8Qic5
-	dmFAZtwcX6D1bgjamoEg4Cviu9oLsGWK/0e7DXO4nxzpeGv8a6cVzzTENfIdBL8x
-	nSyFV3QGh5gohFtx3MSqxzUPTei9ONM9SHBLkxk9WbNX01EZM+P6polXJl2qn06f
-	6wp/3KXa7MOX4ajEHwK0tLiM6WfE4oE4MmYKE=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D7D026599;
+	Mon, 24 Jun 2013 04:33:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id; s=sasl; bh=ZPGdZYO5o1M2a5QFz41m+xqjQSY
+	=; b=MNnrJpvbXjQt7ETxiTG+AU1hAkVRNvLQO0iMy0zh5cgEefnbLs4UDHq6cEd
+	mxlWeSCQqpg36ML9R1X3Yvzp4TWNw1SNgCdUcsU5F4tpIMMAmSeFvzdf4bYbM87Q
+	I5oUu4whoMLPeld1LxIGx993kjEVArAPFsipiuc/cyuedKhU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id; q=dns; s=sasl; b=ORePiXnTM4YaG5kaUxiii
+	IAueJbZdX+3ShueslJjfmS7Zzm//DSHf0dQGoBOymaPzwBlHZhLK7AqwmJiscJ9u
+	Xo2IGLKav+ilKb0tQ9RDPn+mR5lhVdoJCua8GBZeU7p/O5eLydDxuo0MS6kmaHPB
+	btnzZoFDFs7/RFFrEc28js=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A7A02659F
-	for <git@vger.kernel.org>; Mon, 24 Jun 2013 04:33:12 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94BE026598;
+	Mon, 24 Jun 2013 04:33:10 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC7432659D
-	for <git@vger.kernel.org>; Mon, 24 Jun 2013 04:33:11 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 016C026596;
+	Mon, 24 Jun 2013 04:33:09 +0000 (UTC)
 X-Mailer: git-send-email 1.8.3.1-721-g0a353d3
-In-Reply-To: <1372048388-16742-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 2DB05912-DC87-11E2-9947-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2C851258-DC87-11E2-9DEF-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228770>
 
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+This is mostly Ram's triangular-push-fix series, but the fix-up
+commits I queued on top of it when the series was queued to 'pu'
+have been squashed in.
 
-The line
+  [PATCH 1/6] t/t5528-push-default: remove redundant test_config lines
 
-  test_config push.default upstream
+  No changes, as posted by Ram.
 
-appears unnecessarily in two tests, as the final test_push_failure sets
-push.default before pushing anyway.
+  [PATCH 2/6] config doc: rewrite push.default section
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t5528-push-default.sh | 2 --
- 1 file changed, 2 deletions(-)
+  Reorganization (including moving of 'matching' to the end) is Ram's,
+  but otherwise moderately rewritten.
 
-diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
-index 4736da8..69ce6bf 100755
---- a/t/t5528-push-default.sh
-+++ b/t/t5528-push-default.sh
-@@ -48,7 +48,6 @@ test_expect_success '"upstream" pushes to configured upstream' '
- test_expect_success '"upstream" does not push on unconfigured remote' '
- 	git checkout master &&
- 	test_unconfig branch.master.remote &&
--	test_config push.default upstream &&
- 	test_commit three &&
- 	test_push_failure upstream
- '
-@@ -57,7 +56,6 @@ test_expect_success '"upstream" does not push on unconfigured branch' '
- 	git checkout master &&
- 	test_config branch.master.remote parent1 &&
- 	test_unconfig branch.master.merge &&
--	test_config push.default upstream
- 	test_commit four &&
- 	test_push_failure upstream
- '
+  [PATCH 3/6] push: change `simple` to accommodate triangular workflows
+
+  Sqaushed in the fix to keep the semantics of "simple" when used in
+  the centralized workflow the same as before.
+
+  [PATCH 4/6] t/t5528-push-default: generalize test_push_*
+
+  As posted by Ram.
+
+  [PATCH 5/6] t/t5528-push-default: test pushdefault workflows
+
+  A style fix from the review, and comment tweaks to describe what
+  each tests mean better.
+
+  [PATCH 6/6] push: honor branch.*.push
+
+  This is new.  It probably needs tests and docs.
+
+I am trying this myself primarily because this changes the plan for
+Git 2.0 and jc/push-2.0-default-to-simple topic needs to be redone,
+but before we can do so, we need to see this topic solidify enough.
+
+Junio C Hamano (1):
+  push: honor branch.*.push
+
+Ramkumar Ramachandra (5):
+  t/t5528-push-default: remove redundant test_config lines
+  config doc: rewrite push.default section
+  push: change `simple` to accommodate triangular workflows
+  t/t5528-push-default: generalize test_push_*
+  t/t5528-push-default: test pushdefault workflows
+
+ Documentation/config.txt | 80 ++++++++++++++++++++++++++++++------------------
+ builtin/push.c           | 59 +++++++++++++++++++++++++++--------
+ remote.c                 |  5 +++
+ remote.h                 |  2 ++
+ t/t5528-push-default.sh  | 65 ++++++++++++++++++++++++++++++++++++---
+ 5 files changed, 165 insertions(+), 46 deletions(-)
+
 -- 
 1.8.3.1-721-g0a353d3
