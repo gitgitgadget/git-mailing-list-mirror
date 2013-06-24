@@ -1,296 +1,75 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCHv3 06/16] bash prompt: return early from __git_ps1() when not
- in a git repository
-Date: Mon, 24 Jun 2013 18:39:16 +0200
-Message-ID: <1372091966-19315-7-git-send-email-szeder@ira.uka.de>
-References: <1372091966-19315-1-git-send-email-szeder@ira.uka.de>
+From: Yann Droneaud <ydroneaud@opteya.com>
+Subject: Re: Another core.safecrlf behavor with git diff/git status
+Date: Mon, 24 Jun 2013 18:43:48 +0200
+Organization: OPTEYA
+Message-ID: <a52e61e60f626e8ad75435af94a85042@meuh.org>
+References: <866f886ef5e48ba22eec0f67203666bb@meuh.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eduardo D'Avila <erdavila@gmail.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Cc: git-owner@vger.kernel.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 24 18:43:52 2013
+X-From: git-owner@vger.kernel.org Mon Jun 24 18:44:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur9rr-0003DY-Ly
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 18:43:52 +0200
+	id 1Ur9s6-0003Oy-Nd
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 18:44:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753149Ab3FXQnr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 12:43:47 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:51358 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753046Ab3FXQnq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 12:43:46 -0400
-Received: from localhost6.localdomain6 (f050230012.adsl.alicedsl.de [78.50.230.12])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0Ljxmg-1UGSGW10N0-00c6OS; Mon, 24 Jun 2013 18:43:38 +0200
-X-Mailer: git-send-email 1.8.3.1.599.gbe80ec9
-In-Reply-To: <1372091966-19315-1-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V02:K0:jLO3W7wh8+WFzss91MrDq5uNiwhwuwrz95Y7zbsnvz/
- sHc3BsvQl5kkUJZ0tG+Dnn2UGVtXdeZKXB784r5dkD4wQZakX6
- mKL0kh8EB17rI5V4SS6+fmVtLNWOFZRsV8D3m0aX2jd62egTzG
- CQCMNCJpnqxnnEkn5sokcyCAmt+ASlnUzsjnS71z9GT/rjztlq
- yJWDD/1hllMtVEViFmTDEROkPuNd4yCgYBy1SFY0yjEh2SfMIH
- rh3tyjZR4d539ygFj3Maz3PeeMQLujresRClWADWlK7uEvMNds
- UTm1cm8Xrq2MeKn9/wn5vhjCvXGOK8uSNYmwvZimP4czsA6Baq
- aX33O50nUVuW4p9Bmnl2KBIOv1HHYEBUpfdMNObFKEsYcSp6Xh
- PSEKj9XF0egwA==
+	id S1753155Ab3FXQnu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 12:43:50 -0400
+Received: from mx-out.ocsa-data.net ([194.36.166.37]:62655 "EHLO
+	mx-out.ocsa-data.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753046Ab3FXQnt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 12:43:49 -0400
+Received: from [192.168.111.12] (helo=rc.ouvaton.coop)
+	by mx-out.ocsa-data.net with esmtpa (Exim - FreeBSD Rulez)
+	id 1Ur9ro-000Joy-8G; Mon, 24 Jun 2013 18:43:48 +0200
+In-Reply-To: <866f886ef5e48ba22eec0f67203666bb@meuh.org>
+X-Sender: ydroneaud@opteya.com
+User-Agent: Roundcube Webmail/0.9.2
+X-abuse-contact: abuse@ocsa-data.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228858>
 
-=2E.. to gain one level of indentation for the bulk of the function.
+Le 24.06.2013 18:37, Yann Droneaud a =C3=A9crit=C2=A0:
 
-(The patch looks quite unreadable, you'd better check it with 'git
-diff -w'.)
+> I'm still trying to use .gitattributes "text" flag with CRLF line=20
+> ending files
+> under Linux.
+>=20
+> I'm surprised about the interaction between the index and the working=
+=20
+> directory,
+> more specificaly about the interaction between git diff and git statu=
+s:
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- contrib/completion/git-prompt.sh | 201 ++++++++++++++++++++-----------=
---------
- 1 file changed, 101 insertions(+), 100 deletions(-)
+[...]
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
-prompt.sh
-index 3c5e62bb..a915b04c 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -341,121 +341,122 @@ __git_ps1 ()
- 			#In PC mode PS1 always needs to be set
- 			PS1=3D"$ps1pc_start$ps1pc_end"
- 		fi
-+		return
-+	fi
-+
-+	local r=3D""
-+	local b=3D""
-+	local step=3D""
-+	local total=3D""
-+	if [ -d "$g/rebase-merge" ]; then
-+		b=3D"$(cat "$g/rebase-merge/head-name" 2>/dev/null)"
-+		step=3D$(cat "$g/rebase-merge/msgnum" 2>/dev/null)
-+		total=3D$(cat "$g/rebase-merge/end" 2>/dev/null)
-+		if [ -f "$g/rebase-merge/interactive" ]; then
-+			r=3D"|REBASE-i"
-+		else
-+			r=3D"|REBASE-m"
-+		fi
- 	else
--		local r=3D""
--		local b=3D""
--		local step=3D""
--		local total=3D""
--		if [ -d "$g/rebase-merge" ]; then
--			b=3D"$(cat "$g/rebase-merge/head-name" 2>/dev/null)"
--			step=3D$(cat "$g/rebase-merge/msgnum" 2>/dev/null)
--			total=3D$(cat "$g/rebase-merge/end" 2>/dev/null)
--			if [ -f "$g/rebase-merge/interactive" ]; then
--				r=3D"|REBASE-i"
-+		if [ -d "$g/rebase-apply" ]; then
-+			step=3D$(cat "$g/rebase-apply/next" 2>/dev/null)
-+			total=3D$(cat "$g/rebase-apply/last" 2>/dev/null)
-+			if [ -f "$g/rebase-apply/rebasing" ]; then
-+				b=3D"$(cat "$g/rebase-apply/head-name" 2>/dev/null)"
-+				r=3D"|REBASE"
-+			elif [ -f "$g/rebase-apply/applying" ]; then
-+				r=3D"|AM"
- 			else
--				r=3D"|REBASE-m"
--			fi
--		else
--			if [ -d "$g/rebase-apply" ]; then
--				step=3D$(cat "$g/rebase-apply/next" 2>/dev/null)
--				total=3D$(cat "$g/rebase-apply/last" 2>/dev/null)
--				if [ -f "$g/rebase-apply/rebasing" ]; then
--					b=3D"$(cat "$g/rebase-apply/head-name" 2>/dev/null)"
--					r=3D"|REBASE"
--				elif [ -f "$g/rebase-apply/applying" ]; then
--					r=3D"|AM"
--				else
--					r=3D"|AM/REBASE"
--				fi
--			elif [ -f "$g/MERGE_HEAD" ]; then
--				r=3D"|MERGING"
--			elif [ -f "$g/CHERRY_PICK_HEAD" ]; then
--				r=3D"|CHERRY-PICKING"
--			elif [ -f "$g/REVERT_HEAD" ]; then
--				r=3D"|REVERTING"
--			elif [ -f "$g/BISECT_LOG" ]; then
--				r=3D"|BISECTING"
-+				r=3D"|AM/REBASE"
- 			fi
-+		elif [ -f "$g/MERGE_HEAD" ]; then
-+			r=3D"|MERGING"
-+		elif [ -f "$g/CHERRY_PICK_HEAD" ]; then
-+			r=3D"|CHERRY-PICKING"
-+		elif [ -f "$g/REVERT_HEAD" ]; then
-+			r=3D"|REVERTING"
-+		elif [ -f "$g/BISECT_LOG" ]; then
-+			r=3D"|BISECTING"
-+		fi
-=20
--			test -n "$b" ||
--			b=3D"$(git symbolic-ref HEAD 2>/dev/null)" || {
--				detached=3Dyes
--				b=3D"$(
--				case "${GIT_PS1_DESCRIBE_STYLE-}" in
--				(contains)
--					git describe --contains HEAD ;;
--				(branch)
--					git describe --contains --all HEAD ;;
--				(describe)
--					git describe HEAD ;;
--				(* | default)
--					git describe --tags --exact-match HEAD ;;
--				esac 2>/dev/null)" ||
-+		test -n "$b" ||
-+		b=3D"$(git symbolic-ref HEAD 2>/dev/null)" || {
-+			detached=3Dyes
-+			b=3D"$(
-+			case "${GIT_PS1_DESCRIBE_STYLE-}" in
-+			(contains)
-+				git describe --contains HEAD ;;
-+			(branch)
-+				git describe --contains --all HEAD ;;
-+			(describe)
-+				git describe HEAD ;;
-+			(* | default)
-+				git describe --tags --exact-match HEAD ;;
-+			esac 2>/dev/null)" ||
-=20
--				b=3D"$(git rev-parse --short HEAD 2>/dev/null)..." ||
--				b=3D"unknown"
--				b=3D"($b)"
--			}
--		fi
-+			b=3D"$(git rev-parse --short HEAD 2>/dev/null)..." ||
-+			b=3D"unknown"
-+			b=3D"($b)"
-+		}
-+	fi
-=20
--		if [ -n "$step" ] && [ -n "$total" ]; then
--			r=3D"$r $step/$total"
--		fi
-+	if [ -n "$step" ] && [ -n "$total" ]; then
-+		r=3D"$r $step/$total"
-+	fi
-=20
--		local w=3D""
--		local i=3D""
--		local s=3D""
--		local u=3D""
--		local c=3D""
--		local p=3D""
-+	local w=3D""
-+	local i=3D""
-+	local s=3D""
-+	local u=3D""
-+	local c=3D""
-+	local p=3D""
-=20
--		if [ "true" =3D "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]=
-; then
--			if [ "true" =3D "$(git rev-parse --is-bare-repository 2>/dev/null)"=
- ]; then
--				c=3D"BARE:"
-+	if [ "true" =3D "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ];=
- then
-+		if [ "true" =3D "$(git rev-parse --is-bare-repository 2>/dev/null)" =
-]; then
-+			c=3D"BARE:"
-+		else
-+			b=3D"GIT_DIR!"
-+		fi
-+	elif [ "true" =3D "$(git rev-parse --is-inside-work-tree 2>/dev/null)=
-" ]; then
-+		if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
-+		   [ "$(git config --bool bash.showDirtyState)" !=3D "false" ]
-+		then
-+			git diff --no-ext-diff --quiet --exit-code || w=3D"*"
-+			if git rev-parse --quiet --verify HEAD >/dev/null; then
-+				git diff-index --cached --quiet HEAD -- || i=3D"+"
- 			else
--				b=3D"GIT_DIR!"
--			fi
--		elif [ "true" =3D "$(git rev-parse --is-inside-work-tree 2>/dev/null=
-)" ]; then
--			if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
--			   [ "$(git config --bool bash.showDirtyState)" !=3D "false" ]
--			then
--				git diff --no-ext-diff --quiet --exit-code || w=3D"*"
--				if git rev-parse --quiet --verify HEAD >/dev/null; then
--					git diff-index --cached --quiet HEAD -- || i=3D"+"
--				else
--					i=3D"#"
--				fi
--			fi
--			if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
--				git rev-parse --verify refs/stash >/dev/null 2>&1 && s=3D"$"
-+				i=3D"#"
- 			fi
-+		fi
-+		if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
-+			git rev-parse --verify refs/stash >/dev/null 2>&1 && s=3D"$"
-+		fi
-=20
--			if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
--			   [ "$(git config --bool bash.showUntrackedFiles)" !=3D "false" ] =
-&&
--			   [ -n "$(git ls-files --others --exclude-standard)" ]
--			then
--				u=3D"%${ZSH_VERSION+%}"
--			fi
-+		if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
-+		   [ "$(git config --bool bash.showUntrackedFiles)" !=3D "false" ] &=
-&
-+		   [ -n "$(git ls-files --others --exclude-standard)" ]
-+		then
-+			u=3D"%${ZSH_VERSION+%}"
-+		fi
-=20
--			if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
--				__git_ps1_show_upstream
--			fi
-+		if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
-+			__git_ps1_show_upstream
- 		fi
-+	fi
-=20
--		local z=3D"${GIT_PS1_STATESEPARATOR-" "}"
--		local f=3D"$w$i$s$u"
--		if [ $pcmode =3D yes ]; then
--			local gitstring=3D
--			if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
--				__git_ps1_colorize_gitstring
--			else
--				gitstring=3D"$c${b##refs/heads/}${f:+$z$f}$r$p"
--			fi
--			gitstring=3D$(printf -- "$printf_format" "$gitstring")
--			PS1=3D"$ps1pc_start$gitstring$ps1pc_end"
-+	local z=3D"${GIT_PS1_STATESEPARATOR-" "}"
-+	local f=3D"$w$i$s$u"
-+	if [ $pcmode =3D yes ]; then
-+		local gitstring=3D
-+		if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
-+			__git_ps1_colorize_gitstring
- 		else
--			# NO color option unless in PROMPT_COMMAND mode
--			printf -- "$printf_format" "$c${b##refs/heads/}${f:+$z$f}$r$p"
-+			gitstring=3D"$c${b##refs/heads/}${f:+$z$f}$r$p"
- 		fi
-+		gitstring=3D$(printf -- "$printf_format" "$gitstring")
-+		PS1=3D"$ps1pc_start$gitstring$ps1pc_end"
-+	else
-+		# NO color option unless in PROMPT_COMMAND mode
-+		printf -- "$printf_format" "$c${b##refs/heads/}${f:+$z$f}$r$p"
- 	fi
- }
+> - Why git diff does not always report the CRLF/LF mismatch ?
+>=20
+> - Why git status does not report about the CRLF/LF mismatch before
+> updating the index:
+>   it silently hide the CRLF/LF warning.
+>   git add, git commit report the warning. git status should probably
+> do the same.
+
+Can this problem be related to the rebase failure I've described in=20
+thread
+"git rebase fail with CRLF conversion" [1][2][3] ?
+
+1. <fb20a7d711fdd218f58f1f2090b1c515@meuh.org>
+2. <http://thread.gmane.org/gmane.comp.version-control.git/228613>
+3. <http://marc.info/?l=3Dgit&m=3D137182211414404&w=3D2>
+
+Regards.
+
 --=20
-1.8.3.1.599.g4459181
+Yann Droneaud
+OPTEYA
