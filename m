@@ -1,47 +1,47 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v14 11/16] git-clean: add filter by pattern interactive action
-Date: Mon, 24 Jun 2013 23:21:35 +0800
-Message-ID: <36d2d6db4e65145bab6c85d7952f2cc068de65c5.1372087065.git.worldhello.net@gmail.com>
+Subject: [PATCH v14 14/16] git-clean: add documentation for interactive git-clean
+Date: Mon, 24 Jun 2013 23:21:38 +0800
+Message-ID: <28725b96320fbc26322860c7213fa20ae7b4863c.1372087065.git.worldhello.net@gmail.com>
 References: <cover.1372087065.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jun 24 17:22:50 2013
+X-From: git-owner@vger.kernel.org Mon Jun 24 17:22:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur8bR-0006nN-Ri
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 17:22:50 +0200
+	id 1Ur8bY-0006sB-28
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 17:22:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751976Ab3FXPWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 11:22:43 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:55503 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751660Ab3FXPWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 11:22:42 -0400
-Received: by mail-pb0-f49.google.com with SMTP id jt11so10984276pbb.8
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 08:22:41 -0700 (PDT)
+	id S1752055Ab3FXPWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 11:22:53 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:57364 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751778Ab3FXPWw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 11:22:52 -0400
+Received: by mail-pa0-f44.google.com with SMTP id lj1so11199106pab.3
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 08:22:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=jkps94QZzHwzKqNgDzeP6enstQfRfNvM8pJknehIhXc=;
-        b=scGWwlkXd2aDxCUdT3EtERRXtnXMDC6hpx0XBvyU7XQ2FFymXQSBhuVskuLzLdBlwV
-         1ekq6xYRfZ+6ugF/X6uGXWXR5+QlHzHRuKgWsMO8frWRDYhKdIPhwDFNYZkdrCtGnjpf
-         PEJ2/857tsGW3dFXp54We5zqMOAoavw0F/EgHloYgQRJgdFBp4bOgYiPvJ0waEXxXp5v
-         yeO835ZH+OQXFe3SWQB1OLzdwUtq640NC1TAJgL0+C9eCoaXDkZXUOAXWYjGvLQCUzHV
-         2bjkMKjUsJDMff7+xFlFdzywVXg5BaZlx1ruPe62uhBPMxxCb1apAJwuG6sepMqlP0GG
-         uebA==
-X-Received: by 10.68.1.226 with SMTP id 2mr24486189pbp.150.1372087361542;
-        Mon, 24 Jun 2013 08:22:41 -0700 (PDT)
+        bh=nQC/pi+RUmOPmrc2NlcXjeFvwLyWnsABfl2SmnoNNTY=;
+        b=EP/Y2nuwPsAxeR6LXMb2kADixmHxOaPsqEzkL8iJ0GN4wOpGPsa0EbhSh0QApwO5gv
+         lGu3HvhXnEqpMc8vZJ/zKs9UBYfY6PY8IF2Te8mC0fmNXkPWgvEneHoplDl5iiBRJngI
+         Yet/WbJyJkbunpuHeoJcUxflYmOiw8epfODh4Zga+zwV/BP6EOGBuKWnqkjqr7V5FMBQ
+         1f58vANNpV7KftOipMv479y6CaYCV+buP8wlND7Ub/mNDVZeziTATdyad0Dubw5P68/5
+         Lor1/1lVEnmtUahQt1SSEB7QhK0W8dP31otzlTllBGMYP5SQj4nvj7+w/yqp3MwaW69C
+         EQFw==
+X-Received: by 10.68.103.194 with SMTP id fy2mr24031919pbb.158.1372087372091;
+        Mon, 24 Jun 2013 08:22:52 -0700 (PDT)
 Received: from localhost.localdomain ([114.248.133.39])
-        by mx.google.com with ESMTPSA id ix3sm18576807pbc.37.2013.06.24.08.22.37
+        by mx.google.com with ESMTPSA id ix3sm18576807pbc.37.2013.06.24.08.22.48
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 24 Jun 2013 08:22:40 -0700 (PDT)
+        Mon, 24 Jun 2013 08:22:51 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.756.g41beab0
 In-Reply-To: <cover.1372087065.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1372087065.git.worldhello.net@gmail.com>
@@ -50,113 +50,100 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228835>
 
-Add a new action for interactive git-clean: filter by pattern. When the
-user chooses this action, user can input space-separated patterns (the
-same syntax as gitignore), and each clean candidate that matches with
-one of the patterns will be excluded from cleaning. When the user feels
-it's OK, presses ENTER and backs to the confirmation dialog.
+Add new section "Interactive mode" for documentation of interactive
+git-clean.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-Suggested-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/clean.c | 68 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 68 insertions(+)
+ Documentation/git-clean.txt | 65 +++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 63 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/clean.c b/builtin/clean.c
-index df887..36369 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -614,6 +614,72 @@ static int clean_cmd(void)
- 	return MENU_RETURN_NO_LOOP;
- }
+diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+index 186e34..5bf76 100644
+--- a/Documentation/git-clean.txt
++++ b/Documentation/git-clean.txt
+@@ -39,8 +39,8 @@ OPTIONS
  
-+static int filter_by_patterns_cmd(void)
-+{
-+	struct dir_struct dir;
-+	struct strbuf confirm = STRBUF_INIT;
-+	struct strbuf **ignore_list;
-+	struct string_list_item *item;
-+	struct exclude_list *el;
-+	int changed = -1, i;
+ -i::
+ --interactive::
+-	Show what would be done and the user must confirm before actually
+-	cleaning.
++	Show what would be done and clean files interactively. See
++	``Interactive mode'' for details.
+ 
+ -n::
+ --dry-run::
+@@ -69,6 +69,67 @@ OPTIONS
+ 	Remove only files ignored by Git.  This may be useful to rebuild
+ 	everything from scratch, but keep manually created files.
+ 
++Interactive mode
++----------------
++When the command enters the interactive mode, it shows the
++files and directories to be cleaned, and goes into its
++interactive command loop.
 +
-+	for (;;) {
-+		if (!del_list.nr)
-+			break;
++The command loop shows the list of subcommands available, and
++gives a prompt "What now> ".  In general, when the prompt ends
++with a single '>', you can pick only one of the choices given
++and type return, like this:
 +
-+		if (changed)
-+			pretty_print_dels();
++------------
++    *** Commands ***
++        1: clean                2: filter by pattern    3: select by numbers
++        4: ask each             5: quit                 6: help
++    What now> 1
++------------
 +
-+		clean_print_color(CLEAN_COLOR_PROMPT);
-+		printf(_("Input ignore patterns>> "));
-+		clean_print_color(CLEAN_COLOR_RESET);
-+		if (strbuf_getline(&confirm, stdin, '\n') != EOF)
-+			strbuf_trim(&confirm);
-+		else
-+			putchar('\n');
++You also could say `c` or `clean` above as long as the choice is unique.
 +
-+		/* quit filter_by_pattern mode if press ENTER or Ctrl-D */
-+		if (!confirm.len)
-+			break;
++The main command loop has 6 subcommands.
 +
-+		memset(&dir, 0, sizeof(dir));
-+		el = add_exclude_list(&dir, EXC_CMDL, "manual exclude");
-+		ignore_list = strbuf_split_max(&confirm, ' ', 0);
++clean::
 +
-+		for (i = 0; ignore_list[i]; i++) {
-+			strbuf_trim(ignore_list[i]);
-+			if (!ignore_list[i]->len)
-+				continue;
++   Start cleaning files and directories, and then quit.
 +
-+			add_exclude(ignore_list[i]->buf, "", 0, el, -(i+1));
-+		}
++filter by pattern::
 +
-+		changed = 0;
-+		for_each_string_list_item(item, &del_list) {
-+			int dtype = DT_UNKNOWN;
++   This shows the files and directories to be deleted and issues an
++   "Input ignore patterns>>" prompt. You can input space-seperated
++   patterns to exclude files and directories from deletion.
++   E.g. "*.c *.h" will excludes files end with ".c" and ".h" from
++   deletion. When you are satisfied with the filtered result, press
++   ENTER (empty) back to the main menu.
 +
-+			if (is_excluded(&dir, item->string, &dtype)) {
-+				*item->string = '\0';
-+				changed++;
-+			}
-+		}
++select by numbers::
 +
-+		if (changed) {
-+			string_list_remove_empty_items(&del_list, 0);
-+		} else {
-+			clean_print_color(CLEAN_COLOR_ERROR);
-+			printf_ln(_("WARNING: Cannot find items matched by: %s"), confirm.buf);
-+			clean_print_color(CLEAN_COLOR_RESET);
-+		}
++   This shows the files and directories to be deleted and issues an
++   "Select items to delete>>" prompt. When the prompt ends with double
++   '>>' like this, you can make more than one selection, concatenated
++   with whitespace or comma.  Also you can say ranges.  E.g. "2-5 7,9"
++   to choose 2,3,4,5,7,9 from the list.  If the second number in a
++   range is omitted, all remaining patches are taken.  E.g. "7-" to
++   choose 7,8,9 from the list.  You can say '*' to choose everything.
++   Also when you are satisfied with the filtered result, press ENTER
++   (empty) back to the main menu.
 +
-+		strbuf_list_free(ignore_list);
-+		clear_directory(&dir);
-+	}
++ask each::
 +
-+	strbuf_release(&confirm);
-+	return 0;
-+}
++  This will start to clean, and you must confirm one by one in order
++  to delete items. Please note that this action is not as efficient
++  as the above two actions.
 +
- static int quit_cmd(void)
- {
- 	string_list_clear(&del_list, 0);
-@@ -626,6 +692,7 @@ static int help_cmd(void)
- 	clean_print_color(CLEAN_COLOR_HELP);
- 	printf_ln(_(
- 		    "clean               - start cleaning\n"
-+		    "filter by pattern   - exclude items from deletion\n"
- 		    "quit                - stop cleaning\n"
- 		    "help                - this screen\n"
- 		    "?                   - help for prompt selection"
-@@ -641,6 +708,7 @@ static void interactive_main_loop(void)
- 		struct menu_stuff menu_stuff;
- 		struct menu_item menus[] = {
- 			{'c', "clean",			0, clean_cmd},
-+			{'f', "filter by pattern",	0, filter_by_patterns_cmd},
- 			{'q', "quit",			0, quit_cmd},
- 			{'h', "help",			0, help_cmd},
- 		};
++quit::
++
++  This lets you quit without do cleaning.
++
++help::
++
++  Show brief usage of interactive git-clean.
++
+ SEE ALSO
+ --------
+ linkgit:gitignore[5]
 -- 
 1.8.3.1.756.g41beab0
