@@ -1,91 +1,70 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/2] commit: make it work with status.short
-Date: Mon, 24 Jun 2013 18:15:12 +0530
-Message-ID: <1372077912-18625-3-git-send-email-artagnon@gmail.com>
-References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 24 14:49:01 2013
+Subject: Re: [PATCH 0/6] Reroll of rr/triangular-push-fix
+Date: Mon, 24 Jun 2013 19:21:05 +0530
+Message-ID: <CALkWK0=L4X=5UrCPygoUeLo9byvRKh4bez0DVB5iqatLvdEEfA@mail.gmail.com>
+References: <1372048388-16742-1-git-send-email-gitster@pobox.com>
+ <CALkWK0kDwMq-ADRPShOdCy2Vh+zj9J9A0A4CFv21aKZFeiMs+w@mail.gmail.com> <7vli60c4gu.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 15:51:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur6CW-0004ZQ-0n
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 14:48:56 +0200
+	id 1Ur7BO-0002i4-7M
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 15:51:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101Ab3FXMsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 08:48:45 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:64311 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750902Ab3FXMsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 08:48:43 -0400
-Received: by mail-pa0-f52.google.com with SMTP id kq13so10966696pab.39
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 05:48:42 -0700 (PDT)
+	id S1751269Ab3FXNvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 09:51:46 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:52223 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751253Ab3FXNvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 09:51:45 -0400
+Received: by mail-ie0-f171.google.com with SMTP id qd12so24958392ieb.16
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 06:51:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=KPzL4ahzLdV9RGApi7+Gbad5arw/AMd6/qtK08Bh9mw=;
-        b=eDF14XvJZUNLulfhq/4E/Z9hSTzHUo0I4/PFEz1wPF5fROqdtYJmqUtqZRLmo7DVQY
-         bbFdL7MkX2Uv7M2clKr/Jl2VMZbmTiCP9fG8l0+Q6FP23Z6xq4DwUl8+Xduow/rd6AvP
-         GsiZvUwFK/buzmyqmuVUhGa/zskGvsgQ5jJ/WaBfTk6y7tOsB83o4SD6KnCAuLq8hvcK
-         9Jaj62rzFIA86bEuO+yDhipy5QziJeGfMveG6FO9ydHS9yshtPr56rd7t9fpcl2zlfOM
-         Yw7BeYNbdMdoR9IwY34PvVxdNCCB1v/PEdm4m0lwkGDhWeqaBwRhvob9ZYuIhFIjmONr
-         Z8ZA==
-X-Received: by 10.66.141.104 with SMTP id rn8mr8261603pab.52.1372078122771;
-        Mon, 24 Jun 2013 05:48:42 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.185.186])
-        by mx.google.com with ESMTPSA id yj2sm18024267pbb.40.2013.06.24.05.48.40
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 24 Jun 2013 05:48:42 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.550.gd96f26e.dirty
-In-Reply-To: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=QypKcoX4tSkPx8K8uy3FoGM1N9fH+0nn8Vomuah0WZw=;
+        b=Fs9g+knJbZSkZYdGUAk0SxFS/9Kk6IQSMIkiJWp35lZT1FUc4RRW3apbrsa+KZ77iJ
+         kGrwEEF2P6MYxxXg82dWpQjM4Kk9zQhDn0LGMpzJpEKq56UwjZ7SIf7WfuzAA2Ct6YQw
+         jBjtV1dTTBhYfAMZvYEFGBXLTXcWqvJk7+jkZTSRIl8oh1Z/Y3H8i3EWad/oiStGG3a+
+         2FZOUQWxLB4a82NcJ2gOGPmD8c2VxXZGmxeLxLyD7sdOsrX/71BmtZ+dFwnksZZpYWVH
+         qB+9P2LKDayEq4dfnkWb8pJJrUgw8kxjgPWvgfdUat8MudxorJrFkNPXfVeuvcffl+l6
+         7Ntw==
+X-Received: by 10.50.47.105 with SMTP id c9mr5546916ign.50.1372081905377; Mon,
+ 24 Jun 2013 06:51:45 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Mon, 24 Jun 2013 06:51:05 -0700 (PDT)
+In-Reply-To: <7vli60c4gu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228811>
 
-50e4f75 (status: introduce status.short to enable --short by default,
-2013-06-11) introduced a regression in git commit; it is now impossible
-to commit with status.short set.
+Junio C Hamano wrote:
+> 'simple' is supposed to be an easy and safe default to help new
+> people.  Your original patch to change its semantics for the central
+> workflow from the current 'make sure upstream is set and set to the
+> same name' to 'anything goes' is making the mode more dangerous than
+> the corresponding 'upstream'.  Such a mode may have its place, but
+> labelling such a mode with rough edges as 'simple' and forcing it on
+> new people _is_ stupid, IMHO.
 
-This happens because commit internally runs run_status() to set
-s->commitable and determine whether or not there is something to
-commit.  The problem arises from the fact that only STATUS_FORMAT_NONE
-(or STATUS_FORMAT_LONG) is equipped to set s->commitable.
-7c9f7038 (commit: support alternate status formats, 2009-09-05) clearly
-states that --short and --porcelain imply --dry-run and are therefore
-only intended for display purposes.
+Oh, I agree that "anything goes" was the wrong approach.  However, I
+think a sane default for branch.$branch.merge is a good way forward.
 
-The bigger problem is that it is impossible to differentiate between a
-status_format set by the command-line option parser versus that set by
-the config parser.  So these two are exactly equivalent:
+> In any case, the good news is, if you start strict, and if it turns
+> out to be stricter than necessary, it is easier to loosen it later,
+> because nobody would be relying on an operation to _fail_.
 
-  $ git -c status.short=true commit
-  $ git commit --short
+Okay,  I will quote you if you raise issues about "preserving how it
+has historically been functioning" when I complete the upstream-fix
+topic.
 
-To alleviate this problem, clear status_format as soon as the config
-parser has finished its work to nullify the effect of parsing
-status.short, and get commit to work again.
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- builtin/commit.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 896f002..dc5ed7d 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1448,6 +1448,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	wt_status_prepare(&s);
- 	gitmodules_config();
- 	git_config(git_commit_config, &s);
-+	status_format = STATUS_FORMAT_NONE; /* Ignore status.short */
- 	determine_whence(&s);
- 	s.colopts = 0;
- 
--- 
-1.8.3.1.550.gd96f26e.dirty
+There's no need to stall this series then: [1/6] to [5/6] largely look
+good-to-merge; drop [6/6], as it needs more thought.
