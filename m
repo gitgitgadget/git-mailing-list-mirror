@@ -1,123 +1,102 @@
-From: Arnaud Fontaine <arnau@debian.org>
-Subject: [PATCH] Do not ignore merge options in interactive rebase
-Date: Mon, 24 Jun 2013 16:47:32 +0900
-Organization: Debian
-Message-ID: <87ppvcx84r.fsf@duckcorp.org>
-References: <87bo70dokb.fsf@duckcorp.org>
-	<7vr4fvkxew.fsf@alter.siamese.dyndns.org>
-	<87bo6wyn0z.fsf@duckcorp.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 6/7] rebase: write better reflog messages
+Date: Mon, 24 Jun 2013 00:57:40 -0700
+Message-ID: <7vtxkoc557.fsf@alter.siamese.dyndns.org>
+References: <1371629089-27008-1-git-send-email-artagnon@gmail.com>
+	<1371629089-27008-7-git-send-email-artagnon@gmail.com>
+	<7vfvw8dw9m.fsf@alter.siamese.dyndns.org>
+	<CALkWK0kj3UOx8sq+h=L0giUC-vn+h3by9o_6YbjA8ArRXZfgZw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 24 09:47:45 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 09:57:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur1V0-0007lA-4D
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 09:47:42 +0200
+	id 1Ur1el-0007AA-6m
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 09:57:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753074Ab3FXHrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 03:47:37 -0400
-Received: from Orfeo.duckcorp.org ([193.17.192.211]:40028 "EHLO
-	mx1.duckcorp.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752824Ab3FXHrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 03:47:37 -0400
-Received: from localhost (ip6-localhost [IPv6:::1])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1752931Ab3FXH5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 03:57:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64374 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752785Ab3FXH5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 03:57:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 70CB127708;
+	Mon, 24 Jun 2013 07:57:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ncTviQQ7s655fZ9CX8zfXeobkyo=; b=rj77dY
+	EiYgwK/inIzjgnLiff4cZh9fNIXCK9pKbh/7TcpPkxmnl9hqJZfU3BvMFZv2C7GR
+	toWY+9k+TUgLFKzJ6jAtxP3aCCPdLM8VYNTlDsocqdhvr1m7sW23WDSqv9l0kPzJ
+	1ppB5gmZuoKfj3lVys0xJ7bJEi5lFryak228Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Q//MPXT2jJIleRgg9wDosVtPiie0BPfp
+	ZU0MxF23LzoBi1kR8ScWMInYitMuuQoSRTSKaLsZRDvCq+TXivHIBFE775fQ1Eh6
+	Zy5THOkWCRJNw+sry3hbHbPjXGS3V2M6Y2y1g5ldbfIPqY0qID94Y7pG+VWdCInL
+	2J4xVBo5aM0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 673D927707;
+	Mon, 24 Jun 2013 07:57:42 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mx1.duckcorp.org (Postfix) with ESMTPSA id 3bf2fG6n22z2J50;
-	Mon, 24 Jun 2013 09:47:34 +0200 (CEST)
-X-URL: http://www.debian.org
-X-Operating-System: Debian GNU/Linux
-X-GnuPG-KeyID: 5E3619D3
-X-PGP-Fingerprint: D792 B8A5 A567 B001 C342  2613 BDF2 A220 5E36 19D3
-In-Reply-To: <87bo6wyn0z.fsf@duckcorp.org> (Arnaud Fontaine's message of "Mon,
-	24 Jun 2013 16:40:28 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE18427706;
+	Mon, 24 Jun 2013 07:57:41 +0000 (UTC)
+In-Reply-To: <CALkWK0kj3UOx8sq+h=L0giUC-vn+h3by9o_6YbjA8ArRXZfgZw@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 24 Jun 2013 12:37:46 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BF24BD40-DCA3-11E2-A9BB-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228788>
 
-Fix inconsistency where `--strategy` and/or `--strategy-option` can be
-specified in git rebase, but with `--interactive` argument only there
-were completely ignored.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Signed-off-by: Arnaud Fontaine <arnau@debian.org>
----
- git-rebase--interactive.sh    | 13 ++++++++++---
- t/t3404-rebase-interactive.sh | 11 +++++++++++
- 2 files changed, 21 insertions(+), 3 deletions(-)
+>>> +     # always reset GIT_REFLOG_ACTION before calling any external
+>>> +     # scripts; they have no idea about our base_reflog_action
+>>> +     GIT_REFLOG_ACTION="$base_reflog_action"
+>>>       git am $git_am_opt --rebasing --resolvemsg="$resolvemsg"
+>>
+>> Why does this reroll still use this base_reflog_action convention?
+>
+> Because it's simple and it makes sense.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index f953d8d..e558397 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -80,6 +80,13 @@ amend="$state_dir"/amend
- rewritten_list="$state_dir"/rewritten-list
- rewritten_pending="$state_dir"/rewritten-pending
- 
-+strategy_args=
-+if test -n "$do_merge"
-+then
-+	strategy_args="${strategy+--strategy=$strategy}
-+ $(echo $strategy_opts | sed "s/'--\([^']*\)'/-X\1/g")"
-+fi
-+
- GIT_CHERRY_PICK_HELP="$resolvemsg"
- export GIT_CHERRY_PICK_HELP
- 
-@@ -239,7 +246,7 @@ pick_one () {
- 
- 	test -d "$rewritten" &&
- 		pick_one_preserving_merges "$@" && return
--	output git cherry-pick $empty_args $ff "$@"
-+	output git cherry-pick $strategy_args $empty_args $ff "$@"
- }
- 
- pick_one_preserving_merges () {
-@@ -341,7 +348,7 @@ pick_one_preserving_merges () {
- 			# No point in merging the first parent, that's HEAD
- 			new_parents=${new_parents# $first_parent}
- 			if ! do_with_author output \
--				git merge --no-ff ${strategy:+-s $strategy} -m \
-+				git merge --no-ff $strategy_args -m \
- 					"$msg_content" $new_parents
- 			then
- 				printf "%s\n" "$msg_content" > "$GIT_DIR"/MERGE_MSG
-@@ -350,7 +357,7 @@ pick_one_preserving_merges () {
- 			echo "$sha1 $(git rev-parse HEAD^0)" >> "$rewritten_list"
- 			;;
- 		*)
--			output git cherry-pick "$@" ||
-+			output git cherry-pick $strategy_args "$@" ||
- 				die_with_patch $sha1 "Could not pick $sha1"
- 			;;
- 		esac
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 79e8d3c..8b6a36f 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -947,4 +947,15 @@ test_expect_success 'rebase -i respects core.commentchar' '
- 	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
- '
- 
-+test_expect_success 'rebase -i with --strategy and -X' '
-+	git checkout -b conflict-merge-use-theirs conflict-branch &&
-+	git reset --hard HEAD^ &&
-+	echo five >conflict &&
-+	echo Z >file1 &&
-+	git commit -a -m "one file conflict" &&
-+	EDITOR=true git rebase -i --strategy=recursive -Xours conflict-branch &&
-+	test $(git show conflict-branch:conflict) = $(cat conflict) &&
-+	test $(cat file1) = Z
-+'
-+
- test_done
--- 
-1.8.3.GIT
+Without $base_reflog_action hack, you have to make sure
+GIT_REFLOG_ACTION is reasonably pristine when you call out other
+people.  Even with $base_reflog_action, you still have to do the
+same "keep GIT_REFLOG_ACTION pristine" like this one.  And in
+addition, you have to maintain $base_reflog_action as if it is a
+read-only variable [*1*].
+
+So you are forcing people to maintain _two_ variables, instead of
+just _one_, without making anything simpler.
+
+What's so hard to understand why it is a wrong design?
+
+> ... and we're discussing absolutely trivial inconsequential rubbish
+> once again.  In any case, I've given up on arguing with you as it is
+> clear that I can't possibly win.  Do whatever you want.
+
+It is not about winning or losing.
+
+If you truly think this is "inconsequential", that unfortunately
+convinces me that you cannot yet be trusted enough to give you
+latitude to design interfaces that span multiple programs X-<.
+
+
+[Footnote]
+
+*1* The original orig_reflog_action you borrowed from was bad enough
+but it had an excuse that it was confined within the leaf level of
+the callchain.  It was merely done as a way to stash the vanilla
+action name (e.g. "rebase -i" before it is specialized into "rebase
+-i pick" etc) away, so that it can easily "lose" the speciailzation
+from GIT_REFLOG_ACTION while preparing for the next operation.
