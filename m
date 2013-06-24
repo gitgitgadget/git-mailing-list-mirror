@@ -1,110 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push: give early feedback
-Date: Mon, 24 Jun 2013 11:24:46 -0700
-Message-ID: <7vzjuf8iz5.fsf@alter.siamese.dyndns.org>
-References: <1372095662-24527-1-git-send-email-artagnon@gmail.com>
-	<20130624180419.GC26287@paksenarrion.iveqy.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] stage: remove unused, unreferenced builtin-alias
+Date: Mon, 24 Jun 2013 20:27:14 +0200
+Message-ID: <vpqobavnz3x.fsf@anie.imag.fr>
+References: <1372097546-27721-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 20:24:58 2013
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 20:27:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrBRd-00009C-KJ
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:24:54 +0200
+	id 1UrBUA-0002TN-6v
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:27:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753234Ab3FXSYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 14:24:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37785 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753194Ab3FXSYs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 14:24:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FA362B990;
-	Mon, 24 Jun 2013 18:24:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JbNhYLtQ6G2bdzK2jcNkOy5+S68=; b=FdPGO8
-	Tlnm9qT3yJaJndYvuY714isAnsx7voqanO6Vkt1uVjpTpf9Eofzqz7s/k0pUrrgA
-	nu4ouqCSm1pUhQVzP+rkGfKiL3ZjTPCjuMOx8m9saVUw1hpmzZz0+51xs0+NQ7yt
-	3XvL4/O0+491atQSzhsa0KMx/TKvfg9BtfiUQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DQs+Y4ndwLszTXuEY/Ot4fOgKcz3kaAR
-	87UjtWJMj7CLPg8ufDcGqGgucEFfm1x1EV2vVYxT+8pdwXOOcoIGKdwir3R8IIgU
-	9OQN6MqmV6zHbmAPV+58SRqQIDR7btKY/jIQqo1qGIV0Sp6GtSWxGMZ0u0y8FGmp
-	z6FmLUClM4c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 756052B98F;
-	Mon, 24 Jun 2013 18:24:48 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CEB402B98C;
-	Mon, 24 Jun 2013 18:24:47 +0000 (UTC)
-In-Reply-To: <20130624180419.GC26287@paksenarrion.iveqy.com> (Fredrik
-	Gustafsson's message of "Mon, 24 Jun 2013 20:04:19 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 59F33F0C-DCFB-11E2-A34C-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752984Ab3FXS10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 14:27:26 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36454 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752288Ab3FXS10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 14:27:26 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5OIRCeL029678
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 24 Jun 2013 20:27:12 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UrBTv-0002Td-26; Mon, 24 Jun 2013 20:27:15 +0200
+In-Reply-To: <1372097546-27721-1-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Mon, 24 Jun 2013 23:42:26 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 24 Jun 2013 20:27:13 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228892>
 
-Fredrik Gustafsson <iveqy@iveqy.com> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> On Mon, Jun 24, 2013 at 11:11:02PM +0530, Ramkumar Ramachandra wrote:
->> There are many configuration variables that determine exactly what a
->> push does.  Give the user early feedback so that she has a chance to
->> abort if she doesn't mean to push those refspecs to that destination
->> like:
->> 
->>   $ git push
->>   # pushing refspecs 'master next' to ram (^C to abort)
->> 
->> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
->> ---
->>  Goes without saying: this is an early preview.
->> 
->>  builtin/push.c | 6 ++++++
->>  1 file changed, 6 insertions(+)
->> 
->> diff --git a/builtin/push.c b/builtin/push.c
->> index 2d84d10..085d5ab 100644
->> --- a/builtin/push.c
->> +++ b/builtin/push.c
->> @@ -330,6 +330,7 @@ static int do_push(const char *repo, int flags)
->>  {
->>  	int i, errs;
->>  	struct remote *remote = pushremote_get(repo);
->> +	struct strbuf sb = STRBUF_INIT;
->>  	const char **url;
->>  	int url_nr;
->>  
->> @@ -375,6 +376,11 @@ static int do_push(const char *repo, int flags)
->>  	}
->>  	errs = 0;
->>  	url_nr = push_url_of_remote(remote, &url);
->> +
->> +	for (i = 0; i < refspec_nr; i++)
->> +		strbuf_addf(&sb, "%s%s", refspec[i], i == refspec_nr - 1 ? "": " ");
->> +	printf("# pushing refspecs '%s' to %s (^C to abort)\n", sb.buf, remote->name);
->> +
->
-> How about a strbuf_release here?
->
-> Can you really be sure that refspec_nr is set here?
+> 11920d2 (Add a built-in alias for 'stage' to the 'add' command,
+> 2008-12-01) added a the 'git stage' command which simply calls
+> cmd_add().  Since then, no references to it have been made anywhere on
+> the internet; 
 
-Doing this unconditionally when the user says "git push there this"
-would be mildly annoying.
+$ git sta<TAB>
+stage    stash    status 
 
-I think this belongs to either --verbose or even --debug, for people
-who are trying to make sure an underspecified "git push" (or "git
-push there") does what they want, but for those use cases, it
-probably is better to tie this to --dry-run.
+So the command is discoverable.
+
+Also, googling a bit gives me this:
+
+  http://git-scm.com/docs/git-stage
+
+It's not particularly visible, but it's discoverable.
+
+> there is no evidence that anyone even knows about its existence.
+
+I did :-\.
+
+I can very well live without it, but the few people like me who
+sometimes run "git stage" would be surprised if it stopped working
+without a deprecation period.
+
+(In my case, I read the thread so it's OK, but there may be others)
+
+>  Documentation/git-stage.txt | 23 -----------------------
+>  Makefile                    |  3 +--
+>  git.c                       |  1 -
+
+If you go for it, there's also the completion script:
+
+_git_stage ()
+{
+	_git_add
+}
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
