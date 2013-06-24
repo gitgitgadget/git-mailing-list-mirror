@@ -1,47 +1,47 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v14 04/16] Refactor quote_path_relative, remove unused params
-Date: Mon, 24 Jun 2013 23:21:28 +0800
-Message-ID: <c7b9df81fad6a5b87400ae7beb6e6c2b7d48a67b.1372087065.git.worldhello.net@gmail.com>
+Subject: [PATCH v14 05/16] Refactor write_name_quoted_relative, remove unused params
+Date: Mon, 24 Jun 2013 23:21:29 +0800
+Message-ID: <6e5f34b62ff6a7d6b379a5cabc07b849539fb08f.1372087065.git.worldhello.net@gmail.com>
 References: <cover.1372087065.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jun 24 17:22:29 2013
+X-From: git-owner@vger.kernel.org Mon Jun 24 17:22:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur8b0-0006R9-Sk
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 17:22:23 +0200
+	id 1Ur8b1-0006R9-K3
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 17:22:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751756Ab3FXPWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 11:22:17 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:40305 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751660Ab3FXPWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 11:22:14 -0400
-Received: by mail-pa0-f54.google.com with SMTP id kx10so11184108pab.13
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 08:22:13 -0700 (PDT)
+	id S1751829Ab3FXPWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 11:22:20 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:64774 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751660Ab3FXPWS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 11:22:18 -0400
+Received: by mail-pb0-f41.google.com with SMTP id rp16so11220461pbb.28
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 08:22:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=1NDYD7nRSEtctWbqiTuDIcIYgnaAac1aVXmSvoiOoDM=;
-        b=C7KOvsiFG4fKAOfk/b6+JOpAshRfVQzC7FbAJCDMvebYt+lYXDYS+Wb4GVS/Y19LGr
-         cg/yTbWLO6BjJqSiDXSnWlsi3T9W6eRHW/z8JTki6CSlyUTJZKUF7rxem3sTaHRE6/dX
-         z4z19tW4JYdk/tOxny8h1iiK+CxN4e1p1uVKC+9n2sEgOTaBwBZRJOTWnk8bn/P59hHh
-         ENLEky/betkfO5Wlr1EIYiWnjVK6HH8iR4Kb/pr/Cln5zuq7kgQFsjaLUYngR7cN9rdE
-         jdsB10JYn8M+eJACbhHWfCnyOO/YCOWu2tq1UYipSDXemfwA1kZx3GxgdZU6DVkoWoua
-         XUzA==
-X-Received: by 10.68.175.68 with SMTP id by4mr24276770pbc.53.1372087333825;
-        Mon, 24 Jun 2013 08:22:13 -0700 (PDT)
+        bh=tLOLHBeFBRxY0G2SifqF47Hjg5cR0GupUymPb7Kqcg4=;
+        b=f6W3jDeAZ5RVR5PxTjDUYGKlvXQPCLfm9dJze6Icp69EgMpWYI0WVfm22DTEIraXJG
+         QXK+M4qlI2CHQrsBI8ltosPdD8SMiQ1bvve5j3QiG0lwGMnW7Q1KMKtlgHAT3c2n+E3k
+         9fFzrlH14FK4di6GZ1YfZ3jgp1haxNuJWMIe9z6RkCoatKJp42L6qvMxpc1Ir7wqU9CQ
+         zAnB+iUZ3dnvTU/yaPC5wq4DDCysTeKIPRDrv+4xNjpcwmzHbPbs/srLAvyKYoJ+R7hu
+         5fyUXbZgaO53zqr8WujuEEy+KKf8Xam/3ETVKJZGv+bWs4RnnZpnqEUAvNoOI0ck7gsd
+         2YaA==
+X-Received: by 10.69.1.69 with SMTP id be5mr18767718pbd.138.1372087337771;
+        Mon, 24 Jun 2013 08:22:17 -0700 (PDT)
 Received: from localhost.localdomain ([114.248.133.39])
-        by mx.google.com with ESMTPSA id ix3sm18576807pbc.37.2013.06.24.08.22.09
+        by mx.google.com with ESMTPSA id ix3sm18576807pbc.37.2013.06.24.08.22.14
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 24 Jun 2013 08:22:12 -0700 (PDT)
+        Mon, 24 Jun 2013 08:22:16 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.756.g41beab0
 In-Reply-To: <cover.1372087065.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1372087065.git.worldhello.net@gmail.com>
@@ -50,245 +50,95 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228827>
 
 After substitute path_relative() in quote.c with relative_path() from
 path.c, parameters (such as len and prefix_len) are obsolete in function
-quote_path_relative(). Remove unused parameters and change the order of
-parameters for quote_path_relative() function.
+write_name_quoted_relative(). Remove unused parameters from
+write_name_quoted_relative() and related functions.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/clean.c    | 18 +++++++++---------
- builtin/grep.c     |  5 ++---
- builtin/ls-files.c |  2 +-
- quote.c            |  7 ++-----
- quote.h            |  4 ++--
- wt-status.c        | 17 ++++++++---------
- 6 files changed, 24 insertions(+), 29 deletions(-)
+ builtin/ls-files.c | 14 ++++++++------
+ quote.c            |  3 +--
+ quote.h            |  3 +--
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 04e39..f77f95 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -56,7 +56,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 	if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
- 			!resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
- 		if (!quiet) {
--			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+			quote_path_relative(path->buf, prefix, &quoted);
- 			printf(dry_run ?  _(msg_would_skip_git_dir) : _(msg_skip_git_dir),
- 					quoted.buf);
- 		}
-@@ -70,7 +70,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 		/* an empty dir could be removed even if it is unreadble */
- 		res = dry_run ? 0 : rmdir(path->buf);
- 		if (res) {
--			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+			quote_path_relative(path->buf, prefix, &quoted);
- 			warning(_(msg_warn_remove_failed), quoted.buf);
- 			*dir_gone = 0;
- 		}
-@@ -94,7 +94,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 			if (remove_dirs(path, prefix, force_flag, dry_run, quiet, &gone))
- 				ret = 1;
- 			if (gone) {
--				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+				quote_path_relative(path->buf, prefix, &quoted);
- 				string_list_append(&dels, quoted.buf);
- 			} else
- 				*dir_gone = 0;
-@@ -102,10 +102,10 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 		} else {
- 			res = dry_run ? 0 : unlink(path->buf);
- 			if (!res) {
--				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+				quote_path_relative(path->buf, prefix, &quoted);
- 				string_list_append(&dels, quoted.buf);
- 			} else {
--				quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+				quote_path_relative(path->buf, prefix, &quoted);
- 				warning(_(msg_warn_remove_failed), quoted.buf);
- 				*dir_gone = 0;
- 				ret = 1;
-@@ -127,7 +127,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 		if (!res)
- 			*dir_gone = 1;
- 		else {
--			quote_path_relative(path->buf, strlen(path->buf), &quoted, prefix);
-+			quote_path_relative(path->buf, prefix, &quoted);
- 			warning(_(msg_warn_remove_failed), quoted.buf);
- 			*dir_gone = 0;
- 			ret = 1;
-@@ -262,7 +262,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 				if (remove_dirs(&directory, prefix, rm_flags, dry_run, quiet, &gone))
- 					errors++;
- 				if (gone && !quiet) {
--					qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
-+					qname = quote_path_relative(directory.buf, prefix, &buf);
- 					printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
- 				}
- 			}
-@@ -272,11 +272,11 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 				continue;
- 			res = dry_run ? 0 : unlink(ent->name);
- 			if (res) {
--				qname = quote_path_relative(ent->name, -1, &buf, prefix);
-+				qname = quote_path_relative(ent->name, prefix, &buf);
- 				warning(_(msg_warn_remove_failed), qname);
- 				errors++;
- 			} else if (!quiet) {
--				qname = quote_path_relative(ent->name, -1, &buf, prefix);
-+				qname = quote_path_relative(ent->name, prefix, &buf);
- 				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
- 			}
- 		}
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 159e65..a419c 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -286,8 +286,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
- 	struct strbuf pathbuf = STRBUF_INIT;
- 
- 	if (opt->relative && opt->prefix_length) {
--		quote_path_relative(filename + tree_name_len, -1, &pathbuf,
--				    opt->prefix);
-+		quote_path_relative(filename + tree_name_len, opt->prefix, &pathbuf);
- 		strbuf_insert(&pathbuf, 0, filename, tree_name_len);
- 	} else {
- 		strbuf_addstr(&pathbuf, filename);
-@@ -318,7 +317,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	if (opt->relative && opt->prefix_length)
--		quote_path_relative(filename, -1, &buf, opt->prefix);
-+		quote_path_relative(filename, opt->prefix, &buf);
- 	else
- 		strbuf_addstr(&buf, filename);
- 
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 3a410c..16d4f 100644
+index 16d4f..df83f9 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -391,7 +391,7 @@ int report_path_error(const char *ps_matched, const char **pathspec, const char
- 		if (found_dup)
- 			continue;
+@@ -46,10 +46,12 @@ static const char *tag_modified = "";
+ static const char *tag_skip_worktree = "";
+ static const char *tag_resolve_undo = "";
  
--		name = quote_path_relative(pathspec[num], -1, &sb, prefix);
-+		name = quote_path_relative(pathspec[num], prefix, &sb);
- 		error("pathspec '%s' did not match any file(s) known to git.",
- 		      name);
- 		errors++;
+-static void write_name(const char* name, size_t len)
++static void write_name(const char *name)
+ {
+-	write_name_quoted_relative(name, len, prefix, prefix_len, stdout,
+-			line_terminator);
++
++	/* turn off prefix, if run with "--full-name" */
++	write_name_quoted_relative(name, prefix_len ? prefix : NULL,
++				   stdout, line_terminator);
+ }
+ 
+ static void show_dir_entry(const char *tag, struct dir_entry *ent)
+@@ -63,7 +65,7 @@ static void show_dir_entry(const char *tag, struct dir_entry *ent)
+ 		return;
+ 
+ 	fputs(tag, stdout);
+-	write_name(ent->name, ent->len);
++	write_name(ent->name);
+ }
+ 
+ static void show_other_files(struct dir_struct *dir)
+@@ -163,7 +165,7 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
+ 		       find_unique_abbrev(ce->sha1,abbrev),
+ 		       ce_stage(ce));
+ 	}
+-	write_name(ce->name, ce_namelen(ce));
++	write_name(ce->name);
+ 	if (debug_mode) {
+ 		struct stat_data *sd = &ce->ce_stat_data;
+ 
+@@ -198,7 +200,7 @@ static void show_ru_info(void)
+ 			printf("%s%06o %s %d\t", tag_resolve_undo, ui->mode[i],
+ 			       find_unique_abbrev(ui->sha1[i], abbrev),
+ 			       i + 1);
+-			write_name(path, len);
++			write_name(path);
+ 		}
+ 	}
+ }
 diff --git a/quote.c b/quote.c
-index 64ff3..ebb8 100644
+index ebb8..5c880 100644
 --- a/quote.c
 +++ b/quote.c
-@@ -325,8 +325,8 @@ void write_name_quoted_relative(const char *name, size_t len,
+@@ -312,8 +312,7 @@ void write_name_quotedpfx(const char *pfx, size_t pfxlen,
+ 	fputc(terminator, fp);
  }
  
- /* quote path as relative to the given prefix */
--char *quote_path_relative(const char *in, int len,
--			  struct strbuf *out, const char *prefix)
-+char *quote_path_relative(const char *in, const char *prefix,
-+			  struct strbuf *out)
+-void write_name_quoted_relative(const char *name, size_t len,
+-				const char *prefix, size_t prefix_len,
++void write_name_quoted_relative(const char *name, const char *prefix,
+ 				FILE *fp, int terminator)
  {
  	struct strbuf sb = STRBUF_INIT;
- 	const char *rel = relative_path(in, prefix, &sb);
-@@ -334,9 +334,6 @@ char *quote_path_relative(const char *in, int len,
- 	quote_c_style_counted(rel, strlen(rel), out, NULL, 0);
- 	strbuf_release(&sb);
- 
--	if (!out->len)
--		strbuf_addstr(out, "./");
--
- 	return out->buf;
- }
- 
 diff --git a/quote.h b/quote.h
-index 13315..5610159 100644
+index 5610159..ed110 100644
 --- a/quote.h
 +++ b/quote.h
-@@ -65,8 +65,8 @@ extern void write_name_quoted_relative(const char *name, size_t len,
+@@ -60,8 +60,7 @@ extern void quote_two_c_style(struct strbuf *, const char *, const char *, int);
+ extern void write_name_quoted(const char *name, FILE *, int terminator);
+ extern void write_name_quotedpfx(const char *pfx, size_t pfxlen,
+                                  const char *name, FILE *, int terminator);
+-extern void write_name_quoted_relative(const char *name, size_t len,
+-		const char *prefix, size_t prefix_len,
++extern void write_name_quoted_relative(const char *name, const char *prefix,
  		FILE *fp, int terminator);
  
  /* quote path as relative to the given prefix */
--extern char *quote_path_relative(const char *in, int len,
--			  struct strbuf *out, const char *prefix);
-+extern char *quote_path_relative(const char *in, const char *prefix,
-+			  struct strbuf *out);
- 
- /* quoting as a string literal for other languages */
- extern void perl_quote_print(FILE *stream, const char *src);
-diff --git a/wt-status.c b/wt-status.c
-index 438a40..85580 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -243,7 +243,7 @@ static void wt_status_print_unmerged_data(struct wt_status *s,
- 	struct strbuf onebuf = STRBUF_INIT;
- 	const char *one, *how = _("bug");
- 
--	one = quote_path(it->string, -1, &onebuf, s->prefix);
-+	one = quote_path(it->string, s->prefix, &onebuf);
- 	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
- 	switch (d->stagemask) {
- 	case 1: how = _("both deleted:"); break;
-@@ -297,8 +297,8 @@ static void wt_status_print_change_data(struct wt_status *s,
- 		    change_type);
- 	}
- 
--	one = quote_path(one_name, -1, &onebuf, s->prefix);
--	two = quote_path(two_name, -1, &twobuf, s->prefix);
-+	one = quote_path(one_name, s->prefix, &onebuf);
-+	two = quote_path(two_name, s->prefix, &twobuf);
- 
- 	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
- 	switch (status) {
-@@ -706,8 +706,7 @@ static void wt_status_print_other(struct wt_status *s,
- 		struct string_list_item *it;
- 		const char *path;
- 		it = &(l->items[i]);
--		path = quote_path(it->string, strlen(it->string),
--				  &buf, s->prefix);
-+		path = quote_path(it->string, s->prefix, &buf);
- 		if (column_active(s->colopts)) {
- 			string_list_append(&output, path);
- 			continue;
-@@ -1291,7 +1290,7 @@ static void wt_shortstatus_unmerged(struct string_list_item *it,
- 	} else {
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
--		one = quote_path(it->string, -1, &onebuf, s->prefix);
-+		one = quote_path(it->string, s->prefix, &onebuf);
- 		printf(" %s\n", one);
- 		strbuf_release(&onebuf);
- 	}
-@@ -1319,7 +1318,7 @@ static void wt_shortstatus_status(struct string_list_item *it,
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
- 		if (d->head_path) {
--			one = quote_path(d->head_path, -1, &onebuf, s->prefix);
-+			one = quote_path(d->head_path, s->prefix, &onebuf);
- 			if (*one != '"' && strchr(one, ' ') != NULL) {
- 				putchar('"');
- 				strbuf_addch(&onebuf, '"');
-@@ -1328,7 +1327,7 @@ static void wt_shortstatus_status(struct string_list_item *it,
- 			printf("%s -> ", one);
- 			strbuf_release(&onebuf);
- 		}
--		one = quote_path(it->string, -1, &onebuf, s->prefix);
-+		one = quote_path(it->string, s->prefix, &onebuf);
- 		if (*one != '"' && strchr(one, ' ') != NULL) {
- 			putchar('"');
- 			strbuf_addch(&onebuf, '"');
-@@ -1347,7 +1346,7 @@ static void wt_shortstatus_other(struct string_list_item *it,
- 	} else {
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
--		one = quote_path(it->string, -1, &onebuf, s->prefix);
-+		one = quote_path(it->string, s->prefix, &onebuf);
- 		color_fprintf(s->fp, color(WT_STATUS_UNTRACKED, s), "%s", sign);
- 		printf(" %s\n", one);
- 		strbuf_release(&onebuf);
 -- 
 1.8.3.1.756.g41beab0
