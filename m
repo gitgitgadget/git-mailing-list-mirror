@@ -1,143 +1,130 @@
-From: Arnaud Fontaine <arnau@debian.org>
-Subject: Re: [PATCH] Do not ignore merge options in interactive rebase
-Date: Mon, 24 Jun 2013 16:40:28 +0900
-Organization: Debian
-Message-ID: <87bo6wyn0z.fsf@duckcorp.org>
-References: <87bo70dokb.fsf@duckcorp.org>
-	<7vr4fvkxew.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] push: change `simple` to accommodate triangular workflows
+Date: Mon, 24 Jun 2013 00:43:31 -0700
+Message-ID: <7v38s8dkd8.fsf@alter.siamese.dyndns.org>
+References: <1372048388-16742-1-git-send-email-gitster@pobox.com>
+	<1372048388-16742-4-git-send-email-gitster@pobox.com>
+	<CALKQrgfAT9GhD-_tZHr9wRA6R6g7ttDWTsmUQXdWUhG-gwNBqQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 24 09:40:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Jun 24 09:43:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur1OC-0002ea-Qx
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 09:40:41 +0200
+	id 1Ur1R4-0004ZK-SS
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 09:43:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752742Ab3FXHkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 03:40:37 -0400
-Received: from Orfeo.duckcorp.org ([193.17.192.211]:39950 "EHLO
-	mx1.duckcorp.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752585Ab3FXHkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 03:40:36 -0400
-Received: from localhost (ip6-localhost [IPv6:::1])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1752959Ab3FXHnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 03:43:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64428 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752952Ab3FXHne (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 03:43:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1022D27077;
+	Mon, 24 Jun 2013 07:43:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Khs5776zNew72JenFWXcMfFAU7c=; b=Rp4LAG
+	KGZQ265mSXwrRdS31qCTpe+I/wSWsXUE2cGucyCNfSQ6Agn/w5FnTl8iYc8/uV4m
+	u/AlZxiiTZ3vhxk5OUJ80Cl1wnA+X3hAvIhwdy8+B9ZY904FJTkYKv8PF+lMNfqS
+	J0jj5Omjgg9zUjcrE4CR+4ITZxe9zCyFmBYPs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ABukozgckqODLoFVaFn5sSfxvL6BBgi7
+	STyIky1bg/4NFvVqyVklSkdCM/iN7r0JrjVvnsbcnS/E8DsogjYit4mQOxIlSK8z
+	bowswTGEZ9GzoXJMWsT87ILd3s7PoQsM3cOANVKLTt/qkEL75I24F5oEaBZ/d0kG
+	yJrMghLMDME=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D13BB27076;
+	Mon, 24 Jun 2013 07:43:33 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mx1.duckcorp.org (Postfix) with ESMTPSA id 3bf2V70rvdz2J50;
-	Mon, 24 Jun 2013 09:40:31 +0200 (CEST)
-X-URL: http://www.debian.org
-X-Operating-System: Debian GNU/Linux
-X-GnuPG-KeyID: 5E3619D3
-X-PGP-Fingerprint: D792 B8A5 A567 B001 C342  2613 BDF2 A220 5E36 19D3
-In-Reply-To: <7vr4fvkxew.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 21 Jun 2013 13:43:03 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2628F27075;
+	Mon, 24 Jun 2013 07:43:33 +0000 (UTC)
+In-Reply-To: <CALKQrgfAT9GhD-_tZHr9wRA6R6g7ttDWTsmUQXdWUhG-gwNBqQ@mail.gmail.com>
+	(Johan Herland's message of "Mon, 24 Jun 2013 08:58:23 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C53FBBD2-DCA1-11E2-9D21-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228784>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johan Herland <johan@herland.net> writes:
 
-> Arnaud Fontaine <arnau@debian.org> writes:
+>> +static void setup_push_current(struct remote *remote, struct branch *branch)
+>> +{
+>> +       if (!branch)
+>> +               die(_(message_detached_head_die), remote->name);
+>> +       add_refspec(branch->name);
 >
->> Merge strategy and its options can  be specified in `git rebase`, but
->> with `--interactive`, they were completely ignored.
+> Here (and above) we add a refspec to tell Git exactly what to push
+> from the local end, and into what on the remote end.
+
+Correct.
+
+> Is it possible to end up with multiple simultaneous refspecs
+> matching the same local ref, but mapping to different remote refs?
+
+Sorry, I don't follow.  If you say "push.default = current" and you
+do not give any other stronger clue (e.g. "git push origin master"
+on the command line, or "git push [origin]" with remote.origin.push
+configured), the above function is called and sets up your current
+branch to be pushed to the same.
+
+It is a bit more interesting for "push.default = upstream", which is
+for centralized workflow.  If you forked frotz and nitfol branches
+both from their master, e.g.
+
+	$ git checkout -t -b frotz origin/master
+	$ git checkout -t -b nitfol origin/master
+
+after having worked on one of the branches, when you want to push it
+back, the result of working on the topic branch goes back to master,
+but I think that is what you want in the centralized workflow.  If
+it fast-forwards, you are fine, and if it does not, you will fetch
+your upstream, i.e. their master, integrate your work with it, and
+then push it back.  At that point, you are playing the role of the
+integrator of the shared master branch, because what you do on your
+topic branch when you integrate others' work from master is exactly
+that---you are not perfecting the theme you wanted to achieve on
+your topic branch, but are integrating that result into shared
+master to advance the overall state of the project.  So pushing the
+result back to 'master' makes perfect sense.  After that, when you
+have to restart your work on the other branch, you may first "pull
+--rebase" before continuing, or you may just keep going with your
+work based on a tad old origin/master.  But when you finish working
+on that topic and are about to push it out, you would be doing the
+same "tentatively don the central integrator's hat", and again it
+makes sense to push the result to 'master'.
+
+So in that sense, it is not "which one wins".  It is more like "you
+can push only after you become up to date, so there isn't one branch
+overwriting the other one."
+
+That is how I view it, anyway.
+
+ cf. http://git-blame.blogspot.com/2013/06/fun-with-various-workflows-1.html
+
+>> +static int is_workflow_triagular(struct remote *remote)
 >
-> And why  is it a bad  thing?  If you meant  s/--interactive/-m/ in the
-> above, then I can sort of understand the justification, though.
+> s/triagular/triangular/
 
-Sorry, it was not  clear. I meant that you can  do 'rebase -m --strategy
-recursive'. But with 'rebase --interactive -m --strategy recursive', '-m
---strategy recursive' is ignored. To  me, this is not consistent because
-the behavior is  different in interactive mode...   Personally, I needed
-to specify the strategy and its options while using interactive mode and
-it seems I'm not the only one[0].
+Thanks.
 
->> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
->> old mode 100644
->> new mode 100755
 >
-> I see an unjustifiable mode change here.
-
-Sorry about that, I fixed it.
-
->> index f953d8d..c157fdf
->> --- a/git-rebase--interactive.sh
->> +++ b/git-rebase--interactive.sh
->> @@ -239,7 +239,16 @@ pick_one () {
->>  
->>  	test -d "$rewritten" &&
->>  		pick_one_preserving_merges "$@" && return
->> -	output git cherry-pick $empty_args $ff "$@"
->> +
->> +	if test -n "$do_merge"
->> +	then
+>> +{
+>> +       struct remote *fetch_remote = remote_get(NULL);
+>> +       return (fetch_remote && fetch_remote != remote);
 >
-> So you _did_ mean "rebase -m"?
+> This changed from a strcmp() to a pointer compare. That might be safe,
+> depending on the sources of the two struct remote *, but I'm not sure.
 
-I really  meant 'rebase --interactive  -m'. do_merge  is set to  true if
-either '--strategy' or '-m' or '-X' is given according to git-rebase.sh.
-
->> +		test -z "$strategy" && strategy=recursive
->> +		output git cherry-pick --strategy=$strategy \
->
-> This is a bad change.
->
-> I would understand if the above were:
->
-> 	git cherry-pick ${strategy+--strategy=$strategy} ...
->
-> in other  words, "if there is  no strategy specified, do  not override
-> the  configured  default  that  might  be  different  from  recursive"
-> (pull.twohead may be set to resolve).
-
-Indeed, I did not know about that.  I wrongly thought it was a good idea
-to  do   the  same   as  both   git-rebase  (when   -X  is   given)  and
-git-rebase--merge  which  do the  same  test  ('test -z  "$strategy"  &&
-strategy=recursive').  However  after checking  more carefully,  I guess
-that, for the former case, it  is because only recursive currently takes
-options,  whereas,  for  the  latter  case, it  is  to  call  a  default
-git-rebase-$strategy.
-
->> +			$(echo $strategy_opts | sed "s/'--\([^']*\)'/-X\1/g") \
->
-> Is it guaranteed $startegy_opts do not have a space in it?
-
-strategy_opts may be something like (git-rebase.sh): "'--foo' '--bar'",
-but I'm not sure what is wrong if there is a space in it though.
-
-> There is a  call to "git merge" that  uses "${strategy+-s $strategy}",
-> but it does not seem to propagate the strategy option.  Does it need a
-> similar change?  It  seems that the first step might  be to factor out
-> these  calls  to the  "git  cherry-pick"  and  "git merge"  to  helper
-> functions  to make  it easier  to call  them with  -s/-X options  in a
-> consistent way.
-
-As far as I understand, yes. I changed it. As it is really short, I just
-added an if/else inside the script itself, not sure if that's ok...
-
->> +			$empty_args $ff "$@"
->> +	else
->> +		output git cherry-pick $empty_args $ff "$@"
->> +	fi
->
-> It seems that there is another call to "git cherry-pick" in the script
-> ("git grep" for it).  Does it need a similar change?
-
-As far as I understand, yes. So I changed it as well.
-
-I  have sent  the fixed  patch in  my next  email. Many  thanks for  the
-review!
-
-Cheers,
--- 
-Arnaud Fontaine
-
-[0] http://git.661346.n2.nabble.com/git-rebase-interactive-does-not-respect-merge-options-td7500093.html
+Given the way remote_get() works, it should be correct, I think.
