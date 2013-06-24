@@ -1,68 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] t/t5528-push-default: generalize test_push_*
-Date: Mon, 24 Jun 2013 00:28:14 -0700
-Message-ID: <7v7ghkdl2p.fsf@alter.siamese.dyndns.org>
-References: <1372048388-16742-1-git-send-email-gitster@pobox.com>
-	<1372048388-16742-5-git-send-email-gitster@pobox.com>
-	<CALKQrgeSbY3spjTp_m7kgt4TkFi8B5pNpLQ8wvDD+qkCYa+Mww@mail.gmail.com>
+From: Arnaud Fontaine <arnau@debian.org>
+Subject: Re: [PATCH] Do not ignore merge options in interactive rebase
+Date: Mon, 24 Jun 2013 16:40:28 +0900
+Organization: Debian
+Message-ID: <87bo6wyn0z.fsf@duckcorp.org>
+References: <87bo70dokb.fsf@duckcorp.org>
+	<7vr4fvkxew.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Jun 24 09:28:30 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 24 09:40:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur1CO-0002fr-9a
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 09:28:28 +0200
+	id 1Ur1OC-0002ea-Qx
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 09:40:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753060Ab3FXH2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 03:28:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52583 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752940Ab3FXH2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 03:28:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C2BF28965;
-	Mon, 24 Jun 2013 07:28:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=t1SoUiyt4zY+oIdOznqxwpw7KHs=; b=PCc2sc
-	1KsUElnF1UXl7PQeAzXCTshlzqhwYZvcIsD4cuGvffKJw6bwJdcmIpLnzrsqHlYE
-	qgxUcBV9NvQcmuYqh4tgJgPdiBgU0Gwy46LuOiyCKzHG8jb4a/nj491Vi4SU1srn
-	aSuim+9PwBIljERdonSFrcQs50d4BO5yupaKs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hWASdFeydf0YXBmExdKuywGgkiN260no
-	udv10UmMzaY+9aO/lCYqRbGc3EyNrWT1PyCV3BGfH6U1+G2YAirPI/CJZTLm7wUK
-	XrRlPFWQE+eQLVCDTO+j5DCE65m5Sx3Cweu96ZQ349diJqwX9pFHVjgNBC7USTvV
-	puBWq3AZloo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 370E628962;
-	Mon, 24 Jun 2013 07:28:16 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1752742Ab3FXHkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 03:40:37 -0400
+Received: from Orfeo.duckcorp.org ([193.17.192.211]:39950 "EHLO
+	mx1.duckcorp.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752585Ab3FXHkg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 03:40:36 -0400
+Received: from localhost (ip6-localhost [IPv6:::1])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9405D28956;
-	Mon, 24 Jun 2013 07:28:15 +0000 (UTC)
-In-Reply-To: <CALKQrgeSbY3spjTp_m7kgt4TkFi8B5pNpLQ8wvDD+qkCYa+Mww@mail.gmail.com>
-	(Johan Herland's message of "Mon, 24 Jun 2013 08:58:31 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A2678394-DC9F-11E2-9154-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
+	by mx1.duckcorp.org (Postfix) with ESMTPSA id 3bf2V70rvdz2J50;
+	Mon, 24 Jun 2013 09:40:31 +0200 (CEST)
+X-URL: http://www.debian.org
+X-Operating-System: Debian GNU/Linux
+X-GnuPG-KeyID: 5E3619D3
+X-PGP-Fingerprint: D792 B8A5 A567 B001 C342  2613 BDF2 A220 5E36 19D3
+In-Reply-To: <7vr4fvkxew.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 21 Jun 2013 13:43:03 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228783>
 
-Johan Herland <johan@herland.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> +       git --git-dir="${3:-repo1}" log -1 --format='%h %s' "$2" >actual &&
+> Arnaud Fontaine <arnau@debian.org> writes:
 >
-> Isn't  ${3:-repo1} a bashism?
+>> Merge strategy and its options can  be specified in `git rebase`, but
+>> with `--interactive`, they were completely ignored.
+>
+> And why  is it a bad  thing?  If you meant  s/--interactive/-m/ in the
+> above, then I can sort of understand the justification, though.
 
-I do not think so.  But now I looked at it again, I think I would
-use ${3-repo1} form in this case myself.  No caller passes an empty
-string to the third place.
+Sorry, it was not  clear. I meant that you can  do 'rebase -m --strategy
+recursive'. But with 'rebase --interactive -m --strategy recursive', '-m
+--strategy recursive' is ignored. To  me, this is not consistent because
+the behavior is  different in interactive mode...   Personally, I needed
+to specify the strategy and its options while using interactive mode and
+it seems I'm not the only one[0].
+
+>> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+>> old mode 100644
+>> new mode 100755
+>
+> I see an unjustifiable mode change here.
+
+Sorry about that, I fixed it.
+
+>> index f953d8d..c157fdf
+>> --- a/git-rebase--interactive.sh
+>> +++ b/git-rebase--interactive.sh
+>> @@ -239,7 +239,16 @@ pick_one () {
+>>  
+>>  	test -d "$rewritten" &&
+>>  		pick_one_preserving_merges "$@" && return
+>> -	output git cherry-pick $empty_args $ff "$@"
+>> +
+>> +	if test -n "$do_merge"
+>> +	then
+>
+> So you _did_ mean "rebase -m"?
+
+I really  meant 'rebase --interactive  -m'. do_merge  is set to  true if
+either '--strategy' or '-m' or '-X' is given according to git-rebase.sh.
+
+>> +		test -z "$strategy" && strategy=recursive
+>> +		output git cherry-pick --strategy=$strategy \
+>
+> This is a bad change.
+>
+> I would understand if the above were:
+>
+> 	git cherry-pick ${strategy+--strategy=$strategy} ...
+>
+> in other  words, "if there is  no strategy specified, do  not override
+> the  configured  default  that  might  be  different  from  recursive"
+> (pull.twohead may be set to resolve).
+
+Indeed, I did not know about that.  I wrongly thought it was a good idea
+to  do   the  same   as  both   git-rebase  (when   -X  is   given)  and
+git-rebase--merge  which  do the  same  test  ('test -z  "$strategy"  &&
+strategy=recursive').  However  after checking  more carefully,  I guess
+that, for the former case, it  is because only recursive currently takes
+options,  whereas,  for  the  latter  case, it  is  to  call  a  default
+git-rebase-$strategy.
+
+>> +			$(echo $strategy_opts | sed "s/'--\([^']*\)'/-X\1/g") \
+>
+> Is it guaranteed $startegy_opts do not have a space in it?
+
+strategy_opts may be something like (git-rebase.sh): "'--foo' '--bar'",
+but I'm not sure what is wrong if there is a space in it though.
+
+> There is a  call to "git merge" that  uses "${strategy+-s $strategy}",
+> but it does not seem to propagate the strategy option.  Does it need a
+> similar change?  It  seems that the first step might  be to factor out
+> these  calls  to the  "git  cherry-pick"  and  "git merge"  to  helper
+> functions  to make  it easier  to call  them with  -s/-X options  in a
+> consistent way.
+
+As far as I understand, yes. I changed it. As it is really short, I just
+added an if/else inside the script itself, not sure if that's ok...
+
+>> +			$empty_args $ff "$@"
+>> +	else
+>> +		output git cherry-pick $empty_args $ff "$@"
+>> +	fi
+>
+> It seems that there is another call to "git cherry-pick" in the script
+> ("git grep" for it).  Does it need a similar change?
+
+As far as I understand, yes. So I changed it as well.
+
+I  have sent  the fixed  patch in  my next  email. Many  thanks for  the
+review!
+
+Cheers,
+-- 
+Arnaud Fontaine
+
+[0] http://git.661346.n2.nabble.com/git-rebase-interactive-does-not-respect-merge-options-td7500093.html
