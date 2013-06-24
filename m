@@ -1,47 +1,47 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v14 06/16] git-clean: refactor git-clean into two phases
-Date: Mon, 24 Jun 2013 23:21:30 +0800
-Message-ID: <37345475f7166717c7e3cbfab7e179605dafabdd.1372087065.git.worldhello.net@gmail.com>
+Subject: [PATCH v14 07/16] git-clean: add support for -i/--interactive
+Date: Mon, 24 Jun 2013 23:21:31 +0800
+Message-ID: <e9b5bf5dad8b590df282e44c675025e11e2e3295.1372087065.git.worldhello.net@gmail.com>
 References: <cover.1372087065.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jun 24 17:22:30 2013
+X-From: git-owner@vger.kernel.org Mon Jun 24 17:22:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur8b8-0006WH-4j
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 17:22:30 +0200
+	id 1Ur8b8-0006WH-SV
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 17:22:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751843Ab3FXPWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 11:22:25 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:64403 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751660Ab3FXPWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 11:22:22 -0400
-Received: by mail-pa0-f44.google.com with SMTP id lj1so11179004pab.31
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 08:22:21 -0700 (PDT)
+	id S1751864Ab3FXPW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 11:22:27 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:55358 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751660Ab3FXPW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 11:22:26 -0400
+Received: by mail-pd0-f169.google.com with SMTP id y10so536359pdj.14
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 08:22:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=xLHRwiChFkM1Kw+aICPuy697qxEt3NzMpPRRIEUNJno=;
-        b=YnRKI0Iea1kBG8xw0UTA/r0EKXi4BohDSG7Bv9w9FtEZbYk7KxzKRwaCHHvcMFBtDD
-         ZVdUWTTMP8av6x80NEZGf9yXhItFANaiG0EgLKg9G4XAJl2jbDFRSCBPyeFwTtMD99iO
-         i8gtV2AxIS/ZDUoPfaHvm+uZNirgx+HY4yG8q9SacocOPEdneA+zsNoM5vMWMX1OqqKE
-         rlX71zAW2f0Wdu6iTGnRYb8Q6V9m+n3irR2YdzbLKDptB+/LkCS9QTH6i6niZiHaFvLJ
-         VvnyYnS4gP/0XPfEUQS7k9OQjaig+N2Dihal8sIejiBdlZt6ykja2ZDu4ACqofwLIad1
-         pZtQ==
-X-Received: by 10.68.235.103 with SMTP id ul7mr24630156pbc.14.1372087341729;
-        Mon, 24 Jun 2013 08:22:21 -0700 (PDT)
+        bh=yNQGgkfkFdaHgx52fLtA15SuMe8NxWm+0amJzd52rOs=;
+        b=Unrl4eEJcb+Mlu//CYQf1xxaHv/bTrD2XDrjEFeaOanMiIeyBUsQ13ASiRLG7tgFn2
+         HyObepECH3UhUBn2nI3q/iGyNlYpRGga5oGz0KNICJvgum0w2FC8+Yd+5IsuWhNafKS4
+         OqcSsIDTVD0lmzevNb76LJqCAT2Zy0BakdVsXpm9UN5iQ289tcNd/5xjQ+gY1V6vPbZl
+         3dTtWhxBC5mpxev3TK2vLzI7fayBh2UrRGovLs5jyeZ2WnALkzPv8UiYvfitDE9Kevsf
+         4C/L45KngpqzQEdX4gZa9MahlfEIPVDpcb5MsNeJO3AbLxlnOqhOm8c7J4ODexBlVrUh
+         E3ig==
+X-Received: by 10.68.196.231 with SMTP id ip7mr23614908pbc.61.1372087345693;
+        Mon, 24 Jun 2013 08:22:25 -0700 (PDT)
 Received: from localhost.localdomain ([114.248.133.39])
-        by mx.google.com with ESMTPSA id ix3sm18576807pbc.37.2013.06.24.08.22.18
+        by mx.google.com with ESMTPSA id ix3sm18576807pbc.37.2013.06.24.08.22.22
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 24 Jun 2013 08:22:20 -0700 (PDT)
+        Mon, 24 Jun 2013 08:22:24 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.756.g41beab0
 In-Reply-To: <cover.1372087065.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1372087065.git.worldhello.net@gmail.com>
@@ -50,147 +50,155 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228829>
 
-Before introducing interactive git-clean, refactor git-clean operations
-into two phases:
+Show what would be done and the user must confirm before actually
+cleaning.
 
- * hold cleaning items in del_list,
- * and remove them in a separate loop at the end.
+    Would remove ...
+    Would remove ...
+    Would remove ...
 
-We will introduce interactive git-clean between the two phases. The
-interactive git-clean will show what would be done and must confirm
-before do real cleaning.
+    Remove [y/n]?
+
+Press "y" to start cleaning, and press "n" if you want to abort.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/clean.c | 64 ++++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 45 insertions(+), 19 deletions(-)
+ Documentation/git-clean.txt | 10 ++++++--
+ builtin/clean.c             | 57 +++++++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 60 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+index bdc3a..186e34 100644
+--- a/Documentation/git-clean.txt
++++ b/Documentation/git-clean.txt
+@@ -8,7 +8,7 @@ git-clean - Remove untracked files from the working tree
+ SYNOPSIS
+ --------
+ [verse]
+-'git clean' [-d] [-f] [-n] [-q] [-e <pattern>] [-x | -X] [--] <path>...
++'git clean' [-d] [-f] [-i] [-n] [-q] [-e <pattern>] [-x | -X] [--] <path>...
+ 
+ DESCRIPTION
+ -----------
+@@ -34,7 +34,13 @@ OPTIONS
+ -f::
+ --force::
+ 	If the Git configuration variable clean.requireForce is not set
+-	to false, 'git clean' will refuse to run unless given -f or -n.
++	to false, 'git clean' will refuse to run unless given -f, -n or
++	-i.
++
++-i::
++--interactive::
++	Show what would be done and the user must confirm before actually
++	cleaning.
+ 
+ -n::
+ --dry-run::
 diff --git a/builtin/clean.c b/builtin/clean.c
-index f77f95..77ec1 100644
+index 77ec1..698fb 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -15,6 +15,7 @@
+@@ -15,10 +15,11 @@
  #include "quote.h"
  
  static int force = -1; /* unset */
-+static struct string_list del_list = STRING_LIST_INIT_DUP;
++static int interactive;
+ static struct string_list del_list = STRING_LIST_INIT_DUP;
  
  static const char *const builtin_clean_usage[] = {
- 	N_("git clean [-d] [-f] [-n] [-q] [-e <pattern>] [-x | -X] [--] <paths>..."),
-@@ -148,12 +149,13 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	int dry_run = 0, remove_directories = 0, quiet = 0, ignored = 0;
- 	int ignored_only = 0, config_set = 0, errors = 0, gone = 1;
- 	int rm_flags = REMOVE_DIR_KEEP_NESTED_GIT;
--	struct strbuf directory = STRBUF_INIT;
-+	struct strbuf abs_path = STRBUF_INIT;
- 	struct dir_struct dir;
- 	static const char **pathspec;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
- 	struct exclude_list *el;
+-	N_("git clean [-d] [-f] [-n] [-q] [-e <pattern>] [-x | -X] [--] <paths>..."),
++	N_("git clean [-d] [-f] [-i] [-n] [-q] [-e <pattern>] [-x | -X] [--] <paths>..."),
+ 	NULL
+ };
+ 
+@@ -143,6 +144,50 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
+ 	return ret;
+ }
+ 
++static void interactive_main_loop(void)
++{
++	struct strbuf confirm = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT;
 +	struct string_list_item *item;
- 	const char *qname;
- 	char *seen = NULL;
- 	struct option options[] = {
-@@ -223,6 +225,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 		int matches = 0;
- 		struct cache_entry *ce;
- 		struct stat st;
-+		const char *rel;
- 
- 		/*
- 		 * Remove the '/' at the end that directory
-@@ -242,13 +245,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 				continue; /* Yup, this one exists unmerged */
- 		}
- 
--		/*
--		 * we might have removed this as part of earlier
--		 * recursive directory removal, so lstat() here could
--		 * fail with ENOENT.
--		 */
- 		if (lstat(ent->name, &st))
--			continue;
-+			die_errno("Cannot lstat '%s'", ent->name);
- 
- 		if (pathspec) {
- 			memset(seen, 0, argc > 0 ? argc : 1);
-@@ -257,33 +255,61 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 		}
- 
- 		if (S_ISDIR(st.st_mode)) {
--			strbuf_addstr(&directory, ent->name);
- 			if (remove_directories || (matches == MATCHED_EXACTLY)) {
--				if (remove_dirs(&directory, prefix, rm_flags, dry_run, quiet, &gone))
--					errors++;
--				if (gone && !quiet) {
--					qname = quote_path_relative(directory.buf, prefix, &buf);
--					printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
--				}
-+				rel = relative_path(ent->name, prefix, &buf);
-+				string_list_append(&del_list, rel);
- 			}
--			strbuf_reset(&directory);
- 		} else {
- 			if (pathspec && !matches)
- 				continue;
--			res = dry_run ? 0 : unlink(ent->name);
-+			rel = relative_path(ent->name, prefix, &buf);
-+			string_list_append(&del_list, rel);
++	const char *qname;
++
++	while (del_list.nr) {
++		putchar('\n');
++		for_each_string_list_item(item, &del_list) {
++			qname = quote_path_relative(item->string, NULL, &buf);
++			printf(_(msg_would_remove), qname);
++		}
++		putchar('\n');
++
++		printf(_("Remove [y/n]? "));
++		if (strbuf_getline(&confirm, stdin, '\n') != EOF) {
++			strbuf_trim(&confirm);
++		} else {
++			/* Ctrl-D is the same as "quit" */
++			string_list_clear(&del_list, 0);
++			putchar('\n');
++			printf_ln("Bye.");
++			break;
++		}
++
++		if (confirm.len) {
++			if (!strncasecmp(confirm.buf, "yes", confirm.len)) {
++				break;
++			} else if (!strncasecmp(confirm.buf, "no", confirm.len) ||
++				   !strncasecmp(confirm.buf, "quit", confirm.len)) {
++				string_list_clear(&del_list, 0);
++				printf_ln("Bye.");
++				break;
++			} else {
++				continue;
++			}
 +		}
 +	}
 +
-+	/* TODO: do interactive git-clean here, which will modify del_list */
-+
-+	for_each_string_list_item(item, &del_list) {
-+		struct stat st;
-+
-+		if (prefix)
-+			strbuf_addstr(&abs_path, prefix);
-+
-+		strbuf_addstr(&abs_path, item->string);
-+
-+		/*
-+		 * we might have removed this as part of earlier
-+		 * recursive directory removal, so lstat() here could
-+		 * fail with ENOENT.
-+		 */
-+		if (lstat(abs_path.buf, &st))
-+			continue;
-+
-+		if (S_ISDIR(st.st_mode)) {
-+			if (remove_dirs(&abs_path, prefix, rm_flags, dry_run, quiet, &gone))
-+				errors++;
-+			if (gone && !quiet) {
-+				qname = quote_path_relative(item->string, NULL, &buf);
-+				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
-+			}
-+		} else {
-+			res = dry_run ? 0 : unlink(abs_path.buf);
- 			if (res) {
--				qname = quote_path_relative(ent->name, prefix, &buf);
-+				qname = quote_path_relative(item->string, NULL, &buf);
- 				warning(_(msg_warn_remove_failed), qname);
- 				errors++;
- 			} else if (!quiet) {
--				qname = quote_path_relative(ent->name, prefix, &buf);
-+				qname = quote_path_relative(item->string, NULL, &buf);
- 				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
- 			}
- 		}
-+		strbuf_reset(&abs_path);
- 	}
- 	free(seen);
- 
--	strbuf_release(&directory);
-+	strbuf_release(&abs_path);
 +	strbuf_release(&buf);
-+	string_list_clear(&del_list, 0);
- 	string_list_clear(&exclude_list, 0);
- 	return (errors != 0);
- }
++	strbuf_release(&confirm);
++}
++
+ int cmd_clean(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, res;
+@@ -162,6 +207,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		OPT__QUIET(&quiet, N_("do not print names of files removed")),
+ 		OPT__DRY_RUN(&dry_run, N_("dry run")),
+ 		OPT__FORCE(&force, N_("force")),
++		OPT_BOOL('i', "interactive", &interactive, N_("interactive cleaning")),
+ 		OPT_BOOLEAN('d', NULL, &remove_directories,
+ 				N_("remove whole directories")),
+ 		{ OPTION_CALLBACK, 'e', "exclude", &exclude_list, N_("pattern"),
+@@ -188,12 +234,12 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	if (ignored && ignored_only)
+ 		die(_("-x and -X cannot be used together"));
+ 
+-	if (!dry_run && !force) {
++	if (!interactive && !dry_run && !force) {
+ 		if (config_set)
+-			die(_("clean.requireForce set to true and neither -n nor -f given; "
++			die(_("clean.requireForce set to true and neither -i, -n nor -f given; "
+ 				  "refusing to clean"));
+ 		else
+-			die(_("clean.requireForce defaults to true and neither -n nor -f given; "
++			die(_("clean.requireForce defaults to true and neither -i, -n nor -f given; "
+ 				  "refusing to clean"));
+ 	}
+ 
+@@ -267,7 +313,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
+-	/* TODO: do interactive git-clean here, which will modify del_list */
++	if (interactive && del_list.nr > 0)
++		interactive_main_loop();
+ 
+ 	for_each_string_list_item(item, &del_list) {
+ 		struct stat st;
 -- 
 1.8.3.1.756.g41beab0
