@@ -1,63 +1,100 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] stage: remove unused, unreferenced builtin-alias
-Date: Tue, 25 Jun 2013 00:18:29 +0530
-Message-ID: <CALkWK0nRLMby4A4A8YwkCp2Q8cpBdW3XWPRwt0fnE=8iHX3Tcw@mail.gmail.com>
-References: <1372097546-27721-1-git-send-email-artagnon@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] push: give early feedback
+Date: Mon, 24 Jun 2013 14:55:46 -0400
+Message-ID: <20130624185546.GA25306@sigill.intra.peff.net>
+References: <1372095662-24527-1-git-send-email-artagnon@gmail.com>
+ <20130624182809.GA15296@sigill.intra.peff.net>
+ <CALkWK0=d1wkKWngH+6gBd-2svj7r_tgC5=+zUbgJRDfUCzupSw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 20:49:28 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 20:55:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrBpP-0003oH-2J
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:49:27 +0200
+	id 1UrBve-0000i1-4T
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751774Ab3FXStK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 14:49:10 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:59467 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750964Ab3FXStJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 14:49:09 -0400
-Received: by mail-ie0-f176.google.com with SMTP id ar20so25548258iec.21
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 11:49:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=eqHV0TEIr4KyqndFO9jLGYjMfj+1unoimH3XTl5rstA=;
-        b=L26gswV5SxMDWH2jvdOy2W1gdpesXZW5akCKytfhgao+QIhPpG/MwHA8kbou42S3CP
-         6Bl4yiM+H4lBne0tRxdujniiVIGgtrCv0S2BtXtfNCvswfUbFB5MAbTnLyEmOGaxYP3C
-         PKSIfgORbu5H2UB7PCsMoHWiOUS/8n99V8liDLgi6TwuKuh/9ZZTHv83fWOFZdl+DmYm
-         8aicYNrlrQYVG/lOFpfqVQy7kdENtvNvWLosVJBD2iI5VysI44QxKlx1fliYK3VB6XIO
-         1QxceqPwKtTXDw+b1OTHmw/+/Cpg+jpMKjZHfGvKtAaL2mHrgkjAGD1txC8ezz+uBw6D
-         YDHA==
-X-Received: by 10.42.76.5 with SMTP id c5mr8931206ick.91.1372099749108; Mon,
- 24 Jun 2013 11:49:09 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Mon, 24 Jun 2013 11:48:29 -0700 (PDT)
-In-Reply-To: <1372097546-27721-1-git-send-email-artagnon@gmail.com>
+	id S1752246Ab3FXSzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 14:55:49 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40697 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751344Ab3FXSzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 14:55:48 -0400
+Received: (qmail 3229 invoked by uid 102); 24 Jun 2013 18:56:51 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Jun 2013 13:56:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Jun 2013 14:55:46 -0400
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=d1wkKWngH+6gBd-2svj7r_tgC5=+zUbgJRDfUCzupSw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228897>
 
-Ramkumar Ramachandra wrote:
-> 11920d2 (Add a built-in alias for 'stage' to the 'add' command,
-> 2008-12-01) added a the 'git stage' command which simply calls
-> cmd_add().  Since then, no references to it have been made anywhere on
-> the internet; there is no evidence that anyone even knows about its
-> existence.  It is a long-lost forgotten command that only serves the
-> purpose of preventing the user from having a custom alias.stage to do
-> something useful.  Remove it.
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  I just found out about its existence.
+On Tue, Jun 25, 2013 at 12:12:16AM +0530, Ramkumar Ramachandra wrote:
 
-Should we plan a deprecation (2.0 perhaps)?
+> >   1. It does not tell very much about how the refspecs are expanded or
+> >      what is going to happen. "git push --dry-run" gives a much more
+> >      complete view of what will be pushed.
+> 
+> Yes.
+> 
+>   $ git push
+>   # pushing refspecs ':' to ram
+> 
+> Completely useless.
+> 
+> On the other hand, if I implement it at the transport layer like
+> TRANSPORT_PUSH_DRY_RUN, it takes *way* too long to say anything
+> useful; the whole "early" part has been thrown out the window.  The
+> issue is again related to the same nightmare I'm having: not being
+> able to implement @{push} refspec because the transport API is so
+> tangled up; I can't call into the refspec-pattern-expander from
+> anywhere else.
+
+Leaving aside the transport API for a minute, you are always going to
+have this lack-of-information versus time problem. A refspec like ":"
+says nothing particularly useful, but it can only be expanded once
+contact is made with the other side (which is what takes time).
+
+I do not personally think the "early" information is particularly
+useful. I don't have a problem with it as part of "-v" output (or
+enabled by config), but it seems useless for enough cases (e.g., user
+gave explicit refspecs, or refspecs are not useful without being
+expanded) that showing it by default is going to be considered noisy
+cruft by many users.
+
+Was the unconditional nature of your earlier patch meant to be part of
+the final version, or was it just illustrative?
+
+> Yes, ^C is a hack, but it's useful in practice (there is ofcourse no
+> guarantee): I've been saved many times by it.  The only way to prevent
+> the race is to wait (either indefinitely for some user-input or for N
+> seconds), but I don't want to trade of speed.
+
+I have had the opposite experience. Many times I tried "rm -v" to keep
+an eye on what was being removed, but I do not recall once where I
+frantically reached for the keyboard in time to make a difference. But
+of course that is anecdotal, and push can be somewhat slower.
+
+> > As discussed in the top thread, this could also be used for "interactive
+> > push" where you could examine and confirm the changes for each proposed
+> > ref change.
+> 
+> Overkill, I think.  I don't want to bolt on very heavy safety
+> features: just help the user help themselves with feedback.
+
+Yes. I do not have any interest in such an interactive push, but the
+point is that a potential first step to any confirmation scheme, no
+matter what you want it to look like, is a hook. You don't seem to want
+a confirmation scheme, though, due to the wait (and I cannot blame you,
+as I would not want it either; but then I would not want the extra
+refspec message you propose, either).
+
+-Peff
