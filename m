@@ -1,72 +1,94 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/2] commit: make it work with status.short
-Date: Mon, 24 Jun 2013 21:09:41 +0530
-Message-ID: <CALkWK0=2cJZDZTirZqYrfc9yTWaX8x=2G2xC_fhW53+GDDZ+BQ@mail.gmail.com>
-References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
- <1372077912-18625-3-git-send-email-artagnon@gmail.com> <7v38s7czc9.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] push: honor branch.*.push
+Date: Mon, 24 Jun 2013 08:41:43 -0700
+Message-ID: <7vy59zbjns.fsf@alter.siamese.dyndns.org>
+References: <1372048388-16742-1-git-send-email-gitster@pobox.com>
+	<1372048388-16742-7-git-send-email-gitster@pobox.com>
+	<CALkWK0=aDkCMB3ROSuH1crTmQKjCFyCmvJfvOTiQnBo4+NckBA@mail.gmail.com>
+	<7vhagndis4.fsf@alter.siamese.dyndns.org>
+	<CALkWK0kqyV+MTW8jDDBt-qEB1R7yvD+n4nTxwvW0QjA13J2=2A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 17:40:28 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 17:41:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur8sV-0003TP-22
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 17:40:27 +0200
+	id 1Ur8tr-0004d5-4i
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 17:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182Ab3FXPkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 11:40:22 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:50680 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872Ab3FXPkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 11:40:22 -0400
-Received: by mail-ie0-f174.google.com with SMTP id 9so25219999iec.33
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 08:40:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=5ae2BnlwA4fBxLZ6Oi5DejZgxD8mQOibqrAEP8v61AE=;
-        b=z6BkJI5ZmxapVr3ouNaHK4K+zpzcf6/3nx7x9PU57zTaiiFYDrsTiENaplm5fkTVZI
-         rcHRO1Cob6vgZxRuulZrGjoFAVD5kwm7z+QMM/7f6jzDZG5WE2Jqfdo6ZuJLA51gWAPy
-         TsK0xvsmIB4K5cLeHMiAZmj6MhvcEB5+0dlji8WDoIgJCW8KnYRvNvf3jLSaOVms5Xvw
-         sKLjD/3Vai6ObJdF1Q/6/ukPdkl6Z3JEET3kDXVkP0zlC2Hes82zA/B5Mdhg9hFTFjH8
-         tH0+4Yr435F8twhV7XMbMVjqrRWKkk3F4piNGmWCXyxGLhA6XwQ1XlptTF2bPN1NC3Er
-         2TWw==
-X-Received: by 10.42.190.74 with SMTP id dh10mr11975021icb.35.1372088421721;
- Mon, 24 Jun 2013 08:40:21 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Mon, 24 Jun 2013 08:39:41 -0700 (PDT)
-In-Reply-To: <7v38s7czc9.fsf@alter.siamese.dyndns.org>
+	id S1752597Ab3FXPlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 11:41:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59205 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752568Ab3FXPlq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 11:41:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 477F72A095;
+	Mon, 24 Jun 2013 15:41:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2d9vzbCeB3iYqoigkZDRqoAkw9I=; b=Pl0sug
+	2UXLapSKIYoHE82I4M9wdXxgvhk+FJNr8hEZVnum5uD2Vov9R1oXIv9Hfy2gY6jb
+	h0b8eNCo50sMjuaUp//iJW8niH/B8IdN3fMBQYYfRQXpCwNfOvMXyzP0Cm5xCPx4
+	OiYbvrmosR5dQ/XDTK1dzfLsV96nZ1Wdfgh/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bhrCtwkKkwCb7ZBK9ASw9I806awMNR4R
+	u+gDtlp9kM0SzpHqNjZ8qaJpaL8jwo3d1D/YG+TbTcKsh/nfNk5anwykL1Ku867Z
+	fsx1YLEpJWlfQA6GuED8D5XP8awZx7Qw/fqZkJI/kHbKUzlIkPto6Ck24VQ2K6Px
+	kCA37kfc+NI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C89B2A094;
+	Mon, 24 Jun 2013 15:41:45 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9A7812A091;
+	Mon, 24 Jun 2013 15:41:44 +0000 (UTC)
+In-Reply-To: <CALkWK0kqyV+MTW8jDDBt-qEB1R7yvD+n4nTxwvW0QjA13J2=2A@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 24 Jun 2013 19:49:38 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 92B2F3D0-DCE4-11E2-9705-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228841>
 
-Junio C Hamano wrote:
-> As I said in the other message, I'll revert the merge of the topic
-> branch from 'master' for now, and queue this on top of the topic so
-> that we will have the preventive fix when the topic is in a better
-> shape for the other possible breakage on the "--branch" thing.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Thanks, a quick revert is probably the best way to go.
-
-> That is, "git commit --short/--porcelain/-z" has these three
-> possibilities:
+> Junio C Hamano wrote:
+>>>   # on branch master, derived from origin
+>>>   $ git push ram
+>>>
+>>> And branch.master.push is set to next?  Will you let her shoot herself
+>>> in the foot like this?
+>>
+>> It is not shooting in the foot, if branch.master.push is explicitly
+>> set to update next.  I do not see any issue in that part.
 >
->  - work (ignoring these options);
->
->  - work (showing the template in some kind of "short" format); or
->
->  - error out (clearly indicating that we did *not* make a commit).
+> The question does not pertain to master being mapped to next; it
+> pertains to central-workflow versus triangular-workflow: origin versus
+> ram.  If the user has set push.default to upstream, she _expects_
+> triangular pushes to always be denied,...
 
-Actually, I had a different idea: to make short (and porcelain, by
-extension) set s->commitable correctly.  From a quick analysis, it
-shouldn't be a hard problem.  Then, we can make
+If the user said "git push" without an explicit request to push to
+"ram", and if branch.master.pushremote was not set to "ram", and
+still the command "git push" pushed the branch to "ram", then I
+would understand what you are worried about, but otherwise I do not
+see how what you are saying makes sense.
 
-  $ git commit
+A safety valve is different from a straight-jacket.  If you are
+working largely with a central repository and have push.default set
+to upstream, are you now disallowed to push out things to other
+places to ask help from your colleague to check your wip?  Why?
 
-display short-form status when there is nothing to commit.
+Or are you saying that with push.default set to upstream, only these
+two forms should be allowed?
+
+    $ git push ;# no destination, no refspec
+    $ git push there ref:spec ;# both explicitly specified
