@@ -1,7 +1,7 @@
 From: Vicent Marti <tanoku@gmail.com>
-Subject: [PATCH 10/16] pack-objects: use bitmaps when packing objects
-Date: Tue, 25 Jun 2013 01:23:07 +0200
-Message-ID: <1372116193-32762-11-git-send-email-tanoku@gmail.com>
+Subject: [PATCH 12/16] pack-objects: implement bitmap writing
+Date: Tue, 25 Jun 2013 01:23:09 +0200
+Message-ID: <1372116193-32762-13-git-send-email-tanoku@gmail.com>
 References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
 Cc: Vicent Marti <tanoku@gmail.com>
 To: git@vger.kernel.org
@@ -11,270 +11,443 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrG7R-0003Sv-QY
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 01:24:22 +0200
+	id 1UrG7S-0003Sv-MO
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 01:24:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752165Ab3FXXYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 19:24:10 -0400
-Received: from mail-we0-f172.google.com ([74.125.82.172]:48917 "EHLO
-	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752005Ab3FXXYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 19:24:03 -0400
-Received: by mail-we0-f172.google.com with SMTP id q56so8850448wes.3
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 16:24:02 -0700 (PDT)
+	id S1752204Ab3FXXYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 19:24:17 -0400
+Received: from mail-we0-f170.google.com ([74.125.82.170]:45390 "EHLO
+	mail-we0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752086Ab3FXXYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 19:24:09 -0400
+Received: by mail-we0-f170.google.com with SMTP id w57so8797230wes.1
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 16:24:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=CRK+N2jlndA1bxzur0CyKru+QU46GBg28RGuIUJ0gGs=;
-        b=Xw1VlHUB6HvS4JOM0QbvE7AgvuWI7rf95HE3qNhtoWYhWoZ8g7DZWEjmTJTs97v3z0
-         dOLVpWSe+H0kfAdzy15f1xi7oEziYKeNghovTXMm56C8Wii3MvnkNcq/SS3X4gNRSl3N
-         2qSqx/Obn3PYCMl/eMu57wDxWLJjDQmug3C9cWk+GNRPas4xLX0gltkkiAx3Pa3+4bWC
-         IePNfL7p/RaCcYT4QECBP5zPXB6YIh1yRzDy+CiQ0rhA+S3+VAq+3NliAWwdodYP9iPj
-         jhdNNQNTzMiSz9RdhYvweMKXkYip/cNnSbsLiFlAY15SKroisz8vtwcQjBNV8Z8oaIAm
-         N75A==
-X-Received: by 10.180.21.147 with SMTP id v19mr6841384wie.25.1372116242146;
-        Mon, 24 Jun 2013 16:24:02 -0700 (PDT)
+        bh=Cys6hu1dhC8uuxDcCr/JEXIONCa8kPtq9wEZOXYhy7c=;
+        b=HriaFNQPqqoJwfsVdgGWDwZ4RD6+RAsI2m/yL+ml1gVtnN4EYP5FMd3qDNx3+QmWUV
+         ck6Ml9ClBRFpjS9zLJVz60BsoOND6uNeLhWWtQlzg8gNzt4mKosVHgDZ2UEcADDirzYz
+         SsyCs6frBKJC7oAZZJgn1zBTcSgs9GiUmM7dwnlSTTAIRly7hoUnJnj8LBWuMv58PrbS
+         xPpnc6mu1KLTtvZXNJXKk6mDpP2ItTiBz2jFjWwhlYkOv+hqhWC0yVrHLLv+vxtJLOQp
+         V+HO4XeGzQDFc5qlfP1KvliNGjMmZT/uf9U4ID4x8bz/u9EBQbQTbOpUlfGHhIvQgGwH
+         uJew==
+X-Received: by 10.180.9.242 with SMTP id d18mr7341656wib.18.1372116247310;
+        Mon, 24 Jun 2013 16:24:07 -0700 (PDT)
 Received: from localhost.localdomain (212.Red-81-32-36.dynamicIP.rima-tde.net. [81.32.36.212])
-        by mx.google.com with ESMTPSA id x13sm593766wib.3.2013.06.24.16.23.58
+        by mx.google.com with ESMTPSA id x13sm593766wib.3.2013.06.24.16.24.03
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 24 Jun 2013 16:24:01 -0700 (PDT)
+        Mon, 24 Jun 2013 16:24:06 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
 In-Reply-To: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228929>
 
-A bitmap index is used, if available, to speed up the Counting Objects
-phase during `pack-objects`.
+This commit extends more the functionality of `pack-objects` by allowing
+it to write out a `.bitmap` index next to any written packs, together
+with the `.idx` index that currently gets written.
 
-The bitmap index is a `.bitmap` file that can be found inside
-`$GIT_DIR/objects/pack/`, next to its corresponding packfile, and
-contains precalculated reachability information for selected commits.
-The full specification of the format for these bitmap indexes can be found
-in `Documentation/technical/bitmap-format.txt`.
+If bitmaps are enabled for a given repository (either by calling
+`pack-objects` with the `--use-bitmaps` flag or by having
+`pack.usebitmaps` set to `true` in the config) and pack-objects is
+writing a packfile that would normally be indexed (i.e. not piping to
+stdout), we will attempt to write the corresponding bitmap index for the
+packfile.
 
-For a given commit SHA1, if it happens to be available in the bitmap
-index, its bitmap will represent every single object that is reachable
-from the commit itself. The nth bit in the bitmap is the nth object in
-the index of the packfile; if it's set to 1, the object is reachable.
+Bitmap index writing happens after the packfile and its index has been
+successfully written to disk (`finish_tmp_packfile`). The process is
+performed in several steps:
 
-By using the bitmaps available in the index, this commit implements a new
-pair of functions:
+	1. `bitmap_writer_build_type_index`: this call uses the array of
+	`struct object_entry`es that has just been sorted when writing out
+	the actual packfile index to disk to generate 4 type-index bitmaps
+	(one for each object type).
 
-	- `prepare_bitmap_walk`
-	- `traverse_bitmap_commit_list`
+	These bitmaps have their nth bit set if the given object is of the
+	bitmap's type. E.g. the nth bit of the Commits bitmap will be 1 if
+	the nth object in the packfile index is a commit.
 
-This first function tries to build a bitmap of all the objects that can be
-reached from the commit roots of a given `rev_info` struct by using
-the following algorithm:
+	This is a very cheap operation because the bitmap writing code has
+	access to the metadata stored in the `struct object_entry` array,
+	and hence the real type for each object in the packfile.
 
-- If all the interesting commits for a revision walk are available in
-the index, the resulting reachability bitmap is the bitwise OR of all
-the individual bitmaps.
+	2. `bitmap_writer_select_commits`: if bitmap writing is enabled for
+	a given `pack-objects` run, the sequence of commits generated during
+	the Counting Objects phase will be stored in an array.
 
-- When the full set of WANTs is not available in the index, we perform a
-partial revision walk using the commits that don't have bitmaps as
-roots, and limiting the revision walk as soon as we reach a commit that
-has a corresponding bitmap. The earlier OR'ed bitmap with all the
-indexed commits can now be completed as this walk progresses, so the end
-result is the full reachability list.
+	We then use that array to build up the list of selected commits.
+	Writing a bitmap in the index for each object in the repository
+	would be cost-prohibitive, so we use a simple heuristic to pick the
+	commits that will be indexed with bitmaps.
 
-- For revision walks with a HAVEs set (a set of commits that are deemed
-uninteresting), first we perform the same method as for the WANTs, but
-using our HAVEs as roots, in order to obtain a full reachability bitmap
-of all the uninteresting commits. This bitmap then can be used to:
+	The current heuristics are a simplified version of JGit's original
+	implementation. We select a higher density of commits depending on
+	their age: the 100 most recent commits are always selected, after
+	that we pick 1 commit of each 100, and the gap increases as the
+	commits grow older. On top of that, we make sure that every single
+	branch that has not been merged (all the tips that would be required
+	from a clone) gets their own bitmap, and when selecting commits
+	between a gap, we tend to prioritize the commit with the most
+	parents.
 
-	a) limit the subsequent walk when building the WANTs bitmap
-	b) finding the final set of interesting commits by performing an
-	   AND-NOT of the WANTs and the HAVEs.
+	Do note that there is no right/wrong way to perform commit selection;
+	different selection algorithms will result in different commits
+	being selected, but there's no such thing as "missing a commit". The
+	bitmap walker algorithm implemented in `prepare_bitmap_walk` is able
+	to adapt to missing bitmaps by performing manual walks that complete
+	the bitmap: the ideal selection algorithm, however, would select
+	the commits that are more likely to be used as roots for a walk in
+	the future (e.g. the tips of each branch, and so on) to ensure a
+	bitmap for them is always available.
 
-If `prepare_bitmap_walk` runs successfully, the resulting bitmap is
-stored and the equivalent of a `traverse_commit_list` call can be
-performed by using `traverse_bitmap_commit_list`; the bitmap version
-of this call yields the objects straight from the packfile index
-(without having to look them up or parse them) and hence is several
-orders of magnitude faster.
+	3. `bitmap_writer_build`: this is the computationally expensive part
+	of bitmap generation. Based on the list of commits that were
+	selected in the previous step, we perform several incremental walks
+	to generate the bitmap for each commit.
 
-If the `prepare_bitmap_walk` call fails (e.g. because no bitmap files
-are available), the `rev_info` struct is left untouched, and can be used
-to perform a manual rev-walk using `traverse_commit_list`.
+	The walks begin from the oldest commit, and are built up
+	incrementally for each branch. E.g. consider this dag where A, B, C,
+	D, E, F are the selected commits, and a, b, c, e are a chunk of
+	simplified history that will not receive bitmaps.
 
-Hence, this new pair of functions are a generic API that allows to
-perform the equivalent of
+		A---a---B--b--C--c--D
+		         \
+		          E--e--F
 
-	git rev-list --objects [roots...] [^uninteresting...]
+	We start by building the bitmap for A, using A as the root for a
+	revision walk and marking all the objects that are reachable until
+	the walk is over. Once this bitmap is stored, we reuse the bitmap
+	walker to perform the walk for B, assuming that once we reach A
+	again, the walk will be terminated because A has already been SEEN
+	on the previous walk.
 
-for any set of commits, even if they don't have specific bitmaps
-generated for them.
+	This process is repeated for C, and D, but when we try to generate
+	the bitmaps for E, we cannot reuse neither the current walk nor the
+	bitmap we have generated so far.
 
-In this specific commit, we use the API to perform the
-`Counting Objects` phase in `builtin/pack-objects.c`, although it could
-be used to speed up other parts of Git that use the same mechanism.
+	What we do now is resetting both the walk and clearing the bitmap,
+	and performing the walk from scratch using E as the origin. This new
+	walk, however, does not need to be completed. Once we hit B, we can
+	lookup the bitmap we have already stored for that commit and OR it
+	with the existing bitmap we've composed so far, allowing us to limit
+	the walk early.
 
-If the pack-objects invocation is being piped to `stdout` (like a normal
-`pack-objects` from `upload-pack` would be used) and bitmaps are
-enabled, the new `bitmap_walk` API will be used instead of
-`traverse_commit_list`.
+	After all the bitmaps have been generated, another iteration through
+	the list of commits is performed to find the best XOR offsets for
+	compression before writing them to disk. Because of the incremental
+	nature of these bitmaps, XORing one of them with its predecesor
+	results in a minimal "bitmap delta" most of the time. We can write
+	this delta to the on-disk bitmap index, and then re-compose the
+	original bitmaps by XORing them again when loaded.
 
-There are two ways to enable bitmaps for pack-objecs:
+	This is a phase very similar to pack-object's `find_delta` (using
+	bitmaps instead of objects, of course), except the heuristics have
+	been greatly simplified: we only check the 10 bitmaps before any
+	given one to find best compressing one. This operation gives optimal
+	results (again, because of the incremental nature of the bitmaps)
+	and has a very good runtime performance because of the way EWAH
+	bitmaps are implemented.
 
-	- Pass the `--use-bitmaps` flag when calling `pack-objects`
-	- Set `pack.usebitmaps` to `true` in the git config for the
-	repository.
+	3. `bitmap_writer_finish`: the last step in the process is
+	serializing to disk all the bitmap data that has been generated in
+	the two previous steps.
 
-Of course, simply enabling the bitmaps is not enought to perform the
-optimization: a bitmap index must be available on disk. If no bitmap
-index can be found, we'll silently fall back to the slow counting
-objects phase.
-
-The point of speeding up the Counting Objects phase of `pack-objects` is
-to reduce fetch and clone times for big repositories, which right now
-are definitely dominated by the rev-walk algorithm during the Counting
-Objects phase.
-
-Here are some sample timings from a full pack of `torvalds/linux` (i.e.
-something very similar to what would be generated for a clone of the
-repository):
-
-	$ time ../git/git pack-objects --all --stdout
-	Counting objects: 3053537, done.
-	Compressing objects: 100% (495706/495706), done.
-	Total 3053537 (delta 2529614), reused 3053537 (delta 2529614)
-
-	real    0m36.686s
-	user    0m34.440s
-	sys     0m2.184s
-
-	$ time ../git/git pack-objects --all --stdout
-	Counting objects: 3053537, done.
-	Compressing objects: 100% (495706/495706), done.
-	Total 3053537 (delta 2529614), reused 3053537 (delta 2529614)
-
-	real    0m7.255s
-	user    0m6.892s
-	sys     0m0.444s
-
->From a hotspot profiling run, we can see how the counting
-objects phase has been reduced to about 400ms (down from 28s).
-The remaining time is spent finding deltas and writing the packfile, the
-optimization of which is out of the scope of this topic.
+	The bitmap is written to a tmp file and then moved atomically to its
+	final destination, using the same process as `pack-write.c:write_idx_file`.
 ---
- Makefile               |    2 +
- builtin/pack-objects.c |   31 ++
- pack-bitmap.c          |  818 ++++++++++++++++++++++++++++++++++++++++++++++++
- pack-bitmap.h          |   53 ++++
- 4 files changed, 904 insertions(+)
- create mode 100644 pack-bitmap.c
- create mode 100644 pack-bitmap.h
+ Makefile               |    1 +
+ builtin/pack-objects.c |  117 +++++++----
+ builtin/pack-objects.h |   33 +++
+ pack-bitmap-write.c    |  520 ++++++++++++++++++++++++++++++++++++++++++++++++
+ pack-bitmap.h          |    9 +
+ pack-write.c           |    2 +
+ 6 files changed, 646 insertions(+), 36 deletions(-)
+ create mode 100644 builtin/pack-objects.h
+ create mode 100644 pack-bitmap-write.c
 
 diff --git a/Makefile b/Makefile
-index e03c773..0f2e72b 100644
+index 0f2e72b..599aa59 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -703,6 +703,7 @@ LIB_H += notes.h
- LIB_H += object.h
- LIB_H += pack-revindex.h
- LIB_H += pack.h
-+LIB_H += pack-bitmap.h
- LIB_H += parse-options.h
- LIB_H += patch-ids.h
- LIB_H += pathspec.h
-@@ -838,6 +839,7 @@ LIB_OBJS += notes.o
- LIB_OBJS += notes-cache.o
+@@ -840,6 +840,7 @@ LIB_OBJS += notes-cache.o
  LIB_OBJS += notes-merge.o
  LIB_OBJS += object.o
-+LIB_OBJS += pack-bitmap.o
+ LIB_OBJS += pack-bitmap.o
++LIB_OBJS += pack-bitmap-write.o
  LIB_OBJS += pack-check.o
  LIB_OBJS += pack-revindex.o
  LIB_OBJS += pack-write.o
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index b7cab18..469b8da 100644
+index 469b8da..58003ec 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -19,6 +19,7 @@
- #include "streaming.h"
+@@ -20,6 +20,7 @@
  #include "thread-utils.h"
  #include "khash.h"
-+#include "pack-bitmap.h"
+ #include "pack-bitmap.h"
++#include "builtin/pack-objects.h"
  
  static const char *pack_usage[] = {
  	N_("git pack-objects --stdout [options...] [< ref-list | < object-list]"),
-@@ -83,6 +84,9 @@ static struct progress *progress_state;
- static int pack_compression_level = Z_DEFAULT_COMPRESSION;
- static int pack_compression_seen;
+@@ -27,32 +28,6 @@ static const char *pack_usage[] = {
+ 	NULL
+ };
  
-+static int bitmap_support;
-+static int use_bitmap_index;
-+
+-struct object_entry {
+-	struct pack_idx_entry idx;
+-	unsigned long size;	/* uncompressed size */
+-	struct packed_git *in_pack; 	/* already in pack */
+-	off_t in_pack_offset;
+-	struct object_entry *delta;	/* delta base object */
+-	struct object_entry *delta_child; /* deltified objects who bases me */
+-	struct object_entry *delta_sibling; /* other deltified objects who
+-					     * uses the same base as me
+-					     */
+-	void *delta_data;	/* cached delta (uncompressed) */
+-	unsigned long delta_size;	/* delta data size (uncompressed) */
+-	unsigned long z_delta_size;	/* delta data size (compressed) */
+-	unsigned int hash;	/* name hint hash */
+-	enum object_type type;
+-	enum object_type in_pack_type;	/* could be delta */
+-	unsigned char in_pack_header_size;
+-	unsigned char preferred_base; /* we do not pack this, but is available
+-				       * to be used as the base object to delta
+-				       * objects against.
+-				       */
+-	unsigned char no_try_delta;
+-	unsigned char tagged; /* near the very tip of refs */
+-	unsigned char filled; /* assigned write-order */
+-};
+-
+ /*
+  * Objects we are going to pack are collected in objects array (dynamically
+  * expanded).  nr_objects & nr_alloc controls this array.  They are stored
+@@ -86,6 +61,7 @@ static int pack_compression_seen;
+ 
+ static int bitmap_support;
+ static int use_bitmap_index;
++static int write_bitmap_index;
+ 
  static unsigned long delta_cache_size = 0;
  static unsigned long max_delta_cache_size = 256 * 1024 * 1024;
- static unsigned long cache_max_small_delta_size = 1000;
-@@ -2131,6 +2135,10 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 		cache_max_small_delta_size = git_config_int(k, v);
- 		return 0;
- 	}
-+	if (!strcmp(k, "pack.usebitmaps")) {
-+		bitmap_support = git_config_bool(k, v);
-+		return 0;
-+	}
- 	if (!strcmp(k, "pack.threads")) {
- 		delta_search_threads = git_config_int(k, v);
- 		if (delta_search_threads < 0)
-@@ -2366,8 +2374,24 @@ static void get_object_list(int ac, const char **av)
- 			die("bad revision '%s'", line);
- 	}
+@@ -108,6 +84,12 @@ static struct object_entry *locate_object_entry(const unsigned char *sha1);
+ static uint32_t written, written_delta;
+ static uint32_t reused, reused_delta;
  
-+	if (use_bitmap_index) {
-+		uint32_t size_hint;
++/*
++ * Indexed commits
++ */
++struct commit **indexed_commits;
++unsigned int indexed_commits_nr;
++unsigned int indexed_commits_alloc;
+ 
+ static struct object_slab {
+ 	struct object_slab *next;
+@@ -137,6 +119,16 @@ static struct object_entry *alloc_object_entry(void)
+ 	return &slab->data[slab->count++];
+ }
+ 
++static void index_commit_for_bitmap(struct commit *commit)
++{
++	if (indexed_commits_nr >= indexed_commits_alloc) {
++		indexed_commits_alloc = (indexed_commits_alloc + 32) * 2;
++		indexed_commits = xrealloc(indexed_commits,
++			indexed_commits_alloc * sizeof(struct commit *));
++	}
 +
-+		if (!prepare_bitmap_walk(&revs, &size_hint)) {
-+			khint_t new_hash_size = (size_hint * (1.0 / __ac_HASH_UPPER)) + 0.5;
-+			kh_resize_sha1(packed_objects, new_hash_size);
++	indexed_commits[indexed_commits_nr++] = commit;
++}
+ 
+ static void *get_delta(struct object_entry *entry)
+ {
+@@ -746,6 +738,29 @@ static struct object_entry **compute_write_order(void)
+ 	return wo;
+ }
+ 
++static void resolve_real_types(
++	 struct pack_idx_entry **index, uint32_t index_nr)
++{
++	uint32_t i;
 +
-+			nr_alloc = (size_hint + 63) & ~63;
-+			objects = xrealloc(objects, nr_alloc * sizeof(struct object_entry *));
++	for (i = 0; i < index_nr; ++i) {
++		struct object_entry *entry = (struct object_entry *)index[i];
 +
-+			traverse_bitmap_commit_list(&add_object_entry_1);
-+			return;
++		switch (entry->type) {
++		case OBJ_COMMIT:
++		case OBJ_TREE:
++		case OBJ_BLOB:
++		case OBJ_TAG:
++			entry->real_type = entry->type;
++			break;
++
++		default:
++			entry->real_type = sha1_object_info(entry->idx.sha1, NULL);
++			break;
 +		}
 +	}
++}
 +
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
+ static void write_pack_file(void)
+ {
+ 	uint32_t i = 0, j;
+@@ -824,9 +839,27 @@ static void write_pack_file(void)
+ 			if (sizeof(tmpname) <= strlen(base_name) + 50)
+ 				die("pack base name '%s' too long", base_name);
+ 			snprintf(tmpname, sizeof(tmpname), "%s-", base_name);
 +
- 	mark_edges_uninteresting(revs.commits, &revs, show_edge);
- 	traverse_commit_list(&revs, show_commit, show_object, NULL);
++			if (write_bitmap_index)
++				resolve_real_types(written_list, nr_written);
++
+ 			finish_tmp_packfile(tmpname, pack_tmp_name,
+ 					    written_list, nr_written,
+ 					    &pack_idx_opts, sha1);
++
++			if (write_bitmap_index && nr_remaining == nr_written) {
++				char *end_of_name_prefix = strrchr(tmpname, 0);
++				sprintf(end_of_name_prefix, "%s.bitmap", sha1_to_hex(sha1));
++
++				stop_progress(&progress_state);
++
++				bitmap_writer_show_progress(progress);
++				bitmap_writer_build_type_index(written_list, nr_written);
++				bitmap_writer_select_commits(indexed_commits, indexed_commits_nr, -1);
++				bitmap_writer_build(packed_objects);
++				bitmap_writer_finish(tmpname, sha1, BITMAP_OPT_HASH_CACHE);
++			}
++
+ 			free(pack_tmp_name);
+ 			puts(sha1_to_hex(sha1));
+ 		}
+@@ -900,10 +933,8 @@ static int add_object_entry_1(const unsigned char *sha1, enum object_type type,
+ 		return 0;
+ 	}
  
-@@ -2495,6 +2519,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 			    N_("pack compression level")),
- 		OPT_SET_INT(0, "keep-true-parents", &grafts_replace_parents,
- 			    N_("do not hide commits by grafts"), 0),
-+		OPT_BOOL(0, "bitmaps", &bitmap_support,
-+			 N_("enable support for bitmap optimizations")),
- 		OPT_END(),
- 	};
+-	if (!exclude && local && has_loose_object_nonlocal(sha1)) {
+-		kh_del_sha1(packed_objects, ix);
+-		return 0;
+-	}
++	if (!exclude && local && has_loose_object_nonlocal(sha1))
++		goto skip_entry;
  
-@@ -2561,6 +2587,11 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (keep_unreachable && unpack_unreachable)
+ 	if (!found_pack) {
+ 		for (p = packed_git; p; p = p->next) {
+@@ -919,12 +950,12 @@ static int add_object_entry_1(const unsigned char *sha1, enum object_type type,
+ 				}
+ 				if (exclude)
+ 					break;
+-				if (incremental ||
+-					(local && !p->pack_local) ||
+-					(ignore_packed_keep && p->pack_local && p->pack_keep)) {
+-					kh_del_sha1(packed_objects, ix);
+-					return 0;
+-				}
++				if (incremental)
++					goto skip_entry;
++				if (local && !p->pack_local)
++					goto skip_entry;
++				if (ignore_packed_keep && p->pack_local && p->pack_keep)
++					goto skip_entry;
+ 			}
+ 		}
+ 	}
+@@ -956,6 +987,11 @@ static int add_object_entry_1(const unsigned char *sha1, enum object_type type,
+ 	display_progress(progress_state, nr_objects);
+ 
+ 	return 1;
++
++skip_entry:
++	kh_del_sha1(packed_objects, ix);
++	write_bitmap_index = 0;
++	return 0;
+ }
+ 
+ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+@@ -1266,6 +1302,7 @@ static void check_object(struct object_entry *entry)
+ 		used = unpack_object_header_buffer(buf, avail,
+ 						   &entry->in_pack_type,
+ 						   &entry->size);
++
+ 		if (used == 0)
+ 			goto give_up;
+ 
+@@ -2197,6 +2234,10 @@ static void show_commit(struct commit *commit, void *data)
+ {
+ 	add_object_entry(commit->object.sha1, OBJ_COMMIT, NULL, 0);
+ 	commit->object.flags |= OBJECT_ADDED;
++
++	if (write_bitmap_index) {
++		index_commit_for_bitmap(commit);
++	}
+ }
+ 
+ static void show_object(struct object *obj,
+@@ -2366,6 +2407,7 @@ static void get_object_list(int ac, const char **av)
+ 		if (*line == '-') {
+ 			if (!strcmp(line, "--not")) {
+ 				flags ^= UNINTERESTING;
++				write_bitmap_index = 0;
+ 				continue;
+ 			}
+ 			die("not a rev '%s'", line);
+@@ -2588,6 +2630,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
  		die("--keep-unreachable and --unpack-unreachable are incompatible.");
  
-+	if (bitmap_support) {
-+		if (use_internal_rev_list && pack_to_stdout)
-+			use_bitmap_index = 1;
-+	}
+ 	if (bitmap_support) {
++		if (!pack_to_stdout && rev_list_all)
++			write_bitmap_index = 1;
 +
- 	if (progress && all_progress_implied)
- 		progress = 2;
- 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
+ 		if (use_internal_rev_list && pack_to_stdout)
+ 			use_bitmap_index = 1;
+ 	}
+diff --git a/builtin/pack-objects.h b/builtin/pack-objects.h
 new file mode 100644
-index 0000000..090db15
+index 0000000..e186161
 --- /dev/null
-+++ b/pack-bitmap.c
-@@ -0,0 +1,818 @@
++++ b/builtin/pack-objects.h
+@@ -0,0 +1,33 @@
++#ifndef BUILTIN_PACK_OBJECTS_H
++#define BUILTIN_PACK_OBJECTS_H
++
++struct object_entry {
++	struct pack_idx_entry idx;
++	unsigned long size;	/* uncompressed size */
++	struct packed_git *in_pack; 	/* already in pack */
++	off_t in_pack_offset;
++	struct object_entry *delta;	/* delta base object */
++	struct object_entry *delta_child; /* deltified objects who bases me */
++	struct object_entry *delta_sibling; /* other deltified objects who
++					     * uses the same base as me
++					     */
++	void *delta_data;	/* cached delta (uncompressed) */
++	unsigned long delta_size;	/* delta data size (uncompressed) */
++	unsigned long z_delta_size;	/* delta data size (compressed) */
++	unsigned int hash;	/* name hint hash */
++
++	enum object_type type;
++	enum object_type in_pack_type;
++	enum object_type real_type;
++
++	unsigned int index_pos;
++
++	unsigned char in_pack_header_size;
++	unsigned char preferred_base;
++	unsigned char no_try_delta;
++	unsigned char tagged;
++	unsigned char filled;
++	unsigned char refered;
++};
++
++#endif
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+new file mode 100644
+index 0000000..d232545
+--- /dev/null
++++ b/pack-bitmap-write.c
+@@ -0,0 +1,520 @@
 +#include <stdlib.h>
 +
 +#include "cache.h"
@@ -282,446 +455,203 @@ index 0000000..090db15
 +#include "tag.h"
 +#include "diff.h"
 +#include "revision.h"
-+#include "progress.h"
 +#include "list-objects.h"
++#include "progress.h"
++#include "pack-revindex.h"
 +#include "pack.h"
 +#include "pack-bitmap.h"
++#include "builtin/pack-objects.h"
 +
-+struct stored_bitmap {
-+	unsigned char sha1[20];
-+	struct ewah_bitmap *root;
-+	struct stored_bitmap *xor;
++struct bitmapped_commit {
++	struct commit *commit;
++	struct ewah_bitmap *bitmap;
++	struct ewah_bitmap *write_as;
 +	int flags;
++	int xor_offset;
++	uint32_t write_pos;
 +};
 +
-+struct bitmap_index {
++struct bitmap_writer {
 +	struct ewah_bitmap *commits;
 +	struct ewah_bitmap *trees;
 +	struct ewah_bitmap *blobs;
 +	struct ewah_bitmap *tags;
 +
 +	khash_sha1 *bitmaps;
++	khash_sha1 *packed_objects;
 +
-+	struct packed_git *pack;
++	struct bitmapped_commit *selected;
++	unsigned int selected_nr, selected_alloc;
 +
-+	struct {
-+		struct object_array entries;
-+		khash_sha1 *map;
-+	} fake_index;
++	struct object_entry **index;
++	uint32_t index_nr;
 +
-+	struct bitmap *result;
++	int fd;
++	uint32_t written;
 +
-+	int entry_count;
-+	char pack_checksum[20];
-+
-+	int version;
-+	unsigned loaded : 1,
-+			 native_bitmaps : 1,
-+			 has_hash_cache : 1;
-+
-+	struct ewah_bitmap *(*read_bitmap)(struct bitmap_index *index);
-+
-+	void *map;
-+	size_t map_size, map_pos;
-+
-+	uint32_t *delta_hashes;
++	struct progress *progress;
++	int show_progress;
 +};
 +
-+static struct bitmap_index bitmap_git;
++static struct bitmap_writer writer;
 +
-+static struct ewah_bitmap *
-+lookup_stored_bitmap(struct stored_bitmap *st)
++void bitmap_writer_show_progress(int show)
 +{
-+	struct ewah_bitmap *parent;
-+	struct ewah_bitmap *composed;
-+
-+	if (st->xor == NULL)
-+		return st->root;
-+
-+	composed = ewah_pool_new();
-+	parent = lookup_stored_bitmap(st->xor);
-+	ewah_xor(st->root, parent, composed);
-+
-+	ewah_pool_free(st->root);
-+	st->root = composed;
-+	st->xor = NULL;
-+
-+	return composed;
++	writer.show_progress = show;
 +}
 +
-+static struct ewah_bitmap *
-+_read_bitmap(struct bitmap_index *index)
++/**
++ * Build the initial type index for the packfile
++ */
++void bitmap_writer_build_type_index(
++	 struct pack_idx_entry **index, uint32_t index_nr)
 +{
-+	struct ewah_bitmap *b = ewah_pool_new();
-+	int bitmap_size;
++	uint32_t i = 0;
 +
-+	bitmap_size = ewah_read_mmap(b,
-+		index->map + index->map_pos,
-+		index->map_size - index->map_pos);
++	if (writer.show_progress)
++		writer.progress = start_progress("Building bitmap type index", index_nr);
 +
-+	if (bitmap_size < 0) {
-+		error("Failed to load bitmap index (corruped?)");
-+		ewah_pool_free(b);
-+		return NULL;
-+	}
++	writer.commits = ewah_new();
++	writer.trees = ewah_new();
++	writer.blobs = ewah_new();
++	writer.tags = ewah_new();
 +
-+	index->map_pos += bitmap_size;
-+	return b;
-+}
++	writer.index = (struct object_entry **)index;
++	writer.index_nr = index_nr;
 +
-+static struct ewah_bitmap *
-+_read_bitmap_native(struct bitmap_index *index)
-+{
-+	struct ewah_bitmap *b = calloc(1, sizeof(struct ewah_bitmap));
-+	int bitmap_size;
++	while (i < index_nr) {
++		struct object_entry *entry = (struct object_entry *)index[i];
++		entry->index_pos = i;
 +
-+	bitmap_size = ewah_read_mmap_native(b,
-+		index->map + index->map_pos,
-+		index->map_size - index->map_pos);
++		switch (entry->real_type) {
++		case OBJ_COMMIT:
++			ewah_set(writer.commits, i);
++			break;
 +
-+	if (bitmap_size < 0) {
-+		error("Failed to load bitmap index (corruped?)");
-+		free(b);
-+		return NULL;
-+	}
++		case OBJ_TREE:
++			ewah_set(writer.trees, i);
++			break;
 +
-+	index->map_pos += bitmap_size;
-+	return b;
-+}
++		case OBJ_BLOB:
++			ewah_set(writer.blobs, i);
++			break;
 +
-+static int load_bitmap_header(struct bitmap_index *index)
-+{
-+	struct bitmap_disk_header *header = (void *)index->map;
++		case OBJ_TAG:
++			ewah_set(writer.tags, i);
++			break;
 +
-+	if (index->map_size < sizeof(*header))
-+		return error("Corrupted bitmap index (missing header data)");
-+
-+	if (memcmp(header->magic, BITMAP_MAGIC_PREFIX, sizeof(BITMAP_MAGIC_PREFIX)) != 0)
-+		return error("Corrupted bitmap index file (wrong header)");
-+
-+	index->version = (int)ntohs(header->version);
-+	if (index->version != 2)
-+		return error("Unsupported version for bitmap index file (%d)", index->version);
-+
-+	/* Parse known bitmap format options */
-+	{
-+		uint32_t flags = ntohs(header->options);
-+
-+		if ((flags & BITMAP_OPT_FULL_DAG) == 0) {
-+			return error("Unsupported options for bitmap index file "
-+				"(Git requires BITMAP_OPT_FULL_DAG)");
++		default:
++			die("Missing type information for %s (%d/%d)",
++					sha1_to_hex(entry->idx.sha1), entry->real_type, entry->type);
 +		}
 +
-+		if (flags & BITMAP_OPT_HASH_CACHE)
-+			index->has_hash_cache = 1;
-+
-+		index->read_bitmap = &_read_bitmap;
-+
-+		/*
-+		 * If we are in a little endian machine and the bitmap
-+		 * was written in LE, we can mmap it straight into memory
-+		 * without having to parse it
-+		 */
-+		if ((flags & BITMAP_OPT_LE_BITMAPS)) {
-+#if __BYTE_ORDER == __LITTLE_ENDIAN
-+			index->native_bitmaps = 1;
-+			index->read_bitmap = &_read_bitmap_native;
-+#else
-+			die("The existing bitmap index is written in little-endian "
-+				"byte order and cannot be read in this machine.\n"
-+				"Please re-build the bitmap indexes locally.");
-+#endif
-+		}
++		i++;
++		display_progress(writer.progress, i);
 +	}
 +
-+	index->entry_count = ntohl(header->entry_count);
-+	memcpy(index->pack_checksum, header->checksum, sizeof(header->checksum));
-+	index->map_pos += sizeof(*header);
-+
-+	return 0;
++	stop_progress(&writer.progress);
 +}
 +
-+static struct stored_bitmap *
-+store_bitmap(struct bitmap_index *index,
-+	const unsigned char *sha1,
-+	struct ewah_bitmap *bitmap,
-+	struct stored_bitmap *xor_with, int flags)
++/**
++ * Compute the actual bitmaps
++ */
++static struct object **seen_objects;
++static unsigned int seen_objects_nr, seen_objects_alloc;
++
++static inline void push_bitmapped_commit(struct commit *commit)
 +{
-+	struct stored_bitmap *stored;
-+	khiter_t hash_pos;
-+	int ret;
-+
-+	stored = xmalloc(sizeof(struct stored_bitmap));
-+	stored->root = bitmap;
-+	stored->xor = xor_with;
-+	stored->flags = flags;
-+	memcpy(stored->sha1, sha1, 20);
-+
-+	hash_pos = kh_put_sha1(index->bitmaps, stored->sha1, &ret);
-+	if (ret == 0) {
-+		error("Duplicate entry in bitmap index: %s", sha1_to_hex(sha1));
-+		return NULL;
++	if (writer.selected_nr >= writer.selected_alloc) {
++		writer.selected_alloc = (writer.selected_alloc + 32) * 2;
++		writer.selected = xrealloc(writer.selected,
++			writer.selected_alloc * sizeof(struct bitmapped_commit));
 +	}
 +
-+	kh_value(index->bitmaps, hash_pos) = stored;
-+	return stored;
++	writer.selected[writer.selected_nr].commit = commit;
++	writer.selected[writer.selected_nr].bitmap = NULL;
++	writer.selected[writer.selected_nr].flags = 0;
++
++	writer.selected_nr++;
 +}
 +
-+static int
-+load_bitmap_entries_v2(struct bitmap_index *index)
++static inline void mark_as_seen(struct object *object)
 +{
-+	static const int MAX_XOR_OFFSET = 16;
-+
-+	int i;
-+	struct stored_bitmap *recent_bitmaps[16];
-+	struct bitmap_disk_entry_v2 *entry;
-+
-+	void *index_pos = index->map + index->map_size -
-+		(index->entry_count * sizeof(struct bitmap_disk_entry_v2));
-+
-+	for (i = 0; i < index->entry_count; ++i) {
-+		int xor_offset, flags, ret;
-+		struct stored_bitmap *xor_bitmap = NULL;
-+		struct ewah_bitmap *bitmap = NULL;
-+		uint32_t bitmap_pos;
-+
-+		entry = index_pos;
-+		index_pos += sizeof(struct bitmap_disk_entry_v2);
-+
-+		bitmap_pos = ntohl(entry->bitmap_pos);
-+		xor_offset = (int)entry->xor_offset;
-+		flags = (int)entry->flags;
-+
-+		if (index->native_bitmaps) {
-+			bitmap = calloc(1, sizeof(struct ewah_bitmap));
-+			ret = ewah_read_mmap_native(bitmap,
-+				index->map + bitmap_pos,
-+				index->map_size - bitmap_pos);
-+		} else {
-+			bitmap = ewah_pool_new();
-+			ret = ewah_read_mmap(bitmap,
-+				index->map + bitmap_pos,
-+				index->map_size - bitmap_pos);
-+		}
-+
-+		if (ret < 0 || xor_offset > MAX_XOR_OFFSET || xor_offset > i) {
-+			return error("Corrupted bitmap pack index");
-+		}
-+
-+		if (xor_offset > 0) {
-+			xor_bitmap = recent_bitmaps[(i - xor_offset) % MAX_XOR_OFFSET];
-+
-+			if (xor_bitmap == NULL)
-+				return error("Invalid XOR offset in bitmap pack index");
-+		}
-+
-+		recent_bitmaps[i % MAX_XOR_OFFSET] = store_bitmap(
-+			index, entry->sha1, bitmap, xor_bitmap, flags);
++	if (seen_objects_nr >= seen_objects_alloc) {
++		seen_objects_alloc = (seen_objects_alloc + 32) * 2;
++		seen_objects = xrealloc(seen_objects,
++			seen_objects_alloc * sizeof(struct object*));
 +	}
 +
-+	return 0;
++	seen_objects[seen_objects_nr++] = object;
 +}
 +
-+static int load_bitmap_index(
-+	struct bitmap_index *index,
-+	const char *path,
-+	struct packed_git *packfile)
++static inline void reset_all_seen(void)
 +{
-+	int fd = git_open_noatime(path);
-+	struct stat st;
++	unsigned int i;
++	for (i = 0; i < seen_objects_nr; ++i) {
++		seen_objects[i]->flags &= ~(SEEN | ADDED | SHOWN);
++	}
++	seen_objects_nr = 0;
++}
 +
-+	if (fd < 0) {
-+		return -1;
++static uint32_t find_object_pos(const unsigned char *sha1)
++{
++	khiter_t pos = kh_get_sha1(writer.packed_objects, sha1);
++
++	if (pos < kh_end(writer.packed_objects)) {
++		struct object_entry *entry = kh_value(writer.packed_objects, pos);
++		return entry->index_pos;
 +	}
 +
-+	if (fstat(fd, &st)) {
-+		close(fd);
-+		return -1;
-+	}
-+
-+	index->map_size = xsize_t(st.st_size);
-+	index->map = xmmap(NULL, index->map_size, PROT_READ, MAP_PRIVATE, fd, 0);
-+	close(fd);
-+
-+	index->bitmaps = kh_init_sha1();
-+	index->pack = packfile;
-+	index->fake_index.map = kh_init_sha1();
-+
-+	if (load_bitmap_header(index) < 0)
-+		return -1;
-+
-+	if (index->has_hash_cache) {
-+		index->delta_hashes = index->map + index->map_pos;
-+		index->map_pos += (packfile->num_objects * sizeof(uint32_t));
-+	}
-+
-+	if ((index->commits = index->read_bitmap(index)) == NULL ||
-+		(index->trees = index->read_bitmap(index)) == NULL ||
-+		(index->blobs = index->read_bitmap(index)) == NULL ||
-+		(index->tags = index->read_bitmap(index)) == NULL)
-+		return -1;
-+
-+	if (load_bitmap_entries_v2(index) < 0)
-+		return -1;
-+
-+	index->loaded = true;
-+	return 0;
-+}
-+
-+char *pack_bitmap_filename(struct packed_git *p)
-+{
-+	char *idx_name;
-+	int len;
-+
-+	len = strlen(p->pack_name) - strlen(".pack");
-+	idx_name = xmalloc(len + strlen(".bitmap") + 1);
-+
-+	memcpy(idx_name, p->pack_name, len);
-+	memcpy(idx_name + len, ".bitmap", strlen(".bitmap") + 1);
-+
-+	return idx_name;
-+}
-+
-+int open_pack_bitmap(struct packed_git *p)
-+{
-+	char *idx_name;
-+	int ret;
-+
-+	if (open_pack_index(p))
-+		die("failed to open pack %s", p->pack_name);
-+
-+	idx_name = pack_bitmap_filename(p);
-+	ret = load_bitmap_index(&bitmap_git, idx_name, p);
-+	free(idx_name);
-+
-+	return ret;
-+}
-+
-+void prepare_bitmap_git(void)
-+{
-+	struct packed_git *p;
-+
-+	if (bitmap_git.loaded)
-+		return;
-+
-+	for (p = packed_git; p; p = p->next) {
-+		if (open_pack_bitmap(p) == 0)
-+			return;
-+	}
-+}
-+
-+struct include_data {
-+	struct bitmap *base;
-+	struct bitmap *seen;
-+};
-+
-+static inline int bitmap_position_extended(const unsigned char *sha1)
-+{
-+	struct object_array *array = &bitmap_git.fake_index.entries;
-+	struct object_array_entry *entry ;
-+	int bitmap_pos;
-+
-+	khiter_t pos = kh_get_sha1(bitmap_git.fake_index.map, sha1);
-+
-+	if (pos < kh_end(bitmap_git.fake_index.map)) {
-+		entry = kh_value(bitmap_git.fake_index.map, pos);
-+
-+		bitmap_pos = (entry - array->objects);
-+		bitmap_pos += bitmap_git.pack->num_objects;
-+
-+		return bitmap_pos;
-+	}
-+
-+	return -1;
-+}
-+
-+static int bitmap_position(const unsigned char *sha1)
-+{
-+	int pos = find_pack_entry_pos(sha1, bitmap_git.pack);
-+	return (pos >= 0) ? pos : bitmap_position_extended(sha1);
-+}
-+
-+static int fake_index_add_object(struct object *object, const char *name)
-+{
-+	khiter_t hash_pos;
-+	int hash_ret;
-+	int bitmap_pos;
-+
-+	struct object_array *array = &bitmap_git.fake_index.entries;
-+	struct object_array_entry *entry;
-+
-+	hash_pos = kh_put_sha1(bitmap_git.fake_index.map, object->sha1, &hash_ret);
-+	if (hash_ret > 0) {
-+		add_object_array(object, name, array);
-+		entry = &array->objects[array->nr - 1];
-+		kh_value(bitmap_git.fake_index.map, hash_pos) = entry;
-+	} else {
-+		entry = kh_value(bitmap_git.fake_index.map, hash_pos);
-+	}
-+
-+	bitmap_pos = (entry - array->objects);
-+	bitmap_pos += bitmap_git.pack->num_objects;
-+
-+	return bitmap_pos;
++	die("Failed to write bitmap index. Packfile doesn't have full closure "
++		"(object %s is missing)", sha1_to_hex(sha1));
 +}
 +
 +static void show_object(struct object *object,
 +	const struct name_path *path, const char *last, void *data)
 +{
 +	struct bitmap *base = data;
-+	int bitmap_pos;
-+
-+	bitmap_pos = bitmap_position(object->sha1);
-+	if (bitmap_pos < 0) {
-+		bitmap_pos = fake_index_add_object(object, path_name(path, last));
-+	}
-+
-+	bitmap_set(base, bitmap_pos);
++	bitmap_set(base, find_object_pos(object->sha1));
++	mark_as_seen(object);
 +}
 +
 +static void show_commit(struct commit *commit, void *data)
 +{
-+	/* Nothing to do here */
++	mark_as_seen((struct object *)commit);
 +}
 +
 +static int
-+add_to_include_set(struct include_data *data, const unsigned char *sha1, int bitmap_pos)
++add_to_include_set(struct bitmap *base, struct commit *commit)
 +{
 +	khiter_t hash_pos;
++	uint32_t bitmap_pos = find_object_pos(commit->object.sha1);
 +
-+	if (data->seen && bitmap_get(data->seen, bitmap_pos))
++	if (bitmap_get(base, bitmap_pos))
 +		return 0;
 +
-+	if (bitmap_get(data->base, bitmap_pos))
-+		return 0;
-+
-+	hash_pos = kh_get_sha1(bitmap_git.bitmaps, sha1);
-+	if (hash_pos < kh_end(bitmap_git.bitmaps)) {
-+		struct stored_bitmap *st = kh_value(bitmap_git.bitmaps, hash_pos);
-+		bitmap_or_inplace(data->base, lookup_stored_bitmap(st));
++	hash_pos = kh_get_sha1(writer.bitmaps, commit->object.sha1);
++	if (hash_pos < kh_end(writer.bitmaps)) {
++		struct bitmapped_commit *bc = kh_value(writer.bitmaps, hash_pos);
++		bitmap_or_inplace(base, bc->bitmap);
 +		return 0;
 +	}
 +
-+	bitmap_set(data->base, bitmap_pos);
++	bitmap_set(base, bitmap_pos);
 +	return 1;
 +}
 +
 +static int
 +should_include(struct commit *commit, void *_data)
 +{
-+	struct include_data *data = _data;
-+	int bitmap_pos;
++	struct bitmap *base = _data;
 +
-+	bitmap_pos = bitmap_position(commit->object.sha1);
-+	if (bitmap_pos < 0) {
-+		bitmap_pos = fake_index_add_object((struct object *)commit, "");
-+	}
-+
-+	if (!add_to_include_set(data, commit->object.sha1, bitmap_pos)) {
++	if (!add_to_include_set(base, commit)) {
 +		struct commit_list *parent = commit->parents;
++
++		mark_as_seen((struct object *)commit);
 +
 +		while (parent) {
 +			parent->item->object.flags |= SEEN;
++			mark_as_seen((struct object *)parent->item);
 +			parent = parent->next;
 +		}
 +
@@ -731,426 +661,349 @@ index 0000000..090db15
 +	return 1;
 +}
 +
-+static struct bitmap *
-+find_objects(
-+	struct rev_info *revs,
-+	struct object_list *roots,
-+	struct bitmap *seen)
++static void
++compute_xor_offsets(void)
 +{
-+	struct bitmap *base = NULL;
-+	bool needs_walk = false;
++	static const int MAX_XOR_OFFSET_SEARCH = 10;
 +
-+	struct object_list *not_mapped = NULL;
++	int i, next = 0;
 +
-+	/**
-+	 * Go through all the roots for the walk. The ones that have bitmaps
-+	 * on the bitmap index will be `or`ed together to form an initial
-+	 * global reachability analysis.
-+	 *
-+	 * The ones without bitmaps in the index will be stored in the
-+	 * `not_mapped_list` for further processing.
-+	 */
-+	while (roots) {
-+		struct object *object = roots->item;
-+		roots = roots->next;
++	while (next < writer.selected_nr) {
++		struct bitmapped_commit *stored = &writer.selected[next];
 +
-+		if (object->type == OBJ_COMMIT) {
-+			khiter_t pos = kh_get_sha1(bitmap_git.bitmaps, object->sha1);
++		int best_offset = 0;
++		struct ewah_bitmap *best_bitmap = stored->bitmap;
++		struct ewah_bitmap *test_xor;
 +
-+			if (pos < kh_end(bitmap_git.bitmaps)) {
-+				struct stored_bitmap *st = kh_value(bitmap_git.bitmaps, pos);
-+				struct ewah_bitmap *or_with = lookup_stored_bitmap(st);
++		for (i = 1; i <= MAX_XOR_OFFSET_SEARCH; ++i) {
++			int curr = next - i;
 +
-+				if (base == NULL)
-+					base = ewah_to_bitmap(or_with);
-+				else
-+					bitmap_or_inplace(base, or_with);
-+
-+				object->flags |= SEEN;
-+				continue;
-+			}
-+		}
-+
-+		object_list_insert(object, &not_mapped);
-+	}
-+
-+	/**
-+	 * Best case scenario: We found bitmaps for all the roots,
-+	 * so the resulting `or` bitmap has the full reachability analysis
-+	 */
-+	if (not_mapped == NULL)
-+		return base;
-+
-+	roots = not_mapped;
-+
-+	/**
-+	 * Let's iterate through all the roots that don't have bitmaps to
-+	 * check we can determine them to be reachable from the existing
-+	 * global bitmap.
-+	 *
-+	 * If we cannot find them in the existing global bitmap, we'll need
-+	 * to push them to an actual walk and run it until we can confirm
-+	 * they are reachable
-+	 */
-+	while (roots) {
-+		struct object *object = roots->item;
-+		int pos;
-+
-+		roots = roots->next;
-+		pos = bitmap_position(object->sha1);
-+
-+		if (pos < 0 || base == NULL || !bitmap_get(base, pos)) {
-+			object->flags &= ~UNINTERESTING;
-+			add_pending_object(revs, object, "");
-+			needs_walk = true;
-+		} else {
-+			object->flags |= SEEN;
-+		}
-+	}
-+
-+	if (needs_walk) {
-+		struct include_data incdata;
-+
-+		if (base == NULL)
-+			base = bitmap_new();
-+
-+		incdata.base = base;
-+		incdata.seen = seen;
-+
-+		revs->include_check = should_include;
-+		revs->include_check_data = &incdata;
-+
-+		if (prepare_revision_walk(revs))
-+			die("revision walk setup failed");
-+
-+		traverse_commit_list(revs, show_commit, show_object, base);
-+	}
-+
-+	return base;
-+}
-+
-+static void show_extended_objects(
-+	struct bitmap *objects,
-+	show_reachable_fn show_reach)
-+{
-+	struct object_array_entry *entries = bitmap_git.fake_index.entries.objects;
-+	unsigned int nr = bitmap_git.fake_index.entries.nr;
-+	unsigned int i;
-+
-+	for (i = 0; i < nr; ++i) {
-+		struct object *obj;
-+
-+		if (!bitmap_get(objects, bitmap_git.pack->num_objects + i))
-+			continue;
-+
-+		obj = entries[i].item;
-+		show_reach(obj->sha1, obj->type, pack_name_hash(entries[i].name), 0, NULL, 0);
-+	}
-+}
-+
-+static void show_objects_for_type(
-+	struct bitmap *objects,
-+	struct ewah_bitmap *type_filter,
-+	enum object_type object_type,
-+	show_reachable_fn show_reach)
-+{
-+	size_t pos = 0, i = 0;
-+	uint32_t offset;
-+
-+	struct ewah_iterator it;
-+	eword_t filter;
-+
-+	ewah_iterator_init(&it, type_filter);
-+
-+	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it)) {
-+		eword_t word = objects->words[i] & filter;
-+
-+		for (offset = 0; offset < BITS_IN_WORD; ++offset) {
-+			const unsigned char *sha1;
-+			off_t pack_off;
-+			uint32_t hash = 0;
-+
-+			if ((word >> offset) == 0)
++			if (curr < 0)
 +				break;
 +
-+			offset += __builtin_ctzll(word >> offset);
++			test_xor = ewah_pool_new();
++			ewah_xor(writer.selected[curr].bitmap, stored->bitmap, test_xor);
 +
-+			sha1 = nth_packed_object_sha1(bitmap_git.pack, pos + offset);
-+			pack_off = nth_packed_object_offset(bitmap_git.pack, pos + offset);
++			if (test_xor->buffer_size < best_bitmap->buffer_size) {
++				if (best_bitmap != stored->bitmap)
++					ewah_pool_free(best_bitmap);
 +
-+			if (bitmap_git.delta_hashes)
-+				hash = ntohl(bitmap_git.delta_hashes[pos + offset]);
-+
-+			show_reach(sha1, object_type, hash, 0, bitmap_git.pack, pack_off);
++				best_bitmap = test_xor;
++				best_offset = i;
++			} else {
++				ewah_pool_free(test_xor);
++			}
 +		}
 +
-+		pos += BITS_IN_WORD;
-+		i++;
++		stored->xor_offset = best_offset;
++		stored->write_as = best_bitmap;
++
++		next++;
 +	}
 +}
 +
-+int prepare_bitmap_walk(struct rev_info *revs, uint32_t *result_size)
++void
++bitmap_writer_build(khash_sha1 *packed_objects)
 +{
-+	unsigned int i;
-+	unsigned int pending_nr = revs->pending.nr;
-+	unsigned int pending_alloc = revs->pending.alloc;
-+	struct object_array_entry *pending_e = revs->pending.objects;
++	int i;
++	struct bitmap *base = bitmap_new();
++	struct rev_info revs;
 +
-+	struct object_list *wants = NULL;
-+	struct object_list *haves = NULL;
++	writer.bitmaps = kh_init_sha1();
++	writer.packed_objects = packed_objects;
 +
-+	struct bitmap *wants_bitmap = NULL;
-+	struct bitmap *haves_bitmap = NULL;
++	if (writer.show_progress)
++		writer.progress = start_progress("Building bitmaps", writer.selected_nr);
 +
-+	prepare_bitmap_git();
++	init_revisions(&revs, NULL);
++	revs.tag_objects = 1;
++	revs.tree_objects = 1;
++	revs.blob_objects = 1;
++	revs.no_walk = 0;
 +
-+	if (!bitmap_git.loaded)
-+		return -1;
++	revs.include_check = should_include;
++	reset_revision_walk();
 +
-+	revs->pending.nr = 0;
-+	revs->pending.alloc = 0;
-+	revs->pending.objects = NULL;
++	for (i = writer.selected_nr - 1; i >= 0; --i) {
++		struct bitmapped_commit *stored;
++		struct object *object;
 +
-+	for (i = 0; i < pending_nr; ++i) {
-+		struct object *object = pending_e[i].item;
++		khiter_t hash_pos;
++		int hash_ret;
 +
-+		if (object->type == OBJ_NONE)
-+			parse_object(object->sha1);
++		stored = &writer.selected[i];
++		object = (struct object *)stored->commit;
 +
-+		while (object->type == OBJ_TAG) {
-+			struct tag *tag = (struct tag *) object;
++		if (i < writer.selected_nr - 1) {
++			if (!in_merge_bases(writer.selected[i + 1].commit, stored->commit)) {
++				bitmap_reset(base);
++				reset_all_seen();
++			}
++		}
 +
-+			if (object->flags & UNINTERESTING) {
-+				object_list_insert(object, &haves);
-+			} else {
-+				object_list_insert(object, &wants);
++		add_pending_object(&revs, object, "");
++		revs.include_check_data = base;
++
++		if (prepare_revision_walk(&revs))
++			die("revision walk setup failed");
++
++		traverse_commit_list(&revs, show_commit, show_object, base);
++
++		revs.pending.nr = 0;
++		revs.pending.alloc = 0;
++		revs.pending.objects = NULL;
++
++		stored->bitmap = bitmap_to_ewah(base);
++		stored->flags = object->flags;
++
++		hash_pos = kh_put_sha1(writer.bitmaps, object->sha1, &hash_ret);
++		if (hash_ret == 0)
++			die("Duplicate entry when writing index: %s",
++				sha1_to_hex(object->sha1));
++
++		kh_value(writer.bitmaps, hash_pos) = stored;
++
++		display_progress(writer.progress, writer.selected_nr - i);
++	}
++
++	bitmap_free(base);
++	stop_progress(&writer.progress);
++
++	compute_xor_offsets();
++}
++
++/**
++ * Select the commits that will be bitmapped
++ */
++static inline unsigned int next_commit_index(unsigned int idx)
++{
++	static const unsigned int MIN_COMMITS = 100;
++	static const unsigned int MAX_COMMITS = 5000;
++
++	static const unsigned int MUST_REGION = 100;
++	static const unsigned int MIN_REGION = 20000;
++
++	unsigned int offset, next;
++
++	if (idx <= MUST_REGION)
++		return 0;
++
++	if (idx <= MIN_REGION) {
++		offset = idx - MUST_REGION;
++		return (offset < MIN_COMMITS) ? offset : MIN_COMMITS;
++	}
++
++	offset = idx - MIN_REGION;
++	next = (offset < MAX_COMMITS) ? offset : MAX_COMMITS;
++
++	return (next > MIN_COMMITS) ? next : MIN_COMMITS;
++}
++
++void bitmap_writer_select_commits(
++		struct commit **indexed_commits,
++		unsigned int indexed_commits_nr,
++		int max_bitmaps)
++{
++	unsigned int i = 0, next;
++
++	if (writer.show_progress)
++		writer.progress = start_progress("Selecting bitmap commits", 0);
++
++	if (indexed_commits_nr < 100) {
++		for (i = 0; i < indexed_commits_nr; ++i) {
++			push_bitmapped_commit(indexed_commits[i]);
++		}
++		return;
++	}
++
++	for (;;) {
++		next = next_commit_index(i);
++
++		if (i + next >= indexed_commits_nr)
++			break;
++
++		if (max_bitmaps > 0 && writer.selected_nr >= max_bitmaps) {
++			writer.selected_nr = max_bitmaps;
++			break;
++		}
++
++		if (next == 0) {
++			push_bitmapped_commit(indexed_commits[i]);
++		} else {
++			unsigned int j;
++			struct commit *chosen = indexed_commits[i + next];
++
++			for (j = 0; j <= next; ++j) {
++				struct commit *cm = indexed_commits[i + j];
++				if (cm->parents && cm->parents->next)
++					chosen = cm;
 +			}
 +
-+			if (!tag->tagged)
-+				die("bad tag");
-+			object = parse_object(tag->tagged->sha1);
-+			if (!object)
-+				die("bad object %s", sha1_to_hex(tag->tagged->sha1));
++			push_bitmapped_commit(chosen);
 +		}
 +
-+		if (object->flags & UNINTERESTING) {
-+			object_list_insert(object, &haves);
-+		} else {
-+			object_list_insert(object, &wants);
++		i += next + 1;
++		display_progress(writer.progress, i);
++	}
++
++	stop_progress(&writer.progress);
++}
++
++/**
++ * Write the bitmap index to disk
++ */
++static void write_hash_table(
++	 struct object_entry **index, uint32_t index_nr)
++{
++	uint32_t i, j = 0;
++	uint32_t buffer[1024];
++
++	for (i = 0; i < index_nr; ++i) {
++		struct object_entry *entry = index[i];
++
++		buffer[j++] = htonl(entry->hash);
++		if (j == 1024) {
++			write_or_die(writer.fd, buffer, sizeof(buffer));
++			j = 0;
 +		}
 +	}
 +
-+	if (wants == NULL) {
-+		/* we don't want anything! we're done! */
-+		return 0;
++	if (j > 0) {
++		write_or_die(writer.fd, buffer, j * sizeof(uint32_t));
 +	}
 +
-+	if (haves != NULL) {
-+		haves_bitmap = find_objects(revs, haves, NULL);
-+		reset_revision_walk();
-+
-+		if (haves_bitmap == NULL)
-+			goto restore_revs;
-+	}
-+
-+	wants_bitmap = find_objects(revs, wants, haves_bitmap);
-+
-+	if (wants_bitmap == NULL) {
-+		bitmap_free(haves_bitmap);
-+		reset_revision_walk();
-+		goto restore_revs;
-+	}
-+
-+	if (haves_bitmap) {
-+		bitmap_and_not_inplace(wants_bitmap, haves_bitmap);
-+	}
-+
-+	bitmap_git.result = wants_bitmap;
-+
-+	if (result_size) {
-+		*result_size = bitmap_popcount(wants_bitmap);
-+	}
-+
-+	bitmap_free(haves_bitmap);
-+	return 0;
-+
-+restore_revs:
-+	revs->pending.nr = pending_nr;
-+	revs->pending.alloc = pending_alloc;
-+	revs->pending.objects = pending_e;
-+	return -1;
++	writer.written += (index_nr * sizeof(uint32_t));
 +}
 +
-+void traverse_bitmap_commit_list(show_reachable_fn show_reachable)
++static void dump_bitmap(struct ewah_bitmap *bitmap)
 +{
-+	if (!bitmap_git.result)
-+		die("Tried to traverse bitmap commit without setting it up first");
++	int written;
 +
-+	show_objects_for_type(bitmap_git.result, bitmap_git.commits, OBJ_COMMIT, show_reachable);
-+	show_objects_for_type(bitmap_git.result, bitmap_git.trees, OBJ_TREE, show_reachable);
-+	show_objects_for_type(bitmap_git.result, bitmap_git.blobs, OBJ_BLOB, show_reachable);
-+	show_objects_for_type(bitmap_git.result, bitmap_git.tags, OBJ_TAG, show_reachable);
++#if __BYTE_ORDER == __LITTLE_ENDIAN
++	written = ewah_serialize_native(bitmap, writer.fd);
++#else
++	written = ewah_serialize(bitmap, writer.fd);
++#endif
 +
-+	show_extended_objects(bitmap_git.result, show_reachable);
++	if (written < 0)
++		die("Failed to write bitmap index");
 +
-+	bitmap_free(bitmap_git.result);
-+	bitmap_git.result = NULL;
++	writer.written += written;
 +}
 +
-+struct bitmap_test_data {
-+	struct bitmap *base;
-+	struct progress *prg;
-+	size_t seen;
-+};
-+
-+static void test_show_object(struct object *object,
-+	const struct name_path *path, const char *last, void *data)
++static void
++write_selected_commits_v2(void)
 +{
-+	struct bitmap_test_data *tdata = data;
-+	int bitmap_pos;
++	int i;
 +
-+	bitmap_pos = bitmap_position(object->sha1);
-+	if (bitmap_pos < 0) {
-+		die("Object not in bitmap: %s\n", sha1_to_hex(object->sha1));
++	for (i = 0; i < writer.selected_nr; ++i) {
++		struct bitmapped_commit *stored = &writer.selected[i];
++		stored->write_pos = writer.written;
++		dump_bitmap(stored->write_as);
 +	}
 +
-+	bitmap_set(tdata->base, bitmap_pos);
-+	display_progress(tdata->prg, ++tdata->seen);
++	for (i = 0; i < writer.selected_nr; ++i) {
++		struct bitmapped_commit *stored = &writer.selected[i];
++		struct bitmap_disk_entry_v2 on_disk;
++
++		memcpy(on_disk.sha1, stored->commit->object.sha1, 20);
++		on_disk.bitmap_pos = htonl(stored->write_pos);
++		on_disk.xor_offset = stored->xor_offset;
++		on_disk.flags = stored->flags;
++
++		write_or_die(writer.fd, &on_disk, sizeof(on_disk));
++		writer.written += sizeof(on_disk);
++	}
 +}
 +
-+static void test_show_commit(struct commit *commit, void *data)
++void bitmap_writer_finish(
++	 const char *filename, unsigned char sha1[], uint16_t flags)
 +{
-+	struct bitmap_test_data *tdata = data;
-+	int bitmap_pos;
++	static char tmp_file[PATH_MAX];
++	static uint16_t default_version = 2;
 +
-+	bitmap_pos = bitmap_position(commit->object.sha1);
-+	if (bitmap_pos < 0) {
-+		die("Object not in bitmap: %s\n", sha1_to_hex(commit->object.sha1));
-+	}
++	struct bitmap_disk_header header;
 +
-+	bitmap_set(tdata->base, bitmap_pos);
-+	display_progress(tdata->prg, ++tdata->seen);
-+}
++	flags |= BITMAP_OPT_FULL_DAG;
 +
-+void test_bitmap_walk(struct rev_info *revs)
-+{
-+	struct object *root;
-+	struct bitmap *result = NULL;
-+	khiter_t pos;
-+	size_t result_popcnt;
-+	struct bitmap_test_data tdata;
++#if __BYTE_ORDER == __LITTLE_ENDIAN
++	/*
++	 * In little endian machines (i.e. most of them) we're
++	 * going to dump the bitmaps straight from memory into
++	 * disk, and tag the bitmap index as having LE bitmaps
++	 */
++	flags |= BITMAP_OPT_LE_BITMAPS;
++#else
++	flags |= BITMAP_OPT_BE_BITMAPS;
++#endif
 +
-+	prepare_bitmap_git();
++	writer.fd = odb_mkstemp(tmp_file, sizeof(tmp_file), "pack/tmp_bitmap_XXXXXX");
 +
-+	if (!bitmap_git.loaded) {
-+		die("failed to load bitmap indexes");
-+	}
++	if (writer.fd < 0)
++		die_errno("unable to create '%s'", tmp_file);
 +
-+	if (revs->pending.nr != 1) {
-+		die("only one bitmap can be tested at a time");
-+	}
++	memcpy(header.magic, BITMAP_MAGIC_PREFIX, sizeof(BITMAP_MAGIC_PREFIX));
++	header.version = htons(default_version);
++	header.options = htons(flags);
++	header.entry_count = htonl(writer.selected_nr);
++	memcpy(header.checksum, sha1, 20);
 +
-+	fprintf(stderr, "Bitmap v%d test (%d entries loaded)\n",
-+		bitmap_git.version, bitmap_git.entry_count);
++	write_or_die(writer.fd, &header, sizeof(header));
++	writer.written += sizeof(header);
 +
-+	root = revs->pending.objects[0].item;
-+	pos = kh_get_sha1(bitmap_git.bitmaps, root->sha1);
++	if (flags & BITMAP_OPT_HASH_CACHE)
++		write_hash_table(writer.index, writer.index_nr);
 +
-+	if (pos < kh_end(bitmap_git.bitmaps)) {
-+		struct stored_bitmap *st = kh_value(bitmap_git.bitmaps, pos);
-+		struct ewah_bitmap *bm = lookup_stored_bitmap(st);
++	dump_bitmap(writer.commits);
++	dump_bitmap(writer.trees);
++	dump_bitmap(writer.blobs);
++	dump_bitmap(writer.tags);
++	write_selected_commits_v2();
 +
-+		fprintf(stderr, "Found bitmap for %s. %d bits / %08x checksum\n",
-+			sha1_to_hex(root->sha1), (int)bm->bit_size, ewah_checksum(bm));
++	close(writer.fd);
 +
-+		result = ewah_to_bitmap(bm);
-+	}
++	if (adjust_shared_perm(tmp_file))
++		die_errno("unable to make temporary bitmap file readable");
 +
-+	if (result == NULL) {
-+		die("Commit %s doesn't have an indexed bitmap", sha1_to_hex(root->sha1));
-+	}
-+
-+	revs->tag_objects = 1;
-+	revs->tree_objects = 1;
-+	revs->blob_objects = 1;
-+
-+	result_popcnt = bitmap_popcount(result);
-+
-+	if (prepare_revision_walk(revs))
-+		die("revision walk setup failed");
-+
-+	tdata.base = bitmap_new();
-+	tdata.prg = start_progress("Verifying bitmap entries", result_popcnt);
-+	tdata.seen = 0;
-+
-+	traverse_commit_list(revs, &test_show_commit, &test_show_object, &tdata);
-+
-+	stop_progress(&tdata.prg);
-+
-+	if (bitmap_equals(result, tdata.base)) {
-+		fprintf(stderr, "OK!\n");
-+	} else {
-+		fprintf(stderr, "Mismatch!\n");
-+	}
++	if (rename(tmp_file, filename))
++		die_errno("unable to rename temporary bitmap file to '%s'", filename);
 +}
 diff --git a/pack-bitmap.h b/pack-bitmap.h
-new file mode 100644
-index 0000000..b97bd46
---- /dev/null
+index b97bd46..8e7e3dc 100644
+--- a/pack-bitmap.h
 +++ b/pack-bitmap.h
-@@ -0,0 +1,53 @@
-+#ifndef PACK_BITMAP_H
-+#define PACK_BITMAP_H
+@@ -31,6 +31,8 @@ struct bitmap_disk_header {
+ 
+ static const char BITMAP_MAGIC_PREFIX[] = {'B', 'I', 'T', 'M'};;
+ 
++#define NEEDS_BITMAP (1u<<22)
 +
-+#define ewah_malloc xmalloc
-+#define ewah_calloc xcalloc
-+#define ewah_realloc xrealloc
-+#include "ewah/ewok.h"
-+#include "khash.h"
+ enum pack_bitmap_opts {
+ 	BITMAP_OPT_FULL_DAG = 1,
+ 	BITMAP_OPT_LE_BITMAPS = 2,
+@@ -50,4 +52,11 @@ int prepare_bitmap_walk(struct rev_info *revs, uint32_t *result_size);
+ void test_bitmap_walk(struct rev_info *revs);
+ char *pack_bitmap_filename(struct packed_git *p);
+ 
++void bitmap_writer_show_progress(int show);
++void bitmap_writer_build_type_index(struct pack_idx_entry **index, uint32_t index_nr);
++void bitmap_writer_select_commits(struct commit **indexed_commits,
++		unsigned int indexed_commits_nr, int max_bitmaps);
++void bitmap_writer_build(khash_sha1 *packed_objects);
++void bitmap_writer_finish(const char *filename, unsigned char sha1[], uint16_t flags);
 +
-+struct bitmap_disk_entry {
-+	uint32_t object_pos;
-+	uint8_t xor_offset;
-+	uint8_t flags;
-+};
+ #endif
+diff --git a/pack-write.c b/pack-write.c
+index ca9e63b..6203d37 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -371,5 +371,7 @@ void finish_tmp_packfile(char *name_buffer,
+ 	if (rename(idx_tmp_name, name_buffer))
+ 		die_errno("unable to rename temporary index file");
+ 
++	*end_of_name_prefix = '\0';
 +
-+struct bitmap_disk_entry_v2 {
-+	unsigned char sha1[20];
-+	uint32_t bitmap_pos;
-+	uint8_t xor_offset;
-+	uint8_t flags;
-+	uint8_t __pad[2];
-+};
-+
-+struct bitmap_disk_header {
-+	char magic[4];
-+	uint16_t version;
-+	uint16_t options;
-+	uint32_t entry_count;
-+	char checksum[20];
-+};
-+
-+static const char BITMAP_MAGIC_PREFIX[] = {'B', 'I', 'T', 'M'};;
-+
-+enum pack_bitmap_opts {
-+	BITMAP_OPT_FULL_DAG = 1,
-+	BITMAP_OPT_LE_BITMAPS = 2,
-+	BITMAP_OPT_BE_BITMAPS = 4,
-+	BITMAP_OPT_HASH_CACHE = 8
-+};
-+
-+typedef int (*show_reachable_fn)(
-+	const unsigned char *sha1,
-+	enum object_type type,
-+	uint32_t hash, int exclude,
-+	struct packed_git *found_pack,
-+	off_t found_offset);
-+
-+void traverse_bitmap_commit_list(show_reachable_fn show_reachable);
-+int prepare_bitmap_walk(struct rev_info *revs, uint32_t *result_size);
-+void test_bitmap_walk(struct rev_info *revs);
-+char *pack_bitmap_filename(struct packed_git *p);
-+
-+#endif
+ 	free((void *)idx_tmp_name);
+ }
 -- 
 1.7.9.5
