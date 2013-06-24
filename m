@@ -1,91 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
 Subject: Re: [PATCH] documentation: add git transport security notice
-Date: Mon, 24 Jun 2013 15:35:19 -0700
-Message-ID: <7vtxkn5e8o.fsf@alter.siamese.dyndns.org>
+Date: Tue, 25 Jun 2013 00:47:08 +0200
+Message-ID: <20130624224708.GB32270@paksenarrion.iveqy.com>
 References: <1372069414-12601-1-git-send-email-frase@frase.id.au>
-	<7vppvbbhoi.fsf@alter.siamese.dyndns.org>
-	<20130624215733.GU2457@bacardi.hollandpark.frase.id.au>
-	<20130624222703.GA32270@paksenarrion.iveqy.com>
+ <7vppvbbhoi.fsf@alter.siamese.dyndns.org>
+ <20130624215733.GU2457@bacardi.hollandpark.frase.id.au>
+ <20130624222703.GA32270@paksenarrion.iveqy.com>
+ <7vtxkn5e8o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Fraser Tweedale <frase@frase.id.au>, git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Tue Jun 25 00:35:30 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>,
+	Fraser Tweedale <frase@frase.id.au>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 25 00:47:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrFM7-0000jE-EH
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 00:35:27 +0200
+	id 1UrFXe-0001cu-5K
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 00:47:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101Ab3FXWfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 18:35:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41535 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750990Ab3FXWfW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 18:35:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEB012BC03;
-	Mon, 24 Jun 2013 22:35:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/JwNpEjUuD92XxU50Tiz+KPRtJk=; b=P2b4/v
-	aZlpeqa1rnXY8RnVGZiAEAtCUxhkSLmCaew4FhW9QmBK+IoV3oGPz62MSEF3twx2
-	5oZU7Ges0nzrqVD0S/VNi7TNgGEumJbzQkbiIwhmfynR/XgN9VqOEzCzeadWi5oX
-	0uBs6392BVAB4d7Y+MYlFqSQfmV/4XKhw9AJM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V31rt6nPWeDif8Q7tnsvpgnj1xEgzIRZ
-	RPG1oYrN3+1b00ZndY/NrjnyN/mT82J5VBSnqIbzX3V7YMQVzmkbus1d77Q4Cjvm
-	OXkPahtLYLnKRTOtjMqpH3IpvKCu8Z53N4RArNuByIy6oIKeYIr96cGv5nAKHLVd
-	2/kx0XDGtLU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A45632BC02;
-	Mon, 24 Jun 2013 22:35:21 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 155052BBFF;
-	Mon, 24 Jun 2013 22:35:20 +0000 (UTC)
-In-Reply-To: <20130624222703.GA32270@paksenarrion.iveqy.com> (Fredrik
-	Gustafsson's message of "Tue, 25 Jun 2013 00:27:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5A75A942-DD1E-11E2-9B37-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751631Ab3FXWrR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 18:47:17 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:62543 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750858Ab3FXWrR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 18:47:17 -0400
+Received: by mail-la0-f54.google.com with SMTP id ec20so10956935lab.41
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 15:47:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=BrNxvNRwmLcIMTaaO7ZuAL39Q359psNCW/7+SzE0WKk=;
+        b=c7Wodszm7BVrefzoPrcYKewYlVxBvVjw3oHsP2mCN14exfmguceY3O3tvK9Um4GRZp
+         w5ZKLE6J/oLY4QXWx+aOYfflMz/Am3xKu4+123kSIcaPJwfuktkFGaveKYpwmjpHvaUt
+         KT0RjJJFy5vpyaqjWAu/6NXhPmuzi3dRJi+Bq56Tc726B+Zkju6P6aqT5rKhEAAy3d83
+         tA4ECNXAeUj+RMrIxqBjt56SvZdbEjwnhSLfECceDgiHAmo58+YN+V/a2iD1wgX0ly/b
+         +QP/NboWGnG8UgrsbZpTk+m6IWftSxA71UrsfKanaq3/INOVke94+AMcdj+xlyaOaK64
+         gXIA==
+X-Received: by 10.152.8.72 with SMTP id p8mr12633914laa.70.1372114035566;
+        Mon, 24 Jun 2013 15:47:15 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id v18sm7303853lbd.5.2013.06.24.15.47.14
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 24 Jun 2013 15:47:14 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UrFXQ-00005K-1c; Tue, 25 Jun 2013 00:47:08 +0200
+Content-Disposition: inline
+In-Reply-To: <7vtxkn5e8o.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228916>
 
-Fredrik Gustafsson <iveqy@iveqy.com> writes:
+On Mon, Jun 24, 2013 at 03:35:19PM -0700, Junio C Hamano wrote:
+> > I don't understand this. How is git:// insecure?
+>=20
+> If your DNS is poisoned, or your router is compromised to allow your
+> traffic diverted, you may be fetching from somewhere you did not
+> intend to.  As I explained in a separate message, that does not
+> necessarily result in your repository corrupting, but the result,
+> even though it may be "git fsck" clean at the bit level, needs
+> additional validation measure, such as signed tags, to be safely
+> used to base your further work on top.
 
-> On Tue, Jun 25, 2013 at 07:57:35AM +1000, Fraser Tweedale wrote:
->>  The git transport is insecure and should be used with caution on
->>  unsecured networks.
->
-> I don't understand this. How is git:// insecure?
->
-> It's protocol with no authentication, because it's a protocol used for
-> public sharing.
->
-> The only point of encrypt git:// would be to verify that the recieved
-> data has not been altered along the way. However you can always trust
-> that the end result is an valid copy of the remote.
->
-> To me that means that it's as secure as a non-authentication protocoll
-> needs to be.
+Thanks for the explanation. Of course you need to verify your latest
+commit sha1 against a trustworthy source. That would be enough to
+prevent this scenario, yes?
 
-If your DNS is poisoned, or your router is compromised to allow your
-traffic diverted, you may be fetching from somewhere you did not
-intend to.  As I explained in a separate message, that does not
-necessarily result in your repository corrupting, but the result,
-even though it may be "git fsck" clean at the bit level, needs
-additional validation measure, such as signed tags, to be safely
-used to base your further work on top.
+If we add warnings for git:// should we also add warnings for
+http://? Or do we consider that common knowledge?
 
-> How would an "evil network" be able to do any harm to a git transport
-> over git://?
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
 
-Yes, strictly speaking, it may not be "transport being insecure",
-but the effect on the aggregated whole is the same.
+tel: 0733-608274
+e-post: iveqy@iveqy.com
