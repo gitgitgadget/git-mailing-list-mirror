@@ -1,111 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] commit: make it work with status.short
-Date: Mon, 24 Jun 2013 08:17:42 -0700
-Message-ID: <7v38s7czc9.fsf@alter.siamese.dyndns.org>
-References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
-	<1372077912-18625-3-git-send-email-artagnon@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 17:17:57 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v14 00/16] Interactive git-clean
+Date: Mon, 24 Jun 2013 23:21:24 +0800
+Message-ID: <cover.1372087065.git.worldhello.net@gmail.com>
+References: <CANYiYbHQ307TroSd6Lk=5zg68jdKxGeA4N=hWGfaz1W29NhNVw@mail.gmail.com>
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Jun 24 17:22:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur8Wc-0003JM-MB
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 17:17:51 +0200
+	id 1Ur8af-0006AL-Uo
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 17:22:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751479Ab3FXPRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 11:17:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43092 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750872Ab3FXPRp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 11:17:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCB472A06D;
-	Mon, 24 Jun 2013 15:17:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yhCr/rbEj6E4RvUhDy8vERWO69M=; b=C59K8o
-	P9E8esrcudjkV81qs+4VxqhEcr0SGX9R1GpdOUzSYDYL/NWJ0zL8uxMvkfokAUhB
-	+64KBS1AffkgTtn7kZX/f0F3K+zbRDmhfcIQvaUE8iC+JaY97YJ5PgvxJAWMlaXI
-	rF8NGhR0dU9DEjc7Aeczqmkgh5PPvqLbQwaj0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T9Y04PiUf7rfkQh10Bn5BJW0/RTIoICP
-	A/VDikrpdOetVXnJSuNZ7PCEhF/tajJCy/oZB5JUFXbqI/72rZKbh/pVn0GTrLtM
-	dei6LDZAEVCfsSaZ1tyf/Xpm4/HgyyzOHCeFzEOy50cgGXzY2x4OMTeGhHWBVgTy
-	E6Zg97IAgx4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3FF02A06C;
-	Mon, 24 Jun 2013 15:17:44 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 459C72A06B;
-	Mon, 24 Jun 2013 15:17:44 +0000 (UTC)
-In-Reply-To: <1372077912-18625-3-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Mon, 24 Jun 2013 18:15:12 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 382F7652-DCE1-11E2-8E8D-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751211Ab3FXPV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 11:21:58 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:52605 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751179Ab3FXPV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 11:21:57 -0400
+Received: by mail-pb0-f49.google.com with SMTP id jt11so11037836pbb.22
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 08:21:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=aW/J3RtgPlKYZG0B5osC3K4GjvMsKgcMXE0nwgwN0rU=;
+        b=UZUtUUBbNbk4xAJ6W2Smj1VmwYVLPxYvfgMIeFlCkZaqEmwdlGAO7ulDwgK683gDQX
+         7fpFb7+O3GXGyOqUwOXdztcgKUQynXExjilrzHrW8J8COPd7todcG8LCyokpEIU7Mz5u
+         XuwBMK+4G3cf2Zfueeg2dtFOlOOk+W30rqi5LRSyEIYhQ2LqDETAbxY95Df5CV74D9ee
+         Kk0CDuZLlWY/ZeMiluszJZHHVLCxHp5ePn+6fYh/23ML4qhiRTNqey7zIi3V4cpo7z+n
+         VEx5QZRN2zpV79steo0OyMaedJ87QQbik5ge2B/CcaevMQRN4PjIGmDpBPGxTcTEHkuS
+         8byA==
+X-Received: by 10.68.243.40 with SMTP id wv8mr24254477pbc.34.1372087316980;
+        Mon, 24 Jun 2013 08:21:56 -0700 (PDT)
+Received: from localhost.localdomain ([114.248.133.39])
+        by mx.google.com with ESMTPSA id ix3sm18576807pbc.37.2013.06.24.08.21.52
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 24 Jun 2013 08:21:55 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.756.g41beab0
+In-Reply-To: <CANYiYbHQ307TroSd6Lk=5zg68jdKxGeA4N=hWGfaz1W29NhNVw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228822>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Johannes found that some relative_path tests should be skipped on Windows.
+See this thread:
 
-> 50e4f75 (status: introduce status.short to enable --short by default,
-> 2013-06-11) introduced a regression in git commit; it is now impossible
-> to commit with status.short set.
->
-> This happens because commit internally runs run_status() to set
-> s->commitable and determine whether or not there is something to
-> commit.  The problem arises from the fact that only STATUS_FORMAT_NONE
-> (or STATUS_FORMAT_LONG) is equipped to set s->commitable.
-> 7c9f7038 (commit: support alternate status formats, 2009-09-05) clearly
-> states that --short and --porcelain imply --dry-run and are therefore
-> only intended for display purposes.
->
-> The bigger problem is that it is impossible to differentiate between a
-> status_format set by the command-line option parser versus that set by
-> the config parser.  So these two are exactly equivalent:
->
->   $ git -c status.short=true commit
->   $ git commit --short
+  http://thread.gmane.org/gmane.comp.version-control.git/227706
 
-Thanks for a report.  I think the analysis above is correct, and if
-we want to ignore status.short but still want to honor --short from
-the command line, your patch is a way to go.
+In this reroll,
 
-As I said in the other message, I'll revert the merge of the topic
-branch from 'master' for now, and queue this on top of the topic so
-that we will have the preventive fix when the topic is in a better
-shape for the other possible breakage on the "--branch" thing.
+ * I squash Johannes's patch into patch 01/16, and seven relative_path
+   test cases are skipped by marking with POSIX.
+ 
+ * In patch 02/16, 4 test cases can run correctly as the refactor of
+   relative_path.
+ 
+ * In patch 16/16, most of the previous skiped test cases can run with
+   the help of the new utiliy "test-path-utils mingw_path /abs/path/".
 
-Having said that, even before the merge of that status.short
-(e.g. v1.8.3), "git commit --short" did not work and that was
-deliberate only because "git commit --dry-run" has long been an
-equivalent for "git status", "--short/-z/--porcelain" were options
-for "status", and therefore these options were made to imply
-"--dry-run".
+Jiang Xin (16):
+  test: add test cases for relative_path
+  path.c: refactor relative_path(), not only strip prefix
+  quote.c: remove path_relative, use relative_path instead
+  Refactor quote_path_relative, remove unused params
+  Refactor write_name_quoted_relative, remove unused params
+  git-clean: refactor git-clean into two phases
+  git-clean: add support for -i/--interactive
+  git-clean: show items of del_list in columns
+  git-clean: add colors to interactive git-clean
+  git-clean: use a git-add-interactive compatible UI
+  git-clean: add filter by pattern interactive action
+  git-clean: add select by numbers interactive action
+  git-clean: add ask each interactive action
+  git-clean: add documentation for interactive git-clean
+  test: add t7301 for git-clean--interactive
+  test: run testcases with POSIX absolute paths on Windows
 
-I have to wonder if that is a sane thing in the first place, now
-that it has been quite a while since "git status" has become
-different from "git commit --dry-run".
+ Documentation/config.txt     |  21 +-
+ Documentation/git-clean.txt  |  71 +++-
+ builtin/clean.c              | 778 +++++++++++++++++++++++++++++++++++++++++--
+ builtin/grep.c               |   5 +-
+ builtin/ls-files.c           |  16 +-
+ cache.h                      |   2 +-
+ path.c                       | 112 +++++--
+ quote.c                      |  65 +---
+ quote.h                      |   7 +-
+ setup.c                      |   5 +-
+ t/t0060-path-utils.sh        |  88 +++--
+ t/t7301-clean-interactive.sh | 439 ++++++++++++++++++++++++
+ test-path-utils.c            |  32 ++
+ wt-status.c                  |  17 +-
+ 14 files changed, 1487 insertions(+), 171 deletions(-)
+ create mode 100755 t/t7301-clean-interactive.sh
 
-That is, "git commit --short/--porcelain/-z" has these three
-possibilities:
-
- - work (ignoring these options);
-
- - work (showing the template in some kind of "short" format); or
-
- - error out (clearly indicating that we did *not* make a commit).
-
-and what we currently do is closest to the last (but we do not say
-we did not create a commit).  In the longer term for Git 2.0, we may
-want to change it to do one of the former two.
+-- 
+1.8.3.1.756.g41beab0
