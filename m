@@ -1,83 +1,123 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/6] push: change `simple` to accommodate triangular workflows
-Date: Mon, 24 Jun 2013 13:16:47 +0530
-Message-ID: <CALkWK0mAyDb3AjH0s3j2gRRDckx=a2nr9MR+O6gEtwX2MSJrtw@mail.gmail.com>
-References: <1372048388-16742-1-git-send-email-gitster@pobox.com>
- <1372048388-16742-4-git-send-email-gitster@pobox.com> <CALKQrgfAT9GhD-_tZHr9wRA6R6g7ttDWTsmUQXdWUhG-gwNBqQ@mail.gmail.com>
+From: Arnaud Fontaine <arnau@debian.org>
+Subject: [PATCH] Do not ignore merge options in interactive rebase
+Date: Mon, 24 Jun 2013 16:47:32 +0900
+Organization: Debian
+Message-ID: <87ppvcx84r.fsf@duckcorp.org>
+References: <87bo70dokb.fsf@duckcorp.org>
+	<7vr4fvkxew.fsf@alter.siamese.dyndns.org>
+	<87bo6wyn0z.fsf@duckcorp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Jun 24 09:47:37 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 24 09:47:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur1Uu-0007cU-Li
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 09:47:37 +0200
+	id 1Ur1V0-0007lA-4D
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 09:47:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752759Ab3FXHr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 03:47:29 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:62088 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752681Ab3FXHr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 03:47:27 -0400
-Received: by mail-ie0-f169.google.com with SMTP id 10so24085466ied.14
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 00:47:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=4HJjpxFEMArvO7ZscpfAakUGwL8M67r579dOA7Fteag=;
-        b=i8BjO7DPo+oKaTAaMXFuHu5jgpV+v5UUQMrIDuVAmnvkm8x8FM8lo2GPYstvbrQDkT
-         f9M3RXniwvsSXCBHeoKuoUO5UY1psuvRJecMDJrGIkFgOLs8GOZRbO6RVBhRKCoDIsM3
-         8c4liO3MDIq6zfMtE0IUBsywkxTh7AeU9fi2+TdzHIUBckcWqjCMZ8C+GHbB767WtfII
-         6oiLRPKHZPLj6u+ZYHDi67bBOwzjTH6NlaJcKelWogNtlnCBN+hcpUXH1DONhesRriyq
-         tIb5Op6L2esFLKZ0r9XdBTdysRjezSLpcAqmF3cpUt+kwM91gRnvShxIfPhCqrFBOrLo
-         IX1g==
-X-Received: by 10.43.88.3 with SMTP id ay3mr7416936icc.61.1372060047154; Mon,
- 24 Jun 2013 00:47:27 -0700 (PDT)
-Received: by 10.64.129.97 with HTTP; Mon, 24 Jun 2013 00:46:47 -0700 (PDT)
-In-Reply-To: <CALKQrgfAT9GhD-_tZHr9wRA6R6g7ttDWTsmUQXdWUhG-gwNBqQ@mail.gmail.com>
+	id S1753074Ab3FXHrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 03:47:37 -0400
+Received: from Orfeo.duckcorp.org ([193.17.192.211]:40028 "EHLO
+	mx1.duckcorp.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752824Ab3FXHrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 03:47:37 -0400
+Received: from localhost (ip6-localhost [IPv6:::1])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mx1.duckcorp.org (Postfix) with ESMTPSA id 3bf2fG6n22z2J50;
+	Mon, 24 Jun 2013 09:47:34 +0200 (CEST)
+X-URL: http://www.debian.org
+X-Operating-System: Debian GNU/Linux
+X-GnuPG-KeyID: 5E3619D3
+X-PGP-Fingerprint: D792 B8A5 A567 B001 C342  2613 BDF2 A220 5E36 19D3
+In-Reply-To: <87bo6wyn0z.fsf@duckcorp.org> (Arnaud Fontaine's message of "Mon,
+	24 Jun 2013 16:40:28 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228787>
 
-Johan Herland wrote:
->> An earlier round of this change by mistake broke the safety for
->> "simple" mode we have had since day 1 of that mode to make sure that
->> the branch in the repository we update is set to be the one we fetch
->> and integrate with, but it has been fixed.
->
-> Shouldn't there be an acompanying test to demonstrate this mistake being fixed?
+Fix inconsistency where `--strategy` and/or `--strategy-option` can be
+specified in git rebase, but with `--interactive` argument only there
+were completely ignored.
 
-Read "earlier iteration": it didn't get merged.
+Signed-off-by: Arnaud Fontaine <arnau@debian.org>
+---
+ git-rebase--interactive.sh    | 13 ++++++++++---
+ t/t3404-rebase-interactive.sh | 11 +++++++++++
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
->> +static void setup_push_current(struct remote *remote, struct branch *branch)
->> +{
->> +       if (!branch)
->> +               die(_(message_detached_head_die), remote->name);
->> +       add_refspec(branch->name);
->
-> Here (and above) we add a refspec to tell Git exactly what to push
-> from the local end, and into what on the remote end.
-
-Nope, we add the refspec "foo", without the :destination part.  The
-remote end is unspecified (and defaults to "foo", but that is in the
-transport layer).
-
-> Is it possible to
-> end up with multiple simultaneous refspecs matching the same local
-> ref, but mapping to different remote refs? If so, which will win, and
-> does that make sense?
-
-It is impossible.  We either:
-
-- Get an explicit refspec from the user and never run
-setup_default_push_refspecs() to begin with.
-
-- Run setup_push_refspecs() and add *one* refspec depending on the
-push.default value.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index f953d8d..e558397 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -80,6 +80,13 @@ amend="$state_dir"/amend
+ rewritten_list="$state_dir"/rewritten-list
+ rewritten_pending="$state_dir"/rewritten-pending
+ 
++strategy_args=
++if test -n "$do_merge"
++then
++	strategy_args="${strategy+--strategy=$strategy}
++ $(echo $strategy_opts | sed "s/'--\([^']*\)'/-X\1/g")"
++fi
++
+ GIT_CHERRY_PICK_HELP="$resolvemsg"
+ export GIT_CHERRY_PICK_HELP
+ 
+@@ -239,7 +246,7 @@ pick_one () {
+ 
+ 	test -d "$rewritten" &&
+ 		pick_one_preserving_merges "$@" && return
+-	output git cherry-pick $empty_args $ff "$@"
++	output git cherry-pick $strategy_args $empty_args $ff "$@"
+ }
+ 
+ pick_one_preserving_merges () {
+@@ -341,7 +348,7 @@ pick_one_preserving_merges () {
+ 			# No point in merging the first parent, that's HEAD
+ 			new_parents=${new_parents# $first_parent}
+ 			if ! do_with_author output \
+-				git merge --no-ff ${strategy:+-s $strategy} -m \
++				git merge --no-ff $strategy_args -m \
+ 					"$msg_content" $new_parents
+ 			then
+ 				printf "%s\n" "$msg_content" > "$GIT_DIR"/MERGE_MSG
+@@ -350,7 +357,7 @@ pick_one_preserving_merges () {
+ 			echo "$sha1 $(git rev-parse HEAD^0)" >> "$rewritten_list"
+ 			;;
+ 		*)
+-			output git cherry-pick "$@" ||
++			output git cherry-pick $strategy_args "$@" ||
+ 				die_with_patch $sha1 "Could not pick $sha1"
+ 			;;
+ 		esac
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 79e8d3c..8b6a36f 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -947,4 +947,15 @@ test_expect_success 'rebase -i respects core.commentchar' '
+ 	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
+ '
+ 
++test_expect_success 'rebase -i with --strategy and -X' '
++	git checkout -b conflict-merge-use-theirs conflict-branch &&
++	git reset --hard HEAD^ &&
++	echo five >conflict &&
++	echo Z >file1 &&
++	git commit -a -m "one file conflict" &&
++	EDITOR=true git rebase -i --strategy=recursive -Xours conflict-branch &&
++	test $(git show conflict-branch:conflict) = $(cat conflict) &&
++	test $(cat file1) = Z
++'
++
+ test_done
+-- 
+1.8.3.GIT
