@@ -1,78 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] stage: remove unused, unreferenced builtin-alias
-Date: Mon, 24 Jun 2013 11:27:51 -0700
-Message-ID: <7vvc538iu0.fsf@alter.siamese.dyndns.org>
-References: <1372097546-27721-1-git-send-email-artagnon@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] push: give early feedback
+Date: Mon, 24 Jun 2013 14:28:09 -0400
+Message-ID: <20130624182809.GA15296@sigill.intra.peff.net>
+References: <1372095662-24527-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 20:27:59 2013
+X-From: git-owner@vger.kernel.org Mon Jun 24 20:28:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrBUc-0002pM-Hl
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:27:58 +0200
+	id 1UrBUu-00038o-8b
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:28:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753092Ab3FXS1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 14:27:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57683 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750900Ab3FXS1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 14:27:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B20422BB4C;
-	Mon, 24 Jun 2013 18:27:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kEvfxYCeuotn7UgMn92sD1/K5xU=; b=Rzc8b8
-	FQ5C+YdvimKOkoghedHa9ylvldq5ZdipdrmlDAjqBrtyzREKodFANryDrN86TBKg
-	eFdUVq93YrV4bRUAnEak8GxNpg8sS9BZren4kXVBr7rzmLJxDjI8kGZHvUeQmbCZ
-	VCv6DfpqtgerLmr7pipGnsejV/vWxtzljfeKg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MVpA+299z9guNOoiRFX+ow79NVP62pQ8
-	hj9cWsll3Pk3YsSnNxQE2dXoudXAtcAn7Is4E9cZoUWEMoH+KRvSM6HA5/AkprkH
-	u6t6J/DwtEKPkWSmwn7Ie5361+8zqYbW+USkU3bCkJNMXso0UuYSGDnu+AFDX+XI
-	KuwjAMr3Y84=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A75232BB4B;
-	Mon, 24 Jun 2013 18:27:53 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 28E042BB49;
-	Mon, 24 Jun 2013 18:27:53 +0000 (UTC)
-In-Reply-To: <1372097546-27721-1-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Mon, 24 Jun 2013 23:42:26 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C8690E44-DCFB-11E2-A412-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753150Ab3FXS2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 14:28:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40509 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753132Ab3FXS2L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 14:28:11 -0400
+Received: (qmail 1656 invoked by uid 102); 24 Jun 2013 18:29:14 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Jun 2013 13:29:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Jun 2013 14:28:09 -0400
+Content-Disposition: inline
+In-Reply-To: <1372095662-24527-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228894>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Mon, Jun 24, 2013 at 11:11:02PM +0530, Ramkumar Ramachandra wrote:
 
-> 11920d2 (Add a built-in alias for 'stage' to the 'add' command,
-> 2008-12-01) added a the 'git stage' command which simply calls
-> cmd_add().  Since then, no references to it have been made anywhere on
-> the internet; there is no evidence that anyone even knows about its
-> existence.  It is a long-lost forgotten command that only serves the
-> purpose of preventing the user from having a custom alias.stage to do
-> something useful.  Remove it.
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  I just found out about its existence.
+> There are many configuration variables that determine exactly what a
+> push does.  Give the user early feedback so that she has a chance to
+> abort if she doesn't mean to push those refspecs to that destination
+> like:
+> 
+>   $ git push
+>   # pushing refspecs 'master next' to ram (^C to abort)
 
-Hmm, this has not discussed on the list at all, let alone achieving
-consensus that it is a good change.
+If your intent is to let people stop disastrous pushes before they
+complete, I think there are two failings:
 
-At least, please direct the patch Cc'ed to the original author of
-what you are removing, not to me.
+  1. It does not tell very much about how the refspecs are expanded or
+     what is going to happen. "git push --dry-run" gives a much more
+     complete view of what will be pushed.
 
-Thanks.
+  2. You are creating a race with the user to hit ^C. It will probably
+     work if there are a lot of objects to be pushed. But not if the
+     push is small, or even has no pack at all (e.g., only deletions, or
+     moving refs to existing history). As an added bonus, since push
+     prints its output after receiving commitment from the server, it is
+     possible for the server to commit a change, have the user hit ^C,
+     thinking they beat the race, only to find out that the server did
+     indeed accept the change.
+
+I think you could deal with both of them by doing something like:
+
+  git push --dry-run "$@" || exit 1
+  echo >&2 "OK to push?"
+  read response
+  case "$response" in
+  [Yy]) ;;
+  *) exit 1
+  esac
+  exec git push "$@"
+
+That is subject to a race condition in a busy repo (you do not know that
+the refs are in the same state on either end between the two pushes).
+You could solve that by having a "pre-push" hook on the local side that
+gets the list of proposed updates.
+
+In fact, I think this came up before but no hook code ever materialized:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/128273
+
+  http://thread.gmane.org/gmane.comp.version-control.git/128426
+
+As discussed in the top thread, this could also be used for "interactive
+push" where you could examine and confirm the changes for each proposed
+ref change.
+
+-Peff
