@@ -1,85 +1,61 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: Splitting a rev list into 2 sets
-Date: Mon, 24 Jun 2013 11:59:24 +0200
-Message-ID: <87mwqf3k3n.fsf@linux-k42r.v.cablecom.net>
-References: <CAC9WiBi-E+LN4hKGeu0mG7ihJWCaTg-W1Dx_PWmX_vsx-uLOaw@mail.gmail.com>
-	<8761x87wc8.fsf@linux-k42r.v.cablecom.net>
-	<CAC9WiBgb18ZX0vr8V79tCEUStrDRhRiSh44nH6+3B_Kf8rypYg@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: detached HEAD before root commit - possible?
+Date: Mon, 24 Jun 2013 12:41:18 +0200
+Message-ID: <vpqr4frzt81.fsf@anie.imag.fr>
+References: <20130623225505.GO20052@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 11:59:37 2013
+Cc: git@vger.kernel.org
+To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Jun 24 12:41:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur3Yf-0003RM-60
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 11:59:37 +0200
+	id 1Ur4DK-0001Xv-GL
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 12:41:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751977Ab3FXJ72 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 05:59:28 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:29703 "EHLO edge20.ethz.ch"
+	id S1752438Ab3FXKla convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 06:41:30 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:50640 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751157Ab3FXJ71 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Jun 2013 05:59:27 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 24 Jun
- 2013 11:59:24 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- cas10.d.ethz.ch (172.31.38.210) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Mon, 24 Jun 2013 11:59:24 +0200
-In-Reply-To: <CAC9WiBgb18ZX0vr8V79tCEUStrDRhRiSh44nH6+3B_Kf8rypYg@mail.gmail.com>
-	(Francis Moreau's message of "Thu, 20 Jun 2013 18:24:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1752407Ab3FXKl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 06:41:27 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5OAfHsB027040
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 24 Jun 2013 12:41:17 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Ur4D0-0006NW-QZ; Mon, 24 Jun 2013 12:41:18 +0200
+In-Reply-To: <20130623225505.GO20052@goldbirke> ("SZEDER \=\?iso-8859-1\?Q\?G\?\=
+ \=\?iso-8859-1\?Q\?\=E1bor\=22's\?\= message of
+	"Mon, 24 Jun 2013 00:55:05 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 24 Jun 2013 12:41:17 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228801>
 
-=46rancis Moreau <francis.moro@gmail.com> writes:
+SZEDER G=E1bor <szeder@ira.uka.de> writes:
 
-> On Thu, Jun 20, 2013 at 3:20 PM, Thomas Rast <trast@inf.ethz.ch> wrot=
-e:
->>   positive=3D$(git rev-parse "$@" | grep -v '^\^')
->>   negative=3D$(git rev-parse "$@" | grep '^\^')
->>   boundary=3D$(git rev-list --boundary $positive ^master | sed -n 's=
-/^-//p')
->>   # the intersection is
->>   git rev-list $boundary $negative
+> I suspect that detaching HEAD before a root commit is not possible by
+> design.  What would HEAD contain then!?  'git checkout' seems to
+> corroborate:
 >
-> I think there's a minor issue here, when boundary is empty. Please
-> correct me if I'm wrong but I think it can only happen if positive is
-> simply master or a subset of master. In that case I think the solutio=
-n
-> is just make boundary equal to positive:
->
->      # the intersection is
->      git rev-list ${boundary:-$positive} $negative
->
-> Now I'm going to see if that solution is faster than the initial one.
+> $ git init
+> Initialized empty Git repository in /tmp/test/.git/
+> $ git checkout --detach
+> fatal: You are on a branch yet to be born
 
-Jan "jast" Kr=C3=BCger pointed out on #git that
-
-  git log $(git merge-base --all A B)
-
-is exactly the set of commits reachable from both A and B; so there's
-your intersection operator :-)
-
-So it would seem that a much simpler approach is
-
-  git rev-list $(git merge-base --all master $positive) --not $negative
-
-avoiding the boundary handling and special-case.  It relies on the
-(weird?) property that $(git merge-base --all A B1 B2 ...) shows the
-merge bases of A with a hypothetical merge of B1, B2, ..., which is jus=
-t
-what you need here.
+Is "git checkout --orphan" what you're looking for?
 
 --=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
