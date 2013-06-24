@@ -1,79 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git diff returns fatal error with core.safecrlf is set to true.
-Date: Mon, 24 Jun 2013 11:19:52 -0700
-Message-ID: <7vbo6v9xrr.fsf@alter.siamese.dyndns.org>
-References: <6a3d8a2b19a859d8c969ee434e1d6a89@meuh.org>
-	<7vobazo4ds.fsf@alter.siamese.dyndns.org>
-	<7vip17ktyz.fsf@alter.siamese.dyndns.org>
-	<b8e932cba326588db09ebd0986913ac2@meuh.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 6/6] push: honor branch.*.push
+Date: Mon, 24 Jun 2013 23:53:45 +0530
+Message-ID: <CALkWK0=FmOn1dcCvVpN5nh6ysMTt=swSquU1yi_mzq9QhUnXrQ@mail.gmail.com>
+References: <1372048388-16742-1-git-send-email-gitster@pobox.com>
+ <1372048388-16742-7-git-send-email-gitster@pobox.com> <CALkWK0=aDkCMB3ROSuH1crTmQKjCFyCmvJfvOTiQnBo4+NckBA@mail.gmail.com>
+ <7vhagndis4.fsf@alter.siamese.dyndns.org> <CALkWK0kqyV+MTW8jDDBt-qEB1R7yvD+n4nTxwvW0QjA13J2=2A@mail.gmail.com>
+ <7vy59zbjns.fsf@alter.siamese.dyndns.org> <CALkWK0=a40hACGYApN7odrTytDmoRG_00_Q=EuaHuQ_=h8LBkg@mail.gmail.com>
+ <7vbo6vbgbs.fsf@alter.siamese.dyndns.org> <CALkWK0nv7On34g-zE5uHAH69TT-KcEt8z-LxhveNp1b4b+NHsg@mail.gmail.com>
+ <7vfvw79xsq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: Yann Droneaud <ydroneaud@opteya.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 20:20:05 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 20:24:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrBMt-0004HB-C5
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:19:59 +0200
+	id 1UrBRG-0008CI-2T
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752930Ab3FXSTz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 14:19:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53821 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752470Ab3FXSTy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Jun 2013 14:19:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E8FD2B72B;
-	Mon, 24 Jun 2013 18:19:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=h+XylnrQIYXg
-	Im+QZLNcOGmHAgk=; b=xrupUfW+KxLQabbLGhef6ehpNgCCCcIBzWihHEQX7Aik
-	wERnQkiOpU4skTFK3MQ2rwMtNIh5fEVs3hVnf3jfzaDveSVyFfDa8CROtjfDmwqz
-	EtX3xPYg+sDPKDhIdlfdSG2Nq4W1tVNIJYcutqruCiv3s8/J/iDb0vWygc2mvAM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ZknOum
-	gKxiXd9I3MNf01RzyjtfpRB2RlhBigC5GmGjs9Z/AVUMbjarWZQrYFhYbkmP1y8S
-	Swtt6RxC0JE3/fXy0qUB48W6op0VopdnwkXQm8CiPvl5APZ2g4+L/Ak52mxVkKW4
-	/VQO0gikamaXhx34wxEA5SxOpmyigfPq0DRx8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 425172B72A;
-	Mon, 24 Jun 2013 18:19:54 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B48A02B728;
-	Mon, 24 Jun 2013 18:19:53 +0000 (UTC)
-In-Reply-To: <b8e932cba326588db09ebd0986913ac2@meuh.org> (Yann Droneaud's
-	message of "Mon, 24 Jun 2013 14:42:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AAA637F2-DCFA-11E2-8590-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753223Ab3FXSY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 14:24:26 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:56578 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753194Ab3FXSYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 14:24:25 -0400
+Received: by mail-ie0-f178.google.com with SMTP id u16so26226570iet.9
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 11:24:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=cwJ77KkVWQENvL1k9tIGd8kBLkf3J8ht98JTXcxBFUI=;
+        b=CFoKbeU1DueKXmF0lBCSFCFgbxQ+8ijzf43/y3huYgJ5XZfaYWak+vWcQJawsZddJv
+         RY9PIsnLeWffET5IDTM8gGXJJmA8iqrauBnaL65SnfAmD4ARxuxMDj5dZmvvNP+m/tVH
+         9CT0cSviU03KFRSsw9fGgS6zOtwyKO/hKTO111/3lPcEhBb2Und5MRZzB4KSnnio7NRa
+         JAF5Z0+PuIKXyosLVpoJC4rY3QCNGiKpy0rkY4mg3EbSAU2PW8rkZGv9aa+HIHL6ogU6
+         wkM9aOdw5MYxeWUraano5o5koXdmzpllGCAmNVZGsxVT6IP0OkR4RD9pMyESgGmTJ8u1
+         HO4w==
+X-Received: by 10.50.47.105 with SMTP id c9mr6279268ign.50.1372098265399; Mon,
+ 24 Jun 2013 11:24:25 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Mon, 24 Jun 2013 11:23:45 -0700 (PDT)
+In-Reply-To: <7vfvw79xsq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228890>
 
-Yann Droneaud <ydroneaud@opteya.com> writes:
+Junio C Hamano wrote:
+> With remote.pushdefault, I think the ship has long sailed.
 
-> Hi,
->
-> Le 21.06.2013 23:57, Junio C Hamano a =C3=A9crit=C2=A0:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> The helper may want to learn a way to be told to demote that error
->>> to a warning.
->>
->> Perhaps something like this?
->>
->
-> Thanks for the patch.
-
-Care to turn it into an appliable patch with tests?
-
-Thanks.
+What's wrong with the "early feedback" approach I suggested?
