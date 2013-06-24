@@ -1,103 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
-Date: Mon, 24 Jun 2013 15:24:25 -0700
-Message-ID: <7v61x36tba.fsf@alter.siamese.dyndns.org>
-References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
-	<1372077912-18625-2-git-send-email-artagnon@gmail.com>
-	<vpqhagnwraj.fsf@anie.imag.fr>
-	<CALkWK0=F_i95S+53eZmOAJtA+jG=jvi5-sDc3BgW3rNQo=n3Ng@mail.gmail.com>
-	<vpqhagnv9xq.fsf@anie.imag.fr>
-	<7vk3ljbh5r.fsf@alter.siamese.dyndns.org>
-	<vpq7ghjtpv1.fsf@anie.imag.fr>
-	<7vk3lj9xwn.fsf@alter.siamese.dyndns.org>
-	<CALkWK0ngNrxT1MrdhXyz8ViN9an1XQsRD=DnxXYXqhDRmGO8EA@mail.gmail.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: [PATCH] documentation: add git transport security notice
+Date: Tue, 25 Jun 2013 00:27:03 +0200
+Message-ID: <20130624222703.GA32270@paksenarrion.iveqy.com>
+References: <1372069414-12601-1-git-send-email-frase@frase.id.au>
+ <7vppvbbhoi.fsf@alter.siamese.dyndns.org>
+ <20130624215733.GU2457@bacardi.hollandpark.frase.id.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 25 00:24:36 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Fraser Tweedale <frase@frase.id.au>
+X-From: git-owner@vger.kernel.org Tue Jun 25 00:27:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrFBZ-0008OR-CR
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 00:24:33 +0200
+	id 1UrFEH-0002FO-7p
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 00:27:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751049Ab3FXWY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 18:24:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54360 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750733Ab3FXWY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 18:24:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D6B42B70D;
-	Mon, 24 Jun 2013 22:24:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ovzZgxCoDp+AcR11gm/itZPTqQU=; b=HZTnqZ
-	EaieuelYQnpDiiA9JByZctalf6YesCdHzqfsDHRt9xda1NpKhClFWk8djRUkTv8e
-	P1hNK2fWLIS1T4b1vS7wP5jToccT87v/JcD4Xk8dyirPsmdQnwwo52DgIoGMCdfF
-	oWAmDi+AaJ5jRPhNSVajlKDAZLNP7fHcb6ryk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bV9h/ygkkGaQ+6ghHcSu1YyE7vPEaBip
-	m54CdV7a3KrjVqo1zd1hZgXZbJbsqdy7cA09dFpITkrh14T805q0+yfJSjdS3/2/
-	OFk9QhnTB1X+2st3wGLYLMJIOND13HuPkBwKzChEGGk05gVcyOUuyV7zWVA89EuJ
-	ZDgkwF41zNk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01D4B2B70C;
-	Mon, 24 Jun 2013 22:24:28 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C4332B708;
-	Mon, 24 Jun 2013 22:24:27 +0000 (UTC)
-In-Reply-To: <CALkWK0ngNrxT1MrdhXyz8ViN9an1XQsRD=DnxXYXqhDRmGO8EA@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Tue, 25 Jun 2013 01:00:23 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D4D1B6A6-DD1C-11E2-99B8-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751044Ab3FXW1R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 18:27:17 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:37486 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750824Ab3FXW1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 18:27:16 -0400
+Received: by mail-la0-f48.google.com with SMTP id lx15so10939270lab.21
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 15:27:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=GAqLCkTrm5sJarCncKLhDqN6c7VkFfCnpDUNI5t/D4Y=;
+        b=SuvmnRVp3omqkN8zlGMG5lCeokYaV9HtDpmWlxvPmTVV8xFDS6HWV2lbQZmpeo0lv4
+         NpPB+Ptt5b2kg3CTVlJKyBsE/5ddpe6AE16iIPITyXbe6PAGAqfdHeeN5e8RLn8MPY0z
+         EC3jlCBfdIGiVsOPCzNTAVX4DRkhxW4H8hJI+jukn+UywiVonz5Io9fcI0o/EwqoD3qx
+         xT5O2QCVHVCzO8ZabyhI2DRnwSHQRI+kYgW3yyuWizrj4BLndXaFpsBdh4bE+PjYbu+b
+         zIl169Y6UyLJ49WRQ1wjQOAXl2EcrmehWnsvLJB2Mf91NHlRGZHhhBPoYvGsbbfooQnh
+         ssJQ==
+X-Received: by 10.152.170.197 with SMTP id ao5mr12553454lac.35.1372112830361;
+        Mon, 24 Jun 2013 15:27:10 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id ea14sm7427228lbb.11.2013.06.24.15.27.09
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 24 Jun 2013 15:27:09 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UrFDz-0008Uo-2L; Tue, 25 Jun 2013 00:27:03 +0200
+Content-Disposition: inline
+In-Reply-To: <20130624215733.GU2457@bacardi.hollandpark.frase.id.au>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228913>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Tue, Jun 25, 2013 at 07:57:35AM +1000, Fraser Tweedale wrote:
+>  The git transport is insecure and should be used with caution on
+>  unsecured networks.
 
-> Junio C Hamano wrote:
->> If we want to continue that tried-and-proven approach as a
->> short-term fix, a patch may look like this.
->
-> I don't like this special-casing for show_branch at all.
+I don't understand this. How is git:// insecure?
 
-The patch does not special-case show_branch at all, in that I would
-expect that people over time will want to add more and more
-configuration not to type short and sweet command line options.  The
-primary value of the patch is to illustrate how we would ignore the
-ones we do not want when we want to still call git_status_config().
-It lays a groundwork for doing so, using one single variable we
-happen to know about today as an example.
+It's protocol with no authentication, because it's a protocol used for
+public sharing.
 
-> What is the
-> problem with skipping branch configuration altogether and going
-> straight to diff-ui configuration, like I suggested earlier?
+The only point of encrypt git:// would be to verify that the recieved
+data has not been altered along the way. However you can always trust
+that the end result is an valid copy of the remote.
 
-Why diff-*UI*-config, not diff_basic or even default_core?
+To me that means that it's as secure as a non-authentication protocoll
+needs to be.
 
-I actually find that alternative approach a lot nicer, and I wish
-the world were that simple.
+How would an "evil network" be able to do any harm to a git transport
+over git://?
 
-One thing that complicates the matter is that "--porcelain" output
-is affected by "status.showuntrackedfiles" setting, whose parser
-dates only back to June 2008, while --porcelain came much later in
-Sep 2009.  So we have close to four years worth of user scripts that
-read from --porcelain and expects no untracked paths shown in a
-repository with that configration set.  If we care about not
-breaking people's scripts, we need to somehow arrange the option to
-keep honoring status.showuntrackedfiles setting, which may mean that
-we cannot just say "let's bypass git_status_config() and be done
-with it".
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
 
-So...
+tel: 0733-608274
+e-post: iveqy@iveqy.com
