@@ -1,94 +1,109 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: detached HEAD before root commit - possible?
-Date: Sun, 23 Jun 2013 16:54:32 -0700
-Message-ID: <20130623235432.GA3024@elie.Belkin>
-References: <20130623225505.GO20052@goldbirke>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 6/7] rebase: write better reflog messages
+Date: Sun, 23 Jun 2013 20:26:29 -0700
+Message-ID: <7vfvw8dw9m.fsf@alter.siamese.dyndns.org>
+References: <1371629089-27008-1-git-send-email-artagnon@gmail.com>
+	<1371629089-27008-7-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Jun 24 01:55:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 05:26:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uqu7X-0003Av-1i
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 01:54:59 +0200
+	id 1UqxQL-0001zB-It
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 05:26:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643Ab3FWXyl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Jun 2013 19:54:41 -0400
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:54163 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751550Ab3FWXyk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Jun 2013 19:54:40 -0400
-Received: by mail-pb0-f45.google.com with SMTP id mc8so10165934pbc.32
-        for <git@vger.kernel.org>; Sun, 23 Jun 2013 16:54:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=4NlpWSphWbrw8R/Zfca8ltWIHZby2QpsySQNcFQUSus=;
-        b=ICswjATl0nP/STouyCQFdSGeGs2pCd+7iH5mAPkzR8cf3tU73B33VKq0KkjT4IAJSD
-         /8KZ0Q+PS1MAcZ/3SvbggCrGHNuUkKrQyiSi3wGgvqQeBWGCP4DAXOd7JXk3FR8Zu6sI
-         zuTu9MHNQcYiQ5bx+MT5FcWJddxqLCsDq0adejhowfnLk10GXC8b/4ZAL3CCmLZlCQNC
-         /SdlgEt+e5mwBzflNutlfllbNhsrulRkTdA1T/eyj45jzU3+Lk7DS1FllkyAsp+W4Whs
-         k0tXzNgyUVu49UuXtDtBPtatokLD/G/cC5VUhJa2dRjTzrqVUGh7bYH31qkNctaNh93o
-         nxNQ==
-X-Received: by 10.66.27.147 with SMTP id t19mr25031929pag.171.1372031679837;
-        Sun, 23 Jun 2013 16:54:39 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPSA id dg3sm15220579pbc.24.2013.06.23.16.54.37
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 23 Jun 2013 16:54:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20130623225505.GO20052@goldbirke>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1752504Ab3FXD0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Jun 2013 23:26:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38910 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752417Ab3FXD0c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jun 2013 23:26:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15ACA209D9;
+	Mon, 24 Jun 2013 03:26:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XNVC1XSbjESM9hSbkGs+z62LFR4=; b=au9rli
+	aQhc6+wc9SXgU2SVwEIvmTvoTDcnfcvcbd71faThuxbvDQ1VNxc+OCuJy63p2VBX
+	iyEJw6m9d3po5cd58seo41c3+0rSZ8YRvLAkmQisN6trw/odHkpb5Pka5Iyw+t7c
+	jS6NNdkta1lwMCnlzjzAlPPS0/MdsNq/MVB0E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aozEHYnKS1ozIatjjiHQoN5CcKm7VZP+
+	oce0hUmc4zK6Aos/RxO3kK3K9/lAriy9mm7NRZAJRI7XxaTCeC57UNfnLipV84D7
+	qLjODs4UrYLZBeF5upTupjT383wh4hzOyrXNwV3xlFGyA6s6xl4b8HAQeanm+kN6
+	pFn9xYaYIuA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C588209D5;
+	Mon, 24 Jun 2013 03:26:32 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B727209D3;
+	Mon, 24 Jun 2013 03:26:31 +0000 (UTC)
+In-Reply-To: <1371629089-27008-7-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Wed, 19 Jun 2013 13:34:48 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DD443038-DC7D-11E2-B615-80EC6777888E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228767>
 
-Hi,
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-SZEDER G=C3=A1bor wrote:
+> @@ -59,6 +63,9 @@ else
+>  		return $?
+>  	fi
+>  
+> +	# always reset GIT_REFLOG_ACTION before calling any external
+> +	# scripts; they have no idea about our base_reflog_action
+> +	GIT_REFLOG_ACTION="$base_reflog_action"
+>  	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg"
 
-> $ git init
-> Initialized empty Git repository in /tmp/test/.git/
-> $ git checkout --detach
-> fatal: You are on a branch yet to be born
->
-> Are there some plumbing commands and options that would still allow
-> this, or can I rely on that that it's impossible?
+Why does this reroll still use this base_reflog_action convention?
 
-gitrepository-layout(5) tells me HEAD can be in one of a few states:
+The original orig_reflog_action you borrowed this may have been an
+acceptable local solution inside 
+git-rebase--interactive that does not call out to amyting, but
+the above comment a good demonstration that shows why this cannot be 
+a good general solution that scales across scriptlets.
 
- a) Missing.  In this case the repository is considered to be
-    corrupt and attempts to access the repository fail until the user
-    runs "git init" to recover.
+And I already explained that to you at least twice.
 
- b) A symbolic link, which is one way to represent a symref (pointing
-    to an existing branch or an unborn branch).
+cf. http://article.gmane.org/gmane.comp.version-control.git/228399
 
- c) A standard symref, in the format "ref: refs/some/branch".  Behaves
-    like (b).
+    But after writing it down this way, I realize that introduction of
+    base_reflog_action (or GIT_REFLOG_NAME which is a moral equivalent)
+    is not helping us at all.  As long as calls to "git" command in the
+    second category exists in these scripts, GIT_REFLOG_ACTION *must* be
+    kept pristine after set_reflog_action sets it, so we can get rid of
+    this new variable, and rewrite 3.a and 3.b like so:
 
- d) A direct SHA-1 reference (40-character commit object name)
-    pointing to a commit without associating a branch ("detached HEAD")=
-=2E
+        3-a)
 
- e) Anything else means the repository is corrupt, as in case (a).
+            GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: custom message" \
+                    git cmd
 
-In other words, HEAD always either points to an unborn or existing
-branch or an existing commit.  It's not clear to me what it would
-mean to detach from an unborn branch.
+        3-b)
 
-Improvements to the documentation to make that clearer would of course
-be welcome. ;-)
+            SAVED=$GIT_REFLOG_ACTION
+            GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: custom message"
+            output git cmd
+            GIT_REFLOG_ACTION=$SAVED
 
-Thanks,
-Jonathan
+                or
+
+            (
+                    GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: custom message"
+                    output git cmd
+            )
+
+    That essentially boils down to the very original suggestion I made
+    before Ram introduced the base_reflog_action.
