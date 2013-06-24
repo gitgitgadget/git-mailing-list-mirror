@@ -1,8 +1,8 @@
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCHv3 15/16] bash prompt: avoid command substitution when
- finalizing gitstring
-Date: Mon, 24 Jun 2013 18:39:25 +0200
-Message-ID: <1372091966-19315-16-git-send-email-szeder@ira.uka.de>
+Subject: [PATCHv3 16/16] bash prompt: mention that PROMPT_COMMAND mode is
+ faster
+Date: Mon, 24 Jun 2013 18:39:26 +0200
+Message-ID: <1372091966-19315-17-git-send-email-szeder@ira.uka.de>
 References: <1372091966-19315-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,71 +10,153 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Eduardo D'Avila <erdavila@gmail.com>,
 	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 24 18:45:58 2013
+X-From: git-owner@vger.kernel.org Mon Jun 24 18:46:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur9ts-0004vY-Ob
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 18:45:57 +0200
+	id 1Ur9uF-0005Hz-KE
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 18:46:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753195Ab3FXQpx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 12:45:53 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:55209 "EHLO
+	id S1753211Ab3FXQqP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 12:46:15 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:57665 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753079Ab3FXQpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 12:45:52 -0400
+	with ESMTP id S1753079Ab3FXQqO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 12:46:14 -0400
 Received: from localhost6.localdomain6 (f050230012.adsl.alicedsl.de [78.50.230.12])
-	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
-	id 0M5c8C-1U2cbf2Ee0-00xPes; Mon, 24 Jun 2013 18:45:51 +0200
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0MdZRA-1UcmHa341c-00PeiK; Mon, 24 Jun 2013 18:46:06 +0200
 X-Mailer: git-send-email 1.8.3.1.599.gbe80ec9
 In-Reply-To: <1372091966-19315-1-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V02:K0:WY9uXpuWoTVXxPeCgdGCiyzKF9qHHy22q5TQVTRW2yH
- DWYAo4VDy3NUI9/hgGsC5Vw0/wKq37GTzQDLrAUm844vR7Htuj
- fRZ4124nRdZaQw12Cv1E0BnTEGcE9bZN6MCGTNnLElQlqVE+RG
- 7NMh1YGHNAEu+98m9J6TDfBgJdllbSfcw9s15KVMx2cjoIyoSy
- QX8Q0jmXjiPZs6fNzFhb9Et2a7CTHpuPhIo9z1HQrOLi2cmCqG
- 8d5fln8C11TPofK+sPxMn+TdBXELOS55ns2ZJpG+vK4Ci2TrGj
- RUI1Xa3Jgn7yTyrGMdBHEeZCUfmWoaqEWPqAJY/GJH9ZaCME9x
- PxF0IMAXouFTJYz/P06gqu3v0G1+ocfbKpKF+qSFZtZC5CEsGQ
- lNfSzyF2mEV5A==
+X-Provags-ID: V02:K0:3bZMViLyFNFir7LMJx3cYnU0W4NjeJ06NmkpT0+Gmiw
+ 6zdZKY0keZBuvy+hbffvvxxNnuwdyobQLx+REx5K7enAV5AwhV
+ SvgB497Ue5rZQTPisSVxt2jROz+qDjid9bri166Vi2wIxBVWBy
+ drIKf73Mo/hobAAbcFlZ/2i7xWHfi56HwHEImsK2xNg+CcLhzr
+ eVz0n57fZO1R9znhtP+YyDGOjJD8HMtX+ToeDvksaCUNPmGkK0
+ Iqa5brACebIp9sea8aA8DAw08f2HT5AglMks5R1kpbnNeHWZkK
+ Pt7eel1RTu+9aqqCRNZujBXSa67CI/SkHoHHcLH0qssPEqdkLN
+ WQjXIVpoDXksbJRvrYHubAed2lqXmv3fZYVB3wP2F3kaxIODpJ
+ dRbnG/d1Nre8w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228868>
 
-Before setting $PS1, __git_ps1() uses a command substitution to
-redirect the output from a printf into a variable.  Spare the overhead
-of fork()ing a subshell by using 'printf -v <var>' to directly assign
-the output to that variable.
+__git_ps1() is usually added to the prompt inside a command
+substitution, imposing the overhead of fork()ing a subshell.  Using
+__git_ps1() for $PROMPT_COMMAND is slightly faster, because it avoids
+that command substitution.
 
-zsh's printf doesn't support the '-v <var>' option, so stick with the
-command substitution when under zsh.
+Mention this in the comments about setting up the git prompt.
+
+The whole series speeds up the bash prompt on Windows/MSysGit
+considerably.  Here are some timing results in three scenarios, each
+repeated 10 times:
+
+At the top of the work tree, before:
+
+    $ time for i in {0..9} ; do prompt=3D"$(__git_ps1)" ; done
+
+    real    0m1.716s
+    user    0m0.301s
+    sys     0m0.772s
+
+  After:
+
+    real    0m0.687s
+    user    0m0.075s
+    sys     0m0.396s
+
+  After, from $PROMPT_COMMAND:
+
+    $ time for i in {0..9} ; do __git_ps1 '\h:\w' '$ ' ; done
+
+    real    0m0.546s
+    user    0m0.075s
+    sys     0m0.181s
+
+At the top of the work tree, detached head, before:
+
+    real    0m2.574s
+    user    0m0.376s
+    sys     0m1.207s
+
+  After:
+
+    real    0m1.139s
+    user    0m0.151s
+    sys     0m0.500s
+
+  After, from $PROMPT_COMMAND:
+
+    real    0m1.030s
+    user    0m0.245s
+    sys     0m0.336s
+
+In a subdirectory, during rebase, stash status indicator enabled,
+before:
+
+    real    0m3.557s
+    user    0m0.495s
+    sys     0m1.767s
+
+  After:
+
+    real    0m0.717s
+    user    0m0.120s
+    sys     0m0.300s
+
+  After, from $PROMPT_COMMAND:
+
+    real    0m0.577s
+    user    0m0.047s
+    sys     0m0.258s
+
+On Linux the speedup ratio is comparable to Windows, but overall it
+was about an order of magnitude faster to begin with.  The last case
+from above, repeated 100 times, before:
+
+    $ time for i in {0..99} ; do prompt=3D"$(__git_ps1)" ; done
+
+    real    0m2.806s
+    user    0m0.180s
+    sys     0m0.264s
+
+  After:
+
+    real    0m0.857s
+    user    0m0.020s
+    sys     0m0.028s
 
 Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
- contrib/completion/git-prompt.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ contrib/completion/git-prompt.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
 prompt.sh
-index 5ea6a68b..7152ae49 100644
+index 7152ae49..daed6a1d 100644
 --- a/contrib/completion/git-prompt.sh
 +++ b/contrib/completion/git-prompt.sh
-@@ -461,7 +461,11 @@ __git_ps1 ()
- 		else
- 			gitstring=3D"$c${b##refs/heads/}${f:+$z$f}$r$p"
- 		fi
--		gitstring=3D$(printf -- "$printf_format" "$gitstring")
-+		if [[ -n ${ZSH_VERSION-} ]]; then
-+			gitstring=3D$(printf -- "$printf_format" "$gitstring")
-+		else
-+			printf -v gitstring -- "$printf_format" "$gitstring"
-+		fi
- 		PS1=3D"$ps1pc_start$gitstring$ps1pc_end"
- 	else
- 		# NO color option unless in PROMPT_COMMAND mode
+@@ -15,11 +15,11 @@
+ #        Bash: PS1=3D'[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+ #        ZSH:  PS1=3D'[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+ #        the optional argument will be used as format string.
+-#    3b) Alternatively, if you are using bash, __git_ps1 can be
+-#        used for PROMPT_COMMAND with two parameters, <pre> and
+-#        <post>, which are strings you would put in $PS1 before
+-#        and after the status string generated by the git-prompt
+-#        machinery.  e.g.
++#    3b) Alternatively, for a slighly faster prompt, if you are
++#        using bash, __git_ps1 can be used for PROMPT_COMMAND
++#        with two parameters, <pre> and <post>, which are strings
++#        you would put in $PS1 before and after the status string
++#        generated by the git-prompt machinery.  e.g.
+ #        Bash: PROMPT_COMMAND=3D'__git_ps1 "\u@\h:\w" "\\\$ "'
+ #        ZSH:  precmd () { __git_ps1 "%n" ":%~$ " "|%s" }
+ #        will show username, at-sign, host, colon, cwd, then
 --=20
 1.8.3.1.599.g4459181
