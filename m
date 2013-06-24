@@ -1,7 +1,7 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v14 12/16] git-clean: add select by numbers interactive action
-Date: Mon, 24 Jun 2013 23:21:36 +0800
-Message-ID: <b0da2c8e4aa3767335c4d3a95402f43644c2a691.1372087065.git.worldhello.net@gmail.com>
+Subject: [PATCH v14 11/16] git-clean: add filter by pattern interactive action
+Date: Mon, 24 Jun 2013 23:21:35 +0800
+Message-ID: <36d2d6db4e65145bab6c85d7952f2cc068de65c5.1372087065.git.worldhello.net@gmail.com>
 References: <cover.1372087065.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
@@ -13,35 +13,35 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ur8bS-0006nN-Cw
+	id 1Ur8bR-0006nN-Ri
 	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 17:22:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751993Ab3FXPWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 11:22:47 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:44096 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751660Ab3FXPWq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 11:22:46 -0400
-Received: by mail-pa0-f41.google.com with SMTP id bj3so11202771pad.14
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 08:22:45 -0700 (PDT)
+	id S1751976Ab3FXPWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 11:22:43 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:55503 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751660Ab3FXPWm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 11:22:42 -0400
+Received: by mail-pb0-f49.google.com with SMTP id jt11so10984276pbb.8
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 08:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=supIMT8v4KEN1uMOaUoFl8nPBV2ubh78WQXbGIngLDY=;
-        b=wtbfiYWOEXK9wtVs6LTBi1HAZLPK4ol63//RW4RtMZm28oeQP7SDwAGZRrSLzdOCJL
-         vF0mYsbIUNpGRqJWP8yHJazni4YFdKlLo4ivF6jGrJv2rUgTthjUq/Kat2No0dsFD0fc
-         b66yncmV6n/WAXyil4sKF5JzAFnl0ZCTs8sAMwECN/T2PLYIr02IRwn06xsxtU/+b4Jy
-         6K5biUPxPLc9vAqlBKKvyQAsUpHzyOR91NMTjnicBJUoI3wDOR3zDG6S7Isn2EA+wV62
-         KpppGy8Uj+ze3RJmwGWwo54zeLcSYAV7KPi/BiFJrhVdaa95Zxf46ffnZIgd/iwI+1I0
-         Zrig==
-X-Received: by 10.66.191.40 with SMTP id gv8mr28668120pac.19.1372087365238;
-        Mon, 24 Jun 2013 08:22:45 -0700 (PDT)
+        bh=jkps94QZzHwzKqNgDzeP6enstQfRfNvM8pJknehIhXc=;
+        b=scGWwlkXd2aDxCUdT3EtERRXtnXMDC6hpx0XBvyU7XQ2FFymXQSBhuVskuLzLdBlwV
+         1ekq6xYRfZ+6ugF/X6uGXWXR5+QlHzHRuKgWsMO8frWRDYhKdIPhwDFNYZkdrCtGnjpf
+         PEJ2/857tsGW3dFXp54We5zqMOAoavw0F/EgHloYgQRJgdFBp4bOgYiPvJ0waEXxXp5v
+         yeO835ZH+OQXFe3SWQB1OLzdwUtq640NC1TAJgL0+C9eCoaXDkZXUOAXWYjGvLQCUzHV
+         2bjkMKjUsJDMff7+xFlFdzywVXg5BaZlx1ruPe62uhBPMxxCb1apAJwuG6sepMqlP0GG
+         uebA==
+X-Received: by 10.68.1.226 with SMTP id 2mr24486189pbp.150.1372087361542;
+        Mon, 24 Jun 2013 08:22:41 -0700 (PDT)
 Received: from localhost.localdomain ([114.248.133.39])
-        by mx.google.com with ESMTPSA id ix3sm18576807pbc.37.2013.06.24.08.22.41
+        by mx.google.com with ESMTPSA id ix3sm18576807pbc.37.2013.06.24.08.22.37
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 24 Jun 2013 08:22:44 -0700 (PDT)
+        Mon, 24 Jun 2013 08:22:40 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.756.g41beab0
 In-Reply-To: <cover.1372087065.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1372087065.git.worldhello.net@gmail.com>
@@ -50,85 +50,111 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228834>
 
-Draw a multiple choice menu using `list_and_choose` to select items
-to be deleted by numbers.
-
-User can input:
-
- *  1,5-7 : select 1,5,6,7 items to be deleted
- *  *     : select all items to be deleted
- *  -*    : unselect all, nothing will be deleted
- *        : (empty) finish selecting, and return back to main menu
+Add a new action for interactive git-clean: filter by pattern. When the
+user chooses this action, user can input space-separated patterns (the
+same syntax as gitignore), and each clean candidate that matches with
+one of the patterns will be excluded from cleaning. When the user feels
+it's OK, presses ENTER and backs to the confirmation dialog.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/clean.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ builtin/clean.c | 68 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
 diff --git a/builtin/clean.c b/builtin/clean.c
-index 36369..643a5e 100644
+index df887..36369 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -680,6 +680,43 @@ static int filter_by_patterns_cmd(void)
- 	return 0;
+@@ -614,6 +614,72 @@ static int clean_cmd(void)
+ 	return MENU_RETURN_NO_LOOP;
  }
  
-+static int select_by_numbers_cmd(void)
++static int filter_by_patterns_cmd(void)
 +{
-+	struct menu_opts menu_opts;
-+	struct menu_stuff menu_stuff;
-+	struct string_list_item *items;
-+	int *chosen;
-+	int i, j;
++	struct dir_struct dir;
++	struct strbuf confirm = STRBUF_INIT;
++	struct strbuf **ignore_list;
++	struct string_list_item *item;
++	struct exclude_list *el;
++	int changed = -1, i;
 +
-+	menu_opts.header = NULL;
-+	menu_opts.prompt = N_("Select items to delete");
-+	menu_opts.flags = 0;
++	for (;;) {
++		if (!del_list.nr)
++			break;
 +
-+	menu_stuff.type = MENU_STUFF_TYPE_STRING_LIST;
-+	menu_stuff.stuff = &del_list;
-+	menu_stuff.nr = del_list.nr;
++		if (changed)
++			pretty_print_dels();
 +
-+	chosen = list_and_choose(&menu_opts, &menu_stuff);
-+	items = del_list.items;
-+	for (i = 0, j = 0; i < del_list.nr; i++) {
-+		if (i < chosen[j]) {
-+			*(items[i].string) = '\0';
-+		} else if (i == chosen[j]) {
-+			/* delete selected item */
-+			j++;
-+			continue;
-+		} else {
-+			/* end of chosen (chosen[j] == EOF), won't delete */
-+			*(items[i].string) = '\0';
++		clean_print_color(CLEAN_COLOR_PROMPT);
++		printf(_("Input ignore patterns>> "));
++		clean_print_color(CLEAN_COLOR_RESET);
++		if (strbuf_getline(&confirm, stdin, '\n') != EOF)
++			strbuf_trim(&confirm);
++		else
++			putchar('\n');
++
++		/* quit filter_by_pattern mode if press ENTER or Ctrl-D */
++		if (!confirm.len)
++			break;
++
++		memset(&dir, 0, sizeof(dir));
++		el = add_exclude_list(&dir, EXC_CMDL, "manual exclude");
++		ignore_list = strbuf_split_max(&confirm, ' ', 0);
++
++		for (i = 0; ignore_list[i]; i++) {
++			strbuf_trim(ignore_list[i]);
++			if (!ignore_list[i]->len)
++				continue;
++
++			add_exclude(ignore_list[i]->buf, "", 0, el, -(i+1));
 +		}
++
++		changed = 0;
++		for_each_string_list_item(item, &del_list) {
++			int dtype = DT_UNKNOWN;
++
++			if (is_excluded(&dir, item->string, &dtype)) {
++				*item->string = '\0';
++				changed++;
++			}
++		}
++
++		if (changed) {
++			string_list_remove_empty_items(&del_list, 0);
++		} else {
++			clean_print_color(CLEAN_COLOR_ERROR);
++			printf_ln(_("WARNING: Cannot find items matched by: %s"), confirm.buf);
++			clean_print_color(CLEAN_COLOR_RESET);
++		}
++
++		strbuf_list_free(ignore_list);
++		clear_directory(&dir);
 +	}
 +
-+	string_list_remove_empty_items(&del_list, 0);
-+
-+	free(chosen);
++	strbuf_release(&confirm);
 +	return 0;
 +}
 +
  static int quit_cmd(void)
  {
  	string_list_clear(&del_list, 0);
-@@ -693,6 +730,7 @@ static int help_cmd(void)
+@@ -626,6 +692,7 @@ static int help_cmd(void)
+ 	clean_print_color(CLEAN_COLOR_HELP);
  	printf_ln(_(
  		    "clean               - start cleaning\n"
- 		    "filter by pattern   - exclude items from deletion\n"
-+		    "select by numbers   - select items to be deleted by numbers\n"
++		    "filter by pattern   - exclude items from deletion\n"
  		    "quit                - stop cleaning\n"
  		    "help                - this screen\n"
  		    "?                   - help for prompt selection"
-@@ -709,6 +747,7 @@ static void interactive_main_loop(void)
+@@ -641,6 +708,7 @@ static void interactive_main_loop(void)
+ 		struct menu_stuff menu_stuff;
  		struct menu_item menus[] = {
  			{'c', "clean",			0, clean_cmd},
- 			{'f', "filter by pattern",	0, filter_by_patterns_cmd},
-+			{'s', "select by numbers",	0, select_by_numbers_cmd},
++			{'f', "filter by pattern",	0, filter_by_patterns_cmd},
  			{'q', "quit",			0, quit_cmd},
  			{'h', "help",			0, help_cmd},
  		};
