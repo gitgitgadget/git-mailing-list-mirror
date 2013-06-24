@@ -1,100 +1,190 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] push: give early feedback
-Date: Mon, 24 Jun 2013 14:55:46 -0400
-Message-ID: <20130624185546.GA25306@sigill.intra.peff.net>
-References: <1372095662-24527-1-git-send-email-artagnon@gmail.com>
- <20130624182809.GA15296@sigill.intra.peff.net>
- <CALkWK0=d1wkKWngH+6gBd-2svj7r_tgC5=+zUbgJRDfUCzupSw@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v14 16/16] test: run testcases with POSIX absolute paths
+ on Windows
+Date: Mon, 24 Jun 2013 20:56:21 +0200
+Message-ID: <51C89655.4070208@kdbg.org>
+References: <cover.1372087065.git.worldhello.net@gmail.com> <7b6237d76d53c240daf4641a00a09af5135fbba7.1372087065.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 24 20:55:55 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 20:56:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrBve-0000i1-4T
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:55:54 +0200
+	id 1UrBwF-0001Eu-0K
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 20:56:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752246Ab3FXSzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 14:55:49 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40697 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751344Ab3FXSzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 14:55:48 -0400
-Received: (qmail 3229 invoked by uid 102); 24 Jun 2013 18:56:51 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Jun 2013 13:56:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Jun 2013 14:55:46 -0400
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=d1wkKWngH+6gBd-2svj7r_tgC5=+zUbgJRDfUCzupSw@mail.gmail.com>
+	id S1752553Ab3FXS41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 14:56:27 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:60450 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751344Ab3FXS40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 14:56:26 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 71F87A7EB3;
+	Mon, 24 Jun 2013 20:56:22 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id DBB9F19F5EE;
+	Mon, 24 Jun 2013 20:56:21 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <7b6237d76d53c240daf4641a00a09af5135fbba7.1372087065.git.worldhello.net@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228898>
 
-On Tue, Jun 25, 2013 at 12:12:16AM +0530, Ramkumar Ramachandra wrote:
-
-> >   1. It does not tell very much about how the refspecs are expanded or
-> >      what is going to happen. "git push --dry-run" gives a much more
-> >      complete view of what will be pushed.
+Am 24.06.2013 17:21, schrieb Jiang Xin:
+> Add new subcommand "mingw_path" in test-path-utils, so that we can get
+> the expected absolute paths on Windows. For example:
 > 
-> Yes.
+>     COMMAND LINE                        Linux  Windows
+>     ==================================  =====  ===============
+>     test-path-utils mingw_path /        /      C:/msysgit
+>     test-path-utils mingw_path /a/b/    /a/b/  C:/msysgit/a/b/
 > 
->   $ git push
->   # pushing refspecs ':' to ram
+> With this utility, most skipped test cases in t0060 can be runcorrectly
+> on Windows.
+
+Thanks for working on this. Did you have an opportunity to test on Windows?
+
+> +mingw_path() {
+> +	case $2 in
+> +	NO_MINGW)
+> +		echo "$1"
+> +		;;
+> +	*)
+> +		test-path-utils mingw_path "$1"
+> +		;;
+> +	esac
+> +}
+> +
+> +get_prereq_flag() {
+> +	case $1 in
+> +	POSIX)
+> +		echo $1
+> +		;;
+> +	*)
+> +		;;
+> +	esac
+> +}
+
+It took me a while to notice that the token POSIX serves a different
+purpose than NO_MINGW: POSIX is only needed to skip a test, NO_MINGW is
+only used to avoid a test-path-utils call. The reason for the complexity
+is that you put both tokens in the same parameter position in the
+invocations of the test cases.
+
+You use NO_MINGW only twice. I would just skip these two tests, then the
+parameter position is reserved for the prerequisite, and things stay simple.
+
+> +
+>  norm_path() {
+> -	test_expect_success $3 "normalize path: $1 => $2" \
+> -	"test \"\$(test-path-utils normalize_path_copy '$1')\" = '$2'"
+> +	expected=$(mingw_path "$2" "$3")
+> +	prereq=$(get_prereq_flag $3)
+> +	test_expect_success $prereq "normalize path: $1 => $2" \
+> +	"test \"\$(test-path-utils normalize_path_copy '$1')\" = '$expected'"
+>  }
+>  
+>  relative_path() {
+> -	test_expect_success $4 "relative path: $1 $2 => $3" \
+> -	"test \"\$(test-path-utils relative_path '$1' '$2')\" = '$3'"
+> +	expected=$(mingw_path "$3" "$4")
+> +	prereq=$(get_prereq_flag $4)
+> +	test_expect_success $prereq "relative path: $1 $2 => $3" \
+> +	"test \"\$(test-path-utils relative_path '$1' '$2')\" = '$expected'"
+>  }
+>  
+>  # On Windows, we are using MSYS's bash, which mangles the paths.
+> @@ -39,8 +64,8 @@ ancestor() {
+>  	 test \"\$actual\" = '$expected'"
+>  }
+>  
+> -# Absolute path tests must be skipped on Windows because due to path mangling
+> -# the test program never sees a POSIX-style absolute path
+> +# Some absolute path tests should be skipped on Windows due to path mangling
+> +# on POSIX-style absolute paths
+>  case $(uname -s) in
+>  *MINGW*)
+>  	;;
+> @@ -73,10 +98,10 @@ norm_path d1/s1//../s2/../../d2 d2
+>  norm_path d1/.../d2 d1/.../d2
+>  norm_path d1/..././../d2 d1/d2
+>  
+> -norm_path / / POSIX
+> -norm_path // / POSIX
+> -norm_path /// / POSIX
+> -norm_path /. / POSIX
+> +norm_path / /
+> +norm_path // / NO_MINGW
+> +norm_path /// / NO_MINGW
+> +norm_path /. /
+>  norm_path /./ / POSIX
+>  norm_path /./.. ++failed++ POSIX
+>  norm_path /../. ++failed++ POSIX
+> @@ -84,19 +109,19 @@ norm_path /./../.// ++failed++ POSIX
+>  norm_path /dir/.. / POSIX
+>  norm_path /dir/sub/../.. / POSIX
+>  norm_path /dir/sub/../../.. ++failed++ POSIX
+> -norm_path /dir /dir POSIX
+> -norm_path /dir// /dir/ POSIX
+> -norm_path /./dir /dir POSIX
+> -norm_path /dir/. /dir/ POSIX
+> -norm_path /dir///./ /dir/ POSIX
+> -norm_path /dir//sub/.. /dir/ POSIX
+> -norm_path /dir/sub/../ /dir/ POSIX
+> +norm_path /dir /dir
+> +norm_path /dir// /dir/
+> +norm_path /./dir /dir
+> +norm_path /dir/. /dir/
+> +norm_path /dir///./ /dir/
+> +norm_path /dir//sub/.. /dir/
+> +norm_path /dir/sub/../ /dir/
+>  norm_path //dir/sub/../. /dir/ POSIX
+> -norm_path /dir/s1/../s2/ /dir/s2/ POSIX
+> -norm_path /d1/s1///s2/..//../s3/ /d1/s3/ POSIX
+> -norm_path /d1/s1//../s2/../../d2 /d2 POSIX
+> -norm_path /d1/.../d2 /d1/.../d2 POSIX
+> -norm_path /d1/..././../d2 /d1/d2 POSIX
+> +norm_path /dir/s1/../s2/ /dir/s2/
+> +norm_path /d1/s1///s2/..//../s3/ /d1/s3/
+> +norm_path /d1/s1//../s2/../../d2 /d2
+> +norm_path /d1/.../d2 /d1/.../d2
+> +norm_path /d1/..././../d2 /d1/d2
+>  
+>  ancestor / / -1
+>  ancestor /foo / 0
+> @@ -197,8 +222,8 @@ relative_path /a	/a/b		../
+>  relative_path /		/a/b/		../../
+>  relative_path /a/c	/a/b/		../c
+>  relative_path /a/c	/a/b		../c
+> -relative_path /a/b	"<empty>"	/a/b	POSIX
+> -relative_path /a/b 	"<null>"	/a/b	POSIX
+> +relative_path /a/b	"<empty>"	/a/b
+> +relative_path /a/b 	"<null>"	/a/b
+>  relative_path "<empty>"	/a/b		./
+>  relative_path "<empty>"	"<empty>"	./
+>  relative_path "<empty>"	"<null>"	./
+> diff --git a/test-path-utils.c b/test-path-utils.c
+> index 95ef4..699ef 100644
+> --- a/test-path-utils.c
+> +++ b/test-path-utils.c
+> @@ -116,6 +116,11 @@ int main(int argc, char **argv)
+>  		return 0;
+>  	}
+>  
+> +	if (argc == 3 && !strcmp(argv[1], "mingw_path")) {
+> +		puts(argv[2]);
+> +		return 0;
+> +	}
+> +
+>  	if (argc == 4 && !strcmp(argv[1], "relative_path")) {
+>  		struct strbuf sb = STRBUF_INIT;
+>  		const char *abs, *base, *rel;
 > 
-> Completely useless.
-> 
-> On the other hand, if I implement it at the transport layer like
-> TRANSPORT_PUSH_DRY_RUN, it takes *way* too long to say anything
-> useful; the whole "early" part has been thrown out the window.  The
-> issue is again related to the same nightmare I'm having: not being
-> able to implement @{push} refspec because the transport API is so
-> tangled up; I can't call into the refspec-pattern-expander from
-> anywhere else.
-
-Leaving aside the transport API for a minute, you are always going to
-have this lack-of-information versus time problem. A refspec like ":"
-says nothing particularly useful, but it can only be expanded once
-contact is made with the other side (which is what takes time).
-
-I do not personally think the "early" information is particularly
-useful. I don't have a problem with it as part of "-v" output (or
-enabled by config), but it seems useless for enough cases (e.g., user
-gave explicit refspecs, or refspecs are not useful without being
-expanded) that showing it by default is going to be considered noisy
-cruft by many users.
-
-Was the unconditional nature of your earlier patch meant to be part of
-the final version, or was it just illustrative?
-
-> Yes, ^C is a hack, but it's useful in practice (there is ofcourse no
-> guarantee): I've been saved many times by it.  The only way to prevent
-> the race is to wait (either indefinitely for some user-input or for N
-> seconds), but I don't want to trade of speed.
-
-I have had the opposite experience. Many times I tried "rm -v" to keep
-an eye on what was being removed, but I do not recall once where I
-frantically reached for the keyboard in time to make a difference. But
-of course that is anecdotal, and push can be somewhat slower.
-
-> > As discussed in the top thread, this could also be used for "interactive
-> > push" where you could examine and confirm the changes for each proposed
-> > ref change.
-> 
-> Overkill, I think.  I don't want to bolt on very heavy safety
-> features: just help the user help themselves with feedback.
-
-Yes. I do not have any interest in such an interactive push, but the
-point is that a potential first step to any confirmation scheme, no
-matter what you want it to look like, is a hook. You don't seem to want
-a confirmation scheme, though, due to the wait (and I cannot blame you,
-as I would not want it either; but then I would not want the extra
-refspec message you propose, either).
-
--Peff
