@@ -1,111 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 00/16] bash prompt speedup
-Date: Mon, 24 Jun 2013 12:25:21 -0700
-Message-ID: <7vzjuf71lq.fsf@alter.siamese.dyndns.org>
-References: <1372091966-19315-1-git-send-email-szeder@ira.uka.de>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
+Date: Tue, 25 Jun 2013 01:00:23 +0530
+Message-ID: <CALkWK0ngNrxT1MrdhXyz8ViN9an1XQsRD=DnxXYXqhDRmGO8EA@mail.gmail.com>
+References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
+ <1372077912-18625-2-git-send-email-artagnon@gmail.com> <vpqhagnwraj.fsf@anie.imag.fr>
+ <CALkWK0=F_i95S+53eZmOAJtA+jG=jvi5-sDc3BgW3rNQo=n3Ng@mail.gmail.com>
+ <vpqhagnv9xq.fsf@anie.imag.fr> <7vk3ljbh5r.fsf@alter.siamese.dyndns.org>
+ <vpq7ghjtpv1.fsf@anie.imag.fr> <7vk3lj9xwn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eduardo D'Avila <erdavila@gmail.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Jun 24 21:25:29 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 24 21:31:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrCOH-0008Eo-3f
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 21:25:29 +0200
+	id 1UrCTm-0004Li-7C
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Jun 2013 21:31:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751323Ab3FXTZZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 15:25:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34864 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750936Ab3FXTZY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Jun 2013 15:25:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00EB72BA8A;
-	Mon, 24 Jun 2013 19:25:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=KilaEiZhZGnU
-	6tV3SewBzHio5rY=; b=wjmQesXSITc9GCji3izGKIvpbdK18o6be6roEVQi0e4J
-	kLolFnHW8MpNh2XvJtMn+jKxFEMkE8l2oyHCXKiojAmS/PqQT7JDghbI883mYSJE
-	kAQNYGhkTuyLRb0cX7a0jCv+4ZV1iNN/oA07pNMq+NONrY/0VwaCUWJB/iz8xUM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nPr44b
-	L4VTFiVSpaLjeE738rqWZShBGiTzNhFRd43AMSKUiO9NwNWGjlJbtS+/ngV4g7m+
-	FehlnfzY5b0o0PkfzXR9AVznl8f8+rxIpY1CkmhHCVGn54nunKgo60BR7Patt8gg
-	zQn6gDvtLBqwrbx1RbLvZAqSCUbcQsQrJN83o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAE0E2BA89;
-	Mon, 24 Jun 2013 19:25:23 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 68E492BA87;
-	Mon, 24 Jun 2013 19:25:23 +0000 (UTC)
-In-Reply-To: <1372091966-19315-1-git-send-email-szeder@ira.uka.de> ("SZEDER
-	=?utf-8?Q?G=C3=A1bor=22's?= message of "Mon, 24 Jun 2013 18:39:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D0EDA518-DD03-11E2-B062-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750824Ab3FXTbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 15:31:05 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:44123 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750745Ab3FXTbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 15:31:03 -0400
+Received: by mail-ie0-f172.google.com with SMTP id 16so25743549iea.17
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 12:31:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Y0ILZ9nAG6QpdBmz1tgNSo+ZiUbDqnQ0Quiz09NrNXU=;
+        b=GRK4h7DH6HJlV4EU4o/xjq2FMklFsmiLnLKxcl6sYEItCdjVKo808qmfHPLm0C+dDE
+         wft2Wjbn+fTx5j19kiW7aJ9fIBzYy5hZj0PYCyE9Sfu/fUbFMd+FW2Tb0C4MuzpiiZw7
+         w+2cL6/WES6x4KzARejYNpoTpTnJfgKpGQ4PJRct9X3K6JkYz+HVJ/tu72cNVN/eOY35
+         8A9mqZvxsv6kP6TOhx4JPCGR4ZkMltyE3foRk3Yylm3Ko+LcM4guO4DcoPOFnfNuqeaB
+         olN9iVxopkbLbRQGgeIes9hT+iStLNclpPbIlBsJVNxgL01797NBRGetsReic0KKdesq
+         qciQ==
+X-Received: by 10.50.225.66 with SMTP id ri2mr6446814igc.55.1372102263352;
+ Mon, 24 Jun 2013 12:31:03 -0700 (PDT)
+Received: by 10.64.129.97 with HTTP; Mon, 24 Jun 2013 12:30:23 -0700 (PDT)
+In-Reply-To: <7vk3lj9xwn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228906>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+Junio C Hamano wrote:
+> If we want to continue that tried-and-proven approach as a
+> short-term fix, a patch may look like this.
 
-> Hi,
->
-> displaying the git-specific bash prompt on Windows/MinGW takes quite
-> long, long enough to be noticeable.  This is mainly caused by the
-> numerous fork()s and exec()s to create subshells and run git or other
-> commands, which are rather expensive on Windows.
->
-> This patch series eliminates many command substitutions and command
-> executions in __git_ps1() from top to bottom by replacing them with
-> bash builtins or consolidating them.  A few timing results are shown
-> in the log message of the last patch.
->
-> Changes since v2 [1]:
->
->  - The detached HEAD abbreviated object name is now unique and
->    respects core.abbrev; see patches 5 and 11, replacing v2's patch 9=
-=2E
->    (This is why I asked the detached HEAD before root commit thing
->    yesterday.) =20
->  - Patches 12 and 16 are new.
->  - Incorporated Peff's suggestion about using the 'write_script'
->    helper into patch 2.
->  - Incorporated Eric's typofix.
->  - Rephrased a few commit messages.
->
-> It applies on top of current master; 2847cae8 (prompt: squelch error
-> output from cat, 2013-06-14) graduated recently.
->
-> This patch series will conflict with Eduardo's work on refactoring th=
-e
-> colorizing function, and the conflict is not trivial.  Although there
-> are still some open questions left with that series (using tput, zsh
-> tests), those won't affect the conflicts between the two patch series=
-=2E
-> So, for the convenience of our maintainer, I picked up Eduardo's
-> series, took the liberty to apply a fixup commit on top with my
-> suggestions from [2], merged the two series, and published the result
-> at:
->
->   https://github.com/szeder/git.git bash-prompt-speedup-and-color-ref=
-actorization
->
-> Eduardo, could you please also check that my conflict resolution is
-> correct?  Thanks.
-
-Well, then I'll fetch that premerged result and queue it on 'pu',
-wait for a while just in case if you need to reroll based on
-somebody else's input and otherwise merge that down to 'next' and
-then to 'master'.
-
-Thanks.
+I don't like this special-casing for show_branch at all.  What is the
+problem with skipping branch configuration altogether and going
+straight to diff-ui configuration, like I suggested earlier?
