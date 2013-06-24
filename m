@@ -1,146 +1,153 @@
 From: Vicent Marti <tanoku@gmail.com>
-Subject: [PATCH 02/16] sha1_file: refactor into `find_pack_object_pos`
-Date: Tue, 25 Jun 2013 01:22:59 +0200
-Message-ID: <1372116193-32762-3-git-send-email-tanoku@gmail.com>
+Subject: [PATCH 04/16] pack-objects: make `pack_name_hash` global
+Date: Tue, 25 Jun 2013 01:23:01 +0200
+Message-ID: <1372116193-32762-5-git-send-email-tanoku@gmail.com>
 References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
 Cc: Vicent Marti <tanoku@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 25 01:23:54 2013
+X-From: git-owner@vger.kernel.org Tue Jun 25 01:23:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrG6z-00037D-N2
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 01:23:54 +0200
+	id 1UrG71-00037D-MB
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 01:23:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752004Ab3FXXXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 19:23:45 -0400
-Received: from mail-wg0-f54.google.com ([74.125.82.54]:46040 "EHLO
-	mail-wg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751856Ab3FXXXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 19:23:42 -0400
-Received: by mail-wg0-f54.google.com with SMTP id n11so9000547wgh.9
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 16:23:41 -0700 (PDT)
+	id S1752064Ab3FXXXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 19:23:51 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:60449 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752005Ab3FXXXs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 19:23:48 -0400
+Received: by mail-wi0-f175.google.com with SMTP id m6so182463wiv.8
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 16:23:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=in8rRefxeGN7YU8Lz5SajX1G4A/hVu65BknC1vT2P18=;
-        b=ZMazmh2HqBDoPi4TP5BNdZgqvqmKI1bY9tWwq3Aa9kihPoIoOEMQLLbi582Dgssi4z
-         G4qPCrYN7E+n7/wcn13U+r7taXcz5+Gf5vltYc+B+ilnBJGXtEk1EGP3GfhYsxjfJoEr
-         DtMsg6vwDx2j2h0qGyrNTbZ5KAbIgL2Qfposu8WXc9A5HBTcmN0Fed75snj/zAfk9q/e
-         3HtGXmpbO2haq37H3/9uFLepB/lZNS5bMCHrFPiYJjOT+HbpJAnmqS1ck9frfs4pfgzp
-         zf4KgYfnBm2gm7L781uO0emfeH83J+2VtQovM/hS0MoYumv66yki1sGR502Cup8Tcx3R
-         Px9Q==
-X-Received: by 10.180.206.70 with SMTP id lm6mr7441564wic.50.1372116221519;
-        Mon, 24 Jun 2013 16:23:41 -0700 (PDT)
+        bh=j6b+OV9Y90v2JhVIEZ7l8QnPMtsBjKaVD7mPbUnxKGg=;
+        b=TLlRevz+KDrdCYpu1WS94d6u5Ok/zMqIgiqwpMijtsGuJVL2iG9LTnQcO7GE+3Yk29
+         FBfAKaJ7Fdo6kJtkSAaDCsIrq5xBzRRdMdL4kXxFGy1iUcaN2j/iKQPN57+CPV0zqjL1
+         4pHzDPzeTiLyh09gQA2NxWGOhislc3fG+mJwkF5fLElTuO5NszKH+WxOt3ydKZVgYb61
+         Ue0Gsoo+Qv+NbgufA2EnKgshVPzXoQt+yJ2TvBXB6R0vkOez7w2dLThpZjGF+2NiZjbh
+         AvIFKqpJpneU1+rgWS5KikekpID6AhF+MM/yTPltIUFDfV3MJES5si0TRYrMigvXmub5
+         TdfA==
+X-Received: by 10.194.20.97 with SMTP id m1mr18096664wje.31.1372116226715;
+        Mon, 24 Jun 2013 16:23:46 -0700 (PDT)
 Received: from localhost.localdomain (212.Red-81-32-36.dynamicIP.rima-tde.net. [81.32.36.212])
-        by mx.google.com with ESMTPSA id x13sm593766wib.3.2013.06.24.16.23.40
+        by mx.google.com with ESMTPSA id x13sm593766wib.3.2013.06.24.16.23.44
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 24 Jun 2013 16:23:40 -0700 (PDT)
+        Mon, 24 Jun 2013 16:23:45 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
 In-Reply-To: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228921>
 
-Looking up the offset in the packfile for a given SHA1 involves the
-following:
-
-	- Finding the position in the index for the given SHA1
-	- Accessing the offset cache in the index for the found position
-
-There are cases however where we'd like to find the position of a SHA1
-in the index without looking up the packfile offset (e.g. when accessing
-information that has been indexed based on index offsets).
-
-This refactoring implements `find_pack_object_pos`, returning the
-position in the index, and re-implements `find_pack_entry_one`(returning
-the actual offset in the packfile) to use the new function.
+The hash function used by `builtin/pack-objects.c` to efficiently find
+delta bases when packing can be of interest for other parts of Git that
+also have to deal with delta bases.
 ---
- cache.h     |    1 +
- sha1_file.c |   27 +++++++++++++++++----------
- 2 files changed, 18 insertions(+), 10 deletions(-)
+ builtin/pack-objects.c |   24 ++----------------------
+ cache.h                |    2 ++
+ sha1_file.c            |   20 ++++++++++++++++++++
+ 3 files changed, 24 insertions(+), 22 deletions(-)
 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index fc12df8..b7cab18 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -854,26 +854,6 @@ static struct object_entry *locate_object_entry(const unsigned char *sha1)
+ 	return NULL;
+ }
+ 
+-static unsigned name_hash(const char *name)
+-{
+-	unsigned c, hash = 0;
+-
+-	if (!name)
+-		return 0;
+-
+-	/*
+-	 * This effectively just creates a sortable number from the
+-	 * last sixteen non-whitespace characters. Last characters
+-	 * count "most", so things that end in ".c" sort together.
+-	 */
+-	while ((c = *name++) != 0) {
+-		if (isspace(c))
+-			continue;
+-		hash = (hash >> 2) + (c << 24);
+-	}
+-	return hash;
+-}
+-
+ static void setup_delta_attr_check(struct git_attr_check *check)
+ {
+ 	static struct git_attr *attr_delta;
+@@ -977,7 +957,7 @@ static int add_object_entry_1(const unsigned char *sha1, enum object_type type,
+ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+ 			    const char *name, int exclude)
+ {
+-	if (add_object_entry_1(sha1, type, name_hash(name), exclude, NULL, 0)) {
++	if (add_object_entry_1(sha1, type, pack_name_hash(name), exclude, NULL, 0)) {
+ 		struct object_entry *entry = objects[nr_objects - 1];
+ 
+ 		if (name && no_try_delta(name))
+@@ -1186,7 +1166,7 @@ static void add_preferred_base_object(const char *name)
+ {
+ 	struct pbase_tree *it;
+ 	int cmplen;
+-	unsigned hash = name_hash(name);
++	unsigned hash = pack_name_hash(name);
+ 
+ 	if (!num_preferred_base || check_pbase_path(hash))
+ 		return;
 diff --git a/cache.h b/cache.h
-index ec8240f..a29645e 100644
+index a29645e..95ef14d 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1101,6 +1101,7 @@ extern void clear_delta_base_cache(void);
- extern struct packed_git *add_packed_git(const char *, int, int);
- extern const unsigned char *nth_packed_object_sha1(struct packed_git *, uint32_t);
- extern off_t nth_packed_object_offset(const struct packed_git *, uint32_t);
-+extern int find_pack_entry_pos(const unsigned char *sha1, struct packed_git *p);
- extern off_t find_pack_entry_one(const unsigned char *, struct packed_git *);
- extern int is_pack_valid(struct packed_git *);
- extern void *unpack_entry(struct packed_git *, off_t, enum object_type *, unsigned long *);
+@@ -653,6 +653,8 @@ extern char *sha1_pack_index_name(const unsigned char *sha1);
+ extern const char *find_unique_abbrev(const unsigned char *sha1, int);
+ extern const unsigned char null_sha1[20];
+ 
++extern uint32_t pack_name_hash(const char *name);
++
+ static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
+ {
+ 	int i;
 diff --git a/sha1_file.c b/sha1_file.c
-index 0af19c0..371e295 100644
+index 371e295..44c7bca 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -2205,8 +2205,7 @@ off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
- 	}
- }
+@@ -60,6 +60,26 @@ static struct cached_object empty_tree = {
+ 	0
+ };
  
--off_t find_pack_entry_one(const unsigned char *sha1,
--				  struct packed_git *p)
-+int find_pack_entry_pos(const unsigned char *sha1, struct packed_git *p)
- {
- 	const uint32_t *level1_ofs = p->index_data;
- 	const unsigned char *index = p->index_data;
-@@ -2219,7 +2218,7 @@ off_t find_pack_entry_one(const unsigned char *sha1,
- 
- 	if (!index) {
- 		if (open_pack_index(p))
--			return 0;
-+			return -1;
- 		level1_ofs = p->index_data;
- 		index = p->index_data;
- 	}
-@@ -2243,12 +2242,9 @@ off_t find_pack_entry_one(const unsigned char *sha1,
- 
- 	if (use_lookup < 0)
- 		use_lookup = !!getenv("GIT_USE_LOOKUP");
-+
- 	if (use_lookup) {
--		int pos = sha1_entry_pos(index, stride, 0,
--					 lo, hi, p->num_objects, sha1);
--		if (pos < 0)
--			return 0;
--		return nth_packed_object_offset(p, pos);
-+		return sha1_entry_pos(index, stride, 0, lo, hi, p->num_objects, sha1);
- 	}
- 
- 	do {
-@@ -2259,13 +2255,24 @@ off_t find_pack_entry_one(const unsigned char *sha1,
- 			printf("lo %u hi %u rg %u mi %u\n",
- 			       lo, hi, hi - lo, mi);
- 		if (!cmp)
--			return nth_packed_object_offset(p, mi);
-+			return mi;
- 		if (cmp > 0)
- 			hi = mi;
- 		else
- 			lo = mi+1;
- 	} while (lo < hi);
--	return 0;
-+
-+	return -1;
-+}
-+
-+off_t find_pack_entry_one(const unsigned char *sha1, struct packed_git *p)
++uint32_t pack_name_hash(const char *name)
 +{
-+	int pos;
++	unsigned c, hash = 0;
 +
-+	if ((pos = find_pack_entry_pos(sha1, p)) < 0)
++	if (!name)
 +		return 0;
 +
-+	return nth_packed_object_offset(p, (uint32_t)pos);
- }
++	/*
++	 * This effectively just creates a sortable number from the
++	 * last sixteen non-whitespace characters. Last characters
++	 * count "most", so things that end in ".c" sort together.
++	 */
++	while ((c = *name++) != 0) {
++		if (isspace(c))
++			continue;
++		hash = (hash >> 2) + (c << 24);
++	}
++	return hash;
++}
++
+ static struct packed_git *last_found_pack;
  
- int is_pack_valid(struct packed_git *p)
+ static struct cached_object *find_cached_object(const unsigned char *sha1)
 -- 
 1.7.9.5
