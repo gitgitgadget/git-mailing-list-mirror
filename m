@@ -1,55 +1,88 @@
-From: =?UTF-8?Q?Vicent_Mart=C3=AD?= <tanoku@gmail.com>
-Subject: Re: [PATCH 07/16] compat: add endinanness helpers
-Date: Tue, 25 Jun 2013 15:25:14 +0200
-Message-ID: <CAFFjANSNagvDgvrFNV1OLg=-4BPyQVjMDnfMPihdhVJR7o0TdQ@mail.gmail.com>
-References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
- <1372116193-32762-8-git-send-email-tanoku@gmail.com> <alpine.DEB.2.00.1306251404510.9929@ds9.cixit.se>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: Basic git-archive --remote question
+Date: Tue, 25 Jun 2013 15:16:38 +0200
+Message-ID: <1372166198.20511.5.camel@flaca.cmartin.tk>
+References: <CAGpXXZJifb1KmR8=VZVW+1MKjyo7HOq=OgU_rcHs-vc5ezfG6w@mail.gmail.com>
+	 <CAGpXXZJuC09t8-5d=p4KNs9rQ-S347eBNuKcKWFhXZTnkLW0sA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Jun 25 15:25:40 2013
+To: Greg Freemyer <greg.freemyer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 25 15:26:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrTFb-0007xY-D2
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 15:25:39 +0200
+	id 1UrTGU-0000D1-MX
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 15:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751256Ab3FYNZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Jun 2013 09:25:35 -0400
-Received: from mail-ve0-f178.google.com ([209.85.128.178]:57018 "EHLO
-	mail-ve0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750830Ab3FYNZe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jun 2013 09:25:34 -0400
-Received: by mail-ve0-f178.google.com with SMTP id pb11so10180627veb.9
-        for <git@vger.kernel.org>; Tue, 25 Jun 2013 06:25:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=z8wt7H7AuA5DI4atFuqptqFNT2yTkGIra6Iz+tVvfN0=;
-        b=dLEsiFaB8qQPUVRxEhb/gFhFlB7U9z//S3yza0iwHpVZnxK03EyFyP45+LoDHCCjzY
-         p9zODzT2BriG8TVXHsoHiTPbVALJTwUzO4rxWCyJBQcUPT+C2IaYt79gPZX1sfbj2W37
-         R0juq+yuzqFcRqNQPmRpHTMiYzO4agz5ZHof5xdqqO55HixoV+xHs+s2N7H8CDPBX7iL
-         B6xMZotJChn60SZWbIWkDArxv5rlqwBmcBXkjZB/hYvcDgJeWheXYO0D+MxR1lHuXNQx
-         eoVeoxuZ0DIfhGvk4N+avzNzdUyPDBfHzKkBJHHS2lSvHVNLS9+AXoWrh6bR0zomt0fW
-         fCvQ==
-X-Received: by 10.220.73.135 with SMTP id q7mr13861597vcj.33.1372166734107;
- Tue, 25 Jun 2013 06:25:34 -0700 (PDT)
-Received: by 10.221.45.131 with HTTP; Tue, 25 Jun 2013 06:25:14 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1306251404510.9929@ds9.cixit.se>
+	id S1751897Ab3FYN0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Jun 2013 09:26:22 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:54514 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751869Ab3FYN0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jun 2013 09:26:21 -0400
+X-Greylist: delayed 579 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Jun 2013 09:26:20 EDT
+Received: from [IPv6:2001:6f8:1c3c:6a57:a599:f01d:8189:5855] (unknown [IPv6:2001:6f8:1c3c:6a57:a599:f01d:8189:5855])
+	by hessy.dwim.me (Postfix) with ESMTPSA id 795AD80478;
+	Tue, 25 Jun 2013 15:16:39 +0200 (CEST)
+In-Reply-To: <CAGpXXZJuC09t8-5d=p4KNs9rQ-S347eBNuKcKWFhXZTnkLW0sA@mail.gmail.com>
+X-Mailer: Evolution 3.6.3-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228961>
 
-On Tue, Jun 25, 2013 at 3:08 PM, Peter Krefting <peter@softwolves.pp.se> wrote:
-> endian(3) claims that glibc 2.9+ define be64toh() and htobe64() which should
-> do what you are looking for. The manual page does mention them being named
-> differently across OSes, though, so you may need to be careful with that.
+On Mon, 2013-06-24 at 15:53 -0400, Greg Freemyer wrote:
+> I'm trying to create a tarball from a git tag and I can't get the
+> syntax right.  The documentation is not very clear.
+> 
+> Can someone help me?
+> 
+> == details
+> 
+> git v1.8.1.4
+> 
+> The upstream git repo is at: https://github.com/dkovar/analyzeMFT
+> 
+> Here's a few attempts using git as the protocol:
+> 
+> > git archive --format=tar --remote=github.com:dkovar/analyzeMFT.git v2.0.4
+> 
+> Permission denied (publickey).
+> fatal: The remote end hung up unexpectedly
 
-I'm aware of that, but Git needs to build with glibc 2.7+ (or was it
-2.6?), hence the need for this compat layer.
+Assuming you haven't set up any ssh rules for the github.com host,
+you're trying to log in with ssh with your local username, which isn't
+going to work.
+
+> 
+> > git archive --format=tar --remote=git://github.com/dkovar/analyzeMFT v2.0.4
+> 
+> fatal: remote error
+>    Your Git client has made an invalid request:
+>    003agit-upload-archive /dkovar/analyzeMFT
+> 
+
+This is the right format. GitHub doesn't allow remote archive requests,
+which is why it's complaining.
+
+If you want a tarball from GitHub, you need to download over HTTP from
+the links they provide (which you can find e.g. through the web UI).
+
+> 
+> The github page also says I can use ssh with git as the user, but that
+> complains I don't have the private key (which I don't):
+> 
+> git archive --format=tar
+> --remote=ssh://git@github/com/dkovar/analyzeMFT.git v2.0.4
+
+Using git as the ssh user is the right thing (if you want to talk git
+over ssh) with GitHub and a few other sites/hosting programs, as your
+public key is used to determine which user is trying to connect without
+giving each user an account on the underlying OS.
+
+   cmn
