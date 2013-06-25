@@ -1,76 +1,110 @@
-From: Yann Droneaud <ydroneaud@opteya.com>
-Subject: Re: Another core.safecrlf behavor with git diff/git status
-Date: Tue, 25 Jun 2013 10:52:10 +0200
-Organization: OPTEYA
-Message-ID: <48dfe0b092fdf977a823725ddbc91e32@meuh.org>
-References: <866f886ef5e48ba22eec0f67203666bb@meuh.org>
- <7v7ghjbg8i.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 25 10:52:28 2013
+From: Alexey Shumkin <Alex.Crezoff@gmail.com>
+Subject: [PATCH v6 0/5] Reroll patches against v1.8.3.1
+Date: Tue, 25 Jun 2013 12:55:27 +0400
+Message-ID: <cover.1372149305.git.Alex.Crezoff@gmail.com>
+References: <cover.1371720245.git.Alex.Crezoff@gmail.com>
+Cc: Alexey Shumkin <Alex.Crezoff@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 25 10:56:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrOzD-0005UO-Pa
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 10:52:28 +0200
+	id 1UrP2b-0007sw-Ds
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 10:55:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752621Ab3FYIwQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Jun 2013 04:52:16 -0400
-Received: from mx-out.ocsa-data.net ([194.36.166.37]:63484 "EHLO
-	mx-out.ocsa-data.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752804Ab3FYIwO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jun 2013 04:52:14 -0400
-Received: from [192.168.111.12] (helo=rc.ouvaton.coop)
-	by mx-out.ocsa-data.net with esmtpa (Exim - FreeBSD Rulez)
-	id 1UrOyx-000ERC-78; Tue, 25 Jun 2013 10:52:11 +0200
-In-Reply-To: <7v7ghjbg8i.fsf@alter.siamese.dyndns.org>
-X-Sender: ydroneaud@opteya.com
-User-Agent: Roundcube Webmail/0.9.2
-X-abuse-contact: abuse@ocsa-data.net
+	id S1752841Ab3FYIzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Jun 2013 04:55:47 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:54674 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751461Ab3FYIzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jun 2013 04:55:42 -0400
+Received: by mail-la0-f50.google.com with SMTP id dy20so11481730lab.23
+        for <git@vger.kernel.org>; Tue, 25 Jun 2013 01:55:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rarus.ru; s=google;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=XofIIzn2j9Qjnu6ULlV4IUKC1QPwJlrJLBG8vI//dt8=;
+        b=TcBryeBeH9fziQaDvB7eBsNY7Fnz+1CvO4oOIkoJV7cSQyOfEVru7iKAbG92sLvpes
+         Q0vg5T1LxuX3wr9ML9ZQIQa0pPqvYdkZVoY3cI8skfGLA1EjMnx7OnFArfVU6PpAhzRz
+         7TD6TQUyyAvDEAOwkwvRSriarXGJT14MyBtRQ=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=XofIIzn2j9Qjnu6ULlV4IUKC1QPwJlrJLBG8vI//dt8=;
+        b=RpNGoS+KSvfLMh7O5OpBk5lSnhsu/A28PYo7hg/X/62xOSOxzXx+7WDBeIjIEiHQqG
+         Pv8o5uI9v6NABbjUqRNkBFhkDQqAKMV2UmspEGQq24PWhJw83vnzT7lnfWmu/psFnQmC
+         +JRP0HIeHNQz12fDpjpGeDvrgtwi2hN4VRUMJVOVKReYawzKymySFe+SRlrOpWZFXIrk
+         RW1su4Vh3U3ohnjmn2q2kLzATotWboNMQAtWijuU01v9oBeG1UYhxHj7ltzcHe9MONjJ
+         TtAN//J4NA7d9mazh108idexmWC84fDZoxP3Rpey4sreYsN3f+uYSRZPlnVNEn5tXrs4
+         HMCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:x-gm-message-state;
+        bh=XofIIzn2j9Qjnu6ULlV4IUKC1QPwJlrJLBG8vI//dt8=;
+        b=T2calDJO5UtAn6mZ1Fdk6MRG1ooX894JGRKOcH04+OtfN1DyOHsdjZXqo7d/IUFOn2
+         jWcdqvzQ+vOKzE6zDBHP2VkETyglf+by3/mfk+BTGv51pOd7U8ZGwa03nNHJlhRP6o1W
+         A8zRp0+YAVbZzMlE2XiG/G7gaLr9aFOsXMSBsgJFTbF4TFpuf5nVeDyR8wwXCg6NLttA
+         zzOFJ9iTTDYF8qpYBMCT6vK7yzAWjCesRFcnrb+zdDOCqbXYkHREivogdAJP78rEnnr5
+         /zmtzJVbzz4hS+zpTe5RFV5fA+w4t9LO/5nc5eHTAeD0hUOWH1akxemGo675o7i/uwn4
+         u5NQ==
+X-Received: by 10.112.5.134 with SMTP id s6mr14443382lbs.95.1372150539991;
+        Tue, 25 Jun 2013 01:55:39 -0700 (PDT)
+Received: from localhost ([85.21.218.130])
+        by mx.google.com with ESMTPSA id a3sm8223200lbg.2.2013.06.25.01.55.37
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 25 Jun 2013 01:55:38 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.15.g5c23c1e
+In-Reply-To: <cover.1371720245.git.Alex.Crezoff@gmail.com>
+X-Gm-Message-State: ALoCoQksCLNkSzUlrrxN90PGLHO33iQbRCpLllnVSY1RzHmvdPG2gBokrOr8o5hCgsBYZLQUdNEd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228948>
 
-Hi,
+It's all started here [http://thread.gmane.org/gmane.comp.version-control.git/177634]
+and recently continued later [http://thread.gmane.org/gmane.comp.version-control.git/214419]
 
-Le 24.06.2013 18:55, Junio C Hamano a =C3=A9crit=C2=A0:
-> Yann Droneaud <ydroneaud@opteya.com> writes:
->=20
->> - Why git diff does not always report the CRLF/LF mismatch ?
->=20
-> Most likely because you are telling safecrlf not to error out but
-> just warn, and then you are not fixing the cause of the warning?  So
-> diff would say "Ok, you must know what you are doing, so I trust
-> what is in the index", perhaps?
->=20
->> - Why git status does not report about the CRLF/LF mismatch before
->> updating the index:
->=20
-> My suspicion is the same as "diff".
+v6 of this patch series includes Junio's suggestions against v5:
 
-I'm ok with theses answers regarding the test case provided first:
-the warning was emitted when the files were commited.
+1. [PATCH v6 1/5] t6006 (rev-list-format): don't hardcode SHA-1 in expected outputs
+	using modern 'git rev-parse HEAD:' git syntax to get commit tree ID
+2. [PATCH v6 2/5] t7102 (reset): don't hardcode SHA-1 in expected outputs
+	untouched
+3. [PATCH v6 3/5] t4205 (log-pretty-formats): don't hardcode SHA-1 in expected outputs
+	using 'rev-parse --short' instead of 'git rev-list --max-count=1 --abbrev-commit'
+4. [PATCH v6 4/5] pretty: Add failing tests: --format output should honor logOutputEncoding
+	iso8859-5 encoding reverted back to cp1251 encoding (as it was in v4 series)
+	reworded log message
+5. [PATCH v6 5/5] pretty: --format output should honor logOutputEncoding
+	reworded log message
 
-(But still I would like git diff/git status to behave the same regardin=
-g=20
-the "index":
-  emit the warning and update the index,
-  I suppose it's not related to core.safecrlf but inner Git way of=20
-working).
 
-Could you have a look at the other test case I've sent later in this=20
-thread / the rebase problem I've sent earlier in another thread.
+Alexey Shumkin (5):
+  t6006 (rev-list-format): don't hardcode SHA-1 in expected outputs
+  t7102 (reset): don't hardcode SHA-1 in expected outputs
+  t4205 (log-pretty-formats): don't hardcode SHA-1 in expected outputs
+  pretty: Add failing tests: --format output should honor
+    logOutputEncoding
+  pretty: --format output should honor logOutputEncoding
 
-Regards.
+ builtin/reset.c                  |   6 +-
+ builtin/rev-list.c               |   1 +
+ builtin/shortlog.c               |   1 +
+ log-tree.c                       |   1 +
+ submodule.c                      |   1 +
+ t/t4041-diff-submodule-option.sh |  25 +++--
+ t/t4205-log-pretty-formats.sh    | 179 ++++++++++++++++++++-------------
+ t/t6006-rev-list-format.sh       | 207 ++++++++++++++++++++++++---------------
+ t/t7102-reset.sh                 |  37 ++++++-
+ 9 files changed, 293 insertions(+), 165 deletions(-)
 
---=20
-Yann Droneaud
-OPTEYA
+-- 
+1.8.3.1.15.g5c23c1e
