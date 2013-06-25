@@ -1,87 +1,104 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH v14 01/16] test: add test cases for relative_path
-Date: Tue, 25 Jun 2013 15:02:48 +0800
-Message-ID: <CANYiYbErGwRFHk=_d42ffMBAzHVKR=ytyDt5Ki9b4Bp-tFYgjQ@mail.gmail.com>
-References: <cover.1372087065.git.worldhello.net@gmail.com>
-	<85c9aa4d05dba4320a7cc85eae7570e0f450e58e.1372087065.git.worldhello.net@gmail.com>
-	<7vli5z8ha0.fsf@alter.siamese.dyndns.org>
-	<CANYiYbEK-vc2h64rfNDL5k5yhRsxQR=8xtNJJQwUXmyVHH4Cng@mail.gmail.com>
-	<7v38s66b3i.fsf@alter.siamese.dyndns.org>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Splitting a rev list into 2 sets
+Date: Tue, 25 Jun 2013 10:09:45 +0200
+Message-ID: <CAC9WiBiEtygQGB7JAo5mWuetFE_WTZOYDaTTKv_bkbWQs8xe8A@mail.gmail.com>
+References: <CAC9WiBi-E+LN4hKGeu0mG7ihJWCaTg-W1Dx_PWmX_vsx-uLOaw@mail.gmail.com>
+	<8761x87wc8.fsf@linux-k42r.v.cablecom.net>
+	<CAC9WiBgb18ZX0vr8V79tCEUStrDRhRiSh44nH6+3B_Kf8rypYg@mail.gmail.com>
+	<87mwqf3k3n.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 25 09:02:56 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jun 25 10:09:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrNHC-0000Vg-2p
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 09:02:54 +0200
+	id 1UrOK1-0000D8-FF
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 10:09:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592Ab3FYHCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Jun 2013 03:02:50 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:61114 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751028Ab3FYHCt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jun 2013 03:02:49 -0400
-Received: by mail-wi0-f174.google.com with SMTP id k10so414470wiv.7
-        for <git@vger.kernel.org>; Tue, 25 Jun 2013 00:02:48 -0700 (PDT)
+	id S1751849Ab3FYIJt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Jun 2013 04:09:49 -0400
+Received: from mail-ve0-f178.google.com ([209.85.128.178]:46984 "EHLO
+	mail-ve0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751292Ab3FYIJq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Jun 2013 04:09:46 -0400
+Received: by mail-ve0-f178.google.com with SMTP id pb11so9866377veb.9
+        for <git@vger.kernel.org>; Tue, 25 Jun 2013 01:09:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=aWdE4U3tnETR7pWDFu7FN5RgA6Jzj2TP7vqnbJ2BUao=;
-        b=UjwAHoiwHrJgh3hSYNmxZqVoqiwVaL6pKc4dp+4sq6isLIRGPcr9KiBrUCDWzMSsN+
-         1AtQ6gW4QxmId7rNsT+BjE7AOIBHHaMx29xLMgFaIDspgSs/mbDB7LSpk7bA31ZW03A/
-         Q4be22pWTk2PwQv0KgpUBvwVTiJz6jzkkU0L0RjQas5yx+Xhyxvtkr+9gCdEhBvgyaSp
-         PHbK/PU5M0RIVX9ZHjEQLRddWuLTfIiWhyBzSR7U+YMXi+oVtJmuA274mZgZZChw7IQN
-         71S9XHvjCzs2zLMoynWq/SYEFZZ07VHljTdGhJ1HNZH48cdI6SBvMqRYbITNAWWhpxZN
-         lbFw==
-X-Received: by 10.194.249.129 with SMTP id yu1mr19465540wjc.10.1372143768557;
- Tue, 25 Jun 2013 00:02:48 -0700 (PDT)
-Received: by 10.194.176.129 with HTTP; Tue, 25 Jun 2013 00:02:48 -0700 (PDT)
-In-Reply-To: <7v38s66b3i.fsf@alter.siamese.dyndns.org>
+         :cc:content-type:content-transfer-encoding;
+        bh=TUetryV57eKiEeER1mBaYBiISmPVfykpom/gXOftz8Y=;
+        b=amFXb0SQwblqn47FqXrAlqe5E0o7rMOjf1K1zrLusHrEsTkV+7KSpgYSR16M1dZeyw
+         spf7hD2H92HbMf1gKPsnmlefoeWJtPmONe6r5gjQtB+oLVM8YjT3sq3e6OL3pYkFZTXt
+         ax0Nh4LfV38xkELbkpT34MZ+5gZQu0jhPitFMlCfTq6RyjFZVyaFWQtDzM84bomehRHi
+         BdBr1Z9SUVBjOHcAjrt6zCOG9Ce+2o2X88jVBnJ2jLm7l0v77klhiFrIs2593tY1cCGE
+         ERkYSLHa9j65GQbbvlGU2RCRw3RLoz0JQLqAIm0fA1yfIWnfC6Z58q4a2ScCM2tHTpM0
+         yB6w==
+X-Received: by 10.58.127.202 with SMTP id ni10mr13234640veb.27.1372147785920;
+ Tue, 25 Jun 2013 01:09:45 -0700 (PDT)
+Received: by 10.58.154.5 with HTTP; Tue, 25 Jun 2013 01:09:45 -0700 (PDT)
+In-Reply-To: <87mwqf3k3n.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228946>
 
-2013/6/25 Junio C Hamano <gitster@pobox.com>:
->> Add prefix _ to workaround the absolute path rewritten issue in
->> msysGit is interesting, but these test cases have already been
->> tested in Linux, right?
+Hello Thomas,
+
+On Mon, Jun 24, 2013 at 11:59 AM, Thomas Rast <trast@inf.ethz.ch> wrote=
+:
+> Francis Moreau <francis.moro@gmail.com> writes:
 >
-> The most important thing is what we want to test in these tests.
-> The special test program is to try running the underlying
-> relative_path() by driving it directly, but the only real caller is
-> in setup_work_tree(), where two return values from real_path() is
-> compared.  On POSIX systems, we know we are feeding paths that both
-> begin with /.  Now, on Windows systems, what do we get back from
-> real_path()?  C:\git\Documentation?  /git/Documentation?
+>> On Thu, Jun 20, 2013 at 3:20 PM, Thomas Rast <trast@inf.ethz.ch> wro=
+te:
+>>>   positive=3D$(git rev-parse "$@" | grep -v '^\^')
+>>>   negative=3D$(git rev-parse "$@" | grep '^\^')
+>>>   boundary=3D$(git rev-list --boundary $positive ^master | sed -n '=
+s/^-//p')
+>>>   # the intersection is
+>>>   git rev-list $boundary $negative
+>>
+>> I think there's a minor issue here, when boundary is empty. Please
+>> correct me if I'm wrong but I think it can only happen if positive i=
+s
+>> simply master or a subset of master. In that case I think the soluti=
+on
+>> is just make boundary equal to positive:
+>>
+>>      # the intersection is
+>>      git rev-list ${boundary:-$positive} $negative
+>>
+>> Now I'm going to see if that solution is faster than the initial one=
+=2E
 >
-
-Confirm that on Windows real_path() returns absolute path in
-Windows style, such as: C:/msysgit/git/.git
-
-> Unlike relative_path() used in setup.c:setup_work_tree(), for
-> path_relative() from quote.c, IIRC, the expected inputs are both
-> full pathnames within the working tree.  A typical question the
-> callers to this function asks is like "The current directory
-> obtained from prefix is the Documentation/ directory and we need to
-> show that compat/mkdir.c is modified, relative to the current
-> directory.  ../compat/mkdir.c is what I want to show."  So in that
-> sense, it does not matter if /a/b/c is given as /a/b/c or C:\a\b\c
-> as we do not care the leading common part (either / or C:\) very
-> much.  On the other hand, the test vector you preoared in the first
-> test that all begin with / may not be very useful to make sure that
-> the function behaves the same way before and after your rewrite.
+> Jan "jast" Kr=FCger pointed out on #git that
 >
+>   git log $(git merge-base --all A B)
+>
+> is exactly the set of commits reachable from both A and B; so there's
+> your intersection operator :-)
 
-Yes, I should add more test cases without the leading '/'.
+nice :)
 
--- 
-Jiang Xin
+>
+> So it would seem that a much simpler approach is
+>
+>   git rev-list $(git merge-base --all master $positive) --not $negati=
+ve
+>
+> avoiding the boundary handling and special-case.  It relies on the
+> (weird?) property that $(git merge-base --all A B1 B2 ...) shows the
+> merge bases of A with a hypothetical merge of B1, B2, ..., which is j=
+ust
+> what you need here.
+
+Thank you Thomas, that's exactly what I was asking for :)
+
+--
+=46rancis
