@@ -1,46 +1,46 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v15 13/16] git-clean: add ask each interactive action
-Date: Tue, 25 Jun 2013 23:53:54 +0800
-Message-ID: <932e2efee70dadb893dcd8498d7da17f68eb9d96.1372175283.git.worldhello.net@gmail.com>
+Subject: [PATCH v15 15/16] test: add t7301 for git-clean--interactive
+Date: Tue, 25 Jun 2013 23:53:56 +0800
+Message-ID: <e492b49b19fa4860116a4d54e06b1a8c4a0fa7f9.1372175283.git.worldhello.net@gmail.com>
 References: <cover.1372175282.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jun 25 17:55:18 2013
+X-From: git-owner@vger.kernel.org Tue Jun 25 17:56:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrVaL-0004Ki-1p
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 17:55:13 +0200
+	id 1UrVaw-0004nk-0F
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 17:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752620Ab3FYPzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Jun 2013 11:55:05 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:62670 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752611Ab3FYPzC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jun 2013 11:55:02 -0400
-Received: by mail-pb0-f53.google.com with SMTP id xb12so12821340pbc.12
-        for <git@vger.kernel.org>; Tue, 25 Jun 2013 08:55:01 -0700 (PDT)
+	id S1752643Ab3FYPzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Jun 2013 11:55:16 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:38405 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752611Ab3FYPzL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jun 2013 11:55:11 -0400
+Received: by mail-pb0-f42.google.com with SMTP id un1so12787372pbc.29
+        for <git@vger.kernel.org>; Tue, 25 Jun 2013 08:55:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=G5fHfxUBGYeuo5ibApbu0fgQRCZsD78hcj1ZEQ9Lebs=;
-        b=u9EFn+jWRFNaXE2hhjkvLAckf5gB9BpEz5pFd7qVMloM3ZncJciwNckrj/TK17QHkr
-         GlFB0dvhvh1+66YQ4dYq34hoOhWf9Slq6jbZqBLR4OguugW1M26cpTDYSNug3gop48R2
-         GvXbLSLN+lEdV4zMK5OiZbLCvIu7M5iU4dNvld+gklgBobb+xSr4OsUKqNcuwoXYim0m
-         2HqrdZ+e1NC6aTm7vrI05QG81LTjeehlaSy/fJvpghmI9TVF70CDV/Na1fHnlVYLjPt6
-         LEN7mDv6KkwTckN9PFtBBpoD0tpajFTqInEFuWOBRn/0IGUwDJvv6W9e2l8YvqHGkKyq
-         38Tg==
-X-Received: by 10.66.146.164 with SMTP id td4mr454108pab.106.1372175701550;
-        Tue, 25 Jun 2013 08:55:01 -0700 (PDT)
+        bh=sQwoQg5eBb6Kd9e4WT5mHfdhwh1+OKE76zkllFd9rXI=;
+        b=QEt6z0yFheS5YWO8wtKbQu3fDqD9LG6W1gI6cuF2iMxo1wQDyiPVUsoX+urCrjOVX1
+         l6AQbDNnx46LGWaMAF3kS9aQR/fS9CTzZFVfC5LjlhBt9QQyf/QSnVq5MSR//eD5GJ6z
+         8+Q6748eAXoAFYye5S5EyhFq4OS0mPPr+8eoCP6kSnNCYa+r0lrUqQdrM3DUEGWOUgmi
+         g8kvc8CHfL2FUjQ3iMJapS4JrkgFumv3C3xEHf3pKOtQI0JA39xKkq+5KE2IqKFTAqmR
+         j7zYkOA+sU3J+LF/ECB8mzrNf3Wm12YREwKhBs3NJmV1b4hnliV7LplI9yom9PSytvA4
+         obKg==
+X-Received: by 10.66.155.138 with SMTP id vw10mr466891pab.91.1372175710819;
+        Tue, 25 Jun 2013 08:55:10 -0700 (PDT)
 Received: from localhost.localdomain ([114.248.133.39])
-        by mx.google.com with ESMTPSA id pb5sm23760930pbc.29.2013.06.25.08.54.57
+        by mx.google.com with ESMTPSA id pb5sm23760930pbc.29.2013.06.25.08.55.05
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 25 Jun 2013 08:55:00 -0700 (PDT)
+        Tue, 25 Jun 2013 08:55:09 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1.756.g2e9b71f
 In-Reply-To: <cover.1372175282.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1372175282.git.worldhello.net@gmail.com>
@@ -49,78 +49,461 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228975>
 
-Add a new action for interactive git-clean: ask each. It's just like
-the "rm -i" command, that the user must confirm one by one for each
-file or directory to be cleaned.
+Add test cases for git-clean--interactive.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/clean.c | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ t/t7301-clean-interactive.sh | 439 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 439 insertions(+)
+ create mode 100755 t/t7301-clean-interactive.sh
 
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 643a5e..bf03a 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -717,6 +717,40 @@ static int select_by_numbers_cmd(void)
- 	return 0;
- }
- 
-+static int ask_each_cmd(void)
-+{
-+	struct strbuf confirm = STRBUF_INIT;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct string_list_item *item;
-+	const char *qname;
-+	int changed = 0, eof = 0;
+diff --git a/t/t7301-clean-interactive.sh b/t/t7301-clean-interactive.sh
+new file mode 100755
+index 00000..4e605
+--- /dev/null
++++ b/t/t7301-clean-interactive.sh
+@@ -0,0 +1,439 @@
++#!/bin/sh
 +
-+	for_each_string_list_item(item, &del_list) {
-+		/* Ctrl-D should stop removing files */
-+		if (!eof) {
-+			qname = quote_path_relative(item->string, NULL, &buf);
-+			printf(_("remove %s? "), qname);
-+			if (strbuf_getline(&confirm, stdin, '\n') != EOF) {
-+				strbuf_trim(&confirm);
-+			} else {
-+				putchar('\n');
-+				eof = 1;
-+			}
-+		}
-+		if (!confirm.len || strncasecmp(confirm.buf, "yes", confirm.len)) {
-+			*item->string = '\0';
-+			changed++;
-+		}
-+	}
++test_description='git clean -i basic tests'
 +
-+	if (changed)
-+		string_list_remove_empty_items(&del_list, 0);
++. ./test-lib.sh
 +
-+	strbuf_release(&buf);
-+	strbuf_release(&confirm);
-+	return MENU_RETURN_NO_LOOP;
-+}
++test_expect_success 'setup' '
 +
- static int quit_cmd(void)
- {
- 	string_list_clear(&del_list, 0);
-@@ -731,6 +765,7 @@ static int help_cmd(void)
- 		    "clean               - start cleaning\n"
- 		    "filter by pattern   - exclude items from deletion\n"
- 		    "select by numbers   - select items to be deleted by numbers\n"
-+		    "ask each            - confirm each deletion (like \"rm -i\")\n"
- 		    "quit                - stop cleaning\n"
- 		    "help                - this screen\n"
- 		    "?                   - help for prompt selection"
-@@ -748,6 +783,7 @@ static void interactive_main_loop(void)
- 			{'c', "clean",			0, clean_cmd},
- 			{'f', "filter by pattern",	0, filter_by_patterns_cmd},
- 			{'s', "select by numbers",	0, select_by_numbers_cmd},
-+			{'a', "ask each",		0, ask_each_cmd},
- 			{'q', "quit",			0, quit_cmd},
- 			{'h', "help",			0, help_cmd},
- 		};
++	mkdir -p src &&
++	touch src/part1.c Makefile &&
++	echo build >.gitignore &&
++	echo \*.o >>.gitignore &&
++	git add . &&
++	git commit -m setup &&
++	touch src/part2.c README &&
++	git add .
++
++'
++
++test_expect_success 'git clean -i (clean)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	echo c | git clean -i &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -f a.out &&
++	test -f docs/manual.txt &&
++	test ! -f src/part3.c &&
++	test ! -f src/part3.h &&
++	test ! -f src/part4.c &&
++	test ! -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -i (quit)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	echo q | git clean -i &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test -f docs/manual.txt &&
++	test -f src/part3.c &&
++	test -f src/part3.h &&
++	test -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -i (Ctrl+D)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	echo "\04" | git clean -i &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test -f docs/manual.txt &&
++	test -f src/part3.c &&
++	test -f src/part3.h &&
++	test -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (filter all)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo f; echo "*"; echo; echo c) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test -f docs/manual.txt &&
++	test -f src/part3.c &&
++	test -f src/part3.h &&
++	test -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (filter patterns)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo f; echo "part3.* *.out"; echo; echo c) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test ! -f docs/manual.txt &&
++	test -f src/part3.c &&
++	test -f src/part3.h &&
++	test ! -f src/part4.c &&
++	test ! -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (filter patterns 2)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo f; echo "* !*.out"; echo; echo c) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -f a.out &&
++	test -f docs/manual.txt &&
++	test -f src/part3.c &&
++	test -f src/part3.h &&
++	test -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (select - all)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo s; echo "*"; echo; echo c) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -f a.out &&
++	test ! -f docs/manual.txt &&
++	test ! -f src/part3.c &&
++	test ! -f src/part3.h &&
++	test ! -f src/part4.c &&
++	test ! -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (select - none)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo s; echo; echo c) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test -f docs/manual.txt &&
++	test -f src/part3.c &&
++	test -f src/part3.h &&
++	test -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (select - number)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo s; echo 3; echo; echo c) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test -f docs/manual.txt &&
++	test ! -f src/part3.c &&
++	test -f src/part3.h &&
++	test -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (select - number 2)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo s; echo 2 3; echo 5; echo; echo c) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test ! -f docs/manual.txt &&
++	test ! -f src/part3.c &&
++	test -f src/part3.h &&
++	test ! -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (select - number 3)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo s; echo 3,4 5; echo; echo c) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test -f docs/manual.txt &&
++	test ! -f src/part3.c &&
++	test ! -f src/part3.h &&
++	test ! -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (select - range)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo s; echo 1,3-4; echo 2; echo; echo c) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -f a.out &&
++	test ! -f src/part3.c &&
++	test ! -f src/part3.h &&
++	test -f src/part4.c &&
++	test -f src/part4.h &&
++	test ! -f docs/manual.txt &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (select - range 2)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo s; echo 4- 1; echo; echo c) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -f a.out &&
++	test -f docs/manual.txt &&
++	test -f src/part3.c &&
++	test ! -f src/part3.h &&
++	test ! -f src/part4.c &&
++	test ! -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (inverse select)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo s; echo "*"; echo -5- 1 -2; echo; echo c) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -f a.out &&
++	test -f docs/manual.txt &&
++	test ! -f src/part3.c &&
++	test ! -f src/part3.h &&
++	test -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (ask)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo a; echo Y; echo y; echo no; echo yes; echo bad; echo) | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -f a.out &&
++	test ! -f docs/manual.txt &&
++	test -f src/part3.c &&
++	test ! -f src/part3.h &&
++	test -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id (ask - Ctrl+D)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(echo a; echo Y; echo no; echo yes; echo "\04") | \
++	git clean -id &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -f a.out &&
++	test -f docs/manual.txt &&
++	test ! -f src/part3.c &&
++	test -f src/part3.h &&
++	test -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id with prefix and path (filter)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(cd build/ && \
++	 (echo f; echo "docs"; echo "*.h"; echo ; echo c) | \
++	 git clean -id ..) &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -f a.out &&
++	test -f docs/manual.txt &&
++	test ! -f src/part3.c &&
++	test -f src/part3.h &&
++	test ! -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id with prefix and path (select by name)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(cd build/ && \
++	 (echo s; echo "../docs/"; echo "../src/part3.c"; \
++	  echo "../src/part4.c";  echo; echo c) | \
++	 git clean -id ..) &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test ! -f docs/manual.txt &&
++	test ! -f src/part3.c &&
++	test -f src/part3.h &&
++	test ! -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git clean -id with prefix and path (ask)' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
++	docs/manual.txt obj.o build/lib.so &&
++	(cd build/ && \
++	 (echo a; echo Y; echo y; echo no; echo yes; echo bad; echo) | \
++	 git clean -id ..) &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -f a.out &&
++	test ! -f docs/manual.txt &&
++	test -f src/part3.c &&
++	test ! -f src/part3.h &&
++	test -f src/part4.c &&
++	test -f src/part4.h &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_done
 -- 
 1.8.3.1.756.g2e9b71f
