@@ -1,88 +1,175 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: Basic git-archive --remote question
-Date: Tue, 25 Jun 2013 15:16:38 +0200
-Message-ID: <1372166198.20511.5.camel@flaca.cmartin.tk>
-References: <CAGpXXZJifb1KmR8=VZVW+1MKjyo7HOq=OgU_rcHs-vc5ezfG6w@mail.gmail.com>
-	 <CAGpXXZJuC09t8-5d=p4KNs9rQ-S347eBNuKcKWFhXZTnkLW0sA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Greg Freemyer <greg.freemyer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 25 15:26:35 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v15 01/16] test: add test cases for relative_path
+Date: Tue, 25 Jun 2013 23:53:42 +0800
+Message-ID: <569bd5216b6a8d63c9139c20390488b93f402086.1372175282.git.worldhello.net@gmail.com>
+References: <cover.1372175282.git.worldhello.net@gmail.com>
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Jun 25 17:54:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrTGU-0000D1-MX
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 15:26:35 +0200
+	id 1UrVZY-0003hH-I4
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 17:54:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751897Ab3FYN0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Jun 2013 09:26:22 -0400
-Received: from hessy.cmartin.tk ([78.47.67.53]:54514 "EHLO hessy.dwim.me"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751869Ab3FYN0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jun 2013 09:26:21 -0400
-X-Greylist: delayed 579 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Jun 2013 09:26:20 EDT
-Received: from [IPv6:2001:6f8:1c3c:6a57:a599:f01d:8189:5855] (unknown [IPv6:2001:6f8:1c3c:6a57:a599:f01d:8189:5855])
-	by hessy.dwim.me (Postfix) with ESMTPSA id 795AD80478;
-	Tue, 25 Jun 2013 15:16:39 +0200 (CEST)
-In-Reply-To: <CAGpXXZJuC09t8-5d=p4KNs9rQ-S347eBNuKcKWFhXZTnkLW0sA@mail.gmail.com>
-X-Mailer: Evolution 3.6.3-1 
+	id S1752414Ab3FYPyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Jun 2013 11:54:18 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:50052 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752144Ab3FYPyP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jun 2013 11:54:15 -0400
+Received: by mail-pa0-f43.google.com with SMTP id hz11so12894832pad.30
+        for <git@vger.kernel.org>; Tue, 25 Jun 2013 08:54:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :in-reply-to:references;
+        bh=M0cFnQL0vD+MCSh3TNljyE4yKynqupKsfdkwrYObuL8=;
+        b=ReXo+M0WGnKhV0joY7TAQLs5VE9dVW0Pv3m14p8yDJoPUiR3VrMuelNF6nPDe2pxDz
+         9ChlhGo6QnUsxrZ7rd56M0eNh2D6CuajCen1g/z/jInb2wCqn6MxKvLrpvNwZktWnTbb
+         /6wZGnjrUZZtERTTpktlpB3q2KLNXtLk8Oh7CxqfSZkOuVf5fUNVBRkiREfcTHtzPabs
+         Ohho11jtR4K/36tvhRBTBgx6hr9Tbsb9GoCbNOx6BlLQ44GE7PTAelL5rY/EABTRoNa0
+         FZYwtuQsLqJz4PQuRntUfAnoiMXOVlVd/Vq2AMV1FfZBscL4N0+qIX5TfoPHgDCK8jYv
+         CAGg==
+X-Received: by 10.68.224.228 with SMTP id rf4mr29565961pbc.50.1372175655200;
+        Tue, 25 Jun 2013 08:54:15 -0700 (PDT)
+Received: from localhost.localdomain ([114.248.133.39])
+        by mx.google.com with ESMTPSA id pb5sm23760930pbc.29.2013.06.25.08.54.11
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 25 Jun 2013 08:54:14 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.756.g2e9b71f
+In-Reply-To: <cover.1372175282.git.worldhello.net@gmail.com>
+In-Reply-To: <cover.1372175282.git.worldhello.net@gmail.com>
+References: <cover.1372175282.git.worldhello.net@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228962>
 
-On Mon, 2013-06-24 at 15:53 -0400, Greg Freemyer wrote:
-> I'm trying to create a tarball from a git tag and I can't get the
-> syntax right.  The documentation is not very clear.
-> 
-> Can someone help me?
-> 
-> == details
-> 
-> git v1.8.1.4
-> 
-> The upstream git repo is at: https://github.com/dkovar/analyzeMFT
-> 
-> Here's a few attempts using git as the protocol:
-> 
-> > git archive --format=tar --remote=github.com:dkovar/analyzeMFT.git v2.0.4
-> 
-> Permission denied (publickey).
-> fatal: The remote end hung up unexpectedly
+Add subcommand "relative_path" in test-path-utils, and add test cases
+in t0060.
 
-Assuming you haven't set up any ssh rules for the github.com host,
-you're trying to log in with ssh with your local username, which isn't
-going to work.
+Johannes tested this commit on Windows, and found that some relative_path
+tests should be skipped on Windows. This is because the bash on Windows
+rewrites arguments of regular Windows programs, such as git and the
+test helpers, if the arguments look like absolute POSIX paths. As a
+consequence, the actual tests performed are not what the tests scripts
+expect.
 
-> 
-> > git archive --format=tar --remote=git://github.com/dkovar/analyzeMFT v2.0.4
-> 
-> fatal: remote error
->    Your Git client has made an invalid request:
->    003agit-upload-archive /dkovar/analyzeMFT
-> 
+The tests that need *not* be skipped are those where the two paths passed
+to 'test-path-utils relative_path' have the same prefix and the result is
+expected to be a relative path. This is because the rewriting changes
+"/a/b" to "D:/Src/MSysGit/a/b", and when both inputs are extended the same
+way, this just cancels out in the relative path computation.
 
-This is the right format. GitHub doesn't allow remote archive requests,
-which is why it's complaining.
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t0060-path-utils.sh | 37 +++++++++++++++++++++++++++++++++++++
+ test-path-utils.c     | 25 +++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+)
 
-If you want a tarball from GitHub, you need to download over HTTP from
-the links they provide (which you can find e.g. through the web UI).
-
-> 
-> The github page also says I can use ssh with git as the user, but that
-> complains I don't have the private key (which I don't):
-> 
-> git archive --format=tar
-> --remote=ssh://git@github/com/dkovar/analyzeMFT.git v2.0.4
-
-Using git as the ssh user is the right thing (if you want to talk git
-over ssh) with GitHub and a few other sites/hosting programs, as your
-public key is used to determine which user is trying to connect without
-giving each user an account on the underlying OS.
-
-   cmn
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 09a42..72e89 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -12,6 +12,11 @@ norm_path() {
+ 	"test \"\$(test-path-utils normalize_path_copy '$1')\" = '$2'"
+ }
+ 
++relative_path() {
++	test_expect_success $4 "relative path: $1 $2 => $3" \
++	"test \"\$(test-path-utils relative_path '$1' '$2')\" = '$3'"
++}
++
+ # On Windows, we are using MSYS's bash, which mangles the paths.
+ # Absolute paths are anchored at the MSYS installation directory,
+ # which means that the path / accounts for this many characters:
+@@ -183,4 +188,36 @@ test_expect_success SYMLINKS 'real path works on symlinks' '
+ 	test "$sym" = "$(test-path-utils real_path "$dir2/syml")"
+ '
+ 
++relative_path /a/b/c/	/a/b/		c/
++relative_path /a/b/c/	/a/b		c/
++relative_path /a//b//c/	//a/b//		c/	POSIX
++relative_path /a/b	/a/b		.
++relative_path /a/b/	/a/b		.
++relative_path /a	/a/b		/a	POSIX
++relative_path /		/a/b/		/	POSIX
++relative_path /a/c	/a/b/		/a/c	POSIX
++relative_path /a/c	/a/b		/a/c	POSIX
++relative_path /x/y	/a/b/		/x/y	POSIX
++relative_path /a/b	"<empty>"	/a/b	POSIX
++relative_path /a/b 	"<null>"	/a/b	POSIX
++relative_path a/b/c/	a/b/		c/
++relative_path a/b/c/	a/b		c/
++relative_path a/b//c	a//b		c
++relative_path a/b/	a/b/		.
++relative_path a/b/	a/b		.
++relative_path a		a/b		a	# TODO: should be: ..
++relative_path x/y	a/b		x/y	# TODO: should be: ../../x/y
++relative_path a/c	a/b		a/c	# TODO: should be: ../c
++relative_path a/b	"<empty>"	a/b
++relative_path a/b 	"<null>"	a/b
++relative_path "<empty>"	/a/b		"(empty)"
++relative_path "<empty>"	"<empty>"	"(empty)"
++relative_path "<empty>"	"<null>"	"(empty)"
++relative_path "<null>"	"<empty>"	"(null)"
++relative_path "<null>"	"<null>"	"(null)"
++
++test_expect_failure 'relative path: <null> /a/b => segfault' '
++	test-path-utils relative_path "<null>" "/a/b"
++'
++
+ test_done
+diff --git a/test-path-utils.c b/test-path-utils.c
+index 0092cb..8a6d2 100644
+--- a/test-path-utils.c
++++ b/test-path-utils.c
+@@ -28,6 +28,19 @@ static int normalize_ceiling_entry(struct string_list_item *item, void *unused)
+ 	return 1;
+ }
+ 
++static void normalize_argv_string(const char **var, const char *input)
++{
++	if (!strcmp(input, "<null>"))
++		*var = NULL;
++	else if (!strcmp(input, "<empty>"))
++		*var = "";
++	else
++		*var = input;
++
++	if (*var && (**var == '<' || **var == '('))
++		die("Bad value: %s\n", input);
++}
++
+ int main(int argc, char **argv)
+ {
+ 	if (argc == 3 && !strcmp(argv[1], "normalize_path_copy")) {
+@@ -103,6 +116,18 @@ int main(int argc, char **argv)
+ 		return 0;
+ 	}
+ 
++	if (argc == 4 && !strcmp(argv[1], "relative_path")) {
++		const char *in, *prefix, *rel;
++		normalize_argv_string(&in, argv[2]);
++		normalize_argv_string(&prefix, argv[3]);
++		rel = relative_path(in, prefix);
++		if (!rel)
++			puts("(null)");
++		else
++			puts(strlen(rel) > 0 ? rel : "(empty)");
++		return 0;
++	}
++
+ 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
+ 		argv[1] ? argv[1] : "(there was none)");
+ 	return 1;
+-- 
+1.8.3.1.756.g2e9b71f
