@@ -1,143 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/16] pack-objects: use bitmaps when packing objects
-Date: Tue, 25 Jun 2013 16:06:24 -0700
-Message-ID: <7v7ghhzt73.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?Q?Vicent_Mart=C3=AD?= <tanoku@gmail.com>
+Subject: Re: [PATCH 03/16] pack-objects: use a faster hash table
+Date: Wed, 26 Jun 2013 01:09:35 +0200
+Message-ID: <CAFFjANQWb8S4NJAGQYs2-O9abLKBCxE4M7SqWG4pB_CC1K5G4Q@mail.gmail.com>
 References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
-	<1372116193-32762-11-git-send-email-tanoku@gmail.com>
+ <1372116193-32762-4-git-send-email-tanoku@gmail.com> <7vk3lhzu0q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Vicent Marti <tanoku@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 26 01:06:33 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 26 01:10:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrcJj-0001JZ-Ev
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 01:06:31 +0200
+	id 1UrcN6-0003xB-Qo
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 01:10:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751908Ab3FYXG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Jun 2013 19:06:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41326 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751774Ab3FYXG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jun 2013 19:06:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 821122B2FA;
-	Tue, 25 Jun 2013 23:06:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ghEcOx5ggZ4HuDCA4Hkrw73qu4A=; b=UueArE
-	a9ngYHmUz/vPQF8lBmHGhNMfatE24eBCFOeKXyJoHrKZPP2OhyeRNlSNM4O2zGFA
-	YhgSxBWD0WV8LobWasChPj/JUcY7Hy/GfU+px5ZcuOmf7kgJPGx7TOymREwrAb4t
-	KgHJy4l0Rfh0aKGM5schxzVKZBz5u2TWX/sLc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZEc0Xe9choHBc8qAzMNtQBYnr/3lTB5U
-	T4yWIYkEjDLdg4aCXZIol7vgIKNnh6EIZRrRiMguvG+ZHIo9LXzrTY+VpY5PCjVy
-	8wvMxsnoIZbIJfEaKMBPJzMa+zIVAdRlmF9lAGiEwOi303gdRmaiLzBxcIC9AAj2
-	boHkllUM3FE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78B1D2B2F9;
-	Tue, 25 Jun 2013 23:06:26 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC5A92B2F6;
-	Tue, 25 Jun 2013 23:06:25 +0000 (UTC)
-In-Reply-To: <1372116193-32762-11-git-send-email-tanoku@gmail.com> (Vicent
-	Marti's message of "Tue, 25 Jun 2013 01:23:07 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DC599626-DDEB-11E2-878A-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752065Ab3FYXJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Jun 2013 19:09:56 -0400
+Received: from mail-vb0-f50.google.com ([209.85.212.50]:62197 "EHLO
+	mail-vb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751774Ab3FYXJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jun 2013 19:09:56 -0400
+Received: by mail-vb0-f50.google.com with SMTP id w16so10043910vbb.23
+        for <git@vger.kernel.org>; Tue, 25 Jun 2013 16:09:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4i4S6Zc2+zE+lYVr2brotFMII697RfCrbzaMyViTPAA=;
+        b=tJy7qcZSQLz+d3psZxRI7VuBl65LjHoK5RyekpGfqHi4vb8yLD4+PH+fy7XTQY50P2
+         A8hNn+Tx3DLEpUV6jBHwdJId2IwfTJ3M5A9/ClzjEZYVvxnM90HTM4Bpr4RjyjCTdQkx
+         AR48u8bpvOKStB+6HoU3n2ZoyA5pTHY6cu8SDwx7ZfQQavZ4E+CpAs5oCVsduApJ5Qh4
+         yOi6pjUe1RxQ/3LSNWmL3KONecjkRmjHdmf4Ee/cUG2/iZygJlKuVNO4iKkCgVUHuCmJ
+         h5MzvoP5rvjYh995Iw2aieLl4qa0U0RNEP7S4nUkysklHRI7pgTDy6HiXJl4vY82pgOY
+         mnzw==
+X-Received: by 10.58.85.161 with SMTP id i1mr632953vez.97.1372201795525; Tue,
+ 25 Jun 2013 16:09:55 -0700 (PDT)
+Received: by 10.221.45.131 with HTTP; Tue, 25 Jun 2013 16:09:35 -0700 (PDT)
+In-Reply-To: <7vk3lhzu0q.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229015>
 
-Vicent Marti <tanoku@gmail.com> writes:
+On Wed, Jun 26, 2013 at 12:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> After this, the function returns.  The original did not add to the
+> table the object name we are looking at, but the new code first adds
+> it to the table with the unconditional kh_put_sha1() above.  Is a
+> call to kh_del_sha1() missing here ...
 
-> @@ -83,6 +84,9 @@ static struct progress *progress_state;
->  static int pack_compression_level = Z_DEFAULT_COMPRESSION;
->  static int pack_compression_seen;
->  
-> +static int bitmap_support;
-> +static int use_bitmap_index;
+No, this is not the case. That's the return case for when *the object
+was found because it already existed in the hash table* (hence we
+access it if we're excluding it, to tag it as excluded). We don't want
+to remove it from the hash table because we're not the ones we
+inserted it.
 
-OK.
+We only call `kh_del_sha1` in the cases where:
 
-> @@ -2131,6 +2135,10 @@ static int git_pack_config(const char *k, const char *v, void *cb)
->  		cache_max_small_delta_size = git_config_int(k, v);
->  		return 0;
->  	}
-> +	if (!strcmp(k, "pack.usebitmaps")) {
-> +		bitmap_support = git_config_bool(k, v);
-> +		return 0;
-> +	}
+    1. The object wasn't found.
+    2. We inserted its key on the hash table.
+    3. We later learnt that we don't really want to pack this object.
 
-Hmph, so bitmap_support, not use_bitmap_index, keeps track of the
-user request?  Somewhat confusing.
+>
+>> @@ -921,38 +916,42 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+>>               return 0;
+>>       }
+>>
+>> -     if (!exclude && local && has_loose_object_nonlocal(sha1))
+>> +     if (!exclude && local && has_loose_object_nonlocal(sha1)) {
+>> +             kh_del_sha1(packed_objects, ix);
+>>               return 0;
+>
+> ... like this one, which seems to compensate for "ahh, after all we
+> realize we do not want to add this one to the table"?
+>
+>> @@ -966,19 +965,30 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+>>               entry->in_pack_offset = found_offset;
+>>       }
+>>
+>> -     if (object_ix_hashsz * 3 <= nr_objects * 4)
+>> -             rehash_objects();
+>> -     else
+>> -             object_ix[-1 - ix] = nr_objects;
+>> +     kh_value(packed_objects, ix) = entry;
+>> +     kh_key(packed_objects, ix) = entry->idx.sha1;
+>> +     objects[nr_objects++] = entry;
+>>
+>>       display_progress(progress_state, nr_objects);
+>>
+>> -     if (name && no_try_delta(name))
+>> -             entry->no_try_delta = 1;
+>> -
+>>       return 1;
+>>  }
+>>
+>> +static int add_object_entry(const unsigned char *sha1, enum object_type type,
+>> +                         const char *name, int exclude)
+>> +{
+>> +     if (add_object_entry_1(sha1, type, name_hash(name), exclude, NULL, 0)) {
+>> +             struct object_entry *entry = objects[nr_objects - 1];
+>> +
+>> +             if (name && no_try_delta(name))
+>> +                     entry->no_try_delta = 1;
+>> +
+>> +             return 1;
+>> +     }
+>> +
+>> +     return 0;
+>> +}
+>
+> It is somewhat unclear what we are getting from the split of the
+> main part of this function into *_1(), other than the *_1() function
+> now has a very deep indentation inside "if (!found_pack)", which is
+> always true because the caller always passes NULL to found_pack.
+> Perhaps this is an unrelated refactoring that is needed for later
+> steps and does not have anything to do with the use of new hash
+> function?
 
->  	if (!strcmp(k, "pack.threads")) {
->  		delta_search_threads = git_config_int(k, v);
->  		if (delta_search_threads < 0)
-> @@ -2366,8 +2374,24 @@ static void get_object_list(int ac, const char **av)
->  			die("bad revision '%s'", line);
->  	}
->  
-> +	if (use_bitmap_index) {
-> +		uint32_t size_hint;
-> +
-> +		if (!prepare_bitmap_walk(&revs, &size_hint)) {
-> +			khint_t new_hash_size = (size_hint * (1.0 / __ac_HASH_UPPER)) + 0.5;
+Yes, apologies for not making this clear. By refactoring into `_1`,
+you can see how `traverse_bitmap_commit_list` can use the `_1` version
+directly as a callback, to insert objects straight into the packing
+list without looking them up. This is very efficient because we can
+pass the whole API straight from the bitmap code:
 
-What is __ac_HASH_UPPER?  That is a very unusual name for a variable
-or a constant.  Also it is mildly annoying to see unnecessary use of
-float like this.
+1. The SHA1: we find it by simply looking up the `nth` sha1 on the
+pack index (if we are yielding bit `n`)
+2. The object type: we find it because we have type indexes that let
+us know the type of any given bit in the bitmap by and-ing it with the
+index.
+3. The hash for its name: we can look it up from the name hash cache
+in the new bitmap format.
+4. Exclude flag: we never exclude when working with bitmaps
+5. found_pack: all the bitmapped objects come from the same pack!
+6. found_offset: we find it by simply looking up the `nth` offset on
+the pack index (if we are yielding bit `n`)
 
-> +			kh_resize_sha1(packed_objects, new_hash_size);
-> +
-> +			nr_alloc = (size_hint + 63) & ~63;
-> +			objects = xrealloc(objects, nr_alloc * sizeof(struct object_entry *));
-> +
-> +			traverse_bitmap_commit_list(&add_object_entry_1);
-> +			return;
-> +		}
-> +	}
-> +
->  	if (prepare_revision_walk(&revs))
->  		die("revision walk setup failed");
-> +
->  	mark_edges_uninteresting(revs.commits, &revs, show_edge);
->  	traverse_commit_list(&revs, show_commit, show_object, NULL);
->  
-> @@ -2495,6 +2519,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
->  			    N_("pack compression level")),
->  		OPT_SET_INT(0, "keep-true-parents", &grafts_replace_parents,
->  			    N_("do not hide commits by grafts"), 0),
-> +		OPT_BOOL(0, "bitmaps", &bitmap_support,
-> +			 N_("enable support for bitmap optimizations")),
+Boom! We filled the callback just from the data in a bitmap. Ain't that nice?
 
-Please match this with the name of configuration variable, i.e. --use-bitmaps
-
->  		OPT_END(),
->  	};
->  
-> @@ -2561,6 +2587,11 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
->  	if (keep_unreachable && unpack_unreachable)
->  		die("--keep-unreachable and --unpack-unreachable are incompatible.");
->  
-> +	if (bitmap_support) {
-> +		if (use_internal_rev_list && pack_to_stdout)
-> +			use_bitmap_index = 1;
-
-OK, so only when some internal condition is met, the user request to
-use bitmap is honored and the deision is kept in use_bitmap_index.
-
-It may be easier to read if you get rid of bitmap_support, set
-user_bitmap_index directly from the command line and config, and did
-this here instead:
-
-	if (!(use_internal_rev_list && pack_to_stdout))
-		use_bitmap_index = 0;
+Let me amend the commit message.
