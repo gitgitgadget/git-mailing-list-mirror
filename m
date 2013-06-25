@@ -1,76 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 13/16] repack: consider bitmaps when performing repacks
-Date: Tue, 25 Jun 2013 16:00:40 -0700
-Message-ID: <7vbo6tztgn.fsf@alter.siamese.dyndns.org>
-References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
-	<1372116193-32762-14-git-send-email-tanoku@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Vicent Marti <tanoku@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 26 01:00:50 2013
+From: Andrew Pimlott <andrew@pimlott.net>
+Subject: Re: [PATCH] rebase -i: fixup fixup! fixup!
+Date: Tue, 25 Jun 2013 16:03:52 -0700
+Message-ID: <1372198415-sup-2114@pimlott.net>
+References: <20130611180530.GA18488@oinkpad.pimlott.net> <87obbc8otc.fsf@hexa.v.cablecom.net> <1371237209-sup-639@pimlott.net> <1371278908-sup-1930@pimlott.net> <7vk3lvlmat.fsf@alter.siamese.dyndns.org> <87ip1e2tzx.fsf@hexa.v.cablecom.net> <7v7ghtjwbb.fsf@alter.siamese.dyndns.org> <8738shi2ht.fsf@linux-k42r.v.cablecom.net> <7vwqpshkxj.fsf@alter.siamese.dyndns.org> <1372190294-sup-1398@pimlott.net> <7v61x127bw.fsf@alter.siamese.dyndns.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 26 01:04:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrcED-0005Jg-Mp
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 01:00:50 +0200
+	id 1UrcHL-0007sC-2O
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 01:04:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751901Ab3FYXAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Jun 2013 19:00:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61138 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751244Ab3FYXAn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jun 2013 19:00:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B061E2B0AF;
-	Tue, 25 Jun 2013 23:00:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rrBRCrpa02ruo7Uuykkzte2w6iw=; b=NOHRBY
-	t/QFfDBmN9LyV9Z8vK8cBsPy/eDJ7HFZLBBgW2saI12HaGduUqbE8L2udOt+PhGD
-	jtmaNsEviCOGDrvPkCuVVL8211CSN/jtbhB+1SXjSh5jrY9H8GmO2dnmKiF+ydXp
-	i1sbP7a9V1tI1TOIUqyGa9cYsb6jU2G21hVyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HmpHbruee5pTSlRqBpVHZaAgkG31Poat
-	5vLBpbzCQqwOJwx/kfaIh1VyQTkL5pS3//bJvuZdWwd966emmJ9e+Mfuia4kj64Y
-	JxAiS+FXBbXm7fbb1yRZTLKb391s90k7uJPEBxgCtlF2M7s6yvtIv2skapb9s6rL
-	/24WSt0gRXI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A52CC2B0AE;
-	Tue, 25 Jun 2013 23:00:42 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 276B62B0AB;
-	Tue, 25 Jun 2013 23:00:42 +0000 (UTC)
-In-Reply-To: <1372116193-32762-14-git-send-email-tanoku@gmail.com> (Vicent
-	Marti's message of "Tue, 25 Jun 2013 01:23:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0F8118EA-DDEB-11E2-9947-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751870Ab3FYXD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Jun 2013 19:03:59 -0400
+Received: from pimlott.net ([72.249.23.100]:37779 "EHLO fugue.pimlott.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751697Ab3FYXD6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jun 2013 19:03:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=pimlott.net; s=default;
+	h=Content-Transfer-Encoding:Message-Id:Date:References:In-reply-to:To:From:Subject:Cc:Content-Type; bh=yweKnrfJUhESh8EnQSjl4BafFiRZbvam69yxvDOw6XU=;
+	b=L+setIATtjDftuznfLW7llSFlLYqFtAIZtbOKeWdxl20kigkjXnGUMSbU8p7eSFr50iJ4/bMPupYDmIIjG0YiqCYavuV31MQktoiJzxaNo6LlH7twHEU9inRwAV4f+vd1Fw0EvTy/3lq1RFI8jKKnD52q0SnQ9QQ0Nt0hDiizis=;
+Received: from andrew by fugue.pimlott.net with local (Exim 4.72)
+	(envelope-from <andrew@pimlott.net>)
+	id 1UrcHA-0004Xn-At; Tue, 25 Jun 2013 16:03:52 -0700
+In-reply-to: <7v61x127bw.fsf@alter.siamese.dyndns.org>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229013>
 
-Vicent Marti <tanoku@gmail.com> writes:
+Excerpts from Junio C Hamano's message of Tue Jun 25 14:45:07 -0700 2013:
+> After all, autosquash will give the user an opportunity to eyeball
+> the result of automatic rearrangement.  If the user did this:
+> 
+>     git commit -m original
+>         git commit --fixup original ;# obviously fixing the first one
+>         git commit --fixup '!fixup original' ;# explicitly fixing the second
+>     git commit --fixup original ;# may want to fix the first one
+> 
+> and then "git rebase --autosquash" gave him this:
+> 
+>     pick d78c915 original
+>         fixup 0c6388e original
+>         fixup d15b556 !fixup original
+>         fixup 1e39bcd original
 
-> @@ -156,6 +156,11 @@ do
->  	fullbases="$fullbases pack-$name"
->  	chmod a-w "$PACKTMP-$name.pack"
->  	chmod a-w "$PACKTMP-$name.idx"
-> +
-> +	test -f "$PACKTMP-$name.bitmap" &&
-> +	chmod a-w "$PACKTMP-$name.bitmap" &&
-> +	mv -f "$PACKTMP-$name.bitmap" "$PACKDIR/pack-$name.bitmap"
+I assume you mean:
 
-If we see a temporary bitmap but somehow failed to move it to the
-final name, should we _ignore_ that error, or should we die, like
-the next two lines do?
+    pick d78c915 original
+    fixup 0c6388e fixup! original
+    fixup d15b556 fixup! fixup! original
+    fixup 1e39bcd !fixup! original
 
->  	mv -f "$PACKTMP-$name.pack" "$PACKDIR/pack-$name.pack" &&
->  	mv -f "$PACKTMP-$name.idx"  "$PACKDIR/pack-$name.idx" ||
->  	exit
+The current master code tries to keep the original commit message
+intact.  I assume you would preserve that behavior, so you would want to
+see "fixup! fixup!"
+
+> it may not be what the user originally intended, but I think it is
+> OK.
+> 
+> As long as "!fixup original" message is kept in the buffer, the user
+> can notice and rearrange, e.g.
+
+Thomas's patch didn't do this: fixup! or squash! after the first is
+simply discarded, so you see:
+
+    pick d78c915 original
+    fixup 0c6388e fixup! original
+    fixup d15b556 fixup! original
+    fixup 1e39bcd !fixup! original
+
+But it will be a simple change to keep all the fixup!s and squash!s.  I
+will do this (and try to make up for the carelessness of my previous
+patch).
+
+Andrew
