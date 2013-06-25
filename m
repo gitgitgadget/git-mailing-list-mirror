@@ -1,114 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/16] ewah: compressed bitmap implementation
-Date: Mon, 24 Jun 2013 18:10:43 -0700
-Message-ID: <7v7ghj571o.fsf@alter.siamese.dyndns.org>
-References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
-	<1372116193-32762-9-git-send-email-tanoku@gmail.com>
+From: "Eduardo R. D'Avila" <erdavila@gmail.com>
+Subject: Re: [PATCH 2/4] git-prompt.sh: refactor colored prompt code
+Date: Mon, 24 Jun 2013 22:21:52 -0300
+Message-ID: <CAOz-D1Lfh5tnjMriQNQtNYeMUHb=jLbjzxt0=Nru8gPYwVk79A@mail.gmail.com>
+References: <cover.1371780085.git.erdavila@gmail.com> <354a860e12a3463ce5d031c0dc46d095841f717d.1371780085.git.erdavila@gmail.com>
+ <CAOz-D1+LoAnoRLgnyRYtq5LQR32RyXp4RR2M5pPTaxaGcXM4yg@mail.gmail.com> <20130623145157.GN20052@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Vicent Marti <tanoku@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 25 03:10:52 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?=D8ystein_Walle?= <oystwa@gmail.com>,
+	git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Simon Oosthoek <s.oosthoek@xs4all.nl>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Jun 25 03:22:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrHmU-0001Wc-Qm
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 03:10:51 +0200
+	id 1UrHxY-0001DW-TN
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 03:22:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752422Ab3FYBKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 21:10:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57604 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751044Ab3FYBKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 21:10:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DC2820011;
-	Tue, 25 Jun 2013 01:10:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Bu7IMWTvp5pIyyNnmVNi08DF3Vk=; b=h5hzVK
-	BGxoIBcHYt8rf1dVPBaaACixZw4i1GC5WSsrPIctmnbZIhAt6FEbjYMZbk0lmXjx
-	ABMMSMMpJe9PCR9KWfaa++iAlnXQB97fWHBR6ubKG4t4NHdPCHuAVKBMac6VxHnd
-	BFkUvYaRwnHQK+JEaYr8aV69gsF4k8pTlflJM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xsN4YT+JT4xAKiA1+eI0di8FVT62b5We
-	YdikP+94WCzh5SMeCYk+V+wvfEiQt/7OLEKA2hHsGtZotrJhIyf4+BOwc74aAe+J
-	Cr3/phpz3y4aSV+nJpr/nheBIsgqVaf+UnTQoFzyW/KfmOREl5aW+l9XaklIWM2I
-	GC7eAjew7k8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 922722000D;
-	Tue, 25 Jun 2013 01:10:45 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D1BFE2000C;
-	Tue, 25 Jun 2013 01:10:44 +0000 (UTC)
-In-Reply-To: <1372116193-32762-9-git-send-email-tanoku@gmail.com> (Vicent
-	Marti's message of "Tue, 25 Jun 2013 01:23:05 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0FDC5668-DD34-11E2-9993-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750973Ab3FYBWN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jun 2013 21:22:13 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:48242 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775Ab3FYBWM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Jun 2013 21:22:12 -0400
+Received: by mail-ie0-f174.google.com with SMTP id 9so26131532iec.19
+        for <git@vger.kernel.org>; Mon, 24 Jun 2013 18:22:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=G83fgTJudVzFIae1O4cm8EDawLifl2EsZ/emtK79+vM=;
+        b=nEfZNgzF4jiP4mnk4le5SjW/YGh4w5lkhWm2EPHipltnipYtUh39FU+Ie9TV//rY1V
+         EuBj424GBMFe9VrZobpVVLNWMrkV7Fy65OqpBM7HFTAdq2AtgC+MpvDjd1BJmo+wKSsk
+         Dwqa2sc7NvipxbX4gUwFbrKpXNymsjb1THEgxT+xdPOj1jbIKQQyhu/3/D3AGeoU8Gpu
+         E2QxIzv1F+yGFmWFPevzpbk3ahkgOzcVjNwCtFXmy2w+6biwQZfthapd4GsDwKvfVPH0
+         LMyjLljFfdgbidQWt0l7pA9p3p4f15/1e7HO7XqTw3kTWOGjrcFwtN+hIky0fYxaEO39
+         r8Zg==
+X-Received: by 10.50.111.104 with SMTP id ih8mr7267632igb.28.1372123332178;
+ Mon, 24 Jun 2013 18:22:12 -0700 (PDT)
+Received: by 10.42.249.197 with HTTP; Mon, 24 Jun 2013 18:21:52 -0700 (PDT)
+In-Reply-To: <20130623145157.GN20052@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228939>
 
-Vicent Marti <tanoku@gmail.com> writes:
-
-> The library is re-licensed under the GPLv2 with the permission of Daniel
-> Lemire, the original author. The source code for the C version can
-> be found on GitHub:
+2013/6/23 SZEDER G=E1bor <szeder@ira.uka.de>:
+> I'm wary of relying on tput's availability.  It's part of ncurses,
+> which is an essential package in many (most? all?) linux distros, but
+> I don't know how it is with other supported platforms.  So I think
+> we'd have to stick to the hard-coded escape sequences as a fallback
+> anyway. (...)
 >
-> 	https://github.com/vmg/libewok
->
-> The original Java implementation can also be found on GitHub:
->
-> 	https://github.com/lemire/javaewah
-> ---
+> However, I don't know much about the caveats of terminals, so I can't
+> judge the benefits of using tput instead of the escape sequences.
 
-Please make sure that all patches are properly signed off.
+I'm exactly in the same situation...
 
->  Makefile           |    6 +
->  ewah/bitmap.c      |  229 +++++++++++++++++
->  ewah/ewah_bitmap.c |  703 ++++++++++++++++++++++++++++++++++++++++++++++++++++
->  ewah/ewah_io.c     |  199 +++++++++++++++
->  ewah/ewah_rlw.c    |  124 +++++++++
->  ewah/ewok.h        |  194 +++++++++++++++
->  ewah/ewok_rlw.h    |  114 +++++++++
+> considering the additional delay that would be caused by fork()ing
+> four subshells and fork()+exec()ing four external commands on Windows=
+=2E
 
-This is lovely.  A few comments after an initial quick scan-through.
+Well... That would be only once, during script loading.
 
- - The code and the headers are well commented, which is good.
 
- - What's __builtin_popcountll() doing there in a presumably generic
-   codepath?
-
- - Two variants of "bitmap" are given different and easy to
-   understand type names (vanilla one is "bitmap", the clever one is
-   "ewah_bitmap"), but at many places, a pointer to ewah_bitmap is
-   simply called "bitmap" or "bitmap_i" without "ewah" anywhere,
-   which waas confusing to read.  Especially, the "NAND" operation
-   for bitmap takes two bitmaps, while "OR" takes one bitmap and
-   ewah_bitmap.  That is fine as long as the combination is
-   convenient for callers, but I wished the ewah variables be called
-   with "ewah" somewhere in their names.
-
- - I compile with "-Werror -Wdeclaration-after-statement"; some
-   places seem to trigger it.
-
- - Some "extern" declarations in *.c sources were irritating;
-   shouldn't they be declared in *.h file and included?
-
- - There are some instances of "if (condition) stmt;" on a single
-   line; looked irritating.   
-
- - "bool" is not a C type we use (and not a particularly good type
-   in C++, either).
-
-That is it for now. I am looking forward to read through the users
-of the library ;-)
-
-Thanks for working on this.
+Given the concerns raised by G=E1bor (edited and quoted above) and that
+there is no known issue (afaik) with the current implementation, I'm
+tending to revert to the escape sequences.
