@@ -1,105 +1,104 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH 11/16] rev-list: add bitmap mode to speed up lists
-Date: Tue, 25 Jun 2013 09:22:28 -0700
-Message-ID: <87mwqdlvsq.fsf@linux-k42r.v.cablecom.net>
+Subject: Re: [PATCH 00/16] Speed up Counting Objects with bitmap data
+Date: Tue, 25 Jun 2013 09:05:05 -0700
+Message-ID: <87hagllvsk.fsf@linux-k42r.v.cablecom.net>
 References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
-	<1372116193-32762-12-git-send-email-tanoku@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: <git@vger.kernel.org>
 To: Vicent Marti <tanoku@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 25 23:34:07 2013
+X-From: git-owner@vger.kernel.org Tue Jun 25 23:34:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrasJ-0005Fv-6M
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 23:34:07 +0200
+	id 1UrasO-0005JM-L2
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 23:34:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751854Ab3FYVeC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Jun 2013 17:34:02 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:6756 "EHLO edge10.ethz.ch"
+	id S1751852Ab3FYVeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Jun 2013 17:34:08 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:6761 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751532Ab3FYVeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jun 2013 17:34:01 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
+	id S1751532Ab3FYVeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jun 2013 17:34:07 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
  (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 25 Jun
- 2013 23:33:59 +0200
+ 2013 23:34:04 +0200
 Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.210.110) by
- CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Tue, 25 Jun 2013 23:33:59 +0200
+ CAS21.d.ethz.ch (172.31.51.111) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Tue, 25 Jun 2013 23:34:04 +0200
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 X-Originating-IP: [129.132.210.110]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229000>
 
 Vicent Marti <tanoku@gmail.com> writes:
 
-> Calling `git rev-list --use-bitmaps [committish]` is the equivalent
-> of `git rev-list --objects`, but the rev list is performed based on
-> a bitmap result instead of using a manual counting objects phase.
+> Like with every other patch that offers performance improvements,
+> sample benchmarks are provided (spoiler: they are pretty fucking
+> cool).
 
-Why would we ever want to not --use-bitmaps, once it actually works?
-I.e., shouldn't this be the default if pack.usebitmaps is set (or
-possibly even core.usebitmaps for these things)?
+Great stuff.
 
-> These are some example timings for `torvalds/linux`:
->
-> 	$ time ../git/git rev-list --objects master > /dev/null
->
-> 	real    0m25.567s
-> 	user    0m25.148s
-> 	sys     0m0.384s
->
-> 	$ time ../git/git rev-list --use-bitmaps master > /dev/null
->
-> 	real    0m0.393s
-> 	user    0m0.356s
-> 	sys     0m0.036s
+I read the first half, and skimmed the second half.  See the individual
+replies for comments.
 
-I see your badass numbers, and raise you a critical issue:
+However:
 
-  $ time git rev-list --use-bitmaps --count --left-right origin/pu...origin/next
-  Segmentation fault
+>  Documentation/technical/bitmap-format.txt |  235 ++++++++
+>  Makefile                                  |   11 +
+>  builtin.h                                 |    1 +
+>  builtin/pack-objects.c                    |  362 +++++++-----
+>  builtin/pack-objects.h                    |   33 ++
+>  builtin/rev-list.c                        |   35 +-
+>  builtin/write-bitmap.c                    |  256 +++++++++
+>  cache.h                                   |    5 +
+>  ewah/bitmap.c                             |  229 ++++++++
+>  ewah/ewah_bitmap.c                        |  703 ++++++++++++++++++++++++
+>  ewah/ewah_io.c                            |  199 +++++++
+>  ewah/ewah_rlw.c                           |  124 +++++
+>  ewah/ewok.h                               |  194 +++++++
+>  ewah/ewok_rlw.h                           |  114 ++++
+>  git-compat-util.h                         |   28 +
+>  git-repack.sh                             |   10 +-
+>  git.c                                     |    1 +
+>  khash.h                                   |  329 +++++++++++
+>  list-objects.c                            |    1 +
+>  pack-bitmap-write.c                       |  520 ++++++++++++++++++
+>  pack-bitmap.c                             |  855 +++++++++++++++++++++++++++++
+>  pack-bitmap.h                             |   64 +++
+>  pack-write.c                              |    2 +
+>  revision.c                                |    5 +
+>  revision.h                                |    2 +
+>  sha1_file.c                               |   57 +-
 
-  real    0m0.408s
-  user    0m0.383s
-  sys     0m0.022s
+It's pretty hard to miss that there isn't a single test in the entire
+series.  It seems that the features you add depend on pack.usebitmaps,
+and since the tests run with empty config (unless of course they set
+their own) your feature is completely untested -- unless I'm missing
+something.
 
-It actually seems to be related solely to having negated commits in the
-walk:
+I imagine the tests would be of the format
 
-  thomas@linux-k42r:~/g(next u+65)$ time git rev-list --use-bitmaps --count origin/pu
-  32315
+test_expect_success 'do <stuff> without bitmaps' '
+	git ... >expect
+'
 
-  real    0m0.041s
-  user    0m0.034s
-  sys     0m0.006s
-  thomas@linux-k42r:~/g(next u+65)$ time git rev-list --use-bitmaps --count origin/pu ^origin/next
-  Segmentation fault
+test_expect_success 'do <stuff> with bitmaps' '
+	test_config pack.usebitmaps true &&
+	# do something to ensure that we have bitmaps
+	git ... >actual &&
+	test_cmp expect actual
+'
 
-  real    0m0.460s
-  user    0m0.214s
-  sys     0m0.244s
+or some such.
 
-I also can't help noticing that the time spent generating the segfault
-would have sufficed to generate the answer "the old way" as well:
-
-  $ time git rev-list --count --left-right origin/pu...origin/next
-  189     125
-
-  real    0m0.409s
-  user    0m0.386s
-  sys     0m0.022s
-
-Can we use the same trick to speed up merge base computation and then
---left-right?  The latter is a component of __git_ps1 and can get
-somewhat slow in some cases, so it would be nice to make it really fast,
-too.
+For bonus points, you could also add some light performance tests in
+t/perf/, just to show off ;-)
 
 -- 
 Thomas Rast
