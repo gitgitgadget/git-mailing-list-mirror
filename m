@@ -1,65 +1,75 @@
-From: =?UTF-8?Q?Vicent_Mart=C3=AD?= <tanoku@gmail.com>
-Subject: Re: [PATCH 13/16] repack: consider bitmaps when performing repacks
-Date: Wed, 26 Jun 2013 01:16:52 +0200
-Message-ID: <CAFFjANQ4wbMZQO-Y++bzakpqKcD_Co4KPo8sj3i-wCC+730Sig@mail.gmail.com>
-References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
- <1372116193-32762-14-git-send-email-tanoku@gmail.com> <7vbo6tztgn.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
+From: Andrew Pimlott <andrew@pimlott.net>
+Subject: Re: [PATCH] rebase -i: fixup fixup! fixup!
+Date: Tue, 25 Jun 2013 16:17:46 -0700
+Message-ID: <1372201438-sup-833@pimlott.net>
+References: <20130611180530.GA18488@oinkpad.pimlott.net> <87obbc8otc.fsf@hexa.v.cablecom.net> <1371237209-sup-639@pimlott.net> <1371278908-sup-1930@pimlott.net> <7vk3lvlmat.fsf@alter.siamese.dyndns.org> <87ip1e2tzx.fsf@hexa.v.cablecom.net> <7v7ghtjwbb.fsf@alter.siamese.dyndns.org> <8738shi2ht.fsf@linux-k42r.v.cablecom.net> <7vwqpshkxj.fsf@alter.siamese.dyndns.org> <1372190294-sup-1398@pimlott.net> <7vehbp27vl.fsf@alter.siamese.dyndns.org>
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
+Content-Transfer-Encoding: 8bit
+Cc: Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 26 01:17:18 2013
+X-From: git-owner@vger.kernel.org Wed Jun 26 01:17:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrcU9-00015Q-6o
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 01:17:17 +0200
+	id 1UrcUk-0001WF-GU
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 01:17:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751968Ab3FYXRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Jun 2013 19:17:13 -0400
-Received: from mail-vb0-f54.google.com ([209.85.212.54]:55320 "EHLO
-	mail-vb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751698Ab3FYXRM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jun 2013 19:17:12 -0400
-Received: by mail-vb0-f54.google.com with SMTP id q12so10109232vbe.27
-        for <git@vger.kernel.org>; Tue, 25 Jun 2013 16:17:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=DaXryzdB414Kd8R6TDI7Q03gHwtgPEFWNeoQhVa6UmM=;
-        b=u3dffiIGhTsJZV2szWiXDx9fy4SscjiZYsZg/mFIXI8kGTpq/r61PNGN0DJc8DPeye
-         nIMJI3tDPoWOKkTSlRIYZSw6orYyokNDBQwkzkIOJNsiqIS9UNO9fzx8/EUEEHGCADUp
-         cXaKNC4CfghWh4JPO8sadFnkESj9c0n75jGqaD1GG6AqLnR6oXtfdZUU08QXBi/AS+IO
-         Z4jn/FWC21TQTTL0sLzlxGucBGbMMNUo8SrBPzgbLxLtHM8Yq9ZHZ2WP74XTMpuTb27Z
-         2EzdyLxvzHlPtfg7YIIYaGHqot9lmDCD58ZRcZqTAhYrdYrN0tLAua3ouxbt9GWDtcs/
-         WmuA==
-X-Received: by 10.58.230.135 with SMTP id sy7mr744447vec.42.1372202232166;
- Tue, 25 Jun 2013 16:17:12 -0700 (PDT)
-Received: by 10.221.45.131 with HTTP; Tue, 25 Jun 2013 16:16:52 -0700 (PDT)
-In-Reply-To: <7vbo6tztgn.fsf@alter.siamese.dyndns.org>
+	id S1751994Ab3FYXRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Jun 2013 19:17:51 -0400
+Received: from pimlott.net ([72.249.23.100]:34819 "EHLO fugue.pimlott.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751698Ab3FYXRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jun 2013 19:17:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=pimlott.net; s=default;
+	h=Content-Transfer-Encoding:Message-Id:Date:References:In-reply-to:To:From:Subject:Cc:Content-Type; bh=8fSQyDUB08+u1vOQQZ8PQeTzpqparSXSOtwBlXC2KCo=;
+	b=M3v4oefJxUryctHVo8qMKascU/CVx9SVEqB3DtFfC/Mi1nG9cKDOKQAtcvvNivecBX2y7vAwymIvw/ReqrQST9wK8M37gAFz8yeucQrHeMDt6hQNQe/hd9JA48O/tzrT5btgQER6F/CDOR4+oyDQstqgpOZ7vDXbpV4sEIlUIDA=;
+Received: from andrew by fugue.pimlott.net with local (Exim 4.72)
+	(envelope-from <andrew@pimlott.net>)
+	id 1UrcUd-0004Z2-0c; Tue, 25 Jun 2013 16:17:47 -0700
+In-reply-to: <7vehbp27vl.fsf@alter.siamese.dyndns.org>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229018>
 
-On Wed, Jun 26, 2013 at 1:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> @@ -156,6 +156,11 @@ do
->>       fullbases="$fullbases pack-$name"
->>       chmod a-w "$PACKTMP-$name.pack"
->>       chmod a-w "$PACKTMP-$name.idx"
->> +
->> +     test -f "$PACKTMP-$name.bitmap" &&
->> +     chmod a-w "$PACKTMP-$name.bitmap" &&
->> +     mv -f "$PACKTMP-$name.bitmap" "$PACKDIR/pack-$name.bitmap"
->
-> If we see a temporary bitmap but somehow failed to move it to the
-> final name, should we _ignore_ that error, or should we die, like
-> the next two lines do?
+Excerpts from Junio C Hamano's message of Tue Jun 25 14:33:18 -0700 2013:
+> Andrew Pimlott <andrew@pimlott.net> writes:
+> 
+> Just reponding for the "procedual" part for now.
+> 
+> > So if I don't want to break the discussion, should I append the unedited
+> > format-patch output to my message after "scissors", or should I send it
+> > as a whole new message with --in-reply-to?  Or something else?  I'll try
+> > the first.
+> 
+> Which is fine, and you are almost there, but you do not want
+> 
+>  (1) "From 99023b..." that is not part of the message (it is a
+>      delimiter between multiple patches when/in case a file contains
+>      more than one);
+> 
+>  (2) "From: Andrew..." that is the same as the e-mail header in the
+>      message I am responding to;
+> 
+>  (3) "Date: ..." which is older than the e-mail header in the
+>      message I am responding to---the latter is the date people
+>      actually saw this patch on the mailing list, so it is
+>      preferrable to use it than the timestamp in your repository.
+> 
+> So in this case, I'd expect to see, after the "-- >8 --" line, only
+> "Subject: " line, a blank and the log message.
 
-I obviously decided against dying (as you can see on the patch, har
-har), because the bitmap is not required for the proper operation of
-the Git repository, unlike the packfile and the index.
+Thank you.  It was not clear to me even after several doc readings what
+git-mailinfo would look for where.  I think I assumed that the idea was
+to transmit the original commit perfectly, and I stubbornly failed to
+give up that assumption even when it clearly didn't fit.  Everything
+makes more sense with the understanding that the receiver will pull
+together non-patch metadata in the way that makes sense from his point
+of view (and that a different commit will come back via fetch).  I will
+take a whack at clarifying the docs if I have time.
+
+Andrew
