@@ -1,142 +1,98 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Difficulty adding a symbolic link, part 2
-Date: Mon, 24 Jun 2013 22:36:42 -0400
-Message-ID: <201306250236.r5P2ag85022808@hobgoblin.ariadne.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 25 04:44:13 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v14 01/16] test: add test cases for relative_path
+Date: Mon, 24 Jun 2013 21:57:53 -0700
+Message-ID: <7v38s66b3i.fsf@alter.siamese.dyndns.org>
+References: <cover.1372087065.git.worldhello.net@gmail.com>
+	<85c9aa4d05dba4320a7cc85eae7570e0f450e58e.1372087065.git.worldhello.net@gmail.com>
+	<7vli5z8ha0.fsf@alter.siamese.dyndns.org>
+	<CANYiYbEK-vc2h64rfNDL5k5yhRsxQR=8xtNJJQwUXmyVHH4Cng@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 25 06:58:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrJEq-0001Ig-At
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 04:44:12 +0200
+	id 1UrLKL-0002UL-Gc
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 06:58:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751102Ab3FYCnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 22:43:52 -0400
-Received: from qmta12.westchester.pa.mail.comcast.net ([76.96.59.227]:47804
-	"EHLO qmta12.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750784Ab3FYCnv (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Jun 2013 22:43:51 -0400
-X-Greylist: delayed 427 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Jun 2013 22:43:51 EDT
-Received: from omta09.westchester.pa.mail.comcast.net ([76.96.62.20])
-	by qmta12.westchester.pa.mail.comcast.net with comcast
-	id sSAR1l0040SCNGk5CScjTH; Tue, 25 Jun 2013 02:36:43 +0000
-Received: from hobgoblin.ariadne.com ([24.34.72.61])
-	by omta09.westchester.pa.mail.comcast.net with comcast
-	id sScj1l00N1KKtkw3VScj8V; Tue, 25 Jun 2013 02:36:43 +0000
-Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
-	by hobgoblin.ariadne.com (8.14.5/8.14.5) with ESMTP id r5P2agYD022809;
-	Mon, 24 Jun 2013 22:36:42 -0400
-Received: (from worley@localhost)
-	by hobgoblin.ariadne.com (8.14.5/8.14.5/Submit) id r5P2ag85022808;
-	Mon, 24 Jun 2013 22:36:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1372127803;
-	bh=EQMao+FkJSGhoDTzZLbUzkrIBibeW5ls0OS62VbEw08=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=BCWurCXnqC0mVPPDWXSS3QAE729S4Nch7l8IKwJkxVg3RRAshBri6tA9SWlhNwiLl
-	 DIPUw7UTkVW3Ck/rK2TtjyRTiTEBzJNoepcubaffiKTa025HxSXgbvBpRf4l36L7fd
-	 uXW7hJPBf5pU2ny8Ia+d75k5EcLXwwunaaFeiUQ8fvziGma0OrGFEmKdimzKOHY8qU
-	 LHqLkBYNUkoP9ykazfRRLjAtGzVmCZP59A3IVwGzS079Ffnk0zxADPIo/ifQR/1I+x
-	 RvEoMjlQwD+0oavcpQNKp8sLORS/qbtH5G8rWQHJ+wXy2cUxMvysZ9zaCwvhPrLa1P
-	 TYMvQilep9Auw==
+	id S1751256Ab3FYE55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Jun 2013 00:57:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34363 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750971Ab3FYE54 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jun 2013 00:57:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D13F2634C;
+	Tue, 25 Jun 2013 04:57:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=owz85AN9agGdlWKJ2vjonKz49Aw=; b=S6GMXJ
+	ShBYOMZr8Ng7DWZN/p6cEKPcitNKp/hqH2wRvGVn9tbtba7zm7u0Fg6q6AvTiZ46
+	m3UIgJTy9+8opKVFzaUjrNfDqDWtbYr0vx47GtDJtkPC9gLNo05rHfYmlfrBes2w
+	UPfF8tcNoHjKJe6nPelIOu1AxJOwOqyf+ZTRM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kpCWv7m+dbJQ63S4snbhvKVW/BVqmBx0
+	+zXQ3qAuNLxOh3Au1GU9qKfC9JU+CjpoTZaPRTzDhQYG3P51x6iq4VjVpE4ElVdy
+	kC06Veabs1asDzWd+wmjlJPe9EQaPsYLDYE4pkwhJafcvvqsgIBESZBrMwI/USc1
+	vqbNo7VOExA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 127DC2634B;
+	Tue, 25 Jun 2013 04:57:56 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63A2526348;
+	Tue, 25 Jun 2013 04:57:55 +0000 (UTC)
+In-Reply-To: <CANYiYbEK-vc2h64rfNDL5k5yhRsxQR=8xtNJJQwUXmyVHH4Cng@mail.gmail.com>
+	(Jiang Xin's message of "Tue, 25 Jun 2013 09:06:51 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CC4D440A-DD53-11E2-B069-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228942>
 
-Here's a slightly simpler test case for adding a symbolic link.  This
-test exploits the fact that on my system, /bin/awk is a symbolic link
-to "gawk".  As you can see, the behavior of Git differs if the link's
-path is given to "git add" as an absolute path or a relative path.
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-Here is the test script:
-----------------------------------------------------------------------
-#! /bin/bash
+> In order to test NULL pointer in t/t0060, I have to write normalize_argv_string
+> to convert "<null>" to NULL....
 
-# Illustrates a problem with applying "git add" to a symbolic link.
+Yes, null and empty I already understand.
 
-set -x
+> Add prefix _ to workaround the absolute path rewritten issue in
+> msysGit is interesting, but these test cases have already been
+> tested in Linux, right?
 
-# To be run from a directory one step below the root directory.  E.g.,
-# "/git-add-link".
-# Exploits the fact that /bin/awk is a symbolic link to "gawk".
+The most important thing is what we want to test in these tests.
+The special test program is to try running the underlying
+relative_path() by driving it directly, but the only real caller is
+in setup_work_tree(), where two return values from real_path() is
+compared.  On POSIX systems, we know we are feeding paths that both
+begin with /.  Now, on Windows systems, what do we get back from
+real_path()?  C:\git\Documentation?  /git/Documentation?  If the
+former, then writing /a/b/c in the test input and letting Windows
+bash convert it to C:\a\b\c before it calls the test-path-utils
+would feed what we expect to see in the real caller, which would be
+a more meaningful test than what I suggested (i.e. to feed _/a/b/c
+to test-path-utils (unmolested by Windows bash), strip _ to feed
+/a/b/c to underlying relative_path()).
 
-# Show the Git version.
-git version
-
-# Make a test directory and cd to it.
-DIR=temp.$$
-mkdir $DIR
-cd $DIR
-
-# Create a Git repository.
-git init
-# Set the worktree to be /
-git config core.worktree /
-# Create an empty commit.
-git commit --allow-empty -m Empty.
-
-# Add the symbolic link using its absolute name.
-ABSOLUTE=/bin/awk
-ls -l $ABSOLUTE
-git add $ABSOLUTE
-# Notice that the target of the link is added, not the link itself.
-git status -uno
-
-# Reset the index.
-git reset
-
-# Add the symbolic link using its relative name.
-# Remember that we are two directory levels below the root directory now.
-RELATIVE=../..$ABSOLUTE
-ls -l $RELATIVE
-git add $RELATIVE
-# Notice that now the link itself is added.
-git status -uno
-----------------------------------------------------------------------
-Here is the output of the script:
-----------------------------------------------------------------------
-+ git version
-git version 1.7.7.6
-+ DIR=temp.22366
-+ mkdir temp.22366
-+ cd temp.22366
-+ git init
-Initialized empty Git repository in /git-add-link/temp.22366/.git/
-+ git config core.worktree /
-+ git commit --allow-empty -m Empty.
-[master (root-commit) fb232e5] Empty.
-+ ABSOLUTE=/bin/awk
-+ ls -l /bin/awk
-lrwxrwxrwx. 1 root root 4 Nov  2  2012 /bin/awk -> gawk
-+ git add /bin/awk
-+ git status -uno
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	new file:   ../../bin/gawk
-#
-# Untracked files not listed (use -u option to show untracked files)
-+ git reset
-+ RELATIVE=../../bin/awk
-+ ls -l ../../bin/awk
-lrwxrwxrwx. 1 root root 4 Nov  2  2012 ../../bin/awk -> gawk
-+ git add ../../bin/awk
-+ git status -uno
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	new file:   ../../bin/awk
-#
-# Untracked files not listed (use -u option to show untracked files)
-----------------------------------------------------------------------
-I can't see any principle of operation of Git that would cause "git
-add /bin/awk" and "git add ../../bin/awk" to be handled differently.
-
-Dale
+Unlike relative_path() used in setup.c:setup_work_tree(), for
+path_relative() from quote.c, IIRC, the expected inputs are both
+full pathnames within the working tree.  A typical question the
+callers to this function asks is like "The current directory
+obtained from prefix is the Documentation/ directory and we need to
+show that compat/mkdir.c is modified, relative to the current
+directory.  ../compat/mkdir.c is what I want to show."  So in that
+sense, it does not matter if /a/b/c is given as /a/b/c or C:\a\b\c
+as we do not care the leading common part (either / or C:\) very
+much.  On the other hand, the test vector you preoared in the first
+test that all begin with / may not be very useful to make sure that
+the function behaves the same way before and after your rewrite.
