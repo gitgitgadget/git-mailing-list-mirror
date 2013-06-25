@@ -1,112 +1,114 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH v14 01/16] test: add test cases for relative_path
-Date: Tue, 25 Jun 2013 09:06:51 +0800
-Message-ID: <CANYiYbEK-vc2h64rfNDL5k5yhRsxQR=8xtNJJQwUXmyVHH4Cng@mail.gmail.com>
-References: <cover.1372087065.git.worldhello.net@gmail.com>
-	<85c9aa4d05dba4320a7cc85eae7570e0f450e58e.1372087065.git.worldhello.net@gmail.com>
-	<7vli5z8ha0.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 08/16] ewah: compressed bitmap implementation
+Date: Mon, 24 Jun 2013 18:10:43 -0700
+Message-ID: <7v7ghj571o.fsf@alter.siamese.dyndns.org>
+References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
+	<1372116193-32762-9-git-send-email-tanoku@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 25 03:07:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Vicent Marti <tanoku@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 25 03:10:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrHil-0007Bo-Mu
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 03:07:00 +0200
+	id 1UrHmU-0001Wc-Qm
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Jun 2013 03:10:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593Ab3FYBG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jun 2013 21:06:56 -0400
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:53978 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752304Ab3FYBGy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jun 2013 21:06:54 -0400
-Received: by mail-wi0-f177.google.com with SMTP id ey16so218491wid.16
-        for <git@vger.kernel.org>; Mon, 24 Jun 2013 18:06:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=POa8jG+8IC0777Qdyu3pom36m5yPxbtE/uuR/4Cb/8k=;
-        b=KICRneLfH4ZDt8rHDpC9h/NhZJYV9rBRO5yZO+PpCQHtAYmdbq5H9Ru6R6JaQ07gqA
-         8y6kl47Pvkybh7ZAX6rvLBgxekvyjeuEfOYx1cqpVIXIBcKJY6C0D9QGw6TIG2qo8ana
-         lWOoDCjDUAqZTIb93zCX4DgidoFtkcVeqeDM+vBV/Qe/6EwUMdNk2gQD5wXi6LQc714f
-         G/ZoA2ITJKTXvWlgdn5AFH/WBWuuUdXLNrWRAu8Jx8YzUS2QhOQqMiMPXtSkCrHQ6f+b
-         DkPECYrku736fsoC6y5YXedFvp+ch4xiXHAFjMsqlAcGsFW4Yu2PF8Yyrm3xEsT2kwiO
-         xkOw==
-X-Received: by 10.194.249.129 with SMTP id yu1mr18813802wjc.10.1372122411561;
- Mon, 24 Jun 2013 18:06:51 -0700 (PDT)
-Received: by 10.194.176.129 with HTTP; Mon, 24 Jun 2013 18:06:51 -0700 (PDT)
-In-Reply-To: <7vli5z8ha0.fsf@alter.siamese.dyndns.org>
+	id S1752422Ab3FYBKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jun 2013 21:10:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57604 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751044Ab3FYBKq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jun 2013 21:10:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DC2820011;
+	Tue, 25 Jun 2013 01:10:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Bu7IMWTvp5pIyyNnmVNi08DF3Vk=; b=h5hzVK
+	BGxoIBcHYt8rf1dVPBaaACixZw4i1GC5WSsrPIctmnbZIhAt6FEbjYMZbk0lmXjx
+	ABMMSMMpJe9PCR9KWfaa++iAlnXQB97fWHBR6ubKG4t4NHdPCHuAVKBMac6VxHnd
+	BFkUvYaRwnHQK+JEaYr8aV69gsF4k8pTlflJM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xsN4YT+JT4xAKiA1+eI0di8FVT62b5We
+	YdikP+94WCzh5SMeCYk+V+wvfEiQt/7OLEKA2hHsGtZotrJhIyf4+BOwc74aAe+J
+	Cr3/phpz3y4aSV+nJpr/nheBIsgqVaf+UnTQoFzyW/KfmOREl5aW+l9XaklIWM2I
+	GC7eAjew7k8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 922722000D;
+	Tue, 25 Jun 2013 01:10:45 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D1BFE2000C;
+	Tue, 25 Jun 2013 01:10:44 +0000 (UTC)
+In-Reply-To: <1372116193-32762-9-git-send-email-tanoku@gmail.com> (Vicent
+	Marti's message of "Tue, 25 Jun 2013 01:23:05 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0FDC5668-DD34-11E2-9993-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/228938>
 
-2013/6/25 Junio C Hamano <gitster@pobox.com>:
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
->> diff --git a/test-path-utils.c b/test-path-utils.c
->> index 0092cb..dcc530 100644
->> --- a/test-path-utils.c
->> +++ b/test-path-utils.c
->> @@ -28,6 +28,19 @@ static int normalize_ceiling_entry(struct string_list_item *item, void *unused)
->>       return 1;
->>  }
->>
->> +static void normalize_argv_string(const char **var, const char *input)
->> +{
->> +     if (!strcmp(input, "<null>"))
->> +             *var = NULL;
->> +     else if (!strcmp(input, "<empty>"))
->> +             *var = "";
->> +     else
->> +             *var = input;
->> +
->> +     if (*var && (**var == '<' || **var == '('))
->> +             die("Bad value: %s\n", input);
->> +}
->> +
->
-> If you have to munge the input string like this anyway, perhaps you
-> can work around the command line mangling done by Windows bash
-> runtime, perhaps add something like:
->
->         if (*input == '_')
->                 input++;
->
-> and then protecting the path with the underscore, like so?
->
->         relative_path _/a/b/c/  _/a/b/          c/
->
-> Wouldn't that let you avoid having to handle "POSIX" prereq for
-> these paths?
->
+Vicent Marti <tanoku@gmail.com> writes:
 
-In order to test NULL pointer in t/t0060, I have to write normalize_argv_string
-to convert "<null>" to NULL. So that I can write test case in
-t/t0060-path-utils.sh like this:
+> The library is re-licensed under the GPLv2 with the permission of Daniel
+> Lemire, the original author. The source code for the C version can
+> be found on GitHub:
+>
+> 	https://github.com/vmg/libewok
+>
+> The original Java implementation can also be found on GitHub:
+>
+> 	https://github.com/lemire/javaewah
+> ---
 
-    relative_path "<null>"  "<null>"        ./
+Please make sure that all patches are properly signed off.
 
-And for the same reason, output would be "(null)" for NULL pointer.
-Use "(null)" not "<null>" for output, because I want to make sure the
-conversion must happen for input and output.
+>  Makefile           |    6 +
+>  ewah/bitmap.c      |  229 +++++++++++++++++
+>  ewah/ewah_bitmap.c |  703 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  ewah/ewah_io.c     |  199 +++++++++++++++
+>  ewah/ewah_rlw.c    |  124 +++++++++
+>  ewah/ewok.h        |  194 +++++++++++++++
+>  ewah/ewok_rlw.h    |  114 +++++++++
 
-I found it would be nice to wrap input empty string as "<empty>" and
-wrap output of empty string as "(empty)" for the readability of both
-input and output of test cases.
+This is lovely.  A few comments after an initial quick scan-through.
 
-Add prefix _ to workaround the absolute path rewritten issue in
-msysGit is interesting, but these test cases have already been
-tested in Linux, right?  Patch 16/16 turns on most of the test cases
-which could only run under POSIX previously, and test these test
-cases in Windows way.
+ - The code and the headers are well commented, which is good.
 
--- 
-Jiang Xin
+ - What's __builtin_popcountll() doing there in a presumably generic
+   codepath?
+
+ - Two variants of "bitmap" are given different and easy to
+   understand type names (vanilla one is "bitmap", the clever one is
+   "ewah_bitmap"), but at many places, a pointer to ewah_bitmap is
+   simply called "bitmap" or "bitmap_i" without "ewah" anywhere,
+   which waas confusing to read.  Especially, the "NAND" operation
+   for bitmap takes two bitmaps, while "OR" takes one bitmap and
+   ewah_bitmap.  That is fine as long as the combination is
+   convenient for callers, but I wished the ewah variables be called
+   with "ewah" somewhere in their names.
+
+ - I compile with "-Werror -Wdeclaration-after-statement"; some
+   places seem to trigger it.
+
+ - Some "extern" declarations in *.c sources were irritating;
+   shouldn't they be declared in *.h file and included?
+
+ - There are some instances of "if (condition) stmt;" on a single
+   line; looked irritating.   
+
+ - "bool" is not a C type we use (and not a particularly good type
+   in C++, either).
+
+That is it for now. I am looking forward to read through the users
+of the library ;-)
+
+Thanks for working on this.
