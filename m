@@ -1,57 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 11/16] rev-list: add bitmap mode to speed up lists
-Date: Wed, 26 Jun 2013 01:22:26 -0400
-Message-ID: <20130626052226.GC26755@sigill.intra.peff.net>
-References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
- <1372116193-32762-12-git-send-email-tanoku@gmail.com>
- <87mwqdlvsq.fsf@linux-k42r.v.cablecom.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Jun 26 07:22:49 2013
+From: Fraser Tweedale <frase@frase.id.au>
+Subject: [PATCH] documentation: add git transport security notice
+Date: Wed, 26 Jun 2013 15:53:59 +1000
+Message-ID: <1372226039-31689-1-git-send-email-frase@frase.id.au>
+Cc: Fraser Tweedale <frase@frase.id.au>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 26 07:54:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UriBq-0000sw-Vj
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 07:22:47 +0200
+	id 1UrigL-0002Tu-FD
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 07:54:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750886Ab3FZFW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jun 2013 01:22:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54437 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750729Ab3FZFW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jun 2013 01:22:29 -0400
-Received: (qmail 6136 invoked by uid 102); 26 Jun 2013 05:23:33 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Jun 2013 00:23:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Jun 2013 01:22:26 -0400
-Content-Disposition: inline
-In-Reply-To: <87mwqdlvsq.fsf@linux-k42r.v.cablecom.net>
+	id S1751271Ab3FZFyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jun 2013 01:54:13 -0400
+Received: from 110-174-235-130.static.tpgi.com.au ([110.174.235.130]:50076
+	"EHLO bacardi.hollandpark.frase.id.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751195Ab3FZFyN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Jun 2013 01:54:13 -0400
+Received: from bacardi.hollandpark.frase.id.au (localhost [127.0.0.1])
+	by bacardi.hollandpark.frase.id.au (8.14.5/8.14.5) with ESMTP id r5Q5s2nR031765;
+	Wed, 26 Jun 2013 15:54:02 +1000 (EST)
+	(envelope-from fraser@bacardi.hollandpark.frase.id.au)
+Received: (from fraser@localhost)
+	by bacardi.hollandpark.frase.id.au (8.14.5/8.14.5/Submit) id r5Q5s1iL031755;
+	Wed, 26 Jun 2013 15:54:01 +1000 (EST)
+	(envelope-from fraser)
+X-Mailer: git-send-email 1.8.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229030>
 
-On Tue, Jun 25, 2013 at 09:22:28AM -0700, Thomas Rast wrote:
+The fact that the git transport does not do any authentication is
+easily overlooked.  For example, DNS poisoning may result in
+fetching from somewhere that was not intended.
 
-> Vicent Marti <tanoku@gmail.com> writes:
-> 
-> > Calling `git rev-list --use-bitmaps [committish]` is the equivalent
-> > of `git rev-list --objects`, but the rev list is performed based on
-> > a bitmap result instead of using a manual counting objects phase.
-> 
-> Why would we ever want to not --use-bitmaps, once it actually works?
-> I.e., shouldn't this be the default if pack.usebitmaps is set (or
-> possibly even core.usebitmaps for these things)?
+Add a brief security notice to the "GIT URLS" section
+of the documentation stating that the git transport should be used
+with caution on unsecured networks.
 
-If you are using bitmaps, you cannot produce the same output as
-"--objects"; the latter prints the path at which each object is found.
-In the JGit bitmap format, we have no information at all; in Vicent's
-"v2", we have only a hash of that pathname.
+Signed-off-by: Fraser Tweedale <frase@frase.id.au>
+---
+ Documentation/urls.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
--Peff
+diff --git a/Documentation/urls.txt b/Documentation/urls.txt
+index 3ca122f..b58a647 100644
+--- a/Documentation/urls.txt
++++ b/Documentation/urls.txt
+@@ -11,6 +11,9 @@ and ftps can be used for fetching and rsync can be used for fetching
+ and pushing, but these are inefficient and deprecated; do not use
+ them).
+ 
++The git transport does not do any authentication and should be used
++with caution on unsecured networks.
++
+ The following syntaxes may be used with them:
+ 
+ - ssh://{startsb}user@{endsb}host.xz{startsb}:port{endsb}/path/to/repo.git/
+-- 
+1.8.3.1
