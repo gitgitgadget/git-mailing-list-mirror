@@ -1,75 +1,120 @@
-From: Andrew Pimlott <andrew@pimlott.net>
-Subject: Re: [PATCH] rebase -i: fixup fixup! fixup!
-Date: Tue, 25 Jun 2013 16:17:46 -0700
-Message-ID: <1372201438-sup-833@pimlott.net>
-References: <20130611180530.GA18488@oinkpad.pimlott.net> <87obbc8otc.fsf@hexa.v.cablecom.net> <1371237209-sup-639@pimlott.net> <1371278908-sup-1930@pimlott.net> <7vk3lvlmat.fsf@alter.siamese.dyndns.org> <87ip1e2tzx.fsf@hexa.v.cablecom.net> <7v7ghtjwbb.fsf@alter.siamese.dyndns.org> <8738shi2ht.fsf@linux-k42r.v.cablecom.net> <7vwqpshkxj.fsf@alter.siamese.dyndns.org> <1372190294-sup-1398@pimlott.net> <7vehbp27vl.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?Q?Vicent_Mart=C3=AD?= <tanoku@gmail.com>
+Subject: Re: [PATCH 11/16] rev-list: add bitmap mode to speed up lists
+Date: Wed, 26 Jun 2013 03:45:26 +0200
+Message-ID: <CAFFjANSYoRGFDx109kMWJtYAO4TaTwSW0NCaemnrERuwakfpGg@mail.gmail.com>
+References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
+ <1372116193-32762-12-git-send-email-tanoku@gmail.com> <87mwqdlvsq.fsf@linux-k42r.v.cablecom.net>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 26 01:17:54 2013
+Cc: git <git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Jun 26 03:45:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrcUk-0001WF-GU
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 01:17:54 +0200
+	id 1Urenv-00046V-Ba
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 03:45:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751994Ab3FYXRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Jun 2013 19:17:51 -0400
-Received: from pimlott.net ([72.249.23.100]:34819 "EHLO fugue.pimlott.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751698Ab3FYXRu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jun 2013 19:17:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=pimlott.net; s=default;
-	h=Content-Transfer-Encoding:Message-Id:Date:References:In-reply-to:To:From:Subject:Cc:Content-Type; bh=8fSQyDUB08+u1vOQQZ8PQeTzpqparSXSOtwBlXC2KCo=;
-	b=M3v4oefJxUryctHVo8qMKascU/CVx9SVEqB3DtFfC/Mi1nG9cKDOKQAtcvvNivecBX2y7vAwymIvw/ReqrQST9wK8M37gAFz8yeucQrHeMDt6hQNQe/hd9JA48O/tzrT5btgQER6F/CDOR4+oyDQstqgpOZ7vDXbpV4sEIlUIDA=;
-Received: from andrew by fugue.pimlott.net with local (Exim 4.72)
-	(envelope-from <andrew@pimlott.net>)
-	id 1UrcUd-0004Z2-0c; Tue, 25 Jun 2013 16:17:47 -0700
-In-reply-to: <7vehbp27vl.fsf@alter.siamese.dyndns.org>
-User-Agent: Sup/git
+	id S1751263Ab3FZBpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Jun 2013 21:45:47 -0400
+Received: from mail-vb0-f52.google.com ([209.85.212.52]:62798 "EHLO
+	mail-vb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751195Ab3FZBpq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Jun 2013 21:45:46 -0400
+Received: by mail-vb0-f52.google.com with SMTP id f12so10228908vbg.11
+        for <git@vger.kernel.org>; Tue, 25 Jun 2013 18:45:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Tmsjx+nv0fLYFqjwDp2s7p+Iff8KYVHbBCAt5Iji07k=;
+        b=jVOokCbD3DWhWvVsTx8dD6MgzxPZEqq+oPvaRZ98Cf46A6rmRtCl4+YfYY6Bm9zDMp
+         SYN0LuVVCUzvc56cZdEJuLOtrEdRDN/9OYnnaGGWOnJNpO/1POmXGaDsO53YxwsGVYUn
+         mjLianAFYPBCyvbO+ikYE+n3AVD/UBETdySyj9VUqisvfOKcHEKGzlunDp8O4vUFVT26
+         78rXC1uSAtM3lBhpVGJSPqGbbCCYXtofkWSFTthEiRg/XrmiEktO4ZVax9J/wstischF
+         5ci0kzJ0f78q03AuT/t6QTXZ2rlzZaf34vjZy7wg5csWCrLtb6eXIHh459yF5dnXeIlf
+         CtaQ==
+X-Received: by 10.220.144.13 with SMTP id x13mr945997vcu.21.1372211146141;
+ Tue, 25 Jun 2013 18:45:46 -0700 (PDT)
+Received: by 10.221.45.131 with HTTP; Tue, 25 Jun 2013 18:45:26 -0700 (PDT)
+In-Reply-To: <87mwqdlvsq.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229019>
 
-Excerpts from Junio C Hamano's message of Tue Jun 25 14:33:18 -0700 2013:
-> Andrew Pimlott <andrew@pimlott.net> writes:
-> 
-> Just reponding for the "procedual" part for now.
-> 
-> > So if I don't want to break the discussion, should I append the unedited
-> > format-patch output to my message after "scissors", or should I send it
-> > as a whole new message with --in-reply-to?  Or something else?  I'll try
-> > the first.
-> 
-> Which is fine, and you are almost there, but you do not want
-> 
->  (1) "From 99023b..." that is not part of the message (it is a
->      delimiter between multiple patches when/in case a file contains
->      more than one);
-> 
->  (2) "From: Andrew..." that is the same as the e-mail header in the
->      message I am responding to;
-> 
->  (3) "Date: ..." which is older than the e-mail header in the
->      message I am responding to---the latter is the date people
->      actually saw this patch on the mailing list, so it is
->      preferrable to use it than the timestamp in your repository.
-> 
-> So in this case, I'd expect to see, after the "-- >8 --" line, only
-> "Subject: " line, a blank and the log message.
+I'm afraid I cannot reproduce the segfault locally (assuming you're
+performing the rev-list on the git/git repository). Could you please
+send me more information, and a core dump if possible?
 
-Thank you.  It was not clear to me even after several doc readings what
-git-mailinfo would look for where.  I think I assumed that the idea was
-to transmit the original commit perfectly, and I stubbornly failed to
-give up that assumption even when it clearly didn't fit.  Everything
-makes more sense with the understanding that the receiver will pull
-together non-patch metadata in the way that makes sense from his point
-of view (and that a different commit will come back via fetch).  I will
-take a whack at clarifying the docs if I have time.
-
-Andrew
+On Tue, Jun 25, 2013 at 6:22 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Vicent Marti <tanoku@gmail.com> writes:
+>
+>> Calling `git rev-list --use-bitmaps [committish]` is the equivalent
+>> of `git rev-list --objects`, but the rev list is performed based on
+>> a bitmap result instead of using a manual counting objects phase.
+>
+> Why would we ever want to not --use-bitmaps, once it actually works?
+> I.e., shouldn't this be the default if pack.usebitmaps is set (or
+> possibly even core.usebitmaps for these things)?
+>
+>> These are some example timings for `torvalds/linux`:
+>>
+>>       $ time ../git/git rev-list --objects master > /dev/null
+>>
+>>       real    0m25.567s
+>>       user    0m25.148s
+>>       sys     0m0.384s
+>>
+>>       $ time ../git/git rev-list --use-bitmaps master > /dev/null
+>>
+>>       real    0m0.393s
+>>       user    0m0.356s
+>>       sys     0m0.036s
+>
+> I see your badass numbers, and raise you a critical issue:
+>
+>   $ time git rev-list --use-bitmaps --count --left-right origin/pu...origin/next
+>   Segmentation fault
+>
+>   real    0m0.408s
+>   user    0m0.383s
+>   sys     0m0.022s
+>
+> It actually seems to be related solely to having negated commits in the
+> walk:
+>
+>   thomas@linux-k42r:~/g(next u+65)$ time git rev-list --use-bitmaps --count origin/pu
+>   32315
+>
+>   real    0m0.041s
+>   user    0m0.034s
+>   sys     0m0.006s
+>   thomas@linux-k42r:~/g(next u+65)$ time git rev-list --use-bitmaps --count origin/pu ^origin/next
+>   Segmentation fault
+>
+>   real    0m0.460s
+>   user    0m0.214s
+>   sys     0m0.244s
+>
+> I also can't help noticing that the time spent generating the segfault
+> would have sufficed to generate the answer "the old way" as well:
+>
+>   $ time git rev-list --count --left-right origin/pu...origin/next
+>   189     125
+>
+>   real    0m0.409s
+>   user    0m0.386s
+>   sys     0m0.022s
+>
+> Can we use the same trick to speed up merge base computation and then
+> --left-right?  The latter is a component of __git_ps1 and can get
+> somewhat slow in some cases, so it would be nice to make it really fast,
+> too.
+>
+> --
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
