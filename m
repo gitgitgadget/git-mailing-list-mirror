@@ -1,82 +1,116 @@
-From: Colby Ranger <cranger@google.com>
-Subject: Re: [PATCH 09/16] documentation: add documentation for the bitmap format
-Date: Wed, 26 Jun 2013 11:41:12 -0700
-Message-ID: <CAFFbUKJZ1w2puKFLjPNZmMhSLo3_1kpfA1upv7K6qZV256vTyQ@mail.gmail.com>
-References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
-	<1372116193-32762-10-git-send-email-tanoku@gmail.com>
-	<CAJo=hJtcQwh-N-9_i84y1ZsL0mdREHcxhP2gepcrREiaxvxS6A@mail.gmail.com>
-	<CAFFjANRwBBcORhu4mwjESBfr4GJ3zDrgYvUhY=VxK9abv7k2MA@mail.gmail.com>
-	<20130626051117.GB26755@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Shawn Pearce <spearce@spearce.org>,
-	=?ISO-8859-1?Q?Vicent_Mart=ED?= <tanoku@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 26 20:41:19 2013
+From: benoit.person@ensimag.fr
+Subject: [PATCH v5 2/5] git-remote-mediawiki: new git bin-wrapper for developement
+Date: Wed, 26 Jun 2013 21:12:47 +0200
+Message-ID: <1372273970-9084-3-git-send-email-benoit.person@ensimag.fr>
+References: <1372273970-9084-1-git-send-email-benoit.person@ensimag.fr>
+Cc: Celestin Matte <celestin.matte@ensimag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Benoit Person <benoit.person@ensimag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 26 21:13:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uruec-0000CD-OF
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 20:41:19 +0200
+	id 1Urv9y-0005gP-Oe
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 21:13:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752233Ab3FZSlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jun 2013 14:41:14 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:40138 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751401Ab3FZSlO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jun 2013 14:41:14 -0400
-Received: by mail-oa0-f47.google.com with SMTP id m1so15190296oag.20
-        for <git@vger.kernel.org>; Wed, 26 Jun 2013 11:41:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=WmAMLG7p9eMV+yM3ruPmYCcuSujifTzxEmkdiDwbwkc=;
-        b=nX7EM5j4v5Zwrtt284sCtIP1Xl7rVfZfPIwgafPtLBhhTuSvLZx+dYUPRtOuG6fbbt
-         hZ6BPmb5atajPB0oUuQc/F4c/ycXxS/DG25ukBxvtGF+nUteuIGfps4MQHKE57TWM3au
-         7cLkKhPWJzPFZP3W7186EeM0C5DsoQBbyNrzP+e7Q8SBOYTHDts4AlwqBCnphsEcT27j
-         Z6HMlLXCE+DqkWKRn7/5CiyWkfjeNojkOwTOh7vIGsfKtOm2tWKp3rimxAYspgAQj8v0
-         3eJpLQhDfaRNw1J4UMHnQsrdrlp0XYCADIDe8N2k4RFyi50PkRn70tA/r2pRZoOlBenO
-         Bjmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-gm-message-state;
-        bh=WmAMLG7p9eMV+yM3ruPmYCcuSujifTzxEmkdiDwbwkc=;
-        b=ejPL4zk2V320e6XUHm2nmIoN/7oi0gFnJKocAvTEKJLxxEsnAEwA6TWW7uB3P5RM5p
-         gDFPXPUmT7ABqghx6Qo1TS9N07kBg3AqG58Rq6BwnZTrfRDeE17N1SBZlR5pHZu5YJ/N
-         8RhLa/bJB1vOQ+aIeI66SjpDoIUB6GpC4p2XSoYCdZZqsNgpOHX98NRYZPV/OsEjeLca
-         HIn3YAW8ZCAX+EIvQ4O2BywPtpEeglCVdE8+8DqiaB4/Qe8SdgVyuFCAJsXUkTDTIAy4
-         HQgFYvgIbtEZkZGkJ0TNhqmwljVbnN2nQRkpLteIlc6rHUXuR6MkTKU/n7+o0BjEGfip
-         L0dQ==
-X-Received: by 10.182.105.99 with SMTP id gl3mr2350688obb.94.1372272073512;
- Wed, 26 Jun 2013 11:41:13 -0700 (PDT)
-Received: by 10.60.125.198 with HTTP; Wed, 26 Jun 2013 11:41:12 -0700 (PDT)
-In-Reply-To: <20130626051117.GB26755@sigill.intra.peff.net>
-X-Gm-Message-State: ALoCoQloiSR3HEQUgV3jz7cBpJO7oaWptN6pyv2TJZHmJLB5TbC+0GMa2YbL1nsk1EQt82cyFz1pw7SfUGsvNWFgzxpU8uWBSEuuZvAAw4KW2DbS2j1zzYk8QqhSIKpWVBu8dPhrNvJ5bnuN6zh11a2BFdLdMHNGuvG9cl4yNhg2WUSaLUwn6OmMUuxdzdZ+7wPUBbrd3iGO
+	id S1752175Ab3FZTNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jun 2013 15:13:39 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35484 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751954Ab3FZTNi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jun 2013 15:13:38 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5QJDUqK009997
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 26 Jun 2013 21:13:30 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5QJDXxF019167;
+	Wed, 26 Jun 2013 21:13:33 +0200
+Received: from localhost.localdomain (ensibm [195.221.228.8])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5QJDNHv023434;
+	Wed, 26 Jun 2013 21:13:32 +0200
+X-Mailer: git-send-email 1.8.3.GIT
+In-Reply-To: <1372273970-9084-1-git-send-email-benoit.person@ensimag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 26 Jun 2013 21:13:30 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229053>
 
-> Pinning the bitmap index on the reverse index adds complexity (lookups
-> are two-step: first find the entry in the reverse index, and then find
-> the SHA1 in the index) and is measurably slower, in both loading and
-> lookup times. Since Git doesn't have a memory problem, it's very hard
-> to make an argument for design that is more complex and runs slower to
-> save memory.
+From: Benoit Person <benoit.person@ensimag.fr>
 
-Sorting by SHA1 will generate a random distribution. This will require
-you to inflate the entire bitmap on every fetch request, in order to
-do the "contains" operation.  Sorting by pack offset allows us to
-inflate only the bits we need as we are walking the graph, since they
-are usually at the start of the bitmap.
+The introduction of the Git::Mediawiki package makes it impossible to test,
+without installation, git-remote-mediawiki and git-mw.
 
-What is the general size in bytes of the SHA1 sorted bitmaps?  If they
-are much larger, the size of the bitmap has an impact on how fast you
-can perform bitwise operations on them, which is important for fetch
-when doing wants AND NOT haves.
+Using a git bin-wrapper enables us to define proper $GITPERLLIB to force the
+use of the developement version of the Git::Mediawiki package, bypassing its
+installed version if any.
+
+An alternate solution was to 'install' all the files required at each build
+but it pollutes the toplevel with untracked files.
+
+Signed-off-by: Benoit Person <benoit.person@ensimag.fr>
+Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+
+---
+ contrib/mw-to-git/Makefile |  6 ++++++
+ contrib/mw-to-git/git      | 25 +++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
+ create mode 100755 contrib/mw-to-git/git
+
+diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
+index a6f8b24..2a80d56 100644
+--- a/contrib/mw-to-git/Makefile
++++ b/contrib/mw-to-git/Makefile
+@@ -2,6 +2,12 @@
+ # Copyright (C) 2013
+ #     Matthieu Moy <Matthieu.Moy@imag.fr>
+ #
++# To build and test:
++#
++#   make:
++#     ./git mw preview Some_page.mw
++#     ./git clone mediawiki::http://example.com/wiki/
++#
+ # To install, run Git's toplevel 'make install' then run:
+ #
+ #   make install
+diff --git a/contrib/mw-to-git/git b/contrib/mw-to-git/git
+new file mode 100755
+index 0000000..25b60ad
+--- /dev/null
++++ b/contrib/mw-to-git/git
+@@ -0,0 +1,25 @@
++#!/bin/sh
++
++# git executable wrapper script for Git-Mediawiki to run tests without
++# installing all the scripts and perl packages.
++
++# based on $GIT_ROOT_DIR/wrap-for-bin.sh
++
++
++GIT_ROOT_DIR=../..
++GIT_EXEC_PATH=$(cd "$(dirname "$0")" && cd ${GIT_ROOT_DIR} && pwd)
++
++if test -n "$NO_SET_GIT_TEMPLATE_DIR"
++then
++	unset GIT_TEMPLATE_DIR
++else
++	GIT_TEMPLATE_DIR="$GIT_EXEC_PATH"'/templates/blt'
++	export GIT_TEMPLATE_DIR
++fi
++# Hack to make the `use lib` call works with multiple paths
++GITPERLLIB="$GIT_EXEC_PATH"'/contrib/mw-to-git:'"$GIT_EXEC_PATH"'/perl/blib/lib'
++GIT_TEXTDOMAINDIR="$GIT_EXEC_PATH"'/po/build/locale'
++PATH="$GIT_EXEC_PATH"'/contrib/mw-to-git:'"$GIT_EXEC_PATH"'/bin-wrappers:'"$PATH"
++export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
++
++exec "${GIT_EXEC_PATH}/git" "$@"
+\ No newline at end of file
+-- 
+1.8.3.GIT
