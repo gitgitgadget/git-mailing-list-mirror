@@ -1,63 +1,84 @@
-From: "=?windows-1250?Q?David_Ond=F8ich?=" <david.ondrich@aveco.com>
-Subject: Re: QNX support
-Date: Wed, 26 Jun 2013 16:36:33 +0200
-Message-ID: <7213649B-3168-4089-8592-B8FDE2F2F705@aveco.com>
-References: <430B4DD0-B796-4DB2-861D-C1F81302A4D1@aveco.com> <7vmwuxv9ou.fsf@alter.siamese.dyndns.org> <1B04D3EE58602B43B7D34ECC7F9E321E060FA821@SANMAIL04.corp.amo-inc.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
-Content-Type: text/plain; charset=windows-1250
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git diff returns fatal error with core.safecrlf is set to true.
+Date: Wed, 26 Jun 2013 08:48:53 -0700
+Message-ID: <7vsj04yisa.fsf@alter.siamese.dyndns.org>
+References: <6a3d8a2b19a859d8c969ee434e1d6a89@meuh.org>
+	<7vobazo4ds.fsf@alter.siamese.dyndns.org>
+	<7vip17ktyz.fsf@alter.siamese.dyndns.org>
+	<b8e932cba326588db09ebd0986913ac2@meuh.org>
+	<7vbo6v9xrr.fsf@alter.siamese.dyndns.org>
+	<7vli5z6uyq.fsf@alter.siamese.dyndns.org> <51C9FDC0.5020709@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Kraai, Matt" <Matt.Kraai@amo.abbott.com>
-X-From: git-owner@vger.kernel.org Wed Jun 26 16:41:51 2013
+Cc: Yann Droneaud <ydroneaud@opteya.com>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 26 17:49:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Urquq-0003ZD-FG
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 16:41:48 +0200
+	id 1Urrxv-0000ws-4y
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 17:49:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752656Ab3FZOlo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jun 2013 10:41:44 -0400
-Received: from debian.aveco.com ([194.149.122.58]:63367 "EHLO debian.aveco.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751355Ab3FZOln convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Jun 2013 10:41:43 -0400
-X-Greylist: delayed 304 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Jun 2013 10:41:42 EDT
-Received: from macbook-do-w.aveco.com (MacBook-DO-W.aveco.com [172.16.2.243])
-  (AUTH: PLAIN david.ondrich@aveco.com, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by debian.aveco.com with esmtp; Wed, 26 Jun 2013 16:36:36 +0200
-  id 00005C45.51CAFC74.0000D65B
-In-Reply-To: <1B04D3EE58602B43B7D34ECC7F9E321E060FA821@SANMAIL04.corp.amo-inc.com>
-X-Mailer: Apple Mail (2.1508)
+	id S1751475Ab3FZPs7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jun 2013 11:48:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58117 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751347Ab3FZPs6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Jun 2013 11:48:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E366B2B728;
+	Wed, 26 Jun 2013 15:48:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=mej8UXunpIXyS2Z9tuM5kLfGd
+	AE=; b=H/nkYia78Vuw6B2fdTIq16FxA74rEqYY+E6lPQVo+ifV2MtMve1Iv/28l
+	tVnIJoE7imDapeJrjaVNJSary8R9xIeFXvn0u1ClzylEecm3eVoywXH8zkZ7exhG
+	rRAGzqWzZNGFa2I0/i354wHoRJoyyCFgCDqn/ln/bmUc1qxXYA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=r8CA0b//66HFfQ1LdsL
+	MaBJr7IuNN9lHsb8B9/bDnJgVJE/6OHfo9DZ8pYTEfLYA6v8fqbtn2tfhMbMpGQM
+	HBx8EngHZzcRQ4183nybQ5TVTqHWnIMTCg4PmNb2glA6d6Fo2wDHhdSv+GdW2TwE
+	EaCX/SKje+Sip1LpfhedaYy0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD2A62B727;
+	Wed, 26 Jun 2013 15:48:56 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13C3F2B726;
+	Wed, 26 Jun 2013 15:48:55 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E8B0AA36-DE77-11E2-97CC-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229043>
 
-Hi,
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-sorry for long delay, I was busy on some important project so far. Howe=
-ver, we=92ve found out really bad thing recently.
+>> +++ b/diff.c
+>> @@ -2647,6 +2647,10 @@ static int diff_populate_gitlink(struct diff_=
+filespec *s, int size_only)
+>>  int diff_populate_filespec(struct diff_filespec *s, int size_only)
+>>  {
+>>  	int err =3D 0;
+>> +	enum safe_crlf crlf_warn =3D (safe_crlf !=3D SAFE_CRLF_FAIL
+>> +				    ? safe_crlf
+>> +				    : SAFE_CRLF_WARN);
+>
+> Thanks,=20
+> Does it makes sense to write it the other way around?
+>
+> enum safe_crlf crlf_warn =3D (safe_crlf =3D=3D SAFE_CRLF_FAIL=20
+>                            ? SAFE_CRLF_WARN=20
+>                            : safe_crlf);
 
-On Feb 21, 2013, at 7:04 PM, "Kraai, Matt" <Matt.Kraai@amo.abbott.com> =
-wrote:
-> Junio C Hamano writes:
->> "David Ond=F8ich" <david.ondrich@aveco.com> writes:
->>> I've read [1] recently, there's been some QNX port being
->>> initiated. Does that involve also old versions of QNX 4?
->=20
-> No, I haven't been working on QNX 4 support.  I've been targeting QNX=
- 6.3.2, with a little testing on QNX 6.5.0.  I doubt what I've done wou=
-ld work on QNX 4 since it's so different from QNX 6.
-
-It certainly wouldn't work, since there=92s limitation to 48 characters=
- for filename in filesystem =96 it can be beaten up by changes in git i=
-ndex / pack / keep mechanism but it requires on-the-fly transformation =
-when replicating a repository from / to other place. I've thought we wo=
-uld be able to implement such translation but what came up was its cost=
- would be too high. It is definitely doable but for us it's currently t=
-he showstopper.
-
-dond
+I didn't see much difference either way, but between "FAIL needs to
+be demoted to WARN, everything else goes as-is" and the original "We
+do not care about anything other than FAIL, so use it as-is, but
+demote FAIL to WARN", yours look shorter.  Will replace.
