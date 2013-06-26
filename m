@@ -1,84 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git diff returns fatal error with core.safecrlf is set to true.
-Date: Wed, 26 Jun 2013 08:48:53 -0700
-Message-ID: <7vsj04yisa.fsf@alter.siamese.dyndns.org>
-References: <6a3d8a2b19a859d8c969ee434e1d6a89@meuh.org>
-	<7vobazo4ds.fsf@alter.siamese.dyndns.org>
-	<7vip17ktyz.fsf@alter.siamese.dyndns.org>
-	<b8e932cba326588db09ebd0986913ac2@meuh.org>
-	<7vbo6v9xrr.fsf@alter.siamese.dyndns.org>
-	<7vli5z6uyq.fsf@alter.siamese.dyndns.org> <51C9FDC0.5020709@web.de>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: [PATCH] [submodule] Add depth to submodule update
+Date: Wed, 26 Jun 2013 18:02:19 +0200
+Message-ID: <20130626160219.GC9141@paksenarrion.iveqy.com>
+References: <1371974698-28685-1-git-send-email-iveqy@iveqy.com>
+ <20130624224925.GC32270@paksenarrion.iveqy.com>
+ <20130625221132.GB4161@sandbox-ub>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Yann Droneaud <ydroneaud@opteya.com>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Jun 26 17:49:04 2013
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
+	gitster@pobox.com, Jens Lehmann <jens.lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Jun 26 18:02:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Urrxv-0000ws-4y
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 17:49:03 +0200
+	id 1UrsB7-00066m-7A
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 18:02:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475Ab3FZPs7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jun 2013 11:48:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58117 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751347Ab3FZPs6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Jun 2013 11:48:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E366B2B728;
-	Wed, 26 Jun 2013 15:48:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=mej8UXunpIXyS2Z9tuM5kLfGd
-	AE=; b=H/nkYia78Vuw6B2fdTIq16FxA74rEqYY+E6lPQVo+ifV2MtMve1Iv/28l
-	tVnIJoE7imDapeJrjaVNJSary8R9xIeFXvn0u1ClzylEecm3eVoywXH8zkZ7exhG
-	rRAGzqWzZNGFa2I0/i354wHoRJoyyCFgCDqn/ln/bmUc1qxXYA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=r8CA0b//66HFfQ1LdsL
-	MaBJr7IuNN9lHsb8B9/bDnJgVJE/6OHfo9DZ8pYTEfLYA6v8fqbtn2tfhMbMpGQM
-	HBx8EngHZzcRQ4183nybQ5TVTqHWnIMTCg4PmNb2glA6d6Fo2wDHhdSv+GdW2TwE
-	EaCX/SKje+Sip1LpfhedaYy0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD2A62B727;
-	Wed, 26 Jun 2013 15:48:56 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13C3F2B726;
-	Wed, 26 Jun 2013 15:48:55 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8B0AA36-DE77-11E2-97CC-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752091Ab3FZQCh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jun 2013 12:02:37 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:65189 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752004Ab3FZQCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jun 2013 12:02:35 -0400
+Received: by mail-lb0-f179.google.com with SMTP id w20so1571063lbh.10
+        for <git@vger.kernel.org>; Wed, 26 Jun 2013 09:02:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=KN0GOmlDTJhCw+OcN46UPM/T0ryjY6sYWzkIjG+pfB0=;
+        b=b3MSSy0Fdj3pQvpj/SrI7zQyhCu4qzdC/IWvBD6hp7nUXCGvogmXOIM7MHscTIpY7B
+         jcdbi9FUDNlD8WkWKp3kN6nLCffh6RRQSLBmvC2c/Qth/PfOpbm9Y43O1WwPinx+FWZl
+         3ST3sgShknCxUmBZ2qI35BXU+G8s40SSxNkjz2CnDO1dK41CWmcNR4odVgrL08HJ+4+u
+         G1o2WPTC/dWrBEFTyCHdvi0zQXqp8N4kwH4syRJR5uYi03YSjMibqWrhi/4ikW/OIhEa
+         3IPwEyl9c2lYgJ1iL6aPXb2HVUxeZC5tRuC1HE3AsbCEFOZ6RsNTqAqIF7QMwy/xsoYL
+         zCDQ==
+X-Received: by 10.152.87.43 with SMTP id u11mr2162040laz.71.1372262554070;
+        Wed, 26 Jun 2013 09:02:34 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id x8sm11048700lae.10.2013.06.26.09.02.32
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 26 Jun 2013 09:02:33 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UrsAl-00079L-6z; Wed, 26 Jun 2013 18:02:19 +0200
+Content-Disposition: inline
+In-Reply-To: <20130625221132.GB4161@sandbox-ub>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229044>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On Wed, Jun 26, 2013 at 12:11:32AM +0200, Heiko Voigt wrote:
+> On Tue, Jun 25, 2013 at 12:49:25AM +0200, Fredrik Gustafsson wrote:
+> > Used only when a clone is initialized. This is useful when the subm=
+odule(s)
+> > are huge and you're not really interested in anything but the lates=
+t commit.
+> >=20
+> > Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
+>=20
+> I this is a valid use case. But this option only makes sense when a
+> submodule is newly cloned so I am not sure whether submodule update i=
+s
+> the correct place. Let me think about this a little more. Since we do
+> not have any extra command that initiates the clone this is probably =
+the
+> only place we can put this option. But at the moment it does not feel
+> completely right.
+>=20
+> Apart from that the code looks good. If the user does a checkout of a
+> revision that was not fetched submodule update will error out the sam=
+e
+> way as if someone forgot to push his submodule changes. So that shoul=
+d
+> not be a problem.
+>=20
 
->> +++ b/diff.c
->> @@ -2647,6 +2647,10 @@ static int diff_populate_gitlink(struct diff_=
-filespec *s, int size_only)
->>  int diff_populate_filespec(struct diff_filespec *s, int size_only)
->>  {
->>  	int err =3D 0;
->> +	enum safe_crlf crlf_warn =3D (safe_crlf !=3D SAFE_CRLF_FAIL
->> +				    ? safe_crlf
->> +				    : SAFE_CRLF_WARN);
->
-> Thanks,=20
-> Does it makes sense to write it the other way around?
->
-> enum safe_crlf crlf_warn =3D (safe_crlf =3D=3D SAFE_CRLF_FAIL=20
->                            ? SAFE_CRLF_WARN=20
->                            : safe_crlf);
+I agree and would love to say that I've a more beautiful solution, but
+I haven't.
 
-I didn't see much difference either way, but between "FAIL needs to
-be demoted to WARN, everything else goes as-is" and the original "We
-do not care about anything other than FAIL, so use it as-is, but
-demote FAIL to WARN", yours look shorter.  Will replace.
+The only other solution I can think about is to add a git submodule
+clone that will do only clones of non-cloned submodules.
+
+I'm no UI expert so I don't know what's best. Maybe that's more
+intuitive.
+
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
+
+tel: 0733-608274
+e-post: iveqy@iveqy.com
