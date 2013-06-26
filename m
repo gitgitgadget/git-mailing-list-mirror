@@ -1,57 +1,76 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] column doc: rewrite documentation for column.ui
-Date: Wed, 26 Jun 2013 12:07:17 +0530
-Message-ID: <CALkWK0mkdsJpLPpXLdNwdtFS39Vwfer50LpFU3_eegSPHHsUog@mail.gmail.com>
-References: <1372175676-5423-1-git-send-email-artagnon@gmail.com> <7vobatzvfg.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Basic git-archive --remote question
+Date: Wed, 26 Jun 2013 03:01:05 -0400
+Message-ID: <20130626070105.GA5905@sigill.intra.peff.net>
+References: <CAGpXXZJifb1KmR8=VZVW+1MKjyo7HOq=OgU_rcHs-vc5ezfG6w@mail.gmail.com>
+ <CAGpXXZJuC09t8-5d=p4KNs9rQ-S347eBNuKcKWFhXZTnkLW0sA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 26 08:38:02 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Greg Freemyer <greg.freemyer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 26 09:01:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrjMf-0005p4-RG
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 08:38:02 +0200
+	id 1Urjj7-0001Ap-LD
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 09:01:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751374Ab3FZGh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jun 2013 02:37:58 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:50716 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751309Ab3FZGh5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jun 2013 02:37:57 -0400
-Received: by mail-ie0-f182.google.com with SMTP id s9so30450392iec.27
-        for <git@vger.kernel.org>; Tue, 25 Jun 2013 23:37:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+UEJWRDaPKTxGkTBQ+1Xm+Nd8yXk+Ait1eSAZuWZp/g=;
-        b=YPLPjKGuG9gF1bou90drGL+hPijh3nWstVY3fqV+9U3mb1IW51AsPp0y76x5sj3pLF
-         HximYaTUw7nEazCie3VABb6UBh/FM1Q5vpSnUIoXapItesY4MLAcCBrpTis3IAxay+XZ
-         46N82j7Biep1hcMEz6VHwyrzsAzKJBrfcJx9Kmtk9zpaIHjiO4MDioPxjRlKhRyvaG35
-         JeDu/snz3ybD9Uu32rgGMV1y7C36bjDw2y7xvFGtgm+OqmREc++uSiHdJMS0LdtMe24T
-         EkrdFJhO4yDKzBHCUWM8wW4fMaPe2taTddtp4+ucMn+EZeeLhp214ERYY4+Y0JfnKU6U
-         Z/4g==
-X-Received: by 10.43.88.3 with SMTP id ay3mr1216751icc.61.1372228677470; Tue,
- 25 Jun 2013 23:37:57 -0700 (PDT)
-Received: by 10.64.37.130 with HTTP; Tue, 25 Jun 2013 23:37:17 -0700 (PDT)
-In-Reply-To: <7vobatzvfg.fsf@alter.siamese.dyndns.org>
+	id S1751309Ab3FZHBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jun 2013 03:01:09 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55084 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751059Ab3FZHBI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jun 2013 03:01:08 -0400
+Received: (qmail 10651 invoked by uid 102); 26 Jun 2013 07:02:12 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Jun 2013 02:02:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Jun 2013 03:01:05 -0400
+Content-Disposition: inline
+In-Reply-To: <CAGpXXZJuC09t8-5d=p4KNs9rQ-S347eBNuKcKWFhXZTnkLW0sA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229032>
 
-Junio C Hamano wrote:
-> One micronit (read: if you think the suggested change is a good
-> idea, I could just locally amend it) is that it would read better
-> and also easier to maintain to say
->
->         These options control
->
-> without "three".  Both 'man' and 'html' output looked good.
+On Mon, Jun 24, 2013 at 03:53:56PM -0400, Greg Freemyer wrote:
 
-Sure, amend it.
+> I'm trying to create a tarball from a git tag and I can't get the
+> syntax right.  The documentation is not very clear.
+> [...]
+> > git archive --format=tar --remote=github.com:dkovar/analyzeMFT.git v2.0.4
+
+Your remote should be git@github.com:dkovar/analyzeMFT.git.
+
+But...
+
+> > git archive --format=tar --remote=git://github.com/dkovar/analyzeMFT v2.0.4
+> 
+> fatal: remote error
+>    Your Git client has made an invalid request:
+>    003agit-upload-archive /dkovar/analyzeMFT
+
+Your syntax is fine, but GitHub does not support remote git-archive
+requests. Not over git://, and not over ssh. In both cases the error
+messages are rather confusing and unhelpful, though.
+
+> > git archive --format=tar --remote=//github.com/dkovar/analyzeMFT v2.0.4
+
+This is wrong, as it is looking for //github.com... in the local
+filesystem.
+
+> The github page also says I can use ssh with git as the user, but that
+> complains I don't have the private key (which I don't):
+> 
+> git archive --format=tar
+> --remote=ssh://git@github/com/dkovar/analyzeMFT.git v2.0.4
+
+If you have a GitHub account and register your public key, then you can
+use ssh to fetch from the repository (using the git@github.com:user/repo
+syntax). However, remote git-archive is not currently supported, so it
+would not help you.
+
+-Peff
