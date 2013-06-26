@@ -1,94 +1,107 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 03/16] pack-objects: use a faster hash table
-Date: Wed, 26 Jun 2013 00:47:52 -0400
-Message-ID: <20130626044752.GA26755@sigill.intra.peff.net>
+Subject: Re: [PATCH 09/16] documentation: add documentation for the bitmap
+ format
+Date: Wed, 26 Jun 2013 01:11:17 -0400
+Message-ID: <20130626051117.GB26755@sigill.intra.peff.net>
 References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
- <1372116193-32762-4-git-send-email-tanoku@gmail.com>
- <87a9mdnae3.fsf@linux-k42r.v.cablecom.net>
- <20130626021417.GB21212@sigill.intra.peff.net>
+ <1372116193-32762-10-git-send-email-tanoku@gmail.com>
+ <CAJo=hJtcQwh-N-9_i84y1ZsL0mdREHcxhP2gepcrREiaxvxS6A@mail.gmail.com>
+ <CAFFjANRwBBcORhu4mwjESBfr4GJ3zDrgYvUhY=VxK9abv7k2MA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Jun 26 06:48:01 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Vicent =?utf-8?B?TWFydMOt?= <tanoku@gmail.com>,
+	Colby Ranger <cranger@google.com>, git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Jun 26 07:11:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrheB-0004jG-N0
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 06:48:00 +0200
+	id 1Uri0q-00080p-Fq
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 07:11:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750843Ab3FZEr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jun 2013 00:47:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54203 "EHLO peff.net"
+	id S1751059Ab3FZFLV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jun 2013 01:11:21 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54360 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750715Ab3FZErz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jun 2013 00:47:55 -0400
-Received: (qmail 4585 invoked by uid 102); 26 Jun 2013 04:48:59 -0000
+	id S1750718Ab3FZFLU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jun 2013 01:11:20 -0400
+Received: (qmail 5625 invoked by uid 102); 26 Jun 2013 05:12:24 -0000
 Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 25 Jun 2013 23:48:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Jun 2013 00:47:52 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Jun 2013 00:12:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Jun 2013 01:11:17 -0400
 Content-Disposition: inline
-In-Reply-To: <20130626021417.GB21212@sigill.intra.peff.net>
+In-Reply-To: <CAFFjANRwBBcORhu4mwjESBfr4GJ3zDrgYvUhY=VxK9abv7k2MA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229028>
 
-On Tue, Jun 25, 2013 at 10:14:17PM -0400, Jeff King wrote:
+On Tue, Jun 25, 2013 at 09:33:11PM +0200, Vicent Mart=C3=AD wrote:
 
-> So I suspect two things (but as I said, haven't verified):
-> 
->   1. You could speed up pack-objects just by keeping the table half full
->      rather than 3/4 full.
+> > One way we side-stepped the size inflation problem in JGit was to o=
+nly
+> > use the bitmap index information when sending data on the wire to a
+> > client. Here delta reuse plays a significant factor in building the
+> > pack, and we don't have to be as accurate on matching deltas. Durin=
+g
+> > the equivalent of `git repack` bitmaps are not used, allowing the
+> > traditional graph enumeration algorithm to generate path hash
+> > information.
+>=20
+> OH BOY HERE WE GO. This is worth its own thread, lots to discuss here=
+=2E
+> I think peff will have a patchset regarding this to upstream soon,
+> we'll get back to it later.
 
-I wasn't able to show any measurable speedup with this. I tried to make
-as specific a measurement as I could, by adding a "counting only" option
-like this:
+We do the same thing (only use bitmaps during on-the-wire fetches).  Bu=
+t
+there a few problems with assuming delta reuse.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index fc12df8..a0438d0 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2452,6 +2452,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	const char *rp_av[6];
- 	int rp_ac = 0;
- 	int rev_list_unpacked = 0, rev_list_all = 0, rev_list_reflog = 0;
-+	int counting_only = 0;
- 	struct option pack_objects_options[] = {
- 		OPT_SET_INT('q', "quiet", &progress,
- 			    N_("do not show progress meter"), 0),
-@@ -2515,6 +2516,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 			    N_("pack compression level")),
- 		OPT_SET_INT(0, "keep-true-parents", &grafts_replace_parents,
- 			    N_("do not hide commits by grafts"), 0),
-+		OPT_BOOL(0, "counting-only", &counting_only,
-+			 N_("exit after counting objects phase")),
- 		OPT_END(),
- 	};
- 
-@@ -2600,6 +2603,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		for_each_ref(add_ref_tag, NULL);
- 	stop_progress(&progress_state);
- 
-+	if (counting_only)
-+		return 0;
- 	if (non_empty && !nr_result)
- 		return 0;
- 	if (nr_result)
+=46or us (GitHub), the foremost one is that we pack many "forks" of a
+repository together into a single packfile. That means when you clone
+torvalds/linux, an object you want may be stored in the on-disk pack
+with a delta against an object that you are not going to get. So we hav=
+e
+to throw out that delta and find a new one.
 
-and even doing the whole object traversal ahead of time to just focus on
-the object-entry hash, like this:
+I'm dealing with that by adding an option to respect "islands" during
+packing, where an island is a set of common objects (we split it by
+fork, since we expect those objects to be fetched together, but you
+could use other criteria). The rule is that an object cannot delta
+against another object that is not in all of its islands. So everybody
+can delta against shared history, but objects in your fork can only
+delta against other objects in the fork.  You are guaranteed to be able
+to reuse such deltas during a full clone of a fork, and the on-disk pac=
+k
+size does not suffer all that much (because there is usually a good
+alternate delta base within your reachable history).
 
-  git rev-list --objects --all >objects.out
-  time git pack-objects --counting-only --stdout <objects.out
+So with that series, we can get good reuse for clones. But there are
+still two cases worth considering:
 
-Tweaking the hash size didn't have any effect, but using Vicent's khash
-patch actually made it about 5% slower. So I wonder if I'm even
-measuring the right thing. Vicent, how did you get the timings you
-showed in the commit message?
+  1. When you fetch a subset of the commits, git marks only the edges a=
+s
+     preferred bases, and does not walk the full object graph down to
+     the roots. So any object you want that is delta'd against somethin=
+g
+     older will not get reused. If you have reachability bitmaps, I
+     don't think there is any reason that we cannot use the entire
+     object graph (starting at the "have" tips, of course) as preferred
+     bases.
+
+  2. The server is not necessarily fully packed. In an active repo, you
+     may have a large "base" pack with bitmaps, with several recently
+     pushed packs on top. You still need to delta the recently pushed
+     objects against the base objects.
+
+I don't have measurements on how much the deltas suffer in those two
+cases. I know they suffered quite badly for clones without the name
+hashes in our alternates repos, but that part should go away with my
+patch series.
 
 -Peff
