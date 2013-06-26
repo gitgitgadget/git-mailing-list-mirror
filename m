@@ -1,74 +1,86 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [RFC/PATCH 0/1] cygwin: Remove the Win32 l/stat() functions
-Date: Wed, 26 Jun 2013 16:19:15 +0200
-Message-ID: <51CAF863.4020803@web.de>
-References: <51C5FD28.1070004@ramsay1.demon.co.uk> <51C7A875.6020205@gmail.com> <7va9mf6txq.fsf@alter.siamese.dyndns.org> <51C9EE26.9010006@kdbg.org> <7vppv928jx.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 0/5] Reroll patches against v1.8.3.1
+Date: Wed, 26 Jun 2013 07:24:54 -0700
+Message-ID: <7v38s5ymo9.fsf@alter.siamese.dyndns.org>
+References: <cover.1371720245.git.Alex.Crezoff@gmail.com>
+	<cover.1372149305.git.Alex.Crezoff@gmail.com>
+	<7vppva2dod.fsf@alter.siamese.dyndns.org>
+	<20130626073423.GA23688@ashu.dyn1.rarus.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>, dpotapov@gmail.com,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	mhagger@alum.mit.edu, Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, tboegi@web.de,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 26 16:19:53 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Alexey Shumkin <alex.crezoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 26 16:25:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UrqZU-0007i0-CU
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 16:19:44 +0200
+	id 1Urqed-0004cH-82
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Jun 2013 16:25:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751527Ab3FZOTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jun 2013 10:19:39 -0400
-Received: from mout.web.de ([212.227.15.4]:50887 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751778Ab3FZOTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jun 2013 10:19:39 -0400
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0LyDlZ-1UFN7w2AWT-015dxT; Wed, 26 Jun 2013 16:19:21
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <7vppv928jx.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V03:K0:5QkjvkiC+FS3Pqe07zdcZ/C8g8vKtDEe4cLJeqHG+CkGccIRGn0
- M+FSEEKlUOfcTNK69Mv5enSwI/I/lACKZ1D/9R9zGjYOLEHi20BXb9rbKKW0AzxHdkOjZHq
- gNQdYUV8eM/jvfiIKP0zG4LwWBLyuJv5Z3dN60kTh/7YPY0H2c6+dDt8okv65wEKdE2GG54
- E6hH2i6wDJsM/nSM2Q5LA==
+	id S1752268Ab3FZOY7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jun 2013 10:24:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35551 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751467Ab3FZOY6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Jun 2013 10:24:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E78C42A5A5;
+	Wed, 26 Jun 2013 14:24:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=/4pTrfKgonGU
+	i9xnYL2FkXUt3XM=; b=cO+FtH8J9rcfzafGFgoC5jvIEU9pfd3GX9ANTXiU/ZBB
+	955LWFFMgEA1USue26t3cLSkfd482wNj1E/A8yyZcYaoJIC4fBKbTwpN3nBLcRey
+	6UFrFXU4MQ3BS1Bpk/6pgosWintaIINTlSscrnz4tSbsRcFkDycSbU4YUD+SBFE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PudGNs
+	nOCxYZR16fjY1vW1IjljTa0JAQiFA/4GF+JR0lVjI17xIJuJD/WpJwmRRjch3kxg
+	C1/6m8uYVn/K2bZPEMBnbRlSYQdwyXIYtzaxTwkCVO2azjmR3gD8SUorni0LLPZ7
+	sUE5mrMhRjE1VPuPGq1pCo5g3SNVZuFeDr/qE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF16E2A5A4;
+	Wed, 26 Jun 2013 14:24:56 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD2B32A5A3;
+	Wed, 26 Jun 2013 14:24:55 +0000 (UTC)
+In-Reply-To: <20130626073423.GA23688@ashu.dyn1.rarus.ru> (Alexey Shumkin's
+	message of "Wed, 26 Jun 2013 11:37:09 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2C833C9E-DE6C-11E2-9D99-9B86C9BC06FA-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229041>
 
-On 2013-06-25 23.18, Junio C Hamano wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
->> Some context: This is about a patch by Ramsay that removes the
->> "schizophrenic lstat" hack for Cygwin. Junio, can you please queue that
->> patch in pu?
-> 
-> Sure.  Thanks.
+Alexey Shumkin <alex.crezoff@gmail.com> writes:
 
-First of all,
-thanks for the work.
+> On Tue, Jun 25, 2013 at 12:28:02PM -0700, Junio C Hamano wrote:
+> ...
+> If someone can do the same with latin1, I'd be happy.
+> ...
+> But today I've taken a look to Cygwin's locales more closely and foun=
+d
+> out that I've used incorrect encoding name (`iso88595` instead of "ca=
+nonic"
+> `iso-8859-5` that Cygwin has and "understands")
+>
+> Nevertheless, as I've already said that is not a Russian locale speci=
+fic
+> issue.
+> The problem in tests for me now is a language (that uses iso-8859-1
+> encoding) I do not speak or even write ;)
 
-Here some "benchmark" results, 
-(The test run of the test suite did the same amout of time).
+Many of the people on thee list don't, either, and that is perfectly
+OK.
 
-But:
-git status -uno in real life takes double the time,
-git 1.8.3 compared against "pu with the vanilla l/stat"
-   
-    1 second ->  2 seconds on linux kernel
-0.2 seconds -> 0.4 seconds on git.git 
-
-Do we have any known problems with the current implementation ?
-Does speed matter ?
-
-One vote to keep the special cygwin functions.
-(And have a look how to improve the core.filemode)
-
-/Torsten
+=46or the purpose of the test, "=C3=A1=C3=AB=C3=AE=C3=B5=C3=B9" should =
+be sufficient. In a
+sense, using such an artificial string would make it even clearer
+than a real message that what we are testing, no?
