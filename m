@@ -1,99 +1,94 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [RFC/PATCH 0/1] cygwin: Remove the Win32 l/stat() functions
-Date: Wed, 26 Jun 2013 22:45:48 +0100
-Message-ID: <51CB610C.7050501@ramsay1.demon.co.uk>
-References: <51C5FD28.1070004@ramsay1.demon.co.uk> <51C6BC4B.9030905@web.de> <51C8BF2C.2050203@ramsay1.demon.co.uk> <7vy59y4w3r.fsf@alter.siamese.dyndns.org> <51C94425.7050006@alum.mit.edu>
+From: Colby Ranger <cranger@google.com>
+Subject: Re: [PATCH 09/16] documentation: add documentation for the bitmap format
+Date: Wed, 26 Jun 2013 15:33:00 -0700
+Message-ID: <CAFFbUK+emr44o_2EHW2Y4o5fs8Livif_5D=G=NLDzE=2MEx6NQ@mail.gmail.com>
+References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
+	<1372116193-32762-10-git-send-email-tanoku@gmail.com>
+	<CAJo=hJtcQwh-N-9_i84y1ZsL0mdREHcxhP2gepcrREiaxvxS6A@mail.gmail.com>
+	<CAFFjANRwBBcORhu4mwjESBfr4GJ3zDrgYvUhY=VxK9abv7k2MA@mail.gmail.com>
+	<20130626051117.GB26755@sigill.intra.peff.net>
+	<CAFFbUKJZ1w2puKFLjPNZmMhSLo3_1kpfA1upv7K6qZV256vTyQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?Torsten_B=F6gers?= =?ISO-8859-1?Q?hausen?= 
-	<tboegi@web.de>, Jeff King <peff@peff.net>,
-	Johannes Sixt <j6t@kdbg.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, mlevedahl@gmail.com,
-	dpotapov@gmail.com, GIT Mailing-list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 27 00:07:59 2013
+Cc: Shawn Pearce <spearce@spearce.org>,
+	=?ISO-8859-1?Q?Vicent_Mart=ED?= <tanoku@gmail.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 27 00:33:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Urxsa-0007co-Tc
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 00:07:57 +0200
+	id 1UryGx-0005H3-IN
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 00:33:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753160Ab3FZWHu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jun 2013 18:07:50 -0400
-Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:60581 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752978Ab3FZWHt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jun 2013 18:07:49 -0400
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id CD9926F8C45;
-	Wed, 26 Jun 2013 23:07:48 +0100 (BST)
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id E67156F8BBE;
-	Wed, 26 Jun 2013 23:07:47 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
-	Wed, 26 Jun 2013 23:07:45 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <51C94425.7050006@alum.mit.edu>
-X-MDF-HostID: 3
+	id S1753346Ab3FZWdC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jun 2013 18:33:02 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:48411 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752804Ab3FZWdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jun 2013 18:33:01 -0400
+Received: by mail-ob0-f177.google.com with SMTP id ta17so25881obb.36
+        for <git@vger.kernel.org>; Wed, 26 Jun 2013 15:33:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=WYuGRtS7z1SpCXl/wuullm55NIC1srllGM/JJAk0E9c=;
+        b=aeH+EgMhevLEkpF+/7Bj/BsNNclhvNQdwBGXsgkfrvWbuwALver9e1JYNsB1z2mnIP
+         7lJnmMX1FVbRzxPfc+opj35Y5sef7yXsVPySgrzsTDCtWjwShFUFa8WWCsUyqHxswucS
+         P0k9K2aEfjFR37ymYHp2kKikLdxe6IIE5f0q4HXEupTGKisy4FDGf67jBSTWfjqXA8qE
+         bMB34O/o8uErXYUJkberw6DEUcAbzcOWvzWDoXxZek1Eie00f7iWhbKu4v+v4P+BjQGb
+         j+yL8RcvjTQZTU4E854AWjLmAQGWi5E1A8mc3YIv+1ghagmBROLcprEZu19uZGaafC6F
+         3/yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-gm-message-state;
+        bh=WYuGRtS7z1SpCXl/wuullm55NIC1srllGM/JJAk0E9c=;
+        b=daDKhHZeT3L09wMSYr6hG/TbzrpT2JM6GepNhxYuKb7jwG/jLDKWlRbB6WiE1iENjM
+         bhdcEFxOw16Q5FnqtolzL5cHfnDzOl3knkivl/NW84XDlspj13haYSJkVIY9YwDafchV
+         AjlRZJROBVim6CDSfvZOgoA9wb+ZGuNLuUcYSCl7gaemVSvYvY0dLK89k3x9BNMBCqhI
+         VvYPUbe0DR44iwM5Dq8dZWaRphY+cY1782SfWgefOgZScKefUPaHpA4M7+tksxqs6qhu
+         mzcjoXNQaq5BrNUJd4ek1fKCrO64xO3UfOOfQPxjCqIvCEQNcd3y/thRs0Enmkv04bJA
+         jA1w==
+X-Received: by 10.60.37.233 with SMTP id b9mr1519760oek.61.1372285980367; Wed,
+ 26 Jun 2013 15:33:00 -0700 (PDT)
+Received: by 10.60.125.198 with HTTP; Wed, 26 Jun 2013 15:33:00 -0700 (PDT)
+In-Reply-To: <CAFFbUKJZ1w2puKFLjPNZmMhSLo3_1kpfA1upv7K6qZV256vTyQ@mail.gmail.com>
+X-Gm-Message-State: ALoCoQkbuhfMvLjIE8RzCyN7V0xD3XSNJjqDvn/VT0BiQeRiPIjCOI7MZW75TUkHrZRyXDjDP1ZDzjIEQSh4HMRwh0wsuEW53Wq5Cpf1prvcMtaVeb+Z8eLOpgK7jNXAmybKKRkh/K3bi4/VRaHV3fJHpQEkjhbVUrxPqkCKGDSflvyYLkvxIAszBeFh7Iud8M1dw5Gqdr7b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229066>
 
-Michael Haggerty wrote:
-> On 06/25/2013 07:07 AM, Junio C Hamano wrote:
->> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
->>
->>> Michael Haggerty and Jeff King have been re-vamping the reference
->>> handling code. The failures noted above were provoked by patches
->>> in the 'mh/ref-races' branch. At the time I wrote this patch, that
->>> branch was only included in 'pu', but I notice that this topic has
->>> now progressed to 'next' (see commit 71f1a182).
->>
->> I had an impression that up to 98eeb09e (for_each_ref: load all
->> loose refs before packed refs, 2013-06-20) that is now in 'next'
->> does not agressively use the lstat timestamp of the packed-refs
->> file, and the "optional" bit 5d478f5c (refs: do not invalidate the
->> packed-refs cache unnecessarily, 2013-06-20), and the one in 'next'
->> should be safe with the cheating-lstat.  Isn't it the case?
->>
->> In any case, if removing the cheating-lstat will improve the
->> robustness without hurting performance, I am all for it.
->>
->> The less platform specific hacks, the better ;-).
-> 
-> The following patch in the "non-optional" commits (which has already
-> been merged to next) uses stat() via the new stat_validity API:
-> 
-> ca9199300e get_packed_ref_cache: reload packed-refs file when it changes
-> 
-> This patch adds some *extra* cache invalidation that was heretofore
-> missing.  If stat() is broken it could
-> 
-> (a) cause a false positive, resulting in some unnecessary cache
-> invalidation and re-reading of packed-refs, which will hurt performance
-> but not correctness; or
-> 
-> (b) cause a false negative, in which case the stale cache might be used
-> for reading (but not writing), just as was *always* the case before this
-> patch.
-> 
-> As far as I understand, the concern for cygwin is (a).  I will leave it
-> to others to measure and/or decide whether the performance loss is too
-> grave to endure until the cygwin stat() situation is fixed.
-> 
+>> Pinning the bitmap index on the reverse index adds complexity (lookups
+>> are two-step: first find the entry in the reverse index, and then find
+>> the SHA1 in the index) and is measurably slower, in both loading and
+>> lookup times. Since Git doesn't have a memory problem, it's very hard
+>> to make an argument for design that is more complex and runs slower to
+>> save memory.
+>
+> Sorting by SHA1 will generate a random distribution. This will require
+> you to inflate the entire bitmap on every fetch request, in order to
+> do the "contains" operation.  Sorting by pack offset allows us to
+> inflate only the bits we need as we are walking the graph, since they
+> are usually at the start of the bitmap.
+>
+> What is the general size in bytes of the SHA1 sorted bitmaps?  If they
+> are much larger, the size of the bitmap has an impact on how fast you
+> can perform bitwise operations on them, which is important for fetch
+> when doing wants AND NOT haves.
 
-Hmm, I'm not sure I understand ... However, I can confirm that the
-'mh/ref-races' branch in next is broken on cygwin. (i.e. it is not
-just a speed issue; it provokes fatal errors).
-
-See reply to Junio.
-
-ATB,
-Ramsay Jones
+Furthermore, JGit primarily operates on the bitmap representation,
+rarely converting bitmap id -> SHA1 during clone. When the bitmap of
+objects to include in the output pack contains all of the objects in
+the bitmap'd pack, we only do the translation of the bitmap ids of new
+objects, not in the bitmap index, and it is just a lookup in an array.
+Those objects are put at the front of the stream. The rest of the
+objects are streamed directly from the pack, with some header munging,
+since it is guaranteed to be a fully connected pack. Most of the time
+this works because JGit creates 2 packs during GC: a heads pack, which
+is bitmap'd, and an everything else pack.
