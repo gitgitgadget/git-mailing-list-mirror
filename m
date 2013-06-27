@@ -1,8 +1,11 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH] pull: require choice between rebase/merge on non-fast-forward pull
-Date: Thu, 27 Jun 2013 14:20:42 -0700
-Message-ID: <7vehbnqmhh.fsf@alter.siamese.dyndns.org>
-References: <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
+Date: Fri, 28 Jun 2013 00:16:53 +0200
+Message-ID: <vpqwqpf9p2i.fsf@anie.imag.fr>
+References: <20130522115042.GA20649@inner.h.apk.li>
+	<7v4ndukhx0.fsf@alter.siamese.dyndns.org>
+	<20130523090657.GB23933@inner.h.apk.li>
+	<CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
 	<20130523102959.GP9448@inner.h.apk.li>
 	<20130523110839.GT27005@serenity.lan>
 	<7vd2shheic.fsf@alter.siamese.dyndns.org>
@@ -12,83 +15,73 @@ References: <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
 	<7vli75cpom.fsf@alter.siamese.dyndns.org>
 	<CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
 	<7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
-	<20130627201032.GF9999@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: git@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	John Keeping <john@keeping.me.uk>,
 	Andreas Krey <a.krey@gmx.de>,
 	John Szakmeister <john@szakmeister.net>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Thu Jun 27 23:21:10 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 28 00:17:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsJcs-0003wL-2v
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 23:21:10 +0200
+	id 1UsKVd-0007uJ-2I
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 00:17:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753849Ab3F0VUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 17:20:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62543 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752933Ab3F0VUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 17:20:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D2F72A8C0;
-	Thu, 27 Jun 2013 21:20:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y2s8g/j0io5OqtOcM5bizRgFSIk=; b=D2ED56
-	JSn7l2CxVAmxU/GkP6uB0cGnHmal/AVggmlW5qgXy+9sccET05PfqjDXEHTgst5H
-	k0lUBhZjhfb16EIfm5ISyEa+i2KAiax+FwWbgPMZKq3f5gY/bx38pEfqCsG4NgTs
-	4nHh4tjdXQb3lNhvspBx0A1nMrxAwduvXlNcc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mP12oVBkhSNho+u1/uXQGg3Kn7znsJlv
-	aUdEyaAyHmiuFTn8xpWPdI27sUnLbiuV3/v3z5qpRRngeIx6iuNpR6GhFn3O3GHB
-	lorJ+KdaLDK922Ma0MN3Kd8Kgm5/bLvY03VYcB1XxT70bln9W84sv0p2zlGtM1q9
-	6Hhsbh2hfKQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 020762A8BD;
-	Thu, 27 Jun 2013 21:20:48 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4BFA22A8A1;
-	Thu, 27 Jun 2013 21:20:44 +0000 (UTC)
-In-Reply-To: <20130627201032.GF9999@odin.tremily.us> (W. Trevor King's message
-	of "Thu, 27 Jun 2013 16:10:32 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6D55E790-DF6F-11E2-9F9B-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753895Ab3F0WR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 18:17:28 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:56056 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752033Ab3F0WR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 18:17:27 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5RMGqSD016246
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 28 Jun 2013 00:16:52 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UsKUo-0007oj-1J; Fri, 28 Jun 2013 00:16:54 +0200
+In-Reply-To: <7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 27 Jun 2013 12:48:52 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 28 Jun 2013 00:16:55 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229162>
 
-"W. Trevor King" <wking@tremily.us> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Thu, Jun 27, 2013 at 12:48:52PM -0700, Junio C Hamano wrote:
->> Because letting a trivial merge automatically handled by Git is so
->> easy with "git pull", a person who is new to Git may not realize
->> that the project s/he is interacting with may prefer "rebase"
->> workflow.
->
-> Or they may not even realize that they've just merged an unrelated
-> branch at all, dragging in a thousand unrelated commits which they
-> accidentally push to a central repository without looking,
-> contaminating future branches based on the central repostitory without
-> drastic rebase surgery ;).  I just saw one of these earlier this week.
+> Because letting a trivial merge automatically handled by Git is so
+> easy with "git pull", a person who is new to Git may not realize
+> that the project s/he is interacting with may prefer "rebase"
+> workflow.  Add a safety valve to fail "git pull" that is not a
+> fast-forward until/unless the user expressed her preference between
+> the two.
 
-I am not sure "running pull and integrate other's work in random
-branches" is something the proposed (not by me) change would help to
-prevent from happening.
+IMHO, that would be terrible for beginners.
 
-Your "accident user" could have just been on a 'maint' branch,
-pulled the 'master' branch which would fast-forward and then pushed
-the result back to 'maint', contaminating the shared 'maint' branch
-with commits that do not match the purpose of it, which is to hold
-only fixes without enhancements.
+My experience with many beginners/students is: they run "git pull" to
+get changes from their co-workers, don't read the messages. When there's
+no conflict, it's OK, Git creates the merge commit and they continue
+working. When there are conflicts, they fix it (or not), and forget to
+commit, continue working, and commit when they really need to, later.
+That's bad: mixing merges with actual changes is terrible. But that
+works. And that's a very common mistake in my experience :-(.
+
+Now, give the same user as above "git pull --rebase". rebase may stop
+because of conflicts, the user may fix it, but then if the user
+continues working, he's on a detached HEAD with a rebase ongoing. Some
+of the changes went away, they may come back one day if the user runs
+"git rebase --continue".
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
