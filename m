@@ -1,68 +1,129 @@
-From: =?UTF-8?Q?Beno=C3=AEt_Person?= <benoit.person@ensimag.fr>
-Subject: Re: contrib/mw-to-git/Git/Mediawiki.pm
-Date: Thu, 27 Jun 2013 19:54:36 +0200
-Message-ID: <CAETqRCif7K3MZiG4oMfnM-jps+KajDMYML4C5Hhy8eE7bj38xA@mail.gmail.com>
-References: <51CC6189.6030701@web.de>
-	<CAETqRCgctnVqrYaAYn7uZtv0rvQNawUAi513iTeWPufkZPRgAw@mail.gmail.com>
-	<vpq4ncjcxt4.fsf@anie.imag.fr>
-	<7vzjubsbqj.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 2/5] git-remote-mediawiki: new git bin-wrapper for developement
+Date: Thu, 27 Jun 2013 10:57:53 -0700
+Message-ID: <7vr4fnsafy.fsf@alter.siamese.dyndns.org>
+References: <1372354652-4147-1-git-send-email-benoit.person@ensimag.fr>
+	<1372354652-4147-3-git-send-email-benoit.person@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 27 19:54:49 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: benoit.person@ensimag.fr
+X-From: git-owner@vger.kernel.org Thu Jun 27 19:58:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsGP7-000754-Ud
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 19:54:46 +0200
+	id 1UsGSG-0001ou-FQ
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 19:58:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752773Ab3F0Ryh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 13:54:37 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:48783 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752593Ab3F0Ryh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 13:54:37 -0400
-Received: by mail-wg0-f46.google.com with SMTP id c11so815348wgh.13
-        for <git@vger.kernel.org>; Thu, 27 Jun 2013 10:54:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=85Sd2iCRtzkFejUPeF2PKEbM57QCc9hoY1nqD+t/o8k=;
-        b=f7wCY9T8FxeabBP+GRo47wq5P77XpYg3Ls9zuXtv78rO5/PKJeGXsbkhIOhHkuerrk
-         IvDHgWwhuCg+M2F8ysKe3pk1g44iuvRrYD7PC4YH3CHQHU3PbVg7zC6crhfsJcLPWYoY
-         L8W+IHPEr+O6N/sB9LueEwNTJ4370kRU8z5kIdCnI57Bm5zuRbKwfQWdQJF/dHZJ6gPg
-         rDn6adsHPQdJkQ+ZQQtjiIbapnjjRjdWx+AirdrbfuYq3gIfU4tKxQC+bDeGWWMQlLeM
-         7ZXmezdHnZGfqd2TW/wlBgCxY672fuflD9ZHvhSRYgJV2irv0VEvcsu3wCVnrUcZOd1c
-         sTtw==
-X-Received: by 10.194.243.101 with SMTP id wx5mr7042977wjc.49.1372355676102;
- Thu, 27 Jun 2013 10:54:36 -0700 (PDT)
-Received: by 10.216.245.196 with HTTP; Thu, 27 Jun 2013 10:54:36 -0700 (PDT)
-In-Reply-To: <7vzjubsbqj.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: 2BRkLGmOywWsz17ZnDN-E_CRym0
+	id S1753631Ab3F0R54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 13:57:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64174 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752198Ab3F0R54 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 13:57:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6586D2A5AA;
+	Thu, 27 Jun 2013 17:57:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=onp5O7I3rtdXN/vAWq8j2FwgudE=; b=O2SSNr
+	aZN3Re0PujztQt/PLOKDK4Svz+NSLVGdCJ9Z/L/xZHxGRqnsYkKpafIDkRIGY9iU
+	up4yUrlMyT6S1uorQoE71nQtxadMLzf5lngApVsKK6j5H9o7L5p7JJ51pzbdt+II
+	77JoEKZEV5YiaXAX5hw8UDCCa+b0L10PxXjFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UhaW/xQjfuV+tvbY2CY6O+4p4U16BEOu
+	jo29817XqI3uCWt4asY+eb6bR3Uv5NhP3Ktad2W6Wb+SNwevbTXjgyxBG49ggQRJ
+	iQahJL1LNzZnv3vCX56beN0ktTuUE6qFzcnzKEsw56rNdoCSW6cRPYdhOIsL8cPD
+	289e+mroblg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5979C2A5A9;
+	Thu, 27 Jun 2013 17:57:55 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ABB3C2A5A5;
+	Thu, 27 Jun 2013 17:57:54 +0000 (UTC)
+In-Reply-To: <1372354652-4147-3-git-send-email-benoit.person@ensimag.fr>
+	(benoit person's message of "Thu, 27 Jun 2013 19:37:29 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 17AEA910-DF53-11E2-B060-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229135>
 
-> Hmph.  Does it even need to be in-tree then?  Is it insufficient to
-> run ../../git from that directory instead?
-Well, the fact is we use Perl packages now (Git.pm and
-Git::Mediawiki.pm in contrib/mw-to-git/Git/). The way we build perl
-scripts in the toplevel's Makefile makes those packages accessible
-only in $GITPERLLIB if it's defined and defaults to $INSTLIBDIR to
-seek for installed version of those packages.
+benoit.person@ensimag.fr writes:
 
-We use a bin-wrapper to define that $GITPERLLIB variable so that the
-installed version gets bypassed by the one presents in the directory
-defined in $GITPERLLIB.
+> diff --git a/contrib/mw-to-git/bin-wrapper/git b/contrib/mw-to-git/bin-wrapper/git
+> new file mode 100755
+> index 0000000..aa714a5
+> --- /dev/null
+> +++ b/contrib/mw-to-git/bin-wrapper/git
+> @@ -0,0 +1,27 @@
+> +#!/bin/sh
+> +
+> +# git executable wrapper script for Git-Mediawiki to run tests without
+> +# installing all the scripts and perl packages.
+> +
+> +# based on $GIT_ROOT_DIR/wrap-for-bin.sh
 
-> I just noticed that the script is not strictly a text file, ending
-> with an incomplete line, by the way.
-an incomplete line ?
+I really do not like the smell of this.
+
+As far as I can tell, the only real reason why you need this and
+cannot use ../../bin-wrappers/git directly is because the GITPERLLIB
+it gives you only points at ../../perl/blib/lib and not this
+directory.
+
+Two possible alternatives:
+
+ - Is there a reason you would not want to "install" whatever Perl
+   modules you want to "use" via GITPERLLIB mechanism to
+   ../../perl/blib/lib?  Perhaps it will interfere with the real
+   installation step in ../../perl/Makefile?  If that is the case,
+   then it is not a good idea, but otherwise, that would let you use
+   ../../bin-wrappers/git as-is.
+
+ - Perhaps we could do:
+
+	GITPERLLIB="${GPLEXTRA+$GPLEXTRA:}@@BUILD_DIR@@/perl/blib/lib"
+
+   in wrap-for-bin.sh, so that your instruction can become
+
+	GPLEXTRA=$(pwd) ../../bin-wrappers/git whatever-mw-thing
+
+   and you do not have to have this file?  We would also need to
+   "unset GPLEXTRA" at the beginning of test-lib.sh if we were to do
+   this.
+
+How does a developer (or user) use this script?  From your Makefile
+(e.g. "make test")?  Manually following some written instruction?
+In either case, the latter option feels a lot more sensible
+alternative without having to maintain this extra copy of wrap-for-bin
+that can easily go out of sync.
+
+> +
+> +
+> +GIT_ROOT_DIR=../../..
+> +GIT_EXEC_PATH=$(cd "$(dirname "$0")" && cd ${GIT_ROOT_DIR} && pwd)
+> +
+> +echo $GIT_EXEC_PATH
+> +
+> +if test -n "$NO_SET_GIT_TEMPLATE_DIR"
+> +then
+> +	unset GIT_TEMPLATE_DIR
+> +else
+> +	GIT_TEMPLATE_DIR="$GIT_EXEC_PATH"'/templates/blt'
+> +	export GIT_TEMPLATE_DIR
+> +fi
+> +# Hack to make the `use lib` call works with multiple paths
+> +GITPERLLIB="$GIT_EXEC_PATH"'/contrib/mw-to-git:'"$GIT_EXEC_PATH"'/perl/blib/lib'
+> +GIT_TEXTDOMAINDIR="$GIT_EXEC_PATH"'/po/build/locale'
+> +PATH="$GIT_EXEC_PATH"'/contrib/mw-to-git:'"$GIT_EXEC_PATH"'/bin-wrappers:'"$PATH"
+> +export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
+> +
+> +exec "${GIT_EXEC_PATH}/git" "$@"
