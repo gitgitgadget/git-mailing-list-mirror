@@ -1,89 +1,102 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: device files should be handled by git
-Date: Thu, 27 Jun 2013 15:08:42 +0200
-Message-ID: <20130627130842.GB27497@paksenarrion.iveqy.com>
-References: <21095513-708E-4F82-88D0-A312B74BA7F4@mac.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Off-line deverloper workflow?
+Date: Thu, 27 Jun 2013 15:14:05 +0200
+Message-ID: <CALKQrgdiRg--A4-cp7Y0c3-rc-gDX+QVgPxKDpmW5Exx_HeWHg@mail.gmail.com>
+References: <20130627124656.GA2620@zuhnb712>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Perry Wagle <wagle@mac.com>
-X-From: git-owner@vger.kernel.org Thu Jun 27 15:09:09 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Woody Wu <narkewoody@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 27 15:14:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsBwi-0005BB-RN
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 15:09:09 +0200
+	id 1UsC1g-0001K7-VT
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 15:14:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752880Ab3F0NJG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jun 2013 09:09:06 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:48172 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752609Ab3F0NJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 09:09:03 -0400
-Received: by mail-lb0-f176.google.com with SMTP id z5so393805lbh.7
-        for <git@vger.kernel.org>; Thu, 27 Jun 2013 06:09:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=hOc8k2AkKG6l7/F8MwfFyNVXQKPScJgt0sGh7JaPWMM=;
-        b=tsDboJrYipT3IE709Ssa336W1eZ0bxM1i4ZvKrZBfJ5cSXDAGFTWGc4MIJJtyCe2bl
-         kz/s4yhtvcK7kOGTF6YItp0Udy6kcIiUmZM3HZDqjHSoURfLpFIaSJKTggrCSCSHtsRE
-         3j32AroarWSYbMd4kDooNCSxdcpEQbuksbBDFqFSzsMmU3w+vuzrkPs02C4+oRynjb8l
-         ZiB1rTpkdRmP7zwDUIyd3XfjFla6dqT8+pHTJj9ejTKbCec5zFLmpgFhumsy5seohIo+
-         2kVJaE7QtbB06CamtinWvXEwF42bmkEuyp9ROE1hUmjVEP7xbJ42t6zqjTw6TfbJQz8X
-         SlTQ==
-X-Received: by 10.152.8.72 with SMTP id p8mr4255763laa.70.1372338540849;
-        Thu, 27 Jun 2013 06:09:00 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id m14sm1155840lbl.1.2013.06.27.06.08.59
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 27 Jun 2013 06:09:00 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UsBwI-0001TP-Qe; Thu, 27 Jun 2013 15:08:42 +0200
-Content-Disposition: inline
-In-Reply-To: <21095513-708E-4F82-88D0-A312B74BA7F4@mac.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752408Ab3F0NOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 09:14:12 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:63144 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751685Ab3F0NOK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 09:14:10 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UsC1Z-000LO8-AI
+	for git@vger.kernel.org; Thu, 27 Jun 2013 15:14:09 +0200
+Received: from mail-oa0-f46.google.com ([209.85.219.46])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UsAqz-000LTc-6v
+	for git@vger.kernel.org; Thu, 27 Jun 2013 13:59:09 +0200
+Received: by mail-oa0-f46.google.com with SMTP id h1so811969oag.33
+        for <git@vger.kernel.org>; Thu, 27 Jun 2013 06:14:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=wAn8UfuENPlZ5EoADmzTaZMGv79EcM1cskOEZt/FZYY=;
+        b=FjKqMFUUOmfK7z76x7QB15QABkU2KG18AywQE31IaHn0WkFPXZaN1aDUvR/MquNdGy
+         ONRNqqBKySs3NG3w5mWLoOA949pc9ceB+Y4ON7vBWXRqEyZNu7X9BFNV4jToBtlSWlX5
+         Ke00sGh38/15ZZgfVZPnOidV1k8DmfniFGWz7eDFp5IkmhAIZuviU03V7R4Szof9oc8Y
+         G0EHPgD4w9Te0hNQSp7MGRpafTUIskzcG7ZntkFtq2SLFCLeXGRIm48i/9gyzLYQAXsI
+         ulZvi3/2K2Qj2cx1XmYGDALSaFZVxFUSVarD8qjV/cZuRvDzyPoP1qO3Gb1BVpT1k7zd
+         EQiA==
+X-Received: by 10.60.97.1 with SMTP id dw1mr2803836oeb.1.1372338845576; Thu,
+ 27 Jun 2013 06:14:05 -0700 (PDT)
+Received: by 10.182.102.5 with HTTP; Thu, 27 Jun 2013 06:14:05 -0700 (PDT)
+In-Reply-To: <20130627124656.GA2620@zuhnb712>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229100>
 
-On Wed, Jun 26, 2013 at 08:27:56PM -0700, Perry Wagle wrote:
-> Hi --
->=20
-> I have a disk image of a small embedded device whose root file system=
- I'd like to check-in to git as a means of distributing its GPL'd softw=
-are.  In that disk image are device files, which GIT studiously ignores=
-=2E  If symlinks are handled (contents being the path that the symlink =
-points at), I don't see why device files can't be handled (contents bei=
-ng the type (char or block) and the major and minor device number).  TA=
-R, for example, handles this fine, except that using tar in git sort-of=
- goes against the granularity of the objects being modified (like addin=
-g a bunch of extra "sd??" devices), such that you are modifying a whole=
- tar ball instead of the individual (device) files.
->=20
-> Is there a reason not to handle device files other than "its not trad=
-itional"?  That's the only reason given in google or the IRC channel.
->=20
-> Thanks!
+On Thu, Jun 27, 2013 at 2:46 PM, Woody Wu <narkewoody@gmail.com> wrote:
+> I have a colleague who has to left our office for three month, but still
+> need to work on the project which is hosted on our in-office git
+> repository. Problem is that our company has firewall, it's not possible
+> or not allowed to access the company LAN outside the building.  So I
+> want to ask you expert, can you suggest a best practice of git workflow
+> that suitable to my situation?
 
-In linux you can't create device files if your not root. On windows
-those files won't even exists (afaik).
+If he can set up an SSH server on his machine (outside the company
+network), then he can set up a mirror repo on his machine, where you
+can push changes from the office to him, and pull changes from him
+back into the office. Of course, you will probably need to synchronize
+this with him, especially if he's travelling and frequently offline or
+changing IP addresses. Also you need to be able to make outbound SSH
+connections through the company firewall, but AFAICS that is usually
+allowed.
 
-Wouldn't this be very unportable and hard to use (meaning that you need
-to handle your git repo as root or give git setuid root)?
+His work repo is then a local clone of the mirror repo, and when he's
+ready to publish some work to you, he pushes it to the mirror repo,
+and asks you to pull from the mirror repo.
 
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
+If the source code is not secret, you could even synchronize through
+GitHub or some other repo hosting service, which would be even easier
+to set up.
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+
+Hope this helps,
+
+...Johan
+
+> Thanks in advance.
+>
+> -woody
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
