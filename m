@@ -1,70 +1,56 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Bug on OS X...
-Date: Thu, 27 Jun 2013 06:17:52 -0400
-Message-ID: <CAEBDL5VeE7dyo_A7904SBNSvf834xdGyyuk=vE44wXoRVJ-nkg@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [BUG] rebase should desambiguate abbreviated hashes before starting
+Date: Thu, 27 Jun 2013 13:04:10 +0200
+Message-ID: <vpq1u7n3jdh.fsf@anie.imag.fr>
+References: <20130627105513.6bf84060@chalon.bertin.fr>
+	<CAMPXz=pSseQKebNVPVYogTZ2FUc1LqubgmS+pN76sveV=eqC0A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 27 12:17:59 2013
+Content-Type: text/plain
+Cc: Yann Dirson <dirson@bertin.fr>, git list <git@vger.kernel.org>
+To: David <bouncingcats@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 27 13:04:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Us9H4-0001Jp-25
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 12:17:58 +0200
+	id 1Us9zu-0001kY-Qr
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 13:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752799Ab3F0KRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 06:17:54 -0400
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:48803 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752703Ab3F0KRx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 06:17:53 -0400
-Received: by mail-qa0-f42.google.com with SMTP id hu16so2337638qab.15
-        for <git@vger.kernel.org>; Thu, 27 Jun 2013 03:17:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        bh=huuKiq0DqpuQF489DT5sJ3UoGUmNUgUZqbrnUBvbV4Q=;
-        b=fdkGe7sNKHlGVFI3xOxX1C1WCqMMEGKYPGnUAoShyCm+0CwRtICilQ76KuRspyr4rT
-         NFetoZl/HgrIYt5taSdQK/2bKLmJTj8XCjegsXx/QQvGy9SU91pY2/7L5PTj4SRK8PyA
-         2UXn5ylE9296BbSMfX1cN11b1w8glcRLHSlCV0p3qnx3M4ChgA//6F84QyrBG32Ukrrs
-         BVKGXIEb2c+rjZoUODYoZSbL1TyaO4x+bRODn2jtrdo7+Ey1xCpObIB9uPN3b6/VlOQN
-         GLcYJ6RYHpVzxM45/TV1fWYtDrgUVoJD1CHqrHZKS3T5k/IBWQf5lVhRtWWsRJHYdSTA
-         Rkbw==
-X-Received: by 10.49.12.11 with SMTP id u11mr9937875qeb.21.1372328272427; Thu,
- 27 Jun 2013 03:17:52 -0700 (PDT)
-Received: by 10.49.116.205 with HTTP; Thu, 27 Jun 2013 03:17:52 -0700 (PDT)
-X-Google-Sender-Auth: QJpw7SX_14u3PdbSep7DsnzCI48
+	id S1751566Ab3F0LEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 07:04:14 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38827 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750806Ab3F0LEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 07:04:14 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r5RB4AXo026082
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 27 Jun 2013 13:04:10 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Us9zn-0005zU-8y; Thu, 27 Jun 2013 13:04:11 +0200
+In-Reply-To: <CAMPXz=pSseQKebNVPVYogTZ2FUc1LqubgmS+pN76sveV=eqC0A@mail.gmail.com>
+	(David's message of "Thu, 27 Jun 2013 19:38:04 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 27 Jun 2013 13:04:10 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229094>
 
-I wanted to look at some OpenWRT bits this morning and ran into an
-issue cloning the packages repository when setting up the package
-feed.  The feeds script executes this under the hood:
+David <bouncingcats@gmail.com> writes:
 
-   git clone --depth 1 git://nbd.name/packages.git feeds/packages
+> I'm not sure that rebase could predict the new hashes without actually creating
+> the prior commits? So maybe the "short" SHA1 is "too short"?
 
-When trying to run the command directly on OS X, I see:
-   :: git clone --depth 1 git://nbd.name/packages.git
-   Cloning into 'packages'...
-   remote: Counting objects: 4728, done.
-   remote: Compressing objects: 100% (4013/4013), done.
-   remote: Total 4728 (delta 158), reused 3339 (delta 94)
-   Receiving objects: 100% (4728/4728), 3.85 MiB | 1.79 MiB/s, done.
-   Resolving deltas: 100% (158/158), done.
-   error: unable to find 9f041557a0c81f696280bb934731786e3d009b36
-   fatal: object of unexpected type
-   fatal: index-pack failed
+It's OK to show the short sha1 to the user, but "git rebase" could and
+should expand these to complete sha1 right after the editor is closed. I
+think that's what Yann means.
 
-I tried on Linux, and it succeeded.  I tested with both 1.8.2 and
-1.8.3.1.  Unfortunately, I don't have time to dig through what's wrong
-at the moment so I thought I'd put it out there for others.
-
-Thanks!
-
--John
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
