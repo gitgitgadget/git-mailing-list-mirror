@@ -1,183 +1,191 @@
 From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: [PATCH 09/16] documentation: add documentation for the bitmap format
-Date: Wed, 26 Jun 2013 19:11:48 -0600
-Message-ID: <CAJo=hJtJoizQUubriTPvs2bsjvw+N82MCPvw263fUB8vv8_VVA@mail.gmail.com>
+Date: Wed, 26 Jun 2013 19:29:19 -0600
+Message-ID: <CAJo=hJuH98sT5WNykxQ5JX+yKxOH-5p3CCRGa-WLAYtMGAj6oA@mail.gmail.com>
 References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
  <1372116193-32762-10-git-send-email-tanoku@gmail.com> <CAJo=hJtcQwh-N-9_i84y1ZsL0mdREHcxhP2gepcrREiaxvxS6A@mail.gmail.com>
- <CAFFjANRwBBcORhu4mwjESBfr4GJ3zDrgYvUhY=VxK9abv7k2MA@mail.gmail.com>
- <7vtxkl28m7.fsf@alter.siamese.dyndns.org> <CAFFjANRqZ0U5tGhgjACUtquyVKCyuHiS3CC2Xxwo0J1UJVrf=g@mail.gmail.com>
+ <CAFFjANRwBBcORhu4mwjESBfr4GJ3zDrgYvUhY=VxK9abv7k2MA@mail.gmail.com> <20130626051117.GB26755@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: =?ISO-8859-1?Q?Vicent_Mart=ED?= <tanoku@gmail.com>,
 	Colby Ranger <cranger@google.com>, git <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Vicent_Mart=ED?= <tanoku@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 27 03:12:16 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 27 03:29:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Us0kx-0001za-Jv
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 03:12:16 +0200
+	id 1Us11t-0001Zk-3D
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 03:29:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752707Ab3F0BML convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jun 2013 21:12:11 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:50436 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751557Ab3F0BMK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Jun 2013 21:12:10 -0400
-Received: by mail-ie0-f170.google.com with SMTP id e11so354525iej.15
-        for <git@vger.kernel.org>; Wed, 26 Jun 2013 18:12:09 -0700 (PDT)
+	id S1751557Ab3F0B3l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jun 2013 21:29:41 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:33196 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751517Ab3F0B3k convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Jun 2013 21:29:40 -0400
+Received: by mail-ie0-f178.google.com with SMTP id u16so393270iet.9
+        for <git@vger.kernel.org>; Wed, 26 Jun 2013 18:29:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=spearce.org; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=qmCCaFUHOC4Vno+/QgbP0IG/djh7OcbjgBfq35povSM=;
-        b=NYKD1aAJZEFo81drSbS1kff01E5y6jeCK9DP6HHXb4azQ09e4SlLJpJ313G/UEbk2S
-         3R3dfFBf0kWNYwsedK8V3YqHlq2VlHNRyQdFz6AEAtrPoO57HtGNejOjN2T2WjRr0RkJ
-         rEE6HtQgYBvqLGg2JVXykzgZYKr9UVWmuteY4=
+        bh=KhIEsY9+dZYMg2vBmtuE7i/Wk490JFfzHPu4QVGo0U0=;
+        b=Bs8RoYj0dZHjmRh/sDwxDmXYzql0+IYEEFTeAvKJO9RUWFFe/xuiCBYzMUxQmTrqEn
+         Ehv07eYyyUpougD/T4bkJQVjCyT+d4o3Kgi3O7Y+k5XMGjx+Lq9ljRvNHaYr2DvJRkqG
+         Y9xGe9QT1SMPS/2hK/O3YYk9qGpT9wH0clKxA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding:x-gm-message-state;
-        bh=qmCCaFUHOC4Vno+/QgbP0IG/djh7OcbjgBfq35povSM=;
-        b=E5I6O8dLxmJWYqCJd7eGfr2nXjyJmBvF/TVCqChZ1ZXNJM0mmxRZmdt6TxavXcmS34
-         t6wkEdI6LH5bBoqqzm5tCKU8+gcTtKQdQXWQTlbO9c3hE8oTi1/C5LM6fXhWaHeB+SJ8
-         ESPENZoclpkni4H9v0eKvDgxbiLMSVfY19ppmd5XtPcStMiKHY5vXCKvOicu0cgrgXu8
-         NeulQ5jXkPh1UhNVtweKtpXiufR914ZKXcWT53Df22EOVTKJyvx6PkDZjC22MhnBx1H9
-         8NnRQcj2Bpy2uan5IQCe10+IG3WkQnHS4CFrdAHv/1Ul4dsBttSdvGb1LhqoRMxdCLey
-         DYrA==
-X-Received: by 10.50.44.98 with SMTP id d2mr13607970igm.15.1372295528599; Wed,
- 26 Jun 2013 18:12:08 -0700 (PDT)
-Received: by 10.64.82.38 with HTTP; Wed, 26 Jun 2013 18:11:48 -0700 (PDT)
-In-Reply-To: <CAFFjANRqZ0U5tGhgjACUtquyVKCyuHiS3CC2Xxwo0J1UJVrf=g@mail.gmail.com>
-X-Gm-Message-State: ALoCoQmIy+bBiVo7B3LixwT5pR4U5ixfiHAR3FouW19cImoFJzC8uSsNZG4ACQnTfX+8CEBF4FK6
+        bh=KhIEsY9+dZYMg2vBmtuE7i/Wk490JFfzHPu4QVGo0U0=;
+        b=NU754SEz+vzwwzvmh40d0UIdTVhTbTnacSB93OKDl+ZdED0oLJ7O7ldFDBHnadE2y0
+         PSTjo7jZZB0TzZBiQ+PGuvTsSzFz5k/ssfLsyWNQDrnmRv/tTTPaLAgg6MiIqjbpGn/E
+         jK+2ZoMFcNw8EJ6FDrpwG7Fa+pZpJ/wby4pKwk/rOmCZzREsY3M+6S0ZsmHsfxPgjgfC
+         OQUfVgnRJ1aUONY0tZxnzTjrQAMldHdWa/OneTKDKb03oBKxE9eQZKhl4Hnkqy13Xt9n
+         lcKV6KHLAApNZcbIO2eU3yPeKJRa+S8K2n4zGN5urQv/ykJwwVNIwKDBsdui2Lz1BX7r
+         d2Hw==
+X-Received: by 10.42.98.69 with SMTP id r5mr3573984icn.95.1372296579721; Wed,
+ 26 Jun 2013 18:29:39 -0700 (PDT)
+Received: by 10.64.82.38 with HTTP; Wed, 26 Jun 2013 18:29:19 -0700 (PDT)
+In-Reply-To: <20130626051117.GB26755@sigill.intra.peff.net>
+X-Gm-Message-State: ALoCoQl89BAGAvw6uvncN/8FBF9KoXzetY1XlRC3XIyQaOtRRVaoiz7KM1qnbxfrLGKb0/chC/1j
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229079>
 
-On Tue, Jun 25, 2013 at 4:08 PM, Vicent Mart=ED <tanoku@gmail.com> wrot=
-e:
-> On Tue, Jun 25, 2013 at 11:17 PM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->> What case are you talking about?
+On Tue, Jun 25, 2013 at 11:11 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Jun 25, 2013 at 09:33:11PM +0200, Vicent Mart=ED wrote:
+>
+>> > One way we side-stepped the size inflation problem in JGit was to =
+only
+>> > use the bitmap index information when sending data on the wire to =
+a
+>> > client. Here delta reuse plays a significant factor in building th=
+e
+>> > pack, and we don't have to be as accurate on matching deltas. Duri=
+ng
+>> > the equivalent of `git repack` bitmaps are not used, allowing the
+>> > traditional graph enumeration algorithm to generate path hash
+>> > information.
 >>
->> The n-th object must be one of these four types and can never be of
->> more than one type at the same time, so a natural expectation from
->> the reader is "If you OR them together, you will get the same set".
->> If you say "If you XOR them", that forces the reader to wonder when
->> these bitmaps ever can overlap at the same bit position.
+>> OH BOY HERE WE GO. This is worth its own thread, lots to discuss her=
+e.
+>> I think peff will have a patchset regarding this to upstream soon,
+>> we'll get back to it later.
 >
-> I guess this is just wording. I don't particularly care about the
-> distinction, but I'll change it to OR.
-
-Hmm, OK. If you think XOR and OR are the same operation, I also have a
-bridge to sell you. Its in Brooklyn. Its a great value.
-
-The correct operation is OR. Not XOR. OR. Drop the X.
-
-> It cannot be mmapped not particularly because of endianness issues,
-> but because the original format is not indexed and requires a full
-> parse of the whole index before it can be accessed programatically.
-> The wrong endianness just increases the parse time.
-
-Wrong endianness has nothing to do with the parse time. Modern CPUs
-can flip a word around very quickly. In JGit we chose to parse the
-file at load time because its simpler than having an additional index
-segment, and we do what you did which is to toss the object SHA-1s
-into a hashtable for fast lookup. By the time we look for the SHA-1s
-and toss them into a hashtable we can stride through the file and find
-the bitmap regions. Simple.
-
-In other words, the least complex solution possible that still
-provides good performance. I'd say we have pretty good performance.
-
->>> and I'm going to try to make it run fast enough in that
->>> encoding.
->>
->> Hmph.  Is it an option to start from what JGit does, so that people
->> can use both JGit and your code on the same repository?
-
-I'm afraid I agree here with Junio. The JGit format is already
-shipping in JGit 3.0, Gerrit Code Review 2.6, and in heavy production
-use for almost a year on android.googlesource.com, and Google's own
-internal Git trees.
-
-I would prefer to see a series adding bitmap support to C Git start
-with the existing format, make it run, taking advantage of the
-optimizations JGit uses (many of which you ignored and tried to "fix"
-in other ways), and then look at improving the file format itself if
-load time is still the largest low hanging fruit in upload-pack. I'm
-guessing its not. You futzed around with the object table, but JGit
-sped itself up considerably by simply not using the object table when
-the bitmap is used. I think there are several such optimizations you
-missed in your rush to redefine the file format.
-
->>  And then if
->> you do not succeed, after trying to optimize in-core processing
->> using that on-disk format to make it fast enough, start thinking
->> about tweaking the on-disk format?
+> We do the same thing (only use bitmaps during on-the-wire fetches).  =
+But
+> there a few problems with assuming delta reuse.
 >
-> I'm afraid this is not an option. I have an old patchset that
-> implements JGit v1 bitmap loading (and in fact that's how I initially
-> developed these series -- by loading the bitmaps from JGit for
-> debugging), but I discarded it because it simply doesn't pan out in
-> production. ~3 seconds time to spawn `upload-pack` is not an option
-> for us. I did not develop a tweaked on-disk format out of boredom.
+> For us (GitHub), the foremost one is that we pack many "forks" of a
+> repository together into a single packfile. That means when you clone
+> torvalds/linux, an object you want may be stored in the on-disk pack
+> with a delta against an object that you are not going to get. So we h=
+ave
+> to throw out that delta and find a new one.
 
-I think your code or experiments are bogus. Even on our systems with
-JGit a cold start for the Linux kernel doesn't take 3s. And this is
-JGit where Java is slow because "Jesus it has a lot of factories", and
-without mmap'ing the file into the server's address space. Hell the
-file has to come over the network from a remote disk array.
+Gerrit Code Review ran into the same problem a few years ago with the
+refs/changes namespace. Objects reachable from a branch were often
+delta compressed against dropped code review revisions, making for
+some slow transfers. We fixed this by creating a pack of everything
+reachable from refs/heads/* and then another pack of the other stuff.
 
-> I could dig up the patch if you're particularly interested in
-> backwards compatibility, but since it was several times slower than
-> the current iteration, I have no interest (time, actually) to maintai=
-n
-> it, brush it up, and so on. I have already offered myself to port the
-> v2 format to JGit as soon as it's settled. It sounds like a better
-> investment of all our times.
+I would encourage you to do what you suggest...
 
-Actually, I think the format you propose here is inferior to the JGit
-format. In particular the idx-ordering means the EWAH code is useless.
-You might as well not use the EWAH format and just store 2.6M bits per
-commit. The idx-ordering also makes *much* harder to emit a pack file
-a reasonable order for the client. Colby and I tried idx-ordering and
-discarded it when it didn't perform as well as the pack-ordering that
-JGit uses.
+> I'm dealing with that by adding an option to respect "islands" during
+> packing, where an island is a set of common objects (we split it by
+> fork, since we expect those objects to be fetched together, but you
+> could use other criteria). The rule is that an object cannot delta
+> against another object that is not in all of its islands. So everybod=
+y
+> can delta against shared history, but objects in your fork can only
+> delta against other objects in the fork.  You are guaranteed to be ab=
+le
+> to reuse such deltas during a full clone of a fork, and the on-disk p=
+ack
+> size does not suffer all that much (because there is usually a good
+> alternate delta base within your reachable history).
 
-> Following up on Shawn's comments, I removed the little-endian support
-> from the on-disk format and implemented lazy loading of the bitmaps t=
-o
-> make up for it. The result is decent (slowed down from 250ms to 300ms=
-)
-> and it lets us keep the whole format as NWO on disk. I think it's a
-> good tradeback.
+Yes, exactly. I want to do the same thing on our servers, as we have
+many forks of some popular open source repositories that are also not
+small (Linux kernel, WebKit). Unfortunately Google has not had the
+time to develop the necessary support into JGit.
 
-The maintenance burden of two endian formats in a single file is too
-high to justify. I'm glad to see you saw that.
-
-> As it stands right now, the only two changes from v1 of the on-disk f=
-ormat are:
+> So with that series, we can get good reuse for clones. But there are
+> still two cases worth considering:
 >
-> - There is an index at the end. This is a good idea.
+>   1. When you fetch a subset of the commits, git marks only the edges=
+ as
+>      preferred bases, and does not walk the full object graph down to
+>      the roots. So any object you want that is delta'd against someth=
+ing
+>      older will not get reused. If you have reachability bitmaps, I
+>      don't think there is any reason that we cannot use the entire
+>      object graph (starting at the "have" tips, of course) as preferr=
+ed
+>      bases.
 
-I don't think the index is necessary if you plan to build a hashtable
-at runtime anyway. If you mmap the file you can quickly skip over a
-bitmap and find the next SHA-1 using this thing called "pointer
-arithmetic". I am not sure if you are familiar with the term, perhaps
-you could search the web for it.
+In JGit we use the reachability bitmap to provide proof a client has
+an object. Even if its not in the edges. This allows us much better
+delta reuse, as often frequently deltas will be available pointing to
+something behind the edge, but that the client certainly has given the
+edges we know about.
 
-> - The bitmaps are sorted in packfile-index order, not in packfile
-> order. This is a good idea.
+We also use the reachability bitmap to provide proof a client does not
+need an object. We found a reduction in number of objects transferred
+because the "want AND NOT have" subtracted out a number of objects not
+in the edge. Apparently merges, reverts and cherry-picks happen often
+enough in the repositories we host that this particular optimization
+helps reduce data transfer, and work at both server and client ends of
+the connection. Its a nice freebie the bitmap algorithm gives us.
 
-As Colby and I have repeatedly tried to explain, this is not a good ide=
-a.
+>   2. The server is not necessarily fully packed. In an active repo, y=
+ou
+>      may have a large "base" pack with bitmaps, with several recently
+>      pushed packs on top. You still need to delta the recently pushed
+>      objects against the base objects.
 
-> German kisses,
+Yes, this is unfortunate. One way we avoid this in JGit is to keep
+everything in pack files, rather than exploding loose. The
+reachability bitmap often proves the client has the delta base the
+pusher used to make the object, allowing us to reuse the delta. It may
+not be the absolute best delta in the world, but reuse is faster than
+inflate()+delta()+deflate(), and the delta is probably "good enough"
+until the server can do a real GC in the background.
 
-Strawberry and now German kisses? What's next, Mango kisses?
+We combine small packs from pushes together by almost literally just
+concat'ing the packs together and creating a new .idx. Newer pushed
+data is put in front of the older data, the pack is clustered by
+"commit, tree, blob" ordering, duplicates are removed, and its written
+back to disk. Typically we complete this "pack concat" operation mere
+seconds after a push finishes, so readers have very few packs to deal
+with.
+
+> I don't have measurements on how much the deltas suffer in those two
+> cases. I know they suffered quite badly for clones without the name
+> hashes in our alternates repos, but that part should go away with my
+> patch series.
+
+JGit doesn't poke objects into the object table (or even the object
+list) when a bitmap is used. We spool the bits out of the bitmap in
+bitmap order and write them to the wire in that order. Its way faster,
+but depends on the bitmap being in pack-ordering. So clones are crazy
+fast even though we don't have the path-hash table.
+
+JGit also has another optimization where we figure out based on the
+bitmap if the client needs *everything* in this pack. Which given a
+pack created only for refs/heads/* is the common case for a clone. If
+the client is getting all objects we essentially just do a sendfile()
+for the region starting at offset 12 through end-20. It can't be a
+sendfile() syscall because it has to be computed into the trailer
+SHA-1 the client sees, but its a crazy tight IO copy loop with no Git
+smarts beyond the SHA-1 updating.
+
+Like I said, there are a ton of optimizations you guys missed. And we
+think they make a bigger difference than screwing around with
+little-endian format to favor x86 CPUs.
