@@ -1,256 +1,384 @@
-From: Andrew Pimlott <andrew@pimlott.net>
-Subject: Re: [PATCH] rebase -i: fixup fixup! fixup!
-Date: Thu, 27 Jun 2013 12:26:31 -0700
-Message-ID: <1372359783-sup-4507@pimlott.net>
-References: <20130611180530.GA18488@oinkpad.pimlott.net> <87obbc8otc.fsf@hexa.v.cablecom.net> <1371237209-sup-639@pimlott.net> <1371278908-sup-1930@pimlott.net> <7vk3lvlmat.fsf@alter.siamese.dyndns.org> <87ip1e2tzx.fsf@hexa.v.cablecom.net> <7v7ghtjwbb.fsf@alter.siamese.dyndns.org> <8738shi2ht.fsf@linux-k42r.v.cablecom.net> <7vwqpshkxj.fsf@alter.siamese.dyndns.org> <1372190294-sup-1398@pimlott.net> <7v61x127bw.fsf@alter.siamese.dyndns.org> <1372198415-sup-2114@pimlott.net> <1372283778-sup-5704@pimlott.net> <7vd2r8v3fa.fsf@alter.siamese.dyndns.org> <1372291877-sup-8201@pimlott.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
-To: Andrew Pimlott <andrew@pimlott.net>
-X-From: git-owner@vger.kernel.org Thu Jun 27 21:26:47 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] pull: require choice between rebase/merge on non-fast-forward pull
+Date: Thu, 27 Jun 2013 12:48:52 -0700
+Message-ID: <7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
+References: <20130522115042.GA20649@inner.h.apk.li>
+	<7v4ndukhx0.fsf@alter.siamese.dyndns.org>
+	<20130523090657.GB23933@inner.h.apk.li>
+	<CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
+	<20130523102959.GP9448@inner.h.apk.li>
+	<20130523110839.GT27005@serenity.lan>
+	<7vd2shheic.fsf@alter.siamese.dyndns.org>
+	<20130523164114.GV27005@serenity.lan>
+	<7vbo81e7gs.fsf@alter.siamese.dyndns.org>
+	<20130523215557.GX27005@serenity.lan>
+	<7vli75cpom.fsf@alter.siamese.dyndns.org>
+	<CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	John Keeping <john@keeping.me.uk>,
+	Andreas Krey <a.krey@gmx.de>,
+	John Szakmeister <john@szakmeister.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 27 21:49:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsHqA-0003wB-4N
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 21:26:46 +0200
+	id 1UsIBh-0000IL-BP
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 21:49:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754052Ab3F0T0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 15:26:41 -0400
-Received: from pimlott.net ([72.249.23.100]:59836 "EHLO fugue.pimlott.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753654Ab3F0T0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 15:26:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=pimlott.net; s=default;
-	h=Content-Transfer-Encoding:Message-Id:Date:References:In-reply-to:To:From:Subject:Cc:Content-Type; bh=zlx1u4JTE3WRwr7EUD+pB71Z8UlVRr7fzX+SPKJYP/Q=;
-	b=N3v16AnHb+zijZKq+1x2hCPls4QnaIWs4RnaQex0MPTVZ6uEtyJcU1O+qFrzeE6kePcW/U7oXQUuDhtFM7F380dQhLMVKS5UElRs4wUpRUob/A2T9x0kK3PPuhUz5jqYxdG/MuZZ/Ky+Z3+cayx6gBjahwO8bRMZZ+k9+BcUWPY=;
-Received: from andrew by fugue.pimlott.net with local (Exim 4.72)
-	(envelope-from <andrew@pimlott.net>)
-	id 1UsHpv-0006sf-EA; Thu, 27 Jun 2013 12:26:31 -0700
-In-reply-to: <1372291877-sup-8201@pimlott.net>
-User-Agent: Sup/git
+	id S1753819Ab3F0Ts5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 15:48:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48545 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753714Ab3F0Ts4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 15:48:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A18329A1F;
+	Thu, 27 Jun 2013 19:48:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=v3nRaF7aG6tjZvgYqi1c0Tug9Cg=; b=aFjY28
+	Cs6qM9QdElsCcueV0ofgGhR5XW0VkNcjRaYrRzG5oltffvxsCdwKjQse/kpZzzPe
+	IEhZUEzjZGiEzgb8iQREnSEPNCQUa52Ae+tk1jN5xzeS4PbeFUXCkpWMAy1+TM/g
+	cyfvcIdKD/Uiv4XPvFtltxupqSlqnyK84c6u0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qRK4WB/vyyP8Pd16t64Gl4Q7neBz98Zr
+	4xFOST+6Q3vry3JVBS9nlaildKzvkWx9tDGu7bZA2FFVw5kYGLa3I/QubntrgOaQ
+	w4qZAhfden3q3NWTYRWPFWj17063Da42baiKeB0Vfe/HcOfrT6pt4u5i8M4IDilk
+	Sile5R8kPP0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 498E229A1E;
+	Thu, 27 Jun 2013 19:48:55 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE05D29A1B;
+	Thu, 27 Jun 2013 19:48:53 +0000 (UTC)
+In-Reply-To: <CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
+	(Linus Torvalds's message of "Thu, 23 May 2013 17:03:38 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 98ED2286-DF62-11E2-BDBC-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229149>
 
-Excerpts from Andrew Pimlott's message of Wed Jun 26 17:20:32 -0700 2013:
-> Excerpts from Junio C Hamano's message of Wed Jun 26 16:48:57 -0700 2013:
-> > Andrew Pimlott <andrew@pimlott.net> writes:
-> > > In order to test this, I wrote a helper function to dump the rebase -i
-> > > todo list.  Would you like this introduced in its own patch, or
-> > > combined?  See below.
-> > 
-> > Depends on how involved the addition of the tests that actually use
-> > the helper, but in general it would be a good idea to add it in the
-> > first patch that actually uses it.  Unused code added in a separate
-> > patch will not point at that patch when bisecting, if that unused
-> > code was broken from the beginning (not that I see anything
-> > immediately broken in the code the following adds).
-> 
-> Ok, here is the complete commit, incorporating all feedback.
+Because letting a trivial merge automatically handled by Git is so
+easy with "git pull", a person who is new to Git may not realize
+that the project s/he is interacting with may prefer "rebase"
+workflow.  Add a safety valve to fail "git pull" that is not a
+fast-forward until/unless the user expressed her preference between
+the two.
 
-Updated for recommended here-doc style.
+Those who want the existing behaviour could just do
 
-Andrew
+    git config --global pull.rebase false
 
----8<---
-Subject: [PATCH] rebase -i: handle fixup! fixup! in --autosquash
+once, and they'd not even notice.
 
-In rebase -i --autosquash, ignore all "fixup! " or "squash! " after the
-first.  This supports the case when a git commit --fixup/--squash referred
-to an earlier fixup/squash instead of the original commit (whether
-intentionally, as when the user expressly meant to note that the commit
-fixes an earlier fixup; or inadvertently, as when the user meant to refer to
-the original commit with :/msg; or out of laziness, as when the user could
-remember how to refer to the fixup but not the original).
+    http://thread.gmane.org/gmane.comp.version-control.git/225146/focus=225326
 
-In the todo list, the full commit message is preserved, in case it provides
-useful cues to the user.  A test helper set_cat_todo_editor is introduced to
-check this.
+for a full discussion.
 
-Helped-by: Thomas Rast <trast@inf.ethz.ch>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Andrew Pimlott <andrew@pimlott.net>
+The fallout from this change to test suite is not very pretty, though.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-rebase.txt |    4 ++-
- git-rebase--interactive.sh   |   25 ++++++++++++++----
- t/lib-rebase.sh              |   14 +++++++++++
- t/t3415-rebase-autosquash.sh |   57 ++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 94 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index c84854a..6b2e1c8 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -389,7 +389,9 @@ squash/fixup series.
- 	the same ..., automatically modify the todo list of rebase -i
- 	so that the commit marked for squashing comes right after the
- 	commit to be modified, and change the action of the moved
--	commit from `pick` to `squash` (or `fixup`).
-+	commit from `pick` to `squash` (or `fixup`).  Ignores subsequent
-+	"fixup! " or "squash! " after the first, in case you referred to an
-+	earlier fixup/squash with `git commit --fixup/--squash`.
- +
- This option is only valid when the '--interactive' option is used.
- +
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index f953d8d..169e876 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -689,8 +689,22 @@ rearrange_squash () {
- 		case "$message" in
- 		"squash! "*|"fixup! "*)
- 			action="${message%%!*}"
--			rest="${message#*! }"
--			echo "$sha1 $action $rest"
-+			rest=$message
-+			prefix=
-+			# skip all squash! or fixup! (but save for later)
-+			while :
-+			do
-+				case "$rest" in
-+				"squash! "*|"fixup! "*)
-+					prefix="$prefix${rest%%!*},"
-+					rest="${rest#*! }"
-+					;;
-+				*)
-+					break
-+					;;
-+				esac
-+			done
-+			echo "$sha1 $action $prefix $rest"
- 			# if it's a single word, try to resolve to a full sha1 and
- 			# emit a second copy. This allows us to match on both message
- 			# and on sha1 prefix
-@@ -699,7 +713,7 @@ rearrange_squash () {
- 				if test -n "$fullsha"; then
- 					# prefix the action to uniquely identify this line as
- 					# intended for full sha1 match
--					echo "$sha1 +$action $fullsha"
-+					echo "$sha1 +$action $prefix $fullsha"
- 				fi
- 			fi
- 		esac
-@@ -714,7 +728,7 @@ rearrange_squash () {
- 		esac
- 		printf '%s\n' "$pick $sha1 $message"
- 		used="$used$sha1 "
--		while read -r squash action msg_content
-+		while read -r squash action msg_prefix msg_content
- 		do
- 			case " $used" in
- 			*" $squash "*) continue ;;
-@@ -730,7 +744,8 @@ rearrange_squash () {
- 				case "$message" in "$msg_content"*) emit=1;; esac ;;
- 			esac
- 			if test $emit = 1; then
--				printf '%s\n' "$action $squash $action! $msg_content"
-+				real_prefix=$(echo "$msg_prefix" | sed "s/,/! /g")
-+				printf '%s\n' "$action $squash ${real_prefix}$msg_content"
- 				used="$used$squash "
- 			fi
- 		done <"$1.sq"
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 4b74ae4..cfd3409 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -66,6 +66,20 @@ EOF
- 	chmod a+x fake-editor.sh
+ * This is not a serious inclusion proposal yet, but to see if
+   people are still interested in possibly helping new users.
+
+ git-pull.sh                            | 36 +++++++++++++++++++++++++++++++++-
+ t/annotate-tests.sh                    |  2 +-
+ t/t4013-diff-various.sh                |  2 ++
+ t/t4200-rerere.sh                      |  2 ++
+ t/t5500-fetch-pack.sh                  |  6 +++++-
+ t/t5521-pull-options.sh                |  2 ++
+ t/t5524-pull-msg.sh                    |  2 +-
+ t/t5700-clone-reference.sh             |  4 ++--
+ t/t6022-merge-rename.sh                |  2 ++
+ t/t6026-merge-attr.sh                  |  2 +-
+ t/t6029-merge-subtree.sh               |  1 +
+ t/t6037-merge-ours-theirs.sh           |  2 ++
+ t/t9114-git-svn-dcommit-merge.sh       |  2 +-
+ t/t9400-git-cvsserver-server.sh        |  2 +-
+ t/t9500-gitweb-standalone-no-errors.sh |  2 +-
+ 15 files changed, 59 insertions(+), 10 deletions(-)
+
+diff --git a/git-pull.sh b/git-pull.sh
+index 638aabb..4a6a863 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -41,13 +41,21 @@ test -f "$GIT_DIR/MERGE_HEAD" && die_merge
+ strategy_args= diffstat= no_commit= squash= no_ff= ff_only=
+ log_arg= verbosity= progress= recurse_submodules= verify_signatures=
+ merge_args= edit=
++
+ curr_branch=$(git symbolic-ref -q HEAD)
+ curr_branch_short="${curr_branch#refs/heads/}"
++
++# See if we are configured to rebase by default.
++# The value $rebase is, throughout the main part of the code:
++#    (empty) - the user did not have any preference
++#    true    - the user told us to integrate by rebasing
++#    flase   - the user told us to integrate by merging
+ rebase=$(git config --bool branch.$curr_branch_short.rebase)
+ if test -z "$rebase"
+ then
+ 	rebase=$(git config --bool pull.rebase)
+ fi
++
+ dry_run=
+ while :
+ do
+@@ -113,7 +121,8 @@ do
+ 	-r|--r|--re|--reb|--reba|--rebas|--rebase)
+ 		rebase=true
+ 		;;
+-	--no-r|--no-re|--no-reb|--no-reba|--no-rebas|--no-rebase)
++	--no-r|--no-re|--no-reb|--no-reba|--no-rebas|--no-rebase|\
++	-m|--m|--me|--mer|--merg|--merge)
+ 		rebase=false
+ 		;;
+ 	--recurse-submodules)
+@@ -219,6 +228,7 @@ test true = "$rebase" && {
+ 		fi
+ 	done
  }
- 
-+# After set_cat_todo_editor, rebase -i will write the todo list (ignoring
-+# blank lines and comments) to stdout, and exit failure (so you should run
-+# it with test_must_fail).  This can be used to verify the expected user
-+# experience, for todo list changes that do not affect the outcome of
-+# rebase; or as an extra check in addition to checking the outcome.
 +
-+set_cat_todo_editor () {
-+	write_script fake-editor.sh <<-\EOF
-+	grep "^[^#]" "$1"
-+	exit 1
-+	EOF
-+	test_set_editor "$(pwd)/fake-editor.sh"
-+}
+ orig_head=$(git rev-parse -q --verify HEAD)
+ git fetch $verbosity $progress $dry_run $recurse_submodules --update-head-ok "$@" || exit 1
+ test -z "$dry_run" || exit 0
+@@ -264,6 +274,30 @@ case "$merge_head" in
+ 		die "$(gettext "Cannot rebase onto multiple branches")"
+ 	fi
+ 	;;
++*)
++	# integrating with a single other history
++	merge_head=${merge_head% }
++	if test -z "$rebase$no_ff$ff_only${squash#--no-squash}" &&
++		test -n "$orig_head" &&
++		! $(git merge-base --is-ancestor "$orig_head" "$merge_head")
++	then
++echo >&2 "orig-head was $orig_head"
++echo >&2 "merge-head is $merge_head"
++git show >&2 --oneline -s "$orig_head" "$merge_head"
 +
- # checks that the revisions in "$2" represent a linear range with the
- # subjects in "$1"
- test_linear_range () {
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index a1e86c4..7c989f9 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -4,6 +4,8 @@ test_description='auto squash'
++		die "The pull does not fast-forward; please specify
++if you want to merge or rebase.
++
++Use either
++
++    git pull --rebase
++    git pull --merge
++
++You can also use 'git config pull.rebase true' (if you want --rebase) or
++'git config pull.rebase false' (if you want --merge) to set this once for
++this project and forget about it."
++	fi
++	;;
+ esac
  
+ if test -z "$orig_head"
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index c56a77d..af02c6d 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -79,7 +79,7 @@ test_expect_success \
+ 
+ test_expect_success \
+     'merge-setup part 3' \
+-    'git pull . branch1'
++    'git pull --merge . branch1'
+ 
+ test_expect_success \
+     'Two lines blamed on A, one on B, two on B1, one on B2' \
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index e77c09c..1ee2198 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -12,6 +12,8 @@ LF='
+ 
+ test_expect_success setup '
+ 
++	git config pull.rebase false &&
++
+ 	GIT_AUTHOR_DATE="2006-06-26 00:00:00 +0000" &&
+ 	GIT_COMMITTER_DATE="2006-06-26 00:00:00 +0000" &&
+ 	export GIT_AUTHOR_DATE GIT_COMMITTER_DATE &&
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index 7f6666f..0563357 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -25,6 +25,8 @@ test_description='git rerere
  . ./test-lib.sh
  
-+. "$TEST_DIRECTORY"/lib-rebase.sh
+ test_expect_success 'setup' '
++	git config pull.rebase false &&
 +
- test_expect_success setup '
- 	echo 0 >file0 &&
- 	git add . &&
-@@ -193,4 +195,59 @@ test_expect_success 'use commit --squash' '
- 	test_auto_commit_flags squash 2
+ 	cat >a1 <<-\EOF &&
+ 	Some title
+ 	==========
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index fd2598e..4be8877 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -143,7 +143,11 @@ test_expect_success 'clone shallow depth 1 with fsck' '
  '
  
-+test_auto_fixup_fixup () {
-+	git reset --hard base &&
-+	echo 1 >file1 &&
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "$1! first" &&
-+	echo 2 >file1 &&
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "$1! $2! first" &&
-+	git tag "final-$1-$2" &&
-+	test_tick &&
+ test_expect_success 'clone shallow' '
+-	git clone --no-single-branch --depth 2 "file://$(pwd)/." shallow
++	git clone --no-single-branch --depth 2 "file://$(pwd)/." shallow &&
 +	(
-+		set_cat_todo_editor &&
-+		test_must_fail git rebase --autosquash -i HEAD^^^^ >actual &&
-+		cat >expected <<EOF
-+pick $(git rev-parse --short HEAD^^^) first commit
-+$1 $(git rev-parse --short HEAD^) $1! first
-+$1 $(git rev-parse --short HEAD) $1! $2! first
-+pick $(git rev-parse --short HEAD^^) second commit
-+EOF
-+		test_cmp expected actual
-+	) &&
-+	git rebase --autosquash -i HEAD^^^^ &&
-+	git log --oneline >actual &&
-+	test_line_count = 3 actual
-+	git diff --exit-code "final-$1-$2" &&
-+	test 2 = "$(git cat-file blob HEAD^:file1)" &&
-+	if test "$1" = "fixup"
-+	then
-+		test 1 = $(git cat-file commit HEAD^ | grep first | wc -l)
-+	elif test "$1" = "squash"
-+	then
-+		test 3 = $(git cat-file commit HEAD^ | grep first | wc -l)
-+	else
-+		false
-+	fi
-+}
++		cd shallow &&
++		git config pull.rebase false
++	)
+ '
+ 
+ test_expect_success 'clone shallow depth count' '
+diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
+index 453aba5..d821fab 100755
+--- a/t/t5521-pull-options.sh
++++ b/t/t5521-pull-options.sh
+@@ -91,6 +91,8 @@ test_expect_success 'git pull --force' '
+ 	[branch "master"]
+ 		remote = two
+ 		merge = refs/heads/master
++	[pull]
++		rebase = false
+ 	EOF
+ 	git pull two &&
+ 	test_commit A &&
+diff --git a/t/t5524-pull-msg.sh b/t/t5524-pull-msg.sh
+index 8cccecc..660714b 100755
+--- a/t/t5524-pull-msg.sh
++++ b/t/t5524-pull-msg.sh
+@@ -25,7 +25,7 @@ test_expect_success setup '
+ test_expect_success pull '
+ (
+ 	cd cloned &&
+-	git pull --log &&
++	git pull --log --merge &&
+ 	git log -2 &&
+ 	git cat-file commit HEAD >result &&
+ 	grep Dollar result
+diff --git a/t/t5700-clone-reference.sh b/t/t5700-clone-reference.sh
+index 6537911..306badf 100755
+--- a/t/t5700-clone-reference.sh
++++ b/t/t5700-clone-reference.sh
+@@ -94,7 +94,7 @@ cd "$base_dir"
+ 
+ test_expect_success 'pulling changes from origin' \
+ 'cd C &&
+-git pull origin'
++git pull --merge origin'
+ 
+ cd "$base_dir"
+ 
+@@ -109,7 +109,7 @@ cd "$base_dir"
+ 
+ test_expect_success 'pulling changes from origin' \
+ 'cd D &&
+-git pull origin'
++git pull --merge origin'
+ 
+ cd "$base_dir"
+ 
+diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
+index c680f78..e12d90b 100755
+--- a/t/t6022-merge-rename.sh
++++ b/t/t6022-merge-rename.sh
+@@ -10,6 +10,8 @@ modify () {
+ 
+ test_expect_success setup \
+ '
++git config pull.rebase false &&
 +
-+test_expect_success 'fixup! fixup!' '
-+	test_auto_fixup_fixup fixup fixup
-+'
+ cat >A <<\EOF &&
+ a aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ b bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+diff --git a/t/t6026-merge-attr.sh b/t/t6026-merge-attr.sh
+index 5e43997..5428f19 100755
+--- a/t/t6026-merge-attr.sh
++++ b/t/t6026-merge-attr.sh
+@@ -172,7 +172,7 @@ test_expect_success 'up-to-date merge without common ancestor' '
+ 	test_tick &&
+ 	(
+ 		cd repo1 &&
+-		git pull ../repo2 master
++		git pull --merge ../repo2 master
+ 	)
+ '
+ 
+diff --git a/t/t6029-merge-subtree.sh b/t/t6029-merge-subtree.sh
+index 73fc240..3ca29c4 100755
+--- a/t/t6029-merge-subtree.sh
++++ b/t/t6029-merge-subtree.sh
+@@ -41,6 +41,7 @@ test_expect_success 'setup' '
+ 	mkdir git &&
+ 	cd git &&
+ 	git init &&
++	git config pull.rebase false &&
+ 	echo git >git.c &&
+ 	o2=$(git hash-object git.c) &&
+ 	git add git.c &&
+diff --git a/t/t6037-merge-ours-theirs.sh b/t/t6037-merge-ours-theirs.sh
+index 3889eca..41bf060 100755
+--- a/t/t6037-merge-ours-theirs.sh
++++ b/t/t6037-merge-ours-theirs.sh
+@@ -66,6 +66,8 @@ test_expect_success 'binary file with -Xours/-Xtheirs' '
+ '
+ 
+ test_expect_success 'pull passes -X to underlying merge' '
++	git config pull.rebase false &&
 +
-+test_expect_success 'fixup! squash!' '
-+	test_auto_fixup_fixup fixup squash
-+'
-+
-+test_expect_success 'squash! squash!' '
-+	test_auto_fixup_fixup squash squash
-+'
-+
-+test_expect_success 'squash! fixup!' '
-+	test_auto_fixup_fixup squash fixup
-+'
-+
- test_done
+ 	git reset --hard master && git pull -s recursive -Xours . side &&
+ 	git reset --hard master && git pull -s recursive -X ours . side &&
+ 	git reset --hard master && git pull -s recursive -Xtheirs . side &&
+diff --git a/t/t9114-git-svn-dcommit-merge.sh b/t/t9114-git-svn-dcommit-merge.sh
+index f524d2f..dfce024 100755
+--- a/t/t9114-git-svn-dcommit-merge.sh
++++ b/t/t9114-git-svn-dcommit-merge.sh
+@@ -62,7 +62,7 @@ test_expect_success 'setup git mirror and merge' '
+ 	echo friend > README &&
+ 	cat tmp >> README &&
+ 	git commit -a -m "friend" &&
+-	git pull . merge
++	git pull --merge . merge
+ 	'
+ 
+ test_debug 'gitk --all & sleep 1'
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index 0431386..76b8640 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -46,7 +46,7 @@ test_expect_success 'setup' '
+   touch secondrootfile &&
+   git add secondrootfile &&
+   git commit -m "second root") &&
+-  git pull secondroot master &&
++  git pull --merge secondroot master &&
+   git clone -q --bare "$WORKDIR/.git" "$SERVERDIR" >/dev/null 2>&1 &&
+   GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
+   GIT_DIR="$SERVERDIR" git config gitcvs.logfile "$SERVERDIR/gitcvs.log" &&
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index 6fca193..787c6cc 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -328,7 +328,7 @@ test_expect_success \
+ 	 git add b &&
+ 	 git commit -a -m "On branch" &&
+ 	 git checkout master &&
+-	 git pull . b &&
++	 git pull --merge . b &&
+ 	 git tag merge_commit'
+ 
+ test_expect_success \
 -- 
-1.7.10.4
+1.8.3.1-794-ga13ccd6
