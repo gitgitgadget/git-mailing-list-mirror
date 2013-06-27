@@ -1,80 +1,74 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 09/16] documentation: add documentation for the bitmap format
-Date: Wed, 26 Jun 2013 19:32:21 -0600
-Message-ID: <CAJo=hJuA_4zL-cyygqPkDA+6ipbTqsmMYHw-c6OTKCcb5GAs0g@mail.gmail.com>
-References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
- <1372116193-32762-10-git-send-email-tanoku@gmail.com> <CAJo=hJtcQwh-N-9_i84y1ZsL0mdREHcxhP2gepcrREiaxvxS6A@mail.gmail.com>
- <CAFFjANRwBBcORhu4mwjESBfr4GJ3zDrgYvUhY=VxK9abv7k2MA@mail.gmail.com>
- <20130626051117.GB26755@sigill.intra.peff.net> <CAFFbUKJZ1w2puKFLjPNZmMhSLo3_1kpfA1upv7K6qZV256vTyQ@mail.gmail.com>
- <CAFFbUK+emr44o_2EHW2Y4o5fs8Livif_5D=G=NLDzE=2MEx6NQ@mail.gmail.com> <CAFFbUKJTh79-u-D89OAZxjCnfvyZ40DE_iwQ6e+zXSw88AY6PQ@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH v15 04/16] Refactor quote_path_relative, remove unused params
+Date: Thu, 27 Jun 2013 09:47:00 +0800
+Message-ID: <CANYiYbGr4A-PQJtiLwBWd2xqkWBYUPvuVCnSOV4_=sL2qYssnQ@mail.gmail.com>
+References: <cover.1372175282.git.worldhello.net@gmail.com>
+	<bdd209a2f3848ffa784872f4c244b37d38be82c1.1372175283.git.worldhello.net@gmail.com>
+	<7v61x0wypk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>,
-	=?ISO-8859-1?Q?Vicent_Mart=ED?= <tanoku@gmail.com>,
-	git <git@vger.kernel.org>
-To: Colby Ranger <cranger@google.com>
-X-From: git-owner@vger.kernel.org Thu Jun 27 03:33:01 2013
+Cc: Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 27 03:47:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Us150-0004dN-RT
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 03:32:59 +0200
+	id 1Us1Ii-0001AJ-7C
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 03:47:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592Ab3F0Bcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jun 2013 21:32:42 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:47736 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751518Ab3F0Bcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jun 2013 21:32:41 -0400
-Received: by mail-ie0-f175.google.com with SMTP id a13so380648iee.34
-        for <git@vger.kernel.org>; Wed, 26 Jun 2013 18:32:41 -0700 (PDT)
+	id S1751588Ab3F0BrD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jun 2013 21:47:03 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:64866 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751461Ab3F0BrC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jun 2013 21:47:02 -0400
+Received: by mail-wi0-f179.google.com with SMTP id hj3so111657wib.12
+        for <git@vger.kernel.org>; Wed, 26 Jun 2013 18:47:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=UZ8vIFpdUeupvVAaD88BAVkKKnElFqFotG82aqB876k=;
-        b=ZPlpYmYevIKrVA9udsuDjR1ABn6Fr3KJe0f4P9cU1OYg3rfUpPArUrbXfr4bH6TfGa
-         KNDr7cdg0sllsgkXR1QNEQA+VHZ66Dgnl+9uGSDh8dfAriRhLCI/4RUxt5XneZU+RrPT
-         De3LnV+/XVlvtPt83thX1Rdj2tsk4Rn6S9aB4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=UZ8vIFpdUeupvVAaD88BAVkKKnElFqFotG82aqB876k=;
-        b=Gv+ALlaqJKEg/KcLFk9eoLLewOYNaZWptYaq1aTphNMNyx6HvoXwiW0Bpucmz2y+Bo
-         g8wI9XV2uLrJ7hoKYwEMowqFOyCAfVV9fKKE288nk5bpR4jPi/iSgEYOTb9MyXkqImkl
-         L3KYx2QgOx5hg8sissY5R7ulOvcWyUxL3K1qo6+YQ8CanuiMKe5PV2fJWD6pugfElinz
-         /WhwSHx24xClitSM3M8JUzeaIOBYWFMT4YS884w3nQXh1fz2+gYxeMwgTPFYIgOxWSN9
-         sgX0Bta+XS5917tn8qz+VwkgUM7+GK3AhHkjtbQvTdiQRD+CCGdYMEPqZsbMZK4d+xnR
-         mmgQ==
-X-Received: by 10.43.84.131 with SMTP id ak3mr3530801icc.84.1372296761504;
- Wed, 26 Jun 2013 18:32:41 -0700 (PDT)
-Received: by 10.64.82.38 with HTTP; Wed, 26 Jun 2013 18:32:21 -0700 (PDT)
-In-Reply-To: <CAFFbUKJTh79-u-D89OAZxjCnfvyZ40DE_iwQ6e+zXSw88AY6PQ@mail.gmail.com>
-X-Gm-Message-State: ALoCoQk5vXU/HYNTQcOFWLmAB7ULIP/uWvWjAV1EBQ2Hx8kxBVPdy8PfQcQPiq4Q3iEPNekpnnYH
+        bh=9+qMQb3UGqBYXCptdHoqJb5KiPaVIn2SGIYhNaw5B8I=;
+        b=WnpZntEzBxeuHEoBTLUxN7XZhHwyC5L0f6Ycsy2TP9Oan5baPiqQu7wP1pDigL0GfZ
+         672G72OMqwfenHlCxseu5VJFyFVeenGWAdtzPna20b1xryh+uquEHhpJ7ukjFfeQ7WFH
+         SMxuiYCjY01qXNYVTugUNpywWqPyKiUVI52qbYKNwIjFZnNQNd9Qo18bK8lTH8pWohnF
+         zJUDNZcMPG12yJiQRrzC6exMiI4Sw50p+JvoS/ibevyL72XSQuOf0TlaeMdTsX0esuVM
+         EmutZZ1zelQdAdYSzHjp56NOG4QqpkCe9zM2brhOCVqPmlhukjr2A0qHYiLNvR34kdXG
+         o2Gg==
+X-Received: by 10.194.133.106 with SMTP id pb10mr4570154wjb.62.1372297620801;
+ Wed, 26 Jun 2013 18:47:00 -0700 (PDT)
+Received: by 10.194.176.129 with HTTP; Wed, 26 Jun 2013 18:47:00 -0700 (PDT)
+In-Reply-To: <7v61x0wypk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229081>
 
-On Wed, Jun 26, 2013 at 6:53 PM, Colby Ranger <cranger@google.com> wrote:
->> +  Generating this reverse index at runtime is **not** free (around 900ms
->> +  generation time for a repository like `torvalds/linux`), and once again,
->> +  this generation time needs to happen every time `pack-objects` is
->> +  spawned.
+2013/6/27 Junio C Hamano <gitster@pobox.com>:
+>> diff --git a/quote.c b/quote.c
+>> index 64ff3..ebb8 100644
+>
+> You seem to be using unusually short abbrev length.
+>
+> Please don't, at least in format-patch output.
+>
+> "ebb8" may be unique within your repository, but may not be unique
+> in repositories of other people who attempt to apply your patches.
+>
+> Offtopic.  Fixing this, without forcing you to use the default
+> abbrev length everywhere, _might_ require a bit of changes to the
+> configuration mechanism, or "git format-patch", or both.  I've also
+> seen in some other thread that --numstat was used in addition to the
+> usual --stat, which should not be added to format-patch output only
+> because the user configured it for other "diff/log" uses, which may
+> also need to be fixed in the same way.
 
-900ms is fishy. Creating the revidx should not take that long. But if it is...
+Thank you for your notice. I find that I have a setting: core.abbrev=4,
+which overrides the default. Maybe I set it two years ago, when I wrote
+my book on Git in Chinese.
 
-> If generating the reverse index is expensive, it is probably
-> worthwhile to create a ".revidx" or extend the ".idx" with the
-> information sorted by offset.
-
-Colby is probably right that a cached copy of the revidx would help.
-Or update the .idx format to have two additional sections that stores
-the length of each packed object and the delta base of each packed
-object, allowing pack-objects to avoid creating the revidx. This would
-be an additional ~8 bytes per object, so ~19.8M for the Linux kernel
-(given ~2.6M objects).
+-- 
+Jiang Xin
