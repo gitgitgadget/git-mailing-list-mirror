@@ -1,107 +1,103 @@
-From: Johan Herland <johan@herland.net>
+From: Woody Wu <narkewoody@gmail.com>
 Subject: Re: Off-line deverloper workflow?
-Date: Thu, 27 Jun 2013 15:47:19 +0200
-Message-ID: <CALKQrgfLxcNAcSg7QB7h4RVwqdE3+XojKwJ9zfcUrpJ6xnV+5g@mail.gmail.com>
+Date: Thu, 27 Jun 2013 21:58:03 +0800
+Message-ID: <20130627135803.GA5660@zuhnb712>
 References: <20130627124656.GA2620@zuhnb712>
-	<CALKQrgdiRg--A4-cp7Y0c3-rc-gDX+QVgPxKDpmW5Exx_HeWHg@mail.gmail.com>
-	<20130627134156.GB5047@zuhnb712>
+ <51CC4197.3000007@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Woody Wu <narkewoody@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 27 15:47:30 2013
+Cc: Woody Wu <narkewoody@gmail.com>, git <git@vger.kernel.org>
+To: Jean-No?l Avila <avila.jn@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 27 15:58:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsCXo-0006O2-OX
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 15:47:29 +0200
+	id 1UsCi3-0007PR-Sn
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 15:58:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609Ab3F0NrZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jun 2013 09:47:25 -0400
-Received: from mail10.copyleft.no ([188.94.218.231]:51361 "EHLO
-	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751569Ab3F0NrY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jun 2013 09:47:24 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UsCXi-000Ljp-RQ
-	for git@vger.kernel.org; Thu, 27 Jun 2013 15:47:22 +0200
-Received: from mail-oa0-f42.google.com ([209.85.219.42])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UsBN8-000MMN-NM
-	for git@vger.kernel.org; Thu, 27 Jun 2013 14:32:22 +0200
-Received: by mail-oa0-f42.google.com with SMTP id j6so867251oag.29
-        for <git@vger.kernel.org>; Thu, 27 Jun 2013 06:47:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UOMjyycScSZfWk7gO0RcRbOMrfAKTiCPIkYbILFrj64=;
-        b=RKQ2bi2teZ1URM5UNAkiSuuwwK6jA3ytvNBkhCjpcyA8PTIfR/qD54Z3X/XHINcm0b
-         GbC+hgS61m4Nrz+dVzraGCI0BzbL5YrCDyn3JxQQFm8hXEoXcEU4oOsL3NqvwPQBD2Bm
-         4k+d5vVRrOlhHWiVzon1uAj8+4Kel0hpUlLOID5ohh+EhSFbtVKpebMZvaWtD5Q/V+m5
-         ZmPWnpQFUv4kkov/4+LbCAQTbo195xh4kvacMXFtQBZ6b5EqurLlEIH2quBOLG9j2lmX
-         nPeG12Na6SDCp0DYsLM4Fn5UVnefF6WFVdy/nvsGQjkYNZNMgD5joReb/HiYUvteMU5y
-         Of+A==
-X-Received: by 10.60.16.225 with SMTP id j1mr2846636oed.97.1372340839130; Thu,
- 27 Jun 2013 06:47:19 -0700 (PDT)
-Received: by 10.182.102.5 with HTTP; Thu, 27 Jun 2013 06:47:19 -0700 (PDT)
-In-Reply-To: <20130627134156.GB5047@zuhnb712>
+	id S1752647Ab3F0N6A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jun 2013 09:58:00 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:59215 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752067Ab3F0N57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 09:57:59 -0400
+Received: by mail-pd0-f172.google.com with SMTP id z10so409703pdj.17
+        for <git@vger.kernel.org>; Thu, 27 Jun 2013 06:57:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=bmc0S1awsCfYTojhXIC4P5b/3i/e92nBL2tBw9Dx+g4=;
+        b=VCIhnOarvYCOTXPYBv8YDWLkgjoqUs5ulYYGYV8rQShtZZm3mvrYf5q83cK/2AIQm1
+         GnIARkBXvNy6epZoKIVF5YStXFyskz1y+Vzb8WJnuTvZmgNa2TyQ558URxVrl/epOnKu
+         u4P2OG8ak9Ofy9GOeAlrj7Ga0xZGKMY09hdaIVe7vhWo6QSIJx0hlAeWk5Z+Rao9sNWA
+         qioQoaD1v63mrBolba5q3QOucP4JGH4VB0K7OPDE09Vx4ugx5LX1+LAcadsLGiQoEb39
+         PGnyu47jgTmw5SxSFHYhXlical+z90x0lux+E1cCSkE64U6jF4SF6qtUPZ1luRMhbYHH
+         UorQ==
+X-Received: by 10.66.193.199 with SMTP id hq7mr6246145pac.183.1372341478939;
+        Thu, 27 Jun 2013 06:57:58 -0700 (PDT)
+Received: from localhost ([119.120.31.222])
+        by mx.google.com with ESMTPSA id vb8sm3308998pbc.11.2013.06.27.06.57.56
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 27 Jun 2013 06:57:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <51CC4197.3000007@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229106>
 
-On Thu, Jun 27, 2013 at 3:41 PM, Woody Wu <narkewoody@gmail.com> wrote:
-> On Thu, Jun 27, 2013 at 03:14:05PM +0200, Johan Herland wrote:
->> On Thu, Jun 27, 2013 at 2:46 PM, Woody Wu <narkewoody@gmail.com> wro=
-te:
->> > I have a colleague who has to left our office for three month, but=
- still
->> > need to work on the project which is hosted on our in-office git
->> > repository. Problem is that our company has firewall, it's not pos=
-sible
->> > or not allowed to access the company LAN outside the building.  So=
- I
->> > want to ask you expert, can you suggest a best practice of git wor=
-kflow
->> > that suitable to my situation?
->>
->> If he can set up an SSH server on his machine (outside the company
->> network), then he can set up a mirror repo on his machine, where you
->> can push changes from the office to him, and pull changes from him
->> back into the office. Of course, you will probably need to synchroni=
-ze
->> this with him, especially if he's travelling and frequently offline =
-or
->> changing IP addresses. Also you need to be able to make outbound SSH
->> connections through the company firewall, but AFAICS that is usually
->> allowed.
->
-> Outbound ssh to me is not a problem, but inbound ssh to him may be a =
-big
-> problem. You know hotel firewall or some home ADSL don't allow that.
+On Thu, Jun 27, 2013 at 03:43:51PM +0200, Jean-No?l Avila wrote:
+> Le 27/06/2013 14:46, Woody Wu a =E9crit :
+> >Hi,
+> >
+> >I have a colleague who has to left our office for three month, but s=
+till
+> >need to work on the project which is hosted on our in-office git
+> >repository. Problem is that our company has firewall, it's not possi=
+ble
+> >or not allowed to access the company LAN outside the building.  So I
+> >want to ask you expert, can you suggest a best practice of git workf=
+low
+> >that suitable to my situation?
+> >
+> >Thanks in advance.
+> >
+> >-woody
+> >
+> >--
+> >To unsubscribe from this list: send the line "unsubscribe git" in
+> >the body of a message to majordomo@vger.kernel.org
+> >More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>=20
+> For a short time, I had the same issue. We came up using "git
+> bundle" to bundle changes and exchange them via email.
+>=20
+> The setup was to work in two separate branches. The roaming
+> developper started a new branch when leaving. After some work, she
+> sent the commits on her branch as a bundle file. The origin merged
+> the branch extracted from the developper's bundle and sent back the
+> bundle of the changes on origin since the last merge.
+>=20
+> No doubt that both side need to understand well the workflow of
+> fetch/merge. Bundle files can be encrypted for better security.
+>=20
+> Hope this helps.
 
-In that case, you will need either:
+Many thanks, this method sounds suitable to me. I will go the learn
+anything about 'bundle'.
 
-A) A third machine, accessible from both you and him (preferably over
-SSH), where you can store the repo. I don't know what your company
-infrastructure looks like, but maybe it's possible to setup a server
-in the DMZ outside your company firewall?
+Have a nice day!
 
-B) Use a more manual mechanism like emailing bundles (as explained by
-Jean-No=C3=ABl).
-
-
-=2E..Johan
+>=20
+> JN
 
 --=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+I can't go back to yesterday - because I was a different person then
