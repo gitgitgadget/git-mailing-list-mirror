@@ -1,162 +1,85 @@
-From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH] CYGWIN: Use a TCP socket for pipe()
-Date: Thu, 27 Jun 2013 18:31:13 +0200
-Message-ID: <201306271831.13865.tboegi@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] am: replace uses of --resolved with --continue
+Date: Thu, 27 Jun 2013 09:36:18 -0700
+Message-ID: <7vvc4ztssd.fsf@alter.siamese.dyndns.org>
+References: <1372277201-29324-1-git-send-email-kevin@bracey.fi>
+	<20130627083346.GB2232@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: ramsay@ramsay1.demon.co.uk, mlevedahl@gmail.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 27 18:31:27 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Kevin Bracey <kevin@bracey.fi>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Jun 27 18:36:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsF6U-0000v6-AA
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 18:31:26 +0200
+	id 1UsFBK-0005mH-FY
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 18:36:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753195Ab3F0QbW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jun 2013 12:31:22 -0400
-Received: from mout.web.de ([212.227.15.4]:64237 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751685Ab3F0QbV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jun 2013 12:31:21 -0400
-Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb004) with
- ESMTPA (Nemesis) id 0M7Eb0-1U5O4H2LZO-00x4eq; Thu, 27 Jun 2013 18:31:19 +0200
-X-Provags-ID: V03:K0:GkcWvPlEwXKZizWx2DwnfStcA2bPjomKQhhEhDbTB70fjE4SJMA
- UJMk6NW7qo6C6GR79tnWWd0XBkKx1vfMI+KTG3oW2JMVBkJhefkH7WUABR5gtVb2e+e2AqV
- baCELrmbFZ7dIbg5RD6R0eLIgFDKvIc77Z2mHNvSqL7E19BvPiRWHxHnbwtfRhATjSnaimm
- tPAoDFGXtFMyRO+RyPfVA==
+	id S1752643Ab3F0QgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 12:36:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63132 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752435Ab3F0QgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 12:36:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C40929792;
+	Thu, 27 Jun 2013 16:36:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=067unCngAYcNTME3BkSHr8f9mDw=; b=sHIdBJ
+	7wiYs86SYmwc9sWbBNxNzHcHdvyN945LHiEHwNNyHNllQcRHpkLFz2MNN53It5Pj
+	WbAysUn0dyEXQ5CRCi5bvvCHEoGThgOC4/QYo4lQUaohltgo68kqm0IPUolCXJYw
+	Bu9cnyZll6H0XxKLB9MtybVrEnBgRNCFHpK88=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r9jQSBb7F+wI60ZlbBQo5y1m+GfKCWfC
+	GEzUJaeFak9nY9Gw2bY9gP92fsxEw71TJ39t2xK1gRM3qm5HuA1aWarQT0LW4aMy
+	H6EB1mAO19ZYc+pzbjm5jY4oh3Ji/BrW36AQjujErJ5T8G8E2WbXAnGTc/53tq+I
+	l6lQeeB1Nc0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3C0C29791;
+	Thu, 27 Jun 2013 16:36:20 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 724A72978C;
+	Thu, 27 Jun 2013 16:36:20 +0000 (UTC)
+In-Reply-To: <20130627083346.GB2232@serenity.lan> (John Keeping's message of
+	"Thu, 27 Jun 2013 09:33:46 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B27D9250-DF47-11E2-B0B3-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229117>
 
-Work around issues that git hangs when doing fetch or pull under
-various protocols under CYGWIN.
+John Keeping <john@keeping.me.uk> writes:
 
-Replace pipe() with a socket connection using a TCP/IP.
-Introduce a new function socket_pipe() in compat/socket_pipe.c
+>> @@ -176,7 +176,7 @@ aborts in the middle.  You can recover from this in one of two ways:
+>>  
+>>  . hand resolve the conflict in the working directory, and update
+>>    the index file to bring it into a state that the patch should
+>> -  have produced.  Then run the command with the '--resolved' option.
+>> +  have produced.  Then run the command with the '--continue' option.
+>
+> It isn't new in this patch, but there is an inconsistency in the quoting
+> of the options here.  In the previous hunk we use backticks but here it
+> uses SQs.
 
-Re-define the pipe() function into socket_pipe() for CYGWIN.
+Whatever the user is expected to literally type, like the dashed options,
+should be typeset in tt so `--continue` is the right form.
 
-(This redefinition does not work for MinGW, because here a socket can
-not be mixed with a file handle)
+I am not inviting anybody to throw a patch that was generated by
+blindly running:
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- compat/socket_pipe.c | 68 ++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- config.mak.uname     |  2 ++
- git-compat-util.h    |  4 ++++
- 3 files changed, 74 insertions(+)
- create mode 100644 compat/socket_pipe.c
+	sed -e "s/'\(--[a-z_]*\)'/`\1`/g"
 
-diff --git a/compat/socket_pipe.c b/compat/socket_pipe.c
-new file mode 100644
-index 0000000..eee43b5
---- /dev/null
-+++ b/compat/socket_pipe.c
-@@ -0,0 +1,68 @@
-+#include "git-compat-util.h"
-+
-+int socket_pipe(int filedes[2])
-+{
-+	int fd_listen, fd_rd;
-+	int fd_wr =3D -1;
-+	struct sockaddr_in sin;
-+	socklen_t length;
-+	struct linger linger;
-+	int reuse_on =3D 1;
-+
-+	memset(&sin, 0, sizeof(sin));
-+	sin.sin_family =3D AF_INET;
-+	sin.sin_addr.s_addr =3D htonl(INADDR_LOOPBACK);
-+
-+	fd_listen =3D socket(AF_INET, SOCK_STREAM, 0);
-+	if (fd_listen =3D=3D -1)
-+		die_errno("pipe fd_listen socket");
-+	(void)setsockopt(fd_listen, SOL_SOCKET, SO_REUSEADDR,
-+									 (char*)&reuse_on, sizeof(reuse_on));
-+	if (bind(fd_listen, (struct sockaddr *)&sin, sizeof(sin)))
-+		die_errno("pipe bind socket");
-+
-+	length =3D sizeof(sin);
-+	if(getsockname(fd_listen, (struct sockaddr *)&sin, &length))
-+		die_errno("pipe getsockname");
-+	if (listen(fd_listen, SOMAXCONN))
-+		die_errno("pipe listen");
-+	fd_rd =3D socket(AF_INET, SOCK_STREAM, 0);
-+	if (fd_rd =3D=3D -1)
-+		die_errno("pipe fd_rd socket");
-+	if (connect(fd_rd, (struct sockaddr *)&sin, sizeof(sin)))
-+		die_errno("pipe connect");
-+
-+	length =3D sizeof(struct sockaddr);
-+	if(getsockname(fd_rd, (struct sockaddr *)&sin, &length))
-+		die_errno("pipe getsockname");
-+
-+	while (fd_wr =3D=3D -1) {
-+		struct sockaddr_in sacc;
-+		length =3D sizeof(sacc);
-+		memset(&sacc, 0, sizeof(sacc));
-+		fd_wr =3D accept(fd_listen, (struct sockaddr *)&sacc, &length);
-+		if(fd_wr =3D=3D -1)
-+			die_errno("pipe accept");
-+		if (sacc.sin_port !=3D sin.sin_port) {
-+			// Wrong connecting socket
-+			close(fd_wr);
-+			fd_wr =3D -1;
-+		}
-+	}
-+
-+	close(fd_listen);
-+
-+	linger.l_onoff =3D 1;
-+	linger.l_linger =3D 5;
-+	if (setsockopt(fd_wr, SOL_SOCKET, SO_LINGER,
-+								 (char*)&linger, sizeof(linger)))
-+		die_errno("pipe socket linger");
-+	if (shutdown(fd_rd, SHUT_WR))
-+		die_errno("pipe socket shutdown fd_rd");
-+	if (shutdown(fd_wr, SHUT_RD))
-+		die_errno("pipe socket shutdown fd_wr");
-+
-+	filedes[0] =3D fd_rd;
-+	filedes[1] =3D fd_wr;
-+	return 0;
-+}
-diff --git a/config.mak.uname b/config.mak.uname
-index d78fd3d..66bf446 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -170,7 +170,9 @@ ifeq ($(uname_O),Cygwin)
- 	# Try commenting this out if you suspect MMAP is more efficient
- 	NO_MMAP =3D YesPlease
- 	X =3D .exe
-+	BASIC_CFLAGS +=3D -DGIT_USE_SOCKET_PIPE
- 	COMPAT_OBJS +=3D compat/cygwin.o
-+	COMPAT_OBJS +=3D compat/socket_pipe.o
- 	UNRELIABLE_FSTAT =3D UnfortunatelyYes
- 	SPARSE_FLAGS =3D -isystem /usr/include/w32api -Wno-one-bit-signed-bit=
-field
- endif
-diff --git a/git-compat-util.h b/git-compat-util.h
-index c1f8a47..88632ab 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -176,6 +176,10 @@ int get_st_mode_bits(const char *path, int *mode);
- #endif
- #endif
-=20
-+int socket_pipe(int filedes[2]);
-+#ifdef GIT_USE_SOCKET_PIPE
-+#define pipe(a) socket_pipe(a)
-+#endif
- /* used on Mac OS X */
- #ifdef PRECOMPOSE_UNICODE
- #include "compat/precompose_utf8.h"
---=20
-1.8.3
+to touch 50+ files without thinking, by the way.  It is so easy that
+it can even be done by a trained monkey, but it also is very easy to
+fail to spot misconversion.  Done in small batches with a throttled
+rate of patchflow, we may have sufficient review bandwidth to audit
+them.
