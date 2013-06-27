@@ -1,11 +1,10 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
+From: "W. Trevor King" <wking@tremily.us>
 Subject: Re: [PATCH] pull: require choice between rebase/merge on
  non-fast-forward pull
-Date: Thu, 27 Jun 2013 22:11:42 +0200
-Message-ID: <20130627201142.GC27497@paksenarrion.iveqy.com>
+Date: Thu, 27 Jun 2013 16:30:07 -0400
+Message-ID: <20130627203007.GG9999@odin.tremily.us>
 References: <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
- <20130523102959.GP9448@inner.h.apk.li>
- <20130523110839.GT27005@serenity.lan>
+ <20130523102959.GP9448@inner.h.apk.li> <20130523110839.GT27005@serenity.lan>
  <7vd2shheic.fsf@alter.siamese.dyndns.org>
  <20130523164114.GV27005@serenity.lan>
  <7vbo81e7gs.fsf@alter.siamese.dyndns.org>
@@ -14,77 +13,102 @@ References: <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
  <CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
  <7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary="m972NQjnE83KvVa/"
 Cc: git@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	John Keeping <john@keeping.me.uk>,
 	Andreas Krey <a.krey@gmx.de>,
 	John Szakmeister <john@szakmeister.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 27 22:12:13 2013
+X-From: git-owner@vger.kernel.org Thu Jun 27 22:30:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsIY8-0005aC-AR
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 22:12:12 +0200
+	id 1UsIpj-0006Ii-Lb
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 22:30:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754414Ab3F0UMH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jun 2013 16:12:07 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:49308 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754445Ab3F0UME (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 16:12:04 -0400
-Received: by mail-la0-f46.google.com with SMTP id eg20so1323939lab.5
-        for <git@vger.kernel.org>; Thu, 27 Jun 2013 13:12:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=St4sbMjtJE8uBdYsZ/90MWRk8VSvk9MduHDuewAZQ2I=;
-        b=Dl3FRp6HODfQKkXFFkyKgkTK11AdsbgEe7YGZ6QyMo2HxBFkwLYfUZYbD0a3QGa22K
-         oRbL2qM3Pi85PvM3X4YukvBL/NlqpvGwbB+HtTgPPscoVlMuBZBuQeWoxEbvcAp1r6f5
-         XlqmLnM2d2tws2wrwhsA5oGxdL9cK/IB5IwUvnavd+qj2ZPeQhrVgQEGPqgnH7GQcpjV
-         wiyN69fneTNVMaVjJ6xard5IiCbNVfLQpe7GStud8yvvnv/5LTkcUoNx1SvYsJpSt3kg
-         4xOpeD7hlbGc8F0f7JFLhOCdfqPVNqEjntDjRjW6BErRpC42kxDlz/gWabm2jSjNcznl
-         TfAg==
-X-Received: by 10.152.25.135 with SMTP id c7mr4923628lag.39.1372363922313;
-        Thu, 27 Jun 2013 13:12:02 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id p7sm1632741lbi.15.2013.06.27.13.12.01
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 27 Jun 2013 13:12:01 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UsIXe-0002qL-JM; Thu, 27 Jun 2013 22:11:42 +0200
-Content-Disposition: inline
-In-Reply-To: <7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754260Ab3F0UaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 16:30:18 -0400
+Received: from vms173015pub.verizon.net ([206.46.173.15]:61147 "EHLO
+	vms173015pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754219Ab3F0UaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 16:30:16 -0400
+Received: from odin.tremily.us ([unknown] [72.68.87.33])
+ by vms173015.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0MP20090NJM7FC10@vms173015.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 27 Jun 2013 15:30:13 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 5E035A5443B; Thu,
+ 27 Jun 2013 16:30:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1372365007; bh=7q4XkD+cm/AyUKYdy2ckGrrdtoZLgwjVx7BhFaRas7I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=prt0IjptFTaoJUW8y3dkfu5dijieuR0cJ4j2C+v0Vn08BZZFpnDfQKCG6NONuilgu
+ SjJQ17AAvPmh6qsp2fCVw6qy1iKV3bFBfo3IMHoJQ/anZaeCIHY7kwh3UrrqAwKBIC
+ JVtXto31zlMM1bz5kOcn7+AfQLuShgudQd8HQ8Zk=
+Content-disposition: inline
+In-reply-to: <7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229153>
+
+
+--m972NQjnE83KvVa/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Assorted minor edits:
 
 On Thu, Jun 27, 2013 at 12:48:52PM -0700, Junio C Hamano wrote:
-<snip>
-> +# See if we are configured to rebase by default.
-> +# The value $rebase is, throughout the main part of the code:
-> +#    (empty) - the user did not have any preference
-> +#    true    - the user told us to integrate by rebasing
-> +#    flase   - the user told us to integrate by merging
+> Because letting a trivial merge automatically handled by Git is so
 
-s/flase/false
+Maybe:
 
-And isn't all config settings documented somewhere?
+  Because letting Git handle a trivial merge automatically is so=E2=80=A6
+
+> that the project s/he is interacting with may prefer "rebase"
+> workflow.  Add a safety valve to fail "git pull" that is not a
+
+Maybe (adding an "a"):
+
+  a "rebase" workflow.
+
+Cheers,
+Trevor
 
 --=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+--m972NQjnE83KvVa/
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.20 (GNU/Linux)
+
+iQIcBAEBAgAGBQJRzKDKAAoJEKKfehoaNkbtwdYQAJh8xD9d2GX6q2jNkXCMHt/w
+r0Gw1/c5UuksnLHQHGoJPXNVqCI63FZO7WgIoSLDqGT9Q7rEr12eqfQhGhQyH1iS
+9OqyEP8J0WZeXWISkOmj1Ki9wYtRHjbAP+Qndu9+F358zwKUaD728Euy0nawTGiJ
+lrmr++Y1NveRhM3mf//MxFZzxnIbicHM2WQVXveHeERms7oXyfFE+J5M5lldoMGL
+Eo7tXU1PI99vOqSnv079pLkv8DPm9tXiAUyNlLnQjjzj+oUhzklCKsardM1sK3cT
++GlWm9UD1h5KtuoktNcR4PJ+E2N11CAgk0g/x7ghPytr9mlW4yObWO7XBg07lhPG
+6fMOefKJYkJDyso7FVDuFSRLy4CS9O2X6cmcpgJ1Us3MG0VJNbOFrxmkic0/1sAk
+e0Ff+HQfpI6GksI0Q2qHrwVaR3ixMBn7nDwrJ+45tJWlQmkMK5s6wyAqGgXYQcIf
+ajWs6Q1D7lYl2KwkRD+r3ENFcfJELSQ5+InPZlRFgBFST17dF4d5dbENPh9vuOaC
+DgqMaA9JcncQFvYk6gl2jMWSAZungF+P4yzHU4fLliIFeU57x4aZkn02TU1Z5Tam
+PDhKb4EGDHyBiZBAqr075bQAn1uD6rPgmr1apKXFxWVoyx9NDA8/jkRtwAyZEzRa
+w7rQYBWk0yVRd2tdVgsJ
+=cFr6
+-----END PGP SIGNATURE-----
+
+--m972NQjnE83KvVa/--
