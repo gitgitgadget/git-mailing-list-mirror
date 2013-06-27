@@ -1,113 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] CYGWIN: Use a TCP socket for pipe()
-Date: Thu, 27 Jun 2013 10:38:47 -0700
-Message-ID: <7vvc4zsbbs.fsf@alter.siamese.dyndns.org>
-References: <201306271831.13865.tboegi@web.de>
+From: =?UTF-8?Q?Beno=C3=AEt_Person?= <benoit.person@ensimag.fr>
+Subject: Re: contrib/mw-to-git/Git/Mediawiki.pm
+Date: Thu, 27 Jun 2013 19:54:36 +0200
+Message-ID: <CAETqRCif7K3MZiG4oMfnM-jps+KajDMYML4C5Hhy8eE7bj38xA@mail.gmail.com>
+References: <51CC6189.6030701@web.de>
+	<CAETqRCgctnVqrYaAYn7uZtv0rvQNawUAi513iTeWPufkZPRgAw@mail.gmail.com>
+	<vpq4ncjcxt4.fsf@anie.imag.fr>
+	<7vzjubsbqj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: ramsay@ramsay1.demon.co.uk, mlevedahl@gmail.com,
-	git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jun 27 19:39:05 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 27 19:54:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsG9w-0008IB-IO
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 19:39:04 +0200
+	id 1UsGP7-000754-Ud
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 19:54:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753547Ab3F0RjA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jun 2013 13:39:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40296 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752093Ab3F0Ri7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jun 2013 13:38:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 614D329AB7;
-	Thu, 27 Jun 2013 17:38:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/GQgOhi2GoEV
-	e4FSE5D3Feamvbk=; b=R3k69KOZ/vqiN612IPQq/zItJrp/LVF/wb1fhyVghBNY
-	t2mfJAxFjj7H5X2tP3z6UIo4Xr69ZFnqwn/CagPoFh9/rpGdBdLfbmcsYoefQ0VR
-	MdYXVHbg8SHj71Uavr0hJ9ct+Zki51acpbGHGuFxlmS3gkJZoPOKu2x1tqJVtbM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JtWL5q
-	v/cM6G5y/q8Ezu3vjDg8k9lUC1ruDISve1ytZ1ByOxE3lUf8QtIBCjQGWdccSNK1
-	6Z5+BDHBwrJqLBbyNVRrp4So7fsq5AFcga71+30BHImpBUK2eUqm5SBcPuKriQ1y
-	gOinkklsdgFIZjlhwnz2688OAKhNVO08WpowA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5554929AB6;
-	Thu, 27 Jun 2013 17:38:58 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A98A429AB3;
-	Thu, 27 Jun 2013 17:38:57 +0000 (UTC)
-In-Reply-To: <201306271831.13865.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?=
-	message of "Thu, 27 Jun 2013 18:31:13 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 71F8D880-DF50-11E2-A2B0-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752773Ab3F0Ryh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 13:54:37 -0400
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:48783 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752593Ab3F0Ryh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 13:54:37 -0400
+Received: by mail-wg0-f46.google.com with SMTP id c11so815348wgh.13
+        for <git@vger.kernel.org>; Thu, 27 Jun 2013 10:54:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=85Sd2iCRtzkFejUPeF2PKEbM57QCc9hoY1nqD+t/o8k=;
+        b=f7wCY9T8FxeabBP+GRo47wq5P77XpYg3Ls9zuXtv78rO5/PKJeGXsbkhIOhHkuerrk
+         IvDHgWwhuCg+M2F8ysKe3pk1g44iuvRrYD7PC4YH3CHQHU3PbVg7zC6crhfsJcLPWYoY
+         L8W+IHPEr+O6N/sB9LueEwNTJ4370kRU8z5kIdCnI57Bm5zuRbKwfQWdQJF/dHZJ6gPg
+         rDn6adsHPQdJkQ+ZQQtjiIbapnjjRjdWx+AirdrbfuYq3gIfU4tKxQC+bDeGWWMQlLeM
+         7ZXmezdHnZGfqd2TW/wlBgCxY672fuflD9ZHvhSRYgJV2irv0VEvcsu3wCVnrUcZOd1c
+         sTtw==
+X-Received: by 10.194.243.101 with SMTP id wx5mr7042977wjc.49.1372355676102;
+ Thu, 27 Jun 2013 10:54:36 -0700 (PDT)
+Received: by 10.216.245.196 with HTTP; Thu, 27 Jun 2013 10:54:36 -0700 (PDT)
+In-Reply-To: <7vzjubsbqj.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 2BRkLGmOywWsz17ZnDN-E_CRym0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229134>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+> Hmph.  Does it even need to be in-tree then?  Is it insufficient to
+> run ../../git from that directory instead?
+Well, the fact is we use Perl packages now (Git.pm and
+Git::Mediawiki.pm in contrib/mw-to-git/Git/). The way we build perl
+scripts in the toplevel's Makefile makes those packages accessible
+only in $GITPERLLIB if it's defined and defaults to $INSTLIBDIR to
+seek for installed version of those packages.
 
-> Work around issues that git hangs when doing fetch or pull under
-> various protocols under CYGWIN.
->
-> Replace pipe() with a socket connection using a TCP/IP.
-> Introduce a new function socket_pipe() in compat/socket_pipe.c
+We use a bin-wrapper to define that $GITPERLLIB variable so that the
+installed version gets bypassed by the one presents in the directory
+defined in $GITPERLLIB.
 
-Sounds like sweeping the real problem, whatever it is, under rug.
-Is it that we are assuming a pipe buffer that is sufficiently large
-and expecting a write that we deem to be small enough not to block,
-causing a deadlock on a platform with very small pipe buffer, or
-something?
-> +	(void)setsockopt(fd_listen, SOL_SOCKET, SO_REUSEADDR,
-> +									 (char*)&reuse_on, sizeof(reuse_on));
-
-Broken indentation.
-
-Either align (note: these are only to illustrate the column
-alignment; I am not encouraging to indent with leading SPs) the
-opening "(" of the "(char *)" cast with "f" in "fd_listen", like
-this,
-
-        (void)setsockopt(fd_listen, SOL_SOCKET, SO_REUSEADDR,
-                         (char *)&reuse_on, sizeof(reuse_on));
-
-by a run of HT with minimum number of SP, or push the beginning of
-the second line past opening "(" after "setsockopt", like this,
-
-        (void)setsockopt(fd_listen, SOL_SOCKET, SO_REUSEADDR,
-                                (char *)&reuse_on, sizeof(reuse_on));
-
-with a run of minimum number of HT without any SP.
-
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index c1f8a47..88632ab 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -176,6 +176,10 @@ int get_st_mode_bits(const char *path, int *mode=
-);
->  #endif
->  #endif
-> =20
-> +int socket_pipe(int filedes[2]);
-> +#ifdef GIT_USE_SOCKET_PIPE
-> +#define pipe(a) socket_pipe(a)
-> +#endif
-
-Shouldn't the function declaration be inside this #ifdef?
-
->  /* used on Mac OS X */
->  #ifdef PRECOMPOSE_UNICODE
->  #include "compat/precompose_utf8.h"
+> I just noticed that the script is not strictly a text file, ending
+> with an incomplete line, by the way.
+an incomplete line ?
