@@ -1,193 +1,72 @@
-From: =?UTF-8?Q?Vicent_Mart=C3=AD?= <tanoku@gmail.com>
-Subject: Re: [PATCH 09/16] documentation: add documentation for the bitmap format
-Date: Thu, 27 Jun 2013 04:36:54 +0200
-Message-ID: <CAFFjANSr2QRLE8DSPP2zZ_baEZUqR8dzkPzMwqyEqgFX=8cnog@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 09/16] documentation: add documentation for the bitmap
+ format
+Date: Wed, 26 Jun 2013 22:45:22 -0400
+Message-ID: <20130627024521.GA6936@sigill.intra.peff.net>
 References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
- <1372116193-32762-10-git-send-email-tanoku@gmail.com> <CAJo=hJtcQwh-N-9_i84y1ZsL0mdREHcxhP2gepcrREiaxvxS6A@mail.gmail.com>
+ <1372116193-32762-10-git-send-email-tanoku@gmail.com>
+ <CAJo=hJtcQwh-N-9_i84y1ZsL0mdREHcxhP2gepcrREiaxvxS6A@mail.gmail.com>
  <CAFFjANRwBBcORhu4mwjESBfr4GJ3zDrgYvUhY=VxK9abv7k2MA@mail.gmail.com>
- <7vtxkl28m7.fsf@alter.siamese.dyndns.org> <CAFFjANRqZ0U5tGhgjACUtquyVKCyuHiS3CC2Xxwo0J1UJVrf=g@mail.gmail.com>
+ <7vtxkl28m7.fsf@alter.siamese.dyndns.org>
+ <CAFFjANRqZ0U5tGhgjACUtquyVKCyuHiS3CC2Xxwo0J1UJVrf=g@mail.gmail.com>
  <CAJo=hJtJoizQUubriTPvs2bsjvw+N82MCPvw263fUB8vv8_VVA@mail.gmail.com>
+ <CAFFjANSr2QRLE8DSPP2zZ_baEZUqR8dzkPzMwqyEqgFX=8cnog@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Colby Ranger <cranger@google.com>, git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jun 27 04:37:25 2013
+To: Vicent =?utf-8?B?TWFydMOt?= <tanoku@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 27 04:45:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Us25L-0000Xp-W5
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 04:37:24 +0200
+	id 1Us2DB-0008Nq-7M
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 04:45:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928Ab3F0ChR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jun 2013 22:37:17 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:36523 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751782Ab3F0ChP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Jun 2013 22:37:15 -0400
-Received: by mail-vc0-f174.google.com with SMTP id kw10so71534vcb.19
-        for <git@vger.kernel.org>; Wed, 26 Jun 2013 19:37:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=gPwgHVl1PXx6G5GW758Te2NsRL5O9hF6mcs4c8Ryz60=;
-        b=V17PNJUGqaDFPP+BNFenkbn3YgeULW5ccBK8DIydlSnKI6KqP+glYU/s0iRELFaMD2
-         VhhJpsYqkhqxBH4b+qK4OWlXzpIgvabY6nLmkFlQQp2UckCr2I+NkGEuHJx9qFpzgQaM
-         eH8XVWyv8M18BwAOhVUXzd+Tv05YMkdAg2/Dct4M5pnf1qpQsoPMTthbYM54Ub6cMvlJ
-         atRlgwaHbe/sBbEqhKE35uchoeSHgzJV70v7tVtiJw0mWSn6jMTXwUz9r4UjLx8HAHZO
-         duxB9Y1gyAJRHdTarhQKlWyKzTtQ6Ya+L3GRRhVcb+Qw/Sn3/IQZcZ2G9NNqwZKPHRR7
-         3HUA==
-X-Received: by 10.220.73.135 with SMTP id q7mr2778200vcj.33.1372300634520;
- Wed, 26 Jun 2013 19:37:14 -0700 (PDT)
-Received: by 10.221.45.131 with HTTP; Wed, 26 Jun 2013 19:36:54 -0700 (PDT)
-In-Reply-To: <CAJo=hJtJoizQUubriTPvs2bsjvw+N82MCPvw263fUB8vv8_VVA@mail.gmail.com>
+	id S1751801Ab3F0CpZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jun 2013 22:45:25 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34679 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751522Ab3F0CpZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jun 2013 22:45:25 -0400
+Received: (qmail 1269 invoked by uid 102); 27 Jun 2013 02:46:29 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Jun 2013 21:46:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Jun 2013 22:45:22 -0400
+Content-Disposition: inline
+In-Reply-To: <CAFFjANSr2QRLE8DSPP2zZ_baEZUqR8dzkPzMwqyEqgFX=8cnog@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229084>
 
-That was a very rude reply. :(
+On Thu, Jun 27, 2013 at 04:36:54AM +0200, Vicent Mart=C3=AD wrote:
 
-Please refrain from interacting with me in the ML in the future. I'l
-do accordingly.
+> That was a very rude reply. :(
+>=20
+> Please refrain from interacting with me in the ML in the future. I'l
+> do accordingly.
 
-Thanks!
-vmg
+I agree that the pointer arithmetic thing may have been a little much,
+but I think there are some points we need to address in Shawn's email.
 
-On Thu, Jun 27, 2013 at 3:11 AM, Shawn Pearce <spearce@spearce.org> wro=
-te:
-> On Tue, Jun 25, 2013 at 4:08 PM, Vicent Mart=C3=AD <tanoku@gmail.com>=
- wrote:
->> On Tue, Jun 25, 2013 at 11:17 PM, Junio C Hamano <gitster@pobox.com>=
- wrote:
->>> What case are you talking about?
->>>
->>> The n-th object must be one of these four types and can never be of
->>> more than one type at the same time, so a natural expectation from
->>> the reader is "If you OR them together, you will get the same set".
->>> If you say "If you XOR them", that forces the reader to wonder when
->>> these bitmaps ever can overlap at the same bit position.
->>
->> I guess this is just wording. I don't particularly care about the
->> distinction, but I'll change it to OR.
->
-> Hmm, OK. If you think XOR and OR are the same operation, I also have =
-a
-> bridge to sell you. Its in Brooklyn. Its a great value.
->
-> The correct operation is OR. Not XOR. OR. Drop the X.
->
->> It cannot be mmapped not particularly because of endianness issues,
->> but because the original format is not indexed and requires a full
->> parse of the whole index before it can be accessed programatically.
->> The wrong endianness just increases the parse time.
->
-> Wrong endianness has nothing to do with the parse time. Modern CPUs
-> can flip a word around very quickly. In JGit we chose to parse the
-> file at load time because its simpler than having an additional index
-> segment, and we do what you did which is to toss the object SHA-1s
-> into a hashtable for fast lookup. By the time we look for the SHA-1s
-> and toss them into a hashtable we can stride through the file and fin=
-d
-> the bitmap regions. Simple.
->
-> In other words, the least complex solution possible that still
-> provides good performance. I'd say we have pretty good performance.
->
->>>> and I'm going to try to make it run fast enough in that
->>>> encoding.
->>>
->>> Hmph.  Is it an option to start from what JGit does, so that people
->>> can use both JGit and your code on the same repository?
->
-> I'm afraid I agree here with Junio. The JGit format is already
-> shipping in JGit 3.0, Gerrit Code Review 2.6, and in heavy production
-> use for almost a year on android.googlesource.com, and Google's own
-> internal Git trees.
->
-> I would prefer to see a series adding bitmap support to C Git start
-> with the existing format, make it run, taking advantage of the
-> optimizations JGit uses (many of which you ignored and tried to "fix"
-> in other ways), and then look at improving the file format itself if
-> load time is still the largest low hanging fruit in upload-pack. I'm
-> guessing its not. You futzed around with the object table, but JGit
-> sped itself up considerably by simply not using the object table when
-> the bitmap is used. I think there are several such optimizations you
-> missed in your rush to redefine the file format.
->
->>>  And then if
->>> you do not succeed, after trying to optimize in-core processing
->>> using that on-disk format to make it fast enough, start thinking
->>> about tweaking the on-disk format?
->>
->> I'm afraid this is not an option. I have an old patchset that
->> implements JGit v1 bitmap loading (and in fact that's how I initiall=
-y
->> developed these series -- by loading the bitmaps from JGit for
->> debugging), but I discarded it because it simply doesn't pan out in
->> production. ~3 seconds time to spawn `upload-pack` is not an option
->> for us. I did not develop a tweaked on-disk format out of boredom.
->
-> I think your code or experiments are bogus. Even on our systems with
-> JGit a cold start for the Linux kernel doesn't take 3s. And this is
-> JGit where Java is slow because "Jesus it has a lot of factories", an=
-d
-> without mmap'ing the file into the server's address space. Hell the
-> file has to come over the network from a remote disk array.
->
->> I could dig up the patch if you're particularly interested in
->> backwards compatibility, but since it was several times slower than
->> the current iteration, I have no interest (time, actually) to mainta=
-in
->> it, brush it up, and so on. I have already offered myself to port th=
+In particular, it seems like the slowness we saw with the v1 bitmap
+format is not what Shawn and Colby have experienced. So it's possible
+that our test setup is bad or different. Or maybe the C v1 reading
+implementation had some problems that are fixable. It's hard to say
+because we haven't shown any code that can be timed and compared.
+
+And the pack-order versus idx-order for the bitmaps is still up in the
+air. Do we have numbers on the on-disk sizes of the resulting EWAHs? Th=
 e
->> v2 format to JGit as soon as it's settled. It sounds like a better
->> investment of all our times.
->
-> Actually, I think the format you propose here is inferior to the JGit
-> format. In particular the idx-ordering means the EWAH code is useless=
-=2E
-> You might as well not use the EWAH format and just store 2.6M bits pe=
-r
-> commit. The idx-ordering also makes *much* harder to emit a pack file
-> a reasonable order for the client. Colby and I tried idx-ordering and
-> discarded it when it didn't perform as well as the pack-ordering that
-> JGit uses.
->
->> Following up on Shawn's comments, I removed the little-endian suppor=
-t
->> from the on-disk format and implemented lazy loading of the bitmaps =
-to
->> make up for it. The result is decent (slowed down from 250ms to 300m=
-s)
->> and it lets us keep the whole format as NWO on disk. I think it's a
->> good tradeback.
->
-> The maintenance burden of two endian formats in a single file is too
-> high to justify. I'm glad to see you saw that.
->
->> As it stands right now, the only two changes from v1 of the on-disk =
-format are:
->>
->> - There is an index at the end. This is a good idea.
->
-> I don't think the index is necessary if you plan to build a hashtable
-> at runtime anyway. If you mmap the file you can quickly skip over a
-> bitmap and find the next SHA-1 using this thing called "pointer
-> arithmetic". I am not sure if you are familiar with the term, perhaps
-> you could search the web for it.
->
->> - The bitmaps are sorted in packfile-index order, not in packfile
->> order. This is a good idea.
->
-> As Colby and I have repeatedly tried to explain, this is not a good i=
-dea.
->
->> German kisses,
->
-> Strawberry and now German kisses? What's next, Mango kisses?
+pack-order ones should be more amenable to run-length encoding,
+especially as you get further down into history (the tip ones would
+mostly be 1's, no matter how you order them).
+
+-Peff
