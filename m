@@ -1,78 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 0/1] cygwin: Remove the Win32 l/stat() functions
-Date: Thu, 27 Jun 2013 15:58:27 -0400
-Message-ID: <20130627195827.GB17601@sigill.intra.peff.net>
-References: <51C5FD28.1070004@ramsay1.demon.co.uk>
- <51C6BC4B.9030905@web.de>
- <51C8BF2C.2050203@ramsay1.demon.co.uk>
- <7vy59y4w3r.fsf@alter.siamese.dyndns.org>
- <51C94425.7050006@alum.mit.edu>
- <51CB610C.7050501@ramsay1.demon.co.uk>
- <20130626223552.GA12785@sigill.intra.peff.net>
- <51CBD2FD.5070905@alum.mit.edu>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: [PATCH] pull: require choice between rebase/merge on
+ non-fast-forward pull
+Date: Thu, 27 Jun 2013 22:11:42 +0200
+Message-ID: <20130627201142.GC27497@paksenarrion.iveqy.com>
+References: <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
+ <20130523102959.GP9448@inner.h.apk.li>
+ <20130523110839.GT27005@serenity.lan>
+ <7vd2shheic.fsf@alter.siamese.dyndns.org>
+ <20130523164114.GV27005@serenity.lan>
+ <7vbo81e7gs.fsf@alter.siamese.dyndns.org>
+ <20130523215557.GX27005@serenity.lan>
+ <7vli75cpom.fsf@alter.siamese.dyndns.org>
+ <CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
+ <7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Johannes Sixt <j6t@kdbg.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, mlevedahl@gmail.com,
-	dpotapov@gmail.com, GIT Mailing-list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 27 21:58:44 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	John Keeping <john@keeping.me.uk>,
+	Andreas Krey <a.krey@gmx.de>,
+	John Szakmeister <john@szakmeister.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 27 22:12:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsIL4-0001Cl-Uy
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 21:58:43 +0200
+	id 1UsIY8-0005aC-AR
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 22:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754594Ab3F0T6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 15:58:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41493 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754565Ab3F0T6a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 15:58:30 -0400
-Received: (qmail 16382 invoked by uid 102); 27 Jun 2013 19:59:35 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Jun 2013 14:59:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Jun 2013 15:58:27 -0400
+	id S1754414Ab3F0UMH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jun 2013 16:12:07 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:49308 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754445Ab3F0UME (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 16:12:04 -0400
+Received: by mail-la0-f46.google.com with SMTP id eg20so1323939lab.5
+        for <git@vger.kernel.org>; Thu, 27 Jun 2013 13:12:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=St4sbMjtJE8uBdYsZ/90MWRk8VSvk9MduHDuewAZQ2I=;
+        b=Dl3FRp6HODfQKkXFFkyKgkTK11AdsbgEe7YGZ6QyMo2HxBFkwLYfUZYbD0a3QGa22K
+         oRbL2qM3Pi85PvM3X4YukvBL/NlqpvGwbB+HtTgPPscoVlMuBZBuQeWoxEbvcAp1r6f5
+         XlqmLnM2d2tws2wrwhsA5oGxdL9cK/IB5IwUvnavd+qj2ZPeQhrVgQEGPqgnH7GQcpjV
+         wiyN69fneTNVMaVjJ6xard5IiCbNVfLQpe7GStud8yvvnv/5LTkcUoNx1SvYsJpSt3kg
+         4xOpeD7hlbGc8F0f7JFLhOCdfqPVNqEjntDjRjW6BErRpC42kxDlz/gWabm2jSjNcznl
+         TfAg==
+X-Received: by 10.152.25.135 with SMTP id c7mr4923628lag.39.1372363922313;
+        Thu, 27 Jun 2013 13:12:02 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id p7sm1632741lbi.15.2013.06.27.13.12.01
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 27 Jun 2013 13:12:01 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UsIXe-0002qL-JM; Thu, 27 Jun 2013 22:11:42 +0200
 Content-Disposition: inline
-In-Reply-To: <51CBD2FD.5070905@alum.mit.edu>
+In-Reply-To: <7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229152>
 
-On Thu, Jun 27, 2013 at 07:51:57AM +0200, Michael Haggerty wrote:
+On Thu, Jun 27, 2013 at 12:48:52PM -0700, Junio C Hamano wrote:
+<snip>
+> +# See if we are configured to rebase by default.
+> +# The value $rebase is, throughout the main part of the code:
+> +#    (empty) - the user did not have any preference
+> +#    true    - the user told us to integrate by rebasing
+> +#    flase   - the user told us to integrate by merging
 
-> > In theory we can drop the safety valve; it should never actually happen.
-> > But I'd like to keep it there for working systems. Perhaps it is worth
-> > doing something like this:
-> > 
-> > [...#ifdef out consistency check on cygwin when lock is held...]
-> 
-> Yes, this would work.
-> 
-> But, taking a step back, I think it is a bad idea to have an unreliable
-> stat() masquerading as a real stat().  If we want to allow the use of an
-> unreliable stat for certain purposes, let's have two stat() interfaces:
-> 
-> * the true stat() (in this case I guess cygwin's slow-but-correct
-> implementation)
-> 
-> * some fast_but_maybe_unreliable_stat(), which would map to stat() on
-> most platforms but might map to the Windows stat() on cygwin when so
-> configured.
+s/flase/false
 
-Yeah, that makes sense to me. I don't have a particular opinion on which
-way to go, as I do not use cygwin at all (and on most platforms, the
-two stat interfaces would just both call stat()).
+And isn't all config settings documented somewhere?
 
-I will leave it up to Cygwin folks whether they want to do something
-like my patch as a band-aid while working up the two-stat() solution.
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
 
--Peff
+tel: 0733-608274
+e-post: iveqy@iveqy.com
