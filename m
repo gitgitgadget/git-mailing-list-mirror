@@ -1,54 +1,70 @@
-From: Perry Wagle <wagle@mac.com>
-Subject: device files should be handled by git
-Date: Wed, 26 Jun 2013 20:27:56 -0700
-Message-ID: <21095513-708E-4F82-88D0-A312B74BA7F4@mac.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+From: Hyunho Cho <mug896@gmail.com>
+Subject: =?windows-1252?Q?=93git_remote_status=94_incorrect_result?=
+Date: Thu, 27 Jun 2013 14:25:55 +0900
+Message-ID: <CAMMw471Duu075CoC=jw3ZKpcEq0Lonv1NkzyW41v8dR39ZN=Zg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 27 06:28:19 2013
+X-From: git-owner@vger.kernel.org Thu Jun 27 07:26:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Us3od-0005xa-HQ
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 06:28:15 +0200
+	id 1Us4iW-0000CT-LO
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 07:26:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750978Ab3F0E2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 00:28:11 -0400
-Received: from nk11p04mm-asmtpout001.mac.com ([17.158.236.236]:62677 "EHLO
-	nk11p04mm-asmtp001.mac.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750871Ab3F0E2K convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 00:28:10 -0400
-X-Greylist: delayed 3612 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Jun 2013 00:28:10 EDT
-Received: from tuple.ftrdhcpuser.net
- (static-50-43-34-150.bvtn.or.frontiernet.net [50.43.34.150])
- by nk11p04mm-asmtp001.mac.com
- (Oracle Communications Messaging Server 7u4-26.01(7.0.4.26.0) 64bit (built Jul
- 13 2012)) with ESMTPSA id <0MP100B5J8AKZQ30@nk11p04mm-asmtp001.mac.com> for
- git@vger.kernel.org; Thu, 27 Jun 2013 03:27:57 +0000 (GMT)
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.10.8794,1.0.431,0.0.0000
- definitions=2013-06-27_02:2013-06-26,2013-06-27,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- ipscore=0 suspectscore=43 phishscore=0 bulkscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=6.0.2-1305010000
- definitions=main-1306260271
-X-Mailer: Apple Mail (2.1508)
+	id S1751384Ab3F0FZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 01:25:57 -0400
+Received: from mail-ie0-f195.google.com ([209.85.223.195]:64267 "EHLO
+	mail-ie0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750991Ab3F0FZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 01:25:56 -0400
+Received: by mail-ie0-f195.google.com with SMTP id c10so288893ieb.2
+        for <git@vger.kernel.org>; Wed, 26 Jun 2013 22:25:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=9sZv54SE6PcVnV5rgfmCjPTtN3EjrSbv5tOmQ78j1Kc=;
+        b=TY/WDha6GM4WsbZrx5xbZw4t8syto2r6JXicvYcnbFZS6VpGz/n6i5UxfWt/hnkjI8
+         RawB1B3Dt6fIvBSZzjthp1AObtvNknFhtS1fexIAF/jc08e6kdUhqzKfrUlXAA9fExA+
+         D1SdS9pHFO5rqrZr+Q6qLYl2hCF6tqiHtjKOTA6Cm8VO1aydvKPiY06S42O9IzmQmqOi
+         Ropj6kyXw8cs9ByMWEgOE8BnSSK6jdnn5XqgpqKiTWQRLd6W6kyGAEn7ciqftkcNp1Xe
+         eUduIX3Yr9rfWXWLNQRvSvOOojrQNWoz5qwuocLu4dwEyIC6MeiFlTGWXNAWT0659uhU
+         IuaQ==
+X-Received: by 10.50.27.37 with SMTP id q5mr13853876igg.52.1372310756026; Wed,
+ 26 Jun 2013 22:25:56 -0700 (PDT)
+Received: by 10.64.57.199 with HTTP; Wed, 26 Jun 2013 22:25:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229087>
 
-Hi --
+i have configured like this
 
-I have a disk image of a small embedded device whose root file system I'd like to check-in to git as a means of distributing its GPL'd software.  In that disk image are device files, which GIT studiously ignores.  If symlinks are handled (contents being the path that the symlink points at), I don't see why device files can't be handled (contents being the type (char or block) and the major and minor device number).  TAR, for example, handles this fine, except that using tar in git sort-of goes against the granularity of the objects being modified (like adding a bunch of extra "sd??" devices), such that you are modifying a whole tar ball instead of the individual (device) files.
+git remote add myremote1 .......
+git config --global push.default upstream
+git branch --set-upstream-to=myremote1/master remote1-master
 
-Is there a reason not to handle device files other than "its not traditional"?  That's the only reason given in google or the IRC channel.
+and git pull, git push in remote1-master work i expected
 
-Thanks!
+but "git remote status myremote1" display..
 
--- Perry
+Local ref configured for 'git push':
+   master pushes to master (local out of date)
+
+section always display master to master. and status incorrectly
+
+it would be correct:
+
+Local ref configured for 'git push':
+   remote1-master pushes to master (up to date)
+
+if i add another remote "myremote2" there is also exist "master" branch
+
+"Local ref configured for 'git push':" section have to display
+
+according to local branch and upstream setting
+
+and remote status correctly i think
