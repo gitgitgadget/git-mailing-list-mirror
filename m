@@ -1,61 +1,162 @@
-From: =?UTF-8?Q?Beno=C3=AEt_Person?= <benoit.person@ensimag.fr>
-Subject: Re: contrib/mw-to-git/Git/Mediawiki.pm
-Date: Thu, 27 Jun 2013 18:25:38 +0200
-Message-ID: <CAETqRCgctnVqrYaAYn7uZtv0rvQNawUAi513iTeWPufkZPRgAw@mail.gmail.com>
-References: <51CC6189.6030701@web.de>
+From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH] CYGWIN: Use a TCP socket for pipe()
+Date: Thu, 27 Jun 2013 18:31:13 +0200
+Message-ID: <201306271831.13865.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jun 27 18:25:45 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: ramsay@ramsay1.demon.co.uk, mlevedahl@gmail.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 27 18:31:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsF0y-0003p1-IK
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 18:25:44 +0200
+	id 1UsF6U-0000v6-AA
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 18:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047Ab3F0QZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 12:25:40 -0400
-Received: from mail-we0-f182.google.com ([74.125.82.182]:33145 "EHLO
-	mail-we0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566Ab3F0QZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 12:25:40 -0400
-Received: by mail-we0-f182.google.com with SMTP id p60so752303wes.27
-        for <git@vger.kernel.org>; Thu, 27 Jun 2013 09:25:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=vEHzpN0WdReN9czyKNGxo5JlnCVWBRsQTWAJ+2COp9I=;
-        b=wWuOrx/QZuJ0x0QDbjXe+KG18GXGAeRfJtFLmooVbuP5Uo4EVDT4m72CfcN19NPOW7
-         UdjuZT65MigYXQ6UIgElDgfMlBiYe8ul53V06p04ejyGNq1vk9sPVmLcy0XDwbTM+xku
-         BGUCvlycHkNQJDKrx/E1MX7kTKobx/dgvcKnHHy8b8k9WGI3dIQa36t0OmgsdozbG2fv
-         d64EGq1aiI7PNbAFp1KRcJi1CJerFLZpAG2P6sv5SWFhKW9VIbLCzv/FIvKQUicMUS4I
-         iB82NfsScsbl63bmBC0CgK/oF9U35Z26qKsmyxYgJoAZeLBgX62pjcL/irnBtfcBtm0i
-         31Pw==
-X-Received: by 10.180.91.107 with SMTP id cd11mr6527605wib.12.1372350338991;
- Thu, 27 Jun 2013 09:25:38 -0700 (PDT)
-Received: by 10.216.245.196 with HTTP; Thu, 27 Jun 2013 09:25:38 -0700 (PDT)
-In-Reply-To: <51CC6189.6030701@web.de>
-X-Google-Sender-Auth: d2DpX8aGBDna8KZY4VKUhtn9dXw
+	id S1753195Ab3F0QbW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jun 2013 12:31:22 -0400
+Received: from mout.web.de ([212.227.15.4]:64237 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751685Ab3F0QbV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Jun 2013 12:31:21 -0400
+Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb004) with
+ ESMTPA (Nemesis) id 0M7Eb0-1U5O4H2LZO-00x4eq; Thu, 27 Jun 2013 18:31:19 +0200
+X-Provags-ID: V03:K0:GkcWvPlEwXKZizWx2DwnfStcA2bPjomKQhhEhDbTB70fjE4SJMA
+ UJMk6NW7qo6C6GR79tnWWd0XBkKx1vfMI+KTG3oW2JMVBkJhefkH7WUABR5gtVb2e+e2AqV
+ baCELrmbFZ7dIbg5RD6R0eLIgFDKvIc77Z2mHNvSqL7E19BvPiRWHxHnbwtfRhATjSnaimm
+ tPAoDFGXtFMyRO+RyPfVA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229116>
 
-Oops, so sorry :/
+Work around issues that git hangs when doing fetch or pull under
+various protocols under CYGWIN.
 
-It's defintely doable since the lowercase 'git' is only a bin-wrapper
-for git to ease development in contrib/mw-to-git/ .
+Replace pipe() with a socket connection using a TCP/IP.
+Introduce a new function socket_pipe() in compat/socket_pipe.c
 
-Junio, Matthieu : should I resend a new version of my serie which
-renames the 'git' (lowercase) file into something like 'git-dev' ?
-(some comments directly mentionning the 'git' (lowercase) file needs
-to be updated as well in the Makefile)
+Re-define the pipe() function into socket_pipe() for CYGWIN.
 
-Benoit
+(This redefinition does not work for MinGW, because here a socket can
+not be mixed with a file handle)
+
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ compat/socket_pipe.c | 68 ++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ config.mak.uname     |  2 ++
+ git-compat-util.h    |  4 ++++
+ 3 files changed, 74 insertions(+)
+ create mode 100644 compat/socket_pipe.c
+
+diff --git a/compat/socket_pipe.c b/compat/socket_pipe.c
+new file mode 100644
+index 0000000..eee43b5
+--- /dev/null
++++ b/compat/socket_pipe.c
+@@ -0,0 +1,68 @@
++#include "git-compat-util.h"
++
++int socket_pipe(int filedes[2])
++{
++	int fd_listen, fd_rd;
++	int fd_wr =3D -1;
++	struct sockaddr_in sin;
++	socklen_t length;
++	struct linger linger;
++	int reuse_on =3D 1;
++
++	memset(&sin, 0, sizeof(sin));
++	sin.sin_family =3D AF_INET;
++	sin.sin_addr.s_addr =3D htonl(INADDR_LOOPBACK);
++
++	fd_listen =3D socket(AF_INET, SOCK_STREAM, 0);
++	if (fd_listen =3D=3D -1)
++		die_errno("pipe fd_listen socket");
++	(void)setsockopt(fd_listen, SOL_SOCKET, SO_REUSEADDR,
++									 (char*)&reuse_on, sizeof(reuse_on));
++	if (bind(fd_listen, (struct sockaddr *)&sin, sizeof(sin)))
++		die_errno("pipe bind socket");
++
++	length =3D sizeof(sin);
++	if(getsockname(fd_listen, (struct sockaddr *)&sin, &length))
++		die_errno("pipe getsockname");
++	if (listen(fd_listen, SOMAXCONN))
++		die_errno("pipe listen");
++	fd_rd =3D socket(AF_INET, SOCK_STREAM, 0);
++	if (fd_rd =3D=3D -1)
++		die_errno("pipe fd_rd socket");
++	if (connect(fd_rd, (struct sockaddr *)&sin, sizeof(sin)))
++		die_errno("pipe connect");
++
++	length =3D sizeof(struct sockaddr);
++	if(getsockname(fd_rd, (struct sockaddr *)&sin, &length))
++		die_errno("pipe getsockname");
++
++	while (fd_wr =3D=3D -1) {
++		struct sockaddr_in sacc;
++		length =3D sizeof(sacc);
++		memset(&sacc, 0, sizeof(sacc));
++		fd_wr =3D accept(fd_listen, (struct sockaddr *)&sacc, &length);
++		if(fd_wr =3D=3D -1)
++			die_errno("pipe accept");
++		if (sacc.sin_port !=3D sin.sin_port) {
++			// Wrong connecting socket
++			close(fd_wr);
++			fd_wr =3D -1;
++		}
++	}
++
++	close(fd_listen);
++
++	linger.l_onoff =3D 1;
++	linger.l_linger =3D 5;
++	if (setsockopt(fd_wr, SOL_SOCKET, SO_LINGER,
++								 (char*)&linger, sizeof(linger)))
++		die_errno("pipe socket linger");
++	if (shutdown(fd_rd, SHUT_WR))
++		die_errno("pipe socket shutdown fd_rd");
++	if (shutdown(fd_wr, SHUT_RD))
++		die_errno("pipe socket shutdown fd_wr");
++
++	filedes[0] =3D fd_rd;
++	filedes[1] =3D fd_wr;
++	return 0;
++}
+diff --git a/config.mak.uname b/config.mak.uname
+index d78fd3d..66bf446 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -170,7 +170,9 @@ ifeq ($(uname_O),Cygwin)
+ 	# Try commenting this out if you suspect MMAP is more efficient
+ 	NO_MMAP =3D YesPlease
+ 	X =3D .exe
++	BASIC_CFLAGS +=3D -DGIT_USE_SOCKET_PIPE
+ 	COMPAT_OBJS +=3D compat/cygwin.o
++	COMPAT_OBJS +=3D compat/socket_pipe.o
+ 	UNRELIABLE_FSTAT =3D UnfortunatelyYes
+ 	SPARSE_FLAGS =3D -isystem /usr/include/w32api -Wno-one-bit-signed-bit=
+field
+ endif
+diff --git a/git-compat-util.h b/git-compat-util.h
+index c1f8a47..88632ab 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -176,6 +176,10 @@ int get_st_mode_bits(const char *path, int *mode);
+ #endif
+ #endif
+=20
++int socket_pipe(int filedes[2]);
++#ifdef GIT_USE_SOCKET_PIPE
++#define pipe(a) socket_pipe(a)
++#endif
+ /* used on Mac OS X */
+ #ifdef PRECOMPOSE_UNICODE
+ #include "compat/precompose_utf8.h"
+--=20
+1.8.3
