@@ -1,83 +1,111 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: device files should be handled by git
-Date: Thu, 27 Jun 2013 15:24:00 +0200
-Message-ID: <CALKQrgckBB0Nkf0k9iNcoH2fpqPREEWLrL9eXsZXGK1g=yt-iQ@mail.gmail.com>
-References: <21095513-708E-4F82-88D0-A312B74BA7F4@mac.com>
-	<20130627130842.GB27497@paksenarrion.iveqy.com>
+From: Woody Wu <narkewoody@gmail.com>
+Subject: Re: Off-line deverloper workflow?
+Date: Thu, 27 Jun 2013 21:37:32 +0800
+Message-ID: <20130627133732.GA5047@zuhnb712>
+References: <20130627124656.GA2620@zuhnb712>
+ <20130627080605.067af4ae@bigbox.christie.dr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Perry Wagle <wagle@mac.com>, git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Thu Jun 27 15:24:23 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Woody Wu <narkewoody@gmail.com>, git <git@vger.kernel.org>
+To: Tim Chase <git@tim.thechases.com>
+X-From: git-owner@vger.kernel.org Thu Jun 27 15:37:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsCBM-00021E-Ab
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 15:24:16 +0200
+	id 1UsCOD-0005jX-GM
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 15:37:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753258Ab3F0NYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 09:24:07 -0400
-Received: from mail10.copyleft.no ([188.94.218.231]:56939 "EHLO
-	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751746Ab3F0NYF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 09:24:05 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UsCBA-000LUa-Ks
-	for git@vger.kernel.org; Thu, 27 Jun 2013 15:24:04 +0200
-Received: from mail-ob0-f171.google.com ([209.85.214.171])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1UsB0a-000Lkv-IU
-	for git@vger.kernel.org; Thu, 27 Jun 2013 14:09:04 +0200
-Received: by mail-ob0-f171.google.com with SMTP id dn14so719545obc.16
-        for <git@vger.kernel.org>; Thu, 27 Jun 2013 06:24:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ROPqr2BiC6gjo1hIy2NYXG3qFdaX3p1GpZYAX/inank=;
-        b=JWbZZ07Sy6GycAT0+9hZV4trczHnK9W9O/znj+VHbCBDQ8oL6c/Jn1DyGBix9n5o9z
-         WOBqizV2wT+wbZUjX/sdpvIwG1zBoHv+0cDhX5a5GV5ylyC96eyeutI+a8V3z/pO1Syg
-         15d+4gd/vbAQRsrFcCH/0Ra3lmeBfRvhRtvH7zksoEhIiiSkoUC8eLbzQ0mWSCdrEhBf
-         r47qNB2OPYVOr3oIvyJ/GUQckrF9S/ToGpRwJi3B+3EhgEjfWqwxqI34LT3PsUxwvGFD
-         3dHdufUnmJNJFgCatxnh+7I4Pf0Dexsbb1UThJRqTVrH/giw1stKvIvgXaUXI1IDK984
-         pTyw==
-X-Received: by 10.182.66.77 with SMTP id d13mr4168469obt.32.1372339440946;
- Thu, 27 Jun 2013 06:24:00 -0700 (PDT)
-Received: by 10.182.102.5 with HTTP; Thu, 27 Jun 2013 06:24:00 -0700 (PDT)
-In-Reply-To: <20130627130842.GB27497@paksenarrion.iveqy.com>
+	id S1752033Ab3F0Nh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 09:37:29 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:52395 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751893Ab3F0Nh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 09:37:28 -0400
+Received: by mail-pa0-f50.google.com with SMTP id fb1so1070957pad.9
+        for <git@vger.kernel.org>; Thu, 27 Jun 2013 06:37:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=hqJiCkfUjQBd833ZLKvmsW1hHuYanRi6oUX+9p3YvYA=;
+        b=Vc9ib18Q9coqgTp9/yRX01xFhPmXUpcpN/M6PqPb0gUjD1v3SptxgSXgMIHFPyEz8A
+         eV9g79mNpbHQlKUS7MWfM1Y69CwppGzEjTkHzY5pdMIu1njzdxIAfaz+U7vYAS3FUyoe
+         90Q39qmyI/u6ydExtYdIkGU4oE3pHJHSO7Zs9g9zxxe4wZmtRVHr2fkzlCsxcLaFXyzU
+         RPfEpMh7O25yLnPiNH+qJuSy9/RE0Q4acjmhbkDXqxK6u7F8xUdWFm4UzCZ+eeizwWIO
+         97l8haEdTR7WJ+sdMbUJHqZG+MMBkGyTOSSU3zPmsUOz3WTCJ4Ljc+VtXTRfU+wXPM07
+         XYHw==
+X-Received: by 10.66.246.194 with SMTP id xy2mr6137838pac.131.1372340248461;
+        Thu, 27 Jun 2013 06:37:28 -0700 (PDT)
+Received: from localhost ([119.120.31.222])
+        by mx.google.com with ESMTPSA id sq5sm3845528pab.11.2013.06.27.06.37.25
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 27 Jun 2013 06:37:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130627080605.067af4ae@bigbox.christie.dr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229102>
 
-On Thu, Jun 27, 2013 at 3:08 PM, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
-> On Wed, Jun 26, 2013 at 08:27:56PM -0700, Perry Wagle wrote:
->> Is there a reason not to handle device files other than "its not traditional"?  That's the only reason given in google or the IRC channel.
->
-> In linux you can't create device files if your not root. On windows
-> those files won't even exists (afaik).
->
-> Wouldn't this be very unportable and hard to use (meaning that you need
-> to handle your git repo as root or give git setuid root)?
+On Thu, Jun 27, 2013 at 08:06:05AM -0500, Tim Chase wrote:
+> On 2013-06-27 20:46, Woody Wu wrote:
+> > I have a colleague who has to left our office for three month, but
+> > still need to work on the project which is hosted on our in-office
+> > git repository. Problem is that our company has firewall, it's not
+> > possible or not allowed to access the company LAN outside the
+> > building.  So I want to ask you expert, can you suggest a best
+> > practice of git workflow that suitable to my situation?
+> 
+> It would help to know a little more about the information flow and
+> the starting conditions.
+> 
+> - Was a clone of code made before leaving your office or does your
+>   colleague need to obtain the initial copy too?
 
-Device files will probably never be supported by Git for the reasons
-mentioned by Fredrik. If anything, etckeeper
-(http://joeyh.name/code/etckeeper/) would be a much more appropriate
-place to support this, although I don't think it currently does.
-Alternatively, you could follow the suggestions of
-http://superuser.com/questions/440873/git-unable-add-device-file (and
-elsewhere), and write a script for generating the device files, rather
-than storing them as-is.
+Yes, he had a clone already.
 
-...Johan
+> 
+> - How securely do you need to transfer matters?  (email?  shared
+>   external service like Dropbox/Box.com/etc)
+
+I prefer email.
+
+> 
+> - How frequently do updates need to be made?
+> 
+
+Maybe once several days.
+
+> - In which direction do commits flow?  Just from your colleague back
+>   to the office, or are there other updates happening in the office
+>   that your colleague needs to pull down to keep in sync?
+
+Bi-direction, means my colleague and my in-house team need to modify the
+code.
+
+> 
+> Without such answers, it's a little hard to suggest more than
+> transmitting either patch files or bundles using any of the following:
+> email, a shared cloud drive, a shared host out accessible on the net,
+> or sneakernet media (flash-drive or CD/DVD, perhaps via the postal
+> system), or possibly other means.
+> 
+> You may want to read more at
+> 
+>   git help format-patch
+>   git help am
+>   git help bundle
+> 
+> -tkc
+> 
+> 
+> 
+> 
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+I can't go back to yesterday - because I was a different person then
