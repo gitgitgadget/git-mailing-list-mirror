@@ -1,175 +1,97 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: [PATCH] am: replace uses of --resolved with --continue
-Date: Wed, 26 Jun 2013 23:06:41 +0300
-Message-ID: <1372277201-29324-1-git-send-email-kevin@bracey.fi>
-Cc: Jeff King <peff@peff.net>, Kevin Bracey <kevin@bracey.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 27 02:54:54 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH v15 01/16] test: add test cases for relative_path
+Date: Thu, 27 Jun 2013 09:00:10 +0800
+Message-ID: <CANYiYbESfNyNpiV=Ho_fxfQ6CxR5j3nGfKw_va8jq_5T72uPfA@mail.gmail.com>
+References: <cover.1372175282.git.worldhello.net@gmail.com>
+	<569bd5216b6a8d63c9139c20390488b93f402086.1372175282.git.worldhello.net@gmail.com>
+	<7vehbowyv4.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 27 03:00:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Us0UA-0002T7-7h
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 02:54:54 +0200
+	id 1Us0ZO-0007WF-Eu
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 03:00:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753089Ab3F0Ayu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jun 2013 20:54:50 -0400
-Received: from mo4.mail-out.ovh.net ([178.32.228.4]:47117 "EHLO
-	mo4.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751557Ab3F0Ayt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jun 2013 20:54:49 -0400
-X-Greylist: delayed 8400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Jun 2013 20:54:49 EDT
-Received: from mail92.ha.ovh.net (gw6.ovh.net [213.251.189.206])
-	by mo4.mail-out.ovh.net (Postfix) with SMTP id 2FD0A104F1AD
-	for <git@vger.kernel.org>; Wed, 26 Jun 2013 22:06:49 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 26 Jun 2013 22:06:48 +0200
-Received: from 62-183-157-30.bb.dnainternet.fi (HELO asus-i7-debian.bracey.fi) (kevin@bracey.fi@62.183.157.30)
-  by ns0.ovh.net with SMTP; 26 Jun 2013 22:06:47 +0200
-X-Ovh-Mailout: 178.32.228.4 (mo4.mail-out.ovh.net)
-X-Mailer: git-send-email 1.8.3.rc0.28.g4b02ef5
-X-Ovh-Tracer-Id: 5320721485883216094
-X-Ovh-Remote: 62.183.157.30 (62-183-157-30.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 0
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiiedrkeekucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
-X-Spam-Check: DONE|U 0.5/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeiiedrkeekucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+	id S1752707Ab3F0BAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jun 2013 21:00:12 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:63133 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751557Ab3F0BAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jun 2013 21:00:11 -0400
+Received: by mail-wi0-f179.google.com with SMTP id hj3so93517wib.6
+        for <git@vger.kernel.org>; Wed, 26 Jun 2013 18:00:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=TsDeoK19tx/P4YBHcWveZly8NIkuYqp78isY7WQn0hg=;
+        b=O/RKdexmpfE8iGFrNjz655UU867fekIwmkI51lrvrqQW64Ku8OJQBZLxZyUKHYvUWS
+         L04c/qKHwKh1SoUuerY1YreCKjOFC+MkF7HGFVgdc7fAbxH2lNlXjpzgF+h/CE9u4esm
+         DPIkIHDAlEjL/aUGnUeCqKRvHanQZBjJba6Wxyl/xFn47pc8D5lCdsBALdCccLr8ALKV
+         qRAcq2eMU4HMglaIVXCUx5sBx90yyRxUdmhXkyRJH01KhosxijEC+1o8Z3jZlFSKWrYR
+         G6Jn53scmI5EYKO4rHgUsJ9TF9wYB7TL94awTUvWCEFy+cJZJNb3mtKBASl1RW4JrUli
+         lTnQ==
+X-Received: by 10.194.249.129 with SMTP id yu1mr4716536wjc.10.1372294810265;
+ Wed, 26 Jun 2013 18:00:10 -0700 (PDT)
+Received: by 10.194.176.129 with HTTP; Wed, 26 Jun 2013 18:00:10 -0700 (PDT)
+In-Reply-To: <7vehbowyv4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229077>
 
-git am was previously modified to provide --continue for consistency
-with rebase, merge etc, and the documentation changed to showing
---continue as the primary form.
+2013/6/27 Junio C Hamano <gitster@pobox.com>
+>
+> Jiang Xin <worldhello.net@gmail.com> writes:
+>
+> > Add subcommand "relative_path" in test-path-utils, and add test cases
+> > in t0060.
+> >
+> > Johannes tested this commit on Windows, and found that some relative_path
+>
+> "this commit", or "an earlier version of this patch"?  I am guessing
+> it is the latter (if so, I can easily amend locally without a need
+> for rerolling).
 
-Complete the work by replacing remaining uses of --resolved by
---continue, most notably in suggested command reminders.
+Sorry, my English. I should say: Johannes helped to test these test cases on
+Windows, and found that ...
 
-Signed-off-by: Kevin Bracey <kevin@bracey.fi>
----
- Documentation/git-am.txt      | 4 ++--
- Documentation/user-manual.txt | 2 +-
- git-am.sh                     | 8 ++++----
- t/t7512-status-help.sh        | 4 ++--
- wt-status.c                   | 2 +-
- 5 files changed, 10 insertions(+), 10 deletions(-)
+>
+> > tests should be skipped on Windows. This is because the bash on Windows
+> > rewrites arguments of regular Windows programs, such as git and the
+> > test helpers, if the arguments look like absolute POSIX paths. As a
+> > consequence, the actual tests performed are not what the tests scripts
+> > expect.
+> >
+> > The tests that need *not* be skipped are those where the two paths passed
+> > to 'test-path-utils relative_path' have the same prefix and the result is
+> > expected to be a relative path. This is because the rewriting changes
+> > "/a/b" to "D:/Src/MSysGit/a/b", and when both inputs are extended the same
+> > way, this just cancels out in the relative path computation.
+> >
+> > Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+> > Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> I somehow lost track, but does the above list of sign-offs reflect
+> the origins of the changes contained in this patch, or is the second
+> one meant to be helped-by or something (if so, I can easily amend
+> locally without a need for rerolling)?
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 5bbe7b6..54d8461 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -132,7 +132,7 @@ default.   You can use `--no-utf8` to override this.
- --resolvemsg=<msg>::
- 	When a patch failure occurs, <msg> will be printed
- 	to the screen before exiting.  This overrides the
--	standard message informing you to use `--resolved`
-+	standard message informing you to use `--continue`
- 	or `--skip` to handle the failure.  This is solely
- 	for internal use between 'git rebase' and 'git am'.
- 
-@@ -176,7 +176,7 @@ aborts in the middle.  You can recover from this in one of two ways:
- 
- . hand resolve the conflict in the working directory, and update
-   the index file to bring it into a state that the patch should
--  have produced.  Then run the command with the '--resolved' option.
-+  have produced.  Then run the command with the '--continue' option.
- 
- The command refuses to process new mailboxes until the current
- operation is finished, so if you decide to start over from scratch,
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index e831cc2..8218cf9 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1835,7 +1835,7 @@ Once the index is updated with the results of the conflict
- resolution, instead of creating a new commit, just run
- 
- -------------------------------------------------
--$ git am --resolved
-+$ git am --continue
- -------------------------------------------------
- 
- and Git will create the commit for you and continue applying the
-diff --git a/git-am.sh b/git-am.sh
-index 9f44509..7ea40fe 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -6,7 +6,7 @@ SUBDIRECTORY_OK=Yes
- OPTIONS_KEEPDASHDASH=
- OPTIONS_SPEC="\
- git am [options] [(<mbox>|<Maildir>)...]
--git am [options] (--resolved | --skip | --abort)
-+git am [options] (--continue | --skip | --abort)
- --
- i,interactive   run interactively
- b,binary*       (historical option -- no-op)
-@@ -102,7 +102,7 @@ stop_here_user_resolve () {
- 	    printf '%s\n' "$resolvemsg"
- 	    stop_here $1
-     fi
--    eval_gettextln "When you have resolved this problem, run \"\$cmdline --resolved\".
-+    eval_gettextln "When you have resolved this problem, run \"\$cmdline --continue\".
- If you prefer to skip this patch, run \"\$cmdline --skip\" instead.
- To restore the original branch and stop patching, run \"\$cmdline --abort\"."
- 
-@@ -523,7 +523,7 @@ Use \"git am --abort\" to remove it.")"
- 		esac
- 	fi
- 
--	# Make sure we are not given --skip, --resolved, nor --abort
-+	# Make sure we are not given --skip, --continue, nor --abort
- 	test "$skip$resolved$abort" = "" ||
- 		die "$(gettext "Resolve operation not in progress, we are not resuming.")"
- 
-@@ -670,7 +670,7 @@ do
- 	#  - patch is the patch body.
- 	#
- 	# When we are resuming, these files are either already prepared
--	# by the user, or the user can tell us to do so by --resolved flag.
-+	# by the user, or the user can tell us to do so by --continue flag.
- 	case "$resume" in
- 	'')
- 		if test -f "$dotest/rebasing"
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index 4f09bec..bd8aab0 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -510,7 +510,7 @@ test_expect_success 'status in an am session: file already exists' '
- 	cat >expected <<-\EOF &&
- 	# On branch am_already_exists
- 	# You are in the middle of an am session.
--	#   (fix conflicts and then run "git am --resolved")
-+	#   (fix conflicts and then run "git am --continue")
- 	#   (use "git am --skip" to skip this patch)
- 	#   (use "git am --abort" to restore the original branch)
- 	#
-@@ -532,7 +532,7 @@ test_expect_success 'status in an am session: file does not exist' '
- 	cat >expected <<-\EOF &&
- 	# On branch am_not_exists
- 	# You are in the middle of an am session.
--	#   (fix conflicts and then run "git am --resolved")
-+	#   (fix conflicts and then run "git am --continue")
- 	#   (use "git am --skip" to skip this patch)
- 	#   (use "git am --abort" to restore the original branch)
- 	#
-diff --git a/wt-status.c b/wt-status.c
-index 438a40d..b191c65 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -826,7 +826,7 @@ static void show_am_in_progress(struct wt_status *s,
- 	if (advice_status_hints) {
- 		if (!state->am_empty_patch)
- 			status_printf_ln(s, color,
--				_("  (fix conflicts and then run \"git am --resolved\")"));
-+				_("  (fix conflicts and then run \"git am --continue\")"));
- 		status_printf_ln(s, color,
- 			_("  (use \"git am --skip\" to skip this patch)"));
- 		status_printf_ln(s, color,
--- 
-1.8.3.rc0.28.g4b02ef5
+Johannes offered a nice patch based on the last one of this
+patch series. I move his patch right after the first patch
+(patch 01: test: add test cases for relative_path). But I think
+as a cooking topic, it should not has a commit to fix another.
+So I squash Johannes' commit to the previous commit, and
+add his signed-off-by.
+
+
+--
+Jiang Xin
