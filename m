@@ -1,72 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 09/16] documentation: add documentation for the bitmap
- format
-Date: Wed, 26 Jun 2013 22:45:22 -0400
-Message-ID: <20130627024521.GA6936@sigill.intra.peff.net>
-References: <1372116193-32762-1-git-send-email-tanoku@gmail.com>
- <1372116193-32762-10-git-send-email-tanoku@gmail.com>
- <CAJo=hJtcQwh-N-9_i84y1ZsL0mdREHcxhP2gepcrREiaxvxS6A@mail.gmail.com>
- <CAFFjANRwBBcORhu4mwjESBfr4GJ3zDrgYvUhY=VxK9abv7k2MA@mail.gmail.com>
- <7vtxkl28m7.fsf@alter.siamese.dyndns.org>
- <CAFFjANRqZ0U5tGhgjACUtquyVKCyuHiS3CC2Xxwo0J1UJVrf=g@mail.gmail.com>
- <CAJo=hJtJoizQUubriTPvs2bsjvw+N82MCPvw263fUB8vv8_VVA@mail.gmail.com>
- <CAFFjANSr2QRLE8DSPP2zZ_baEZUqR8dzkPzMwqyEqgFX=8cnog@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH v15 02/16] path.c: refactor relative_path(), not only
+ strip prefix
+Date: Thu, 27 Jun 2013 11:31:35 +0800
+Message-ID: <CANYiYbHi=TTuV63SN44YK-vx2+0Vy8c+cHB4z874ouSfmeaAng@mail.gmail.com>
+References: <cover.1372175282.git.worldhello.net@gmail.com>
+	<31fc3821962b83e79cd8f59127c8c11ba1551073.1372175282.git.worldhello.net@gmail.com>
+	<7v7ghgwyup.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Colby Ranger <cranger@google.com>, git <git@vger.kernel.org>
-To: Vicent =?utf-8?B?TWFydMOt?= <tanoku@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 27 04:45:31 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 27 05:31:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Us2DB-0008Nq-7M
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 04:45:29 +0200
+	id 1Us2vs-0001fA-R4
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 05:31:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751801Ab3F0CpZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jun 2013 22:45:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:34679 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751522Ab3F0CpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jun 2013 22:45:25 -0400
-Received: (qmail 1269 invoked by uid 102); 27 Jun 2013 02:46:29 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Jun 2013 21:46:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Jun 2013 22:45:22 -0400
-Content-Disposition: inline
-In-Reply-To: <CAFFjANSr2QRLE8DSPP2zZ_baEZUqR8dzkPzMwqyEqgFX=8cnog@mail.gmail.com>
+	id S1752024Ab3F0Dbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jun 2013 23:31:37 -0400
+Received: from mail-we0-f172.google.com ([74.125.82.172]:38739 "EHLO
+	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751557Ab3F0Dbg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jun 2013 23:31:36 -0400
+Received: by mail-we0-f172.google.com with SMTP id q56so153906wes.3
+        for <git@vger.kernel.org>; Wed, 26 Jun 2013 20:31:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=vTAeyVybAGsV9eW2QMPTn3L3YJdV9wpW6s18/5uXReI=;
+        b=trISchBaquQ3Fm9Z2hmwN7nEEJyed+2cbZ0uIR6iGOhtGsgSyGz35qPHE5EsgT5URW
+         esT17LvhfMJiTmGo4LrA6I1zxs4pf50J6vPSMM58dVPGw+WwtFrNLBNPNoZqB+eEs1Y0
+         rlkZGwt8H0pRDcYGiDF5wFtSR+m7uejk+bd/zp1d6jgWp0mdV7X6OaRfOUVg8k0jvQji
+         5uxGDNwXJniR3YgjcJV0uEVbcGn1XZRzDQ/NnsjOwoqNSUXNrkUV/Thj/XAQF6MSr7US
+         OshdA0QoXqqipM9iq8CZ4QT7xzE6PLbruci+FGVXgYNyZ+eUqlOqHM4PNCVk6A8wO26B
+         PboQ==
+X-Received: by 10.194.133.106 with SMTP id pb10mr4749462wjb.62.1372303895343;
+ Wed, 26 Jun 2013 20:31:35 -0700 (PDT)
+Received: by 10.194.176.129 with HTTP; Wed, 26 Jun 2013 20:31:35 -0700 (PDT)
+In-Reply-To: <7v7ghgwyup.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229085>
 
-On Thu, Jun 27, 2013 at 04:36:54AM +0200, Vicent Mart=C3=AD wrote:
+2013/6/27 Junio C Hamano <gitster@pobox.com>:
+>> +             } else {
+>> +                     i++;
+>> +                     j++;
+>> +             }
+>> +     }
+>> +
+>> +     if (
+>> +         /* "prefix" seems like prefix of "in" */
+>> +         i >= prefix_len &&
+>
+> So shouldn't this be "i == prefix_len"?
+>
+>> +         /*
+>> +          * but "/foo" is not a prefix of "/foobar"
+>> +          * (i.e. prefix not end with '/')
+>> +          */
+>> +         prefix_off < prefix_len) {
+>> +             if (j >= in_len) {
+>
+> Again, "j == in_len", isn't it?  Or can i and j overrun in_len and
+> prefix_len?
 
-> That was a very rude reply. :(
->=20
-> Please refrain from interacting with me in the ML in the future. I'l
-> do accordingly.
+Yes, better write as ==. But both will pass the test cases.
+Since this commit has been merged to next, so let it be?
 
-I agree that the pointer arithmetic thing may have been a little much,
-but I think there are some points we need to address in Shawn's email.
 
-In particular, it seems like the slowness we saw with the v1 bitmap
-format is not what Shawn and Colby have experienced. So it's possible
-that our test setup is bad or different. Or maybe the C v1 reading
-implementation had some problems that are fixable. It's hard to say
-because we haven't shown any code that can be timed and compared.
-
-And the pack-order versus idx-order for the bitmaps is still up in the
-air. Do we have numbers on the on-disk sizes of the resulting EWAHs? Th=
-e
-pack-order ones should be more amenable to run-length encoding,
-especially as you get further down into history (the tip ones would
-mostly be 1's, no matter how you order them).
-
--Peff
+-- 
+Jiang Xin
