@@ -1,83 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: contrib/mw-to-git/Git/Mediawiki.pm
-Date: Thu, 27 Jun 2013 10:29:56 -0700
-Message-ID: <7vzjubsbqj.fsf@alter.siamese.dyndns.org>
-References: <51CC6189.6030701@web.de>
-	<CAETqRCgctnVqrYaAYn7uZtv0rvQNawUAi513iTeWPufkZPRgAw@mail.gmail.com>
-	<vpq4ncjcxt4.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Beno=C3=AEt?= Person <benoit.person@ensimag.fr>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 27 19:30:08 2013
+From: benoit.person@ensimag.fr
+Subject: [PATCH v6 1/5] git-remote-mediawiki: Introduction of Git::Mediawiki.pm
+Date: Thu, 27 Jun 2013 19:37:28 +0200
+Message-ID: <1372354652-4147-2-git-send-email-benoit.person@ensimag.fr>
+References: <1372354652-4147-1-git-send-email-benoit.person@ensimag.fr>
+Cc: Celestin Matte <celestin.matte@ensimag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Benoit Person <benoit.person@ensimag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 27 19:37:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsG1D-0007xH-Cq
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 19:30:03 +0200
+	id 1UsG8n-0007A7-Pw
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 19:37:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752093Ab3F0R37 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jun 2013 13:29:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65449 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751353Ab3F0R37 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jun 2013 13:29:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C53729560;
-	Thu, 27 Jun 2013 17:29:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=jbqoBdmghQKx
-	RkU3slhclGYx4k0=; b=Z/fPOF3DUl8htAZ96FgNpS/V+voHqwPxAW78pLEr523a
-	h2A4Y521T9FgP7LCk9QesMu+FUxP70DH8ogFYVd70SvuCcz35BZODubBL0Dc3ccj
-	k1UcVTF/f3RFgez5YGXJ6LjLVZqwHHITaAC34IAXsYzxrJggKLZN9Om5m54rycA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=BJzGrt
-	uZUg/ptQjCoB4uLVHSHOaXC9gXq/6WcTZHyYj1fyyT8ag5mPJIbIWqJ8bI1bNphm
-	uFEMr9mfC9d5w0m8BD0kBERKpCNGC+yz7hOTaom6Ft8+rK7g2gPVugaZ0xog4zbf
-	O3Cq128j6FbHIcTYOdR4c/BEt/Ug2tLrcSmtM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F7612955F;
-	Thu, 27 Jun 2013 17:29:58 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E57C12955C;
-	Thu, 27 Jun 2013 17:29:57 +0000 (UTC)
-In-Reply-To: <vpq4ncjcxt4.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
-	27 Jun 2013 18:39:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 30410544-DF4F-11E2-9A47-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753619Ab3F0Rht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 13:37:49 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:37290 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752227Ab3F0Rhs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 13:37:48 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5RHbfdq004146
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 27 Jun 2013 19:37:41 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5RHbhOq013093;
+	Thu, 27 Jun 2013 19:37:43 +0200
+Received: from localhost.localdomain (ensibm [195.221.228.8])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5RHbgW1007347;
+	Thu, 27 Jun 2013 19:37:43 +0200
+X-Mailer: git-send-email 1.8.3.GIT
+In-Reply-To: <1372354652-4147-1-git-send-email-benoit.person@ensimag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 27 Jun 2013 19:37:41 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229127>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+From: Benoit Person <benoit.person@ensimag.fr>
 
-> Beno=C3=AEt Person <benoit.person@ensimag.fr> writes:
->
->> Junio, Matthieu : should I resend a new version of my serie which
->> renames the 'git' (lowercase) file into something like 'git-dev' ?
->
-> I'd call it bin-wrapper/git, so that people can put bin-wrapper/ in
-> their $PATH if needed, and by analogy with ../../bin-wrapper. If you =
-go
-> this way, don't forget to update the $0 relative paths.
->
-> git-dev is OK with me too.
->
->> (some comments directly mentionning the 'git' (lowercase) file needs
->> to be updated as well in the Makefile)
->
-> Yes.
+Currently, the mw-to-git project contains only a remote helper
+(git-remote-mediawiki.perl). To improve the user experience while
+working with mediawiki remotes, new tools, designed for such cases,
+should be created. To achieve this goal, the project needs a way to
+share code between several scripts (remote helper, commands, ... ).
 
-I just noticed that the script is not strictly a text file, ending
-with an incomplete line, by the way.
+A perl package offers the best way to handle such case: Each script
+can select what should be imported in its namespace.  The package
+namespacing limits the use of side effects in the shared code.
+
+An alternate solution is to concatenate a "toolset" file with each
+*.perl when 'make'-ing the project. In that scheme, everything is
+imported in the script's namespace. Plus, files should be renamed in
+order to chain to Git's toplevel makefile. Hence, this solution is not
+acceptable.
+
+Signed-off-by: Benoit Person <benoit.person@ensimag.fr>
+Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+
+---
+ contrib/mw-to-git/Git/Mediawiki.pm | 24 ++++++++++++++++++++++++
+ contrib/mw-to-git/Makefile         | 24 +++++++++++++++++++++---
+ 2 files changed, 45 insertions(+), 3 deletions(-)
+ create mode 100644 contrib/mw-to-git/Git/Mediawiki.pm
+
+diff --git a/contrib/mw-to-git/Git/Mediawiki.pm b/contrib/mw-to-git/Git/Mediawiki.pm
+new file mode 100644
+index 0000000..805f42a
+--- /dev/null
++++ b/contrib/mw-to-git/Git/Mediawiki.pm
+@@ -0,0 +1,24 @@
++package Git::Mediawiki;
++
++use 5.008;
++use strict;
++use Git;
++
++BEGIN {
++
++our ($VERSION, @ISA, @EXPORT, @EXPORT_OK);
++
++# Totally unstable API.
++$VERSION = '0.01';
++
++require Exporter;
++
++@ISA = qw(Exporter);
++
++@EXPORT = ();
++
++# Methods which can be called as standalone functions as well:
++@EXPORT_OK = ();
++}
++
++1; # Famous last words
+diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
+index 1fb2424..a6f8b24 100644
+--- a/contrib/mw-to-git/Makefile
++++ b/contrib/mw-to-git/Makefile
+@@ -2,18 +2,36 @@
+ # Copyright (C) 2013
+ #     Matthieu Moy <Matthieu.Moy@imag.fr>
+ #
+-## Build git-remote-mediawiki
++# To install, run Git's toplevel 'make install' then run:
++#
++#   make install
+ 
++GIT_MEDIAWIKI_PM=Git/Mediawiki.pm
+ SCRIPT_PERL=git-remote-mediawiki.perl
+ GIT_ROOT_DIR=../..
+ HERE=contrib/mw-to-git/
+ 
+ SCRIPT_PERL_FULL=$(patsubst %,$(HERE)/%,$(SCRIPT_PERL))
++INSTLIBDIR=$(shell $(MAKE) -C $(GIT_ROOT_DIR)/perl \
++                -s --no-print-directory instlibdir)
+ 
+ all: build
+ 
+-build install clean:
++install_pm:
++	install $(GIT_MEDIAWIKI_PM) $(INSTLIBDIR)/$(GIT_MEDIAWIKI_PM)
++
++build:
++	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL=$(SCRIPT_PERL_FULL) \
++                build-perl-script
++
++install: install_pm
+ 	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL=$(SCRIPT_PERL_FULL) \
+-                $@-perl-script
++                install-perl-script
++
++clean:
++	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL=$(SCRIPT_PERL_FULL) \
++                clean-perl-script
++	rm $(INSTLIBDIR)/$(GIT_MEDIAWIKI_PM)
++
+ perlcritic:
+ 	perlcritic -2 *.perl
+-- 
+1.8.3.GIT
