@@ -1,129 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 2/5] git-remote-mediawiki: new git bin-wrapper for developement
-Date: Thu, 27 Jun 2013 10:57:53 -0700
-Message-ID: <7vr4fnsafy.fsf@alter.siamese.dyndns.org>
-References: <1372354652-4147-1-git-send-email-benoit.person@ensimag.fr>
-	<1372354652-4147-3-git-send-email-benoit.person@ensimag.fr>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: [PATCH] Do not call built-in aliases from scripts
+Date: Thu, 27 Jun 2013 14:02:27 -0400
+Message-ID: <CAEBDL5VL+C7yKMBq1g4vSrSSsvrKE+FCeoS66mkWQqJJvf0sWA@mail.gmail.com>
+References: <CAHGBnuNUjaWH2UDsa6jGjf32M+b8-iezw4pKXR985mROFSLOKQ@mail.gmail.com>
+	<7vzjubtty7.fsf@alter.siamese.dyndns.org>
+	<CAHGBnuPc+vDwejFOF_o+jr+L_mgrVo=Uxs2vC6C-Feg_uxWPpA@mail.gmail.com>
+	<7v8v1vtqfa.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: benoit.person@ensimag.fr
-X-From: git-owner@vger.kernel.org Thu Jun 27 19:58:01 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, Git Mailing List <git@vger.kernel.org>, 
+	msysGit Mailinglist <msysgit@googlegroups.com>, Thomas Braun <thomas.braun@virtuell-zuhause.de>, 
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBDMK3Q7TZUGRBNH4WGHAKGQET4IJJCA@googlegroups.com Thu Jun 27 20:02:32 2013
+Return-path: <msysgit+bncBDMK3Q7TZUGRBNH4WGHAKGQET4IJJCA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f62.google.com ([209.85.215.62])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsGSG-0001ou-FQ
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 19:58:00 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631Ab3F0R54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 13:57:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64174 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752198Ab3F0R54 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 13:57:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6586D2A5AA;
-	Thu, 27 Jun 2013 17:57:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=onp5O7I3rtdXN/vAWq8j2FwgudE=; b=O2SSNr
-	aZN3Re0PujztQt/PLOKDK4Svz+NSLVGdCJ9Z/L/xZHxGRqnsYkKpafIDkRIGY9iU
-	up4yUrlMyT6S1uorQoE71nQtxadMLzf5lngApVsKK6j5H9o7L5p7JJ51pzbdt+II
-	77JoEKZEV5YiaXAX5hw8UDCCa+b0L10PxXjFc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UhaW/xQjfuV+tvbY2CY6O+4p4U16BEOu
-	jo29817XqI3uCWt4asY+eb6bR3Uv5NhP3Ktad2W6Wb+SNwevbTXjgyxBG49ggQRJ
-	iQahJL1LNzZnv3vCX56beN0ktTuUE6qFzcnzKEsw56rNdoCSW6cRPYdhOIsL8cPD
-	289e+mroblg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5979C2A5A9;
-	Thu, 27 Jun 2013 17:57:55 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ABB3C2A5A5;
-	Thu, 27 Jun 2013 17:57:54 +0000 (UTC)
-In-Reply-To: <1372354652-4147-3-git-send-email-benoit.person@ensimag.fr>
-	(benoit person's message of "Thu, 27 Jun 2013 19:37:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 17AEA910-DF53-11E2-B060-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229135>
+	(envelope-from <msysgit+bncBDMK3Q7TZUGRBNH4WGHAKGQET4IJJCA@googlegroups.com>)
+	id 1UsGWd-0006KH-FY
+	for gcvm-msysgit@m.gmane.org; Thu, 27 Jun 2013 20:02:31 +0200
+Received: by mail-la0-f62.google.com with SMTP id ej20sf269938lab.17
+        for <gcvm-msysgit@m.gmane.org>; Thu, 27 Jun 2013 11:02:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=md9uNxyufEp1mUu7Mph+G1R05EGiNb9D8+qag26o/Pk=;
+        b=ICtd8R3laTP3tmYC9kT7ozAdtxQtZutNsqXzEZmBo0FLqc5lpnu7ekNvJjBG+kfBMX
+         8rg+GIYuI+peRx7PFozT3J1VMq2FSd5lOLEYBIk9n6Rk61JmrgGzWeskcjSEdXO6e0yr
+         tUrTdm4bUsW83pZ2FMYhLZVTka3EXmZKus1USWoooNq9bb/EJ6icCoDuLWFruREB3wiR
+         Ge+DCu7LT230wPFKjwBNzoY2/qU+jqDk8Qg+Pf+d79q0evJpqWMfAorC6bq0u1t/lmOU
+         FSlczn5lqK/Lcl26nyfQQkGo/CixXJM5Xv7lfEG9nWk8asMLdXKrv3R6H+AJC+X6Flgb
+         /4ZQ==
+X-Received: by 10.180.105.73 with SMTP id gk9mr825394wib.15.1372356150920;
+        Thu, 27 Jun 2013 11:02:30 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.98.233 with SMTP id el9ls1146wib.40.canary; Thu, 27 Jun
+ 2013 11:02:27 -0700 (PDT)
+X-Received: by 10.180.187.229 with SMTP id fv5mr1054156wic.6.1372356147830;
+        Thu, 27 Jun 2013 11:02:27 -0700 (PDT)
+Received: from mail-wg0-x231.google.com (mail-wg0-x231.google.com [2a00:1450:400c:c00::231])
+        by gmr-mx.google.com with ESMTPS id ct9si573483wib.1.2013.06.27.11.02.27
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 27 Jun 2013 11:02:27 -0700 (PDT)
+Received-SPF: pass (google.com: domain of jszakmeister@gmail.com designates 2a00:1450:400c:c00::231 as permitted sender) client-ip=2a00:1450:400c:c00::231;
+Received: by mail-wg0-x231.google.com with SMTP id a12so855562wgh.16
+        for <msysgit@googlegroups.com>; Thu, 27 Jun 2013 11:02:27 -0700 (PDT)
+X-Received: by 10.194.103.73 with SMTP id fu9mr7101532wjb.70.1372356147587;
+ Thu, 27 Jun 2013 11:02:27 -0700 (PDT)
+Sender: msysgit@googlegroups.com
+Received: by 10.180.144.37 with HTTP; Thu, 27 Jun 2013 11:02:27 -0700 (PDT)
+In-Reply-To: <7v8v1vtqfa.fsf@alter.siamese.dyndns.org>
+X-Original-Sender: jszakmeister@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of jszakmeister@gmail.com designates 2a00:1450:400c:c00::231
+ as permitted sender) smtp.mail=jszakmeister@gmail.com;       dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229136>
 
-benoit.person@ensimag.fr writes:
+On Thu, Jun 27, 2013 at 1:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+[snip]
+>> diff --git a/git-am.sh b/git-am.sh
+>> index 9f44509..ad67194 100755
+>> --- a/git-am.sh
+>> +++ b/git-am.sh
+>> @@ -16,8 +16,8 @@ s,signoff       add a Signed-off-by line to the commit message
+>>  u,utf8          recode into utf8 (default)
+>>  k,keep          pass -k flag to git-mailinfo
+>>  keep-non-patch  pass -b flag to git-mailinfo
+>> -keep-cr         pass --keep-cr flag to git-mailsplit for mbox format
+>> -no-keep-cr      do not pass --keep-cr flag to git-mailsplit
+>> independent of am.keepcr
+>> +keep-cr         pass --keep-cr flag to git mailsplit for mbox format
+>> +no-keep-cr      do not pass --keep-cr flag to git mailsplit
+>> independent of am.keepcr
+>>  c,scissors      strip everything before a scissors line
+>>  whitespace=     pass it through git-apply
+>>  ignore-space-change pass it through git-apply
+>
+>> As you were saying yourself, we tell users to prefer the "git foo"
+>> form, so we should also do so in the "git am" option help, IMHO.
+>
+> What does the above change to the options-help have anything to do
+> with that theme?  It does not seem to say anything about "git foo"
+> vs "git-foo"?
 
-> diff --git a/contrib/mw-to-git/bin-wrapper/git b/contrib/mw-to-git/bin-wrapper/git
-> new file mode 100755
-> index 0000000..aa714a5
-> --- /dev/null
-> +++ b/contrib/mw-to-git/bin-wrapper/git
-> @@ -0,0 +1,27 @@
-> +#!/bin/sh
-> +
-> +# git executable wrapper script for Git-Mediawiki to run tests without
-> +# installing all the scripts and perl packages.
-> +
-> +# based on $GIT_ROOT_DIR/wrap-for-bin.sh
+I initially missed it too, but `git-mailsplit` changed to `git
+mailsplit` in the help.  Now that I look at it more, I see that
+`git-mailinfo` was missed and there's a `git-apply` towards the
+bottom.  So I'm not sure it's helping the consistency argument.
 
-I really do not like the smell of this.
+-John
 
-As far as I can tell, the only real reason why you need this and
-cannot use ../../bin-wrappers/git directly is because the GITPERLLIB
-it gives you only points at ../../perl/blib/lib and not this
-directory.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Two possible alternatives:
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
- - Is there a reason you would not want to "install" whatever Perl
-   modules you want to "use" via GITPERLLIB mechanism to
-   ../../perl/blib/lib?  Perhaps it will interfere with the real
-   installation step in ../../perl/Makefile?  If that is the case,
-   then it is not a good idea, but otherwise, that would let you use
-   ../../bin-wrappers/git as-is.
-
- - Perhaps we could do:
-
-	GITPERLLIB="${GPLEXTRA+$GPLEXTRA:}@@BUILD_DIR@@/perl/blib/lib"
-
-   in wrap-for-bin.sh, so that your instruction can become
-
-	GPLEXTRA=$(pwd) ../../bin-wrappers/git whatever-mw-thing
-
-   and you do not have to have this file?  We would also need to
-   "unset GPLEXTRA" at the beginning of test-lib.sh if we were to do
-   this.
-
-How does a developer (or user) use this script?  From your Makefile
-(e.g. "make test")?  Manually following some written instruction?
-In either case, the latter option feels a lot more sensible
-alternative without having to maintain this extra copy of wrap-for-bin
-that can easily go out of sync.
-
-> +
-> +
-> +GIT_ROOT_DIR=../../..
-> +GIT_EXEC_PATH=$(cd "$(dirname "$0")" && cd ${GIT_ROOT_DIR} && pwd)
-> +
-> +echo $GIT_EXEC_PATH
-> +
-> +if test -n "$NO_SET_GIT_TEMPLATE_DIR"
-> +then
-> +	unset GIT_TEMPLATE_DIR
-> +else
-> +	GIT_TEMPLATE_DIR="$GIT_EXEC_PATH"'/templates/blt'
-> +	export GIT_TEMPLATE_DIR
-> +fi
-> +# Hack to make the `use lib` call works with multiple paths
-> +GITPERLLIB="$GIT_EXEC_PATH"'/contrib/mw-to-git:'"$GIT_EXEC_PATH"'/perl/blib/lib'
-> +GIT_TEXTDOMAINDIR="$GIT_EXEC_PATH"'/po/build/locale'
-> +PATH="$GIT_EXEC_PATH"'/contrib/mw-to-git:'"$GIT_EXEC_PATH"'/bin-wrappers:'"$PATH"
-> +export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
-> +
-> +exec "${GIT_EXEC_PATH}/git" "$@"
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
