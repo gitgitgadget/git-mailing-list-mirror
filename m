@@ -1,91 +1,96 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] [submodule] Add depth to submodule update
-Date: Thu, 27 Jun 2013 16:54:45 +0200
-Message-ID: <51CC5235.6030908@web.de>
-References: <1371974698-28685-1-git-send-email-iveqy@iveqy.com> <20130624224925.GC32270@paksenarrion.iveqy.com> <20130625221132.GB4161@sandbox-ub> <20130626160219.GC9141@paksenarrion.iveqy.com> <7vli5wvb3n.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [RFC/PATCH 0/1] cygwin: Remove the Win32 l/stat() functions
+Date: Thu, 27 Jun 2013 17:19:14 +0200
+Message-ID: <51CC57F2.8010805@web.de>
+References: <51C5FD28.1070004@ramsay1.demon.co.uk> <51C7A875.6020205@gmail.com> <7va9mf6txq.fsf@alter.siamese.dyndns.org> <51C9EE26.9010006@kdbg.org> <7vppv928jx.fsf@alter.siamese.dyndns.org> <51CAF863.4020803@web.de> <51CB62FC.4070001@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 27 16:55:12 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>, dpotapov@gmail.com,
+	Mark Levedahl <mlevedahl@gmail.com>, mhagger@alum.mit.edu,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Jun 27 17:19:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsDbL-0000l2-Dx
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 16:55:11 +0200
+	id 1UsDyp-0006g2-DP
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Jun 2013 17:19:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753755Ab3F0OzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 10:55:03 -0400
-Received: from mout.web.de ([212.227.17.11]:51534 "EHLO mout.web.de"
+	id S1752227Ab3F0PTX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jun 2013 11:19:23 -0400
+Received: from mout.web.de ([212.227.15.3]:52774 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753744Ab3F0OzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 10:55:00 -0400
-Received: from [192.168.178.41] ([79.193.82.142]) by smtp.web.de (mrweb003)
- with ESMTPA (Nemesis) id 0McFQF-1UaHN81YW7-00JdD3; Thu, 27 Jun 2013 16:54:50
+	id S1751569Ab3F0PTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 11:19:23 -0400
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0Lh6UN-1UW65t2uj1-00oZOk; Thu, 27 Jun 2013 17:19:16
  +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <7vli5wvb3n.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V03:K0:2yQzizIBViowxITQJ/jy3ArGTfUGGmkGN7a4HeulzAhQpw6L5pD
- otuenZCwM9fl1lSCeBsAzOSYsigCT/VYunqx7wAaSeDcvEg4soi2aoXK2orhTPwlOl8R9lV
- mfTj1XHYJL2U4m33HE6C5o/65LB3AO0WAgU/iup9H/cVQ/34Zc2+Z+e2dIFaSGMyVjHhqDq
- tdgt5H+6QcdHsyOsYdzVg==
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <51CB62FC.4070001@ramsay1.demon.co.uk>
+X-Provags-ID: V03:K0:hC9DCUX8cqrN3HZcmBBKtB5w5pjKK3mu4ANpJ8mWawM6Xqs9Cfh
+ jXWxl7kJUeppmiasmf1IUcYQE/h3BCetyaVL+Q69sspWFYAQVK+oXvh0bl3VpADn+PuoVv5
+ HoPDQNFXzO5I67nKoV+VHYgtRCJ7gmrDi4IxLHzgREcY++5lkRGanvmco7ITWrdGnZTH+c3
+ pzZDDRWPino8D8Qh+jq/g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229109>
 
-Am 26.06.2013 23:03, schrieb Junio C Hamano:
-> Fredrik Gustafsson <iveqy@iveqy.com> writes:
-> 
->> On Wed, Jun 26, 2013 at 12:11:32AM +0200, Heiko Voigt wrote:
->>> On Tue, Jun 25, 2013 at 12:49:25AM +0200, Fredrik Gustafsson wrote:
->>>> Used only when a clone is initialized. This is useful when the submodule(s)
->>>> are huge and you're not really interested in anything but the latest commit.
->>>>
->>>> Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
+On 2013-06-26 23.54, Ramsay Jones wrote:
+> Torsten B=F6gershausen wrote:
+>> On 2013-06-25 23.18, Junio C Hamano wrote:
+>>> Johannes Sixt <j6t@kdbg.org> writes:
 >>>
->>> I this is a valid use case. But this option only makes sense when a
->>> submodule is newly cloned so I am not sure whether submodule update is
->>> the correct place. Let me think about this a little more. Since we do
->>> not have any extra command that initiates the clone this is probably the
->>> only place we can put this option. But at the moment it does not feel
->>> completely right.
+>>>> Some context: This is about a patch by Ramsay that removes the
+>>>> "schizophrenic lstat" hack for Cygwin. Junio, can you please queue=
+ that
+>>>> patch in pu?
 >>>
->>> Apart from that the code looks good. If the user does a checkout of a
->>> revision that was not fetched submodule update will error out the same
->>> way as if someone forgot to push his submodule changes. So that should
->>> not be a problem.
+>>> Sure.  Thanks.
 >>
->> I agree and would love to say that I've a more beautiful solution, but
->> I haven't.
+>> First of all,
+>> thanks for the work.
 >>
->> The only other solution I can think about is to add a git
->> submodule clone that will do only clones of non-cloned submodules.
-> 
-> The "update" subcommand already has "--init" to do "init && update",
-> and it would not complain if a given submodule is what you already
-> have shown interest in, so in that sense, I do not think what the
-> posted patch does is too bad---if it is already cloned, it just
-> ignores the depth altogether and makes sure the repository is there.
-> A separate "submodule clone" would only make it more cumbersome to
-> use, I suspect.
-
-Yup, I see no need for a new command either.
-
-Me too thinks adding "--depth" to "update" makes sense (and I don't
-think that this pretty generic name will become a problem later in
-case someone wants to add a maximum recursion depth, as grep already
-uses "--max-depth" for the same purpose).
-
-But "--depth" should also be added to the "submodule add" command.
-As an example we already have the "--reference" option, which is
-passed to clone on add and update. Additionally that one supports
-the form with and without '=', so I'd prefer the new update option
-to basically re-use the same code the reference option uses. And
-at least two tests, of course ;-)
+>> Here some "benchmark" results,=20
+>> (The test run of the test suite did the same amout of time).
+>=20
+> The test suite runs noticeably faster for me.
+>=20
+>>
+>> But:
+>> git status -uno in real life takes double the time,
+>> git 1.8.3 compared against "pu with the vanilla l/stat"
+>>   =20
+>>     1 second ->  2 seconds on linux kernel
+>> 0.2 seconds -> 0.4 seconds on git.git=20
+>=20
+> Hmm, OK, I guess I will have to try something else. Sigh :(
+>=20
+>> Do we have any known problems with the current implementation ?
+>=20
+> Yes. The next branch is currently broken. (see reply to Junio)
+>=20
+>> Does speed matter ?
+>>
+>> One vote to keep the special cygwin functions.
+>> (And have a look how to improve the core.filemode)
+>=20
+> I don't understand this (parenthetical) comment; could you
+> elaborate on this.
+>=20
+> ATB,
+> Ramsay Jones
+This is probably wrong information:
+I had in mind that cygwin sets core.filemode=3Dfalse,
+which is quite annoying when exchanging .sh files with linux.
+But that seems to be wrong, a quick test shows that core.filemode=3Dtru=
+e.
+Sorry for confusion.
