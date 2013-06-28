@@ -1,161 +1,86 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: [RFC/PATCH] submodule: add 'exec' option to submodule update
-Date: Fri, 28 Jun 2013 21:53:10 +1200
-Message-ID: <1372413190-32732-1-git-send-email-judge.packham@gmail.com>
-Cc: Jens.Lehmann@web.de, Chris Packham <judge.packham@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 28 11:53:37 2013
+From: =?ISO-8859-1?Q?Stefan_N=E4we?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: [RFC/PATCH] submodule: add 'exec' option to submodule update
+Date: Fri, 28 Jun 2013 12:13:01 +0200
+Message-ID: <51CD61AD.4090203@atlas-elektronik.com>
+References: <1372413190-32732-1-git-send-email-judge.packham@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"Jens.Lehmann@web.de" <Jens.Lehmann@web.de>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 28 12:21:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsVN2-0001Eh-OV
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 11:53:37 +0200
+	id 1UsVnX-0008LE-VW
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 12:21:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755187Ab3F1Jxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jun 2013 05:53:32 -0400
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:62254 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755015Ab3F1Jxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jun 2013 05:53:31 -0400
-Received: by mail-pb0-f51.google.com with SMTP id um15so2080777pbc.24
-        for <git@vger.kernel.org>; Fri, 28 Jun 2013 02:53:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=cTHb8zKa10iA8LMq+BrulS5T4S5IkzBdhnF+dOR8yuA=;
-        b=xD15JcWoRWJEryY13ZBQZlbMtJE2KjxPEtsz7FSgyebhes+G/U1c47hAmH5Y4R+LUu
-         mP3EtLVrOVhdTi0HvzkOWDvvVnrKgaDJIP24h54idPKTuiQLSKC1Wvlz0U/jwo7OSRIi
-         woQIDHgwys2NqAwgOaPDHwENDapTlm35u4trDrVU4FmN86+ira6Qzkhe+6nkCvRbypZJ
-         b2AsmtAAWnyKhe+8K7bh3SIgcb8A/nVkG+v3EdomNkcWzSfOabFWzrww8kzfWiGODfqh
-         ZbXUqJM7Gpv7rBgMWr1G93SKpI1d9XETW0fIvvq606zwzQFzeS756VzX7ibaZbF8zDKo
-         YIMA==
-X-Received: by 10.68.252.233 with SMTP id zv9mr10535742pbc.69.1372413210869;
-        Fri, 28 Jun 2013 02:53:30 -0700 (PDT)
-Received: from chrisp3-dl.ws.atlnz.lc ([202.36.163.2])
-        by mx.google.com with ESMTPSA id bs3sm7342723pbc.42.2013.06.28.02.53.28
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 28 Jun 2013 02:53:30 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1.643.gebeea52.dirty
+	id S1755024Ab3F1KU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jun 2013 06:20:56 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:29289 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754779Ab3F1KUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jun 2013 06:20:55 -0400
+X-Greylist: delayed 475 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Jun 2013 06:20:55 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id 17B441014B;
+	Fri, 28 Jun 2013 12:12:59 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mail96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id IEaPVZaknmCb; Fri, 28 Jun 2013 12:12:58 +0200 (CEST)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Fri, 28 Jun 2013 12:12:58 +0200 (CEST)
+Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 2296927169;
+	Fri, 28 Jun 2013 12:12:58 +0200 (CEST)
+Received: from [10.200.54.97] (10.200.54.97) by MSSRVS1.atlas.de
+ (10.200.101.71) with Microsoft SMTP Server (TLS) id 8.3.279.1; Fri, 28 Jun
+ 2013 12:12:58 +0200
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <1372413190-32732-1-git-send-email-judge.packham@gmail.com>
+X-Enigmail-Version: 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229184>
 
-This allows the user some finer grained control over how the update is
-done. The primary motivation for this was interoperability with stgit
-however being able to intercept the submodule update process may prove
-useful for integrating or extending other tools.
+Am 28.06.2013 11:53, schrieb Chris Packham:
+> This allows the user some finer grained control over how the update is
+> done. The primary motivation for this was interoperability with stgit
+> however being able to intercept the submodule update process may prove
+> useful for integrating or extending other tools.
+> 
+> Signed-off-by: Chris Packham <judge.packham@gmail.com>
+> --
+> Hi,
+> 
+> At $dayjob we have a number of users that are accustomed to using stgit.
+> Stgit doesn't play nicely with git rebase which would be the logical
+> setting for submodule.*.update for our usage. Instead we need to run
+> 'stg rebase --merged' on those submodules that have been initialised
+> with stgit.
+> 
+> Our current solution is an in-house script which is a poor substitute
+> for git submodule update. I'd much rather replace our script with git
+> submodule update but we do have a requirement to keep stgit for the
+> foreseeable future.  Rather than narrowing in on stgit it seems logical
+> to allow an arbitrary update command to be executed.
 
-Signed-off-by: Chris Packham <judge.packham@gmail.com>
---
-Hi,
-
-At $dayjob we have a number of users that are accustomed to using stgit.
-Stgit doesn't play nicely with git rebase which would be the logical
-setting for submodule.*.update for our usage. Instead we need to run
-'stg rebase --merged' on those submodules that have been initialised
-with stgit.
-
-Our current solution is an in-house script which is a poor substitute
-for git submodule update. I'd much rather replace our script with git
-submodule update but we do have a requirement to keep stgit for the
-foreseeable future.  Rather than narrowing in on stgit it seems logical
-to allow an arbitrary update command to be executed.
----
- Documentation/git-submodule.txt |  8 +++++++-
- git-submodule.sh                | 22 +++++++++++++++++++++-
- 2 files changed, 28 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index e576713..a0d8b89 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -16,7 +16,7 @@ SYNOPSIS
- 'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
- 'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
- 	      [-f|--force] [--rebase] [--reference <repository>]
--	      [--merge] [--recursive] [--] [<path>...]
-+	      [--merge] [--recursive] [--exec <command>] [--] [<path>...]
- 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
- 	      [commit] [--] [<path>...]
- 'git submodule' [--quiet] foreach [--recursive] <command>
-@@ -172,6 +172,12 @@ If `--force` is specified, the submodule will be checked out (using
- `git checkout --force` if appropriate), even if the commit specified in the
- index of the containing repository already matches the commit checked out in
- the submodule.
-++
-+If `--exec` is specified the next argument is an arbitrary shell command that
-+can be used to gain finer control over how the update is done or integrate with
-+external tools. The command should take one argument namely the sha1 of the
-+commit to update to. The config variable `submodule.$name.update` can be set
-+to `exec` along with `submodule.$name.update.command`.
+Hhmmm...
+Can't the same be accomplished with 
  
- summary::
- 	Show commit summary between the given commit (defaults to HEAD) and
-diff --git a/git-submodule.sh b/git-submodule.sh
-index eb58c8e..44631c8 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -9,7 +9,7 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
-    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] init [--] [<path>...]
-    or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
--   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
-+   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--exec <command>] [--] [<path>...]
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
-    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
-@@ -32,6 +32,7 @@ nofetch=
- update=
- prefix=
- custom_name=
-+update_exec_command=
- 
- # The function takes at most 2 arguments. The first argument is the
- # URL that navigates to the submodule origin repo. When relative, this URL
-@@ -677,6 +678,12 @@ cmd_update()
- 		--checkout)
- 			update="checkout"
- 			;;
-+		--exec)
-+			case "$2" in '') usage ;; esac
-+			update="exec"
-+			update_exec_command="$2"
-+			shift
-+			;;
- 		--)
- 			shift
- 			break
-@@ -718,6 +725,11 @@ cmd_update()
- 			update_module=$(git config submodule."$name".update)
- 		fi
- 
-+		if test -z "$update_exec_command"
-+		then
-+			exec_command=$(git config submodule."$name".update.command)
-+		fi
-+
- 		if test "$update_module" = "none"
- 		then
- 			echo "Skipping submodule '$prefix$sm_path'"
-@@ -799,6 +811,14 @@ Maybe you want to use 'update --init'?")"
- 				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': merged in '\$sha1'")"
- 				must_die_on_failure=yes
- 				;;
-+			exec)
-+				test -n "$exec_command" || \
-+					die "$(eval_gettext "Unable to update '\$prefix\$sm_path' exec command not specified")"
-+				command="$exec_command"
-+				die_msg="$(eval_gettext "Unable to exec '\$command \$sha1' in submodule path '\$prefix\$sm_path'")"
-+				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': '\$command \$sha1'")"
-+				must_die_on_failure=yes
-+				;;
- 			*)
- 				command="git checkout $subforce -q"
- 				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$prefix\$sm_path'")"
+  git submodule foreach 'your-update-script $sha1'
+
+Am I missing something?
+
+Stefan
 -- 
-1.8.3.1.643.gebeea52.dirty
+----------------------------------------------------------------
+/dev/random says: Preserve nature... pickle a squirrel.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
