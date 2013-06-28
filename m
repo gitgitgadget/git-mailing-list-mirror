@@ -1,80 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
-Date: Thu, 27 Jun 2013 20:59:48 -0700
-Message-ID: <7v61wyrikr.fsf@alter.siamese.dyndns.org>
-References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
-	<1372077912-18625-2-git-send-email-artagnon@gmail.com>
-	<vpqhagnwraj.fsf@anie.imag.fr>
-	<CALkWK0=F_i95S+53eZmOAJtA+jG=jvi5-sDc3BgW3rNQo=n3Ng@mail.gmail.com>
-	<vpqhagnv9xq.fsf@anie.imag.fr>
-	<7vk3ljbh5r.fsf@alter.siamese.dyndns.org>
-	<vpq7ghjtpv1.fsf@anie.imag.fr>
-	<7vk3lj9xwn.fsf@alter.siamese.dyndns.org>
-	<20130628014011.GA620@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] pull: require choice between rebase/merge on non-fast-forward pull
+Date: Fri, 28 Jun 2013 08:34:53 +0200
+Message-ID: <vpq1u7magky.fsf@anie.imag.fr>
+References: <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
+	<20130523102959.GP9448@inner.h.apk.li>
+	<20130523110839.GT27005@serenity.lan>
+	<7vd2shheic.fsf@alter.siamese.dyndns.org>
+	<20130523164114.GV27005@serenity.lan>
+	<7vbo81e7gs.fsf@alter.siamese.dyndns.org>
+	<20130523215557.GX27005@serenity.lan>
+	<7vli75cpom.fsf@alter.siamese.dyndns.org>
+	<CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
+	<7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
+	<20130627201032.GF9999@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 28 05:59:59 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	John Keeping <john@keeping.me.uk>,
+	Andreas Krey <a.krey@gmx.de>,
+	John Szakmeister <john@szakmeister.net>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Fri Jun 28 08:35:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsPqm-0004R4-Qe
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 05:59:57 +0200
+	id 1UsSHP-0007vZ-9m
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 08:35:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754161Ab3F1D7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 23:59:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35431 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754101Ab3F1D7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 23:59:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CE2E266C8;
-	Fri, 28 Jun 2013 03:59:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QEFei5JppLnZ5Fdw1y34MG7q3lQ=; b=NSKiXf
-	kBF29KSzijHlHAqZ+1NhSdu5nu8d7kPpp9e8oPnIwp4MACf+xAkmndXp1T6w2Tw4
-	Iji+K2KQsMY9La9AwWynV5WoFFrL4KRIlM6qboGN+ZF3tFVXxmzipbnluVIz2eMW
-	qEtNcO2pNE21/0FfN8qEJlD9SiqRDKaJ8Z3lY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=geNlkSiKQsgft3I2qMDi/HKqOhxPXFfF
-	LYoadsNux1KLvEwmp0toYBNl+e5U50PHguQyO5FdUj4ata2GMW78H1mp8Og50kY1
-	V+Evm1C5COszUpRjtGZjZvhb5zUvw7f4rcs9y1RJrXK866HRU4r9ZGz0Mi5Qe0SQ
-	d/kXD6H7xUY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3127C266C7;
-	Fri, 28 Jun 2013 03:59:51 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5217266C5;
-	Fri, 28 Jun 2013 03:59:50 +0000 (UTC)
-In-Reply-To: <20130628014011.GA620@sigill.intra.peff.net> (Jeff King's message
-	of "Thu, 27 Jun 2013 21:40:11 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2E7AD7F0-DFA7-11E2-91AB-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754643Ab3F1Gfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jun 2013 02:35:31 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41487 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752748Ab3F1Gfa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jun 2013 02:35:30 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5S6Yq7d020851
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 28 Jun 2013 08:34:52 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UsSGj-0004rb-Dq; Fri, 28 Jun 2013 08:34:53 +0200
+In-Reply-To: <20130627201032.GF9999@odin.tremily.us> (W. Trevor King's message
+	of "Thu, 27 Jun 2013 16:10:32 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 28 Jun 2013 08:34:56 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229176>
 
-Jeff King <peff@peff.net> writes:
+"W. Trevor King" <wking@tremily.us> writes:
 
-> You lose the assertion that finalize_deferred_config has been called,
-> but I think the resulting code would be simpler, as it drops this
-> die("BUG") state entirely. Am I missing something?
+> On Thu, Jun 27, 2013 at 12:48:52PM -0700, Junio C Hamano wrote:
+>> Because letting a trivial merge automatically handled by Git is so
+>> easy with "git pull", a person who is new to Git may not realize
+>> that the project s/he is interacting with may prefer "rebase"
+>> workflow.
+>
+> Or they may not even realize that they've just merged an unrelated
+> branch at all, dragging in a thousand unrelated commits which they
+> accidentally push to a central repository without looking,
+> contaminating future branches based on the central repostitory without
+> drastic rebase surgery ;).  I just saw one of these earlier this week.
 
-Probably not.  Depending on "-z", NONE is sometimes converted to
-PORCELAIN and sometimes left as-is.  I originally wanted to keep the
-"unspecified" state as long as possible so that this deferred config
-logic and the "-z" default logic can be kept separate.
+I don't understand how the change would solve this. If "pull" would drag
+a lot of commits in the current branch, the "rebase" will rebase the
+current branch on a totally different history, and pushing the result
+would be equally bad.
 
-The final patch ended up folding that "-z" default logic into the
-same function, so it probably is saner to remove UNSPECIFIED.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
