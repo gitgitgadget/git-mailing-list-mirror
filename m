@@ -1,85 +1,80 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH] CYGWIN: Use a TCP socket for pipe()
-Date: Thu, 27 Jun 2013 22:46:55 -0400
-Message-ID: <51CCF91F.7080501@gmail.com>
-References: <201306271831.13865.tboegi@web.de> <7vvc4zsbbs.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
+Date: Thu, 27 Jun 2013 20:59:48 -0700
+Message-ID: <7v61wyrikr.fsf@alter.siamese.dyndns.org>
+References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
+	<1372077912-18625-2-git-send-email-artagnon@gmail.com>
+	<vpqhagnwraj.fsf@anie.imag.fr>
+	<CALkWK0=F_i95S+53eZmOAJtA+jG=jvi5-sDc3BgW3rNQo=n3Ng@mail.gmail.com>
+	<vpqhagnv9xq.fsf@anie.imag.fr>
+	<7vk3ljbh5r.fsf@alter.siamese.dyndns.org>
+	<vpq7ghjtpv1.fsf@anie.imag.fr>
+	<7vk3lj9xwn.fsf@alter.siamese.dyndns.org>
+	<20130628014011.GA620@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	ramsay@ramsay1.demon.co.uk, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 28 04:47:25 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 28 05:59:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsOiX-0004D1-VM
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 04:47:22 +0200
+	id 1UsPqm-0004R4-Qe
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 05:59:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754358Ab3F1CrA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jun 2013 22:47:00 -0400
-Received: from mail-qe0-f45.google.com ([209.85.128.45]:47871 "EHLO
-	mail-qe0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754135Ab3F1Cq7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 22:46:59 -0400
-Received: by mail-qe0-f45.google.com with SMTP id w7so502167qeb.32
-        for <git@vger.kernel.org>; Thu, 27 Jun 2013 19:46:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=XyRDKT0GtkBYy09dxJ2ePw9g36Rot1a3hyWuYMM8XRY=;
-        b=tDRwlDt9Ri/h12hY5L376TES/3/lnXFy69QxAN/8SUhkIijNJ/cPySzA5wC/yZe/jS
-         fbqSc/hC4fbP+HgcK58Nak4iHXTXPz5Mowy/VnztcxvCVEJsm9p9J7dk9vx9CSF9aeVe
-         MAm8/q19+ChZBKt3sKBskj//1nX6Wdn3I1WwD0L8JPSj8uwYhBM/bNXlDbiRbEua3Ago
-         huvTLmFeWtq5MZ5yrSQl5Nm3N0BaDaciKtAT1XY8CghnSf21e28vAlSsOtCPa4+rMyjP
-         zHnl5ysetyuL+0LWOk2mMxmEoQybkVqra2q0gOVngFtwLopatnD+vf+jEtutIs83MeEQ
-         w+Uw==
-X-Received: by 10.49.28.200 with SMTP id d8mr14643474qeh.26.1372387618331;
-        Thu, 27 Jun 2013 19:46:58 -0700 (PDT)
-Received: from mark-laptop.lan (pool-173-79-104-160.washdc.fios.verizon.net. [173.79.104.160])
-        by mx.google.com with ESMTPSA id l2sm7996810qez.2.2013.06.27.19.46.56
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 27 Jun 2013 19:46:57 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130514 Thunderbird/17.0.6
-In-Reply-To: <7vvc4zsbbs.fsf@alter.siamese.dyndns.org>
+	id S1754161Ab3F1D7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 23:59:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35431 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754101Ab3F1D7w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 23:59:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CE2E266C8;
+	Fri, 28 Jun 2013 03:59:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QEFei5JppLnZ5Fdw1y34MG7q3lQ=; b=NSKiXf
+	kBF29KSzijHlHAqZ+1NhSdu5nu8d7kPpp9e8oPnIwp4MACf+xAkmndXp1T6w2Tw4
+	Iji+K2KQsMY9La9AwWynV5WoFFrL4KRIlM6qboGN+ZF3tFVXxmzipbnluVIz2eMW
+	qEtNcO2pNE21/0FfN8qEJlD9SiqRDKaJ8Z3lY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=geNlkSiKQsgft3I2qMDi/HKqOhxPXFfF
+	LYoadsNux1KLvEwmp0toYBNl+e5U50PHguQyO5FdUj4ata2GMW78H1mp8Og50kY1
+	V+Evm1C5COszUpRjtGZjZvhb5zUvw7f4rcs9y1RJrXK866HRU4r9ZGz0Mi5Qe0SQ
+	d/kXD6H7xUY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3127C266C7;
+	Fri, 28 Jun 2013 03:59:51 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5217266C5;
+	Fri, 28 Jun 2013 03:59:50 +0000 (UTC)
+In-Reply-To: <20130628014011.GA620@sigill.intra.peff.net> (Jeff King's message
+	of "Thu, 27 Jun 2013 21:40:11 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2E7AD7F0-DFA7-11E2-91AB-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229175>
 
-On 06/27/2013 01:38 PM, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->
->> Work around issues that git hangs when doing fetch or pull under
->> various protocols under CYGWIN.
->>
->> Replace pipe() with a socket connection using a TCP/IP.
->> Introduce a new function socket_pipe() in compat/socket_pipe.c
-> Sounds like sweeping the real problem, whatever it is, under rug.
-> Is it that we are assuming a pipe buffer that is sufficiently large
-> and expecting a write that we deem to be small enough not to block,
-> causing a deadlock on a platform with very small pipe buffer, or
-> something?
->
+Jeff King <peff@peff.net> writes:
 
-There were issues in early v1.7 Cygwin release for overlapping I/O such=
-=20
-that the pipe was sometimes terminated early resulting in data loss. If=
-=20
-the pipe implementation in Cygwin is still a problem a good test case=20
-sent to the Cygwin developers would be the right approach rather than a=
-=20
-one-off patch in git to try to work around a current platform bug.
+> You lose the assertion that finalize_deferred_config has been called,
+> but I think the resulting code would be simpler, as it drops this
+> die("BUG") state entirely. Am I missing something?
 
-Note - I do not see random hangs with the stat/lstat hack removed,=20
-rather the sole test suite hang I see is repeatable in t0008.sh. So, if=
-=20
-the patch remains, we may be able to run this remaining hang to ground.
+Probably not.  Depending on "-z", NONE is sometimes converted to
+PORCELAIN and sometimes left as-is.  I originally wanted to keep the
+"unspecified" state as long as possible so that this deferred config
+logic and the "-z" default logic can be kept separate.
 
-Mark
+The final patch ended up folding that "-z" default logic into the
+same function, so it probably is saner to remove UNSPECIFIED.
