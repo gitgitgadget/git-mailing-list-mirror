@@ -1,119 +1,52 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] completion: add completer for status
-Date: Fri, 28 Jun 2013 16:04:34 +0200
-Message-ID: <20130628140434.GA12404@goldbirke>
-References: <1372094575-20799-1-git-send-email-artagnon@gmail.com>
- <20130628102936.GA16562@goldbirke>
- <20130628105601.GB16562@goldbirke>
- <20130628112631.GC16562@goldbirke>
- <CALkWK0=pyzcx-rB9gjRecoD1MFkHrSdYwLurD8y805O3FwT4Cg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 28 16:04:49 2013
+From: Andrew Pimlott <andrew@pimlott.net>
+Subject: Re: [PATCH] rebase -i: fixup fixup! fixup!
+Date: Fri, 28 Jun 2013 07:20:51 -0700
+Message-ID: <1372428798-sup-8609@pimlott.net>
+References: <20130611180530.GA18488@oinkpad.pimlott.net> <87obbc8otc.fsf@hexa.v.cablecom.net> <1371237209-sup-639@pimlott.net> <1371278908-sup-1930@pimlott.net> <7vk3lvlmat.fsf@alter.siamese.dyndns.org> <87ip1e2tzx.fsf@hexa.v.cablecom.net> <7v7ghtjwbb.fsf@alter.siamese.dyndns.org> <8738shi2ht.fsf@linux-k42r.v.cablecom.net> <7vwqpshkxj.fsf@alter.siamese.dyndns.org> <1372190294-sup-1398@pimlott.net> <7v61x127bw.fsf@alter.siamese.dyndns.org> <1372198415-sup-2114@pimlott.net> <1372283778-sup-5704@pimlott.net> <7vd2r8v3fa.fsf@alter.siamese.dyndns.org> <1372291877-sup-8201@pimlott.net> <1372359783-sup-4507@pimlott.net> <7vr4fnqnse.fsf@alter.siamese.dyndns.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Thomas Rast <trast@inf.ethz.ch>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 28 16:21:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsZI8-0003fJ-AJ
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 16:04:48 +0200
+	id 1UsZXn-00013e-2j
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 16:20:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754747Ab3F1OEo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jun 2013 10:04:44 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:62762 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754654Ab3F1OEo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jun 2013 10:04:44 -0400
-Received: from localhost6.localdomain6 ([141.21.12.113])
-	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
-	id 0Lio4j-1UFf2N1e85-00cvrZ; Fri, 28 Jun 2013 16:04:34 +0200
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=pyzcx-rB9gjRecoD1MFkHrSdYwLurD8y805O3FwT4Cg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:rE5HAICeMK6LnQMkv0sFqPLKDkX2HCN3z93qYsU/Fx+
- d+tUA2Fc3irBlADRYWESdBQVXNCwo7U/qu/qM/lIqyYi3/1UG4
- cMTHqJR25gSNkrXQcW93hEPTYyNwg2beChu+t/6RGF91FrRkS7
- 0q9Sfu4EHYVKHnQ09GBe+JBBTg5ch9N+2Jb+wDl9+d3Yp/wFnj
- +ZG76K+fIIF8XOnkAp6qV2GfxbdfYXTEM27odgLlAFpjJpKBQZ
- LEPxxQe3S9udQhQHzbH11Jvbko+GqHw2hvfUkGzwTFrxPnwuK1
- oCzZJQz5RpYcBvE6kFSDdm9fBi3QeUKPrluS1jlr7SdWztfLxl
- BR9tfRqyj0axLo+1UaCUO7pBdGkmUo/clfuj0Ct60
+	id S1753816Ab3F1OUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jun 2013 10:20:54 -0400
+Received: from pimlott.net ([72.249.23.100]:50258 "EHLO fugue.pimlott.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750956Ab3F1OUy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jun 2013 10:20:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=pimlott.net; s=default;
+	h=Content-Transfer-Encoding:Message-Id:Date:References:In-reply-to:To:From:Subject:Cc:Content-Type; bh=3D60mkylxAcYq/QFF+oF9LqP0FMaUNCrgsBPvTuUuGo=;
+	b=OmRF8g4HSfLRQ3bH2bzZT0xpvJctWGIs6LasPIBKak4uEC7D7u7KHliQ3ZpGPJ/ro4arICv8CQEJ7BOTk3VD/NNM9y4HxtEE60UEc89a3hjYJ5x/BIi0WhcAdwLQtge20cxPKwgp8JE0ff1PQtRFn6g76+Yy4gi8Oki6YxAalXE=;
+Received: from andrew by fugue.pimlott.net with local (Exim 4.72)
+	(envelope-from <andrew@pimlott.net>)
+	id 1UsZXf-0005IO-H9; Fri, 28 Jun 2013 07:20:51 -0700
+In-reply-to: <7vr4fnqnse.fsf@alter.siamese.dyndns.org>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229201>
 
-On Fri, Jun 28, 2013 at 06:50:02PM +0530, Ramkumar Ramachandra wrote:
-> SZEDER G=E1bor wrote:
-> > diff --git a/contrib/completion/git-completion.bash b/contrib/compl=
-etion/git-completion.bash
-> > index 912fb988..b68024c6 100644
-> > --- a/contrib/completion/git-completion.bash
-> > +++ b/contrib/completion/git-completion.bash
-> > @@ -1697,6 +1697,8 @@ _git_stage ()
-> >
-> >  _git_status ()
-> >  {
-> > +       __git_has_doubledash && return
-> > +
->=20
-> This line makes absolutely no sense to me.
+Excerpts from Junio C Hamano's message of Thu Jun 27 13:52:33 -0700 2013:
+> Two issues here, which I'll locally amend (no need to resend):
 
-That was my quick attempt to provide a way to complete untracked
-files, but M-/ or '--others' will do as well.
+Great!  Thank you for your help and patience.
 
-> When the case statement
-> fails to match anything (which it will, when a double-dash is
-> present), we'll use the __git_complete_index_file which is superior t=
-o
+>         cat >expected <<-EOF &&
+>         pick ...
+>         ...
+>                 EOF
+>         test_cmp expected actual
 
-And slower, too.
+Is that two issues?
 
-> returning and falling back to the dumb zsh file listing, no?  As a
-> result, without that line,
->=20
->   $ git status -- foo<TAB>
->=20
-> will complete fine when foo* isn't necessarily a file in the
-> filesystem, but something that our ls-files returns, no?
-
-If you want fancy completion replies, then you won't type the
-doubledash.
-
-> >         case "$cur" in
-> >         --untracked-files=3D*)
-> >                 __gitcomp "no normal all" "" "${cur##--untracked-fi=
-les=3D}"
-> > @@ -1718,7 +1720,7 @@ _git_status ()
-> >                 return
-> >                 ;;
-> >         esac
-> > -       __git_complete_index_file
-> > +       __git_complete_index_file "--with-tree=3DHEAD --cached --de=
-leted"
->=20
-> Might as well go all the way with  "--cached --deleted --unmerged
-> --others" no?
-
-'--unmerged' is definitely not good, it implies '--stage', which
-changes the output format.
-
-> What is the point of --with-tree=3DHEAD?
-
-To list files that are deleted from the index:
-
-$ rm version.h
-$ git rm version.c
-rm 'version.c'
-$ git ls-files --deleted
-version.h
-$ git ls-files --deleted --with-tree=3DHEAD
-version.c
-version.h
-
-
-G=E1bor
+Andrew
