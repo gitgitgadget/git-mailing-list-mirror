@@ -1,166 +1,95 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: [PATCH] git stash: Avoid data loss when saving a stash
-Date: Fri, 28 Jun 2013 17:05:32 +0200
-Message-ID: <20130628150532.GD12252@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 28 17:05:46 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] fixup-builtins: remove unused cruft
+Date: Fri, 28 Jun 2013 21:16:19 +0530
+Message-ID: <1372434379-24085-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 28 17:49:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsaF5-0004gs-JT
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 17:05:43 +0200
+	id 1Usavc-0007tZ-Lr
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 17:49:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754017Ab3F1PFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jun 2013 11:05:39 -0400
-Received: from pasky.or.cz ([84.242.80.195]:49241 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751519Ab3F1PFi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jun 2013 11:05:38 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id BE86A1700058; Fri, 28 Jun 2013 17:05:32 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754229Ab3F1Pth (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jun 2013 11:49:37 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:54691 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751230Ab3F1Ptg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jun 2013 11:49:36 -0400
+Received: by mail-pd0-f174.google.com with SMTP id 10so1116227pdc.33
+        for <git@vger.kernel.org>; Fri, 28 Jun 2013 08:49:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=WPqNSZCCrJsPky13n5Rvc8MQqhtfCnTBJQUoQlOtJw4=;
+        b=KfY5oKYQexyWqtBcmfF5uzBXsxN7VaoDTQhtaLm3LCElcLijiXec1W6WWIfc41mb6a
+         pZ0Zj9Fw56LMi92T3e4syDAEU4IdxXGv5ldjt3s+pkPPE50YeyHarC7zZR5dx/9qJa2g
+         BT4C1FbXAN/0SXo+/Bv8/83g7BvhDOrdlE3bnWfoCm1B5tnsLRctKzw4ktybXyaz/Fa4
+         McBIz5i2ecS/fI7X7edxz37S/qNKbS2UwDPASFWfTlRYweo36q+e6Do1G97ibiWQZqtG
+         IcBl/jNEAwEZKwZvOKUlq4a+mExhvmw2vLDpBXTEecBHkVH1K64QovhaWlh2yJQOOtGu
+         OR2w==
+X-Received: by 10.66.178.174 with SMTP id cz14mr12125266pac.136.1372434575881;
+        Fri, 28 Jun 2013 08:49:35 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.185.186])
+        by mx.google.com with ESMTPSA id qp4sm8648015pbc.41.2013.06.28.08.49.33
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 28 Jun 2013 08:49:35 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.643.gebeea52.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229209>
 
-I have been recently again bitten by git stash versus an uncommitted
-file-to-directory change that happily threw away few gigabytes of my
-data. This has been recently discussed in the past, e.g.
+The fixup-builtins script is only used by an unused remove-dashes target
+in the Makefile: remove that along with the script.
 
-	http://thread.gmane.org/gmane.comp.version-control.git/202332/
-
-and I implemented Junio's suggestion in this patch - if ls-files --killed
-produced any output, the stash save is stopped and the user is required
-to pass --force to really have the data removed.
-
-A test case is included. I think that the (currently failing) tests
-'stash file to directory' and 'stash directory to file' are related to
-this, but I consider their expectation to be bogus - I would personally
-be surprised by `git stash` suddenly importing the complete
-never-meant-to-be-tracked contents of my directory to Git during a stash
-save, and I think the approach of aborting in this situation is more
-reasonable.
-
-Other parts of Git also behave in a troublesome way in case of tracked
-file being replaced by an untracked directory - I wouldn't expect `git
-reset --hard` alone to remove the directory (i.e. touch untracked files)
-either. However, this matter is much more complicated since `git reset
---hard` is assumed to "never fail in ordinary circumstances" (see e.g.
-git-stash code ;-) and I'm unable to devote sufficient effort to seeing
-such a change through.
-
-Signed-off-by: Petr Baudis <pasky@ucw.cz>
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
+ Makefile       |  3 ---
+ fixup-builtins | 16 ----------------
+ 2 files changed, 19 deletions(-)
+ delete mode 100755 fixup-builtins
 
-Please Cc me, I'm currently not subscribed on the list.
-
- Documentation/git-stash.txt |   12 ++++++++++--
- git-stash.sh                |   10 ++++++++++
- t/t3903-stash.sh            |   16 ++++++++++++++++
- 3 files changed, 36 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index db7e803..52d4def 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -14,7 +14,8 @@ SYNOPSIS
- 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
- 'git stash' branch <branchname> [<stash>]
- 'git stash' [save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
--	     [-u|--include-untracked] [-a|--all] [<message>]]
-+	     [-u|--include-untracked] [-a|--all] [-f|--force]
-+	     [<message>]]
- 'git stash' clear
- 'git stash' create [<message>]
- 'git stash' store [-m|--message <message>] [-q|--quiet] <commit>
-@@ -44,7 +45,7 @@ is also possible).
- OPTIONS
- -------
- 
--save [-p|--patch] [--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
-+save [-p|--patch] [--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [-f|--force] [<message>]::
- 
- 	Save your local modifications to a new 'stash', and run `git reset
- 	--hard` to revert them.  The <message> part is optional and gives
-@@ -71,6 +72,13 @@ linkgit:git-add[1] to learn how to operate the `--patch` mode.
- +
- The `--patch` option implies `--keep-index`.  You can use
- `--no-keep-index` to override this.
-++
-+In some cases, saving a stash could mean irretrievably removing some
-+data - if a directory with untracked files replaces a tracked file of
-+the same name, the new untracked files are not saved (except in case
-+of `--include-untracked`) but the original tracked file shall be restored.
-+Normally, stash save will abort; `--force` will make it remove the
-+untracked files.
- 
- list [<options>]::
- 
-diff --git a/git-stash.sh b/git-stash.sh
-index 1e541a2..3cb9b05 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -195,6 +195,7 @@ save_stash () {
- 	keep_index=
- 	patch_mode=
- 	untracked=
-+	force=
- 	while test $# != 0
- 	do
- 		case "$1" in
-@@ -215,6 +216,9 @@ save_stash () {
- 		-u|--include-untracked)
- 			untracked=untracked
- 			;;
-+		-f|--force)
-+			force=t
-+			;;
- 		-a|--all)
- 			untracked=all
- 			;;
-@@ -258,6 +262,12 @@ save_stash () {
- 		say "$(gettext "No local changes to save")"
- 		exit 0
+diff --git a/Makefile b/Makefile
+index e158376..6b0ddf8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2302,9 +2302,6 @@ check: common-cmds.h
+ 		exit 1; \
  	fi
-+	if test -z "$untracked$force" -a -n "$(git ls-files --killed | head -n 1)"; then
-+		say "$(gettext "The following untracked files would NOT be saved but need to be removed by stash save:")"
-+		test -n "$GIT_QUIET" || git ls-files --killed | sed 's/^/\t/'
-+		say "$(gettext "Abording. Consider using either the --force or --include-untracked switches.")" >&2
-+		exit 1
-+	fi
- 	test -f "$GIT_DIR/logs/$ref_stash" ||
- 		clear_stash || die "$(gettext "Cannot initialize stash")"
  
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index debda7a..4ac4ebe 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -673,4 +673,19 @@ test_expect_success 'store updates stash ref and reflog' '
- 	grep quux bazzy
- '
+-remove-dashes:
+-	./fixup-builtins $(BUILT_INS) $(PROGRAMS) $(SCRIPTS)
+-
+ ### Installation rules
  
-+test_expect_success SYMLINKS 'stash symlink to non-empty directory' '
-+	git reset --hard &&
-+	ln -s file2 linkdir &&
-+	git add linkdir &&
-+	git commit -m"+linkdir as symlink" &&
-+	rm linkdir && mkdir linkdir && touch linkdir/file &&
-+	! git stash save "symlink to non-empty directory" &&
-+	[ -e linkdir/file ]
-+'
-+
-+test_expect_success SYMLINKS 'stash symlink to non-empty directory (forced)' '
-+	git stash save --force "symlink to non-empty directory (forced)" &&
-+	[ ! -e linkdir/file ] && [ -L linkdir ]
-+'
-+
- test_done
+ ifneq ($(filter /%,$(firstword $(template_dir))),)
+diff --git a/fixup-builtins b/fixup-builtins
+deleted file mode 100755
+index 63dfa4c..0000000
+--- a/fixup-builtins
++++ /dev/null
+@@ -1,16 +0,0 @@
+-#!/bin/sh
+-while [ "$1" ]
+-do
+-	if [ "$1" != "git-sh-setup" -a "$1" != "git-parse-remote" -a "$1" != "git-svn" ]; then
+-		old="$1"
+-		new=$(echo "$1" | sed 's/git-/git /')
+-		echo "Converting '$old' to '$new'"
+-		sed -i "s/\\<$old\\>/$new/g" $(git ls-files '*.sh')
+-	fi
+-	shift
+-done
+-
+-sed -i 's/git merge-one-file/git-merge-one-file/g
+-s/git rebase-todo/git-rebase-todo/g' $(git ls-files '*.sh')
+-git update-index --refresh >& /dev/null
+-exit 0
 -- 
-1.7.10.4
+1.8.3.1.643.gebeea52.dirty
