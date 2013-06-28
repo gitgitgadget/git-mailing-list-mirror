@@ -1,95 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
-Date: Fri, 28 Jun 2013 10:37:26 -0700
-Message-ID: <7vhagip25l.fsf@alter.siamese.dyndns.org>
-References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
-	<1372077912-18625-2-git-send-email-artagnon@gmail.com>
-	<vpqhagnwraj.fsf@anie.imag.fr>
-	<CALkWK0=F_i95S+53eZmOAJtA+jG=jvi5-sDc3BgW3rNQo=n3Ng@mail.gmail.com>
-	<vpqhagnv9xq.fsf@anie.imag.fr>
-	<7vk3ljbh5r.fsf@alter.siamese.dyndns.org>
-	<vpq7ghjtpv1.fsf@anie.imag.fr>
-	<7vk3lj9xwn.fsf@alter.siamese.dyndns.org>
-	<20130628014011.GA620@sigill.intra.peff.net>
-	<7v61wyrikr.fsf@alter.siamese.dyndns.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] pull: require choice between rebase/merge on
+ non-fast-forward pull
+Date: Fri, 28 Jun 2013 18:42:53 +0100
+Message-ID: <20130628174252.GF2232@serenity.lan>
+References: <20130523110839.GT27005@serenity.lan>
+ <7vd2shheic.fsf@alter.siamese.dyndns.org>
+ <20130523164114.GV27005@serenity.lan>
+ <7vbo81e7gs.fsf@alter.siamese.dyndns.org>
+ <20130523215557.GX27005@serenity.lan>
+ <7vli75cpom.fsf@alter.siamese.dyndns.org>
+ <CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
+ <7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
+ <20130628080953.GD2232@serenity.lan>
+ <7vli5up2tq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 28 19:37:52 2013
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andreas Krey <a.krey@gmx.de>,
+	John Szakmeister <john@szakmeister.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 28 19:43:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsccB-0002ru-Nf
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 19:37:44 +0200
+	id 1Uschc-0007sc-8r
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 19:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752167Ab3F1Rhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jun 2013 13:37:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46120 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750769Ab3F1Rhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jun 2013 13:37:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A55F2C4C9;
-	Fri, 28 Jun 2013 17:37:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=l84U2z48jg6nAcQfVcISjdtr9hg=; b=C3ZgOQ
-	/nDeS0s0D0gxTT9ngH3qDAR2DubxJqRAD80G0pm4LqgEkeXRCe4H2/o1bV/O3rSJ
-	BnUE22PXNSPivCiRiH4xkmVKmZgcmN37OC/+Gd/PRuOYFRRPe2rMClWm5T0w5Q7j
-	/GkkCIFnCW+plazXVRL6hW4i+LpPGisiW661E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yTelJYZn+a/nmGZqPlOdUAwc8L1J/exr
-	+b6CSwQngijM1UonB8oW31EzNJkpN53lHbq9H8P0juqH2/Fgw3NmCX16VyHVIrkQ
-	xt0d/BUsM8WDu1QJt4EZBTyI7faIPrHpg3MAoWDui0aLgTYXIfwf0AVm8g/aZyyy
-	JiSwBBhORuo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E6D12C4C8;
-	Fri, 28 Jun 2013 17:37:38 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1752360Ab3F1RnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jun 2013 13:43:09 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:38087 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751693Ab3F1RnH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jun 2013 13:43:07 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 30943CDA5C3;
+	Fri, 28 Jun 2013 18:43:07 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wNI9CN8xw5hO; Fri, 28 Jun 2013 18:43:06 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id 8AF61CDA560;
+	Fri, 28 Jun 2013 18:43:05 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 7A8E0161E1A5;
+	Fri, 28 Jun 2013 18:43:05 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id SLRKwPX0sj91; Fri, 28 Jun 2013 18:43:03 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC7BB2C4BE;
-	Fri, 28 Jun 2013 17:37:36 +0000 (UTC)
-In-Reply-To: <7v61wyrikr.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 27 Jun 2013 20:59:48 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6C44E284-E019-11E2-A811-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 45A29161E18E;
+	Fri, 28 Jun 2013 18:42:54 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7vli5up2tq.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229221>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jun 28, 2013 at 10:22:57AM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> >>  test_expect_success \
+> >>      'merge-setup part 3' \
+> >> -    'git pull . branch1'
+> >> +    'git pull --merge . branch1'
+> >
+> > I think the "--merge" should be implied here because the suer has
+> > specified an explicit remote and branch.
+> 
+> The whole point of the topic is "It used to be that when you said
+> 'git pull' and did not tell us your preferred way to integrate your
+> work and work by the others', we default to merging, but we no
+> longer do so---you have to choose."
+> 
+> Here, "git pull . branch1" is merely saying "I want to integrate
+> the work on my current branch with that of branch1" without saying
+> how that integration wants to happen.
 
-> Jeff King <peff@peff.net> writes:
->
->> You lose the assertion that finalize_deferred_config has been called,
->> but I think the resulting code would be simpler, as it drops this
->> die("BUG") state entirely. Am I missing something?
->
-> Probably not.  Depending on "-z", NONE is sometimes converted to
-> PORCELAIN and sometimes left as-is.  I originally wanted to keep the
-> "unspecified" state as long as possible so that this deferred config
-> logic and the "-z" default logic can be kept separate.
->
-> The final patch ended up folding that "-z" default logic into the
-> same function, so it probably is saner to remove UNSPECIFIED.
+The change that I think is important is that the "bring my branch
+up-to-date" operation should force the user to choose what to do if the
+branch does not fast-forward to its upstream.  If that was spelled "git
+update" then having "git pull" perform a merge would be fine, but we
+spell this operation as "git pull" so the change needs to happen there.
 
-Actually, the code needs to be able to differentiate between
+I don't think "git pull remote branch" falls into the same category as
+plain "git pull" so I'm not convinced that defaulting to merge there is
+unreasonable.  The original message about this [1] did talk about only
+"git pull" with no arguments.
 
-	git status --no-short
-        git status
+> Even though, as an old timer, I find it mildly irritating that we
+> now have to be explicit in these tests, this change is in line with
+> the spirit of the topic.  If we didn't have to change this example
+> and the pull silently succeeded without complaining, we achieved
+> nothing.
 
-the former telling us explicitly to defeat status.short while the
-latter telling us to use whatever random value we happen to have in
-the configuration.  Initializing the variable to UNSPECIFIED is one
-way to achieve that, as the former will explicitly set it to NONE
-while the latter will leave it UNSPECIFIED when the command line
-parsing finishes.
+I disagree that we would have achieved nothing.  New users will not be
+using explicit arguments to git-pull when just trying to bring a branch
+up-to-date.
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/225240
