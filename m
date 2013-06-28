@@ -1,86 +1,116 @@
-From: =?ISO-8859-1?Q?Stefan_N=E4we?= <stefan.naewe@atlas-elektronik.com>
-Subject: Re: [RFC/PATCH] submodule: add 'exec' option to submodule update
-Date: Fri, 28 Jun 2013 12:13:01 +0200
-Message-ID: <51CD61AD.4090203@atlas-elektronik.com>
-References: <1372413190-32732-1-git-send-email-judge.packham@gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] completion: add completer for status
+Date: Fri, 28 Jun 2013 12:29:36 +0200
+Message-ID: <20130628102936.GA16562@goldbirke>
+References: <1372094575-20799-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"Jens.Lehmann@web.de" <Jens.Lehmann@web.de>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 28 12:21:03 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 28 12:29:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsVnX-0008LE-VW
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 12:21:00 +0200
+	id 1UsVw0-0007mT-7B
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 12:29:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755024Ab3F1KU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jun 2013 06:20:56 -0400
-Received: from mail96.atlas.de ([194.156.172.86]:29289 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754779Ab3F1KUz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jun 2013 06:20:55 -0400
-X-Greylist: delayed 475 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Jun 2013 06:20:55 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id 17B441014B;
-	Fri, 28 Jun 2013 12:12:59 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mail96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IEaPVZaknmCb; Fri, 28 Jun 2013 12:12:58 +0200 (CEST)
-Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Fri, 28 Jun 2013 12:12:58 +0200 (CEST)
-Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id 2296927169;
-	Fri, 28 Jun 2013 12:12:58 +0200 (CEST)
-Received: from [10.200.54.97] (10.200.54.97) by MSSRVS1.atlas.de
- (10.200.101.71) with Microsoft SMTP Server (TLS) id 8.3.279.1; Fri, 28 Jun
- 2013 12:12:58 +0200
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <1372413190-32732-1-git-send-email-judge.packham@gmail.com>
-X-Enigmail-Version: 1.5.1
+	id S1755306Ab3F1K3k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jun 2013 06:29:40 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:50407 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755068Ab3F1K3j (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jun 2013 06:29:39 -0400
+Received: from localhost6.localdomain6 (g226130042.adsl.alicedsl.de [92.226.130.42])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0Lf0ON-1UTcFS1hnz-00qDMN; Fri, 28 Jun 2013 12:29:37 +0200
+Content-Disposition: inline
+In-Reply-To: <1372094575-20799-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:PPm+X9te7Y2WCfr1AGqRysqfeCQnk/SzknwI2SLAzHJ
+ Z4E53pMX0newCdeuz3xCoZqYKf/3v1QGuxYZo0X1+KOfudabaH
+ KkxhjqvArq5Wrn1TX9PDRPKQvqtdGE+GGhS/rZbbwvp9qV14H+
+ YRK0FikZJJHttf6RUFFz5DV0TCujSA1zMiOUytMa/HwwIFlX+J
+ yQCcM8nYZeuQ8yQ1ka0PhbwJxnDGFaHd8X8WL8vd9lp+LsoX2E
+ KJ38MnovFg3xc3qxH2pk8jXE76Q07VFzJ76IpTA+NJ+aectttj
+ xR+L3CF13ZyaYfzZiHMse0jptyuAgafNWiYAWh/AqNetYBkycY
+ k02QqYzCCb4Y3akATJNylxNbYhNy7yr+tTtvl/etw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229185>
 
-Am 28.06.2013 11:53, schrieb Chris Packham:
-> This allows the user some finer grained control over how the update is
-> done. The primary motivation for this was interoperability with stgit
-> however being able to intercept the submodule update process may prove
-> useful for integrating or extending other tools.
-> 
-> Signed-off-by: Chris Packham <judge.packham@gmail.com>
-> --
-> Hi,
-> 
-> At $dayjob we have a number of users that are accustomed to using stgit.
-> Stgit doesn't play nicely with git rebase which would be the logical
-> setting for submodule.*.update for our usage. Instead we need to run
-> 'stg rebase --merged' on those submodules that have been initialised
-> with stgit.
-> 
-> Our current solution is an in-house script which is a poor substitute
-> for git submodule update. I'd much rather replace our script with git
-> submodule update but we do have a requirement to keep stgit for the
-> foreseeable future.  Rather than narrowing in on stgit it seems logical
-> to allow an arbitrary update command to be executed.
+Hi,
 
-Hhmmm...
-Can't the same be accomplished with 
- 
-  git submodule foreach 'your-update-script $sha1'
+On Mon, Jun 24, 2013 at 10:52:55PM +0530, Ramkumar Ramachandra wrote:
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash | 26 ++++++++++++++++++++++++=
+++
+>  1 file changed, 26 insertions(+)
+>=20
+> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
+ion/git-completion.bash
+> index 6c3bafe..912fb98 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1695,6 +1695,32 @@ _git_stage ()
+>  	_git_add
+>  }
+> =20
+> +_git_status ()
+> +{
+> +	case "$cur" in
+> +	--untracked-files=3D*)
+> +		__gitcomp "no normal all" "" "${cur##--untracked-files=3D}"
+> +		return
+> +		;;
+> +	--ignore-submodules=3D*)
+> +		__gitcomp "none untracked dirty all" "" "${cur##--ignore-submodule=
+s=3D}"
+> +		return
+> +		;;
+> +	--column=3D*)
+> +		__gitcomp "always never auto column row plain dense nodense" "" "$=
+{cur##--column=3D}"
+> +		return
+> +		;;
+> +	--*)
+> +		__gitcomp "
+> +			--short --branch --long --porcelain
+> +			--untracked-files=3D --ignore-submodules=3D --ignored --column=3D
 
-Am I missing something?
+The parameter for '--untracked-files' '--ignore-submodules' and
+'--column' is optional.  In such cases we usually list the option both
+with and without the '=3D' as a reminder, e.g. look at 'git log's
+'--decorate' and '--dirstat'.
 
-Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: Preserve nature... pickle a squirrel.
-python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
+> +			"
+> +		return
+> +		;;
+> +	esac
+> +	__git_complete_index_file
+
+With or without this change we can't ask for the status of a certain
+deleted file:
+
+$ git rm version.h
+rm 'version.h'
+$ git status=20
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       deleted:    version.h
+#
+$ git status v<TAB>
+varint.c   varint.h   vcs-svn/   version.c =20
+
+I wonder whether there is some clever combination of options that
+would make that possible?  I didn't find it.
+
+
+G=E1bor
