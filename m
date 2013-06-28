@@ -1,93 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
-Date: Thu, 27 Jun 2013 21:40:11 -0400
-Message-ID: <20130628014011.GA620@sigill.intra.peff.net>
-References: <1372077912-18625-1-git-send-email-artagnon@gmail.com>
- <1372077912-18625-2-git-send-email-artagnon@gmail.com>
- <vpqhagnwraj.fsf@anie.imag.fr>
- <CALkWK0=F_i95S+53eZmOAJtA+jG=jvi5-sDc3BgW3rNQo=n3Ng@mail.gmail.com>
- <vpqhagnv9xq.fsf@anie.imag.fr>
- <7vk3ljbh5r.fsf@alter.siamese.dyndns.org>
- <vpq7ghjtpv1.fsf@anie.imag.fr>
- <7vk3lj9xwn.fsf@alter.siamese.dyndns.org>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [RFC/PATCH 0/1] cygwin: Remove the Win32 l/stat() functions
+Date: Thu, 27 Jun 2013 22:31:22 -0400
+Message-ID: <51CCF57A.3020900@gmail.com>
+References: <51C5FD28.1070004@ramsay1.demon.co.uk> <51C6BC4B.9030905@web.de> <51C8BF2C.2050203@ramsay1.demon.co.uk> <7vy59y4w3r.fsf@alter.siamese.dyndns.org> <51C94425.7050006@alum.mit.edu> <51CB610C.7050501@ramsay1.demon.co.uk> <20130626223552.GA12785@sigill.intra.peff.net> <20130626224336.GA22486@sigill.intra.peff.net> <51CCC397.3060705@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 28 03:40:24 2013
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Johannes Sixt <j6t@kdbg.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, dpotapov@gmail.com,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Fri Jun 28 04:31:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsNfh-0006p9-BL
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 03:40:21 +0200
+	id 1UsOTJ-0007z1-D9
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 04:31:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753743Ab3F1BkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jun 2013 21:40:15 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43753 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753249Ab3F1BkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jun 2013 21:40:14 -0400
-Received: (qmail 689 invoked by uid 102); 28 Jun 2013 01:41:19 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Jun 2013 20:41:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Jun 2013 21:40:11 -0400
-Content-Disposition: inline
-In-Reply-To: <7vk3lj9xwn.fsf@alter.siamese.dyndns.org>
+	id S1754300Ab3F1Cb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jun 2013 22:31:28 -0400
+Received: from mail-qe0-f54.google.com ([209.85.128.54]:48441 "EHLO
+	mail-qe0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754176Ab3F1Cb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jun 2013 22:31:27 -0400
+Received: by mail-qe0-f54.google.com with SMTP id ne12so509918qeb.27
+        for <git@vger.kernel.org>; Thu, 27 Jun 2013 19:31:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Ncz+HrgWpizOC4UV5tSGhIS1aDtDr49Q962mO6Wv46M=;
+        b=w0wfJgag9hVF99e9sQLwZ0IrsKHaFyGiggaTLMwtNTGVEtX/oM0huCAKDyNqfkzid0
+         vYzzmYxR9og0IRovwfv5TbM0BtxTv7iF74O6SL3pNeg2XHFr7fEDnynqrqRAyRyk0+QI
+         OdrtRkTQzcVG/J57nbh7OvuTYy3Bmhs8KBCu3lC0DtYqLD9j0OG/16X9PX8E5+e0cfgq
+         q3Zmrj4Armz8jF2A8bl7GkKG6Dp9JBQ7AyuAZkLt8Qi2LxeHKAAdvRiH3pIE01OSvsiQ
+         LgpJPNsYiWqZzj+9fiQwRRm92Eomn4Xep8mQTgE/WXpsKVTpPBoTRy9OmB5IGr7Yktsg
+         MXPw==
+X-Received: by 10.224.79.203 with SMTP id q11mr1619523qak.35.1372386687081;
+        Thu, 27 Jun 2013 19:31:27 -0700 (PDT)
+Received: from mark-laptop.lan (pool-173-79-104-160.washdc.fios.verizon.net. [173.79.104.160])
+        by mx.google.com with ESMTPSA id j9sm8797661qas.3.2013.06.27.19.31.24
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 27 Jun 2013 19:31:25 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130514 Thunderbird/17.0.6
+In-Reply-To: <51CCC397.3060705@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229173>
 
-On Mon, Jun 24, 2013 at 11:16:56AM -0700, Junio C Hamano wrote:
+On 06/27/2013 06:58 PM, Ramsay Jones wrote:
 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 0da944f..a535eb2 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -111,12 +111,14 @@ static int show_ignored_in_status;
->  static const char *only_include_assumed;
->  static struct strbuf message = STRBUF_INIT;
->  
-> -static enum {
-> +static enum status_format {
->  	STATUS_FORMAT_NONE = 0,
->  	STATUS_FORMAT_LONG,
->  	STATUS_FORMAT_SHORT,
-> -	STATUS_FORMAT_PORCELAIN
-> -} status_format;
-> +	STATUS_FORMAT_PORCELAIN,
-> +
-> +	STATUS_FORMAT_UNSPECIFIED
-> +} status_format = STATUS_FORMAT_UNSPECIFIED;
+> This is why I tried the "cygwin: Remove the Win32 l/stat()
+> functions" patch first; I think this is the correct approach
+> to fixing this problem (and similar *future* problems).
+I adamantly agree.
+> However, since that is no longer an option, on performance
+> grounds, I have other ideas I want to try. (see later email)
 
-I'm not sure why you need to add UNSPECIFIED here; the point of NONE is
-that no format had yet been specified.
+Correctness first, speed later.
 
-It looks like the only difference is that finalize_deferred_config
-converts unspecified into NONE. But I think you can just use NONE for
-both cases, and drop this hunk:
+1) Keep the patch to remove the buggy and unreliable stat / lstat.
+2) We fix the remaining test failures.
+3) With the test suite passing, stat optimization(s) that cause no 
+failures / regressions can be accepted.
 
->  static int opt_parse_m(const struct option *opt, const char *arg, int unset)
->  {
-> @@ -457,6 +459,9 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
->  	case STATUS_FORMAT_PORCELAIN:
->  		wt_porcelain_print(s);
->  		break;
-> +	case STATUS_FORMAT_UNSPECIFIED:
-> +		die("BUG: finalize_deferred_config() should have been called");
-> +		break;
->  	case STATUS_FORMAT_NONE:
->  	case STATUS_FORMAT_LONG:
->  		wt_status_print(s);
+With the msys/mingw git available for years now, there really is not a 
+reason to make Cygwin's git violate the Posix expectations of that 
+platform. msys makes no such promises, so is the right tool for those on 
+Windows who just want git as fast as possible on Windows (still 
+slooooow) and don't care about file modes, softlinks, etc.
 
-You lose the assertion that finalize_deferred_config has been called,
-but I think the resulting code would be simpler, as it drops this
-die("BUG") state entirely. Am I missing something?
+I'm keeping your patch in my tree.
 
--Peff
+Mark
