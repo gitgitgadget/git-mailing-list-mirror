@@ -1,117 +1,119 @@
-From: "Melton Low (devl)" <softw.devl@gmail.com>
-Subject: Re: How to update git on Mac OS X Mountain Lion 10.8.4
-Date: Fri, 28 Jun 2013 15:06:37 -0600
-Message-ID: <51CDFADD.8000707@gmail.com>
-References: <CAN_-5Z94-OV7rHYf+mUuf_xanxu0+odwovv0mpB4GRHVsjccDw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git stash: Avoid data loss when saving a stash
+Date: Fri, 28 Jun 2013 14:30:15 -0700
+Message-ID: <7vhaghnct4.fsf@alter.siamese.dyndns.org>
+References: <20130628150532.GD12252@machine.or.cz>
+	<7vbo6qni1d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Olivier de Broqueville <olivier.debroqueville@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 28 23:06:52 2013
+To: Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Fri Jun 28 23:30:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsfsU-0002pJ-3e
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 23:06:46 +0200
+	id 1UsgFL-0007Bt-Tk
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 23:30:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069Ab3F1VGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jun 2013 17:06:42 -0400
-Received: from mail-pb0-f50.google.com ([209.85.160.50]:45838 "EHLO
-	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751149Ab3F1VGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jun 2013 17:06:41 -0400
-Received: by mail-pb0-f50.google.com with SMTP id wz7so2717639pbc.9
-        for <git@vger.kernel.org>; Fri, 28 Jun 2013 14:06:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=NM81ajlrIoSzD9aNGIdK7kDlEHWhFrghdd16rzlJXmY=;
-        b=QjOI++/0SPtioRZnk5PIfLt1Zb5C7uxgq9szn19lK42jNxz0M9jDQ/uJ7OVsFdg2sF
-         MJ6t50+iQgDIKFisAbRLsXZOZN/N5xWxg04Jd/FDv21ZzpheF+UpAMudYA9W8iO9J+3U
-         lPTMK8Fazcwxk1yduFKorW90LAqtvKfD+OkvcvBvK/zOfdtgg2wBNiXG9F8VbELDLfvg
-         3+GbwFx6qsdNHmgcDsMdOqgagizqe8kdQZSf+96/RPncgQ+zZ/TowqL9wPIxNfZqODZc
-         LpVwjb2ec0lFjJDwSdrfTxR2Sx8nlikTs+jkErrpiuMhWmSx3z+wntHd5onoitg5bvaz
-         3kpg==
-X-Received: by 10.68.171.226 with SMTP id ax2mr13184119pbc.201.1372453601064;
-        Fri, 28 Jun 2013 14:06:41 -0700 (PDT)
-Received: from BigBook-2.local (S010620c9d00fc430.cg.shawcable.net. [70.72.44.173])
-        by mx.google.com with ESMTPSA id sq5sm10562913pab.11.2013.06.28.14.06.39
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 28 Jun 2013 14:06:40 -0700 (PDT)
-User-Agent: Postbox 3.0.8 (Macintosh/20130427)
-In-Reply-To: <CAN_-5Z94-OV7rHYf+mUuf_xanxu0+odwovv0mpB4GRHVsjccDw@mail.gmail.com>
+	id S1752165Ab3F1VaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jun 2013 17:30:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52684 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751629Ab3F1VaS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jun 2013 17:30:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF0202C1FF;
+	Fri, 28 Jun 2013 21:30:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g5/najB/tQ4Ch2tADxtEKdPOglI=; b=oUJP59
+	9WbwUw7IwlttLmPGRAciHMKtVff6f10FQPHrn9Y8Ur10VfrNKlwMfX9hVErl85SY
+	xEItf7G8o6H4qmVE6aq1L2zJLAWj3zI9PG2Z+f4fnhIoslmVoFy9V+Kmr/a5HN3p
+	Usof+PrIYk/uaWD9TZOV7dDpxwCE9Mp4TnCaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Tap4HZ9E110vUgmiWhjTNEKh2hlQgZPr
+	dfVgiFiq09C9GDy+0K1qVOuBGjbXDFelgYLT2xAhD1a9vs+lLkKx1+VRZNfDJytj
+	DmsdnoW9FCMuYNvBqI3AzQ+afDFxSbY+RMOko6/WKDAyRR0g7HvAurIwQrOEtK7W
+	ERz1c4+a6G0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C42B62C1FE;
+	Fri, 28 Jun 2013 21:30:17 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 42AC02C1FD;
+	Fri, 28 Jun 2013 21:30:17 +0000 (UTC)
+In-Reply-To: <7vbo6qni1d.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 28 Jun 2013 12:37:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: ED41DA70-E039-11E2-8E33-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229241>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Did you do a "sudo make install" as the last step?
-
-As a general rule of thumb on OS X, don't update or otherwise do 
-anything to stuff installed by Apple.  You have to install the newer 
-version from the Git repository to a different directory, eg /usr/local 
-or /usr/local/git .
-
-./configure --prefix=/usr/local
-or
-./configure --prefix=/usr/local/git
-
-make all
-sudo make install
-
-Then change your login profile, from the terminal, to reflect the new 
-bin location, eg /usr/local/bin or /usr/local/git/bin .
-
-Hope this help.
-
-Mel
-
-Olivier de Broqueville wrote:
-> Hello,
+> Petr Baudis <pasky@ucw.cz> writes:
 >
-> I've learnt that Xcode installs git by default on the Mac. My current
-> version of git is 1.7.12.4 and it's located in /usr/bin/git.
+>> diff --git a/git-stash.sh b/git-stash.sh
+>> index 1e541a2..3cb9b05 100755
+>> --- a/git-stash.sh
+>> +++ b/git-stash.sh
+>> @@ -258,6 +262,12 @@ save_stash () {
+>>  		say "$(gettext "No local changes to save")"
+>>  		exit 0
+>>  	fi
+>> +	if test -z "$untracked$force" -a -n "$(git ls-files --killed | head -n 1)"; then
+>> +		say "$(gettext "The following untracked files would NOT be saved but need to be removed by stash save:")"
 >
-> I wanted to update git to the latest stable version available:
-> 1.8.3.1. I proceeded with the instructions on:
-> http://git-scm.com/downloads and typed:
+> I think "ls-files --killed" was not adjusted for the new world order
+> when submodules were introduced.  With this change, you see t7402
+> break,...
+> Exactly the same breakage this patch introduces triggers in t7610,
+> too.
 >
-> git clone https://github.com/git/git.git
->
-> (rather than using the .dmg file because I don't want to install a new
-> version of git in addition to the existing one used by Xcode.
-> Furthermore, I have no idea where the new version would end up being
-> installed and I've read that users have had trouble doing this!)
->
-> This rendered the following results:
-> Oliviers-iMac:~ odebroqueville$ git clone https://github.com/git/git.git
-> Cloning into 'git'...
-> remote: Counting objects: 157697, done.
-> remote: Compressing objects: 100% (53116/53116), done.
-> remote: Total 157697 (delta 114700), reused 143715 (delta 102625)
-> Receiving objects: 100% (157697/157697), 39.56 MiB | 2.01 MiB/s, done.
-> Resolving deltas: 100% (114700/114700), done.
-> Oliviers-iMac:~ odebroqueville$ which git
-> /usr/bin/git
-> Oliviers-iMac:~ odebroqueville$ git --version
-> git version 1.7.12.4 (Apple Git-37)
->
-> As you can see, nothing seems to have changed!
->
-> Would you have any explanations?
->
-> Thank you in advance for your help.
-> Best regards,
-> Olivier de Broqueville.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> I think another patch to teach "ls-files --killed" what to do with
+> submodules is needed as a preliminary step before this patch.
+
+Which may be just the matter of doing this.
+
+-- >8 --
+Subject: treat_directory(): do not declare submodules in index to be untracked
+
+When the working tree walker encounters a directory, it asks this
+function if it should descend into it, show it as an untracked
+directory, or do something else.  When the directory is the top of
+the submodule working tree, we used to say "That is an untracked
+directory", which was quite bogus.  It is an entity that is tracked
+in the index of the repository we are looking at, and that is not to
+be descended into it.  Return path_none.
+
+The existing case that path_untracked is returned for a newly
+discovered submodule that is not tracked in the index (this only
+happens when DIR_NO_GITLINKS option is not used) is unchanged and
+returns path_untracked, but that is exactly because the submodule is
+not tracked in the index.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ dir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dir.c b/dir.c
+index 897c874..b99c40e 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1038,7 +1038,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+ 	case index_gitdir:
+ 		if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
+ 			return path_none;
+-		return path_untracked;
++		return path_none;
+ 
+ 	case index_nonexistent:
+ 		if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
