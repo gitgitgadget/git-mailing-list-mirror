@@ -1,71 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/5] git-prompt: cleaning and improvement
-Date: Fri, 28 Jun 2013 10:13:33 -0700
-Message-ID: <7vsj02p39e.fsf@alter.siamese.dyndns.org>
-References: <cover.1372211661.git.erdavila@gmail.com>
-	<7v8v1vvash.fsf@alter.siamese.dyndns.org>
-	<CAOz-D1JE2YkoJErY_yjvBC-YSTC=7RycB3svnQ0t3c4RMVOJPw@mail.gmail.com>
-	<20130628094221.GA15436@goldbirke>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Eduardo R. D'Avila" <erdavila@gmail.com>, git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Jun 28 19:13:45 2013
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: [PATCH] configure: fix help screen
+Date: Fri, 28 Jun 2013 19:19:42 +0200
+Message-ID: <39f9e29341ce7818d1b3ed67d108345c7159f01d.1372439910.git.stefano.lattarini@gmail.com>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 28 19:19:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UscEu-0006kd-LR
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 19:13:41 +0200
+	id 1UscKz-0003iQ-Lj
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 19:19:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755736Ab3F1RNh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jun 2013 13:13:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35020 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755398Ab3F1RNg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Jun 2013 13:13:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9019E2966D;
-	Fri, 28 Jun 2013 17:13:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=6EDecvU5G9C8
-	AfOA6AcFAwryvKc=; b=EBvMWHStzNSSSufWdG9A4xnmc5Yf6/0H64FWv4eoI9ME
-	9t4tO2p1j8HjYt9DHlfqQ5BOHm1n9qhrJYekpNSamJ9WBoiWUz69PPK4/poRF+Qw
-	MVJx0MPoI5rp+o8yF79DJw1SJQfGP5AC7JK7DkEMhJjaauqndVe6Vba/bN7Xp5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=oMaMiK
-	sIdCCWqgVAlXDEv22imfzbx2XIm45ZXKcKV5h/cW4HNomFTDYNUFGqPxOtn7S+Hk
-	etPbxPX3CTBccRFpyrGuxjyh2nR6MvzIuoMZruqGIDcxDSUWr3o+xHIENrXXeegd
-	lgViq3INFy6+U6vDFn96yNLakCod1X06vYwsY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 847CD2966C;
-	Fri, 28 Jun 2013 17:13:35 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 08DD729669;
-	Fri, 28 Jun 2013 17:13:34 +0000 (UTC)
-In-Reply-To: <20130628094221.GA15436@goldbirke> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-	"Fri, 28 Jun 2013 11:42:21 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 10CF1C7E-E016-11E2-8B8F-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755823Ab3F1RTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jun 2013 13:19:54 -0400
+Received: from mail-bk0-f43.google.com ([209.85.214.43]:34779 "EHLO
+	mail-bk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755717Ab3F1RTx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jun 2013 13:19:53 -0400
+Received: by mail-bk0-f43.google.com with SMTP id jm2so894194bkc.2
+        for <git@vger.kernel.org>; Fri, 28 Jun 2013 10:19:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=7pRCzucNDHzvJdHhaK55SSDN7iG4iptAnfkxt/VvlY0=;
+        b=UMDu8raGzEVuUeLYY9v8ZmXClU9Vy8l+w8/SM9uEGjI+JZ8hQYa9yTa28HcvPSBFmH
+         biFFQw+rl+uYvPDnTKBiVz5L7gv0xE2bAx0whwlbSBN3VIl7aKf4LTapTV+L8h3TTYrF
+         zQkvsgxxjsSoDZP4faVJPfUElBy5DY52P+bdZvXMdGZ0aWQEZ6HTzkWTyLsPxD5UcYW2
+         VTHl3fhahprngSfWMc1qmtmLm75O/q4d2tSiKjzFdjo/+ju+fAPkuYQO8hr+kXeK8Tyg
+         2kWd9pryqqxJUwPtFFrkOWmw4TrFC271uLnJAvYKUbNHXuhJJ2WpgvWZeEIPM6tD67I0
+         XLcQ==
+X-Received: by 10.205.9.8 with SMTP id ou8mr2006130bkb.76.1372439992295;
+        Fri, 28 Jun 2013 10:19:52 -0700 (PDT)
+Received: from localhost.localdomain (host166-10-dynamic.13-87-r.retail.telecomitalia.it. [87.13.10.166])
+        by mx.google.com with ESMTPSA id eu16sm4068237bkc.0.2013.06.28.10.19.50
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 28 Jun 2013 10:19:51 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.605.g85318f5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229217>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+The configure option to disable threading is '--disable-pthreads',
+not '--without-pthreads'.
 
-> On Thu, Jun 27, 2013 at 10:31:57PM -0300, Eduardo R. D'Avila wrote:
->> The merged result is ok!
->
-> Yeah, it look good, thanks.
+Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks, both, for double checking (and thank you for preparing the
-pre-merged results).
+diff --git a/configure.ac b/configure.ac
+index f3462d9..2f43393 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -193,7 +193,7 @@ AC_ARG_ENABLE([pthreads],
+   [FLAGS is the value to pass to the compiler to enable POSIX Threads.]
+   [The default if FLAGS is not specified is to try first -pthread]
+   [and then -lpthread.]
+-  [--without-pthreads will disable threading.])],
++  [--disable-pthreads will disable threading.])],
+ [
+ if test "x$enableval" = "xyes"; then
+    AC_MSG_NOTICE([Will try -pthread then -lpthread to enable POSIX Threads])
+-- 
+1.8.3.1.605.g85318f5
