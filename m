@@ -1,88 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] status: really ignore config with --porcelain
-Date: Fri, 28 Jun 2013 13:15:09 -0700
-Message-ID: <7vzjuam1pu.fsf@alter.siamese.dyndns.org>
-References: <1372077912-18625-2-git-send-email-artagnon@gmail.com>
-	<vpqhagnwraj.fsf@anie.imag.fr>
-	<CALkWK0=F_i95S+53eZmOAJtA+jG=jvi5-sDc3BgW3rNQo=n3Ng@mail.gmail.com>
-	<vpqhagnv9xq.fsf@anie.imag.fr>
-	<7vk3ljbh5r.fsf@alter.siamese.dyndns.org>
-	<vpq7ghjtpv1.fsf@anie.imag.fr>
-	<7vk3lj9xwn.fsf@alter.siamese.dyndns.org>
-	<20130628014011.GA620@sigill.intra.peff.net>
-	<7v61wyrikr.fsf@alter.siamese.dyndns.org>
-	<7vhagip25l.fsf@alter.siamese.dyndns.org>
-	<20130628193104.GA12625@sigill.intra.peff.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] Do not call built-in aliases from scripts
+Date: Fri, 28 Jun 2013 22:18:27 +0200
+Message-ID: <CAHGBnuPcXaRgtq_LDBHWRXuBHRWsiy4YHy1NjsW5hXe1AyVqCg@mail.gmail.com>
+References: <CAHGBnuNUjaWH2UDsa6jGjf32M+b8-iezw4pKXR985mROFSLOKQ@mail.gmail.com>
+	<7vzjubtty7.fsf@alter.siamese.dyndns.org>
+	<CAHGBnuPc+vDwejFOF_o+jr+L_mgrVo=Uxs2vC6C-Feg_uxWPpA@mail.gmail.com>
+	<7v8v1vtqfa.fsf@alter.siamese.dyndns.org>
+	<CAEBDL5VL+C7yKMBq1g4vSrSSsvrKE+FCeoS66mkWQqJJvf0sWA@mail.gmail.com>
+	<7vmwqbsa3u.fsf@alter.siamese.dyndns.org>
+	<7vehbns9vq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 28 22:15:26 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: John Szakmeister <john@szakmeister.net>, Git Mailing List <git@vger.kernel.org>, 
+	msysGit Mailinglist <msysgit@googlegroups.com>, Thomas Braun <thomas.braun@virtuell-zuhause.de>, 
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBDZMLEGXWQLBBFO7W6HAKGQEZ2COZDA@googlegroups.com Fri Jun 28 22:18:30 2013
+Return-path: <msysgit+bncBDZMLEGXWQLBBFO7W6HAKGQEZ2COZDA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-fa0-f59.google.com ([209.85.161.59])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Usf4i-0007g3-PD
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 22:15:21 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752778Ab3F1UPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jun 2013 16:15:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64819 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752728Ab3F1UPM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jun 2013 16:15:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E19722CBF1;
-	Fri, 28 Jun 2013 20:15:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ilQPV4Hb3Z1HBxB7rDboxPiV7vs=; b=YVE74L
-	yopf7+MhOeqeEJ/J7iz9MxigE/19iTZ7Tewufx5OLAZ4e86Wy6Pd9WZHWuV3W3CJ
-	99TLOxk6fw+lpYrzZxkl0maOy1G6OPC7kyBRiHUOrpj7eYuoCRxH//I2noZyOysa
-	CAHdPUp6tBzt276nerTvqgw589nZ5p2YgGyek=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r4sxvuTVPbRdD13+NO2SI8fJBu2iXKN8
-	2U09k8cnd9G4/30xm3qcESMR7Du7KeJAueoSZwgWq0OrR7sWJZsbJa040UTRKsCd
-	W7gx0vrubvf4VyFESYPSsg6s29hH+JAahxMWYlzYJPE5apfibEnaT1J4FidGu0uE
-	hUvl8wHxlwg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4ED22CBF0;
-	Fri, 28 Jun 2013 20:15:11 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 456932CBEF;
-	Fri, 28 Jun 2013 20:15:11 +0000 (UTC)
-In-Reply-To: <20130628193104.GA12625@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 28 Jun 2013 15:31:04 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6F7A99BA-E02F-11E2-9257-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229231>
+	(envelope-from <msysgit+bncBDZMLEGXWQLBBFO7W6HAKGQEZ2COZDA@googlegroups.com>)
+	id 1Usf7m-0001x5-GJ
+	for gcvm-msysgit@m.gmane.org; Fri, 28 Jun 2013 22:18:30 +0200
+Received: by mail-fa0-f59.google.com with SMTP id p1sf540970fap.14
+        for <gcvm-msysgit@m.gmane.org>; Fri, 28 Jun 2013 13:18:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:mime-version:in-reply-to:references:date:message-id
+         :subject:from:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=wCSlvzZKj0Tx4LZf3SdcItGb/unvCwGc7DPtGaz8VJc=;
+        b=br/Ed3McIQRz+OZSKN7BRAgeB+wsZ15g1hUlP/aV0eZ2DoUfGCNXVmw3MX3ehg8ta4
+         KgpB1RGCWwy0b2tpOhUf+rXfAoqOmN+9r+hG6FIsGD+8SJ6VPwzMivjsNmOOJwkol9Bd
+         Kz6kFmCfJmSl5SD82brQ7xwEULE4AnlJ6I/qmqfMTSZMwsFIMH4iw9fIRcyMgDiQ9RI3
+         nVvgUE6GUCEKLFdQLcLHe274wy4GLjcwOQ028aBq/OB0L2+2SxqDxcwnO1NbUONcHoRV
+         i8xA43vRGqaE6ifqZY519Ve3WkiEy5bYDSBM8Yz3pDJ/6KZQKbgWk1Mi1LXStZhfuBsm
+         N+lA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-beenthere:mime-version:in-reply-to:references:date:message-id
+         :subject:from:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=wCSlvzZKj0Tx4LZf3SdcItGb/unvCwGc7DPtGaz8VJc=;
+        b=U6BK8tBjrjG7Ht2VIAHsu8ikTGfxHIeNCUNb/ZJPy5a5BAPK6eYMF8J7J54ZDJ1oR9
+         AU13DMal5os19kT+EinPdDyJmEPDiNCmpEBboTiiVgZ6F6IGzVg3Hk69rYvjKOeK1b0r
+         d9EJmaw9/QspZZNNv3HjTF/Y744OP9GPR+hBa1Sq5ByZVQO2ONAsqJmi7nOQhvIhjvE/
+         HDFVPA/3AEqsL0d9sgfEmd0JwPPYuxoL/GigMo7xuXPfwsqah88U6dGYkHIMq5nINEDh
+         ZN81mJDel74+EyxPv11Nknn4aq+UDBCCGN1lVbHZVXviGj+UAxPIYimajOICg35BOmDm
+         dPYA==
+X-Received: by 10.180.160.229 with SMTP id xn5mr188877wib.14.1372450710001;
+        Fri, 28 Jun 2013 13:18:30 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.98.166 with SMTP id ej6ls277039wib.41.canary; Fri, 28 Jun
+ 2013 13:18:28 -0700 (PDT)
+X-Received: by 10.204.224.8 with SMTP id im8mr1285973bkb.5.1372450708882;
+        Fri, 28 Jun 2013 13:18:28 -0700 (PDT)
+Received: from mail-la0-x236.google.com (mail-la0-x236.google.com [2a00:1450:4010:c03::236])
+        by gmr-mx.google.com with ESMTPS id b9si379738bkc.1.2013.06.28.13.18.28
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 28 Jun 2013 13:18:28 -0700 (PDT)
+Received-SPF: pass (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4010:c03::236 as permitted sender) client-ip=2a00:1450:4010:c03::236;
+Received: by mail-la0-f54.google.com with SMTP id ec20so2589898lab.13
+        for <msysgit@googlegroups.com>; Fri, 28 Jun 2013 13:18:28 -0700 (PDT)
+X-Received: by 10.152.29.41 with SMTP id g9mr7237396lah.44.1372450708565; Fri,
+ 28 Jun 2013 13:18:28 -0700 (PDT)
+Received: by 10.114.16.161 with HTTP; Fri, 28 Jun 2013 13:18:27 -0700 (PDT)
+In-Reply-To: <7vehbns9vq.fsf@alter.siamese.dyndns.org>
+X-Original-Sender: sschuberth@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4010:c03::236
+ as permitted sender) smtp.mail=sschuberth@gmail.com;       dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229232>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jun 27, 2013 at 8:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Hmm. I would have thought --no-short would just set it to LONG. That is,
-> we are no longer NONE at that point, as the user has told us something
-> on the command line. So we are whatever --no-short is, which is LONG.
+>>>  Now that I look at it more, I see that
+>>> `git-mailinfo` was missed and there's a `git-apply` towards the
+>>> bottom.  So I'm not sure it's helping the consistency argument.
+>>
+>> Hmph, true.
 >
-> But I guess that would wreck
->
->   git status --no-short -z
->
-> which currently defaults to porcelain. Which, to be honest, seems a
-> little crazy to me, but I guess there is no reason to break it.
->
-> I am just trying to prevent the future maintenance confusion where a
-> reader of the code says "Huh? What is the difference between NONE and
-> UNSPECIFIED?"
+> Having said that, I'd still prefer to see documentation changes in a
+> patch separate from a "do not call git-foo form" patch.
 
-Yeah, I share your sentiment, but I did not think of a better way to
-do this without unnecessarily changing behaviour.
+I'll send a new version of the patch next week to address this and
+also use quotes when replacing a hyphenated form in prose.
+
+-- 
+Sebastian Schuberth
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
