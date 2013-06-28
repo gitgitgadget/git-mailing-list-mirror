@@ -1,263 +1,139 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: [PATCH --clone-depth version] [submodule] Add --depth to submodule update/add
-Date: Fri, 28 Jun 2013 23:45:24 +0200
-Message-ID: <1372455924-17420-1-git-send-email-iveqy@iveqy.com>
-Cc: gitster@pobox.com, hvoigt@hvoigt.net, jens.lehmann@web.de,
-	git@vger.kernel.org
-To: iveqy@iveqy.com
-X-From: git-owner@vger.kernel.org Fri Jun 28 23:46:16 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v1.8.3.2
+Date: Fri, 28 Jun 2013 15:28:01 -0700
+Message-ID: <7vzju9lvke.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Sat Jun 29 00:28:22 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UsgUh-00041t-9D
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 23:46:15 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Ush9S-0007n7-3L
+	for glk-linux-kernel-3@plane.gmane.org; Sat, 29 Jun 2013 00:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752360Ab3F1VqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jun 2013 17:46:11 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:35992 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009Ab3F1VqK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jun 2013 17:46:10 -0400
-Received: by mail-la0-f48.google.com with SMTP id lx15so2656888lab.35
-        for <git@vger.kernel.org>; Fri, 28 Jun 2013 14:46:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=7YXu5xeUR9r0sB/7CQ6hPN3+BO0eAxeYtKdi+vzUymw=;
-        b=FmfvdjcsraHY9dh4XtYEesCfAsNO5NcvnSXyZolsPKgUSHRtmhSmhDbVfnbjsU7eLL
-         INFO88ZaU8sf1FFPlvTlpIBrvGkwxPAbkvYBnQOo1hHru1aj1BcOryMYVCsGkggqNBWY
-         +3zK1z9+PDyB22MN5lPjmjdi5UzAiJQYszcT6mtjwWcn2Qcy3mDHL4xmGZ5W5TqHPiYg
-         K0x88NYMekuS0duixBN2FoWQ3/JTHtX1puxhC8nuFKv/vKrED4FZK69hnKH5s4dHBE/J
-         kbtNYDvSKwj21ke7jLZ+tZA1dCIgpUS7okkUGC8Cppgaljt6COtJonn4Cvphpqm7Qcl3
-         Zkrg==
-X-Received: by 10.112.55.104 with SMTP id r8mr7171033lbp.49.1372455968781;
-        Fri, 28 Jun 2013 14:46:08 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id c4sm3209037lae.7.2013.06.28.14.46.07
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 28 Jun 2013 14:46:08 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1UsgUC-0004Xd-T3; Fri, 28 Jun 2013 23:45:44 +0200
-X-Mailer: git-send-email 1.8.3.1.489.gbc4ad7e.dirty
-Sender: git-owner@vger.kernel.org
+	id S1752772Ab3F1W2H (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 28 Jun 2013 18:28:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63307 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751270Ab3F1W2F (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 28 Jun 2013 18:28:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 285CF2C242;
+	Fri, 28 Jun 2013 22:28:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=y
+	sApwbvzl7dEaD0LfGF2QzXao5c=; b=asSEL1FC/xmRF6qJW0GpSDRTkdK58Iu4q
+	q75e0RhUm6IbxdUxHAYcLsZA7M2S74H+0T7F3bCfWPLsyZja3BCmzlwL8Q9QUkYO
+	GjoK9pK212lXOpOJ5XqDc+gVpdUMvbgWLTL41gvKTEIimY2SWK2IvLPkst9Iwya8
+	NutOXaJP+c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=aVrzK9HePLWjbal5ojG3OVLEQDw9aPZDtysdRdrp7yNUVrLHKGxj3Hzu
+	IQ3LpdIuJTrJo+r4XDYbogkbnO4H7b7FFrg5FpkyRbMqTAWkm1p8R3G6Z4EiYlYr
+	/Uv5vY1uhB6K0TPq33x1dvTR1qNlWDl9qpF+H1xiIxg2NwUejac=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C7362C241;
+	Fri, 28 Jun 2013 22:28:04 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B1302C240;
+	Fri, 28 Jun 2013 22:28:03 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FF36DD0E-E041-11E2-8824-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229244>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229245>
 
-When a submodule is clone, clone it width the --depth flag. This is useful
-when the submodule(s) are huge and you're not really interested in anything
-but the latest commit.
+The latest maintenance release Git v1.8.3.2 is now available at the
+usual places.  It contains fixes that have already been applied to
+the 'master' branch for 1.8.4.
 
-Tests are added and to make --depth work the path for test "setup a submodule
-tree" had to be modified. Also did some indent adjustments to conform to the
-rest of the testfile on "submodule update can handle symbolic links in pwd".
+The release tarballs are found at:
 
-Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
----
+    http://code.google.com/p/git-core/downloads/list
 
-I neither have an opinion about what word to use. --depth is more
-consistent and easier to code. But also eaiser to be confused about.
+and their SHA-1 checksums are:
 
-Here is a --clone-depth version of the patch. Nothing else is changed.
-Please take the one thats most suited.
+4a6585dd81a542e7803e5f54a5c85b1c1a5869aa  git-1.8.3.2.tar.gz
+adffaa379e1994fc6d6cb6491aed680ad6bb37ad  git-htmldocs-1.8.3.2.tar.gz
+5ce8c00fe9e2755c67d29b2f2135fc8c4202fc1f  git-manpages-1.8.3.2.tar.gz
 
- Documentation/git-submodule.txt | 13 +++++++++++--
- git-submodule.sh                | 24 +++++++++++++++++++++---
- t/t7400-submodule-basic.sh      | 18 ++++++++++++++++++
- t/t7406-submodule-update.sh     | 28 ++++++++++++++++++++--------
- 4 files changed, 70 insertions(+), 13 deletions(-)
+The following public repositories all have a copy of the v1.8.3.2
+tag and the maint branch that the tag points at:
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index e576713..41b9610 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -10,12 +10,12 @@ SYNOPSIS
- --------
- [verse]
- 'git submodule' [--quiet] add [-b <branch>] [-f|--force] [--name <name>]
--	      [--reference <repository>] [--] <repository> [<path>]
-+	      [--reference <repository>] [--clone-depth <depth>] [--] <repository> [<path>]
- 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
- 'git submodule' [--quiet] init [--] [<path>...]
- 'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
- 'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
--	      [-f|--force] [--rebase] [--reference <repository>]
-+	      [-f|--force] [--rebase] [--reference <repository>] [--clone-depth <depth>]
- 	      [--merge] [--recursive] [--] [<path>...]
- 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
- 	      [commit] [--] [<path>...]
-@@ -328,6 +328,15 @@ for linkgit:git-clone[1]'s `--reference` and `--shared` options carefully.
- 	only in the submodules of the current repo, but also
- 	in any nested submodules inside those submodules (and so on).
- 
-+--clone-depth::
-+	This option is valid for add and update commands. Create a 'shallow'
-+	clone with a history truncated to the specified number of revisions.
-+	A shallow repository has a number of limitations (you cannot clone
-+	or fetch from it, nor push from nor into it), but is adequate if
-+	you are only interested in the recent history of a large project
-+	with a long history.
-+
-+
- <path>...::
- 	Paths to submodule(s). When specified this will restrict the command
- 	to only operate on the submodules found at the specified paths.
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 79bfaac..0a949d1 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -32,6 +32,7 @@ nofetch=
- update=
- prefix=
- custom_name=
-+clone_depth=
- 
- # The function takes at most 2 arguments. The first argument is the
- # URL that navigates to the submodule origin repo. When relative, this URL
-@@ -211,6 +212,7 @@ module_clone()
- 	name=$2
- 	url=$3
- 	reference="$4"
-+	clone_depth=$5
- 	quiet=
- 	if test -n "$GIT_QUIET"
- 	then
-@@ -234,7 +236,7 @@ module_clone()
- 		(
- 			clear_local_git_env
- 			git clone $quiet -n ${reference:+"$reference"} \
--				--separate-git-dir "$gitdir" "$url" "$sm_path"
-+				--separate-git-dir "$gitdir" $clone_depth "$url" "$sm_path"
- 		) ||
- 		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
- 	fi
-@@ -309,6 +311,14 @@ cmd_add()
- 			custom_name=$2
- 			shift
- 			;;
-+		--clone-depth)
-+			case "$2" in '') usage ;; esac
-+			clone_depth="--depth=$2"
-+			shift
-+			;;
-+		--clone-depth=*)
-+			clone_depth="$(echo $1 | sed -e 's/^--clone/-/')"
-+			;;
- 		--)
- 			shift
- 			break
-@@ -405,7 +415,7 @@ Use -f if you really want to add it." >&2
- 				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
- 			fi
- 		fi
--		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" || exit
-+		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$clone_depth" || exit
- 		(
- 			clear_local_git_env
- 			cd "$sm_path" &&
-@@ -676,6 +686,14 @@ cmd_update()
- 		--checkout)
- 			update="checkout"
- 			;;
-+		--clone-depth)
-+			case "$2" in '') usage ;; esac
-+			clone_depth="--depth=$2"
-+			shift
-+			;;
-+		--clone-depth=*)
-+			clone_depth="$(echo $1 | sed -e 's/^--clone/-/')"
-+			;;
- 		--)
- 			shift
- 			break
-@@ -735,7 +753,7 @@ Maybe you want to use 'update --init'?")"
- 
- 		if ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
- 		then
--			module_clone "$sm_path" "$name" "$url" "$reference" || exit
-+			module_clone "$sm_path" "$name" "$url" "$reference" "$clone_depth" || exit
- 			cloned_modules="$cloned_modules;$name"
- 			subsha1=
- 		else
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index f47cc7b..7a44059 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -868,4 +868,22 @@ test_expect_success 'submodule deinit fails when submodule has a .git directory
- 	test -n "$(git config --get-regexp "submodule\.example\.")"
- '
- 
-+test_expect_success 'submodule add clone shallow submodule' '
-+	mkdir super &&
-+	pwd=$(pwd)
-+	(
-+		cd super &&
-+		git init &&
-+		git submodule add --clone-depth=1 file://"$pwd"/example2 submodule &&
-+		(
-+			cd submodule &&
-+			if test $(git log --oneline | wc -l) != 1
-+			then
-+				exit 1
-+			fi
-+		)
-+	)
-+'
-+
-+
- test_done
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index a4ffea0..d52df37 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -31,8 +31,9 @@ test_expect_success 'setup a submodule tree' '
- 	git clone super rebasing &&
- 	git clone super merging &&
- 	git clone super none &&
-+	pwd=$(pwd)
- 	(cd super &&
--	 git submodule add ../submodule submodule &&
-+	 git submodule add file:///"$pwd"/submodule submodule &&
- 	 test_tick &&
- 	 git commit -m "submodule" &&
- 	 git submodule init submodule
-@@ -685,14 +686,25 @@ test_expect_success 'submodule update properly revives a moved submodule' '
- test_expect_success SYMLINKS 'submodule update can handle symbolic links in pwd' '
- 	mkdir -p linked/dir &&
- 	ln -s linked/dir linkto &&
--	(
--		cd linkto &&
--		git clone "$TRASH_DIRECTORY"/super_update_r2 super &&
--		(
--			cd super &&
--			git submodule update --init --recursive
--		)
-+	(cd linkto &&
-+	 git clone "$TRASH_DIRECTORY"/super_update_r2 super &&
-+	 (cd super &&
-+	  git submodule update --init --recursive
-+	 )
- 	)
- '
- 
-+test_expect_success 'submodule update clone shallow submodule' '
-+	git clone cloned super3 &&
-+	(cd super3 &&
-+	 git submodule init &&
-+	 git submodule update --clone-depth=3 &&
-+	 (cd submodule &&
-+	  if test $(git log --oneline | wc -l) != 1
-+	  then
-+	   exit 1
-+	  fi
-+	 )
-+	)
-+'
- test_done
--- 
-1.8.3.1.489.gbc4ad7e.dirty
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
+
+Also, http://www.kernel.org/pub/software/scm/git/ has copies of the
+release tarballs.
+
+Git v1.8.3.2 Release Notes
+==========================
+
+Fixes since v1.8.3.1
+--------------------
+
+ * Cloning with "git clone --depth N" while fetch.fsckobjects (or
+   transfer.fsckobjects) is set to true did not tell the cut-off
+   points of the shallow history to the process that validates the
+   objects and the history received, causing the validation to fail.
+
+ * "git checkout foo" DWIMs the intended "upstream" and turns it into
+   "git checkout -t -b foo remotes/origin/foo". This codepath has been
+   updated to correctly take existing remote definitions into account.
+
+ * "git fetch" into a shallow repository from a repository that does
+   not know about the shallow boundary commits (e.g. a different fork
+   from the repository the current shallow repository was cloned from)
+   did not work correctly.
+
+ * "git subtree" (in contrib/) had one codepath with loose error
+   checks to lose data at the remote side.
+
+ * "git log --ancestry-path A...B" did not work as expected, as it did
+   not pay attention to the fact that the merge base between A and B
+   was the bottom of the range being specified.
+
+ * "git diff -c -p" was not showing a deleted line from a hunk when
+   another hunk immediately begins where the earlier one ends.
+
+ * "git merge @{-1}~22" was rewritten to "git merge frotz@{1}~22"
+   incorrectly when your previous branch was "frotz" (it should be
+   rewritten to "git merge frotz~22" instead).
+
+ * "git commit --allow-empty-message -m ''" should not start an
+   editor.
+
+ * "git push --[no-]verify" was not documented.
+
+ * An entry for "file://" scheme in the enumeration of URL types Git
+   can take in the HTML documentation was made into a clickable link
+   by mistake.
+
+ * zsh prompt script that borrowed from bash prompt script did not
+   work due to slight differences in array variable notation between
+   these two shells.
+
+ * The bash prompt code (in contrib/) displayed the name of the branch
+   being rebased when "rebase -i/-m/-p" modes are in use, but not the
+   plain vanilla "rebase".
+
+ * "git push $there HEAD:branch" did not resolve HEAD early enough, so
+   it was easy to flip it around while push is still going on and push
+   out a branch that the user did not originally intended when the
+   command was started.
+
+ * "difftool --dir-diff" did not copy back changes made by the
+   end-user in the diff tool backend to the working tree in some
+   cases.
