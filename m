@@ -1,64 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] fixup-builtins: remove unused cruft
-Date: Fri, 28 Jun 2013 12:45:45 -0400
-Message-ID: <20130628164545.GB9127@sigill.intra.peff.net>
-References: <1372434379-24085-1-git-send-email-artagnon@gmail.com>
+Subject: Re: Parse --o in format-patch
+Date: Fri, 28 Jun 2013 12:49:59 -0400
+Message-ID: <20130628164959.GC9127@sigill.intra.peff.net>
+References: <20130628160459.GA16832@paksenarrion.iveqy.com>
+ <20130628163153.GA9127@sigill.intra.peff.net>
+ <20130628164440.GA21354@paksenarrion.iveqy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 28 18:45:56 2013
+Cc: git@vger.kernel.org
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Fri Jun 28 18:50:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Usbo1-0007Tx-Jn
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 18:45:53 +0200
+	id 1Usbsc-0003HG-5U
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Jun 2013 18:50:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754682Ab3F1Qpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jun 2013 12:45:50 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49632 "EHLO peff.net"
+	id S1755866Ab3F1Qub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jun 2013 12:50:31 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49663 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754529Ab3F1Qpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jun 2013 12:45:49 -0400
-Received: (qmail 9441 invoked by uid 102); 28 Jun 2013 16:46:55 -0000
+	id S1754638Ab3F1QuD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jun 2013 12:50:03 -0400
+Received: (qmail 9629 invoked by uid 102); 28 Jun 2013 16:51:10 -0000
 Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Jun 2013 11:46:55 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Jun 2013 12:45:45 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Jun 2013 11:51:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Jun 2013 12:49:59 -0400
 Content-Disposition: inline
-In-Reply-To: <1372434379-24085-1-git-send-email-artagnon@gmail.com>
+In-Reply-To: <20130628164440.GA21354@paksenarrion.iveqy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229214>
 
-On Fri, Jun 28, 2013 at 09:16:19PM +0530, Ramkumar Ramachandra wrote:
+On Fri, Jun 28, 2013 at 06:44:40PM +0200, Fredrik Gustafsson wrote:
 
-> The fixup-builtins script is only used by an unused remove-dashes target
-> in the Makefile: remove that along with the script.
+> On Fri, Jun 28, 2013 at 12:31:53PM -0400, Jeff King wrote:
+> > It's possible to have an "optional" argument by using the
+> > PARSE_OPT_OPTARG flag. However, it is not backwards compatible from the
+> > user's perspective, as they must use the "sticked" form:
+> 
+> That would be a possibility but I don't like breaking backwards
+> compability.
 
-I am not sure of this justification. If you read the commit message from
-36e5e70, which introduced the target, it was meant to be run manually as
-part of migrating away from dashed forms.
+Yes, I did not say it outright, but I meant "...and that is why we
+cannot go that route." :)
 
-Running it today does still uncover some places that could be tweaked.
-However, I note that it also has a lot of false positives (e.g.,
-removing dashes from places that are not commands, like filenames or
-config options). It also produces crappy output for documentation (if we
-do want to change dashed mentions, we would probably want to switch
-git-foo to `git foo` with some kind of quoting to make it more obvious).
+> my goal is to make:
+>        git format-patch [-k] [(-o|--output-directory) <dir> | --stdout] [ <since> | <revision range> ]
+> to be:
+>        git format-patch [-k] [(-o|--output-directory) [dir] | --stdout] [ <since> | <revision range> ]
+> 
+> that would do:
+> git format patch -> current dir
+> git format patch -o -> default dir (for example GIT_DIR/.outgoing/)
+> git format patch -o <dir> -> user defined <dir>
 
-So I think it is probably a good idea to remove it, but the
-justification is not "this is unused cruft", but more like:
+Ah, that makes much more sense to me.
 
-  This script was added in 36e5e70 (Start deprecating "git-command" in
-  favor of "git command", 2007-06-30) with the intent of aiding the
-  transition away from dashed forms. However, nobody is really working
-  on that transition, and even if they did, this tool will probably lead
-  them in the wrong direction, as it produces a large number of
-  questionable changes.
+> But I guess I would need a new option instead. Something like
+> --default-output-dir.
+
+It depends on how the default is specified. Is it hard-coded? Or do you
+specify format.outputDirectory? If the latter, I would think you would
+want it on all the time when "-o" is not given[1], and no new option is
+required. Otherwise, yes, I'd think you would want a new option.
 
 -Peff
+
+[1] format-patch may be considered plumbing, in which case an output
+    directory config option might cause problems with scripts that
+    expect to run it and find the output in the current directory. I'm
+    not sure how big a deal that is.
