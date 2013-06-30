@@ -1,92 +1,133 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] CYGWIN: Use a TCP socket for pipe()
-Date: Sun, 30 Jun 2013 21:47:36 +0200
-Message-ID: <51D08B58.8000103@web.de>
-References: <201306271831.13865.tboegi@web.de> <7vvc4zsbbs.fsf@alter.siamese.dyndns.org> <51CCF91F.7080501@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 0/1] cygwin: Remove the Win32 l/stat() functions
+Date: Sun, 30 Jun 2013 12:50:41 -0700
+Message-ID: <7v4ncfjs32.fsf@alter.siamese.dyndns.org>
+References: <51C5FD28.1070004@ramsay1.demon.co.uk> <51C6BC4B.9030905@web.de>
+	<51C8BF2C.2050203@ramsay1.demon.co.uk>
+	<7vy59y4w3r.fsf@alter.siamese.dyndns.org>
+	<51C94425.7050006@alum.mit.edu> <51CB610C.7050501@ramsay1.demon.co.uk>
+	<20130626223552.GA12785@sigill.intra.peff.net>
+	<51CBD2FD.5070905@alum.mit.edu> <51CCC643.1050702@ramsay1.demon.co.uk>
+	<51D06AC8.70206@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, ramsay@ramsay1.demon.co.uk,
-	git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 30 21:48:04 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Johannes Sixt <j6t@kdbg.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, mlevedahl@gmail.com,
+	dpotapov@gmail.com, GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sun Jun 30 21:50:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtNbP-0002Wv-Um
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Jun 2013 21:48:04 +0200
+	id 1UtNe5-0004Tp-5w
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Jun 2013 21:50:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752002Ab3F3Trr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Jun 2013 15:47:47 -0400
-Received: from mout.web.de ([212.227.17.11]:52328 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751844Ab3F3Trr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Jun 2013 15:47:47 -0400
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0MhUfW-1UY0xH1950-00Me4A; Sun, 30 Jun 2013 21:47:38
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <51CCF91F.7080501@gmail.com>
-X-Provags-ID: V03:K0:qWPPVfmOfnQgv8R0wt3ci0uXG7XumJzjgqZVKebLn3/WqgKGwCp
- H04kpOgj5DG/LiLhO+3GSGYWQSAvaNRBBiS2a+zornDuBdNeF6HFWnfYeYwO1WHvJroWUMs
- ovycH6dl8fNOD58F2QL4H940eWJNKqUxvO62elabZ2KAHJHpCZd068sLNL8roWW48rREPQh
- jsP2OivJIMStwLpciwm3g==
+	id S1752095Ab3F3Tup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Jun 2013 15:50:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33614 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751844Ab3F3Tuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Jun 2013 15:50:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E818F2C7A7;
+	Sun, 30 Jun 2013 19:50:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uDlOk828Oo70TiA38KqEpB5fWtU=; b=efE92l
+	097+IO4yJch5IQTOsJzyweUrBbyz6nev/C9XA7HK8cT/i2YXQUTkq6UeZPZmBewL
+	ekOooTnA7yqVC5FVQK/zBmLdnAs83lY7NXDQYgK0s017/fQpPkm5TGVJ8O9fXPs4
+	93VMd9f7ZAsFR6AHGUDEAqq4lM6ti+6j3k7GE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YyXveUC0MtzTgxyHBHZqzSIvlV7EqytP
+	0YELYIwXbyut2BEvvWQiyadQLLvPIEY2Jne5OGe45RlpWRYZq/L7GMooBgfjR7dc
+	xPMgpunovqvSagfaAY/coNK5dxgXPlDx552tQpImK0KsArQXcgz71D+N5EmBYE8K
+	g8TdCDNHvL0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC5142C7A6;
+	Sun, 30 Jun 2013 19:50:43 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F1D82C7A5;
+	Sun, 30 Jun 2013 19:50:43 +0000 (UTC)
+In-Reply-To: <51D06AC8.70206@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Sun, 30 Jun 2013 18:28:40 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 59581410-E1BE-11E2-A85D-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229288>
 
-On 2013-06-28 04.46, Mark Levedahl wrote:
-> On 06/27/2013 01:38 PM, Junio C Hamano wrote:
->> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->>
->>> Work around issues that git hangs when doing fetch or pull under
->>> various protocols under CYGWIN.
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+
+> Ramsay Jones wrote:
+>> Michael Haggerty wrote:
+>>> On 06/27/2013 12:35 AM, Jeff King wrote:
+>> [ ... ]
+>>>> I think Michael's assessment above is missing one thing.
 >>>
->>> Replace pipe() with a socket connection using a TCP/IP.
->>> Introduce a new function socket_pipe() in compat/socket_pipe.c
->> Sounds like sweeping the real problem, whatever it is, under rug.
->> Is it that we are assuming a pipe buffer that is sufficiently large
->> and expecting a write that we deem to be small enough not to block,
->> causing a deadlock on a platform with very small pipe buffer, or
->> something?
->>
->
-> There were issues in early v1.7 Cygwin release for overlapping I/O su=
-ch that the pipe was sometimes terminated early resulting in data loss.=
- If the pipe implementation in Cygwin is still a problem a good test ca=
-se sent to the Cygwin developers would be the right approach rather tha=
-n a one-off patch in git to try to work around a current platform bug.
->
-> Note - I do not see random hangs with the stat/lstat hack removed, ra=
-ther the sole test suite hang I see is repeatable in t0008.sh. So, if t=
-he patch remains, we may be able to run this remaining hang to ground.
->
-> Mark
-Thanks,
-I testet "rj/cygwin-remove-cheating-lstat" with the "socket pipe" on to=
-p:
-no hanging.
+>>> Peff is absolutely right; for some unknown reason I was thinking of the
+>>> consistency check as having been already fixed.
+>> 
+>> Well, the "cygwin: Remove the Win32 l/stat() functions" patch *does* fix
+>> the problem. :-D It's just a pity we can't use it on performance grounds. :(
+>> 
+>>>> [...#ifdef out consistency check on cygwin when lock is held...]
+>>>
+>>> Yes, this would work.
+>>>
+>>> But, taking a step back, I think it is a bad idea to have an unreliable
+>>> stat() masquerading as a real stat().  If we want to allow the use of an
+>>> unreliable stat for certain purposes, let's have two stat() interfaces:
+>>>
+>>> * the true stat() (in this case I guess cygwin's slow-but-correct
+>>> implementation)
+>>>
+>>> * some fast_but_maybe_unreliable_stat(), which would map to stat() on
+>>> most platforms but might map to the Windows stat() on cygwin when so
+>>> configured.
+>>>
+>>> By default the true stat() would always be used.  It should have to be a
+>>> conscious decision, taken only in specific, vetted scenarios, to use the
+>>> unreliable stat.
+>>  ...
 
-Then I run "rj/cygwin-remove-cheating-lstat" without "socket pipe",
-(or in other words git.git/pu):
-No hanging.
+I like the part that gets rid of that "get-mode-bits" but at the
+same time, I find this part wanting a reasonable in-code comment.
 
-Then I run a "stress test" with many (but not all) "git fetch" tests:
- t1507, t1514, t2015, t2024, t3200, t3409, t3600, t4041, t6050, t6200
-repeat those tests in a forever loop.
+At least, with the earlier get-mode-bits, it was clear why we are
+doing something special in that codepath, both from the name of the
+helper function/macro and the comment attached to it describing how
+the "regular" one is cheating.
 
-All these test run 24 hours in a row on a single core machine, no hangi=
-ng.
-(I need to re-do the test on a dual-core machine)
+We must say why this "fast" is not used everywhere and what criteria
+you should apply when deciding to use it (or not use it).  And the
+"fast" name is much less descriptive.
 
-So at the moment I don't have any problems to report for cygwin, which =
-is good.
+I suspect (without thinking it through) that the rule would be
+something like:
 
-And it looks as if "rj/cygwin-remove-cheating-lstat" prevents the "hang=
-ing",
-so there is another +1 to keep it and move it into next.
-/Torsten
+    The "fast" variant is to be used to read from the filesystem the
+    "stat" bits that are stuffed into the index for quick "touch
+    detection" (aka "cached stat info") and/or that are compared
+    with the cached stat info, and should not be used anywhere else.
+
+But then we always use lstat(2) and not stat(2) for that, so...
+
+> +#ifndef GIT_FAST_STAT
+> +static inline int fast_stat(const char *path, struct stat *st)
+> +{
+> +	return stat(path, st);
+> +}
+> +static inline int fast_lstat(const char *path, struct stat *st)
+> +{
+> +	return lstat(path, st);
+> +}
+> +#endif
