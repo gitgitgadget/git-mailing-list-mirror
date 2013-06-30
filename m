@@ -1,83 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] check-ignore doc: fix broken link to ls-files page
-Date: Sun, 30 Jun 2013 12:34:08 -0700
-Message-ID: <7v8v1rjsun.fsf@alter.siamese.dyndns.org>
-References: <1372593928-403-1-git-send-email-artagnon@gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] CYGWIN: Use a TCP socket for pipe()
+Date: Sun, 30 Jun 2013 21:47:36 +0200
+Message-ID: <51D08B58.8000103@web.de>
+References: <201306271831.13865.tboegi@web.de> <7vvc4zsbbs.fsf@alter.siamese.dyndns.org> <51CCF91F.7080501@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 30 21:34:17 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, ramsay@ramsay1.demon.co.uk,
+	git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 30 21:48:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtNO3-0001Ws-BQ
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Jun 2013 21:34:15 +0200
+	id 1UtNbP-0002Wv-Um
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Jun 2013 21:48:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752302Ab3F3TeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Jun 2013 15:34:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51901 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752291Ab3F3TeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Jun 2013 15:34:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 420502C08C;
-	Sun, 30 Jun 2013 19:34:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xl/Azwm2w8r2RYfKDvOB2FZvk8U=; b=S6Vlrw
-	Uopp4fNXCneECMJLzJJzGKEJ2gA7sPa88iYqbK+EhPOmvKE4RxS/e47D8453LOpM
-	HX6fZ5Ro1Jv6xulE/8BYVKoSK99rXdk1sAS5ocXl0a+Q5KJMMxZsDX7XDuhsyke/
-	Rg913tJZQ9T9QS5pSuFsPDDZaGzP/ALKdmyyE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uQ8gsDdfVSHyvGNGpBTZVqir2ig6Vp3e
-	sfIJ6uqbJ2WUlCSCRkNpv9eIOx33/7/sAAh4m4NMjkVwAJyBrSiduOHsGTMLNlJD
-	4eQGCw6STeB2rg4F0C/CGiNl12ngfNOy/LGRDElIFTolcVCSR4nhtetURQoQJdAN
-	XhgfAPvjEHw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 391A52C08B;
-	Sun, 30 Jun 2013 19:34:10 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B18FC2C08A;
-	Sun, 30 Jun 2013 19:34:09 +0000 (UTC)
-In-Reply-To: <1372593928-403-1-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Sun, 30 Jun 2013 17:35:28 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 091A7652-E1BC-11E2-A881-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752002Ab3F3Trr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Jun 2013 15:47:47 -0400
+Received: from mout.web.de ([212.227.17.11]:52328 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751844Ab3F3Trr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Jun 2013 15:47:47 -0400
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0MhUfW-1UY0xH1950-00Me4A; Sun, 30 Jun 2013 21:47:38
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <51CCF91F.7080501@gmail.com>
+X-Provags-ID: V03:K0:qWPPVfmOfnQgv8R0wt3ci0uXG7XumJzjgqZVKebLn3/WqgKGwCp
+ H04kpOgj5DG/LiLhO+3GSGYWQSAvaNRBBiS2a+zornDuBdNeF6HFWnfYeYwO1WHvJroWUMs
+ ovycH6dl8fNOD58F2QL4H940eWJNKqUxvO62elabZ2KAHJHpCZd068sLNL8roWW48rREPQh
+ jsP2OivJIMStwLpciwm3g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229287>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
-
-Thanks, good eyes.
-
-I wonder if we can come up with an automated and reliable way to add
-to check-docs target of the main Makefile to catch this kind of thing.
-
->  Documentation/git-check-ignore.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On 2013-06-28 04.46, Mark Levedahl wrote:
+> On 06/27/2013 01:38 PM, Junio C Hamano wrote:
+>> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>>
+>>> Work around issues that git hangs when doing fetch or pull under
+>>> various protocols under CYGWIN.
+>>>
+>>> Replace pipe() with a socket connection using a TCP/IP.
+>>> Introduce a new function socket_pipe() in compat/socket_pipe.c
+>> Sounds like sweeping the real problem, whatever it is, under rug.
+>> Is it that we are assuming a pipe buffer that is sufficiently large
+>> and expecting a write that we deem to be small enough not to block,
+>> causing a deadlock on a platform with very small pipe buffer, or
+>> something?
+>>
 >
-> diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
-> index 8e1f7ab..d2df487 100644
-> --- a/Documentation/git-check-ignore.txt
-> +++ b/Documentation/git-check-ignore.txt
-> @@ -102,7 +102,7 @@ SEE ALSO
->  --------
->  linkgit:gitignore[5]
->  linkgit:gitconfig[5]
-> -linkgit:git-ls-files[5]
-> +linkgit:git-ls-files[1]
->  
->  GIT
->  ---
+> There were issues in early v1.7 Cygwin release for overlapping I/O su=
+ch that the pipe was sometimes terminated early resulting in data loss.=
+ If the pipe implementation in Cygwin is still a problem a good test ca=
+se sent to the Cygwin developers would be the right approach rather tha=
+n a one-off patch in git to try to work around a current platform bug.
+>
+> Note - I do not see random hangs with the stat/lstat hack removed, ra=
+ther the sole test suite hang I see is repeatable in t0008.sh. So, if t=
+he patch remains, we may be able to run this remaining hang to ground.
+>
+> Mark
+Thanks,
+I testet "rj/cygwin-remove-cheating-lstat" with the "socket pipe" on to=
+p:
+no hanging.
+
+Then I run "rj/cygwin-remove-cheating-lstat" without "socket pipe",
+(or in other words git.git/pu):
+No hanging.
+
+Then I run a "stress test" with many (but not all) "git fetch" tests:
+ t1507, t1514, t2015, t2024, t3200, t3409, t3600, t4041, t6050, t6200
+repeat those tests in a forever loop.
+
+All these test run 24 hours in a row on a single core machine, no hangi=
+ng.
+(I need to re-do the test on a dual-core machine)
+
+So at the moment I don't have any problems to report for cygwin, which =
+is good.
+
+And it looks as if "rj/cygwin-remove-cheating-lstat" prevents the "hang=
+ing",
+so there is another +1 to keep it and move it into next.
+/Torsten
