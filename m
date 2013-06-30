@@ -1,103 +1,72 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v2 0/4] Update linux-2.6.git location and related examples
-Date: Sun, 30 Jun 2013 06:48:23 -0400
-Message-ID: <20130630104823.GD25463@odin.tremily.us>
-References: <7vppvhye6s.fsf@alter.siamese.dyndns.org>
- <cover.1371911897.git.wking@tremily.us>
- <20130630010532.GB25463@odin.tremily.us>
- <7vfvw0l6d9.fsf@alter.siamese.dyndns.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] completion: add completer for status
+Date: Sun, 30 Jun 2013 13:00:36 +0200
+Message-ID: <20130630110036.GA2294@goldbirke>
+References: <1372094575-20799-1-git-send-email-artagnon@gmail.com>
+ <20130628102936.GA16562@goldbirke>
+ <20130628105601.GB16562@goldbirke>
+ <20130628112631.GC16562@goldbirke>
+ <CALkWK0=pyzcx-rB9gjRecoD1MFkHrSdYwLurD8y805O3FwT4Cg@mail.gmail.com>
+ <CALkWK0=RZbZxSzCFNAPqzcpnnC_Tak+isESmFiEyLMgcu3vV1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=AbQceqfdZEv+FvjW
-Cc: Git <git@vger.kernel.org>, David Aguilar <davvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 30 12:48:35 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 30 13:01:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtFBK-0004VG-2g
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Jun 2013 12:48:34 +0200
+	id 1UtFNM-0003Pq-RU
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Jun 2013 13:01:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751916Ab3F3Ksa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Jun 2013 06:48:30 -0400
-Received: from vms173021pub.verizon.net ([206.46.173.21]:64193 "EHLO
-	vms173021pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751636Ab3F3Ks3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Jun 2013 06:48:29 -0400
-Received: from odin.tremily.us ([unknown] [72.68.95.119])
- by vms173021.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0MP700BYTCOOG050@vms173021.mailsrvcs.net> for
- git@vger.kernel.org; Sun, 30 Jun 2013 05:48:25 -0500 (CDT)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id B8312A7903F; Sun,
- 30 Jun 2013 06:48:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1372589303; bh=jR4cq0wc5RVaRCoqUL+Kwg/4KR+gyUiv98wPIyAjiJQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=PhCmvfNxpmM0x/98nO2JA2dTts0ohBTf917Lh34Yg7UFv4ERydNbQtX6S7Sp1fAe/
- egf8Ng6fmqS0CIH3xaxkzyrv6nP817XydRqrPuv1/EcLVkNZ7Q93uymXfRxpq7qvQq
- HNBJe+hSyEpdbFmiY2/x80rdtqeuuA4WhsVpid+Y=
-Content-disposition: inline
-In-reply-to: <7vfvw0l6d9.fsf@alter.siamese.dyndns.org>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
+	id S1751632Ab3F3LAm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Jun 2013 07:00:42 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:55719 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751408Ab3F3LAm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Jun 2013 07:00:42 -0400
+Received: from localhost6.localdomain6 (f051032128.adsl.alicedsl.de [78.51.32.128])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0MIAjy-1Ux57j09vS-003Mu8; Sun, 30 Jun 2013 13:00:37 +0200
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=RZbZxSzCFNAPqzcpnnC_Tak+isESmFiEyLMgcu3vV1Q@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:EWMI+mFXuObv8pFrl+MrZljZZWzjrMdIaaSdtVbckT2
+ iQG4zkTc4rxFA4iduellMqH0A0fONSJIPa7h/qBsPpY6oinFeR
+ ZItveu/XdxmpbG2qKH/mDPWzeKIZ9q0vfKtEV/F3XxsmeRQalg
+ jWBQJt42ue4SrNL1Jbxf9rOEZY4xVtYBVGRRdjE5io/g7M1V/E
+ 440qKq24AjTPqwZkvSe82vqtEYbBGenbQdOKR/2ZMyUjDZWMpe
+ 1wP+olTC2ROyPl2KbNLjb7Wvl263O4yIPbiab28wF3REmXLNHX
+ tfToFhaAK+PAfUHiMs81gLJ57iqusgoZ9T68PfkOwQ6PoQleIV
+ T105MoLKFpUSqv3VadUI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229265>
 
-
---AbQceqfdZEv+FvjW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, Jun 29, 2013 at 06:44:34PM -0700, Junio C Hamano wrote:
-> "W. Trevor King" <wking@tremily.us> writes:
->=20
-> > On Sat, Jun 22, 2013 at 10:46:23AM -0400, W. Trevor King wrote:
-> >> David and Junio mentioned that I'd missed a few 2.6 references in my
-> >> initial pass.  Here's a second attempt that does some deeper
-> >> reworking of the effected sections.
+On Fri, Jun 28, 2013 at 07:33:21PM +0530, Ramkumar Ramachandra wrote:
+> Ramkumar Ramachandra wrote:
+> >> +       __git_complete_index_file "--with-tree=3DHEAD --cached --d=
+eleted"
 > >
-> > No comments after a week, so I'm giving this patch series a bump ;).
+> > Might as well go all the way with  "--cached --deleted --unmerged
+> > --others" no?  What is the point of --with-tree=3DHEAD?
 >=20
-> Hmph, didn't I queue them on 'pu' already?
+> Ugh, --deleted doesn't work as advertised (terrible documentation).
 
-Oops, that would be my first time having a patch series queued without
-comment ;).  Sorry for the noise.
+Why not?  In my experiments it worked well, as you can see in my
+previous emails.  What behavior did you observe which differs from the
+advertised?
 
-Thanks,
-Trevor
+> The minimally correct combination we need seems to be
+> "--with-tree=3DHEAD --cached --others".
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+Yeah, once we use '--with-tree=3DHEAD' we don't need '--deleted'
+anymore.
 
---AbQceqfdZEv+FvjW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.20 (GNU/Linux)
-
-iQIcBAEBAgAGBQJR0Az0AAoJEKKfehoaNkbt5Y4QAKpIcO3AfRfkZUL7SYPYIz+4
-SaV6NgoEqyxTXcvJoND7sc4eNyvwdQi/+MJPN5jdwEYS+KsAzMbBKnmluPWmZQr/
-0v7VlwWRE0WZwIfCa62D6yfxsJPRQ30o1WZguA7zM7QE/8u53RKz2Snvqjdhs7ew
-VOP6J8XSA3s4x59gTVG27NgL+R8yogzNAjbAYPYj2P6wtPbLiNSVbrAc8U+W5AQD
-B1av3g0WB1nCyZ0uh5ivvRQ7te4ik9ZS6hY32f1OkTHGsSqIoED/fEvJxBS2VV2v
-C5SYXKlCAtMFuaHFI9/vp0PYGIFRgLqOi0hMMUn8TvZLXfIbndMoO4npApvl57jD
-Wl56b8NAgQtiZ2ez0y9plPVg4XZbUiWU9mvAE9nHbAFFRjJ1W6luk7zwxJfqk99e
-vZyUJbS2RLTJxwQOm2aQYs8HuKzMUlvsBsOOrpFjop5WkO0UfMSlD9myIr/m4id6
-9VrCgxc1nA7GDmm5YvI1u4F2nIAvnJzcbqru8FoeuEY7E07ZlRl/nfSat+ckrMtn
-zNPiV6RqH7gU/2UsRCIT0UcdcX8u3Dx+boZ6wtsH+yjCO5uVkXFM53lShiAeWjUH
-87shk1yyz4bLu9LzZRmEuP9TC07q0clsAPc8Gy+OgPtPivcgH2Flpc9AJBGXaJn4
-xrDxjtybARWh0KinVMY8
-=fAEV
------END PGP SIGNATURE-----
-
---AbQceqfdZEv+FvjW--
+G=E1bor
