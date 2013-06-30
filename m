@@ -1,460 +1,188 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [RFC/PATCH 0/1] cygwin: Remove the Win32 l/stat() functions
-Date: Sun, 30 Jun 2013 18:28:40 +0100
-Message-ID: <51D06AC8.70206@ramsay1.demon.co.uk>
-References: <51C5FD28.1070004@ramsay1.demon.co.uk> <51C6BC4B.9030905@web.de> <51C8BF2C.2050203@ramsay1.demon.co.uk> <7vy59y4w3r.fsf@alter.siamese.dyndns.org> <51C94425.7050006@alum.mit.edu> <51CB610C.7050501@ramsay1.demon.co.uk> <20130626223552.GA12785@sigill.intra.peff.net> <51CBD2FD.5070905@alum.mit.edu> <51CCC643.1050702@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] completion: add completer for rev-parse
+Date: Sun, 30 Jun 2013 12:03:30 -0700
+Message-ID: <7vtxkfju9p.fsf@alter.siamese.dyndns.org>
+References: <1372429088-385-1-git-send-email-artagnon@gmail.com>
+	<1372429088-385-4-git-send-email-artagnon@gmail.com>
+	<20130630111436.GB2294@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Johannes Sixt <j6t@kdbg.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, mlevedahl@gmail.com,
-	dpotapov@gmail.com, GIT Mailing-list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jun 30 19:30:55 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sun Jun 30 21:03:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtLSf-0004Qx-7X
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Jun 2013 19:30:53 +0200
+	id 1UtMuc-0005eb-K3
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Jun 2013 21:03:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261Ab3F3Rag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Jun 2013 13:30:36 -0400
-Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:57163 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750827Ab3F3Raf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Jun 2013 13:30:35 -0400
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 64FBC6F99E6;
-	Sun, 30 Jun 2013 18:30:32 +0100 (BST)
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id A7BCD6F968B;
-	Sun, 30 Jun 2013 18:30:29 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
-	Sun, 30 Jun 2013 18:30:26 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <51CCC643.1050702@ramsay1.demon.co.uk>
-X-MDF-HostID: 3
+	id S1752054Ab3F3TDe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Jun 2013 15:03:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39327 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751691Ab3F3TDd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Jun 2013 15:03:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 968A62C09E;
+	Sun, 30 Jun 2013 19:03:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=JwOCa8BzBpd9
+	hUMxYx8Dp20xA2Y=; b=BHema6r2ViBJfGtVZrUegyKdHNsR8axM3rZjoh7LfSZV
+	cORbBxHepTZRa4pgs2zMKZ6Wdg2//zI+0dYhKl5rcbiA2zlDfTSKSoOpKF2z+j++
+	NX6cykbsC1BMkcQRxaXY8M3VWWxoN6ayJXJgF7wrzjJE59mRM9ylH69Bu11q/MM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=sqz5Xo
+	Kh4+M17wg2abjNbesNf6mKyAd70/puiCgBU+y9Zt6KqbSTxL62+8skosmcVQfQBJ
+	X6tnH0xnfv6gvmcnIO6D9nphs+6v18QCTnl6MHN5ofxL2XYunIXBlE2oRkGCALL7
+	NFxJNguwUtH8DVaF4dFPMNJmI4RKtAGPXNi7Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D83E2C09C;
+	Sun, 30 Jun 2013 19:03:32 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD7BD2C098;
+	Sun, 30 Jun 2013 19:03:31 +0000 (UTC)
+In-Reply-To: <20130630111436.GB2294@goldbirke> ("SZEDER =?utf-8?Q?G=C3=A1b?=
+ =?utf-8?Q?or=22's?= message of
+	"Sun, 30 Jun 2013 13:14:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C1A3773C-E1B7-11E2-8753-E636B1368C5F-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229281>
 
-Ramsay Jones wrote:
-> Michael Haggerty wrote:
->> On 06/27/2013 12:35 AM, Jeff King wrote:
-> [ ... ]
->>> I think Michael's assessment above is missing one thing.
->>
->> Peff is absolutely right; for some unknown reason I was thinking of the
->> consistency check as having been already fixed.
-> 
-> Well, the "cygwin: Remove the Win32 l/stat() functions" patch *does* fix
-> the problem. :-D It's just a pity we can't use it on performance grounds. :(
-> 
->>> [...#ifdef out consistency check on cygwin when lock is held...]
->>
->> Yes, this would work.
->>
->> But, taking a step back, I think it is a bad idea to have an unreliable
->> stat() masquerading as a real stat().  If we want to allow the use of an
->> unreliable stat for certain purposes, let's have two stat() interfaces:
->>
->> * the true stat() (in this case I guess cygwin's slow-but-correct
->> implementation)
->>
->> * some fast_but_maybe_unreliable_stat(), which would map to stat() on
->> most platforms but might map to the Windows stat() on cygwin when so
->> configured.
->>
->> By default the true stat() would always be used.  It should have to be a
->> conscious decision, taken only in specific, vetted scenarios, to use the
->> unreliable stat.
-> 
-> You have just described my second patch! :D
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-Unfortunately, I have not had any time to work on the patch this weekend.
-However, despite the patch being a bit rough around the edges, I decided
-to send it out (see below) to get some early feedback.
+> On Fri, Jun 28, 2013 at 07:48:07PM +0530, Ramkumar Ramachandra wrote:
+>> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+>> ---
+>>  contrib/completion/git-completion.bash | 14 ++++++++++++++
+>>  1 file changed, 14 insertions(+)
+>>=20
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/comple=
+tion/git-completion.bash
+>> index 278018f..f2959a7 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -2247,6 +2247,20 @@ _git_reset ()
+>>  	__gitcomp_nl "$(__git_refs)"
+>>  }
+>> =20
+>> +_git_rev_parse ()
+>> +{
+>> +	case "$cur" in
+>> +	--*)
+>> +		__gitcomp "
+>> +			--short --show-toplevel --is-inside-work-tree
+>> +			--symbolic-full-name --verify
+>> +			"
+>
+> In the completion script we support porcelain commands.  I'm not sure
+> about 'git rev-parse', but I think it's more plumbing than porcelain.
+> However, I think the same about 'git ls-tree' and 'git reflog', too,
+> yet we have support for them in the completion script.
+>
+> Either way, why these five options?  'git rev-parse' has a lot more
+> options than that.
 
-Note that it passes the t3210, t3211, t5500, t3200, t3301, t7606 and t1301
-tests, but I have not run the full test suite.
+I think most of the options not listed here are indeed very low
+level plumbings that end users have no reason to type on the command
+line, except when they are learning to see how they would use it in
+their scripts, of course.
 
-Comments welcome.
+Adding a select few that current Git gives no other easy way to
+achieve what the users may want to do is a good short-to-medium term
+compromise for usability, and I think the above is a good starting
+point.
 
-ATB,
-Ramsay Jones
+But our goal should be _not_ to grow that set, but to shrink them by
+making "rev-parse" less end-user facing.
 
--- >8 --
-Subject: [PATCH] cygwin: Add fast_[l]stat() functions
+A longer term direction should be to make sure that we do _not_ need
+to run "rev-parse" from the command line by giving usability updates
+to other commands and shell helpers, though.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
- builtin/apply.c        |  6 +++---
- builtin/commit.c       |  2 +-
- builtin/ls-files.c     |  2 +-
- builtin/rm.c           |  2 +-
- builtin/update-index.c |  2 +-
- check-racy.c           |  2 +-
- compat/cygwin.c        | 12 ------------
- compat/cygwin.h        | 10 +++-------
- diff-lib.c             |  2 +-
- diff.c                 |  2 +-
- entry.c                |  4 ++--
- git-compat-util.h      | 13 +++++++++++--
- help.c                 |  5 +----
- path.c                 |  9 +--------
- preload-index.c        |  2 +-
- read-cache.c           |  6 +++---
- unpack-trees.c         |  8 ++++----
- 17 files changed, 36 insertions(+), 53 deletions(-)
+=46or example, some subcommands of "git submodule" always required you
+to run from the top-level, so you needed some way to find out where
+the top level was, but the need to find the top-level is _not_ the
+ultimate end-user _want_.  There was no other easy way to achieve
+what the users wanted to do (i.e. run "git submodule foo" command)
+without first finding out where the top-level is and to go there
+before running it.  The user did not necessarily want to go there,
+and giving an easy way to find the top may merely be a workaround.
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 0e9b631..ca26caa 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -3253,7 +3253,7 @@ static int load_current(struct image *image, struct patch *patch)
- 	if (pos < 0)
- 		return error(_("%s: does not exist in index"), name);
- 	ce = active_cache[pos];
--	if (lstat(name, &st)) {
-+	if (fast_lstat(name, &st)) {
- 		if (errno != ENOENT)
- 			return error(_("%s: %s"), name, strerror(errno));
- 		if (checkout_target(ce, &st))
-@@ -3396,7 +3396,7 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
- 	if (previous) {
- 		st_mode = previous->new_mode;
- 	} else if (!cached) {
--		stat_ret = lstat(old_name, st);
-+		stat_ret = fast_lstat(old_name, st);
- 		if (stat_ret && errno != ENOENT)
- 			return error(_("%s: %s"), old_name, strerror(errno));
- 	}
-@@ -3850,7 +3850,7 @@ static void add_index_file(const char *path, unsigned mode, void *buf, unsigned
- 			die(_("corrupt patch for subproject %s"), path);
- 	} else {
- 		if (!cached) {
--			if (lstat(path, &st) < 0)
-+			if (fast_lstat(path, &st) < 0)
- 				die_errno(_("unable to stat newly created file '%s'"),
- 					  path);
- 			fill_stat_cache_info(ce, &st);
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 6b693c1..1d208c6 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -231,7 +231,7 @@ static void add_remove_files(struct string_list *list)
- 		if (p->util)
- 			continue;
- 
--		if (!lstat(p->string, &st)) {
-+		if (!fast_lstat(p->string, &st)) {
- 			if (add_to_cache(p->string, &st, 0))
- 				die(_("updating files failed"));
- 		} else
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 08d9786..db66a0e 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -251,7 +251,7 @@ static void show_files(struct dir_struct *dir)
- 				continue;
- 			if (ce_skip_worktree(ce))
- 				continue;
--			err = lstat(ce->name, &st);
-+			err = fast_lstat(ce->name, &st);
- 			if (show_deleted && err)
- 				show_ce_entry(tag_removed, ce);
- 			if (show_modified && ce_modified(ce, &st, 0))
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 06025a2..4b783e7 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -143,7 +143,7 @@ static int check_local_mod(unsigned char *head, int index_only)
- 		}
- 		ce = active_cache[pos];
- 
--		if (lstat(ce->name, &st) < 0) {
-+		if (fast_lstat(ce->name, &st) < 0) {
- 			if (errno != ENOENT && errno != ENOTDIR)
- 				warning("'%s': %s", ce->name, strerror(errno));
- 			/* It already vanished from the working tree */
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 5c7762e..4790e4c 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -206,7 +206,7 @@ static int process_path(const char *path)
- 	 * First things first: get the stat information, to decide
- 	 * what to do about the pathname!
- 	 */
--	if (lstat(path, &st) < 0)
-+	if (fast_lstat(path, &st) < 0)
- 		return process_lstat_error(path, errno);
- 
- 	if (S_ISDIR(st.st_mode))
-diff --git a/check-racy.c b/check-racy.c
-index 00d92a1..6124355 100644
---- a/check-racy.c
-+++ b/check-racy.c
-@@ -11,7 +11,7 @@ int main(int ac, char **av)
- 		struct cache_entry *ce = active_cache[i];
- 		struct stat st;
- 
--		if (lstat(ce->name, &st)) {
-+		if (fast_lstat(ce->name, &st)) {
- 			error("lstat(%s): %s", ce->name, strerror(errno));
- 			continue;
- 		}
-diff --git a/compat/cygwin.c b/compat/cygwin.c
-index 91ce5d4..f07cbd3 100644
---- a/compat/cygwin.c
-+++ b/compat/cygwin.c
-@@ -6,18 +6,6 @@
- #include "../git-compat-util.h"
- #include "../cache.h" /* to read configuration */
- 
--/*
-- * Return POSIX permission bits, regardless of core.ignorecygwinfstricks
-- */
--int cygwin_get_st_mode_bits(const char *path, int *mode)
--{
--	struct stat st;
--	if (lstat(path, &st) < 0)
--		return -1;
--	*mode = st.st_mode;
--	return 0;
--}
--
- static inline void filetime_to_timespec(const FILETIME *ft, struct timespec *ts)
- {
- 	long long winTime = ((long long)ft->dwHighDateTime << 32) +
-diff --git a/compat/cygwin.h b/compat/cygwin.h
-index c04965a..8299f58 100644
---- a/compat/cygwin.h
-+++ b/compat/cygwin.h
-@@ -4,11 +4,7 @@
- typedef int (*stat_fn_t)(const char*, struct stat*);
- extern stat_fn_t cygwin_stat_fn;
- extern stat_fn_t cygwin_lstat_fn;
--int cygwin_get_st_mode_bits(const char *path, int *mode);
- 
--#define get_st_mode_bits(p,m) cygwin_get_st_mode_bits((p),(m))
--#ifndef CYGWIN_C
--/* cygwin.c needs the original lstat() */
--#define stat(path, buf) (*cygwin_stat_fn)(path, buf)
--#define lstat(path, buf) (*cygwin_lstat_fn)(path, buf)
--#endif
-+#define fast_stat(path, buf) (*cygwin_stat_fn)(path, buf)
-+#define fast_lstat(path, buf) (*cygwin_lstat_fn)(path, buf)
-+#define GIT_FAST_STAT
-diff --git a/diff-lib.c b/diff-lib.c
-index b6f4b21..401dab6 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -27,7 +27,7 @@
-  */
- static int check_removed(const struct cache_entry *ce, struct stat *st)
- {
--	if (lstat(ce->name, st) < 0) {
-+	if (fast_lstat(ce->name, st) < 0) {
- 		if (errno != ENOENT && errno != ENOTDIR)
- 			return -1;
- 		return 1;
-diff --git a/diff.c b/diff.c
-index 208094f..212d3ff 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2642,7 +2642,7 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
- 	 * If ce matches the file in the work tree, we can reuse it.
- 	 */
- 	if (ce_uptodate(ce) ||
--	    (!lstat(name, &st) && !ce_match_stat(ce, &st, 0)))
-+	    (!fast_lstat(name, &st) && !ce_match_stat(ce, &st, 0)))
- 		return 1;
- 
- 	return 0;
-diff --git a/entry.c b/entry.c
-index d7c131d..4d2ac73 100644
---- a/entry.c
-+++ b/entry.c
-@@ -210,7 +210,7 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
- finish:
- 	if (state->refresh_cache) {
- 		if (!fstat_done)
--			lstat(ce->name, &st);
-+			fast_lstat(ce->name, &st);
- 		fill_stat_cache_info(ce, &st);
- 	}
- 	return 0;
-@@ -230,7 +230,7 @@ static int check_path(const char *path, int len, struct stat *st, int skiplen)
- 		errno = ENOENT;
- 		return -1;
- 	}
--	return lstat(path, st);
-+	return fast_lstat(path, st);
- }
- 
- int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath)
-diff --git a/git-compat-util.h b/git-compat-util.h
-index ff193f4..7997bdb 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -129,8 +129,6 @@
- #include <poll.h>
- #endif
- 
--extern int get_st_mode_bits(const char *path, int *mode);
--
- #if defined(__MINGW32__)
- /* pull in Windows compatibility stuff */
- #include "compat/mingw.h"
-@@ -179,6 +177,17 @@ typedef unsigned long uintptr_t;
- #endif
- #endif
- 
-+#ifndef GIT_FAST_STAT
-+static inline int fast_stat(const char *path, struct stat *st)
-+{
-+	return stat(path, st);
-+}
-+static inline int fast_lstat(const char *path, struct stat *st)
-+{
-+	return lstat(path, st);
-+}
-+#endif
-+
- /* used on Mac OS X */
- #ifdef PRECOMPOSE_UNICODE
- #include "compat/precompose_utf8.h"
-diff --git a/help.c b/help.c
-index 08c54ef..f068925 100644
---- a/help.c
-+++ b/help.c
-@@ -107,10 +107,7 @@ static int is_executable(const char *name)
- 	    !S_ISREG(st.st_mode))
- 		return 0;
- 
--#if defined(GIT_WINDOWS_NATIVE) || defined(__CYGWIN__)
--#if defined(__CYGWIN__)
--if ((st.st_mode & S_IXUSR) == 0)
--#endif
-+#if defined(GIT_WINDOWS_NATIVE)
- {	/* cannot trust the executable bit, peek into the file instead */
- 	char buf[3] = { 0 };
- 	int n;
-diff --git a/path.c b/path.c
-index 7f3324a..3d244d3 100644
---- a/path.c
-+++ b/path.c
-@@ -5,13 +5,7 @@
- #include "strbuf.h"
- #include "string-list.h"
- 
--#ifndef get_st_mode_bits
--/*
-- * The replacement lstat(2) we use on Cygwin is incomplete and
-- * may return wrong permission bits. Most of the time we do not care,
-- * but the callsites of this wrapper do care.
-- */
--int get_st_mode_bits(const char *path, int *mode)
-+static int get_st_mode_bits(const char *path, int *mode)
- {
- 	struct stat st;
- 	if (lstat(path, &st) < 0)
-@@ -19,7 +13,6 @@ int get_st_mode_bits(const char *path, int *mode)
- 	*mode = st.st_mode;
- 	return 0;
- }
--#endif
- 
- static char bad_path[] = "/bad-path/";
- 
-diff --git a/preload-index.c b/preload-index.c
-index 49cb08d..1bece91 100644
---- a/preload-index.c
-+++ b/preload-index.c
-@@ -57,7 +57,7 @@ static void *preload_thread(void *_data)
- 			continue;
- 		if (threaded_has_symlink_leading_path(&cache, ce->name, ce_namelen(ce)))
- 			continue;
--		if (lstat(ce->name, &st))
-+		if (fast_lstat(ce->name, &st))
- 			continue;
- 		if (ie_match_stat(index, ce, &st, CE_MATCH_RACY_IS_DIRTY))
- 			continue;
-diff --git a/read-cache.c b/read-cache.c
-index d5201f9..ed33d9e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -689,7 +689,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- int add_file_to_index(struct index_state *istate, const char *path, int flags)
- {
- 	struct stat st;
--	if (lstat(path, &st))
-+	if (fast_lstat(path, &st))
- 		die_errno("unable to stat '%s'", path);
- 	return add_to_index(istate, path, &st, flags);
- }
-@@ -1049,7 +1049,7 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
- 		return ce;
- 	}
- 
--	if (lstat(ce->name, &st) < 0) {
-+	if (fast_lstat(ce->name, &st) < 0) {
- 		if (err)
- 			*err = errno;
- 		return NULL;
-@@ -1635,7 +1635,7 @@ static void ce_smudge_racily_clean_entry(struct cache_entry *ce)
- 	 */
- 	struct stat st;
- 
--	if (lstat(ce->name, &st) < 0)
-+	if (fast_lstat(ce->name, &st) < 0)
- 		return;
- 	if (ce_match_stat_basic(ce, &st))
- 		return;
-diff --git a/unpack-trees.c b/unpack-trees.c
-index b27f2a6..1fe9b63 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1215,7 +1215,7 @@ static int verify_uptodate_1(const struct cache_entry *ce,
- 	else if (o->reset || ce_uptodate(ce))
- 		return 0;
- 
--	if (!lstat(ce->name, &st)) {
-+	if (!fast_lstat(ce->name, &st)) {
- 		int flags = CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE;
- 		unsigned changed = ie_match_stat(o->src_index, ce, &st, flags);
- 		if (!changed)
-@@ -1432,13 +1432,13 @@ static int verify_absent_1(const struct cache_entry *ce,
- 		char path[PATH_MAX + 1];
- 		memcpy(path, ce->name, len);
- 		path[len] = 0;
--		if (lstat(path, &st))
-+		if (fast_lstat(path, &st))
- 			return error("cannot stat '%s': %s", path,
- 					strerror(errno));
- 
- 		return check_ok_to_remove(path, len, DT_UNKNOWN, NULL, &st,
- 				error_type, o);
--	} else if (lstat(ce->name, &st)) {
-+	} else if (fast_lstat(ce->name, &st)) {
- 		if (errno != ENOENT)
- 			return error("cannot stat '%s': %s", ce->name,
- 				     strerror(errno));
-@@ -1852,7 +1852,7 @@ int oneway_merge(const struct cache_entry * const *src,
- 		int update = 0;
- 		if (o->reset && o->update && !ce_uptodate(old) && !ce_skip_worktree(old)) {
- 			struct stat st;
--			if (lstat(old->name, &st) ||
-+			if (fast_lstat(old->name, &st) ||
- 			    ie_match_stat(o->src_index, old, &st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE))
- 				update |= CE_UPDATE;
- 		}
--- 
-1.8.3
+The true solution for that particular issue may be to teach that
+subcommand of "git submodule" to run from anywhere, which I think
+has happened recently.
+
+Another example on the same option.  Nobody should have to type
+
+	$ cd $(git rev-parse --show-toplevel)
+
+on the command line, even if there is a legitimate reason why it is
+necessary to go to the top.  If it is common enough, just like we
+ship completion and prompt in contrib/, we should ship a set of
+common shell functions and aliases to let you do the above with:
+
+	$ cdtop
+
+which may be defined to be something like [*1*].
+
+And these are illustrations of how we can lose needs to use that
+option from the command line.  We should continue to go in that
+direction.
+
+=46or --short and --symbolic-full-name, I have a feeling that we
+should make "describe" a front-end for these.
+
+Just like "describe" already acts as a front-end for "name-rev" and
+behaves differently, we treat the command as a way to transform an
+object name into another form, and in addition to the current "do so
+by expressing the given rev relative to an appropriate anchor point"
+mode, teach it more ways to represent the given rev by doing
+something different (e.g. these two are about expressing them as
+themselves and not as relative to something else, so the "describe"
+command in that mode would not walk the history to find nearby anchor
+points).
+
+As to completing "--verify", I can see how it may be useful for
+people who interactively play with the command examples they find in
+scripts, but otherwise I do not see much value for real end-users.
+
+"rev-parse foobar" would say "foobar" if that does not refer to an
+object and end users are more intelligent than a script to see the
+difference without seeing the value of $? and error message when
+running on the command line.
+
+
+[Footnote]
+
+*1* This is typed in my MUA for illustration purposes only, not
+tested:
+
+        cdtop () {
+                local eh
+                eh=3D$(git rev-parse --is-inside-work-tree) || return
+                case "$eh" in
+                true)
+                        eh=3D$(git rev-parse --show-toplevel)
+                        test -z "$eh" || cd "$eh"
+                        ;;
+                false)
+                        eh=3D$(git rev-parse --git-dir) || return
+                        cd "$eh" || return
+                        eh=3D$(git rev-parse --is-bare-repository) || r=
+eturn
+                        test "z$eh" =3D ztrue || cd ..
+                        ;;
+                esac
+        }
