@@ -1,82 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: repo.or.cz being not well???
-Date: Mon, 01 Jul 2013 16:10:59 -0700
-Message-ID: <7vy59p98qk.fsf@alter.siamese.dyndns.org>
-References: <7vli5q9ba2.fsf@alter.siamese.dyndns.org>
-	<7va9m5apl8.fsf@alter.siamese.dyndns.org>
-	<CB8FBC9A-B24D-4EAC-820F-A40472387FD9@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, admin@repo.or.cz
-To: Kyle McKay <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 02 01:11:11 2013
+From: Alexey Shumkin <Alex.Crezoff@gmail.com>
+Subject: [PATCH v8 0/5] Reroll patches against Git v1.8.3.2
+Date: Tue,  2 Jul 2013 03:18:59 +0400
+Message-ID: <cover.1372719264.git.Alex.Crezoff@gmail.com>
+References: <cover.1372240998.git.Alex.Crezoff@gmail.com>
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Alexey Shumkin <Alex.Crezoff@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 02 01:19:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtnFV-0007qn-MZ
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 01:11:10 +0200
+	id 1UtnNa-00078t-5q
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 01:19:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755411Ab3GAXLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jul 2013 19:11:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44465 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755179Ab3GAXLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jul 2013 19:11:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79E802DE96;
-	Mon,  1 Jul 2013 23:11:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CXQ6GSmhgVssKLeLOMgs/5+oFRQ=; b=GeIScF
-	9XCwQXpaMzINMwP6QeR0vHkxyX/R6UyS+LH5RinAIAln417QLU2f/d8phWoZgQ66
-	fJ4VJTw4HaHJfOBJHyY4xoj0FU3lB9aKXbdzbQaGqrQbWFUpWBM3Lnq98GXOyTDa
-	WtsJ1lwKmzPP+ETz7ofWSFwBDalTV4By34lSw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oF4i2x+BavEhwgSMyo4okxi6Fvxk5kdy
-	+Nuq28bpHS3dvXrEY4If+bpZpcngq+urarD8sQGCF4/TozpLkDKwGhZiPNtIJvph
-	Vrb/jbSdHkyUswWgomdV9OJYZt1x0rgFOveJNq6g1xZOdzkO/W3V52t9rthFSPRz
-	5Qd8N1IU5mQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7067A2DE95;
-	Mon,  1 Jul 2013 23:11:01 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DFBD02DE92;
-	Mon,  1 Jul 2013 23:11:00 +0000 (UTC)
-In-Reply-To: <CB8FBC9A-B24D-4EAC-820F-A40472387FD9@gmail.com> (Kyle McKay's
-	message of "Mon, 1 Jul 2013 15:39:22 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7ECA1DA2-E2A3-11E2-82A2-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755345Ab3GAXTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jul 2013 19:19:13 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:59881 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755100Ab3GAXTM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jul 2013 19:19:12 -0400
+Received: by mail-la0-f44.google.com with SMTP id er20so5038655lab.31
+        for <git@vger.kernel.org>; Mon, 01 Jul 2013 16:19:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rarus.ru; s=google;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=3vFgRuL9Y3Dazn6ghujWAP2ONSOTVisO4srCscWS58A=;
+        b=JOD/1GqptGL7Gy0vZJp87PDIRIs6Imz4wSERUtPliuwS8LfkvzcxfZTP8Vq/zG0+2+
+         C4zNovKp98OIyyiq09v8u2g900I09W20+rW+99ufms7px7A1qOE0x2F03+G7n15yWKZb
+         H4Ub9wOXjcG0+3cQTmePAR37kY78UsPd+bXnA=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=3vFgRuL9Y3Dazn6ghujWAP2ONSOTVisO4srCscWS58A=;
+        b=U6+BeWjgPZe5Kea27MwM4jy8PM7MYvspEXSOSqDdr00QTbtJIXbEkrDJmtC9Tpyoq4
+         ohMIgaS57w2yhCLm1EONFhblVmIhUHxfS/v0Rzd3s8lgOQV2SsYVkcijvUojeInypsrm
+         /BxK985yo3TiadiE1wBIhODbzQc8goi4Bkiwt38es6JzRvH9Wrh1gJAZWlUfku9xDDC8
+         4rexH1pwt/B8ZdKIKIPMjwqmmd9jOXu1sRFYBZwMreuhZQgUXRFEa3zcnEIVmiPQoaIp
+         xQQCpGPb96pM1a28lPXB/wB0huD6I1Ak4jJ8ZrB6vXeCED7hKHsrrwXtg6Hl27fNgZaz
+         6e5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:x-gm-message-state;
+        bh=3vFgRuL9Y3Dazn6ghujWAP2ONSOTVisO4srCscWS58A=;
+        b=Lksr3IuC8Sjip7UtGzzw6DZ4aQ5zx1GUiDr+dOK0mBnrcnZC5Fj4qerg/V8SKtvCqu
+         eM4rqSs9MwAHMVWtCWUykcTUXcjTiAsUQsVzRPFit56I8viEO7hfp4g9lDCixOpt6Vb4
+         a6OpRXPUbYckDqNpdk2+fVjltoBM/RRZGl8K4lLwI3mUXZYlUOiuFH7WhvT08AqSp4x4
+         u7xuZhUIybpWr+2wqQ/onUn94nZDrKUA9uqFtn9p16Y0Z7OBc32hZE2Xsu1wKrK6UrlH
+         /Mexxfo0tCrO4o4vKg54kwJHXhKX9XMq36aqP8xkgBexqtW1VAfbOEGea5umanyNveA/
+         OXYg==
+X-Received: by 10.152.22.232 with SMTP id h8mr12954329laf.37.1372720750185;
+        Mon, 01 Jul 2013 16:19:10 -0700 (PDT)
+Received: from localhost (ppp91-77-20-158.pppoe.mtu-net.ru. [91.77.20.158])
+        by mx.google.com with ESMTPSA id c4sm8053445lae.7.2013.07.01.16.19.08
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 01 Jul 2013 16:19:09 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.16.gce2c52e
+In-Reply-To: <cover.1372240998.git.Alex.Crezoff@gmail.com>
+X-Gm-Message-State: ALoCoQnEphdj5iQYEmnZyazXHsaQMoca73xthnjxEc2bdna4K9o/1+VWr+ph1CIYdCEJFZpd/k7B
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229348>
 
-Kyle McKay <mackyle@gmail.com> writes:
+v8 of this patch series includes the following changes against v7:
+1. [PATCH v8 1/5] t6006 (rev-list-format): don't hardcode SHA-1 in expected outputs
+        untouched
+2. [PATCH v8 2/5] t7102 (reset): don't hardcode SHA-1 in expected outputs
+        untouched
+3. [PATCH v8 3/5] t4205 (log-pretty-formats): don't hardcode SHA-1 in expected outputs
+        untouched
+4. [PATCH v8 4/5] pretty: Add failing tests: --format output should honor logOutputEncoding
+    Includes suggestions of Johannes Sixt:
+    iso-8859-1 encoding replaced with its more "ancient" synonym "iso8859-1" already used in tests
+    t/t6006-rev-list-format.sh:
+       `test_format` function become simplier and more readable 
+       `complex body` & `complex subject` tests are reverted back (to its "initial" state)
+       2 tests added to test encoding conversions with i18n.commitEncoding unset
+    t/t7102-reset.sh:
+       `commit_msg` function become more readable
 
-> I was not previously aware that URLs not shown on that page were
-> accepted, thank you for bringing it to my attention.
->
-> Do you feel that it's important to accept these alternate URL versions
-> that are not listed on the project page:
->
-> 1) Optional trailing '/'
-> 2) For the ssh scp form, optional leading '/'
+5. [PATCH v8 5/5] pretty: --format output should honor logOutputEncoding 
+    untouched
 
-I am on the fence.  As long as the accepted URL forms are advertised
-clearly (which you guys do indeed do), I do not think there is much
-reason to spend effort to "loosen" it again.  People can adjust.  On
-the other hand, loosening _might_ reduce the cost of "support calls"
-(like the one I just did) from long-time users.  I dunno.
+P.S.
+It's all started here [http://thread.gmane.org/gmane.comp.version-control.git/177634]
 
-I just (1) was curious, as getting "error 403" when I didn't mean to
-talk to an HTTP server was strange, and (2) wanted to make sure I am
-talking with the same repo.or.cz without a funny MITM.  If I sounded
-like complaining, that wasn't intended, and I am sorry.
+Alexey Shumkin (5):
+  t6006 (rev-list-format): don't hardcode SHA-1 in expected outputs
+  t7102 (reset): don't hardcode SHA-1 in expected outputs
+  t4205 (log-pretty-formats): don't hardcode SHA-1 in expected outputs
+  pretty: Add failing tests: --format output should honor
+    logOutputEncoding
+  pretty: --format output should honor logOutputEncoding
 
-Thanks for serving the community for all those years.
+ builtin/reset.c                  |   5 +-
+ builtin/rev-list.c               |   1 +
+ builtin/shortlog.c               |   1 +
+ log-tree.c                       |   1 +
+ submodule.c                      |   1 +
+ t/t4041-diff-submodule-option.sh |  25 +++--
+ t/t4205-log-pretty-formats.sh    | 126 ++++++++++++++++--------
+ t/t6006-rev-list-format.sh       | 204 +++++++++++++++++++++++++--------------
+ t/t7102-reset.sh                 |  39 +++++++-
+ 9 files changed, 270 insertions(+), 133 deletions(-)
+
+-- 
+1.8.3.1.16.gce2c52e
