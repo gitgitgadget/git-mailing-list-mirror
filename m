@@ -1,93 +1,66 @@
 From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RFC/PATCH] submodule: add 'exec' option to submodule update
-Date: Mon, 01 Jul 2013 21:21:09 +1200
-Message-ID: <51D14A05.7030707@gmail.com>
-References: <1372413190-32732-1-git-send-email-judge.packham@gmail.com> <20130628104243.GD27497@paksenarrion.iveqy.com> <51CEA4B2.1090008@gmail.com> <51D04F06.9000400@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
-	stefan.naewe@atlas-elektronik.com, Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Jul 01 11:20:17 2013
+Subject: [RFC/PATCHv2] submodule: add ability to configure update command
+Date: Mon,  1 Jul 2013 22:11:34 +1200
+Message-ID: <1372673494-24286-1-git-send-email-judge.packham@gmail.com>
+References: <51D04F06.9000400@web.de>
+Cc: Jens.Lehmann@web.de, iveqy@iveqy.com,
+	stefan.naewe@atlas-elektronik.com, hvoigt@hvoigt.net,
+	Chris Packham <judge.packham@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 01 12:11:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtaHR-00011U-Dd
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jul 2013 11:20:17 +0200
+	id 1Utb5R-0002dH-1q
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jul 2013 12:11:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753274Ab3GAJUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jul 2013 05:20:10 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:41147 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753203Ab3GAJUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jul 2013 05:20:09 -0400
-Received: by mail-pa0-f43.google.com with SMTP id hz11so4791650pad.16
-        for <git@vger.kernel.org>; Mon, 01 Jul 2013 02:20:08 -0700 (PDT)
+	id S1753600Ab3GAKLw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jul 2013 06:11:52 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:34697 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751572Ab3GAKLw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jul 2013 06:11:52 -0400
+Received: by mail-pa0-f46.google.com with SMTP id fa11so4871590pad.33
+        for <git@vger.kernel.org>; Mon, 01 Jul 2013 03:11:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=WPxEztZ2B/ATo+8RoZovHAy4N7yOqTxVp3TwgTxfdak=;
-        b=YBH8jote0rU4vcJap0NQVSKOfgs7/fq5d9irRiY+DKlClnBy0SJGDdHeB1QHXkbIZw
-         C7c9YU2Z5qT9OB+MhSDUijAlpwHxXnlXRJfkBmIm+2sREb250KyfcLRD8/5qk/dNeRD+
-         kn7IpWkb19A1dnQiskSnPxiGnp/sozB9hX21px+O73+2a4AVpK+uhKq3sAJpsTzlfswg
-         JH7y8WsndZuPHsZl0PRb6jKbCGlCThfTNw1pm4D73aZv5J54s5y3tfwfOv+ah9qVnpri
-         O6/rTP2YEYgjZgaJcu/m9fuWhhNFy1kRHqEtZQf2WZyqeJaFWSDZ9Fix6rucPg16BMOQ
-         cp3w==
-X-Received: by 10.68.201.66 with SMTP id jy2mr22819424pbc.90.1372670408708;
-        Mon, 01 Jul 2013 02:20:08 -0700 (PDT)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id fl2sm22913475pab.23.2013.07.01.02.20.05
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=OilaOd3cXUg/gAcjDpIpcrO9loDUA2kNejjrsQp163g=;
+        b=R79CblVBZ0nBsasBmZZaRn//IvvZwUnre9QBO9i9OEdRLvPaNNznpCNv2JGOj45aOM
+         SVM1xCdIqE+zdAWrS7Tps3zgJ0XlQj2YkYNx4gm85EhrfufMyis3D5ip1vC7U5oJhB+6
+         2M6oFB1d21WxDk2D6IyIROpMxkM6ht32hJ9aX1g4vLZMH4Erbp+Eh08/F40Y3TXYo18P
+         HsnCej2rOcy8duRva8lIchNz7OWpH2n81uTsN+8SwFEbZHG8d68wdEPGq+NA2q/WkS3d
+         Kc5P/fdzPrTHm5hTPkhmQtwjJ1fNGPVOKDoyyzj6kvpzaXAvgMMSWcWou531SFX9DQge
+         onxA==
+X-Received: by 10.66.160.74 with SMTP id xi10mr6734180pab.8.1372673511631;
+        Mon, 01 Jul 2013 03:11:51 -0700 (PDT)
+Received: from chrisp3-dl.ws.atlnz.lc ([202.36.163.2])
+        by mx.google.com with ESMTPSA id ue9sm23205788pab.7.2013.07.01.03.11.48
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 01 Jul 2013 02:20:08 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 01 Jul 2013 03:11:50 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.644.g533062f.dirty
 In-Reply-To: <51D04F06.9000400@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229298>
+
+Users can set submodule.$name.update to '!command' which will cause
+'command' to be run instead of checkout/merge/rebase.  This allows the
+user some finer grained control over how the update is done. The primary
+motivation for this was interoperability with stgit however being able
+to intercept the submodule update process may prove useful for
+integrating or extending other tools.
+
+Signed-off-by: Chris Packham <judge.packham@gmail.com>
+---
 
 On 01/07/13 03:30, Jens Lehmann wrote:
-> Am 29.06.2013 11:11, schrieb Chris Packham:
->> On 28/06/13 22:42, Fredrik Gustafsson wrote:
->>> technically it looks fine to me (except for the lack of tests) but I'm
->>> not sure I follow the use case.
->>>
->>> In your case, you want to run a script to determinate if that certain
->>> submodule should use merge or rebase depending on "whatever". And this
->>> can't be done with git submodule foreach because you want to know the
->>> sha1 to update to. Have I understood you correctly?
->>
->> Correct. We tend to have submodules that are just normal detached heads
->> which we don't usually touch and others that are actively developed
->> where we would use submodule.x.update=rebase (I personally do) but some
->> developers want to use stgit on those repositories.
->>
->> Another approach could be to do a 'git pull --no-recurse-submodule' then
->> use 'git submodule foreach script-that-does-the-rebase'. The benefit of
->> the patch I sent is that it can be setup using the config variables[1]
->> and updated the normal way along with the detached HEADs and those using
->> plain git branches.
-> 
-> Wouldn't a "stgit submodule update" (which would do the Right Thing for
-> submodules initialized with stgit by maybe just using the pull & foreach
-> logic you described) be a better UI for solving your problem?
-
-Yeah I guess so. I was hoping to stay away from an stgit specific
-solution but I'm not hearing any other voices looking for such flexibility.
-
->> There may be other use-cases for integration with other tools as well
->> (e.g. something that updates a review tool when commits get rebased).
->>
->> --
->> [1] I'm not crazy about the name of submodule.*.update.command but I
->> couldn't think of a better one.
-> 
+>
 > Hmm, if we go that route, why not do the same we do for aliases? If
 > the submodule.*.update setting is prefixed with a '!', we just execute
 > the shell command following. This would give everyone the freedom to
@@ -95,4 +68,53 @@ solution but I'm not hearing any other voices looking for such flexibility.
 > do the trick without having to add another config option.
 >
 
-Make sense. I'll give it a go.
+And here's an implementation of this. Actually I like this a lot better
+to the v1 patch. Still lacks tests but if there is enough interest I can
+add some.
+
+ Documentation/git-submodule.txt | 5 ++++-
+ git-submodule.sh                | 6 ++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index e576713..0befc20 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -159,7 +159,9 @@ update::
+ 	This will make the submodules HEAD be detached unless `--rebase` or
+ 	`--merge` is specified or the key `submodule.$name.update` is set to
+ 	`rebase`, `merge` or `none`. `none` can be overridden by specifying
+-	`--checkout`.
++	`--checkout`. Setting the key `submodule.$name.update` to `!command`
++	will cause `command` to be run. `command` can be any arbitrary shell
++	command that takes a single argument, namely the sha1 to update to.
+ +
+ If the submodule is not yet initialized, and you just want to use the
+ setting as stored in .gitmodules, you can automatically initialize the
+@@ -172,6 +174,7 @@ If `--force` is specified, the submodule will be checked out (using
+ `git checkout --force` if appropriate), even if the commit specified in the
+ index of the containing repository already matches the commit checked out in
+ the submodule.
+++
+ 
+ summary::
+ 	Show commit summary between the given commit (defaults to HEAD) and
+diff --git a/git-submodule.sh b/git-submodule.sh
+index eb58c8e..680cb68 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -799,6 +799,12 @@ Maybe you want to use 'update --init'?")"
+ 				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': merged in '\$sha1'")"
+ 				must_die_on_failure=yes
+ 				;;
++			!*)
++				command="$(expr "$update_module" : '!\(.*\)')"
++				die_msg="$(eval_gettext "Unable to exec '\$command \$sha1' in submodule path '\$prefix\$sm_path'")"
++				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': '\$command \$sha1'")"
++				must_die_on_failure=yes
++				;;
+ 			*)
+ 				command="git checkout $subforce -q"
+ 				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$prefix\$sm_path'")"
+-- 
+1.8.3.1.644.g533062f.dirty
