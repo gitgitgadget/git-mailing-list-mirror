@@ -1,79 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] fast-import: handle empty paths better
-Date: Mon, 01 Jul 2013 14:57:32 -0700
-Message-ID: <7v7ghaapzy.fsf@alter.siamese.dyndns.org>
-References: <cover.1371999369.git.john@keeping.me.uk>
+Subject: Re: [PATCH] contrib/hooks/post-receive-email: get description from repo.git/config
+Date: Mon, 01 Jul 2013 14:58:47 -0700
+Message-ID: <7v1u7iapzw.fsf@alter.siamese.dyndns.org>
+References: <15tsj20cizd.fsf@tux.uio.no>
+	<7vtxmgruhc.fsf@alter.siamese.dyndns.org>
+	<vpq1u9kunba.fsf@grenoble-inp.fr>
+	<7vwqrbmh4d.fsf@alter.siamese.dyndns.org>
+	<5188B165.3050709@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Dave Abrahams <dave@boostpro.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Jul 02 00:13:00 2013
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Trond Hasle Amundsen <t.h.amundsen@usit.uio.no>,
+	git@vger.kernel.org, Marc Branchaud <mbranchaud@xiplink.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Chris Hiestand <chiestand@salk.edu>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jul 02 00:12:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtmLC-0005bA-CO
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 00:12:58 +0200
+	id 1UtmLC-0005bA-UR
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 00:12:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755713Ab3GAWMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jul 2013 18:12:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64459 "EHLO
+	id S1755742Ab3GAWMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jul 2013 18:12:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51764 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755682Ab3GAWMv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jul 2013 18:12:51 -0400
+	id S1755720Ab3GAWMy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jul 2013 18:12:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 955532D37E;
-	Mon,  1 Jul 2013 22:12:51 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2C7E2D385;
+	Mon,  1 Jul 2013 22:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 s=sasl; bh=3lh3p7yMS7PmpAOJLtD3NVrJAbw=; b=WQ2KaI+HA6riY8RJN9MI
-	yv4P8ecq+XjZyDq2/GJpPwploZ+J0HlcaY14MQLq0TI6vjFwrB1KQLupPKVwysK5
-	kXYKvNeEZ6CgP/lbsPVyw4eYFbD1RHrjLdgcp02oXwzSnveLB64mHKRu+sWwwoAP
-	3/F/OWmtIzUK6H07e+KeVYQ=
+	 s=sasl; bh=WkynyEglIjPNt5TcBIjH70fX5QM=; b=HvYBsyOapvf+6ScLmhTM
+	KTsNrh3AQq3mfQDcF1HY3TdKu2m+/q3L78i+JE25w5dg83Arht/E1LhG4BZ+/wuz
+	VGOjlAvvOon4chskYNlNQjcDIcVY9bwuQpG6FSrBtzvZW7tKfUEyXbfmVQiT2NHP
+	9ohfRHxyWpzhiVguVcV5h1s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=yU4t18qqgzk0so38RLWauVgsT4E6YwdFT4Hq/cltrYhHe0
-	eceYD520FCSXt6yS40VtNgQx7MwfzfL80YqxczMbgOEDIwM8D4AoUdITp/vCmMjU
-	a3/d+4283sa8DBJ3g+aClf+7tf0oV/FH+2wXIJpIQZmdulpVhsA+LvnCh9hkQ=
+	 q=dns; s=sasl; b=ocCcx8RX8xxkoqclZKLkgVYrFDe6ri1kC5aMasgxYOvcqk
+	UVMUR34Wg2Lvp7p/MpIjCTCt94mZjyYDHEkn5zk7SD/wSqCIAk0NdQEfuKreciYr
+	moMYZ3nKqwLOlCAjCfNI2APrNz29eeI+P4v6lNLk1LeYWg8r/oVUszIa5V7bQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89B2D2D37D;
-	Mon,  1 Jul 2013 22:12:51 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8F972D384;
+	Mon,  1 Jul 2013 22:12:53 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 049132D37B;
-	Mon,  1 Jul 2013 22:12:50 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45D692D381;
+	Mon,  1 Jul 2013 22:12:53 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5EA5CE02-E29B-11E2-99D2-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5FFFF322-E29B-11E2-9793-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229337>
 
-John Keeping <john@keeping.me.uk> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> This series addressed Dave Abraham's recent bug report [1] about using
-> fast-import's "ls" command with an empty path.  I also found a couple of
-> other places that do not handle the empty path when it can reasonably be
-> interpreted as meaning the root tree object, which are also fixed here.
+> My understanding is that we are waiting on two things:
 >
-> [1] http://article.gmane.org/gmane.comp.version-control.git/228586
+> 1. Consensus from the community.  I would characterize the feedback on
+> the mailing list as limited in quantity but strongly positive [1-4] and
+> I think that most/all of the wishes for post-receive-email features that
+> were originally omitted from git-multimail have been implemented in the
+> current version.  Some of the mailing list feedback was about earlier
+> versions.  Do you want people to give feedback specifically about the
+> current version?
 >
-> John Keeping (4):
->   t9300: document fast-import empty path issues
->   fast-import: set valid mode on root tree in "ls"
->   fast-import: allow ls or filecopy of the root tree
->   fast-import: allow moving the root tree
->
->  fast-import.c          | 58 ++++++++++++++++++++++++++++----------------
->  t/t9300-fast-import.sh | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 103 insertions(+), 20 deletions(-)
+> 2. For me to figure out what part of the git-multimail history I think
+> should be included in the Git project, do any necessary repository
+> rewriting, and submit a pull request to you.  The fact that I haven't
+> gotten to this is due to the fact that I've been busy getting git-imerge
+> [5] ready to present at GitMerge.
 
-Ping?  Reviews, please?
+Ping, now GitMerge is over?
 
 No need to hurry, but just to make sure this didn't disappear from
 everybody's radar.
