@@ -1,60 +1,78 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: [PATCH] git-daemon: have --no-syslog
-Date: Mon, 1 Jul 2013 22:04:19 +0200
-Message-ID: <20130701200419.GA22234@inner.h.apk.li>
-References: <20130622174122.GA6496@inner.h.apk.li> <7v38s9jqk0.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] merge: handle --ff/--no-ff/--ff-only as a tri-state option
+Date: Mon, 01 Jul 2013 13:27:29 -0700
+Message-ID: <7vppv2f2ku.fsf@alter.siamese.dyndns.org>
+References: <20130701070143.GB17269@suse.cz> <51D197AD.1070502@alum.mit.edu>
+	<20130701195407.GK17269@suse.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 01 22:04:34 2013
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Jul 01 22:27:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtkKu-0001bh-7W
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jul 2013 22:04:32 +0200
+	id 1UtkhE-0003vN-IN
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jul 2013 22:27:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754810Ab3GAUE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jul 2013 16:04:27 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:48538 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753269Ab3GAUE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jul 2013 16:04:26 -0400
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id r61K4Jg22474;
-	Mon, 1 Jul 2013 22:04:19 +0200
-Content-Disposition: inline
-In-Reply-To: <7v38s9jqk0.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S1755202Ab3GAU1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jul 2013 16:27:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43189 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754518Ab3GAU1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jul 2013 16:27:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47C8E2D1D2;
+	Mon,  1 Jul 2013 20:27:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WKjTRZDpIccJuidKZUVE0KxmYO8=; b=fQMuwn
+	3W0b13mwvaHuZLYk1W8PDnQZpwzKhSf9HG7zs7/MAnLkiL5/uh+YBwSxug5H1cl5
+	vEmoWJbBfEeknVBaBH3NDh+9E+xlWsgyOiR6qlY97n1nxgGteihBdZ5SKvcoIaYz
+	6lFlgSy+78xtLej/bfn6872tVptgsIgljC+vM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ubPOGws8ysw8ImiNCU1aYXGGsH1zyyAO
+	WMSlRHka0FztLXD9P/w7UA4zG59J6EBiFQRasqoS5TTaQ+SJYiXEQcaD4nbr53d6
+	qu0swxLXXQSaSk0rwIlvsfFp+jrp0g3Wc/PSKI5pGtiQIwVF/xAlVmIumQczKW3s
+	y4K3O9LB7tQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D1512D1D0;
+	Mon,  1 Jul 2013 20:27:31 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B45C92D1CE;
+	Mon,  1 Jul 2013 20:27:30 +0000 (UTC)
+In-Reply-To: <20130701195407.GK17269@suse.cz> (Miklos Vajna's message of "Mon,
+	1 Jul 2013 21:54:07 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A777D10C-E28C-11E2-8DE0-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229327>
 
-On Sat, 22 Jun 2013 23:21:03 +0000, Junio C Hamano wrote:
-...
-> Are there examples of other daemon programs outside Git that have
-> this particular support to help such inetd implementations?
+Miklos Vajna <vmiklos@suse.cz> writes:
 
-Unfortunately I only know one server that exclusively uses this
-interface, and isn't even capable of running under inetd.
+> On Mon, Jul 01, 2013 at 04:52:29PM +0200, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> If I find the time (unlikely) I might submit a patch to implement these
+>> expectations.
+>
+> Seeing that the --no-ff / --ff-only combo wasn't denied just sort of 
+> accidently, I agree that it makes more sense to merge allow_fast_forward
+> and fast_forward_only to a single enum, that automatically gives you 
+> both benefits.
 
-> I would like to know how widely this kind of workaround is done, and
-> also what they call the option, as a quick sanity check.
+Yes, this goes in the right direction.  "Pick one out of these three
+possibilities" is how the configuration is done, and the command
+line option parsing should follow suit by consolidating these two
+variables into one.
 
-The only open-source inetd-like server I know of that does this is Dan
-Bernstein's tcpserver (which also passes the remote IP addresse and simile
-in envvars), and it's probably more to the point to introduce
-a --tcpserver in parallel to --inetd instead of doing --no-syslog.
+Thanks, will queue.
 
-Andreas
-
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+I didn't read the patch carefully, though, so review comments are
+very much appreciated.
