@@ -1,72 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2013, #05; Mon, 20)
-Date: Mon, 01 Jul 2013 14:56:47 -0700
-Message-ID: <7vobamaq04.fsf@alter.siamese.dyndns.org>
-References: <7v38thrxwo.fsf@alter.siamese.dyndns.org>
-	<CALKQrgcmmaqAt-oVtFeem_xvqsjehacVoVJ2bYOyfKWTUzV0AA@mail.gmail.com>
-	<7vtxlwqrbg.fsf@alter.siamese.dyndns.org>
-	<CALKQrge33R9NiQ6isy4xEFaPe7SUmRaDbrXsjPahjtGp9ELG9Q@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2013, #01; Sun, 2)
+Date: Mon, 01 Jul 2013 15:05:04 -0700
+Message-ID: <7vip0uaq02.fsf@alter.siamese.dyndns.org>
+References: <7vfvx0kqtn.fsf@alter.siamese.dyndns.org>
+	<CAM9Z-nmk1qfQZLCH1g2DVaZXm+WY03oTr19ZRZ8L9rb1apSz6Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
+Cc: git@vger.kernel.org,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+	=?utf-8?Q?J=C3=BCrgen?= Kreileder <jk@blackdown.de>
+To: Drew Northup <n1xim.email@gmail.com>
 X-From: git-owner@vger.kernel.org Tue Jul 02 00:12:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtmLB-0005bA-9g
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 00:12:57 +0200
+	id 1UtmLB-0005bA-QZ
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 00:12:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755646Ab3GAWMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jul 2013 18:12:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60992 "EHLO
+	id S1755666Ab3GAWMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jul 2013 18:12:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58856 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755204Ab3GAWMp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jul 2013 18:12:45 -0400
+	id S1755204Ab3GAWMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jul 2013 18:12:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F93D2D363;
-	Mon,  1 Jul 2013 22:12:45 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CCE32D36D;
+	Mon,  1 Jul 2013 22:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 s=sasl; bh=l5uDi8Jj096lOqdeygwdzxhYvXY=; b=WlGME2HSePICwSpq1+2C
-	qb3jUF/6jhvaRe21ka/SqbVKsYiUIEDRkddiKubesrMSBNWB7GNdKm90Fvbr3HIe
-	cdbqQdKxU6qtOn+b0Hg0uAoSA8C+hOGgO5xKAjP4qor+ssvHEdC014+EnGHJHVEo
-	WCEX0vVXd9/qS4eal8g8bO4=
+	 s=sasl; bh=IC1nlv5uXu1O2wxl3BepqzZHXGQ=; b=yGPuzTY3A043E021ddA1
+	2emDzmwUZzL0vicOUx6wstTCXc3RXCqQa9sfLRyN/DvNpmepjvJS73phtzcBzD+U
+	WeiEE0DyTJ7GTuuAmOQkZBaMaHbXg/yZRPj3epbqO344XudNh5li22jo7D1gnO+O
+	sm+0XrCxGGYelpnB32E3SnI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=fXIsc9rerGzZMgewhCvyh+5EzT08yXSpkie9OL718irkw1
-	pmJ2XktUFfwD30hPFMjkyIhgSEp9peygzQQE8ifkGnGMi+mZqHJExcdtDEUp7PEn
-	j6bO+khYTHSMEnNux3NjMm0WUbhDQ+8PzvkOB6EIQDbOGP45dSwZ+bHrvjZ1c=
+	 q=dns; s=sasl; b=aIFx86d8KcLESa2Qtf7CO7WsVYNHVufe51K4N3krl2fI2L
+	A1P7wGSiEzNE3yDAjE11XcyE6NRAPekDfB+cz/7TAwmfuFg/HFJi4WPuENzbksDr
+	v31SFs2LpOpKU+AtEUAnOMZ+oifDFnNb3JT2mRsc60nc2Qe2u1yXql6vDFa5Q=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 659CF2D362;
-	Mon,  1 Jul 2013 22:12:45 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 82B1C2D36C;
+	Mon,  1 Jul 2013 22:12:47 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA9902D35F;
-	Mon,  1 Jul 2013 22:12:44 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E20712D368;
+	Mon,  1 Jul 2013 22:12:46 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5AFFB056-E29B-11E2-B926-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5C354EB8-E29B-11E2-8E6C-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229335>
 
-Johan Herland <johan@herland.net> writes:
+Drew Northup <n1xim.email@gmail.com> writes:
 
-> On Tue, May 21, 2013 at 5:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> ... I think we can go either way, and the above "I think this is
->> being rerolld" was primarily keeping the options open.
+> On Sun, Jun 2, 2013 at 7:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> --------------------------------------------------
+>> [Stalled]
+> ...
+>> * jk/gitweb-utf8 (2013-04-08) 4 commits
+>>  - gitweb: Fix broken blob action parameters on blob/commitdiff pages
+>>  - gitweb: Don't append ';js=(0|1)' to external links
+>>  - gitweb: Make feed title valid utf8
+>>  - gitweb: Fix utf8 encoding for blob_plain, blobdiff_plain, commitdiff_plain, and patch
+>>
+>>  Various fixes to gitweb.
+>>
+>>  Waiting for a reroll after a review.
+>>  Will discard unless we hear from anybody who is interested in
+>>  tying its loose ends.
 >
-> You're right. No point in setting things prematurely in stone. I'll
-> fold jh/shorten-refname into the ongoing series.
+> I'd like to have a closer look at these. It may be a week however as
+> there's some serious in-house chaos going on right now. (Finally
+> starting to settle after about 2 months...)
 
-Ping?
-
-No need to hurry, but just to make sure this didn't disappear from
-everybody's radar.
+Ping?  No need to hurry but in case somebody else is interested but
+is stopped because of this offer to review...
 
 Thanks.
