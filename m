@@ -1,103 +1,84 @@
-From: Miklos Vajna <vmiklos@suse.cz>
-Subject: [PATCH] merge: allow using --no-ff and --ff-only at the same time
-Date: Mon, 1 Jul 2013 09:01:43 +0200
-Message-ID: <20130701070143.GB17269@suse.cz>
+From: =?ISO-8859-15?Q?Stefan_N=E4we?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: git clone -b
+Date: Mon, 1 Jul 2013 09:04:46 +0200
+Message-ID: <51D12A0E.60709@atlas-elektronik.com>
+References: <51CD7AB7.3040409@atlas-elektronik.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 01 09:01:57 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 01 09:04:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtY7Y-000353-BE
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jul 2013 09:01:56 +0200
+	id 1UtYAP-0005Ro-LY
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jul 2013 09:04:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752597Ab3GAHBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jul 2013 03:01:52 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:42907 "EHLO mx2.suse.de"
+	id S1752729Ab3GAHEs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Jul 2013 03:04:48 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:30025 "EHLO mail96.atlas.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751008Ab3GAHBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jul 2013 03:01:52 -0400
-Received: from relay2.suse.de (unknown [195.135.220.254])
-	by mx2.suse.de (Postfix) with ESMTP id B7D15A535C;
-	Mon,  1 Jul 2013 09:01:48 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752472Ab3GAHEr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jul 2013 03:04:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id 150EF10136
+	for <git@vger.kernel.org>; Mon,  1 Jul 2013 09:04:46 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mail96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Mp2aiMpbyb_r for <git@vger.kernel.org>;
+	Mon,  1 Jul 2013 09:04:44 +0200 (CEST)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP
+	for <git@vger.kernel.org>; Mon,  1 Jul 2013 09:04:44 +0200 (CEST)
+Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 864FB27169
+	for <git@vger.kernel.org>; Mon,  1 Jul 2013 09:04:44 +0200 (CEST)
+Received: from [10.200.54.97] (10.200.54.97) by MSSRVS1.atlas.de
+ (10.200.101.71) with Microsoft SMTP Server (TLS) id 8.3.279.1; Mon, 1 Jul
+ 2013 09:04:44 +0200
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <51CD7AB7.3040409@atlas-elektronik.com>
+X-Enigmail-Version: 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229293>
 
-1347483 (Teach 'git merge' and 'git pull' the option --ff-only,
-2009-10-29) says this is not allowed, as they contradict each other.
+Am 28.06.2013 13:59, schrieb Stefan N=E4we:
+> Hi there!
+>=20
+> Is there any reason why 'git clone -b' only takes a branch (from refs=
+/heads/)
+> or a tag (from refs/tags/) ?
+>=20
+> Background: At $dayjob we're using some kind of 'hidden' refs (in ref=
+s/releases/)
+> to communicate between the 'branch integrator' (who creates the ref i=
+n refs/releases/)
+> and the 'build master' who wants to build that ref.=20
+>=20
+> It would be a little easier if the build master could simply say
+>=20
+>   git clone -b refs/releases/the-release-for-today URL
+>=20
+> instead of: git clone... ; cd ... ; git fetch... ; git checkout....
+>=20
+> Any answer or even a better idea to solve that is appreciated.
+>=20
+> Stefan
+>=20
 
-However, --ff-only is about asserting the input of the merge, and
---no-ff is about instructing merge to always create a merge commit, i.e.
-it makes sense to use these options together in some workflow, e.g. when
-branches are integrated by rebasing then merging, and the maintainer
-wants to be sure the branch is rebased.
+Anyone?
 
-Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
----
- builtin/merge.c  | 12 ++++++++----
- t/t7600-merge.sh | 11 ++++++++---
- 2 files changed, 16 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 2ebe732..7026ce0 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1162,9 +1162,6 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		option_commit = 0;
- 	}
- 
--	if (!allow_fast_forward && fast_forward_only)
--		die(_("You cannot combine --no-ff with --ff-only."));
--
- 	if (!abort_current_merge) {
- 		if (!argc) {
- 			if (default_to_upstream)
-@@ -1433,7 +1430,14 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	if (fast_forward_only)
-+	/*
-+	 * If --ff-only was used without --no-ff, or: --ff-only and --no-ff was
-+	 * used at the same time, and this is not a fast-forward.
-+	 */
-+	if (fast_forward_only && (allow_fast_forward || remoteheads->next ||
-+				common->next ||
-+				hashcmp(common->item->object.sha1,
-+					head_commit->object.sha1)))
- 		die(_("Not possible to fast-forward, aborting."));
- 
- 	/* We are going to make a new commit. */
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 460d8eb..bf3d9b2 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -497,9 +497,14 @@ test_expect_success 'combining --squash and --no-ff is refused' '
- 	test_must_fail git merge --no-ff --squash c1
- '
- 
--test_expect_success 'combining --ff-only and --no-ff is refused' '
--	test_must_fail git merge --ff-only --no-ff c1 &&
--	test_must_fail git merge --no-ff --ff-only c1
-+test_expect_success 'combining --ff-only and --no-ff (ff is possible)' '
-+	git reset --hard c0 &&
-+	git merge --ff-only --no-ff c1
-+'
-+
-+test_expect_success 'combining --ff-only and --no-ff (ff is not possible)' '
-+	git reset --hard c1 &&
-+	test_must_fail git merge --ff-only --no-ff c2
- '
- 
- test_expect_success 'merge c0 with c1 (ff overrides no-ff)' '
--- 
-1.8.1.4
+Thanks,
+  Stefan
+--=20
+----------------------------------------------------------------
+/dev/random says: Some people like learning Eskimo, but I can't get Inu=
+it.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6=
+e696b2e636f6d'.decode('hex')"
