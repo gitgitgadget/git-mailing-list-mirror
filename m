@@ -1,99 +1,257 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t4205: replace .\+ with ..* in sed commands
-Date: Mon, 01 Jul 2013 12:26:34 -0700
-Message-ID: <7vtxkef5ed.fsf@alter.siamese.dyndns.org>
-References: <1372705199-17679-1-git-send-email-brian@gernhardtsoftware.com>
+From: Miklos Vajna <vmiklos@suse.cz>
+Subject: [PATCH] merge: handle --ff/--no-ff/--ff-only as a tri-state option
+Date: Mon, 1 Jul 2013 21:54:07 +0200
+Message-ID: <20130701195407.GK17269@suse.cz>
+References: <20130701070143.GB17269@suse.cz>
+ <51D197AD.1070502@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Mon Jul 01 21:26:43 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 01 21:54:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtjkH-0004C6-Lf
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Jul 2013 21:26:42 +0200
+	id 1UtkB3-0001hG-8G
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Jul 2013 21:54:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754255Ab3GAT0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jul 2013 15:26:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43281 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753207Ab3GAT0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jul 2013 15:26:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7406B2CF58;
-	Mon,  1 Jul 2013 19:26:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BoIVOtDIW1fimMUfC6n17QD4294=; b=Ci/PlE
-	gz+oPmPZxnpYDeVOWYMA5ld+GIE1F1uwXQuUHZ2/UzbECMR+8K2qz/TYB4v2tciN
-	dapmkr0jVS5lQLehQ47IThq1rA9WG4vY5el19Tru7hym+rH9zl0R1NrC67eACPWr
-	/+EHGVKJNARji4zbq9hB60mSHhEje/1XiXAuw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jFZzgFJa1lZy4caBUof3wzc9fpF5pHTM
-	w1WOOjbIshHS0jUlphQKfQitdCp/jOh56RPrgNDfw9i4wMaRozkOxl/FjQbopB3t
-	uFFTRos/yUxtZOsKvz2VN7ycznzeibLBR0b2b7cUtEB5m8MlQyB5YbfhL1lUDHql
-	HEFOSEIuI98=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B55A2CF54;
-	Mon,  1 Jul 2013 19:26:36 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C53812CF51;
-	Mon,  1 Jul 2013 19:26:35 +0000 (UTC)
-In-Reply-To: <1372705199-17679-1-git-send-email-brian@gernhardtsoftware.com>
-	(Brian Gernhardt's message of "Mon, 1 Jul 2013 14:59:59 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 24F58452-E284-11E2-8311-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755010Ab3GATyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jul 2013 15:54:16 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:44981 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754884Ab3GATyP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jul 2013 15:54:15 -0400
+Received: from relay1.suse.de (unknown [195.135.220.254])
+	by mx2.suse.de (Postfix) with ESMTP id C76DFA50E4;
+	Mon,  1 Jul 2013 21:54:13 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <51D197AD.1070502@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229325>
 
-Brian Gernhardt <brian@gernhardtsoftware.com> writes:
+This has multiple benefits: with more than one of {"--ff", "--no-ff",
+"--ff-only"} respects the last option; also the command-line option to
+always take precedence over the config file option.
 
-> OS X's sed only accepts basic regular expressions, which does not
-> allow the + quantifier.  However '..*' (anything, followed by zero or
-> more anything) is the same as '.\+' (one or more anything) and valid
-> in any regular expression language.
+Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
+---
 
-Thanks for spotting this.
+On Mon, Jul 01, 2013 at 04:52:29PM +0200, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> If I find the time (unlikely) I might submit a patch to implement these
+> expectations.
 
-We shouldn't mark this as "OS X's sed is broken", but as "We try to
-stick to POSIX BRE, and calling ERE elements via backslash escape,
-e.g. \+, is a GNU extension we try to avoid".  Obviously we are not
-always careful and sometimes these slip through the review process.
+Seeing that the --no-ff / --ff-only combo wasn't denied just sort of 
+accidently, I agree that it makes more sense to merge allow_fast_forward
+and fast_forward_only to a single enum, that automatically gives you 
+both benefits.
 
->
-> Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
-> ---
->  t/t4205-log-pretty-formats.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-> index 719d132..3cfb744 100755
-> --- a/t/t4205-log-pretty-formats.sh
-> +++ b/t/t4205-log-pretty-formats.sh
-> @@ -192,7 +192,7 @@ test_expect_success 'left alignment formatting with trunc' "
->  message ..
->  message ..
->  add bar  Z
-> -$(commit_msg "" "8" ".\+$")
-> +$(commit_msg "" "8" "..*$")
->  EOF
->  	test_cmp expected actual
->  "
-> @@ -310,7 +310,7 @@ test_expect_success 'left/right alignment formatting with stealing' "
->  short long  long long
->  message ..   A U Thor
->  add bar      A U Thor
-> -$(commit_msg "" "8" ".\+$")   A U Thor
-> +$(commit_msg "" "8" "..*$")   A U Thor
->  EOF
->  	test_cmp expected actual
->  "
+ builtin/merge.c  | 65 +++++++++++++++++++++++++++++++++++++-------------------
+ t/t7600-merge.sh | 12 ++++++++---
+ 2 files changed, 52 insertions(+), 25 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 2ebe732..561edf4 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -47,8 +47,8 @@ static const char * const builtin_merge_usage[] = {
+ };
+ 
+ static int show_diffstat = 1, shortlog_len = -1, squash;
+-static int option_commit = 1, allow_fast_forward = 1;
+-static int fast_forward_only, option_edit = -1;
++static int option_commit = 1;
++static int option_edit = -1;
+ static int allow_trivial = 1, have_message, verify_signatures;
+ static int overwrite_ignore = 1;
+ static struct strbuf merge_msg = STRBUF_INIT;
+@@ -76,6 +76,14 @@ static struct strategy all_strategy[] = {
+ 
+ static const char *pull_twohead, *pull_octopus;
+ 
++enum ff_type {
++	FF_ALLOW,
++	FF_NO,
++	FF_ONLY
++};
++
++static enum ff_type fast_forward = FF_ALLOW;
++
+ static int option_parse_message(const struct option *opt,
+ 				const char *arg, int unset)
+ {
+@@ -178,6 +186,21 @@ static int option_parse_n(const struct option *opt,
+ 	return 0;
+ }
+ 
++static int option_parse_ff(const struct option *opt,
++			  const char *arg, int unset)
++{
++	fast_forward = unset ? FF_NO : FF_ALLOW;
++	return 0;
++}
++
++static int option_parse_ff_only(const struct option *opt,
++			  const char *arg, int unset)
++{
++	if (!unset)
++		fast_forward = FF_ONLY;
++	return 0;
++}
++
+ static struct option builtin_merge_options[] = {
+ 	{ OPTION_CALLBACK, 'n', NULL, NULL, NULL,
+ 		N_("do not show a diffstat at the end of the merge"),
+@@ -194,10 +217,12 @@ static struct option builtin_merge_options[] = {
+ 		N_("perform a commit if the merge succeeds (default)")),
+ 	OPT_BOOL('e', "edit", &option_edit,
+ 		N_("edit message before committing")),
+-	OPT_BOOLEAN(0, "ff", &allow_fast_forward,
+-		N_("allow fast-forward (default)")),
+-	OPT_BOOLEAN(0, "ff-only", &fast_forward_only,
+-		N_("abort if fast-forward is not possible")),
++	{ OPTION_CALLBACK, 0, "ff", NULL, NULL,
++		N_("allow fast-forward (default)"),
++		PARSE_OPT_NOARG, option_parse_ff },
++	{ OPTION_CALLBACK, 0, "ff-only", NULL, NULL,
++		N_("abort if fast-forward is not possible"),
++		PARSE_OPT_NOARG, option_parse_ff_only },
+ 	OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
+ 	OPT_BOOL(0, "verify-signatures", &verify_signatures,
+ 		N_("Verify that the named commit has a valid GPG signature")),
+@@ -581,10 +606,9 @@ static int git_merge_config(const char *k, const char *v, void *cb)
+ 	else if (!strcmp(k, "merge.ff")) {
+ 		int boolval = git_config_maybe_bool(k, v);
+ 		if (0 <= boolval) {
+-			allow_fast_forward = boolval;
++			fast_forward = boolval ? FF_ALLOW : FF_NO;
+ 		} else if (v && !strcmp(v, "only")) {
+-			allow_fast_forward = 1;
+-			fast_forward_only = 1;
++			fast_forward = FF_ONLY;
+ 		} /* do not barf on values from future versions of git */
+ 		return 0;
+ 	} else if (!strcmp(k, "merge.defaulttoupstream")) {
+@@ -863,7 +887,7 @@ static int finish_automerge(struct commit *head,
+ 
+ 	free_commit_list(common);
+ 	parents = remoteheads;
+-	if (!head_subsumed || !allow_fast_forward)
++	if (!head_subsumed || fast_forward == FF_NO)
+ 		commit_list_insert(head, &parents);
+ 	strbuf_addch(&merge_msg, '\n');
+ 	prepare_to_commit(remoteheads);
+@@ -1008,7 +1032,7 @@ static void write_merge_state(struct commit_list *remoteheads)
+ 	if (fd < 0)
+ 		die_errno(_("Could not open '%s' for writing"), filename);
+ 	strbuf_reset(&buf);
+-	if (!allow_fast_forward)
++	if (fast_forward == FF_NO)
+ 		strbuf_addf(&buf, "no-ff");
+ 	if (write_in_full(fd, buf.buf, buf.len) != buf.len)
+ 		die_errno(_("Could not write to '%s'"), filename);
+@@ -1157,14 +1181,11 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		show_diffstat = 0;
+ 
+ 	if (squash) {
+-		if (!allow_fast_forward)
++		if (fast_forward == FF_NO)
+ 			die(_("You cannot combine --squash with --no-ff."));
+ 		option_commit = 0;
+ 	}
+ 
+-	if (!allow_fast_forward && fast_forward_only)
+-		die(_("You cannot combine --no-ff with --ff-only."));
+-
+ 	if (!abort_current_merge) {
+ 		if (!argc) {
+ 			if (default_to_upstream)
+@@ -1206,7 +1227,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 				"empty head"));
+ 		if (squash)
+ 			die(_("Squash commit into empty head not supported yet"));
+-		if (!allow_fast_forward)
++		if (fast_forward == FF_NO)
+ 			die(_("Non-fast-forward commit does not make sense into "
+ 			    "an empty head"));
+ 		remoteheads = collect_parents(head_commit, &head_subsumed, argc, argv);
+@@ -1294,11 +1315,11 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			    sha1_to_hex(commit->object.sha1));
+ 		setenv(buf.buf, merge_remote_util(commit)->name, 1);
+ 		strbuf_reset(&buf);
+-		if (!fast_forward_only &&
++		if (fast_forward != FF_ONLY &&
+ 		    merge_remote_util(commit) &&
+ 		    merge_remote_util(commit)->obj &&
+ 		    merge_remote_util(commit)->obj->type == OBJ_TAG)
+-			allow_fast_forward = 0;
++			fast_forward = FF_NO;
+ 	}
+ 
+ 	if (option_edit < 0)
+@@ -1315,7 +1336,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 
+ 	for (i = 0; i < use_strategies_nr; i++) {
+ 		if (use_strategies[i]->attr & NO_FAST_FORWARD)
+-			allow_fast_forward = 0;
++			fast_forward = FF_NO;
+ 		if (use_strategies[i]->attr & NO_TRIVIAL)
+ 			allow_trivial = 0;
+ 	}
+@@ -1345,7 +1366,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		 */
+ 		finish_up_to_date("Already up-to-date.");
+ 		goto done;
+-	} else if (allow_fast_forward && !remoteheads->next &&
++	} else if (fast_forward != FF_NO && !remoteheads->next &&
+ 			!common->next &&
+ 			!hashcmp(common->item->object.sha1, head_commit->object.sha1)) {
+ 		/* Again the most common case of merging one remote. */
+@@ -1392,7 +1413,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		 * only one common.
+ 		 */
+ 		refresh_cache(REFRESH_QUIET);
+-		if (allow_trivial && !fast_forward_only) {
++		if (allow_trivial && fast_forward != FF_ONLY) {
+ 			/* See if it is really trivial. */
+ 			git_committer_info(IDENT_STRICT);
+ 			printf(_("Trying really trivial in-index merge...\n"));
+@@ -1433,7 +1454,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
+-	if (fast_forward_only)
++	if (fast_forward == FF_ONLY)
+ 		die(_("Not possible to fast-forward, aborting."));
+ 
+ 	/* We are going to make a new commit. */
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 460d8eb..3ff5fb8 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -497,9 +497,15 @@ test_expect_success 'combining --squash and --no-ff is refused' '
+ 	test_must_fail git merge --no-ff --squash c1
+ '
+ 
+-test_expect_success 'combining --ff-only and --no-ff is refused' '
+-	test_must_fail git merge --ff-only --no-ff c1 &&
+-	test_must_fail git merge --no-ff --ff-only c1
++test_expect_success 'option --ff-only overwrites --no-ff' '
++	git merge --no-ff --ff-only c1 &&
++	test_must_fail git merge --no-ff --ff-only c2
++'
++
++test_expect_success 'option --ff-only overwrites merge.ff=only config' '
++	git reset --hard c0 &&
++	test_config merge.ff only &&
++	git merge --no-ff c1
+ '
+ 
+ test_expect_success 'merge c0 with c1 (ff overrides no-ff)' '
+-- 
+1.8.1.4
