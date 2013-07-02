@@ -1,68 +1,117 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: repo.or.cz being not well???
-Date: Tue, 02 Jul 2013 18:55:18 +0200
-Message-ID: <87k3l8gavd.fsf@igel.home>
-References: <7vli5q9ba2.fsf@alter.siamese.dyndns.org>
-	<7va9m5apl8.fsf@alter.siamese.dyndns.org>
-	<CB8FBC9A-B24D-4EAC-820F-A40472387FD9@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC/PATCHv3] submodule update: allow custom update command
+Date: Tue, 02 Jul 2013 18:56:44 +0200
+Message-ID: <51D3064C.80901@web.de>
+References: <7vehbii6un.fsf@alter.siamese.dyndns.org> <1372759974-19765-1-git-send-email-judge.packham@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	admin@repo.or.cz
-To: Kyle McKay <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 02 18:55:32 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, iveqy@iveqy.com,
+	stefan.naewe@atlas-elektronik.com, hvoigt@hvoigt.net,
+	gitster@pobox.com
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 02 18:57:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uu3rX-0008Lc-Vz
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 18:55:32 +0200
+	id 1Uu3t5-0001PK-Dk
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 18:57:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752347Ab3GBQz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 12:55:28 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:39855 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752152Ab3GBQz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 12:55:27 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3blBQb4MvVz3hhZV;
-	Tue,  2 Jul 2013 18:55:19 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3blBQb49mfzbbg0;
-	Tue,  2 Jul 2013 18:55:19 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id vsa13iSCsqbh; Tue,  2 Jul 2013 18:55:18 +0200 (CEST)
-X-Auth-Info: p1OLdybUcotMPfGXw3ujVkgK7oUY3E8hdCFhdnRFqdw=
-Received: from igel.home (ppp-88-217-100-28.dynamic.mnet-online.de [88.217.100.28])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Tue,  2 Jul 2013 18:55:18 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 2286DE346A; Tue,  2 Jul 2013 18:55:18 +0200 (CEST)
-X-Yow: I have a TINY BOWL in my HEAD
-In-Reply-To: <CB8FBC9A-B24D-4EAC-820F-A40472387FD9@gmail.com> (Kyle McKay's
-	message of "Mon, 1 Jul 2013 15:39:22 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752548Ab3GBQ5D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 12:57:03 -0400
+Received: from mout.web.de ([212.227.15.3]:51491 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752370Ab3GBQ5B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 12:57:01 -0400
+Received: from [192.168.178.41] ([79.193.89.81]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0MLgQp-1UtEff2W2N-000q8n; Tue, 02 Jul 2013 18:56:53
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <1372759974-19765-1-git-send-email-judge.packham@gmail.com>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V03:K0:YCCt6FOvqbUiZWQX1AAeLu3D0PfO0sIGxl9V23E9nlm4n+kC1Ev
+ EbNCMwhfayKZyUyc/7w5Q0+7TR9AcoPlnF7dGhwuRg9i2KQAByS/mr8qZfrYEwfACStA9Ts
+ CD0K26zqFWbCWfiErDOyyCLVE5iSOQsFV5HLqn1UlTkTMxoyvBM6faZzfBavKgouBuaDxh+
+ QjRCnMNgGeEFcns9MNiDQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229401>
 
-Kyle McKay <mackyle@gmail.com> writes:
+Am 02.07.2013 12:12, schrieb Chris Packham:
+> Users can set submodule.$name.update to '!command' which will cause
+> 'command' to be run instead of checkout/merge/rebase.  This allows the
+> user some finer grained control over how the update is done. The primary
+> motivation for this was interoperability with stgit however being able
+> to intercept the submodule update process may prove useful for
+> integrating or extending other tools.
+> 
+> Signed-off-by: Chris Packham <judge.packham@gmail.com>
+> ---
+> v3 updated as per Junio's review.
 
-> Do you feel that it's important to accept these alternate URL versions
-> that are not listed on the project page:
->
-> 1) Optional trailing '/'
-> 2) For the ssh scp form, optional leading '/'
-3) Optional trailing .git
+Thanks, a few comments below.
 
-Andreas.
+> Still needs tests. Any suggestions? I've been manually testing by setting
+> submodule.$name.update to '!echo'. I haven't looked to see if there are
+> existing 'submodule update' tests yet.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+t7406-submodule-update.sh should be the right place.
+
+>  Documentation/git-submodule.txt | 5 ++++-
+>  git-submodule.sh                | 6 ++++++
+>  2 files changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+> index e576713..0befc20 100644
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -159,7 +159,9 @@ update::
+>  	This will make the submodules HEAD be detached unless `--rebase` or
+>  	`--merge` is specified or the key `submodule.$name.update` is set to
+>  	`rebase`, `merge` or `none`. `none` can be overridden by specifying
+> -	`--checkout`.
+> +	`--checkout`. Setting the key `submodule.$name.update` to `!command`
+> +	will cause `command` to be run. `command` can be any arbitrary shell
+> +	command that takes a single argument, namely the sha1 to update to.
+>  +
+>  If the submodule is not yet initialized, and you just want to use the
+>  setting as stored in .gitmodules, you can automatically initialize the
+> @@ -172,6 +174,7 @@ If `--force` is specified, the submodule will be checked out (using
+>  `git checkout --force` if appropriate), even if the commit specified in the
+>  index of the containing repository already matches the commit checked out in
+>  the submodule.
+> ++
+>  
+>  summary::
+>  	Show commit summary between the given commit (defaults to HEAD) and
+
+I'm not sure this change is necessary ;-)
+
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index eb58c8e..a7c2375 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -799,6 +799,12 @@ Maybe you want to use 'update --init'?")"
+>  				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': merged in '\$sha1'")"
+>  				must_die_on_failure=yes
+>  				;;
+> +			!*)
+> +				command="${update_module#!}"
+> +				die_msg="$(eval_gettext "Unable to exec '\$command \$sha1' in submodule path '\$prefix\$sm_path'")"
+
+Hmm, "Unable to exec" does not quite cut it, as the command was executed
+but returned an error, right? Maybe something like this:
+
+   Execution of '\$command \$sha1' failed in submodule  path '\$prefix\$sm_path'
+
+> +				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': '\$command \$sha1'")"
+> +				must_die_on_failure=yes
+> +				;;
+>  			*)
+>  				command="git checkout $subforce -q"
+>  				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$prefix\$sm_path'")"
+> 
