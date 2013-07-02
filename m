@@ -1,67 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 0/5] Reroll patches against Git v1.8.3.2
-Date: Tue, 02 Jul 2013 12:41:03 -0700
-Message-ID: <7vbo6klpgw.fsf@alter.siamese.dyndns.org>
-References: <cover.1372240998.git.Alex.Crezoff@gmail.com>
-	<cover.1372719264.git.Alex.Crezoff@gmail.com>
+From: Ed Hutchins <eh@demeterr.com>
+Subject: Feature request: "author branch" in commit object
+Date: Tue, 2 Jul 2013 12:37:13 -0700
+Message-ID: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Alexey Shumkin <Alex.Crezoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 02 21:41:26 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 02 21:43:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uu6Rz-0002Ya-LY
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 21:41:20 +0200
+	id 1Uu6Tm-0004RO-3H
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 21:43:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756244Ab3GBTlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 15:41:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51124 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756242Ab3GBTlG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 15:41:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF4AC2A3CD;
-	Tue,  2 Jul 2013 19:41:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8CqpM0MCZ2WUFixMGZ7D4Q4T/kM=; b=G8/G5l
-	V+U+0HCYg8Iu+iztbCQ2nTRu+NrO4z5XJw/rxhmucyyolDPJHj3OXQB3EbDHqSHK
-	lTSlouX6YAAaG5XWkGKk8XmVUZNIACnu/7566DPP8sllYTcshElYuGncCdkA5uAq
-	GZEDwBprxetb7Iupero6CsTHVwHXYz3/XZ8WU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cX4XXasjPPJWmCdd7S6zSxCL8PS4tQ9j
-	YMz6ybe0HS9Ki9kds2CopxLgcYYGgshVOlCHT9P8apHBYl+IMiM9gdHvKwj1nbeq
-	KqnAcagYBqVdAEs+KA8Ep6b8Scynpl5MtjUoIBtuEVNCUH1KAkDYIUiYatejtxED
-	k8Ez7K6cF60=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E48612A3CB;
-	Tue,  2 Jul 2013 19:41:05 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65BAD2A3CA;
-	Tue,  2 Jul 2013 19:41:05 +0000 (UTC)
-In-Reply-To: <cover.1372719264.git.Alex.Crezoff@gmail.com> (Alexey Shumkin's
-	message of "Tue, 2 Jul 2013 03:18:59 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 55B2F1DA-E34F-11E2-9CEA-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754798Ab3GBTnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 15:43:05 -0400
+Received: from mail-qa0-f50.google.com ([209.85.216.50]:53903 "EHLO
+	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754231Ab3GBTnE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 15:43:04 -0400
+Received: by mail-qa0-f50.google.com with SMTP id l18so3111642qak.9
+        for <git@vger.kernel.org>; Tue, 02 Jul 2013 12:43:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :x-gm-message-state;
+        bh=T9F+2awWbY78IZt4WoQM2+yoeMEiPmUk8w5pPHUs+/0=;
+        b=W2ohp0J90ItRsgkvGJAav/KlbdNYih//U59DjsjJXkzZIgG18y7SySheu0vjMJp/O3
+         PbSqZM+0HpjHZ9F7uZL/skAfUztUHZR41l/oFW0w3I/SoFyYYzjcKHkRG52FCUzX9Pqn
+         Kwx2EHQV9oZLmv82HijffTDa/N4tQ/tDCMCqq8GHVFikq09TtmYIHATM+19gPGpZFOUV
+         umbB/Lpn5MmEKtEwaro6zA2nWZYIFHylqjZh1KiEHe03dRvatRqRfjJoh1k4Lu2Z44X0
+         iVkCVjkS5QBGQd5ZmxvpEcEkVU+FKb3HMP9YmnsPv9m++nzr9R3vUpM0Q8Jeb+15xqOJ
+         DsjQ==
+X-Received: by 10.49.12.33 with SMTP id v1mr40172628qeb.85.1372793834036; Tue,
+ 02 Jul 2013 12:37:14 -0700 (PDT)
+Received: by 10.49.76.234 with HTTP; Tue, 2 Jul 2013 12:37:13 -0700 (PDT)
+X-Gm-Message-State: ALoCoQkh3Wl6BL5ibLSPVk0QkGnGDfJRpofQW7BCJvbM/EPCJ9EnGE3srcpBHcjYf+a7bame5n0+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229422>
 
-Alexey Shumkin <Alex.Crezoff@gmail.com> writes:
+I realize that branch names are ephemeral repo-specific things, but it
+would be really useful to be able to determine what branch a commit
+was authored from (as a hint to ancestry graph layout tools, for
+example). Is there any way to do this currently, is it planned, or
+would it be deemed useful enough to be worth adding to each commit
+object?
 
-> v8 of this patch series includes the following changes against v7:
-
-Oops, isn't this already in 'next'?  In that case, please feed
-incremental updates on top of the patches that are already queued as
-improvements and fixes.
-
-Thanks.
+  - Ed
