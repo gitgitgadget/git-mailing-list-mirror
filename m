@@ -1,117 +1,92 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [RFC/PATCHv3] submodule update: allow custom update command
-Date: Tue, 02 Jul 2013 18:56:44 +0200
-Message-ID: <51D3064C.80901@web.de>
-References: <7vehbii6un.fsf@alter.siamese.dyndns.org> <1372759974-19765-1-git-send-email-judge.packham@gmail.com>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: How to still kill git fetch with too many refs
+Date: Tue, 2 Jul 2013 10:58:58 -0600
+Organization: CAF
+Message-ID: <201307021058.58563.mfick@codeaurora.org>
+References: <201307012102.31384.mfick@codeaurora.org> <51D29C3E.5070600@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, iveqy@iveqy.com,
-	stefan.naewe@atlas-elektronik.com, hvoigt@hvoigt.net,
-	gitster@pobox.com
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 02 18:57:13 2013
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jul 02 18:59:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uu3t5-0001PK-Dk
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 18:57:07 +0200
+	id 1Uu3v1-00039s-0C
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 18:59:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752548Ab3GBQ5D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 12:57:03 -0400
-Received: from mout.web.de ([212.227.15.3]:51491 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752370Ab3GBQ5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 12:57:01 -0400
-Received: from [192.168.178.41] ([79.193.89.81]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0MLgQp-1UtEff2W2N-000q8n; Tue, 02 Jul 2013 18:56:53
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <1372759974-19765-1-git-send-email-judge.packham@gmail.com>
-X-Enigmail-Version: 1.5.1
-X-Provags-ID: V03:K0:YCCt6FOvqbUiZWQX1AAeLu3D0PfO0sIGxl9V23E9nlm4n+kC1Ev
- EbNCMwhfayKZyUyc/7w5Q0+7TR9AcoPlnF7dGhwuRg9i2KQAByS/mr8qZfrYEwfACStA9Ts
- CD0K26zqFWbCWfiErDOyyCLVE5iSOQsFV5HLqn1UlTkTMxoyvBM6faZzfBavKgouBuaDxh+
- QjRCnMNgGeEFcns9MNiDQ==
+	id S1752776Ab3GBQ7B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 12:59:01 -0400
+Received: from smtp.codeaurora.org ([198.145.11.231]:50286 "EHLO
+	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752370Ab3GBQ7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 12:59:00 -0400
+Received: from smtp.codeaurora.org (localhost [127.0.0.1])
+	by smtp.codeaurora.org (Postfix) with ESMTP id 0EFF913F092;
+	Tue,  2 Jul 2013 16:59:00 +0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 486)
+	id 0070013F05D; Tue,  2 Jul 2013 16:58:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	pdx-caf-smtp.dmz.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.3.1
+Received: from mfick-lnx.localnet (mfick-lnx.qualcomm.com [129.46.10.58])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: mfick@smtp.codeaurora.org)
+	by smtp.codeaurora.org (Postfix) with ESMTPSA id B8F0513F05D;
+	Tue,  2 Jul 2013 16:58:59 +0000 (UTC)
+User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <51D29C3E.5070600@alum.mit.edu>
+X-Length: 2178
+X-UID: 254
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229402>
 
-Am 02.07.2013 12:12, schrieb Chris Packham:
-> Users can set submodule.$name.update to '!command' which will cause
-> 'command' to be run instead of checkout/merge/rebase.  This allows the
-> user some finer grained control over how the update is done. The primary
-> motivation for this was interoperability with stgit however being able
-> to intercept the submodule update process may prove useful for
-> integrating or extending other tools.
+On Tuesday, July 02, 2013 03:24:14 am Michael Haggerty 
+wrote:
+> > git rev-list HEAD | for nn in $(seq 0 100) ; do for c
+> > in $(seq 0 10000) ; do  read sha ; echo $sha
+> > refs/c/$nn/$c$nn ; done ; done > .git/packed-refs
 > 
-> Signed-off-by: Chris Packham <judge.packham@gmail.com>
-> ---
-> v3 updated as per Junio's review.
+> I believe this generates a packed-refs file that is not
+> sorted lexicographically by refname, whereas all
+> Git-generated packed-refs files are sorted.  
 
-Thanks, a few comments below.
 
-> Still needs tests. Any suggestions? I've been manually testing by setting
-> submodule.$name.update to '!echo'. I haven't looked to see if there are
-> existing 'submodule update' tests yet.
+Yes, you are indeed correct.  I was attempting to be too 
+clever with my sharding I guess.  Thanks.
 
-t7406-submodule-update.sh should be the right place.
+> There are
+> some optimizations in refs.c for adding references in
+> order that might therefore be circumvented by your
+> unsorted file.  Please try sorting the file by refname
+> and see if that helps.  (You can do so by deleting one
+> of the packed references; then git will sort the
+> remainder while rewriting the file.)
 
->  Documentation/git-submodule.txt | 5 ++++-
->  git-submodule.sh                | 6 ++++++
->  2 files changed, 10 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index e576713..0befc20 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -159,7 +159,9 @@ update::
->  	This will make the submodules HEAD be detached unless `--rebase` or
->  	`--merge` is specified or the key `submodule.$name.update` is set to
->  	`rebase`, `merge` or `none`. `none` can be overridden by specifying
-> -	`--checkout`.
-> +	`--checkout`. Setting the key `submodule.$name.update` to `!command`
-> +	will cause `command` to be run. `command` can be any arbitrary shell
-> +	command that takes a single argument, namely the sha1 to update to.
->  +
->  If the submodule is not yet initialized, and you just want to use the
->  setting as stored in .gitmodules, you can automatically initialize the
-> @@ -172,6 +174,7 @@ If `--force` is specified, the submodule will be checked out (using
->  `git checkout --force` if appropriate), even if the commit specified in the
->  index of the containing repository already matches the commit checked out in
->  the submodule.
-> ++
->  
->  summary::
->  	Show commit summary between the given commit (defaults to HEAD) and
+A simple git pack-refs seems to clean it up.
 
-I'm not sure this change is necessary ;-)
+The original test did complete in ~77mins last night.  A 
+rerun with a sorted file takes ~61mins,
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index eb58c8e..a7c2375 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -799,6 +799,12 @@ Maybe you want to use 'update --init'?")"
->  				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': merged in '\$sha1'")"
->  				must_die_on_failure=yes
->  				;;
-> +			!*)
-> +				command="${update_module#!}"
-> +				die_msg="$(eval_gettext "Unable to exec '\$command \$sha1' in submodule path '\$prefix\$sm_path'")"
+-Martin
 
-Hmm, "Unable to exec" does not quite cut it, as the command was executed
-but returned an error, right? Maybe something like this:
 
-   Execution of '\$command \$sha1' failed in submodule  path '\$prefix\$sm_path'
+PS: This test was performed with git version 1.8.2.1 on 
+linux 2.6.32-37-generic #81-Ubuntu SMP 
 
-> +				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': '\$command \$sha1'")"
-> +				must_die_on_failure=yes
-> +				;;
->  			*)
->  				command="git checkout $subforce -q"
->  				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$prefix\$sm_path'")"
-> 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code 
+Aurora Forum, hosted by The Linux Foundation
+ 
