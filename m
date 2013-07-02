@@ -1,55 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: John Keeping <john@keeping.me.uk>
 Subject: Re: --follow is ignored when used with --reverse
-Date: Tue, 2 Jul 2013 14:42:59 +0530
-Message-ID: <CALkWK0ngwvQzL1cMGL5pWJoJHLYBHV2kUU=i3YiWt5V_uVLz7A@mail.gmail.com>
+Date: Tue, 2 Jul 2013 10:19:36 +0100
+Message-ID: <20130702091936.GA9161@serenity.lan>
 References: <20130524012324.295dec77@hugo.daonet.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Alois Mahdal <Alois.Mahdal.1-ndmail@zxcvb.cz>
-X-From: git-owner@vger.kernel.org Tue Jul 02 11:13:45 2013
+X-From: git-owner@vger.kernel.org Tue Jul 02 11:19:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Utwee-0005AD-CU
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 11:13:44 +0200
+	id 1Utwkb-00012h-56
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 11:19:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932470Ab3GBJNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 05:13:40 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:57644 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932362Ab3GBJNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 05:13:40 -0400
-Received: by mail-ie0-f175.google.com with SMTP id a13so11376054iee.20
-        for <git@vger.kernel.org>; Tue, 02 Jul 2013 02:13:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=EyEnyGj5is1+caSlOoj3oYu4XlX+KNJH2IIk61neD6E=;
-        b=k6FwK/EbVGxzOf2WO/9S/mlxFyUEAIIVbIMnx8aV4iNiELa5bJDGDxpb6rGHx+c+7n
-         yO/9Vp3Ni3sdww2wYUdq4BFxhR02iXqFBX77Ox1/0ONVaLwgJzjin6yBph/YCzS9+oFD
-         yMfjsCf54u/+DLbjnBA7DOXj1ix7LjJXPaK7L22FlJEOvKebrDwUp258wYFMzPzWxYGS
-         WCcLk2wccrQKBd8zdiI6TD7iKOHSmHp86jdzRDp5CZAQrotTQQYVihxcilAEVIstnx5k
-         8mR0io5n8QaoL79Vmalwf3jACbfYTlS7EdmUJbU19KXYHpG8Fj7oIxKNhyfyS0E8SjR+
-         rAiw==
-X-Received: by 10.50.72.73 with SMTP id b9mr19055857igv.50.1372756419823; Tue,
- 02 Jul 2013 02:13:39 -0700 (PDT)
-Received: by 10.64.37.130 with HTTP; Tue, 2 Jul 2013 02:12:59 -0700 (PDT)
+	id S932507Ab3GBJTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 05:19:48 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:42811 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932268Ab3GBJTs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 05:19:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 2817ACDA5B4;
+	Tue,  2 Jul 2013 10:19:47 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id G-fOfIqK5I5d; Tue,  2 Jul 2013 10:19:45 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id BCEA4CDA5DA;
+	Tue,  2 Jul 2013 10:19:41 +0100 (BST)
+Content-Disposition: inline
 In-Reply-To: <20130524012324.295dec77@hugo.daonet.home>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229384>
 
-Alois Mahdal wrote:
+On Fri, May 24, 2013 at 01:23:24AM +0200, Alois Mahdal wrote:
+> Hello!
+> 
 > This [has been reported][1] to this list about half a year ago
 > but with no response so I'm  not even sure if it's been
 > acknowledged as bug.
+> 
+>   [1]: http://marc.info/?l=git&m=135215709307126&q=raw
+> 
+> When I use `git log --follow file` all is OK, but once I add
+> `--reverse` to it, it no longer follows the file beyond renames.
+> 
+> This makes it hard to query for when the file was really added,
+> which I was trying to achieve with
+> 
+>     $ git -1 --reverse --follow several_times_renamed_file
 
-Yes, this is a bug.  However, it is not at all easy to fix; so I would
-recommend that you contribute a documentation patch/ failing test for
-now (hint: patch emails get more attention that non-patch ones ;)
+In my testing it actually seems to be worse than that.  In git.git:
+
+    $ git log --oneline builtin/clone.c | wc -l
+    99
+    $ git log --oneline --reverse builtin/clone.c | wc -l
+    99
+    $ git log --oneline --follow builtin/clone.c | wc -l
+    125
+    $ git log --oneline --follow --reverse builtin/clone.c | wc -l
+    3
+
+So the combination of --reverse and --follow appears to have lost the
+majority of the commits!
