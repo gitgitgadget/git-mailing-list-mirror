@@ -1,102 +1,92 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] CYGWIN: Use a TCP socket for pipe()
-Date: Tue, 02 Jul 2013 16:57:21 +0200
-Message-ID: <51D2EA51.5000807@web.de>
-References: <201306271831.13865.tboegi@web.de> <7vvc4zsbbs.fsf@alter.siamese.dyndns.org> <51CCF91F.7080501@gmail.com> <51D08B58.8000103@web.de> <7vwqpbi4ws.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	ramsay@ramsay1.demon.co.uk, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 02 16:57:41 2013
+From: Tony Finch <dot@dotat.at>
+Subject: [PATCH] gitweb: allow extra breadcrumbs to prefix the trail
+Date: Tue, 2 Jul 2013 16:49:08 +0100
+Message-ID: <E1Uu3IT-0008U1-3c@hermes-2.csi.cam.ac.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 02 18:42:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uu21P-0006bd-DT
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 16:57:35 +0200
+	id 1Uu3fE-0005NO-ND
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 18:42:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753028Ab3GBO53 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Jul 2013 10:57:29 -0400
-Received: from mout.web.de ([212.227.15.3]:58544 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752977Ab3GBO51 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 10:57:27 -0400
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0LoYJu-1UHxAx31FC-00gVCx; Tue, 02 Jul 2013 16:57:22
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <7vwqpbi4ws.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V03:K0:wApLmGU7iVP0X6k94DXibtWnuWqLCm+rnCs/BHDgJ6AlkBfzBgq
- vSSTslAcKUwhgMgzIVUwW5GYXFTZEEPhd4Mo+96iYMReG45fjxv3E1AAaESFBAzqmmaUb+S
- U1OE18M54h+yDm0TL32BJF4TbSo9UDFQvGpvk5rkkxq2/z3NhrDzXr065C57F3npQjyMGVc
- mkBGWravZypvD7zEEzWBQ==
+	id S1754762Ab3GBQmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 12:42:43 -0400
+Received: from ppsw-mx-f.csi.cam.ac.uk ([131.111.8.149]:50788 "EHLO
+	ppsw-42.csi.cam.ac.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754616Ab3GBQmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 12:42:40 -0400
+X-Greylist: delayed 1402 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Jul 2013 12:42:40 EDT
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:37937)
+	by ppsw-42.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.159]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1Uu3IT-0003SY-6y (Exim 4.80_167-5a66dd3) for git@vger.kernel.org
+	(return-path <fanf2@hermes.cam.ac.uk>); Tue, 02 Jul 2013 17:19:17 +0100
+Received: from fanf2 by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local id 1Uu3IT-0008U1-3c (Exim 4.72) for git@vger.kernel.org
+	(return-path <fanf2@hermes.cam.ac.uk>); Tue, 02 Jul 2013 17:19:17 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229399>
 
-On 2013-07-01 00.56, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> I testet "rj/cygwin-remove-cheating-lstat" with the "socket pipe" on=
- top:
->> no hanging.
->>
->> Then I run "rj/cygwin-remove-cheating-lstat" without "socket pipe",
->> (or in other words git.git/pu):
->> No hanging.
->=20
-> So an immediate conclusion is that we can forget about this patch?
-Yes
->=20
->> So at the moment I don't have any problems to report for cygwin, whi=
-ch is good.
->>
->> And it looks as if "rj/cygwin-remove-cheating-lstat" prevents the "h=
-anging",
->> so there is another +1 to keep it and move it into next.
->=20
-> Ramsay started a "mark places we call lstat() when we do not really
-> need fully correct lstat" topic, and I think it may be a sane
-> direction to go, as long as the helper function's semantic is
-> clearly defined.
->=20
-> It would be worth seeing where it leads us, before ripping that
-> "cheating and incomplete lstat out, I think.
-I currently run the test suite on it, based on next.
-Got one hanging, but of a different kind:
-git was running fetch, but the corresponding git-upload-pack.exe was no=
-t in the
-task list of the windows explorer, but it was in ps under cygwin.
+There are often parent pages logically above the gitweb projects
+list, e.g. home pages of the organization and department that host
+the gitweb server. This change allows you to include links to those
+pages in gitweb's breadcrumb trail.
 
+Signed-off-by: Tony Finch <dot@dotat.at>
+---
+ Documentation/gitweb.conf.txt | 8 ++++++++
+ gitweb/gitweb.perl            | 6 ++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/run-command.c b/run-command.c
-index aece872..ee588eb 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -226,6 +226,9 @@ static inline void set_cloexec(int fd)
-                fcntl(fd, F_SETFD, flags | FD_CLOEXEC);
- }
-=20
-+#if defined(__CYGWIN__)
-+#define wait_or_whine(p, a) (p)
-+#else
- static int wait_or_whine(pid_t pid, const char *argv0)
- {
-        int status, code =3D -1;
-@@ -268,6 +271,7 @@ static int wait_or_whine(pid_t pid, const char *arg=
-v0)
-        errno =3D failed_errno;
-        return code;
- }
-+#endif
-
-(And I needed to remove the credential helper tests)
-
-More info later
-/Torsten
+diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
+index ea0526e..4579578 100644
+--- a/Documentation/gitweb.conf.txt
++++ b/Documentation/gitweb.conf.txt
+@@ -339,6 +339,14 @@ $home_link_str::
+ 	as this link leads to the list of projects.  Other popular choice it to
+ 	set it to the name of site.
+ 
++@extra_breadcrumbs::
++	Additional links to be added to the start of the breadcrumb trail,
++	that are logically "above" the gitweb projects list. For example,
++	links to the organization and department which host the gitweb
++	server. Each element of the list is a reference to an array,
++	in which element 0 is the link text and element 1 is the
++	target URL.
++
+ $logo_url::
+ $logo_label::
+ 	URI and label (title) for the Git logo link (or your site logo,
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 8d69ada..436f17a 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -85,6 +85,9 @@ our $project_maxdepth = "++GITWEB_PROJECT_MAXDEPTH++";
+ # string of the home link on top of all pages
+ our $home_link_str = "++GITWEB_HOME_LINK_STR++";
+ 
++# extra breadcrumbs preceding the home link
++our @extra_breadcrumbs = ();
++
+ # name of your site or organization to appear in page titles
+ # replace this with something more descriptive for clearer bookmarks
+ our $site_name = "++GITWEB_SITENAME++"
+@@ -3982,6 +3985,9 @@ sub print_nav_breadcrumbs_path {
+ sub print_nav_breadcrumbs {
+ 	my %opts = @_;
+ 
++	for my $crumb (@extra_breadcrumbs) {
++		print $cgi->a({-href => esc_url($crumb->[1])}, $crumb->[0]) . " / ";
++	}
+ 	print $cgi->a({-href => esc_url($home_link)}, $home_link_str) . " / ";
+ 	if (defined $project) {
+ 		my @dirname = split '/', $project;
+-- 
+1.8.3.1.605.g85318f5
