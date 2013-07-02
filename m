@@ -1,65 +1,112 @@
 From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RFC/PATCHv2] submodule: add ability to configure update command
-Date: Tue, 02 Jul 2013 21:59:17 +1200
-Message-ID: <51D2A475.9010608@gmail.com>
-References: <51D04F06.9000400@web.de> <1372673494-24286-1-git-send-email-judge.packham@gmail.com> <7v1u7ii5us.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de, iveqy@iveqy.com,
-	stefan.naewe@atlas-elektronik.com, hvoigt@hvoigt.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 02 11:58:22 2013
+Subject: [RFC/PATCHv3] submodule update: allow custom update command
+Date: Tue,  2 Jul 2013 22:12:54 +1200
+Message-ID: <1372759974-19765-1-git-send-email-judge.packham@gmail.com>
+References: <7vehbii6un.fsf@alter.siamese.dyndns.org>
+Cc: Jens.Lehmann@web.de, iveqy@iveqy.com,
+	stefan.naewe@atlas-elektronik.com, hvoigt@hvoigt.net,
+	gitster@pobox.com, Chris Packham <judge.packham@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 02 12:13:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtxLp-0005Qs-Mf
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 11:58:22 +0200
+	id 1UtxaT-0007r0-QN
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 12:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755287Ab3GBJ6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 05:58:18 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:34910 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753549Ab3GBJ6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 05:58:17 -0400
-Received: by mail-pa0-f42.google.com with SMTP id rl6so6127465pac.1
-        for <git@vger.kernel.org>; Tue, 02 Jul 2013 02:58:16 -0700 (PDT)
+	id S932504Ab3GBKN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 06:13:26 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:36069 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755046Ab3GBKNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 06:13:25 -0400
+Received: by mail-pa0-f48.google.com with SMTP id kp12so6052942pab.7
+        for <git@vger.kernel.org>; Tue, 02 Jul 2013 03:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=a3QtR/w2E94JDAwRW1W0DkGesPya511Bx6pupBy4Yn0=;
-        b=XNsSbvbS6fhATfrVAbzbrodYBB4PPPdPXe+lNzb9CmqM99hSHkKQs3SqV8CSVvR+BT
-         7usXbJGNZH7P2USJ/BqJUYggFypk7LnnbOgB0L1+NeVn7sWQ3Lp2WK8iiHGqmn5uhmS8
-         iBr+u6j8oY7VWh9CgvS+5iqGlP3Rl3Bv07WPWzWHVV5/MRsjz2+rd79R/quz3azbBahq
-         aGVX+WSTzV8KkFFu+vbOywpaJf/WrFJqEM0FISf55At3a/1RBZGltF4WyU3TVdzLF74X
-         vzHzbge+5eg0LmJ2420F7E/KI82wm68Ljj8kW7KulNGqxIJtik/lVbKyWAzjgQCAzshW
-         aShA==
-X-Received: by 10.68.35.131 with SMTP id h3mr28206194pbj.140.1372759096681;
-        Tue, 02 Jul 2013 02:58:16 -0700 (PDT)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id fr1sm26687474pbb.26.2013.07.02.02.58.13
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=OOzpFFKHFQXvQSqr2ttfjeQSy3Eogh/Q8XjxPXYJogg=;
+        b=0gw6b+y0/5RTuHZDCZKZPwrFoGDJzL5w6DGZH0amk1Sc8ws/mXqkgiPXHi8ofBsZnv
+         1dxl3Qr7FGVBJ4uNXh6JlyWnmBc1tQ5SKaLPLQnBaPiyokKw5FRNxv4OA3pjpfo7Go7W
+         1IqywtnQvvUsjr6xv9nRvqSgrX3fjNdvIxE+PTG3sA2fqCe3521Zy2GdiHzx2A4Z1Jjj
+         GO88ms7TmOZyFJfp77PhBfnU76xZXljvFN4+CDbBYJnqlD+X2IOlYvo04x3xDrxgFuFW
+         MMNRFVlHVXysRsO7mN11bDlW7pWQ95pIcmnrq/8SJzQvFhMuDjgI84FrWuSdrUsMKrXu
+         lRxA==
+X-Received: by 10.68.182.130 with SMTP id ee2mr13262252pbc.26.1372760004657;
+        Tue, 02 Jul 2013 03:13:24 -0700 (PDT)
+Received: from chrisp3-dl.ws.atlnz.lc ([202.36.163.2])
+        by mx.google.com with ESMTPSA id td4sm14900393pac.20.2013.07.02.03.13.21
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 02 Jul 2013 02:58:16 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <7v1u7ii5us.fsf@alter.siamese.dyndns.org>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 02 Jul 2013 03:13:24 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1.644.gfaf2af3
+In-Reply-To: <7vehbii6un.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229389>
 
-On 02/07/13 04:48, Junio C Hamano wrote:
-> Chris Packham <judge.packham@gmail.com> writes:
-> 
->> +			!*)
->> +				command="$(expr "$update_module" : '!\(.*\)')"
-> 
-> 	command=${command#!}
-> 
+Users can set submodule.$name.update to '!command' which will cause
+'command' to be run instead of checkout/merge/rebase.  This allows the
+user some finer grained control over how the update is done. The primary
+motivation for this was interoperability with stgit however being able
+to intercept the submodule update process may prove useful for
+integrating or extending other tools.
 
-Thanks, expr was my attempt to avoid using a ${command:1} bash-ism. v3
-on it's way.
+Signed-off-by: Chris Packham <judge.packham@gmail.com>
+---
+v3 updated as per Junio's review.
+
+Still needs tests. Any suggestions? I've been manually testing by setting
+submodule.$name.update to '!echo'. I haven't looked to see if there are
+existing 'submodule update' tests yet.
+
+ Documentation/git-submodule.txt | 5 ++++-
+ git-submodule.sh                | 6 ++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index e576713..0befc20 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -159,7 +159,9 @@ update::
+ 	This will make the submodules HEAD be detached unless `--rebase` or
+ 	`--merge` is specified or the key `submodule.$name.update` is set to
+ 	`rebase`, `merge` or `none`. `none` can be overridden by specifying
+-	`--checkout`.
++	`--checkout`. Setting the key `submodule.$name.update` to `!command`
++	will cause `command` to be run. `command` can be any arbitrary shell
++	command that takes a single argument, namely the sha1 to update to.
+ +
+ If the submodule is not yet initialized, and you just want to use the
+ setting as stored in .gitmodules, you can automatically initialize the
+@@ -172,6 +174,7 @@ If `--force` is specified, the submodule will be checked out (using
+ `git checkout --force` if appropriate), even if the commit specified in the
+ index of the containing repository already matches the commit checked out in
+ the submodule.
+++
+ 
+ summary::
+ 	Show commit summary between the given commit (defaults to HEAD) and
+diff --git a/git-submodule.sh b/git-submodule.sh
+index eb58c8e..a7c2375 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -799,6 +799,12 @@ Maybe you want to use 'update --init'?")"
+ 				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': merged in '\$sha1'")"
+ 				must_die_on_failure=yes
+ 				;;
++			!*)
++				command="${update_module#!}"
++				die_msg="$(eval_gettext "Unable to exec '\$command \$sha1' in submodule path '\$prefix\$sm_path'")"
++				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': '\$command \$sha1'")"
++				must_die_on_failure=yes
++				;;
+ 			*)
+ 				command="git checkout $subforce -q"
+ 				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$prefix\$sm_path'")"
+-- 
+1.8.3.1.644.gfaf2af3
