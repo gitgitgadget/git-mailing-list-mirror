@@ -1,101 +1,263 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: [PATCH 0/3] avoid quadratic behavior in fetch-pack
-Date: Tue, 2 Jul 2013 11:45:07 -0600
-Organization: CAF
-Message-ID: <201307021145.07726.mfick@codeaurora.org>
-References: <201307012102.31384.mfick@codeaurora.org> <20130702052827.GA10626@sigill.intra.peff.net> <20130702061149.GB1206@sigill.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v3] [submodule] Add --depth to submodule update/add
+Date: Tue, 02 Jul 2013 19:46:26 +0200
+Message-ID: <51D311F2.1030009@web.de>
+References: <1372729167-23200-1-git-send-email-iveqy@iveqy.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 02 19:45:17 2013
+Cc: gitster@pobox.com, hvoigt@hvoigt.net, git@vger.kernel.org
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Tue Jul 02 19:48:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uu4dh-0000zI-23
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 19:45:17 +0200
+	id 1Uu4gz-000415-8f
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 19:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754103Ab3GBRpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 13:45:10 -0400
-Received: from smtp.codeaurora.org ([198.145.11.231]:52509 "EHLO
-	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752758Ab3GBRpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 13:45:09 -0400
-Received: from smtp.codeaurora.org (localhost [127.0.0.1])
-	by smtp.codeaurora.org (Postfix) with ESMTP id 20DE413ED2A;
-	Tue,  2 Jul 2013 17:45:09 +0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 486)
-	id 14C9A13F092; Tue,  2 Jul 2013 17:45:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	pdx-caf-smtp.dmz.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.1
-Received: from mfick-lnx.localnet (mfick-lnx.qualcomm.com [129.46.10.58])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: mfick@smtp.codeaurora.org)
-	by smtp.codeaurora.org (Postfix) with ESMTPSA id C7CF313ED2A;
-	Tue,  2 Jul 2013 17:45:08 +0000 (UTC)
-User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <20130702061149.GB1206@sigill.intra.peff.net>
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1752910Ab3GBRsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 13:48:37 -0400
+Received: from mout-xforward.web.de ([82.165.159.2]:62912 "EHLO
+	mout-xforward.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752334Ab3GBRsg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 13:48:36 -0400
+X-Greylist: delayed 2308 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Jul 2013 13:48:36 EDT
+Received: from [192.168.178.41] ([79.193.89.81]) by smtp.web.de (mrweb102)
+ with ESMTPA (Nemesis) id 0LwHkw-1UAfGN01Ww-017zct; Tue, 02 Jul 2013 19:46:29
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <1372729167-23200-1-git-send-email-iveqy@iveqy.com>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V03:K0:AcTaxH+xUM4XPMqgwm/6igzOoCOLAs1k+lu5XQdfUzC8PvMy3Nx
+ cG3/EQEhZF6fGRgj8cMto7P/VVTI6mQoLA6W9e7O6NLFMX1RByGGEL6Zy26Umk+ONufgkrm
+ ZvpEGC8xuOPJRjvPcpzmMXxPB9J7EJMPTsu9lb3X5nUCFCdOfQmuG4fJIJZxCV+nvt+No+V
+ Q+gjHJWMz0b0aDXu09D6A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229410>
 
-On Tuesday, July 02, 2013 12:11:49 am Jeff King wrote:
-> Here are my patches to deal with Martin's pathological
-> case, split out for easy reading. I took a few timings
-> to show that the results of the 3rd patch are noticeable
-> even with 50,000 unique refs (which is still a lot, but
-> something that I could conceive of a busy repo
-> accumulating over time).
+Sending again because the first one bounced.
+
+Am 02.07.2013 03:39, schrieb Fredrik Gustafsson:
+> When a submodule is clone, clone it width the --depth flag. This is useful
+> when the submodule(s) are huge and you're not really interested in anything
+> but the latest commit.
+>
+> Tests are added and to make --depth work the path for test "setup a submodule
+> tree" had to be modified. Also did some indent adjustments to conform to the
+> rest of the testfile on "submodule update can handle symbolic links in pwd".
 > 
->   [1/3]: fetch-pack: avoid quadratic list insertion in
-> mark_complete [2/3]: commit.c: make
-> compare_commits_by_commit_date global [3/3]: fetch-pack:
-> avoid quadratic behavior in rev_list_push
+> Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
+> ---
 > 
-> And here's the diffstat to prove it is really not scary.
-> :)
+> The previous iteration can be found here:
+> http://thread.gmane.org/gmane.comp.version-control.git/229196/
+
+The first line of the commit message still sounds strange to me, please see
+my answer in the thread you quoted.
+
+Also the documentation still talks about --clone-depth.
+
+> This was actually a bit tricky. When I changed
+> git clone $depth
+> to
+> git clone "$depth"
 > 
->  commit.c     |  2 +-
->  commit.h     |  2 ++
->  fetch-pack.c | 16 ++++++++--------
->  3 files changed, 11 insertions(+), 9 deletions(-)
+> git clone dies with the error "too many arguments". This was solved with changing
+> depth=$5
+> to
+> depth="$5"
 > 
-> -Peff
+> which I don't understand since variable assignment doesn't expand $5 and therefore
+> "" should not be needed, AFAIK. Any comments on this?
 
-I applied these 3 patches and it indeed improves things 
-dramatically.  Thanks Peff, you are awesome!!!
+The assignment to reference right above that is quoted like that too. I wonder
+if we should also use ${depth:+"$depth"} as argument to clone.
 
-
-The synthetic test case (but sorted), now comes in at around 
-15s.  The more important real world case (for us), fetching 
-from my production server, which took around 12mins 
-previously, now takes around 30s (I think the extra time is 
-now spent on the Gerrit server, but I will investigate that 
-a bit more)!  That is very significant and should make many 
-workflows much more efficient.  +1 for merging this. :)
-
-Again, thanks,
-
--Martin
-
-
-Note, I tested git-next 1.8.3.2.883.g27cfd27 to be sure that 
-it is still problematic without this patch, it is (running 
-for 10mins now without completing).
-
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
- 
+> An other note:
+> file:// accepts relative paths but don't handle them well at all. For example in the
+> test t7406-submodule-update.sh:
+> git clone file://cloned super3
+> will work, but submodules and push/fetch will be "broken", since the paths will
+> be wrong.
+> 
+>  Documentation/git-submodule.txt | 10 ++++++++--
+>  git-submodule.sh                | 24 +++++++++++++++++++++---
+>  t/t7400-submodule-basic.sh      | 15 +++++++++++++++
+>  t/t7406-submodule-update.sh     | 24 +++++++++++++++++-------
+>  4 files changed, 61 insertions(+), 12 deletions(-)
+> 
+> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+> index e576713..9876c7c 100644
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -10,12 +10,12 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git submodule' [--quiet] add [-b <branch>] [-f|--force] [--name <name>]
+> -	      [--reference <repository>] [--] <repository> [<path>]
+> +	      [--reference <repository>] [--clone-depth <depth>] [--] <repository> [<path>]
+>  'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+>  'git submodule' [--quiet] init [--] [<path>...]
+>  'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
+>  'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
+> -	      [-f|--force] [--rebase] [--reference <repository>]
+> +	      [-f|--force] [--rebase] [--reference <repository>] [--clone-depth <depth>]
+>  	      [--merge] [--recursive] [--] [<path>...]
+>  'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
+>  	      [commit] [--] [<path>...]
+> @@ -328,6 +328,12 @@ for linkgit:git-clone[1]'s `--reference` and `--shared` options carefully.
+>  	only in the submodules of the current repo, but also
+>  	in any nested submodules inside those submodules (and so on).
+>  
+> +--clone-depth::
+> +	This option is valid for add and update commands. Create a 'shallow'
+> +	clone with a history truncated to the specified number of revisions.
+> +	See linkgit:git-clone[1]
+> +
+> +
+>  <path>...::
+>  	Paths to submodule(s). When specified this will restrict the command
+>  	to only operate on the submodules found at the specified paths.
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 79bfaac..1cfe2bf 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -32,6 +32,7 @@ nofetch=
+>  update=
+>  prefix=
+>  custom_name=
+> +depth=
+>  
+>  # The function takes at most 2 arguments. The first argument is the
+>  # URL that navigates to the submodule origin repo. When relative, this URL
+> @@ -211,6 +212,7 @@ module_clone()
+>  	name=$2
+>  	url=$3
+>  	reference="$4"
+> +	depth="$5"
+>  	quiet=
+>  	if test -n "$GIT_QUIET"
+>  	then
+> @@ -233,7 +235,7 @@ module_clone()
+>  		mkdir -p "$gitdir_base"
+>  		(
+>  			clear_local_git_env
+> -			git clone $quiet -n ${reference:+"$reference"} \
+> +			git clone $quiet $depth -n ${reference:+"$reference"} \
+>  				--separate-git-dir "$gitdir" "$url" "$sm_path"
+>  		) ||
+>  		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
+> @@ -309,6 +311,14 @@ cmd_add()
+>  			custom_name=$2
+>  			shift
+>  			;;
+> +		--depth)
+> +			case "$2" in '') usage ;; esac
+> +			depth="--depth=$2"
+> +			shift
+> +			;;
+> +		--depth=*)
+> +			depth=$1
+> +			;;
+>  		--)
+>  			shift
+>  			break
+> @@ -405,7 +415,7 @@ Use -f if you really want to add it." >&2
+>  				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
+>  			fi
+>  		fi
+> -		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" || exit
+> +		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" || exit
+>  		(
+>  			clear_local_git_env
+>  			cd "$sm_path" &&
+> @@ -676,6 +686,14 @@ cmd_update()
+>  		--checkout)
+>  			update="checkout"
+>  			;;
+> +		--depth)
+> +			case "$2" in '') usage ;; esac
+> +			depth="--depth=$2"
+> +			shift
+> +			;;
+> +		--depth=*)
+> +			depth=$1
+> +			;;
+>  		--)
+>  			shift
+>  			break
+> @@ -735,7 +753,7 @@ Maybe you want to use 'update --init'?")"
+>  
+>  		if ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
+>  		then
+> -			module_clone "$sm_path" "$name" "$url" "$reference" || exit
+> +			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
+>  			cloned_modules="$cloned_modules;$name"
+>  			subsha1=
+>  		else
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index f47cc7b..bfd1ce9 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -868,4 +868,19 @@ test_expect_success 'submodule deinit fails when submodule has a .git directory
+>  	test -n "$(git config --get-regexp "submodule\.example\.")"
+>  '
+>  
+> +test_expect_success 'submodule add clone shallow submodule' '
+> +	mkdir super &&
+> +	pwd=$(pwd)
+> +	(
+> +		cd super &&
+> +		git init &&
+> +		git submodule add --depth=1 file://"$pwd"/example2 submodule &&
+> +		(
+> +			cd submodule &&
+> +			test 1 = $(git log --oneline | wc -l)
+> +		)
+> +	)
+> +'
+> +
+> +
+>  test_done
+> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> index a4ffea0..e0a06e2 100755
+> --- a/t/t7406-submodule-update.sh
+> +++ b/t/t7406-submodule-update.sh
+> @@ -685,14 +685,24 @@ test_expect_success 'submodule update properly revives a moved submodule' '
+>  test_expect_success SYMLINKS 'submodule update can handle symbolic links in pwd' '
+>  	mkdir -p linked/dir &&
+>  	ln -s linked/dir linkto &&
+> -	(
+> -		cd linkto &&
+> -		git clone "$TRASH_DIRECTORY"/super_update_r2 super &&
+> -		(
+> -			cd super &&
+> -			git submodule update --init --recursive
+> -		)
+> +	(cd linkto &&
+> +	 git clone "$TRASH_DIRECTORY"/super_update_r2 super &&
+> +	 (cd super &&
+> +	  git submodule update --init --recursive
+> +	 )
+>  	)
+>  '
+>  
+> +test_expect_success 'submodule update clone shallow submodule' '
+> +	git clone cloned super3 &&
+> +	pwd=$(pwd)
+> +	(cd super3 &&
+> +	 sed -e "s#url = ../#url = file://$pwd/#" <.gitmodules >.gitmodules.tmp &&
+> +	 mv -f .gitmodules.tmp .gitmodules &&
+> +	 git submodule update --init --depth=3
+> +	 (cd submodule &&
+> +	  test 1 = $(git log --oneline | wc -l)
+> +	 )
+> +	)
+> +'
+>  test_done
+> 
