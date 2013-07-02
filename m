@@ -1,65 +1,102 @@
-From: alois.mahdal.1-ndmail@zxcvb.cz
-Subject: Re: --follow is ignored when used with --reverse
-Date: Tue, 02 Jul 2013 10:56:08 +0200
-Message-ID: <8c83f60d8eb4b7aaf4686f065e49ac93@zxcvb.cz>
-References: <20130524012324.295dec77@hugo.daonet.home>
+From: Sedat Dilek <sedat.dilek@gmail.com>
+Subject: Re: [Q] Getting the latest available Linux-kernel version
+ (v3.x.y-stable or v3.x.y-rcX)?
+Date: Tue, 2 Jul 2013 11:05:55 +0200
+Message-ID: <CA+icZUUMjKx2J+Q4xKc6QkiSQB71szVjZNURhkpLFMGjqgpqRw@mail.gmail.com>
+References: <CA+icZUV50bn4wjohfmKWL-GXpstidPNsNWqHuq+0gvEorWOaxA@mail.gmail.com>
+	<CALkWK0nj3BG0VCxkzack_9sHa8oo=aypuv6KRusdRKyO1JCkAw@mail.gmail.com>
+Reply-To: sedat.dilek@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 02 11:02:00 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 02 11:06:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UtwTG-0004hN-OO
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 11:01:59 +0200
+	id 1UtwXA-0007dn-Sp
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 11:06:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932439Ab3GBJBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 05:01:55 -0400
-Received: from 89-185-248-48.static.axfone.eu ([89.185.248.48]:35254 "EHLO
-	azzgoat.static.masterinter.net" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932225Ab3GBJBy (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Jul 2013 05:01:54 -0400
-X-Greylist: delayed 342 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Jul 2013 05:01:54 EDT
-Received: from azzgoat.static.masterinter.net (localhost [127.0.0.1])
-	by azzgoat.static.masterinter.net (8.14.4/8.14.4/Debian-4) with ESMTP id r628u9Ab022994
-	for <git@vger.kernel.org>; Tue, 2 Jul 2013 10:56:09 +0200
-Received: (from www-data@localhost)
-	by azzgoat.static.masterinter.net (8.14.4/8.14.4/Submit) id r628u8WB022993;
-	Tue, 2 Jul 2013 10:56:08 +0200
-X-Authentication-Warning: azzgoat.static.masterinter.net: www-data set sender to alois.mahdal.1-ndmail@zxcvb.cz using -f
-X-PHP-Originating-Script: 0:main.inc
-In-Reply-To: <20130524012324.295dec77@hugo.daonet.home>
-X-Sender: alois.mahdal.1-ndmail@zxcvb.cz
-User-Agent: Roundcube Webmail/0.7.2
+	id S932489Ab3GBJF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 05:05:57 -0400
+Received: from mail-we0-f169.google.com ([74.125.82.169]:41881 "EHLO
+	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932225Ab3GBJF4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 05:05:56 -0400
+Received: by mail-we0-f169.google.com with SMTP id n57so4159961wev.14
+        for <git@vger.kernel.org>; Tue, 02 Jul 2013 02:05:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=538l0OWFo78IMYBRk4yY8ObV2yTkfmNjv3LUklpiDck=;
+        b=jublqXVzfsmu31bTjFVJNBPnVJ2SeQwmKPDbINI6Uq1kndsw7aV9HApZjb8QG/VH9B
+         edcvlWt56ZkJO0ZuYnVNW7ruJEHbwqJHuX4Nz4ffLiyBzOG+Tlg6adupOf/hwlo3jimZ
+         Xm7S4yXjChPr+kJ+Uy5tUJ2lKyxVxDQSWQOL6UStbLc+OqEkwA81zYFP4ounZtgBFbrc
+         /nY7rvL86dszVpTfvdCc3DXYQ4Jru06RVRzhj+ABfxkVypb3y9za1laGp9YllzyDNQ4Q
+         iR/qPxFHD1jdBht6aIkA5GXmKMVs9bNj48BtfaCiettmW9SMkWCix8OJSBeXVvCpSS/+
+         ZiiQ==
+X-Received: by 10.194.48.116 with SMTP id k20mr23331246wjn.23.1372755955286;
+ Tue, 02 Jul 2013 02:05:55 -0700 (PDT)
+Received: by 10.216.192.8 with HTTP; Tue, 2 Jul 2013 02:05:55 -0700 (PDT)
+In-Reply-To: <CALkWK0nj3BG0VCxkzack_9sHa8oo=aypuv6KRusdRKyO1JCkAw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229381>
 
-On 2013-05-24 01:23, Alois Mahdal wrote:
-> [...]
+On Tue, Jul 2, 2013 at 10:46 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Sedat Dilek wrote:
+>> for my Linux-kernel build-script I am searching for a reliable check
+>> of getting the ***latest*** version.
 >
-> When I use `git log --follow file` all is OK, but once I add
-> `--reverse` to it, it no longer follows the file beyond renames.
+>   $ git describe HEAD
 >
-> This makes it hard to query for when the file was really added,
-> which I was trying to achieve with
+> If you want a sorted list of tags,
 >
->     $ git -1 --reverse --follow several_times_renamed_file
+>   $ git for-each-ref --sort=taggerdate --format="%(refname:short)" refs/tags
+>
+> Are you looking for something else?
 
-I see that this list is **really** busy---my question got lost as
-a needle in an ocean.. :-)  Immediately.
+Hi Ramukar,
 
-Maybe I should record an incident?
+Thanks for the quick answer!
 
-Could anyone point me in the right direction?  Just say the word! :)
+Cool, this seems to keep version-chronology!
 
-aL.
+$ git for-each-ref --sort=taggerdate --format="%(refname:short)"
+refs/tags | grep ^'v3.[0-9]*' | tail -1
+v3.10
 
--- 
-Alois Mahdal
+$ git for-each-ref --sort=taggerdate --format="%(refname:short)"
+refs/tags | grep ^'next-[0-9]*' | tail -1
+next-20130702
+
+Another question if I may ask:
+
+Sometimes I need to bisect a previous Linux-Next version.
+
+What I am doing is to have the latest Linux-v3.x.y(-rcX) as stable base.
+
+$ git checkout upstream
+$ git checkout -b Linux-v3.10-rc7 v3.10-rc7
+
+Afterwards I checkout the latest Linux-Next remote repository with all
+its (new) tags (here: next-20130628)
+
+$ git checkout -b Linux-Next-v20130628
+$ git pull linux-next --tags next-20130628
+
+How do I get the latest available linux-version in the downgraded
+(current) Linux-Next local repository (example: I have parallelly
+Linux-Next-v20130702 and Linux-Next-v20130628)?
+If I have all -next tags merged-in, I will get always today's 'next-20130702'.
+Due to my poor git skillz I do this manually for git-bisect sessions.
+
+Thanks again, you helped me a lot with the above!
+
+- Sedat -
