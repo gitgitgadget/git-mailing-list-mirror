@@ -1,261 +1,369 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC 1/4] contrib: add git-contacts helper
-Date: Tue, 2 Jul 2013 04:17:14 -0400
-Message-ID: <CAPig+cRbBGqrXj-Anib1ESdBBbdUGM-9um4XoPcwG2QxJBubuA@mail.gmail.com>
-References: <1372590512-21341-1-git-send-email-sunshine@sunshineco.com>
-	<1372590512-21341-2-git-send-email-sunshine@sunshineco.com>
-	<7vbo6mgm5e.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] merge: handle --ff/--no-ff/--ff-only as a tri-state option
+Date: Tue, 02 Jul 2013 10:42:39 +0200
+Message-ID: <51D2927F.3040207@alum.mit.edu>
+References: <20130701070143.GB17269@suse.cz> <51D197AD.1070502@alum.mit.edu> <20130701195407.GK17269@suse.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 02 10:17:24 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Jul 02 10:42:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Utvm7-0005of-HW
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 10:17:24 +0200
+	id 1UtwAm-0007Ut-Mh
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 10:42:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932152Ab3GBIRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 04:17:18 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:56132 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753235Ab3GBIRO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 04:17:14 -0400
-Received: by mail-ie0-f178.google.com with SMTP id u16so10799639iet.23
-        for <git@vger.kernel.org>; Tue, 02 Jul 2013 01:17:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=6MTjBAkUFW+8+ZlxezTp7u7J+6Pg4ClKe1ashQI/xx8=;
-        b=YwBkiWVwQGcjU/6+KO4noWAKrw2F0zcItJHdb1SY80YPf+qJvnQrlGeoDcp64GAG8H
-         MjCAop8D7xyDr1pb8IuSmml/MPYFF4fK1reDikPJJkNM7xBrc45OtMmculJvne2ovBN1
-         Cd6Z0hhSwFnQgSspvHN3fhehPiyrmSJTklvjkiOga2MvqEMmvWOb3h5CTugiVJ4IpAfE
-         sKk/PT8DZv8lchA2qTWIJChljA4Yor+P+EgNSd3NTB8LRvW6YKl161nvLR7Z0U3u0y+h
-         FAG5L3GAnCVyz6LzH2cuhNUnNMzUZHLhj7MDhbc93EPMWRVkXOLWZddg3b1KH/BVYhkV
-         uKRg==
-X-Received: by 10.50.47.46 with SMTP id a14mr5496391ign.46.1372753034255; Tue,
- 02 Jul 2013 01:17:14 -0700 (PDT)
-Received: by 10.64.86.164 with HTTP; Tue, 2 Jul 2013 01:17:14 -0700 (PDT)
-In-Reply-To: <7vbo6mgm5e.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: WCmuKQhTShY-nhaavQNT8MKFxJg
+	id S932267Ab3GBImr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 04:42:47 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:44697 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932141Ab3GBImn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Jul 2013 04:42:43 -0400
+X-AuditID: 12074412-b7f656d00000102f-05-51d292820cd0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 5D.43.04143.28292D15; Tue,  2 Jul 2013 04:42:42 -0400 (EDT)
+Received: from [192.168.101.152] (mx.berlin.jpk.com [212.222.128.135] (may be forged))
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r628gd4V023489
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 2 Jul 2013 04:42:41 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <20130701195407.GK17269@suse.cz>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqNs06VKgwZyj0hZdV7qZLBp6rzBb
+	7Jwyn9mB2ePiJWWPMwuOsHt83iQXwBzFbZOUWFIWnJmep2+XwJ1xf+sztoKmyIr1t9+yNTB+
+	de1i5OSQEDCR+PNwPjOELSZx4d56ti5GLg4hgcuMEg82fgJLCAlcZZJ4eLYQxOYV0JZo3XWB
+	DcRmEVCVOD5nBSuIzSagK7Gop5mpi5GDQ1QgTOLKb1WIckGJkzOfsIDYIgJKEt8m7mcHsZkF
+	rCVWvD7MBGILC/hLHP/bwQ6xKlfiwZR7YPWcQCPnvvvICjKSWUBdYv08IYhWeYntb+cwT2AU
+	mIVkwyyEqllIqhYwMq9ilEvMKc3VzU3MzClOTdYtTk7My0st0jXTy80s0UtNKd3ECAlaoR2M
+	60/KHWIU4GBU4uFVmHcxUIg1say4MvcQoyQHk5Io75QJlwKF+JLyUyozEosz4otKc1KLDzFK
+	cDArifDe9AYq501JrKxKLcqHSUlzsCiJ8/5crO4nJJCeWJKanZpakFoEk5Xh4FCS4DUFGSpY
+	lJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPitH4YmCUgqR4gPYuBmnnLS5IzAWKQrSe
+	YtTlOPBjy3tGIZa8/LxUKXHeAyBFAiBFGaV5cCtgKeoVozjQx8K8y0CqeIDpDW7SK6AlTEBL
+	suvAlpQkIqSkGhgZ+qZfT71XcOgY//NY9fYo2V7+BzdDze+wSCmlzngkWRdR+cfB4J7s3MNT
+	VAT9Oje/LVISE/PpvtD0w8vz7CUDs2PzzpdxnX3rz/ZifsWqirc9xi713ndez3/Z 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229376>
 
-On Mon, Jul 1, 2013 at 2:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> diff --git a/contrib/contacts/git-contacts b/contrib/contacts/git-contacts
->> new file mode 100755
->> index 0000000..9007bae
->> --- /dev/null
->> +++ b/contrib/contacts/git-contacts
->> @@ -0,0 +1,121 @@
->> +#!/usr/bin/perl
->> +
->> +# List people who might be interested in a patch.  Useful as the argument to
->> +# git-send-email --cc-cmd option, and in other situations.
->> +#
->> +# Usage: git contacts <file>
->> +
->> +use strict;
->> +use warnings;
->> +use IPC::Open2;
->> +
->> +my $since = '5-years-ago';
->> +my $min_percent = 10;
->> +my $labels_rx = qr/(?:Signed-off|Reviewed|Acked)-by/;
->
-> Although I personally do not see particuarly a good reason to do so,
-> I have seen people add "Cc:" on the footers, and I suspect they may
-> expect them to be also picked up as "relevant parties" to the
-> change.  Also S-o-b is often misspelled as "Signed-Off-By", so you
-> may want to do qr//i this one.
+On 07/01/2013 09:54 PM, Miklos Vajna wrote:
+> This has multiple benefits: with more than one of {"--ff", "--no-ff",
+> "--ff-only"} respects the last option; also the command-line option to
+> always take precedence over the config file option.
+> 
+> Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
+> ---
+> 
+> On Mon, Jul 01, 2013 at 04:52:29PM +0200, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> If I find the time (unlikely) I might submit a patch to implement these
+>> expectations.
+> 
+> Seeing that the --no-ff / --ff-only combo wasn't denied just sort of 
+> accidently, I agree that it makes more sense to merge allow_fast_forward
+> and fast_forward_only to a single enum, that automatically gives you 
+> both benefits.
 
-I originally used /i but bogusly discarded it due to too narrow
-thinking. Will re-add.
+Thanks a lot for taking this on!  I would definitely be happy to be able
+to set merge.ff=false without preventing the use of explicit "--ff-only"
+from the command line.
 
-Agreed about adding Cc:.
+See comments below...
 
->> +my $id_rx = qr/[0-9a-f]{40}/i;
->
-> On the other hand, we always mark the "this is a format-patch
-> output" marker lines with lowercase hex, so you would want to lose
-> 'i' from here.
+>  builtin/merge.c  | 65 +++++++++++++++++++++++++++++++++++++-------------------
+>  t/t7600-merge.sh | 12 ++++++++---
+>  2 files changed, 52 insertions(+), 25 deletions(-)
+> 
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 2ebe732..561edf4 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -47,8 +47,8 @@ static const char * const builtin_merge_usage[] = {
+>  };
+>  
+>  static int show_diffstat = 1, shortlog_len = -1, squash;
+> -static int option_commit = 1, allow_fast_forward = 1;
+> -static int fast_forward_only, option_edit = -1;
+> +static int option_commit = 1;
+> +static int option_edit = -1;
+>  static int allow_trivial = 1, have_message, verify_signatures;
+>  static int overwrite_ignore = 1;
+>  static struct strbuf merge_msg = STRBUF_INIT;
+> @@ -76,6 +76,14 @@ static struct strategy all_strategy[] = {
+>  
+>  static const char *pull_twohead, *pull_octopus;
+>  
+> +enum ff_type {
+> +	FF_ALLOW,
+> +	FF_NO,
+> +	FF_ONLY
+> +};
+> +
+> +static enum ff_type fast_forward = FF_ALLOW;
+> +
+>  static int option_parse_message(const struct option *opt,
+>  				const char *arg, int unset)
+>  {
+> @@ -178,6 +186,21 @@ static int option_parse_n(const struct option *opt,
+>  	return 0;
+>  }
+>  
+> +static int option_parse_ff(const struct option *opt,
+> +			  const char *arg, int unset)
+> +{
+> +	fast_forward = unset ? FF_NO : FF_ALLOW;
+> +	return 0;
+> +}
+> +
+> +static int option_parse_ff_only(const struct option *opt,
+> +			  const char *arg, int unset)
+> +{
+> +	if (!unset)
+> +		fast_forward = FF_ONLY;
+> +	return 0;
+> +}
+> +
 
-Indeed, all the SHA-1's matched by $id_rx in the script are
-git-generated and thus lowercase hex. Will change.
+You allow --no-ff-only but ignore it, which I think is incorrect.  In
 
-> And you probably want to tighten it even more, perhaps
-> like so:
->
->         qr/^From ([0-9a-f]{40}) Mon Sep 17 00:00:00 2001$/
->
-> Of course, you wuold need to have a separate regular expression to
-> parse "git blame --incremental/--porcelain" output that may read
-> perhaps like so:
->
->         qr/^([0-9a-f]{40})[ *](\d) (\d) (\d)$/
->
-> to pick up only the group header.  The last \d is the number of
-> lines that came from this guilty party, and it might become useful
-> if we want to give weight to people based on line-count, not just
-> number of commits.
+    git merge --ff-only --no-ff-only [...]
 
-Can do.
+, the --no-ff-only should presumably cancel the effect of the previous
+--ff-only (i.e., be equivalent to "--ff").  But it is a little bit
+subtle because
 
->> +sub format_contact {
->> +     my ($name, $email) = @_;
->> +     return "$name <$email>";
->> +}
->> +
->> +sub parse_commit {
->> +     my ($commit, $data) = @_;
->> +     my $contacts = $commit->{contacts};
->> +     my $inbody = 0;
->> +     for (split(/^/m, $data)) {
->> +             if (not $inbody) {
->> +                     if (/^author ([^<>]+) <(\S+)> .+$/) {
->> +                             $contacts->{format_contact($1, $2)} = 1;
->
-> The author name and email can be grabbed from the "blame" output
-> without doing this (and the result may be more robust), but you
-> would need to read from the log message anyway, so I think this is
-> OK.
->
-> Note that the names and emails in blame output are sanitized via the
-> mailmap mechanism, but "cat-file commit" will certainly not be.
+    git merge --no-ff --no-ff-only
 
-Thanks for pointing this out. Grabbing the author name and email from
-git-blame output does seem like a better approach.
+should presumably be equivalent to --no-ff.  So I think that
+"--no-ff-only" should do something like
 
-> You may have to do the mapping yourself by reading the mailmap for
-> the names and addresses you read from S-o-b: and friends.
+    if (fast_forward == FF_ONLY)
+        fast_forward = FF_ALLOW;
 
-Felipe did introduce mailmap support in v4 but dropped it at about v6.
-It seems worthwhile, but I first wanted to duplicate the basic
-functionality of his v9, and figured that mailmap support could be
-added in a follow-up patch.
+(Note that there is an asymmetry here, because "--no-ff-only"
+*shouldn't* cancel the effect of "--no-ff", whereas "--ff" *should*
+cancel the effect of "--ff-only".  This is because --ff-only restricts
+what the user wants to allow whereas --ff removes a restriction.  So I
+think it is OK.)
 
-v4: http://article.gmane.org/gmane.comp.version-control.git/222439/
-v6: http://thread.gmane.org/gmane.comp.version-control.git/224896/
+>  static struct option builtin_merge_options[] = {
+>  	{ OPTION_CALLBACK, 'n', NULL, NULL, NULL,
+>  		N_("do not show a diffstat at the end of the merge"),
+> @@ -194,10 +217,12 @@ static struct option builtin_merge_options[] = {
+>  		N_("perform a commit if the merge succeeds (default)")),
+>  	OPT_BOOL('e', "edit", &option_edit,
+>  		N_("edit message before committing")),
+> -	OPT_BOOLEAN(0, "ff", &allow_fast_forward,
+> -		N_("allow fast-forward (default)")),
+> -	OPT_BOOLEAN(0, "ff-only", &fast_forward_only,
+> -		N_("abort if fast-forward is not possible")),
+> +	{ OPTION_CALLBACK, 0, "ff", NULL, NULL,
+> +		N_("allow fast-forward (default)"),
+> +		PARSE_OPT_NOARG, option_parse_ff },
+> +	{ OPTION_CALLBACK, 0, "ff-only", NULL, NULL,
+> +		N_("abort if fast-forward is not possible"),
+> +		PARSE_OPT_NOARG, option_parse_ff_only },
+>  	OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
+>  	OPT_BOOL(0, "verify-signatures", &verify_signatures,
+>  		N_("Verify that the named commit has a valid GPG signature")),
 
->> +sub import_commits {
->> +     my ($commits) = @_;
->> +     return unless %$commits;
->> +     my $pid = open2 my $reader, my $writer, qw(git cat-file --batch);
->
-> Hmph.
->
-> I vaguely recall that people wanted not to use open2/IPC::Open2 in
-> other parts of the system.
->
-> I think "cat-file --batch" is designed to behave on a regular bidi
-> pipe, as long as the caller strictly does a ping-pong of issuing one
-> request, flush (with an empty line) and always read the response, so
-> if open2 becomes problematic, we could switch to regular pipes.
+I'm no options guru, but I think it would be possible to implement --ff
+and --no-ff without callbacks if you choose constants such that
+FF_NO==0, something like:
 
-Checking the log, I see several cases where deprecated Python popen2
-was removed but find nothing mentioning Perl. Git.pm,
-git-archimport.perl and git-cvsimport.perl appear to use open2.
-Switching to pipes is certainly an option.
+    enum ff_type {
+    	FF_NO = 0, /* It is important that this value be zero! */
+    	FF_ALLOW,
+    	FF_ONLY
+    };
 
->> +sub get_blame {
->> +     my ($commits, $source, $start, $len, $from) = @_;
->> +     $len = 1 unless defined($len);
->> +     return if $len == 0;
->> +     open my $f, '-|',
->> +             qw(git blame --incremental -C -C), '-L', "$start,+$len",
->> +             '--since', $since, "$from^", '--', $source or die;
->
-> "--incremental" is meant for consumers that wants better latency,
-> not necessarily better throughput, but I think this consumer does
-> not present incremental result to the end user, so perhaps you would
-> want to use "--porcelain" instead.
+    static int fast_forward = FF_ALLOW;
 
-This use of --incremental was copied literally from Felipe's v9, but
-after reading git-blame documentation, I agree that --porcelain makes
-sense.
+    static struct option builtin_merge_options[] = {
+        [...]
+        { OPTION_SET_INT, 0, "ff", &fast_forward, NULL,
+        	N_("allow fast-forward (default)"),
+        	PARSE_OPT_NOARG, NULL, FF_ALLOW },
+        { OPTION_CALLBACK, 0, "ff-only", [...]
 
->> +sub scan_hunks {
->> +     my ($commits, $id, $f) = @_;
->> +     my $source;
->> +     while (<$f>) {
->> +             if (/^---\s+(\S+)/) {
->
-> I wonder what happens to a patch that touches a file with SP in its
-> path with this regular expression.  As it is fairly clear that you
-> are reading from format-patch output (the caller does not call this
-> function if it did not see $id), perhaps you can tighten the prefix
-> a bit more?  I.e. something like:
->
->         if (/^--- (.*)$/)
+because OPTION_SET_INT resets the value to zero if "--no-ff" is
+specified, which is just what we need.
 
-Good idea.
+> @@ -581,10 +606,9 @@ static int git_merge_config(const char *k, const char *v, void *cb)
+>  	else if (!strcmp(k, "merge.ff")) {
+>  		int boolval = git_config_maybe_bool(k, v);
+>  		if (0 <= boolval) {
+> -			allow_fast_forward = boolval;
+> +			fast_forward = boolval ? FF_ALLOW : FF_NO;
+>  		} else if (v && !strcmp(v, "only")) {
+> -			allow_fast_forward = 1;
+> -			fast_forward_only = 1;
+> +			fast_forward = FF_ONLY;
+>  		} /* do not barf on values from future versions of git */
+>  		return 0;
+>  	} else if (!strcmp(k, "merge.defaulttoupstream")) {
+> @@ -863,7 +887,7 @@ static int finish_automerge(struct commit *head,
+>  
+>  	free_commit_list(common);
+>  	parents = remoteheads;
+> -	if (!head_subsumed || !allow_fast_forward)
+> +	if (!head_subsumed || fast_forward == FF_NO)
+>  		commit_list_insert(head, &parents);
+>  	strbuf_addch(&merge_msg, '\n');
+>  	prepare_to_commit(remoteheads);
+> @@ -1008,7 +1032,7 @@ static void write_merge_state(struct commit_list *remoteheads)
+>  	if (fd < 0)
+>  		die_errno(_("Could not open '%s' for writing"), filename);
+>  	strbuf_reset(&buf);
+> -	if (!allow_fast_forward)
+> +	if (fast_forward == FF_NO)
+>  		strbuf_addf(&buf, "no-ff");
+>  	if (write_in_full(fd, buf.buf, buf.len) != buf.len)
+>  		die_errno(_("Could not write to '%s'"), filename);
+> @@ -1157,14 +1181,11 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  		show_diffstat = 0;
+>  
+>  	if (squash) {
+> -		if (!allow_fast_forward)
+> +		if (fast_forward == FF_NO)
+>  			die(_("You cannot combine --squash with --no-ff."));
+>  		option_commit = 0;
+>  	}
+>  
 
->> +             } elsif (/^@@ -(\d+)(?:,(\d+))?/ && $source) {
->
-> (mental note) For each hunk of a patch that is not a creation patch,
-> find the origin of the preimage.
->
->> +                     get_blame($commits, $source, $1, $2, $id);
->> +             }
->
-> An major issue (*) and a few minor issues (-) from the above
-> observations:
->
->  * A single patch may touch two or more paths.  If the first one is
->    to modify an existing file, its path is assigned to $source.
->    Now, imagine that the second one is a creation patch.  $source is
->    not set to undef but is kept, and the code ends up trying to run
->    blame on the first path with the range for the second path.
->
->    Oops?
->
->    This is one of the reasons why we shouldn't use statement
->    modifiers lightly.  I think the above should be more like:
->
->         if (/^--- (.*)$) {
->                 $source = ($1 eq '/dev/null') ? undef : substr($1, 2);
->         } elsif ...
+So there is still a problem with setting merge.ff=false, namely that it
+prevents the use of --squash.  That's not good.  (I realize that you are
+not to blame for this pre-existing behavior.)
 
-This error is entirely mine. Felipe's script did it correctly.
+How should --squash and the ff-related options interact?
 
->  - If the patch were prepared with a non-standard src/dst-prefix,
->    unconditional substr($1, 2) would call blame on a wrong (and
->    likely to be nonexistent) path without a useful diagnosis (the
->    invocation of "git blame" will likely die with "no such path
->    'tailofpathname' in $id").
->
->    One way to make it more robust may be to do something like this:
->
->         if (/^--- /) {
->                 if (m{^--- (?:a/(.*)|/dev/null)$}) {
->                         $source = ($1 eq '/dev/null') ? undef : $1;
->                 } else {
->                         die "Cannot parse the patch file:$_";
->                 }
->         } elsif ...
+    git merge --ff --squash
+    git merge --no-ff --squash
 
-The substr($1, 2) also bothered me, but I didn't immediately see a
-good solution. Aborting, as you suggest, seems reasonable.
+I think these should just squash.
 
->  - Often a single patch touches more than one ranges in the same
->    path.  Depending on the size of the patch, it might be more
->    efficient to run a single blame for a range that covers all the
->    lines the patch touches while discarding irrelevant parts.  A
->    longer term improvement may be to extend "git blame" so that it
->    can take more than one "-L n,m" ranges, but I think that is
->    outside of the scope of this patch.
+    git merge --ff-only --squash
 
-Sounds like a potentially good optimization for a future patch, though
-it's not clear what heuristic to use to decide when to combine the
-ranges for a single git-blame run. Extending git-blame to recognize
-multiple -L sounds even better, though definitely outside the scope of
-this series.
+I think this should definitely squash.  But perhaps it should require
+that HEAD be an ancestor of the branch to be merged?
+
+    git merge --squash --ff
+    git merge --squash --no-ff
+    git merge --squash --ff-only
+
+Should these do the same as the versions with the option order reversed?
+ Or should the command line option that appears later take precedence?
+The latter implies that {--ff, --no-ff, --ff-only, --squash} actually
+constitute a single *quad-state* option, representing "how the results
+of the merge should be handled", and, for example,
+
+    git merge --squash --ff-only
+
+ignores the --squash option, and
+
+    git merge --ff-only --squash
+
+ignores the --ff-only option.
+
+I'm not sure.
+
+> -	if (!allow_fast_forward && fast_forward_only)
+> -		die(_("You cannot combine --no-ff with --ff-only."));
+> -
+>  	if (!abort_current_merge) {
+>  		if (!argc) {
+>  			if (default_to_upstream)
+> @@ -1206,7 +1227,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  				"empty head"));
+>  		if (squash)
+>  			die(_("Squash commit into empty head not supported yet"));
+> -		if (!allow_fast_forward)
+> +		if (fast_forward == FF_NO)
+>  			die(_("Non-fast-forward commit does not make sense into "
+>  			    "an empty head"));
+>  		remoteheads = collect_parents(head_commit, &head_subsumed, argc, argv);
+> @@ -1294,11 +1315,11 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  			    sha1_to_hex(commit->object.sha1));
+>  		setenv(buf.buf, merge_remote_util(commit)->name, 1);
+>  		strbuf_reset(&buf);
+> -		if (!fast_forward_only &&
+> +		if (fast_forward != FF_ONLY &&
+>  		    merge_remote_util(commit) &&
+>  		    merge_remote_util(commit)->obj &&
+>  		    merge_remote_util(commit)->obj->type == OBJ_TAG)
+> -			allow_fast_forward = 0;
+> +			fast_forward = FF_NO;
+>  	}
+>  
+>  	if (option_edit < 0)
+> @@ -1315,7 +1336,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  
+>  	for (i = 0; i < use_strategies_nr; i++) {
+>  		if (use_strategies[i]->attr & NO_FAST_FORWARD)
+> -			allow_fast_forward = 0;
+> +			fast_forward = FF_NO;
+>  		if (use_strategies[i]->attr & NO_TRIVIAL)
+>  			allow_trivial = 0;
+>  	}
+> @@ -1345,7 +1366,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  		 */
+>  		finish_up_to_date("Already up-to-date.");
+>  		goto done;
+> -	} else if (allow_fast_forward && !remoteheads->next &&
+> +	} else if (fast_forward != FF_NO && !remoteheads->next &&
+>  			!common->next &&
+>  			!hashcmp(common->item->object.sha1, head_commit->object.sha1)) {
+>  		/* Again the most common case of merging one remote. */
+> @@ -1392,7 +1413,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  		 * only one common.
+>  		 */
+>  		refresh_cache(REFRESH_QUIET);
+> -		if (allow_trivial && !fast_forward_only) {
+> +		if (allow_trivial && fast_forward != FF_ONLY) {
+>  			/* See if it is really trivial. */
+>  			git_committer_info(IDENT_STRICT);
+>  			printf(_("Trying really trivial in-index merge...\n"));
+> @@ -1433,7 +1454,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  		}
+>  	}
+>  
+> -	if (fast_forward_only)
+> +	if (fast_forward == FF_ONLY)
+>  		die(_("Not possible to fast-forward, aborting."));
+>  
+>  	/* We are going to make a new commit. */
+> diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+> index 460d8eb..3ff5fb8 100755
+> --- a/t/t7600-merge.sh
+> +++ b/t/t7600-merge.sh
+> @@ -497,9 +497,15 @@ test_expect_success 'combining --squash and --no-ff is refused' '
+>  	test_must_fail git merge --no-ff --squash c1
+>  '
+>  
+> -test_expect_success 'combining --ff-only and --no-ff is refused' '
+> -	test_must_fail git merge --ff-only --no-ff c1 &&
+> -	test_must_fail git merge --no-ff --ff-only c1
+> +test_expect_success 'option --ff-only overwrites --no-ff' '
+> +	git merge --no-ff --ff-only c1 &&
+> +	test_must_fail git merge --no-ff --ff-only c2
+> +'
+> +
+> +test_expect_success 'option --ff-only overwrites merge.ff=only config' '
+> +	git reset --hard c0 &&
+> +	test_config merge.ff only &&
+> +	git merge --no-ff c1
+>  '
+>  
+>  test_expect_success 'merge c0 with c1 (ff overrides no-ff)' '
+> 
+
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
