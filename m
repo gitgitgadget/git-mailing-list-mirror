@@ -1,102 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] [submodule] Add --depth to submodule update/add
-Date: Tue, 02 Jul 2013 12:01:09 -0700
-Message-ID: <7v7gh8947e.fsf@alter.siamese.dyndns.org>
-References: <1372729167-23200-1-git-send-email-iveqy@iveqy.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFC 1/4] contrib: add git-contacts helper
+Date: Tue, 2 Jul 2013 15:04:17 -0400
+Message-ID: <CAPig+cSt2+xjRo36veWSAJbAJ+q5XKSox7Gr=1892znFz5Tgcw@mail.gmail.com>
+References: <1372590512-21341-1-git-send-email-sunshine@sunshineco.com>
+	<1372590512-21341-2-git-send-email-sunshine@sunshineco.com>
+	<7vbo6mgm5e.fsf@alter.siamese.dyndns.org>
+	<CAPig+cRbBGqrXj-Anib1ESdBBbdUGM-9um4XoPcwG2QxJBubuA@mail.gmail.com>
+	<7vk3l895in.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: jens.lehmann@web.de, hvoigt@hvoigt.net, git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Tue Jul 02 21:01:22 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 02 21:04:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uu5pH-0008Nb-2n
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 21:01:19 +0200
+	id 1Uu5sF-0002iB-Sn
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 21:04:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131Ab3GBTBN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 15:01:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64552 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750956Ab3GBTBM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 15:01:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DFDE2B468;
-	Tue,  2 Jul 2013 19:01:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hHFY6OKu/xbIA19wCy/K/vhS9oY=; b=dqatGt
-	folk9+uEXcpCiLpCmEbFn5uWEpM5qGpmVkfOyj66isI4jD4ym4GM2Y+VEi641/d2
-	6XL+OKTfIqe9cFTbtaKDf6vGrSZwZtkikGC/3uw1/+jXnxUHcWtdemD4OAYXyJ2z
-	U8BoWWLVfboJrRApB2mOFs60casilCnpZvlh4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FMtpGxpL4oOnnQ1H88hG562lrNFhOny2
-	1xHey7x0XLcZwXSB9IwP1lXHX+w700Q8nQGi9OeafrDGiJlkMZjtbYD2sCdqrYMZ
-	BBgPSYLCqNWkOjPXolzsfgKrYjUiXE8TS1LqcYSmL+b2KtKMqWrz8PVzRW2K142Q
-	PiNVrJaVhyA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B3A32B466;
-	Tue,  2 Jul 2013 19:01:11 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC70F2B464;
-	Tue,  2 Jul 2013 19:01:10 +0000 (UTC)
-In-Reply-To: <1372729167-23200-1-git-send-email-iveqy@iveqy.com> (Fredrik
-	Gustafsson's message of "Tue, 2 Jul 2013 03:39:27 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C2612172-E349-11E2-A839-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752304Ab3GBTET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 15:04:19 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:57605 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751498Ab3GBTET (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 15:04:19 -0400
+Received: by mail-la0-f45.google.com with SMTP id fr10so5975615lab.18
+        for <git@vger.kernel.org>; Tue, 02 Jul 2013 12:04:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=W1Tuyd8KFOUvdrd4hH0JGwzwzHZRcXbxtBQ/99jUmtI=;
+        b=juxM7gZIxj5eESYnrQVetQq9PoLQGsDoWKqvku+HaeZFlrz7v/YpsrjkYV0veJTR98
+         CR/jmceCFDP+NHH/XTAAsljTqBSJukapVw2VHzr4NaN5AbxAct+mF33N2ITHmOU4MCNP
+         3bqE2AOz0k26qmVPCob5+cvXlIgS/dYjrzGn1GGxrZPb93VscUNI9F1R+3P6BgBmtcV6
+         ir0S3GKvwgSmljq+/eUx8Se5r8dMXBfKuZPZcYJUlD1qg7B6DutNr/GOVAJjC7+ZNety
+         +VnywQxAdg7C3Du+fnb6dQ2ACIhwqrDyE0UlZTEZJSRn5o8mUIbGW9mEHb/UIBEVCJZK
+         HmLA==
+X-Received: by 10.152.43.82 with SMTP id u18mr14664259lal.86.1372791857726;
+ Tue, 02 Jul 2013 12:04:17 -0700 (PDT)
+Received: by 10.114.187.78 with HTTP; Tue, 2 Jul 2013 12:04:17 -0700 (PDT)
+In-Reply-To: <7vk3l895in.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 571T3VFAYlexrc0hUdyvGGBHsKA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229418>
 
-Fredrik Gustafsson <iveqy@iveqy.com> writes:
-
-> git clone dies with the error "too many arguments". This was solved with changing
-> depth=$5
-> to
-> depth="$5"
+On Tue, Jul 2, 2013 at 2:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 >
-> which I don't understand since variable assignment doesn't expand $5 and therefore
-> "" should not be needed, AFAIK. Any comments on this?
+>>> The author name and email can be grabbed from the "blame" output
+>>> without doing this (and the result may be more robust), but you
+>>> would need to read from the log message anyway, so I think this is
+>>> OK.
+>>>
+>>> Note that the names and emails in blame output are sanitized via the
+>>> mailmap mechanism, but "cat-file commit" will certainly not be.
+>>
+>> Thanks for pointing this out. Grabbing the author name and email from
+>> git-blame output does seem like a better approach.
+>
+> Well, that was not what I was suggesting.  Reading from blame output
+> will map only the author/committer names/addresses, and you have two
+> choices:
+>
+>  (1) if you read author/committer from blame output and other names
+>      from the commit object without applying mailmap, the same
+>      person can appear under different names, from his authorship
+>      (mapped name) and from his name on footers (unmapped), which
+>      would be inconsistent.  By reading from "author" and
+>      "committer" header lines in the commit object, you will be at
+>      least consistently using unmapped names.
+>
+>  (2) if you want to apply mailmap to names you collect by reading
+>      the footer, you will write the mapping logic yourself anyway,
+>      and at that point, passing the names you collect by reading the
+>      "author" and "committer" header lines in the commit object to
+>      the same logic will give you mapped names. At that point, you
+>      do not gain much by reading names from the blame output.
+>
+> So in either case, you would be better off not reading the
+> author/committer from blame output, as long as you need to pick up
+> other names from the commit object payload.
 
-A red herring?
-
-> @@ -211,6 +212,7 @@ module_clone()
->  	name=$2
->  	url=$3
->  	reference="$4"
-> +	depth="$5"
-
-If the caller gave you only 4 arguments, depth will become an empty
-string with or without dq around $5 here.  And
-
-> -			git clone $quiet -n ${reference:+"$reference"} \
-> +			git clone $quiet $depth -n ${reference:+"$reference"} \
->  				--separate-git-dir "$gitdir" "$url" "$sm_path"
-
-... you use $depth without dq around it, so when $depth is empty
-string, "git clone" will not see it at all (not even an empty string
-as one of its arguments).
-
-Which is probably fine, as long as the caller makes sure it will not
-call this function as
-
-	module_clone 1 2 3 4 "depth argument as multi-word"
-
-which will be split at $IFS.
-
-If you know $depth must be passed as a single argument (or no
-argument when the caller did not give you any) to the underlying
-"git clone", you can write it like so:
-
-		...
-		depth=$5
-		...
-
-		git clone $quiet ${depth:+"$depth"} -n ...
+Thanks for the clarification.
