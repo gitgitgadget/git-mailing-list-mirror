@@ -1,109 +1,128 @@
-From: benoit.person@ensimag.fr
-Subject: [PATCH v7 3/7] git-remote-mediawiki: New git bin-wrapper for developement
-Date: Wed,  3 Jul 2013 00:39:45 +0200
-Message-ID: <1372804789-12732-4-git-send-email-benoit.person@ensimag.fr>
-References: <1372804789-12732-1-git-send-email-benoit.person@ensimag.fr>
-Cc: Celestin Matte <celestin.matte@ensimag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Benoit Person <benoit.person@ensimag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 03 00:52:33 2013
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFD] Making "git push [--force/--delete]" safer?
+Date: Wed, 3 Jul 2013 00:55:34 +0200
+Message-ID: <CALKQrgenpqKUxOZ+p79NsaQD9M2-q4h93ZqN0oencVo-QZF=zg@mail.gmail.com>
+References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 03 00:55:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uu9Qc-0000tX-Br
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 00:52:06 +0200
+	id 1Uu9UC-0005SZ-Eg
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 00:55:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755394Ab3GBWv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 18:51:57 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35570 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755056Ab3GBWlg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 18:41:36 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r62MfOTv001882
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 3 Jul 2013 00:41:25 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r62MfRgN021154;
-	Wed, 3 Jul 2013 00:41:27 +0200
-Received: from localhost.localdomain (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r62MfMNd024530;
-	Wed, 3 Jul 2013 00:41:27 +0200
-X-Mailer: git-send-email 1.8.3.1.590.gc07d91b
-In-Reply-To: <1372804789-12732-1-git-send-email-benoit.person@ensimag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 03 Jul 2013 00:41:25 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r62MfOTv001882
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: benoit.person@ensimag.fr
-MailScanner-NULL-Check: 1373409685.48047@I8EOntUT2L+vsjkPaZY9Xg
+	id S1755596Ab3GBWzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 18:55:42 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:62062 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753052Ab3GBWzl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 18:55:41 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1Uu9U2-000POs-Ny
+	for git@vger.kernel.org; Wed, 03 Jul 2013 00:55:39 +0200
+Received: from mail-oa0-f49.google.com ([209.85.219.49])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1Uu8EU-000Fuu-6g
+	for git@vger.kernel.org; Tue, 02 Jul 2013 23:35:30 +0200
+Received: by mail-oa0-f49.google.com with SMTP id n9so7117625oag.36
+        for <git@vger.kernel.org>; Tue, 02 Jul 2013 15:55:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=/dhcWzxetOTQtp26RD4UYSgQo2wUJtgxfv0Jcqmc/jM=;
+        b=h/tGyerFBJr0W3dhWoFdaECOGPLVe1CUC413jCsuSFXpvgLTuXwoyDavS1HKKxuVx4
+         /r/lmIszrQbm8/fYbWzBVZrIaKEzJTKoNMBWaMMGcW4mBeByTE1JcXqsLD+9J08lgY7u
+         3qVy1y8k90D+IVtty5s4Q2HQd2x5rVwL2M9TpbM7Pm/0h++7hihOr1q+r+nehhz8p93s
+         kTuR5JXIE08OEE7QTGRioEh9y490km9WZvTyIkZkbyMl82vZng1c7MFClHCrpwmSCkIc
+         LCVV0z1mS+/qZYXPhy94JhR8ficmANFdwwWl8lwZ0D9UdIn8Tb14Byd8+l5uurpblIA8
+         aBPg==
+X-Received: by 10.182.213.10 with SMTP id no10mr14447127obc.76.1372805734963;
+ Tue, 02 Jul 2013 15:55:34 -0700 (PDT)
+Received: by 10.182.102.5 with HTTP; Tue, 2 Jul 2013 15:55:34 -0700 (PDT)
+In-Reply-To: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229444>
 
-From: Benoit Person <benoit.person@ensimag.fr>
+On Tue, Jul 2, 2013 at 10:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-The introduction of the Git::Mediawiki package makes it impossible to test,
-without installation, git-remote-mediawiki and git-mw.
+[...]
 
-Using a git bin-wrapper enables us to define proper $GITPERLLIB to force the
-use of the developement version of the Git::Mediawiki package, bypassing its
-installed version if any.
+>   (2) Add --compare-and-swap=dst:expect parameters, e.g.
+>
+>       $ git push --cas=master:deadbabecafe --cas=next:cafebabe ":"
+>
+>       This removes the "reservation" I expressed against (1) above
+>       (i.e. we are doing a "matching" push in this example, but we
+>       will fail if 'master' and 'next' are not pointing at the
+>       expected objects).
 
-An alternate solution was to 'install' all the files required at each build
-but it pollutes the toplevel with untracked files.
+I still think this is too long/verbose for the average user to
+remember, and type out. Also, I don't like the name, as it is too
+'technical', and describes the nature of the implementation (i.e. the
+"how") rather than the purpose of using it (i.e. the "why" or "what").
 
-Signed-off-by: Benoit Person <benoit.person@ensimag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
----
- contrib/mw-to-git/Makefile        |  6 ++++++
- contrib/mw-to-git/bin-wrapper/git | 14 ++++++++++++++
- 2 files changed, 20 insertions(+)
- create mode 100755 contrib/mw-to-git/bin-wrapper/git
+>   (3) Add a mechanism to call a custom validation script after "git
+>       push" reads the list of <current object name, refname> tuples,
+>       but before responding with the proposed update.  The script
+>       would be fed a list of <current object name, new object
+>       name, refname> tuples (i.e. what the sender _would_ tell the
+>       receiving end if there weren't this mechanism), and can tell
+>       "git push" to fail with its exit status.
+>
+>       This would be the most flexible in that the validation does
+>       not have to be limited to "the ref must be still pointing at
+>       the object we expect" (aka compare-and-swap); the script could
+>       implement other semantics (e.g. "the ref must be pointing at
+>       the object or its ancestor").
 
-diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
-index a6f8b24..c5e66df 100644
---- a/contrib/mw-to-git/Makefile
-+++ b/contrib/mw-to-git/Makefile
-@@ -2,6 +2,12 @@
- # Copyright (C) 2013
- #     Matthieu Moy <Matthieu.Moy@imag.fr>
- #
-+# To build and test:
-+#
-+#   make:
-+#     bin-wrapper/git mw preview Some_page.mw
-+#     bin-wrapper/git clone mediawiki::http://example.com/wiki/
-+#
- # To install, run Git's toplevel 'make install' then run:
- #
- #   make install
-diff --git a/contrib/mw-to-git/bin-wrapper/git b/contrib/mw-to-git/bin-wrapper/git
-new file mode 100755
-index 0000000..1aa51f7
---- /dev/null
-+++ b/contrib/mw-to-git/bin-wrapper/git
-@@ -0,0 +1,14 @@
-+#!/bin/sh
-+
-+# git executable wrapper script for Git-Mediawiki to run tests without
-+# installing all the scripts and perl packages.
-+
-+GIT_ROOT_DIR=../../..
-+GIT_EXEC_PATH=$(cd "$(dirname "$0")" && cd ${GIT_ROOT_DIR} && pwd)
-+
-+GITPERLLIB="$GIT_EXEC_PATH"'/contrib/mw-to-git:'"$GITPERLLIB"
-+PATH="$GIT_EXEC_PATH"'/contrib/mw-to-git:'"$PATH"
-+
-+export GITPERLLIB PATH
-+
-+exec "${GIT_EXEC_PATH}/bin-wrappers/git" "$@"
+With this, I guess --dry-run could be reformulated as a trivial
+validation script that always returns a non-zero exit code (although
+it should still cause 'push' to return zero).
+
+[...]
+
+> I am inclined to say, if we were to do this, we should do (2) among
+> the above three.
+>
+> But of course, others may have better ideas ;-).
+
+I assume that in most cases the expected value of the remote ref would
+equal the current value of the corresponding remote-tracking ref in
+the user's repo, so why not use that as the default expected value?
+E.g.:
+
+  $ git config push.default simple
+  $ git checkout -b foo -t origin/foo
+  # prepare non-ff update
+  $ git push --force-if-expected
+  # the above validates foo @ origin != origin/foo before pushing
+
+And if the users expects a different value, (s)he can pass that to the
+same option:
+
+  $ git push --force-if-expected=refs/original/foo my_remote HEAD:foo
+  # the above fails if foo @ origin != refs/original/foo
+
+The option name probably needs a little work, but as long as it
+properly communicates the user's _intent_ I'm fine with whatever we
+call it.
+
+
+...Johan
+
 -- 
-1.8.3.1.590.gc07d91b
+Johan Herland, <johan@herland.net>
+www.herland.net
