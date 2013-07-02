@@ -1,128 +1,81 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFD] Making "git push [--force/--delete]" safer?
-Date: Wed, 3 Jul 2013 00:55:34 +0200
-Message-ID: <CALKQrgenpqKUxOZ+p79NsaQD9M2-q4h93ZqN0oencVo-QZF=zg@mail.gmail.com>
-References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 1/7] git-remote-mediawiki: Introduction of Git::Mediawiki.pm
+Date: Tue, 02 Jul 2013 15:59:59 -0700
+Message-ID: <7vobakin4g.fsf@alter.siamese.dyndns.org>
+References: <1372804789-12732-1-git-send-email-benoit.person@ensimag.fr>
+	<1372804789-12732-2-git-send-email-benoit.person@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 03 00:55:51 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: benoit.person@ensimag.fr
+X-From: git-owner@vger.kernel.org Wed Jul 03 01:00:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uu9UC-0005SZ-Eg
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 00:55:48 +0200
+	id 1Uu9YU-0000oc-BB
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 01:00:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755596Ab3GBWzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 18:55:42 -0400
-Received: from mail10.copyleft.no ([188.94.218.231]:62062 "EHLO
-	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753052Ab3GBWzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 18:55:41 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1Uu9U2-000POs-Ny
-	for git@vger.kernel.org; Wed, 03 Jul 2013 00:55:39 +0200
-Received: from mail-oa0-f49.google.com ([209.85.219.49])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1Uu8EU-000Fuu-6g
-	for git@vger.kernel.org; Tue, 02 Jul 2013 23:35:30 +0200
-Received: by mail-oa0-f49.google.com with SMTP id n9so7117625oag.36
-        for <git@vger.kernel.org>; Tue, 02 Jul 2013 15:55:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/dhcWzxetOTQtp26RD4UYSgQo2wUJtgxfv0Jcqmc/jM=;
-        b=h/tGyerFBJr0W3dhWoFdaECOGPLVe1CUC413jCsuSFXpvgLTuXwoyDavS1HKKxuVx4
-         /r/lmIszrQbm8/fYbWzBVZrIaKEzJTKoNMBWaMMGcW4mBeByTE1JcXqsLD+9J08lgY7u
-         3qVy1y8k90D+IVtty5s4Q2HQd2x5rVwL2M9TpbM7Pm/0h++7hihOr1q+r+nehhz8p93s
-         kTuR5JXIE08OEE7QTGRioEh9y490km9WZvTyIkZkbyMl82vZng1c7MFClHCrpwmSCkIc
-         LCVV0z1mS+/qZYXPhy94JhR8ficmANFdwwWl8lwZ0D9UdIn8Tb14Byd8+l5uurpblIA8
-         aBPg==
-X-Received: by 10.182.213.10 with SMTP id no10mr14447127obc.76.1372805734963;
- Tue, 02 Jul 2013 15:55:34 -0700 (PDT)
-Received: by 10.182.102.5 with HTTP; Tue, 2 Jul 2013 15:55:34 -0700 (PDT)
-In-Reply-To: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
+	id S1755143Ab3GBXAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 19:00:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37500 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754571Ab3GBXAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 19:00:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AD1D2D59E;
+	Tue,  2 Jul 2013 23:00:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mDFbBWTPA9P++NgYuVLoHy8qtjs=; b=kXq7x1
+	4u99OBd4lj0XjBAcXuF5ce/jrB0sNSwLsfxIRBbE/vYz+lylk1oWvjrPV90fnH9V
+	j0bCPQtzhnei8IYUKVKsZy2a5uMe9KGR8kD0htFArtzr3ZkekdtYA3FpkAHTp4X+
+	ROJGO3ynj8bfPp5+vwemYOyn4smEBfK0rPmkg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=L5+YDhxmJjKn07u6xobOwtOZSn9AyCto
+	Su4lAfg074veEFDcHscBfZn78B9AHEY9HlLR3U8RAqy+50f7affspZRrDgUG4epi
+	SutzKc4gCKx1LFyle+44ie1yE8nKeqQI8aaOQTe2B4m9Lf3k0KpCFlatfDyt91c3
+	wsL5v+YKfdY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8194B2D59C;
+	Tue,  2 Jul 2013 23:00:06 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD07B2D591;
+	Tue,  2 Jul 2013 23:00:05 +0000 (UTC)
+In-Reply-To: <1372804789-12732-2-git-send-email-benoit.person@ensimag.fr>
+	(benoit person's message of "Wed, 3 Jul 2013 00:39:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 22C9B9D6-E36B-11E2-8CCF-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229445>
 
-On Tue, Jul 2, 2013 at 10:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
+benoit.person@ensimag.fr writes:
 
-[...]
-
->   (2) Add --compare-and-swap=dst:expect parameters, e.g.
+> From: Benoit Person <benoit.person@ensimag.fr>
 >
->       $ git push --cas=master:deadbabecafe --cas=next:cafebabe ":"
->
->       This removes the "reservation" I expressed against (1) above
->       (i.e. we are doing a "matching" push in this example, but we
->       will fail if 'master' and 'next' are not pointing at the
->       expected objects).
+> Currently, the mw-to-git project contains only a remote helper
+> (git-remote-mediawiki.perl). To improve the user experience while
+> working with mediawiki remotes, new tools, designed for such cases,
+> should be created.
 
-I still think this is too long/verbose for the average user to
-remember, and type out. Also, I don't like the name, as it is too
-'technical', and describes the nature of the implementation (i.e. the
-"how") rather than the purpose of using it (i.e. the "why" or "what").
+The above is too vague to be meaningful justification behind "should
+be created".  It is unclear what "new tools" are being built, what
+the success criteria to judge such "new tools" to see if they are
+well "designed for such cases", etc.
 
->   (3) Add a mechanism to call a custom validation script after "git
->       push" reads the list of <current object name, refname> tuples,
->       but before responding with the proposed update.  The script
->       would be fed a list of <current object name, new object
->       name, refname> tuples (i.e. what the sender _would_ tell the
->       receiving end if there weren't this mechanism), and can tell
->       "git push" to fail with its exit status.
->
->       This would be the most flexible in that the validation does
->       not have to be limited to "the ref must be still pointing at
->       the object we expect" (aka compare-and-swap); the script could
->       implement other semantics (e.g. "the ref must be pointing at
->       the object or its ancestor").
+Perhaps you meant something like "we would want to allow the user
+to preview what he has edited locally before pushing it out".
 
-With this, I guess --dry-run could be reformulated as a trivial
-validation script that always returns a non-zero exit code (although
-it should still cause 'push' to return zero).
+> To achieve this goal, the project needs a way to
+> share code between several scripts (remote helper, commands, ... ).
 
-[...]
-
-> I am inclined to say, if we were to do this, we should do (2) among
-> the above three.
->
-> But of course, others may have better ideas ;-).
-
-I assume that in most cases the expected value of the remote ref would
-equal the current value of the corresponding remote-tracking ref in
-the user's repo, so why not use that as the default expected value?
-E.g.:
-
-  $ git config push.default simple
-  $ git checkout -b foo -t origin/foo
-  # prepare non-ff update
-  $ git push --force-if-expected
-  # the above validates foo @ origin != origin/foo before pushing
-
-And if the users expects a different value, (s)he can pass that to the
-same option:
-
-  $ git push --force-if-expected=refs/original/foo my_remote HEAD:foo
-  # the above fails if foo @ origin != refs/original/foo
-
-The option name probably needs a little work, but as long as it
-properly communicates the user's _intent_ I'm fine with whatever we
-call it.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+That is sensible, no matter what new things you are building, you
+would want to build them on a solid foundation.
