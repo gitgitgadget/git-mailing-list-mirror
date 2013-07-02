@@ -1,89 +1,91 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: --follow is ignored when used with --reverse
-Date: Tue, 2 Jul 2013 11:41:19 +0100
-Message-ID: <20130702104119.GB9161@serenity.lan>
-References: <20130524012324.295dec77@hugo.daonet.home>
- <20130702091936.GA9161@serenity.lan>
- <20130702093842.GA4353@blizzard>
- <87vc4t9tn5.fsf@linux-k42r.v.cablecom.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [Q] Getting the latest available Linux-kernel version
+ (v3.x.y-stable or v3.x.y-rcX)?
+Date: Tue, 2 Jul 2013 16:36:31 +0530
+Message-ID: <CALkWK0mm4iB5Z2t0n7vBkfUNTPR-e0bU7D_V+4DXXEvrNj6R4w@mail.gmail.com>
+References: <CA+icZUV50bn4wjohfmKWL-GXpstidPNsNWqHuq+0gvEorWOaxA@mail.gmail.com>
+ <CALkWK0nj3BG0VCxkzack_9sHa8oo=aypuv6KRusdRKyO1JCkAw@mail.gmail.com> <CA+icZUUMjKx2J+Q4xKc6QkiSQB71szVjZNURhkpLFMGjqgpqRw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Lukas Fleischer <git@cryptocrack.de>,
-	Alois Mahdal <Alois.Mahdal.1-ndmail@zxcvb.cz>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jul 02 12:41:35 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: sedat.dilek@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jul 02 13:07:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uty1e-0003ks-H4
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 12:41:34 +0200
+	id 1UtyQf-0006hc-4O
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 13:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751761Ab3GBKla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 06:41:30 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:56730 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751602Ab3GBKl3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 06:41:29 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 22DDDCDA5BE;
-	Tue,  2 Jul 2013 11:41:29 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oq+tURafieXK; Tue,  2 Jul 2013 11:41:27 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 90499CDA5A9;
-	Tue,  2 Jul 2013 11:41:21 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <87vc4t9tn5.fsf@linux-k42r.v.cablecom.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754366Ab3GBLHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 07:07:16 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:60337 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753879Ab3GBLHM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 07:07:12 -0400
+Received: by mail-ie0-f177.google.com with SMTP id aq17so11599107iec.22
+        for <git@vger.kernel.org>; Tue, 02 Jul 2013 04:07:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=1MIC9CJYjyqaxDRZ+e6hRitPtHdj8xxZw8xw6WDZCMs=;
+        b=A/xRYnYSr5ktN/GBkH+x9S8ACT7t3UXnDrC4l79EHAkdHtM87YjjjX//OzRnL/zfcw
+         RbGlahRO7gYZCr1qm6+lJbz7s0OQsfdiQy5LE8s4BNgEeIfGiSikuUsxUxbKvTG2rzLy
+         KZR9DpnEkJQqlQn6rSexPeUsAZV2Jnc4A/PQT/YQSrUVHpMRa8HKT5lFYSOMw+1VxdmN
+         7Etlx2OaigryKyab7up+OjX3hPKSnMgq+/vxmgeQ+VHY3AZKOl5acD9ACIkAa5ZWZcxZ
+         TLmW9Hy6MR3s1pZTOr8AUX8VTnwTuAOs0lG/eqN4sSyYOl8aoLpt6KeAGfbWAAKYdSXn
+         RMSA==
+X-Received: by 10.50.126.99 with SMTP id mx3mr6372104igb.48.1372763231577;
+ Tue, 02 Jul 2013 04:07:11 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Tue, 2 Jul 2013 04:06:31 -0700 (PDT)
+In-Reply-To: <CA+icZUUMjKx2J+Q4xKc6QkiSQB71szVjZNURhkpLFMGjqgpqRw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229391>
 
-On Tue, Jul 02, 2013 at 11:51:42AM +0200, Thomas Rast wrote:
-> Lukas Fleischer <git@cryptocrack.de> writes:
-> 
-> > On Tue, Jul 02, 2013 at 10:19:36AM +0100, John Keeping wrote:
-> [...]
-> >>     $ git log --oneline --follow builtin/clone.c | wc -l
-> >>     125
-> >>     $ git log --oneline --follow --reverse builtin/clone.c | wc -l
-> >>     3
-> >
-> > I just wanted to point out that it works fine when specifying the *original*
-> > file name (which kind of makes sense given that everything is done in reverse
-> > order):
-> [...]
-> > However, that also doesn't seem to work for builtin/clone.c:
-> >
-> >     $ git log --oneline --follow --reverse -- builtin-clone.c | wc -l
-> >     65
-> 
-> I'm pretty sure that is simply because --follow iis a horrible hack,
-> known to be broken in many ways.  I have it on my longer-term todo list
-> to unify it with -L -M, which already does the Right Thing (more
-> generally, not in the --reverse interaction, which it never occurred to
-> me I should check).
+Sedat Dilek wrote:
+> Sometimes I need to bisect a previous Linux-Next version.
+>
+> What I am doing is to have the latest Linux-v3.x.y(-rcX) as stable base.
+>
+> $ git checkout upstream
+> $ git checkout -b Linux-v3.10-rc7 v3.10-rc7
+>
+> Afterwards I checkout the latest Linux-Next remote repository with all
+> its (new) tags (here: next-20130628)
+>
+> $ git checkout -b Linux-Next-v20130628
+> $ git pull linux-next --tags next-20130628
+>
+> How do I get the latest available linux-version in the downgraded
+> (current) Linux-Next local repository (example: I have parallelly
+> Linux-Next-v20130702 and Linux-Next-v20130628)?
 
-Interesting... this tells me that --reverse doesn't work the way I
-thought it did (although without any real evidence).  Given how
---reverse interacts with other options (like --max-count), I assumed it
-would generate the commit list first and then simply reverse it before
-display but it seems that this isn't what happens with --follow.
+I'm not able to understand the question.  I'm not sure why you're
+creating branches from existing tags.  You can easily do:
 
-I guess that makes sense to avoid calculating the diff twice but I
-suspect we have to pay that price to get correct output.
+  $ git bisect start @ v3.10-rc7
+
+(@ is a synonym for HEAD in the latest git)
+
+You can also fetch all tags:
+
+  $ git fetch --tags
+
+and decide what to do with them later:
+
+  $ git merge next-20130628
+
+In the process, next-20130628 hasn't changed: you can still use it as a
+bisect endpoint.
+
+> If I have all -next tags merged-in, I will get always today's 'next-20130702'.
+> Due to my poor git skillz I do this manually for git-bisect sessions.
+
+*scratches head*
+
+Can you try rephrasing your question?
