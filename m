@@ -1,84 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] merge: handle --ff/--no-ff/--ff-only as a tri-state option
-Date: Tue, 02 Jul 2013 13:12:14 -0700
-Message-ID: <7vsizwk9gh.fsf@alter.siamese.dyndns.org>
-References: <20130701070143.GB17269@suse.cz> <51D197AD.1070502@alum.mit.edu>
-	<20130701195407.GK17269@suse.cz> <51D2927F.3040207@alum.mit.edu>
-	<20130702144757.GG5317@suse.cz>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Feature request: "author branch" in commit object
+Date: Tue, 2 Jul 2013 22:31:03 +0200
+Message-ID: <CALKQrgf_Gv=+zUwcdDUPENj59kx1CbEwELnYZjArBZ1S8ueVcg@mail.gmail.com>
+References: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Jul 02 22:12:22 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Ed Hutchins <eh@demeterr.com>
+X-From: git-owner@vger.kernel.org Tue Jul 02 22:31:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uu6w1-0004fI-VI
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 22:12:22 +0200
+	id 1Uu7EK-0003x2-3Q
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Jul 2013 22:31:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754695Ab3GBUMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jul 2013 16:12:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56657 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752758Ab3GBUMR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jul 2013 16:12:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3B802B9E9;
-	Tue,  2 Jul 2013 20:12:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CCFzWE1U5wm7Bz8xfln+dYc/h3k=; b=s1WWkw
-	w7fzQg2C+kf2zGsK7QUWYT30s8zGYQJXBamBEkfJivOsOCYU6ITA/PfZ4zdAAAO9
-	eXV7bD+Wca5K7nkSwvfTxgL0FnWBznq6kah3pFC1l1LLAgt0IN5ldTtrnJYutklI
-	Ih0ktq5VHUs0Xu6Y3f5y3pJ8y6VFVrq0Px9zI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OKLX7NGX82F8fEtcJKBXaOLPiCZBKu0l
-	Lt+TxFlxJrB6xdoYrzHDEUbvwg9VJMzxGLJHKwpt9u3QRxcLXKbvGkGp3FUm1jpK
-	lP14GN/+y2UF0DTzZAY+lvkFfv4kjxhEEIszpD6RnOFTkXVNKpjoFC25S7oqIo7x
-	0/DPuOg6nU4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A79A72B9E4;
-	Tue,  2 Jul 2013 20:12:16 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2414B2B9E2;
-	Tue,  2 Jul 2013 20:12:16 +0000 (UTC)
-In-Reply-To: <20130702144757.GG5317@suse.cz> (Miklos Vajna's message of "Tue,
-	2 Jul 2013 16:47:57 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B0BDF120-E353-11E2-90F7-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755429Ab3GBUbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jul 2013 16:31:10 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:62276 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754487Ab3GBUbJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jul 2013 16:31:09 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1Uu7EB-000NqG-45
+	for git@vger.kernel.org; Tue, 02 Jul 2013 22:31:07 +0200
+Received: from mail-oa0-f41.google.com ([209.85.219.41])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1Uu5yc-000DS1-PI
+	for git@vger.kernel.org; Tue, 02 Jul 2013 21:10:58 +0200
+Received: by mail-oa0-f41.google.com with SMTP id n10so7048344oag.0
+        for <git@vger.kernel.org>; Tue, 02 Jul 2013 13:31:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=p+e+71YprGlpJX0XeM098Uvh+OEfVEXsbxgqVAM85Eo=;
+        b=nNQP+CmAbbr/4AFIFdTEw4MYvtbjBYMWYzKKsWrJbfaGa+l6ZZiXlaEtiTjfz2KBeo
+         p4peBt92NOoPsYL0BceJ2H3mFlnsed4mEAC40uyjvKuild6wN3gOC/+HnlxftZ1PO3ru
+         IXy5uiHnlmLR9WR8IEGUkjE/3cTPNTudwLls6Z0B29rHOcOQ5LeRlnhU4RKzVsmln6Q8
+         oVNYuN6cp7v7ZClNAa0EO3cSPnpxn3JRPB+oSxN69e6vLmD/WYWUEgHxTLx0mGWofTap
+         QBUulUQHsVKxAwfb2Hnm3YtSgnJXVzWOds2bnRpMGynFE5tIfx8YfNK0+C7VMez241JM
+         s9hg==
+X-Received: by 10.60.97.1 with SMTP id dw1mr12751739oeb.1.1372797063392; Tue,
+ 02 Jul 2013 13:31:03 -0700 (PDT)
+Received: by 10.182.102.5 with HTTP; Tue, 2 Jul 2013 13:31:03 -0700 (PDT)
+In-Reply-To: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229426>
 
-Miklos Vajna <vmiklos@suse.cz> writes:
+On Tue, Jul 2, 2013 at 9:37 PM, Ed Hutchins <eh@demeterr.com> wrote:
+> I realize that branch names are ephemeral repo-specific things, but it
+> would be really useful to be able to determine what branch a commit
+> was authored from (as a hint to ancestry graph layout tools, for
+> example). Is there any way to do this currently, is it planned, or
+> would it be deemed useful enough to be worth adding to each commit
+> object?
 
->>     if (fast_forward == FF_ONLY)
->>         fast_forward = FF_ALLOW;
->
-> Do we really want --no-ff-only? I would rather just disable it, see the
-> updated patch.
+As Junio stated elsewhere in the thread: No.
 
-Sounds sane.
+However, you could do this with "git notes", which allows you to
+attach information to a commit object without changing the commit
+object itself. Of course, for this to work, you would have to write a
+post-commit hook to record the branch information in a commit note,
+and then convince all contributors in your project to install the same
+hook. Then you'd need to teach the relevant graph layout tools to pay
+attention to your notes.
 
->> I'm no options guru, but I think it would be possible to implement --ff
->> and --no-ff without callbacks if you choose constants such that
->> FF_NO==0, something like:
->
-> Indeed, done.
+...Johan
 
-Yup, looks good.
-
-> Actually there is also --no-squash, used by e.g. git-pull internally.
-> You definitely don't want a five-state option. :-) So for now I would
-> rather let --squash/--no-squash alone.
-
-Sensible for this patch.
-
-Will replace what was queued.  Thanks.
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
