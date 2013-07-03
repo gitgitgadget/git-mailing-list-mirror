@@ -1,88 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Change "remote tracking" to "remote-tracking"
-Date: Wed, 3 Jul 2013 11:38:51 -0700
-Message-ID: <20130703183851.GR408@google.com>
-References: <1372842754-13366-1-git-send-email-mschub@elegosoft.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remote.c: avoid O(n^2) behavior in match_push_refs by using string_list
+Date: Wed, 03 Jul 2013 11:40:12 -0700
+Message-ID: <7vhagbfpwz.fsf@alter.siamese.dyndns.org>
+References: <1372809228-2963-1-git-send-email-bcasey@nvidia.com>
+	<20130703062332.GA16090@sigill.intra.peff.net>
+	<CA+sFfMeDC=hc7QZhfSuQYsdBPzig5WANeTBhMxFZk=Pusq0QpA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pete Wyckoff <pw@padd.com>
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Wed Jul 03 20:39:01 2013
+Cc: Jeff King <peff@peff.net>, Brandon Casey <bcasey@nvidia.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Martin Fick <mfick@codeaurora.org>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 03 20:40:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuRxE-00034m-81
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 20:39:00 +0200
+	id 1UuRyZ-0004Xb-Mk
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 20:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932857Ab3GCSi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 14:38:56 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:46335 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755366Ab3GCSiz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 14:38:55 -0400
-Received: by mail-pd0-f172.google.com with SMTP id z10so348565pdj.3
-        for <git@vger.kernel.org>; Wed, 03 Jul 2013 11:38:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=imaf1F6N5cPrNzLhMIDRRIDPqzyNDVHhbaf/09O2VlY=;
-        b=WcOPRjrVdzEF0dpZNtQ+EGpTa0iPBmSmHdZv/umdp0y0YBHBkjE+RvTqQ9gCp8deeP
-         dkzYUXAMIgfQg1tnLEfMUD/onyvZHNxofvB4JhWsao1MmSRbAgKNLRTL08NWFpIbGf2E
-         sisBv9scpdks+UPY70bk2cqwaRucG3Qrjc9OOmjSMP3VUx7fcVmlbP+26mwHbKshbDEe
-         4kc6sMT1oYzYOaAp/DevofyhSHwA7PSXHd1S4517riR8FfXtdxunCbek8Ejpn5wErpe8
-         y5YirFqyiZOhc5WkHweMP7VQzSkU1sNeDF7o+vK74yKlXODz2RoJvKLwQ/AT7lT0lDdy
-         Fv1w==
-X-Received: by 10.66.228.72 with SMTP id sg8mr3672283pac.45.1372876735350;
-        Wed, 03 Jul 2013 11:38:55 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id y6sm27122991pbl.23.2013.07.03.11.38.53
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 03 Jul 2013 11:38:54 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1372842754-13366-1-git-send-email-mschub@elegosoft.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756205Ab3GCSkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 14:40:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45491 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755366Ab3GCSkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 14:40:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 938082DAAC;
+	Wed,  3 Jul 2013 18:40:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pn2T/3DaJP5wy+LOlfEXF0JLi0Y=; b=Z8MCca
+	PucvxWld2FMLXxCyUqCDizagTr9AkfMYzbh36DPSt/8kVtIDZSMed4lam1XfpRFV
+	YoBOCuCMMlukE6NCanEfqZRi1un3kvUmC25Mbd0lu4u/ifIZ/S3LiB+yeAMYV7+c
+	SPuhymbnTuxwIbYQjW1ly1Csm0gxqMf3m7z3s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sf0/bkKiTJfot13DTG1+6lNUsbcNGnSy
+	1P0lXvdnrQdsnEvgVj8bv31ZUsBS5q/w9UtOhb4BxnwbDEroWJvnC+OzyprgUUJF
+	4OUXXG0edCyKVuPGIthqrBKsgnhg7oLR8fE5ct/D+PaSgRtY27UEYGbDx1xvlHaO
+	4omE17DwxY4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52B0B2DAAA;
+	Wed,  3 Jul 2013 18:40:16 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C84C2DAA1;
+	Wed,  3 Jul 2013 18:40:14 +0000 (UTC)
+In-Reply-To: <CA+sFfMeDC=hc7QZhfSuQYsdBPzig5WANeTBhMxFZk=Pusq0QpA@mail.gmail.com>
+	(Brandon Casey's message of "Wed, 3 Jul 2013 11:12:10 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 002ED5F0-E410-11E2-9E86-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229509>
 
-Michael Schubert wrote:
+Brandon Casey <drafnel@gmail.com> writes:
 
-> --- a/Documentation/git-p4.txt
-> +++ b/Documentation/git-p4.txt
-> @@ -180,7 +180,7 @@ subsequent 'sync' operations.
->  	Import changes into given branch.  If the branch starts with
->  	'refs/', it will be used as is.  Otherwise if it does not start
->  	with 'p4/', that prefix is added.  The branch is assumed to
-> -	name a remote tracking, but this can be modified using
-> +	name a remote-tracking, but this can be modified using
->  	'--import-local', or by giving a full ref name.  The default
->  	branch is 'master'.
+> Right.  For repos with few refs on either side, I don't think there
+> will be any measurable difference.  When pushing a single ref to a
+> repo with a very large number of refs, we will see a very small net
+> loss for the time required to prepare the string list (which grows
+> linearly with the number of remote refs).  After 2 or 3 refs, we
+> should see a net gain.
+>
+> So we're really just improving our worst case performance here.
 
-This is confusing both before and after the patch.  What is "a remote
-tracking"?
+... by penalizing the common case by how much?  If it is not too
+much, then this obviously would be a good change.
 
-Perhaps:
+> ...  But, I don't see a down side to doing the lazy prepare in
+> the other loop too, and in fact, it looks like we may be able to avoid
+> building the string list when only explicit refspecs are used.  So,
+> yeah, we should lazy build in both loops.
 
-	--branch <ref>::
-		Import changes into <ref> instead of refs/remotes/p4/master.
-		If <ref> starts with refs/, it is used as is.  Otherwise, if
-		it does not start with p4/, that prefix is added.
-	+
-	By default a <ref> not starting with refs/ is treated as the
-	name of a remote-tracking branch (under refs/remotes/).  This
-	behavior can be modified using the --import-local option.
-	+
-	The default <ref> is "master".
-
-The rest of the patch looks good.
-
-Thanks,
-Jonathan
+OK, so will see a reroll sometime?
