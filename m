@@ -1,98 +1,106 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v7 2/7] wrap-for-bin: Make bin-wrappers chainable
-Date: Wed, 03 Jul 2013 22:38:19 +0200
-Message-ID: <vpqvc4r751g.fsf@anie.imag.fr>
-References: <1372804789-12732-1-git-send-email-benoit.person@ensimag.fr>
-	<1372804789-12732-3-git-send-email-benoit.person@ensimag.fr>
-	<vpqfvvvq5bl.fsf@anie.imag.fr>
-	<7v38rve6i9.fsf@alter.siamese.dyndns.org>
+From: Alexey Shumkin <alex.crezoff@gmail.com>
+Subject: Re: [PATCH] t4205: don't rely on en_US.UTF-8 locale existing
+Date: Thu, 4 Jul 2013 00:40:24 +0400
+Message-ID: <20130703204024.GA6148@dell-note>
+References: <f607decdc65b86b1759438e375ddf77fd5b91042.1372882590.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: benoit.person@ensimag.fr, git@vger.kernel.org,
-	Celestin Matte <celestin.matte@ensimag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 03 22:38:36 2013
+Content-Type: text/plain; charset=windows-1251
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Jul 03 22:40:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuToy-0002T5-69
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 22:38:36 +0200
+	id 1UuTqq-0004Uh-4v
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 22:40:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933075Ab3GCUic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 16:38:32 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:38763 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756179Ab3GCUib (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 16:38:31 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r63KcHvN029775
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 3 Jul 2013 22:38:17 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UuToi-0001Sk-1A; Wed, 03 Jul 2013 22:38:20 +0200
-In-Reply-To: <7v38rve6i9.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 03 Jul 2013 13:24:46 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 03 Jul 2013 22:38:19 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r63KcHvN029775
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1373488699.53724@mX1N3BZ5nHk0G86f5tertg
+	id S933116Ab3GCUk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 16:40:28 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:52404 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933059Ab3GCUk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 16:40:27 -0400
+Received: by mail-lb0-f173.google.com with SMTP id v1so598968lbd.18
+        for <git@vger.kernel.org>; Wed, 03 Jul 2013 13:40:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=3wGC46Z0yUbCv6Or7q/nGyYDeOyRapncgw7WYg2PRzk=;
+        b=dqgJaFZaOKJ9qWnZ/6OzeyqEv8WFHeMYac/tPbVxYvqVCX/xE9VDPR2og/MXFc6hpE
+         1We/xQ6nccXMsQJS3rguDqkmqtfIkZrCsayvyPzKkZBT1oFzG3V/O+RkaBHR2DnacKTc
+         Yi35reVQv5vK4EXJku8jfjdL61s1SVlP2GzK81GNxfzyBC7IjDdhQJFKsVUiaff1APPq
+         Qr2F2V3KQIwu1ngT5mIvuVwJpqz/lpq38BP1VGu9uJxJYxyNOYdEIiDlRyxd1vTzfcYk
+         gPab8XigqORd0oPwE2Gxj79U+eKN8fMiDH/wAQ+6HXwTDVPgGd/jIZBEZUAqck6+rPx8
+         mbeg==
+X-Received: by 10.112.52.97 with SMTP id s1mr2060273lbo.8.1372884026404;
+        Wed, 03 Jul 2013 13:40:26 -0700 (PDT)
+Received: from localhost (ppp91-77-20-80.pppoe.mtu-net.ru. [91.77.20.80])
+        by mx.google.com with ESMTPSA id p10sm11472648lap.8.2013.07.03.13.40.25
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 03 Jul 2013 13:40:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <f607decdc65b86b1759438e375ddf77fd5b91042.1372882590.git.john@keeping.me.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229528>
 
-Junio C Hamano <gitster@pobox.com> writes:
+CC this to Johannes Sixt
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> benoit.person@ensimag.fr writes:
->>
->>> diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
->>> index 53a8dd0..dbebe49 100644
->>> --- a/wrap-for-bin.sh
->>> +++ b/wrap-for-bin.sh
->>> @@ -14,7 +14,7 @@ else
->>>  	GIT_TEMPLATE_DIR='@@BUILD_DIR@@/templates/blt'
->>>  	export GIT_TEMPLATE_DIR
->>>  fi
->>> -GITPERLLIB='@@BUILD_DIR@@/perl/blib/lib'
->>> +GITPERLLIB='@@BUILD_DIR@@/perl/blib/lib:'"$GITPERLLIB"
->>
->> Then you need to do something like this to prevent broken $GITPERLLIB in
->> user's configuration from interfering with the testsuite:
->>
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -92,6 +92,7 @@ unset VISUAL EMAIL LANGUAGE COLUMNS $("$PERL_PATH" -e '
->>         print join("\n", @vars);
->>  ')
->>  unset XDG_CONFIG_HOME
->> +unset GITPERLLIB
->>  GIT_AUTHOR_EMAIL=author@example.com
->>  GIT_AUTHOR_NAME='A U Thor'
->>  GIT_COMMITTER_EMAIL=committer@example.com
->
-> Yes, that is a good point.
->
-> It introduces a chicken-and-egg circularity for git-mw tests to use
-> the common test infrastructure by dot-sourcing this file, though,
-> no?
-
-I don't get it. It Git Mediawiki's tests, the tests scripts source
-test-lib.sh, that unsets GITPERLLIB. Then, it calls the
-mw-to-git/bin-wrapper/git that sets it properly, and calls the
-toplevel's bin-wrapper.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+On Wed, Jul 03, 2013 at 09:18:08PM +0100, John Keeping wrote:
+> My system doesn't have the en_US.UTF-8 locale (or plain en_US), which
+> causes t4205 to fail by counting bytes instead of UTF-8 codepoints.
+> 
+> Instead of using sed for this, use Perl which behaves predictably
+> whatever locale is in use.
+> 
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+> This patch is on top of 'as/log-output-encoding-in-user-format'.
+> 
+>  t/t4205-log-pretty-formats.sh | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
+> 
+> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+> index 3cfb744..5864f5b 100755
+> --- a/t/t4205-log-pretty-formats.sh
+> +++ b/t/t4205-log-pretty-formats.sh
+> @@ -20,9 +20,7 @@ commit_msg () {
+>  		# cut string, replace cut part with two dots
+>  		# $2 - chars count from the beginning of the string
+>  		# $3 - "trailing" chars
+> -		# LC_ALL is set to make `sed` interpret "." as a UTF-8 char not a byte
+> -		# as it does with C locale
+> -		msg=$(echo $msg | LC_ALL=en_US.UTF-8 sed -e "s/^\(.\{$2\}\)$3/\1../")
+> +		msg=$(echo $msg | "$PERL_PATH" -CIO -pe "s/^(.{$2})$3/\1../")
+>  	fi
+>  	echo $msg
+>  }
+> @@ -205,7 +203,7 @@ test_expect_success 'left alignment formatting with ltrunc' "
+>  ..sage two
+>  ..sage one
+>  add bar  Z
+> -$(commit_msg "" "0" ".\{11\}")
+> +$(commit_msg "" "0" ".{11}")
+>  EOF
+>  	test_cmp expected actual
+>  "
+> @@ -218,7 +216,7 @@ test_expect_success 'left alignment formatting with mtrunc' "
+>  mess.. two
+>  mess.. one
+>  add bar  Z
+> -$(commit_msg "" "4" ".\{11\}")
+> +$(commit_msg "" "4" ".{11}")
+>  EOF
+>  	test_cmp expected actual
+>  "
+> -- 
+> 1.8.3.1.747.g77f7d3a
+> 
