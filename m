@@ -1,72 +1,121 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: allow extra breadcrumbs to prefix the trail
-Date: Thu, 4 Jul 2013 00:11:01 +0200
-Message-ID: <CANQwDwcneUzzXS-Du-3Aca3-Vp8ycSzVqUv1rVRVhaNUWfeokw@mail.gmail.com>
-References: <E1Uu3IT-0008U1-3c@hermes-2.csi.cam.ac.uk> <20130703215930.GT408@google.com>
+From: Alexey Shumkin <alex.crezoff@gmail.com>
+Subject: Re: [PATCH] t4205: don't rely on en_US.UTF-8 locale existing
+Date: Thu, 4 Jul 2013 02:25:08 +0400
+Message-ID: <20130703222508.GC6148@dell-note>
+References: <f607decdc65b86b1759438e375ddf77fd5b91042.1372882590.git.john@keeping.me.uk>
+ <7vr4ffcoel.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Tony Finch <dot@dotat.at>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 04 00:11:29 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 04 00:25:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuVGq-00059J-Iu
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 00:11:28 +0200
+	id 1UuVUG-0002Us-1u
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 00:25:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933142Ab3GCWLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 18:11:22 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:47481 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932486Ab3GCWLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 18:11:22 -0400
-Received: by mail-qa0-f46.google.com with SMTP id ih17so3888431qab.19
-        for <git@vger.kernel.org>; Wed, 03 Jul 2013 15:11:21 -0700 (PDT)
+	id S932486Ab3GCWZN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jul 2013 18:25:13 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:40644 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754047Ab3GCWZM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 18:25:12 -0400
+Received: by mail-la0-f41.google.com with SMTP id fn20so643975lab.28
+        for <git@vger.kernel.org>; Wed, 03 Jul 2013 15:25:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=hFMzTE+B5TNbkCTEJ5PxNNJOKEgwcijBv/z0k0CHKzE=;
-        b=bOANFTEGJAFPj0z7uznuwE+ych3M6fUimJL0fMiDkm8w0Y71XuCqywTCowZqAA+4yi
-         toVioeNK/Z6XECrncrZMK7VMxTYsS+WjGdX19PGtmukG0xGMD07XbVtiYMtUA57IPcVi
-         PNguIobpWk69nVbJlG84a+CJs/gH7r6E9BxwBrHrZsT3UVlSMeYj0bJCcp91GBPfg5KH
-         pjR/12+JyucP8W1rDYEfF/SBAL7MDgcgPHgQotljFkoFMB8Bf0aGT8DeFpBQTUV8NHL5
-         HLkJLNkjvCDLFcZvGaJCST8qbmYl0bNCWT43uJ6ND2EByLFbqLYG6K8mFxHQkH02lIer
-         pjaQ==
-X-Received: by 10.49.38.105 with SMTP id f9mr3741277qek.63.1372889481265; Wed,
- 03 Jul 2013 15:11:21 -0700 (PDT)
-Received: by 10.49.75.169 with HTTP; Wed, 3 Jul 2013 15:11:01 -0700 (PDT)
-In-Reply-To: <20130703215930.GT408@google.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=VuT5Q3vab5C93Rx1ekD9hE5Oen9wpz9QOMctWNudus8=;
+        b=IeNJNmLV4uxYzFqS3dMi3XSdkQjtyLd+cwy2mMxWHKOiU1mtAG6gAQjudZupcnhAEY
+         rmm4zBZ8V8I8MTiM/IaFLdO1GQEDaKvnMbTispwBKDGuVnucnvVJEtJSN3fbMgaPlC62
+         i/9mBFnMLDlFueHjjbl0zvH0DjjGCVym8pVRyfxfsivuxWRSBye832PW6gBOehSKarKk
+         rKjqAbV5yAARZeAodUMLbgH5z2CdZrc9XxCr7cG+inngFUfrP9YGeyAB/t9Zf9wVwrGh
+         4anvRFlu0Ku9fXgraC6LqwUPVgvprrKaKrtf/OGvRkP6+qgGRon7+bUBBwUKM4DTajd3
+         7ZLw==
+X-Received: by 10.152.4.163 with SMTP id l3mr1419095lal.60.1372890310766;
+        Wed, 03 Jul 2013 15:25:10 -0700 (PDT)
+Received: from localhost (ppp91-77-20-80.pppoe.mtu-net.ru. [91.77.20.80])
+        by mx.google.com with ESMTPSA id c4sm37810lae.7.2013.07.03.15.25.09
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 03 Jul 2013 15:25:10 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vr4ffcoel.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229540>
 
-On Wed, Jul 3, 2013 at 11:59 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Tony Finch wrote:
-
->> +@extra_breadcrumbs::
->> +     Additional links to be added to the start of the breadcrumb trail,
->> +     that are logically "above" the gitweb projects list. For example,
->> +     links to the organization and department which host the gitweb
->> +     server. Each element of the list is a reference to an array,
->> +     in which element 0 is the link text and element 1 is the
->> +     target URL.
->
-> Is arbitrary HTML permitted in the link text?
->
-> I think it makes sense to permit it for consistency with $home_link_str,
-> but it might be worth mentioning in the manpage so the administrator
-> knows not to set it to something user-controlled --- e.g.:
->
->         The link text can contain arbitrary HTML --- to escape link
->         text generated programatically, use esc_html($text).
-
-Nb. it would be nice to have relation of @extra_breadcrumbs with
-$home_link_str explained.
-
--- 
-Jakub Narebski
+On Wed, Jul 03, 2013 at 02:41:06PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+>=20
+> > My system doesn't have the en_US.UTF-8 locale (or plain en_US), whi=
+ch
+> > causes t4205 to fail by counting bytes instead of UTF-8 codepoints.
+> >
+> > Instead of using sed for this, use Perl which behaves predictably
+> > whatever locale is in use.
+> >
+> > Signed-off-by: John Keeping <john@keeping.me.uk>
+> > ---
+> > This patch is on top of 'as/log-output-encoding-in-user-format'.
+>=20
+> Thanks.  I think Alexey is going to send incremental updates to the
+> topic so I won't interfere by applying this patch on top of the
+> version I have in my tree.
+>=20
+> But I do agree that using Perl may be a workable solution.
+>=20
+> An alternative might be not to use this cryptic 3-arg form of
+> commit_msg at all.  They are used only for these three:
+>=20
+> 	$(commit_msg "" "8" "..*$")
+> 	$(commit_msg "" "0" ".\{11\}")
+> 	$(commit_msg "" "4" ".\{11\}")
+>=20
+> I somehow find them simply not readable, in order to figure out what
+> is going on.
+>=20
+> Just using three variables to hold what are expected would be far
+> more portable and readable.
+>=20
+> # "anf=C3=A4nglich" whatever it means.
+> sample_utf8_part=3D$(printf "anf\303\244ng")
+>=20
+> commit_msg () {
+> 	msg=3D"initial. ${sample_utf8_part}lich";
+> 	if test -n "$1"
+> 	then
+> 		echo "$msg" | iconv -f utf-8 -t "$1"
+> 	else
+> 		echo "$msg"
+>         fi
+> }
+>=20
+> And then instead of writing in the expected test output.
+>=20
+> 	$(commit_msg "" "8" "..*$")
+> 	$(commit_msg "" "0" ".\{11\}")
+> 	$(commit_msg "" "4" ".\{11\}")
+>=20
+> we can just say
+>=20
+> 	initial...
+>         ..an${sample_utf8_part}lich
+> 	init..lich
+>=20
+> It is no worse than those cryptic 0, 4, 8 and 11 magic numbers we
+> see in the test, no?
+Yep!
+when I was thinking about Johannes's suggestions, I finally came to the=
+ decision
+alike yours.
