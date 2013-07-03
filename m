@@ -1,88 +1,93 @@
-From: Ed Hutchins <eh@demeterr.com>
-Subject: Re: Feature request: "author branch" in commit object
-Date: Wed, 3 Jul 2013 10:31:51 -0700
-Message-ID: <CADL+T9bbnGSxCjUBqoL3qm7Ss-j9jxorED0L1A6v1NbeLBpRQg@mail.gmail.com>
-References: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
-	<7v38rwlola.fsf@alter.siamese.dyndns.org>
-	<CADL+T9ax0maws3GR24YV77Yge7knqHd5mfuPd_AqE9b4UmvYPg@mail.gmail.com>
-	<CALWbr2zJFjbaCdA3d1eaFuP4HGShAwnK=gisRD=KHKWWi-XuTg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5] [submodule] Add --depth to submodule update/add
+Date: Wed, 03 Jul 2013 10:36:58 -0700
+Message-ID: <7vvc4rfsud.fsf@alter.siamese.dyndns.org>
+References: <51D342BB.8080907@web.de>
+	<1372801376-32673-1-git-send-email-iveqy@iveqy.com>
+	<51D3D20A.5000700@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 03 19:31:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, hvoigt@hvoigt.net,
+	git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jul 03 19:37:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuQuK-0007Sw-Kt
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 19:31:56 +0200
+	id 1UuQzP-0004Ca-Bj
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 19:37:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932471Ab3GCRbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 13:31:52 -0400
-Received: from mail-qa0-f50.google.com ([209.85.216.50]:60148 "EHLO
-	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754184Ab3GCRbv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 13:31:51 -0400
-Received: by mail-qa0-f50.google.com with SMTP id l18so296519qak.9
-        for <git@vger.kernel.org>; Wed, 03 Jul 2013 10:31:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-gm-message-state;
-        bh=TYU1a/QKripBdGXRjEleVwWbnFvgNlPJ02qXNtSotIg=;
-        b=g1yWe0j4jw86x6RCNxlrUmuVzGytdk3/GgHzUneMH03qQ+ARc2SkDQHLFMQvYJVBcU
-         qFPC3XZroZQ9O0XG9ChD2JbOa5K7O6lpvY/h0J9ohdh1nLfS1s6AgxgG7lUIOOJnJQld
-         /Z9DpX2TgLS9w2aD7bxlIdSQwKlM8TbljsI42ob+mPvw1OfxK33q/JMqAC+Mdx7xo6nr
-         5GWAntBf6k5P9aVMdM9tjroZbCirrohj8NRntGYqnNyhNZ5qKPDxwf10k0ytorZKCjfk
-         4tWNjNLL9xdhcvwwKuA1SuG24I5nKr3M6NHF0Sx8km10V1whJ6dPNCJHbP6gS2vnO471
-         bc9g==
-X-Received: by 10.224.38.133 with SMTP id b5mr5267109qae.78.1372872711115;
- Wed, 03 Jul 2013 10:31:51 -0700 (PDT)
-Received: by 10.49.76.234 with HTTP; Wed, 3 Jul 2013 10:31:51 -0700 (PDT)
-In-Reply-To: <CALWbr2zJFjbaCdA3d1eaFuP4HGShAwnK=gisRD=KHKWWi-XuTg@mail.gmail.com>
-X-Gm-Message-State: ALoCoQmYn3rFYOFDpcdoStgXhZs5kzPXhjwCGL8QzLTNKOcN24aYOx++YCr8y//kj2h+qoTHf55t
+	id S1753753Ab3GCRhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 13:37:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47172 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751193Ab3GCRhC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 13:37:02 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4029E2DDB6;
+	Wed,  3 Jul 2013 17:37:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z++ra0UypiBE+ZOX4wTXwEfGUzI=; b=uB1J9D
+	tOeqxgHd/sacrCIR93vvxIILG9RIhEFHWkXbQnwTrICm/UFIH52cRK6HLGSr3pzE
+	KMcuDjeo9EI1d6bQMGRuqdckNziWydN8TawGi8zetVtAqckkH/GAXGqvX65g24nj
+	Ox8ND3E+5X01p7Nn4Ako7Wtq79BktNllpg3M8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dmBjgS/rBaJKsWSIr9izK87HC+ONcIuF
+	KFch8z97QWJgBh0Sta411ho90fS6E79+gTvDXa0A2Z4dPaO3W82nfTe+RjPF2gSD
+	J81CNsUTCTv1F3cJUQb4OV0ihpC8e5Bu9scerDLEeGJ03KU2J1RIsdlRxiy8o3VS
+	k/eoK4OeANE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30E032DDB5;
+	Wed,  3 Jul 2013 17:37:02 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A0A12DDAE;
+	Wed,  3 Jul 2013 17:37:00 +0000 (UTC)
+In-Reply-To: <51D3D20A.5000700@web.de> (Jens Lehmann's message of "Wed, 03 Jul
+	2013 09:26:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2A98DC72-E407-11E2-8304-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229501>
 
-I might be able to switch our corporate workflow to adding non-ff merge
-commits, but the reason we moved away from using github's big red button
-in the first place was to avoid the extra noise of merge-only commits.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Actually you've pointed out an inconsistency: why is it okay for merge
-commits to automatically mention branch names, but for regular commits
-this is considered harmful?
+> The only minor problem is that this patch still does not apply cleanly
+> to master, next or pu (I wonder what you based this on ;-).
 
-On Wed, Jul 3, 2013 at 9:16 AM, Antoine Pelisse <apelisse@gmail.com> wrote:
-> On Tue, Jul 2, 2013 at 10:34 PM, Ed Hutchins <eh@demeterr.com> wrote:
->> On the other hand
->> trying to figure
->> out the history of events from a large directed graph of commits
->> without any clue about
->> what topics first spawned each commit is actively harmful in many
->> cases (trying to display
->> a clear history of who did what for what reasons, for example).
->
-> I think this is exactly what Junio does with git.git:
-> - Each branch is named "$initials/$topicname" before being merged.
-> - Branches are always merged with --no-ff.
->
-> I think it answers your question: Who (initials) does what (topic)
-> The name of the branch is also stuck as part of the history as the
-> merge reads the name of the merged branch:
->
-> e.g. Merge branch 'rr/remote-branch-config-refresh'
->
-> You can of course provide more information than the simple commit
-> header line (that would give the "what reasons").
->
-> Of course, it's even easier to read if you always merge in the same
-> direction (that allows you to easily find the first commit of the
-> branch).
->
-> Hope that helps,
-> Antoine
+Older iteration of the topic has been queued directly on top of
+v1.8.3.  When I replace a topic with its new version, I try to
+rebuild on the same base.
+
+This is primarily out of habit, but it makes comparison between the
+two versions easier, and also "show-branch -g" output looks sane.
+
+The workflow goes like this:
+
+	: quick-glance the old iteration
+	$ git log --boundary --oneline master..fg/submodule-clone-depth
+
+        : can we rewind?  compare with the previous one for 'master'
+        $ git log --boundary --oneline next..fg/submodule-clone-depth
+        : if nothing has been merged to 'next', we can continue...
+
+	: detach at the old base
+	$ git checkout master...fg/submodule-clone-depth
+
+        : apply
+        $ git am -s3 ./+fg-submodule-clone-depth.mbox
+
+        : inspect
+        $ git show-branch @{-1} HEAD
+        $ git diff @{-1}
+
+	: replace
+        $ git branch -f @{-1}
