@@ -1,124 +1,112 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RFC/PATCHv3] submodule update: allow custom update command
-Date: Wed, 03 Jul 2013 19:54:53 +1200
-Message-ID: <51D3D8CD.5090804@gmail.com>
-References: <7vehbii6un.fsf@alter.siamese.dyndns.org> <1372759974-19765-1-git-send-email-judge.packham@gmail.com> <51D3064C.80901@web.de> <CAFOYHZC1xMt2eqaNm0vtLVJ3X2TNjRxa3sEjBPmHVeHrQmSc4A@mail.gmail.com> <51D3CAE8.50509@web.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Review of git multimail
+Date: Wed, 03 Jul 2013 10:02:34 +0200
+Message-ID: <51D3DA9A.9090604@alum.mit.edu>
+References: <1372793019-12162-1-git-send-email-artagnon@gmail.com> <7vsizwiowt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>, iveqy@iveqy.com,
-	stefan.naewe@atlas-elektronik.com, hvoigt@hvoigt.net,
-	Junio C Hamano <gitster@pobox.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Jul 03 09:53:58 2013
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 03 10:02:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuHsz-0001vt-Fp
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 09:53:57 +0200
+	id 1UuI1V-0002RN-Un
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 10:02:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753960Ab3GCHxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 03:53:53 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:62097 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753460Ab3GCHxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 03:53:53 -0400
-Received: by mail-pa0-f42.google.com with SMTP id rl6so7269882pac.1
-        for <git@vger.kernel.org>; Wed, 03 Jul 2013 00:53:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=vJdUfiG6VlwGG7RbVRp2dvUnCLx6yyHYY+fuq2TEvng=;
-        b=iSev8iP+y/4UC//47vQaBox5v1YNjUCiglzp4Q27SDLnvdDJP19ntsfoKnFYIAivZg
-         D+XtCsEo1gWOx8bfdFT92d05TKmCt964gfMXoNKWDGjSCvGKvZ7ah9QXJN7u4Lv3GRWa
-         TovqMNlNtMY08dhDkmqwjbr1+/NO7AhBmWP1TUoSYMJR7B6TQef4Ri1eLDFacwttxXXw
-         NUA19Qq0CWfM1HkHA6tWKdr6GcrHdLgvVblaPDp+hPbNwMAcBgu8ggLKlf7r1NUbrwln
-         26/aewLzIq764BQU2tjRV2HNracW+inTkE3hcPuDmo85UE9QP1NhM8BJcXEQqBq3FaxL
-         s8SA==
-X-Received: by 10.68.108.163 with SMTP id hl3mr32631381pbb.160.1372838032526;
-        Wed, 03 Jul 2013 00:53:52 -0700 (PDT)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id ve3sm30711458pbc.14.2013.07.03.00.53.49
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 03 Jul 2013 00:53:52 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <51D3CAE8.50509@web.de>
+	id S1754582Ab3GCICk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 04:02:40 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:61204 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753481Ab3GCICi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Jul 2013 04:02:38 -0400
+X-AuditID: 1207440e-b7f0f6d0000043b7-57-51d3da9ddc3b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 1B.B7.17335.D9AD3D15; Wed,  3 Jul 2013 04:02:37 -0400 (EDT)
+Received: from [192.168.101.152] (mx.berlin.jpk.com [212.222.128.135] (may be forged))
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r6382Zhn017536
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 3 Jul 2013 04:02:36 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <7vsizwiowt.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAKsWRmVeSWpSXmKPExsUixO6iqDv31uVAgw0vNC1WzXzMbtF1pZvJ
+	oqH3CrMDs8fOWXfZPS5eUvb4vEkugDmK2yYpsaQsODM9T98ugTvj/WypggbBildHJrE2MB7m
+	6WLk5JAQMJF4cbSHDcIWk7hwbz2QzcUhJHCZUaL/7DYo5yqTxKdv8xhBqngFtCXan59gAbFZ
+	BFQlts2+xApiswnoSizqaWbqYuTgEBUIk7jyWxWiXFDi5MwnYOUiAmoSE9sOgdnMAr4S1781
+	gI0UFlCRuLh4NTOILSSQI/Fo3Rt2kDGcAmYSpzdqQ5TrSLzre8AMYctLbH87h3kCo8AsJBtm
+	ISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdY73czBK91JTSTYyQsOXbwdi+XuYQ
+	owAHoxIPr8OzS4FCrIllxZW5hxglOZiURHknXb0cKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE
+	d8kioBxvSmJlVWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYJX5SZQo2BRanpq
+	RVpmTglCmomDE2Q4l5RIcWpeSmpRYmlJRjwoSuOLgXEKkuIB2hsI0s5bXJCYCxSFaD3FaMwx
+	+eyW94wcB34ASSGWvPy8VClxXkeQUgGQ0ozSPLhFsIT1ilEc6G9h3gyQKh5gsoOb9wpoFRPQ
+	Kunll0BWlSQipKQaGG2k9GxztpoeNVVhsoj7OPXVJybGJJWucum3hzsFdge0mniwnGq6Z/nH
+	dGv1qeuX03LDorur3/br+UaYWNtOuuP9QmNNVeMHJ71j9tWXPtudWSHzO2jXf67d 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229462>
 
-On 03/07/13 18:55, Jens Lehmann wrote:
-> Am 03.07.2013 01:26, schrieb Chris Packham:
->> On Wed, Jul 3, 2013 at 4:56 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->>> Am 02.07.2013 12:12, schrieb Chris Packham:
->>>> --- a/Documentation/git-submodule.txt
->>>> +++ b/Documentation/git-submodule.txt
->>>> @@ -159,7 +159,9 @@ update::
->>>>       This will make the submodules HEAD be detached unless `--rebase` or
->>>>       `--merge` is specified or the key `submodule.$name.update` is set to
->>>>       `rebase`, `merge` or `none`. `none` can be overridden by specifying
->>>> -     `--checkout`.
->>>> +     `--checkout`. Setting the key `submodule.$name.update` to `!command`
->>>> +     will cause `command` to be run. `command` can be any arbitrary shell
->>>> +     command that takes a single argument, namely the sha1 to update to.
->>>>  +
->>>>  If the submodule is not yet initialized, and you just want to use the
->>>>  setting as stored in .gitmodules, you can automatically initialize the
+On 07/03/2013 12:21 AM, Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 > 
-> The above hunk is perfectly fine ...
-> 
->>>> @@ -172,6 +174,7 @@ If `--force` is specified, the submodule will be checked out (using
->>>>  `git checkout --force` if appropriate), even if the commit specified in the
->>>>  index of the containing repository already matches the commit checked out in
->>>>  the submodule.
->>>> ++
->>>>
->>>>  summary::
->>>>       Show commit summary between the given commit (defaults to HEAD) and
-> 
-> ... but I don't understand the extra '+'-line added here.
-> 
->>> I'm not sure this change is necessary ;-)
+>>>     def get(self, name, default=''):
+>>>         try:
+>>>             values = self._split(read_git_output(
+>>>                     ['config', '--get', '--null', '%s.%s' % (self.section, name)],
+>>>                     env=self.env, keepends=True,
+>>>                     ))
 >>
->> Not necessary because it should be documented in
->> Documentation/config.txt instead, or not necessary because it's a
->> niche feature that doesn't need to be advertised?
+>> Wait, what is the point of using --null and then splitting by hand
+>> using a poorly-defined static method?  Why not drop the --null and
+>> splitlines() as usual?
 > 
-> Sorry for the confusion, I should have been more specific here.
+> You may actually have spotted a bug or misuse of "--get" here.
 > 
+> With this sample configuration:
+> 
+>         $ cat >sample <<\EOF
+>         [a]
+>                 one = value
+>                 one = another
+> 
+>         [b]
+>                 one = "value\nanother"
+>         EOF
+> 
+> A script cannot differentiate between them without using '--null'.
+> 
+> 	$ git config -f sample --get-all a.one
+>         $ git config -f sample --get-all b.one
+> 
+> But that matters only when you use "--get-all", not "--get".  If
+> this method wants to make sure that the user did not misuse a.one
+> as a multi-valued configuration variable, use of "--null --get-all"
+> followed by checking how many items the command gives you back would
+> be a way to do so.
 
-Ah that makes sense. It's left over from the '--exec' option in v1. Will
-be cleaned up in v4.
+No, the code in question was a simple sanity check (i.e., mostly a check
+of my own sanity and understanding of "git config" behavior) preceding
+the information-losing next line "return values[0]".  If it had been
+meant as a check that the user hadn't misconfigured the system, then I
+wouldn't have used assert but rather raised a ConfigurationException
+with an explanatory message.
 
-On a related note should I be updating Documentation/config.txt as well?
-Even if it's a statement that this feature exists refer to
-git-submodule(1) for details.
+I would be happy to add the checking that you described, but I didn't
+have the impression that it is the usual convention.  Does code that
+wants a single value from the config usually verify that there is
+one-and-only-one value, or does it typically just do the equivalent of
+"git config --get" and use the returned (effectively the last) value?
 
->>>> diff --git a/git-submodule.sh b/git-submodule.sh
->>>> index eb58c8e..a7c2375 100755
->>>> --- a/git-submodule.sh
->>>> +++ b/git-submodule.sh
->>>> @@ -799,6 +799,12 @@ Maybe you want to use 'update --init'?")"
->>>>                               say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': merged in '\$sha1'")"
->>>>                               must_die_on_failure=yes
->>>>                               ;;
->>>> +                     !*)
->>>> +                             command="${update_module#!}"
->>>> +                             die_msg="$(eval_gettext "Unable to exec '\$command \$sha1' in submodule path '\$prefix\$sm_path'")"
->>>
->>> Hmm, "Unable to exec" does not quite cut it, as the command was executed
->>> but returned an error, right? Maybe something like this:
->>>
->>>    Execution of '\$command \$sha1' failed in submodule  path '\$prefix\$sm_path'
->>>
->>
->> Will include in v4 once I write some tests.
-> 
-> Thanks.
-> 
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
