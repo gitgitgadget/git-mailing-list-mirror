@@ -1,120 +1,183 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Feature request: "author branch" in commit object
-Date: Wed, 03 Jul 2013 11:08:45 -0700
-Message-ID: <7vppuzfrde.fsf@alter.siamese.dyndns.org>
-References: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
-	<vpqehbgrnrx.fsf@anie.imag.fr>
-	<CADL+T9Z=SrVyMMnYk3M7Dmb4c5xGiQtCTiDYaceKwB2-51TV-g@mail.gmail.com>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH] remote.c: avoid O(n^2) behavior in match_push_refs by
+ using string_list
+Date: Wed, 3 Jul 2013 11:12:10 -0700
+Message-ID: <CA+sFfMeDC=hc7QZhfSuQYsdBPzig5WANeTBhMxFZk=Pusq0QpA@mail.gmail.com>
+References: <1372809228-2963-1-git-send-email-bcasey@nvidia.com>
+	<20130703062332.GA16090@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Ed Hutchins <eh@demeterr.com>
-X-From: git-owner@vger.kernel.org Wed Jul 03 20:08:56 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Brandon Casey <bcasey@nvidia.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Martin Fick <mfick@codeaurora.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 03 20:12:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuRU7-0004Od-HC
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 20:08:55 +0200
+	id 1UuRXM-0007va-UU
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 20:12:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754647Ab3GCSIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 14:08:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45288 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752970Ab3GCSIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 14:08:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B780F2D37F;
-	Wed,  3 Jul 2013 18:08:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IzQoqsWbnTm/+B1O0eUZ6YbH2og=; b=WDoVEy
-	62e/cUFwIVklroiZTdIEWx/NruTTzvwxXxZU8UkJWFcx64ITjNptcXA7R7/aw0Nq
-	jomqOxuWAt1R3P0ZONK8NLu86zf6Ypsd4ud+ZLh4utLEkH81td+euU/aCZftfl+6
-	NRA4bg7XU0+8Yy+kU0/bDyF0yWuOMQGNERGUs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B0MQ0UlETcbPvM87Be7jBxFeGlhW87ZI
-	2PBOk1DZ1X/kqjn0E/0bi1tLDwOzTItWXUSY4Xg1TUkwEAbpjiN70tKVjPLddffl
-	+ZssAyDJEYl5DNfdggvSLBPZ8lvXquHqLS2LjuIQgXplp7zlXwBYwCFPzhWZIPjQ
-	ftebc0YGuN4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 016202D37D;
-	Wed,  3 Jul 2013 18:08:49 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C073F2D37A;
-	Wed,  3 Jul 2013 18:08:47 +0000 (UTC)
-In-Reply-To: <CADL+T9Z=SrVyMMnYk3M7Dmb4c5xGiQtCTiDYaceKwB2-51TV-g@mail.gmail.com>
-	(Ed Hutchins's message of "Wed, 3 Jul 2013 08:47:17 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9B6E4348-E40B-11E2-9CA0-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S932637Ab3GCSMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 14:12:13 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:55562 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755944Ab3GCSMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 14:12:12 -0400
+Received: by mail-wi0-f174.google.com with SMTP id k10so5531181wiv.1
+        for <git@vger.kernel.org>; Wed, 03 Jul 2013 11:12:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=GzdeHLez181vOPsZKn9Kz6JNWP1PUfCmPY3dVuWX+Yo=;
+        b=GBhLiDLGRwGH0Zb8/rWy7aZTzt8/V2pXODWDVFABxRk/cZBHfB0ikpYP6E0WoSmF9q
+         TsmYj40DiPW7hfioLy6h1XmeziN4utCvppbySSXK4dt7GlfUnS2z8XjoJcjERx2dLxPJ
+         uSfWzW/+pGuJkUXDfYJ5hvkQAulUSsyh1PH2g7ZitIjK1OaB1Vtqnwu0hIy/3vUJbvZW
+         Dq+OmpUELt5Afo0HBadZxwSjLlJzdYgLHYTKzwZ+M5cVO5h1gAlqtt/O0mKt6LOLlagg
+         7tJvOsAg/qpN2Jf57GGx3sSIzEJv4HO4btIAaheySRRpRjGqNu+WsNhAyTs7HlYz6s2y
+         4CZQ==
+X-Received: by 10.194.234.100 with SMTP id ud4mr1343944wjc.44.1372875130532;
+ Wed, 03 Jul 2013 11:12:10 -0700 (PDT)
+Received: by 10.194.81.102 with HTTP; Wed, 3 Jul 2013 11:12:10 -0700 (PDT)
+In-Reply-To: <20130703062332.GA16090@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229503>
 
-Ed Hutchins <eh@demeterr.com> writes:
+On Tue, Jul 2, 2013 at 11:23 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Jul 02, 2013 at 04:53:48PM -0700, Brandon Casey wrote:
+>
+>> From: Brandon Casey <drafnel@gmail.com>
+>>
+>> When pushing, each ref in the local repository must be paired with a
+>> ref advertised by the remote server.  Currently, this is performed by
+>> first applying the refspec to the local ref to transform the local ref
+>> into the name of the remote ref, and then performing a linear search
+>> through the list of remote refs to see if the remote ref was advertised
+>> by the remote system.
+>>
+>> This has O(n) complexity and makes match_push_refs() be an O(n^2)
+>> operation.
+>
+> Just to be sure I understand correctly, is this actually O(m*n) where
+> "m" is the number of local refs and "n" is the number of remote refs?
 
-> I'm not trying to change the way git does things (which works perfectly
-> well), I'm asking for some extra information to be added to the commit
-> so that analysis of the ancestry graph can be tied to the branch topics
-> that the original author was working from. Currently if you have a
-> rebase-branch/ff-merge-to-master workflow, the graph of commits looks
-> like a single user produced all of the code. It would be very useful for
-> both forensic and display purposes to categorize those commits by their
-> original topics, but that history is lost in such a workflow.
+Yes, O(m*n) is more correct.  I think you understand completely.
 
-I am not following that "a single user" part. As long as these
-topics are done by different people, the authorship remains
-separate, no matter what the shape of the graph is.
+> For a repository that repeatedly pushes everything it has to the remote,
+> we end up with m=n, but it would not necessarily be the case if you are
+> pushing a subset of your refs. But even pushing a small number of refs
+> into a repository with a very large number of refs would be
+> unnecessarily slow, as we would do several O(n) lookups which could be
+> O(log n). So it may speed things up even in the case of a normal-sized
+> repo pushing to a large one.
 
-It all depends on what you show on the graph other than a circle and
-connecting lines, but I presume at least you would show the subject
-line. The graph would clearly show which groups of commits tackle
-what problems in your history, even if you excessively linearlized
-it by rebasing. You need subjects / commit log messages that are
-better than "bugfix", of course, for it to work, though.
+Right.  For repos with few refs on either side, I don't think there
+will be any measurable difference.  When pushing a single ref to a
+repo with a very large number of refs, we will see a very small net
+loss for the time required to prepare the string list (which grows
+linearly with the number of remote refs).  After 2 or 3 refs, we
+should see a net gain.
 
-> Arguing that branch names are local and thus meaningless misses
-> the point: branches are *names* which were meaningful to the
-> author at the time the branch was being worked on.
+So we're really just improving our worst case performance here.
 
-That is not necessarily true.
+>> Dry-run push of a repository with 121913 refs:
+>>
+>>         before     after
+>> real    1m40.582s  0m0.804s
+>> user    1m39.914s  0m0.515s
+>> sys     0m0.125s   0m0.106s
+>
+> Very nice. :)
+>
+>> Signed-off-by: Brandon Casey <drafnel@gmail.com>
+>> ---
+>>  remote.c | 26 ++++++++++++++++++++++++--
+>>  1 file changed, 24 insertions(+), 2 deletions(-)
+>
+> Patch itself looks good to me, although...
+>
+>> @@ -1362,6 +1378,8 @@ int match_push_refs(struct ref *src, struct ref **dst,
+>>               free(dst_name);
+>>       }
+>>
+>> +     string_list_clear(&ref_list, 0);
+>> +
+>>       if (flags & MATCH_REFS_FOLLOW_TAGS)
+>>               add_missing_tags(src, dst, &dst_tail);
+>>
+>> @@ -1376,11 +1394,15 @@ int match_push_refs(struct ref *src, struct ref **dst,
+>>
+>>                       src_name = get_ref_match(rs, nr_refspec, ref, send_mirror, FROM_DST, NULL);
+>>                       if (src_name) {
+>> -                             if (!find_ref_by_name(src, src_name))
+>> +                             if (!ref_list.nr)
+>> +                                     prepare_searchable_ref_list(src,
+>> +                                             &ref_list);
+>> +                             if (!string_list_has_string(&ref_list, src_name))
+>
+> This hunk threw me for a bit, as it looked like we were lazily
+> initializing ref_list in case we had not done so earlier. But we would
+> have cleared it mid-way through the function (in the hunk above), and it
+> is only that we are reusing the same ref_list for two different
+> purposes.
+>
+> I do not feel strongly about it, but it might be a little more obvious
+> to just declare a new variable in the block, like:
+>
+> diff --git a/remote.c b/remote.c
+> index 75255af..53bef82 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -1399,6 +1399,7 @@ int match_push_refs(struct ref *src, struct ref **dst,
+>                 add_missing_tags(src, dst, &dst_tail);
+>
+>         if (send_prune) {
+> +               struct string_list src_ref_index = STRING_LIST_INIT_NODUP;
+>                 /* check for missing refs on the remote */
+>                 for (ref = *dst; ref; ref = ref->next) {
+>                         char *src_name;
+> @@ -1409,15 +1410,15 @@ int match_push_refs(struct ref *src, struct ref **dst,
+>
+>                         src_name = get_ref_match(rs, nr_refspec, ref, send_mirror, FROM_DST, NULL);
+>                         if (src_name) {
+> -                               if (!ref_list.nr)
+> +                               if (!src_ref_index.nr)
+>                                         prepare_searchable_ref_list(src,
+> -                                               &ref_list);
+> -                               if (!string_list_has_string(&ref_list, src_name))
+> +                                               &src_ref_index);
+> +                               if (!string_list_has_string(&src_ref_index, src_name))
+>                                         ref->peer_ref = alloc_delete_ref();
+>                                 free(src_name);
+>                         }
+>                 }
+> -               string_list_clear(&ref_list, 0);
+> +               string_list_clear(&src_ref_index, 0);
+>         }
+>         if (errs)
+>                 return -1;
+>
+> And similarly maybe call the outer ref_list dst_ref_index or something.
 
-Most of my commits start their life on a single branch that is named
-after a very broad theme (or even on a detached HEAD) that ends up
-touching different parts of the system and then later split into
-separate topic branches that are named after more detailed single
-issues. The name of the branch that happened to have been used to
-create them have almost no meaning after I am done with multiple and
-independent (but related in the larger scheme of things) topics.
+That looks/sounds reasonable.
 
-It is not just misleading but is actively wrong to recording the
-name of the original branch in commits and carrying them forward via
-rebase. If you want a record of what a group of commits were about,
-the right time to do so is when you merge.
+> I also note that we don't do the lazy-prepare for the other loop. I
+> guess that is because we assume that "src" is always non-NULL?
 
-Projects that care about the shape of the ancestry graph have an
-obvious option of not excessively/unnecessarily linearlizing their
-history. We even have the "--no-ff" mode of merge to create an
-otherwise unnecessary merge to mark the point where a topic is
-merged to the mainline, so that merge log messages can say what
-topic was merged (and also you can even have "merge.log").
+It really wasn't a conscious decision to not do the lazy prepare in
+the other loop.  I gave extra attention to the pruning block since I
+expect that deleting refs is less common than updating refs, so we
+should be able to avoid the cost of building the string list most of
+the time.  But, I don't see a down side to doing the lazy prepare in
+the other loop too, and in fact, it looks like we may be able to avoid
+building the string list when only explicit refspecs are used.  So,
+yeah, we should lazy build in both loops.
 
-Cleaning up a messy history created on a topic branch before
-presenting to others by lineralizing is one thing. It is a good
-practice. Requiring any update to fast-forward on top of the tip of
-the project is quite different. It does not make your history any
-easier to read. A topic that has been working fine on top of last
-week's trunk can have a subtle interaction with the work done by
-others on the trunk since it forked, and rebasing it on top of
-today's trunk, just before pushing it out on the trunk, risks
-breaking the topic in a subtle way without the person who does such
-a rebase without noticing, making later bisection harder.
-
-Any option to encourage such an artificially linear history _is_
-actively detrimental.
+-Brandon
