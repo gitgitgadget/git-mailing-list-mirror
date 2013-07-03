@@ -1,79 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: John Keeping <john@keeping.me.uk>
 Subject: Re: Review of git multimail
-Date: Wed, 03 Jul 2013 01:16:19 -0700
-Message-ID: <7vzju4giss.fsf@alter.siamese.dyndns.org>
+Date: Wed, 3 Jul 2013 09:29:02 +0100
+Message-ID: <20130703082902.GE9161@serenity.lan>
 References: <1372793019-12162-1-git-send-email-artagnon@gmail.com>
-	<7vsizwiowt.fsf@alter.siamese.dyndns.org>
-	<51D3DA9A.9090604@alum.mit.edu>
+ <7vsizwiowt.fsf@alter.siamese.dyndns.org>
+ <51D3DA9A.9090604@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Git List <git@vger.kernel.org>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jul 03 10:16:31 2013
+X-From: git-owner@vger.kernel.org Wed Jul 03 10:29:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuIEo-0007T9-OL
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 10:16:31 +0200
+	id 1UuIRF-0003He-2X
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 10:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754738Ab3GCIQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 04:16:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41304 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754542Ab3GCIQW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 04:16:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CBF482B7C7;
-	Wed,  3 Jul 2013 08:16:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pOAmsctjJWzX9v67UWoxDI4+tx0=; b=HonXs3
-	VfhVWIuAlaCAVRjdA3bg1rzfnSRvpTETVjUq3l3C1yNkr2C1sBS+j8pNzSn5h3Vq
-	CErzGLSnTnPDja6/dXg2vQHvvDHNrC/rXZsLkjSOps22YzWZUDDiZjOv8jlI17Nl
-	qwN9osHbsySeQ9hMSbJlqvMHY3zjpMY2r2Gj0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AMgssVuo3m+lik2FBjDdfuxncoV43qH1
-	x+HLPFS+7QDwccfbbVZZWTaoc0EOsaNCd7hu7eHBg03ehQfc2CjAagm6qn8BzsVm
-	sCJBScHjS+YgtVINVh/AW1LieGMooZ91tCnVNJaa5Y7qEGYSUr44A3DhvJAXdr4i
-	sojY/LORCq8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C12102B7C5;
-	Wed,  3 Jul 2013 08:16:21 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1754739Ab3GCI3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 04:29:15 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:44597 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753521Ab3GCI3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 04:29:12 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 6E7F4606519;
+	Wed,  3 Jul 2013 09:29:11 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id o2c+xWTfY38q; Wed,  3 Jul 2013 09:29:10 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4408A2B7C3;
-	Wed,  3 Jul 2013 08:16:21 +0000 (UTC)
-In-Reply-To: <51D3DA9A.9090604@alum.mit.edu> (Michael Haggerty's message of
-	"Wed, 03 Jul 2013 10:02:34 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D80EEA62-E3B8-11E2-AC39-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	by coyote.aluminati.org (Postfix) with ESMTPSA id EC65B606529;
+	Wed,  3 Jul 2013 09:29:04 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <51D3DA9A.9090604@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229465>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
-
+On Wed, Jul 03, 2013 at 10:02:34AM +0200, Michael Haggerty wrote:
+> On 07/03/2013 12:21 AM, Junio C Hamano wrote:
+> > Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> > 
+> >>>     def get(self, name, default=''):
+> >>>         try:
+> >>>             values = self._split(read_git_output(
+> >>>                     ['config', '--get', '--null', '%s.%s' % (self.section, name)],
+> >>>                     env=self.env, keepends=True,
+> >>>                     ))
+> >>
+> >> Wait, what is the point of using --null and then splitting by hand
+> >> using a poorly-defined static method?  Why not drop the --null and
+> >> splitlines() as usual?
+> > 
+> > You may actually have spotted a bug or misuse of "--get" here.
+> > 
+> > With this sample configuration:
+> > 
+> >         $ cat >sample <<\EOF
+> >         [a]
+> >                 one = value
+> >                 one = another
+> > 
+> >         [b]
+> >                 one = "value\nanother"
+> >         EOF
+> > 
+> > A script cannot differentiate between them without using '--null'.
+> > 
+> > 	$ git config -f sample --get-all a.one
+> >         $ git config -f sample --get-all b.one
+> > 
+> > But that matters only when you use "--get-all", not "--get".  If
+> > this method wants to make sure that the user did not misuse a.one
+> > as a multi-valued configuration variable, use of "--null --get-all"
+> > followed by checking how many items the command gives you back would
+> > be a way to do so.
+> 
+> No, the code in question was a simple sanity check (i.e., mostly a check
+> of my own sanity and understanding of "git config" behavior) preceding
+> the information-losing next line "return values[0]".  If it had been
+> meant as a check that the user hadn't misconfigured the system, then I
+> wouldn't have used assert but rather raised a ConfigurationException
+> with an explanatory message.
+> 
 > I would be happy to add the checking that you described, but I didn't
 > have the impression that it is the usual convention.  Does code that
 > wants a single value from the config usually verify that there is
 > one-and-only-one value, or does it typically just do the equivalent of
 > "git config --get" and use the returned (effectively the last) value?
 
-In most cases, variables are "one value per key" and follow "the
-last one wins" rule, which is the reason why we read from the most
-generic to the most specific (i.e. $GIT_DIR/config is read last).
-For such uses, reading from "--get", and not from "--get-all", is
-absolutely the right thing to do.
+Doesn't "git config --get" return an error if there are multiple values?
+The answer is apparently "no" - I wrote the text below from
+git-config(1) and then checked the behaviour.  This seems to be a
+regression in git-config (bisect running now).
 
-But then as Ram said, there probably is not a need for --null; you
-can just read from textual "--get" to the end without any splitting
-(using splitlines is of course wrong if you do so).
+I think the "correct" answer is what's below, but it doesn't work like
+this in current Git:
 
-Thanks.
+    If you want a single value then I think it's normal to just read the
+    output of "git config" and let it handle the error cases, without
+    needing to split the result at all.
+
+    I think there is a different issue in the "except" block following
+    the code quoted at the top though - you will return "default" if a
+    key happens to be multi-valued.  The script should check the return
+    code and raise a ConfigurationException if it is 2.
