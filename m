@@ -1,78 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFD] Making "git push [--force/--delete]" safer?
-Date: Wed, 03 Jul 2013 12:53:45 -0700
-Message-ID: <7vmwq3e7xy.fsf@alter.siamese.dyndns.org>
-References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
-	<CALKQrgenpqKUxOZ+p79NsaQD9M2-q4h93ZqN0oencVo-QZF=zg@mail.gmail.com>
-	<CALKQrgdovWTd50LVDnNR+BhurWgSCKkhr88wCo01VZF3sd5PNg@mail.gmail.com>
-	<7vli5ogh8r.fsf@alter.siamese.dyndns.org>
-	<CALKQrge_REZKfds0T-owJOn2BvfLmHpk7yQeSog=yvofE_zKJQ@mail.gmail.com>
-	<CAF5DW8++sc2VYmdJEjbD_ue_wtDFj21vcyFzNWU0M+rAm2X0sQ@mail.gmail.com>
-	<CALKQrgfQhVVC1NxizjCQdDmNfihfyEgypYddWB0CMTPqW9Mxtg@mail.gmail.com>
-	<51D40203.1010100@alum.mit.edu> <51D413BA.6080709@viscovery.net>
+From: Gareth Collins <gareth.o.collins@gmail.com>
+Subject: git subtree push-all and pull-all
+Date: Wed, 3 Jul 2013 15:56:36 -0400
+Message-ID: <CALemSr4Z+p7v_wQn7EOFTVHjtMYgxqGSBZf3zU5pn-eW_SEG5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Johan Herland <johan@herland.net>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Jul 03 21:53:54 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 03 21:56:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuT7h-0006MR-AV
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 21:53:53 +0200
+	id 1UuTAQ-0000ug-RS
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 21:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756066Ab3GCTxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 15:53:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59911 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753118Ab3GCTxs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 15:53:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E40062DD44;
-	Wed,  3 Jul 2013 19:53:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ndZ+5Y3YXuLwvQQ3tqM5j9g8TNo=; b=HsVf4N
-	3WBfIuHjBf7uUIDezMPdy1npHf3+D+gNBO17l1lldxJmP/nF58xNNVL9Tnhr/QgU
-	RHJpb3+AvD8eL9izt0JoXA0nHtcZfDfM4zlLVsFcpQ/WlBN0D7ARvTstItlkJxIp
-	0GbTYs6fZNooHuoDfg+U75EPgKIphzVVBYfSE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VcjC87fkHwwYCSYBw4Kea7jNfqsG87zi
-	RE1M9ZBfdNCMZT3aAAek8RtqHq3Oof7y6oRNtPZnj8FqdR3aaDPdgcsPM5wH4eA0
-	x3eXPYYzfsCkIYSCbmc4gtNZJifcuI110P3h6txgA6eMiuzROKtHgjMnSqBFYStX
-	tlmhqPTtueo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D78562DD43;
-	Wed,  3 Jul 2013 19:53:47 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4B20D2DD41;
-	Wed,  3 Jul 2013 19:53:47 +0000 (UTC)
-In-Reply-To: <51D413BA.6080709@viscovery.net> (Johannes Sixt's message of
-	"Wed, 03 Jul 2013 14:06:18 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 463CDC36-E41A-11E2-8B67-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S932630Ab3GCT4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 15:56:39 -0400
+Received: from mail-ee0-f54.google.com ([74.125.83.54]:61842 "EHLO
+	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753118Ab3GCT4i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 15:56:38 -0400
+Received: by mail-ee0-f54.google.com with SMTP id t10so312675eei.41
+        for <git@vger.kernel.org>; Wed, 03 Jul 2013 12:56:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Z3E1vUzJLT+0wqz+SyAWq8Gzvf4rVBebsgCytYPCU08=;
+        b=A33ovM6XZfKlRJ4epY8syGkyRyHSE6MWzbF6C3WnDXkBS50V+Jl3yJwVs2moHppRO2
+         V1KR/t7APzgH1sCtfJnQu5fVS8JaYKHkivgDBlBWtXqq3S7WjMRB96WkyNi5dp3A0ZvY
+         GYp8jUzJyf4R5FBOrXju0+qGcjDysK1Z0GFiqAq2Ho6NzaMZBfdBMOCeWGLRFjaiQbnE
+         1O0ACCRUhOVqa96dkerB6sk0kSByE9+P6BBcAH/+XzyA87PwaGpARrjrn5suYSk2RHi3
+         ubb5QeWGPCqP6HPoi1eRRu5eEWy6wLkrBNKjEyI3wS7kJ9nuGzmALREayQO7oKim7RCE
+         Ujyg==
+X-Received: by 10.14.193.199 with SMTP id k47mr2777624een.83.1372881397034;
+ Wed, 03 Jul 2013 12:56:37 -0700 (PDT)
+Received: by 10.223.73.196 with HTTP; Wed, 3 Jul 2013 12:56:36 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229517>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Hello,
 
-> I don't think that is necessary. We already have *two* options to
-> force-push a ref: the + in front of refspec, and --force.
+I see over the last year (on the web and in this mailing list) there
+was some activity to extend subtree with a .gittrees file and
+push-all/pull-all commands.
 
-They mean exactly the same thing; the only difference being that "+"
-prefix is per target ref, while "--force" covers everything, acting
-as a mere short-hand to add "+" to everything you push.
+Perhaps I missed it, but looking through the latest git code on the
+github mirror I can't find any reference to the .gittrees file or
+these commands.
 
-If the "--lockref/--update-only-if-ref-is-still-there" option
-defeats "--force", it should defeat "+src:dst" exactly the same way.
+Does anyone know the status of this feature? Was it decided that this
+was a bad idea and the feature has been rejected? Or is this a feature
+still "cooking"...which will likely make it into git mainline at some
+point?
+
+I ask because I would like to use something like this to be able to
+keep a combined repository and separate project repositories in sync.
+Of course, if it was decided that this feature is fundamentally a bad
+idea then I will do something different.
+
+Any pointers would be a big help.
+
+thanks in advance,
+Gareth Collins
