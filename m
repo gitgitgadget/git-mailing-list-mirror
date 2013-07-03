@@ -1,92 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] clone: Skip pack-*.keep files when cloning locally
-Date: Wed, 03 Jul 2013 10:26:35 -0700
-Message-ID: <7vzju3ftbo.fsf@alter.siamese.dyndns.org>
-References: <1372430538-19216-1-git-send-email-jl@opera.com>
-	<7vvc4ynkrx.fsf@alter.siamese.dyndns.org>
-	<CAEef6WzAg8-QMH1c4v=1tm7TPgfeE3W3K+ue-eYgRL3pyYo6Vg@mail.gmail.com>
-	<7vip0ui757.fsf@alter.siamese.dyndns.org>
-	<CAEef6WxnRbPVFgZP4asQrvYGVTTbGzeQCwPJrwj4a-6k9vFcbQ@mail.gmail.com>
+From: Ed Hutchins <eh@demeterr.com>
+Subject: Re: Feature request: "author branch" in commit object
+Date: Wed, 3 Jul 2013 10:31:51 -0700
+Message-ID: <CADL+T9bbnGSxCjUBqoL3qm7Ss-j9jxorED0L1A6v1NbeLBpRQg@mail.gmail.com>
+References: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
+	<7v38rwlola.fsf@alter.siamese.dyndns.org>
+	<CADL+T9ax0maws3GR24YV77Yge7knqHd5mfuPd_AqE9b4UmvYPg@mail.gmail.com>
+	<CALWbr2zJFjbaCdA3d1eaFuP4HGShAwnK=gisRD=KHKWWi-XuTg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, johan@herland.net
-To: Jens =?utf-8?Q?Lindstr=C3=B6m?= <jl@opera.com>
-X-From: git-owner@vger.kernel.org Wed Jul 03 19:26:43 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 03 19:31:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuQpG-0002Du-VN
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 19:26:43 +0200
+	id 1UuQuK-0007Sw-Kt
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 19:31:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753792Ab3GCR0j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jul 2013 13:26:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48920 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751193Ab3GCR0i convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Jul 2013 13:26:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB3812D740;
-	Wed,  3 Jul 2013 17:26:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=eMpmQjJ4lkzd
-	bHOREMb36GmBOp8=; b=KExuvOhjbBchHgtlE9m65FcUBLOHEHd59hck/2qoxgp/
-	+8u90ih9I2NASTka8hxMspOaeUE4dEDwgdBnGwohd18c7CU3iRSRHg6y2Einzhdj
-	61rD4cVY9RYkcDDuIeEv88R/vW1xhMIfEJzlo9FUppjQ6m8hLkoYd611ksV7+r4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aRv89j
-	g4IYqpFMLFgQa3cRBQuPMsrAg7TQ4PrJjXXBHjQ+p/POcXHUihafNLxxGtPaL4Qu
-	MP/iTJ4YUu5yMl3/gnvmnpARRBQGZoDrtNBpkFK6KmyeQA980945qSNCj8bqYap9
-	X7cpCWnYhm/28NL5YN9I/X8W0eWQsf3U9mFUU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EB5E2D73F;
-	Wed,  3 Jul 2013 17:26:37 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 07C1D2D73A;
-	Wed,  3 Jul 2013 17:26:36 +0000 (UTC)
-In-Reply-To: <CAEef6WxnRbPVFgZP4asQrvYGVTTbGzeQCwPJrwj4a-6k9vFcbQ@mail.gmail.com>
-	("Jens =?utf-8?Q?Lindstr=C3=B6m=22's?= message of "Wed, 3 Jul 2013 12:02:49
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B6FB0E08-E405-11E2-8A92-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S932471Ab3GCRbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 13:31:52 -0400
+Received: from mail-qa0-f50.google.com ([209.85.216.50]:60148 "EHLO
+	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754184Ab3GCRbv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 13:31:51 -0400
+Received: by mail-qa0-f50.google.com with SMTP id l18so296519qak.9
+        for <git@vger.kernel.org>; Wed, 03 Jul 2013 10:31:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-gm-message-state;
+        bh=TYU1a/QKripBdGXRjEleVwWbnFvgNlPJ02qXNtSotIg=;
+        b=g1yWe0j4jw86x6RCNxlrUmuVzGytdk3/GgHzUneMH03qQ+ARc2SkDQHLFMQvYJVBcU
+         qFPC3XZroZQ9O0XG9ChD2JbOa5K7O6lpvY/h0J9ohdh1nLfS1s6AgxgG7lUIOOJnJQld
+         /Z9DpX2TgLS9w2aD7bxlIdSQwKlM8TbljsI42ob+mPvw1OfxK33q/JMqAC+Mdx7xo6nr
+         5GWAntBf6k5P9aVMdM9tjroZbCirrohj8NRntGYqnNyhNZ5qKPDxwf10k0ytorZKCjfk
+         4tWNjNLL9xdhcvwwKuA1SuG24I5nKr3M6NHF0Sx8km10V1whJ6dPNCJHbP6gS2vnO471
+         bc9g==
+X-Received: by 10.224.38.133 with SMTP id b5mr5267109qae.78.1372872711115;
+ Wed, 03 Jul 2013 10:31:51 -0700 (PDT)
+Received: by 10.49.76.234 with HTTP; Wed, 3 Jul 2013 10:31:51 -0700 (PDT)
+In-Reply-To: <CALWbr2zJFjbaCdA3d1eaFuP4HGShAwnK=gisRD=KHKWWi-XuTg@mail.gmail.com>
+X-Gm-Message-State: ALoCoQmYn3rFYOFDpcdoStgXhZs5kzPXhjwCGL8QzLTNKOcN24aYOx++YCr8y//kj2h+qoTHf55t
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229500>
 
-Jens Lindstr=C3=B6m <jl@opera.com> writes:
+I might be able to switch our corporate workflow to adding non-ff merge
+commits, but the reason we moved away from using github's big red button
+in the first place was to avoid the extra noise of merge-only commits.
 
-> On Mon, Jul 1, 2013 at 6:20 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> I am not sure if we should care that deeply about them in the first
->> place.
+Actually you've pointed out an inconsistency: why is it okay for merge
+commits to automatically mention branch names, but for regular commits
+this is considered harmful?
+
+On Wed, Jul 3, 2013 at 9:16 AM, Antoine Pelisse <apelisse@gmail.com> wrote:
+> On Tue, Jul 2, 2013 at 10:34 PM, Ed Hutchins <eh@demeterr.com> wrote:
+>> On the other hand
+>> trying to figure
+>> out the history of events from a large directed graph of commits
+>> without any clue about
+>> what topics first spawned each commit is actively harmful in many
+>> cases (trying to display
+>> a clear history of who did what for what reasons, for example).
 >
-> Fine by me; I don't really have a strong opinion on the matter.
+> I think this is exactly what Junio does with git.git:
+> - Each branch is named "$initials/$topicname" before being merged.
+> - Branches are always merged with --no-ff.
 >
->> Besides, I think you can make a hardlink to a file that you cannot
->> read.
+> I think it answers your question: Who (initials) does what (topic)
+> The name of the branch is also stuck as part of the history as the
+> merge reads the name of the merged branch:
 >
-> Not always.  The Linux kernel can at least be configured not to allow
-> it.  It seems this is enabled by default in at least Debian.
-
-You learn a new thing every day, I guess.  I am on Debian, I do not
-think I did any customization in that area, and I can hardlink just
-fine.
-
-> This restriction had me a bit confused when I was testing variations
-> here; I expected all "access denied" failures to be because of .keep
-> files, but in fact creating hardlinks to other files (.idx and .pack)
-> failed too, even though they were readable. =20
-
-Is it possible that you are tripping cross-device link?  The reason
-why we have "attempt to hardlink but fall back to copy" is exactly
-because it is fairly common that people try local-cheap clone without
-realizing the source and the destination may be on separate filesystems=
-=2E
+> e.g. Merge branch 'rr/remote-branch-config-refresh'
+>
+> You can of course provide more information than the simple commit
+> header line (that would give the "what reasons").
+>
+> Of course, it's even easier to read if you always merge in the same
+> direction (that allows you to easily find the first commit of the
+> branch).
+>
+> Hope that helps,
+> Antoine
