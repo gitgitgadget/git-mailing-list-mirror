@@ -1,117 +1,116 @@
-From: Jed Brown <jed@59A2.org>
-Subject: Re: Review of git multimail
-Date: Wed, 03 Jul 2013 16:09:52 -0500
-Message-ID: <87ppuzz6xr.fsf@mcs.anl.gov>
-References: <1372793019-12162-1-git-send-email-artagnon@gmail.com> <51D36BD8.1060909@alum.mit.edu> <CALkWK0=taYiV3UTaj9r-FLdaCeZRzVBTp_MH4sQt8-v+YYqbaA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t4205: don't rely on en_US.UTF-8 locale existing
+Date: Wed, 03 Jul 2013 14:41:06 -0700
+Message-ID: <7vr4ffcoel.fsf@alter.siamese.dyndns.org>
+References: <f607decdc65b86b1759438e375ddf77fd5b91042.1372882590.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jul 03 23:10:18 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Alexey Shumkin <Alex.Crezoff@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Jul 03 23:41:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuUJb-0001lT-7M
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 23:10:15 +0200
+	id 1UuUnb-00082i-DY
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 23:41:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933032Ab3GCVJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 17:09:56 -0400
-Received: from mail-oa0-f49.google.com ([209.85.219.49]:45073 "EHLO
-	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932842Ab3GCVJz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 17:09:55 -0400
-Received: by mail-oa0-f49.google.com with SMTP id n9so888031oag.22
-        for <git@vger.kernel.org>; Wed, 03 Jul 2013 14:09:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type;
-        bh=JgemAKmahgGV7MhSiA+KLQqB/mD/tuDYJ/jUZ/k13XA=;
-        b=eFcl61bZL7PNwAbflng5wCTM8C8fuPX6zsfPfnjX9MZ9nkQt4HBvTfVrHPSs2o+KmI
-         /WjoAkttJ61kiBuC66F+EyFT3Xk1L8308kC8lAu2HOeih0IA/W6fTK/0yqeBJl5W7Uf0
-         nGCegSoGbofZHFHxRFX+MhTRgjGxasEIqYJqfRTFA+nKgqLEgT8AjztAjCmf1N7B4pXe
-         9QTXNSz8lpTqh4CiXBfGxYzunKfSQE2Q1yqlTcWU/lqaVQz+DgIHaWsJxIHxfDFu53x1
-         9uBvKzvVuDuPT9vAVcdE8KyELKsCkfQsABct0xpL3vmoP9v8uvaQtqDxWJ8Mc30Gxhuz
-         nKlw==
-X-Received: by 10.182.237.82 with SMTP id va18mr2871417obc.0.1372885794426;
-        Wed, 03 Jul 2013 14:09:54 -0700 (PDT)
-Received: from localhost (vis-v410v070.mcs.anl-external.org. [130.202.17.70])
-        by mx.google.com with ESMTPSA id m11sm14429574oer.4.2013.07.03.14.09.53
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 03 Jul 2013 14:09:53 -0700 (PDT)
-In-Reply-To: <CALkWK0=taYiV3UTaj9r-FLdaCeZRzVBTp_MH4sQt8-v+YYqbaA@mail.gmail.com>
-User-Agent: Notmuch/0.15.2+129~g1907b1d (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+	id S932417Ab3GCVlK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jul 2013 17:41:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40287 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932128Ab3GCVlJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Jul 2013 17:41:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E3272D7B5;
+	Wed,  3 Jul 2013 21:41:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=lsCZKV8D0RPu
+	XB612OEjYKPzqqI=; b=tRbHFh+IXMjYGQ75ATs5MIcy4JRnf6/tXTShtjEeFRTJ
+	2TMrmPuDdUd52V7NzRG1rad4sS7PjxLVZCJ6LDckBjqpH6ciSkpWlszkVr+ZpWFI
+	7oxmEeT/BJVM/AeIXeQ/mkEhW1kBEsH7C7U2f9f8WyNpADm8rq7yY1mspYU3uEo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pPSPrW
+	klA75RdWvUnCggS+PaMAnyq070P/25jZjKMZJhlOn7GMNNk78B+mxz06Tbnm6wdz
+	/+ESykP9LlzycuysPKQrrkSRDuLon5/swq/bjr2DV1tkw41yx1O86StTmJ8fxU2q
+	tOq7Hag5GVH0aPzOPJntqXoCPA3vWNW6yJnZs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12BB22D7B3;
+	Wed,  3 Jul 2013 21:41:08 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 81E9F2D7B1;
+	Wed,  3 Jul 2013 21:41:07 +0000 (UTC)
+In-Reply-To: <f607decdc65b86b1759438e375ddf77fd5b91042.1372882590.git.john@keeping.me.uk>
+	(John Keeping's message of "Wed, 3 Jul 2013 21:18:08 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 44E8B72E-E429-11E2-B95A-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229535>
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+John Keeping <john@keeping.me.uk> writes:
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
-> Yeah, this is good reasoning.  And yes, I'm on Arch: python points to
-> python3, and python2 points to python2.=20=20
-
-I'm also on Arch and it has been this way since October 2010 [1].
-Ubuntu plans to remove python2 from the desktop CD images in 14.04 [2],
-so having code that does not work with python3 will become more painful
-pretty soon.
-
-Note that RHEL5 has only python2.4 and will be supported through March,
-2017.  Since it is not feasible to have code that works in both python3
-and any versions prior to python2.6, any chosen dialect will be broken
-by default on some major distributions that still have full vendor
-support.
-
-> A couple of thoughts while we're on the subject:
+> My system doesn't have the en_US.UTF-8 locale (or plain en_US), which
+> causes t4205 to fail by counting bytes instead of UTF-8 codepoints.
 >
-> 1. We should probably convert git-remote-{hg,bzr} to use this style
-> too:=20
+> Instead of using sed for this, use Perl which behaves predictably
+> whatever locale is in use.
+>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+> This patch is on top of 'as/log-output-encoding-in-user-format'.
 
-Python-2.6.8 from python.org installs only python2.6 and python, but not
-python2, so this will break on a lot of older systems.  Some
-distributions have been nice enough to provide python2 symlinks anyway.
+Thanks.  I think Alexey is going to send incremental updates to the
+topic so I won't interfere by applying this patch on top of the
+version I have in my tree.
 
-Michael's rationale that at least the error message is obvious still
-stands.
+But I do agree that using Perl may be a workable solution.
 
-> Debian uses an alternatives mechanism to have multiple versions of the
-> same package
+An alternative might be not to use this cryptic 3-arg form of
+commit_msg at all.  They are used only for these three:
 
-Alternatives is global configuration that doesn't really solve this
-problem anyway.
+	$(commit_msg "" "8" "..*$")
+	$(commit_msg "" "0" ".\{11\}")
+	$(commit_msg "" "4" ".\{11\}")
 
+I somehow find them simply not readable, in order to figure out what
+is going on.
 
-[1] https://www.archlinux.org/news/python-is-now-python-3/
-[2] https://wiki.ubuntu.com/Python/3
+Just using three variables to hold what are expected would be far
+more portable and readable.
 
---=-=-=
-Content-Type: application/pgp-signature
+# "anf=C3=A4nglich" whatever it means.
+sample_utf8_part=3D$(printf "anf\303\244ng")
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.20 (GNU/Linux)
+commit_msg () {
+	msg=3D"initial. ${sample_utf8_part}lich";
+	if test -n "$1"
+	then
+		echo "$msg" | iconv -f utf-8 -t "$1"
+	else
+		echo "$msg"
+        fi
+}
 
-iQIcBAEBAgAGBQJR1JMgAAoJEM+2iNHeMalNGWoP/0zqoHnt+mnNf0RA/p0ilcC7
-tDA82zdPY5YvpHlHV7KePo+t2GRpy25A3+iKWslPTApNQvn/vR2QiWu8/AH7K+lm
-1zhAJVsrsMfdY+qjKpw0RVAe6Aky6yqhSuA/i/xciBNTtigajL8qmgT6Fp101KvA
-iuhV4i4QZFeYqgqosGM7ymuFfsAewahrE/bfH+dZhynQuWMf+Qhe+1zflTnGRY/9
-5MhEsENPdZwm8C8F0YARFKKx/hA3M1VlXW53u1pkBorJgWPI7Fhtp/+MsNaHOvu9
-6LYsJTxlcJmubTfmuUdkAu10uocXAO18Ft4uS6Q2v3pNl4r56gp+bkKjNrGWMVRw
-nP7rfquv4u51XVsRGQCvMC6IOlQKy2wZOBmILEZ0teUhn/Dn5RGZFcUykDhn7jHk
-abk1Rjq0lJMjhoo9rYb2blCV618r+4QvYCWZwCP6WiFgQxmKK2TJn5jsjQ2Fo7GM
-huEqlf5R3UHx0TCk01vtSYPmjwkMn7LqXuH8Co0vok3eDH//d6f/zVJ5x1vkY8p4
-nXp6wcLvBQ45t32Hzl4KAKGUGogJeobQbv4kyDSvkKe1V03yDc9IUzoVMtug4KJH
-32lhxBg5vzkoO+2Q+iMzaBIdi6jqe+VoKRmMqXnsEc9AmvJxlYU8MFeHpiYuploI
-IRsHCPKVUd51QGDCfF2A
-=adSN
------END PGP SIGNATURE-----
---=-=-=--
+And then instead of writing in the expected test output.
+
+	$(commit_msg "" "8" "..*$")
+	$(commit_msg "" "0" ".\{11\}")
+	$(commit_msg "" "4" ".\{11\}")
+
+we can just say
+
+	initial...
+        ..an${sample_utf8_part}lich
+	init..lich
+
+It is no worse than those cryptic 0, 4, 8 and 11 magic numbers we
+see in the test, no?
