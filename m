@@ -1,112 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git clone -b
-Date: Wed, 3 Jul 2013 06:01:19 -0400
-Message-ID: <20130703100118.GA21130@sigill.intra.peff.net>
-References: <51CD7AB7.3040409@atlas-elektronik.com>
- <51D12A0E.60709@atlas-elektronik.com>
- <CABURp0oQ9MNGZecD4mkniXMEUJ5L7Xn+JFQMEgc97Mfe26JYvg@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] Change "remote tracking" to "remote-tracking"
+Date: Wed, 3 Jul 2013 12:02:30 +0200
+Message-ID: <CALKQrge-ioMp_YxcEng+h3OcVMtQXFBFbZu=Z8+rwoiEDi7qmA@mail.gmail.com>
+References: <1372842754-13366-1-git-send-email-mschub@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan =?utf-8?B?TsOkd2U=?= <stefan.naewe@atlas-elektronik.com>,
-	Git List <git@vger.kernel.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 03 12:01:29 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Wed Jul 03 12:02:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuJsO-0002CC-Hx
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 12:01:28 +0200
+	id 1UuJtY-0003OX-M6
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 12:02:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932593Ab3GCKBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 06:01:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37236 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932445Ab3GCKBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 06:01:24 -0400
-Received: (qmail 5406 invoked by uid 102); 3 Jul 2013 10:02:34 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Jul 2013 05:02:34 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Jul 2013 06:01:19 -0400
-Content-Disposition: inline
-In-Reply-To: <CABURp0oQ9MNGZecD4mkniXMEUJ5L7Xn+JFQMEgc97Mfe26JYvg@mail.gmail.com>
+	id S1755329Ab3GCKCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 06:02:36 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:57629 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753038Ab3GCKCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 06:02:35 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UuJtS-0006LZ-LC
+	for git@vger.kernel.org; Wed, 03 Jul 2013 12:02:34 +0200
+Received: from mail-ob0-f182.google.com ([209.85.214.182])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UuIcv-0004Ia-5U
+	for git@vger.kernel.org; Wed, 03 Jul 2013 10:41:25 +0200
+Received: by mail-ob0-f182.google.com with SMTP id va7so6879979obc.27
+        for <git@vger.kernel.org>; Wed, 03 Jul 2013 03:02:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=z1uQpvJ5W1oZ0DQR25eGxUqNw4+GdaBdjbtWk7xsUqc=;
+        b=l5MBzneSATV87TU8d0s+uKlrUZepDXVxdG9hA+vC63mCGnH5Wbx4kaOetFGwNlAPhL
+         gkMigQuxgxE2lv+U54v0AbQvO6dNV/oDO41JVu+FIkLEHrz99m3dUJlHHCObaiUKed23
+         DvrIBgW9fTQPRnyfyBGw+1gW1KW5JjTP/dseN/73/ASWHidg7mTbbP7rxcYCIeKGbN2r
+         S7yu2KnR6U+5AlOWacRZD5VHgc1ZyEOMrvKKFXCnHMGgdc3vbeM5ajC0IFQ41dLAX5Xi
+         uonaamwan/KEzaMbSRUz+JSg/qTKxi5p97h4WRyZjtCswcD54dokPncdof/Ar9bf2byy
+         hQBQ==
+X-Received: by 10.182.66.77 with SMTP id d13mr109615obt.32.1372845750867; Wed,
+ 03 Jul 2013 03:02:30 -0700 (PDT)
+Received: by 10.182.102.5 with HTTP; Wed, 3 Jul 2013 03:02:30 -0700 (PDT)
+In-Reply-To: <1372842754-13366-1-git-send-email-mschub@elegosoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229481>
 
-On Mon, Jul 01, 2013 at 01:49:37PM -0400, Phil Hord wrote:
+On Wed, Jul 3, 2013 at 11:12 AM, Michael Schubert <mschub@elegosoft.com> wrote:
+> Fix a typo ("remote remote-tracking") going back to the big cleanup
+> in 2010 (8b3f3f84 etc). Also, remove some more occurrences of
+> "tracking" and "remote tracking" in favor of "remote-tracking".
+>
+> Signed-off-by: Michael Schubert <mschub@elegosoft.com>
 
-> It would be nice to support more generic specs for the --branch
-> switch. But it is complicated because the refs have not been fetched
-> yet during the clone, and so normal refs operations -- which expect to
-> work on a local repository -- do not work.  So, the ref is looked up
-> locally from a list in expected locations after fetching the remote
-> refs but before the clone occurs.  The remote refs which are fetched
-> is not configurable during clone, and so only 'refs/heads/*' is
-> fetched for non-mirrors.
+Reviewed-by: Johan Herland <johan@herland.net>
 
-I think there are two problems:
-
-  1. Our find_remote_branch function implements only half of the regular
-     ref_rev_parse_rules (heads and tags). Fixing that to make "-b
-     refs/heads/master" work is pretty easy. Patch is below.
-
-  2. When we give a ref that is not going to be fetched, we should
-     fetch it explicitly. It looks like --single-branch tries to do
-     this, but only handles tags. I am not sure what a non-single-branch
-     would want to do (since you are effectively overriding the
-     default refspecs).
-
-     So even with the patch, doing "clone -b refs/foo/bar" does not
-     quite work.
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 14b1323..5984303 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -433,24 +433,24 @@ static struct ref *find_remote_branch(const struct ref *refs, const char *branch
- 	raise(signo);
- }
- 
--static struct ref *find_remote_branch(const struct ref *refs, const char *branch)
-+static struct ref *find_remote_branch(const struct ref *refs, const char *name)
- {
--	struct ref *ref;
--	struct strbuf head = STRBUF_INIT;
--	strbuf_addstr(&head, "refs/heads/");
--	strbuf_addstr(&head, branch);
--	ref = find_ref_by_name(refs, head.buf);
--	strbuf_release(&head);
--
--	if (ref)
--		return ref;
--
--	strbuf_addstr(&head, "refs/tags/");
--	strbuf_addstr(&head, branch);
--	ref = find_ref_by_name(refs, head.buf);
--	strbuf_release(&head);
--
--	return ref;
-+	int len = strlen(name);
-+	const char **p;
-+
-+	for (p = ref_rev_parse_rules; *p; p++) {
-+		struct ref *ref;
-+
-+		ref = find_ref_by_name(refs, mkpath(*p, len, name));
-+		if (ref)
-+			/*
-+			 * optionally check for and complain about ambiguity
-+			 * here, like dwim_ref does
-+			 */
-+			return ref;
-+	}
-+
-+	return NULL;
- }
- 
- static struct ref *wanted_peer_refs(const struct ref *refs,
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
