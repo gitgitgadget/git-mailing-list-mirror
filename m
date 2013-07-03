@@ -1,110 +1,225 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: Re: [PATCH] t4205: don't rely on en_US.UTF-8 locale existing
-Date: Thu, 4 Jul 2013 00:47:02 +0400
-Message-ID: <20130703204702.GB6148@dell-note>
-References: <f607decdc65b86b1759438e375ddf77fd5b91042.1372882590.git.john@keeping.me.uk>
- <20130703204024.GA6148@dell-note>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Jul 03 22:47:18 2013
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 1/3] contrib: add git-contacts helper
+Date: Wed,  3 Jul 2013 16:59:40 -0400
+Message-ID: <1372885182-5512-2-git-send-email-sunshine@sunshineco.com>
+References: <1372885182-5512-1-git-send-email-sunshine@sunshineco.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 03 23:00:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuTxM-0003Ah-JI
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 22:47:16 +0200
+	id 1UuUAG-000062-1M
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 23:00:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964876Ab3GCUrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 16:47:08 -0400
-Received: from mail-la0-f47.google.com ([209.85.215.47]:52765 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964864Ab3GCUrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 16:47:06 -0400
-Received: by mail-la0-f47.google.com with SMTP id fe20so567801lab.34
-        for <git@vger.kernel.org>; Wed, 03 Jul 2013 13:47:04 -0700 (PDT)
+	id S933362Ab3GCVAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 17:00:25 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:54251 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933348Ab3GCVAX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 17:00:23 -0400
+Received: by mail-ob0-f170.google.com with SMTP id ef5so731334obb.1
+        for <git@vger.kernel.org>; Wed, 03 Jul 2013 14:00:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=QAZB9fGSOlKnLYQEGG1UsBG5qmwMF96gQ2w0Ce3RScA=;
-        b=Iv6IJREyo10zErMo6H0Q44taAW5WWbl9gfASDd6G3Y0d2DfSa1Bs8lojqDngtGX3k1
-         G9Aq0X69wmceMNb7jiKA0LTrzM1z0iYQFgTOWZPMD+JttGk5gcPFZOhQYm51jKFaleo2
-         emicA/mR6+TW/iopgByoX1ZTFTg3xxnsW0Juk/8PSYmHUjngP7KyjJ6L0IGLsVynkfHi
-         +Q7Lz0gf6FiA3NEwjkmfcmvtpTGXxFTn3hzz4EUPTD08sZ6XUVjIlVKYHc2UuOc+c/J+
-         1j9LhQ0QR9N562uLsz0yDpWkL3iEEM4H6g4cziXX2g5fnIKlbabUX4wPIGTYTihi2w2I
-         48Yg==
-X-Received: by 10.112.180.164 with SMTP id dp4mr2036106lbc.68.1372884424460;
-        Wed, 03 Jul 2013 13:47:04 -0700 (PDT)
-Received: from localhost (ppp91-77-20-80.pppoe.mtu-net.ru. [91.77.20.80])
-        by mx.google.com with ESMTPSA id k10sm116289lbl.10.2013.07.03.13.47.03
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=EvnGhuJ2VFc4Q+mXysMZTP1NyggfqjFD6V9P0o1nQg8=;
+        b=LgfH4m4oajWmX7QmVww+f+BsoDcdEOQpIXsVWC7lQsmP/0ejkLbLzT5OIPC3QlAatX
+         LwtSaL38Z+63QUd+2Q3c/wvOcOioZBVRpWwzu7bqNwke9R54BrXsOo5mfT1BiWAn5RGS
+         N61KzXkIsT5+eyoFlE7BZRNNwKBpdIvXpl8tB0A7xxw09Gv6JkN44Zl6NPUlbSzSfNmv
+         SWM8zq1V80+0Y3Mcax/jkyR78b33fDrw3wgZRD/p8cXna8cKRy6PLHolX0KPU2Q5IQcA
+         WmZhwsDGfWDUS5PVAIXI9gkSsW/3sG6BzB+br7aYMG3R78wOO9o9oLCKRhw+uCIb/av6
+         k4jg==
+X-Received: by 10.182.129.129 with SMTP id nw1mr2660676obb.100.1372885222870;
+        Wed, 03 Jul 2013 14:00:22 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
+        by mx.google.com with ESMTPSA id ps5sm14400579oeb.8.2013.07.03.14.00.20
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 03 Jul 2013 13:47:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20130703204024.GA6148@dell-note>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 03 Jul 2013 14:00:21 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2
+In-Reply-To: <1372885182-5512-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229530>
 
-http://thread.gmane.org/gmane.comp.version-control.git/229291
+This script lists people that might be interested in a patch by going
+back through the history for each patch hunk, and finding people that
+reviewed, acknowledge, signed, authored, or were Cc:'d on the code the
+patch is modifying.
 
-this is why CCed
-> CC this to Johannes Sixt
-> 
-> On Wed, Jul 03, 2013 at 09:18:08PM +0100, John Keeping wrote:
-> > My system doesn't have the en_US.UTF-8 locale (or plain en_US), which
-> > causes t4205 to fail by counting bytes instead of UTF-8 codepoints.
-> > 
-> > Instead of using sed for this, use Perl which behaves predictably
-> > whatever locale is in use.
-> > 
-> > Signed-off-by: John Keeping <john@keeping.me.uk>
-> > ---
-> > This patch is on top of 'as/log-output-encoding-in-user-format'.
-> > 
-> >  t/t4205-log-pretty-formats.sh | 8 +++-----
-> >  1 file changed, 3 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-> > index 3cfb744..5864f5b 100755
-> > --- a/t/t4205-log-pretty-formats.sh
-> > +++ b/t/t4205-log-pretty-formats.sh
-> > @@ -20,9 +20,7 @@ commit_msg () {
-> >  		# cut string, replace cut part with two dots
-> >  		# $2 - chars count from the beginning of the string
-> >  		# $3 - "trailing" chars
-> > -		# LC_ALL is set to make `sed` interpret "." as a UTF-8 char not a byte
-> > -		# as it does with C locale
-> > -		msg=$(echo $msg | LC_ALL=en_US.UTF-8 sed -e "s/^\(.\{$2\}\)$3/\1../")
-> > +		msg=$(echo $msg | "$PERL_PATH" -CIO -pe "s/^(.{$2})$3/\1../")
-> >  	fi
-> >  	echo $msg
-> >  }
-> > @@ -205,7 +203,7 @@ test_expect_success 'left alignment formatting with ltrunc' "
-> >  ..sage two
-> >  ..sage one
-> >  add bar  Z
-> > -$(commit_msg "" "0" ".\{11\}")
-> > +$(commit_msg "" "0" ".{11}")
-> >  EOF
-> >  	test_cmp expected actual
-> >  "
-> > @@ -218,7 +216,7 @@ test_expect_success 'left alignment formatting with mtrunc' "
-> >  mess.. two
-> >  mess.. one
-> >  add bar  Z
-> > -$(commit_msg "" "4" ".\{11\}")
-> > +$(commit_msg "" "4" ".{11}")
-> >  EOF
-> >  	test_cmp expected actual
-> >  "
-> > -- 
-> > 1.8.3.1.747.g77f7d3a
-> > 
+It does this by running git-blame incrementally on each hunk and then
+parsing the commit message. After gathering all participants, it
+determines each person's relevance by considering how many commits
+mentioned that person compared with the total number of commits under
+consideration. The final output consists only of participants who pass a
+minimum threshold of participation.
+
+Several conditions controlling a person's significance are currently
+hard-coded, such as minimum participation level, blame date-limiting,
+and -C level for detecting moved and copied lines. In the future, these
+conditions may become configurable.
+
+For example:
+
+  % git contacts 0001-remote-hg-trivial-cleanups.patch
+  Felipe Contreras <felipe.contreras@gmail.com>
+  Jeff King <peff@peff.net>
+  Max Horn <max@quendi.de>
+  Junio C Hamano <gitster@pobox.com>
+
+Thus, it can be invoked as git-send-email's --cc-cmd option, among other
+possible uses.
+
+This is a Perl rewrite of Felipe Contreras' git-related patch series[1]
+written in Ruby.
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/226065/
+
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ contrib/contacts/git-contacts | 127 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 127 insertions(+)
+ create mode 100755 contrib/contacts/git-contacts
+
+diff --git a/contrib/contacts/git-contacts b/contrib/contacts/git-contacts
+new file mode 100755
+index 0000000..6e9ab45
+--- /dev/null
++++ b/contrib/contacts/git-contacts
+@@ -0,0 +1,127 @@
++#!/usr/bin/perl
++
++# List people who might be interested in a patch.  Useful as the argument to
++# git-send-email --cc-cmd option, and in other situations.
++#
++# Usage: git contacts <file> ...
++
++use strict;
++use warnings;
++use IPC::Open2;
++
++my $since = '5-years-ago';
++my $min_percent = 10;
++my $labels_rx = qr/Signed-off-by|Reviewed-by|Acked-by|Cc/i;
++my %seen;
++
++sub format_contact {
++	my ($name, $email) = @_;
++	return "$name <$email>";
++}
++
++sub parse_commit {
++	my ($commit, $data) = @_;
++	my $contacts = $commit->{contacts};
++	my $inbody = 0;
++	for (split(/^/m, $data)) {
++		if (not $inbody) {
++			if (/^author ([^<>]+) <(\S+)> .+$/) {
++				$contacts->{format_contact($1, $2)} = 1;
++			} elsif (/^$/) {
++				$inbody = 1;
++			}
++		} elsif (/^$labels_rx:\s+([^<>]+)\s+<(\S+?)>$/o) {
++			$contacts->{format_contact($1, $2)} = 1;
++		}
++	}
++}
++
++sub import_commits {
++	my ($commits) = @_;
++	return unless %$commits;
++	my $pid = open2 my $reader, my $writer, qw(git cat-file --batch);
++	for my $id (keys(%$commits)) {
++		print $writer "$id\n";
++		my $line = <$reader>;
++		if ($line =~ /^([0-9a-f]{40}) commit (\d+)/) {
++			my ($cid, $len) = ($1, $2);
++			die "expected $id but got $cid\n" unless $id eq $cid;
++			my $data;
++			# cat-file emits newline after data, so read len+1
++			read $reader, $data, $len + 1;
++			parse_commit($commits->{$id}, $data);
++		}
++	}
++	close $reader;
++	close $writer;
++	waitpid($pid, 0);
++	die "git-cat-file error: $?\n" if $?;
++}
++
++sub get_blame {
++	my ($commits, $source, $start, $len, $from) = @_;
++	$len = 1 unless defined($len);
++	return if $len == 0;
++	open my $f, '-|',
++		qw(git blame --porcelain -C), '-L', "$start,+$len",
++		'--since', $since, "$from^", '--', $source or die;
++	while (<$f>) {
++		if (/^([0-9a-f]{40}) \d+ \d+ \d+$/) {
++			my $id = $1;
++			$commits->{$id} = { id => $id, contacts => {} }
++				unless $seen{$id};
++			$seen{$id} = 1;
++		}
++	}
++	close $f;
++}
++
++sub scan_patches {
++	my ($commits, $f) = @_;
++	my ($id, $source);
++	while (<$f>) {
++		if (/^From ([0-9a-f]{40}) Mon Sep 17 00:00:00 2001$/) {
++			$id = $1;
++			$seen{$id} = 1;
++		}
++		next unless $id;
++		if (m{^--- (?:a/(.+)|/dev/null)$}) {
++			$source = $1;
++		} elsif (/^--- /) {
++			die "Cannot parse hunk source: $_\n";
++		} elsif (/^@@ -(\d+)(?:,(\d+))?/ && $source) {
++			get_blame($commits, $source, $1, $2, $id);
++		}
++	}
++}
++
++sub scan_patch_file {
++	my ($commits, $file) = @_;
++	open my $f, '<', $file or die "read failure: $file: $!\n";
++	scan_patches($commits, $f);
++	close $f;
++}
++
++if (!@ARGV) {
++	die "No input patch files\n";
++}
++
++my %commits;
++for (@ARGV) {
++	scan_patch_file(\%commits, $_);
++}
++import_commits(\%commits);
++
++my %count_per_person;
++for my $commit (values %commits) {
++	for my $contact (keys %{$commit->{contacts}}) {
++		$count_per_person{$contact}++;
++	}
++}
++
++my $ncommits = scalar(keys %commits);
++for my $contact (keys %count_per_person) {
++	my $percent = $count_per_person{$contact} * 100 / $ncommits;
++	next if $percent < $min_percent;
++	print "$contact\n";
++}
+-- 
+1.8.3.2
