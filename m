@@ -1,78 +1,71 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v7 4/7] git-remote-mediawiki: Update tests to run with the new bin-wrapper
-Date: Wed, 03 Jul 2013 11:18:49 +0200
-Message-ID: <vpqobakrog6.fsf@anie.imag.fr>
-References: <1372804789-12732-1-git-send-email-benoit.person@ensimag.fr>
-	<1372804789-12732-5-git-send-email-benoit.person@ensimag.fr>
+Subject: Re: Feature request: "author branch" in commit object
+Date: Wed, 03 Jul 2013 11:33:22 +0200
+Message-ID: <vpqehbgrnrx.fsf@anie.imag.fr>
+References: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: benoit.person@ensimag.fr
-X-From: git-owner@vger.kernel.org Wed Jul 03 11:19:05 2013
+Cc: git@vger.kernel.org
+To: Ed Hutchins <eh@demeterr.com>
+X-From: git-owner@vger.kernel.org Wed Jul 03 11:33:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuJDJ-0002uq-QC
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 11:19:02 +0200
+	id 1UuJRN-0008CY-W9
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 11:33:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932342Ab3GCJS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 05:18:58 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:47679 "EHLO shiva.imag.fr"
+	id S932402Ab3GCJda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 05:33:30 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:50174 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932261Ab3GCJS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 05:18:57 -0400
+	id S1754699Ab3GCJd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 05:33:29 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r639Im3g012895
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r639XLR6028161
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 3 Jul 2013 11:18:48 +0200
+	Wed, 3 Jul 2013 11:33:21 +0200
 Received: from anie.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UuJD7-0000q9-IE; Wed, 03 Jul 2013 11:18:49 +0200
-In-Reply-To: <1372804789-12732-5-git-send-email-benoit.person@ensimag.fr>
-	(benoit person's message of "Wed, 3 Jul 2013 00:39:46 +0200")
+	id 1UuJRC-0001Dm-RS; Wed, 03 Jul 2013 11:33:22 +0200
+In-Reply-To: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
+	(Ed Hutchins's message of "Tue, 2 Jul 2013 12:37:13 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 03 Jul 2013 11:18:49 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 03 Jul 2013 11:33:22 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r639Im3g012895
+X-MailScanner-ID: r639XLR6028161
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1373447931.95489@09LNCuPWO2grlslJ6skHnQ
+MailScanner-NULL-Check: 1373448803.00337@KtlPIJofs8eVJjq2X1aD7Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229476>
 
-benoit.person@ensimag.fr writes:
+Ed Hutchins <eh@demeterr.com> writes:
 
-> --- a/contrib/mw-to-git/t/test-gitmw-lib.sh
-> +++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
-> @@ -62,12 +62,8 @@ test_check_precond () {
->  		test_done
->  	fi
->  
-> -	if [ ! -f "$GIT_BUILD_DIR"/git-remote-mediawiki ];
-> -	then
-> -		echo "No remote mediawiki for git found. Copying it in git"
-> -		echo "cp $GIT_BUILD_DIR/contrib/mw-to-git/git-remote-mediawiki $GIT_BUILD_DIR/"
-> -		ln -s "$GIT_BUILD_DIR"/contrib/mw-to-git/git-remote-mediawiki "$GIT_BUILD_DIR"
-> -	fi
-> +	GIT_EXEC_PATH=$(cd "$(dirname "$0")" && cd "../.." && pwd)
-> +	PATH="$GIT_EXEC_PATH"'/bin-wrapper:'"$PATH"
->  
->  	if [ ! -d "$WIKI_DIR_INST/$WIKI_DIR_NAME" ];
->  	then
+> I realize that branch names are ephemeral repo-specific things, but it
+> would be really useful to be able to determine what branch a commit
+> was authored from (as a hint to ancestry graph layout tools, for
+> example). Is there any way to do this currently, is it planned, or
+> would it be deemed useful enough to be worth adding to each commit
+> object?
 
-Cool!
+FWIW, this is what Mercurial's "named branches" do. Instead of having
+branches point to commit, each commit says what branch it belongs to.
 
-I like the way adding a new feature has positive side effects on the
-rest of the code.
+One drawback of this approach is that the branch name is part of the
+commit and can't be changed without changing the commit's sha1. Hence, a
+local, private, branch name becomes permanent the day it's merged
+upstream.
+
+(for completeness: Mercurial also has essentially Git-like branches,
+but they call this "bookmarks")
 
 -- 
 Matthieu Moy
