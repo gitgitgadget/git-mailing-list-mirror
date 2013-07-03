@@ -1,116 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t4205: don't rely on en_US.UTF-8 locale existing
-Date: Wed, 03 Jul 2013 14:41:06 -0700
-Message-ID: <7vr4ffcoel.fsf@alter.siamese.dyndns.org>
-References: <f607decdc65b86b1759438e375ddf77fd5b91042.1372882590.git.john@keeping.me.uk>
+Subject: Re: [PATCH v7 2/7] wrap-for-bin: Make bin-wrappers chainable
+Date: Wed, 03 Jul 2013 14:50:26 -0700
+Message-ID: <7vmwq3cnz1.fsf@alter.siamese.dyndns.org>
+References: <1372804789-12732-1-git-send-email-benoit.person@ensimag.fr>
+	<1372804789-12732-3-git-send-email-benoit.person@ensimag.fr>
+	<vpqfvvvq5bl.fsf@anie.imag.fr>
+	<7v38rve6i9.fsf@alter.siamese.dyndns.org>
+	<vpqvc4r751g.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Alexey Shumkin <Alex.Crezoff@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Jul 03 23:41:15 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: benoit.person@ensimag.fr, git@vger.kernel.org,
+	Celestin Matte <celestin.matte@ensimag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jul 03 23:50:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuUnb-00082i-DY
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 23:41:15 +0200
+	id 1UuUwj-00011c-Kh
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 23:50:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932417Ab3GCVlK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jul 2013 17:41:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40287 "EHLO
+	id S933307Ab3GCVub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 17:50:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35864 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932128Ab3GCVlJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Jul 2013 17:41:09 -0400
+	id S932221Ab3GCVu3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 17:50:29 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E3272D7B5;
-	Wed,  3 Jul 2013 21:41:08 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 040E22DE16;
+	Wed,  3 Jul 2013 21:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=lsCZKV8D0RPu
-	XB612OEjYKPzqqI=; b=tRbHFh+IXMjYGQ75ATs5MIcy4JRnf6/tXTShtjEeFRTJ
-	2TMrmPuDdUd52V7NzRG1rad4sS7PjxLVZCJ6LDckBjqpH6ciSkpWlszkVr+ZpWFI
-	7oxmEeT/BJVM/AeIXeQ/mkEhW1kBEsH7C7U2f9f8WyNpADm8rq7yY1mspYU3uEo=
+	:content-type; s=sasl; bh=D1awfBEGiG75ANuOUeAypqYdHZg=; b=V+03Hb
+	HfuNrwkFy+Rdi3XcwUfuusaSpcJoSVU8JOj3MdYJ9SL4h7AmS9+4YNXQBCcW8+DY
+	zFvz1iF8pRXzk0saeKgWbbp+tU9LX3LJjc2ORkU3IP++xA01MMc0lRQtzno03RCy
+	FBh9rEQb8V1HLfuhW/r02nlQWelkWhDOX0iMQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pPSPrW
-	klA75RdWvUnCggS+PaMAnyq070P/25jZjKMZJhlOn7GMNNk78B+mxz06Tbnm6wdz
-	/+ESykP9LlzycuysPKQrrkSRDuLon5/swq/bjr2DV1tkw41yx1O86StTmJ8fxU2q
-	tOq7Hag5GVH0aPzOPJntqXoCPA3vWNW6yJnZs=
+	:content-type; q=dns; s=sasl; b=aT18c/l0p2zq2pmOs3x/WrHuDOb6dQJC
+	QgvFC8vw8TXalcTqYK3HQZWRNRCU+GCUGnMPqJUkfiyjFYcMgIrsazc+pb2brOlX
+	veaFApWU7o5G4/tbKJTdJaucLWiSRfSguPXImewH6PD1wDgMHA31O9c7DLy+M1Og
+	ck8axCwm404=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12BB22D7B3;
-	Wed,  3 Jul 2013 21:41:08 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE83C2DE15;
+	Wed,  3 Jul 2013 21:50:28 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 81E9F2D7B1;
-	Wed,  3 Jul 2013 21:41:07 +0000 (UTC)
-In-Reply-To: <f607decdc65b86b1759438e375ddf77fd5b91042.1372882590.git.john@keeping.me.uk>
-	(John Keeping's message of "Wed, 3 Jul 2013 21:18:08 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 73FB52DE12;
+	Wed,  3 Jul 2013 21:50:28 +0000 (UTC)
+In-Reply-To: <vpqvc4r751g.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
+	03 Jul 2013 22:38:19 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 44E8B72E-E429-11E2-B95A-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 93415538-E42A-11E2-861C-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229536>
 
-John Keeping <john@keeping.me.uk> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> My system doesn't have the en_US.UTF-8 locale (or plain en_US), which
-> causes t4205 to fail by counting bytes instead of UTF-8 codepoints.
->
-> Instead of using sed for this, use Perl which behaves predictably
-> whatever locale is in use.
->
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> ---
-> This patch is on top of 'as/log-output-encoding-in-user-format'.
+> I don't get it. It Git Mediawiki's tests, the tests scripts source
+> test-lib.sh, that unsets GITPERLLIB. Then, it calls the
+> mw-to-git/bin-wrapper/git that sets it properly, and calls the
+> toplevel's bin-wrapper.
 
-Thanks.  I think Alexey is going to send incremental updates to the
-topic so I won't interfere by applying this patch on top of the
-version I have in my tree.
+Ah, OK.  I somehow was assuming that a wrapper sets GITPERLLIB to
+point at mediawiki stuff before running tests, which is the other
+way around.
 
-But I do agree that using Perl may be a workable solution.
-
-An alternative might be not to use this cryptic 3-arg form of
-commit_msg at all.  They are used only for these three:
-
-	$(commit_msg "" "8" "..*$")
-	$(commit_msg "" "0" ".\{11\}")
-	$(commit_msg "" "4" ".\{11\}")
-
-I somehow find them simply not readable, in order to figure out what
-is going on.
-
-Just using three variables to hold what are expected would be far
-more portable and readable.
-
-# "anf=C3=A4nglich" whatever it means.
-sample_utf8_part=3D$(printf "anf\303\244ng")
-
-commit_msg () {
-	msg=3D"initial. ${sample_utf8_part}lich";
-	if test -n "$1"
-	then
-		echo "$msg" | iconv -f utf-8 -t "$1"
-	else
-		echo "$msg"
-        fi
-}
-
-And then instead of writing in the expected test output.
-
-	$(commit_msg "" "8" "..*$")
-	$(commit_msg "" "0" ".\{11\}")
-	$(commit_msg "" "4" ".\{11\}")
-
-we can just say
-
-	initial...
-        ..an${sample_utf8_part}lich
-	init..lich
-
-It is no worse than those cryptic 0, 4, 8 and 11 magic numbers we
-see in the test, no?
+Please ignore the noise, and thanks for a dose of sanity.
