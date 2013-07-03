@@ -1,78 +1,146 @@
-From: Kyle McKay <mackyle@gmail.com>
-Subject: Re: repo.or.cz being not well???
-Date: Tue, 2 Jul 2013 23:01:27 -0700
-Message-ID: <5DA7CF37-6738-42A4-8648-2952ADF94284@gmail.com>
-References: <7vli5q9ba2.fsf@alter.siamese.dyndns.org> <7va9m5apl8.fsf@alter.siamese.dyndns.org> <CB8FBC9A-B24D-4EAC-820F-A40472387FD9@gmail.com> <87k3l8gavd.fsf@igel.home>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "repo.or.cz admins" <admin@repo.or.cz>
-To: Andreas Schwab <schwab@linux-m68k.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 03 08:01:42 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] remote.c: avoid O(n^2) behavior in match_push_refs by
+ using string_list
+Date: Wed, 3 Jul 2013 02:23:32 -0400
+Message-ID: <20130703062332.GA16090@sigill.intra.peff.net>
+References: <1372809228-2963-1-git-send-email-bcasey@nvidia.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, mfick@codeaurora.org, gitster@pobox.com,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <bcasey@nvidia.com>
+X-From: git-owner@vger.kernel.org Wed Jul 03 08:23:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuG8E-0002yv-Om
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 08:01:35 +0200
+	id 1UuGTb-0006TY-M5
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 08:23:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753522Ab3GCGBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 02:01:31 -0400
-Received: from mail-oa0-f51.google.com ([209.85.219.51]:59524 "EHLO
-	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753107Ab3GCGBa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 02:01:30 -0400
-Received: by mail-oa0-f51.google.com with SMTP id i4so7427080oah.24
-        for <git@vger.kernel.org>; Tue, 02 Jul 2013 23:01:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc:x-mailer;
-        bh=uO8I3Du+28sQjwXXk2dXvXT5Q+BupbkkBjTSkCO5aHU=;
-        b=W3y4/QQzfCC4QgBTMyM118TTN+0MK8MffWBZ1FRkopdJnsKqWQ/sdCGWUlpU6At3q/
-         7tL1oWSW4LOyggCXEoXt1HYRXuxl95Z7Vx6c0iJiJWGsHP8Zh0ClgLozNWdp2zbfgQqk
-         BujyW0967RdEJ0SBgxZWacuFox/F3CdB3HUEASKZMayQfgUg3NQmu/FtNKjboxWy+96V
-         0Jivl6A16NZVvGF6jZ0k3oYmvHJNjfWcxurlKkjGprHOBwjzIQNVdaQvAPzfr1/nHWAQ
-         Q90R9za6wgLzWdIMkTH0OKIkWuHa1NLP9XbfJxMCwjVgfOWbrnxPwozu9BQQhNdCixUv
-         +bWg==
-X-Received: by 10.60.137.225 with SMTP id ql1mr14318461oeb.48.1372831289903;
-        Tue, 02 Jul 2013 23:01:29 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id kz3sm9600962obb.6.2013.07.02.23.01.28
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 02 Jul 2013 23:01:29 -0700 (PDT)
-In-Reply-To: <87k3l8gavd.fsf@igel.home>
-X-Mailer: Apple Mail (2.936)
+	id S1753561Ab3GCGXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 02:23:36 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35761 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751767Ab3GCGXf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 02:23:35 -0400
+Received: (qmail 26428 invoked by uid 102); 3 Jul 2013 06:24:45 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Jul 2013 01:24:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Jul 2013 02:23:32 -0400
+Content-Disposition: inline
+In-Reply-To: <1372809228-2963-1-git-send-email-bcasey@nvidia.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229453>
 
-On Jul 2, 2013, at 09:55, Andreas Schwab wrote:
-> Kyle McKay <mackyle@gmail.com> writes:
->
->> Do you feel that it's important to accept these alternate URL  
->> versions
->> that are not listed on the project page:
->>
->> 1) Optional trailing '/'
->> 2) For the ssh scp form, optional leading '/'
-> 3) Optional trailing .git
+On Tue, Jul 02, 2013 at 04:53:48PM -0700, Brandon Casey wrote:
 
-Thank you for your patience.
+> From: Brandon Casey <drafnel@gmail.com>
+> 
+> When pushing, each ref in the local repository must be paired with a
+> ref advertised by the remote server.  Currently, this is performed by
+> first applying the refspec to the local ref to transform the local ref
+> into the name of the remote ref, and then performing a linear search
+> through the list of remote refs to see if the remote ref was advertised
+> by the remote system.
+> 
+> This has O(n) complexity and makes match_push_refs() be an O(n^2)
+> operation.
 
-The 3 URL variants listed above should all be working again now.
+Just to be sure I understand correctly, is this actually O(m*n) where
+"m" is the number of local refs and "n" is the number of remote refs?
 
-On Jul 1, 2013, at 16:10, Junio C Hamano wrote:
-> I just (1) was curious, as getting "error 403" when I didn't mean to
-> talk to an HTTP server was strange,
+For a repository that repeatedly pushes everything it has to the remote,
+we end up with m=n, but it would not necessarily be the case if you are
+pushing a subset of your refs. But even pushing a small number of refs
+into a repository with a very large number of refs would be
+unnecessarily slow, as we would do several O(n) lookups which could be
+O(log n). So it may speed things up even in the case of a normal-sized
+repo pushing to a large one.
 
-The '403' prefix has also been removed from ssh protocol error  
-messages to reduce confusion.
+> Dry-run push of a repository with 121913 refs:
+> 
+>         before     after
+> real    1m40.582s  0m0.804s
+> user    1m39.914s  0m0.515s
+> sys     0m0.125s   0m0.106s
 
-Regards,
-Kyle
+Very nice. :)
+
+> Signed-off-by: Brandon Casey <drafnel@gmail.com>
+> ---
+>  remote.c | 26 ++++++++++++++++++++++++--
+>  1 file changed, 24 insertions(+), 2 deletions(-)
+
+Patch itself looks good to me, although...
+
+> @@ -1362,6 +1378,8 @@ int match_push_refs(struct ref *src, struct ref **dst,
+>  		free(dst_name);
+>  	}
+>  
+> +	string_list_clear(&ref_list, 0);
+> +
+>  	if (flags & MATCH_REFS_FOLLOW_TAGS)
+>  		add_missing_tags(src, dst, &dst_tail);
+>  
+> @@ -1376,11 +1394,15 @@ int match_push_refs(struct ref *src, struct ref **dst,
+>  
+>  			src_name = get_ref_match(rs, nr_refspec, ref, send_mirror, FROM_DST, NULL);
+>  			if (src_name) {
+> -				if (!find_ref_by_name(src, src_name))
+> +				if (!ref_list.nr)
+> +					prepare_searchable_ref_list(src,
+> +						&ref_list);
+> +				if (!string_list_has_string(&ref_list, src_name))
+
+This hunk threw me for a bit, as it looked like we were lazily
+initializing ref_list in case we had not done so earlier. But we would
+have cleared it mid-way through the function (in the hunk above), and it
+is only that we are reusing the same ref_list for two different
+purposes.
+
+I do not feel strongly about it, but it might be a little more obvious
+to just declare a new variable in the block, like:
+
+diff --git a/remote.c b/remote.c
+index 75255af..53bef82 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1399,6 +1399,7 @@ int match_push_refs(struct ref *src, struct ref **dst,
+ 		add_missing_tags(src, dst, &dst_tail);
+ 
+ 	if (send_prune) {
++		struct string_list src_ref_index = STRING_LIST_INIT_NODUP;
+ 		/* check for missing refs on the remote */
+ 		for (ref = *dst; ref; ref = ref->next) {
+ 			char *src_name;
+@@ -1409,15 +1410,15 @@ int match_push_refs(struct ref *src, struct ref **dst,
+ 
+ 			src_name = get_ref_match(rs, nr_refspec, ref, send_mirror, FROM_DST, NULL);
+ 			if (src_name) {
+-				if (!ref_list.nr)
++				if (!src_ref_index.nr)
+ 					prepare_searchable_ref_list(src,
+-						&ref_list);
+-				if (!string_list_has_string(&ref_list, src_name))
++						&src_ref_index);
++				if (!string_list_has_string(&src_ref_index, src_name))
+ 					ref->peer_ref = alloc_delete_ref();
+ 				free(src_name);
+ 			}
+ 		}
+-		string_list_clear(&ref_list, 0);
++		string_list_clear(&src_ref_index, 0);
+ 	}
+ 	if (errs)
+ 		return -1;
+
+And similarly maybe call the outer ref_list dst_ref_index or something.
+I also note that we don't do the lazy-prepare for the other loop. I
+guess that is because we assume that "src" is always non-NULL?
+
+-Peff
