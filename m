@@ -1,72 +1,152 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Feature request: "author branch" in commit object
-Date: Wed, 03 Jul 2013 11:33:22 +0200
-Message-ID: <vpqehbgrnrx.fsf@anie.imag.fr>
-References: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Ed Hutchins <eh@demeterr.com>
-X-From: git-owner@vger.kernel.org Wed Jul 03 11:33:34 2013
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: [PATCH] Change "remote tracking" to "remote-tracking"
+Date: Wed,  3 Jul 2013 11:12:34 +0200
+Message-ID: <1372842754-13366-1-git-send-email-mschub@elegosoft.com>
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Michael Schubert <mschub@elegosoft.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 03 11:33:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuJRN-0008CY-W9
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 11:33:34 +0200
+	id 1UuJRb-0008OZ-29
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 11:33:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932402Ab3GCJda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 05:33:30 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:50174 "EHLO rominette.imag.fr"
+	id S932435Ab3GCJdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 05:33:43 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:54892 "EHLO mx0.elegosoft.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754699Ab3GCJd3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 05:33:29 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r639XLR6028161
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 3 Jul 2013 11:33:21 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UuJRC-0001Dm-RS; Wed, 03 Jul 2013 11:33:22 +0200
-In-Reply-To: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
-	(Ed Hutchins's message of "Tue, 2 Jul 2013 12:37:13 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 03 Jul 2013 11:33:22 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r639XLR6028161
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1373448803.00337@KtlPIJofs8eVJjq2X1aD7Q
+	id S932261Ab3GCJdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 05:33:42 -0400
+X-Greylist: delayed 627 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Jul 2013 05:33:42 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 849C8DE051;
+	Wed,  3 Jul 2013 11:23:14 +0200 (CEST)
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id EmtsKTiKfWqn; Wed,  3 Jul 2013 11:23:14 +0200 (CEST)
+Received: from pc.elego.de (unknown [46.189.27.162])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 55FB6DE00E;
+	Wed,  3 Jul 2013 11:23:14 +0200 (CEST)
+X-Mailer: git-send-email 1.8.3.2.860.gf7f8a72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229477>
 
-Ed Hutchins <eh@demeterr.com> writes:
+Fix a typo ("remote remote-tracking") going back to the big cleanup
+in 2010 (8b3f3f84 etc). Also, remove some more occurrences of
+"tracking" and "remote tracking" in favor of "remote-tracking".
 
-> I realize that branch names are ephemeral repo-specific things, but it
-> would be really useful to be able to determine what branch a commit
-> was authored from (as a hint to ancestry graph layout tools, for
-> example). Is there any way to do this currently, is it planned, or
-> would it be deemed useful enough to be worth adding to each commit
-> object?
+Signed-off-by: Michael Schubert <mschub@elegosoft.com>
+---
+ Documentation/git-p4.txt           | 2 +-
+ Documentation/git-submodule.txt    | 2 +-
+ Documentation/glossary-content.txt | 4 ++--
+ builtin/clone.c                    | 2 +-
+ builtin/merge.c                    | 4 ++--
+ t/t5505-remote.sh                  | 2 +-
+ 6 files changed, 8 insertions(+), 8 deletions(-)
 
-FWIW, this is what Mercurial's "named branches" do. Instead of having
-branches point to commit, each commit says what branch it belongs to.
-
-One drawback of this approach is that the branch name is part of the
-commit and can't be changed without changing the commit's sha1. Hence, a
-local, private, branch name becomes permanent the day it's merged
-upstream.
-
-(for completeness: Mercurial also has essentially Git-like branches,
-but they call this "bookmarks")
-
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index c579fbc..609c1d2 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -180,7 +180,7 @@ subsequent 'sync' operations.
+ 	Import changes into given branch.  If the branch starts with
+ 	'refs/', it will be used as is.  Otherwise if it does not start
+ 	with 'p4/', that prefix is added.  The branch is assumed to
+-	name a remote tracking, but this can be modified using
++	name a remote-tracking, but this can be modified using
+ 	'--import-local', or by giving a full ref name.  The default
+ 	branch is 'master'.
+ +
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index e576713..bfff090 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -262,7 +262,7 @@ OPTIONS
+ --remote::
+ 	This option is only valid for the update command.  Instead of using
+ 	the superproject's recorded SHA-1 to update the submodule, use the
+-	status of the submodule's remote tracking branch.  The remote used
++	status of the submodule's remote-tracking branch.  The remote used
+ 	is branch's remote (`branch.<name>.remote`), defaulting to `origin`.
+ 	The remote branch used defaults to `master`, but the branch name may
+ 	be overridden by setting the `submodule.<name>.branch` option in
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index db2a74d..dba5062 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -113,7 +113,7 @@ Note that commands that operate on the history of the current branch
+ while the HEAD is detached. They update the HEAD to point at the tip
+ of the updated history without affecting any branch.  Commands that
+ update or inquire information _about_ the current branch (e.g. `git
+-branch --set-upstream-to` that sets what remote tracking branch the
++branch --set-upstream-to` that sets what remote-tracking branch the
+ current branch integrates with) obviously do not work, as there is no
+ (real) current branch to ask about in this state.
+ 
+@@ -267,7 +267,7 @@ This commit is referred to as a "merge commit", or sometimes just a
+ 	The default upstream <<def_repository,repository>>. Most projects have
+ 	at least one upstream project which they track. By default
+ 	'origin' is used for that purpose. New upstream updates
+-	will be fetched into remote <<def_remote_tracking_branch,remote-tracking branches>> named
++	will be fetched into <<def_remote_tracking_branch,remote-tracking branches>> named
+ 	origin/name-of-upstream-branch, which you can see using
+ 	`git branch -r`.
+ 
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 14b1323..17f57cd 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -701,7 +701,7 @@ static void write_refspec_config(const char* src_ref_prefix,
+ 			/*
+ 			 * otherwise, the next "git fetch" will
+ 			 * simply fetch from HEAD without updating
+-			 * any remote tracking branch, which is what
++			 * any remote-tracking branch, which is what
+ 			 * we want.
+ 			 */
+ 		} else {
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 2ebe732..bad4536 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -948,7 +948,7 @@ static int evaluate_result(void)
+ }
+ 
+ /*
+- * Pretend as if the user told us to merge with the tracking
++ * Pretend as if the user told us to merge with the remote-tracking
+  * branch we have for the upstream of the current branch
+  */
+ static int setup_with_upstream(const char ***argv)
+@@ -967,7 +967,7 @@ static int setup_with_upstream(const char ***argv)
+ 	args = xcalloc(branch->merge_nr + 1, sizeof(char *));
+ 	for (i = 0; i < branch->merge_nr; i++) {
+ 		if (!branch->merge[i]->dst)
+-			die(_("No remote tracking branch for %s from %s"),
++			die(_("No remote-tracking branch for %s from %s"),
+ 			    branch->merge[i]->src, branch->remote_name);
+ 		args[i] = branch->merge[i]->dst;
+ 	}
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index ee5d65d..8f6e392 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -74,7 +74,7 @@ test_expect_success 'add another remote' '
+ 	)
+ '
+ 
+-test_expect_success C_LOCALE_OUTPUT 'check remote tracking' '
++test_expect_success C_LOCALE_OUTPUT 'check remote-tracking' '
+ 	(
+ 		cd test &&
+ 		check_remote_track origin master side &&
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.8.3.2.860.gf7f8a72
