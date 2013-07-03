@@ -1,85 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: unexpected file deletion after using git rebase --abort
-Date: Wed, 03 Jul 2013 16:04:23 -0700
-Message-ID: <7vip0rckjs.fsf@alter.siamese.dyndns.org>
-References: <20130703224402.GF9016@localhost.localdomain>
-	<20130703225642.GU408@google.com>
-Mime-Version: 1.0
+From: Dany <nessup@gmail.com>
+Subject: Feature request: prevent push -f from pushing all branches at once
+Date: Wed, 3 Jul 2013 16:30:27 -0700
+Message-ID: <ADE9FE42-FC10-4976-8E6A-290B101DD17A@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
 Content-Type: text/plain; charset=us-ascii
-Cc: "Paul A. Kennedy" <pakenned@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 04 01:04:35 2013
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 04 01:30:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuW6A-00011N-SG
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 01:04:31 +0200
+	id 1UuWVZ-0003qO-3y
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 01:30:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933110Ab3GCXE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 19:04:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57934 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932988Ab3GCXE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 19:04:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BEA472D974;
-	Wed,  3 Jul 2013 23:04:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g5TbwjzsD+AbZMfAw3/7QWN9dl0=; b=HtoUNH
-	G57a+pYixbX9EUO1QVeMET7BjqQLsFR8PCqSz0/vx4AX4FxaYdFStxJs0dYHrgLX
-	BlnCI+pL/IGIccLY2L9ZWQoodv3UCW2nF666oeoKdjovhsCGlD7WQ6NjAOq+39F0
-	i9AxH/RGLJfz3ud8ioeXTW4uTIlBeQgJIV9ec=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VOgMhYutAJgjvLWF6l8clhajSf4FFBhp
-	0m73QYLsjUYdGvBs0cuwQ5OaVLHMea21Ov/H4ErvLhkYJ2fFyb7fy96uOcMhAdMc
-	bumPT0NNuB5+PPygaJMlUqlSS8vZKXpIdoZrmM+R4Y1j34Br9ZF9m66NxDEr/6GK
-	5014v6MZT8w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B52882D973;
-	Wed,  3 Jul 2013 23:04:25 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 125262D971;
-	Wed,  3 Jul 2013 23:04:24 +0000 (UTC)
-In-Reply-To: <20130703225642.GU408@google.com> (Jonathan Nieder's message of
-	"Wed, 3 Jul 2013 15:56:43 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E7ACC6E8-E434-11E2-8FA7-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755696Ab3GCXaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 19:30:30 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:64454 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752773Ab3GCXa3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Jul 2013 19:30:29 -0400
+Received: by mail-pa0-f47.google.com with SMTP id kl14so715785pab.6
+        for <git@vger.kernel.org>; Wed, 03 Jul 2013 16:30:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:content-type:content-transfer-encoding:subject:message-id:date
+         :to:mime-version:x-mailer;
+        bh=LyfAl2+VzysVcCtR5vlV7Nb+Cn0vtir3U357LlN9BDM=;
+        b=jPtAeb8K+tUq7RMVDsUrU0+rPNe2rr8M+PyloHjrFZH7v8hDMsAJZNwF5b5k/WJBHk
+         XpmPQb2oKDh7OSlmOkbxH5vC9RH8EG88H/k3oA6tKOnPsBBvw0KvZpxEyndOHauW5EAp
+         XZebajfeDfQ27pUxh1jX4pZHpqN7un3P2GjvFbBhRwNeb33tDkOLdEwJ5ldWigTaE436
+         aQaqX8yuNWM1vBfvNxF+PKAxNBEw8fMIMaji/sN/UvDaqvXHOndHvxyV/gusEawYeZ5A
+         d9PMJfWgxBfNiJrsNrssNZ3MFEMLuVUjHvkbjXUHlRGVAfy1wqh7TpwmsZRpWxE4iOqu
+         hZug==
+X-Received: by 10.68.137.8 with SMTP id qe8mr2975612pbb.100.1372894229364;
+        Wed, 03 Jul 2013 16:30:29 -0700 (PDT)
+Received: from [192.168.1.20] (c-76-102-3-186.hsd1.ca.comcast.net. [76.102.3.186])
+        by mx.google.com with ESMTPSA id vb8sm268244pbc.11.2013.07.03.16.30.28
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 03 Jul 2013 16:30:28 -0700 (PDT)
+X-Mailer: Apple Mail (2.1508)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229546>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi,
 
-> Paul A. Kennedy wrote:
->
->> If we don't expect this, should we update the documentation for the
->> --abort heading in the git rebase man page to indicate that newly
->> staged content will be lost after a git rebase --abort?
->
-> How about something along these lines?
->
-> diff --git i/Documentation/git-rebase.txt w/Documentation/git-rebase.txt
-> index 6b2e1c8..dcae40d 100644
-> --- i/Documentation/git-rebase.txt
-> +++ w/Documentation/git-rebase.txt
-> @@ -240,6 +240,9 @@ leave out at most one of A and B, in which case it defaults to HEAD.
->  	started, then HEAD will be reset to <branch>. Otherwise HEAD
->  	will be reset to where it was when the rebase operation was
->  	started.
-> ++
-> +This discards any changes to files tracked in the working tree or <branch>.
-> +You may want to stash your changes first (see linkgit:git-stash[1]).
->  
+I had a pretty sucky thing happen to me today: while remote tracking a non-master branch, I force pushed. This had the intended effect of force pushing the branch I was working on, but also the unintended function of force pushing all branches I wasn't on.
 
-"rebase --abort" is typically used to get rid of conflicted mess the
-user does not want to resolve right now, and "stash" would not be a
-sensible thing to use in such a situation, I think.  Doesn't it even
-refuse to work if there is a conflicted entry in the index?
+I'm open to anyone's thoughts about this (or even a suggestion as to how to avoid this in the future), but as far as I know, in 99% of cases, a developer does not intend to force push all branches he is remote tracking on his system when he types `git push -f`. Now I know that that's what will happen, but I wonder why git does this (and, furthermore, why git doesn't prevent force pushing multiple branches at once.)
+
+Again, I think the case where one intends to force push many branches is certainly not as common as the case where one intends to force push one branch, so why does git's default behavior leave the user in the position of fscking himself over pretty badly?
+
+Would love any thoughts or suggestions on this.
+
+Thanks,
+--Dany.
