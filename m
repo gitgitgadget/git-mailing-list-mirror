@@ -1,76 +1,98 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFD] Making "git push [--force/--delete]" safer?
-Date: Wed, 03 Jul 2013 14:06:18 +0200
-Message-ID: <51D413BA.6080709@viscovery.net>
-References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org> <CALKQrgenpqKUxOZ+p79NsaQD9M2-q4h93ZqN0oencVo-QZF=zg@mail.gmail.com> <CALKQrgdovWTd50LVDnNR+BhurWgSCKkhr88wCo01VZF3sd5PNg@mail.gmail.com> <7vli5ogh8r.fsf@alter.siamese.dyndns.org> <CALKQrge_REZKfds0T-owJOn2BvfLmHpk7yQeSog=yvofE_zKJQ@mail.gmail.com> <CAF5DW8++sc2VYmdJEjbD_ue_wtDFj21vcyFzNWU0M+rAm2X0sQ@mail.gmail.com> <CALKQrgfQhVVC1NxizjCQdDmNfihfyEgypYddWB0CMTPqW9Mxtg@mail.gmail.com> <51D40203.1010100@alum.mit.edu>
+From: Ed Hutchins <eh@demeterr.com>
+Subject: Re: Feature request: "author branch" in commit object
+Date: Wed, 3 Jul 2013 08:47:17 -0700
+Message-ID: <CADL+T9Z=SrVyMMnYk3M7Dmb4c5xGiQtCTiDYaceKwB2-51TV-g@mail.gmail.com>
+References: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
+	<vpqehbgrnrx.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jul 03 14:06:33 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jul 03 17:47:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuLpP-0008LR-MJ
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 14:06:32 +0200
+	id 1UuPH9-00031y-3m
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 17:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755844Ab3GCMG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 08:06:28 -0400
-Received: from so.liwest.at ([212.33.55.13]:29169 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755129Ab3GCMG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 08:06:27 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UuLpE-0001e7-2T; Wed, 03 Jul 2013 14:06:20 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 3BB0C1660F;
-	Wed,  3 Jul 2013 14:06:18 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <51D40203.1010100@alum.mit.edu>
-X-Spam-Score: -1.0 (-)
+	id S1755569Ab3GCPrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 11:47:18 -0400
+Received: from mail-qa0-f48.google.com ([209.85.216.48]:61606 "EHLO
+	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932128Ab3GCPrS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 11:47:18 -0400
+Received: by mail-qa0-f48.google.com with SMTP id cm16so225848qab.0
+        for <git@vger.kernel.org>; Wed, 03 Jul 2013 08:47:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-gm-message-state;
+        bh=Bvh14vo8MAVJcrDnTaFBc2DjNs/0DHInlJqpSNpgW5M=;
+        b=Yxv5ddCxTtrhV90iAojAr1Us10XI8s3uUt06VCv1Kx3pMHquRdxqCuh50vPViIeZ+s
+         EqqVUtFFxAkmQ1A2Dx+4+5Q3eN35/jIo1D1Q+F4WLE62Rl5GE/goKuZSBIHt9V86k/32
+         0HbjzroyQmL2ithRbK9XOWAGxyiUHcKMjcOQXkvvJwyo62EHpQ62xVARJyRO1+NPQ7m5
+         DnvwOUaYl+B/7wgCVYTR7M1XoGClKFOPy3wKQBJAJuPvsgdlgaT9IZ4hQ5T0bxeOuRTj
+         bxZpWqcrx2MqvDghL0wlObTvV2DUS26VXtYTyUkSuR0zATVLoyKX/z+1m6eRfgga1oo2
+         rZ2A==
+X-Received: by 10.229.170.199 with SMTP id e7mr497541qcz.29.1372866437449;
+ Wed, 03 Jul 2013 08:47:17 -0700 (PDT)
+Received: by 10.49.76.234 with HTTP; Wed, 3 Jul 2013 08:47:17 -0700 (PDT)
+In-Reply-To: <vpqehbgrnrx.fsf@anie.imag.fr>
+X-Gm-Message-State: ALoCoQkdO/zwmIXngILSM59Tqrj0qMulJOSEDqvJldU/g6TqZbrd/ZL8yD99VqzYGeEc0K5xRDkz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229495>
 
-Am 7/3/2013 12:50, schrieb Michael Haggerty:
-> On 07/03/2013 12:11 PM, Johan Herland wrote:
->> On Wed, Jul 3, 2013 at 12:06 PM, Jonathan del Strother
->> <maillist@steelskies.com> wrote:
->>> I'm struggling to think of instances where I wouldn't want this
->>> CAS-like behaviour.  Wouldn't it be better to make it the default when
->>> pushing, and allowing the current behaviour with "git push
->>> --blind-force" or something?
->>
->> I believe I agree with you. I guess the reason this hasn't come up
->> before is that by far most of the pushes we do are either
->> fast-forwarding, or pushing into a non-shared repo (e.g. my own public
->> repo),  and this safety only really applies when we're forcing a
->> non-fast-forward push into a shared repo...
-> 
-> I didn't see Jonathan's original email but I was having exactly the same
-> though as him (and was even going to propose the same option name).
-> 
-> Non-ff pushing without knowing what you are going to overwrite is
-> irresponsible in most scenarios, and (if backwards-compatibility
-> concerns can be overcome) I think it would be quite prudent to forbid a
-> non-ff push if there is no local remote-tracking branch that is
-> up-to-date at the time of the push.  Circumventing that check should
-> require some extra-super-force option.
+I'm not trying to change the way git does things (which works perfectly
+well), I'm asking for some extra information to be added to the commit
+so that analysis of the ancestry graph can be tied to the branch topics
+that the original author was working from. Currently if you have a
+rebase-branch/ff-merge-to-master workflow, the graph of commits looks
+like a single user produced all of the code. It would be very useful for
+both forensic and display purposes to categorize those commits by their
+original topics, but that history is lost in such a workflow. Certainly
+there are work-arounds (notes etc.) to capture this history, but I think
+that this is a basic feature which most projects would benefit from. I
+fully understand that branches are not global and that it may be
+confusing to keep an "author branch" name around in some cases, but the
+vast majority of cases where authors pick meaningful branch names would
+benefit from being able to look back and go "ah-ha! that was a commit to
+fix bug such-and-such" or "that was a commit from when I was working on
+super-cool feature X". Even just knowing that two commits were from
+different (or the same) branches would tell you something useful about
+the evolution of the project. Arguing that branch names are local and
+thus meaningless misses the point: branches are *names* which were
+meaningful to the author at the time the branch was being worked on.
+Discarding this information makes it harder to reason about or display
+the history of the project and is an irritating defect in an otherwise
+wonderful tool.
 
-I don't think that is necessary. We already have *two* options to
-force-push a ref: the + in front of refspec, and --force.
-
-IMO, the meaning of + should be changed to "force-push with safety", and
---force can then be used to override if the safety triggers (i.e., --force
-is your extra-super-force option).
-
--- Hannes
+On Wed, Jul 3, 2013 at 2:33 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Ed Hutchins <eh@demeterr.com> writes:
+>
+>> I realize that branch names are ephemeral repo-specific things, but it
+>> would be really useful to be able to determine what branch a commit
+>> was authored from (as a hint to ancestry graph layout tools, for
+>> example). Is there any way to do this currently, is it planned, or
+>> would it be deemed useful enough to be worth adding to each commit
+>> object?
+>
+> FWIW, this is what Mercurial's "named branches" do. Instead of having
+> branches point to commit, each commit says what branch it belongs to.
+>
+> One drawback of this approach is that the branch name is part of the
+> commit and can't be changed without changing the commit's sha1. Hence, a
+> local, private, branch name becomes permanent the day it's merged
+> upstream.
+>
+> (for completeness: Mercurial also has essentially Git-like branches,
+> but they call this "bookmarks")
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
