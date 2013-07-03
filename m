@@ -1,81 +1,58 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v7 2/7] wrap-for-bin: Make bin-wrappers chainable
-Date: Wed, 03 Jul 2013 12:57:18 +0200
-Message-ID: <vpqfvvvq5bl.fsf@anie.imag.fr>
-References: <1372804789-12732-1-git-send-email-benoit.person@ensimag.fr>
-	<1372804789-12732-3-git-send-email-benoit.person@ensimag.fr>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Review of git multimail
+Date: Wed, 3 Jul 2013 16:32:14 +0530
+Message-ID: <CALkWK0mCChJtLqDTiaw8Ji6==7Qh9AoBDpkde-siGVUMArpVpA@mail.gmail.com>
+References: <1372793019-12162-1-git-send-email-artagnon@gmail.com>
+ <51D36BD8.1060909@alum.mit.edu> <CALkWK0=taYiV3UTaj9r-FLdaCeZRzVBTp_MH4sQt8-v+YYqbaA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Celestin Matte <celestin.matte@ensimag.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: benoit.person@ensimag.fr
-X-From: git-owner@vger.kernel.org Wed Jul 03 12:57:31 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jul 03 13:03:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuKkc-0006zC-Nf
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 12:57:31 +0200
+	id 1UuKpv-00042m-07
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 13:02:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754270Ab3GCK50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 06:57:26 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50387 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752795Ab3GCK50 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 06:57:26 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r63AvHqO021684
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 3 Jul 2013 12:57:17 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1UuKkQ-0002hV-F5; Wed, 03 Jul 2013 12:57:18 +0200
-In-Reply-To: <1372804789-12732-3-git-send-email-benoit.person@ensimag.fr>
-	(benoit person's message of "Wed, 3 Jul 2013 00:39:44 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 03 Jul 2013 12:57:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r63AvHqO021684
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1373453840.94078@fCOLrfJHvmR7o6Gcmk82Ug
+	id S932216Ab3GCLCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 07:02:55 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:60505 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932066Ab3GCLCy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 07:02:54 -0400
+Received: by mail-ie0-f180.google.com with SMTP id f4so13898806iea.25
+        for <git@vger.kernel.org>; Wed, 03 Jul 2013 04:02:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=aUsx649xuY01nTMyHCwVKizBJn6VIFOMWSGUkJ60lS8=;
+        b=yZaTZR65Uo3rtSaf6HSRDE0zf4ewzwNs6c1Hw7NgPzZtJnnM2CJRcusfmJuh66qdfE
+         Ao4QyzhJF4wFbI084EBO3B1UjqK6VDVFTQ9BZL5N3yaqNEd7G5F2dbBIfSz1K8rJmzl+
+         gZky9t6QLeseC4cjJU9LKBBpJYIMjv6hVrdOqW1Yaqb9JxY9hBCKdsbftl1/g3+LMET4
+         2V1zn+T56EKzjBVdxERqyVeewailbeUQzF0KWFNIV+6e2qaAHMwCdefJxKY53TQ6QSVU
+         CLDdgt/TwmnhQokt959gFl3OjwK3rWCS0FJLkNjq5/e0kM4sovpi9Rsz2YTCDQIMQ94W
+         VjXg==
+X-Received: by 10.42.190.74 with SMTP id dh10mr194666icb.35.1372849374479;
+ Wed, 03 Jul 2013 04:02:54 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Wed, 3 Jul 2013 04:02:14 -0700 (PDT)
+In-Reply-To: <CALkWK0=taYiV3UTaj9r-FLdaCeZRzVBTp_MH4sQt8-v+YYqbaA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229491>
 
-benoit.person@ensimag.fr writes:
+Ramkumar Ramachandra wrote:
+>>> New-style class.  I wonder why you suddenly switched.
+>>
+>> ?  All of the classes are new-style classes.
+>
+> When you say class Foo:, aren't you declaring an old-style class by
+> default in python2?  New-style classes are those that explicitly
+> inherit from object (implicit in python3).
 
-> diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
-> index 53a8dd0..dbebe49 100644
-> --- a/wrap-for-bin.sh
-> +++ b/wrap-for-bin.sh
-> @@ -14,7 +14,7 @@ else
->  	GIT_TEMPLATE_DIR='@@BUILD_DIR@@/templates/blt'
->  	export GIT_TEMPLATE_DIR
->  fi
-> -GITPERLLIB='@@BUILD_DIR@@/perl/blib/lib'
-> +GITPERLLIB='@@BUILD_DIR@@/perl/blib/lib:'"$GITPERLLIB"
-
-Then you need to do something like this to prevent broken $GITPERLLIB in
-user's configuration from interfering with the testsuite:
-
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -92,6 +92,7 @@ unset VISUAL EMAIL LANGUAGE COLUMNS $("$PERL_PATH" -e '
-        print join("\n", @vars);
- ')
- unset XDG_CONFIG_HOME
-+unset GITPERLLIB
- GIT_AUTHOR_EMAIL=author@example.com
- GIT_AUTHOR_NAME='A U Thor'
- GIT_COMMITTER_EMAIL=committer@example.com
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I just noticed that all your classes are new-style.
