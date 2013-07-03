@@ -1,58 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-remote-mediawiki: un-brace file handles in binmode calls
-Date: Wed, 03 Jul 2013 12:10:32 -0700
-Message-ID: <7v8v1nfoif.fsf@alter.siamese.dyndns.org>
-References: <1372842859-16598-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Brandon Casey <bcasey@nvidia.com>
+Subject: Re: [PATCH] remote.c: avoid O(n^2) behavior in match_push_refs by
+ using string_list
+Date: Wed, 3 Jul 2013 12:21:30 -0700
+Message-ID: <51D479BA.1070207@nvidia.com>
+References: <1372809228-2963-1-git-send-email-bcasey@nvidia.com> <20130703062332.GA16090@sigill.intra.peff.net> <CA+sFfMeDC=hc7QZhfSuQYsdBPzig5WANeTBhMxFZk=Pusq0QpA@mail.gmail.com> <7vhagbfpwz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, celestin.matte@ensimag.fr
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 03 21:10:58 2013
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Brandon Casey <drafnel@gmail.com>, Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Martin Fick <mfick@codeaurora.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 03 21:21:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuSS6-0003Ay-V4
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 21:10:55 +0200
+	id 1UuScX-00064L-AH
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 21:21:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965078Ab3GCTKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 15:10:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52656 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964960Ab3GCTKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 15:10:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 321F32D10D;
-	Wed,  3 Jul 2013 19:10:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=Dgl77F
-	fGshM33Iq7V9l2MjUxd5imFQzwohRzA/tWkno7jxSJVf51MduUNXyTdKmbzmwSt6
-	zejCE8ka+uu8tD1Z1nayh1OXElpdCpAqSd9QPKjOssvxMOwN+MNLaHy+f1588kvR
-	ZpM7KbqFhXCJn0m4uhNGSz718RT23QcfdKMaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BmdeXO1opbcn2Ye7nCLxHikUUlZAdTVw
-	G09EPKAMuVtaMZCVI7/M7ToIL22o7k32SiDvegSbpJAvzmOAFNE9S49Nbp4tpdvz
-	YPab+VU5TpxXjLW+ldrdEKMDx09gkrIjFmjbxD64KR5pXP56pxiF5waUS4LqC7R+
-	hF/p6iWxjCc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5E782D10C;
-	Wed,  3 Jul 2013 19:10:43 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE0272D0FA;
-	Wed,  3 Jul 2013 19:10:33 +0000 (UTC)
-In-Reply-To: <1372842859-16598-1-git-send-email-Matthieu.Moy@imag.fr>
-	(Matthieu Moy's message of "Wed, 3 Jul 2013 11:14:19 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3C7D1F2C-E414-11E2-85B2-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S965403Ab3GCTVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 15:21:35 -0400
+Received: from hqemgate04.nvidia.com ([216.228.121.35]:3944 "EHLO
+	hqemgate04.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965381Ab3GCTVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 15:21:32 -0400
+Received: from hqnvupgp07.nvidia.com (Not Verified[216.228.121.13]) by hqemgate04.nvidia.com
+	id <B51d479cc0000>; Wed, 03 Jul 2013 12:21:48 -0700
+Received: from hqemhub01.nvidia.com ([172.20.12.94])
+  by hqnvupgp07.nvidia.com (PGP Universal service);
+  Wed, 03 Jul 2013 12:22:38 -0700
+X-PGP-Universal: processed;
+	by hqnvupgp07.nvidia.com on Wed, 03 Jul 2013 12:22:38 -0700
+Received: from [172.17.130.228] (172.20.144.16) by hqemhub01.nvidia.com
+ (172.20.150.30) with Microsoft SMTP Server id 8.3.298.1; Wed, 3 Jul 2013
+ 12:21:30 -0700
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+In-Reply-To: <7vhagbfpwz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229513>
 
-Thanks.
+On 7/3/2013 11:40 AM, Junio C Hamano wrote:
+> Brandon Casey <drafnel@gmail.com> writes:
+> 
+>> Right.  For repos with few refs on either side, I don't think there
+>> will be any measurable difference.  When pushing a single ref to a
+>> repo with a very large number of refs, we will see a very small net
+>> loss for the time required to prepare the string list (which grows
+>> linearly with the number of remote refs).  After 2 or 3 refs, we
+>> should see a net gain.
+>>
+>> So we're really just improving our worst case performance here.
+> 
+> ... by penalizing the common case by how much?  If it is not too
+> much, then this obviously would be a good change.
+
+For something the size of the git repo, 5 branches, and pushing with
+matching refspecs, I can't measure any difference.  The fastest time I
+record with or without this patch is the same:
+
+   $ time git push -n
+   real    0m0.178s
+   user    0m0.020s
+   sys     0m0.008s
+
+Ditto, when only pushing a single branch.  Preparing the string list for
+a repo with a "normal" number of refs has very little overhead.
+
+When the remote side has very many refs, then there is a small penalty
+when the local side is pushing very few refs.  But still, the penalty is
+small.
+
+My measurements for pushing from a repo with a single local branch into
+my 100000+ ref repo showed <10% hit and the numbers were in the tens of
+milliseconds.
+
+        before    after
+real    0m0.525s  0m0.566s
+user    0m0.243s  0m0.279s
+sys     0m0.075s  0m0.099s
+
+>> ...  But, I don't see a down side to doing the lazy prepare in
+>> the other loop too, and in fact, it looks like we may be able to avoid
+>> building the string list when only explicit refspecs are used.  So,
+>> yeah, we should lazy build in both loops.
+> 
+> OK, so will see a reroll sometime?
+
+Yeah, I'll reroll.
+
+-Brandon
