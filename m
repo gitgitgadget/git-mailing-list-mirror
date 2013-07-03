@@ -1,103 +1,75 @@
-From: Brandon Casey <bcasey@nvidia.com>
-Subject: Re: [PATCH] remote.c: avoid O(n^2) behavior in match_push_refs by
- using string_list
-Date: Wed, 3 Jul 2013 13:05:09 -0700
-Message-ID: <51D483F5.6020702@nvidia.com>
-References: <1372809228-2963-1-git-send-email-bcasey@nvidia.com> <20130703062332.GA16090@sigill.intra.peff.net> <CA+sFfMeDC=hc7QZhfSuQYsdBPzig5WANeTBhMxFZk=Pusq0QpA@mail.gmail.com> <7vhagbfpwz.fsf@alter.siamese.dyndns.org> <20130703190047.GA349@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 0/5] Reroll patches against Git v1.8.3.2
+Date: Wed, 03 Jul 2013 13:06:54 -0700
+Message-ID: <7vip0re7c1.fsf@alter.siamese.dyndns.org>
+References: <cover.1372240998.git.Alex.Crezoff@gmail.com>
+	<cover.1372719264.git.Alex.Crezoff@gmail.com>
+	<7vbo6klpgw.fsf@alter.siamese.dyndns.org>
+	<20130703200304.GA32573@dell-note>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Martin Fick <mfick@codeaurora.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 03 22:05:18 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Alexey Shumkin <alex.crezoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 03 22:07:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuTIk-0001SJ-3A
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 22:05:18 +0200
+	id 1UuTKP-0003Ix-UD
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 22:07:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933089Ab3GCUFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 16:05:11 -0400
-Received: from hqemgate04.nvidia.com ([216.228.121.35]:5043 "EHLO
-	hqemgate04.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932690Ab3GCUFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 16:05:10 -0400
-Received: from hqnvupgp07.nvidia.com (Not Verified[216.228.121.13]) by hqemgate04.nvidia.com
-	id <B51d484070000>; Wed, 03 Jul 2013 13:05:27 -0700
-Received: from hqemhub01.nvidia.com ([172.20.12.94])
-  by hqnvupgp07.nvidia.com (PGP Universal service);
-  Wed, 03 Jul 2013 13:06:17 -0700
-X-PGP-Universal: processed;
-	by hqnvupgp07.nvidia.com on Wed, 03 Jul 2013 13:06:17 -0700
-Received: from [172.17.130.228] (172.20.144.16) by hqemhub01.nvidia.com
- (172.20.150.30) with Microsoft SMTP Server id 8.3.298.1; Wed, 3 Jul 2013
- 13:05:09 -0700
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
-In-Reply-To: <20130703190047.GA349@sigill.intra.peff.net>
+	id S933041Ab3GCUG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 16:06:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48359 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932690Ab3GCUG5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 16:06:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 004282D602;
+	Wed,  3 Jul 2013 20:06:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eGAxogy1/TTKIej2nbMsqarhvi8=; b=UBGiAk
+	GVODSycRqzUfI8Z6a/k8Wc+XZ4xDBxr/Kb0puW5KxI2XbAOPcI/YXZWPbZCU/wj9
+	SKJIckk1CyQfGfJFvQlvHf7nWqSPs/b/XRE/5Xyng/OoA5XteqPxDfyA5Sl9j09M
+	q53sAiNs8ImajWgqFx3D4GRnGqKsvANnHyrIQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=l8rtOJD4fGtZL8Wfc3iGhP6d8OjKp42s
+	f0268igxVIjrbDF6w998kQGRH/V+HrJOrfmeGixAW6TRCgsl7HnJ1Rn7Fp+S57fW
+	+WGoyDlvAc0g4aKi+1OH+QKEONMF0cY+NVmkt46YMjauYr0o+tuYZPzlc1GVW4//
+	HRH6L/L6Whw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E61122D601;
+	Wed,  3 Jul 2013 20:06:56 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34B362D600;
+	Wed,  3 Jul 2013 20:06:56 +0000 (UTC)
+In-Reply-To: <20130703200304.GA32573@dell-note> (Alexey Shumkin's message of
+	"Thu, 4 Jul 2013 00:03:04 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1C838208-E41C-11E2-A8E1-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229520>
 
-On 7/3/2013 12:00 PM, Jeff King wrote:
-> On Wed, Jul 03, 2013 at 11:40:12AM -0700, Junio C Hamano wrote:
-> 
->> Brandon Casey <drafnel@gmail.com> writes:
->>
->>> Right.  For repos with few refs on either side, I don't think there
->>> will be any measurable difference.  When pushing a single ref to a
->>> repo with a very large number of refs, we will see a very small net
->>> loss for the time required to prepare the string list (which grows
->>> linearly with the number of remote refs).  After 2 or 3 refs, we
->>> should see a net gain.
->>>
->>> So we're really just improving our worst case performance here.
->>
->> ... by penalizing the common case by how much?  If it is not too
->> much, then this obviously would be a good change.
-> 
-> I don't think by much. If we have "m" local refs to push and "n" remote
-> refs, right now we do O(m*n) work ("m" linear searches of the remote
-> namespace). With Brandon's patch, we do O(n log n) to build the index,
+Alexey Shumkin <alex.crezoff@gmail.com> writes:
 
-Whoops, yes, n log n, not linear as I misspoke.
+> On Tue, Jul 02, 2013 at 12:41:03PM -0700, Junio C Hamano wrote:
+>> Alexey Shumkin <Alex.Crezoff@gmail.com> writes:
+>> 
+>> > v8 of this patch series includes the following changes against v7:
+>> 
+>> Oops, isn't this already in 'next'?  In that case, please feed
+>> incremental updates on top of the patches that are already queued as
+>> improvements and fixes.
+> Oops ;)
+> I'll send patches against 'next' then.
 
-> plus O(m log n) for lookups.
-> 
-> So our break-even point is basically m = log n, and for m smaller than
-> that, we do more work building the index. Your absolute biggest
-> difference would be pushing a single ref to a repository with a very
-> large number of refs.
-> 
-> Here are the timings before and after Brandon's patch for pushing a
-> no-op single ref from a normal repo to one with 370K refs (the same
-> pathological repo from the upload-pack tests). Times are
-> best-of-five.
-> 
->              before     after
->      real    0m1.087s   0m1.156s
->      user    0m1.344s   0m1.412s
->      sys     0m0.288s   0m0.284s
-> 
-> So it's measurable, but even on a pathological worst-case, we're talking
-> about 6% slowdown.
-
-That agrees with what I've observed.
-
-> You could try to guess about when to build the index based on the size
-> of "m" and "n", but I suspect you'd waste more time calculating whether
-> to build the index than you would simply building it in most cases.
-
-I agree, I don't think it's worth trying to guess when to build an index
-and when to just perform linear searches.  If building the payload for
-each element in the index was more expensive than just assigning to a
-pointer, than it could be worth it, but we're not, so I don't think it
-is worth it.
-
--Brandon
+Thanks; please build on top of 7c375214 (t4205: replace .\+ with ..*
+in sed commands, 2013-07-01).
