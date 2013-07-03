@@ -1,146 +1,121 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] remote.c: avoid O(n^2) behavior in match_push_refs by
- using string_list
-Date: Wed, 3 Jul 2013 02:23:32 -0400
-Message-ID: <20130703062332.GA16090@sigill.intra.peff.net>
-References: <1372809228-2963-1-git-send-email-bcasey@nvidia.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFD] Making "git push [--force/--delete]" safer?
+Date: Wed, 3 Jul 2013 08:34:25 +0200
+Message-ID: <CALKQrgdovWTd50LVDnNR+BhurWgSCKkhr88wCo01VZF3sd5PNg@mail.gmail.com>
+References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
+	<CALKQrgenpqKUxOZ+p79NsaQD9M2-q4h93ZqN0oencVo-QZF=zg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, mfick@codeaurora.org, gitster@pobox.com,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <bcasey@nvidia.com>
-X-From: git-owner@vger.kernel.org Wed Jul 03 08:23:43 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 03 08:34:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuGTb-0006TY-M5
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 08:23:40 +0200
+	id 1UuGeL-0008GY-MV
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 08:34:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753561Ab3GCGXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 02:23:36 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35761 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751767Ab3GCGXf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 02:23:35 -0400
-Received: (qmail 26428 invoked by uid 102); 3 Jul 2013 06:24:45 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Jul 2013 01:24:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Jul 2013 02:23:32 -0400
-Content-Disposition: inline
-In-Reply-To: <1372809228-2963-1-git-send-email-bcasey@nvidia.com>
+	id S1753697Ab3GCGeb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 02:34:31 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:58975 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753255Ab3GCGea (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 02:34:30 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UuGe4-000429-Vz
+	for git@vger.kernel.org; Wed, 03 Jul 2013 08:34:28 +0200
+Received: from mail-oa0-f41.google.com ([209.85.219.41])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1UuFOV-000MvY-Qa
+	for git@vger.kernel.org; Wed, 03 Jul 2013 07:14:19 +0200
+Received: by mail-oa0-f41.google.com with SMTP id n10so7666105oag.28
+        for <git@vger.kernel.org>; Tue, 02 Jul 2013 23:34:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=aW7y4W57y58jElYF/PvfWbyV1yizWyawvxxc7GXqTKw=;
+        b=Zm2UCqMrJjRVOFPirPEV/+dVjp3AlxtHhB2KuhJkpoGWMgGpo+JYFEppB13xyVcXjl
+         xlXxNQgG1mJDAxxoBtbewBe6Pk7RkgHtaNe23rkbjOEVNMW/WCACg5pg0KhItoRpsORL
+         jXNYZylqm0Azrdu1sO7wgm7tOsSXDfHxCJV43WWyv122KJW94+G+YQRDq28Q8K+de4tu
+         8ZyYpZ8OPxKFE4P1ZbmcNM2+m+sWbytKBW/9UASLLqCo9ySSgWtvAd4G44nm4zHI54Sm
+         +SU6LK0Goq/dgPysb2Ue18S4P85zM5PONn7v2HZgmsswX+ItWDbeiboS/Ky7schCgKPW
+         BjvQ==
+X-Received: by 10.60.84.147 with SMTP id z19mr14712441oey.21.1372833265160;
+ Tue, 02 Jul 2013 23:34:25 -0700 (PDT)
+Received: by 10.182.102.5 with HTTP; Tue, 2 Jul 2013 23:34:25 -0700 (PDT)
+In-Reply-To: <CALKQrgenpqKUxOZ+p79NsaQD9M2-q4h93ZqN0oencVo-QZF=zg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229454>
 
-On Tue, Jul 02, 2013 at 04:53:48PM -0700, Brandon Casey wrote:
+On Wed, Jul 3, 2013 at 12:55 AM, Johan Herland <johan@herland.net> wrote:
+> I assume that in most cases the expected value of the remote ref would
+> equal the current value of the corresponding remote-tracking ref in
+> the user's repo, so why not use that as the default expected value?
+> E.g.:
+>
+>   $ git config push.default simple
+>   $ git checkout -b foo -t origin/foo
+>   # prepare non-ff update
+>   $ git push --force-if-expected
+>   # the above validates foo @ origin != origin/foo before pushing
 
-> From: Brandon Casey <drafnel@gmail.com>
-> 
-> When pushing, each ref in the local repository must be paired with a
-> ref advertised by the remote server.  Currently, this is performed by
-> first applying the refspec to the local ref to transform the local ref
-> into the name of the remote ref, and then performing a linear search
-> through the list of remote refs to see if the remote ref was advertised
-> by the remote system.
-> 
-> This has O(n) complexity and makes match_push_refs() be an O(n^2)
-> operation.
+Oops, typo: s/!=/==/
 
-Just to be sure I understand correctly, is this actually O(m*n) where
-"m" is the number of local refs and "n" is the number of remote refs?
+>
+> And if the users expects a different value, (s)he can pass that to the
+> same option:
+>
+>   $ git push --force-if-expected=refs/original/foo my_remote HEAD:foo
+>   # the above fails if foo @ origin != refs/original/foo
+>
+> The option name probably needs a little work, but as long as it
+> properly communicates the user's _intent_ I'm fine with whatever we
+> call it.
 
-For a repository that repeatedly pushes everything it has to the remote,
-we end up with m=n, but it would not necessarily be the case if you are
-pushing a subset of your refs. But even pushing a small number of refs
-into a repository with a very large number of refs would be
-unnecessarily slow, as we would do several O(n) lookups which could be
-O(log n). So it may speed things up even in the case of a normal-sized
-repo pushing to a large one.
+Overnight, it occured to me that --force-if-expected could be
+simplified by leveraging the existing --force option; for the above
+two examples, respectively:
 
-> Dry-run push of a repository with 121913 refs:
-> 
->         before     after
-> real    1m40.582s  0m0.804s
-> user    1m39.914s  0m0.515s
-> sys     0m0.125s   0m0.106s
+  $ git push --force --expect
+  # validate foo @ origin == @{upstream} before pushing
 
-Very nice. :)
+and
 
-> Signed-off-by: Brandon Casey <drafnel@gmail.com>
-> ---
->  remote.c | 26 ++++++++++++++++++++++++--
->  1 file changed, 24 insertions(+), 2 deletions(-)
+  $ git push --force --expect=refs/original/foo my_remote HEAD:foo
+  # validate foo @ my_remote == refs/original/foo before pushing
 
-Patch itself looks good to me, although...
+In other words, the --expect option becomes a modifier on the --force
+behaviour: If --expect is given, and the remote ref is not as
+expected, then the push will still fail, even when --force is given.
+Furthermore, this could be fleshed out by allowing the user to
+configure push.expect = True, in which case --expect will be assumed
+whenever --force is used, and the user can override with --no-expect.
 
-> @@ -1362,6 +1378,8 @@ int match_push_refs(struct ref *src, struct ref **dst,
->  		free(dst_name);
->  	}
->  
-> +	string_list_clear(&ref_list, 0);
-> +
->  	if (flags & MATCH_REFS_FOLLOW_TAGS)
->  		add_missing_tags(src, dst, &dst_tail);
->  
-> @@ -1376,11 +1394,15 @@ int match_push_refs(struct ref *src, struct ref **dst,
->  
->  			src_name = get_ref_match(rs, nr_refspec, ref, send_mirror, FROM_DST, NULL);
->  			if (src_name) {
-> -				if (!find_ref_by_name(src, src_name))
-> +				if (!ref_list.nr)
-> +					prepare_searchable_ref_list(src,
-> +						&ref_list);
-> +				if (!string_list_has_string(&ref_list, src_name))
+If push.expect == True (or if --expect is given on command-line
+without a parameter), we default to using @{upstream} as the expected
+value, and we complain to the user if the current branch has no
+upstream. This way, you can still enable push.expect even when you do
+not configure @{upstream}, but it compels you to always supply
+--expect=$something (or --no-expect) when you use --force.
 
-This hunk threw me for a bit, as it looked like we were lazily
-initializing ref_list in case we had not done so earlier. But we would
-have cleared it mid-way through the function (in the hunk above), and it
-is only that we are reusing the same ref_list for two different
-purposes.
 
-I do not feel strongly about it, but it might be a little more obvious
-to just declare a new variable in the block, like:
+...Johan
 
-diff --git a/remote.c b/remote.c
-index 75255af..53bef82 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1399,6 +1399,7 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 		add_missing_tags(src, dst, &dst_tail);
- 
- 	if (send_prune) {
-+		struct string_list src_ref_index = STRING_LIST_INIT_NODUP;
- 		/* check for missing refs on the remote */
- 		for (ref = *dst; ref; ref = ref->next) {
- 			char *src_name;
-@@ -1409,15 +1410,15 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 
- 			src_name = get_ref_match(rs, nr_refspec, ref, send_mirror, FROM_DST, NULL);
- 			if (src_name) {
--				if (!ref_list.nr)
-+				if (!src_ref_index.nr)
- 					prepare_searchable_ref_list(src,
--						&ref_list);
--				if (!string_list_has_string(&ref_list, src_name))
-+						&src_ref_index);
-+				if (!string_list_has_string(&src_ref_index, src_name))
- 					ref->peer_ref = alloc_delete_ref();
- 				free(src_name);
- 			}
- 		}
--		string_list_clear(&ref_list, 0);
-+		string_list_clear(&src_ref_index, 0);
- 	}
- 	if (errs)
- 		return -1;
+PS: I'm still unsure about the option naming. Maybe --validate would
+be better than --expect, but I feel it should convey more strongly
+that we're doing _pre_-validation, as opposed to (post-)validating the
+_result_ of the push, whatever that would look like.
 
-And similarly maybe call the outer ref_list dst_ref_index or something.
-I also note that we don't do the lazy-prepare for the other loop. I
-guess that is because we assume that "src" is always non-NULL?
-
--Peff
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
