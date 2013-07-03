@@ -1,94 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 2/7] wrap-for-bin: Make bin-wrappers chainable
-Date: Wed, 03 Jul 2013 13:24:46 -0700
-Message-ID: <7v38rve6i9.fsf@alter.siamese.dyndns.org>
-References: <1372804789-12732-1-git-send-email-benoit.person@ensimag.fr>
-	<1372804789-12732-3-git-send-email-benoit.person@ensimag.fr>
-	<vpqfvvvq5bl.fsf@anie.imag.fr>
+Subject: Re: [PATCH] Change "remote tracking" to "remote-tracking"
+Date: Wed, 03 Jul 2013 13:33:19 -0700
+Message-ID: <7vy59ncrjk.fsf@alter.siamese.dyndns.org>
+References: <1372842754-13366-1-git-send-email-mschub@elegosoft.com>
+	<20130703183851.GR408@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: benoit.person@ensimag.fr, git@vger.kernel.org,
-	Celestin Matte <celestin.matte@ensimag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 03 22:24:55 2013
+Cc: Michael Schubert <mschub@elegosoft.com>, git@vger.kernel.org,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Pete Wyckoff <pw@padd.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 03 22:33:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuTbj-00056E-AU
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 22:24:55 +0200
+	id 1UuTk1-0005Y6-0w
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Jul 2013 22:33:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933286Ab3GCUYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jul 2013 16:24:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57105 "EHLO
+	id S1756229Ab3GCUdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 16:33:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60403 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933210Ab3GCUYs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jul 2013 16:24:48 -0400
+	id S1756179Ab3GCUdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 16:33:23 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37DA12D131;
-	Wed,  3 Jul 2013 20:24:48 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B1B52D571;
+	Wed,  3 Jul 2013 20:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XG0N/59peR7vVzn9sHPsJUbOTKc=; b=mQ8Q7m
-	lFgWd7OCOMAbhdXFPEe6sm3QbTyQ2g+jds5c6NVLae307QOUW4K4w1Tyvve1bGfz
-	UjtqqTbmgA+mQDA+c95WjqtT2pfCEsf/7vq2xICrG6PNpwnrTNaXhv7UALYqQlL+
-	Tr+aSlcYjp1lhHO0e+PoV9cBRd3AHk6Kxa5XA=
+	:content-type; s=sasl; bh=Dt9TB/gmfKG4m6+qg0zGK2hdtis=; b=xaAxpG
+	m1A0EBYTBTfDlta0b3KfSAWbLMKzvvSAiXv2ehFFxWaSXRFaCWx3Gjfdmf3AFq6e
+	xhsKBTbR0ffh5AZ+PqSr/FwqO1E4fkHiVCtjLXPO2HT6ckni9T/FkeLRwkj0b21q
+	JpY1X7xXd13rEeV+nBH4QOEGZIgSgdlBmdsj8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x8F+MC3oHBvdZyPoXsrrCokmnmh5XrpU
-	7UQfyu5DmoJ0jvrkaPWldn+tpBpXptimYW/PlUgZyNpnRja7WPeDZp+35PL6AU1D
-	cg4GNQOxVJ2s9A982E4x8xOcGC40/BbC9DjUL0wUYv3Oj5jcVcfxFhW2TMokI4HS
-	iND8hCcMMIU=
+	:content-type; q=dns; s=sasl; b=g/06fiecVDdrPT+K+LjnwkJzYT5w7pIY
+	76UEKa63ggn7fIctyB8Y/Kra+T7jiYiTWvaP6LSyfIw3cjWf0cU//yBFUUEWCbPj
+	xZ+ywF1EHMsb6gHG3TBxDANfz9797UAs9dMckpLyp42VYBIqhrg85r4cSOM9hNsh
+	5IThFCc7cp0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A3C42D130;
-	Wed,  3 Jul 2013 20:24:48 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AAE92D570;
+	Wed,  3 Jul 2013 20:33:22 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B2E02D12D;
-	Wed,  3 Jul 2013 20:24:47 +0000 (UTC)
-In-Reply-To: <vpqfvvvq5bl.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	03 Jul 2013 12:57:18 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB6B62D56C;
+	Wed,  3 Jul 2013 20:33:20 +0000 (UTC)
+In-Reply-To: <20130703183851.GR408@google.com> (Jonathan Nieder's message of
+	"Wed, 3 Jul 2013 11:38:51 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9B0B04C8-E41E-11E2-BF9E-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CCFB2B6A-E41F-11E2-B1FE-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229526>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> benoit.person@ensimag.fr writes:
+> Michael Schubert wrote:
 >
->> diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
->> index 53a8dd0..dbebe49 100644
->> --- a/wrap-for-bin.sh
->> +++ b/wrap-for-bin.sh
->> @@ -14,7 +14,7 @@ else
->>  	GIT_TEMPLATE_DIR='@@BUILD_DIR@@/templates/blt'
->>  	export GIT_TEMPLATE_DIR
->>  fi
->> -GITPERLLIB='@@BUILD_DIR@@/perl/blib/lib'
->> +GITPERLLIB='@@BUILD_DIR@@/perl/blib/lib:'"$GITPERLLIB"
+>> --- a/Documentation/git-p4.txt
+>> +++ b/Documentation/git-p4.txt
+>> @@ -180,7 +180,7 @@ subsequent 'sync' operations.
+>>  	Import changes into given branch.  If the branch starts with
+>>  	'refs/', it will be used as is.  Otherwise if it does not start
+>>  	with 'p4/', that prefix is added.  The branch is assumed to
+>> -	name a remote tracking, but this can be modified using
+>> +	name a remote-tracking, but this can be modified using
+>>  	'--import-local', or by giving a full ref name.  The default
+>>  	branch is 'master'.
 >
-> Then you need to do something like this to prevent broken $GITPERLLIB in
-> user's configuration from interfering with the testsuite:
+> This is confusing both before and after the patch.  What is "a remote
+> tracking"?
 >
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -92,6 +92,7 @@ unset VISUAL EMAIL LANGUAGE COLUMNS $("$PERL_PATH" -e '
->         print join("\n", @vars);
->  ')
->  unset XDG_CONFIG_HOME
-> +unset GITPERLLIB
->  GIT_AUTHOR_EMAIL=author@example.com
->  GIT_AUTHOR_NAME='A U Thor'
->  GIT_COMMITTER_EMAIL=committer@example.com
+> Perhaps:
+>
+> 	--branch <ref>::
+> 		Import changes into <ref> instead of refs/remotes/p4/master.
+> 		If <ref> starts with refs/, it is used as is.  Otherwise, if
+> 		it does not start with p4/, that prefix is added.
+> 	+
+> 	By default a <ref> not starting with refs/ is treated as the
+> 	name of a remote-tracking branch (under refs/remotes/).  This
+> 	behavior can be modified using the --import-local option.
+> 	+
+> 	The default <ref> is "master".
+>
+> The rest of the patch looks good.
 
-Yes, that is a good point.
+Myy reading did hiccup at the same "remote-tracking" used as if it
+were a noun, and your rewritten version reads much better.
 
-It introduces a chicken-and-egg circularity for git-mw tests to use
-the common test infrastructure by dot-sourcing this file, though,
-no?
+Thanks.
