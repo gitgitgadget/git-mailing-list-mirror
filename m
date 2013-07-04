@@ -1,156 +1,141 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 1/2] commit: reject invalid UTF-8 codepoints
-Date: Thu, 4 Jul 2013 17:19:43 +0000
-Message-ID: <20130704171943.GA267700@vauxhall.crustytoothpaste.net>
+Subject: [PATCH v2 2/2] commit: reject overlong UTF-8 sequences
+Date: Thu, 4 Jul 2013 17:20:34 +0000
+Message-ID: <20130704172034.GB267700@vauxhall.crustytoothpaste.net>
 References: <cover.1372957719.git.sandals@crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 04 19:27:02 2013
+X-From: git-owner@vger.kernel.org Thu Jul 04 19:27:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UunJ7-0001JT-Sd
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 19:27:02 +0200
+	id 1UunJu-0002By-D3
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 19:27:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756687Ab3GDR04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jul 2013 13:26:56 -0400
-Received: from qmta14.emeryville.ca.mail.comcast.net ([76.96.27.212]:45108
-	"EHLO qmta14.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756646Ab3GDR0z (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Jul 2013 13:26:55 -0400
-X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Jul 2013 13:26:55 EDT
-Received: from omta03.emeryville.ca.mail.comcast.net ([76.96.30.27])
-	by qmta14.emeryville.ca.mail.comcast.net with comcast
-	id wHJi1l0020b6N64AEHKpev; Thu, 04 Jul 2013 17:19:49 +0000
+	id S1756790Ab3GDR1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jul 2013 13:27:46 -0400
+Received: from qmta12.emeryville.ca.mail.comcast.net ([76.96.27.227]:33517
+	"EHLO qmta12.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756593Ab3GDR1q (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Jul 2013 13:27:46 -0400
+Received: from omta10.emeryville.ca.mail.comcast.net ([76.96.30.28])
+	by qmta12.emeryville.ca.mail.comcast.net with comcast
+	id wHGS1l0040cQ2SL01HLfeG; Thu, 04 Jul 2013 17:20:39 +0000
 Received: from castro.crustytoothpaste.net ([IPv6:2001:470:1f04:79::2])
-	by omta03.emeryville.ca.mail.comcast.net with comcast
-	id wHKn1l00W25wmie8PHKoud; Thu, 04 Jul 2013 17:19:49 +0000
+	by omta10.emeryville.ca.mail.comcast.net with comcast
+	id wHLd1l00P25wmie8WHLfxT; Thu, 04 Jul 2013 17:20:39 +0000
 Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E463728074;
-	Thu,  4 Jul 2013 17:19:46 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A8EE528074;
+	Thu,  4 Jul 2013 17:20:37 +0000 (UTC)
 Content-Disposition: inline
 In-Reply-To: <cover.1372957719.git.sandals@crustytoothpaste.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1372958389;
-	bh=6h2o0UE44gghBfWD83WeUz/FqcJDX3FV9mM9706wPbE=;
+	s=q20121106; t=1372958439;
+	bh=S4HsMZpUKnGYDIPU6EhBidaIoAl7IgnIpm0hAvvmztk=;
 	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
 	 MIME-Version:Content-Type;
-	b=lAe8elJ+OuAi6H9EIqc2PdZ4bXAKVLHAUGE7feEm+y7tJQGoYV6lfI1DQZBtCrENZ
-	 9yiLbFIAYowFSI81YdRvamjQsldlxj7mFnFF/2acS3K+62RP35IT6afCMDEb8boRCm
-	 glAIxaY1G8zNIb/zVchgyX0E5UThzI3XUWjhNtV2ZJEldzH69gIGlZGWcsLg+pCNqt
-	 CH+Nw+1PUztym0kH+FfAb/VDYtEHL3ZnGRWQtVz15MHN1WueyrrmyC6LuqVeboQgRY
-	 WXoTr7MrsZmijHeMeOj4JVeP7KZ7v5R21WnsyCbaDhtfCz/OiSI4UFEp9aoHC+VhdZ
-	 MuPS4EbfaqAEg==
+	b=c2GVVjYLVJhxN1bQnuQaNkWE9E9MasgRMJozg9NoNuoBHeMkVe+4TUyuhDrwQnw+N
+	 Oe8UGqar/Y6+HatLOhbb2YM/NqTjpx+7SS0ZIvxDGdcEaCoLCY+FAgPRInS3iAw92Q
+	 PS1T5GVVTA4cVgB0OML/2YUssh/IQGraXUVJ7T95td/MoI3sMOSaMsGeiLzGEir+Xj
+	 jrv8WkOUYnImGVXPCXDr9R89dMcd5KOx8YZt2G0wXXkt0ghRjnnZXjwCLj37YY5wZW
+	 JzP3FQKYmtbX7OCI71NzLC52BT1aHuqrPGjVIxV2FkrTORwez98duQuSa1ivP6GT/2
+	 BH60o8GJyEEYw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229600>
 
-The commit code already contains code for validating UTF-8, but it does not
-check for invalid values, such as guaranteed non-characters and surrogates.  Fix
-this by explicitly checking for and rejecting such characters.
+The commit code accepts pseudo-UTF-8 sequences that encode a character with more
+bytes than necessary.  Reject such sequences, since they are not valid UTF-8.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- commit.c               | 27 ++++++++++++++++++++++-----
- t/t3900-i18n-commit.sh | 12 ++++++++++++
- 2 files changed, 34 insertions(+), 5 deletions(-)
+ commit.c               | 17 +++++++++++------
+ t/t3900-i18n-commit.sh | 11 +++++++++++
+ 2 files changed, 22 insertions(+), 6 deletions(-)
 
 diff --git a/commit.c b/commit.c
-index 888e02a..2264106 100644
+index 2264106..b59c187 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -1244,6 +1244,7 @@ static int find_invalid_utf8(const char *buf, int len)
+@@ -1240,11 +1240,15 @@ int commit_tree(const struct strbuf *msg, unsigned char *tree,
+ static int find_invalid_utf8(const char *buf, int len)
+ {
+ 	int offset = 0;
++	static const unsigned int max_codepoint[] = {
++		0x7f, 0x7ff, 0xffff, 0x10ffff
++	};
+ 
  	while (len) {
  		unsigned char c = *buf++;
  		int bytes, bad_offset;
-+		unsigned int codepoint;
+ 		unsigned int codepoint;
++		unsigned int min_val, max_val;
  
  		len--;
  		offset++;
-@@ -1264,24 +1265,40 @@ static int find_invalid_utf8(const char *buf, int len)
- 			bytes++;
- 		}
- 
--		/* Must be between 1 and 5 more bytes */
--		if (bytes < 1 || bytes > 5)
-+		/*
-+		 * Must be between 1 and 3 more bytes.  Longer sequences result in
-+		 * codepoints beyond U+10FFFF, which are guaranteed never to exist.
-+		 */
-+		if (bytes < 1 || bytes > 3)
- 			return bad_offset;
- 
- 		/* Do we *have* that many bytes? */
+@@ -1276,8 +1280,12 @@ static int find_invalid_utf8(const char *buf, int len)
  		if (len < bytes)
  			return bad_offset;
  
-+		/* Place the encoded bits at the bottom of the value. */
-+		codepoint = (c & 0x7f) >> bytes;
-+
+-		/* Place the encoded bits at the bottom of the value. */
++		/* Place the encoded bits at the bottom of the value and compute the
++		 * valid range.
++		 */
+ 		codepoint = (c & 0x7f) >> bytes;
++		min_val = max_codepoint[bytes-1] + 1;
++		max_val = max_codepoint[bytes];
+ 
  		offset += bytes;
  		len -= bytes;
- 
- 		/* And verify that they are good continuation bytes */
- 		do {
-+			codepoint <<= 6;
-+			codepoint |= *buf & 0x3f;
- 			if ((*buf++ & 0xc0) != 0x80)
+@@ -1290,8 +1298,8 @@ static int find_invalid_utf8(const char *buf, int len)
  				return bad_offset;
  		} while (--bytes);
  
--		/* We could/should check the value and length here too */
-+		/* No codepoints can ever be allocated beyond U+10FFFF. */
-+		if (codepoint > 0x10ffff)
-+			return bad_offset;
-+		/* Surrogates are only for UTF-16 and cannot be encoded in UTF-8. */
-+		if ((codepoint & 0x1ff800) == 0xd800)
-+			return bad_offset;
-+		/* U+FFFE and U+FFFF are guaranteed non-characters. */
-+		if ((codepoint & 0x1ffffe) == 0xfffe)
-+			return bad_offset;
- 	}
- 	return -1;
- }
-@@ -1292,8 +1309,8 @@ static int find_invalid_utf8(const char *buf, int len)
+-		/* No codepoints can ever be allocated beyond U+10FFFF. */
+-		if (codepoint > 0x10ffff)
++		/* Reject codepoints that are out of range for the sequence length. */
++		if (codepoint < min_val || codepoint > max_val)
+ 			return bad_offset;
+ 		/* Surrogates are only for UTF-16 and cannot be encoded in UTF-8. */
+ 		if ((codepoint & 0x1ff800) == 0xd800)
+@@ -1308,9 +1316,6 @@ static int find_invalid_utf8(const char *buf, int len)
+  *
   * If it isn't, it assumes any non-utf8 characters are Latin1,
   * and does the conversion.
-  *
-- * Fixme: we should probably also disallow overlong forms and
-- * invalid characters. But we don't do that currently.
-+ * Fixme: we should probably also disallow overlong forms.
-+ * But we don't do that currently.
+- *
+- * Fixme: we should probably also disallow overlong forms.
+- * But we don't do that currently.
   */
  static int verify_utf8(struct strbuf *buf)
  {
 diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-index 37ddabb..ee8ba6c 100755
+index ee8ba6c..94fa1e8 100755
 --- a/t/t3900-i18n-commit.sh
 +++ b/t/t3900-i18n-commit.sh
-@@ -39,6 +39,18 @@ test_expect_failure 'UTF-16 refused because of NULs' '
- 	git commit -a -F "$TEST_DIRECTORY"/t3900/UTF-16.txt
+@@ -50,6 +50,17 @@ test_expect_success 'UTF-8 invalid characters refused' '
+ 	grep "did not conform" "$HOME"/stderr
  '
  
-+test_expect_success 'UTF-8 invalid characters refused' '
-+	test_when_finished "rm -f $HOME/stderr $HOME/invalid" && 
-+	rm -f "$HOME/stderr" &&
-+	echo "UTF-8 characters" >F &&
-+	printf "Commit message\n\nInvalid surrogate:\355\240\200\n" \
++test_expect_success 'UTF-8 overlong sequences rejected' '
++	test_when_finished "rm -f $HOME/stderr $HOME/invalid" &&
++	rm -f "$HOME/stderr" "$HOME/invalid" &&
++	echo "UTF-8 overlong" >F &&
++	printf "\340\202\251ommit message\n\nThis is not a space:\300\240\n" \
 +		>"$HOME/invalid" &&
 +	git commit -a -F "$HOME/invalid" \
 +		2>"$HOME"/stderr &&
 +	grep "did not conform" "$HOME"/stderr
 +'
 +
-+rm -f "$HOME/stderr"
+ rm -f "$HOME/stderr"
  
  for H in ISO8859-1 eucJP ISO-2022-JP
- do
 -- 
 1.8.3.1
