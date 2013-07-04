@@ -1,435 +1,134 @@
-From: benoit.person@ensimag.fr
-Subject: [PATCH v8 7/7] git-remote-mediawiki: Add preview subcommand into git mw
-Date: Thu,  4 Jul 2013 22:39:00 +0200
-Message-ID: <1372970340-6545-8-git-send-email-benoit.person@ensimag.fr>
-References: <1372970340-6545-1-git-send-email-benoit.person@ensimag.fr>
-Cc: Celestin Matte <celestin.matte@ensimag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Benoit Person <benoit.person@ensimag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 04 22:39:47 2013
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 1/2] commit: reject invalid UTF-8 codepoints
+Date: Thu, 4 Jul 2013 20:39:21 +0000
+Message-ID: <20130704203921.GR862789@vauxhall.crustytoothpaste.net>
+References: <cover.1372957719.git.sandals@crustytoothpaste.net>
+ <20130704171943.GA267700@vauxhall.crustytoothpaste.net>
+ <51D5D3D0.3030102@web.de>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="QRtLtq+kfJNLc57H"
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Jul 04 22:39:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuqJd-0007sq-8X
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 22:39:45 +0200
+	id 1UuqJe-0007sq-OR
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 22:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933194Ab3GDUj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jul 2013 16:39:29 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43249 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933045Ab3GDUjX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jul 2013 16:39:23 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r64KdA3G011169
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 4 Jul 2013 22:39:10 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r64KdDoK020613;
-	Thu, 4 Jul 2013 22:39:13 +0200
-Received: from localhost.localdomain (ensibm [195.221.228.8])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r64Kd3il025632;
-	Thu, 4 Jul 2013 22:39:13 +0200
-X-Mailer: git-send-email 1.8.3.1.590.gc07d91b
-In-Reply-To: <1372970340-6545-1-git-send-email-benoit.person@ensimag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 04 Jul 2013 22:39:10 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r64KdA3G011169
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: benoit.person@ensimag.fr
-MailScanner-NULL-Check: 1373575155.15167@RNs7lMFbc4O8Qj8gxCmnTA
+	id S933233Ab3GDUjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jul 2013 16:39:35 -0400
+Received: from qmta13.emeryville.ca.mail.comcast.net ([76.96.27.243]:33597
+	"EHLO qmta13.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933192Ab3GDUj3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Jul 2013 16:39:29 -0400
+Received: from omta11.emeryville.ca.mail.comcast.net ([76.96.30.36])
+	by qmta13.emeryville.ca.mail.comcast.net with comcast
+	id wLbQ1l0050mlR8UADLfVoZ; Thu, 04 Jul 2013 20:39:29 +0000
+Received: from castro.crustytoothpaste.net ([IPv6:2001:470:1f04:79::2])
+	by omta11.emeryville.ca.mail.comcast.net with comcast
+	id wLfT1l00125wmie8XLfUu1; Thu, 04 Jul 2013 20:39:28 +0000
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 7C9C428057;
+	Thu,  4 Jul 2013 20:39:26 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <51D5D3D0.3030102@web.de>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.10-rc4-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1372970369;
+	bh=/bzoU3m6i+fqGIghX2px0ErK8a8LVUKxOysrelkoMqs=;
+	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
+	 MIME-Version:Content-Type;
+	b=GC6EJXHtUSR3QvtYWWRf6sTpZLxOwxTQhknN7lYomAJ23sM3yzXJuivhhcSjLEuuk
+	 OB4qmq2LMgWj3aB8I81KtIt/wj8ovkF2Scnma1ENGOfr49bXoaumCpULc+YqFZwMMz
+	 C3u7EMAsnXhADNb4LvczLnPitrwxal8UKsCrUbeV+KihbtM3cLE1AjscGItInRPFvo
+	 eYSvhajNmltoYGP+mRtfp9y7VJS0ZqIUk8aQEx8he7XluTAKRL0a6ljuTe8NXgOmsx
+	 XQb9f3hrAmTpuviLqAC0ts3SNVBBF2wCjKBNqu1VCjBca50n7Uar47/GE/1u1t0cj/
+	 q+BUCQdNdbLNQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229618>
 
-From: Benoit Person <benoit.person@ensimag.fr>
 
-In the current state, a user of git-remote-mediawiki can edit the markup text
-locally, but has to push to the remote wiki to see how the page is rendererd.
-Add a new 'git mw preview' command that allows rendering the markup text on
-the remote wiki without actually pushing any change on the wiki.
+--QRtLtq+kfJNLc57H
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This uses Mediawiki's API to render the markup and inserts it in an actual
-HTML page from the wiki so that CSS can be rendered properly. Most links
-should work when the page exists on the remote.
+On Thu, Jul 04, 2013 at 09:58:08PM +0200, Torsten B=C3=B6gershausen wrote:
+> On 2013-07-04 19.19, brian m. carlson wrote:
+> > The commit code already contains code for validating UTF-8, but it does=
+ not
+> > check for invalid values, such as guaranteed non-characters and surroga=
+tes.  Fix
+> s/guaranteed non-characters/code points out of range/
 
-Signed-off-by: Benoit Person <benoit.person@ensimag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
----
- contrib/mw-to-git/Git/Mediawiki.pm |   3 +-
- contrib/mw-to-git/git-mw.perl      | 310 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 311 insertions(+), 2 deletions(-)
+The "such as" is meant to be illustrative, not all-inclusive, and my
+patch does check for U+FFFE and U+FFFF, which are guaranteed
+non-characters.
 
-diff --git a/contrib/mw-to-git/Git/Mediawiki.pm b/contrib/mw-to-git/Git/Mediawiki.pm
-index 47fe4f4..d13c4df 100644
---- a/contrib/mw-to-git/Git/Mediawiki.pm
-+++ b/contrib/mw-to-git/Git/Mediawiki.pm
-@@ -19,7 +19,7 @@ require Exporter;
- 
- # Methods which can be called as standalone functions as well:
- @EXPORT_OK = qw(clean_filename smudge_filename connect_maybe
--				EMPTY HTTP_CODE_OK);
-+				EMPTY HTTP_CODE_OK HTTP_CODE_PAGE_NOT_FOUND);
- }
- 
- # Mediawiki filenames can contain forward slashes. This variable decides by which pattern they should be replaced
-@@ -30,6 +30,7 @@ use constant EMPTY => q{};
- 
- # HTTP codes
- use constant HTTP_CODE_OK => 200;
-+use constant HTTP_CODE_PAGE_NOT_FOUND => 404;
- 
- sub clean_filename {
- 	my $filename = shift;
-diff --git a/contrib/mw-to-git/git-mw.perl b/contrib/mw-to-git/git-mw.perl
-index 4a3e4a9..28df3ee 100755
---- a/contrib/mw-to-git/git-mw.perl
-+++ b/contrib/mw-to-git/git-mw.perl
-@@ -12,6 +12,14 @@ use strict;
- use warnings;
- 
- use Getopt::Long;
-+use URI::URL qw(url);
-+use LWP::UserAgent;
-+use HTML::TreeBuilder;
-+
-+use Git;
-+use MediaWiki::API;
-+use Git::Mediawiki qw(clean_filename connect_maybe
-+					EMPTY HTTP_CODE_PAGE_NOT_FOUND);
- 
- # By default, use UTF-8 to communicate with Git and the user
- binmode STDERR, ':encoding(UTF-8)';
-@@ -26,9 +34,26 @@ sub v_print {
- 	return;
- }
- 
-+# Preview parameters
-+my $file_name = EMPTY;
-+my $remote_name = EMPTY;
-+my $preview_file_name = EMPTY;
-+my $autoload = 0;
-+sub file {
-+	$file_name = shift;
-+	return $file_name;
-+}
-+
- my %commands = (
- 	'help' =>
--		[\&help, {}, \&help]
-+		[\&help, {}, \&help],
-+	'preview' =>
-+		[\&preview, {
-+			'<>' => \&file,
-+			'output|o=s' => \$preview_file_name,
-+			'remote|r=s' => \$remote_name,
-+			'autoload|a' => \$autoload
-+		}, \&preview_help]
- );
- 
- # Search for sub-command
-@@ -47,6 +72,288 @@ GetOptions( %{$cmd->[1]},
- # Launch command
- &{$cmd->[0]};
- 
-+############################# Preview Functions ################################
-+
-+sub preview_help {
-+	print {*STDOUT} <<'END';
-+USAGE: git mw preview [--remote|-r <remote name>] [--autoload|-a]
-+                      [--output|-o <output filename>] [--verbose|-v]
-+                      <blob> | <filename>
-+
-+DESCRIPTION:
-+Preview is an utiliy to preview local content of a mediawiki repo as if it was
-+pushed on the remote.
-+
-+For that, preview searches for the remote name of the current branch's
-+upstream if --remote is not set. If that remote is not found or if it
-+is not a mediawiki, it lists all mediawiki remotes configured and asks
-+you to replay your command with the --remote option set properly.
-+
-+Then, it searches for a file named 'filename'. If it's not found in
-+the current dir, it will assume it's a blob.
-+
-+The content retrieved in the file (or in the blob) will then be parsed
-+by the remote mediawiki and combined with a template retrieved from
-+the mediawiki.
-+
-+Finally, preview will save the HTML result in a file. and autoload it
-+in your default web browser if the option --autoload is present.
-+
-+OPTIONS:
-+    -r <remote name>, --remote <remote name>
-+        If the remote is a mediawiki, the template and the parse engine
-+        used for the preview will be those of that remote.
-+        If not, a list of valid remotes will be shown.
-+
-+    -a, --autoload
-+        Try to load the HTML output in a new tab (or new window) of your
-+        default web browser.
-+
-+    -o <output filename>, --output <output filename>
-+        Change the HTML output filename. Default filename is based on the
-+        input filename with its extension replaced by '.html'.
-+
-+    -v, --verbose
-+        Show more information on what's going on under the hood.
-+END
-+	exit;
-+}
-+
-+sub preview {
-+	my $wiki;
-+	my ($remote_url, $wiki_page_name);
-+	my ($new_content, $template);
-+	my $file_content;
-+
-+	if ($file_name eq EMPTY) {
-+		die "Missing file argument, see `git mw help`\n";
-+	}
-+
-+	v_print("### Selecting remote\n");
-+	if ($remote_name eq EMPTY) {
-+		$remote_name = find_upstream_remote_name();
-+		if ($remote_name) {
-+			$remote_url = mediawiki_remote_url_maybe($remote_name);
-+		}
-+
-+		if (! $remote_url) {
-+			my @valid_remotes = find_mediawiki_remotes();
-+
-+			if ($#valid_remotes == 0) {
-+				print {*STDERR} "No mediawiki remote in this repo. \n";
-+				exit 1;
-+			} else {
-+				my $remotes_list = join("\n\t", @valid_remotes);
-+				print {*STDERR} <<"MESSAGE";
-+There are multiple mediawiki remotes, which of:
-+	${remotes_list}
-+do you want ? Use the -r option to specify the remote.
-+MESSAGE
-+			}
-+
-+			exit 1;
-+		}
-+	} else {
-+		if (!is_valid_remote($remote_name)) {
-+			die "${remote_name} is not a remote\n";
-+		}
-+
-+		$remote_url = mediawiki_remote_url_maybe($remote_name);
-+		if (! $remote_url) {
-+			die "${remote_name} is not a mediawiki remote\n";
-+		}
-+	}
-+	v_print("selected remote:\n\tname: ${remote_name}\n\turl: ${remote_url}\n");
-+
-+	$wiki = connect_maybe($wiki, $remote_name, $remote_url);
-+
-+	# Read file content
-+	if (! -e $file_name) {
-+		$file_content = git_cmd_try {
-+			Git::command('cat-file', 'blob', $file_name); }
-+			"%s failed w/ code %d";
-+
-+		if ($file_name =~ /(.+):(.+)/) {
-+			$file_name = $2;
-+		}
-+	} else {
-+		open my $read_fh, "<", $file_name
-+			or die "could not open ${file_name}: $!\n";
-+		$file_content = do { local $/ = undef; <$read_fh> };
-+		close $read_fh
-+			or die "unable to close: $!\n";
-+	}
-+
-+	v_print("### Retrieving template\n");
-+	($wiki_page_name = clean_filename($file_name)) =~ s/\.[^.]+$//;
-+	$template = get_template($remote_url, $wiki_page_name);
-+
-+	v_print("### Parsing local content\n");
-+	$new_content = $wiki->api({
-+		action => 'parse',
-+		text => $file_content,
-+		title => $wiki_page_name
-+	}, {
-+		skip_encoding => 1
-+	}) or die "No response from remote mediawiki\n";
-+	$new_content = $new_content->{'parse'}->{'text'}->{'*'};
-+
-+	v_print("### Merging contents\n");
-+	if ($preview_file_name eq EMPTY) {
-+		($preview_file_name = $file_name) =~ s/\.[^.]+$/.html/;
-+	}
-+	open(my $save_fh, '>:encoding(UTF-8)', $preview_file_name)
-+		or die "Could not open: $!\n";
-+	print {$save_fh} merge_contents($template, $new_content, $remote_url);
-+	close($save_fh)
-+		or die "Could not close: $!\n";
-+
-+	v_print("### Results\n");
-+	if ($autoload) {
-+		v_print("Launching browser w/ file: ${preview_file_name}");
-+		system('git', 'web--browse', $preview_file_name);
-+	} else {
-+		print {*STDERR} "Preview file saved as: ${preview_file_name}\n";
-+	}
-+
-+	exit;
-+}
-+
-+# uses global scope variable: $remote_name
-+sub merge_contents {
-+	my $template = shift;
-+	my $content = shift;
-+	my $remote_url = shift;
-+	my ($content_tree, $html_tree, $mw_content_text);
-+	my $template_content_id = 'bodyContent';
-+
-+	$html_tree = HTML::TreeBuilder->new;
-+	$html_tree->parse($template);
-+
-+	$content_tree = HTML::TreeBuilder->new;
-+	$content_tree->parse($content);
-+
-+	$template_content_id = Git::config("remote.${remote_name}.mwIDcontent")
-+		|| $template_content_id;
-+	v_print("Using '${template_content_id}' as the content ID\n");
-+
-+	$mw_content_text = $html_tree->look_down('id', $template_content_id);
-+	if (!defined $mw_content_text) {
-+		print {*STDERR} <<"CONFIG";
-+Could not combine the new content with the template. You might want to
-+configure `mediawiki.IDContent` in your config:
-+	git config --add remote.${remote_name}.mwIDcontent <id>
-+and re-run the command afterward.
-+CONFIG
-+		exit 1;
-+	}
-+	$mw_content_text->delete_content();
-+	$mw_content_text->push_content($content_tree);
-+
-+	make_links_absolute($html_tree, $remote_url);
-+
-+	return $html_tree->as_HTML;
-+}
-+
-+sub make_links_absolute {
-+	my $html_tree = shift;
-+	my $remote_url = shift;
-+	for (@{ $html_tree->extract_links() }) {
-+		my ($link, $element, $attr) = @{ $_ };
-+		my $url = url($link)->canonical;
-+		if ($url !~ /#/) {
-+			$element->attr($attr, URI->new_abs($url, $remote_url));
-+		}
-+	}
-+	return $html_tree;
-+}
-+
-+sub is_valid_remote {
-+	my $remote = shift;
-+	my @remotes = git_cmd_try {
-+		Git::command('remote') }
-+		"%s failed w/ code %d";
-+	my $found_remote = 0;
-+	foreach my $remote (@remotes) {
-+		if ($remote eq $remote) {
-+			$found_remote = 1;
-+			last;
-+		}
-+	}
-+	return $found_remote;
-+}
-+
-+sub find_mediawiki_remotes {
-+	my @remotes = git_cmd_try {
-+		Git::command('remote'); }
-+		"%s failed w/ code %d";
-+	my $remote_url;
-+	my @valid_remotes = ();
-+	foreach my $remote (@remotes) {
-+		$remote_url = mediawiki_remote_url_maybe($remote);
-+		if ($remote_url) {
-+			push(@valid_remotes, $remote);
-+		}
-+	}
-+	return @valid_remotes;
-+}
-+
-+sub find_upstream_remote_name {
-+	my $current_branch = git_cmd_try {
-+		Git::command_oneline('symbolic-ref', '--short', 'HEAD') }
-+		"%s failed w/ code %d";
-+	return Git::config("branch.${current_branch}.remote");
-+}
-+
-+sub mediawiki_remote_url_maybe {
-+	my $remote = shift;
-+
-+	# Find remote url
-+	my $remote_url = Git::config("remote.${remote}.url");
-+	if ($remote_url =~ s/mediawiki::(.*)/$1/) {
-+		return url($remote_url)->canonical;
-+	}
-+
-+	return;
-+}
-+
-+sub get_template {
-+	my $url = shift;
-+	my $page_name = shift;
-+	my ($req, $res, $code, $url_after);
-+
-+	$req = LWP::UserAgent->new;
-+	if ($verbose) {
-+		$req->show_progress(1);
-+	}
-+
-+	$res = $req->get("${url}/index.php?title=${page_name}");
-+	if (!$res->is_success) {
-+		$code = $res->code;
-+		$url_after = $res->request()->uri(); # resolve all redirections
-+		if ($code == HTTP_CODE_PAGE_NOT_FOUND) {
-+			if ($verbose) {
-+				print {*STDERR} <<"WARNING";
-+Warning: Failed to retrieve '$page_name'. Create it on the mediawiki if you want
-+all the links to work properly.
-+Trying to use the mediawiki homepage as a fallback template ...
-+WARNING
-+			}
-+
-+			# LWP automatically redirects GET request
-+			$res = $req->get("${url}/index.php");
-+			if (!$res->is_success) {
-+				$url_after = $res->request()->uri(); # resolve all redirections
-+				die "Failed to get homepage @ ${url_after} w/ code ${code}\n";
-+			}
-+		} else {
-+			die "Failed to get '${page_name}' @ ${url_after} w/ code ${code}\n";
-+		}
-+	}
-+
-+	return $res->decoded_content;
-+}
-+
- ############################## Help Functions ##################################
- 
- sub help {
-@@ -55,6 +362,7 @@ usage: git mw <command> <args>
- 
- git mw commands are:
-     help        Display help information about git mw
-+    preview     Parse and render local file into HTML
- END
- 	exit;
- }
--- 
-1.8.3.1.590.gc07d91b
+> > this by explicitly checking for and rejecting such characters.
+> Do we really reject them, or do we (only) warn about them ?=20
+
+Well, find_invalid_utf8 rejects them as invalid, and verify_utf8 fixes
+them up as if they were Latin-1, and commit_tree_extended warns about
+them.  My interpretation was from the point of view of the code that I
+touched (find_invalid_utf8), not the binary.  It would be nice if the
+binary actually rejected it, too, but that isn't within the scope of
+this patch.
+
+> Other question:
+> Now that we have a check for codepoints out of range, beyond U+10FFFF,
+> do we want to have an additional testcase ?
+
+Sure, why not?
+
+> > +test_expect_success 'UTF-8 invalid characters refused' '
+> May be:
+>  test_expect_success 'UTF-8 invalid surrogate' '
+
+Since I'll be adding at least one more unit test, as you requested, I'll
+change the name.  I suppose I might as well add a test for the
+non-characters as well.
+
+> Does it make sense to "grep on the fly", like this:
+> git commit -a -F "$HOME/invalid" 2>&1  | grep "did not conform"
+
+I am interested in making sure that git commit succeeds, and using a
+pipe will cause any failure of git commit to be ignored.
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--QRtLtq+kfJNLc57H
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBCgAGBQJR1d15AAoJEL9TXYEfUvaL8AkP/37+SUXiqfV/XUFABvqzv9ha
+pKaxV273Nbo6AC4ytMQbEIJoKrkoYg0PNCYgRQPt4hxbIoPQA/Al2yMYQMcO4DNb
+HCHS7wWyqi84e5O1iQL/3NnbVPUXLzxLjzsJ6VqRSMkwX8sdqQ6RK21GDwI48e7o
+VRPtK2PbwdM9l+zVCHK7rM3UvFdMY+C2EKGOIfudEq9iz7KF5GXHZ0Zr8CzeAUZ9
+aX5xgSC4oEy4Wz+Zh93cO+cVgx/DG/dw/lGIbiujc/qJKAd+SgXlvB5aRqPt810s
+Q71kWylt7z/f2xv8QKXRDKXqZ+PqpIL9vmpV7DsNDrNv4LMTRiMyb8FpqhKrOsi0
+34uWfMf/mejyPxHhODUoqwYaJPlBFJAJKMcsoWBk/s/LRBvRnf3MC47JYtsG/im2
+0LcpgIkcQF/cpXioSn1+liAKkkTDYWFQj8xMHrH1+c3ihyyO4W7OY10f8lXlxQJz
+6e5CMBuZkM5rZwxvrkv+2Evo34CNlg/TNh0NInxDx0vdRS0hgyKwWz6tt3o4EC4B
+/G+CUmdotk3JOBP/ms8A5dbV43jL6TeyCS8YOOJMK8Z4/ahw7oa270/q6UZQ+8sb
+XqvkMBs8NRVXLmvyc3Oj4s22NT+y3VaAPs2fi/j6ckGpYhPV4k492pmqRYhwlbUI
+tQIBCnhxE6TGBZgLHF89
+=UtKc
+-----END PGP SIGNATURE-----
+
+--QRtLtq+kfJNLc57H--
