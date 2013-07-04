@@ -1,89 +1,73 @@
-From: Tony Finch <dot@dotat.at>
-Subject: Re: [PATCH] gitweb: allow extra breadcrumbs to prefix the trail
-Date: Thu, 4 Jul 2013 18:08:51 +0100
-Message-ID: <alpine.LSU.2.00.1307041752030.26246@hermes-2.csi.cam.ac.uk>
-References: <E1Uu3IT-0008U1-3c@hermes-2.csi.cam.ac.uk> <20130703215930.GT408@google.com> <CANQwDwcneUzzXS-Du-3Aca3-Vp8ycSzVqUv1rVRVhaNUWfeokw@mail.gmail.com> <alpine.LSU.2.00.1307040940400.26246@hermes-2.csi.cam.ac.uk> <CANQwDwd9siyeu5xqS5Un+=8ioEaDbpT30vBpgJCVNUEcszcv1g@mail.gmail.com>
- <alpine.LSU.2.00.1307041559140.26246@hermes-2.csi.cam.ac.uk> <CANQwDwfCYPBjGfmKOLju-Zey4WrVrXfaymJtu9g1OYvOUfBTcw@mail.gmail.com> <alpine.LSU.2.00.1307041646250.26246@hermes-2.csi.cam.ac.uk>
- <CANQwDwfNrqZvLNYS6kqZdgX-ab5fK3RmQqAN3qKTW2TGnaDaUg@mail.gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH v2 0/2] commit: improve UTF-8 validation
+Date: Thu, 4 Jul 2013 17:17:36 +0000
+Message-ID: <cover.1372957719.git.sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1870870024-958422304-1372957731=:26246"
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 04 19:09:14 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 04 19:17:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uun1r-0005xt-7b
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 19:09:11 +0200
+	id 1UunAE-0007Zl-Qc
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 19:17:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756729Ab3GDRIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jul 2013 13:08:53 -0400
-Received: from ppsw-mx-f.csi.cam.ac.uk ([131.111.8.149]:40031 "EHLO
-	ppsw-42.csi.cam.ac.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756646Ab3GDRIw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jul 2013 13:08:52 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:38425)
-	by ppsw-42.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.159]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1Uun1X-0003Bz-8c (Exim 4.80_167-5a66dd3)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 04 Jul 2013 18:08:51 +0100
-Received: from fanf2 by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local id 1Uun1X-0003M0-KE (Exim 4.72)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 04 Jul 2013 18:08:51 +0100
-X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
-In-Reply-To: <CANQwDwfNrqZvLNYS6kqZdgX-ab5fK3RmQqAN3qKTW2TGnaDaUg@mail.gmail.com>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1756762Ab3GDRRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jul 2013 13:17:45 -0400
+Received: from qmta10.emeryville.ca.mail.comcast.net ([76.96.30.17]:34952 "EHLO
+	qmta10.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756626Ab3GDRRo (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Jul 2013 13:17:44 -0400
+Received: from omta02.emeryville.ca.mail.comcast.net ([76.96.30.19])
+	by qmta10.emeryville.ca.mail.comcast.net with comcast
+	id wHFh1l0030QkzPwAAHHkuh; Thu, 04 Jul 2013 17:17:44 +0000
+Received: from castro.crustytoothpaste.net ([173.11.243.49])
+	by omta02.emeryville.ca.mail.comcast.net with comcast
+	id wHHi1l00R14fh3h8NHHjQ9; Thu, 04 Jul 2013 17:17:44 +0000
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 91A7828074;
+	Thu,  4 Jul 2013 17:17:41 +0000 (UTC)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1372958264;
+	bh=/uwUuBLKGUHMOlSLpmdsyQSzKKoFkHdYuMUWitOn2Ac=;
+	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
+	 MIME-Version:Content-Type;
+	b=ESTS5f+8OdiFohhVriEpIHKxAHQ0Rkfw/pCMHH1xNLQdDJrTh5IYvpFuzjzLuo38C
+	 nPBqHFcZ2T8JyU4QVoxgw2yBj2Thf6A+Lnc1OyZF4211fiDlqM6M2JTGaCUtfcT4kL
+	 XbszYBRFyP6/i/nbZBZU5LH4vDzZKFlh1CEfVKKvgAToQgr+69ZOOBVwJ18qrfcXsj
+	 tCK1TGH04LMx0dH4rdCoqNC0BEdGCaHuwpcrS3qU8PQRFxTvFAD+3a6dpRKevDw6xE
+	 NKjLptHsqzpEkncSP3+8zy+dtBpvgvBuRhP/F7OSB6vlZvdoTsyzmHCpDtZR6EAeB2
+	 pRua7da4h3VBw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229597>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This series contains a pair of patches that improve the validation of
+the UTF-8 used in commit messages.  Invalid codepoints, such as
+surrogates and guaranteed non-characters, are rejected, along with
+overlong UTF-8 sequences.
 
---1870870024-958422304-1372957731=:26246
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Changes from v1:
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
->
-> In what situation do you need those extra breadcrumbs useful? What
-> necessity / itch to scratch is behind idea of this patch?
+* Improved comments to aid those less familiar with Unicode.
+* Generated test files using printf as part of the test.
+* Removed FIXME comments for things that have been fixed.
+* Use a shorter form for detecting surrogate pairs.
 
-For an example, see https://git.csx.cam.ac.uk/x/ucs/git/git.git
+brian m. carlson (2):
+  commit: reject invalid UTF-8 codepoints
+  commit: reject overlong UTF-8 sequences
 
-I have three items in @extra_breadcrumbs which point to the University
-home page, my department home page, and my git server's home page; there
-are a number of gitolite accounts on the server each of which has a
-project listing which is where gitweb's home link points.
+ commit.c               | 34 ++++++++++++++++++++++++++++------
+ t/t3900-i18n-commit.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 6 deletions(-)
 
-(I expect to change the link texts to make it less confusing when you
-happen to be looking at my department's account on the git server...)
-
-our @extra_breadcrumbs =3D (
-  [ cam =3D> 'http://www.cam.ac.uk/'      ],
-  [ ucs =3D> 'http://www.ucs.cam.ac.uk/'  ],
-  [ git =3D> 'https://git.csx.cam.ac.uk/' ],
-);
-
-This is in line with our house style (none of which I have implemented on
-this server yet) - there are other examples of similar breadcrumb trails
-at https://raven.cam.ac.uk and http://new-webmail.hermes.cam.ac.uk
-
-There is a more generic version of this description and config example in
-v2 of my patch. I hope it is clear enough. I'll send a v3 patch with the
-code tweak.
-
-Tony.
---=20
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-Forties, Cromarty: East, veering southeast, 4 or 5, occasionally 6 at first=
-=2E
-Rough, becoming slight or moderate. Showers, rain at first. Moderate or goo=
-d,
-occasionally poor at first.
---1870870024-958422304-1372957731=:26246--
+-- 
+1.8.3.1
