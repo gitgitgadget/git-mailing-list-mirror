@@ -1,102 +1,79 @@
-From: Dany <nessup@gmail.com>
-Subject: Re: Feature request:
-Date: Wed, 3 Jul 2013 16:53:18 -0700
-Message-ID: <686269E5-8539-42F9-B0B6-D7CA996A4FF2@gmail.com>
-References: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com> <vpqehbgrnrx.fsf@anie.imag.fr> <CADL+T9Z=SrVyMMnYk3M7Dmb4c5xGiQtCTiDYaceKwB2-51TV-g@mail.gmail.com> <7vppuzfrde.fsf@alter.siamese.dyndns.org> <loom.20130704T013747-723@post.gmane.org> <67824DCD-A486-476D-9A04-D18B083DB090@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 04 01:53:26 2013
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Feature request: "author branch" in commit object
+Date: Thu, 4 Jul 2013 10:00:48 +1000
+Message-ID: <CAH5451kq-zmy1kFFqx44ba4iM+H4zCF2J3GMc2ppcmoz5=urXA@mail.gmail.com>
+References: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com>
+ <7v38rwlola.fsf@alter.siamese.dyndns.org> <CADL+T9ax0maws3GR24YV77Yge7knqHd5mfuPd_AqE9b4UmvYPg@mail.gmail.com>
+ <CALWbr2zJFjbaCdA3d1eaFuP4HGShAwnK=gisRD=KHKWWi-XuTg@mail.gmail.com>
+ <CADL+T9bbnGSxCjUBqoL3qm7Ss-j9jxorED0L1A6v1NbeLBpRQg@mail.gmail.com> <7vli5nfquq.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Ed Hutchins <eh@demeterr.com>,
+	Antoine Pelisse <apelisse@gmail.com>, git <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 04 02:01:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UuWrV-0002Tb-IM
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 01:53:25 +0200
+	id 1UuWz4-0002Fb-9c
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 02:01:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933183Ab3GCXxW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jul 2013 19:53:22 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:36689 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932206Ab3GCXxV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Jul 2013 19:53:21 -0400
-Received: by mail-pa0-f52.google.com with SMTP id kq13so721189pab.25
-        for <git@vger.kernel.org>; Wed, 03 Jul 2013 16:53:20 -0700 (PDT)
+	id S932744Ab3GDABK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jul 2013 20:01:10 -0400
+Received: from mail-vc0-f172.google.com ([209.85.220.172]:56109 "EHLO
+	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932143Ab3GDABI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jul 2013 20:01:08 -0400
+Received: by mail-vc0-f172.google.com with SMTP id ib11so522891vcb.17
+        for <git@vger.kernel.org>; Wed, 03 Jul 2013 17:01:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=quUnqX3afcE41CS+sC10e7dEG3wFSGWzxsYCzIf/ruc=;
-        b=FzN74WPgL6ORySPMYbBSC+/5Da8rN9w0dVPdZOk2a/MRS/H5F7AAaOxcYbDb3U8V6c
-         3WHaK5h+omeZdFm4mAvGsOzJj7jUHYDeHt47Jz1wrU1vyViZEx8uIPOpSMnoOf6WJyXj
-         6nRehdw1OtlK63CdbJXjSXRMYNUzue6dLljhHu6m8hiYP3nScCTBZ7TSMuCDCCqHpMlt
-         mezvtsEnf+rPcRHmP9xiL7Qb5/6OD5Byd0HW1bLC/Ywb3fJ0AtpjxEFr6u/lbnq3Ct1J
-         s8AI3hurGG7u9IKYZr9QVg297FwAZjSSyRkBzs2tG5s8Id09WyDEE8QxxCmQI6tKG8a0
-         i30Q==
-X-Received: by 10.68.1.226 with SMTP id 2mr2907202pbp.150.1372895600905;
-        Wed, 03 Jul 2013 16:53:20 -0700 (PDT)
-Received: from [192.168.1.20] (c-76-102-3-186.hsd1.ca.comcast.net. [76.102.3.186])
-        by mx.google.com with ESMTPSA id zn4sm696719pac.21.2013.07.03.16.53.19
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 03 Jul 2013 16:53:19 -0700 (PDT)
-In-Reply-To: <67824DCD-A486-476D-9A04-D18B083DB090@gmail.com>
-X-Mailer: Apple Mail (2.1508)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=jpF5ZfHb3pAoqtxiMHOIGAftol2rJue7Y02EhYGumio=;
+        b=hKRY4Q40GpyW+NtbCu/+hO5FXUlMrmJ23LfF+n44RBf9o8qJc7RTVqe9XXAdgXuud2
+         Wua/pIgcXXXyOn9ezwr1EJ+P0UmdIY+w/iIGiBgQslw5k4rk68vm+K7KV9wxoVeOOioH
+         nCfj5t+rV3E39kIklLZ/hZbebvHvBbNZpLKD2S9DIaAuqTQRHh3YpVk0DxHJfK9wlK3r
+         DVjupqc+8tUKDnsv5j5Ms0/wByahyeDB5EHxeqZXKOXV97s8FtHsHY9b/tweTO+9lVGu
+         C90ImXjO5z65oOA0eQaDq75PT7lDjgVIpEPag2V3Dh/BtFPiU8T0IA0XHqCjBJ2c8fx1
+         Un0g==
+X-Received: by 10.52.100.166 with SMTP id ez6mr891610vdb.19.1372896068070;
+ Wed, 03 Jul 2013 17:01:08 -0700 (PDT)
+Received: by 10.220.14.71 with HTTP; Wed, 3 Jul 2013 17:00:48 -0700 (PDT)
+In-Reply-To: <7vli5nfquq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229551>
 
-lol, confusion abound. this message was intended to be in response to "=
-Re: Feature request: prevent push -f from pushing all branches at once"
+On 4 July 2013 09:46, Jakub Narebski <jnareb@gmail.com> wrote:
+> Junio C Hamano <gitster <at> pobox.com> writes:
+>> It is not just misleading but is actively wrong to recording the
+>> name of the original branch in commits and carrying them forward via
+>> rebase. If you want a record of what a group of commits were about,
+>> the right time to do so is when you merge.
+>
+> There is even git-resurrect.sh script in 'contrib/' that makes
+> use of that practice to find merged-in and deleted branches,
+> and resurrect them (among other tools).
 
-On Jul 3, 2013, at 4:52 PM, Dany <nessup@gmail.com> wrote:
+How do users who wish to keep a record of branch names find out that
+--no-ff will enable this behaviour?
 
-> Hey Jonathan,
->=20
-> Thanks for the quick reply. I think that's a great message; I do have=
- to say that I wouldn't have known what the `matching` and `simple` mod=
-es are without that message; I just had to look it up is all. It may be=
- helpful to tell users that `simple` is probably what they want :)
->=20
-> @DanyJoumaa
-> 1 520 991 5001
->=20
-> On Jul 3, 2013, at 4:46 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->=20
->> [I'm sorry about breaking Cc: chain - responding via GMane web inter=
-face]
->>=20
->> Junio C Hamano <gitster <at> pobox.com> writes:
->>> Ed Hutchins <eh <at> demeterr.com> writes:
->>>=20
->>>> I'm not trying to change the way git does things (which works perf=
-ectly
->>>> well), I'm asking for some extra information to be added to the co=
-mmit
->>>> so that analysis of the ancestry graph can be tied to the branch t=
-opics
->>>> that the original author was working from. [...]
->> [...]
->>> It is not just misleading but is actively wrong to recording the
->>> name of the original branch in commits and carrying them forward vi=
-a
->>> rebase. If you want a record of what a group of commits were about,
->>> the right time to do so is when you merge.
->> [...]
->>=20
->> There is even git-resurrect.sh script in 'contrib/' that makes
->> use of that practice to find merged-in and deleted branches,
->> and resurrect them (among other tools).
->>=20
->> --=20
->> Jakub Nar=C4=99bski
->>=20
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
+Is this a common enough requirement to make --no-ff the default
+behaviour (probably not, and that transition would be painful)?
+
+What are the shortcomings of using --no-ff in the analogue to how
+mercurials named branches work?
+
+I think the git-flow and git-list style workflows have done a lot to
+promote a set of usage patterns that keep this metadata around, I just
+wonder if we can do more to assist users in what seems to be a
+relatively common request.
+
+Regards,
+
+Andrew Ardill
