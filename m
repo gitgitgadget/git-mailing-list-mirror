@@ -1,57 +1,57 @@
 From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH 4/6] .mailmap: Multiple mail addresses of Keith Cascio
-Date: Thu,  4 Jul 2013 16:04:17 +0200
-Message-ID: <1372946659-10332-5-git-send-email-stefanbeller@googlemail.com>
+Subject: [PATCH 6/6] .mailmap: Multiple mail addresses of Toby Allsopp
+Date: Thu,  4 Jul 2013 16:04:19 +0200
+Message-ID: <1372946659-10332-7-git-send-email-stefanbeller@googlemail.com>
 References: <1372946659-10332-1-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Stefan Beller <stefanbeller@googlemail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 04 16:04:44 2013
+X-From: git-owner@vger.kernel.org Thu Jul 04 16:04:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uuk9L-0002Dt-P6
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 16:04:44 +0200
+	id 1Uuk9U-0002MI-Fn
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 16:04:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756688Ab3GDOEi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Jul 2013 10:04:38 -0400
-Received: from mail-bk0-f53.google.com ([209.85.214.53]:48947 "EHLO
-	mail-bk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755247Ab3GDOEh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jul 2013 10:04:37 -0400
-Received: by mail-bk0-f53.google.com with SMTP id e11so661657bkh.40
-        for <git@vger.kernel.org>; Thu, 04 Jul 2013 07:04:36 -0700 (PDT)
+	id S932868Ab3GDOEp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Jul 2013 10:04:45 -0400
+Received: from mail-bk0-f49.google.com ([209.85.214.49]:48106 "EHLO
+	mail-bk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932532Ab3GDOEn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jul 2013 10:04:43 -0400
+Received: by mail-bk0-f49.google.com with SMTP id mz10so666433bkb.22
+        for <git@vger.kernel.org>; Thu, 04 Jul 2013 07:04:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=607BqIZxW+U/SGXT045bXPZ14iD44hZUydz6+kaEPkI=;
-        b=DIr7EtB8F0+tejivhKazkwdt2JZSi57yhQCCHVXPPWqjJb1MdgaR2SCkmO5qk75kD9
-         noOGmu7fclWsnwEPGZm9hwlQQecLnbrxxq46Q0C92Ko/JCHhhW2FaBexHiSvLdgq4n0D
-         fxHEHW9DfTnXBKQ8Drio4LfNy7lYbQQIutOSisO+GJ0oEVI3PZHtdrUwUa97bY7LtP/v
-         7cea2URWK5t+GFQ9zpqkG06zNHoCbTD/AjCtMeKwXJNqgnu2q4UubxIlPUlJjPZyR+eh
-         PxKCHV3k+gFmk7kFChJXcqi9A4+ScSX/ZP8bcLlx5fJHOdPBLv6PjSYN5x8i5omMDqOS
-         YDhw==
-X-Received: by 10.205.21.9 with SMTP id qq9mr1110760bkb.145.1372946676284;
-        Thu, 04 Jul 2013 07:04:36 -0700 (PDT)
+        bh=Xqe3+DsNgu3eEJqRM2FPWGyha9Cb4v7DRVPLeA0dwCk=;
+        b=W9G6Dm7IwaNA9YLyfytCgVyOU7anHpbGqYnx5rnDXvEH/TFzMJo+v/lMgnwfjv2TBd
+         hsY2YP3C1rq6rZSL7qhnvkGWKI/ppEbMW0c3yvtDEnUR7iQHc1GVB//jhjCmBZAgKFO+
+         fLZN6nOISMpygkOQ0ZweJ565notZWwqzszVzrn5i9aAwZoYF0K0zgUyflcaTxJLXnksB
+         pOUF28SgDWE4jWap1eqFpdILCNoBX97a2nNkAG88L2Mj00dgr1UzCsse9RSFj7xoe1nS
+         fQ9P8+JqxSctbkSd2r7U5Jo5FFKQ+yoz7GSpEFeAm2/kFAnz8tkLvqpHFU97jJSdWO6N
+         OImQ==
+X-Received: by 10.204.58.204 with SMTP id i12mr1134409bkh.74.1372946682009;
+        Thu, 04 Jul 2013 07:04:42 -0700 (PDT)
 Received: from localhost (eduroam-74-151.uni-paderborn.de. [131.234.74.151])
-        by mx.google.com with ESMTPSA id kz11sm1067623bkb.11.2013.07.04.07.04.35
+        by mx.google.com with ESMTPSA id kz11sm1067842bkb.11.2013.07.04.07.04.40
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Jul 2013 07:04:35 -0700 (PDT)
+        Thu, 04 Jul 2013 07:04:41 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.2.636.g7943f03
 In-Reply-To: <1372946659-10332-1-git-send-email-stefanbeller@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229587>
 
-Capital letters in mail address.
+Different capitalization
 
 Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
 ---
@@ -59,17 +59,16 @@ Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/.mailmap b/.mailmap
-index 6d75678..1e94906 100644
+index d7d7b89..7e5638d 100644
 --- a/.mailmap
 +++ b/.mailmap
-@@ -52,6 +52,7 @@ Junio C Hamano <gitster@pobox.com> <junio@hera.kernel=
-=2Eorg>
- Junio C Hamano <gitster@pobox.com> <junio@kernel.org>
- Junio C Hamano <gitster@pobox.com> <junkio@cox.net>
- Karl Hasselstr=C3=B6m <kha@treskal.com>
-+Keith Cascio <keith@CS.UCLA.EDU> <keith@cs.ucla.edu>
- Kevin Leung <kevinlsk@gmail.com>
- Kent Engstrom <kent@lysator.liu.se>
- Lars Doelle <lars.doelle@on-line ! de>
+@@ -97,6 +97,7 @@ Steven Grimm <koreth@midwinter.com>
+ Tay Ray Chuan <rctay89@gmail.com>
+ Theodore Ts'o <tytso@mit.edu>
+ Thomas Rast <trast@inf.ethz.ch> <trast@student.ethz.ch>
++Toby Allsopp <Toby.Allsopp@navman.co.nz> <toby.allsopp@navman.co.nz>
+ Tony Luck <tony.luck@intel.com>
+ Uwe Kleine-K=C3=B6nig <Uwe_Zeisberger@digi.com>
+ Uwe Kleine-K=C3=B6nig <Uwe.Kleine-Koenig@digi.com>
 --=20
 1.8.3.2.636.g7943f03
