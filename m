@@ -1,140 +1,93 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Review of git multimail
-Date: Thu, 04 Jul 2013 10:27:05 +0200
-Message-ID: <51D531D9.10203@alum.mit.edu>
-References: <1372793019-12162-1-git-send-email-artagnon@gmail.com> <51D36BD8.1060909@alum.mit.edu> <CALkWK0=taYiV3UTaj9r-FLdaCeZRzVBTp_MH4sQt8-v+YYqbaA@mail.gmail.com> <87ppuzz6xr.fsf@mcs.anl.gov>
+From: Tony Finch <dot@dotat.at>
+Subject: Re: [PATCH] gitweb: allow extra breadcrumbs to prefix the trail
+Date: Thu, 4 Jul 2013 09:44:50 +0100
+Message-ID: <alpine.LSU.2.00.1307040940400.26246@hermes-2.csi.cam.ac.uk>
+References: <E1Uu3IT-0008U1-3c@hermes-2.csi.cam.ac.uk> <20130703215930.GT408@google.com> <CANQwDwcneUzzXS-Du-3Aca3-Vp8ycSzVqUv1rVRVhaNUWfeokw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jed Brown <jed@59A2.org>
-X-From: git-owner@vger.kernel.org Thu Jul 04 10:27:23 2013
+Content-Type: MULTIPART/MIXED; BOUNDARY="1870870024-182335467-1372927490=:26246"
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 04 10:45:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uueso-0000GP-TQ
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 10:27:19 +0200
+	id 1Uuf9v-00039p-BC
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 10:44:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933618Ab3GDI1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jul 2013 04:27:13 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:44909 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933426Ab3GDI1J (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Jul 2013 04:27:09 -0400
-X-AuditID: 12074414-b7f626d0000001f1-b6-51d531dcbe09
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 1B.7E.00497.CD135D15; Thu,  4 Jul 2013 04:27:08 -0400 (EDT)
-Received: from [192.168.101.152] (mx.berlin.jpk.com [212.222.128.135] (may be forged))
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r648R5Ik013509
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 4 Jul 2013 04:27:07 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <87ppuzz6xr.fsf@mcs.anl.gov>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrJKsWRmVeSWpSXmKPExsUixO6iqHvH8GqgwZ7NKharZj5mt+i60s1k
-	sW3hMSYHZo+Wh7NZPXbOusvu8XmTXABzFLdNUmJJWXBmep6+XQJ3xuFDMQU7ZSr2nV7E2MD4
-	QayLkZNDQsBEYvKRP2wQtpjEhXvrgWwuDiGBy4wSk1a+Z4JwrjJJ9M1+zwxSxSugKbFu50oW
-	EJtFQFVi0tledhCbTUBXYlFPM1ADB4eoQJjEld+qEOWCEidnPgErFxGQkdjZuBOsnFnAV+L6
-	twZGEFtYQEXi4uLVzBC7jjBKtEz9zAqS4ATadWr3NRaIBh2Jd30PmCFseYntb+cwT2AUmIVk
-	xywkZbOQlC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuhl5tZopeaUrqJERK8IjsYj5yU
-	O8QowMGoxMN7wPxKoBBrYllxZe4hRkkOJiVR3hqDq4FCfEn5KZUZicUZ8UWlOanFhxglOJiV
-	RHidOIByvCmJlVWpRfkwKWkOFiVx3m+L1f2EBNITS1KzU1MLUotgsjIcHEoSvL0gQwWLUtNT
-	K9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJBkRpfDIxVkBQP0N5tIO28xQWJuUBRiNZTjJYc
-	k89uec/IceAHiLz5fut7RiGWvPy8VClx3h0gDQIgDRmleXDrYCnsFaM40PfCvFdAqniA6Q9u
-	6iughUxAC/+yXwFZWJKIkJJqYKznmbBoybGwxHILL841f7tlD/RutJjX3Hv6+hbbvJn81ZK8
-	/npqzpcS3ZUdhTim70iM+Pj25txS/rsPxeYFtJUe/HmEw0SD55C80eSOeP2caPMO 
+	id S933456Ab3GDIoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jul 2013 04:44:54 -0400
+Received: from ppsw-mx-f.csi.cam.ac.uk ([131.111.8.149]:46843 "EHLO
+	ppsw-42.csi.cam.ac.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755550Ab3GDIow (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jul 2013 04:44:52 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:40541)
+	by ppsw-42.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.159]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1Uuf9m-0002go-9B (Exim 4.80_167-5a66dd3)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 04 Jul 2013 09:44:50 +0100
+Received: from fanf2 by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local id 1Uuf9m-0006CH-EV (Exim 4.72)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 04 Jul 2013 09:44:50 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+In-Reply-To: <CANQwDwcneUzzXS-Du-3Aca3-Vp8ycSzVqUv1rVRVhaNUWfeokw@mail.gmail.com>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229562>
 
-Thanks for all of the information.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On 07/03/2013 11:09 PM, Jed Brown wrote:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
-> 
->> Yeah, this is good reasoning.  And yes, I'm on Arch: python points to
->> python3, and python2 points to python2.  
-> 
-> I'm also on Arch and it has been this way since October 2010 [1].
-> Ubuntu plans to remove python2 from the desktop CD images in 14.04 [2],
-> so having code that does not work with python3 will become more painful
-> pretty soon.
+--1870870024-182335467-1372927490=:26246
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-It may not be on the CD image, but python2 will undoubtedly continue to
-be supported in the Ubuntu repositories; i.e., it is just an "apt-get
-install" away.  (For that matter, I don't think Git itself is on the
-Ubuntu CD image.)
+Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
+> On Wed, Jul 3, 2013 at 11:59 PM, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> > Tony Finch wrote:
+>
+> >> +@extra_breadcrumbs::
+> >> +     Additional links to be added to the start of the breadcrumb trai=
+l,
+> >> +     that are logically "above" the gitweb projects list. For example=
+,
+> >> +     links to the organization and department which host the gitweb
+> >> +     server. Each element of the list is a reference to an array,
+> >> +     in which element 0 is the link text and element 1 is the
+> >> +     target URL.
+> >
+> > Is arbitrary HTML permitted in the link text?
 
-> Note that RHEL5 has only python2.4 and will be supported through March,
-> 2017.  Since it is not feasible to have code that works in both python3
-> and any versions prior to python2.6, any chosen dialect will be broken
-> by default on some major distributions that still have full vendor
-> support.
+I had the same question when I was wondering about abusing $home_link_str
+to do this without a patch :-)
 
-I think for a server-oriented program like git-multimail it is more
-important to support old versions of Python than to support the
-bleeding-edge versions.  For user-oriented programs a different
-conclusion might be reached.
+> > I think it makes sense to permit it for consistency with $home_link_str=
+,
+> > but it might be worth mentioning in the manpage so the administrator
+> > knows not to set it to something user-controlled --- e.g.:
 
-My vague, long-term plan is roughly:
+I left this detail out of the man page for consistency with the
+documentation for $home_link_str.
 
-* Continue to support Python 2.4 or at least 2.5 for the next year or
-two.  This excludes any reasonable hope of simultaneously being Python
-3.x compatible, so don't worry about 3.x for now (though
-backwards-compatible and non-hideous changes that move in the direction
-of Python 3.x compatibility are of course welcome).
+> Nb. it would be nice to have relation of @extra_breadcrumbs with
+> $home_link_str explained.
 
-* At some point, abandon support for the older Python 2.x releases and
-start using 3.x-compatibility features that were added in Python 2.6 and
-2.7.
+I will make that clearer.
 
-* Make string handling Unicode-correct.
+Thanks for reviewing the patch.
 
-* Then evaluate the situation and decide between two courses of action:
-
-  * Evolve the script to work with both Python 2.7 (and maybe 2.6) and
-Python 3.3 (and maybe 3.2) simultaneously.
-
-  * Fork development of a Python 3.x version while retaining a 2.x
-version in maintenance mode.
-
->> A couple of thoughts while we're on the subject:
->>
->> 1. We should probably convert git-remote-{hg,bzr} to use this style
->> too: 
-> 
-> Python-2.6.8 from python.org installs only python2.6 and python, but not
-> python2, so this will break on a lot of older systems.  Some
-> distributions have been nice enough to provide python2 symlinks anyway.
-> 
-> Michael's rationale that at least the error message is obvious still
-> stands.
-
-The approach I've taken in git-multimail isn't necessarily applicable to
-git-remote-*.  The main difference is that git-multimail *has to* be
-installed by a repository administrator to have an effect (either by
-being copied or linked to $GIT_DIR/hooks or by adding a script there
-that refers to git_multimail.py).  So the admin, at that time, can
-decide what python is best to use on his system and adjust the shebang
-line or create a "python2" symlink or whatever.
-
-The git-remote-* scripts are meant for users, who simply want to execute
-them without thinking.  So in that case, the scripts should be installed
-to the default $PATH with the correct shebang line already in place for
-the local environment.  Thus their shebang lines will tend to be decided
-by packagers, not end users, and this difference changes the situation.
- I think they should be managed via build step that rewrites the scripts
-to use a build-time-configured Python interpreter.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Tony.
+--=20
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+Forties, Cromarty: East, veering southeast, 4 or 5, occasionally 6 at first=
+=2E
+Rough, becoming slight or moderate. Showers, rain at first. Moderate or goo=
+d,
+occasionally poor at first.
+--1870870024-182335467-1372927490=:26246--
