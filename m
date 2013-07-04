@@ -1,73 +1,111 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 0/2] commit: improve UTF-8 validation
-Date: Thu, 4 Jul 2013 17:17:36 +0000
-Message-ID: <cover.1372957719.git.sandals@crustytoothpaste.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com
+From: Tony Finch <dot@dotat.at>
+Subject: [PATCH v3] gitweb: allow extra breadcrumbs to prefix the trail
+Date: Thu, 4 Jul 2013 18:02:12 +0100
+Message-ID: <E1UunDD-0004Xd-Vv@hermes-2.csi.cam.ac.uk>
+References: <E1Uu3IT-0008U1-3c@hermes-2.csi.cam.ac.uk>
+Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 04 19:17:51 2013
+X-From: git-owner@vger.kernel.org Thu Jul 04 19:21:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UunAE-0007Zl-Qc
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 19:17:51 +0200
+	id 1UunDJ-0002ly-90
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 19:21:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756762Ab3GDRRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jul 2013 13:17:45 -0400
-Received: from qmta10.emeryville.ca.mail.comcast.net ([76.96.30.17]:34952 "EHLO
-	qmta10.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756626Ab3GDRRo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Jul 2013 13:17:44 -0400
-Received: from omta02.emeryville.ca.mail.comcast.net ([76.96.30.19])
-	by qmta10.emeryville.ca.mail.comcast.net with comcast
-	id wHFh1l0030QkzPwAAHHkuh; Thu, 04 Jul 2013 17:17:44 +0000
-Received: from castro.crustytoothpaste.net ([173.11.243.49])
-	by omta02.emeryville.ca.mail.comcast.net with comcast
-	id wHHi1l00R14fh3h8NHHjQ9; Thu, 04 Jul 2013 17:17:44 +0000
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 91A7828074;
-	Thu,  4 Jul 2013 17:17:41 +0000 (UTC)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1372958264;
-	bh=/uwUuBLKGUHMOlSLpmdsyQSzKKoFkHdYuMUWitOn2Ac=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=ESTS5f+8OdiFohhVriEpIHKxAHQ0Rkfw/pCMHH1xNLQdDJrTh5IYvpFuzjzLuo38C
-	 nPBqHFcZ2T8JyU4QVoxgw2yBj2Thf6A+Lnc1OyZF4211fiDlqM6M2JTGaCUtfcT4kL
-	 XbszYBRFyP6/i/nbZBZU5LH4vDzZKFlh1CEfVKKvgAToQgr+69ZOOBVwJ18qrfcXsj
-	 tCK1TGH04LMx0dH4rdCoqNC0BEdGCaHuwpcrS3qU8PQRFxTvFAD+3a6dpRKevDw6xE
-	 NKjLptHsqzpEkncSP3+8zy+dtBpvgvBuRhP/F7OSB6vlZvdoTsyzmHCpDtZR6EAeB2
-	 pRua7da4h3VBw==
+	id S1756834Ab3GDRU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jul 2013 13:20:57 -0400
+Received: from ppsw-52.csi.cam.ac.uk ([131.111.8.152]:39838 "EHLO
+	ppsw-52.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756662Ab3GDRU4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jul 2013 13:20:56 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:34076)
+	by ppsw-52.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.158]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1UunDE-00074T-D6 (Exim 4.80_167-5a66dd3)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 04 Jul 2013 18:20:56 +0100
+Received: from fanf2 by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local id 1UunDD-0004Xd-Vv (Exim 4.72)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 04 Jul 2013 18:20:56 +0100
+In-Reply-To: <E1Uu3IT-0008U1-3c@hermes-2.csi.cam.ac.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229598>
 
-This series contains a pair of patches that improve the validation of
-the UTF-8 used in commit messages.  Invalid codepoints, such as
-surrogates and guaranteed non-characters, are rejected, along with
-overlong UTF-8 sequences.
+There are often parent pages logically above the gitweb projects
+list, e.g. home pages of the organization and department that host
+the gitweb server. This change allows you to include links to those
+pages in gitweb's breadcrumb trail.
 
-Changes from v1:
+Signed-off-by: Tony Finch <dot@dotat.at>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Documentation/gitweb.conf.txt | 22 ++++++++++++++++++++--
+ gitweb/gitweb.perl            |  7 ++++++-
+ 2 files changed, 26 insertions(+), 3 deletions(-)
 
-* Improved comments to aid those less familiar with Unicode.
-* Generated test files using printf as part of the test.
-* Removed FIXME comments for things that have been fixed.
-* Use a shorter form for detecting surrogate pairs.
-
-brian m. carlson (2):
-  commit: reject invalid UTF-8 codepoints
-  commit: reject overlong UTF-8 sequences
-
- commit.c               | 34 ++++++++++++++++++++++++++++------
- t/t3900-i18n-commit.sh | 23 +++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 6 deletions(-)
-
+diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
+index ea0526e..305db63 100644
+--- a/Documentation/gitweb.conf.txt
++++ b/Documentation/gitweb.conf.txt
+@@ -336,8 +336,26 @@ $home_link_str::
+ 	used as the first component of gitweb's "breadcrumb trail":
+ 	`<home link> / <project> / <action>`.  Can be set at build time using
+ 	the `GITWEB_HOME_LINK_STR` variable.  By default it is set to "projects",
+-	as this link leads to the list of projects.  Other popular choice it to
+-	set it to the name of site.
++	as this link leads to the list of projects.  Another popular choice is to
++	set it to the name of site.  Note that it is treated as raw HTML so it
++	should not be set from untrusted sources.
++
++@extra_breadcrumbs::
++	Additional links to be added to the start of the breadcrumb trail before
++	the home link, to pages that are logically "above" the gitweb projects
++	list, such as the organization and department which host the gitweb
++	server. Each element of the list is a reference to an array, in which
++	element 0 is the link text (equivalent to `$home_link_str`) and element
++	1 is the target URL (equivalent to `$home_link`).
+++
++For example, the following setting produces a breadcrumb trail like
++"home / dev / projects / ..." where "projects" is the home link.
++----------------------------------------------------------------------------
++    our @extra_breadcrumbs = (
++      [ 'home' => 'https://www.example.org/' ],
++      [ 'dev'  => 'https://dev.example.org/' ],
++    );
++----------------------------------------------------------------------------
+ 
+ $logo_url::
+ $logo_label::
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 8d69ada..f429f75 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -85,6 +85,9 @@ our $project_maxdepth = "++GITWEB_PROJECT_MAXDEPTH++";
+ # string of the home link on top of all pages
+ our $home_link_str = "++GITWEB_HOME_LINK_STR++";
+ 
++# extra breadcrumbs preceding the home link
++our @extra_breadcrumbs = ();
++
+ # name of your site or organization to appear in page titles
+ # replace this with something more descriptive for clearer bookmarks
+ our $site_name = "++GITWEB_SITENAME++"
+@@ -3982,7 +3985,9 @@ sub print_nav_breadcrumbs_path {
+ sub print_nav_breadcrumbs {
+ 	my %opts = @_;
+ 
+-	print $cgi->a({-href => esc_url($home_link)}, $home_link_str) . " / ";
++	for my $crumb (@extra_breadcrumbs, [ $home_link_str => $home_link ]) {
++		print $cgi->a({-href => esc_url($crumb->[1])}, $crumb->[0]) . " / ";
++	}
+ 	if (defined $project) {
+ 		my @dirname = split '/', $project;
+ 		my $projectbasename = pop @dirname;
 -- 
-1.8.3.1
+1.8.3.1.605.g85318f5
