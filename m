@@ -1,109 +1,89 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+From: Tony Finch <dot@dotat.at>
 Subject: Re: [PATCH] gitweb: allow extra breadcrumbs to prefix the trail
-Date: Thu, 4 Jul 2013 18:32:26 +0200
-Message-ID: <CANQwDwfNrqZvLNYS6kqZdgX-ab5fK3RmQqAN3qKTW2TGnaDaUg@mail.gmail.com>
-References: <E1Uu3IT-0008U1-3c@hermes-2.csi.cam.ac.uk> <20130703215930.GT408@google.com>
- <CANQwDwcneUzzXS-Du-3Aca3-Vp8ycSzVqUv1rVRVhaNUWfeokw@mail.gmail.com>
- <alpine.LSU.2.00.1307040940400.26246@hermes-2.csi.cam.ac.uk>
- <CANQwDwd9siyeu5xqS5Un+=8ioEaDbpT30vBpgJCVNUEcszcv1g@mail.gmail.com>
- <alpine.LSU.2.00.1307041559140.26246@hermes-2.csi.cam.ac.uk>
- <CANQwDwfCYPBjGfmKOLju-Zey4WrVrXfaymJtu9g1OYvOUfBTcw@mail.gmail.com> <alpine.LSU.2.00.1307041646250.26246@hermes-2.csi.cam.ac.uk>
+Date: Thu, 4 Jul 2013 18:08:51 +0100
+Message-ID: <alpine.LSU.2.00.1307041752030.26246@hermes-2.csi.cam.ac.uk>
+References: <E1Uu3IT-0008U1-3c@hermes-2.csi.cam.ac.uk> <20130703215930.GT408@google.com> <CANQwDwcneUzzXS-Du-3Aca3-Vp8ycSzVqUv1rVRVhaNUWfeokw@mail.gmail.com> <alpine.LSU.2.00.1307040940400.26246@hermes-2.csi.cam.ac.uk> <CANQwDwd9siyeu5xqS5Un+=8ioEaDbpT30vBpgJCVNUEcszcv1g@mail.gmail.com>
+ <alpine.LSU.2.00.1307041559140.26246@hermes-2.csi.cam.ac.uk> <CANQwDwfCYPBjGfmKOLju-Zey4WrVrXfaymJtu9g1OYvOUfBTcw@mail.gmail.com> <alpine.LSU.2.00.1307041646250.26246@hermes-2.csi.cam.ac.uk>
+ <CANQwDwfNrqZvLNYS6kqZdgX-ab5fK3RmQqAN3qKTW2TGnaDaUg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: MULTIPART/MIXED; BOUNDARY="1870870024-958422304-1372957731=:26246"
 Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Tony Finch <dot@dotat.at>
-X-From: git-owner@vger.kernel.org Thu Jul 04 18:32:53 2013
+To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 04 19:09:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UumSi-0005mW-9J
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 18:32:52 +0200
+	id 1Uun1r-0005xt-7b
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 19:09:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756836Ab3GDQcs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Jul 2013 12:32:48 -0400
-Received: from mail-qc0-f171.google.com ([209.85.216.171]:55507 "EHLO
-	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756525Ab3GDQcr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Jul 2013 12:32:47 -0400
-Received: by mail-qc0-f171.google.com with SMTP id n1so860727qcw.30
-        for <git@vger.kernel.org>; Thu, 04 Jul 2013 09:32:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ZYwnfmXRnRWUGB5C65Q/tjOFIbMn8hkv6WLOxhfHaLc=;
-        b=b+TnFs8bVlOxy7xqLB0PmuevujNYjW0GNm0xUHsW/H/P29Cea6bXQy7nf4rsNptogl
-         heeV4FZajlSVDiCLXAaMFFvZmUjjq0rZkmiK6P1Q/dk4fdS7tAvyo4R0P6uKFknAS+/9
-         5JG+vnLfVH1lQp7k4Zh/HtnQ0OezN6Z99CNACZx+ht7BpZyQFxPkF0tX789MpsDLtihU
-         unrvxfc1x2c9B2W481CMZQaFnoNQtRbarxTqFY8W5M/co+IC36Y9arYJ1B0kDWO2QfX6
-         u06XBOLhnj8ZEvqyC4vkQMjR7Sld+KkzH9UYLGPdxHgs81804aS2UfJHHjNCXaeZsG31
-         y/Gw==
-X-Received: by 10.49.38.105 with SMTP id f9mr5157098qek.63.1372955566713; Thu,
- 04 Jul 2013 09:32:46 -0700 (PDT)
-Received: by 10.49.75.169 with HTTP; Thu, 4 Jul 2013 09:32:26 -0700 (PDT)
-In-Reply-To: <alpine.LSU.2.00.1307041646250.26246@hermes-2.csi.cam.ac.uk>
+	id S1756729Ab3GDRIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jul 2013 13:08:53 -0400
+Received: from ppsw-mx-f.csi.cam.ac.uk ([131.111.8.149]:40031 "EHLO
+	ppsw-42.csi.cam.ac.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756646Ab3GDRIw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jul 2013 13:08:52 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:38425)
+	by ppsw-42.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.159]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1Uun1X-0003Bz-8c (Exim 4.80_167-5a66dd3)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 04 Jul 2013 18:08:51 +0100
+Received: from fanf2 by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local id 1Uun1X-0003M0-KE (Exim 4.72)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 04 Jul 2013 18:08:51 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+In-Reply-To: <CANQwDwfNrqZvLNYS6kqZdgX-ab5fK3RmQqAN3qKTW2TGnaDaUg@mail.gmail.com>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229596>
 
-On Thu, Jul 4, 2013 at 5:56 PM, Tony Finch <dot@dotat.at> wrote:
-> Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
->>
->> First, do I understand correctly that @extra_breadcrumbs are rendere=
-d *after*
->> $home_link*, and in exactly the same manner?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--1870870024-958422304-1372957731=:26246
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
 >
-> Before the home link, and yes, in the same manner. The extra breadcru=
-mbs
-> are for links to parent pages above gitweb in some hierarchy.
+> In what situation do you need those extra breadcrumbs useful? What
+> necessity / itch to scratch is behind idea of this patch?
 
-Hmmm... I would have thought that they were after home link. I wonder
-if leaving it up to user to configure @extra_breadcrumbs to include $ho=
-me_link
-in appropriate place (the unshift / push solution to adding to
-@extra_breadcrumbs,
-starting with $home_link) would be good idea, or over-engineering.
+For an example, see https://git.csx.cam.ac.uk/x/ucs/git/git.git
 
-In what situation do you need those extra breadcrumbs useful? What
-necessity / itch to scratch is behind idea of this patch?
+I have three items in @extra_breadcrumbs which point to the University
+home page, my department home page, and my git server's home page; there
+are a number of gitolite accounts on the server each of which has a
+project listing which is where gitweb's home link points.
 
->> But now I think that we can do better, simply put $home_link_str and=
- $home_link
->> in @extra_breadcrumbs / @top_level_breadcrumbs / @nav_breadcrumbs be=
-fore
->> using it,
->
-> We could save a line that way:
->
-> -       print $cgi->a({-href =3D> esc_url($home_link)}, $home_link_st=
-r) . " / ";
-> +       for my $crumb (@extra_breadcrumbs, [ $home_link_str =3D> $hom=
-e_link ]) {
-> +               print $cgi->a({-href =3D> esc_url($crumb->[1])}, $cru=
-mb->[0]) . " / ";
-> +       }
+(I expect to change the link texts to make it less confusing when you
+happen to be looking at my department's account on the git server...)
 
-And avoid a bit of code duplication; now we are sure that both
-@extra_breadcrumbs and $home_link are rendered in the same way.
+our @extra_breadcrumbs =3D (
+  [ cam =3D> 'http://www.cam.ac.uk/'      ],
+  [ ucs =3D> 'http://www.ucs.cam.ac.uk/'  ],
+  [ git =3D> 'https://git.csx.cam.ac.uk/' ],
+);
 
->> P.S. It is a bit late, but wouldn't { name =3D> $link_name, href =3D=
-> $link_url }
->> (like %features hash) be a better solution than [ $link_name, $link_=
-url ],
->> i.e. hashref (named parameters) instead of arrayref (positional para=
-meters).
->> You wouldn't have to remember which is first: text or URL.
->
-> I thought the fat arrow would be mnemonic enough, and less verbose.
+This is in line with our house style (none of which I have implemented on
+this server yet) - there are other examples of similar breadcrumb trails
+at https://raven.cam.ac.uk and http://new-webmail.hermes.cam.ac.uk
 
-Yes, hashref solution is a bit verbose. I don't like abusing fat arrow =
-notation,
-but here it gives nice mnemonic (hopefully explained in documentation).
+There is a more generic version of this description and config example in
+v2 of my patch. I hope it is clear enough. I'll send a v3 patch with the
+code tweak.
 
+Tony.
 --=20
-Jakub Narebski
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+Forties, Cromarty: East, veering southeast, 4 or 5, occasionally 6 at first=
+=2E
+Rough, becoming slight or moderate. Showers, rain at first. Moderate or goo=
+d,
+occasionally poor at first.
+--1870870024-958422304-1372957731=:26246--
