@@ -1,332 +1,148 @@
-From: Kyle McKay <mackyle@gmail.com>
-Subject: [PATCH] config: add support for http.<url>.* settings
-Date: Thu, 4 Jul 2013 07:19:36 -0700
-Message-ID: <279E20D1-6E36-42A0-A733-72C97C15D860@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH 0/6] Corrections to the mailmap file
+Date: Thu, 04 Jul 2013 16:37:36 +0200
+Message-ID: <51D588B0.60007@googlemail.com>
+References: <1372946659-10332-1-git-send-email-stefanbeller@googlemail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig970E5D3256DA4A7BA3513E0E"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 04 16:19:50 2013
+X-From: git-owner@vger.kernel.org Thu Jul 04 16:37:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UukNu-00038J-3M
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 16:19:46 +0200
+	id 1UukfH-0007Y9-QA
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Jul 2013 16:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756249Ab3GDOTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jul 2013 10:19:42 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:59142 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752708Ab3GDOTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jul 2013 10:19:39 -0400
-Received: by mail-ob0-f178.google.com with SMTP id fb19so1686721obc.23
-        for <git@vger.kernel.org>; Thu, 04 Jul 2013 07:19:39 -0700 (PDT)
+	id S1756618Ab3GDOhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jul 2013 10:37:40 -0400
+Received: from mail-bk0-f49.google.com ([209.85.214.49]:39214 "EHLO
+	mail-bk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756517Ab3GDOhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jul 2013 10:37:39 -0400
+Received: by mail-bk0-f49.google.com with SMTP id mz10so677693bkb.8
+        for <git@vger.kernel.org>; Thu, 04 Jul 2013 07:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:from:to:content-type:content-transfer-encoding:subject
-         :mime-version:date:x-mailer;
-        bh=KO+FmSUcYwUq1Hk/WORj3iiZQtHB2Q7RlGfDJGKsNWo=;
-        b=iBDhEA6taeUv2zFH5qxkIELnkyUsq+McnbbLk778NJYwMvWYEYieqf7Kqiur4Nbye6
-         A5nETm8uH2/pgnsu2yqBIAtf7LB5cPMHAup1wmHKy1ej9coy1M5RZqC7infAIqGb9OCI
-         Py98wvmyoaWE/CPpTQzGD7xYVIEMVGGiHddeDDS+4l1MU01iE7F3auseMUCIEGHtX0U7
-         aiDHrk6SOQZBM0jzdzY1HXIVzeI6hnUTE2pkxZthsffqKT0jzlkTgJoHlAKil7VZASwu
-         55VdXuQzebegZWTTrJhcAMH4sQmoqAaOKlhUAvo8Jg0RIcKzW+ljqssxP1r2bMKZOF6X
-         TBJw==
-X-Received: by 10.182.53.194 with SMTP id d2mr6447082obp.28.1372947579241;
-        Thu, 04 Jul 2013 07:19:39 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id qa4sm5727940oeb.5.2013.07.04.07.19.38
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Jul 2013 07:19:38 -0700 (PDT)
-X-Mailer: Apple Mail (2.936)
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:x-enigmail-version:content-type;
+        bh=wtBmaZWTMbzTNLSOYoFNtUpY8Y1kK+nmaATI0DF4dbo=;
+        b=08b8HgGKQosS8ce5+813CfEAqCZStSbUlsRK60t82ySP0AFEVZvM30EncftH/KBw+c
+         aa7/WezfrbHkydwiDp377vIU/F0JAjH0CFPXlSE6C39XdDCQgcqplSMljDv3ADrECuPU
+         JDm6i/na/3UiQah9Kp246aPIZpQThxsJpRSkalAVM2M8cVhe9jpZkM3mUzJtvsOHdGMJ
+         Z4iYg3+5drey7QCCZKUkwvktZ3ofGR0UrbjoOvBn/dv6loh9IPFjVr8+4t3V0zYTKGXv
+         QMG4TZXoabxzHmGKsy3AFSfcNUBw61Yn9efzMrPzumox+0crQ3Ttj1FHKG20d4VueiyF
+         oufg==
+X-Received: by 10.204.225.12 with SMTP id iq12mr1164437bkb.4.1372948658058;
+        Thu, 04 Jul 2013 07:37:38 -0700 (PDT)
+Received: from [131.234.74.151] (eduroam-74-151.uni-paderborn.de. [131.234.74.151])
+        by mx.google.com with ESMTPSA id cy5sm1118469bkb.1.2013.07.04.07.37.36
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 04 Jul 2013 07:37:37 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <1372946659-10332-1-git-send-email-stefanbeller@googlemail.com>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229590>
 
-The <url> value is considered a match to a url if the <url>
-value is a prefix of the url which ends on a path component
-boundary ('/').  So "https://example.com/test" will match
-"https://example.com/test" and "https://example.com/test/too"
-but not "https://example.com/testextra".
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig970E5D3256DA4A7BA3513E0E
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Longer matches take precedence over shorter matches with
-environment variable settings taking precedence over all.
-
-With this configuration:
-
-[http]
-        useragent = other-agent
-        noEPSV = true
-[http "https://example.com"]
-        useragent = example-agent
-        sslVerify = false
-[http "https://example.com/path"]
-        useragent = path-agent
-
-The "https://other.example.com/" url will have useragent
-"other-agent" and sslVerify will be on.
-
-The "https://example.com/" url will have useragent
-"example-agent" and sslVerify will be off.
-
-The "https://example.com/path/sub" url will have useragent
-"path-agent" and sslVerify will be off.
-
-All three of examples will have noEPSV enabled.
-
-Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+Here is a script to display the entries I was referring to:
 ---
+#!/bin/bash
 
-The credentials configuration values already support url-specific
-configuration items in the form credential.<url>.*.  This patch
-adds similar support for http configuration values.
+git shortlog -sne |awk '{ NF--; $1=3D""; print }' |sort |uniq -d > mailma=
+pdoubles
 
-Documentation/config.txt |   8 +++
-http.c                   | 125 +++++++++++++++++++++++++++++++++++++++ 
-+-------
-2 files changed, 116 insertions(+), 17 deletions(-)
+while read line ; do
+	# remove leading whitespace
+	trimmed=3D$(echo $line | sed -e 's/^ *//g' -e 's/ *$//g')
+	echo "git shortlog -sne | grep \""$trimmed"\""
+done < mailmapdoubles > mailmapdoubles2
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index b4d4887..27d19a1 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1531,6 +1531,14 @@ http.useragent::
-	of common USER_AGENT strings (but not including those like git/1.7.1).
-	Can be overridden by the 'GIT_HTTP_USER_AGENT' environment variable.
 
-+http.<url>.*::
-+	Any of the http.* options above can be applied selectively to some  
-urls.
-+	For example "http.https://example.com.useragent" would set the user
-+	agent only for https connections to example.com.  The <url> value
-+	matches a url if it is a prefix of the url matching at a '/' boundary.
-+	Longer <url> matches take precedence over shorter ones with the
-+	environment variable settings taking precedence over all.
-+
-i18n.commitEncoding::
-	Character encoding the commit messages are stored in; Git itself
-	does not care per se, but this information is necessary e.g. when
-diff --git a/http.c b/http.c
-index 2d086ae..7ddf9af 100644
---- a/http.c
-+++ b/http.c
-@@ -30,6 +30,34 @@ static CURL *curl_default;
+sh mailmapdoubles2
+rm mailmapdoubles
+rm mailmapdoubles2
 
-char curl_errorstr[CURL_ERROR_SIZE];
 
-+enum http_option_type {
-+	o_post_buffer = 0,
-+	o_min_sessions,
-+#ifdef USE_CURL_MULTI
-+	o_max_requests,
-+#endif
-+	o_ssl_verify,
-+	o_ssl_try,
-+	o_ssl_cert,
-+#if LIBCURL_VERSION_NUM >= 0x070903
-+	o_ssl_key,
-+#endif
-+#if LIBCURL_VERSION_NUM >= 0x070908
-+	o_ssl_capath,
-+#endif
-+	o_ssl_cainfo,
-+	o_low_speed,
-+	o_low_time,
-+	o_no_epsv,
-+	o_http_proxy,
-+	o_cookie_file,
-+	o_user_agent,
-+	o_passwd_req,
-+	o_max
-+};
-+
-+static int http_option_maxlen[o_max];
-+
-static int curl_ssl_verify = -1;
-static int curl_ssl_try;
-static const char *ssl_cert;
-@@ -65,6 +93,23 @@ static struct curl_slist *no_pragma_header;
 
-static struct active_request_slot *active_queue_head;
+On 07/04/2013 04:04 PM, Stefan Beller wrote:
+> Hello,
+>=20
+> I noticed many duplicates in email addresses but having the same name b=
+y
+> running:
+>=20
+>     # Finding out duplicates by comparing names:
+>     git shortlog -sne |awk '{ NF--; $1=3D""; print }' |sort |uniq -d
+>=20
+> Most of these entries are most probably the same person, but we cannot =
+be=20
+> sure, as there might be different persons having the same name, then th=
+ey
+> are only distinguished by the mail address.
+>=20
+> However I suspect most of these to be the same person, having changed=20
+> mail addresses.
+>=20
+> Here comes an initial batch of corrections to the mailmap file, which
+> maps people with email addresses of different capitalization onto
+> the same entity.
+> (Example Name@MIT.EDU is the same as Name@mit.edu)
+>=20
+> I intend to contact each of the persons individually and ask whether=20
+> just their mail address changed, or if they are indeed different person=
+s.
+>=20
+> Stefan Beller
+>=20
+> Stefan Beller (6):
+>   .mailmap: Multiple email addresses of Alejandro R. Sede=C3=B1o
+>   .mailmap: Multiple mail addresses of Alex Riesen
+>   .mailmap: Multiple mail addresses of Paul Mackerras
+>   .mailmap: Multiple mail addresses of Keith Cascio
+>   .mailmap: Multiple mail addresses of Johannes Schindelin
+>   .mailmap: Multiple mail addresses of Toby Allsopp
+>=20
+>  .mailmap | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+>=20
 
-+static int http_options_url_match(const char *url, const char  
-*config_url)
-+{
-+	/*
-+	 * config option with config_url matches url if config_url is a
-+	 * prefix of url and the match ends on a path component boundary.
-+	 * the return value is the length of the match in characters or
-+	 * 0 for no match.
-+	 */
-+	size_t url_len, config_url_len = strlen(config_url);
-+	if (!config_url || strncmp(url, config_url, config_url_len))
-+		return 0;
-+	url_len = strlen(url);
-+	if (url_len == config_url_len || url[config_url_len - 1] == '/' ||  
-url[config_url_len] == '/')
-+		return url[config_url_len - 1] == '/' ? config_url_len - 1 :  
-config_url_len;
-+	return 0;
-+}
-+
-size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void  
-*buffer_)
-{
-	size_t size = eltsize * nmemb;
-@@ -143,32 +188,65 @@ static void process_curl_messages(void)
 
-static int http_options(const char *var, const char *value, void *cb)
-{
--	if (!strcmp("http.sslverify", var)) {
-+#define CHECKLEN(opt) if (http_option_maxlen[opt] > matchlen) return  
-0; \
-+		      else http_option_maxlen[opt] = matchlen
-+
-+	const char *url = (const char *)cb;
-+	const char *key, *dot;
-+	int matchlen = 0;
-+
-+	key = skip_prefix(var, "http.");
-+	if (!key)
-+		return git_default_config(var, value, cb);
-+
-+	dot = strrchr(key, '.');
-+	if (dot) {
-+		char *config_url = xmemdupz(key, dot - key);
-+		matchlen = http_options_url_match(url, config_url);
-+		free(config_url);
-+		if (!matchlen)
-+			return git_default_config(var, value, cb);
-+		key = dot + 1;
-+	}
-+
-+	if (!strcmp("sslverify", key)) {
-+		CHECKLEN(o_ssl_verify);
-		curl_ssl_verify = git_config_bool(var, value);
-		return 0;
-	}
--	if (!strcmp("http.sslcert", var))
-+	if (!strcmp("sslcert", key)) {
-+		CHECKLEN(o_ssl_cert);
-		return git_config_string(&ssl_cert, var, value);
-+	}
-#if LIBCURL_VERSION_NUM >= 0x070903
--	if (!strcmp("http.sslkey", var))
-+	if (!strcmp("sslkey", key)) {
-+		CHECKLEN(o_ssl_key);
-		return git_config_string(&ssl_key, var, value);
-+	}
-#endif
-#if LIBCURL_VERSION_NUM >= 0x070908
--	if (!strcmp("http.sslcapath", var))
-+	if (!strcmp("sslcapath", key)) {
-+		CHECKLEN(o_ssl_capath);
-		return git_config_string(&ssl_capath, var, value);
-+	}
-#endif
--	if (!strcmp("http.sslcainfo", var))
-+	if (!strcmp("sslcainfo", key)) {
-+		CHECKLEN(o_ssl_cainfo);
-		return git_config_string(&ssl_cainfo, var, value);
--	if (!strcmp("http.sslcertpasswordprotected", var)) {
-+	}
-+	if (!strcmp("sslcertpasswordprotected", key)) {
-+		CHECKLEN(o_passwd_req);
-		if (git_config_bool(var, value))
-			ssl_cert_password_required = 1;
-		return 0;
-	}
--	if (!strcmp("http.ssltry", var)) {
-+	if (!strcmp("ssltry", key)) {
-+		CHECKLEN(o_ssl_try);
-		curl_ssl_try = git_config_bool(var, value);
-		return 0;
-	}
--	if (!strcmp("http.minsessions", var)) {
-+	if (!strcmp("minsessions", key)) {
-+		CHECKLEN(o_min_sessions);
-		min_curl_sessions = git_config_int(var, value);
-#ifndef USE_CURL_MULTI
-		if (min_curl_sessions > 1)
-@@ -177,42 +255,55 @@ static int http_options(const char *var, const  
-char *value, void *cb)
-		return 0;
-	}
-#ifdef USE_CURL_MULTI
--	if (!strcmp("http.maxrequests", var)) {
-+	if (!strcmp("maxrequests", key)) {
-+		CHECKLEN(o_max_requests);
-		max_requests = git_config_int(var, value);
-		return 0;
-	}
-#endif
--	if (!strcmp("http.lowspeedlimit", var)) {
-+	if (!strcmp("lowspeedlimit", key)) {
-+		CHECKLEN(o_low_speed);
-		curl_low_speed_limit = (long)git_config_int(var, value);
-		return 0;
-	}
--	if (!strcmp("http.lowspeedtime", var)) {
-+	if (!strcmp("lowspeedtime", key)) {
-+		CHECKLEN(o_low_time);
-		curl_low_speed_time = (long)git_config_int(var, value);
-		return 0;
-	}
 
--	if (!strcmp("http.noepsv", var)) {
-+	if (!strcmp("noepsv", key)) {
-+		CHECKLEN(o_no_epsv);
-		curl_ftp_no_epsv = git_config_bool(var, value);
-		return 0;
-	}
--	if (!strcmp("http.proxy", var))
-+	if (!strcmp("proxy", key)) {
-+		CHECKLEN(o_http_proxy);
-		return git_config_string(&curl_http_proxy, var, value);
-+	}
+--------------enig970E5D3256DA4A7BA3513E0E
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
--	if (!strcmp("http.cookiefile", var))
-+	if (!strcmp("cookiefile", key)) {
-+		CHECKLEN(o_cookie_file);
-		return git_config_string(&curl_cookie_file, var, value);
-+	}
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
--	if (!strcmp("http.postbuffer", var)) {
-+	if (!strcmp("postbuffer", key)) {
-+		CHECKLEN(o_post_buffer);
-		http_post_buffer = git_config_int(var, value);
-		if (http_post_buffer < LARGE_PACKET_MAX)
-			http_post_buffer = LARGE_PACKET_MAX;
-		return 0;
-	}
+iQIcBAEBAgAGBQJR1YiwAAoJEJQCPTzLflhqRY8P/0GMNMH051zjW42f/VUwCiBt
+0fdtMb3stsQZvS0/n3GGV5ZE7MX1xPBr4BSXeQrAYdhoBxdOHQJLXemB9zxDlaY9
+n7FKuNRFmmpFsCT9DUlg0D8cgPZjUYk8fIALJK10rQx2/X3/dvNPpJUOV1oStYTl
+zXCM8CAFrqq6TWtZYB3Wf8SSaa+rtESYULsXwYY00zzMdYp6gtuezrt5xmAE9dGM
+uGmYBYwh27b/yAnsX1soZRp+VFfEIhnVTDpumEuBY/hAacbLbf/WfKd09ZoAONbJ
+9VA0zMe1UeF/REORuWFvFAyIaL5uI1EsrN035WT7ZjQirVs+185/IoOmzk/YzlW1
+itqTCa3lYmpW/RLJJOn6xZjNuTAfK29Ngse2E2AJ7rdN5nhqkuthy56Drjho9y/9
+JZEgeIdnYpjpg+KZmdIdrkEqPwg636IdLw/kcn0b845eZjBskUuYyNZnicMIp6O3
+VL2SFUEkkNunY0OsVhFgDTu8VMJxD5sh/JQXm06Q7BTEIbvf3I/CrldnoxcsufO+
+n4kYuEDNjOp0dhPr9qrO9Bz31wazPDGzw5YmchINjsnS8Xl1tp+3XRyf6b9dWvKd
+AnB0CACsaI4SKkNXFG1qX6qE55TPH6w4UK7TtuFELeUUkqGFg1sWUbgwnWIVxjbO
+jBnZVL77XWkqEUHx2TWj
+=Jgps
+-----END PGP SIGNATURE-----
 
--	if (!strcmp("http.useragent", var))
-+	if (!strcmp("useragent", key)) {
-+		CHECKLEN(o_user_agent);
-		return git_config_string(&user_agent, var, value);
-+	}
-
-	/* Fall back on the default ones */
-	return git_default_config(var, value, cb);
-+
-+#undef CHECKLEN
-}
-
-static void init_curl_http_auth(CURL *result)
-@@ -344,7 +435,7 @@ void http_init(struct remote *remote, const char  
-*url, int proactive_auth)
-
-	http_is_verbose = 0;
-
--	git_config(http_options, NULL);
-+	git_config(http_options, (void *)url);
-
-	curl_global_init(CURL_GLOBAL_ALL);
-
--- 
-1.8.3
+--------------enig970E5D3256DA4A7BA3513E0E--
