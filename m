@@ -1,113 +1,98 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 2/2] send-email: introduce sendemail.smtpsslcertpath
-Date: Fri, 5 Jul 2013 18:47:30 +0100
-Message-ID: <20130705174730.GM9161@serenity.lan>
-References: <1373025947-26495-1-git-send-email-artagnon@gmail.com>
- <1373025947-26495-3-git-send-email-artagnon@gmail.com>
- <20130705124536.GU862789@vauxhall.crustytoothpaste.net>
- <7vobag7wl0.fsf@alter.siamese.dyndns.org>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: git p4 clone not processing branches properly
+Date: Fri, 5 Jul 2013 17:56:59 +0000 (UTC)
+Message-ID: <loom.20130705T195116-413@post.gmane.org>
+References: <CAHCaCkJ+zRwu67QsYidmvcwtWtPPd4XPBYDaTnHLt9HrTSDM3A@mail.gmail.com> <CAHCaCk+8EehnwMP98EX=cdoyQof=zPj65Vyd_YaADVquztOYww@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 05 19:47:52 2013
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 05 19:57:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvA6q-0005jS-5m
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 19:47:52 +0200
+	id 1UvAG2-0006Hh-Oa
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 19:57:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964988Ab3GERrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jul 2013 13:47:47 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:34690 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933597Ab3GERrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jul 2013 13:47:45 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id D6A08CDA604;
-	Fri,  5 Jul 2013 18:47:44 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Bw5P7QIEDv7G; Fri,  5 Jul 2013 18:47:42 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id 9CE5FCDA5DB;
-	Fri,  5 Jul 2013 18:47:42 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 17643161E38C;
-	Fri,  5 Jul 2013 18:47:41 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id E5GNJmeoYz7D; Fri,  5 Jul 2013 18:47:38 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 09184161E3FB;
-	Fri,  5 Jul 2013 18:47:32 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7vobag7wl0.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933597Ab3GER5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jul 2013 13:57:18 -0400
+Received: from plane.gmane.org ([80.91.229.3]:49936 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752212Ab3GER5S (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jul 2013 13:57:18 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UvAFw-0006D7-97
+	for git@vger.kernel.org; Fri, 05 Jul 2013 19:57:17 +0200
+Received: from a88-157-197-173.static.cpe.netcabo.pt ([a88-157-197-173.static.cpe.netcabo.pt])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Jul 2013 19:57:16 +0200
+Received: from vitor.hda by a88-157-197-173.static.cpe.netcabo.pt with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Jul 2013 19:57:16 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 88.157.197.173 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229671>
 
-On Fri, Jul 05, 2013 at 10:20:11AM -0700, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Matthieu Brucher <matthieu.brucher <at> gmail.com> writes:
 > 
-> > You've covered the STARTTLS case, but not the SSL one right above it.
-> > Someone using smtps on port 465 will still see the warning.  You can
-> > pass SSL_verify_mode to Net::SMTP::SSL->new just like you pass it to
-> > start_SSL.
+> Hi,
 > 
-> OK, will a fix-up look like this on top of 1/2 and 2/2?
-
-According to IO::Socket::SSL [1], if neither SSL_ca_file nor SSL_ca_path
-is specified then builtin defaults will be used, so I wonder if we
-should pass SSL_VERIFY_PEER regardless (possibly with a switch for
-SSL_VERIFY_NONE if people really need that).
-
-[1] http://search.cpan.org/~sullr/IO-Socket-SSL-1.951/lib/IO/Socket/SSL.pm
-
->  git-send-email.perl | 39 +++++++++++++++++++++++----------------
->  1 file changed, 23 insertions(+), 16 deletions(-)
+> I'm trying to convert a Perforce repository to git, knowing that:
+> - I use client specs to remove a bunch of folders containing binaires
+> (several GiB)
+> - branch mappings may not be properly set, and I can't change them
 > 
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 52028ba..3b80340 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -1093,6 +1093,25 @@ sub smtp_auth_maybe {
->  	return $auth;
->  }
->  
-> +# Helper to come up with SSL/TLS certification validation params
-> +# and warn when doing no verification
-> +sub ssl_verify_params {
-> +	use IO::Socket::SSL qw(SSL_VERIFY_PEER SSL_VERIFY_NONE);
-> +
-> +	if (!defined $smtp_ssl_cert_path) {
-> +		$smtp_ssl_cert_path = "/etc/ssl/certs";
-> +	}
-> +
-> +	if (-d $smtp_ssl_cert_path) {
-> +		return (SSL_verify_mode => SSL_VERIFY_PEER,
-> +			SSL_ca_path => $smtp_ssl_cert_path);
-> +	} else {
-> +		print STDERR "warning: Using SSL_VERIFY_NONE.  " .
-> +		    "See sendemail.smtpsslcertpath.\n";
-> +		return (SSL_verify_mode => SSL_VERIFY_NONE);
-> +	}
-> +}
-> +
+> Now, the branches are layout like this:
+> - Branch/Main <- master
+> - Branch/Feature1
+> - ...
+> - Releases/2013
+> - ...
+> I would like to have these branches and releases branches inside by
+> cloned git repository, but this doesn't work. I keep on getting each
+> file with Project/Branch/Main as well as Project/Branch/Feature1 and
+> all others in my master branch.
+> I tried to add branchLists like this:
+>         branchList = Branch/Main:Releases/2013
+>         branchList = Releases/2013:Branch/Feature1
+> but it doesn't change a thing with the following command:
+>  git p4 clone --verbose --use-client-spec --detect-branches
+> //Depot/Project <at> specificrevision
+> 
+> I can see that branches are detected from the Perforce server, but
+> none are actually detected for this specific project:
+> p4-git branches: []
+> initial parents: {}
+> 
+> Can someone give a pointer to a tutorial or something for a complex
+> case like this?
+
+Hi Matthieu,
+
+Could you please try using //Depot/Project<at>all instead of selecting a
+specific revision? 
+Also, by using that command it means that the following depot paths must
+exist:
+//Depot/Project/Branch/Main
+//Depot/Project/Releases/2013
+//Depot/Project/Branch/Feature1
+
+I've never used the --use-client-spec, so I'm not sure if that will not
+break the branch detection code.
+
+Cheers,
+Vitor
+
+P.S. - Please keep me in CC because I'm not subscribed to the mailing
+list.
