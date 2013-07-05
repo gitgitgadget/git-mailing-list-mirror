@@ -1,80 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v10 3/5] t4205, t6006, t7102: make functions better readable
-Date: Fri, 05 Jul 2013 11:45:52 -0700
-Message-ID: <7v61wo7sm7.fsf@alter.siamese.dyndns.org>
-References: <cover.1373024281.git.Alex.Crezoff@gmail.com>
-	<77116508da1bf88e6035cbd657c401cf96b08cbb.1373024281.git.Alex.Crezoff@gmail.com>
-	<7va9m07syh.fsf@alter.siamese.dyndns.org>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: git gui replaces amend message when prepare-commit-msg hook is used
+Date: Fri, 5 Jul 2013 21:13:42 +0200
+Message-ID: <CALWbr2y52fHae=svf6vct1gRR-o1ocG_iF3yppHDipx1jjuODg@mail.gmail.com>
+References: <CAGHpTBKOX8G1PZqE2njQ1UbFJeC_L6WxjnTC5NyT8LSbiBNGXw@mail.gmail.com>
+	<20130704103440.GH9161@serenity.lan>
+	<CAGHpTB+ObJjqvQ-xfQOdGG+ZSZdCijVZXh1NBp97TZ=hO-QVgQ@mail.gmail.com>
+	<20130704111901.GI9161@serenity.lan>
+	<CAGHpTBJzwuPw6u=DKUkik5w=hQoCF3F_4wqjuU3UJ528gfcdpA@mail.gmail.com>
+	<CALWbr2zAt4a6vkQy8PhP-dH5eZ9_5VMzbiWqSEKE_1V5rsfh+A@mail.gmail.com>
+	<CAGHpTBJhwzLdxiTynx-eBWj7wUwe4e6HPAB4g0jDHTeVF2rfeg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Alexey Shumkin <alex.crezoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 05 20:46:00 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: John Keeping <john@keeping.me.uk>, git <git@vger.kernel.org>
+To: Orgad Shaneh <orgads@gmail.com>, Pat Thoyts <patthoyts@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 05 21:13:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvB15-0001iF-Q1
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 20:46:00 +0200
+	id 1UvBRz-0002hy-HE
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 21:13:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933777Ab3GESp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jul 2013 14:45:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44648 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752241Ab3GESpz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jul 2013 14:45:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5EFA2B89C;
-	Fri,  5 Jul 2013 18:45:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FuhqQdtbog3jlbo1t1t8FcfzALk=; b=kHgdin
-	woss9AhEysgAmDmtfBMDOVh9QSHf0+GwQX6FoXPbqFAJDE5mGDKhu+zhUK03hn2r
-	XLVkRMOSUjiwoBAmpXlETseIMvPDPQ/H3dCKumBt5LgKXlsfOPbR8+0cToRqXR7f
-	FlVfXuE0Tj0vyjsGUNYXzVMDd49rcDhdAwOvo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BOvTdRQp07KN9wKQQ07fe3aISe6mzDn8
-	BTKqtdPMx5XX2AhKhVA3mYYFLJLoMl2D7XsdwyBD/gzdZ/WLUKUSglSsTirQaXMS
-	r0FM/0iz5fout5hWia+38KzyYaU3t2qEB5QPuHrQaS1g0kGdyG78xdq6/e3PZyVi
-	FRDI4y7UXZM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB66F2B89B;
-	Fri,  5 Jul 2013 18:45:54 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E26A2B89A;
-	Fri,  5 Jul 2013 18:45:54 +0000 (UTC)
-In-Reply-To: <7va9m07syh.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 05 Jul 2013 11:38:30 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1F5F404C-E5A3-11E2-88AD-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755591Ab3GETNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jul 2013 15:13:43 -0400
+Received: from mail-qc0-f179.google.com ([209.85.216.179]:64646 "EHLO
+	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752214Ab3GETNn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jul 2013 15:13:43 -0400
+Received: by mail-qc0-f179.google.com with SMTP id e11so1408314qcx.10
+        for <git@vger.kernel.org>; Fri, 05 Jul 2013 12:13:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=aAr8SZT4D/8e1r0oaONBeKRBTwfcmodN18NcaF2yeEU=;
+        b=qb6v7QmXtMXFnFbhnh5wYTDtIqst8K0ksreO78u6eR8CEK6l4JQZpNmjxhCQGpcCmH
+         uf44i13zcxQPT6qWZG9xEVB3RB/5wmA1f3+PMoHZpmVmmxRhGKwzJh8neq0m39W0AoTJ
+         PetTFHgNCIUqt3NEKcYoPY8p4LDifqNWIDtIHbR1d9HUI35c/mN6BqlPMs5N2oqYte0Q
+         DcVsIV+ujyD17gzQF5BycSMXETr5H/hMIuHegrH6Y5cVPjKJ/cHmfblQ2dl4tAASCNNq
+         EXAs1FSnsIjXx3HiOdXzEo22H9nHqnhEFS6Gv9igeShJRD+z0pNZX/Uvg++bKVPgCPRc
+         +TSg==
+X-Received: by 10.49.5.133 with SMTP id s5mr6568194qes.96.1373051622407; Fri,
+ 05 Jul 2013 12:13:42 -0700 (PDT)
+Received: by 10.49.108.105 with HTTP; Fri, 5 Jul 2013 12:13:42 -0700 (PDT)
+In-Reply-To: <CAGHpTBJhwzLdxiTynx-eBWj7wUwe4e6HPAB4g0jDHTeVF2rfeg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229679>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Alexey Shumkin <alex.crezoff@gmail.com> writes:
+On Thu, Jul 4, 2013 at 2:46 PM, Orgad Shaneh <orgads@gmail.com> wrote:
+> On Thu, Jul 4, 2013 at 3:42 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
+>>>> Your problem is that your hook script is not checking $2 so it is
+>>>> overwriting the message even when you do not want to do so.
+>>>
+>>> No, it isn't. Not by git-gui at least. Check /tmp/hook.log with the
+>>> hook I provided...
+>>
+>> So what you mean is that the hook is not executed with the correct parameters?
+>> Could you please provide the output of the /tmp/hook.log file (I can't
+>> reproduce right now) ?
 >
->> -	msg=$(printf "modify 2nd file (ge\303\244ndert)")
->> +	msg="modify 2nd file (ge\303\244ndert)"
->>  	if test -n "$1"
->>  	then
->> -		msg=$(echo $msg | iconv -f utf-8 -t $1)
->> +		print "$msg" | iconv -f utf-8 -t "$1"
->> +	else
->> +		print "$msg"
->>  	fi
->> -	echo $msg
->>  }
+> It only runs for "New commit" (possibly with merge or squash as
+> arguments). In my case the log is:
+> .git/PREPARE_COMMIT_MSG
+> .git/PREPARE_COMMIT_MSG
+> .git/PREPARE_COMMIT_MSG
+> ...
 >
-> I think I'll do s/print/&f/ before queuing this.
+> Not running the hook for amend is another problem.
+>
+> What I referred to was that handling the hook's result is done without
+> checking if the state has changed while it was running, like Fredrik
+> has already pointed out.
 
-Also, I'll change the $msg constant to have \n at the end, as we are
-losing it by bypassing "echo".
+Yep, I've had a quick look at that, and clearly the problem seems to
+come from git-gui.
+I have absolutely no knowledge of TCL so I won't be able to help.
+Indeed, from what I've seen it looks like prepare-commit-message hook
+is not called in amend case.
+
+I cc'ed Pat Thoyts as he's the maintainer of git-gui.
+
+Sorry for not being able to help any further on this one.
+
+Antoine,
