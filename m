@@ -1,89 +1,111 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: git gui replaces amend message when prepare-commit-msg hook is used
-Date: Fri, 5 Jul 2013 21:13:42 +0200
-Message-ID: <CALWbr2y52fHae=svf6vct1gRR-o1ocG_iF3yppHDipx1jjuODg@mail.gmail.com>
-References: <CAGHpTBKOX8G1PZqE2njQ1UbFJeC_L6WxjnTC5NyT8LSbiBNGXw@mail.gmail.com>
-	<20130704103440.GH9161@serenity.lan>
-	<CAGHpTB+ObJjqvQ-xfQOdGG+ZSZdCijVZXh1NBp97TZ=hO-QVgQ@mail.gmail.com>
-	<20130704111901.GI9161@serenity.lan>
-	<CAGHpTBJzwuPw6u=DKUkik5w=hQoCF3F_4wqjuU3UJ528gfcdpA@mail.gmail.com>
-	<CALWbr2zAt4a6vkQy8PhP-dH5eZ9_5VMzbiWqSEKE_1V5rsfh+A@mail.gmail.com>
-	<CAGHpTBJhwzLdxiTynx-eBWj7wUwe4e6HPAB4g0jDHTeVF2rfeg@mail.gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 2/2] send-email: introduce sendemail.smtpsslcertpath
+Date: Fri, 5 Jul 2013 20:29:48 +0000
+Message-ID: <20130705202948.GW862789@vauxhall.crustytoothpaste.net>
+References: <1373025947-26495-1-git-send-email-artagnon@gmail.com>
+ <1373025947-26495-3-git-send-email-artagnon@gmail.com>
+ <20130705124536.GU862789@vauxhall.crustytoothpaste.net>
+ <7vobag7wl0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: John Keeping <john@keeping.me.uk>, git <git@vger.kernel.org>
-To: Orgad Shaneh <orgads@gmail.com>, Pat Thoyts <patthoyts@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 05 21:13:48 2013
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="72btQdUC6twB1rwh"
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 05 22:30:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvBRz-0002hy-HE
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 21:13:47 +0200
+	id 1UvCdp-0007Lm-E8
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 22:30:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755591Ab3GETNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jul 2013 15:13:43 -0400
-Received: from mail-qc0-f179.google.com ([209.85.216.179]:64646 "EHLO
-	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752214Ab3GETNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jul 2013 15:13:43 -0400
-Received: by mail-qc0-f179.google.com with SMTP id e11so1408314qcx.10
-        for <git@vger.kernel.org>; Fri, 05 Jul 2013 12:13:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=aAr8SZT4D/8e1r0oaONBeKRBTwfcmodN18NcaF2yeEU=;
-        b=qb6v7QmXtMXFnFbhnh5wYTDtIqst8K0ksreO78u6eR8CEK6l4JQZpNmjxhCQGpcCmH
-         uf44i13zcxQPT6qWZG9xEVB3RB/5wmA1f3+PMoHZpmVmmxRhGKwzJh8neq0m39W0AoTJ
-         PetTFHgNCIUqt3NEKcYoPY8p4LDifqNWIDtIHbR1d9HUI35c/mN6BqlPMs5N2oqYte0Q
-         DcVsIV+ujyD17gzQF5BycSMXETr5H/hMIuHegrH6Y5cVPjKJ/cHmfblQ2dl4tAASCNNq
-         EXAs1FSnsIjXx3HiOdXzEo22H9nHqnhEFS6Gv9igeShJRD+z0pNZX/Uvg++bKVPgCPRc
-         +TSg==
-X-Received: by 10.49.5.133 with SMTP id s5mr6568194qes.96.1373051622407; Fri,
- 05 Jul 2013 12:13:42 -0700 (PDT)
-Received: by 10.49.108.105 with HTTP; Fri, 5 Jul 2013 12:13:42 -0700 (PDT)
-In-Reply-To: <CAGHpTBJhwzLdxiTynx-eBWj7wUwe4e6HPAB4g0jDHTeVF2rfeg@mail.gmail.com>
+	id S1757586Ab3GEUaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jul 2013 16:30:00 -0400
+Received: from qmta10.westchester.pa.mail.comcast.net ([76.96.62.17]:60213
+	"EHLO qmta10.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757566Ab3GEU37 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Jul 2013 16:29:59 -0400
+Received: from omta06.westchester.pa.mail.comcast.net ([76.96.62.51])
+	by qmta10.westchester.pa.mail.comcast.net with comcast
+	id wgWQ1l00516LCl05AkVyF0; Fri, 05 Jul 2013 20:29:58 +0000
+Received: from castro.crustytoothpaste.net ([IPv6:2001:470:1f04:79::2])
+	by omta06.westchester.pa.mail.comcast.net with comcast
+	id wkVv1l00l25wmie3SkVxoX; Fri, 05 Jul 2013 20:29:58 +0000
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A672128057;
+	Fri,  5 Jul 2013 20:29:53 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7vobag7wl0.fsf@alter.siamese.dyndns.org>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.10-rc4-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1373056198;
+	bh=47HOHTf4i7Ohf0FMonXv80lYhPwbWf2UfQco2upEc18=;
+	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
+	 MIME-Version:Content-Type;
+	b=g72EBe79xL0AvF5u6deQNvY01gf0fisChq8H5nq2gi6wD9XTuXpUtU2S0EJ3Y66LV
+	 wmHA0fgZQTNe+rwe5XOvF1fNklqV5NqdId4spZXqWoEywrWUwCQKTvDkByxkvArhCs
+	 MAVzSLzUTdMx3vjnXa/PfmWcuwVM2DFiaCXKQ8DmKMvNQwYjwjhjuEGX57ATVi09MG
+	 Wpp6b5B9RstJbdRLbe06jIByg3tNyRaGNPoZUZrJtmmIvpZG6g4IoEzzDEyXQ2/12S
+	 2qQIO0y8b9iJjT+r0WqJAXnhblhA64CBj9n80O5qNOve/pSGApxliMfXP2+418qsL0
+	 jWJoW9P4rrZYg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229680>
 
-On Thu, Jul 4, 2013 at 2:46 PM, Orgad Shaneh <orgads@gmail.com> wrote:
-> On Thu, Jul 4, 2013 at 3:42 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
->>>> Your problem is that your hook script is not checking $2 so it is
->>>> overwriting the message even when you do not want to do so.
->>>
->>> No, it isn't. Not by git-gui at least. Check /tmp/hook.log with the
->>> hook I provided...
->>
->> So what you mean is that the hook is not executed with the correct parameters?
->> Could you please provide the output of the /tmp/hook.log file (I can't
->> reproduce right now) ?
->
-> It only runs for "New commit" (possibly with merge or squash as
-> arguments). In my case the log is:
-> .git/PREPARE_COMMIT_MSG
-> .git/PREPARE_COMMIT_MSG
-> .git/PREPARE_COMMIT_MSG
-> ...
->
-> Not running the hook for amend is another problem.
->
-> What I referred to was that handling the hook's result is done without
-> checking if the state has changed while it was running, like Fredrik
-> has already pointed out.
 
-Yep, I've had a quick look at that, and clearly the problem seems to
-come from git-gui.
-I have absolutely no knowledge of TCL so I won't be able to help.
-Indeed, from what I've seen it looks like prepare-commit-message hook
-is not called in amend case.
+--72btQdUC6twB1rwh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I cc'ed Pat Thoyts as he's the maintainer of git-gui.
+On Fri, Jul 05, 2013 at 10:20:11AM -0700, Junio C Hamano wrote:
+> +# Helper to come up with SSL/TLS certification validation params
+> +# and warn when doing no verification
+> +sub ssl_verify_params {
+> +	use IO::Socket::SSL qw(SSL_VERIFY_PEER SSL_VERIFY_NONE);
 
-Sorry for not being able to help any further on this one.
+You might as well put this at the top of the file, because all use
+statements happen at compile time anyway, regardless of their location.
+If you want to lazy-load this, you need to do:
 
-Antoine,
+require IO::Socket::SSL;
+IO::Socket::SSL->import(qw(SSL_VERIFY_PEER SSL_VERIFY_NONE));
+
+which is equivalent to "use" except that it happens at runtime.
+
+Otherwise, it looks fine.
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--72btQdUC6twB1rwh
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBCgAGBQJR1yy8AAoJEL9TXYEfUvaLkZgQAKMJed0+4CuB04KfW18SkEpW
+6GZl4sOdPKrLvi6vXAYH9PHBkJCLkyzdm9armMpArjbwTfzVFbg10ogDbwH/MRSt
+EnW1VRMwgLft5ocCOg4nAYbd7XCt2Sm+kKyGSv/BHqRCZuKdPTfPDcthUW3t9+5u
+xd/9C2pEoglc1dxBF1NkJRU4ZRyo5V5N7tqjHSbIdoSHcxeLDkqzC/03XLt2Jtb2
+yqiUDdV91KAq6XylfLhmz/w+XKtaQZPto0f4HxaEAbsNJpFaGlhzYXhCTT1Pp/Xb
+cMBvjvJAlBGrQy+8s7l1bwUFZ/cGRXZQirW4AJ1FEBg185EqBkK2vfd3nnfT/w1F
+cpzuCUal8Y7oT44rRtcs/F2cGos0D5Ci2vJqZjBfHlH34fvhDxOBpyG0e9wB4CWL
+i8WPVW3jStaMuPvVluGmpl9QICt4+kYnhPfLzYQ7tBUsVTC7pcqzbGXElMTDqutr
++dw0Hzh2jpBqod/1X3eacbY5k/TeLZj/kOSBRQNJpVj6J/449VXRtsmfqja1TUEX
+AJgB6pX/fWCUOh3eRpCaHyEn9DmkCwLuEX7lyEXrwETGzdUjQx32XFJExznSSRBK
+Toz1Wn36O7TtyRfpIkvXZ/syApYPw7uZCU4eUPUvnRLqTPev47etxx4uv8JEiN00
+Ml0nEaLpud4bjgPIga0I
+=0Qcw
+-----END PGP SIGNATURE-----
+
+--72btQdUC6twB1rwh--
