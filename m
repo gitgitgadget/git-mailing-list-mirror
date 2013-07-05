@@ -1,87 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v9 2/5] t4205: revert back single quotes
-Date: Fri, 05 Jul 2013 00:07:09 -0700
-Message-ID: <7v61wpa3j6.fsf@alter.siamese.dyndns.org>
+From: Alexey Shumkin <alex.crezoff@gmail.com>
+Subject: Re: [PATCH v9 4/5] t6006: add two more tests for the case
+ i18n.commitEncoding is not set
+Date: Fri, 5 Jul 2013 11:46:44 +0400
+Message-ID: <20130705074644.GA32072@ashu.dyn1.rarus.ru>
 References: <cover.1372939482.git.Alex.Crezoff@gmail.com>
-	<b7ac1f5c14ab4571f06030ab02a33b1489ab4dcd.1372939482.git.Alex.Crezoff@gmail.com>
+ <d1e6681bea4a69d4774b09e4cb776f4cd6e6dcc9.1372939482.git.Alex.Crezoff@gmail.com>
+ <7vk3l5a3nh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
 	Johannes Sixt <j.sixt@viscovery.net>
-To: Alexey Shumkin <alex.crezoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 05 09:07:22 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 05 09:47:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uv06y-0002au-0g
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 09:07:20 +0200
+	id 1Uv0jH-0005r3-QG
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 09:46:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757075Ab3GEHHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jul 2013 03:07:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50396 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750716Ab3GEHHM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jul 2013 03:07:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DABA12999B;
-	Fri,  5 Jul 2013 07:07:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=RwEPsVNhehTKZMLwor7n35vGymg=; b=Ybt3DPLPXpvw5nnqKi7G
-	JqDceiMcCSyzLwYY6ZHEE5oTgFleZf+zSTR/v5jmvDJuEykc6BIuf4IqS5F2FPhB
-	aWbi3okTodZWC3ud8tPWF67NXTkAWLY0xIgpzwpuzWWXwWrZ2mr+UjWR1VGq3tTs
-	b1w5vlUAI7jRDx4SPiq52x4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=cT3RwwxxxigivG28ZaKzUNDNF6K35shC7iY3/HNqxLkNss
-	DLN9++Xcspws12mQzZgsxemto7qdO4hXnbdtRevDPPkMggDFLfvFZAiRhoNC3MCj
-	b+wuJDx5luXXhJIJdhhk6go1dvAB83ftYJRdsJhyGpJ5s6DiZ3prFXqYFlMFk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFD5A29999;
-	Fri,  5 Jul 2013 07:07:11 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 546C429998;
-	Fri,  5 Jul 2013 07:07:11 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8354F9E6-E541-11E2-AB73-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S932264Ab3GEHqv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jul 2013 03:46:51 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:37439 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932201Ab3GEHqu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jul 2013 03:46:50 -0400
+Received: by mail-lb0-f169.google.com with SMTP id d10so1813539lbj.0
+        for <git@vger.kernel.org>; Fri, 05 Jul 2013 00:46:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=4aLtr1XiRIobc/xo3y/+3tfjjH3IRL3Gh2VJOJMtWB8=;
+        b=k0j25NnhZE9WNKNPEfw1fFvBDYwbaNXTs/ipwfEYRYa8gsvU+9sCROfL/4fDTHQd8a
+         /yI9BnGr3f3nrP97ScrTkpXh0YE7ZB7N31N+hbInxBFYA3lyEyXV4WXMjpDgxZ1HnPG+
+         lEpfeEygz58WufyOJHMYLTjPm+VO5pnNX1bDm70BBgzGJY/iGHqNDn3HbnBchsXK1EU7
+         wcxg4Yw5hDWheKrsrS17qxVfyNBcS5zv7Kt+YKKY/8cntGkMTulKXFLAzA1XoZBMc7aY
+         HXpFK/pnWjQ+RgtRSuomMFcTj8+ESpv9asKkfg0sBBckSzEsa/EdcqrEAhPxQjj+rZEG
+         fXgA==
+X-Received: by 10.152.44.170 with SMTP id f10mr4370778lam.68.1373010408175;
+        Fri, 05 Jul 2013 00:46:48 -0700 (PDT)
+Received: from localhost ([85.21.218.130])
+        by mx.google.com with ESMTPSA id w9sm2461246lbk.7.2013.07.05.00.46.46
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 05 Jul 2013 00:46:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vk3l5a3nh.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229632>
 
-Alexey Shumkin <alex.crezoff@gmail.com> writes:
+On Fri, Jul 05, 2013 at 12:04:34AM -0700, Junio C Hamano wrote:
+> Alexey Shumkin <alex.crezoff@gmail.com> writes:
+>=20
+> > +test_format complex-body %b <<EOF
+> > +commit $head3
+> > +This commit message is much longer than the others,
+> > +and it will be encoded in iso8859-1. We should therefore
+> > +include an iso8859 character: =C2=A1bueno!
+>=20
+> This is not such a good idea, as the resulting file will be in mixed
+> encoding (it already has a line with non-ascii that is in UTF-8),
+> and many editors would not like such a file.
+I agree, there was issues when I edited that file
+>=20
+> Perhaps we should update test_format so that we can feed a quoted
+> input, e.g.
+>=20
+>     +include an iso8859-1 character: <A1>bueno!
+>=20
+> or something?
+We could use this file whole in UTF-8 but just make a conversion of
+expected output as it's done a few lines above with a commit message
+(stored to a file 'commit-msg' before the test 'setup complex body').
+    +iconv -f utf-8 -t iso8859-1 > commit-msg <<EOF
+    +Test printing of complex bodies
+We can even use content of that file (as far as it's kept untouched
+between that tests)
 
-> In previuos commit de6029a2d7734a93a9e27b9c4471862a47dd8123 single
-> quotes were replaced with double quotes to make "$(commit_msg)"
-> expression in heredoc to work. The same effect can be achieved by using
-> "EOF" as a heredoc delimiter instead of "\EOF".
+>=20
+> > +commit $head2
+> > +commit $head1
+> > +EOF
+> > +
+> > +# Git uses i18n.commitEncoding if no i18n.logOutputEncoding set
+> > +# so unset i18n.commitEncoding to test encoding conversion
+> > +git config --unset i18n.commitEncoding
+> > +
+> > +test_format complex-subject-commitencoding-unset %s <<EOF
+> > +commit $head3
+> > +Test printing of complex bodies
+> > +commit $head2
+> >  $changed
+> >  commit $head1
+> >  $added
+> >  EOF
+> > =20
+> > -test_format complex-body %b <<EOF
+> > +test_format complex-body-commitencoding-unset %b <<EOF
+> >  commit $head3
+> >  This commit message is much longer than the others,
+> >  and it will be encoded in iso8859-1. We should therefore
 
-OK.
-
-> -test_expect_success 'left alignment formatting' "
-> -	git log --pretty='format:%<(40)%s' >actual &&
-> +test_expect_success 'left alignment formatting' '
-> +	git log --pretty="format:%<(40)%s" >actual &&
->  	# complete the incomplete line at the end
->  	echo >>actual &&
-> -	qz_to_tab_space <<\EOF >expected &&
-> +	qz_to_tab_space <<EOF >expected &&
->  message two                            Z
->  message one                            Z
->  add bar                                Z
->  $(commit_msg)                    Z
->  EOF
->  	test_cmp expected actual
-> -"
-> +'
-
-A subtle difference is that a call to commit_msg is made when the
-test is actually run, not when the test script is prepared to be
-passed (as a parameter) to test_expect_success helper.  I think the
-result of applying this patch, i.e. running $(commit_msg) inside the
-test, is easier to read and understand.
+--=20
+Alexey Shumkin
