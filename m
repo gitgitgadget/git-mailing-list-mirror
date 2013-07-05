@@ -1,76 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v10 3/5] t4205, t6006, t7102: make functions better readable
-Date: Fri, 05 Jul 2013 11:38:30 -0700
-Message-ID: <7va9m07syh.fsf@alter.siamese.dyndns.org>
-References: <cover.1373024281.git.Alex.Crezoff@gmail.com>
-	<77116508da1bf88e6035cbd657c401cf96b08cbb.1373024281.git.Alex.Crezoff@gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v2 2/2] send-email: introduce sendemail.smtpsslcertpath
+Date: Fri, 5 Jul 2013 19:43:33 +0100
+Message-ID: <20130705184333.GN9161@serenity.lan>
+References: <1373025947-26495-1-git-send-email-artagnon@gmail.com>
+ <1373025947-26495-3-git-send-email-artagnon@gmail.com>
+ <20130705124536.GU862789@vauxhall.crustytoothpaste.net>
+ <7vobag7wl0.fsf@alter.siamese.dyndns.org>
+ <20130705174730.GM9161@serenity.lan>
+ <7vehbc7tcc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Alexey Shumkin <alex.crezoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 05 20:38:39 2013
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 05 20:43:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvAtx-0003DR-Ry
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 20:38:38 +0200
+	id 1UvAyx-00081d-B2
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 20:43:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933750Ab3GESie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jul 2013 14:38:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37431 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757607Ab3GESid (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jul 2013 14:38:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA3FC2B11F;
-	Fri,  5 Jul 2013 18:38:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/pPX5MtSbB/ftBVavDkq8daJWzc=; b=Najq3/
-	Fw6ZIxZToIrQFx3RX99IYy35/7vAQ5/+QAKaZxzM6DLEPGXSXE2vPFzbnEbahRSn
-	5pQldr0sDVZV7qGd581xhi3JLcZk8QdDMzPJz47V3BAyaNs4dejaj06YAIB1OxVV
-	Y5eNRPpQma2otJ4R2MHxw/XJcvY2ov9yKI2AI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ppLtlZL6O16qPdf+VfnLi5TZcFzyjiQq
-	IWdIp/gJ0Tpkogd3aSaSYiW4LOl/BG2lAASfggiYH8KL2Yhk0YgDGTtgVMLh7O70
-	S9DnIee/b1fjaql1tXGnePFojYTbF2UPipO9PXwKIVACTdDEgUpwJv+akFAXHl5U
-	2t0VPlFPWEc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3CD82B11B;
-	Fri,  5 Jul 2013 18:38:32 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1757578Ab3GESnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jul 2013 14:43:43 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:44499 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752241Ab3GESnm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jul 2013 14:43:42 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 4456B23728;
+	Fri,  5 Jul 2013 19:43:42 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cr4UmLgGgLpp; Fri,  5 Jul 2013 19:43:41 +0100 (BST)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 330632B115;
-	Fri,  5 Jul 2013 18:38:32 +0000 (UTC)
-In-Reply-To: <77116508da1bf88e6035cbd657c401cf96b08cbb.1373024281.git.Alex.Crezoff@gmail.com>
-	(Alexey Shumkin's message of "Fri, 5 Jul 2013 16:01:48 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 17DAF024-E5A2-11E2-8F01-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	by hyena.aluminati.org (Postfix) with ESMTPSA id CF0BA22F73;
+	Fri,  5 Jul 2013 19:43:35 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7vehbc7tcc.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229676>
 
-Alexey Shumkin <alex.crezoff@gmail.com> writes:
+On Fri, Jul 05, 2013 at 11:30:11AM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > On Fri, Jul 05, 2013 at 10:20:11AM -0700, Junio C Hamano wrote:
+> >> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> >> 
+> >> > You've covered the STARTTLS case, but not the SSL one right above it.
+> >> > Someone using smtps on port 465 will still see the warning.  You can
+> >> > pass SSL_verify_mode to Net::SMTP::SSL->new just like you pass it to
+> >> > start_SSL.
+> >> 
+> >> OK, will a fix-up look like this on top of 1/2 and 2/2?
+> >
+> > According to IO::Socket::SSL [1], if neither SSL_ca_file nor SSL_ca_path
+> > is specified then builtin defaults will be used, so I wonder if we
+> > should pass SSL_VERIFY_PEER regardless (possibly with a switch for
+> > SSL_VERIFY_NONE if people really need that).
+> >
+> > [1] http://search.cpan.org/~sullr/IO-Socket-SSL-1.951/lib/IO/Socket/SSL.pm
+> 
+> Interesting.  That frees us from saying "we assume /etc/ssl/cacerts
+> is the default location, and let the users override it".
+> 
+> To help those "I do not want verification because I know my server
+> does not present valid certificate, I know my server is internal and
+> trustable, and I do not bother to fix it" people, we can let them
+> specify an empty string (or any non-directory) as the CACertPath,
+> and structure the code like so?
+> 
+>         if (defined $smtp_ssl_cert_path && -d $smtp_ssl_cert_path) {
+>                 return (SSL_verify_mode => SSL_VERIFY_PEER,
+>                         SSL_ca_path => $smtp_ssl_cert_path);
+>         } elsif (defined $smtp_ssl_cert_path) {
+>                 return (SSL_verify_mode => SSL_VERIFY_NONE);
+>         } else {
+>                 return (SSL_verify_mode => SSL_VERIFY_PEER);
+>         }
 
-> -	msg=$(printf "modify 2nd file (ge\303\244ndert)")
-> +	msg="modify 2nd file (ge\303\244ndert)"
->  	if test -n "$1"
->  	then
-> -		msg=$(echo $msg | iconv -f utf-8 -t $1)
-> +		print "$msg" | iconv -f utf-8 -t "$1"
-> +	else
-> +		print "$msg"
->  	fi
-> -	echo $msg
->  }
+I'd rather have '$smtp_ssl_cert_path ne ""' in the first if condition
+(instead of the '-d $smtp_ssl_cert_path') but that seems reasonable and
+agrees with my reading of the documentation.
 
-I think I'll do s/print/&f/ before queuing this.
+Perhaps a complete solution could allow CA files as well:
 
-Thanks.
+	if (defined $smtp_ssl_cert_path) {
+		if ($smtp_ssl_cert_path eq "") {
+			return (SSL_verify_mode => SSL_VERIFY_NONE);
+		} elsif (-f $smtp_ssl_cert_path) {
+			return (SSL_verify_mode => SSL_VERIFY_PEER,
+				SSL_ca_file => $smtp_ssl_cert_path);
+		} else {
+			return (SSL_verify_mode => SSL_VERIFY_PEER,
+				SSL_ca_path => $smtp_ssl_cert_path);
+		}
+	} else {
+		return (SSL_verify_mode => SSL_VERIFY_PEER);
+	}
