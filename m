@@ -1,88 +1,76 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: git p4 clone not processing branches properly
-Date: Fri, 5 Jul 2013 19:36:14 +0100
-Message-ID: <CAOpHH-WAjjaa3oOXje3u5bBWb=vm-2wG1KYf8oKwH__XLK4R2A@mail.gmail.com>
-References: <CAHCaCkJ+zRwu67QsYidmvcwtWtPPd4XPBYDaTnHLt9HrTSDM3A@mail.gmail.com>
- <CAHCaCk+8EehnwMP98EX=cdoyQof=zPj65Vyd_YaADVquztOYww@mail.gmail.com>
- <loom.20130705T195116-413@post.gmane.org> <CAHCaCkLpobqTOUMeK2TP_=VkjRo4P3-dMwt85_CaasSuRNE1Kg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v10 3/5] t4205, t6006, t7102: make functions better readable
+Date: Fri, 05 Jul 2013 11:38:30 -0700
+Message-ID: <7va9m07syh.fsf@alter.siamese.dyndns.org>
+References: <cover.1373024281.git.Alex.Crezoff@gmail.com>
+	<77116508da1bf88e6035cbd657c401cf96b08cbb.1373024281.git.Alex.Crezoff@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Matthieu Brucher <matthieu.brucher@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 05 20:37:02 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Alexey Shumkin <alex.crezoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 05 20:38:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvAsP-0001eu-1Z
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 20:37:01 +0200
+	id 1UvAtx-0003DR-Ry
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 20:38:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757605Ab3GESgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jul 2013 14:36:45 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:58438 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752249Ab3GESgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jul 2013 14:36:44 -0400
-Received: by mail-ie0-f173.google.com with SMTP id k13so5889304iea.4
-        for <git@vger.kernel.org>; Fri, 05 Jul 2013 11:36:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=jP/uuR5wI/W2fgys1YoLmCp1XhKjH7IIgSHr2L88BuI=;
-        b=UnlvkluLEiCGj6wmeGSa9QjDZXZ9XzFFgi9YIQBkVrEXnkKKfN4ef8+ZZonv46aez7
-         3Qfh9CgH+2xO1rwDcTHMDuN6JSnuQJzdtrIOSe7GYToEOpLpWNNz9w+3E2HoTJMaxpwm
-         VLpn2RCFjpzTK3jKcUm7vYocZ2BBkuGyh/cTrqVW/Btc9ALg/SkujY5+vXwO67fzynpZ
-         +E7zk7pL9LJa0fRxyBadtavaZHPgwlhHQDHPgf0r602jxH6OTQUdPID0/SVV5wIWvLWQ
-         7TQBJUT0ZIBLLwpAhr1SDjWzYsa9v9Hk5OaoCR/a8eeLRrzOn2e5S4SQkjV6k/0k5LxN
-         /6UA==
-X-Received: by 10.43.74.74 with SMTP id yv10mr4209645icb.67.1373049404055;
- Fri, 05 Jul 2013 11:36:44 -0700 (PDT)
-Received: by 10.64.21.103 with HTTP; Fri, 5 Jul 2013 11:36:14 -0700 (PDT)
-In-Reply-To: <CAHCaCkLpobqTOUMeK2TP_=VkjRo4P3-dMwt85_CaasSuRNE1Kg@mail.gmail.com>
+	id S933750Ab3GESie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jul 2013 14:38:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37431 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757607Ab3GESid (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jul 2013 14:38:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA3FC2B11F;
+	Fri,  5 Jul 2013 18:38:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/pPX5MtSbB/ftBVavDkq8daJWzc=; b=Najq3/
+	Fw6ZIxZToIrQFx3RX99IYy35/7vAQ5/+QAKaZxzM6DLEPGXSXE2vPFzbnEbahRSn
+	5pQldr0sDVZV7qGd581xhi3JLcZk8QdDMzPJz47V3BAyaNs4dejaj06YAIB1OxVV
+	Y5eNRPpQma2otJ4R2MHxw/XJcvY2ov9yKI2AI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ppLtlZL6O16qPdf+VfnLi5TZcFzyjiQq
+	IWdIp/gJ0Tpkogd3aSaSYiW4LOl/BG2lAASfggiYH8KL2Yhk0YgDGTtgVMLh7O70
+	S9DnIee/b1fjaql1tXGnePFojYTbF2UPipO9PXwKIVACTdDEgUpwJv+akFAXHl5U
+	2t0VPlFPWEc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3CD82B11B;
+	Fri,  5 Jul 2013 18:38:32 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 330632B115;
+	Fri,  5 Jul 2013 18:38:32 +0000 (UTC)
+In-Reply-To: <77116508da1bf88e6035cbd657c401cf96b08cbb.1373024281.git.Alex.Crezoff@gmail.com>
+	(Alexey Shumkin's message of "Fri, 5 Jul 2013 16:01:48 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 17DAF024-E5A2-11E2-8F01-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229675>
 
-On Fri, Jul 5, 2013 at 7:11 PM, Matthieu Brucher
-<matthieu.brucher@gmail.com> wrote:
->> Hi Matthieu,
->>
->> Could you please try using //Depot/Project<at>all instead of selecting a
->> specific revision?
->
-> I can try. Indeed, at this revision, the two other branches do not yet
-> exist. But @all will get everything? Last time, I only got head
-> (IIRC).
+Alexey Shumkin <alex.crezoff@gmail.com> writes:
 
-Our P4 server has a limitation on the number of lines returned by "p4
-changes" command, so sometimes I have to use @change_start,@change_stop
-instead of @all. You might want to use this range limitation to test
-git-p4 by limiting to a small number of changelists that allows you to
-check if at least one branch is correctly detected.
+> -	msg=$(printf "modify 2nd file (ge\303\244ndert)")
+> +	msg="modify 2nd file (ge\303\244ndert)"
+>  	if test -n "$1"
+>  	then
+> -		msg=$(echo $msg | iconv -f utf-8 -t $1)
+> +		print "$msg" | iconv -f utf-8 -t "$1"
+> +	else
+> +		print "$msg"
+>  	fi
+> -	echo $msg
+>  }
 
->> Also, by using that command it means that the following depot paths must
->> exist:
->> //Depot/Project/Branch/Main
->> //Depot/Project/Releases/2013
->> //Depot/Project/Branch/Feature1
->
-> Yes, they indeed do.
+I think I'll do s/print/&f/ before queuing this.
 
-In this case the problem should not be in branchList configuration.
-
->> I've never used the --use-client-spec, so I'm not sure if that will not
->> break the branch detection code.
->
-> I need to do that because if I don't, the depot is clobbed with
-> binaries. Or perhaps if I put some .gitignore stuff, I might not do
-> this?
-
-Keep using it, at least for now. If everything else fails we can look at
-this again.
-
-Cheers,
-Vitor
+Thanks.
