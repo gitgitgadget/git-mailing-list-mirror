@@ -1,132 +1,62 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH v2 1/2] commit: reject invalid UTF-8 codepoints
-Date: Fri, 5 Jul 2013 13:51:03 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1307051345260.11814@ds9.cixit.se>
-References: <cover.1372957719.git.sandals@crustytoothpaste.net> <20130704171943.GA267700@vauxhall.crustytoothpaste.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v2 2/2] send-email: introduce sendemail.smtpsslcertpath
+Date: Fri, 5 Jul 2013 18:23:58 +0530
+Message-ID: <CALkWK0nbib0G4w6X4sy56X4KixFqpqQ2GEJ-uSOqxVoH8M7C5g@mail.gmail.com>
+References: <1373025947-26495-1-git-send-email-artagnon@gmail.com>
+ <1373025947-26495-3-git-send-email-artagnon@gmail.com> <20130705124536.GU862789@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>, gitster@pobox.com
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Fri Jul 05 14:51:21 2013
+X-From: git-owner@vger.kernel.org Fri Jul 05 14:54:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uv5Ts-0008EQ-81
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 14:51:20 +0200
+	id 1Uv5X9-0002vJ-Nz
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 14:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932743Ab3GEMvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jul 2013 08:51:16 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:39286 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1757405Ab3GEMvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jul 2013 08:51:15 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id r65Cp3wT029477
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 5 Jul 2013 14:51:03 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id r65Cp3Cl029474;
-	Fri, 5 Jul 2013 14:51:03 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <20130704171943.GA267700@vauxhall.crustytoothpaste.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Fri, 05 Jul 2013 14:51:03 +0200 (CEST)
+	id S932797Ab3GEMyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jul 2013 08:54:40 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:56768 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757225Ab3GEMyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jul 2013 08:54:39 -0400
+Received: by mail-ie0-f177.google.com with SMTP id aq17so5248055iec.36
+        for <git@vger.kernel.org>; Fri, 05 Jul 2013 05:54:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=J1N8vF5fNkxTHBKKTpwGkyXpChZhK7/7/A+wK424Ymc=;
+        b=Y2LucsBUhS+TAG7SJflLd749B2V8LGzcy1zJbrvRg9SVDzYjdTaV6K9kJHPF2xPTW5
+         tKqHjNv2MbOGF9I8bsUeVH6KH1oRAlNXu9KPTpD2+JCoOpGq52yBni+MhHm1fD9misKt
+         UPFAIJZBOelzScPXkvM371Ph2IJNMdMMg3PWVUeE3CbL4kO+zPON1dYUnoI6MxuYosIT
+         2LZvqDFvdf+QWM4LjNP9zNMNu7DpJcGDvo99QnbQPJz0WPo51XJIwKb3jHsHmY1Of4Sv
+         Tq5iq1tDhghQOxjAgMgR/vqNDawGHCR/FIEI14f5M1f7TE3GP9Z/ZFqy8eHE5bg/F3c7
+         wG+w==
+X-Received: by 10.42.190.74 with SMTP id dh10mr3839385icb.35.1373028879134;
+ Fri, 05 Jul 2013 05:54:39 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Fri, 5 Jul 2013 05:53:58 -0700 (PDT)
+In-Reply-To: <20130705124536.GU862789@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229664>
 
-brian m. carlson:
+brian m. carlson wrote:
+> You've covered the STARTTLS case, but not the SSL one right above it.
+> Someone using smtps on port 465 will still see the warning.  You can
+> pass SSL_verify_mode to Net::SMTP::SSL->new just like you pass it to
+> start_SSL.
 
-> +		/* U+FFFE and U+FFFF are guaranteed non-characters. */
-> +		if ((codepoint & 0x1ffffe) == 0xfffe)
-> +			return bad_offset;
+Thanks.  On a related note, how do I find out about all these things?  I tried
 
-I missed this the first time around: All Unicode characters whose 
-lower 16-bits are FFFE or FFFF are non-characters, so you can re-write 
-that to:
+  $ perldoc Net::SMTP::SSL
 
-   /* U+xxFFFE and U+xxFFFF are guaranteed non-characters. */
-   if ((codepoint & 0xfffe) == 0xfffe)
-    return bad_offset;
-
-Also, the range U+FDD0--U+FDEF are also non-characters, if you wish to 
-be really pedantic.
-
-$ grep '^[0-9A-F].*<not a' NamesList.txt
-FDD0	<not a character>
-FDD1	<not a character>
-FDD2	<not a character>
-FDD3	<not a character>
-FDD4	<not a character>
-FDD5	<not a character>
-FDD6	<not a character>
-FDD7	<not a character>
-FDD8	<not a character>
-FDD9	<not a character>
-FDDA	<not a character>
-FDDB	<not a character>
-FDDC	<not a character>
-FDDD	<not a character>
-FDDE	<not a character>
-FDDF	<not a character>
-FDE0	<not a character>
-FDE1	<not a character>
-FDE2	<not a character>
-FDE3	<not a character>
-FDE4	<not a character>
-FDE5	<not a character>
-FDE6	<not a character>
-FDE7	<not a character>
-FDE8	<not a character>
-FDE9	<not a character>
-FDEA	<not a character>
-FDEB	<not a character>
-FDEC	<not a character>
-FDED	<not a character>
-FDEE	<not a character>
-FDEF	<not a character>
-FFFE	<not a character>
-FFFF	<not a character>
-1FFFE	<not a character>
-1FFFF	<not a character>
-2FFFE	<not a character>
-2FFFF	<not a character>
-3FFFE	<not a character>
-3FFFF	<not a character>
-4FFFE	<not a character>
-4FFFF	<not a character>
-5FFFE	<not a character>
-5FFFF	<not a character>
-6FFFE	<not a character>
-6FFFF	<not a character>
-7FFFE	<not a character>
-7FFFF	<not a character>
-8FFFE	<not a character>
-8FFFF	<not a character>
-9FFFE	<not a character>
-9FFFF	<not a character>
-AFFFE	<not a character>
-AFFFF	<not a character>
-BFFFE	<not a character>
-BFFFF	<not a character>
-CFFFE	<not a character>
-CFFFF	<not a character>
-DFFFE	<not a character>
-DFFFF	<not a character>
-EFFFE	<not a character>
-EFFFF	<not a character>
-FFFFE	<not a character>
-FFFFF	<not a character>
-10FFFE	<not a character>
-10FFFF	<not a character>
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+but it was completely useless.  The only reason I got this far is
+because you literally told me what to do.  Do I have to resort to
+reading the sources?  If so, how do I bring up the relevant functions
+quickly? (I'm looking for something like the elisp M-x find-function).
