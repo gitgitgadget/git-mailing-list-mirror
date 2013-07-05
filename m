@@ -1,63 +1,124 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 Subject: Re: [PATCH v2 2/2] send-email: introduce sendemail.smtpsslcertpath
-Date: Fri, 5 Jul 2013 18:06:46 +0530
-Message-ID: <CALkWK0kfp3RWqm+v4zwKxSF=GxVJ0Bpw0-Qidc7u7-NDKUKu0A@mail.gmail.com>
+Date: Fri, 5 Jul 2013 12:45:37 +0000
+Message-ID: <20130705124536.GU862789@vauxhall.crustytoothpaste.net>
 References: <1373025947-26495-1-git-send-email-artagnon@gmail.com>
- <1373025947-26495-3-git-send-email-artagnon@gmail.com> <CAPig+cReC8TnU0P3-qgeXGeyV=tHaHpa1Cz6r3AAZDw2ZH6B_A@mail.gmail.com>
+ <1373025947-26495-3-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Jul 05 14:37:31 2013
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="1gsfN/+pS0/2Ta7u"
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 05 14:45:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uv5GV-0003k0-DA
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 14:37:31 +0200
+	id 1Uv5Oa-0003Do-SM
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Jul 2013 14:45:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757326Ab3GEMh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jul 2013 08:37:27 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:44130 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757050Ab3GEMh0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jul 2013 08:37:26 -0400
-Received: by mail-ie0-f173.google.com with SMTP id k13so5155421iea.4
-        for <git@vger.kernel.org>; Fri, 05 Jul 2013 05:37:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=hzuaJ6FxnMKsRzedfQqm7BefHnS2P/il0Nncvhl1NN4=;
-        b=sIdpsvoDPXbOeTJWyMkHRgn+Scwbuvda1eW5g+ZNYPpH2E2dwRvH3v9WUZws+Q7ct8
-         XzZ1UYl60hHqLCkfyyhIWXbNYsFqXDqgUF+0i10QM6S8PDxJs5FoogSzosFV86sFiCiS
-         Kq4aibrk0ip5vFhIvZJVrG4dBclzSV4wB44e7B7scfGY7OC1LXfXsE1Pq/sEWrdv5SUj
-         Hu4uEoo89A6erEPj2HAdOGA4bDwXLmPgHXjyxmiRLfne6jcn8xIvIzKdmSpkewbKKWv5
-         iKuaY6R99tPgRGSVB4odHrm9rl+mH9uyVX4smu8bk6BAfrKlidN93PExguhjnqQGeHK3
-         o+pQ==
-X-Received: by 10.50.47.12 with SMTP id z12mr4427978igm.50.1373027846291; Fri,
- 05 Jul 2013 05:37:26 -0700 (PDT)
-Received: by 10.64.37.130 with HTTP; Fri, 5 Jul 2013 05:36:46 -0700 (PDT)
-In-Reply-To: <CAPig+cReC8TnU0P3-qgeXGeyV=tHaHpa1Cz6r3AAZDw2ZH6B_A@mail.gmail.com>
+	id S1757354Ab3GEMpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jul 2013 08:45:49 -0400
+Received: from qmta12.emeryville.ca.mail.comcast.net ([76.96.27.227]:47164
+	"EHLO qmta12.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757225Ab3GEMps (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Jul 2013 08:45:48 -0400
+Received: from omta09.emeryville.ca.mail.comcast.net ([76.96.30.20])
+	by qmta12.emeryville.ca.mail.comcast.net with comcast
+	id wcd61l0030S2fkC01cln6s; Fri, 05 Jul 2013 12:45:47 +0000
+Received: from castro.crustytoothpaste.net ([IPv6:2001:470:1f04:79::2])
+	by omta09.emeryville.ca.mail.comcast.net with comcast
+	id wclm1l00325wmie8VclnSj; Fri, 05 Jul 2013 12:45:47 +0000
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id AA22C28057;
+	Fri,  5 Jul 2013 12:45:43 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1373025947-26495-3-git-send-email-artagnon@gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.10-rc4-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1373028347;
+	bh=81nS/oZ4Vk4so0kFHDIdwq4A0mhEvZApQc4ntaKMSNA=;
+	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
+	 MIME-Version:Content-Type;
+	b=IQf30eDy9lRuvqzmgUnZhnSnbIDnNBbhbEZIaJsducdu/WUQ2ODO/BliBgmAXTYmv
+	 a06WoYKewNp1vdfZNFtu2hpouKd4LI185+vUHdSTacILzoWovCv6NOSnsbhjCDCDaF
+	 fjM+e9QGTjenenZoapefvnM+ET74QU7gkXEIH2AcXeT5CJrca3ry3iQlA/Em3vT89h
+	 g1xkq38fO7hD1E1TzuPNl3TrLsQ8VlwE0L+102IZLQrsmoxAiyocBQBYihp24KirtJ
+	 8wmZq6SuG+HTqkngefpTJUPSynpguUKfd7ShqvQkE2Emsk3kNhaaJq22LHLc0MIr/F
+	 si+lrGY18Faag==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229662>
 
-Eric Sunshine wrote:
->> +                                       $smtp_ssl_cert_path |= "/etc/ssl/certs";
->
-> You're going to want to use logical ||= here. Bitwise |= on a string
-> does not do what you expect[1]:
->
->   my $s = '/usr/local/etc/ssl/certs';
->   $s |= '/etc/ssl/certs';
->   print $s, "\n";
->
-> Outputs: /uws/oooowts/ssl/certs
 
-Thanks; much appreciated.  My Perl is quite weak.
+--1gsfN/+pS0/2Ta7u
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Jul 05, 2013 at 05:35:47PM +0530, Ramkumar Ramachandra wrote:
+> @@ -1193,13 +1197,23 @@ X-Mailer: git-send-email $gitversion
+>  						 Debug =3D> $debug_net_smtp);
+>  			if ($smtp_encryption eq 'tls' && $smtp) {
+>  				require Net::SMTP::SSL;
+> -				use IO::Socket::SSL qw(SSL_VERIFY_NONE);
+> +				use IO::Socket::SSL qw(SSL_VERIFY_PEER SSL_VERIFY_NONE);
+>  				$smtp->command('STARTTLS');
+>  				$smtp->response();
+>  				if ($smtp->code =3D=3D 220) {
+> -					$smtp =3D Net::SMTP::SSL->start_SSL($smtp,
+> -									  SSL_verify_mode =3D> SSL_VERIFY_NONE)
+> -						or die "STARTTLS failed! ".$smtp->message;
+> +					# Attempt to use a ca-certificate by default
+> +					$smtp_ssl_cert_path |=3D "/etc/ssl/certs";
+> +					if (-d $smtp_ssl_cert_path) {
+> +						$smtp =3D Net::SMTP::SSL->start_SSL($smtp,
+> +										  SSL_verify_mode =3D> SSL_VERIFY_PEER,
+> +										  SSL_ca_path =3D> $smtp_ssl_cert_path)
+> +							or die "STARTTLS failed! ".$smtp->message;
+> +					} else {
+> +						print STDERR "warning: Using SSL_VERIFY_NONE.  See sendemail.smtps=
+slcertpath.\n";
+> +						$smtp =3D Net::SMTP::SSL->start_SSL($smtp,
+> +										  SSL_verify_mode =3D> SSL_VERIFY_NONE)
+> +							or die "STARTTLS failed! ".$smtp->message;
+> +					}
+
+You've covered the STARTTLS case, but not the SSL one right above it.
+Someone using smtps on port 465 will still see the warning.  You can
+pass SSL_verify_mode to Net::SMTP::SSL->new just like you pass it to
+start_SSL.
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--1gsfN/+pS0/2Ta7u
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBCgAGBQJR1r/wAAoJEL9TXYEfUvaLRuoP/jAIO/3JYN8MYt4yZRts58ZC
+1pskWOrLtK9fex+ejt/oDAdFFKW7IF1PM/AUWAH/OoTx7okSuscwc+Zjpgb3BNIY
+yM3k8hFcZ5ir8BEGkz0re45Vhv78X9eHnsFxm2/YxbiGdEOGnI6iQlo3wFeAF5n3
+FbxIO1jwFhoI+J7aV+FvIOqsMNvy7gZhm+i/7+18MjEhFI2JLUGTTE1YM2CBWTL0
++B2DgOPYDzZH9eP+OKTMxHTWsUbCsNyNjBcotaVG71B7NvriVxjrlg748c20yn5Y
+cJrzHouKd6iVdNL1ablTyDvkgkyG+JfPOHrpbU8VgJ5mXOawnrZvbnI5nWSYQXAk
+xY/eQn52Modk3o+itlyYjiWzvU8uJZDE0ZpM4rM2YOI0WGpbhCNEbAIkAtc7kKNK
+DrK9uXbkrtKwaSenYAGWKzmke0DHxoPs2STMRBKc/eDA6pBiCU9+8p72v3VucP4I
+d+vOKTeLLqxD7n2EIvwHx3+q4b4biAJjXZzsKW0TBpd3+mqrIvxaajLZq+JE3Lwh
+bLNGdlearUglEpjzBuFBZthHv5srU9ZCA77UsYwddwKve6NUiu76G4S4oyQ5sGfx
+G4hT9mz6iWtMrH8oFzJ3P9eWyKWDryq6ZoueCYNizzg391SjsS4G60G5nV+rATdj
+d7z9UR0WxLYCbnr8dhHg
+=UFtr
+-----END PGP SIGNATURE-----
+
+--1gsfN/+pS0/2Ta7u--
