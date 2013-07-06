@@ -1,210 +1,79 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 2/2] send-email: introduce sendemail.smtpsslcertpath
-Date: Sat, 6 Jul 2013 12:46:00 +0100
-Message-ID: <20130706114600.GP9161@serenity.lan>
-References: <1373025947-26495-1-git-send-email-artagnon@gmail.com>
- <1373025947-26495-3-git-send-email-artagnon@gmail.com>
- <20130705124536.GU862789@vauxhall.crustytoothpaste.net>
- <7vobag7wl0.fsf@alter.siamese.dyndns.org>
- <20130705174730.GM9161@serenity.lan>
- <7vehbc7tcc.fsf@alter.siamese.dyndns.org>
- <20130705184333.GN9161@serenity.lan>
- <7v1u7c6w7z.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] diffcore-pickaxe: simplify has_changes and contains
+Date: Sat,  6 Jul 2013 15:53:27 +0200
+Message-ID: <1373118807-1345-1-git-send-email-rene.scharfe@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 06 13:46:16 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 06 15:53:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvQwR-00082R-GE
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Jul 2013 13:46:16 +0200
+	id 1UvSvj-0002bG-0A
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Jul 2013 15:53:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752958Ab3GFLqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jul 2013 07:46:11 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:53955 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752943Ab3GFLqK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jul 2013 07:46:10 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 5B46C198008;
-	Sat,  6 Jul 2013 12:46:09 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -10.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0tXuwSu3rFbf; Sat,  6 Jul 2013 12:46:08 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 9FFFB6064B7;
-	Sat,  6 Jul 2013 12:46:02 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7v1u7c6w7z.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751250Ab3GFNxf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Jul 2013 09:53:35 -0400
+Received: from india601.server4you.de ([85.25.151.105]:50202 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751051Ab3GFNxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jul 2013 09:53:34 -0400
+Received: from debian.Speedport_W_504V_Typ_A (p4FFD94EC.dip0.t-ipconnect.de [79.253.148.236])
+	by india601.server4you.de (Postfix) with ESMTPSA id 67D7244E;
+	Sat,  6 Jul 2013 15:53:32 +0200 (CEST)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229700>
 
-On Fri, Jul 05, 2013 at 11:25:36PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > I'd rather have '$smtp_ssl_cert_path ne ""' in the first if condition
-> > (instead of the '-d $smtp_ssl_cert_path') ...
-> 
-> I agree.  The signal for "no certs" should be an explicit "nonsense"
-> value like an empty string, not just a string that does not name an
-> expected filesystem object.  Otherwise people can misspell paths and
-> disable the validation by accident.
-> 
-> > Perhaps a complete solution could allow CA files as well.
-> 
-> Yes, that would be a good idea.  Care to roll into a "fixup!" patch
-> against [2/2]?
+Halve the number of callsites of contains() to two using temporary
+variables, simplifying the code.  While at it, get rid of the
+diff_options parameter, which became unused with 8fa4b09f.
 
-Here's a patch that should do that.  However, when testing this I
-couldn't get the "SSL_verify_mode" warning to disappear and
-git-send-email kept connecting to my untrusted server - this was using
-the SSL code path not the TLS upgrade one.
+Signed-off-by: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ diffcore-pickaxe.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-I think this is caused by the SSL_verify_mode argument not getting all
-the way down to the configure_SSL function in IO::Socket::SSL but I
-can't see what the code in git-send-email is doing wrong.  Can any Perl
-experts point out what's going wrong?
-
-Also, I tried Brian's "IO::Socket::SSL->import(qw(SSL_VERIFY_PEER
-SSL_VERIFY_NONE));" but that produced a warning message about the uses
-of SSL_VERIFY_PEER and SSL_VERIFY_NONE following that statement, so I
-ended up qualifying each use in the code below.
-
--- >8 --
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 605f263..b56c215 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -198,6 +198,10 @@ must be used for each option.
- --smtp-ssl::
- 	Legacy alias for '--smtp-encryption ssl'.
- 
-+--smtp-ssl-verify::
-+--no-smtp-ssl-verify::
-+	Enable SSL certificate verification.  Defaults to on.
-+
- --smtp-ssl-cert-path::
- 	Path to ca-certificates.  Defaults to `/etc/ssl/certs`, or
- 	'sendemail.smtpsslcertpath'.
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 3b80340..cbe85aa 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -69,8 +69,10 @@ git send-email [options] <file | directory | rev-list options >
-     --smtp-pass             <str>  * Password for SMTP-AUTH; not necessary.
-     --smtp-encryption       <str>  * tls or ssl; anything else disables.
-     --smtp-ssl                     * Deprecated. Use '--smtp-encryption ssl'.
-+    --[no-]smtp-ssl-verify         * Enable SSL certificate verification.
-+                                     Default on.
-     --smtp-ssl-cert-path    <str>  * Path to ca-certificates.  Defaults to
--                                     /etc/ssl/certs.
-+                                     a platform-specific value.
-     --smtp-domain           <str>  * The domain name sent to HELO/EHLO handshake
-     --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
- 
-@@ -197,7 +199,7 @@ my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc);
- my ($to_cmd, $cc_cmd);
- my ($smtp_server, $smtp_server_port, @smtp_server_options);
- my ($smtp_authuser, $smtp_encryption);
--my ($smtp_ssl_cert_path);
-+my ($smtp_ssl_verify, $smtp_ssl_cert_path);
- my ($identity, $aliasfiletype, @alias_files, $smtp_domain);
- my ($validate, $confirm);
- my (@suppress_cc);
-@@ -214,6 +216,7 @@ my %config_bool_settings = (
-     "suppressfrom" => [\$suppress_from, undef],
-     "signedoffbycc" => [\$signed_off_by_cc, undef],
-     "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
-+    "smtpsslverify" => [\$smtp_ssl_verify, 1],
-     "validate" => [\$validate, 1],
-     "multiedit" => [\$multiedit, undef],
-     "annotate" => [\$annotate, undef]
-@@ -306,6 +309,8 @@ my $rc = GetOptions("h" => \$help,
- 		    "smtp-pass:s" => \$smtp_authpass,
- 		    "smtp-ssl" => sub { $smtp_encryption = 'ssl' },
- 		    "smtp-encryption=s" => \$smtp_encryption,
-+		    "smtp-ssl-cert-path=s" => \$smtp_ssl_cert_path,
-+		    "smtp-ssl-verify!" => \$smtp_ssl_verify,
- 		    "smtp-debug:i" => \$debug_net_smtp,
- 		    "smtp-domain:s" => \$smtp_domain,
- 		    "identity=s" => \$identity,
-@@ -1096,19 +1101,18 @@ sub smtp_auth_maybe {
- # Helper to come up with SSL/TLS certification validation params
- # and warn when doing no verification
- sub ssl_verify_params {
--	use IO::Socket::SSL qw(SSL_VERIFY_PEER SSL_VERIFY_NONE);
--
--	if (!defined $smtp_ssl_cert_path) {
--		$smtp_ssl_cert_path = "/etc/ssl/certs";
-+	if ($smtp_ssl_verify == 0) {
-+		return (SSL_verify_mode => IO::Socket::SSL->SSL_VERIFY_NONE);
- 	}
- 
--	if (-d $smtp_ssl_cert_path) {
--		return (SSL_verify_mode => SSL_VERIFY_PEER,
--			SSL_ca_path => $smtp_ssl_cert_path);
-+	if (! defined $smtp_ssl_cert_path) {
-+		return (SSL_verify_mode => IO::Socket::SSL->SSL_VERIFY_PEER);
-+	} elsif (-f $smtp_ssl_cert_path) {
-+		return (SSL_verify_mode => IO::Socket::SSL->SSL_VERIFY_PEER,
-+			SSL_ca_file => $smtp_ssl_cert_path);
- 	} else {
--		print STDERR "warning: Using SSL_VERIFY_NONE.  " .
--		    "See sendemail.smtpsslcertpath.\n";
--		return (SSL_verify_mode => SSL_VERIFY_NONE);
-+		return (SSL_verify_mode => IO::Socket::SSL->SSL_VERIFY_PEER,
-+			SSL_ca_path => $smtp_ssl_cert_path);
- 	}
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index c97ac9b..401eb72 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -131,8 +131,7 @@ static void diffcore_pickaxe_grep(struct diff_optio=
+ns *o)
+ 	return;
  }
- 
--- 8< --
-
-> > 	if (defined $smtp_ssl_cert_path) {
-> > 		if ($smtp_ssl_cert_path eq "") {
-> > 			return (SSL_verify_mode => SSL_VERIFY_NONE);
-> > 		} elsif (-f $smtp_ssl_cert_path) {
-> > 			return (SSL_verify_mode => SSL_VERIFY_PEER,
-> > 				SSL_ca_file => $smtp_ssl_cert_path);
-> > 		} else {
-> > 			return (SSL_verify_mode => SSL_VERIFY_PEER,
-> > 				SSL_ca_path => $smtp_ssl_cert_path);
-> > 		}
-> > 	} else {
-> > 		return (SSL_verify_mode => SSL_VERIFY_PEER);
-> > 	}
-> 
-> Two things that worry me a bit are:
-> 
->  (1) At the end user UI level, it may look nice to accept some form
->      of --no-option-name to say "I have been using SSL against my
->      server with handrolled cert, and I want to keep using the
->      verify-none option"; "--ssl-cert-path=" looks somewhat ugly.
->      The same goes for [sendemail] ssl_cert_path = "" config.
-> 
->  (2) How loudly does the new code barf when no configuration is done
->      (i.e. we just pass SSL_VERIFY_PEER and let the system default
->      CA path to take effect) and the server cert does not validate?
->      The warning that triggered this thread, if we had the
->      configuration mechanism we have been designing together, would
->      have been a good reminder for the user to use it, but would we
->      give a similar (less noisy is fine, as long as it is clear)
->      diagnostic message?
+=20
+-static unsigned int contains(mmfile_t *mf, struct diff_options *o,
+-			     regex_t *regexp, kwset_t kws)
++static unsigned int contains(mmfile_t *mf, regex_t *regexp, kwset_t kw=
+s)
+ {
+ 	unsigned int cnt;
+ 	unsigned long sz;
+@@ -176,11 +175,9 @@ static int has_changes(mmfile_t *one, mmfile_t *tw=
+o,
+ 		       struct diff_options *o,
+ 		       regex_t *regexp, kwset_t kws)
+ {
+-	if (!one)
+-		return contains(two, o, regexp, kws) !=3D 0;
+-	if (!two)
+-		return contains(one, o, regexp, kws) !=3D 0;
+-	return contains(one, o, regexp, kws) !=3D contains(two, o, regexp, kw=
+s);
++	unsigned int one_contains =3D one ? contains(one, regexp, kws) : 0;
++	unsigned int two_contains =3D two ? contains(two, regexp, kws) : 0;
++	return one_contains !=3D two_contains;
+ }
+=20
+ static int pickaxe_match(struct diff_filepair *p, struct diff_options =
+*o,
+--=20
+1.8.3.2
