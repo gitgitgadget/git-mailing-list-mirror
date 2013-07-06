@@ -1,98 +1,59 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] git stash: Avoid data loss when saving a stash
-Date: Sat, 6 Jul 2013 16:42:14 +0200
-Message-ID: <20130706144214.GM12252@machine.or.cz>
-References: <7vhaghnct4.fsf@alter.siamese.dyndns.org>
- <20130630132017.GQ12252@machine.or.cz>
- <7vppv3jtrh.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v2 1/2] send-email: squelch warning from Net::SMTP::SSL
+Date: Sat, 06 Jul 2013 17:49:18 +0200
+Message-ID: <51D83C7E.8000902@web.de>
+References: <1373025947-26495-1-git-send-email-artagnon@gmail.com> <1373025947-26495-2-git-send-email-artagnon@gmail.com> <51D82970.5070108@web.de> <20130706143256.GX862789@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 06 16:42:26 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Sat Jul 06 17:49:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvTgv-0006Gj-Rr
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Jul 2013 16:42:26 +0200
+	id 1UvUk1-0001pl-VY
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Jul 2013 17:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751206Ab3GFOmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jul 2013 10:42:20 -0400
-Received: from pasky.or.cz ([84.242.80.195]:55620 "EHLO machine.or.cz"
+	id S1751981Ab3GFPtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jul 2013 11:49:25 -0400
+Received: from mout.web.de ([212.227.15.4]:50935 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750966Ab3GFOmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jul 2013 10:42:19 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 1E1E21700067; Sat,  6 Jul 2013 16:42:15 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vppv3jtrh.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751900Ab3GFPtY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jul 2013 11:49:24 -0400
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb004)
+ with ESMTPA (Nemesis) id 0LaqwS-1USzX50o7k-00kNle; Sat, 06 Jul 2013 17:49:19
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <20130706143256.GX862789@vauxhall.crustytoothpaste.net>
+X-Provags-ID: V03:K0:Jn3/D8H1wtYDDgBeMXIktRWvxaB0h+s5EXU9b/f9dFkgLPn+OP7
+ DinusQBfVQ9KTg+cb53ITQ77baSgaT2i4dwfD62QQD++n4NUS4Z3w+qmf/5SmPuV8L+N9mk
+ Em2OX+yZtLad3R3vxOD6IkbovrIypjAFsF8dYAcqatYmVP5VFwQYih6ZIENL27DgoasKST/
+ 10XrjfQO8yKA+16xiLVuA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229704>
 
-  Hi!
+On 2013-07-06 16.32, brian m. carlson wrote:
+> perl -MIO::Socket::SSL -e 'print "$IO::Socket::SSL::VERSION\n";'
 
-  (tl;dr - I disagree but this issue is perhaps not so important
-in practice)
+Mac OS X, 10.6:
+(I think this perl we use for git:)
+/usr/bin/perl -MIO::Socket::SSL -e 'print "$IO::Socket::SSL::VERSION\n";'
+1.22
 
-On Sun, Jun 30, 2013 at 12:14:26PM -0700, Junio C Hamano wrote:
-> I do not agree with your `git reset --hard` at all.  With the
-> command, the user demands "no matter what, I want get rid of any
-> funny state in my working tree so that I can start my work from that
-> specified commit (default to HEAD)".
+(And this is in my path:)
+ which perl
+/opt/local/bin/perl
 
-  Yeah, but this normally concerns only tracked files; `git reset
---hard` does not imply `git clean`. I'm worried when a tool normally
-behaves in a way that follows an apparent rule but its behavior is
-defined in such a way that in a corner case this rule is violated (but
-it's ok since it's a - non-obvious - implication of the specification).
+perl -MIO::Socket::SSL -e 'print "$IO::Socket::SSL::VERSION\n";'
+Can't locate IO/Socket/SSL.pm in @INC (@INC contains: /sw/lib/perl5 /sw/lib/perl5/darwin /opt/local/lib/perl5/site_perl/5.8.9/darwin-2level /opt/local/lib/perl5/site_perl/5.8.9 /opt/local/lib/perl5/site_perl /opt/local/lib/perl5/vendor_perl/5.8.9/darwin-2level /opt/local/lib/perl5/vendor_perl/5.8.9 /opt/local/lib/perl5/vendor_perl /opt/local/lib/perl5/5.8.9/darwin-2level /opt/local/lib/perl5/5.8.9 .).
 
-> Imagine that this is you did to arrive that "funny state":
-> 
-> 	$ git rm foo ;# foo used to be tracked and in HEAD
->         $ cp /somewhere/else/foo foo
-> 	$ cp /somewhere/else/bar bar ;# bar is not in HEAD
-> 	$ cp /somewhere/else/bar baz ;# baz is in HEAD
->         ... do various other things ...
-> 
-> and then "git reset --hard".  At that point, "foo" and "bar" are not
-> tracked and completely unrelated to the project.  "baz" is tracked
-> and have unrelated contents from that of "HEAD".
-> 
-> In order to satisfy your desire to go back to the state of HEAD with
-> minimal collateral amage, we need to get rid of the updated "foo"
-> and "baz" and replace them with those from HEAD.  We do not have to
-> touch "bar" so we leave it as-is.
-
-  Perhaps we misundertood each other here. I certainly don't care to
-keep local changes as a whole - a command behaving like that wouldn't
-be very useful for me; for me, the crucial distinction is between
-tracked and untracked files. Therefore, from my viewpoint it's fine
-to overwrite baz, but not to overwrite foo.
-
-> And the "killed" case is just like "foo" and "baz".  If the state
-> you want to go back to with "--hard" has a directory (a file) where
-> your working tree's funny state has a file (a directory), the local
-> cruft needs to go away to satisify your request.
-> 
-> I do not mind if you are proposing a different and new kind of reset
-> that fails if it has to overwrite any local changes (be it tracked
-> or untracked), but that is not "reset --hard".  It is something else.
-
-  Hmm, I suppose the assumption I would prefer is that "the only command
-that will destroy (currently) untracked data without warning is `git
-clean`"; even though (unlike in case of git stash) the current reset
---hard behavior wouldn't surprise me, I suspect it can be a bad surprise
-for many Git users when they hit this situation; but since I didn't
-notice any actual complaint yet, so I don't care enough to press this
-further for now anyway. :-)
-
--- 
-				Petr "Pasky" Baudis
-	For every complex problem there is an answer that is clear,
-	simple, and wrong.  -- H. L. Mencken
+/Torsten
