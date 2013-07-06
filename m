@@ -1,142 +1,110 @@
-From: =?UTF-8?B?QnJhbmtvIMSMaWJlag==?= <brane@wandisco.com>
-Subject: Re: git-svn "Temp file with moniker 'svn_delta' already in use" and
- skelta mode
-Date: Sat, 06 Jul 2013 06:23:57 +0200
-Organization: WANdisco
-Message-ID: <51D79BDD.5020106@wandisco.com>
-References: <kr6uvc$p8a$1@ger.gmane.org> <51D7072A.6080909@wandisco.com> <kr75h0$qg5$1@ger.gmane.org> <51D7362B.1040803@wandisco.com> <kr7il5$n0p$1@ger.gmane.org> <51D7660F.6070901@wandisco.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] send-email: introduce sendemail.smtpsslcertpath
+Date: Fri, 05 Jul 2013 23:25:36 -0700
+Message-ID: <7v1u7c6w7z.fsf@alter.siamese.dyndns.org>
+References: <1373025947-26495-1-git-send-email-artagnon@gmail.com>
+	<1373025947-26495-3-git-send-email-artagnon@gmail.com>
+	<20130705124536.GU862789@vauxhall.crustytoothpaste.net>
+	<7vobag7wl0.fsf@alter.siamese.dyndns.org>
+	<20130705174730.GM9161@serenity.lan>
+	<7vehbc7tcc.fsf@alter.siamese.dyndns.org>
+	<20130705184333.GN9161@serenity.lan>
 Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="------------080303090603040508080505"
-Cc: git@vger.kernel.org
-To: users@subversion.apache.org
-X-From: users-return-18597-gcvsu-users=m.gmane.org@subversion.apache.org Sat Jul 06 06:24:34 2013
-Return-path: <users-return-18597-gcvsu-users=m.gmane.org@subversion.apache.org>
-Envelope-to: gcvsu-users@plane.gmane.org
-Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
-	by plane.gmane.org with smtp (Exim 4.69)
-	(envelope-from <users-return-18597-gcvsu-users=m.gmane.org@subversion.apache.org>)
-	id 1UvK2z-0000vx-Qd
-	for gcvsu-users@plane.gmane.org; Sat, 06 Jul 2013 06:24:34 +0200
-Received: (qmail 19274 invoked by uid 500); 6 Jul 2013 04:24:29 -0000
-Mailing-List: contact users-help@subversion.apache.org; run by ezmlm
+Content-Type: text/plain; charset=us-ascii
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sat Jul 06 08:25:44 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by plane.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UvLwG-0001ke-7o
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Jul 2013 08:25:44 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752343Ab3GFGZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jul 2013 02:25:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47417 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752106Ab3GFGZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jul 2013 02:25:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B96C28927;
+	Sat,  6 Jul 2013 06:25:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=riKA79HiE1dD9f2AihWynvdI2U0=; b=U1bfnD
+	Vphg1+I3YHxBc6k1dY9aKcsVkjhcTodXuHNev+JD1/m5KFqj36oW9s9+N5loAPBz
+	koxpMC6fSfkhzFmjH1HEoGVGoKT6+x39D87vxGKOV3jWcu4pUXPvPQEiNZvJvcD5
+	E8wFwuCCP16iPWptJmjg9a68MlD8al5zOgCmA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LSUq2/0jcD1vpQir2TNcxvoFvuxHgEEq
+	Vqq/GJ68R+8TjRtUDszl+G4TdnAKVkO3U4EIUi6RMlCduW8xGypVbmMZZeKZ+7kN
+	oAiL2Dg1lNqbL4tuL0bcavi7N876XQ4UCbOgCGqvBoMlPMqcD1PM2ssPu2sDgHdT
+	pBFUBAiYg1I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F48928926;
+	Sat,  6 Jul 2013 06:25:38 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D83A28923;
+	Sat,  6 Jul 2013 06:25:37 +0000 (UTC)
+In-Reply-To: <20130705184333.GN9161@serenity.lan> (John Keeping's message of
+	"Fri, 5 Jul 2013 19:43:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DF584324-E604-11E2-BBA3-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Help: <mailto:users-help@subversion.apache.org>
-List-Unsubscribe: <mailto:users-unsubscribe@subversion.apache.org>
-List-Post: <mailto:users@subversion.apache.org>
-List-Id: <users.subversion.apache.org>
-Delivered-To: mailing list users@subversion.apache.org
-Received: (qmail 19261 invoked by uid 99); 6 Jul 2013 04:24:26 -0000
-Received: from athena.apache.org (HELO athena.apache.org) (140.211.11.136)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Sat, 06 Jul 2013 04:24:26 +0000
-X-ASF-Spam-Status: No, hits=1.5 required=5.0
-	tests=HTML_MESSAGE,RCVD_IN_DNSWL_LOW,SPF_PASS
-X-Spam-Check-By: apache.org
-Received-SPF: pass (athena.apache.org: domain of brane@wandisco.com designates 209.85.215.172 as permitted sender)
-Received: from [209.85.215.172] (HELO mail-ea0-f172.google.com) (209.85.215.172)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Sat, 06 Jul 2013 04:24:21 +0000
-Received: by mail-ea0-f172.google.com with SMTP id q10so1830477eaj.3
-        for <users@subversion.apache.org>; Fri, 05 Jul 2013 21:23:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:organization:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:content-type:x-gm-message-state;
-        bh=kDz1lpJgV/rxAE9kEJ6hTCmh2sqZPEonppr8tAwU74w=;
-        b=pUV3I6jnBd4Xg4D1x7kq1jm49rcQo0reLfPFDLsDxspvPfj79793ugAGgDrvcrLd6s
-         YXvz1srWUnkESoLj3S022DSeqUMvzDhB632wpNZicSJNLPmHY8r5dQ9zK47k1wsZB2Zt
-         f+S4a6tgyl/dOljUENWfqfYbhrJiDD5NrfFBnZCBhj0BvQtykoDe/FxeK75IQIDLYm95
-         XFhPRRkig9jpzr0L8wCvP/MzsF1tEsdtb7xNarYaLlF/CDQyafyubYu70rrcvj9kJ5H/
-         CO48zZz04G1meAi8T3RL6XYFB6BvM8KUQOA3i6D8Zd322Ygv0GYfFtPWmMIJlMrNsaC5
-         WFjQ==
-X-Received: by 10.15.23.194 with SMTP id h42mr14572537eeu.123.1373084639635;
-        Fri, 05 Jul 2013 21:23:59 -0700 (PDT)
-Received: from zulu.local (cpe-46-164-15-215.dynamic.amis.net. [46.164.15.215])
-        by mx.google.com with ESMTPSA id o5sm19811577eef.5.2013.07.05.21.23.58
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 05 Jul 2013 21:23:59 -0700 (PDT)
-Received: from zulu.local (localhost [IPv6:::1])
-	by zulu.local (Postfix) with ESMTP id 7A6307462E0D;
-	Sat,  6 Jul 2013 06:23:57 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <51D7660F.6070901@wandisco.com>
-X-Gm-Message-State: ALoCoQkidxhRp3Q/7zuHMzXw2n1MKA1uCknhkZ0et5kZV9QdmhISjd+Tz6XygqBad5p/v/++cOGY
-X-Virus-Checked: Checked by ClamAV on apache.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229694>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229695>
 
-This is a multi-part message in MIME format.
---------------080303090603040508080505
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+John Keeping <john@keeping.me.uk> writes:
 
-On 06.07.2013 02:34, Branko Čibej wrote:
-> In the meantime, it might be a good idea to relax the restrictions in
-> git-svn to account for the way the HTTPv2 protocol works.
+> I'd rather have '$smtp_ssl_cert_path ne ""' in the first if condition
+> (instead of the '-d $smtp_ssl_cert_path') ...
 
-By the way, this section of the 1.8 release notes is relevant:
+I agree.  The signal for "no certs" should be an explicit "nonsense"
+value like an empty string, not just a string that does not name an
+expected filesystem object.  Otherwise people can misspell paths and
+disable the validation by accident.
 
-http://subversion.apache.org/docs/release-notes/1.8.html#neon-deleted
+> Perhaps a complete solution could allow CA files as well.
 
-In 1.8 there is a client-side configuration option called
-http-bulk-updates that controls how the client will request data from
-the server. It can be set in the ~/.subversion/servers file, or on the
-comand-line by the option
+Yes, that would be a good idea.  Care to roll into a "fixup!" patch
+against [2/2]?
 
-    --config-option=servers:global:http-bulk-updates=on
+> 	if (defined $smtp_ssl_cert_path) {
+> 		if ($smtp_ssl_cert_path eq "") {
+> 			return (SSL_verify_mode => SSL_VERIFY_NONE);
+> 		} elsif (-f $smtp_ssl_cert_path) {
+> 			return (SSL_verify_mode => SSL_VERIFY_PEER,
+> 				SSL_ca_file => $smtp_ssl_cert_path);
+> 		} else {
+> 			return (SSL_verify_mode => SSL_VERIFY_PEER,
+> 				SSL_ca_path => $smtp_ssl_cert_path);
+> 		}
+> 	} else {
+> 		return (SSL_verify_mode => SSL_VERIFY_PEER);
+> 	}
 
-or, of course, in the client API context. git-svn should probably do the
-latter as a simple workaround.
+Two things that worry me a bit are:
 
--- Brane
+ (1) At the end user UI level, it may look nice to accept some form
+     of --no-option-name to say "I have been using SSL against my
+     server with handrolled cert, and I want to keep using the
+     verify-none option"; "--ssl-cert-path=" looks somewhat ugly.
+     The same goes for [sendemail] ssl_cert_path = "" config.
 
--- 
-Branko Čibej | Director of Subversion
-WANdisco // Non-Stop Data
-e. brane@wandisco.com
-
---------------080303090603040508080505
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-  </head>
-  <body bgcolor="#FFFFFF" text="#000000">
-    <div class="moz-cite-prefix">On 06.07.2013 02:34, Branko Čibej
-      wrote:<br>
-    </div>
-    <blockquote cite="mid:51D7660F.6070901@wandisco.com" type="cite">
-      <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-      In the meantime, it might be a good idea to relax the restrictions
-      in git-svn to account for the way the HTTPv2 protocol works.<br>
-    </blockquote>
-    <br>
-    By the way, this section of the 1.8 release notes is relevant:<br>
-    <br>
-<a class="moz-txt-link-freetext" href="http://subversion.apache.org/docs/release-notes/1.8.html#neon-deleted">http://subversion.apache.org/docs/release-notes/1.8.html#neon-deleted</a><br>
-    <br>
-    In 1.8 there is a client-side configuration option called
-    http-bulk-updates that controls how the client will request data
-    from the server. It can be set in the ~/.subversion/servers file, or
-    on the comand-line by the option<br>
-    <pre>    --config-option=servers:global:http-bulk-updates=on
-</pre>
-    or, of course, in the client API context. git-svn should probably do
-    the latter as a simple workaround.<br>
-    <br>
-    -- Brane<br>
-    <br>
-    <div class="moz-signature">-- <br>
-      <span style="font-face:sans-serif;font-size:9pt;line-height:18pt">Branko
-        Čibej <span style="color: #f90">|</span> <span
-          style="font-weight:bold">Director of Subversion</span>
-        <br>
-        WANdisco <span style="color: #f90">//</span> <span
-          style="font-style:oblique">Non-Stop Data</span>
-        <br>
-        <span style="color: #ccc">e.</span> <a class="moz-txt-link-abbreviated" href="mailto:brane@wandisco.com">brane@wandisco.com</a></span></div>
-  </body>
-</html>
-
---------------080303090603040508080505--
+ (2) How loudly does the new code barf when no configuration is done
+     (i.e. we just pass SSL_VERIFY_PEER and let the system default
+     CA path to take effect) and the server cert does not validate?
+     The warning that triggered this thread, if we had the
+     configuration mechanism we have been designing together, would
+     have been a good reminder for the user to use it, but would we
+     give a similar (less noisy is fine, as long as it is clear)
+     diagnostic message?
