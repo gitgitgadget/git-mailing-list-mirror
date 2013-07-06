@@ -1,100 +1,56 @@
-From: David Rothenberger <daveroth@acm.org>
+From: Daniel Shahaf <danielsh@apache.org>
 Subject: Re: git-svn "Temp file with moniker 'svn_delta' already in use" and
  skelta mode
-Date: Fri, 05 Jul 2013 19:02:25 -0700
-Message-ID: <51D77AB1.9020708@acm.org>
-References: <kr7beq$ilk$1@ger.gmane.org> <E82AC74E-3294-415D-8E59-97DDD213B11A@gmail.com> <51D75196.4030100@acm.org> <5675CCAE-F4E8-48B7-8B63-BE91AAE09DD5@gmail.com>
+Date: Sat, 6 Jul 2013 02:04:07 +0000
+Message-ID: <20130706020407.GA26200@minotaur.apache.org>
+References: <kr6uvc$p8a$1@ger.gmane.org>
+ <51D7072A.6080909@wandisco.com>
+ <kr75h0$qg5$1@ger.gmane.org>
+ <51D7362B.1040803@wandisco.com>
+ <kr7il5$n0p$1@ger.gmane.org>
+ <51D7660F.6070901@wandisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Kyle McKay <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 06 04:02:36 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvHpc-0006Tf-7E
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Jul 2013 04:02:36 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752551Ab3GFCC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jul 2013 22:02:28 -0400
-Received: from qmta07.emeryville.ca.mail.comcast.net ([76.96.30.64]:48447 "EHLO
-	qmta07.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752524Ab3GFCC1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Jul 2013 22:02:27 -0400
-Received: from omta12.emeryville.ca.mail.comcast.net ([76.96.30.44])
-	by qmta07.emeryville.ca.mail.comcast.net with comcast
-	id wprM1l0030x6nqcA7q2TRF; Sat, 06 Jul 2013 02:02:27 +0000
-Received: from [10.249.1.104] ([24.16.16.7])
-	by omta12.emeryville.ca.mail.comcast.net with comcast
-	id wq2R1l00E098amo8Yq2SWA; Sat, 06 Jul 2013 02:02:26 +0000
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <5675CCAE-F4E8-48B7-8B63-BE91AAE09DD5@gmail.com>
-X-Enigmail-Version: 1.5.1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1373076147;
-	bh=Ph+j1DEtG9p6mHQPhRPE6jz7e40hTMUsuRKaXgUdG4w=;
-	h=Received:Received:Message-ID:Date:From:MIME-Version:To:Subject:
-	 Content-Type;
-	b=hNj2TSrX3vZ77lIVsBdXR15fn/eVpVtmNtCns2bsWUszeW5mrDsYgEduT1la6EmqM
-	 nd3YAbjZaCkjsdOXCvP4H90FaYusSS9cVN9QrKZjWAp6Brn9XKy4sK5+B/4mpr0G2d
-	 /rDsaNVwvGOwWYSXb9nimhFNv0UIjS5F5CM8vyA5tcmBtrpR7ILguBp2liZQ7J9VpA
-	 3srNo4KGQMKdl/pEpqAkx0Y0Q3UOJDy8/bwTUdRmK/dwiWuECLFr2iKx/p7G+5AJoM
-	 subFmilwEs0i4zw4W0FAqCb66wblFhTIYI41NO0zXY+qzQ1TajUZs9N/QQNu4vjcJW
-	 okOOH6YpZYu5A==
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: wSubversion Development <dev@subversion.apache.org>,
+	git@vger.kernel.org
+To: Branko =?utf-8?B?xIxpYmVq?= <brane@wandisco.com>
+X-From: dev-return-27431-gcvsd-dev=m.gmane.org@subversion.apache.org Sat Jul 06 04:04:11 2013
+Return-path: <dev-return-27431-gcvsd-dev=m.gmane.org@subversion.apache.org>
+Envelope-to: gcvsd-dev@plane.gmane.org
+Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
+	by plane.gmane.org with smtp (Exim 4.69)
+	(envelope-from <dev-return-27431-gcvsd-dev=m.gmane.org@subversion.apache.org>)
+	id 1UvHr7-0007ut-Hy
+	for gcvsd-dev@plane.gmane.org; Sat, 06 Jul 2013 04:04:09 +0200
+Received: (qmail 45474 invoked by uid 500); 6 Jul 2013 02:04:08 -0000
+Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229687>
+List-Help: <mailto:dev-help@subversion.apache.org>
+List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
+List-Post: <mailto:dev@subversion.apache.org>
+List-Id: <dev.subversion.apache.org>
+Delivered-To: mailing list dev@subversion.apache.org
+Received: (qmail 45465 invoked by uid 99); 6 Jul 2013 02:04:08 -0000
+Received: from minotaur.apache.org (HELO minotaur.apache.org) (140.211.11.9)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Sat, 06 Jul 2013 02:04:08 +0000
+Received: by minotaur.apache.org (Postfix, from userid 3316)
+	id 0BB96108E2; Sat,  6 Jul 2013 02:04:08 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <51D7660F.6070901@wandisco.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229688>
 
-On 7/5/2013 6:01 PM, Kyle McKay wrote:
-> On Jul 5, 2013, at 16:07, David Rothenberger wrote:
->> On 7/5/2013 3:58 PM, Kyle McKay wrote:
->>> On Jul 5, 2013, at 13:48, David Rothenberger wrote:
->>>> I recently upgraded my Subversion server to 1.8.0 and started
->>>> receiving the following error from "git svn fetch":
->>>>
->>>> Temp file with moniker 'svn_delta' already in use at
->>>> /usr/lib/perl5/vendor_perl/5.10/Git.pm line 1024.
->>>>
->>>> This occurs only when using an http:// URL; svn:// URLs work fine.
->>> [snip]
->>>> The client is Cygwin: svn version 1.8.0 and git version
->>>> 1.8.3.2.
->>>
->>> The subversion 1.8 release has removed the neon library, all svn client
->>> http access now always goes through the serf library.  If you put
->>> "http-library = serf" in the "[global]" section of the
->>> "~/.subversion/servers" file you will get the 'svn_delta' error with
->>> git-svn when running earlier versions of the svn client as well.
->>
->> That was not my experience. I did try this with the 1.7 perl bindings
->> and libraries and with "http-library = serf" in by servers and it worked
->> fine. I confirmed that serf was being used with a Wireshark trace.
-> 
-> I had it always fail right away from my home ISP (kinda slow
-> connection), but when running on a host with quite a different internet
-> connection it would sometimes run for a while before generating the
-> error (maybe a couple hundred revisions fetched) for some sources, but
-> it would *always* eventually fail.
-> 
-> For this reason I also believe the problem is timing sensitive.
-> 
-> Try doing "git svn clone --quiet
-> http://dev.heuristiclab.com/svn/hl/core" with "~/.subversion/servers"
-> section "[global]" including "http_library = serf".  I find this one
-> always seems to fail right away for me with git-svn over serf but will
-> clone fine over neon (if you can stand to wait long enough).
+On Sat, Jul 06, 2013 at 02:34:23AM +0200, Branko Čibej wrote:
+> http://subversion.apache.org/docs/release-notes/1.7.html#svnrdump
+> In other words, this is a limitation of the Serf-based backend that has
+> been around since Subversion 1.4. I'm aware that it isn't documented as
+> well as it should be, but the bulk-mode workaround exists in part as a
+> workaround for that, effectively disabling the more efficient HTTPv2
+> protocol.
 
-Yes, you're right. That one fails for me too with 1.7, although I note
-that the server itself is running 1.5. Still, the reason is the same --
-a non-depth-first drive of the delta editor from serf.
+Is it possible to set "SVNAllowBulkUpdates Prefer" on a per-client basis?
 
--- 
-David Rothenberger  ----  daveroth@acm.org
-
-"If Diet Coke did not exist it would have been necessary to invent it."
-                -- Karl Lehenbauer
+That would require two things: (1) for git-svn to identify itself as such via
+the User-Agent string, (2) for httpd to support making the SVNAllowBulkUpdates
+directive conditional on a request header.
