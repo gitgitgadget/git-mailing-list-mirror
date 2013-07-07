@@ -1,91 +1,67 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 2/2] send-email: introduce sendemail.smtpsslcertpath
-Date: Sun, 7 Jul 2013 10:02:01 +0100
-Message-ID: <20130707090200.GQ9161@serenity.lan>
-References: <1373025947-26495-1-git-send-email-artagnon@gmail.com>
- <1373025947-26495-3-git-send-email-artagnon@gmail.com>
- <20130705124536.GU862789@vauxhall.crustytoothpaste.net>
- <7vobag7wl0.fsf@alter.siamese.dyndns.org>
- <20130705174730.GM9161@serenity.lan>
- <7vehbc7tcc.fsf@alter.siamese.dyndns.org>
- <20130705184333.GN9161@serenity.lan>
- <7v1u7c6w7z.fsf@alter.siamese.dyndns.org>
- <20130706114600.GP9161@serenity.lan>
- <7vppuv57ps.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] test-lib.sh - cygwin does not have usable FIFOs
+Date: Sun, 07 Jul 2013 11:14:12 +0200
+Message-ID: <51D93164.8030202@web.de>
+References: <1372975470-13573-1-git-send-email-mlevedahl@gmail.com> <20130707005558.GI30132@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 07 11:02:34 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 07 11:14:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvkrZ-0003ME-DL
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 11:02:33 +0200
+	id 1Uvl33-0004HW-CY
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 11:14:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751925Ab3GGJCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jul 2013 05:02:15 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:33688 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751788Ab3GGJCO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jul 2013 05:02:14 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id E80246064FD;
-	Sun,  7 Jul 2013 10:02:13 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IQwV0pgSHi3a; Sun,  7 Jul 2013 10:02:11 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 3D8296064C7;
-	Sun,  7 Jul 2013 10:02:11 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 122CD161E472;
-	Sun,  7 Jul 2013 10:02:11 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ifZpuxb1mRse; Sun,  7 Jul 2013 10:02:09 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 4CD33161E47E;
-	Sun,  7 Jul 2013 10:02:02 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7vppuv57ps.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751788Ab3GGJOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jul 2013 05:14:17 -0400
+Received: from mout.web.de ([212.227.17.11]:62733 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751683Ab3GGJOQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jul 2013 05:14:16 -0400
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0MJkt6-1UwrVQ420S-001BD4; Sun, 07 Jul 2013 11:14:13
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <20130707005558.GI30132@google.com>
+X-Provags-ID: V03:K0:5ysPgk6pXmznKVn1K9rKNOEc5ky1Ajtz4scdIP2T84SDylfEgaX
+ T8cqGtAnowcUiqpwFrcaVIdDOD5Lo8fWx/WE2025bHPf09dpyrxq40u0A+lbOc5/OQbPbEE
+ +KT6GiLzKW/SMLEwIk2DF8h6Hftb2GwDsCUfJU05Nm9EoLHlX87iv/a9J6Op9P9qV/Lorfg
+ hkHZzB5Sd9A3HdmP+NHfw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229757>
 
-On Sat, Jul 06, 2013 at 09:12:31PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
+On 2013-07-07 02.55, Jonathan Nieder wrote:
+> Mark Levedahl wrote:
 > 
-> > @@ -1096,19 +1101,18 @@ sub smtp_auth_maybe {
-> >  # Helper to come up with SSL/TLS certification validation params
-> >  # and warn when doing no verification
-> >  sub ssl_verify_params {
-> > -	use IO::Socket::SSL qw(SSL_VERIFY_PEER SSL_VERIFY_NONE);
-> > -
-> > -	if (!defined $smtp_ssl_cert_path) {
-> > -		$smtp_ssl_cert_path = "/etc/ssl/certs";
-> > +	if ($smtp_ssl_verify == 0) {
-> > +		return (SSL_verify_mode => IO::Socket::SSL->SSL_VERIFY_NONE);
+>> Do not use FIFOs on cygwin, they do not work. Cygwin includes
+>> coreutils, so has mkfifo, and that command does something. However,
+>> the resultant named pipe is known (on the Cygwin mailing list at
+>> least) to not work correctly.
 > 
-> I do not see any "use IO::Socket::SSL" anywhere after applying this
-> patch.  Is this expected to work?
+> Hm.  How would you recommend going about writing a script that takes
+> output from a command, transforms it, and then feeds it back into
+> that command's input?  Are sockets a more reliable way to do this kind
+> of IPC on Cygwin?
+> 
+> See reinit_git and try_dump from t9010-svn-fe.sh for context.
+> 
+> Thanks,
+> Jonathan
 
-I don't get any errors about unknown variables when running it.  Do we
-get IO::Socket::SSL imported through Net::SMTP::SSL, which extends it?
+t9010 needs PIPE in most test cases as a prerequisite.
+And if PIPE isn't available, the tests can not be run.
+
+Are you suggesting to replace the named pipes with a TCP socket?
+
+Disabling PIPE under cygwin seems to be the right thing to do,
+or do I miss something ?
+
+/Torsten
