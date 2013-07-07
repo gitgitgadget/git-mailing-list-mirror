@@ -1,98 +1,102 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 3/4] cat-file: add --batch-disk-sizes option
-Date: Sun, 7 Jul 2013 21:15:41 +0000
-Message-ID: <20130707211538.GB6478@vauxhall.crustytoothpaste.net>
-References: <20130707100133.GA18717@sigill.intra.peff.net>
- <20130707100949.GC19143@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] name-rev: strip trailing ^0 in when --name-only
+Date: Sun, 07 Jul 2013 15:03:27 -0700
+Message-ID: <7vtxk62fkg.fsf@alter.siamese.dyndns.org>
+References: <1373200996-9753-1-git-send-email-artagnon@gmail.com>
+	<1373200996-9753-3-git-send-email-artagnon@gmail.com>
+	<7vd2qu44mm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JYK4vJDZwFMowpUq"
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jul 07 23:16:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 08 00:03:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvwJZ-0000NV-64
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 23:16:13 +0200
+	id 1Uvx3P-0006or-P5
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 00:03:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753180Ab3GGVPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jul 2013 17:15:53 -0400
-Received: from qmta06.westchester.pa.mail.comcast.net ([76.96.62.56]:36496
-	"EHLO qmta06.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753170Ab3GGVPw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Jul 2013 17:15:52 -0400
-Received: from omta07.westchester.pa.mail.comcast.net ([76.96.62.59])
-	by qmta06.westchester.pa.mail.comcast.net with comcast
-	id xZED1l0031GhbT856ZFmZm; Sun, 07 Jul 2013 21:15:46 +0000
-Received: from castro.crustytoothpaste.net ([173.11.243.49])
-	by omta07.westchester.pa.mail.comcast.net with comcast
-	id xZFl1l00W14fh3h3TZFlTb; Sun, 07 Jul 2013 21:15:46 +0000
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E394928073;
-	Sun,  7 Jul 2013 21:15:44 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20130707100949.GC19143@sigill.intra.peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.10-rc7-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1373231746;
-	bh=pzcrtFmJSCdJ9+JEpwTS78i0cEf4Hbqu/ZxrEZB2WeA=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=SmKGsj4tlU4d1gJtAtqJjV/Cz9Na9ecFCyTJe0etgx4oPou8dC1+6mRW17+AHOJmU
-	 0V7DYJv7gf9gaOXXphvlEi0x5zmMbQSfpR9gUuJbmvvnWMlSt/O5iWW8FdW4SuiGe2
-	 oU6/weT08mk+RE6mxC+2z4feM/v/S744rjSOuBKDX4sdVlk53p5W2nSDro6RjsSEN5
-	 FWFjdhRxqeMtgxyOiULOsf6cUZZZLPDTOngAX4tpfJCQRG6LkNMB9/GOKcMXDJYTWZ
-	 2LljpYB5ucl29Rf8RJHFcmxbCZ+bRGgmtLqnaDHdIYk9FcAqeAc3ZarJlbUkJdUjHj
-	 0k1CbTRBdDlRQ==
+	id S1753234Ab3GGWDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jul 2013 18:03:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33752 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753171Ab3GGWDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jul 2013 18:03:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6EB502F712;
+	Sun,  7 Jul 2013 22:03:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=z/ZgFR1t7S8ty6q4NVPFObXM5kQ=; b=W8EwNw
+	0BgDgrHU5QOQbZq5yEGlXIQ6IYGqagE8wHM3s3FefTYYzQfu2mrwKxT3a0sk81Ed
+	+cYo9st4PVzmvhMPHrxCjcDYlO9ERiK1bLJH4gkldJA5cnaDGtgDm6I8KimEKzcO
+	ivTG5CV3acjZIot5PaepkOS3++hKWrEZ+jOUE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UKlODikpXT1+bToE3Cu5dyn/NCFldxDG
+	KzptD6IsR5ylrxpebWYiCsZQGnX+j3IEEG3ohYdVdGjqq+uqPDNXunDaXFYZROil
+	ydgvbNK78XshW0ptb73Ox8hzcISMyn1F273pQS4viEyYJhFVN/0jMTQrPvltnOtX
+	cgjI9yR4eU0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 652CA2F711;
+	Sun,  7 Jul 2013 22:03:29 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C298A2F70F;
+	Sun,  7 Jul 2013 22:03:28 +0000 (UTC)
+In-Reply-To: <7vd2qu44mm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 07 Jul 2013 11:16:49 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0E045544-E751-11E2-9E0B-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229807>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---JYK4vJDZwFMowpUq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> WRT "describe --contains", I do agree that both of these
+>
+>     $ git describe $(git rev-parse v1.8.3^0)
+>     $ git describe --contains $(git rev-parse v1.8.3^0)
+>         
+> should just say "v1.8.3" without ~0/^0/~0~0~0 etc. and the last
+> example you showed will be improved by dropping ^0 at the end.
+>
+> However.
+>
+> I was a bit bothered by the description talking _only_ about
+> describe, but the actual change is to modify what name-rev gives its
+> direct users as well.  And that made me realize that the patch
+> itself has an undesirable side effect.
+>
+> "describe" is _only_ about commit history graph, so in its context
+> v1.8.3 means the same thing as v1.8.3^0 (we never want to get a tag;
+> we always want a commit).  But I do not think "name-rev" is limited
+> to commits, in the sense that you would see this:
+>
+>     $ git rev-parse v1.8.3 v1.8.3^0 | git name-rev --stdin
+>     8af06057d0c31a24e8737ae846ac2e116e8bafb9
+>     edca4152560522a431a51fc0a06147fc680b5b18 (tags/v1.8.3^0)
+>
+> The second object is _not_ v1.8.3 but is v1.8.3^0 in the context of
+> name-rev, whose purpose is to give you a string you can feed
+> "rev-parse" and get the object name back.  "rev-parse v1.8.3" will
+> not give you the commit object name, so you need to keep "^0".
 
-On Sun, Jul 07, 2013 at 06:09:49AM -0400, Jeff King wrote:
-> +NOTE: The on-disk size reported is accurate, but care should be taken in
-> +drawing conclusions about which refs or objects are responsible for disk
-> +usage. The size of a packed non-delta object be much larger than the
+Well, the code in "name-rev" other than --stdin mode is already
+broken (and the documentation half-describes this breakage) in that
+it describes the peeled commit and rejects anything other than
+commit objects.  The reason I say "half-describes" is that it only
+says that the command takes "commit-ish" and leaves it unclear if it
+comes up with a name for the tag itself that happens to be
+commit-ish, or it does so for the commit that is referred by the
+tag.
 
-You probably meant "may be" here.               ^
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---JYK4vJDZwFMowpUq
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBCgAGBQJR2dp6AAoJEL9TXYEfUvaLiFEP/j7pTnkRlIcMhkURI6n60hTV
-9aJ0KMCiBIk1EY090WUr+LFAldbUwPm0XNRMRUj1z+77dTsWyoDSq3zatOKQaQzj
-iVaUKX9gPFiV+iu1hQpPK3XKcvOXHrpiiNmsXsQQmEW2g6unR+K40VFoVrkLEQFO
-bi1APbU9QXo8zvFzO2jKcEnwdzHREGJ0hVDcEtOhVrfMxcIiKbaa7nJEqezZYYsD
-g+hzI251U0uMENm+q0gFU8UmgaC3l5G36zKAamVz5ZzsPPGeDVjA2vlY290PC3xm
-IE2J1mOybz2RJOXaXhtmLB3Rr0S/duLKrbGfdoA4mUo6SFuj7lQwKNlzl2NIfVIi
-65LnROzM1PnKKc4oAhiL0NcCVConYwZHFerSaZzuZ+LveuBAqAYZ7hTcE4otK958
-23WfARSa8BvVNSnPXVq7EGE6b4JOwuvwlk7fnXluqyGEwlkdkB+/qfmOebkt0HvP
-YkDUnt9P+eDySjFbT+YWyPoZb6UhHTz/qdPNM7qQfv9FzMkNDQHT4k9u/dkkHZ1/
-DMCNfJ1Nk/ZYD/S2JDwsdMzlgYT/GSxcwy36XyJUwep1qSIJRr5TtilJ6TOgzE04
-loMpN93VjDoRDlXBpzsB3CATqMqv2bwy2RyH5IOjdOfQRVGDtv24HhxtvqtTQSRZ
-Nq+n2WEcRbH0gMlZNhzV
-=c7Rh
------END PGP SIGNATURE-----
-
---JYK4vJDZwFMowpUq--
+I'll send out a WIP to fix that, and also help the topic to strip
+unnecessary "^0" suffix when name-rev is run as an implementation
+detail of "describe" shortly.
