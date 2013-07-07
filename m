@@ -1,108 +1,66 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 09/16] documentation: add documentation for the bitmap format
-Date: Sun, 7 Jul 2013 10:27:01 -0700
-Message-ID: <CAJo=hJsUr1osy5rDZja1WBAgzczY5Yp0CJuLoAQs7J59PsX7Zw@mail.gmail.com>
-References: <1372116193-32762-10-git-send-email-tanoku@gmail.com>
- <CAJo=hJtcQwh-N-9_i84y1ZsL0mdREHcxhP2gepcrREiaxvxS6A@mail.gmail.com>
- <CAFFjANRwBBcORhu4mwjESBfr4GJ3zDrgYvUhY=VxK9abv7k2MA@mail.gmail.com>
- <7vtxkl28m7.fsf@alter.siamese.dyndns.org> <CAFFjANRqZ0U5tGhgjACUtquyVKCyuHiS3CC2Xxwo0J1UJVrf=g@mail.gmail.com>
- <CAJo=hJtJoizQUubriTPvs2bsjvw+N82MCPvw263fUB8vv8_VVA@mail.gmail.com>
- <CAFFjANSr2QRLE8DSPP2zZ_baEZUqR8dzkPzMwqyEqgFX=8cnog@mail.gmail.com>
- <20130627024521.GA6936@sigill.intra.peff.net> <CAJo=hJvOq=CATrDeYAwi+jgkPpqjywWhuKeC1TVYeCXr6NVM6w@mail.gmail.com>
- <CAFFbUKKm89n0HG6xUhYMLs_yjRJ8n0jFtOEEN=vXxJfWKLx5FA@mail.gmail.com> <20130707094646.GA18120@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] lockfile: fix buffer overflow in path handling
+Date: Sun, 07 Jul 2013 10:29:19 -0700
+Message-ID: <7v7gh25le8.fsf@alter.siamese.dyndns.org>
+References: <1373140132-12351-1-git-send-email-mhagger@alum.mit.edu>
+	<20130707041236.GB30898@sigill.intra.peff.net>
+	<51D94225.1010803@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Colby Ranger <cranger@google.com>,
-	=?ISO-8859-1?Q?Vicent_Mart=ED?= <tanoku@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jul 07 19:27:38 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun Jul 07 19:29:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvskA-0006PB-9g
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 19:27:26 +0200
+	id 1Uvsm7-000058-A5
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 19:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752797Ab3GGR1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jul 2013 13:27:22 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:36586 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752736Ab3GGR1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jul 2013 13:27:21 -0400
-Received: by mail-ie0-f176.google.com with SMTP id ar20so8295103iec.21
-        for <git@vger.kernel.org>; Sun, 07 Jul 2013 10:27:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=UOQdpl1pYG9a5BdZ/beMHa6rj+sxsiPNvmr96mi6Vwo=;
-        b=XkoPBRAws9ot0Y10Q5NgHjsY1j3rpCTX/MEECxcjM1Q5oNXFJuGktARUos1K3Csw5J
-         pTwNsVR3ZQRQPdFD2oH+GJ5SJ9UMIlzNHRBQa3PSrFrNYTLUvRSI/FhH6YQinqaWmMJj
-         fGLmMGUTQaauDU5YkllHlOsmNLnw66dBtjkd4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=UOQdpl1pYG9a5BdZ/beMHa6rj+sxsiPNvmr96mi6Vwo=;
-        b=OmVzXmXCNSiYpARI2thcVflyNgvHgUxHE/NvMZgZiv9t5VMGA1FcWrI9eWylaw+VOW
-         PJZiicI+8IQ/hrjM/AT7KOPbMytsu2ltn/xQ77EAWoRGIxxF2LWQEQEKUa1blRKDg4/0
-         oCkh4ZBSL9KEH+3zGLUS2lIZYL1Xctolsh1uOJ2gmzqI+ouR7JWHKj2UD8WzdG950HxM
-         xsCe+Jm2ogj2c4wKtQ/Y6vLkVn59vJQuycE3eMUpGYOJRLKC7yI9sXdibsFEMhbbNS/F
-         7uiF8ygE7EBEoBd7BlwSuGqiJj6GavpLKbE5HaxhgT8dOzhkv6tucUwtHga6+G6R0e2l
-         1Fqw==
-X-Received: by 10.50.225.66 with SMTP id ri2mr7346295igc.55.1373218041149;
- Sun, 07 Jul 2013 10:27:21 -0700 (PDT)
-Received: by 10.64.143.200 with HTTP; Sun, 7 Jul 2013 10:27:01 -0700 (PDT)
-In-Reply-To: <20130707094646.GA18120@sigill.intra.peff.net>
-X-Gm-Message-State: ALoCoQkb3y8NC57Ah4n+LUMudcxrNumLdcRPnED+B9p9nKDI8XRhRL6k0nnHWzqMmn9v9bnn4CCw
+	id S1752801Ab3GGR3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jul 2013 13:29:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35894 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752736Ab3GGR3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jul 2013 13:29:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75E932AB0C;
+	Sun,  7 Jul 2013 17:29:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hTMdEWj/bCqOiiEdXcD1kje7xHk=; b=NIr4q9
+	Dl/nLBIUeqPYqcNpoyN4tehv7bc86CX7cBGpSQ28/iDsyF/UXQHxFd78o7chWmIZ
+	1XhlVTTMr15TwYNMQgiCXOIg052hQvvJvHs5EZigome5c+IsHVK72c/aVZNNykPi
+	PSwEqOAYMH/qbq2fdW/kZF+Lp6kZAOKqECuhw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qS/a0gyHgVSfoagB0CAt8XirjBVsWXHV
+	EWB4TTV5acF2J1pOfRNvJyl9mM6u4qn2wd9jHAzZXaQQoCJ4wYzs6wxgCxNwP6Lb
+	A88ipo+vYJ6Vz+AnmI0YGCNrU2ocevYDDV54n6E63Dek6QW+DRMUlZmN8u8Mw8jn
+	GwswuUW0YBA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D41E2AB0B;
+	Sun,  7 Jul 2013 17:29:22 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2A462AB02;
+	Sun,  7 Jul 2013 17:29:20 +0000 (UTC)
+In-Reply-To: <51D94225.1010803@alum.mit.edu> (Michael Haggerty's message of
+	"Sun, 07 Jul 2013 12:25:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C252428A-E72A-11E2-85FF-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229780>
 
-On Sun, Jul 7, 2013 at 2:46 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Jul 01, 2013 at 11:47:32AM -0700, Colby Ranger wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
+>> But either way, the fix looks good to me.
 >
->> > But I think we are comparing
->> > apples to steaks here, Vincent is (rightfully) concerned about process
->> > startup performance, whereas our timings were assuming the process was
->> > already running.
->> >
->>
->> I did some timing on loading the reverse index for the kernel and it
->> is pretty slow (~1200ms). I just submitted a fix to do a bucket sort
->> and reduced that to ~450ms, which is still slow but much better:
->
-> On my machine, loading the kernel revidx in C git is about ~830ms. I
-> switched the qsort() call to a radix/bucket sort, and have it down to
-> ~200ms. So definitely much better,
+> Yes, the constant is an improvement and Peff's version is also fine with me.
 
-This is a very nice reduction. pack-objects would benefit from it even
-without bitmaps. Since it doesn't require a data format change this is
-a pretty harmless patch to include in Git. We may later conclude
-caching the revidx is worthwhile, but until then a bucket sort doesn't
-hurt. :-)
-
-> though that still leaves a bit to be
-> desired for quick commands. E.g., "git rev-list --count A..B" should
-> become fairly instantaneous with bitmaps, but in many cases the revindex
-> loading will take longer than it would have to simply do the actual
-> traversal.
-
-Yea, we don't know of a way around this. In a few cases the bitmap
-code in JGit is slower than the naive traversal, but these are only on
-small segments of history. I wonder if you could guess which algorithm
-to use by looking at the offsets of A and B using the idx file. If
-they are near each other in the pack, run the naive algorithm without
-bitmaps and revidx. If they are farther apart assume the bitmap would
-help more than traversal and use bitmap+revidx.
-
-Working out what the correct "distance" should be before switching
-algorithms is hard. A and B could be megabytes apart in the pack but A
-could be B's grandparent and traversed in milliseconds. I wonder how
-often that is in practice, certainly if A and B are within a few
-hundred kilobytes of each other the naive traversal should be almost
-instant.
+OK, will squash in.  Thanks both.
