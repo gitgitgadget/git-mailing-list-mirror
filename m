@@ -1,184 +1,132 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] pack-revindex: radix-sort the revindex
-Date: Sun, 7 Jul 2013 06:14:39 -0400
-Message-ID: <20130707101438.GD19143@sigill.intra.peff.net>
-References: <20130707100133.GA18717@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] lockfile: fix buffer overflow in path handling
+Date: Sun, 07 Jul 2013 12:25:41 +0200
+Message-ID: <51D94225.1010803@alum.mit.edu>
+References: <1373140132-12351-1-git-send-email-mhagger@alum.mit.edu> <20130707041236.GB30898@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 07 12:14:49 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jul 07 12:26:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvlzT-0004x8-HI
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 12:14:48 +0200
+	id 1UvmAP-0006mo-JM
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 12:26:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523Ab3GGKOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jul 2013 06:14:43 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46861 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751295Ab3GGKOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jul 2013 06:14:42 -0400
-Received: (qmail 13156 invoked by uid 102); 7 Jul 2013 10:15:56 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 07 Jul 2013 05:15:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Jul 2013 06:14:39 -0400
-Content-Disposition: inline
-In-Reply-To: <20130707100133.GA18717@sigill.intra.peff.net>
+	id S1751792Ab3GGKZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jul 2013 06:25:47 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:49399 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751703Ab3GGKZq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Jul 2013 06:25:46 -0400
+X-AuditID: 1207440c-b7f016d000005997-9d-51d94229c5ed
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id C8.C5.22935.92249D15; Sun,  7 Jul 2013 06:25:45 -0400 (EDT)
+Received: from [192.168.69.140] (p4FDD4B55.dip0.t-ipconnect.de [79.221.75.85])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r67APgu6018829
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 7 Jul 2013 06:25:44 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <20130707041236.GB30898@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqKvpdDPQoPOVlkXXlW4mi4beK8wW
+	P1p6mB2YPZ717mH0uHhJ2ePzJrkA5ihum6TEkrLgzPQ8fbsE7oxD9y8wFvwVrdizup25gXGT
+	YBcjB4eEgInE4dOOXYycQKaYxIV769m6GLk4hAQuM0q0rpvADOGcZZJouvWBGaSKV0Bbom3+
+	VyYQm0VAVeLf62lgcTYBXYlFPc1MIENFBcIkrvxWhSgXlDg58wkLiC0iICvx/fBGRhCbWcBa
+	YsXrw2BjhAWcJTa9+A1WIyRQLPH7L4TNCVSztvcRO8hIZgF1ifXzhCBa5SW2v53DPIFRYBaS
+	DbMQqmYhqVrAyLyKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdQLzezRC81pXQTIyRoeXYwflsn
+	c4hRgINRiYc3oPVGoBBrYllxZe4hRkkOJiVRXh/Hm4FCfEn5KZUZicUZ8UWlOanFhxglOJiV
+	RHhzuYByvCmJlVWpRfkwKWkOFiVxXtUl6n5CAumJJanZqakFqUUwWRkODiUJXhWQoYJFqemp
+	FWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGgGI0vBkYpSIoHaO8nB5C9xQWJuUBRiNZTjLoc
+	B35sec8oxJKXn5cqJc7rBLJDAKQoozQPbgUsRb1iFAf6WJjXDaSKB5je4Ca9AlrCBLSk6/41
+	kCUliQgpqQZGmz+lE/xy9vQt9Nxemz+95Jugs92WGsbmnrZbsbUi21KXB18OYDpwcb9VsoGB
+	rhUbw8mknRbJ8l2P/RO4LUyfrZqf8dlddVHMnhtffrvETdR1kX9yKCt5SZmP3rn8 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229767>
 
-The pack revindex stores the offsets of the objects in the
-pack in sorted order, allowing us to easily find the on-disk
-size of each object. To compute it, we populate an array
-with the offsets from the sha1-sorted idx file, and then use
-qsort to order it by offsets.
+On 07/07/2013 06:12 AM, Jeff King wrote:
+> On Sat, Jul 06, 2013 at 09:48:52PM +0200, Michael Haggerty wrote:
+> 
+>> When and if resolve_symlink() is called, then that function is
+>> correctly told to treat the buffer as (PATH_MAX - 5) characters long.
+>> This part is correct.  However:
+>>
+>> * If LOCK_NODEREF was specified, then resolve_symlink() is never
+>>   called.
+>>
+>> * If resolve_symlink() is called but the path is not a symlink, then
+>>   the length check is never applied.
+>>
+>> So it is possible for a path with length (PATH_MAX - 5 <= len <
+>> PATH_MAX) to make it through the checks.  When ".lock" is strcat()ted
+>> to such a path, the lock_file::filename buffer is overflowed.
+> 
+> Thanks for posting this. I independently discovered this about a month
+> ago while working on an unrelated series, and then let it languish
+> unseen and forgotten at the base of that almost-done series.
+> 
+> So definitely a problem, and my patch looked almost identical to
+> yours. The only difference is:
+> 
+>>  static int lock_file(struct lock_file *lk, const char *path, int flags)
+>>  {
+>> -	if (strlen(path) >= sizeof(lk->filename))
+>> -		return -1;
+>> -	strcpy(lk->filename, path);
+>>  	/*
+>>  	 * subtract 5 from size to make sure there's room for adding
+>>  	 * ".lock" for the lock file name
+>>  	 */
+>> +	if (strlen(path) >= sizeof(lk->filename)-5)
+>> +		return -1;
+>> +	strcpy(lk->filename, path);
+>>  	if (!(flags & LOCK_NODEREF))
+>>  		resolve_symlink(lk->filename, sizeof(lk->filename)-5);
+> 
+> It might be worth consolidating the magic "-5" into a constant near the
+> comment, like this:
+> 
+> diff --git a/lockfile.c b/lockfile.c
+> index c6fb77b..2aeb2bb 100644
+> --- a/lockfile.c
+> +++ b/lockfile.c
+> @@ -124,15 +124,16 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+>  
+>  static int lock_file(struct lock_file *lk, const char *path, int flags)
+>  {
+> -	if (strlen(path) >= sizeof(lk->filename))
+> -		return -1;
+> -	strcpy(lk->filename, path);
+>  	/*
+>  	 * subtract 5 from size to make sure there's room for adding
+>  	 * ".lock" for the lock file name
+>  	 */
+> +	static const size_t max_path_len = sizeof(lk->filename) - 5;
+> +	if (strlen(path) >= max_path_len)
+> +		return -1;
+> +	strcpy(lk->filename, path);
+>  	if (!(flags & LOCK_NODEREF))
+> -		resolve_symlink(lk->filename, sizeof(lk->filename)-5);
+> +		resolve_symlink(lk->filename, max_path_len);
+>  	strcat(lk->filename, ".lock");
+>  	lk->fd = open(lk->filename, O_RDWR | O_CREAT | O_EXCL, 0666);
+>  	if (0 <= lk->fd) {
+> 
+> But either way, the fix looks good to me.
 
-That does O(n log n) offset comparisons, and profiling shows
-that we spend most of our time in cmp_offset. However, since
-we are sorting on a simple off_t, we can use numeric sorts
-that perform better. A radix sort can run in O(k*n), where k
-is the number of "digits" in our number. For a 64-bit off_t,
-using 16-bit "digits" gives us k=4.
+Yes, the constant is an improvement and Peff's version is also fine with me.
 
-On the linux.git repo, with about 3M objects to sort, this
-yields a 400% speedup. Here are the best-of-five numbers for
-running "echo HEAD | git cat-file --batch-disk-size", which
-is dominated by time spent building the pack revindex:
+Michael
 
-          before     after
-  real    0m0.834s   0m0.204s
-  user    0m0.788s   0m0.164s
-  sys     0m0.040s   0m0.036s
-
-On a smaller repo, the radix sort would not be
-as impressive (and could even be worse), as we are trading
-the log(n) factor for the k=4 of the radix sort. However,
-even on git.git, with 173K objects, it shows some
-improvement:
-
-          before     after
-  real    0m0.046s   0m0.017s
-  user    0m0.036s   0m0.012s
-  sys     0m0.008s   0m0.000s
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I think there are probably still two potential issues here:
-
-  1. My while() loop termination probably has issues when we have to use
-     all 64 bits to represent the pack offset (not likely, but...)
-
-  2. We put "int pos[65536]" on the stack. This is a little big, but is
-     probably OK, as I think the usual small stack problems we have seen
-     are always in threaded code. But it would not be a big deal to heap
-     allocate it (it would happen once per radix step, which is only 4
-     times for the whole sort).
-
- pack-revindex.c | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 72 insertions(+), 5 deletions(-)
-
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 77a0465..d2adf36 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -59,11 +59,78 @@ static int cmp_offset(const void *a_, const void *b_)
- 	/* revindex elements are lazily initialized */
- }
- 
--static int cmp_offset(const void *a_, const void *b_)
-+/*
-+ * This is a least-significant-digit radix sort using a 16-bit "digit".
-+ */
-+static void sort_revindex(struct revindex_entry *entries, int n, off_t max)
- {
--	const struct revindex_entry *a = a_;
--	const struct revindex_entry *b = b_;
--	return (a->offset < b->offset) ? -1 : (a->offset > b->offset) ? 1 : 0;
-+	/*
-+	 * We need O(n) temporary storage, so we sort back and forth between
-+	 * the real array and our tmp storage. To keep them straight, we always
-+	 * sort from "a" into buckets in "b".
-+	 */
-+	struct revindex_entry *tmp = xcalloc(n, sizeof(*tmp));
-+	struct revindex_entry *a = entries, *b = tmp;
-+	int digits = 0;
-+
-+	/*
-+	 * We want to know the bucket that a[i] will go into when we are using
-+	 * the digit that is N bits from the (least significant) end.
-+	 */
-+#define BUCKET_FOR(a, i, digits) ((a[i].offset >> digits) & 0xffff)
-+
-+	while (max / (((off_t)1) << digits)) {
-+		struct revindex_entry *swap;
-+		int i;
-+		int pos[65536] = {0};
-+
-+		/*
-+		 * We want pos[i] to store the index of the last element that
-+		 * will go in bucket "i" (actually one past the last element).
-+		 * To do this, we first count the items that will go in each
-+		 * bucket, which gives us a relative offset from the last
-+		 * bucket. We can then cumulatively add the index from the
-+		 * previous bucket to get the true index.
-+		 */
-+		for (i = 0; i < n; i++)
-+			pos[BUCKET_FOR(a, i, digits)]++;
-+		for (i = 1; i < ARRAY_SIZE(pos); i++)
-+			pos[i] += pos[i-1];
-+
-+		/*
-+		 * Now we can drop the elements into their correct buckets (in
-+		 * our temporary array).  We iterate the pos counter backwards
-+		 * to avoid using an extra index to count up. And since we are
-+		 * going backwards there, we must also go backwards through the
-+		 * array itself, to keep the sort stable.
-+		 */
-+		for (i = n - 1; i >= 0; i--)
-+			b[--pos[BUCKET_FOR(a, i, digits)]] = a[i];
-+
-+		/*
-+		 * Now "b" contains the most sorted list, so we swap "a" and
-+		 * "b" for the next iteration.
-+		 */
-+		swap = a;
-+		a = b;
-+		b = swap;
-+
-+		/* And bump our digits for the next round. */
-+		digits += 16;
-+	}
-+
-+	/*
-+	 * If we ended with our data in the original array, great. If not,
-+	 * we have to move it back from the temporary storage.
-+	 */
-+	if (a != entries) {
-+		int i;
-+		for (i = 0; i < n; i++)
-+			entries[i] = tmp[i];
-+	}
-+	free(tmp);
-+
-+#undef BUCKET_FOR
- }
- 
- /*
-@@ -108,7 +175,7 @@ static void create_pack_revindex(struct pack_revindex *rix)
- 	 */
- 	rix->revindex[num_ent].offset = p->pack_size - 20;
- 	rix->revindex[num_ent].nr = -1;
--	qsort(rix->revindex, num_ent, sizeof(*rix->revindex), cmp_offset);
-+	sort_revindex(rix->revindex, num_ent, p->pack_size);
- }
- 
- struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
 -- 
-1.8.3.rc3.24.gec82cb9
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
