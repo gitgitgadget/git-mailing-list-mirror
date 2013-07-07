@@ -1,102 +1,86 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH 3/3] merge-recursive: -Xindex-only to leave worktree unchanged
-Date: Sun, 7 Jul 2013 20:02:40 +0200
-Message-ID: <9733c853e2f674380c64e9b3a6f319414816ef28.1373219466.git.trast@inf.ethz.ch>
-References: <cover.1373219466.git.trast@inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] name-rev doc: rewrite --stdin paragraph
+Date: Sun, 07 Jul 2013 11:04:27 -0700
+Message-ID: <7vhag64578.fsf@alter.siamese.dyndns.org>
+References: <1373200996-9753-1-git-send-email-artagnon@gmail.com>
+	<1373200996-9753-4-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 07 20:03:07 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 07 20:04:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvtIe-0000Tt-62
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 20:03:04 +0200
+	id 1UvtK8-00022g-93
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 20:04:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752914Ab3GGSC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jul 2013 14:02:56 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:25399 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752849Ab3GGSCu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jul 2013 14:02:50 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 7 Jul
- 2013 20:02:42 +0200
-Received: from hexa.v.cablecom.net (46.126.8.85) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 7 Jul
- 2013 20:02:47 +0200
-X-Mailer: git-send-email 1.8.3.2.908.gbd0dbd0
-In-Reply-To: <cover.1373219466.git.trast@inf.ethz.ch>
-X-Originating-IP: [46.126.8.85]
+	id S1752932Ab3GGSEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jul 2013 14:04:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40296 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752530Ab3GGSEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jul 2013 14:04:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D2E72E590;
+	Sun,  7 Jul 2013 18:04:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+NhwK0uBWsKI5lJ1805tC1JyH6E=; b=il2LPG
+	M89T2sQVo0VVvpl6J8TvcnUVo5YjcShBwwalfpOQP4mKnF+gW8LeD0uCYl9jZq5g
+	o+7pwxIq8eOvxEFku6Ngh0K0f43pMrQZdEkFRKxHqKHRPxzPnywIo+9i/nKtEaF0
+	h87h9qXDEDDVzTtuSQJCKEV6NU6clcfgzyzUw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=efG6bWYl37vieiDlXflRKWyc4/PtBwK9
+	ARElyhe3vdQj1M7Mb1SrRXJeoegVpr6FOQR4k8JDcu/e0S5yE5HV9F9sRv+E+TSQ
+	uohHy2ZFk3wyNRnjOplDHBycB2sdEzMdib5FsWdT8dnmVwCPPikmbeYJKUfMNbga
+	CUiN7d5VNKA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 121262E58F;
+	Sun,  7 Jul 2013 18:04:29 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 882842E58C;
+	Sun,  7 Jul 2013 18:04:28 +0000 (UTC)
+In-Reply-To: <1373200996-9753-4-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Sun, 7 Jul 2013 18:13:16 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AA9183D6-E72F-11E2-895A-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229791>
 
-Using the new no_worktree flag from the previous commit, we can teach
-merge-recursive to leave the worktree untouched.  Expose this with a
-new strategy option so that scripts can use it.
----
- Documentation/merge-strategies.txt |  4 ++++
- merge-recursive.c                  |  2 ++
- t/t3030-merge-recursive.sh         | 13 +++++++++++++
- 3 files changed, 19 insertions(+)
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index 49a9a7d..b663a2e 100644
---- a/Documentation/merge-strategies.txt
-+++ b/Documentation/merge-strategies.txt
-@@ -92,6 +92,10 @@ subtree[=<path>];;
- 	is prefixed (or stripped from the beginning) to make the shape of
- 	two trees to match.
- 
-+index-only;;
-+	Write the merge result only to the index; do not touch the
-+	worktree.
-+
- octopus::
- 	This resolves cases with more than two heads, but refuses to do
- 	a complex merge that needs manual resolution.  It is
-diff --git a/merge-recursive.c b/merge-recursive.c
-index b93b762..a58d691 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2094,6 +2094,8 @@ int parse_merge_opt(struct merge_options *o, const char *s)
- 		if ((o->rename_score = parse_rename_score(&score)) == -1 || *score != 0)
- 			return -1;
- 	}
-+	else if (!strcmp(s, "index-only"))
-+		o->no_worktree = 1;
- 	else
- 		return -1;
- 	return 0;
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index 2f96100..2f3a16c 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -296,6 +296,19 @@ test_expect_success 'merge-recursive result' '
- 
- '
- 
-+test_expect_success 'merge-recursive --index-only' '
-+
-+	rm -fr [abcd] &&
-+	git checkout -f "$c2" &&
-+	test_expect_code 1 git merge-recursive --index-only "$c0" -- "$c2" "$c1" &&
-+	git ls-files -s >actual &&
-+	# reuses "expected" from previous test!
-+	test_cmp expected actual &&
-+	git diff HEAD >actual-diff &&
-+	: >expected-diff &&
-+	test_cmp expected-diff actual-diff
-+'
-+
- test_expect_success 'fail if the index has unresolved entries' '
- 
- 	rm -fr [abcd] &&
--- 
-1.8.3.2.908.gbd0dbd0
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  Documentation/git-name-rev.txt | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
+> index 7cde4b3..94bded8 100644
+> --- a/Documentation/git-name-rev.txt
+> +++ b/Documentation/git-name-rev.txt
+> @@ -32,8 +32,10 @@ OPTIONS
+>  	List all commits reachable from all refs
+>  
+>  --stdin::
+> -	Read from stdin, append "(<rev_name>)" to all sha1's of nameable
+> -	commits, and pass to stdout
+> +	Transform stdin by substituting all the 40-character SHA-1
+> +	hexes (say $hex) with "$hex ($rev_name)".  When used with
+> +	--name-only, substitute with "$rev_name", omitting $hex
+> +	altogether.  Intended for the scripter's use.
+>  
+>  --name-only::
+>  	Instead of printing both the SHA-1 and the name, print only
+
+Looks obviously correct and more helpful description.
+
+Thanks.
