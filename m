@@ -1,128 +1,96 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: [PATCH v2 1/2] Git.pm: add new temp_is_locked function
-Date: Sat,  6 Jul 2013 20:39:56 -0700
-Message-ID: <1373168397-7360-2-git-send-email-mackyle@gmail.com>
-References: <1373168397-7360-1-git-send-email-mackyle@gmail.com>
-Cc: David Rothenberger <daveroth@acm.org>, Petr Baudis <pasky@ucw.cz>,
-	Daniel Shahaf <danielsh@apache.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>
+From: David Rothenberger <daveroth@acm.org>
+Subject: Re: [PATCH 0/2] allow git-svn fetching to work using serf
+Date: Sat, 06 Jul 2013 20:44:15 -0700
+Message-ID: <51D8E40F.2020008@acm.org>
+References: <CB53C901-3643-46AE-AA80-CED5E20AC3B7@gmail.com> <51D7C47D.5070700@acm.org> <20130707002804.GF30132@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 07 05:40:43 2013
+X-From: git-owner@vger.kernel.org Sun Jul 07 05:44:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uvfq2-0002xF-Ub
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 05:40:39 +0200
+	id 1Uvfts-0006M0-Pm
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 05:44:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751474Ab3GGDkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jul 2013 23:40:16 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:46397 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751316Ab3GGDkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jul 2013 23:40:06 -0400
-Received: by mail-pd0-f176.google.com with SMTP id t12so3025409pdi.21
-        for <git@vger.kernel.org>; Sat, 06 Jul 2013 20:40:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dsrjF1qj2EkX4IQatSF3rFnBJo0LpU9IkXM5+H3MHTU=;
-        b=RP5XR7YIxrjdnhdJkoJfPDIAK7Ey9NoRmzczNJvPqaEd1wXpk7AnYcPB++oYmuLeq5
-         Bo1+ier9klfBB/ffp53Fy8igHl9PspMiaHrqwhv+nZdswWeenkfYTKh4GYkXmzhqzeqm
-         2rCaCmCDnKOyEq+bM335sZ8PVGtetZK4ThmrFehQMtErchV6qC3TeLcJ3F7VvRpp3lwg
-         p/4lj5G3T8kgjyrP0Q9bRiwjZGRVtJwhsNdgMC31YfwPqCCO4Rk46wTKG7mqVOhb1EfC
-         k2IzqYbCup3FIt4JS1MpVjsPuq11J84PodAPE5VHhxFGi3GWazIkpx8Pa0BgPZAOKNWA
-         Zipg==
-X-Received: by 10.66.228.7 with SMTP id se7mr17297745pac.62.1373168405719;
-        Sat, 06 Jul 2013 20:40:05 -0700 (PDT)
-Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id wg6sm15027459pbc.3.2013.07.06.20.40.04
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 06 Jul 2013 20:40:05 -0700 (PDT)
-In-Reply-To: <1373168397-7360-1-git-send-email-mackyle@gmail.com>
+	id S1751425Ab3GGDod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jul 2013 23:44:33 -0400
+Received: from plane.gmane.org ([80.91.229.3]:42139 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751295Ab3GGDoc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jul 2013 23:44:32 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Uvftl-0006EQ-S4
+	for git@vger.kernel.org; Sun, 07 Jul 2013 05:44:29 +0200
+Received: from c-24-16-16-7.hsd1.wa.comcast.net ([24.16.16.7])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 07 Jul 2013 05:44:29 +0200
+Received: from daveroth by c-24-16-16-7.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 07 Jul 2013 05:44:29 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: c-24-16-16-7.hsd1.wa.comcast.net
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <20130707002804.GF30132@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229723>
 
-From: "Kyle J. McKay" <mackyle@gmail.com>
+On 7/6/2013 5:28 PM, Jonathan Nieder wrote:
+> David Rothenberger wrote:
+>> On 7/5/2013 8:41 PM, Kyle McKay wrote:
+> 
+>>> Daniel Shahaf has suggested also setting
+>>> "servers:global:http-bulk-updates=on".
+>>
+>> I have a patch that does this, but since turning on bulk updates has
+>> a possible performance penalty, I prefer your approach. 
+> 
+> I assume that's because http-bulk-updates defeats caching.  If so,
+> makes sense.
 
-The temp_is_locked function can be used to determine whether
-or not a given name previously passed to temp_acquire is
-currently locked.
+I believe that "bulk updates" means that serf makes one request for a
+lot of information and receives it all in one big response. In "skelta"
+mode, serf makes a single request for a single piece of information. The
+serf authors feel this can lead to improved overall throughput because
+they can pipeline these requests and have multiple connections open at
+the same time.
 
-Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
----
- perl/Git.pm | 39 +++++++++++++++++++++++++++++++++------
- 1 file changed, 33 insertions(+), 6 deletions(-)
+The downside, though, is that serf will do multiple open_file calls in
+parallel as it descends down sibling directories.
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 7a252ef..74d9a73 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -61,7 +61,7 @@ require Exporter;
-                 remote_refs prompt
-                 get_tz_offset
-                 credential credential_read credential_write
--                temp_acquire temp_release temp_reset temp_path);
-+                temp_acquire temp_is_locked temp_release temp_reset temp_path);
- 
- 
- =head1 DESCRIPTION
-@@ -1206,6 +1206,35 @@ sub temp_acquire {
- 	$temp_fd;
- }
- 
-+=item temp_is_locked ( NAME )
-+
-+Returns true if the internal lock created by a previous C<temp_acquire()>
-+call with C<NAME> is still in effect.
-+
-+When temp_acquire is called on a C<NAME>, it internally locks the temporary
-+file mapped to C<NAME>.  That lock will not be released until C<temp_release()>
-+is called with either the original C<NAME> or the L<File::Handle> that was
-+returned from the original call to temp_acquire.
-+
-+Subsequent attempts to call C<temp_acquire()> with the same C<NAME> will fail
-+unless there has been an intervening C<temp_release()> call for that C<NAME>
-+(or its corresponding L<File::Handle> that was returned by the original
-+C<temp_acquire()> call).
-+
-+If true is returned by C<temp_is_locked()> for a C<NAME>, an attempt to
-+C<temp_acquire()> the same C<NAME> will cause an error unless
-+C<temp_release> is first called on that C<NAME> (or its corresponding
-+L<File::Handle> that was returned by the original C<temp_acquire()> call).
-+
-+=cut
-+
-+sub temp_is_locked {
-+	my ($self, $name) = _maybe_self(@_);
-+	my $temp_fd = \$TEMP_FILEMAP{$name};
-+
-+	defined $$temp_fd && $$temp_fd->opened && $TEMP_FILES{$$temp_fd}{locked};
-+}
-+
- =item temp_release ( NAME )
- 
- =item temp_release ( FILEHANDLE )
-@@ -1247,11 +1276,9 @@ sub _temp_cache {
- 	_verify_require();
- 
- 	my $temp_fd = \$TEMP_FILEMAP{$name};
--	if (defined $$temp_fd and $$temp_fd->opened) {
--		if ($TEMP_FILES{$$temp_fd}{locked}) {
--			throw Error::Simple("Temp file with moniker '" .
--				$name . "' already in use");
--		}
-+	if (temp_is_locked($name)) {
-+		throw Error::Simple("Temp file with moniker '" .
-+			$name . "' already in use");
- 	} else {
- 		if (defined $$temp_fd) {
- 			# then we're here because of a closed handle.
+> It's still not clear to me how we know that ra_serf driving the editor
+> in a non depth-first manner is the problem here.  Has that explanation
+> been confirmed somehow?
+
+I did do a trace of "git svn fetch" and observed this non-depth-first
+traversal. It certainly causes the failure we've observed.
+
+> Is there a simple explanation of why violating the depth-first
+> constraint would lead to multiple blob (i.e., file, not directory)
+> deltas being opened in a row without an intervening close?
+
+I believe serf is doing the following for a number of files in parallel:
+ 1. open_file
+ 2. apply_textdelta
+ 3. change_file_prop, change_file_prop, ...
+ 4. close_file
+
+
 -- 
-1.8.3
+David Rothenberger  ----  daveroth@acm.org
+
+Nusbaum's Rule:
+        The more pretentious the corporate name, the smaller the
+        organization.  (For instance, the Murphy Center for the
+        Codification of Human and Organizational Law, contrasted
+        to IBM, GM, and AT&T.)
