@@ -1,97 +1,94 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/3] name-rev: strip trailing ^0 in when --name-only
-Date: Sun,  7 Jul 2013 18:13:15 +0530
-Message-ID: <1373200996-9753-3-git-send-email-artagnon@gmail.com>
-References: <1373200996-9753-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 07 14:47:31 2013
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: git subtree push-all and pull-all
+Date: Sun, 7 Jul 2013 14:54:30 +0200
+Message-ID: <20130707125430.GA23197@paksenarrion.iveqy.com>
+References: <CALemSr4Z+p7v_wQn7EOFTVHjtMYgxqGSBZf3zU5pn-eW_SEG5A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Gareth Collins <gareth.o.collins@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 07 14:54:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvoNB-0007dr-Rc
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 14:47:26 +0200
+	id 1UvoTt-0004f6-Ax
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 14:54:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751899Ab3GGMrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jul 2013 08:47:21 -0400
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:61510 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751781Ab3GGMrU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jul 2013 08:47:20 -0400
-Received: by mail-pb0-f51.google.com with SMTP id um15so3438404pbc.10
-        for <git@vger.kernel.org>; Sun, 07 Jul 2013 05:47:19 -0700 (PDT)
+	id S1751820Ab3GGMyB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Jul 2013 08:54:01 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:60905 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751732Ab3GGMyA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jul 2013 08:54:00 -0400
+Received: by mail-la0-f54.google.com with SMTP id ec20so3038954lab.41
+        for <git@vger.kernel.org>; Sun, 07 Jul 2013 05:53:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=FCruyzHNEona8fpBOUyvR8cXF7LfD4k+TEwPu7aIea4=;
-        b=edHpEMU092ir6sFXfqIrBsl/i7LqDfFWcWCEwKBg44LgOCxuN/PyycpR5CbQWfWKl5
-         nqSNBwGj+xbZtkZVvkQgkmGM3cXqg1JzjjFPlNhvbdjRBF48XSt/XyuxGvHIJOY0CCfh
-         7Kot8zvGF2jPT8Rrw8ldljPYj1t8ketaPB4l7OJAi9ZwN2toV6Ah0cbWxA9RHE+WEuPs
-         +5i9o4xA4PKWaDSl5oYxe25rYrOKW37nS4l3SaeDL5Bs9O3bHMQKhjeLJ5uXtXTsJL+j
-         PkTMNpLoFfpzOvJHzQjT52dL3mv6OIrDpkPJo7BkgI+i7wIUEmVC82j65+05jKKwhjl8
-         npwg==
-X-Received: by 10.66.155.102 with SMTP id vv6mr18924257pab.60.1373201239703;
-        Sun, 07 Jul 2013 05:47:19 -0700 (PDT)
-Received: from localhost.localdomain ([122.174.59.189])
-        by mx.google.com with ESMTPSA id eq5sm17024014pbc.15.2013.07.07.05.47.15
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=sUnCHqWhM9gn5I086UhebkiL466XlzzN11R/vr1jBG4=;
+        b=mm7M8GonAKx7jz/VkvLaEHyOAGV+yL/hJ6xZZMjzCdJTer36pzq7ZuTEZGWoOBmEYx
+         iOD58YIqCzLMKuHSD3HKe3Fj9yoVK4qGsvkLIkxtBHmo4mkZMP2TGpejSO/kAfODlXxh
+         zK4OP7lByeeffUlZ65/vdjShT1L6fjY9/MNeszCNowUJ/Hj5A/ckmx4nLVAa9KzmGO7P
+         ApiaRMjG6i7N+DznrPo5nAkNBXWH9NvBXFHzbWScF68rXZbYL0see2R/TZYWWjzetj0K
+         sYjm3CdHGK+Cp7r/0dv9sK8pDb1NXK5LxsqA0GzODFjHlTAFytXNhWQHgiUq/I07wVJh
+         OZrA==
+X-Received: by 10.152.3.74 with SMTP id a10mr8548538laa.74.1373201638303;
+        Sun, 07 Jul 2013 05:53:58 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id et10sm5800871lbc.6.2013.07.07.05.53.57
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 07 Jul 2013 05:47:19 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.2.737.gcbc076a.dirty
-In-Reply-To: <1373200996-9753-1-git-send-email-artagnon@gmail.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 07 Jul 2013 05:53:57 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1UvoU2-0000pv-Jj; Sun, 07 Jul 2013 14:54:30 +0200
+Content-Disposition: inline
+In-Reply-To: <CALemSr4Z+p7v_wQn7EOFTVHjtMYgxqGSBZf3zU5pn-eW_SEG5A@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229772>
 
-236157 (Teach git-describe how to run name-rev, 2007-05-21) introduced
-`git name-rev --name-only`, with the intent of using it to implement
-`git describe --contains`.  According to the message, one of the primary
-objectives of --name-only was to make the output of name-rev match that
-of describe.
+On Wed, Jul 03, 2013 at 03:56:36PM -0400, Gareth Collins wrote:
+> Hello,
+>=20
+> I see over the last year (on the web and in this mailing list) there
+> was some activity to extend subtree with a .gittrees file and
+> push-all/pull-all commands.
+>=20
+> Perhaps I missed it, but looking through the latest git code on the
+> github mirror I can't find any reference to the .gittrees file or
+> these commands.
+>=20
+> Does anyone know the status of this feature? Was it decided that this
+> was a bad idea and the feature has been rejected? Or is this a featur=
+e
+> still "cooking"...which will likely make it into git mainline at some
+> point?
+>=20
+> I ask because I would like to use something like this to be able to
+> keep a combined repository and separate project repositories in sync.
+> Of course, if it was decided that this feature is fundamentally a bad
+> idea then I will do something different.
+>=20
+> Any pointers would be a big help.
+>=20
+> thanks in advance,
+> Gareth Collins
 
-  $ git describe --contains --all master
-  master
+Still no answer to this? I suggest that you CC the persons discussing
+this the last time.
 
-  $ git describe --contains --all master~1
-  master~1
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
 
-  $ git describe --contains --all v1.8.3~1
-  v1.8.3~1
-
-  $ git describe --contains --all v1.8.3
-  v1.8.3^0
-
-The last invocation unnecessarily prints a trailing "^0" (--stdin does
-not suffer from this defect).  Fix this.
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- builtin/name-rev.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 37207a9..8ba5d72 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -186,7 +186,14 @@ static void show_name(const struct object *obj,
- 	if (!name_only)
- 		printf("%s ", caller_name ? caller_name : sha1_to_hex(sha1));
- 	name = get_rev_name(obj);
--	if (name)
-+
-+	if (name && name_only) {
-+		/* strip possible trailing ^0 from name */
-+		int len = strlen(name);
-+		if (len > 2 && !strcmp(name + len - 2, "^0"))
-+			len -= 2;
-+		printf("%.*s\n", len, name);
-+	} else if (name)
- 		printf("%s\n", name);
- 	else if (allow_undefined)
- 		printf("undefined\n");
--- 
-1.8.3.2.737.gcbc076a.dirty
+tel: 0733-608274
+e-post: iveqy@iveqy.com
