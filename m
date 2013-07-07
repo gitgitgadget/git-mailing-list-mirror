@@ -1,126 +1,84 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 08/22] tree.c: use index api
-Date: Sun,  7 Jul 2013 10:11:46 +0200
-Message-ID: <1373184720-29767-9-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH 09/22] name-hash.c: use index api
+Date: Sun,  7 Jul 2013 10:11:47 +0200
+Message-ID: <1373184720-29767-10-git-send-email-t.gummerer@gmail.com>
 References: <1373184720-29767-1-git-send-email-t.gummerer@gmail.com>
 Cc: trast@inf.ethz.ch, mhagger@alum.mit.edu, gitster@pobox.com,
 	pclouds@gmail.com, robin.rosenberg@dewire.com, t.gummerer@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 07 10:13:16 2013
+X-From: git-owner@vger.kernel.org Sun Jul 07 10:13:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uvk5r-0006Au-Ny
+	id 1Uvk5s-0006Au-AM
 	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 10:13:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997Ab3GGINE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jul 2013 04:13:04 -0400
-Received: from mail-ee0-f42.google.com ([74.125.83.42]:34067 "EHLO
-	mail-ee0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751851Ab3GGIMv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jul 2013 04:12:51 -0400
-Received: by mail-ee0-f42.google.com with SMTP id c4so2229762eek.1
-        for <git@vger.kernel.org>; Sun, 07 Jul 2013 01:12:50 -0700 (PDT)
+	id S1752001Ab3GGING (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jul 2013 04:13:06 -0400
+Received: from mail-ea0-f172.google.com ([209.85.215.172]:52218 "EHLO
+	mail-ea0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751781Ab3GGIMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jul 2013 04:12:55 -0400
+Received: by mail-ea0-f172.google.com with SMTP id q10so2298756eaj.3
+        for <git@vger.kernel.org>; Sun, 07 Jul 2013 01:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=SdD4g0Kild6Er6aKs29+T1pf9fqW4jiqBrQsZmkJkHA=;
-        b=rhL1t9C0wuga0YVI2AqGgfGspNO3ohhm/WOxj5f5EF/BfZDJD/KXk5HmI98uErcdkA
-         wYufJsFsycEMN1cowdeFNLdkMiORcT21iV0pc377lSYyUBQRLiCgRPxVlsjOVIH0vdsu
-         FxKGCXqB5+CkW+pqnWDdH+HJeF3q+JpKCxC3Ufj9TPx8rIWvIYMLPrki3TYbqlH/rXrA
-         c2X/cxUXdfFpWUNoUY66Y8h5umFG+egPotGOKyZ8w7kgjfO2EstSlmF7T8l3N6E1zvS0
-         rxugBQvKl12eKWMRhzlJVewYh9Cv6itnOL0Jp0SEqEPPK5z1o4ULcJUB+DnN/MnjOWr6
-         PBfw==
-X-Received: by 10.14.182.132 with SMTP id o4mr19379205eem.94.1373184769965;
-        Sun, 07 Jul 2013 01:12:49 -0700 (PDT)
+        bh=7dj8r35PW5Rw+SJaRYTajkqnED+aVAO3d96q+GI3s/Y=;
+        b=Ed08DJI8iOTSbXn3jonu1o0hmpcoqG0uskQukF/C2kS+0IuOupzv6RkvDAnd64OnTK
+         2H9n9c1WnMQj7rZfQWJP/2OOeNu8tjT7HpFsBJ/cyF5WQTfeNyj5lIrnJpxdUhQYOS6i
+         WgT1GhiDih1HD+gM9UALWljYlLMNHUcCw/6S04u7lkVrPRHyW+DvM0BQDj5i9LjZaErR
+         kvEdN7xon/bNDKSQyinSdSYyEiG435umxoBSlhvV2GbT98MVw57k6S5PWZYkdkrkLunV
+         AiTzbL2bJ/d1didWrEDxb/iBvER2zaopAvfEA215ad4GbRGauM4CO9LNORz8O+29Xhz6
+         TVcQ==
+X-Received: by 10.14.53.75 with SMTP id f51mr19776421eec.30.1373184773215;
+        Sun, 07 Jul 2013 01:12:53 -0700 (PDT)
 Received: from localhost (host252-23-dynamic.0-87-r.retail.telecomitalia.it. [87.0.23.252])
-        by mx.google.com with ESMTPSA id l42sm30656891eeo.14.2013.07.07.01.12.47
+        by mx.google.com with ESMTPSA id c44sm30730970eeb.8.2013.07.07.01.12.51
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 07 Jul 2013 01:12:49 -0700 (PDT)
+        Sun, 07 Jul 2013 01:12:52 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.453.g1dfc63d
 In-Reply-To: <1373184720-29767-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229740>
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- tree.c | 38 ++++++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 18 deletions(-)
+ name-hash.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/tree.c b/tree.c
-index 62fed63..5cd43f4 100644
---- a/tree.c
-+++ b/tree.c
-@@ -128,20 +128,28 @@ int read_tree_recursive(struct tree *tree,
- 	return ret;
+diff --git a/name-hash.c b/name-hash.c
+index 617c86c..6551849 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -144,16 +144,19 @@ static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
+ 		add_dir_entry(istate, ce);
  }
  
--static int cmp_cache_name_compare(const void *a_, const void *b_)
-+
-+struct read_tree_data {
-+	read_tree_fn_t fn;
-+	int stage;
-+};
-+
-+int get_read_tree_fn(struct cache_entry *ce, void *cb_data)
+-static void lazy_init_name_hash(struct index_state *istate)
++static int hash_entry(struct cache_entry *ce, void *istate)
  {
--	const struct cache_entry *ce1, *ce2;
-+	struct read_tree_data *data = cb_data;
+-	int nr;
++	hash_index_entry((struct index_state *)istate, ce);
++	return 0;
++}
  
--	ce1 = *((const struct cache_entry **)a_);
--	ce2 = *((const struct cache_entry **)b_);
--	return cache_name_stage_compare(ce1->name, ce1->ce_namelen, ce_stage(ce1),
--				  ce2->name, ce2->ce_namelen, ce_stage(ce2));
-+	if (ce_stage(ce) == data->stage) {
-+		data->fn = read_one_entry;
-+		return 0;
-+	}
-+	return 1;
- }
- 
- int read_tree(struct tree *tree, int stage, struct pathspec *match)
- {
- 	read_tree_fn_t fn = NULL;
--	int i, err;
-+	int err;
-+	struct read_tree_data rtd;
- 
- 	/*
- 	 * Currently the only existing callers of this function all
-@@ -158,11 +166,10 @@ int read_tree(struct tree *tree, int stage, struct pathspec *match)
- 	 * do it the original slow way, otherwise, append and then
- 	 * sort at the end.
- 	 */
--	for (i = 0; !fn && i < active_nr; i++) {
--		struct cache_entry *ce = active_cache[i];
--		if (ce_stage(ce) == stage)
--			fn = read_one_entry;
--	}
-+	rtd.fn = fn;
-+	rtd.stage = stage;
-+	for_each_cache_entry(get_read_tree_fn, &rtd);
-+	fn = rtd.fn;
- 
- 	if (!fn)
- 		fn = read_one_entry_quick;
-@@ -170,12 +177,7 @@ int read_tree(struct tree *tree, int stage, struct pathspec *match)
- 	if (fn == read_one_entry || err)
- 		return err;
- 
--	/*
--	 * Sort the cache entry -- we need to nuke the cache tree, though.
--	 */
--	cache_tree_free(&active_cache_tree);
--	qsort(active_cache, active_nr, sizeof(active_cache[0]),
--	      cmp_cache_name_compare);
-+	sort_cache();
- 	return 0;
++static void lazy_init_name_hash(struct index_state *istate)
++{
+ 	if (istate->name_hash_initialized)
+ 		return;
+ 	if (istate->cache_nr)
+ 		preallocate_hash(&istate->name_hash, istate->cache_nr);
+-	for (nr = 0; nr < istate->cache_nr; nr++)
+-		hash_index_entry(istate, istate->cache[nr]);
++	for_each_index_entry(istate, hash_entry, istate);
+ 	istate->name_hash_initialized = 1;
  }
  
 -- 
