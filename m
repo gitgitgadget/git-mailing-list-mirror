@@ -1,102 +1,69 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] documentation: add git transport security notice
-Date: Sat, 6 Jul 2013 17:50:34 -0700
-Message-ID: <20130707005034.GH30132@google.com>
-References: <1373013686-2137-1-git-send-email-frase@frase.id.au>
+Subject: Re: [PATCH] test-lib.sh - cygwin does not have usable FIFOs
+Date: Sat, 6 Jul 2013 17:55:58 -0700
+Message-ID: <20130707005558.GI30132@google.com>
+References: <1372975470-13573-1-git-send-email-mlevedahl@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Fraser Tweedale <frase@frase.id.au>
-X-From: git-owner@vger.kernel.org Sun Jul 07 02:50:43 2013
+Cc: git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 07 02:56:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvdBb-00018H-3g
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 02:50:43 +0200
+	id 1UvdGq-0005q5-Je
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 02:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751184Ab3GGAuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jul 2013 20:50:39 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:44277 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750933Ab3GGAui (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jul 2013 20:50:38 -0400
-Received: by mail-pd0-f176.google.com with SMTP id t12so2949364pdi.7
-        for <git@vger.kernel.org>; Sat, 06 Jul 2013 17:50:38 -0700 (PDT)
+	id S1751168Ab3GGA4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jul 2013 20:56:05 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:37665 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750933Ab3GGA4D (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jul 2013 20:56:03 -0400
+Received: by mail-pd0-f172.google.com with SMTP id z10so2989956pdj.17
+        for <git@vger.kernel.org>; Sat, 06 Jul 2013 17:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=6LiP/uLwJCwaFOTqMgc0kXTlmcWUa7IBjZuS5a8M/bM=;
-        b=R2vvdpm5gmjMv7LU1yZWJfiQD+smiJ/a4HBuBk7ooeKY+HLMx96ABDXXixRlVb/JMZ
-         QwFpjO8yhsPX7Aul3JeaT6EjLiUhv3Me7qje9xfZD0uR1sHb7r4Z7xBjsKp5jCIIDdUf
-         RHFpZqnlXrZX50akBCpdO4/W1nyVcZRr+F+kQlYH4rvXyNSotp4x5VlBD0HWVSO2MhfC
-         gJVY4HOMdccKn4kjQCJxxctWRjE23NPg5SvRldqRl+u8PgrY2JMb7AmvPvQ9b7Gscx9r
-         GiDiIDlriFjEEsWh2ph7nntVLlGEB+Rf71J5XCtrsxWJFHlMe76Jux/TCFiKBT2YbKfc
-         Lmhg==
-X-Received: by 10.68.209.196 with SMTP id mo4mr15430729pbc.114.1373158237972;
-        Sat, 06 Jul 2013 17:50:37 -0700 (PDT)
+        bh=NNxe5zvtUGYFozFeBTDb+u9uJqlDS7l2b3V6jTMyEK0=;
+        b=ROQIjSIrEVB8ViOuSNAKvHJNVDE17iNu9UNTgo9UwZXJCNNpgt1KRUw0GmlluRVU9o
+         W+h36hRp9Nv352O0LU+C5P8177CrfQH2EF9ic680sKr3Ma7+1T9e9IBmoGTxO3PylI7T
+         WummEfI9R0Hz0Rk4pxzvgMJaJA2y4SeYLlBtK8z+REMzooHneMYC80s6Hd78adiVns6s
+         YA75wXgZiKbTIBFba8OGprutyrRNNbqGSVY3dZ0C+GMYoT+tkzOGv2bzYp9KPhBYuG9i
+         UyNpsKVYQNC8sOj5vYwWptt6mbDxBEFFUf6Sin8eUpBhtJwTy86UQlrmpAEtRwY+9EXq
+         Bi2A==
+X-Received: by 10.68.252.233 with SMTP id zv9mr15358402pbc.69.1373158561847;
+        Sat, 06 Jul 2013 17:56:01 -0700 (PDT)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id ry2sm14381332pbc.41.2013.07.06.17.50.36
+        by mx.google.com with ESMTPSA id z14sm1366224pbt.0.2013.07.06.17.56.00
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 06 Jul 2013 17:50:37 -0700 (PDT)
+        Sat, 06 Jul 2013 17:56:00 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1373013686-2137-1-git-send-email-frase@frase.id.au>
+In-Reply-To: <1372975470-13573-1-git-send-email-mlevedahl@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229711>
 
-Hi,
+Mark Levedahl wrote:
 
-Fraser Tweedale wrote:
+> Do not use FIFOs on cygwin, they do not work. Cygwin includes
+> coreutils, so has mkfifo, and that command does something. However,
+> the resultant named pipe is known (on the Cygwin mailing list at
+> least) to not work correctly.
 
-> --- a/Documentation/urls.txt
-> +++ b/Documentation/urls.txt
-> @@ -11,6 +11,9 @@ and ftps can be used for fetching and rsync can be used for fetching
->  and pushing, but these are inefficient and deprecated; do not use
->  them).
->  
-> +The git transport does not do any authentication and should be used
-> +with caution on unsecured networks.
+Hm.  How would you recommend going about writing a script that takes
+output from a command, transforms it, and then feeds it back into
+that command's input?  Are sockets a more reliable way to do this kind
+of IPC on Cygwin?
 
-How about the something like the following?  I'm starting to think it
-would make more sense to add a SECURITY section to git-clone(1),
-though.
+See reinit_git and try_dump from t9010-svn-fe.sh for context.
 
--- >8 --
-Subject: doc: clarify git:// transport security notice
-
-The recently added warning about the git protocol's lack of
-authentication does not make it clear that the protocol lacks both
-client and server authentication.  The lack of non IP-based client
-auth is obvious (when does user enter her credentials?), while the
-lack of authentication of the server is less so, so emphasize it.
-
-Put the warning in context by making an analogy to HTTP's security
-properties as compared to HTTPS.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
 Thanks,
 Jonathan
-
-diff --git a/Documentation/urls.txt b/Documentation/urls.txt
-index 9ccb246..bd0058f 100644
---- a/Documentation/urls.txt
-+++ b/Documentation/urls.txt
-@@ -11,8 +11,8 @@ and ftps can be used for fetching and rsync can be used for fetching
- and pushing, but these are inefficient and deprecated; do not use
- them).
- 
--The native transport (i.e. git:// URL) does no authentication and
--should be used with caution on unsecured networks.
-+Like HTTP, the native protocol (used for git:// URLs) does no server
-+authentication and should be used with caution on unsecured networks.
- 
- The following syntaxes may be used with them:
- 
