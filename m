@@ -1,70 +1,137 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 09/16] documentation: add documentation for the bitmap
- format
-Date: Sun, 7 Jul 2013 05:46:46 -0400
-Message-ID: <20130707094646.GA18120@sigill.intra.peff.net>
-References: <1372116193-32762-10-git-send-email-tanoku@gmail.com>
- <CAJo=hJtcQwh-N-9_i84y1ZsL0mdREHcxhP2gepcrREiaxvxS6A@mail.gmail.com>
- <CAFFjANRwBBcORhu4mwjESBfr4GJ3zDrgYvUhY=VxK9abv7k2MA@mail.gmail.com>
- <7vtxkl28m7.fsf@alter.siamese.dyndns.org>
- <CAFFjANRqZ0U5tGhgjACUtquyVKCyuHiS3CC2Xxwo0J1UJVrf=g@mail.gmail.com>
- <CAJo=hJtJoizQUubriTPvs2bsjvw+N82MCPvw263fUB8vv8_VVA@mail.gmail.com>
- <CAFFjANSr2QRLE8DSPP2zZ_baEZUqR8dzkPzMwqyEqgFX=8cnog@mail.gmail.com>
- <20130627024521.GA6936@sigill.intra.peff.net>
- <CAJo=hJvOq=CATrDeYAwi+jgkPpqjywWhuKeC1TVYeCXr6NVM6w@mail.gmail.com>
- <CAFFbUKKm89n0HG6xUhYMLs_yjRJ8n0jFtOEEN=vXxJfWKLx5FA@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] git-config: update doc for --get with multiple values
+Date: Sun, 7 Jul 2013 10:50:26 +0100
+Message-ID: <20130707095026.GR9161@serenity.lan>
+References: <41dc25ceac50731a7c5da753c04b7c13c41c1b51.1372876047.git.john@keeping.me.uk>
+ <7vd2qzfpk9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Vicent =?utf-8?B?TWFydMOt?= <tanoku@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Colby Ranger <cranger@google.com>
-X-From: git-owner@vger.kernel.org Sun Jul 07 11:46:59 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 07 11:50:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvlYY-00063w-KZ
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 11:46:59 +0200
+	id 1Uvlc8-0000jN-1q
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 11:50:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523Ab3GGJqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jul 2013 05:46:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46666 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751295Ab3GGJqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jul 2013 05:46:53 -0400
-Received: (qmail 11647 invoked by uid 102); 7 Jul 2013 09:48:07 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 07 Jul 2013 04:48:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Jul 2013 05:46:46 -0400
+	id S1751535Ab3GGJug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jul 2013 05:50:36 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:52446 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751321Ab3GGJuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jul 2013 05:50:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 9515623A0A;
+	Sun,  7 Jul 2013 10:50:34 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ggfzIOigOnXP; Sun,  7 Jul 2013 10:50:33 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id 1A13A23A69;
+	Sun,  7 Jul 2013 10:50:28 +0100 (BST)
 Content-Disposition: inline
-In-Reply-To: <CAFFbUKKm89n0HG6xUhYMLs_yjRJ8n0jFtOEEN=vXxJfWKLx5FA@mail.gmail.com>
+In-Reply-To: <7vd2qzfpk9.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229759>
 
-On Mon, Jul 01, 2013 at 11:47:32AM -0700, Colby Ranger wrote:
-
-> > But I think we are comparing
-> > apples to steaks here, Vincent is (rightfully) concerned about process
-> > startup performance, whereas our timings were assuming the process was
-> > already running.
-> >
+On Wed, Jul 03, 2013 at 11:47:50AM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
 > 
-> I did some timing on loading the reverse index for the kernel and it
-> is pretty slow (~1200ms). I just submitted a fix to do a bucket sort
-> and reduced that to ~450ms, which is still slow but much better:
+> > Since commit 00b347d (git-config: do not complain about duplicate
+> > entries, 2012-10-23), "git config --get" does not exit with an error if
+> > there are multiple values for the specified key but instead returns the
+> > last value.  Update the documentation to reflect this.
+> >
+> > Signed-off-by: John Keeping <john@keeping.me.uk>
+> > ---
+> >  Documentation/git-config.txt | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+> > index 19a7be0..fbad05e 100644
+> > --- a/Documentation/git-config.txt
+> > +++ b/Documentation/git-config.txt
+> > @@ -82,7 +82,7 @@ OPTIONS
+> >  --get::
+> >  	Get the value for a given key (optionally filtered by a regex
+> >  	matching the value). Returns error code 1 if the key was not
+> > -	found and error code 2 if multiple key values were found.
+> > +	found and the last value if multiple key values were found.
+> >  
+> >  --get-all::
+> >  	Like get, but does not fail if the number of values for the key
+> 
+> Thanks.
+> 
+> I wondered if we should explain the significance of "last" a bit
+> more (like "this results in the value from the most specific
+> configuration file to be used, the ones in $GIT_DIR/config
+> overriding what is in $HOME/.gitconfig"), but I do not have a strong
+> opinion either way.  Let's queue this for 'maint' for now.
 
-On my machine, loading the kernel revidx in C git is about ~830ms. I
-switched the qsort() call to a radix/bucket sort, and have it down to
-~200ms. So definitely much better, though that still leaves a bit to be
-desired for quick commands. E.g., "git rev-list --count A..B" should
-become fairly instantaneous with bitmaps, but in many cases the revindex
-loading will take longer than it would have to simply do the actual
-traversal.
+I don't think that change belongs here.  How about doing something like
+this in the FILES section (the first two hunks are just reordering the
+existing list, only the last hunk changes the content):
 
--Peff
+-- >8 --
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index fbad05e..99dc497 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -206,12 +206,8 @@ FILES
+ If not set explicitly with '--file', there are four files where
+ 'git config' will search for configuration options:
+ 
+-$GIT_DIR/config::
+-	Repository specific configuration file.
+-
+-~/.gitconfig::
+-	User-specific configuration file. Also called "global"
+-	configuration file.
++$(prefix)/etc/gitconfig::
++	System-wide configuration file.
+ 
+ $XDG_CONFIG_HOME/git/config::
+ 	Second user-specific configuration file. If $XDG_CONFIG_HOME is not set
+@@ -221,8 +217,12 @@ $XDG_CONFIG_HOME/git/config::
+ 	you sometimes use older versions of Git, as support for this
+ 	file was added fairly recently.
+ 
+-$(prefix)/etc/gitconfig::
+-	System-wide configuration file.
++~/.gitconfig::
++	User-specific configuration file. Also called "global"
++	configuration file.
++
++$GIT_DIR/config::
++	Repository specific configuration file.
+ 
+ If no further options are given, all reading options will read all of these
+ files that are available. If the global or the system-wide configuration
+@@ -230,6 +230,10 @@ file are not available they will be ignored. If the repository configuration
+ file is not available or readable, 'git config' will exit with a non-zero
+ error code. However, in neither case will an error message be issued.
+ 
++The files are read in the order given above, with last value found taking
++precedence over values read earlier.  When multiple values are taken then all
++values of a key from all files will be used.
++
+ All writing options will per default write to the repository specific
+ configuration file. Note that this also affects options like '--replace-all'
+ and '--unset'. *'git config' will only ever change one file at a time*.
