@@ -1,122 +1,96 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] lockfile: fix buffer overflow in path handling
-Date: Sat,  6 Jul 2013 21:48:52 +0200
-Message-ID: <1373140132-12351-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 06 21:49:45 2013
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] Git.pm: add new temp_is_locked function
+Date: Sat, 6 Jul 2013 17:11:48 -0700
+Message-ID: <20130707001148.GD30132@google.com>
+References: <D34E9C76-89B8-44E6-B364-C71B2FC2AC52@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Rothenberger <daveroth@acm.org>,
+	Petr Baudis <pasky@ucw.cz>, Daniel Shahaf <danielsh@apache.org>
+To: Kyle McKay <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 07 02:12:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UvYUL-0001Q5-1R
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Jul 2013 21:49:45 +0200
+	id 1UvcaN-0002TU-6u
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Jul 2013 02:12:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752757Ab3GFTtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jul 2013 15:49:39 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:46407 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752460Ab3GFTtf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Jul 2013 15:49:35 -0400
-X-AuditID: 1207440e-b7f0f6d0000043b7-1f-51d874ce6a1c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 14.38.17335.EC478D15; Sat,  6 Jul 2013 15:49:34 -0400 (EDT)
-Received: from michael.fritz.box (p57A24089.dip0.t-ipconnect.de [87.162.64.137])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r66JnQSC023444
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 6 Jul 2013 15:49:33 -0400
-X-Mailer: git-send-email 1.8.3.2
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFIsWRmVeSWpSXmKPExsUixO6iqHuu5EagQdM2U4uuK91MFg29V5gt
-	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M5oa97CWrBTrOLX4xvsDYwN
-	Ql2MnBwSAiYS77Y9ZoKwxSQu3FvP1sXIxSEkcJlRYv++q6wQznkmif+fjzCDVLEJ6Eos6mkG
-	6xARUJOY2HaIBcRmFnCQ2Py5kbGLkYNDWMBeYtM/BZAwi4CqxNWud+wgNq+Ai8T2L1fZIZYp
-	SCz7spZ5AiP3AkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6xnq5mSV6qSmlmxghvufbwdi+
-	XuYQowAHoxIPb8LFa4FCrIllxZW5hxglOZiURHkPFd8IFOJLyk+pzEgszogvKs1JLT7EKMHB
-	rCTCW3jqeqAQb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mClwcY4kKC
-	RanpqRVpmTklCGkmDk4QwQWygQdow3eQ7bzFBYm5xZnpEEWnGBWlxHnZQCYIgCQySvPgBsCi
-	9BWjONA/wrwPQNp5gBEO1/0KaDAT0OCu+9dABpckIqSkGhgb335jqs3rEb6wTGDe5M4NZz4z
-	ckbP3Pev6r52/FH7ayy5elOCnLtbTkWzedqVysgdepPEnXTkUOmdNN/pT0rXCwtNF10+/+OV
-	neotwi9Kf/ROXyRy8v5CHjX73df+uLmoheUlVt9+0vcqzcjkvIf19R8x2u9WiApoXe/q+Z7Q
-	G26zUO71bxslluKMREMt5qLiRAB4KqpvrQIAAA==
+	id S1751184Ab3GGALz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jul 2013 20:11:55 -0400
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:55518 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751094Ab3GGALy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jul 2013 20:11:54 -0400
+Received: by mail-pb0-f48.google.com with SMTP id ma3so3138568pbc.21
+        for <git@vger.kernel.org>; Sat, 06 Jul 2013 17:11:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=2LOuZ5v8s960SLihhc6ubn9A2aRXEZtRapYYISPGn3Q=;
+        b=ITuYz/x2T4jXKjmXnj/ZmXXbFwqV6gmwW0q503MgkBe2kF9X3GR4UGrwKuEs7Lg3WL
+         y4L2ixGFaOucxt2FeSj8SRqvlQrOV9DmIAgaIaR6LB/II//JHB4HeywnLP9ZHSl20qVe
+         lAak5A2/FPcHpMgoz8qNHW2Hu3CYj4FwB8VjrnhBoksT+y/GUGXZWxqA8VCGt7cu1+Vn
+         2HCk1lXrLhK9T2zesFtxb8wWPaTEkhsGWU4xwV0/t3swV1ZHHKZVZEGMei1Gh3VMVxi6
+         4Pt5kcvv3obINdKSTIx7ZCQTtc+ErJ+iYczfnX+DtdO7W4m9sSAUIYspQby5ZMogjmt1
+         5H5w==
+X-Received: by 10.66.234.232 with SMTP id uh8mr16855015pac.155.1373155914182;
+        Sat, 06 Jul 2013 17:11:54 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id p2sm15550284pag.22.2013.07.06.17.11.52
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 06 Jul 2013 17:11:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <D34E9C76-89B8-44E6-B364-C71B2FC2AC52@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229706>
 
-The path of the file to be locked is held in lock_file::filename,
-which is a fixed-length buffer of length PATH_MAX.  This buffer is
-also (temporarily) used to hold the path of the lock file, which is
-the path of the file being locked plus ".lock".  Because of this, the
-path of the file being locked must be less than (PATH_MAX - 5)
-characters long (5 chars are needed for ".lock" and one character for
-the NUL terminator).
+Hi,
 
-On entry into lock_file(), the path length was only verified to be
-less than PATH_MAX characters, not less than (PATH_MAX - 5)
-characters.
+Kyle McKay wrote:
 
-When and if resolve_symlink() is called, then that function is
-correctly told to treat the buffer as (PATH_MAX - 5) characters long.
-This part is correct.  However:
+> The temp_is_locked function can be used to determine whether
+> or not a given name previously passed to temp_acquire is
+> currently locked.
+[...]
+> +=item temp_is_locked ( NAME )
+> +
+> +Returns true if the file mapped to C<NAME> is currently locked.
+> +
+> +If true is returned, an attempt to C<temp_acquire()> the same
+> C<NAME> will
+> +throw an error.
 
-* If LOCK_NODEREF was specified, then resolve_symlink() is never
-  called.
+Looks like this was line-wrapped somewhere in transit.
 
-* If resolve_symlink() is called but the path is not a symlink, then
-  the length check is never applied.
+More importantly, it's not obvious from the above description what
+this function will do.  What is a typical value of NAME?  Is it a
+filename, an arbitrary string, a reference, or something else?  Is
+this a way of checking if a file is flocked?  What is a typical way to
+use this function?
 
-So it is possible for a path with length (PATH_MAX - 5 <= len <
-PATH_MAX) to make it through the checks.  When ".lock" is strcat()ted
-to such a path, the lock_file::filename buffer is overflowed.
+Looking more closely, it looks like this is factoring out the idiom
+for checking if a name is already in use from the _temp_cache
+function.  Would it make sense for _temp_cache to call this helper?
 
-Fix the problem by adding a check when entering lock_file() that the
-original path is less than (PATH_MAX - 5) characters.
+When is a caller expected to call this function?  What guarantees can
+the caller rely on?  After a call to temp_acquire(NAME), will
+temp_is_locked(NAME) always return true until temp_release(NAME) is
+called?  Does this only work within the context of a single process or
+can locks persist beyond a process lifetime?  Do locks ever need to be
+broken?
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-This patch applies to maint.  I discovered it when working on
-something else.  From a brief check of history, it looks like this
-code has always been vulnerable to buffer overflows in one way or
-another.
+I didn't spend a lot of time trying to find the answers to these
+questions because I want to make sure that people using Git.pm in the
+future similarly do not have to spend a lot of time.  So hopefully a
+documentation change could fix this.
 
-I haven't tried to evaluate whether this problem could be exploited
-remotely.  Even if so, the ramifications are likely to be limited to
-denial-of-service, because the data that are written past the end of
-the buffer are not under the control of the user; they would be one of
-the strings "lock\0", "ock\0", "ck\0", "k\0", or "\0", depending on
-the length of the path to be locked.
-
-I'm thinking of rewriting this code to use strbufs to prevent similar
-problems in the future, but that is a more extensive change that
-wouldn't be appropriate for maint.
-
- lockfile.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/lockfile.c b/lockfile.c
-index c6fb77b..3ac49cb 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -124,13 +124,13 @@ static char *resolve_symlink(char *p, size_t s)
- 
- static int lock_file(struct lock_file *lk, const char *path, int flags)
- {
--	if (strlen(path) >= sizeof(lk->filename))
--		return -1;
--	strcpy(lk->filename, path);
- 	/*
- 	 * subtract 5 from size to make sure there's room for adding
- 	 * ".lock" for the lock file name
- 	 */
-+	if (strlen(path) >= sizeof(lk->filename)-5)
-+		return -1;
-+	strcpy(lk->filename, path);
- 	if (!(flags & LOCK_NODEREF))
- 		resolve_symlink(lk->filename, sizeof(lk->filename)-5);
- 	strcat(lk->filename, ".lock");
--- 
-1.8.3.2
+Thanks and hope that helps,
+Jonathan
