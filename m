@@ -1,111 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: finding $(prefix)/etc/gitconfig when prefix = /usr
-Date: Sun, 07 Jul 2013 15:47:05 -0700
-Message-ID: <7vmwpy2djq.fsf@alter.siamese.dyndns.org>
-References: <1373234402-6856-1-git-send-email-robin.rosenberg@dewire.com>
-	<382862830.1053811.1373235806136.JavaMail.root@dewire.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 4/4] pack-revindex: radix-sort the revindex
+Date: Sun, 7 Jul 2013 16:52:23 -0700
+Message-ID: <CAJo=hJugvqBEQwPYcttNH+R8xUKxy1uDm5EjiWaye-wEuTxk-w@mail.gmail.com>
+References: <20130707100133.GA18717@sigill.intra.peff.net> <20130707101438.GD19143@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Jul 08 00:54:23 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jul 08 01:52:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uvxje-0003Hk-EH
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 00:47:14 +0200
+	id 1Uvyl7-0004ek-8y
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 01:52:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753269Ab3GGWrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jul 2013 18:47:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62794 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753250Ab3GGWrI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jul 2013 18:47:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 409632F304;
-	Sun,  7 Jul 2013 22:47:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gKJj6xnMy8IUHQKFms+xHY/tvL4=; b=Uu/cdb
-	0u5CZvetNEcsKtCE8t8L/1DNCDy/vEh3Y1tbyLSVmdErNI0J3Lk/OMweh0500EDH
-	rWA4Ohjw5OMBgknmTMMLxsfMsODRjWLrWb9yTmt55n7sFBH8/F/mGTvHsOTy4vxN
-	ybO1kwVM51s+9IrJxLDYTnUe3VJ2TTiGKLMa4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pEdVn3MifXdtoDsG0mj06NffyoguJ8VT
-	WD0t33vuBiVEaDosaBKJ5A8rvCrYxs6nQ5rfzst8JZot/iJcWGdb9witLOGR5hh3
-	nvi+36kgmMlEJuVHImB9BKiPQSOso4pozUbHKZSN1cY3PJDEJ34fufgz2CQ2pzpN
-	atmlNXFlTH8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 357682F303;
-	Sun,  7 Jul 2013 22:47:08 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7BC412F300;
-	Sun,  7 Jul 2013 22:47:07 +0000 (UTC)
-In-Reply-To: <382862830.1053811.1373235806136.JavaMail.root@dewire.com> (Robin
-	Rosenberg's message of "Mon, 8 Jul 2013 00:23:26 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 26E3C684-E757-11E2-BF2C-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753303Ab3GGXwp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jul 2013 19:52:45 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:58423 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753254Ab3GGXwo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jul 2013 19:52:44 -0400
+Received: by mail-ie0-f170.google.com with SMTP id e11so8930984iej.29
+        for <git@vger.kernel.org>; Sun, 07 Jul 2013 16:52:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=hAQ90viieYFg4sYmFvzJCF3vKPNpzDI4cS+BT8dmj88=;
+        b=D3AUx9mr5RTaTFJ9MufRxo7RBqf8ujnQBYWLkArLWvf4FtSD6OiWBSdk4zsnh0fxgV
+         1ZcAwaYXe3RnSbY1WhZF2KjW9PRXWBM9Kh1Ur9If/UL8Lsc4aiC1+iK9H7HD5aKZGfGL
+         v+JxDmCeebcfyOtUx1/26KvOeGCmKSDgtXzKs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-gm-message-state;
+        bh=hAQ90viieYFg4sYmFvzJCF3vKPNpzDI4cS+BT8dmj88=;
+        b=WCxKVv9cePua7DI2OMEA233IE5oNqKjZBL+11PlKmHNKqee5Pnosu31tLWfWzeMVq2
+         2zzlRUWprVBRF/3RNFt5MnFDuqM7WVDP6YUKR0nHiSJuQtjeIiSz3L0oM22XkhF2BktS
+         yuf4GNor60MeEcvheRLYgiLnkmVbE3bGLQPh3horfH1MRr7xSNKhplFPQrSI5QVKZL1F
+         z6NwUWt+GuYxKssyyBDKI1D4eY5lST1RSJd5Pn5Olgr9KXukTEWm2nWoc2c5GUgX3a9T
+         Z/KD5Z/JKpsdisG6TblS87xsL4cHPOyQPk6DNbWCSR2k2wZcCc2boM8hDtnNzOypDpVC
+         SX3Q==
+X-Received: by 10.43.84.131 with SMTP id ak3mr6318185icc.84.1373241163740;
+ Sun, 07 Jul 2013 16:52:43 -0700 (PDT)
+Received: by 10.64.143.200 with HTTP; Sun, 7 Jul 2013 16:52:23 -0700 (PDT)
+In-Reply-To: <20130707101438.GD19143@sigill.intra.peff.net>
+X-Gm-Message-State: ALoCoQnu+x+/WurVa9xIx1uGFNNAn3BuvYFvpDefiyFgi5cjyd3ln52wXn21sFUuZ+NBAYp/R9jV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229818>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> writes:
-
-> I guess this isn't true either. Anyone has a better way of
-> specifiying where the system wide config file is read from,
-> or a user-parseable definition of $(prefix) ?
-
-	... the system-wide configuration file (typically
-	/etc/gitconfig), rather than the repository specific
-	configuration file (.git/config)
-
-should be sufficient.
-
+On Sun, Jul 7, 2013 at 3:14 AM, Jeff King <peff@peff.net> wrote:
+> The pack revindex stores the offsets of the objects in the
+> pack in sorted order, allowing us to easily find the on-disk
+> size of each object. To compute it, we populate an array
+> with the offsets from the sha1-sorted idx file, and then use
+> qsort to order it by offsets.
 >
-> -- robin
->
-> ----- Ursprungligt meddelande -----
->> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
->> ---
->>  Documentation/git-config.txt | 6 ++++--
->>  1 file changed, 4 insertions(+), 2 deletions(-)
->> 
->> diff --git a/Documentation/git-config.txt
->> b/Documentation/git-config.txt
->> index 9ae2508..3198d52 100644
->> --- a/Documentation/git-config.txt
->> +++ b/Documentation/git-config.txt
->> @@ -107,7 +107,8 @@ See also <<FILES>>.
->>  
->>  --system::
->>  	For writing options: write to system-wide $(prefix)/etc/gitconfig
->> -	rather than the repository .git/config.
->> +	rather than the repository .git/config. However, $(prefix) is /usr
->> +	then /etc/gitconfig is used.
->>  +
->>  For reading options: read only from system-wide
->>  $(prefix)/etc/gitconfig
->>  rather than from all available files.
->> @@ -214,7 +215,8 @@ $XDG_CONFIG_HOME/git/config::
->>  	file was added fairly recently.
->>  
->>  $(prefix)/etc/gitconfig::
->> -	System-wide configuration file.
->> +	System-wide configuration file, unless $(prefix) is /usr. In the
->> +	latter case /etc/gitconfig is used.
->>  
->>  If no further options are given, all reading options will read all
->>  of these
->>  files that are available. If the global or the system-wide
->>  configuration
->> --
->> 1.8.3.rc0.19.g7e6a0cc
->> 
->> 
+> That does O(n log n) offset comparisons, and profiling shows
+> that we spend most of our time in cmp_offset. However, since
+> we are sorting on a simple off_t, we can use numeric sorts
+> that perform better. A radix sort can run in O(k*n), where k
+> is the number of "digits" in our number. For a 64-bit off_t,
+> using 16-bit "digits" gives us k=4.
+
+Did you try the simple bucket sort Colby now uses in JGit?
+
+The sort is pretty simple:
+
+  bucket_size = pack_length / object_count;
+  buckets[] = malloc(object_count * sizeof(int));
+
+  foreach obj in idx:
+    push_chain(buckets[obj.offset / bucket_size], obj.idx_nth);
+
+  foreach bucket:
+    insertion sort by offset
+
+https://eclipse.googlesource.com/jgit/jgit/+/master/org.eclipse.jgit/src/org/eclipse/jgit/internal/storage/file/PackReverseIndex.java
+
+We observed on linux.git that most buckets have an average number of
+objects. IIRC the bucket_size was ~201 bytes and most buckets had very
+few objects each. For lookups we keep the bucket_size parameter and a
+bucket index table. This arrangement uses 8 bytes per object in the
+reverse index, making it very memory efficient. Searches are typically
+below O(log N) time because each bucket has <log N entries.
