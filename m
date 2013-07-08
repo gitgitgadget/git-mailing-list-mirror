@@ -1,61 +1,98 @@
-From: "Eduardo R. D'Avila" <erdavila@gmail.com>
-Subject: Re: [PATCH] prompt: do not double-discriminate detached HEAD
-Date: Sun, 7 Jul 2013 22:12:50 -0300
-Message-ID: <CAOz-D1+DU=DziVOcoa1=vy-pt8AX8wnUPY38tksep4S7ngKLpA@mail.gmail.com>
-References: <1373201565-14030-1-git-send-email-artagnon@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 05/22] read-cache: add index reading api
+Date: Mon, 8 Jul 2013 09:01:43 +0700
+Message-ID: <CACsJy8A65JGUtdJnGuC20vUfQLQfrtDzj7Eb8pgP9RTqP1Po_w@mail.gmail.com>
+References: <1373184720-29767-1-git-send-email-t.gummerer@gmail.com> <1373184720-29767-6-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 08 03:13:30 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 08 04:02:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uw01B-0001n2-NI
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 03:13:30 +0200
+	id 1Uw0mU-000823-Md
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 04:02:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753349Ab3GHBNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jul 2013 21:13:21 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:48643 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753327Ab3GHBNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jul 2013 21:13:11 -0400
-Received: by mail-ie0-f175.google.com with SMTP id a11so1751918iee.6
-        for <git@vger.kernel.org>; Sun, 07 Jul 2013 18:13:11 -0700 (PDT)
+	id S1753383Ab3GHCCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jul 2013 22:02:14 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:57447 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753326Ab3GHCCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jul 2013 22:02:14 -0400
+Received: by mail-ob0-f173.google.com with SMTP id wc20so4851722obb.4
+        for <git@vger.kernel.org>; Sun, 07 Jul 2013 19:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=jtoJO5f/Mgnl/akyLT1SfRkWI1q88JlDL8NhM8YyRHk=;
-        b=QCRG8UM5SLdU1mSr8wOdiVmv5Jv/VuiPL1LZRxc7gfA8d9Da4paazPTQLrOxiJklQb
-         chi7Gy088cQVgqspqqUVcoGIO4d8Xm1N4zePtFxjR332It3bxTa+jkF9h+jcTkkddLag
-         0vCuZCsmOTEV9tgry1ADbhVuLvOOz3LuSG0mfrPCNs6kH3fbsnQ2/QsMyMTPoldp4Oc5
-         nayiifHAFFsWUzSG/w0pxdkqqDL6KSRsy/aFHqCNyAI6jarcUBDPbv5D2O1f+TaxG8h6
-         2XCxLtFm0nGL0f2KUNhkFpAecXF8Vl6SAjHfeuuOswIL9SuKoleMwoi+3J2OFt5fXJrz
-         7a/g==
-X-Received: by 10.43.168.67 with SMTP id nh3mr6481821icc.33.1373245990933;
- Sun, 07 Jul 2013 18:13:10 -0700 (PDT)
-Received: by 10.42.154.198 with HTTP; Sun, 7 Jul 2013 18:12:50 -0700 (PDT)
-In-Reply-To: <1373201565-14030-1-git-send-email-artagnon@gmail.com>
+        bh=e0Dudufh7JEdtkozbj3KwHZ8bJ9bToOleyTeK/MrYJM=;
+        b=nHEInr5HBQg+VZC0yoqa5fRyByrx7XM+3yRu++MvLqZL4oUbc8zRZ3/F/aPOFBbgwg
+         YqwTk2+iYfDDSrl/97+kqNcHzr46+Bc04CQJPBrab3hrreytfvtSjXpgIwHuDbwNzrp2
+         dUZjVzr9dYjmev9DMua9D529QJAEPGre95QnMbTMsk8GEW9+n8AjFJX9eESWERl6wcqg
+         oZdDNkeQ3258Bpy+bjaBDSqbPsYH2enT8iUu61P/y3PByqCGHm88jwzZQOgzAc827Kfz
+         4MLpVFjVnUJlQ2KovoioMVBCGzohS9SVtXq0DnrA2s25yUJPoz3q9kvr/7mC2CMEFLXT
+         dzHg==
+X-Received: by 10.182.215.133 with SMTP id oi5mr18688901obc.83.1373248933109;
+ Sun, 07 Jul 2013 19:02:13 -0700 (PDT)
+Received: by 10.76.88.230 with HTTP; Sun, 7 Jul 2013 19:01:43 -0700 (PDT)
+In-Reply-To: <1373184720-29767-6-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229820>
 
-I think color in terminals should be used to highlight and make it easier to see
-textual information, not to replace them. So I would keep the parenthesis.
+On Sun, Jul 7, 2013 at 3:11 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> Add an api for access to the index file.  Currently there is only a very
+> basic api for accessing the index file, which only allows a full read of
+> the index, and lets the users of the data filter it.  The new index api
+> gives the users the possibility to use only part of the index and
+> provides functions for iterating over and accessing cache entries.
+>
+> This simplifies future improvements to the in-memory format, as changes
+> will be concentrated on one file, instead of the whole git source code.
+>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>  cache.h         |  57 +++++++++++++++++++++++++++++-
+>  read-cache-v2.c |  96 +++++++++++++++++++++++++++++++++++++++++++++++--
+>  read-cache.c    | 108 ++++++++++++++++++++++++++++++++++++++++++++++++++++----
+>  read-cache.h    |  12 ++++++-
+>  4 files changed, 263 insertions(+), 10 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index 5082b34..d38dfbd 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -127,7 +127,8 @@ struct cache_entry {
+>         unsigned int ce_flags;
+>         unsigned int ce_namelen;
+>         unsigned char sha1[20];
+> -       struct cache_entry *next;
+> +       struct cache_entry *next; /* used by name_hash */
+> +       struct cache_entry *next_ce; /* used to keep a list of cache entries */
+>         char name[FLEX_ARRAY]; /* more */
+>  };
 
-> +                               test -n "${GIT_PS1_SHOWCOLORHINTS-}" || b="($b)"
+>From what I read, doing
 
-Also, the proposed change has a side-effect because color is not possible in
-non-pc mode, even if GIT_PS1_SHOWCOLORHINTS is defined. (Non-pc mode
-with GIT_PS1_SHOWCOLORHINTS defined would make the detached HEAD not be
-shown neither in red nor within parenthesis).
+    ce = start;
+    while (ce) { do(something); ce = next_cache_entry(ce); }
 
-Regards,
+is the same as
 
-Eduardo R. D'Avila
+    i = start_index;
+    while (i < active_nr) { ce = active_cache[i]; do(something); i++; }
+
+What's the advantage of using the former over the latter? Do you plan
+to eliminate the latter loop (by hiding "struct cache_entry **cache;"
+from public index_state structure?
+--
+Duy
