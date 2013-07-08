@@ -1,87 +1,66 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] builtin/push.c: use OPT_BOOL, not OPT_BOOLEAN
-Date: Mon, 08 Jul 2013 14:59:46 -0700
-Message-ID: <7vsizoyap9.fsf@alter.siamese.dyndns.org>
+Subject: Re: standarize mtime when git checkout
+Date: Mon, 08 Jul 2013 15:03:05 -0700
+Message-ID: <7vobacyajq.fsf@alter.siamese.dyndns.org>
+References: <7D0754FFADBD2D4785C1D233C497C47B209AF2BC@SJEXCHMB06.corp.ad.broadcom.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 08 23:59:57 2013
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: "Rick Liu" <rickliu@broadcom.com>
+X-From: git-owner@vger.kernel.org Tue Jul 09 00:03:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwJTQ-0007s7-ES
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 23:59:56 +0200
+	id 1UwJWb-0002Xd-WF
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 00:03:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753218Ab3GHV7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jul 2013 17:59:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64925 "EHLO
+	id S1753295Ab3GHWDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jul 2013 18:03:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59774 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751322Ab3GHV7v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jul 2013 17:59:51 -0400
+	id S1751809Ab3GHWDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jul 2013 18:03:08 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E28C92EF75;
-	Mon,  8 Jul 2013 21:59:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=s
-	X/osipC9IVweodBKmJ78c9/zsA=; b=LZmZS+RcRPJffFtMuclgH2DwMCm2y8ozN
-	I/RVOfkwgMZwkniqVSi+FnzkL7elsbsMtEJj9PwK0Wwsd+QA0tV2QgNIvxQZ3sf8
-	l8NPVRcI8bjHvKvUbdW9EaTXYga0TN59+AuuQbp9D6xmqUPrxZ+MEUDQJBUe1ukh
-	rPfU1PPLD0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=l/v
-	RkhcX9b/1DTM4BTaI+jk6oelAputX1AbEu5F8rVbqDJte2MSMOuWFFBmH9nO1+r1
-	UvfIvqlE7z2QD/8PlgiD++qyN2DTLnfbG2UoSfXMezQGUyFwfsRuHC+UOpHadA5g
-	scJKGrsciVZYmM44o0SnQxrg8g+R9Vuf5Hx52Lxg=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7CFD2F166;
+	Mon,  8 Jul 2013 22:03:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/wWfew4Mpkf4jsc3lp3Yaqf9BLU=; b=VFrzdx
+	9GY2ZyK+nVlz2UH0lKnPcaNoi2s0eL7q6IlYa5fTPpE9V8dJPQHJ3Ga/43IeGMeI
+	Bh1X9cSxK+5V7bsxYiKGPOn2tDSsASob0wvWvmysG3AXoahs6zgcq/z0J4Ktbxda
+	BZH3WgG1kOshUeJldnHERd4xQeRv6e7iB/auw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rwV8qQ5rEzYTfW1c6av8p+PsCRvoV3lq
+	/sNhvN05Fz3MNsYcep2Mv8xoAWCR+OKJ9wHKYX4yitDj+jX+1UBfhHn2Ni2/FGgv
+	y9HAYk3UD0vHN2L+yaxhf0vHHdf1bDXS7snK2PavRh24sex1eGeZT9ckEaZAochd
+	Qs5nH1HTD5w=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9A192EF74;
-	Mon,  8 Jul 2013 21:59:50 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC8582F165;
+	Mon,  8 Jul 2013 22:03:07 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A7E52EF6E;
-	Mon,  8 Jul 2013 21:59:50 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FF2F2F163;
+	Mon,  8 Jul 2013 22:03:07 +0000 (UTC)
+In-Reply-To: <7D0754FFADBD2D4785C1D233C497C47B209AF2BC@SJEXCHMB06.corp.ad.broadcom.com>
+	(Rick Liu's message of "Mon, 8 Jul 2013 21:39:09 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B632BDF0-E819-11E2-9A6D-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2B8DEA48-E81A-11E2-BAF9-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229898>
 
-The command line parser of "git push" for "--tags", "--delete", and
-"--thin" options still used outdated OPT_BOOLEAN.  Because these
-options do not give escalating levels when given multiple times,
-they should use OPT_BOOL.
+"Rick Liu" <rickliu@broadcom.com> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/push.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> Can we use GIT's commit time as the mtime for all of files/folders when we do "git checkout"?
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 2d84d10..342d792 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -427,15 +427,15 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_BIT( 0 , "all", &flags, N_("push all refs"), TRANSPORT_PUSH_ALL),
- 		OPT_BIT( 0 , "mirror", &flags, N_("mirror all refs"),
- 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
--		OPT_BOOLEAN( 0, "delete", &deleterefs, N_("delete refs")),
--		OPT_BOOLEAN( 0 , "tags", &tags, N_("push tags (can't be used with --all or --mirror)")),
-+		OPT_BOOL( 0, "delete", &deleterefs, N_("delete refs")),
-+		OPT_BOOL( 0 , "tags", &tags, N_("push tags (can't be used with --all or --mirror)")),
- 		OPT_BIT('n' , "dry-run", &flags, N_("dry run"), TRANSPORT_PUSH_DRY_RUN),
- 		OPT_BIT( 0,  "porcelain", &flags, N_("machine-readable output"), TRANSPORT_PUSH_PORCELAIN),
- 		OPT_BIT('f', "force", &flags, N_("force updates"), TRANSPORT_PUSH_FORCE),
- 		{ OPTION_CALLBACK, 0, "recurse-submodules", &flags, N_("check"),
- 			N_("control recursive pushing of submodules"),
- 			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
--		OPT_BOOLEAN( 0 , "thin", &thin, N_("use thin pack")),
-+		OPT_BOOL( 0 , "thin", &thin, N_("use thin pack")),
- 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", N_("receive pack program")),
- 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", N_("receive pack program")),
- 		OPT_BIT('u', "set-upstream", &flags, N_("set upstream for git pull/status"),
--- 
-1.8.3.2-876-ge3d3f5e
+No.  That will screw up common practice of build based on file
+timestamps (e.g. make).
+
+You may be interested in "git archive $commit" which will set the file
+timestamps that of the commit object.
