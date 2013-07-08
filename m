@@ -1,129 +1,204 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 05/22] read-cache: add index reading api
-Date: Mon, 08 Jul 2013 22:10:58 +0200
-Message-ID: <874nc4rewd.fsf@gmail.com>
-References: <1373184720-29767-1-git-send-email-t.gummerer@gmail.com> <1373184720-29767-6-git-send-email-t.gummerer@gmail.com> <7va9lx100l.fsf@alter.siamese.dyndns.org>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH 4/4] pack-revindex: radix-sort the revindex
+Date: Mon, 8 Jul 2013 13:50:41 -0700
+Message-ID: <CA+sFfMfQcnx+OGNd+v7NJC5zSXg2OR1QiLyRSqDjXD0zb4mvtA@mail.gmail.com>
+References: <20130707100133.GA18717@sigill.intra.peff.net>
+	<20130707101438.GD19143@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, trast@inf.ethz.ch, mhagger@alum.mit.edu,
-	pclouds@gmail.com, robin.rosenberg@dewire.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 08 22:11:23 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jul 08 22:51:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwHmD-00066d-L2
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 22:11:14 +0200
+	id 1UwIOd-00014n-Bd
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 22:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753112Ab3GHULH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jul 2013 16:11:07 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:43582 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752903Ab3GHULF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jul 2013 16:11:05 -0400
-Received: by mail-pa0-f53.google.com with SMTP id tj12so4740684pac.26
-        for <git@vger.kernel.org>; Mon, 08 Jul 2013 13:11:05 -0700 (PDT)
+	id S1752840Ab3GHUuo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jul 2013 16:50:44 -0400
+Received: from mail-wi0-f169.google.com ([209.85.212.169]:63861 "EHLO
+	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752680Ab3GHUun (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jul 2013 16:50:43 -0400
+Received: by mail-wi0-f169.google.com with SMTP id c10so10480782wiw.4
+        for <git@vger.kernel.org>; Mon, 08 Jul 2013 13:50:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type;
-        bh=gyknFlTPa4Gp4/0VRk+yACrJbgTeIkPcIIaU83K5N7I=;
-        b=Liyjh4IKeF2OSNiOCyo++x78sv5Qny08kMcEmSV4jdunXEJphQa8M8EHeIeWz22crV
-         seM81b3FYgBDG/zoUMp/EaveUsDhKazTTb60LKdc8pwL0eD2t60Yv9kR5cVObRFrKAZn
-         Zbj0pmACPFK73eHnAHarhgFWoN5KZ1rxRjj4/CJ6FxGbhReMz2lEoZBYAFsoOQsPKpMR
-         IEse6Xc5tJlfx5/MB1FAXGW7MAuEU5H7SDmdBdlJxdvS4zuAi8xum8YjuvKcHnD+C0a6
-         /VxLIonG+vJGrB9dBtPU4NSliD5l2ATd09GobVEhOdRiFM9gD0tWnTcjLOwIPYepFGFP
-         +4SA==
-X-Received: by 10.68.231.200 with SMTP id ti8mr22915002pbc.46.1373314264906;
-        Mon, 08 Jul 2013 13:11:04 -0700 (PDT)
-Received: from localhost ([2001:470:6d:596:9227:e4ff:feea:9196])
-        by mx.google.com with ESMTPSA id sz6sm25843404pab.5.2013.07.08.13.11.01
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 08 Jul 2013 13:11:04 -0700 (PDT)
-In-Reply-To: <7va9lx100l.fsf@alter.siamese.dyndns.org>
-User-Agent: Notmuch/0.15.2+119~gf0dfda5 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=hhkkgGmtIL2PHByxLq6biVn8AKG6ZThJvgVyKqo4/p4=;
+        b=XyQLtK/uzExumJ3cQlursXjAk8ZnT6nhFg7n+1+MqmSC8ctWb1HR7srMccDB9ifv89
+         pcifZ4PiOGNhjFdOZ8IWv+Gz8wJ/y3fHouJDh3/yi6GNNJKMnzFthRkMgSCP3YEvwIo4
+         af1Z9mgBSUw5y8x4u+wSsYI47RxvrmVml99p+wj4s+VHVqT9KGkodLPzQodlyZ/Zhl+I
+         NT4Ks6E5mhWCjzVl3KpgoKePpLu0CwLcbHnQydIaVnCx9fw9wEl+W35lOr1ctmrjNRtO
+         zxtxg/3b42DXoYg4BGX/vEMkJsKUIWWyNJfRrwoHOErUbnU1QyAdpG403CUeXFtry8qe
+         PI3g==
+X-Received: by 10.194.78.110 with SMTP id a14mr13295339wjx.84.1373316641622;
+ Mon, 08 Jul 2013 13:50:41 -0700 (PDT)
+Received: by 10.194.81.102 with HTTP; Mon, 8 Jul 2013 13:50:41 -0700 (PDT)
+In-Reply-To: <20130707101438.GD19143@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229891>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
+On Sun, Jul 7, 2013 at 3:14 AM, Jeff King <peff@peff.net> wrote:
+> The pack revindex stores the offsets of the objects in the
+> pack in sorted order, allowing us to easily find the on-disk
+> size of each object. To compute it, we populate an array
+> with the offsets from the sha1-sorted idx file, and then use
+> qsort to order it by offsets.
 >
->> Add an api for access to the index file.  Currently there is only a very
->> basic api for accessing the index file, which only allows a full read of
->> the index, and lets the users of the data filter it.  The new index api
->> gives the users the possibility to use only part of the index and
->> provides functions for iterating over and accessing cache entries.
->>
->> This simplifies future improvements to the in-memory format, as changes
->> will be concentrated on one file, instead of the whole git source code.
->>
->> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
->> ---
->>  cache.h         |  57 +++++++++++++++++++++++++++++-
->>  read-cache-v2.c |  96 +++++++++++++++++++++++++++++++++++++++++++++++--
->>  read-cache.c    | 108 ++++++++++++++++++++++++++++++++++++++++++++++++++++----
->>  read-cache.h    |  12 ++++++-
->>  4 files changed, 263 insertions(+), 10 deletions(-)
->>
->> diff --git a/cache.h b/cache.h
->> index 5082b34..d38dfbd 100644
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -127,7 +127,8 @@ struct cache_entry {
->>  	unsigned int ce_flags;
->>  	unsigned int ce_namelen;
->>  	unsigned char sha1[20];
->> -	struct cache_entry *next;
->> +	struct cache_entry *next; /* used by name_hash */
->> +	struct cache_entry *next_ce; /* used to keep a list of cache entries */
+> That does O(n log n) offset comparisons, and profiling shows
+> that we spend most of our time in cmp_offset. However, since
+> we are sorting on a simple off_t, we can use numeric sorts
+> that perform better. A radix sort can run in O(k*n), where k
+> is the number of "digits" in our number. For a 64-bit off_t,
+> using 16-bit "digits" gives us k=4.
 >
-> The reader often needs to rewind the read-pointer partially while
-> walking the index (e.g. next_cache_entry() in unpack-trees.c and how
-> the o->cache_bottom position is used throughout the subsystem).  I
-> am not sure if this singly-linked list is a good way to go.
-
-I'm not very familiar with the unpack-trees code, but from a quick look
-the pointer (or position in the cache) is always only moved forward.  A
-problem I do see though is skipping a number of entries at once.  An
-example for that below:
-			int matches;
-			matches = cache_tree_matches_traversal(o->src_index->cache_tree,
-							       names, info);
-			/*
-			 * Everything under the name matches; skip the
-			 * entire hierarchy.  diff_index_cached codepath
-			 * special cases D/F conflicts in such a way that
-			 * it does not do any look-ahead, so this is safe.
-			 */
-			if (matches) {
-				o->cache_bottom += matches;
-				return mask;
-			}
-
-This could probably be transformed into something like
-skip_cache_tree_matches(cache-tree, names, info);
-
-I'll take some time to familiarize myself with the unpack-trees code to
-see if I can find a better solution than this, and if there are more
-pitfalls.
-
->> +/*
->> + * Options by which the index should be filtered when read partially.
->> + *
->> + * pathspec: The pathspec which the index entries have to match
->> + * seen: Used to return the seen parameter from match_pathspec()
->> + * max_prefix, max_prefix_len: These variables are set to the longest
->> + *     common prefix, the length of the longest common prefix of the
->> + *     given pathspec
+> On the linux.git repo, with about 3M objects to sort, this
+> yields a 400% speedup. Here are the best-of-five numbers for
+> running "echo HEAD | git cat-file --batch-disk-size", which
+> is dominated by time spent building the pack revindex:
 >
-> These probably should use "struct pathspec" abstration, not just the
-> "array of raw strings", no?
+>           before     after
+>   real    0m0.834s   0m0.204s
+>   user    0m0.788s   0m0.164s
+>   sys     0m0.040s   0m0.036s
+>
+> On a smaller repo, the radix sort would not be
+> as impressive (and could even be worse), as we are trading
+> the log(n) factor for the k=4 of the radix sort. However,
+> even on git.git, with 173K objects, it shows some
+> improvement:
+>
+>           before     after
+>   real    0m0.046s   0m0.017s
+>   user    0m0.036s   0m0.012s
+>   sys     0m0.008s   0m0.000s
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I think there are probably still two potential issues here:
+>
+>   1. My while() loop termination probably has issues when we have to use
+>      all 64 bits to represent the pack offset (not likely, but...)
+>
+>   2. We put "int pos[65536]" on the stack. This is a little big, but is
+>      probably OK, as I think the usual small stack problems we have seen
+>      are always in threaded code. But it would not be a big deal to heap
+>      allocate it (it would happen once per radix step, which is only 4
+>      times for the whole sort).
+>
+>  pack-revindex.c | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 72 insertions(+), 5 deletions(-)
+>
+> diff --git a/pack-revindex.c b/pack-revindex.c
+> index 77a0465..d2adf36 100644
+> --- a/pack-revindex.c
+> +++ b/pack-revindex.c
+> @@ -59,11 +59,78 @@ static int cmp_offset(const void *a_, const void *b_)
+>         /* revindex elements are lazily initialized */
+>  }
+>
+> -static int cmp_offset(const void *a_, const void *b_)
+> +/*
+> + * This is a least-significant-digit radix sort using a 16-bit "digit".
+> + */
+> +static void sort_revindex(struct revindex_entry *entries, int n, off_t max)
 
-Yes, thanks, that's probably a good idea.
+If 'n' is the number of objects in the pack, shouldn't it be unsigned?
+
+The data type for struct packed_git.num_objects is uint32_t.  Looks
+like create_pack_revindex uses the wrong datatype when it captures
+num_objects in the int num_ent and passes it to sort_revindex.  So, it
+looks like that function needs to be updated too.
+
+>  {
+> -       const struct revindex_entry *a = a_;
+> -       const struct revindex_entry *b = b_;
+> -       return (a->offset < b->offset) ? -1 : (a->offset > b->offset) ? 1 : 0;
+> +       /*
+> +        * We need O(n) temporary storage, so we sort back and forth between
+> +        * the real array and our tmp storage. To keep them straight, we always
+> +        * sort from "a" into buckets in "b".
+> +        */
+> +       struct revindex_entry *tmp = xcalloc(n, sizeof(*tmp));
+> +       struct revindex_entry *a = entries, *b = tmp;
+> +       int digits = 0;
+> +
+> +       /*
+> +        * We want to know the bucket that a[i] will go into when we are using
+> +        * the digit that is N bits from the (least significant) end.
+> +        */
+> +#define BUCKET_FOR(a, i, digits) ((a[i].offset >> digits) & 0xffff)
+> +
+> +       while (max / (((off_t)1) << digits)) {
+
+Is there any reason this shouldn't be simplified to just:
+
+       while (max >> digits) {
+
+I glanced briefly at the assembly and it appears that gcc does
+actually emit a divide instruction to accomplish this, which I think
+we can avoid by just rearranging the operation.
+
+> +               struct revindex_entry *swap;
+> +               int i;
+> +               int pos[65536] = {0};
+> +
+> +               /*
+> +                * We want pos[i] to store the index of the last element that
+> +                * will go in bucket "i" (actually one past the last element).
+> +                * To do this, we first count the items that will go in each
+> +                * bucket, which gives us a relative offset from the last
+> +                * bucket. We can then cumulatively add the index from the
+> +                * previous bucket to get the true index.
+> +                */
+> +               for (i = 0; i < n; i++)
+> +                       pos[BUCKET_FOR(a, i, digits)]++;
+> +               for (i = 1; i < ARRAY_SIZE(pos); i++)
+> +                       pos[i] += pos[i-1];
+> +
+> +               /*
+> +                * Now we can drop the elements into their correct buckets (in
+> +                * our temporary array).  We iterate the pos counter backwards
+> +                * to avoid using an extra index to count up. And since we are
+> +                * going backwards there, we must also go backwards through the
+> +                * array itself, to keep the sort stable.
+> +                */
+> +               for (i = n - 1; i >= 0; i--)
+> +                       b[--pos[BUCKET_FOR(a, i, digits)]] = a[i];
+> +
+> +               /*
+> +                * Now "b" contains the most sorted list, so we swap "a" and
+> +                * "b" for the next iteration.
+> +                */
+> +               swap = a;
+> +               a = b;
+> +               b = swap;
+> +
+> +               /* And bump our digits for the next round. */
+> +               digits += 16;
+> +       }
+> +
+> +       /*
+> +        * If we ended with our data in the original array, great. If not,
+> +        * we have to move it back from the temporary storage.
+> +        */
+> +       if (a != entries) {
+> +               int i;
+> +               for (i = 0; i < n; i++)
+> +                       entries[i] = tmp[i];
+
+I think I recall that somebody investigated whether a for loop like
+you have above was faster for copying structures than memcpy.  I
+forget whether it was conclusive.  Did you happen to compare them?
+
+<snip>
+
+-Brandon
