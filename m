@@ -1,103 +1,86 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 15/22] read-cache: read index-v5
-Date: Mon, 08 Jul 2013 13:40:55 +0200
-Message-ID: <87k3l1qny0.fsf@gmail.com>
-References: <1373184720-29767-1-git-send-email-t.gummerer@gmail.com> <1373184720-29767-16-git-send-email-t.gummerer@gmail.com> <CAPig+cSyvjSKR7s8KpwsZxGcbHbxHXU1-4BRY02VvOPNvkLTng@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 3/4] cat-file: add --batch-disk-sizes option
+Date: Mon, 8 Jul 2013 17:30:21 +0530
+Message-ID: <CALkWK0ktNK49zBM4tD8fpNN3VMan7DegfWRtDcOEgTyEbSK9Uw@mail.gmail.com>
+References: <20130707100133.GA18717@sigill.intra.peff.net> <20130707100949.GC19143@sigill.intra.peff.net>
+ <7vtxk645vp.fsf@alter.siamese.dyndns.org> <CACsJy8A8ZO3DL8Vr=S1G-3yiJz3WaZ-7jV_eA+v6rPAWrd9NAw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>, Thomas Rast <trast@inf.ethz.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	robin.rosenberg@dewire.com
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Jul 08 13:41:07 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 08 14:01:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uw9oY-00050u-2R
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 13:41:06 +0200
+	id 1UwA8T-0007jc-Sm
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 14:01:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751573Ab3GHLlB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jul 2013 07:41:01 -0400
-Received: from mail-ea0-f169.google.com ([209.85.215.169]:33520 "EHLO
-	mail-ea0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750932Ab3GHLlA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jul 2013 07:41:00 -0400
-Received: by mail-ea0-f169.google.com with SMTP id h15so2851910eak.14
-        for <git@vger.kernel.org>; Mon, 08 Jul 2013 04:40:59 -0700 (PDT)
+	id S1752328Ab3GHMBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jul 2013 08:01:37 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:35700 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752158Ab3GHMBC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jul 2013 08:01:02 -0400
+Received: by mail-ie0-f174.google.com with SMTP id 9so9535645iec.5
+        for <git@vger.kernel.org>; Mon, 08 Jul 2013 05:01:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type;
-        bh=59qFIFxl7AcIVq1aLjTWcuPzv6/x6v7vXyHL8O7I17Q=;
-        b=uqLvYmhB9Ikao1uqyaynYaKJl5/5gS/7nsfmTiljCpjCEX7utl1N2JJXj2ZtKpt09s
-         VMzFN8IvMk45zDSFw7jLipPHFNX/kZ++jpzQdOFyyG3/vPITDYUBxhO+B00n/7ZXNlN1
-         CXBHZLshxnPwgnr/+6xTmqkKgZuiCJePMn2PdFqFzfX6gys7XPVAimwW8vyDc90mjZe1
-         2UZmIJG47Y9ld+ZFGLjIoRUp+yd40SYpf0MGllYCYAV1qlq2mBD1685KrrT39IAGblwe
-         qej/h4TcbrDTkENMeWodeASwlHzoD1OhA6vDVvRfuLlcCI5D3tv/vN/VgjJRSkqj8nRA
-         srOQ==
-X-Received: by 10.14.4.70 with SMTP id 46mr23869630eei.42.1373283659300;
-        Mon, 08 Jul 2013 04:40:59 -0700 (PDT)
-Received: from localhost (nat5.unibz.it. [46.18.27.5])
-        by mx.google.com with ESMTPSA id w43sm41528790eez.6.2013.07.08.04.40.57
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 08 Jul 2013 04:40:58 -0700 (PDT)
-In-Reply-To: <CAPig+cSyvjSKR7s8KpwsZxGcbHbxHXU1-4BRY02VvOPNvkLTng@mail.gmail.com>
-User-Agent: Notmuch/0.15.2+119~gf0dfda5 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=GF8y1aFVYoLl26o82qfIvPymK4pZ5LgTp++m9vkwwh0=;
+        b=cFDmGYn4leuoL/nMVbIFipVZPPppOAOUjun3TyM7/N8eQudExw2cWU+ZoM+wy84M6u
+         589kuwHNAd49p6Pakcdh/yVE33bQYCkIyCadKq4PRh/rvomxT4P/SjxCGyS2pqdWLUv8
+         4GLUPy4pi3ho/GrCbK4F1V2DV4wx6ciS2il4EbBFyNcudw6Kh1uG/rMSzc6TuOmK8IPN
+         0kkCtW39xV1MOnJu/XIfnL593BmqwopitGTz/pW6qkeGU/H+7MF2Fu9o5msDDZoFDBHf
+         FE8gyTKd8SSHAxzq+gacYaNvUAwbo9d7enfFntiJ9P6wLjT3MxsMPi4TYzdeMjcioqU3
+         WbMQ==
+X-Received: by 10.50.225.66 with SMTP id ri2mr8336086igc.55.1373284861613;
+ Mon, 08 Jul 2013 05:01:01 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Mon, 8 Jul 2013 05:00:21 -0700 (PDT)
+In-Reply-To: <CACsJy8A8ZO3DL8Vr=S1G-3yiJz3WaZ-7jV_eA+v6rPAWrd9NAw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229842>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Duy Nguyen wrote:
+> Ram, are you still interested in the awesome branch series?
 
-> On Sun, Jul 7, 2013 at 4:11 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
->> Make git read the index file version 5 without complaining.
->>
->> This version of the reader doesn't read neither the cache-tree
->> nor the resolve undo data, but doesn't choke on an index that
->> includes such data.
->> ---
->> diff --git a/read-cache-v5.c b/read-cache-v5.c
->> new file mode 100644
->> index 0000000..e319f30
->> --- /dev/null
->> +++ b/read-cache-v5.c
->> @@ -0,0 +1,658 @@
->> +static struct directory_entry *read_directories(unsigned int *dir_offset,
->> +                               unsigned int *dir_table_offset,
->> +                               void *mmap,
->> +                               int mmap_size)
->> +{
->> +       int i, ondisk_directory_size;
->> +       uint32_t *filecrc, *beginning, *end;
->> +       struct directory_entry *current = NULL;
->> +       struct ondisk_directory_entry *disk_de;
->> +       struct directory_entry *de;
->> +       unsigned int data_len, len;
->> +       char *name;
->> +
->> +       /* Length of pathname + nul byte for termination + size of
->> +        * members of ondisk_directory_entry. (Just using the size
->> +        * of the stuct doesn't work, because there may be padding
->
-> s/stuct/struct/
->
->> +        * bytes for the struct)
->> +        */
->
-> Also:
->
->   /*
->    * Format multi-line comment
->    * like this.
->    */
->
-> Remaining multi-line comments appear to be formatted correctly.
+Yep, but it got stalled due to lack of reviewer-interest :/
 
-Thanks for catching this and the other typos.
+I'm a bit under the weather at the moment, but it's good to see that
+you're back: let's finish this soon.
+
+>>> Perhaps we need
+>>>
+>>>   git cat-file --batch-format="%(disk-size) %(object)"
+>>>
+>>> or similar.
+>
+> This is what I wanted to do with the in for-each-ref's pretty
+> formatting [1]. I used to hack cat-file --batch to extract info I
+> needed for experimenting with various pack index extensions. If you
+> are not in hurry, maybe we can introduce something similar to your
+> syntax, but applicable for all for-each-ref, branch and log family.
+
+I'm still quite confused about this "grand plan".  We have short
+commit-specific format specifiers that don't work with refs, among
+several other quirks in [1].  I personally think we should absolutely
+stay away from short format-specifiers (like %H, %f, %e; we'll soon
+run out of letters, and nobody can tell what they are without the
+documentation anyway) for the new options, and just start adding new
+long-form ones as and when they are necessary.  I think refname:short,
+upstream:track, upstream:trackshort are very sensible choices, and
+that we should continue along that line.  I'm fine with
+format-specifiers having meanings only in certain contexts as long as
+we document it properly (how can we possibly get %(refname) to mean
+something sensible in cat-file?).
+
+As far as this series is concerned, I think Peff can implement %H and
+%(object:[disk-]size) locally without worrying about code-sharing or
+waiting for us.  Then, after the for-each-ref-pretty thing matures, we
+can just replace the code underneath.
