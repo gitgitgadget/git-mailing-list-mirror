@@ -1,88 +1,79 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/4] cat-file: add --batch-disk-sizes option
-Date: Mon, 8 Jul 2013 19:07:01 +0530
-Message-ID: <CALkWK0k0xiNFaFmqL2t4ba2g+HSrQ8kU+W_HvnSMcMYY8VgJyg@mail.gmail.com>
-References: <20130707100133.GA18717@sigill.intra.peff.net> <20130707100949.GC19143@sigill.intra.peff.net>
- <7vtxk645vp.fsf@alter.siamese.dyndns.org> <CACsJy8A8ZO3DL8Vr=S1G-3yiJz3WaZ-7jV_eA+v6rPAWrd9NAw@mail.gmail.com>
- <CALkWK0ktNK49zBM4tD8fpNN3VMan7DegfWRtDcOEgTyEbSK9Uw@mail.gmail.com> <CACsJy8Dffc2WgtDyUS2g2gmDWG_rTxs389fHcj0ztm6pdJddjQ@mail.gmail.com>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: git p4 clone not processing branches properly
+Date: Mon, 8 Jul 2013 14:43:40 +0100
+Message-ID: <CAOpHH-WxOhfYYOY8z5rc+O1B5QD8g22L9DFrNFEAtp9YwH+V_A@mail.gmail.com>
+References: <CAHCaCkJ+zRwu67QsYidmvcwtWtPPd4XPBYDaTnHLt9HrTSDM3A@mail.gmail.com>
+ <CAHCaCk+8EehnwMP98EX=cdoyQof=zPj65Vyd_YaADVquztOYww@mail.gmail.com>
+ <loom.20130705T195116-413@post.gmane.org> <CAHCaCkLpobqTOUMeK2TP_=VkjRo4P3-dMwt85_CaasSuRNE1Kg@mail.gmail.com>
+ <CAOpHH-WAjjaa3oOXje3u5bBWb=vm-2wG1KYf8oKwH__XLK4R2A@mail.gmail.com>
+ <CAHCaCkJDNqhd0UqnZhrA13V=J_yJBr17BuWohjMRADCPYFiQ4Q@mail.gmail.com>
+ <CAHCaCkL=ghxktJHDEVPfn73o-6oPQnXQv1NBCwxkwsM==-bQ4A@mail.gmail.com>
+ <CAOpHH-WiH8K__Wm_0WmnDpY8OKMWVz5-sOQWZ1vtb0GPJ44USQ@mail.gmail.com>
+ <CAHCaCkL6p2ha-8yj4x0G5NodwSdupftCDO4Rst0WTLBRdK2PcA@mail.gmail.com> <CAHCaCkJ1rTj3xt4_rHEYTWzRbSDVnULwfkTggevn+qjLj_UC5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 08 15:37:47 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Matthieu Brucher <matthieu.brucher@gmail.com>,
+	Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Mon Jul 08 15:44:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwBdS-0007vR-8x
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 15:37:46 +0200
+	id 1UwBjl-0005a0-QK
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 15:44:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751951Ab3GHNhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jul 2013 09:37:42 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:52902 "EHLO
+	id S1752474Ab3GHNoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jul 2013 09:44:13 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:45880 "EHLO
 	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751442Ab3GHNhl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jul 2013 09:37:41 -0400
-Received: by mail-ie0-f177.google.com with SMTP id aq17so9940870iec.36
-        for <git@vger.kernel.org>; Mon, 08 Jul 2013 06:37:41 -0700 (PDT)
+	with ESMTP id S1752152Ab3GHNoL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jul 2013 09:44:11 -0400
+Received: by mail-ie0-f177.google.com with SMTP id aq17so9822012iec.22
+        for <git@vger.kernel.org>; Mon, 08 Jul 2013 06:44:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=7DYGTiVGYUCTC8AD0JcLp1eZD6PkOAmYc6L8Jv7bf8U=;
-        b=JsYwsRu+GC8Y2eRWwucyAWi5c7vmAdJFKRIchDO3Eg7pnlMZKxbES0Qtfq6XOkO91T
-         fi08NDTMxlVgGdjdH1SUnxcU+4KVHG0XW3KXWC6lZNixE6Po8wneKeqyRKZUOo4fSxt7
-         rLOaObZSH2Ao6l0m/dXtqo8ffHiqzFtRBlGT3PHoiwvSqlT+ednkq4Qz8lFYhvIZpVsl
-         YcQGiJzQqSKrFTYKPZEIO+6HcWKA9yXGjitThRlvQu+BTZvBrYi6wWSDPR0L6++0unZN
-         HIcArSOBSdu6ejtJzPcGZs+WriF8jA4mtrgy3Q95oSbXR8FWS0zXX0ST39FfEXR7QgoZ
-         XeQQ==
-X-Received: by 10.43.88.3 with SMTP id ay3mr7096326icc.61.1373290661328; Mon,
- 08 Jul 2013 06:37:41 -0700 (PDT)
-Received: by 10.64.37.130 with HTTP; Mon, 8 Jul 2013 06:37:01 -0700 (PDT)
-In-Reply-To: <CACsJy8Dffc2WgtDyUS2g2gmDWG_rTxs389fHcj0ztm6pdJddjQ@mail.gmail.com>
+        bh=KmVBk1sJUZhEZ+k12CHvPMcBqZQumhDNtGbtvlLSMRw=;
+        b=awM3UG5ac7ATL3gxWdnvRt97ari3z7nlJXrUWLlfJoJAT7upes5kKFIYIp3kDrPkZs
+         NKAzS4O5Oy7ahK39QtU43s6c7iSEJ3CYgGT/g5uxQLQZHIhTuW9UFHLGdU8qR+MW7/p1
+         2AhWAGdXR/MDlPFLV3IqSGTQWh9kq7fGT2NujBIipjdU5d6+enrM3N2cFK1CDNF2Y1EI
+         25vLhvXJ/zq98dE7lQRSPoOMSXbIGxcNRdwcxjbBENegnM70puRJ8g6njU4LSdAG24FD
+         JqH8jduwMEpMum4+br/S67V3STV/opg2XBBeXFZPqsGE2sObQCn+yj+A0RUpSBvabqYx
+         5gTA==
+X-Received: by 10.43.74.74 with SMTP id yv10mr7270136icb.67.1373291051253;
+ Mon, 08 Jul 2013 06:44:11 -0700 (PDT)
+Received: by 10.64.21.103 with HTTP; Mon, 8 Jul 2013 06:43:40 -0700 (PDT)
+In-Reply-To: <CAHCaCkJ1rTj3xt4_rHEYTWzRbSDVnULwfkTggevn+qjLj_UC5A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229854>
 
-Duy Nguyen wrote:
-> The short/long naming is the least I worry about. We could add long
-> names to pretty specifiers. The thing about the last attempt is, you
-> add some extra things on top elsewhere, but format_commit_item code
-> may need to be aware of those changes, which are not obvious when
-> sombody just focuses on format_commit_item. Having all specifiers in
-> one place would be better (hence no hooks, no callbacks) because we
-> get a full picture. And yes we need to deal with specifers that make
-> no sense in certain context.
+On Mon, Jul 8, 2013 at 12:10 PM, Matthieu Brucher
+<matthieu.brucher@gmail.com> wrote:
+> Without the spec client, it seems that the branches are recognized,
+> but there are some many binary files that I need to remove them during
+> the migration.
+> I tried setting a .gitignore beforehand, but it is not respected (I
+> tried to remove some folders with folder/ in .gitignore, but the
+> folder are still imported).
+> It there a switch for the import somewhere?
 
-Yeah, it would certainly be nice to have all the format-specifiers
-that one unified parser acts on, but isn't this just a matter of
-refactoring?  Shouldn't we be starting with cheap callbacks, get
-things working, and guard against regressions in the refactoring phase
-first?  How else do you propose to start out?
+Hi Matthieu,
 
-> There's also syntax sharing. I don't think each command should have
-> its own syntax. f-e-r already has %(objectsize). If we plan to have a
-> common syntax, perhaps %(disk-size) should be %(objectsize:disk) or
-> something.
+Unfortunately I've never tested the branch detection together with spec
+configuration. But there is a test case for it in the code that refers
+to the following question in StackOverflow:
 
-Ofcourse.  I didn't notice %(objectsize); %(objectsize[:disk]) is a
-fine suggestion.
+http://stackoverflow.com/questions/11893688
 
-> Adding formatting to cat-file --batch from scratch could be
-> another big chunk of code (that also comes with bugs, usually) and may
-> or may not be compatible with the common syntax because of some
-> oversight.
+Could you also tell us which version of git you are using?
 
-Oh, I'm proposing that Peff implements just %H and
-%(objectsize[:disk]) for _now_, because that's what he wants.  It
-should be a tiny 20-line parser that's easy to swap out.
+Pete, maybe you can help Matthieu further on this question?
 
-> --batch-cols=... or --batch-disk-size would be simpler, but
-> we might never be able to remove that code.
-
-Agreed.  The approach paints us into a design-corner, and must
-therefore be avoided.
+Thanks,
+Vitor
