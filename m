@@ -1,78 +1,113 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/4] name-rev: allow converting the exact object name at
- the tip of a ref
-Date: Mon, 8 Jul 2013 17:50:16 +0530
-Message-ID: <CALkWK0kSqaMrD_YuT8OxLo8yLEc0APd2Ca7FapKstqqmcYbC7A@mail.gmail.com>
-References: <1373236424-25617-1-git-send-email-gitster@pobox.com> <1373236424-25617-3-git-send-email-gitster@pobox.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 05/22] read-cache: add index reading api
+Date: Mon, 8 Jul 2013 19:45:39 +0700
+Message-ID: <CACsJy8CtOWjpxKuNhQXYjPAv8MU0U6yTBEuQeqm0kxqVne6NjQ@mail.gmail.com>
+References: <1373184720-29767-1-git-send-email-t.gummerer@gmail.com>
+ <1373184720-29767-6-git-send-email-t.gummerer@gmail.com> <CACsJy8C0F+v3g+gPon6Y8+z7ObN1Jv8Ln==RNrVsRp7aya74hw@mail.gmail.com>
+ <87pputqowr.fsf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 08 14:21:15 2013
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 08 14:46:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwARB-0000pu-TX
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 14:21:02 +0200
+	id 1UwApb-0000TS-AO
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 14:46:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335Ab3GHMU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jul 2013 08:20:57 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:58367 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750998Ab3GHMU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jul 2013 08:20:56 -0400
-Received: by mail-ie0-f171.google.com with SMTP id qd12so9885446ieb.30
-        for <git@vger.kernel.org>; Mon, 08 Jul 2013 05:20:56 -0700 (PDT)
+	id S1751409Ab3GHMqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jul 2013 08:46:11 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:49576 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751000Ab3GHMqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jul 2013 08:46:10 -0400
+Received: by mail-ob0-f176.google.com with SMTP id v19so5357485obq.7
+        for <git@vger.kernel.org>; Mon, 08 Jul 2013 05:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=pvzUQPzsg4b46bqPQRpmELrFErFR5cHqO3DmArX0lJ0=;
-        b=jQ22lcmiPCirmTFtWNSnWLJXJF3DnXXrh6lpMWONt3erYcCJaZ39q3LO3y96zAUCXd
-         +6cLx2Z71pzk3k3TTOcJo/+WzOjuoTRtmxKaG0S/tFRVSA5sWlvhRe0JwGrLCJJPBRra
-         OG8FRdG6ql6t/GRd+AhCXbgbR7L95xiWBeeKztPD3AA7CnJDWH5gewvtj6z6Uwd1wCzC
-         bV0A3415USlHO8inKRi90/vuHTNaMqzoat/+OInfMuT3kY88ZsGWdpNMKC+2lLqJEhIe
-         7fzM7bimxMy18NnJN8le8AcQ6yl1o0vWkNs91HOh/LbDOFFMOvS6ZLygEWXxUzIFwwCf
-         HqeA==
-X-Received: by 10.50.47.12 with SMTP id z12mr8355233igm.50.1373286056321; Mon,
- 08 Jul 2013 05:20:56 -0700 (PDT)
-Received: by 10.64.37.130 with HTTP; Mon, 8 Jul 2013 05:20:16 -0700 (PDT)
-In-Reply-To: <1373236424-25617-3-git-send-email-gitster@pobox.com>
+        bh=lrUVCEVUKxPSUcorURzCD9IYPh7wXwHNaZEB7/Xn7rg=;
+        b=kDZKSAHU7HfPpGntlPe6w6L2c2Iq+rx/hOHHYbll+5ygjSApkLNJ1J6ZPogHJIXi0P
+         3nc50UpnfFGnZgS5Dx6LXKgDE8TXDPID+MGJFKevma3k/iV5r0SwBU5UeppU3EVlf2lM
+         BtsUrJCXQFeX0Nj4ufL9YpWK344orVF+yHjlmDXkr9sLee5rxJdZG9To4zt6Hz2EGfDK
+         vJFdYWEXMZXv66CNSXTzhkKUzjKRo+RgYXqe5Y7bsEz7rKyMAAjXZ6WwiXwsuwJ68I+6
+         /e5k1jkYkjt9TarWV0IWZO7gO+ysq48JmNoCRgg1V3Q0tpFIFZ6wTIW4V/fe3wP/oCp0
+         uWAw==
+X-Received: by 10.60.47.41 with SMTP id a9mr19836771oen.78.1373287569355; Mon,
+ 08 Jul 2013 05:46:09 -0700 (PDT)
+Received: by 10.76.88.230 with HTTP; Mon, 8 Jul 2013 05:45:39 -0700 (PDT)
+In-Reply-To: <87pputqowr.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229844>
 
-Junio C Hamano wrote:
-> "git name-rev" is supposed to convert 40-hex object names into
-> strings that name the same objects based on refs, that can be fed to
-> "git rev-parse" to get the same object names back, so
+On Mon, Jul 8, 2013 at 6:20 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>> Putting filter_opts in index_state feels like a bad design. Iterator
+>> information should be separated from the iterated object, so that two
+>> callers can walk through the same index without stepping on each other
+>> (I'm not talking about multithreading, a caller may walk a bit, then
+>> the other caller starts walking, then the former caller resumes
+>> walking again in a call chain).
 >
->     $ git rev-parse v1.8.3 v1.8.3^0 | git name-rev --stdin
->     8af06057d0c31a24e8737ae846ac2e116e8bafb9
->     edca4152560522a431a51fc0a06147fc680b5b18 (tags/v1.8.3^0)
-
-Wait, what?
-
-  $ git name-rev 8af060
-  8af060 tags/v1.8.3^0
-
-Isn't this a failure specific to --stdin?
-
-> Teach it to show this instead:
+> Yes, you're right.  We need the filter_opts to see what part of the
+> index has been loaded [1] and which part has been skipped, but it
+> shouldn't be used for filtering in the for_each_index_entry function.
 >
->     $ git rev-parse v1.8.3 v1.8.3^0 | git name-rev --stdin
->     8af06057d0c31a24e8737ae846ac2e116e8bafb9 (tags/v1.8.3)
->     edca4152560522a431a51fc0a06147fc680b5b18 (tags/v1.8.3^0)
+> I think there should be two versions of the for_each_index_entry
+> function then, where the for_each_index_entry function would behave the
+> same way as the for_each_index_entry_filtered function with the
+> filter_opts parameter set to NULL:
+> for_each_index_entry_filtered(struct index_state *, each_cache_entry_fn, void *cb_data, struct filter_opts *)
+> for_each_index_entry(struct index_state *, each_cache_entry_fn, void *cb_data)
+>
+> Both of them then should call index_change_filter_opts to make sure all
+> the entries that are needed are loaded in the in-memory format.
+>
+> Does that make sense?
 
-Wait, what is name-rev?
+Hmm.. I was confused actually (documentation on the api would help
+greatly). If you already filter at load time, I don't think you need
+to match again. The caller asked for filter and it should know what's
+in there so for_each_index_entry just goes through all entries without
+extra match_pathspec. Or is that what next_index_entry for?
+match_pathspec function could be expensive when glob is involved. If
+the caller wants extra matching, it could do inside the callback
+function.
 
-  Finds symbolic names suitable for human digestion for revisions
-  given in any format parsable by git rev-parse.
+It seems you could change the filter with index_change_filter_opts. In
+v5 the index will be reloaded. What happens when some index entries
+area already modified? Do we start to have read-only index "views" and
+one read-write view? If partial views are always read-only, perhaps we
+just allow the user to create a new index_state (or view) with new
+filter and destroy the old one. We don't have to care about changing
+or separating filter in that case because the view is the iterator.
 
-It is meant to name _revisions_ (aka. commits): in that context, what
-sense does it make to distinguish between tags/v1.8.3 and
-tags/v1.8.3^0?
+I wanted to have a tree-based iterator api, but that seems
+incompatible with pre-v5 (or at least adds some overhead on pre-v5 to
+rebuild the tree structure). It looks like using pathspec to build a
+list of entries, as you did, is a good way to take advantage of
+tree-based v5 while maintaining code compatibility with pre-v5. By the
+way with tree structure, you could use tree_entry_interesting in
+read_index_filtered_v5. I think it's more efficient than
+match_pathspec.
+
+I'm still studying the code. Some of what I wrote here may be totally
+wrong due to my lack of understanding. I'll get back to you later if I
+find something else.
+
+> [1] That is only important for the new index-v5 file format, which can
+>     be loaded partially.  The filter_opts could always be set to NULL,
+>     as the whole index is always loaded anyway.
+--
+Duy
