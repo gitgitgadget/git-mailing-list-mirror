@@ -1,79 +1,73 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: git p4 clone not processing branches properly
-Date: Mon, 8 Jul 2013 14:43:40 +0100
-Message-ID: <CAOpHH-WxOhfYYOY8z5rc+O1B5QD8g22L9DFrNFEAtp9YwH+V_A@mail.gmail.com>
-References: <CAHCaCkJ+zRwu67QsYidmvcwtWtPPd4XPBYDaTnHLt9HrTSDM3A@mail.gmail.com>
- <CAHCaCk+8EehnwMP98EX=cdoyQof=zPj65Vyd_YaADVquztOYww@mail.gmail.com>
- <loom.20130705T195116-413@post.gmane.org> <CAHCaCkLpobqTOUMeK2TP_=VkjRo4P3-dMwt85_CaasSuRNE1Kg@mail.gmail.com>
- <CAOpHH-WAjjaa3oOXje3u5bBWb=vm-2wG1KYf8oKwH__XLK4R2A@mail.gmail.com>
- <CAHCaCkJDNqhd0UqnZhrA13V=J_yJBr17BuWohjMRADCPYFiQ4Q@mail.gmail.com>
- <CAHCaCkL=ghxktJHDEVPfn73o-6oPQnXQv1NBCwxkwsM==-bQ4A@mail.gmail.com>
- <CAOpHH-WiH8K__Wm_0WmnDpY8OKMWVz5-sOQWZ1vtb0GPJ44USQ@mail.gmail.com>
- <CAHCaCkL6p2ha-8yj4x0G5NodwSdupftCDO4Rst0WTLBRdK2PcA@mail.gmail.com> <CAHCaCkJ1rTj3xt4_rHEYTWzRbSDVnULwfkTggevn+qjLj_UC5A@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] push: avoid suggesting "merging" remote changes
+Date: Mon, 08 Jul 2013 15:47:19 +0200
+Message-ID: <vpqd2qtkvtk.fsf@anie.imag.fr>
+References: <cover.1373223663.git.john@keeping.me.uk>
+	<cover.1373223663.git.john@keeping.me.uk>
+	<2a6f4a3c31e667aa03b06ce63ae5319a25beaca0.1373223663.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Matthieu Brucher <matthieu.brucher@gmail.com>,
-	Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Mon Jul 08 15:44:18 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Andreas Krey <a.krey@gmx.de>,
+	John Szakmeister <john@szakmeister.net>,
+	Philip Oakley <philipoakley@iee.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Mon Jul 08 15:47:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwBjl-0005a0-QK
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 15:44:18 +0200
+	id 1UwBn8-0000Qt-Ko
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 15:47:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752474Ab3GHNoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jul 2013 09:44:13 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:45880 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752152Ab3GHNoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jul 2013 09:44:11 -0400
-Received: by mail-ie0-f177.google.com with SMTP id aq17so9822012iec.22
-        for <git@vger.kernel.org>; Mon, 08 Jul 2013 06:44:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=KmVBk1sJUZhEZ+k12CHvPMcBqZQumhDNtGbtvlLSMRw=;
-        b=awM3UG5ac7ATL3gxWdnvRt97ari3z7nlJXrUWLlfJoJAT7upes5kKFIYIp3kDrPkZs
-         NKAzS4O5Oy7ahK39QtU43s6c7iSEJ3CYgGT/g5uxQLQZHIhTuW9UFHLGdU8qR+MW7/p1
-         2AhWAGdXR/MDlPFLV3IqSGTQWh9kq7fGT2NujBIipjdU5d6+enrM3N2cFK1CDNF2Y1EI
-         25vLhvXJ/zq98dE7lQRSPoOMSXbIGxcNRdwcxjbBENegnM70puRJ8g6njU4LSdAG24FD
-         JqH8jduwMEpMum4+br/S67V3STV/opg2XBBeXFZPqsGE2sObQCn+yj+A0RUpSBvabqYx
-         5gTA==
-X-Received: by 10.43.74.74 with SMTP id yv10mr7270136icb.67.1373291051253;
- Mon, 08 Jul 2013 06:44:11 -0700 (PDT)
-Received: by 10.64.21.103 with HTTP; Mon, 8 Jul 2013 06:43:40 -0700 (PDT)
-In-Reply-To: <CAHCaCkJ1rTj3xt4_rHEYTWzRbSDVnULwfkTggevn+qjLj_UC5A@mail.gmail.com>
+	id S1752182Ab3GHNrm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jul 2013 09:47:42 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:53753 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751183Ab3GHNrl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jul 2013 09:47:41 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r68DlI11006343
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 8 Jul 2013 15:47:18 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UwBmh-0006Zv-VY; Mon, 08 Jul 2013 15:47:19 +0200
+In-Reply-To: <2a6f4a3c31e667aa03b06ce63ae5319a25beaca0.1373223663.git.john@keeping.me.uk>
+	(John Keeping's message of "Sun, 7 Jul 2013 20:02:14 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 08 Jul 2013 15:47:19 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r68DlI11006343
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1373896039.45111@vdd9W2m9dIKPFn3q/Qmzkw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229855>
 
-On Mon, Jul 8, 2013 at 12:10 PM, Matthieu Brucher
-<matthieu.brucher@gmail.com> wrote:
-> Without the spec client, it seems that the branches are recognized,
-> but there are some many binary files that I need to remove them during
-> the migration.
-> I tried setting a .gitignore beforehand, but it is not respected (I
-> tried to remove some folders with folder/ in .gitignore, but the
-> folder are still imported).
-> It there a switch for the import somewhere?
+John Keeping <john@keeping.me.uk> writes:
 
-Hi Matthieu,
+>  static const char message_advice_pull_before_push[] =
+>  	N_("Updates were rejected because the tip of your current branch is behind\n"
+> -	   "its remote counterpart. Merge the remote changes (e.g. 'git pull')\n"
+> -	   "before pushing again.\n"
+> +	   "its remote counterpart. Integrate the remote changes (e.g.\n"
+> +	   "'git pull ...') before pushing again.\n"
 
-Unfortunately I've never tested the branch detection together with spec
-configuration. But there is a test case for it in the code that refers
-to the following question in StackOverflow:
+To me, "merge" includes "rebase", so I'd say the merge -> integrate
+change is not needed, but I have nothing against it either.
 
-http://stackoverflow.com/questions/11893688
+The "..." added are a bit weird with the quotes around. Quotes may
+suggest that the content is to be taken literally, which is not the case
+anymore. Not a real objection anyway, just thinking aloud.
 
-Could you also tell us which version of git you are using?
-
-Pete, maybe you can help Matthieu further on this question?
-
-Thanks,
-Vitor
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
