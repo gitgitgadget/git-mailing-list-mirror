@@ -1,136 +1,102 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 4/4] pack-revindex: radix-sort the revindex
-Date: Mon, 8 Jul 2013 08:38:44 -0700
-Message-ID: <CAJo=hJt0R43TtGaSEegkC+aZvUJ7FAPFYzZ8fq-Tx1Pzp6Zi-A@mail.gmail.com>
-References: <20130707100133.GA18717@sigill.intra.peff.net> <20130707101438.GD19143@sigill.intra.peff.net>
- <CAJo=hJugvqBEQwPYcttNH+R8xUKxy1uDm5EjiWaye-wEuTxk-w@mail.gmail.com> <20130708075712.GC25072@sigill.intra.peff.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 0/3] merge -Xindex-only
+Date: Mon, 8 Jul 2013 17:44:26 +0200
+Message-ID: <87k3l1gip1.fsf@linux-k42r.v.cablecom.net>
+References: <cover.1373219466.git.trast@inf.ethz.ch>
+	<51DAD8F2.5070008@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 08 17:39:13 2013
+Content-Type: text/plain
+Cc: git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jul 08 17:44:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwDWx-00057n-Ux
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 17:39:12 +0200
+	id 1UwDcL-00020U-Kr
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 17:44:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751653Ab3GHPjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jul 2013 11:39:06 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:57903 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751549Ab3GHPjE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jul 2013 11:39:04 -0400
-Received: by mail-ie0-f181.google.com with SMTP id x12so10161561ief.40
-        for <git@vger.kernel.org>; Mon, 08 Jul 2013 08:39:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=KUUIWwgupcr/vACKGYTh1yoxqOGnRm/sqYDH25FFEcQ=;
-        b=Lv0hyVBzq8OSK/W6eKUo9FCSaM/imZAWPueH9yh+1LtwU0tUKSdZNQR88LTm+IGxRt
-         wuZfwrpbPop/PVjSvthsmvl9vpiKZX7dAbdh06zYHCaswlC0D0NAzMgxUQpCaSCKlfFl
-         X4Cq6OSawH/pwvZZ8e85+I6+ryt7XBGZYd0HU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=KUUIWwgupcr/vACKGYTh1yoxqOGnRm/sqYDH25FFEcQ=;
-        b=HWdcFDPuOFmY1z8Aw9TeUctwhAaFbsccHWDumtRTNd1V3wgIWfBzPJ1OTWgOxsDC/e
-         LclY3V8yUSWoUiyO0IXOrgYITx0O9uIlGaTOFt/2hChnaWKYI8Xtw+EEuIqmmppvkpIR
-         WbVk5o603v+7Egw6WGGL7WAMWMwHzMI/ILOZ8QpotNPhhNmabB+LZnNHVrpLGGKhRy8J
-         8QwMY0urkMdlaDmes4sDjY3/T5IOIokU+tePnzL7vqUAp4GXxh/i7HUtVEg2L+F2RuUS
-         f6LdEQHczmW2uL7Mxx8F4yovi9twHXvDyix46UGgG1OtKYh5xbo2CJ0q57Cd+yOuySh2
-         ybvg==
-X-Received: by 10.50.72.40 with SMTP id a8mr8865255igv.15.1373297944145; Mon,
- 08 Jul 2013 08:39:04 -0700 (PDT)
-Received: by 10.64.143.200 with HTTP; Mon, 8 Jul 2013 08:38:44 -0700 (PDT)
-In-Reply-To: <20130708075712.GC25072@sigill.intra.peff.net>
-X-Gm-Message-State: ALoCoQkIRqzHXtKnCB9G+oM10XWmIljGVBQiA8vk6TKf2aN1kXPjr+gEAOgK2FTs/74MC0PoxpCV
+	id S1751441Ab3GHPoa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jul 2013 11:44:30 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:43371 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751392Ab3GHPo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jul 2013 11:44:29 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 8 Jul
+ 2013 17:44:25 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS11.d.ethz.ch (172.31.38.211) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Mon, 8 Jul 2013 17:44:26 +0200
+In-Reply-To: <51DAD8F2.5070008@alum.mit.edu> (Michael Haggerty's message of
+	"Mon, 08 Jul 2013 17:21:22 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229869>
 
-On Mon, Jul 8, 2013 at 12:57 AM, Jeff King <peff@peff.net> wrote:
-> On Sun, Jul 07, 2013 at 04:52:23PM -0700, Shawn O. Pearce wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
+> [Resend because of address confusion in replied-to email.]
 >
->> On Sun, Jul 7, 2013 at 3:14 AM, Jeff King <peff@peff.net> wrote:
->> > The pack revindex stores the offsets of the objects in the
->> > pack in sorted order, allowing us to easily find the on-disk
->> > size of each object. To compute it, we populate an array
->> > with the offsets from the sha1-sorted idx file, and then use
->> > qsort to order it by offsets.
->> >
->> > That does O(n log n) offset comparisons, and profiling shows
->> > that we spend most of our time in cmp_offset. However, since
->> > we are sorting on a simple off_t, we can use numeric sorts
->> > that perform better. A radix sort can run in O(k*n), where k
->> > is the number of "digits" in our number. For a 64-bit off_t,
->> > using 16-bit "digits" gives us k=4.
->>
->> Did you try the simple bucket sort Colby now uses in JGit?
->>
->> The sort is pretty simple:
->>
->>   bucket_size = pack_length / object_count;
->>   buckets[] = malloc(object_count * sizeof(int));
->>
->>   foreach obj in idx:
->>     push_chain(buckets[obj.offset / bucket_size], obj.idx_nth);
->>
->>   foreach bucket:
->>     insertion sort by offset
+> On 07/07/2013 08:00 PM, Thomas Rast wrote:
+>> I recently looked into making merge-recursive more useful as a modular
+>> piece in various tasks, e.g. Michael's git-imerge and the experiments
+>> I made in showing evil merges.
+>> 
+>> This miniseries is the extremely low-hanging fruit.  If it makes a
+>> good first step for git-imerge, perhaps it can go in like this.  It's
+>> not a big speedup (about 2.2s vs 2.4s in a sample conflicting merge in
+>> git.git), but it does feel much cleaner to avoid touching the worktree
+>> unless actually necessary.
+>> 
+>> Otherwise it's probably not worth it just yet; for what I want to do
+>> with it, we need some more reshuffling of things.
 >
-> I did do something similar (though I flattened my buckets into a single
-> list afterwards), but I ended up closer to 700ms (down from 830ms, but
-> with the radix sort around 200ms). It's entirely possible I screwed up
-> something in the implementation (the bucket insertion can be done in a
-> lot of different ways, many of which are terrible), but I didn't keep a
-> copy of that attempt. If you try it and have better numbers, I'd be
-> happy to see them.
-
-Colby's sort in Java is coming in around 450ms for linux.git, so
-sounds like your implementation was doing something suboptimal.
-
-But as I thought about it this morning, a radix sort for most pack
-files should run with k=2 and take only O(2*N) time. It is a very
-efficient sort for the data. Colby and I didn't even try a radix sort,
-and I suspect it would out-perform the bucket sort we do now.
-
->> We observed on linux.git that most buckets have an average number of
->> objects. IIRC the bucket_size was ~201 bytes and most buckets had very
->> few objects each. For lookups we keep the bucket_size parameter and a
->> bucket index table. This arrangement uses 8 bytes per object in the
->> reverse index, making it very memory efficient. Searches are typically
->> below O(log N) time because each bucket has <log N entries.
+> Interesting.
 >
-> I didn't measure lookups at all; I was focused on time to build the
-> index. So if there were benefits there that make up for a longer setup
-> time, I wouldn't have measured them (of course, we also care about the
-> case with few lookups, so it would be a tradeoff).
+> For git-imerge, it would be nice to speed up merges by skipping the
+> working tree updates.  10% might not be so noticeable, but every little
+> bit helps :-)
+>
+> But the killer benefit would be if git-imerge could do some of its
+> automatic merge-testing and autofilling in the background while the user
+> is resolving conflicts in the main index and working tree.
+>
+> Is it possible to use this option with an alternate index file (e.g.,
+> via the GIT_INDEX_FILE environment variable)?  Can it be made to leave
+> other shared state (e.g., MERGE_HEAD) alone?  If so, maybe it's already
+> there.
 
-We didn't measure lookup times either. Colby did compute a histogram
-of bucket sizes and showed nearly all buckets were significantly
-smaller than log N, so lookups are <log N time even though they are a
-simple iteration through the elements. Colby considered doing binary
-search within a bucket but didn't bother given how small the buckets
-are.
+GIT_INDEX_FILE yes, that one works out of the box.
 
-So our lookup time benefit is theoretical. The way JGit implements
-clones we tend not to perform N lookups in revidx, its usually sub
-1000 lookups in revidx. That makes it harder to have any noticeable
-benefit from decreased lookup time.
+I think for the shared state, the following is a (probably) ridiculously
+unsupported yet magic way of achieving this:
 
-> You could also leave
-> each bucket unsorted and only lazily sort it when a lookup hits the
-> bucket, which might help that case (I didn't look to see if you do that
-> in JGit).
+  mkdir -p unshared/.git
+  cd unshared/.git
+  for f in ../../.git/*; do
+    case "$f" in
+      *HEAD | index)
+        cp "$f" .
+        ;;
+      *)
+        ln -s "$f" .
+        ;;
+    esac
+  done
 
-We didn't do that in JGit, the sort is done at initialization. But
-given the remark I just made about clones doing only a few lookups we
-may want to defer the sort. IIRC the sort is about half of our
-initialization cost.
+That gives you a repository that propagates ref changes and object
+writing, but does not propagate changes to index, HEAD, FETCH_HEAD or
+MERGE_HEAD.  Which might just be what you need?
+
+Note that as far as I'm concerned, this is a live handgrenade.  It could
+blow up in your face at any time, but it probably has its applications...
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
