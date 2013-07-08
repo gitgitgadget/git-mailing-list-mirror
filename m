@@ -1,84 +1,196 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/3] name-rev: strip trailing ^0 in when --name-only
-Date: Mon, 8 Jul 2013 18:30:07 +0530
-Message-ID: <CALkWK0mrOfx-EfS3YfS7mMBKqjFrwcyiVmQO=wMLN-BH1avqBg@mail.gmail.com>
-References: <1373200996-9753-1-git-send-email-artagnon@gmail.com>
- <1373200996-9753-3-git-send-email-artagnon@gmail.com> <7vd2qu44mm.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: A local shared clone is now much slower
+Date: Mon, 08 Jul 2013 06:05:48 -0700
+Message-ID: <7vip0l2ocz.fsf@alter.siamese.dyndns.org>
+References: <20130708130355.647fffb6e5b6a453bfa0fa6e@canb.auug.org.au>
+	<20130708073041.GA25072@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 08 15:00:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>, git@vger.kernel.org,
+	Linus <torvalds@linux-foundation.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jul 08 15:06:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwB3n-00064r-Oo
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 15:00:56 +0200
+	id 1UwB8i-0002o9-U2
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Jul 2013 15:06:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752265Ab3GHNAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jul 2013 09:00:51 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:59298 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752226Ab3GHNAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jul 2013 09:00:49 -0400
-Received: by mail-ie0-f173.google.com with SMTP id k13so9722956iea.4
-        for <git@vger.kernel.org>; Mon, 08 Jul 2013 06:00:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=FsyLBPPsXH6KzX3yGOEiqZ/e/1viEXddS2S5QHY29Bc=;
-        b=KA6IPyhtL4G9qpiWSEWAiSQB/AG2aanWHv3tcO7sz8gJPzdfIs6fHL2jBp0N2djulJ
-         xqtqaa3LsAMwbB6rOKbJxN4mxJ1yc7AQtvEHqnM2KaiccoiwqSIVxfDyLWPYdQg+/i+7
-         c4tletvNKjlkEuzJjgoRU50vYYDC7vll21xgXOoFglfGYlzg798p/acWWbsedBVxvbm+
-         8mnIbv0M8o8Fpsw4JhWwa9cBupnZw229FosZkTp63hABPAOyzACRoo+W2mhYtrm9n9Kr
-         QqRfrNGkxPUhHh3qIcCQOveRCYXM6y/9XYHvJEM/cobHm8DQrSvAs4nmR9KpDlKzb+03
-         1nUQ==
-X-Received: by 10.50.6.16 with SMTP id w16mr8649400igw.29.1373288449192; Mon,
- 08 Jul 2013 06:00:49 -0700 (PDT)
-Received: by 10.64.37.130 with HTTP; Mon, 8 Jul 2013 06:00:07 -0700 (PDT)
-In-Reply-To: <7vd2qu44mm.fsf@alter.siamese.dyndns.org>
+	id S1751696Ab3GHNF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jul 2013 09:05:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38651 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751430Ab3GHNFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jul 2013 09:05:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBA362CD9A;
+	Mon,  8 Jul 2013 13:05:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6OrlEDwCGmnsRrcsHLAhCqo9Xu0=; b=sQX+hF
+	QwUv8ikiZe1mRKUVH/AFytfAnIiCXj8EXCSGKsV7YEEHwulLyiqAmWm8+GndRKB9
+	uiUVJDfGYohCh9+x2kTHfOSkMgx62ksiMGaHtnsMpSG6DULRnoM2LXWwP1xjTBYg
+	SszpvqkU160Xk4EnBfDmnN4gBAtuR0HN5JrTE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Dd94GKYmQd+Nyx+5C5SmJOXqci4X7qqV
+	gMvbv7b7PCF2/bao8boDUcBwpxpUpNK4s3dNri1Ecuz22nmYbz8uetzaitnBh4ZL
+	xaM2vAV08WjHmPQRIZp9YI+j2ByKD7nUSGDaEfnrFM7BipMHz9PkG/4MO1u5ePiF
+	3E3i6dYrkNU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CAD312CD99;
+	Mon,  8 Jul 2013 13:05:53 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EED122CD92;
+	Mon,  8 Jul 2013 13:05:51 +0000 (UTC)
+In-Reply-To: <20130708073041.GA25072@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 8 Jul 2013 03:30:41 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1DEA4C10-E7CF-11E2-84E0-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229846>
 
-Junio C Hamano wrote:
-> But I do not think "name-rev" is limited
-> to commits, in the sense that you would see this:
+Jeff King <peff@peff.net> writes:
+
+> On Mon, Jul 08, 2013 at 01:03:55PM +1000, Stephen Rothwell wrote:
 >
->     $ git rev-parse v1.8.3 v1.8.3^0 | git name-rev --stdin
->     8af06057d0c31a24e8737ae846ac2e116e8bafb9
->     edca4152560522a431a51fc0a06147fc680b5b18 (tags/v1.8.3^0)
+>> So commit 0433ad128c59 ("clone: run check_everything_connected") (which
+>> turned up with v1.8.3) added a large traversal to clone which (as the
+>> comment said) makes a clone much slower.  It is especially noticeable on
+>> "git clone -s -l -n" which I use every day and used to be almost
+>> instant.  Is there any thought to making it fast again, please?
+>> 
+>> The above clone is very useful for working with different branches in one
+>> tree without touching every file in the main branch you are working
+>> with (and consequent issues with rebuilding at least).  As linux-next
+>> maintainer, you can imagine that I do this a bit.
 >
-> The second object is _not_ v1.8.3 but is v1.8.3^0 in the context of
-> name-rev, whose purpose is to give you a string you can feed
-> "rev-parse" and get the object name back.  "rev-parse v1.8.3" will
-> not give you the commit object name, so you need to keep "^0".
+> Yeah, I have noticed it is somewhat annoying, as well, because the
+> proportion of time taken for the check is so much larger compared to the
+> relatively instant time taken for the local shared clone.
+>
+> The point of that commit is to add the same safety checks to clone that
+> we do for fetching. But in the local shared-repo case, I really feel
+> like all safety bets are off anyway. You are not creating a verified
+> redundant copy at all, and there are still corruptions that can sneak
+> through (e.g., bit corruptions of blob objects).
 
-Quite frankly, I thought the unstripped ^0 in one codepath was an
-unintended quirk.  What exactly do you want name-rev to give you?
+Yeah, I was thinking the same when I saw that report, so obviously I
+think the approacch makes sense ;-)
 
-  $ git tag foo @^
-  $ git name-rev foo
-  foo tags/foo
+Thanks.
 
-So you can distinguish between annotated tags, unannotated tags, and
-head-refs.  Can you get it to tell you anything reliably though?
-
-  $ git tag bar @
-  $ git tag -a baz @
-  $ git name-rev @
-  $ git name-rev bar
-  $ git name-rev baz
-
-ref, annotated, or unannotated tag?  I do not think name-rev is
-fundamentally different from describe: it is also only dependent on
-the commit history graph.  Whether I specify a revision using @, HEAD,
-baz, or bar, I should get the same answer (it's just a recursive
-peeler).  I'm not sure what you gain by knowing the object type of the
-output.  If you wanted to feed something into rev-parse and get out a
-commit, you'd send in $REV^0 without bothering about what it is, no?
+>
+> So maybe this:
+>
+> -- >8 --
+> Subject: [PATCH] clone: drop connectivity check for local clones
+>
+> Commit 0433ad1 (clone: run check_everything_connected,
+> 2013-03-25) added the same connectivity check to clone that
+> we use for fetching. The intent was to provide enough safety
+> checks that "git clone git://..." could be counted on to
+> detect bit errors and other repo corruption, and not
+> silently propagate them to the clone.
+>
+> For local clones, this turns out to be a bad idea, for two
+> reasons:
+>
+>   1. Local clones use hard linking (or even shared object
+>      stores), and so complete far more quickly. The time
+>      spent on the connectivity check is therefore
+>      proportionally much more painful.
+>
+>   2. Local clones do not actually meet our safety guarantee
+>      anyway. The connectivity check makes sure we have all
+>      of the objects we claim to, but it does not check for
+>      bit errors. We will notice bit errors in commits and
+>      trees, but we do not load blob objects at all. Whereas
+>      over the pack transport, we actually recompute the sha1
+>      of each object in the incoming packfile; bit errors
+>      change the sha1 of the object, which is then caught by
+>      the connectivity check.
+>
+> This patch drops the connectivity check in the local case.
+> Note that we have to revert the changes from 0433ad1 to
+> t5710, as we no longer notice the corruption during clone.
+>
+> We could go a step further and provide a "verify even local
+> clones" option, but it is probably not worthwhile. You can
+> already spell that as "cd foo.git && git fsck && git clone ."
+> or as "git clone --no-local foo.git".
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/clone.c           | 22 +++++++++++++---------
+>  t/t5710-info-alternate.sh |  8 +++++++-
+>  2 files changed, 20 insertions(+), 10 deletions(-)
+>
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 14b1323..dafb6b5 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -545,17 +545,20 @@ static void update_remote_refs(const struct ref *refs,
+>  			       const struct ref *remote_head_points_at,
+>  			       const char *branch_top,
+>  			       const char *msg,
+> -			       struct transport *transport)
+> +			       struct transport *transport,
+> +			       int check_connectivity)
+>  {
+>  	const struct ref *rm = mapped_refs;
+>  
+> -	if (0 <= option_verbosity)
+> -		printf(_("Checking connectivity... "));
+> -	if (check_everything_connected_with_transport(iterate_ref_map,
+> -						      0, &rm, transport))
+> -		die(_("remote did not send all necessary objects"));
+> -	if (0 <= option_verbosity)
+> -		printf(_("done\n"));
+> +	if (check_connectivity) {
+> +		if (0 <= option_verbosity)
+> +			printf(_("Checking connectivity... "));
+> +		if (check_everything_connected_with_transport(iterate_ref_map,
+> +							      0, &rm, transport))
+> +			die(_("remote did not send all necessary objects"));
+> +		if (0 <= option_verbosity)
+> +			printf(_("done\n"));
+> +	}
+>  
+>  	if (refs) {
+>  		write_remote_refs(mapped_refs);
+> @@ -963,7 +966,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  		transport_fetch_refs(transport, mapped_refs);
+>  
+>  	update_remote_refs(refs, mapped_refs, remote_head_points_at,
+> -			   branch_top.buf, reflog_msg.buf, transport);
+> +			   branch_top.buf, reflog_msg.buf, transport,
+> +			   !is_local);
+>  
+>  	update_head(our_head_points_at, remote_head, reflog_msg.buf);
+>  
+> diff --git a/t/t5710-info-alternate.sh b/t/t5710-info-alternate.sh
+> index 8956c21..5a6e49d 100755
+> --- a/t/t5710-info-alternate.sh
+> +++ b/t/t5710-info-alternate.sh
+> @@ -58,7 +58,13 @@ git clone -l -s F G &&
+>  git clone -l -s D E &&
+>  git clone -l -s E F &&
+>  git clone -l -s F G &&
+> -test_must_fail git clone --bare -l -s G H'
+> +git clone --bare -l -s G H'
+> +
+> +test_expect_success 'invalidity of deepest repository' \
+> +'cd H && {
+> +	test_valid_repo
+> +	test $? -ne 0
+> +}'
+>  
+>  cd "$base_dir"
