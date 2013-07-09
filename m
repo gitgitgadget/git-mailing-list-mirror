@@ -1,99 +1,123 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] describe: use argv-array
-Date: Tue, 09 Jul 2013 09:00:20 -0700
-Message-ID: <7vehb7wwob.fsf@alter.siamese.dyndns.org>
-References: <1373236424-25617-1-git-send-email-gitster@pobox.com>
-	<1373236424-25617-4-git-send-email-gitster@pobox.com>
-	<20130709045151.GE27903@sigill.intra.peff.net>
-	<7vip0jwzou.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Convert "struct cache_entry *" to "const ..." wherever possible
+Date: Tue, 09 Jul 2013 09:15:48 -0700
+Message-ID: <7va9lvwvyj.fsf@alter.siamese.dyndns.org>
+References: <1373383740-24440-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 09 18:00:31 2013
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 09 18:15:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwaL7-0000Sh-5V
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 18:00:29 +0200
+	id 1Uwaa4-0006DP-Lb
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 18:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752030Ab3GIQAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jul 2013 12:00:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45515 "EHLO
+	id S1752102Ab3GIQPw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jul 2013 12:15:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39783 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751653Ab3GIQAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jul 2013 12:00:24 -0400
+	id S1751980Ab3GIQPv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jul 2013 12:15:51 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 32E922F137;
-	Tue,  9 Jul 2013 16:00:23 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2ACC42FB1A;
+	Tue,  9 Jul 2013 16:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CB0GowTZiGJCvp9yjQbI18TnCTY=; b=fd07H+
-	CkiJ/EjsE7KHvG5Gk893KrMg3FvypFB7tRKg+ljDJrHIGMSe4tpk+dre07BSsdgd
-	c7pgE9xYSb56+M7vkTXupb0Bgu52wl/ki+cYwVcdswnDwn+r7N3IUrD5Hw+MGFJl
-	qB2W2fyUwcDQTKuUwavGIsRHBDJo+YFydoNjc=
+	:content-type:content-transfer-encoding; s=sasl; bh=SbSu45U/+S60
+	Pe1CbUVv2hJNhS4=; b=Q8fC4uNShmBQQUI0OBH8octHjHC858HKOL9QPKRZJ6BQ
+	gmbTGaGkunA8MC6JG06P8COmAsbNyrGcE0yUUGeZxKYPjL+I/0u18XZNysgpw6kp
+	sFBUY4fqh29wHTr2XWBoceKo4x9eP2XGAWxLqQqIfWQPZ5gfOjaRoY0vlfy9+Ak=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CuVYjtnkoI6A9p3wbf/+iLp+/VTBZYeq
-	gd+wZPgylDNvCzOCPpgAdJnnqz3Z9iuU6mRQjb+Mofuuajx3ALIOBW6gWizY5a5/
-	SJZC5p4mTtpFe8fR+ckb8XFpB3o/mazE/d3jg1ezH7yDD0CyMocnWo3DKDrq8pIA
-	Pg8NosEu+18=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QX47ic
+	x5lTLzUQofs/1c7sh+uX1LnM+UsmkEEyi2rx4ROKa7N3JoIHR/pmVMU7FJZjNu2s
+	YHNbN3YWoghDla5X14pEwYF+NzimmoyFnLC3kFT3ZstK7rmJre/ESKYa2PiQupr3
+	AaSFaglCSKinNvy/iRP5pYaUg7NqMAFgsN9tk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A3A02F136;
-	Tue,  9 Jul 2013 16:00:23 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2098E2FB19;
+	Tue,  9 Jul 2013 16:15:51 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8BA532F134;
-	Tue,  9 Jul 2013 16:00:22 +0000 (UTC)
-In-Reply-To: <7vip0jwzou.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 09 Jul 2013 07:55:13 -0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7DF562FB16;
+	Tue,  9 Jul 2013 16:15:50 +0000 (UTC)
+In-Reply-To: <1373383740-24440-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 9 Jul
+ 2013 22:29:00 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A93D67F2-E8B0-11E2-8240-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D2569260-E8B2-11E2-AC7C-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229965>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
+> I attempted to make index_state->cache[] a "const struct cache_entry =
+**"
+> to find out how existing entries in index are modified and where. The
+> question I have is what do we do if we really need to keep track of o=
+n-disk
+> changes in the index. The result is
 >
->> On Sun, Jul 07, 2013 at 03:33:43PM -0700, Junio C Hamano wrote:
->>
->>> +		argv_array_init(&args);
->>> +		argv_array_push(&args, "name-rev");
->>> +		argv_array_push(&args, "--name-only");
->>> +		argv_array_push(&args, "--no-undefined");
->>> [...]
->>> -		memcpy(args + i, argv, argc * sizeof(char *));
->>> -		args[i + argc] = NULL;
->>> -		return cmd_name_rev(i + argc, args, prefix);
->>> +		return cmd_name_rev(args.argc, args.argv, prefix);
->>
->> This leaks the memory allocated by "args". The original did, too, and it
->> is probably not that big a deal (we exit right after anyway). The fix
->> would be something like:
->>
->>   rc = cmd_name_rev(args.argc, args.argv, prefix);
->>   argv_array_clear(&args);
->>   return rc;
+>  - diff-lib.c: setting CE_UPTODATE
 >
-> Yes; this was meant as a straight rewrite and I did not bother, but
-> I should have cleaned it up as I meant to build on top.
+>  - name-hash.c: setting CE_HASHED
 >
-> Will amend, even though I do not think we need to build anything on
-> top.
+>  - preload-index.c, read-cache.c, unpack-trees.c and
+>    builtin/update-index: obvious
+>
+>  - entry.c: write_entry() may refresh the checked out entry via
+>    fill_stat_cache_info(). This causes "non-const struct cache_entry
+>    *" in builtin/apply.c, builtin/checkout-index.c and
+>    builtin/checkout.c
+>
+>  - builtin/ls-files.c: --with-tree changes stagemask and may set
+>    CE_UPDATE
+>
+> Of these, write_entry() and its call sites are probably most
+> interesting because it modifies on-disk info. But this is stat info
+> and can be retrieved via refresh, at least for porcelain
+> commands. Other just uses ce_flags for local purposes.
+>
+> So, keeping track of "dirty" entries is just a matter of setting a
+> flag in index modification functions exposed by read-cache.c. Except
+> unpack-trees, the rest of the code base does not do anything funny
+> behind read-cache's back.
+>
+> The actual patch is less valueable than the summary above. But if
+> anyone wants to re-identify the above sites. Applying this patch, the=
+n
+> this:
+>
+>     diff --git a/cache.h b/cache.h
+>     index 430d021..1692891 100644
+>     --- a/cache.h
+>     +++ b/cache.h
+>     @@ -267,7 +267,7 @@ static inline unsigned int canon_mode(unsigne=
+d int mode)
+>      #define cache_entry_size(len) (offsetof(struct cache_entry,name)=
+ + (len) + 1)
+>    =20
+>      struct index_state {
+>     -	struct cache_entry **cache;
+>     +	const struct cache_entry **cache;
+>      	unsigned int version;
+>      	unsigned int cache_nr, cache_alloc, cache_changed;
+>      	struct string_list *resolve_undo;
+>
+> will help quickly identify them without bogus warnings.
 
-Heh, you fooled me.  cmd_name_rev() uses the usual parse-options
-machinery that updates args.argv[].  Dashed options that were
-consumed will not remain in args.argv[] and argv_array_clear() will
-not have a chance to free them, and besides, args.argc and args.argv
-will be out of sync and wreaks havoc in argv_array_clear().
+Nicely done and a very interesting result.  I quickly eyeballed the
+output of
 
-We could expose argv_array_push_nodup() and use it in this caller
-and then free the args.argv[] but not its contents, but I do not
-think it is worth it.
+$ git grep -e 'struct cache_entry' --and --not -e 'const struct cache_e=
+ntry'
+
+and the result matches what I would expect to see.
