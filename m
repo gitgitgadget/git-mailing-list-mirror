@@ -1,65 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] fetch: make --prune configurable
-Date: Mon, 8 Jul 2013 23:50:08 -0400
-Message-ID: <20130709035008.GA27903@sigill.intra.peff.net>
-References: <1373288217-20580-1-git-send-email-mschub@elegosoft.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: standarize mtime when git checkout
+Date: Tue, 09 Jul 2013 05:54:14 +0200
+Message-ID: <51DB8966.2060308@lsrfire.ath.cx>
+References: <7D0754FFADBD2D4785C1D233C497C47B209AF2BC@SJEXCHMB06.corp.ad.broadcom.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Tue Jul 09 05:50:39 2013
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Rick Liu <rickliu@broadcom.com>
+X-From: git-owner@vger.kernel.org Tue Jul 09 05:54:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwOwn-0007kc-P1
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 05:50:38 +0200
+	id 1UwP0T-0002ie-Rp
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 05:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751845Ab3GIDuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jul 2013 23:50:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35024 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751026Ab3GIDuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jul 2013 23:50:12 -0400
-Received: (qmail 32361 invoked by uid 102); 9 Jul 2013 03:51:27 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 08 Jul 2013 22:51:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Jul 2013 23:50:08 -0400
-Content-Disposition: inline
-In-Reply-To: <1373288217-20580-1-git-send-email-mschub@elegosoft.com>
+	id S1751960Ab3GIDyW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jul 2013 23:54:22 -0400
+Received: from india601.server4you.de ([85.25.151.105]:50376 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751672Ab3GIDyV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jul 2013 23:54:21 -0400
+Received: from [192.168.2.102] (p579BE0AD.dip0.t-ipconnect.de [87.155.224.173])
+	by india601.server4you.de (Postfix) with ESMTPSA id 74226416;
+	Tue,  9 Jul 2013 05:54:19 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <7D0754FFADBD2D4785C1D233C497C47B209AF2BC@SJEXCHMB06.corp.ad.broadcom.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229904>
 
-On Mon, Jul 08, 2013 at 02:56:57PM +0200, Michael Schubert wrote:
+Am 08.07.2013 23:39, schrieb Rick Liu:
+> Hi,
+>
+> Currently when doing "git checkout" (either for a branch or a tag),
+> if the file doesn't exist before,
+> the file will be created using current datetime.
+>
+> This causes problem while trying to tar the git repository source fil=
+es (excluding .git folder).
+> The tar binary can be different
+> even all of file contents are the same (eg. from the same GIT commit)
+> because the mtime for the files might be different due to different "=
+git checkout" time.
+>
+> eg:
+> User A checkout the commit at time A and then tarball the folder.
+> User B checkout the same commit as time B and then tarball the folder=
+=2E
+> The result tarball are binary different
+> even though all of tarball contents are the same
+> except the mtime for each file.
+>
+>
+> Can we use GIT's commit time as the mtime for all of files/folders wh=
+en we do "git checkout"?
 
-> $gmane/201715 brought up the idea to fetch --prune by default.
-> Since --prune is a "potentially destructive operation" (Git doesn't
-> keep reflogs for deleted references yet), we don't want to prune
-> without users consent.
-> 
-> To accommodate users who want to either prune always or when fetching
-> from a particular remote, add two new configuration variables
-> "fetch.prune" and "remote.<name>.prune":
-> 
->  - "fetch.prune" allows to enable prune for all fetch operations.
-> 
->  - "remote.<name>.prune" allows to change the behaviour per remote.
+That would break tools like make which rely on a files mtime to build=20
+them.  They wouldn't be able to detect switching between source file=20
+versions that are older than the latest build.
 
-Thanks. As the person who brought up the destructive nature of --prune
-in the thread you mentioned, I have no problem at all with doing
-something like this, where the user gets to make the choice. And it is
-even a good building block if we later do have deleted-branch reflogs;
-we can just flip the default from "off" to "on".
+You can use "git archive" to create tar files in which all entries have=
+=20
+their mtime set to the commit time.  Such archives only contain tracked=
+=20
+(committed) files, though.  And different versions of git can create=20
+slightly different archives, but such changes have been rare.
 
-In the meantime, I don't know if it is worth mentioning in the
-documentation that the remote branches are hard to get back. On the one
-hand, it is the (or at least a) reason why the default is not "on". But
-it is also far from the only place refs get deleted, so I don't know if
-it is worth calling attention to it specifically.
-
--Peff
+Ren=E9
