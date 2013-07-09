@@ -1,69 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/7] push: document --lockref
-Date: Tue, 09 Jul 2013 13:42:03 -0700
-Message-ID: <7v8v1fv52c.fsf@alter.siamese.dyndns.org>
-References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
-	<1373399610-8588-1-git-send-email-gitster@pobox.com>
-	<1373399610-8588-8-git-send-email-gitster@pobox.com>
-	<51DC723F.2000602@alum.mit.edu>
+From: Muhammad Bashir Al-Noimi <mbnoimi@gmail.com>
+Subject: Re: Git in nutshell Inbox
+Date: Tue, 09 Jul 2013 22:47:35 +0200
+Message-ID: <51DC76E7.2080003@gmail.com>
+References: <CABpATRsi-Akyv_d4xHsa0AdOdw4_P5VBpoWgx=ViWpA2Q0itPw@mail.gmail.com> <vpq4nc3g5l5.fsf@anie.imag.fr> <CABpATRt1wffDN7tC3fQpqLcHgf1M6NdhANjx+jxLhN2oa2xEZQ@mail.gmail.com> <20130709170239.GC7038@paksenarrion.iveqy.com> <CABpATRsG=n1MzpPLc2u_gOmOM9G8Ym=O0j9bTuwwkUS6F6f1mQ@mail.gmail.com> <20130709173857.GF7038@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jul 09 22:42:16 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu.Moy@imag.fr, git@vger.kernel.org
+To: iveqy@iveqy.com
+X-From: git-owner@vger.kernel.org Tue Jul 09 22:47:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uwejl-0008Du-1y
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 22:42:13 +0200
+	id 1UwepD-00055h-7q
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 22:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753987Ab3GIUmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jul 2013 16:42:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43907 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753831Ab3GIUmG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jul 2013 16:42:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAFA82F99A;
-	Tue,  9 Jul 2013 20:42:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4GailLSJ9KS1Z7KzbbBJBLj9zrU=; b=lgf0o7
-	GvC1b3v8VjfwjBXalBFlzIZr7D3oXISOY2xx4riZoAXO5R44PUAZTj3BCGR86Z+r
-	aShf2Z8dZG7W9MrS3G1KKN/vU5HZNZkhqaKFMdhTgLIrz5HVH3LG9h68sXA4ehAx
-	CwrsyiSpDTBP5Ia1jcTHCQAInZXzeo2flSJ1Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kL6R2dj/vuRaOs3NSyrR/ffGIM8RA1wU
-	Xdl+l5oP8SnsP0DQZM0vwpYazEfH++1xtBDTlkPLaNC76TXx1Ga8xUcAQt7TR7zK
-	S0RpbrtvQINaAFoMGy7ARRvDkFwIo1NB3bj8gvlOcNdz0hIW/r8cL3dzy6b9njrX
-	wKJJZdpw4VY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E07A22F999;
-	Tue,  9 Jul 2013 20:42:05 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D5372F997;
-	Tue,  9 Jul 2013 20:42:05 +0000 (UTC)
-In-Reply-To: <51DC723F.2000602@alum.mit.edu> (Michael Haggerty's message of
-	"Tue, 09 Jul 2013 22:27:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0419CA0E-E8D8-11E2-89F4-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752856Ab3GIUrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jul 2013 16:47:47 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:59872 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752493Ab3GIUrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jul 2013 16:47:46 -0400
+Received: by mail-wi0-f175.google.com with SMTP id m6so10652517wiv.8
+        for <git@vger.kernel.org>; Tue, 09 Jul 2013 13:47:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-tagtoolbar-keys:content-type
+         :content-transfer-encoding;
+        bh=BvwF0AAPDQUQyyexjgSWhICrpT0zL6DmdbAOvo0qWeQ=;
+        b=DjeZ+QEzkjBrngOQoX4cVT3MiD36Az6zezinct62xlnt1tTtCma7SnRduQ1+xrUoIA
+         lOYoEfPVGRxdRleriY0COvIRVFIP6v50y959IKMiiuAWcDysnWRPKlcSnDfb/6NJS2Tm
+         Z28IH4pxzfdF1G48HEpIeIyYsQXVW0ixlhEpWkPNZyg87dXbgJV3Za683I03BTQJETOS
+         Efyhl80As1Gi2u86bq19FhcFLgFqYzcQUihzG8tGrgYXQBiBLj7H9qEANYQJkQw7Xx18
+         aP73+AvYOKVFnh0OuB8XO/DtHBQTBCX21JeyLBvMko6yXczJMyMvCYB8mS8t+t/PdOUP
+         YTWw==
+X-Received: by 10.180.187.136 with SMTP id fs8mr15219235wic.18.1373402864427;
+        Tue, 09 Jul 2013 13:47:44 -0700 (PDT)
+Received: from [0.0.0.0] (spftor5e1.privacyfoundation.ch. [77.109.139.26])
+        by mx.google.com with ESMTPSA id b20sm32247955wiw.4.2013.07.09.13.47.39
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 09 Jul 2013 13:47:42 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <20130709173857.GF7038@paksenarrion.iveqy.com>
+X-TagToolbar-Keys: D20130709224735561
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230006>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On 07/09/2013 07:38 PM, Fredrik Gustafsson wrote:
+> git-cola is about six years old and you're using a two year old release.
+> You miss 1/3 of all development that has been done on git-cola. I
+> suggest you update to a newer version. Too bad that ubuntu shipped such
+> old version.
+Thanks for mentioning that. I get recent version from this PPS
+https://launchpad.net/~winski/+archive/git-cola
 
-> <bikeshed>
-> The name "--lockref" is OK, but for me it's less a question of
-> "locking", because as far as the user is concerned the push is an atomic
-> operation so there is no sense of a "lock" that is being held for a
-> finite period of time.
+There is a big difference between old and new version... voila.
+Now I've to make some tests because the new version is completely 
+different than the old one so I'll send a feedback soon.
 
-Yeah, I think this is more like "taking a lease".
+Thanks again :)
+
+-- 
+Best Regards,
+Muhammad Bashir Al-Noimi
