@@ -1,105 +1,133 @@
-From: Marc Branchaud <mbranchaud@xiplink.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 7/7] push: document --lockref
-Date: Tue, 09 Jul 2013 17:37:38 -0400
-Message-ID: <51DC82A2.8020203@xiplink.com>
-References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org> <1373399610-8588-1-git-send-email-gitster@pobox.com> <1373399610-8588-8-git-send-email-gitster@pobox.com> <51DC7199.2050302@kdbg.org> <7vhag3v59o.fsf@alter.siamese.dyndns.org>
-Reply-To: marcnarc@xiplink.com
+Date: Tue, 09 Jul 2013 15:09:58 -0700
+Message-ID: <7v38rnv0zt.fsf@alter.siamese.dyndns.org>
+References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
+	<1373399610-8588-1-git-send-email-gitster@pobox.com>
+	<1373399610-8588-8-git-send-email-gitster@pobox.com>
+	<51DC7199.2050302@kdbg.org> <7vhag3v59o.fsf@alter.siamese.dyndns.org>
+	<51DC78C0.9030202@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 09 23:49:35 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Jul 10 00:10:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uwfmw-0002bX-57
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 23:49:34 +0200
+	id 1Uwg6p-0004Li-SR
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 00:10:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753722Ab3GIVta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jul 2013 17:49:30 -0400
-Received: from smtp182.dfw.emailsrvr.com ([67.192.241.182]:48569 "EHLO
-	smtp182.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753703Ab3GIVt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jul 2013 17:49:28 -0400
-X-Greylist: delayed 587 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Jul 2013 17:49:28 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp8.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id DAFC28AA1
-	for <git@vger.kernel.org>; Tue,  9 Jul 2013 17:39:40 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: from smtp114.ord1c.emailsrvr.com (smtp114.ord1c.emailsrvr.com [108.166.43.114])
-	by smtp8.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTPS id BC9A98A9C
-	for <git@vger.kernel.org>; Tue,  9 Jul 2013 17:39:40 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp7.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 1EE091B8138;
-	Tue,  9 Jul 2013 17:37:35 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp7.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id C566D1B8116;
-	Tue,  9 Jul 2013 17:37:34 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <7vhag3v59o.fsf@alter.siamese.dyndns.org>
+	id S1751400Ab3GIWKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jul 2013 18:10:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62274 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751173Ab3GIWKB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jul 2013 18:10:01 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2FA42F6A4;
+	Tue,  9 Jul 2013 22:10:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RJ/7f7AgxBUcMrnSEoAHkJyXcOY=; b=qWonWY
+	umF0s2rM8D6Y+hMXBI/mvC6wb2gR1ehK5k5WTCeTeSNab76nEn+N+dk0RVHn+l3S
+	3wnJKEBlSctQ0+UEQZwWmIFf9RXOusKuCwrnbS21FD8UVhbs6WwHZOTCTCmbiL2f
+	utANQ2w/waqiOXfN3EvrZ4KwImHy4557Fj514=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sKGyv4SDn4OWPcALrg3yMFqLoD1Ac1Ht
+	9G0/czerecUuo1wg17wpxjbbmd4JQXTeh+sKqzUVdhgAW6MKcy7K9nq4uRY62RWw
+	NUFtbRBvfvTU9yJP6bwk8Y0iniwK81I7XNanWVOeckokxSuVWgXf5Jrr/7wlwXzH
+	Q6XKsAc3zMY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A0F622F6A2;
+	Tue,  9 Jul 2013 22:10:00 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA78A2F69F;
+	Tue,  9 Jul 2013 22:09:59 +0000 (UTC)
+In-Reply-To: <51DC78C0.9030202@kdbg.org> (Johannes Sixt's message of "Tue, 09
+	Jul 2013 22:55:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4BFEA310-E8E4-11E2-BBF7-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230011>
 
-On 13-07-09 04:37 PM, Junio C Hamano wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
->> Am 09.07.2013 21:53, schrieb Junio C Hamano:
->>> +--lockref::
->>> +--lockref=<refname>::
->>> +--lockref=<refname>:<expect>::
->>> ...
->>> +This is meant to make `--force` safer to use.
->>
->> This is a contradiction. "--force" means "I mean it, dude", and not "I
->> mean it sometimes". It would make sense if this sentence were "This is
->> meant to make `+refspec` safer to use."
-> 
-> No, this *IS* making --force safer by letting you to say in addition
-> to --force alone which is blind, add --lockref to defeat it.
-> 
-> I do not see any good reason to change the samentics of "+refspec"
-> for something like this.  "+refspec" and "--force refspec" have
-> meant the same thing forever.  If --lockref adds safety to +refspec,
-> the same safety should apply to "--force refspec".
-> 
->> Do you intend to require users to opt in to safety by saying --lockref
->> until the end of time?
-> 
-> For normal users this is *NOT* necessary.  I do not know where
-> people are getting the idea of making it default.
-> 
-> Rewinding a branch, needing to --force, is an exceptional case.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Yes, rewinding is exceptional.
+> No. --force means "I know what I am doing, no safety needed, thank you".
 
-However, when a rewind has to happen, I think most users would want to have
-this feature most of the time.  I think anyone who rewinds a shared branch
-would hate to inadvertently throw away someone else's work.  Rare is the
-person who really won't care about that.
+I sympathize the desire to keep a big red button to override
+everything, but it is still not clear how these two independent
+safety should work together and should possibly seletively be
+overriden.
 
-So I agree with those who say that this would be nice default behaviour.  I
-also don't think we need to make --force different from +refspec, mainly
-because if the rewound ref turns out to have moved a simple "git fetch" will
-update it and likely allow the next rewind attempt to succeed.  A helpful
-error message would make this plain.
+A proposed ref update can be in one of the four:
 
-I also appreciate the desire to let this stew a while before making it the
-default.  However, I don't think that leaving it as an option of push will
-give it enough exposure.  I myself want this feature, and I do rewind or
-delete a branch every few months or so, but I'm almost certainly going to
-forget to use this option the next time the need arises.
+ 1. The update fast-forwards, and the ref to be updated is at the
+    expected place (or you simply do not care what the current value
+    is);
 
-But if it was instead/also a configurable option I could just turn on, that
-would be awesome.
+ 2. The update does not fast-forward, and the ref to be updated is
+    at the expected place (or you simply do not care what the
+    current value is);
 
-<bikeshed>
-For the option name, how about --match-baseref ?
-</bikeshed>
+ 3. The update fast-forwards, but the ref to be updated is not at the
+    expected place; or
 
-		M.
+ 4. The update does not fast-forward, and the ref to be updated is
+    not at the expected place.
+
+So far we had only 1. and 2. because we did not have this "old value
+has to be at X".  And --force has been the way to allow 2. to go
+through.
+
+Now we are adding 3. and 4. to the mix.
+
+If --force were the big red button that allows all four, is that
+sufficient to cover the necessary cases, especially given that some
+people seem to want to make the --lockref on by default (implying
+that 3. and 4. will both fail by default unless forced in some way)?
+For example, would there be a case where we want to allow 3. but not
+4. (or vice versa)?
+
+You _could_ structure the safety into hierarchies:
+
+ * safest: no-ff will be rejected, and current value at an
+   unexpected place is also rejected.  That would be:
+
+   $ git push --lockref
+
+ * --lockref only: no-ff is not even checked, but current value
+     must be at an expected place.  How would that be spelled???
+
+   $ git push --lockref ???
+
+ * --force: anything goes.
+
+   $ git push --force --no-lockref
+
+Where does "ff-check only" fit in the hierarchy?
+
+This is one of the reasons why the original design of "--lockref"
+was to even countermand "allow non-fast-forward" (which is the
+original meaning of "--force").
+
+I _think_ I am OK if we introduced "--allow-no-ff" that means the
+current "--force" (i.e. "rewinding is OK"), that does not defeat the
+"--lockref" safety.  That is the intended application (you know that
+push does not fast-forward because you rebased, but you also want to
+make sure there is nothing you are losing by enforcing --lockref
+safety).
+
+If that is what happens, then I think "--force" that means "anything
+goes" makes sense.
+
+With the posted series, adding "--force --no-lockref" to the command
+line is how to spell that big red button.
