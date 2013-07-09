@@ -1,86 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] describe: use argv-array
-Date: Tue, 09 Jul 2013 07:55:13 -0700
-Message-ID: <7vip0jwzou.fsf@alter.siamese.dyndns.org>
-References: <1373236424-25617-1-git-send-email-gitster@pobox.com>
-	<1373236424-25617-4-git-send-email-gitster@pobox.com>
-	<20130709045151.GE27903@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFC] blame: accept multiple -L ranges
+Date: Tue, 9 Jul 2013 11:04:55 -0400
+Message-ID: <CAPig+cQ9sfV+PRqn5vrL0=xOZrKDDmsKdAPiB4PsCFb=jnk4kQ@mail.gmail.com>
+References: <1373186706-19284-1-git-send-email-sunshine@sunshineco.com>
+	<7vk3l26695.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 09 16:55:34 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Thomas Rast <trast@inf.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 09 17:05:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwZKG-0006St-3H
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 16:55:32 +0200
+	id 1UwZTS-0007IX-4I
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 17:05:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754085Ab3GIOz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jul 2013 10:55:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51207 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753864Ab3GIOz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jul 2013 10:55:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B93C92E995;
-	Tue,  9 Jul 2013 14:55:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=csWmQ2VF/dPQ1BZMSCvWTwAcNnE=; b=M558xg
-	z+th+Enc75rmY63KxKZVqz7XFD+vqW9VuLAEE1HQRtHDV2xfoYyrFG1q4JDYuBLH
-	QRyDbiNZpBKYOyUbUSW9aq9+pn+qNNejF1rKaExk2pKxdwvGRoVXgKNRPDTDvwMa
-	+iumLyFSdE7kk3gQ9rHFx4dZ48ztdDz96yvBc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VgRiZLlyDi79TZ2NdRoTMnop3TET6bP/
-	2CdNku9TLrTndHEwwYo2dH2lb/jc7F2jyRBhkDs37Ck2kX7EqM+nwbH8c3eA2+lI
-	HmKVGq+HLJ3fpoNebPwZynXerktL+KLE4kAY4pNgFBHqPLgadfR5aEtyyoTx844I
-	06cp8p2pJGU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADACB2E994;
-	Tue,  9 Jul 2013 14:55:16 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 167232E991;
-	Tue,  9 Jul 2013 14:55:16 +0000 (UTC)
-In-Reply-To: <20130709045151.GE27903@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 9 Jul 2013 00:51:51 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 90CC31DE-E8A7-11E2-AA09-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754072Ab3GIPE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jul 2013 11:04:58 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:54565 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753630Ab3GIPE5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jul 2013 11:04:57 -0400
+Received: by mail-lb0-f175.google.com with SMTP id r10so4775505lbi.20
+        for <git@vger.kernel.org>; Tue, 09 Jul 2013 08:04:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=awk5rZ9HWGdnIDdydbqmcFk6wDmxwyptOFRL/XLwRIA=;
+        b=ISxSPgqgr031WzktDv4SJkQan+G0weZDtijBxEacYuYYGFmTzE4jALPxIJW+JTNnBI
+         k4+mS6FLQq01CaZxxAJ8o7V1VWwgcR0wgQGnhTJY16yW5AUNPQZR7yd6Sg6Lyp/Lpn4F
+         MNuqu1/uNPsEuSykhVH3s/X2fjTBf6FofQrajvMglmS7iBfe0kYwXqAFuKEXOAYPREWe
+         GXIzA/ycoUgtWZB84wxbrwd53Efa1DmvYsm3IclgcVEfb5S9Wgh2SQ+4dBruX1lIjkbo
+         fxTwwwzyg6MpdO243U9baOih7DaADCIu/IMAwBEs9EF+tt9VwPaKVfnGX5tb+qrTZVqc
+         wS/g==
+X-Received: by 10.152.6.228 with SMTP id e4mr12715342laa.61.1373382295778;
+ Tue, 09 Jul 2013 08:04:55 -0700 (PDT)
+Received: by 10.114.187.78 with HTTP; Tue, 9 Jul 2013 08:04:55 -0700 (PDT)
+In-Reply-To: <7vk3l26695.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: o-VDPs2wyzEARl7LjVk9f4lbZPA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229959>
 
-Jeff King <peff@peff.net> writes:
+[Added Cc:Thomas Rast]
 
-> On Sun, Jul 07, 2013 at 03:33:43PM -0700, Junio C Hamano wrote:
+On Sun, Jul 7, 2013 at 5:58 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 >
->> +		argv_array_init(&args);
->> +		argv_array_push(&args, "name-rev");
->> +		argv_array_push(&args, "--name-only");
->> +		argv_array_push(&args, "--no-undefined");
->> [...]
->> -		memcpy(args + i, argv, argc * sizeof(char *));
->> -		args[i + argc] = NULL;
->> -		return cmd_name_rev(i + argc, args, prefix);
->> +		return cmd_name_rev(args.argc, args.argv, prefix);
+>> git-blame accepts only zero or one -L option. Clients requiring blame
+>> information for multiple disjoint ranges are therefore forced either to
+>> invoke git-blame multiple times, once for each range, or only once with
+>> no -L option to cover the entire file, which can be costly. Teach
+>> git-blame to accept multiple -L ranges.
+>>
+>> Overlapping and out-of-order ranges are accepted and handled gracefully.
+>> For example:
+>>
+>>   git blame -L 3,+4 -L 91,+7 -L 2,3 -L 89,100 source.c
+>>
+>> emits blame information for lines 2-6 and 89-100.
+>> ---
+>>
+>> This is RFC because it lacks documentation and test updates, and because
+>> I want to make sure the approach is sound and not abusive of the blame
+>> machinery.
 >
-> This leaks the memory allocated by "args". The original did, too, and it
-> is probably not that big a deal (we exit right after anyway). The fix
-> would be something like:
+> A few commments (without reading too deep in the patch, so do not
+> take any of these as complaint---if you did it the way I said "I'd
+> prefer", take it as a praise ;-).
 >
->   rc = cmd_name_rev(args.argc, args.argv, prefix);
->   argv_array_clear(&args);
->   return rc;
+>  - I'd prefer to see the command parser for multiple -L options to
+>    ensure that they are in strictly increasing order without
+>    overlap.  Error out with a message if the input ranges are out of
+>    order or with overlap.  Doing it that way, it would be easier to
+>    explain to the users how "blame -L /A/,/B/ -L /C/,/D/" should
+>    work.  It would find the first line that matches C _after_ the
+>    end of the first range.  This is in line with the way we find the
+>    end of the range (e.g. the line that matches B) starting from the
+>    last line previously specified (e.g. the line that matches A).
 
-Yes; this was meant as a straight rewrite and I did not bother, but
-I should have cleaned it up as I meant to build on top.
+As implemented by this patch, the behavior of git-blame with multiple
+-L's is consistent with that of git-log with multiple -L's. The
+implemented behavior feels intuitive to me, but I can see how the
+behavior you suggest could feel intuitive to others.
 
-Will amend, even though I do not think we need to build anything on
-top.
+If I re-do the patch to work the way you describe above, how should we
+deal with the inconsistent behaviors between the two commands?
+
+>  - I'd be somewhat unhappy to see coalesce() butchered to blindly
+>    accept overlapping ranges (if anything, I'd rather see it
+>    tightened to detect such input as a programming error), but this
+>    is a minor point.
+
+Loosening the behavior bothered enough that I mentioned it centrally
+in the patch commentary. I can re-implement without (ab)using
+coalesce().
+
+(In fact, I already have an implementation which re-uses the machinery
+employed by git-log -L.)
+
+-- ES
