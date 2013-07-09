@@ -1,149 +1,105 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Feature request: "author branch" in commit object
-Date: Tue, 9 Jul 2013 22:46:36 +0100
-Organization: OPDS
-Message-ID: <E66A4CB66EF64CE5A46851045BFB48FA@PhilipOakley>
-References: <CADL+T9YGtvFrzStxJW64OJEV6H0BroMbkVCJdsDwWDaUWd91zQ@mail.gmail.com><vpqehbgrnrx.fsf@anie.imag.fr><CADL+T9Z=SrVyMMnYk3M7Dmb4c5xGiQtCTiDYaceKwB2-51TV-g@mail.gmail.com> <7vppuzfrde.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Marc Branchaud <mbranchaud@xiplink.com>
+Subject: Re: [PATCH 7/7] push: document --lockref
+Date: Tue, 09 Jul 2013 17:37:38 -0400
+Message-ID: <51DC82A2.8020203@xiplink.com>
+References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org> <1373399610-8588-1-git-send-email-gitster@pobox.com> <1373399610-8588-8-git-send-email-gitster@pobox.com> <51DC7199.2050302@kdbg.org> <7vhag3v59o.fsf@alter.siamese.dyndns.org>
+Reply-To: marcnarc@xiplink.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
-	"Git List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Ed Hutchins" <eh@demeterr.com>
-X-From: git-owner@vger.kernel.org Tue Jul 09 23:46:18 2013
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 09 23:49:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uwfjj-0007yd-LH
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 23:46:16 +0200
+	id 1Uwfmw-0002bX-57
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 23:49:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753463Ab3GIVqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jul 2013 17:46:12 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:15437 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752704Ab3GIVqK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jul 2013 17:46:10 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AuENAEuD3FFOl3AH/2dsb2JhbABbgwmJRbhDBAEDAYEaF3SCHgUBAQQBCAEBLh4BASELAgMFAgEDFQELJRQBBBoGBxcGAQkJCAIBAgMBCIdwCroPjwFqgxBrA4hthgyaJIMSOw
-X-IPAS-Result: AuENAEuD3FFOl3AH/2dsb2JhbABbgwmJRbhDBAEDAYEaF3SCHgUBAQQBCAEBLh4BASELAgMFAgEDFQELJRQBBBoGBxcGAQkJCAIBAgMBCIdwCroPjwFqgxBrA4hthgyaJIMSOw
-X-IronPort-AV: E=Sophos;i="4.87,1030,1363132800"; 
-   d="scan'208";a="415635688"
-Received: from host-78-151-112-7.as13285.net (HELO PhilipOakley) ([78.151.112.7])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 09 Jul 2013 22:46:07 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753722Ab3GIVta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jul 2013 17:49:30 -0400
+Received: from smtp182.dfw.emailsrvr.com ([67.192.241.182]:48569 "EHLO
+	smtp182.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753703Ab3GIVt2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jul 2013 17:49:28 -0400
+X-Greylist: delayed 587 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Jul 2013 17:49:28 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp8.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id DAFC28AA1
+	for <git@vger.kernel.org>; Tue,  9 Jul 2013 17:39:40 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: from smtp114.ord1c.emailsrvr.com (smtp114.ord1c.emailsrvr.com [108.166.43.114])
+	by smtp8.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTPS id BC9A98A9C
+	for <git@vger.kernel.org>; Tue,  9 Jul 2013 17:39:40 -0400 (EDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp7.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 1EE091B8138;
+	Tue,  9 Jul 2013 17:37:35 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp7.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id C566D1B8116;
+	Tue,  9 Jul 2013 17:37:34 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <7vhag3v59o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230010>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Wednesday, July 03, 2013 7:08 PM
-[catching up on old emails]
-> Ed Hutchins <eh@demeterr.com> writes:
->
->> I'm not trying to change the way git does things (which works
->> perfectly
->> well), I'm asking for some extra information to be added to the
->> commit
->> so that analysis of the ancestry graph can be tied to the branch
->> topics
->> that the original author was working from. Currently if you have a
->> rebase-branch/ff-merge-to-master workflow, the graph of commits looks
->> like a single user produced all of the code. It would be very useful
->> for
->> both forensic and display purposes to categorize those commits by
->> their
->> original topics, but that history is lost in such a workflow.
->
-> I am not following that "a single user" part. As long as these
-> topics are done by different people, the authorship remains
-> separate, no matter what the shape of the graph is.
->
-> It all depends on what you show on the graph other than a circle and
-> connecting lines, but I presume at least you would show the subject
-> line. The graph would clearly show which groups of commits tackle
-> what problems in your history, even if you excessively linearlized
-> it by rebasing. You need subjects / commit log messages that are
-> better than "bugfix", of course, for it to work, though.
->
->> Arguing that branch names are local and thus meaningless misses
->> the point: branches are *names* which were meaningful to the
->> author at the time the branch was being worked on.
->
-> That is not necessarily true.
->
-> Most of my commits start their life on a single branch that is named
-> after a very broad theme (or even on a detached HEAD) that ends up
-> touching different parts of the system and then later split into
-> separate topic branches that are named after more detailed single
-> issues. The name of the branch that happened to have been used to
-> create them have almost no meaning after I am done with multiple and
-> independent (but related in the larger scheme of things) topics.
->
-> It is not just misleading but is actively wrong to recording the
-> name of the original branch in commits and carrying them forward via
-> rebase. If you want a record of what a group of commits were about,
-> the right time to do so is when you merge.
+On 13-07-09 04:37 PM, Junio C Hamano wrote:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+>> Am 09.07.2013 21:53, schrieb Junio C Hamano:
+>>> +--lockref::
+>>> +--lockref=<refname>::
+>>> +--lockref=<refname>:<expect>::
+>>> ...
+>>> +This is meant to make `--force` safer to use.
+>>
+>> This is a contradiction. "--force" means "I mean it, dude", and not "I
+>> mean it sometimes". It would make sense if this sentence were "This is
+>> meant to make `+refspec` safer to use."
+> 
+> No, this *IS* making --force safer by letting you to say in addition
+> to --force alone which is blind, add --lockref to defeat it.
+> 
+> I do not see any good reason to change the samentics of "+refspec"
+> for something like this.  "+refspec" and "--force refspec" have
+> meant the same thing forever.  If --lockref adds safety to +refspec,
+> the same safety should apply to "--force refspec".
+> 
+>> Do you intend to require users to opt in to safety by saying --lockref
+>> until the end of time?
+> 
+> For normal users this is *NOT* necessary.  I do not know where
+> people are getting the idea of making it default.
+> 
+> Rewinding a branch, needing to --force, is an exceptional case.
 
-While the general arguments are true that in the main one shouldn't
-embed whatever random branch name was used into the commit messages,
-there are some workflows and some production (corporate) environments
-where adding a relevant branch name is suitable for that environment.
+Yes, rewinding is exceptional.
 
-If the existing branch name is poor then the user should do a rebase to
-transfer it to a better branch name, and then the 'git filter-branch'
-command would be the obvious method to add a "Developed-on: <branch>"
-final 'signoff line'.
+However, when a rewind has to happen, I think most users would want to have
+this feature most of the time.  I think anyone who rewinds a shared branch
+would hate to inadvertently throw away someone else's work.  Rare is the
+person who really won't care about that.
 
-The 'git filter-branch' man page already includes an example for adding
-an acked by, which can easily be modified.
+So I agree with those who say that this would be nice default behaviour.  I
+also don't think we need to make --force different from +refspec, mainly
+because if the rewound ref turns out to have moved a simple "git fetch" will
+update it and likely allow the next rewind attempt to succeed.  A helpful
+error message would make this plain.
 
---
-If you need to add Acked-by lines to, say, the last 10 commits (none of
-which is a merge), use this command:
+I also appreciate the desire to let this stew a while before making it the
+default.  However, I don't think that leaving it as an option of push will
+give it enough exposure.  I myself want this feature, and I do rewind or
+delete a branch every few months or so, but I'm almost certainly going to
+forget to use this option the next time the need arises.
 
-git filter-branch --msg-filter '
-        cat &&
-        echo "Acked-by: Bugs Bunny <bunny@bugzilla.org>"
-' HEAD~10..HEAD
---
+But if it was instead/also a configurable option I could just turn on, that
+would be awesome.
 
-I'll leave it to Ed to automate it as a script.... (and possibly making 
-sure it's idempotent so only the final branch name is retained, etc.)
+<bikeshed>
+For the option name, how about --match-baseref ?
+</bikeshed>
 
->
-> Projects that care about the shape of the ancestry graph have an
-> obvious option of not excessively/unnecessarily linearlizing their
-> history. We even have the "--no-ff" mode of merge to create an
-> otherwise unnecessary merge to mark the point where a topic is
-> merged to the mainline, so that merge log messages can say what
-> topic was merged (and also you can even have "merge.log").
->
-> Cleaning up a messy history created on a topic branch before
-> presenting to others by lineralizing is one thing. It is a good
-> practice. Requiring any update to fast-forward on top of the tip of
-> the project is quite different. It does not make your history any
-> easier to read. A topic that has been working fine on top of last
-> week's trunk can have a subtle interaction with the work done by
-> others on the trunk since it forked, and rebasing it on top of
-> today's trunk, just before pushing it out on the trunk, risks
-> breaking the topic in a subtle way without the person who does such
-> a rebase without noticing, making later bisection harder.
->
-> Any option to encourage such an artificially linear history _is_
-> actively detrimental.
-> --
-
-Philip
-The boss may not always be right, but she is the boss. 
+		M.
