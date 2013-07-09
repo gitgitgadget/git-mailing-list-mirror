@@ -1,61 +1,115 @@
-From: =?iso-8859-1?Q?Saraj=E4rvi_Tony?= <Tony.Sarajarvi@digia.com>
-Subject: Git --file doesn't override $HOME in version 1.8.1.2
-Date: Tue, 9 Jul 2013 11:05:46 +0000
-Message-ID: <C8A88C530F38AE47B22BDC434090CBB0ED26E0@IT-EXMB01-HKI.it.local>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: [PATCH] commit: reject non-characters
+Date: Tue, 9 Jul 2013 12:16:33 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1307091213090.2313@ds9.cixit.se>
+References: <cover.1372957719.git.sandals@crustytoothpaste.net> <20130704171943.GA267700@vauxhall.crustytoothpaste.net> <alpine.DEB.2.00.1307051345260.11814@ds9.cixit.se> <7vfvvozvx4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 09 13:05:55 2013
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 09 13:17:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwVk2-0008Gs-OB
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 13:05:55 +0200
+	id 1UwVum-0001fP-P8
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 13:17:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753444Ab3GILFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jul 2013 07:05:51 -0400
-Received: from smtp1.digia.com ([82.118.214.156]:50121 "EHLO smtp1.digia.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753359Ab3GILFt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jul 2013 07:05:49 -0400
-Received: from smtp1.digia.com (unknown [127.0.0.1])
-	by IMSVA80 (Postfix) with ESMTP id 73572370048
-	for <git@vger.kernel.org>; Tue,  9 Jul 2013 14:05:47 +0300 (EEST)
-Received: from IT-EXCAS01-HKI.it.local (unknown [10.9.52.70])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by smtp1.digia.com (Postfix) with ESMTP id 65E7A370041
-	for <git@vger.kernel.org>; Tue,  9 Jul 2013 14:05:47 +0300 (EEST)
-Received: from IT-EXMB01-HKI.it.local ([fe80::78ea:e84d:88b4:9f3d]) by
- IT-EXCAS01-HKI.it.local ([fe80::880f:35fb:7fe4:a7cf%14]) with mapi id
- 14.02.0283.003; Tue, 9 Jul 2013 14:05:47 +0300
-Thread-Topic: Git --file doesn't override $HOME in version 1.8.1.2
-Thread-Index: Ac58lDNuzKSWXOyLSHmV48wyH4v0hQ==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.9.5.6]
+	id S1753216Ab3GILQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jul 2013 07:16:54 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:49326 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752990Ab3GILQy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jul 2013 07:16:54 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id r69BGZB6015488
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 9 Jul 2013 13:16:35 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id r69BGXnt015484;
+	Tue, 9 Jul 2013 13:16:34 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <7vfvvozvx4.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Tue, 09 Jul 2013 13:16:35 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229946>
 
-Using Ubuntu 13.04 with Git 1.8.1.2 I stumbled upon a problem using Puppet.
+Unicode clause D14 defines all characters U+nFFFE and U+nFFFF (where
+0 <= n <= 10h) as well as the range U+FDD0..U+FDEF as non-characters,
+reserved for internal use only.  Disallow these characters in commit
+messages as they are normally not recommended for interchange.
 
-In Puppet we launch Git with the command: '/usr/bin/git config --file /home/qt/.gitconfig --get "user.name" "Qt Continuous Integration System"'
-However, puppet logs: "fatal: unable to access '/root/.config/git/config': Permission denied".
+Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
+---
+Junio C Hamano:
 
-Puppet is run as root, so HOME points to /root, but still -file should override the environment variable.
+> Yeah, while we are at it, doing this may not hurt.  I think Brian's
+> two patches are in fairly good shape otherwise, so perhaps you can
+> do this as a follow-up patch on top of the tip of the topic,
+> e82bd6cc (commit: reject overlong UTF-8 sequences, 2013-07-04)?
 
-If the same command is run directly from terminal as root, it works as well.
+OK, here you are. Enjoy :)
 
-With 1.8.3.2 the problem didn't reoccur.
+  commit.c               |  7 +++++--
+  t/t3900-i18n-commit.sh | 18 ++++++++++++++++++
+  2 files changed, 23 insertions(+), 2 deletions(-)
 
--Tony
--------
-Digia, Qt
+diff --git a/commit.c b/commit.c
+index 5097dba..0587732 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1305,8 +1305,11 @@ static int find_invalid_utf8(const char *buf, int len)
+  		/* Surrogates are only for UTF-16 and cannot be encoded in UTF-8. */
+  		if ((codepoint & 0x1ff800) == 0xd800)
+  			return bad_offset;
+-		/* U+FFFE and U+FFFF are guaranteed non-characters. */
+-		if ((codepoint & 0x1ffffe) == 0xfffe)
++		/* U+xxFFFE and U+xxFFFF are guaranteed non-characters. */
++		if ((codepoint & 0xffffe) == 0xfffe)
++			return bad_offset;
++		/* So are anything in the range U+FDD0..U+FDEF. */
++		if (codepoint >= 0xfdd0 && codepoint <= 0xfdef)
+  			return bad_offset;
+  	}
+  	return -1;
+diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+index 051ea9d..38b00c3 100755
+--- a/t/t3900-i18n-commit.sh
++++ b/t/t3900-i18n-commit.sh
+@@ -58,6 +58,24 @@ test_expect_success 'UTF-8 overlong sequences rejected' '
+  	grep "did not conform" "$HOME"/stderr
+  '
+
++test_expect_success 'UTF-8 non-characters refused' '
++	test_when_finished "rm -f $HOME/stderr $HOME/invalid" &&
++	echo "UTF-8 non-character 1" >F &&
++	printf "Commit message\n\nNon-character:\364\217\277\276\n" \
++		>"$HOME/invalid" &&
++	git commit -a -F "$HOME/invalid" 2>"$HOME"/stderr &&
++	grep "did not conform" "$HOME"/stderr
++'
++
++test_expect_success 'UTF-8 non-characters refused' '
++	test_when_finished "rm -f $HOME/stderr $HOME/invalid" &&
++	echo "UTF-8 non-character 2." >F &&
++	printf "Commit message\n\nNon-character:\357\267\220\n" \
++		>"$HOME/invalid" &&
++	git commit -a -F "$HOME/invalid" 2>"$HOME"/stderr &&
++	grep "did not conform" "$HOME"/stderr
++'
++
+  for H in ISO8859-1 eucJP ISO-2022-JP
+  do
+  	test_expect_success "$H setup" '
+-- 
+1.8.3.1
