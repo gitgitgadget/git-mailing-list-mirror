@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 11/15] for-each-ref: introduce %(HEAD) marker
-Date: Tue,  9 Jul 2013 16:02:22 +0530
-Message-ID: <1373365946-9230-12-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 14/15] pretty: introduce get_pretty_userformat
+Date: Tue,  9 Jul 2013 16:02:25 +0530
+Message-ID: <1373365946-9230-15-git-send-email-artagnon@gmail.com>
 References: <1373365946-9230-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,113 +10,114 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 09 12:36:53 2013
+X-From: git-owner@vger.kernel.org Tue Jul 09 12:36:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwVHu-0007Ep-68
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 12:36:50 +0200
+	id 1UwVI3-0007Kh-0h
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 12:36:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753633Ab3GIKgp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jul 2013 06:36:45 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:42320 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753596Ab3GIKgl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jul 2013 06:36:41 -0400
-Received: by mail-pb0-f52.google.com with SMTP id xa12so5341920pbc.25
-        for <git@vger.kernel.org>; Tue, 09 Jul 2013 03:36:41 -0700 (PDT)
+	id S1753679Ab3GIKgx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jul 2013 06:36:53 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:58734 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753646Ab3GIKgt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jul 2013 06:36:49 -0400
+Received: by mail-pd0-f176.google.com with SMTP id t12so5088321pdi.35
+        for <git@vger.kernel.org>; Tue, 09 Jul 2013 03:36:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=uC6bRhYOjz9OYjOXJW6533wVq71AtjEDZsrw1I5+aH4=;
-        b=R0xeaBb24UiqzUjQZrNGySPtL/bZ5OOdE+lbrRS7TACwn+h6AKaogMsoW53bsK0hYe
-         EJksUuFkHgTNkf1Oljz2KBglcX26iFc1Xq9TROvhm6ywA0lcz3rUmv8OdDHSb5ICcaXS
-         Vmnsf5oCbbSoO8ggtrxKnvOUm7we/dtS5JBMr4sXhvXaUpoGEynJ1KnticudpAB28QRs
-         fZlnjWy85KYhEYr+33C4cv8Qca8qcw+53LYIFnRC20ACoEpkTreDm6d3K3zltavdtF3F
-         /5kDbpUqHfQu5VGIrjAcgt2kL89jE69sKEY6iailMJUyd5/JtUQiya+ZB+SQrsvhcWQy
-         lwOg==
-X-Received: by 10.66.118.227 with SMTP id kp3mr26703880pab.190.1373366201048;
-        Tue, 09 Jul 2013 03:36:41 -0700 (PDT)
+        bh=FOo3m2eCUURGI7jYHvmiqZw2It+4sh/TOtYElsfkbYk=;
+        b=M6TXkKIJdNoYC1EfXwjfelRv4nk7aRn91pCFD6HCoDXwmyx+Wd2ZLz+2dZlD3LCqJ+
+         5lx1R47O6MkdsM3TA0v8c7UMV+oAEYKIFXznT652wtLex8JuNMNOlGY2HnYfN24cnPyQ
+         z34zB8qf/uyeigVZ95DpXQX/KlJQFxA0WSLQwNEXgleVYTl5TPCNoEcDegWv5XU9yR2F
+         CpllMu87OlSKZr622SpD6wE2B81uH7XMiX7ErP23eO5Jy7iFFzdq5D5g/NX/b9xRQKb1
+         NwZNsQPmy2vSSrvAKPcV/BaeJWsWYzOgpIwHGNNNwdKC45gxN6y5nGOXElGY/BMqCtbM
+         KnLA==
+X-Received: by 10.67.2.71 with SMTP id bm7mr26711251pad.144.1373366208725;
+        Tue, 09 Jul 2013 03:36:48 -0700 (PDT)
 Received: from localhost.localdomain ([122.174.59.189])
-        by mx.google.com with ESMTPSA id fr1sm27553398pbb.26.2013.07.09.03.36.38
+        by mx.google.com with ESMTPSA id fr1sm27553398pbb.26.2013.07.09.03.36.46
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 09 Jul 2013 03:36:40 -0700 (PDT)
+        Tue, 09 Jul 2013 03:36:48 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.2.736.g869de25
 In-Reply-To: <1373365946-9230-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229941>
 
-'git branch' shows which branch you are currently on with an '*', but
-'git for-each-ref' misses this feature.  So, extend the format with
-%(HEAD) to do exactly the same thing.
-
-Now you can use the following format in for-each-ref:
-
-  %C(red)%(HEAD)%C(reset) %C(green)%(refname:short)%C(reset)
-
-to display a red asterisk next to the current ref.
+This helper function is intended to be used by callers implementing
+--pretty themselves; it parses pretty.* configuration variables
+recursively and hands the user-defined format back to the caller.  No
+builtins are supported, as CMT_FMT_* are really only useful when
+displaying commits.  Callers might like to define their own builtins in
+the future.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/git-for-each-ref.txt |  4 ++++
- builtin/for-each-ref.c             | 13 +++++++++++--
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ commit.h |  1 +
+ pretty.c | 25 +++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for=
--each-ref.txt
-index 8cbc08c..8d982e3 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -121,6 +121,10 @@ upstream::
- 	from the displayed ref. Respects `:short` in the same way as
- 	`refname` above.
-=20
-+HEAD::
-+	Useful to indicate the currently checked out branch.  Is '*'
-+	if HEAD points to the current ref, and ' ' otherwise.
-+
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index da479d1..3d357a9 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -76,6 +76,7 @@ static struct {
- 	{ "upstream" },
- 	{ "symref" },
- 	{ "flag" },
-+	{ "HEAD" },
- };
+diff --git a/commit.h b/commit.h
+index ced7100..331a2db 100644
+--- a/commit.h
++++ b/commit.h
+@@ -113,6 +113,7 @@ extern char *logmsg_reencode(const struct commit *c=
+ommit,
+ 			     const char *output_encoding);
+ extern void logmsg_free(char *msg, const struct commit *commit);
+ extern void get_commit_format(const char *arg, struct rev_info *);
++extern const char *get_pretty_userformat(const char *arg);
+ extern const char *format_subject(struct strbuf *sb, const char *msg,
+ 				  const char *line_separator);
+ extern void userformat_find_requirements(const char *fmt, struct userf=
+ormat_want *w);
+diff --git a/pretty.c b/pretty.c
+index 28c0a72..70e4e44 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -174,6 +174,31 @@ void get_commit_format(const char *arg, struct rev=
+_info *rev)
+ }
 =20
  /*
-@@ -679,8 +680,16 @@ static void populate_value(struct refinfo *ref)
- 				v->s =3D xstrdup(buf + 1);
- 			}
- 			continue;
--		}
--		else
-+		} else if (!strcmp(name, "HEAD")) {
-+			const char *head;
-+			unsigned char sha1[20];
-+			head =3D resolve_ref_unsafe("HEAD", sha1, 1, NULL);
-+			if (!strcmp(ref->refname, head))
-+				v->s =3D "*";
-+			else
-+				v->s =3D " ";
-+			continue;
-+		} else
- 			continue;
-=20
- 		formatp =3D strchr(name, ':');
++ * Function to parse --pretty string, lookup pretty.* configuration
++ * variables and return the format string, assuming no builtin
++ * formats.  Not limited to commits, unlike get_commit_format().
++ */
++const char *get_pretty_userformat(const char *arg)
++{
++	struct cmt_fmt_map *commit_format;
++
++	if (!arg || !*arg)
++		return NULL;
++
++	if (!prefixcmp(arg, "format:") || !prefixcmp(arg, "tformat:"))
++		return xstrdup(strchr(arg, ':' + 1));
++
++	if (strchr(arg, '%'))
++		return xstrdup(arg);
++
++	commit_format =3D find_commit_format(arg);
++	if (!commit_format || commit_format->format !=3D CMIT_FMT_USERFORMAT)
++		die("invalid --pretty format: %s", arg);
++
++	return xstrdup(commit_format->user_format);
++}
++
++/*
+  * Generic support for pretty-printing the header
+  */
+ static int get_one_line(const char *msg)
 --=20
 1.8.3.2.736.g869de25
