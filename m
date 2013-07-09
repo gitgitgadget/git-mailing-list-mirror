@@ -1,87 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] blame: accept multiple -L ranges
-Date: Tue, 09 Jul 2013 12:31:42 -0700
-Message-ID: <7vppurv8bl.fsf@alter.siamese.dyndns.org>
-References: <1373186706-19284-1-git-send-email-sunshine@sunshineco.com>
-	<7vk3l26695.fsf@alter.siamese.dyndns.org>
-	<CAPig+cQ9sfV+PRqn5vrL0=xOZrKDDmsKdAPiB4PsCFb=jnk4kQ@mail.gmail.com>
-	<7v38rnwuvb.fsf@alter.siamese.dyndns.org>
-	<87ehb7d3za.fsf@hexa.v.cablecom.net>
-	<CAPig+cT9U7L-03Fe5YLft=WS2EZY1B_BhLzkM_sT_3wQQ1g1MQ@mail.gmail.com>
-	<7vy59fv9zr.fsf@alter.siamese.dyndns.org>
-	<87a9lvcztv.fsf@hexa.v.cablecom.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/3] merge -Xindex-only
+Date: Tue, 09 Jul 2013 21:38:13 +0200
+Message-ID: <51DC66A5.80500@alum.mit.edu>
+References: <cover.1373219466.git.trast@inf.ethz.ch> <51DAD8F2.5070008@alum.mit.edu> <87k3l1gip1.fsf@linux-k42r.v.cablecom.net> <51DBDB6F.7090105@alum.mit.edu> <878v1gey16.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>
 To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jul 09 21:31:54 2013
+X-From: git-owner@vger.kernel.org Tue Jul 09 21:38:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uwdde-0002fm-16
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 21:31:50 +0200
+	id 1Uwdjy-00009i-KV
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 21:38:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752635Ab3GITbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jul 2013 15:31:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34596 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752396Ab3GITbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jul 2013 15:31:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0B5D2F779;
-	Tue,  9 Jul 2013 19:31:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wd46Sdn4iusTdN9pQyi+PXwyAWY=; b=CsFeY6
-	wb/Lx4wXGkK+bjhII0Ti4MRlpz1V1uiJysz3RVfS383C6TbtMAxAoYgP6edzO7Cc
-	+8oMx3gf5ZlYawPLHljbhLM6WESMtsyeEd5aCX5nSJpCBW6/ETWSSeekDqsvrBGF
-	33Pf9jvKh04f3+pJH8v3ODWfwFVnXhrMxNtkE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZTBVfDEJKCudNjAgBf8DMkYs+nMCIVHj
-	wzLSHjZHMUSR3OwuJ5e1s24ybmcvdCncnhKC75JaEcDY54Qswb97VHtiOqPxc7nB
-	celCEiMT54VmGmtnha0CcIOX/e7aPhsFwpXfvEMrh+ZyzQWbcb9YGqavwV6MPDkP
-	/HfGCL18J8s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A453C2F778;
-	Tue,  9 Jul 2013 19:31:44 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 085852F776;
-	Tue,  9 Jul 2013 19:31:43 +0000 (UTC)
-In-Reply-To: <87a9lvcztv.fsf@hexa.v.cablecom.net> (Thomas Rast's message of
-	"Tue, 9 Jul 2013 21:12:28 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2FFB68A8-E8CE-11E2-8399-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752601Ab3GITiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jul 2013 15:38:18 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:63025 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752493Ab3GITiS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jul 2013 15:38:18 -0400
+X-AuditID: 1207440e-b7f0f6d0000043b7-f8-51dc66a9996a
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id F7.8C.17335.9A66CD15; Tue,  9 Jul 2013 15:38:17 -0400 (EDT)
+Received: from [192.168.69.140] (p57A24C98.dip0.t-ipconnect.de [87.162.76.152])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r69JcEXW002131
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 9 Jul 2013 15:38:16 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <878v1gey16.fsf@linux-k42r.v.cablecom.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqLsy7U6gwekjEhZdV7qZLO5eXsXu
+	wORx+/V8Zo/Pm+QCmKK4bZISS8qCM9Pz9O0SuDN6n6xlLpjLW3H7+TOmBsadXF2MnBwSAiYS
+	R6/dYIWwxSQu3FvP1sXIxSEkcJlRYub1TiYI5xyTxPrX01lAqngFNCWePTnDBmKzCKhKPNs6
+	FSzOJqArsainGaiBg0NUIEziym9ViHJBiZMzn7CAhEUElCW2LawBMZmBqh++SQQxhQW0Ja50
+	W0IsOsUoca/nK9hwTgFziXNvpoHZzAI6Eu/6HjBD2PIS29/OYZ7AKDALyYJZSMpmISlbwMi8
+	ilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXWC83s0QvNaV0EyMkSPl2MLavlznEKMDBqMTDe0Dh
+	TqAQa2JZcWXuIUZJDiYlUd4fyUAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrxJfEA53pTEyqrU
+	onyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKYrAwHh5IE75JUoEbBotT01Iq0zJwShDQTByfI
+	cC4pkeLUvJTUosTSkox4UJTGFwPjFCTFA7R3Hkg7b3FBYi5QFKL1FKMux4EfW94zCrHk5eel
+	SonzrgcpEgApyijNg1sBS0mvGMWBPhbm3QhSxQNMZ3CTXgEtYQJasicFbElJIkJKqoExhOP8
+	Qm1nwcWR2rcka+XlVVS+S0g8MVASFrGaYqZ3euevI9Nq105rvdDa9l9d+1Be7XXnxd4zOh0m
+	7OjY4fU+offLoRvxW4QfSbY9NNeeq52w7LjOAtH4bUcmb+KMdd17ULrc+3jmiWRD 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229985>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+On 07/09/2013 02:08 PM, Thomas Rast wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> Since you've already implemented a way to merge into the index (even an
+>> alternative index) without touching the working copy, I'll just cross my
+>> fingers and hope for the appearance of an option that makes merge leave
+>> HEAD, MERGE_HEAD, etc. untouched.
+> 
+> The most annoying part is probably where to put the output, since
+> merging is more or less defined to do one of:
+> 
+> - update HEAD and return 0
+> - update MERGE_HEAD and return 1
 
-> If you define it that way, the output of
->
->   git blame -L 4,6; git blame -L /A/,+20
->
-> is significantly different from
->
->   git blame -L 4,6 -L /A/,+20
->
-> Not just in the presentation or any possible coalescing, but in the
-> meaning of the ranges.
->
-> Do you really want to make it that way?
+I don't understand what you mean here.  Why does *any* reference need to
+be updated?  Why not
 
-Absolutely.  The primary reason I want to be able to specify two
-ranges at the same time is to follow two functions in a file that
-appear in separate places, and /A/ might not be unique.  When I want
-to say "I want to see from here to there, and then from here to
-there, and then from here to there", it would be very frustrating if
-"and then" resets what I mean by "here" every time and make these
-three evaluated independently.
+* load arbitrary commit-ish A into index
+
+* merge arbitrary commit-ish B into index
+
+* return error/OK depending on whether there was a conflict
+
+?  The script that started the whole process would know what A and B are
+and could create the commit itself using "git write-tree" and "git
+commit-tree -p A -p B".  And if the index were an alternative index
+chosen via GIT_INDEX_FILE then the rest of the git repo would be none
+the wiser.
+
+> I'm not sure how much flexibility is worth having.  Would it be
+> sufficient if you had an option, e.g. -Xresult-ref=refs/heads/foo, that
+> changes it to:
+> 
+> - update refs/heads/foo and return 0
+> - return 1, not updating any refs
+> 
+> That would mean that it would only work for noninteractive use.  In the
+> conflicting case, the driving script would need to remember what it
+> wanted to merge so as have the information when finally committing.
+
+That would be fine with me.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
