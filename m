@@ -1,87 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git --file doesn't override $HOME in version 1.8.1.2
-Date: Tue, 9 Jul 2013 15:24:55 -0400
-Message-ID: <20130709192455.GC5153@sigill.intra.peff.net>
-References: <C8A88C530F38AE47B22BDC434090CBB0ED26E0@IT-EXMB01-HKI.it.local>
- <87mwpweywu.fsf@linux-k42r.v.cablecom.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] blame: accept multiple -L ranges
+Date: Tue, 09 Jul 2013 12:31:42 -0700
+Message-ID: <7vppurv8bl.fsf@alter.siamese.dyndns.org>
+References: <1373186706-19284-1-git-send-email-sunshine@sunshineco.com>
+	<7vk3l26695.fsf@alter.siamese.dyndns.org>
+	<CAPig+cQ9sfV+PRqn5vrL0=xOZrKDDmsKdAPiB4PsCFb=jnk4kQ@mail.gmail.com>
+	<7v38rnwuvb.fsf@alter.siamese.dyndns.org>
+	<87ehb7d3za.fsf@hexa.v.cablecom.net>
+	<CAPig+cT9U7L-03Fe5YLft=WS2EZY1B_BhLzkM_sT_3wQQ1g1MQ@mail.gmail.com>
+	<7vy59fv9zr.fsf@alter.siamese.dyndns.org>
+	<87a9lvcztv.fsf@hexa.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?Q?Saraj=C3=A4rvi?= Tony <Tony.Sarajarvi@digia.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
 To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jul 09 21:25:04 2013
+X-From: git-owner@vger.kernel.org Tue Jul 09 21:31:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwdX6-0004qo-6B
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 21:25:04 +0200
+	id 1Uwdde-0002fm-16
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 21:31:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752486Ab3GITZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jul 2013 15:25:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41287 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752114Ab3GITY7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jul 2013 15:24:59 -0400
-Received: (qmail 11339 invoked by uid 102); 9 Jul 2013 19:26:15 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 09 Jul 2013 14:26:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Jul 2013 15:24:55 -0400
-Content-Disposition: inline
-In-Reply-To: <87mwpweywu.fsf@linux-k42r.v.cablecom.net>
+	id S1752635Ab3GITbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jul 2013 15:31:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34596 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752396Ab3GITbp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jul 2013 15:31:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0B5D2F779;
+	Tue,  9 Jul 2013 19:31:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wd46Sdn4iusTdN9pQyi+PXwyAWY=; b=CsFeY6
+	wb/Lx4wXGkK+bjhII0Ti4MRlpz1V1uiJysz3RVfS383C6TbtMAxAoYgP6edzO7Cc
+	+8oMx3gf5ZlYawPLHljbhLM6WESMtsyeEd5aCX5nSJpCBW6/ETWSSeekDqsvrBGF
+	33Pf9jvKh04f3+pJH8v3ODWfwFVnXhrMxNtkE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZTBVfDEJKCudNjAgBf8DMkYs+nMCIVHj
+	wzLSHjZHMUSR3OwuJ5e1s24ybmcvdCncnhKC75JaEcDY54Qswb97VHtiOqPxc7nB
+	celCEiMT54VmGmtnha0CcIOX/e7aPhsFwpXfvEMrh+ZyzQWbcb9YGqavwV6MPDkP
+	/HfGCL18J8s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A453C2F778;
+	Tue,  9 Jul 2013 19:31:44 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 085852F776;
+	Tue,  9 Jul 2013 19:31:43 +0000 (UTC)
+In-Reply-To: <87a9lvcztv.fsf@hexa.v.cablecom.net> (Thomas Rast's message of
+	"Tue, 9 Jul 2013 21:12:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2FFB68A8-E8CE-11E2-8399-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229984>
 
-On Tue, Jul 09, 2013 at 01:49:21PM +0200, Thomas Rast wrote:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> Rather, it's very strange that 'git config --file foo' tries to look at
-> any config file other than 'foo'.  In a git repo:
-> 
->   $ strace git config --file fooconfig test.var 2>&1 | grep 'open.*config'
->   open("/home/thomas/.gitconfig", O_RDONLY) = 3
->   open(".git/config", O_RDONLY)           = 3
->   open("/home/thomas/.gitconfig", O_RDONLY) = 3
->   open(".git/config", O_RDONLY)           = 3
->   open("fooconfig", O_RDONLY)             = 3
-> 
-> I haven't looked into the code yet.  Probably it's simply following the
-> usual code paths to discover a repo and read its config.  However, with
-> the --file option, it shouldn't.
+> If you define it that way, the output of
+>
+>   git blame -L 4,6; git blame -L /A/,+20
+>
+> is significantly different from
+>
+>   git blame -L 4,6 -L /A/,+20
+>
+> Not just in the presentation or any possible coalescing, but in the
+> meaning of the ranges.
+>
+> Do you really want to make it that way?
 
-I'm not so sure. It is (in theory) OK to read the usual config files to
-find out _how_ git-config should behave, but then return results from a
-specific file. The former should read the "normal" files, and the latter
-should read whatever is specified by the options ("--file", a specific
-level like "--global", or the usual set of files).
-
-There are probably not many config options that can affect git-config's
-behavior. The few I can think of are:
-
-  1. core.editor should affect "git config --edit"
-
-  2. pager.config would auto-start a pager. I am not sure if that is a
-     sane thing to do or not.
-
-  3. In theory you could have advice.* affect git-config, but I do not
-     think any currently do.
-
-  4. Currently git-config does not read objects, but there are patches
-     proposed to do so. In that case, things like core.packedGitWindowSize
-     might be important.
-
-So I think you could probably drop the config parsing, special-case (1),
-and ignore (2) as silly. But I think (3) and (4) show that it isn't the
-right thing to do; you will never know which config options affect
-git-config's behavior in the future.
-
-The real issue here is not the "extra" normal config parsing; it is that
-the normal parsing does not work in some cases. And that has already
-been fixed by Jonathan's 4698c8f (config: allow inaccessible
-configuration under $HOME, 2013-04-12).
-
--Peff
+Absolutely.  The primary reason I want to be able to specify two
+ranges at the same time is to follow two functions in a file that
+appear in separate places, and /A/ might not be unique.  When I want
+to say "I want to see from here to there, and then from here to
+there, and then from here to there", it would be very frustrating if
+"and then" resets what I mean by "here" every time and make these
+three evaluated independently.
