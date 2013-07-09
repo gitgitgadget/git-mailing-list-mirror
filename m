@@ -1,75 +1,72 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: standarize mtime when git checkout
-Date: Tue, 09 Jul 2013 05:54:14 +0200
-Message-ID: <51DB8966.2060308@lsrfire.ath.cx>
-References: <7D0754FFADBD2D4785C1D233C497C47B209AF2BC@SJEXCHMB06.corp.ad.broadcom.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: expanding pack idx fanout table
+Date: Tue, 9 Jul 2013 00:19:13 -0400
+Message-ID: <20130709041913.GB27903@sigill.intra.peff.net>
+References: <CAJo=hJsto1ik=GTC8c3+2_jBuUqcAPL0UWp-1uoYYMpgbLB+qg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Rick Liu <rickliu@broadcom.com>
-X-From: git-owner@vger.kernel.org Tue Jul 09 05:54:32 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jul 09 06:19:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwP0T-0002ie-Rp
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 05:54:26 +0200
+	id 1UwPOb-0007ad-I8
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 06:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751960Ab3GIDyW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jul 2013 23:54:22 -0400
-Received: from india601.server4you.de ([85.25.151.105]:50376 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751672Ab3GIDyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jul 2013 23:54:21 -0400
-Received: from [192.168.2.102] (p579BE0AD.dip0.t-ipconnect.de [87.155.224.173])
-	by india601.server4you.de (Postfix) with ESMTPSA id 74226416;
-	Tue,  9 Jul 2013 05:54:19 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <7D0754FFADBD2D4785C1D233C497C47B209AF2BC@SJEXCHMB06.corp.ad.broadcom.com>
+	id S1751962Ab3GIETR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jul 2013 00:19:17 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35220 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750725Ab3GIETQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jul 2013 00:19:16 -0400
+Received: (qmail 1309 invoked by uid 102); 9 Jul 2013 04:20:32 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 08 Jul 2013 23:20:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Jul 2013 00:19:13 -0400
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJsto1ik=GTC8c3+2_jBuUqcAPL0UWp-1uoYYMpgbLB+qg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229905>
 
-Am 08.07.2013 23:39, schrieb Rick Liu:
-> Hi,
->
-> Currently when doing "git checkout" (either for a branch or a tag),
-> if the file doesn't exist before,
-> the file will be created using current datetime.
->
-> This causes problem while trying to tar the git repository source fil=
-es (excluding .git folder).
-> The tar binary can be different
-> even all of file contents are the same (eg. from the same GIT commit)
-> because the mtime for the files might be different due to different "=
-git checkout" time.
->
-> eg:
-> User A checkout the commit at time A and then tarball the folder.
-> User B checkout the same commit as time B and then tarball the folder=
-=2E
-> The result tarball are binary different
-> even though all of tarball contents are the same
-> except the mtime for each file.
->
->
-> Can we use GIT's commit time as the mtime for all of files/folders wh=
-en we do "git checkout"?
+On Mon, Jul 08, 2013 at 08:54:24AM -0700, Shawn O. Pearce wrote:
 
-That would break tools like make which rely on a files mtime to build=20
-them.  They wouldn't be able to detect switching between source file=20
-versions that are older than the latest build.
+> Has anyone studied the impact of converting the pack idx fanout table
+> from 256 entries to 65536 entries?
+> 
+> Back of the envelope estimates for 3.1M objects in linux.git suggests
+> a 2^16 fanout table would decrease the number of binary search
+> iterations from ~14 to ~6. The increased table costs an extra 255 KiB
+> of disk. On a 70M idx file this is noise.
 
-You can use "git archive" to create tar files in which all entries have=
-=20
-their mtime set to the commit time.  Such archives only contain tracked=
-=20
-(committed) files, though.  And different versions of git can create=20
-slightly different archives, but such changes have been rare.
+No, I hadn't considered it, but I think your analysis is correct that it
+would decrease the lookup cost. Having run "perf" on git a lot of times,
+I do see find_pack_entry_one turn up as a noticeable hot spot, but
+usually not more than a few percent.
 
-Ren=E9
+Which kind of makes sense, because of the way we cache objects in
+memory. If you are doing something like `rev-list --objects`, you are
+going to do O(n) packfile lookups, but you end up doing _way_ more
+lookups in the object hash. Not just one per tree entry, but one per
+tree entry for each commit in which the entry was untouched.
+
+I tried (maybe a year or so ago) to make the object hash faster using a
+similar fan-out trick, but I don't remember it having any real impact
+(because we keep our hash tables relatively collision free already). I
+think I also tried a full prefix-trie, with no luck.
+
+Obviously the exact results would depend on your workload, but in
+general I'd expect the object hash to take the brunt of the load for
+repeated lookups, and for non-repeated lookups to be dominated by the
+time to actually access the object, as opposed to saving a few hashcmps.
+That may change as we start using the pack .idx for more clever things
+than simply accessing the objects, though (e.g., it might make a
+difference when coupled with my commit cache patches).
+
+-Peff
