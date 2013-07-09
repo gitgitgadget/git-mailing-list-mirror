@@ -1,210 +1,181 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: [PATCH] TIG: Implement mkstemps() work-around for platforms lacking it
-Date: Tue,  9 Jul 2013 11:33:12 -0400
-Message-ID: <1373383992-4298-1-git-send-email-n1xim.email@gmail.com>
-Cc: David Aguilar <davvid@gmail.com>,
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 5.5/22] Add documentation for the index api
+Date: Tue, 9 Jul 2013 22:42:59 +0700
+Message-ID: <CACsJy8A9+1O_em=FtV_TUKags4FrSggV76dd1h6gsJ+JHfjZKw@mail.gmail.com>
+References: <1373184720-29767-1-git-send-email-t.gummerer@gmail.com>
+ <1373184720-29767-6-git-send-email-t.gummerer@gmail.com> <CACsJy8C0F+v3g+gPon6Y8+z7ObN1Jv8Ln==RNrVsRp7aya74hw@mail.gmail.com>
+ <87pputqowr.fsf@gmail.com> <CACsJy8CtOWjpxKuNhQXYjPAv8MU0U6yTBEuQeqm0kxqVne6NjQ@mail.gmail.com>
+ <871u78rcw0.fsf@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
 	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>, Jonas Fonseca <fonseca@diku.dk>,
-	Drew Northup <n1xim.email@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 09 17:34:01 2013
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 09 17:43:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwZvT-0001U7-64
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 17:33:59 +0200
+	id 1Uwa4m-000248-NQ
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 17:43:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751982Ab3GIPdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jul 2013 11:33:55 -0400
-Received: from mail-vc0-f181.google.com ([209.85.220.181]:39372 "EHLO
-	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751728Ab3GIPdy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jul 2013 11:33:54 -0400
-Received: by mail-vc0-f181.google.com with SMTP id lf11so4461550vcb.12
-        for <git@vger.kernel.org>; Tue, 09 Jul 2013 08:33:53 -0700 (PDT)
+	id S1752193Ab3GIPnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jul 2013 11:43:32 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:37318 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752112Ab3GIPnb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jul 2013 11:43:31 -0400
+Received: by mail-ob0-f180.google.com with SMTP id eh20so7172619obb.11
+        for <git@vger.kernel.org>; Tue, 09 Jul 2013 08:43:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=yK32RJ7AqPTEJa+F6xNz8jo3rHWnQc8s6sPUI6/vi7M=;
-        b=vrrlIyNJsA4bKIfB+P2JnDMsYHolpFqeHssrP5dMRFtnVoifV0Xt78PouQ4M6e1JGv
-         pKPz5KAfz/jZf9w3DUEItTNKiJv2YVnCAkBl1ppFDewKcBMXreCj2EQFU1X3bXLl0PR9
-         8CSMtC4IAcDIu5aNrEyPmyV+uzU69zhetLtryymemUh3jWmqTIk9d/PzuKERfmI7mu6X
-         vaSBkucA8u+R/T/uC1xDBxTGlvoMu7kEwzMqCnmFmU6RKLW+HmdEWU9N4++my3gaCGBv
-         ve6oR3aVPOuaNtwDVlLebIqHjlLiERsxvUukujT7+3fbBn0GwE6kyqWASYMUuYaLkC+s
-         J9Zg==
-X-Received: by 10.52.91.202 with SMTP id cg10mr14072568vdb.85.1373384033625;
-        Tue, 09 Jul 2013 08:33:53 -0700 (PDT)
-Received: from atom.sys-os.org (pool-70-16-208-44.man.east.myfairpoint.net. [70.16.208.44])
-        by mx.google.com with ESMTPSA id t5sm20794999vde.8.2013.07.09.08.33.52
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 09 Jul 2013 08:33:52 -0700 (PDT)
-X-Mailer: git-send-email 1.8.0
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=nzI5sUOwFXjzie+UPY/SiRX+UcWw+rOx+uQqXZSpcK8=;
+        b=WfwxIX4nVZHrcFj4x+PlrnASmVkZL4de3V04xeGtvF0ibDHaBHtgrQLtwvz5QQkTfd
+         9DaLqIu6NHw9ujysptQjnAASushCjTpfijeRmQ5tAxTbW+v9OdKKF4TIHVuyNRK9bkVI
+         l1xl6ne7L6KW5mEBVt8WCMBVLC+27e2WyjtLtNC88bMY4bZ1Qvy2sbU1PCnFMYQtbKX8
+         Xm0yPzHVHwr1dvPoCidrILnKMMLO4bs99kHOZbrCyQIcUD49rwzkIUQmYPn5VhYJzyhe
+         FC1CAxxP7KLXTyT8KyxUBW5SabL111J9jSXwf4HQ0o0KFKzq/2CdThjdH+cvSZXj73YA
+         sE/g==
+X-Received: by 10.182.215.133 with SMTP id oi5mr24573778obc.83.1373384610005;
+ Tue, 09 Jul 2013 08:43:30 -0700 (PDT)
+Received: by 10.76.88.230 with HTTP; Tue, 9 Jul 2013 08:42:59 -0700 (PDT)
+In-Reply-To: <871u78rcw0.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229962>
 
-The function mkstemps() isn't available in all libc implementations. In
-glibc it first became available in 2.11, so platforms such as RHEL 5 &
-Slackware 13 lack it. This is likely true of many non-LINUX platforms
-as well.
+On Tue, Jul 9, 2013 at 3:54 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> As promised, a draft for a documentation for the index api as it is in
+> this series.
 
-This fixes breakage that was introduced with a0fdac29 "Create temporary
-file with name as suffix."
+First of all, it may be a good idea to acknowledge
+index_state->cache[] as part of the API for now. Not hiding it
+simplifies a few things (no need for new next_ce field, no worries
+about rewinding in unpack-trees..). Supporting partial loading (and
+maybe partial update in some cases) with this API and
+index_state->cache[] part of the API are good enough for me. We can do
+another tree-based API or something update later when it's formed (I
+looked at your index-v5api branch but I don't think a tree-based api
+was there, my concern is how much extra head pre-v5 has to pay to use
+tree-based api).
 
-Signed-off-by: Drew Northup <n1xim.email@gmail.com>
----
+> +`read_index_filtered(opts)`::
+> +       This method behaves differently for index-v2 and index-v5.
+> +
+> +       For index-v2 it simply reads the whole index as read_index()
+> +       does, so we are sure we don't have to reload anything if the
+> +       user wants a different filter.  It also sets the filter_opts
+> +       in the index_state, which is used to limit the results when
+> +       iterating over the index with for_each_index_entry().
+> +
+> +       The whole index is read to avoid the need to eventually
+> +       re-read the index later, because the performance is no
+> +       different when reading it partially.
+> +
+> +       For index-v5 it creates an adjusted_pathspec to filter the
+> +       reading.  First all the directory entries are read and then
+> +       the cache_entries in the directories that match the adjusted
+> +       pathspec are read.  The filter_opts in the index_state are set
+> +       to filter out the rest of the cache_entries that are matched
+> +       by the adjusted pathspec but not by the pathspec given.  The
+> +       rest of the index entries are filtered out when iterating over
+> +       the cache with for_each_index_entries.
 
-This work-around is taken from Git and was inspired by code in libiberty.
-It is presumed that this isn't a problem due to compatible license terms.
+You can state in the API that the input pathspec is used as a hint to
+load only a portion of the index. read_index_filtered may load _more_
+than necessary. It's the caller's responsibility to verify again which
+is matched and which is not. That's how read_directory is done. I
+think it gives you more liberty in loading strategy. It's already true
+for v2 because full index is loaded regardless of the given pathspec.
+In the end, we have a linear list (from public view) of cache entries,
+accessible via index_state->cache[].
 
-A (virtually identical) version of this available in
-https://github.com/n1xim/tig/tree/mkstemps_wkarnd (differences only in
-the commit message).
+If you happen to know that certain entries match the given pathspec,
+you could help the caller avoid match_pathspec'ing again by set a bit
+in ce_flags.  To know which entry exists in the index and which is
+new, use another flag. Most reader code won't change if we do it this
+way, all match_pathspec() remain where they are.
 
- configure.ac |  4 ++++
- io.c         | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- io.h         | 14 +++++++++++
- 3 files changed, 95 insertions(+)
+> +`for_each_index_entry(fn, cb_data)`::
+> +       Iterates over all cache_entries in the index filtered by
+> +       filter_opts in the index_stat.  For each cache entry fn is
+> +       executed with cb_data as callback data.  From within the loop
+> +       do `return 0` to continue, or `return 1` to break the loop.
 
-diff --git a/configure.ac b/configure.ac
-index 8dd2508..40e1f85 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -21,6 +21,10 @@ AC_SUBST(CURSES_LIB)
- 
- AM_ICONV
- 
-+dnl  Not all platforms have mkstemps
-+AC_CHECK_FUNC([mkstemps], [AC_DEFINE([HAVE_MKSTEMPS], [1],
-+	      [Define if mkstemps is available.])])
-+
- AC_PROG_CC
- 
- AC_CHECK_PROGS(ASCIIDOC, [asciidoc], [false])
-diff --git a/io.c b/io.c
-index 3ff1d1c..f1b6fbc 100644
---- a/io.c
-+++ b/io.c
-@@ -237,6 +237,83 @@ encoding_convert(struct encoding *encoding, char *line)
- }
- 
- /*
-+ * Compatibility: no mkstemps()
-+ */
-+
-+/* Adapted from libiberty's mkstemp.c via Git's wrapper.c. */
-+
-+#undef TMP_MAX
-+#define TMP_MAX 16384
-+
-+int tig_mkstemps_mode(char *pattern, int suffix_len, int mode)
-+{
-+	static const char letters[] =
-+		"abcdefghijklmnopqrstuvwxyz"
-+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-+		"0123456789";
-+	static const int num_letters = 62;
-+	uint64_t value;
-+	struct timeval tv;
-+	char *template;
-+	size_t len;
-+	int fd, count;
-+
-+	len = strlen(pattern);
-+
-+	if (len < 6 + suffix_len) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+
-+	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+
-+	/*
-+	 * Replace pattern's XXXXXX characters with randomness.
-+	 * Try TMP_MAX different filenames.
-+	 */
-+	gettimeofday(&tv, NULL);
-+	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
-+	template = &pattern[len - 6 - suffix_len];
-+	for (count = 0; count < TMP_MAX; ++count) {
-+		uint64_t v = value;
-+		/* Fill in the random bits. */
-+		template[0] = letters[v % num_letters]; v /= num_letters;
-+		template[1] = letters[v % num_letters]; v /= num_letters;
-+		template[2] = letters[v % num_letters]; v /= num_letters;
-+		template[3] = letters[v % num_letters]; v /= num_letters;
-+		template[4] = letters[v % num_letters]; v /= num_letters;
-+		template[5] = letters[v % num_letters]; v /= num_letters;
-+
-+		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, mode);
-+		if (fd > 0)
-+			return fd;
-+		/*
-+		 * Fatal error (EPERM, ENOSPC etc).
-+		 * It doesn't make sense to loop.
-+		 */
-+		if (errno != EEXIST)
-+			break;
-+		/*
-+		 * This is a random value.  It is only necessary that
-+		 * the next TMP_MAX values generated by adding 7777 to
-+		 * VALUE are different with (module 2^32).
-+		 */
-+		value += 7777;
-+	}
-+	/* We return the null string if we can't find a unique file name.  */
-+	pattern[0] = '\0';
-+	return -1;
-+}
-+
-+int tigmkstemps(char *pattern, int suffix_len)
-+{
-+	return tig_mkstemps_mode(pattern, suffix_len, 0600);
-+}
-+
-+/*
-  * Executing external commands.
-  */
- 
-diff --git a/io.h b/io.h
-index 646989d..8f43216 100644
---- a/io.h
-+++ b/io.h
-@@ -16,6 +16,9 @@
- 
- #include "tig.h"
- 
-+/* Needed for mkstemps workaround */
-+#include <stdint.h>
-+
- /*
-  * Argument array helpers.
-  */
-@@ -41,6 +44,17 @@ struct encoding *encoding_open(const char *fromcode);
- char *encoding_convert(struct encoding *encoding, char *line);
- 
- /*
-+ * Compatibility: no mkstemps()
-+ */
-+
-+#ifndef HAVE_MKSTEMPS
-+#define mkstemps tigmkstemps
-+#endif
-+
-+int tigmkstemps(char *, int);
-+int tig_mkstemps_mode(char *pattern, int suffix_len, int mode);
-+
-+/*
-  * Executing external commands.
-  */
- 
--- 
-1.8.0
+Because we don't attempt to hide index_state->cache[], this one may be
+for convenience, the user is not required to convert to it. Actually I
+think this may be slower because of the cost of calling function
+pointer.
+
+> +`next_index_entry(ce)`::
+> +       Returns the cache_entry that follows after ce
+
+next_ce field and this method may be gone too, just access index_state->cache[]
+
+> +`index_change_filter_opts(opts)`::
+> +       This function again has a slightly different functionality for
+> +       index-v2 and index-v5.
+> +
+> +       For index-v2 it simply changes the filter_opts, so
+> +       for_each_index_entry uses the changed index_opts, to iterate
+> +       over a different set of cache entries.
+> +
+> +       For index-v5 it refreshes the index if the filter_opts have
+> +       changed and sets the new filter_opts in the index state, again
+> +       to iterate over a different set of cache entries as with
+> +       index-v2.
+> +
+> +       This has some optimization potential, in the case that the
+> +       opts get stricter (less of the index should be read) it
+> +       doesn't have to reload anything, but currently does.
+
+The only use case I see so far is converting a partial index_state
+back to a full one. Apart from doing so in order to write the new
+index, I think some operation (like rename tracking in diff or
+unpack-trees) may expect full index. I think we should support that. I
+doubt we need to change pathspec to something different than the one
+we used to load the index. When a user passes a pathspec to a command,
+the user expects the command to operate on that set only, not outside.
+
+If you take the input pathspec at loading just as a hint, you could
+load all related directory blocks and all files in those blocks, so
+that expanding to full index is simply adding more files from missing
+directory blocks (and their files). An advantage of not strictly
+follow the input pathspec.
+
+Some thoughts about the writing api.
+
+In think we should avoid automatically converting partial index into a
+full one before writing. Push that back to the caller and die() when
+asked to update partial index. They know at what point the index may
+be updated and even what part of it may be updated. I think all
+commands fall into two categories, tree-wide updates (merge,
+checkout...) and limited by the user-given pathspec. "what part to be
+updated" is not so hard to determine.
+
+If the caller promises not to update or read outside certain pathspec
+(part of API), we don't really need to load full index until
+write_index is called. At that point I think we also know what
+directory blocks are completely untouched by the caller (by promise)
+and could copy them over from the old index byte-by-byte (or something
+close, some offsets may be recalculated). That may keep tree compiling
+cost proportional to the number of changed entries, not the number of
+entries in index.
+
+There is another partial write case that's not covered this round (or
+was it discussed and discarded?): refreshing the index. This operation
+could be treated as a standalone, special one: refresh and update the
+index file directly without waiting until write_index is called. There
+are some commands that follow this scheme by doing
+update_index_if_able() after refresh_index(). Those will be cheaper
+with v5 because we don't need write a full new index.
+--
+Duy
