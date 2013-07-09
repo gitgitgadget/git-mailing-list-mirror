@@ -1,145 +1,65 @@
-From: Ilya Holinov <holinov@netvoxlab.ru>
-Subject: Re: [BUG] git svn geotrust certificate problem
-Date: Tue, 9 Jul 2013 12:45:02 +0400
-Message-ID: <CAOfgeSYfMjkW87PjmaVWoMKtKTGfmq0dHyT6-gkBUP1bLOBm5w@mail.gmail.com>
-References: <CAOfgeSaRmqRj3gCGy0q9ehr=znzyPONa-Ze03hTo69QLHMuQjA@mail.gmail.com>
-	<20130708194604.GA7038@paksenarrion.iveqy.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 1/2] t9902: fix 'test A == B' to use = operator
+Date: Tue, 9 Jul 2013 11:27:22 +0200
+Message-ID: <87fvvogk1x.fsf@linux-k42r.v.cablecom.net>
+References: <8761wli0fe.fsf@linux-k42r.v.cablecom.net>
+	<b9e889a27f648c44179ad39159240867f86525f3.1373296313.git.trast@inf.ethz.ch>
+	<7v1u790xzj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Tue Jul 09 10:45:14 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 09 11:27:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwTXr-0006g8-CS
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 10:45:11 +0200
+	id 1UwUCn-0003un-Pf
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 11:27:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753277Ab3GIIpG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jul 2013 04:45:06 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:44490 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752942Ab3GIIpE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jul 2013 04:45:04 -0400
-Received: by mail-la0-f45.google.com with SMTP id fr10so4599088lab.18
-        for <git@vger.kernel.org>; Tue, 09 Jul 2013 01:45:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-gm-message-state;
-        bh=0mtuclC55PYCJDkhYCb3EMYDtVLfKTm0KCGdyoDGT3o=;
-        b=mQt10aegIIXFddH/OZHFf0xvq3AYHsyxS9/OofK9oMxtpUNwmBZaJr3tBuNi0bpjti
-         ER2v/QNfoXyNWW/vlTK4+zYuieuckv/uq41GkLMGIpIgWTb8xmKqFx15OaPoPv/ojtGu
-         bGNtUcyYIfh/9EiItE+1XxrzsS5xYDlpZwRWDrU05Pc6BdUh2pX+IWwe5BYJpSNDpIYP
-         v68ndtK4BHa0n+m9+TEhnIz3JTkpqIh2POBNVJP7uuHNRlEeOLNl9jdZAwTpFrXs1+lS
-         Sz0c2BfwU6LBU8V13KQygw6qB/7G7n0DpLGFSUShmOLjRLzK5yX5NjHphTptqGu+eAN7
-         I/SQ==
-X-Received: by 10.152.29.41 with SMTP id g9mr12195583lah.44.1373359502148;
- Tue, 09 Jul 2013 01:45:02 -0700 (PDT)
-Received: by 10.112.74.47 with HTTP; Tue, 9 Jul 2013 01:45:02 -0700 (PDT)
-In-Reply-To: <20130708194604.GA7038@paksenarrion.iveqy.com>
-X-Gm-Message-State: ALoCoQmIUY+f9vSvgrl85l7LTc4n8x2qei13TWkhWZupig/OeA5OBJS+ZjCvJtOKmLRn7Onh6HfO
+	id S1753541Ab3GIJ10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jul 2013 05:27:26 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:34479 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753217Ab3GIJ1Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jul 2013 05:27:25 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 9 Jul
+ 2013 11:27:21 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS22.d.ethz.ch (172.31.51.112) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Tue, 9 Jul 2013 11:27:22 +0200
+In-Reply-To: <7v1u790xzj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 08 Jul 2013 10:20:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229921>
 
-Thanks for trying to help me.
-I'v found an issue - that happend because i had system username
-written in russian language.
-When i'v changed to user with english characres username everything
-started to work ok
-_____________
+Junio C Hamano <gitster@pobox.com> writes:
 
-C =D1=83=D0=B2=D0=B0=D0=B6=D0=B5=D0=BD=D0=B8=D0=B5=D0=BC
-=D0=A5=D0=BE=D0=BB=D0=B8=D0=BD=D0=BE=D0=B2 =D0=98=D0=BB=D1=8C=D1=8F =D0=
-=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B5=D0=B5=D0=B2=D0=B8=D1=87,
-
-=D0=92=D0=B5=D0=B4=D1=83=D1=89=D0=B8=D0=B9 =D0=B8=D0=BD=D0=B6=D0=B5=D0=BD=
-=D0=B5=D1=80-=D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=B8=D1=81=
-=D1=82
-
-=D0=93=D1=80=D1=83=D0=BF=D0=BF=D0=B0 =D0=BA=D0=BE=D0=BC=D0=BF=D0=B0=D0=BD=
-=D0=B8=D0=B9 =C2=AB=D0=9D=D0=B5=D1=82=D0=B2=D0=BE=D0=BA=D1=81=C2=BB
-
-=D0=9C=D0=BE=D0=B1: +7 (964) 7075157
-
-=D0=A0=D0=B0=D0=B1=D0=BE=D1=87=D0=B8=D0=B9: +7 (499) 502 2020 =D0=B4=D0=
-=BE=D0=B1 547
-
-Email: holinov@netvoxab.ru,
--------------------------------------
-
-=D0=93=D1=80=D1=83=D0=BF=D0=BF=D0=B0 =D0=BA=D0=BE=D0=BC=D0=BF=D0=B0=D0=BD=
-=D0=B8=D0=B9 =C2=AB=D0=9D=D0=B5=D1=82=D0=B2=D0=BE=D0=BA=D1=81=C2=BB =D0=
-=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D1=8F=D0=B5=D1=82 =D0=BA=D0=BE=D0=
-=BC=D0=BF=D0=B0=D0=BD=D0=B8=D0=B8 =D0=B2 =D0=BE=D0=B1=D0=BB=D0=B0=D1=81=
-=D1=82=D0=B8 =D1=80=D0=B0=D0=B7=D1=80=D0=B0=D0=B1=D0=BE=D1=82=D0=BA=D0=B8
-=D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=BD=D0=BE=D0=B3=D0=BE=
- =D0=BE=D0=B1=D0=B5=D1=81=D0=BF=D0=B5=D1=87=D0=B5=D0=BD=D0=B8=D1=8F, =D0=
-=B8=D0=BD=D1=82=D0=B5=D0=B3=D1=80=D0=B0=D1=86=D0=B8=D0=B8 =D0=B8=D0=BD=D1=
-=84=D0=BE=D1=80=D0=BC=D0=B0=D1=86=D0=B8=D0=BE=D0=BD=D0=BD=D1=8B=D1=85 =D1=
-=81=D0=B8=D1=81=D1=82=D0=B5=D0=BC =D0=B8
-=D0=BE=D1=81=D1=83=D1=89=D0=B5=D1=81=D1=82=D0=B2=D0=BB=D0=B5=D0=BD=D0=B8=
-=D1=8F =D0=B1=D0=B8=D0=B7=D0=BD=D0=B5=D1=81-=D0=BA=D0=BE=D0=BD=D1=81=D0=
-=B0=D0=BB=D1=82=D0=B8=D0=BD=D0=B3=D0=B0:
-=D0=9E=D0=9E=D0=9E =C2=ABNetvox Lab=C2=BB
-
-___________________________
-
-
-2013/7/8 Fredrik Gustafsson <iveqy@iveqy.com>:
-> On Fri, Jul 05, 2013 at 07:16:01PM +0400, Ilya Holinov wrote:
->> I have svn repository on https singed with GeoTrust issued certifica=
-te.
->> Every time i try to access this repository i have message :
->>
->> $ git svn rebase
->> Error validating server certificate for 'https://svn.egspace.ru:443'=
-:
->>  - The certificate is not issued by a trusted authority. Use the
->>    fingerprint to validate the certificate manually!
->> Certificate information:
->>  - Hostname: *.egspace.ru
->>  - Valid: from Apr 28 01:38:17 2013 GMT until Apr 30 12:00:40 2014 G=
-MT
->>  - Issuer: GeoTrust, Inc., US
->>  - Fingerprint: b2:8d:f8:3b:7c:d2:a2:36:e2:1d:c3:5c:56:ec:87:6f:22:3=
-e:4b:a8
->> Certificate problem.
->> (R)eject, accept (t)emporarily or accept (p)ermanently? p
->> Authentication realm: <https://svn.egspace.ru:443> VisualSVN Server
->> Username: holinov
->> Password for 'holinov':
->>
->> Even if i choose permanently every next attempt to access in i have
->> same issue. And this happens on svn rebase on every commit. I mean i=
-f
->> i have 10 commits in local repository i will be asked about cert and
->> user login\passwor for every one of them (and that's is verry
->> annoying).
->> But if i use TortoiseSVN i have no problem with checking that cert.
->>
->> P.S.: I'm using Windows 8 x64.
->> P.P.S: I like git very much but in this case it makes me impossible =
-to
->> work in this way.
+> Thomas Rast <trast@inf.ethz.ch> writes:
 >
-> This isn't really my thing to answer, I don't know windows well enoug=
-h.
-> However since you still haven't got an answer I'll give it a try.
+>> The == operator as an alias to = is not POSIX.  This doesn't actually
+>> matter for the execution of the script, because it only runs when the
+>> shell is bash.  However, it trips up test-lint, so it's nicer to use
+>> the standard form.
 >
-> Please see the following link:
-> https://confluence.atlassian.com/display/SOURCETREEKB/Resolving+SSL+S=
-elf-Signed+Certificate+Errors
+> OK, my knee-jerk reaction was "this is only for bash" as you said,
+> but the test-lint part I agree with.
 >
-> --
-> Med v=C3=A4nliga h=C3=A4lsningar
-> Fredrik Gustafsson
->
-> tel: 0733-608274
-> e-post: iveqy@iveqy.com
+> But then test-lint _ought_ to also catch the use of "local" in the
+> ideal world, so perhaps in the longer term we would need to treat
+> this bash-only script differently from others anyway???
+
+True.  I didn't really think about wider implications; I just noticed
+that there was an easy-to-fix complaint from test-lint :-)
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
