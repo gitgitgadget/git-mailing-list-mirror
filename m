@@ -1,72 +1,89 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 0/2] fix broken range_set tests and coalescing
-Date: Tue,  9 Jul 2013 01:55:03 -0400
-Message-ID: <1373349305-63917-1-git-send-email-sunshine@sunshineco.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Bo Yang <struggleyb.nku@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 09 08:03:48 2013
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] remote-http: use argv-array
+Date: Tue, 9 Jul 2013 08:05:19 +0200
+Message-ID: <CAKPyHN0DG0c2vxWtybYtDmFKMo369PZcbqCfDJaXeiRV+PP8pQ@mail.gmail.com>
+References: <7vfvvoxqdw.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 09 08:05:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwR1e-0007Jz-MS
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 08:03:47 +0200
+	id 1UwR3F-0000TG-Ge
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Jul 2013 08:05:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752873Ab3GIGDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jul 2013 02:03:43 -0400
-Received: from mail-gh0-f170.google.com ([209.85.160.170]:33080 "EHLO
-	mail-gh0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752849Ab3GIGDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jul 2013 02:03:42 -0400
-Received: by mail-gh0-f170.google.com with SMTP id z10so1930364ghb.29
-        for <git@vger.kernel.org>; Mon, 08 Jul 2013 23:03:41 -0700 (PDT)
+	id S1753093Ab3GIGFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jul 2013 02:05:21 -0400
+Received: from mail-vc0-f172.google.com ([209.85.220.172]:58215 "EHLO
+	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752990Ab3GIGFU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jul 2013 02:05:20 -0400
+Received: by mail-vc0-f172.google.com with SMTP id ib11so4042745vcb.17
+        for <git@vger.kernel.org>; Mon, 08 Jul 2013 23:05:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=JGe8CjZpdZvYHukU0PO7MUNr+hUfsjW8lUjmrOpbWwE=;
-        b=ABlrKlLx0L5zbCWchEULF0NQtDayygwR5TXfN4DaZxEcHccu9Nh8YL9HqCUzBa+Wdd
-         YliMN0VgW0miLSK2DRcHSoU5Qh5f2EQT6TRKy18JbhJ9feWHhzrXd28bvuh1JtSY7Tg5
-         nHpI/oZGRkRHMy4jFKDEOlGSzYZJRLgtWaw3YpRok1ZwAeLrLKw69eSM4HoTD7P9wcX0
-         JRqmCFpslud9HP6a7gwLY6FjdwOwSskKKX+q5vdmbqfK1zr1AOmRhT2A7+iT11Rsy9ss
-         cDlZLQzC4lPUesM58bG1PmV/40Ujxf1IHtu+aW7nYKCXKIjrpK/NcoEQZgc0S+cwjkuG
-         +Htg==
-X-Received: by 10.236.116.2 with SMTP id f2mr14035656yhh.184.1373349321913;
-        Mon, 08 Jul 2013 22:55:21 -0700 (PDT)
-Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
-        by mx.google.com with ESMTPSA id e69sm42754928yhl.3.2013.07.08.22.55.19
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 08 Jul 2013 22:55:20 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.2
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=lsVMhcYwiJdJHNI06VvxNib1naq8EO2tpPgsoj59Y90=;
+        b=cJQ3Z785UZLKnJHc5wbuHwCsEqKCTfCcNmaKGcYdGqUxsqhoGqU1Nk7vHnaAphrN1k
+         bCykgS4WkGCIPbfPPrRdWaE6vcmy83/YHVEBp3MQjVomVsNXqMNIc2z68S7R9HRiggBv
+         EeRPHq23ErIHiBxIVDCnitBXmY73hxZSsJe2gXtEVVg10Vi0ckD3/nSdvlImalBRCfqh
+         bdr03G/rpid5XBjvXxCjY3/GeRzuaOFxPS8YI/NI3q37lOGQTkxv0tdAYLWM/+PkBx1J
+         yPWOckKcJL3e49wDTlsEUmP0q5HnyOWVkCMM7Vy6hOuoSSUn5Mf0FNY3TGaWsnolWtI9
+         GM1g==
+X-Received: by 10.58.216.97 with SMTP id op1mr1429136vec.60.1373349919474;
+ Mon, 08 Jul 2013 23:05:19 -0700 (PDT)
+Received: by 10.220.176.72 with HTTP; Mon, 8 Jul 2013 23:05:19 -0700 (PDT)
+In-Reply-To: <7vfvvoxqdw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/229918>
 
-This is a re-roll of a patch [1] which fixes the
-line-log.c:sort_and_merge_range_set() coalescing bug.  This re-roll
-inserts a new patch before the lone patch from v1.
+On Tue, Jul 9, 2013 at 7:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Instead of using a hand-managed argument array, use argv-array API
+> to manage dynamically formulated command line.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  remote-curl.c | 31 +++++++++++++++----------------
+>  1 file changed, 15 insertions(+), 16 deletions(-)
+>
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 60eda63..884b3a3 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -7,6 +7,7 @@
+>  #include "run-command.h"
+>  #include "pkt-line.h"
+>  #include "sideband.h"
+> +#include "argv-array.h"
+>
+>  static struct remote *remote;
+>  static const char *url; /* always ends with a trailing slash */
+> @@ -787,36 +788,34 @@ static int push_dav(int nr_spec, char **specs)
+>  static int push_git(struct discovery *heads, int nr_spec, char **specs)
+>  {
+>         struct rpc_state rpc;
+> -       const char **argv;
+> -       int argc = 0, i, err;
+> +       int i, err;
+> +       struct argv_array args;
+> +
+> +       argv_array_init(&args);
+> +       argv_array_pushl(&args, "send-pack", "--stateless-rpc", "--helper-status");
 
-patch 1/2: Fix broken tests in t4211 which should have detected the
-    sort_and_merge_range_set() bug but didn't due to incorrect
-    "expected" state. Mark the tests as expect-failure.
+missing NULL sentinel. GCC has the 'sentinel' [1] attribute to catch
+such errors. Or use macro magic:
 
-patch 2/2: Fix the sort_and_merge_range_set() coalesce bug. Same as v1
-    but also flips the tests to expect-success.
+void argv_array_pushl_(struct argv_array *array, ...);
+#define argv_array_pushl(array, ...) argv_array_pushl_(array, __VA_ARGS__, NULL)
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/229774
+Bert
 
-Eric Sunshine (2):
-  t4211: fix broken test when one -L range is subset of another
-  range_set: fix coalescing bug when range is a subset of another
-
- line-log.c                       |   3 +-
- t/t4211/expect.multiple-superset | 134 ++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 133 insertions(+), 4 deletions(-)
-
--- 
-1.8.3.2
+[1] http://gcc.gnu.org/onlinedocs/gcc/Function-Attributes.html#index-g_t_0040code_007bsentinel_007d-function-attribute-2708
