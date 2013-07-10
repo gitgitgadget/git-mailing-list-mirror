@@ -1,207 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 10/10] pack-revindex: radix-sort the revindex
-Date: Wed, 10 Jul 2013 07:55:57 -0400
-Message-ID: <20130710115557.GJ21963@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 06/10] cat-file: add --batch-check=<format>
+Date: Wed, 10 Jul 2013 07:57:33 -0400
+Message-ID: <CAPig+cRSTPGioLXdkzWtsqneM8KTNvFoONZJXFKNy_T=-VioNA@mail.gmail.com>
 References: <20130710113447.GA20113@sigill.intra.peff.net>
+	<20130710114546.GF21963@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Duy Nguyen <pclouds@gmail.com>,
 	Brandon Casey <drafnel@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 10 13:56:45 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 10 13:57:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uwt0l-0003VF-QR
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 13:56:44 +0200
+	id 1Uwt1h-0004PS-WA
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 13:57:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141Ab3GJL4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jul 2013 07:56:39 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47916 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754532Ab3GJL4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jul 2013 07:56:03 -0400
-Received: (qmail 25964 invoked by uid 102); 10 Jul 2013 11:57:19 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Jul 2013 06:57:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jul 2013 07:55:57 -0400
-Content-Disposition: inline
-In-Reply-To: <20130710113447.GA20113@sigill.intra.peff.net>
+	id S1754635Ab3GJL5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jul 2013 07:57:37 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:32869 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754632Ab3GJL5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jul 2013 07:57:35 -0400
+Received: by mail-lb0-f172.google.com with SMTP id v20so5687525lbc.17
+        for <git@vger.kernel.org>; Wed, 10 Jul 2013 04:57:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=MIYlyCRIbflqwN99t8KtDCsgOed/oCz3ZJnokkMQ/c8=;
+        b=C37onuIPb3Po7H/KezfGLeGXuSzcRuSxIL2S1b9S/xsRYnz336B7HHj27Jco5gbW0G
+         o11gVhA8rELSi2M89HStVxIWWfarR5QPxdv+4r6Ey/axFlEEZ60NurU1PwdhAbv06T8l
+         OFHCvlIdMmzfoyQbvPTYP9REs1wP6R7Jnr7Ti4+UmwIZkRONnWuUKEhcdmDGwgowywYA
+         WblzAQCMViU2LO2Jdu5/uAG1MABMzRH7RG2CLOYjBYqUvcbV72EdmX5qvNGjfbsMAvFy
+         0+fgUikq/yYlyZ43U5+jF6gei4kbz8Mxgci4S/mEf+a6Vt1ezY2fbYmWR7Gh5rkKglsQ
+         Zfxw==
+X-Received: by 10.152.44.225 with SMTP id h1mr14431571lam.90.1373457453866;
+ Wed, 10 Jul 2013 04:57:33 -0700 (PDT)
+Received: by 10.114.187.78 with HTTP; Wed, 10 Jul 2013 04:57:33 -0700 (PDT)
+In-Reply-To: <20130710114546.GF21963@sigill.intra.peff.net>
+X-Google-Sender-Auth: zdfdGEGgB1VXNbSgmyTGEHq_rSw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230052>
 
-The pack revindex stores the offsets of the objects in the
-pack in sorted order, allowing us to easily find the on-disk
-size of each object. To compute it, we populate an array
-with the offsets from the sha1-sorted idx file, and then use
-qsort to order it by offsets.
+On Wed, Jul 10, 2013 at 7:45 AM, Jeff King <peff@peff.net> wrote:
+> The `cat-file --batch-check` command can be used to quickly
+> get information about a large number of objects. However, it
+> provides a fixed set of information.
+>
+> This patch adds an optional <format> option to --batch-check
+> to allow a caller to specify which items they are interested
+> in, and in which order to output them. This is not very
+> exciting for now, since we provide the same limited set that
+> you could already get. However, it opens the door to adding
+> new format items in the future without breaking backwards
+> compatibility (or forcing callers to pay the cost to
+> calculate uninteresting items).
+>
+> The format atom names are chosen to match their counterparts
+> in for-each-ref. Though we do not (yet) share any code with
+> for-each-ref's formatter, this keeps the interface as
+> consistent as possible, and may help later on if the
+> implementations are unified.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+> index 30d585a..dd5d6e4 100644
+> --- a/Documentation/git-cat-file.txt
+> +++ b/Documentation/git-cat-file.txt
+> @@ -78,23 +82,52 @@ each object specified on stdin:
+>  If <type> is specified, the raw (though uncompressed) contents of the <object>
+>  will be returned.
+>
+> -If '--batch' is specified, output of the following form is printed for each
+> -object specified on stdin:
+> +BATCH OUTPUT
+> +------------
+> +
+> +You can specify the information shown for each object by using a custom
+> +`<format>`. The `<format>` is copied literally to stdout for each
+> +object, with placeholders of the form `%(atom)` expanded, followed by a
+> +newline. The available atoms are:
+> +
+> +`objectname`::
+> +       The sha1 hash of the object.
 
-That does O(n log n) offset comparisons, and profiling shows
-that we spend most of our time in cmp_offset. However, since
-we are sorting on a simple off_t, we can use numeric sorts
-that perform better. A radix sort can run in O(k*n), where k
-is the number of "digits" in our number. For a 64-bit off_t,
-using 16-bit "digits" gives us k=4.
+For consistency with (d5fa1f1; The name of the hash function is
+"SHA-1", not "SHA1"):
 
-On the linux.git repo, with about 3M objects to sort, this
-yields a 400% speedup. Here are the best-of-five numbers for
-running "echo HEAD | git cat-file --batch-disk-size", which
-is dominated by time spent building the pack revindex:
+s/sha1/SHA-1/
 
-          before     after
-  real    0m0.834s   0m0.204s
-  user    0m0.788s   0m0.164s
-  sys     0m0.040s   0m0.036s
-
-On a smaller repo, the radix sort would not be
-as impressive (and could even be worse), as we are trading
-the log(n) factor for the k=4 of the radix sort. However,
-even on git.git, with 173K objects, it shows some
-improvement:
-
-          before     after
-  real    0m0.046s   0m0.017s
-  user    0m0.036s   0m0.012s
-  sys     0m0.008s   0m0.000s
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I changed a few things from the original, including:
-
-  1. We take an "unsigned" number of objects to match the fix in the
-     last patch.
-
-  2. The 16-bit "digit" size is factored out to a single place, which
-     avoids magic numbers and repeating ourselves.
-
-  3. The "digits" variable is renamed to "bits", which is more accurate.
-
-  4. The outer loop condition uses the simpler "while (max >> bits)".
-
-  5. We use memcpy instead of an open-coded loop to copy the whole array
-     at the end. The individual bucket-assignment is still done by
-     struct assignment. I haven't timed if memcpy would make a
-     difference there.
-
-  6. The 64K*sizeof(int) "pos" array is now heap-allocated, in case
-     there are platforms with a small stack.
-
-I re-ran my timings to make sure none of the above impacted them; it
-turned out the same.
-
- pack-revindex.c | 84 +++++++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 79 insertions(+), 5 deletions(-)
-
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 1aa9754..9365bc2 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -59,11 +59,85 @@ static int cmp_offset(const void *a_, const void *b_)
- 	/* revindex elements are lazily initialized */
- }
- 
--static int cmp_offset(const void *a_, const void *b_)
-+/*
-+ * This is a least-significant-digit radix sort.
-+ */
-+static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
- {
--	const struct revindex_entry *a = a_;
--	const struct revindex_entry *b = b_;
--	return (a->offset < b->offset) ? -1 : (a->offset > b->offset) ? 1 : 0;
-+	/*
-+	 * We use a "digit" size of 16 bits. That keeps our memory
-+	 * usage reasonable, and we can generally (for a 4G or smaller
-+	 * packfile) quit after two rounds of radix-sorting.
-+	 */
-+#define DIGIT_SIZE (16)
-+#define BUCKETS (1 << DIGIT_SIZE)
-+	/*
-+	 * We want to know the bucket that a[i] will go into when we are using
-+	 * the digit that is N bits from the (least significant) end.
-+	 */
-+#define BUCKET_FOR(a, i, bits) (((a)[(i)].offset >> (bits)) & (BUCKETS-1))
-+
-+	/*
-+	 * We need O(n) temporary storage, so we sort back and forth between
-+	 * the real array and our tmp storage. To keep them straight, we always
-+	 * sort from "a" into buckets in "b".
-+	 */
-+	struct revindex_entry *tmp = xcalloc(n, sizeof(*tmp));
-+	struct revindex_entry *a = entries, *b = tmp;
-+	int bits = 0;
-+	unsigned *pos = xmalloc(BUCKETS * sizeof(*pos));
-+
-+	while (max >> bits) {
-+		struct revindex_entry *swap;
-+		int i;
-+
-+		memset(pos, 0, BUCKETS * sizeof(*pos));
-+
-+		/*
-+		 * We want pos[i] to store the index of the last element that
-+		 * will go in bucket "i" (actually one past the last element).
-+		 * To do this, we first count the items that will go in each
-+		 * bucket, which gives us a relative offset from the last
-+		 * bucket. We can then cumulatively add the index from the
-+		 * previous bucket to get the true index.
-+		 */
-+		for (i = 0; i < n; i++)
-+			pos[BUCKET_FOR(a, i, bits)]++;
-+		for (i = 1; i < BUCKETS; i++)
-+			pos[i] += pos[i-1];
-+
-+		/*
-+		 * Now we can drop the elements into their correct buckets (in
-+		 * our temporary array).  We iterate the pos counter backwards
-+		 * to avoid using an extra index to count up. And since we are
-+		 * going backwards there, we must also go backwards through the
-+		 * array itself, to keep the sort stable.
-+		 */
-+		for (i = n - 1; i >= 0; i--)
-+			b[--pos[BUCKET_FOR(a, i, bits)]] = a[i];
-+
-+		/*
-+		 * Now "b" contains the most sorted list, so we swap "a" and
-+		 * "b" for the next iteration.
-+		 */
-+		swap = a;
-+		a = b;
-+		b = swap;
-+
-+		/* And bump our bits for the next round. */
-+		bits += DIGIT_SIZE;
-+	}
-+
-+	/*
-+	 * If we ended with our data in the original array, great. If not,
-+	 * we have to move it back from the temporary storage.
-+	 */
-+	if (a != entries)
-+		memcpy(entries, tmp, n * sizeof(*entries));
-+	free(tmp);
-+	free(pos);
-+
-+#undef BUCKET_FOR
- }
- 
- /*
-@@ -108,7 +182,7 @@ static void create_pack_revindex(struct pack_revindex *rix)
- 	 */
- 	rix->revindex[num_ent].offset = p->pack_size - 20;
- 	rix->revindex[num_ent].nr = -1;
--	qsort(rix->revindex, num_ent, sizeof(*rix->revindex), cmp_offset);
-+	sort_revindex(rix->revindex, num_ent, p->pack_size);
- }
- 
- struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
--- 
-1.8.3.rc3.24.gec82cb9
+> +
+> +`objecttype`::
+> +       The type of of the object (the same as `cat-file -t` reports).
+> +
+> +`objectsize`::
+> +       The size, in bytes, of the object (the same as `cat-file -s`
+> +       reports).
+> +
+> +If no format is specified, the default format is `%(objectname)
+> +%(objecttype) %(objectsize)`.
+> +
+> +If `--batch` is specified, the object information is followed by the
+> +object contents (consisting of `%(objectsize)` bytes), followed by a
+> +newline.
