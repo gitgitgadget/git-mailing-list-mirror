@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 09/10] pack-revindex: use unsigned to store number of objects
-Date: Wed, 10 Jul 2013 07:50:26 -0400
-Message-ID: <20130710115026.GI21963@sigill.intra.peff.net>
+Subject: [PATCH 10/10] pack-revindex: radix-sort the revindex
+Date: Wed, 10 Jul 2013 07:55:57 -0400
+Message-ID: <20130710115557.GJ21963@sigill.intra.peff.net>
 References: <20130710113447.GA20113@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -10,93 +10,198 @@ Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Brandon Casey <drafnel@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 10 13:50:37 2013
+X-From: git-owner@vger.kernel.org Wed Jul 10 13:56:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uwsup-00060z-E5
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 13:50:35 +0200
+	id 1Uwt0l-0003VF-QR
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 13:56:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754367Ab3GJLub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jul 2013 07:50:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47875 "EHLO peff.net"
+	id S1754141Ab3GJL4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jul 2013 07:56:39 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47916 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753854Ab3GJLub (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jul 2013 07:50:31 -0400
-Received: (qmail 25692 invoked by uid 102); 10 Jul 2013 11:51:47 -0000
+	id S1754532Ab3GJL4D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jul 2013 07:56:03 -0400
+Received: (qmail 25964 invoked by uid 102); 10 Jul 2013 11:57:19 -0000
 Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Jul 2013 06:51:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jul 2013 07:50:26 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Jul 2013 06:57:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jul 2013 07:55:57 -0400
 Content-Disposition: inline
 In-Reply-To: <20130710113447.GA20113@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230051>
 
-A packfile may have up to 2^32-1 objects in it, so the
-"right" data type to use is uint32_t. We currently use a
-signed int, which means that we may behave incorrectly for
-packfiles with more than 2^31-1 objects on 32-bit systems.
+The pack revindex stores the offsets of the objects in the
+pack in sorted order, allowing us to easily find the on-disk
+size of each object. To compute it, we populate an array
+with the offsets from the sha1-sorted idx file, and then use
+qsort to order it by offsets.
 
-Nobody has noticed because having 2^31 objects is pretty
-insane. The linux.git repo has on the order of 2^22 objects,
-which is hundreds of times smaller than necessary to trigger
-the bug.
+That does O(n log n) offset comparisons, and profiling shows
+that we spend most of our time in cmp_offset. However, since
+we are sorting on a simple off_t, we can use numeric sorts
+that perform better. A radix sort can run in O(k*n), where k
+is the number of "digits" in our number. For a 64-bit off_t,
+using 16-bit "digits" gives us k=4.
 
-Let's bump this up to an "unsigned". On 32-bit systems, this
-gives us the correct data-type, and on 64-bit systems, it is
-probably more efficient to use the native "unsigned" than a
-true uint32_t.
+On the linux.git repo, with about 3M objects to sort, this
+yields a 400% speedup. Here are the best-of-five numbers for
+running "echo HEAD | git cat-file --batch-disk-size", which
+is dominated by time spent building the pack revindex:
 
-While we're at it, we can fix the binary search not to
-overflow in such a case if our unsigned is 32 bits.
+          before     after
+  real    0m0.834s   0m0.204s
+  user    0m0.788s   0m0.164s
+  sys     0m0.040s   0m0.036s
+
+On a smaller repo, the radix sort would not be
+as impressive (and could even be worse), as we are trading
+the log(n) factor for the k=4 of the radix sort. However,
+even on git.git, with 173K objects, it shows some
+improvement:
+
+          before     after
+  real    0m0.046s   0m0.017s
+  user    0m0.036s   0m0.012s
+  sys     0m0.008s   0m0.000s
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I didn't look farther in the pack code to see if we have other
-problematic instances. So there may be others lurking, but these ones
-were close to the area I was working in.
+I changed a few things from the original, including:
 
- pack-revindex.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+  1. We take an "unsigned" number of objects to match the fix in the
+     last patch.
+
+  2. The 16-bit "digit" size is factored out to a single place, which
+     avoids magic numbers and repeating ourselves.
+
+  3. The "digits" variable is renamed to "bits", which is more accurate.
+
+  4. The outer loop condition uses the simpler "while (max >> bits)".
+
+  5. We use memcpy instead of an open-coded loop to copy the whole array
+     at the end. The individual bucket-assignment is still done by
+     struct assignment. I haven't timed if memcpy would make a
+     difference there.
+
+  6. The 64K*sizeof(int) "pos" array is now heap-allocated, in case
+     there are platforms with a small stack.
+
+I re-ran my timings to make sure none of the above impacted them; it
+turned out the same.
+
+ pack-revindex.c | 84 +++++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 79 insertions(+), 5 deletions(-)
 
 diff --git a/pack-revindex.c b/pack-revindex.c
-index 77a0465..1aa9754 100644
+index 1aa9754..9365bc2 100644
 --- a/pack-revindex.c
 +++ b/pack-revindex.c
-@@ -72,8 +72,8 @@ static void create_pack_revindex(struct pack_revindex *rix)
- static void create_pack_revindex(struct pack_revindex *rix)
- {
- 	struct packed_git *p = rix->p;
--	int num_ent = p->num_objects;
--	int i;
-+	unsigned num_ent = p->num_objects;
-+	unsigned i;
- 	const char *index = p->index_data;
+@@ -59,11 +59,85 @@ static int cmp_offset(const void *a_, const void *b_)
+ 	/* revindex elements are lazily initialized */
+ }
  
- 	rix->revindex = xmalloc(sizeof(*rix->revindex) * (num_ent + 1));
-@@ -114,7 +114,7 @@ struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
+-static int cmp_offset(const void *a_, const void *b_)
++/*
++ * This is a least-significant-digit radix sort.
++ */
++static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
+ {
+-	const struct revindex_entry *a = a_;
+-	const struct revindex_entry *b = b_;
+-	return (a->offset < b->offset) ? -1 : (a->offset > b->offset) ? 1 : 0;
++	/*
++	 * We use a "digit" size of 16 bits. That keeps our memory
++	 * usage reasonable, and we can generally (for a 4G or smaller
++	 * packfile) quit after two rounds of radix-sorting.
++	 */
++#define DIGIT_SIZE (16)
++#define BUCKETS (1 << DIGIT_SIZE)
++	/*
++	 * We want to know the bucket that a[i] will go into when we are using
++	 * the digit that is N bits from the (least significant) end.
++	 */
++#define BUCKET_FOR(a, i, bits) (((a)[(i)].offset >> (bits)) & (BUCKETS-1))
++
++	/*
++	 * We need O(n) temporary storage, so we sort back and forth between
++	 * the real array and our tmp storage. To keep them straight, we always
++	 * sort from "a" into buckets in "b".
++	 */
++	struct revindex_entry *tmp = xcalloc(n, sizeof(*tmp));
++	struct revindex_entry *a = entries, *b = tmp;
++	int bits = 0;
++	unsigned *pos = xmalloc(BUCKETS * sizeof(*pos));
++
++	while (max >> bits) {
++		struct revindex_entry *swap;
++		int i;
++
++		memset(pos, 0, BUCKETS * sizeof(*pos));
++
++		/*
++		 * We want pos[i] to store the index of the last element that
++		 * will go in bucket "i" (actually one past the last element).
++		 * To do this, we first count the items that will go in each
++		 * bucket, which gives us a relative offset from the last
++		 * bucket. We can then cumulatively add the index from the
++		 * previous bucket to get the true index.
++		 */
++		for (i = 0; i < n; i++)
++			pos[BUCKET_FOR(a, i, bits)]++;
++		for (i = 1; i < BUCKETS; i++)
++			pos[i] += pos[i-1];
++
++		/*
++		 * Now we can drop the elements into their correct buckets (in
++		 * our temporary array).  We iterate the pos counter backwards
++		 * to avoid using an extra index to count up. And since we are
++		 * going backwards there, we must also go backwards through the
++		 * array itself, to keep the sort stable.
++		 */
++		for (i = n - 1; i >= 0; i--)
++			b[--pos[BUCKET_FOR(a, i, bits)]] = a[i];
++
++		/*
++		 * Now "b" contains the most sorted list, so we swap "a" and
++		 * "b" for the next iteration.
++		 */
++		swap = a;
++		a = b;
++		b = swap;
++
++		/* And bump our bits for the next round. */
++		bits += DIGIT_SIZE;
++	}
++
++	/*
++	 * If we ended with our data in the original array, great. If not,
++	 * we have to move it back from the temporary storage.
++	 */
++	if (a != entries)
++		memcpy(entries, tmp, n * sizeof(*entries));
++	free(tmp);
++	free(pos);
++
++#undef BUCKET_FOR
+ }
+ 
+ /*
+@@ -108,7 +182,7 @@ static void create_pack_revindex(struct pack_revindex *rix)
+ 	 */
+ 	rix->revindex[num_ent].offset = p->pack_size - 20;
+ 	rix->revindex[num_ent].nr = -1;
+-	qsort(rix->revindex, num_ent, sizeof(*rix->revindex), cmp_offset);
++	sort_revindex(rix->revindex, num_ent, p->pack_size);
+ }
+ 
  struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
- {
- 	int num;
--	int lo, hi;
-+	unsigned lo, hi;
- 	struct pack_revindex *rix;
- 	struct revindex_entry *revindex;
- 
-@@ -132,7 +132,7 @@ struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
- 	lo = 0;
- 	hi = p->num_objects + 1;
- 	do {
--		int mi = (lo + hi) / 2;
-+		unsigned mi = lo + (hi - lo) / 2;
- 		if (revindex[mi].offset == ofs) {
- 			return revindex + mi;
- 		} else if (ofs < revindex[mi].offset)
 -- 
 1.8.3.rc3.24.gec82cb9
