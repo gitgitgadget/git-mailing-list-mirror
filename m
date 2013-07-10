@@ -1,84 +1,66 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH/RFC] blame: accept multiple -L ranges
-Date: Wed, 10 Jul 2013 11:18:26 +0200
-Message-ID: <87mwpuepst.fsf@linux-k42r.v.cablecom.net>
-References: <1373186706-19284-1-git-send-email-sunshine@sunshineco.com>
-	<7vk3l26695.fsf@alter.siamese.dyndns.org>
-	<CAPig+cQ9sfV+PRqn5vrL0=xOZrKDDmsKdAPiB4PsCFb=jnk4kQ@mail.gmail.com>
-	<7v38rnwuvb.fsf@alter.siamese.dyndns.org>
-	<87ehb7d3za.fsf@hexa.v.cablecom.net>
-	<CAPig+cT9U7L-03Fe5YLft=WS2EZY1B_BhLzkM_sT_3wQQ1g1MQ@mail.gmail.com>
-	<7vy59fv9zr.fsf@alter.siamese.dyndns.org>
-	<87a9lvcztv.fsf@hexa.v.cablecom.net>
-	<7vppurv8bl.fsf@alter.siamese.dyndns.org>
+From: Muhammad Bashir Al-Noimi <mbnoimi@gmail.com>
+Subject: Re: Git in nutshell Inbox
+Date: Wed, 10 Jul 2013 12:10:55 +0200
+Message-ID: <CABpATRsr=50r_xWTB1bf82mYTUkU9tGrz-YedsA9wrzMUPB0Jg@mail.gmail.com>
+References: <CABpATRsi-Akyv_d4xHsa0AdOdw4_P5VBpoWgx=ViWpA2Q0itPw@mail.gmail.com>
+ <vpq4nc3g5l5.fsf@anie.imag.fr> <CABpATRt1wffDN7tC3fQpqLcHgf1M6NdhANjx+jxLhN2oa2xEZQ@mail.gmail.com>
+ <20130709170239.GC7038@paksenarrion.iveqy.com> <CABpATRsG=n1MzpPLc2u_gOmOM9G8Ym=O0j9bTuwwkUS6F6f1mQ@mail.gmail.com>
+ <20130709173857.GF7038@paksenarrion.iveqy.com> <51DC76E7.2080003@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 10 11:18:35 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Wed Jul 10 12:11:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwqXh-00014K-NZ
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 11:18:34 +0200
+	id 1UwrMn-0005s6-D9
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 12:11:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753962Ab3GJJS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jul 2013 05:18:29 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:26089 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753381Ab3GJJS3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jul 2013 05:18:29 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 10 Jul
- 2013 11:18:22 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Wed, 10 Jul 2013 11:18:26 +0200
-In-Reply-To: <7vppurv8bl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 09 Jul 2013 12:31:42 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1753484Ab3GJKLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jul 2013 06:11:17 -0400
+Received: from mail-ve0-f175.google.com ([209.85.128.175]:43890 "EHLO
+	mail-ve0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752059Ab3GJKLQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jul 2013 06:11:16 -0400
+Received: by mail-ve0-f175.google.com with SMTP id da11so5498656veb.20
+        for <git@vger.kernel.org>; Wed, 10 Jul 2013 03:11:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qhj/LKZIy++3Ue10lqtEN7NaByFLp/8rdydRMXNympw=;
+        b=W8Vjf0griLAlCkCCkcEPZz+wugj5zRE8epYqxm35P2OO81MXENkWf/J/l9AiZNjhsU
+         O41jiczZGfibDEb3FdCDfeuY0QxHZiX6lAvDLct4blHvZZxO41zRrMatmOW92Bckkzxf
+         z1kUdRLVJXPxSk8JyvyuNiCVesSeB1Tr4qvz1Qf4a4yc0ee45k2umR4bpXJ+vy204n1j
+         bDZF+BRqr7HhO0kLTrXSRcbjbp3uFb9x31visyc2/oVdghUIDNvEMeOAwmB53IlQPXN6
+         AiHftarXN/IxRkKBkm2O86OCH9MP9lZIYIHAmuJPouGQGHDqH1D/vefSZ+QISZzpywhL
+         BWrQ==
+X-Received: by 10.58.76.5 with SMTP id g5mr18670370vew.90.1373451075701; Wed,
+ 10 Jul 2013 03:11:15 -0700 (PDT)
+Received: by 10.58.161.52 with HTTP; Wed, 10 Jul 2013 03:10:55 -0700 (PDT)
+In-Reply-To: <51DC76E7.2080003@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230033>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Jul 9, 2013 at 10:47 PM, Muhammad Bashir Al-Noimi
+<mbnoimi@gmail.com> wrote:
+> Now I've to make some tests because the new version is completely different
+> than the old one so I'll send a feedback soon.
 
-> Thomas Rast <trast@inf.ethz.ch> writes:
->
->> If you define it that way, the output of
->>
->>   git blame -L 4,6; git blame -L /A/,+20
->>
->> is significantly different from
->>
->>   git blame -L 4,6 -L /A/,+20
->>
->> Not just in the presentation or any possible coalescing, but in the
->> meaning of the ranges.
->>
->> Do you really want to make it that way?
->
-> Absolutely.  The primary reason I want to be able to specify two
-> ranges at the same time is to follow two functions in a file that
-> appear in separate places, and /A/ might not be unique.  When I want
-> to say "I want to see from here to there, and then from here to
-> there, and then from here to there", it would be very frustrating if
-> "and then" resets what I mean by "here" every time and make these
-> three evaluated independently.
 
-Ok, fair enough.  That is at least an argument other than "trust me, I
-care deeply" :-)
+Thanks guys, the recent git-cola fabulous so I don't need to use the
+terminal anymore for git.
 
-But still, log -L should then be changed to match this behavior (for all
-args affecting a single file).  Currently it always does the scan for
-the start of the range from line 1 of the file.
+As I mentioned above, I came from bzr background so git not completely
+strange to me I just want to learn more about some commands so may you
+please guide me to a quick reference (as simple as possible)
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+--
+Best Regards
+Muhammad Bashir Al-Noimi
