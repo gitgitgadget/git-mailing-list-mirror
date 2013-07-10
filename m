@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 02/10] teach sha1_object_info_extended a "disk_size" query
-Date: Wed, 10 Jul 2013 07:35:39 -0400
-Message-ID: <20130710113538.GB21963@sigill.intra.peff.net>
+Subject: [PATCH 03/10] t1006: modernize output comparisons
+Date: Wed, 10 Jul 2013 07:36:43 -0400
+Message-ID: <20130710113642.GC21963@sigill.intra.peff.net>
 References: <20130710113447.GA20113@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -10,134 +10,135 @@ Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Brandon Casey <drafnel@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 10 13:35:48 2013
+X-From: git-owner@vger.kernel.org Wed Jul 10 13:36:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwsgV-0000xP-RS
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 13:35:48 +0200
+	id 1UwshX-00020l-Pk
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 13:36:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754175Ab3GJLfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jul 2013 07:35:44 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47738 "EHLO peff.net"
+	id S1754173Ab3GJLgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jul 2013 07:36:48 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47753 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753537Ab3GJLfn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jul 2013 07:35:43 -0400
-Received: (qmail 24914 invoked by uid 102); 10 Jul 2013 11:37:00 -0000
+	id S1751620Ab3GJLgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jul 2013 07:36:47 -0400
+Received: (qmail 24968 invoked by uid 102); 10 Jul 2013 11:38:04 -0000
 Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Jul 2013 06:37:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jul 2013 07:35:39 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Jul 2013 06:38:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jul 2013 07:36:43 -0400
 Content-Disposition: inline
 In-Reply-To: <20130710113447.GA20113@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230044>
 
-Using sha1_object_info_extended, a caller can find out the
-type of an object, its size, and information about where it
-is stored. In addition to the object's "true" size, it can
-also be useful to know the size that the object takes on
-disk (e.g., to generate statistics about which refs consume
-space).
-
-This patch adds a "disk_sizep" field to "struct object_info",
-and fills it in during sha1_object_info_extended if it is
-non-NULL.
+In modern tests, we typically put output into a file and
+compare it with test_cmp. This is nicer than just comparing
+via "test", and much shorter than comparing via "test" and
+printing a custom message.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- cache.h     |  1 +
- sha1_file.c | 20 ++++++++++++++++----
- 2 files changed, 17 insertions(+), 4 deletions(-)
+I didn't do the whole file, just the ones of a particular style close to
+what I was touching.
 
-diff --git a/cache.h b/cache.h
-index dd0fb33..2d06169 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1130,6 +1130,7 @@ struct object_info {
- struct object_info {
- 	/* Request */
- 	unsigned long *sizep;
-+	unsigned long *disk_sizep;
+ t/t1006-cat-file.sh | 61 ++++++++++++++++-------------------------------------
+ 1 file changed, 18 insertions(+), 43 deletions(-)
+
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 9cc5c6b..c2f2503 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -36,66 +36,41 @@ $content"
+     '
  
- 	/* Response */
- 	enum {
-diff --git a/sha1_file.c b/sha1_file.c
-index de06a97..4c2365f 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1697,7 +1697,8 @@ static int packed_object_info(struct packed_git *p, off_t obj_offset,
- #define POI_STACK_PREALLOC 64
+     test_expect_success "Type of $type is correct" '
+-        test $type = "$(git cat-file -t $sha1)"
++	echo $type >expect &&
++	git cat-file -t $sha1 >actual &&
++	test_cmp expect actual
+     '
  
- static int packed_object_info(struct packed_git *p, off_t obj_offset,
--			      unsigned long *sizep, int *rtype)
-+			      unsigned long *sizep, int *rtype,
-+			      unsigned long *disk_sizep)
- {
- 	struct pack_window *w_curs = NULL;
- 	unsigned long size;
-@@ -1731,6 +1732,11 @@ static int packed_object_info(struct packed_git *p, off_t obj_offset,
- 		}
- 	}
+     test_expect_success "Size of $type is correct" '
+-        test $size = "$(git cat-file -s $sha1)"
++	echo $size >expect &&
++	git cat-file -s $sha1 >actual &&
++	test_cmp expect actual
+     '
  
-+	if (disk_sizep) {
-+		struct revindex_entry *revidx = find_pack_revindex(p, obj_offset);
-+		*disk_sizep = revidx[1].offset - obj_offset;
-+	}
-+
- 	while (type == OBJ_OFS_DELTA || type == OBJ_REF_DELTA) {
- 		off_t base_offset;
- 		/* Push the object we're going to leave behind */
-@@ -2357,7 +2363,8 @@ struct packed_git *find_sha1_pack(const unsigned char *sha1,
+     test -z "$content" ||
+     test_expect_success "Content of $type is correct" '
+-	expect="$(maybe_remove_timestamp "$content" $no_ts)"
+-	actual="$(maybe_remove_timestamp "$(git cat-file $type $sha1)" $no_ts)"
+-
+-        if test "z$expect" = "z$actual"
+-	then
+-		: happy
+-	else
+-		echo "Oops: expected $expect"
+-		echo "but got $actual"
+-		false
+-        fi
++	maybe_remove_timestamp "$content" $no_ts >expect &&
++	maybe_remove_timestamp "$(git cat-file $type $sha1)" $no_ts >actual &&
++	test_cmp expect actual
+     '
  
+     test_expect_success "Pretty content of $type is correct" '
+-	expect="$(maybe_remove_timestamp "$pretty_content" $no_ts)"
+-	actual="$(maybe_remove_timestamp "$(git cat-file -p $sha1)" $no_ts)"
+-        if test "z$expect" = "z$actual"
+-	then
+-		: happy
+-	else
+-		echo "Oops: expected $expect"
+-		echo "but got $actual"
+-		false
+-        fi
++	maybe_remove_timestamp "$pretty_content" $no_ts >expect &&
++	maybe_remove_timestamp "$(git cat-file -p $sha1)" $no_ts >actual &&
++	test_cmp expect actual
+     '
+ 
+     test -z "$content" ||
+     test_expect_success "--batch output of $type is correct" '
+-	expect="$(maybe_remove_timestamp "$batch_output" $no_ts)"
+-	actual="$(maybe_remove_timestamp "$(echo $sha1 | git cat-file --batch)" $no_ts)"
+-        if test "z$expect" = "z$actual"
+-	then
+-		: happy
+-	else
+-		echo "Oops: expected $expect"
+-		echo "but got $actual"
+-		false
+-        fi
++	maybe_remove_timestamp "$batch_output" $no_ts >expect &&
++	maybe_remove_timestamp "$(echo $sha1 | git cat-file --batch)" $no_ts >actual &&
++	test_cmp expect actual
+     '
+ 
+     test_expect_success "--batch-check output of $type is correct" '
+-	expect="$sha1 $type $size"
+-	actual="$(echo_without_newline $sha1 | git cat-file --batch-check)"
+-        if test "z$expect" = "z$actual"
+-	then
+-		: happy
+-	else
+-		echo "Oops: expected $expect"
+-		echo "but got $actual"
+-		false
+-        fi
++	echo "$sha1 $type $size" >expect &&
++	echo_without_newline $sha1 | git cat-file --batch-check >actual &&
++	test_cmp expect actual
+     '
  }
  
--static int sha1_loose_object_info(const unsigned char *sha1, unsigned long *sizep)
-+static int sha1_loose_object_info(const unsigned char *sha1, unsigned long *sizep,
-+				  unsigned long *disk_sizep)
- {
- 	int status;
- 	unsigned long mapsize, size;
-@@ -2368,6 +2375,8 @@ static int sha1_loose_object_info(const unsigned char *sha1, unsigned long *size
- 	map = map_sha1_file(sha1, &mapsize);
- 	if (!map)
- 		return -1;
-+	if (disk_sizep)
-+		*disk_sizep = mapsize;
- 	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
- 		status = error("unable to unpack %s header",
- 			       sha1_to_hex(sha1));
-@@ -2391,13 +2400,15 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
- 	if (co) {
- 		if (oi->sizep)
- 			*(oi->sizep) = co->size;
-+		if (oi->disk_sizep)
-+			*(oi->disk_sizep) = 0;
- 		oi->whence = OI_CACHED;
- 		return co->type;
- 	}
- 
- 	if (!find_pack_entry(sha1, &e)) {
- 		/* Most likely it's a loose object. */
--		status = sha1_loose_object_info(sha1, oi->sizep);
-+		status = sha1_loose_object_info(sha1, oi->sizep, oi->disk_sizep);
- 		if (status >= 0) {
- 			oi->whence = OI_LOOSE;
- 			return status;
-@@ -2409,7 +2420,8 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
- 			return status;
- 	}
- 
--	status = packed_object_info(e.p, e.offset, oi->sizep, &rtype);
-+	status = packed_object_info(e.p, e.offset, oi->sizep, &rtype,
-+				    oi->disk_sizep);
- 	if (status < 0) {
- 		mark_bad_packed_object(e.p, sha1);
- 		status = sha1_object_info_extended(sha1, oi);
 -- 
 1.8.3.rc3.24.gec82cb9
