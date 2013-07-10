@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 03/10] t1006: modernize output comparisons
-Date: Wed, 10 Jul 2013 07:36:43 -0400
-Message-ID: <20130710113642.GC21963@sigill.intra.peff.net>
+Subject: [PATCH 04/10] cat-file: teach --batch to stream blob objects
+Date: Wed, 10 Jul 2013 07:38:24 -0400
+Message-ID: <20130710113824.GD21963@sigill.intra.peff.net>
 References: <20130710113447.GA20113@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -10,134 +10,124 @@ Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Brandon Casey <drafnel@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 10 13:36:53 2013
+X-From: git-owner@vger.kernel.org Wed Jul 10 13:38:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwshX-00020l-Pk
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 13:36:52 +0200
+	id 1UwsjC-0003Yl-Be
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 13:38:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754173Ab3GJLgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jul 2013 07:36:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47753 "EHLO peff.net"
+	id S1754422Ab3GJLia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jul 2013 07:38:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47766 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751620Ab3GJLgr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jul 2013 07:36:47 -0400
-Received: (qmail 24968 invoked by uid 102); 10 Jul 2013 11:38:04 -0000
+	id S1754320Ab3GJLi3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jul 2013 07:38:29 -0400
+Received: (qmail 25070 invoked by uid 102); 10 Jul 2013 11:39:45 -0000
 Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Jul 2013 06:38:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jul 2013 07:36:43 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 10 Jul 2013 06:39:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jul 2013 07:38:24 -0400
 Content-Disposition: inline
 In-Reply-To: <20130710113447.GA20113@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230045>
 
-In modern tests, we typically put output into a file and
-compare it with test_cmp. This is nicer than just comparing
-via "test", and much shorter than comparing via "test" and
-printing a custom message.
+The regular "git cat-file -p" and "git cat-file blob" code
+paths already learned to stream large blobs. Let's do the
+same here.
+
+Note that this means we look up the type and size before
+making a decision of whether to load the object into memory
+or stream (just like the "-p" code path does). That can lead
+to extra work, but it should be dwarfed by the cost of
+actually accessing the object itself. In my measurements,
+there was a 1-2% slowdown when using "--batch" on a large
+number of objects.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I didn't do the whole file, just the ones of a particular style close to
-what I was touching.
+ builtin/cat-file.c | 41 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 13 deletions(-)
 
- t/t1006-cat-file.sh | 61 ++++++++++++++++-------------------------------------
- 1 file changed, 18 insertions(+), 43 deletions(-)
-
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 9cc5c6b..c2f2503 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -36,66 +36,41 @@ $content"
-     '
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 045cee7..70dd8c8 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -117,12 +117,36 @@ static int batch_one_object(const char *obj_name, int print_contents)
+ 	return 0;
+ }
  
-     test_expect_success "Type of $type is correct" '
--        test $type = "$(git cat-file -t $sha1)"
-+	echo $type >expect &&
-+	git cat-file -t $sha1 >actual &&
-+	test_cmp expect actual
-     '
++static void print_object_or_die(int fd, const unsigned char *sha1,
++				enum object_type type, unsigned long size)
++{
++	if (type == OBJ_BLOB) {
++		if (stream_blob_to_fd(fd, sha1, NULL, 0) < 0)
++			die("unable to stream %s to stdout", sha1_to_hex(sha1));
++	}
++	else {
++		enum object_type rtype;
++		unsigned long rsize;
++		void *contents;
++
++		contents = read_sha1_file(sha1, &rtype, &rsize);
++		if (!contents)
++			die("object %s disappeared", sha1_to_hex(sha1));
++		if (rtype != type)
++			die("object %s changed type!?", sha1_to_hex(sha1));
++		if (rsize != size)
++			die("object %s change size!?", sha1_to_hex(sha1));
++
++		write_or_die(fd, contents, size);
++		free(contents);
++	}
++}
++
+ static int batch_one_object(const char *obj_name, int print_contents)
+ {
+ 	unsigned char sha1[20];
+ 	enum object_type type = 0;
+ 	unsigned long size;
+-	void *contents = NULL;
  
-     test_expect_success "Size of $type is correct" '
--        test $size = "$(git cat-file -s $sha1)"
-+	echo $size >expect &&
-+	git cat-file -s $sha1 >actual &&
-+	test_cmp expect actual
-     '
+ 	if (!obj_name)
+ 	   return 1;
+@@ -133,16 +157,10 @@ static int batch_one_object(const char *obj_name, int print_contents)
+ 		return 0;
+ 	}
  
-     test -z "$content" ||
-     test_expect_success "Content of $type is correct" '
--	expect="$(maybe_remove_timestamp "$content" $no_ts)"
--	actual="$(maybe_remove_timestamp "$(git cat-file $type $sha1)" $no_ts)"
+-	if (print_contents == BATCH)
+-		contents = read_sha1_file(sha1, &type, &size);
+-	else
+-		type = sha1_object_info(sha1, &size);
 -
--        if test "z$expect" = "z$actual"
--	then
--		: happy
--	else
--		echo "Oops: expected $expect"
--		echo "but got $actual"
--		false
--        fi
-+	maybe_remove_timestamp "$content" $no_ts >expect &&
-+	maybe_remove_timestamp "$(git cat-file $type $sha1)" $no_ts >actual &&
-+	test_cmp expect actual
-     '
++	type = sha1_object_info(sha1, &size);
+ 	if (type <= 0) {
+ 		printf("%s missing\n", obj_name);
+ 		fflush(stdout);
+-		if (print_contents == BATCH)
+-			free(contents);
+ 		return 0;
+ 	}
  
-     test_expect_success "Pretty content of $type is correct" '
--	expect="$(maybe_remove_timestamp "$pretty_content" $no_ts)"
--	actual="$(maybe_remove_timestamp "$(git cat-file -p $sha1)" $no_ts)"
--        if test "z$expect" = "z$actual"
--	then
--		: happy
--	else
--		echo "Oops: expected $expect"
--		echo "but got $actual"
--		false
--        fi
-+	maybe_remove_timestamp "$pretty_content" $no_ts >expect &&
-+	maybe_remove_timestamp "$(git cat-file -p $sha1)" $no_ts >actual &&
-+	test_cmp expect actual
-     '
+@@ -150,12 +168,9 @@ static int batch_one_object(const char *obj_name, int print_contents)
+ 	fflush(stdout);
  
-     test -z "$content" ||
-     test_expect_success "--batch output of $type is correct" '
--	expect="$(maybe_remove_timestamp "$batch_output" $no_ts)"
--	actual="$(maybe_remove_timestamp "$(echo $sha1 | git cat-file --batch)" $no_ts)"
--        if test "z$expect" = "z$actual"
--	then
--		: happy
--	else
--		echo "Oops: expected $expect"
--		echo "but got $actual"
--		false
--        fi
-+	maybe_remove_timestamp "$batch_output" $no_ts >expect &&
-+	maybe_remove_timestamp "$(echo $sha1 | git cat-file --batch)" $no_ts >actual &&
-+	test_cmp expect actual
-     '
- 
-     test_expect_success "--batch-check output of $type is correct" '
--	expect="$sha1 $type $size"
--	actual="$(echo_without_newline $sha1 | git cat-file --batch-check)"
--        if test "z$expect" = "z$actual"
--	then
--		: happy
--	else
--		echo "Oops: expected $expect"
--		echo "but got $actual"
--		false
--        fi
-+	echo "$sha1 $type $size" >expect &&
-+	echo_without_newline $sha1 | git cat-file --batch-check >actual &&
-+	test_cmp expect actual
-     '
+ 	if (print_contents == BATCH) {
+-		write_or_die(1, contents, size);
+-		printf("\n");
+-		fflush(stdout);
+-		free(contents);
++		print_object_or_die(1, sha1, type, size);
++		write_or_die(1, "\n", 1);
+ 	}
+-
+ 	return 0;
  }
  
 -- 
