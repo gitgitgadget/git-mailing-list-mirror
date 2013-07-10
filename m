@@ -1,2233 +1,2563 @@
 From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCHv2 2/3] l10n: de.po: switch from pure German to German+English (part 2)
-Date: Wed, 10 Jul 2013 19:54:49 +0200
-Message-ID: <1373478890-8480-3-git-send-email-ralf.thielow@gmail.com>
+Subject: [PATCHv2 3/3] l10n: de.po: switch from pure German to German+English (part 3)
+Date: Wed, 10 Jul 2013 19:54:50 +0200
+Message-ID: <1373478890-8480-4-git-send-email-ralf.thielow@gmail.com>
 References: <1371057331-3917-1-git-send-email-ralf.thielow@gmail.com>
  <1373478890-8480-1-git-send-email-ralf.thielow@gmail.com>
  <1373478890-8480-2-git-send-email-ralf.thielow@gmail.com>
+ <1373478890-8480-3-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
 To: trast@student.ethz.ch, jk@jk.gs, stimming@tuhh.de
-X-From: git-owner@vger.kernel.org Wed Jul 10 19:56:22 2013
+X-From: git-owner@vger.kernel.org Wed Jul 10 19:56:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uwyci-000557-QR
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 19:56:17 +0200
+	id 1Uwycj-000557-J4
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 19:56:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754983Ab3GJRzq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Jul 2013 13:55:46 -0400
-Received: from mail-ea0-f182.google.com ([209.85.215.182]:51792 "EHLO
-	mail-ea0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754950Ab3GJRzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jul 2013 13:55:14 -0400
-Received: by mail-ea0-f182.google.com with SMTP id d10so5143002eaj.27
-        for <git@vger.kernel.org>; Wed, 10 Jul 2013 10:55:13 -0700 (PDT)
+	id S1754986Ab3GJRzr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Jul 2013 13:55:47 -0400
+Received: from mail-ee0-f51.google.com ([74.125.83.51]:40012 "EHLO
+	mail-ee0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754960Ab3GJRzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jul 2013 13:55:19 -0400
+Received: by mail-ee0-f51.google.com with SMTP id e52so5067001eek.10
+        for <git@vger.kernel.org>; Wed, 10 Jul 2013 10:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=eWw2IYoaJA69C75EnCQY0h9bM3mfX9i6Oi8xL9GI/Oc=;
-        b=V24OrzdSjUsISen0ZUNgDlrBNsZzLT7f7maEDK9z8K4OIJoZbdd7ZaqhgTSk45yWQf
-         QkP88Vj5FBSteWCCP7mjaXV4boky5TPp+3BTStaxl3lJk2wKN3xr8y68BYw1Hs6Uea2q
-         1f5I6ScgxNbcGLuZkupg52MQgEb3Zxfg9USDIQju9im46KZef818LLBwabh2nvqWuLz4
-         K/O6HXqectWAQBAa1y9FVnK007X3eqCDDjIvlxJ6MpBtX2N5LHkuf9E5585SG1E4H8vN
-         bPl1vHZ1lWC19/DT0mJvHQyjFUYmnlPPDvMLuin7DU22xo7ypUZtTw/C7NhV1Je/x0s9
-         GpCQ==
-X-Received: by 10.15.22.199 with SMTP id f47mr37693468eeu.47.1373478913086;
-        Wed, 10 Jul 2013 10:55:13 -0700 (PDT)
+        bh=Kfiqkx20WiUetyYpgvCgKxyt9I54DKARdja85344lCU=;
+        b=glyipyriBvIq5R1McsHourj8HsIw/3rs5NICobEjhUXGCMuOx12wzM1oVBa4YXcP/Z
+         IYYndkB9l0KzA9pzYyP7nRlGru1uppnCDA+VsXxloDxRgwilR0JGwLwqGoCFv665t5gR
+         EaFvqobuyGKlKylxGJjCkk/7xZEKYDoPzUd+gPJFybjVB39Kd5YpEgeQlENMSrli8xxC
+         qih6JTu9IK/CQ/Nx1qQwD1suOqtzxHerbOXFdOJA7Dr8xHhsBlKRuEQ2/sjNkL8ECci+
+         SeLTV+CuZn8hD0NKlhyzLLc0Qb1wNnLnr6TeqzCqYeGdBHZ9/uJlKeXSpiHUmkLDYymz
+         0Sug==
+X-Received: by 10.14.213.135 with SMTP id a7mr36871547eep.152.1373478917487;
+        Wed, 10 Jul 2013 10:55:17 -0700 (PDT)
 Received: from localhost (dslb-188-103-254-174.pools.arcor-ip.net. [188.103.254.174])
-        by mx.google.com with ESMTPSA id y1sm61841418eew.3.2013.07.10.10.55.10
+        by mx.google.com with ESMTPSA id cg12sm61796013eeb.7.2013.07.10.10.55.14
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 10 Jul 2013 10:55:12 -0700 (PDT)
+        Wed, 10 Jul 2013 10:55:16 -0700 (PDT)
 X-Mailer: git-send-email 1.8.2.1230.g519726a
-In-Reply-To: <1373478890-8480-2-git-send-email-ralf.thielow@gmail.com>
+In-Reply-To: <1373478890-8480-3-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230063>
 
 This switches the translation from pure German to German+English.
 
 Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
 ---
- po/de.po | 573 +++++++++++++++++++++++++++++++------------------------=
+ po/de.po | 658 +++++++++++++++++++++++++++++++------------------------=
 --------
- 1 file changed, 283 insertions(+), 290 deletions(-)
+ 1 file changed, 326 insertions(+), 332 deletions(-)
 
 diff --git a/po/de.po b/po/de.po
-index ff69291..da0fbb0 100644
+index da0fbb0..6a9a7b1 100644
 --- a/po/de.po
 +++ b/po/de.po
-@@ -3340,7 +3340,7 @@ msgstr "erzwingt Auschecken (verwirft lokale =C3=84=
-nderungen)"
+@@ -1407,7 +1407,7 @@ msgstr ""
 =20
- #: builtin/checkout.c:1059
- msgid "perform a 3-way merge with the new branch"
--msgstr "f=C3=BChrt eine 3-Wege-Zusammenf=C3=BChrung mit dem neuen Zwei=
-g aus"
-+msgstr "f=C3=BChrt einen 3-Wege-Merge mit dem neuen Branch aus"
+ #: wt-status.c:831
+ msgid "  (use \"git am --skip\" to skip this patch)"
+-msgstr " (benutzen Sie \"git am --skip\" um diesen Patch auszulassen)"
++msgstr "  (benutzen Sie \"git am --skip\" um diesen Patch auszulassen)=
+"
 =20
- #: builtin/checkout.c:1060 builtin/merge.c:217
- msgid "update ignored files (default)"
-@@ -3368,11 +3368,11 @@ msgstr "Die Optionen -b, -B und --orphan schlie=
-=C3=9Fen sich gegenseitig aus."
-=20
- #: builtin/checkout.c:1108
- msgid "--track needs a branch name"
--msgstr "Bei der Option --track muss ein Zweigname angegeben werden."
-+msgstr "Bei der Option --track muss ein Branchname angegeben werden."
-=20
- #: builtin/checkout.c:1115
- msgid "Missing branch name; try -b"
--msgstr "Vermisse Zweignamen; versuchen Sie -b"
-+msgstr "Vermisse Branchnamen; versuchen Sie -b"
-=20
- #: builtin/checkout.c:1150
- msgid "invalid path specification"
-@@ -3384,8 +3384,8 @@ msgid ""
- "Cannot update paths and switch to branch '%s' at the same time.\n"
- "Did you intend to checkout '%s' which can not be resolved as commit?"
+ #: wt-status.c:833
+ msgid "  (use \"git am --abort\" to restore the original branch)"
+@@ -7477,16 +7477,16 @@ msgid ""
+ "\n"
+ "    git push --set-upstream %s %s\n"
  msgstr ""
--"Kann nicht gleichzeitig Pfade aktualisieren und zu Zweig '%s' wechsel=
-n.\n"
--"Haben Sie beabsichtigt '%s' auszuchecken, welcher nicht als Version "
-+"Kann nicht gleichzeitig Pfade aktualisieren und zu Branch '%s' wechse=
-ln.\n"
-+"Haben Sie beabsichtigt '%s' auszuchecken, welcher nicht als Commit "
- "aufgel=C3=B6st werden kann?"
+-"Der aktuelle Zweig %s hat keinen Zweig im externen Projektarchiv.\n"
+-"Um den aktuellen Zweig zu versenden und das Fernarchiv als externes\n=
+"
+-"Projektarchiv zu verwenden, benutzen Sie\n"
++"Der aktuelle Branch %s hat keinen Upstream-Branch.\n"
++"Um den aktuellen Branch zu versenden und den Remote-Branch\n"
++"als Upstream-Branch zu setzen, benutzen Sie\n"
+ "\n"
+ "    git push --set-upstream %s %s\n"
 =20
- #: builtin/checkout.c:1162
-@@ -3399,7 +3399,7 @@ msgid ""
- "checking out of the index."
+ #: builtin/push.c:136
+ #, c-format
+ msgid "The current branch %s has multiple upstream branches, refusing =
+to push."
+-msgstr "Der aktuelle Zweig %s hat mehrere externe Zweige, Versand verw=
+eigert."
++msgstr "Der aktuelle Branch %s hat mehrere Upstream-Branches, \"push\"=
+ verweigert."
+=20
+ #: builtin/push.c:139
+ #, c-format
+@@ -7495,9 +7495,9 @@ msgid ""
+ "your current branch '%s', without telling me what to push\n"
+ "to update which remote branch."
  msgstr ""
- "git checkout: --ours/--theirs, --force und --merge sind inkompatibel =
-wenn\n"
--"Sie aus der Bereitstellung auschecken."
-+"Sie aus der Staging-Area auschecken."
+-"Sie versenden nach '%s', welches kein externes Projektarchiv Ihres\n"
+-"aktuellen Zweiges '%s' ist, ohne mir mitzuteilen, was ich versenden\n=
+"
+-"soll, um welchen externen Zweig zu aktualisieren."
++"Sie versenden nach '%s', welches kein Upstream-Repository Ihres aktue=
+llen\n"
++"Branches '%s' ist, ohne mir mitzuteilen, was ich versenden soll, um w=
+elchen\n"
++"Remote-Branch zu aktualisieren."
 =20
- #: builtin/clean.c:20
- msgid "git clean [-d] [-f] [-n] [-q] [-e <pattern>] [-x | -X] [--] <pa=
-ths>..."
-@@ -3418,12 +3418,12 @@ msgstr "W=C3=BCrde %s l=C3=B6schen\n"
- #: builtin/clean.c:26
- #, c-format
- msgid "Skipping repository %s\n"
--msgstr "=C3=9Cberspringe Projektarchiv %s\n"
-+msgstr "=C3=9Cberspringe Repository %s\n"
-=20
- #: builtin/clean.c:27
- #, c-format
- msgid "Would skip repository %s\n"
--msgstr "W=C3=BCrde Projektarchiv %s =C3=BCberspringen\n"
-+msgstr "W=C3=BCrde Repository %s =C3=BCberspringen\n"
-=20
- #: builtin/clean.c:28
- #, c-format
-@@ -3468,7 +3468,7 @@ msgid ""
- "clean.requireForce set to true and neither -n nor -f given; refusing =
-to clean"
+ #: builtin/push.c:151
+ msgid ""
+@@ -7520,6 +7520,7 @@ msgstr ""
+ "wird in Git 2.0 von 'matching' nach 'simple' ge=C3=A4ndert. Um diese =
+Meldung zu\n"
+ "unterdr=C3=BCcken und das aktuelle Verhalten nach =C3=84nderung des S=
+tandardwertes\n"
+ "beizubehalten, benutzen Sie:\n"
++"\n"
+ "  git config --global push.default matching\n"
+ "\n"
+ "Um diese Meldung zu unterdr=C3=BCcken und das neue Verhalten jetzt zu=
+ =C3=BCbernehmen, "
+@@ -7537,8 +7538,8 @@ msgstr ""
+ msgid ""
+ "You didn't specify any refspecs to push, and push.default is \"nothin=
+g\"."
  msgstr ""
- "clean.requireForce auf \"true\" gesetzt und weder -n noch -f gegeben;=
+-"Sie haben keine Referenzspezifikationen zum Versenden angegeben, und =
+push."
+-"default ist \"nothing\"."
++"Sie haben keine Refspec f=C3=BCr \"push\" angegeben, und push.default=
+ ist "
++"\"nothing\"."
+=20
+ #: builtin/push.c:206
+ msgid ""
+@@ -7548,9 +7549,9 @@ msgid ""
+ "See the 'Note about fast-forwards' in 'git push --help' for details."
+ msgstr ""
+ "Aktualisierungen wurden zur=C3=BCckgewiesen, weil die Spitze Ihres ak=
+tuellen\n"
+-"Zweiges hinter seinem externen Gegenst=C3=BCck zur=C3=BCckgefallen is=
+t. F=C3=BChren Sie\n"
+-"die externen =C3=84nderungen zusammen (z.B. 'git pull') bevor Sie ern=
+eut\n"
+-"versenden.\n"
++"Branches hinter seinem externen Gegenst=C3=BCck zur=C3=BCckgefallen i=
+st. F=C3=BChren Sie\n"
++"die externen =C3=84nderungen zusammen (z.B. 'git pull') bevor Sie \"p=
+ush\"\n"
++"erneut ausf=C3=BChren.\n"
+ "Siehe auch die Sektion 'Note about fast-forwards' in 'git push --help=
+'\n"
+ "f=C3=BCr weitere Details."
+=20
+@@ -7562,13 +7563,13 @@ msgid ""
+ "to 'simple', 'current' or 'upstream' to push only the current branch.=
+"
+ msgstr ""
+ "Aktualisierungen wurden zur=C3=BCckgewiesen, weil die Spitze eines ve=
+rsendeten\n"
+-"Zweiges hinter seinem externen Gegenst=C3=BCck zur=C3=BCckgefallen is=
+t. Wenn Sie "
++"Branches hinter seinem externen Gegenst=C3=BCck zur=C3=BCckgefallen i=
+st. Wenn Sie "
+ "nicht\n"
+-"beabsichtigt haben, diesen Zweig zu versenden, k=C3=B6nnen Sie auch d=
+en zu "
++"beabsichtigt haben, diesen Branch zu versenden, k=C3=B6nnen Sie auch =
+den zu "
+ "versendenden\n"
+-"Zweig spezifizieren oder die Konfigurationsvariable 'push.default' zu=
  "
--"S=C3=A4uberung verweigert"
-+"\"clean\" verweigert"
++"Branch spezifizieren oder die Konfigurationsvariable 'push.default' z=
+u "
+ "'simple', 'current'\n"
+-"oder 'upstream' setzen, um nur den aktuellen Zweig zu versenden."
++"oder 'upstream' setzen, um nur den aktuellen Branch zu versenden."
 =20
- #: builtin/clean.c:194
+ #: builtin/push.c:218
  msgid ""
-@@ -3476,11 +3476,11 @@ msgid ""
- "clean"
+@@ -7578,9 +7579,9 @@ msgid ""
+ "See the 'Note about fast-forwards' in 'git push --help' for details."
  msgstr ""
- "clean.requireForce standardm=C3=A4=C3=9Fig auf \"true\" gesetzt und w=
-eder -n noch -f "
--"gegeben; S=C3=A4uberung verweigert"
-+"gegeben; \"clean\" verweigert"
+ "Aktualisierungen wurden zur=C3=BCckgewiesen, weil die Spitze eines ve=
+rsendeten\n"
+-"Zweiges hinter seinem externen Gegenst=C3=BCck zur=C3=BCckgefallen is=
+t. Checken Sie\n"
+-"diesen Zweig aus und f=C3=BChren Sie die externen =C3=84nderungen zus=
+ammen\n"
+-"(z.B. 'git pull') bevor Sie erneut versenden.\n"
++"Branches hinter seinem externen Gegenst=C3=BCck zur=C3=BCckgefallen i=
+st. Checken Sie\n"
++"diesen Branch aus und f=C3=BChren Sie die externen =C3=84nderungen zu=
+sammen\n"
++"(z.B. 'git pull') bevor Sie erneut \"push\" ausf=C3=BChren.\n"
+ "Siehe auch die Sektion 'Note about fast-forwards' in 'git push --help=
+'\n"
+ "f=C3=BCr weitere Details."
 =20
- #: builtin/clone.c:37
- msgid "git clone [options] [--] <repo> [<dir>]"
--msgstr "git clone [Optionen] [--] <Projektarchiv> [<Verzeichnis>]"
-+msgstr "git clone [Optionen] [--] <Repository> [<Verzeichnis>]"
-=20
- #: builtin/clone.c:65 builtin/fetch.c:82 builtin/merge.c:214
- #: builtin/push.c:436
-@@ -3493,27 +3493,27 @@ msgstr "kein Auschecken"
-=20
- #: builtin/clone.c:68 builtin/clone.c:70 builtin/init-db.c:488
- msgid "create a bare repository"
--msgstr "erstellt ein blo=C3=9Fes Projektarchiv"
-+msgstr "erstellt ein Bare-Repository"
-=20
- #: builtin/clone.c:73
- msgid "create a mirror repository (implies bare)"
--msgstr "erstellt ein Spiegelarchiv (impliziert blo=C3=9Fes Projektarch=
-iv)"
-+msgstr "erstellt ein Spiegelarchiv (impliziert Bare-Repository)"
-=20
- #: builtin/clone.c:75
- msgid "to clone from a local repository"
--msgstr "um von einem lokalen Projektarchiv zu klonen"
-+msgstr "um von einem lokalen Repository zu klonen"
-=20
- #: builtin/clone.c:77
- msgid "don't use local hardlinks, always copy"
--msgstr "verwendet lokal keine harten Links, immer Kopien"
-+msgstr "verwendet lokal keine harten Verweise, immer Kopien"
-=20
- #: builtin/clone.c:79
- msgid "setup as shared repository"
--msgstr "Einrichtung als verteiltes Projektarchiv"
-+msgstr "Einrichtung als verteiltes Repository"
-=20
- #: builtin/clone.c:81 builtin/clone.c:83
- msgid "initialize submodules in the clone"
--msgstr "initialisiert Unterprojekte im Klon"
-+msgstr "initialisiert Submodule im Klon"
-=20
- #: builtin/clone.c:84 builtin/init-db.c:485
- msgid "template-directory"
-@@ -3525,7 +3525,7 @@ msgstr "Verzeichnis, von welchem die Vorlagen ver=
-wendet werden"
-=20
- #: builtin/clone.c:87
- msgid "reference repository"
--msgstr "referenziert Projektarchiv"
-+msgstr "referenziert Repository"
-=20
- #: builtin/clone.c:88 builtin/column.c:26 builtin/merge-file.c:44
- msgid "name"
-@@ -3533,16 +3533,16 @@ msgstr "Name"
-=20
- #: builtin/clone.c:89
- msgid "use <name> instead of 'origin' to track upstream"
--msgstr "verwendet <Name> statt 'origin' f=C3=BCr externes Projektarchi=
-v"
-+msgstr "verwendet <Name> statt 'origin' f=C3=BCr Upstream-Repository"
-=20
- #: builtin/clone.c:91
- msgid "checkout <branch> instead of the remote's HEAD"
+@@ -7592,23 +7593,23 @@ msgid ""
+ "'git pull') before pushing again.\n"
+ "See the 'Note about fast-forwards' in 'git push --help' for details."
  msgstr ""
--"checkt <Zweig> aus, anstatt Zweigspitze (HEAD) des externen Projektar=
-chivs"
-+"checkt <Branch> aus, anstatt HEAD des Remote-Repositories"
+-"Aktualisierungen wurden zur=C3=BCckgewiesen, weil das Fernarchiv Vers=
+ionen "
++"Aktualisierungen wurden zur=C3=BCckgewiesen, weil das Remote-Reposito=
+ry Commits "
+ "enth=C3=A4lt,\n"
+-"die lokal nicht vorhanden sind. Das wird =C3=BCblicherweise durch das=
+ Versenden "
++"die lokal nicht vorhanden sind. Das wird =C3=BCblicherweise durch ein=
+en \"push\" "
+ "von\n"
+-"Versionen auf dieselbe Referenz von einem anderen Projektarchiv aus "
++"Commits auf dieselbe Referenz von einem anderen Repository aus "
+ "verursacht.\n"
+ "Vielleicht m=C3=BCssen Sie die externen =C3=84nderungen zusammenzuf=C3=
+=BChren (z.B. 'git "
+ "pull')\n"
+-"bevor Sie erneut versenden.\n"
++"bevor Sie erneut \"push\" ausf=C3=BChren.\n"
+ "Siehe auch die Sektion 'Note about fast-forwards' in 'git push --help=
+'\n"
+ "f=C3=BCr weitere Details."
 =20
- #: builtin/clone.c:93
- msgid "path to git-upload-pack on the remote"
--msgstr "Pfad zu \"git-upload-pack\" auf der Gegenseite"
-+msgstr "Pfad zu \"git-upload-pack\" im Remote-Repository"
-=20
- #: builtin/clone.c:94 builtin/fetch.c:83 builtin/grep.c:662
- msgid "depth"
-@@ -3554,7 +3554,7 @@ msgstr "erstellt einen flachen Klon mit dieser Ti=
-efe"
-=20
- #: builtin/clone.c:97
- msgid "clone only one branch, HEAD or --branch"
--msgstr "klont nur einen Zweig, Zweigspitze (HEAD) oder --branch"
-+msgstr "klont nur einen Branch, HEAD oder --branch"
-=20
- #: builtin/clone.c:98 builtin/init-db.c:494
- msgid "gitdir"
-@@ -3562,7 +3562,7 @@ msgstr ".git-Verzeichnis"
-=20
- #: builtin/clone.c:99 builtin/init-db.c:495
- msgid "separate git dir from working tree"
--msgstr "separiert Git-Verzeichnis vom Arbeitsbaum"
-+msgstr "separiert Git-Verzeichnis vom Arbeitsverzeichnis"
-=20
- #: builtin/clone.c:100
- msgid "key=3Dvalue"
-@@ -3570,12 +3570,12 @@ msgstr "Schl=C3=BCssel=3DWert"
-=20
- #: builtin/clone.c:101
- msgid "set config inside the new repository"
--msgstr "setzt Konfiguration innerhalb des neuen Projektarchivs"
-+msgstr "setzt Konfiguration innerhalb des neuen Repositories"
-=20
- #: builtin/clone.c:254
- #, c-format
- msgid "reference repository '%s' is not a local repository."
--msgstr "Referenziertes Projektarchiv '%s' ist kein lokales Projektarch=
-iv."
-+msgstr "Referenziertes Repository '%s' ist kein lokales Repository."
-=20
- #: builtin/clone.c:317
- #, c-format
-@@ -3600,7 +3600,7 @@ msgstr "Konnte %s nicht lesen\n"
- #: builtin/clone.c:357
- #, c-format
- msgid "failed to create link '%s'"
--msgstr "Konnte Verkn=C3=BCpfung '%s' nicht erstellen"
-+msgstr "Konnte Verweis '%s' nicht erstellen"
-=20
- #: builtin/clone.c:361
- #, c-format
-@@ -3625,21 +3625,21 @@ msgstr ""
- #: builtin/clone.c:476
- #, c-format
- msgid "Could not find remote branch %s to clone."
--msgstr "Konnte zu klonenden externer Zweig %s nicht finden."
-+msgstr "Konnte zu klonenden Remote-Branch %s nicht finden."
-=20
- #: builtin/clone.c:550
- msgid "remote did not send all necessary objects"
--msgstr "Fernarchiv hat nicht alle erforderlichen Objekte gesendet."
-+msgstr "Remote-Repository hat nicht alle erforderlichen Objekte gesend=
-et."
-=20
- #: builtin/clone.c:610
- msgid "remote HEAD refers to nonexistent ref, unable to checkout.\n"
+ #: builtin/push.c:231
+ msgid "Updates were rejected because the tag already exists in the rem=
+ote."
  msgstr ""
--"Externe Zweigspitze (HEAD) bezieht sich auf eine nicht existierende R=
-eferenz "
-+"Externer HEAD bezieht sich auf eine nicht existierende Referenz "
- "und kann nicht ausgecheckt werden.\n"
+-"Aktualisierungen wurden zur=C3=BCckgewiesen, weil die Markierung bere=
+its\n"
+-"im Fernarchiv existiert."
++"Aktualisierungen wurden zur=C3=BCckgewiesen, weil der Tag bereits\n"
++"im Remote-Repository existiert."
 =20
- #: builtin/clone.c:641
- msgid "unable to checkout working tree"
--msgstr "Arbeitsbaum konnte nicht ausgecheckt werden"
-+msgstr "Arbeitsverzeichnis konnte nicht ausgecheckt werden"
-=20
- #: builtin/clone.c:749
- msgid "Too many arguments."
-@@ -3647,7 +3647,7 @@ msgstr "Zu viele Argumente."
-=20
- #: builtin/clone.c:753
- msgid "You must specify a repository to clone."
--msgstr "Sie m=C3=BCssen ein Projektarchiv zum Klonen angeben."
-+msgstr "Sie m=C3=BCssen ein Repository zum Klonen angeben."
-=20
- #: builtin/clone.c:764
- #, c-format
-@@ -3661,7 +3661,7 @@ msgstr "Die Optionen --bare und --separate-git-di=
-r sind inkompatibel."
- #: builtin/clone.c:780
- #, c-format
- msgid "repository '%s' does not exist"
--msgstr "Projektarchiv '%s' existiert nicht."
-+msgstr "Repository '%s' existiert nicht."
-=20
- #: builtin/clone.c:785
- msgid "--depth is ignored in local clones; use file:// instead."
-@@ -3677,7 +3677,7 @@ msgstr "Zielpfad '%s' existiert bereits und ist k=
-ein leeres Verzeichnis."
- #: builtin/clone.c:805
- #, c-format
- msgid "working tree '%s' already exists."
--msgstr "Arbeitsbaum '%s' existiert bereits."
-+msgstr "Arbeitsverzeichnis '%s' existiert bereits."
-=20
- #: builtin/clone.c:818 builtin/clone.c:830
- #, c-format
-@@ -3692,7 +3692,7 @@ msgstr "Konnte Arbeitsverzeichnis '%s' nicht erst=
-ellen."
- #: builtin/clone.c:840
- #, c-format
- msgid "Cloning into bare repository '%s'...\n"
--msgstr "Klone in blo=C3=9Fes Projektarchiv '%s'...\n"
-+msgstr "Klone in Bare-Repository '%s'...\n"
-=20
- #: builtin/clone.c:842
- #, c-format
-@@ -3707,11 +3707,11 @@ msgstr "Wei=C3=9F nicht wie %s zu klonen ist."
- #: builtin/clone.c:926
- #, c-format
- msgid "Remote branch %s not found in upstream %s"
--msgstr "externer Zweig %s nicht im anderen Projektarchiv %s gefunden"
-+msgstr "Remote-Branch %s nicht im Upstream-Repository %s gefunden"
-=20
- #: builtin/clone.c:933
- msgid "You appear to have cloned an empty repository."
--msgstr "Sie scheinen ein leeres Projektarchiv geklont zu haben."
-+msgstr "Sie scheinen ein leeres Repository geklont zu haben."
-=20
- #: builtin/column.c:9
- msgid "git column [options]"
-@@ -3774,7 +3774,7 @@ msgstr ""
- "    git config --global user.name \"Ihr Name\"\n"
- "    git config --global user.email ihre@emailadresse.de\n"
- "\n"
--"Nachdem Sie das getan hast, k=C3=B6nnen Sie Ihre Identit=C3=A4t f=C3=BC=
-r diese Version "
-+"Nachdem Sie das getan hast, k=C3=B6nnen Sie Ihre Identit=C3=A4t f=C3=BC=
-r diesen Commit "
- "=C3=A4ndern mit:\n"
- "\n"
- "    git commit --amend --reset-author\n"
-@@ -3785,9 +3785,9 @@ msgid ""
- "it empty. You can repeat your command with --allow-empty, or you can\=
-n"
- "remove the commit entirely with \"git reset HEAD^\".\n"
- msgstr ""
--"Sie fragten die j=C3=BCngste Version nachzubessern, aber das w=C3=BCr=
-de diese leer\n"
--"machen. Sie k=C3=B6nnen Ihr Kommando mit --allow-empty wiederholen, o=
-der die\n"
--"Version mit \"git reset HEAD^\" vollst=C3=A4ndig entfernen.\n"
-+"Sie fragten den j=C3=BCngsten Commit nachzubessern, aber das w=C3=BCr=
-de diesen leer\n"
-+"machen. Sie k=C3=B6nnen Ihr Kommando mit --allow-empty wiederholen, o=
-der diesen\n"
-+"Commit mit \"git reset HEAD^\" vollst=C3=A4ndig entfernen.\n"
-=20
- #: builtin/commit.c:61
+ #: builtin/push.c:234
  msgid ""
-@@ -3800,7 +3800,7 @@ msgid ""
+@@ -7616,8 +7617,8 @@ msgid ""
+ "or update a remote ref to make it point at a non-commit object,\n"
+ "without using the '--force' option.\n"
  msgstr ""
- "Der letzte \"cherry-pick\" ist jetzt leer, m=C3=B6glicherweise durch =
-eine "
- "Konfliktaufl=C3=B6sung.\n"
--"Wenn Sie dies trotzdem eintragen wollen, benutzen Sie:\n"
-+"Wenn Sie dies trotzdem committen wollen, benutzen Sie:\n"
- "\n"
- "    git commit --allow-empty\n"
- "\n"
-@@ -3808,11 +3808,11 @@ msgstr ""
+-"Sie k=C3=B6nnen keine externe Referenz aktualisieren, die auf ein Obj=
+ekt zeigt,\n"
+-"das keine Version ist, oder es auf ein solches Objekt zeigen lassen, =
+ohne\n"
++"Sie k=C3=B6nnen keine Remote-Referenz aktualisieren, die auf ein Obje=
+kt zeigt,\n"
++"das kein Commit ist, oder es auf ein solches Objekt zeigen lassen, oh=
+ne\n"
+ "die Option '--force' zu verwenden.\n"
 =20
- #: builtin/commit.c:260
- msgid "failed to unpack HEAD tree object"
--msgstr "Fehler beim Entpacken des Baum-Objektes der Zweigspitze (HEAD)=
-=2E"
-+msgstr "Fehler beim Entpacken des \"Tree\"-Objektes von HEAD."
-=20
- #: builtin/commit.c:302
- msgid "unable to create temporary index"
--msgstr "Konnte tempor=C3=A4re Bereitstellung nicht erstellen."
-+msgstr "Konnte tempor=C3=A4re Staging-Area nicht erstellen."
-=20
- #: builtin/commit.c:308
- msgid "interactive add failed"
-@@ -3825,27 +3825,25 @@ msgstr "Konnte new_index Datei nicht schreiben"
- #: builtin/commit.c:393
- msgid "cannot do a partial commit during a merge."
- msgstr ""
--"Kann keine partielle Eintragung durchf=C3=BChren, w=C3=A4hrend eine Z=
-usammenf=C3=BChrung im "
--"Gange ist."
-+"Kann keinen Teil-Commit durchf=C3=BChren, w=C3=A4hrend ein Merge im G=
-ange ist."
-=20
- #: builtin/commit.c:395
- msgid "cannot do a partial commit during a cherry-pick."
- msgstr ""
--"Kann keine partielle Eintragung durchf=C3=BChren, w=C3=A4hrend \"cher=
-ry-pick\" im "
--"Gange ist."
-+"Kann keinen Teil-Commit durchf=C3=BChren, w=C3=A4hrend \"cherry-pick\=
-" im Gange ist."
-=20
- #: builtin/commit.c:405
- msgid "cannot read the index"
--msgstr "Kann Bereitstellung nicht lesen"
-+msgstr "Kann Staging-Area nicht lesen"
-=20
- #: builtin/commit.c:425
- msgid "unable to write temporary index file"
--msgstr "Konnte tempor=C3=A4re Bereitstellungsdatei nicht schreiben."
-+msgstr "Konnte tempor=C3=A4re Staging-Area-Datei nicht schreiben."
-=20
- #: builtin/commit.c:513 builtin/commit.c:519
+ #: builtin/push.c:294
+@@ -7633,7 +7634,7 @@ msgstr "Fehler beim Versenden einiger Referenzen =
+nach '%s'"
+ #: builtin/push.c:331
  #, c-format
- msgid "invalid commit: %s"
--msgstr "Ung=C3=BCltige Version: %s"
-+msgstr "Ung=C3=BCltiger Commit: %s"
+ msgid "bad repository '%s'"
+-msgstr "ung=C3=BCltiges Projektarchiv '%s'"
++msgstr "ung=C3=BCltiges Repository '%s'"
 =20
- #: builtin/commit.c:542
- msgid "malformed --author parameter"
-@@ -3859,7 +3857,7 @@ msgstr "Fehlerhafte Identifikations-String: '%s'"
- #: builtin/commit.c:600 builtin/commit.c:633 builtin/commit.c:956
- #, c-format
- msgid "could not lookup commit %s"
--msgstr "Konnte Version %s nicht nachschlagen"
-+msgstr "Konnte Commit %s nicht nachschlagen"
-=20
- #: builtin/commit.c:612 builtin/shortlog.c:270
- #, c-format
-@@ -3877,7 +3875,7 @@ msgstr "Konnte Log-Datei '%s' nicht lesen"
-=20
- #: builtin/commit.c:624
- msgid "commit has empty message"
--msgstr "Version hat eine leere Beschreibung"
-+msgstr "Commit hat eine leere Beschreibung"
-=20
- #: builtin/commit.c:640
- msgid "could not read MERGE_MSG"
-@@ -3894,7 +3892,7 @@ msgstr "Konnte '%s' nicht lesen"
-=20
- #: builtin/commit.c:709
- msgid "could not write commit template"
--msgstr "Konnte Versionsvorlage nicht schreiben"
-+msgstr "Konnte Commit-Vorlage nicht schreiben"
-=20
- #: builtin/commit.c:720
- #, c-format
-@@ -3906,7 +3904,7 @@ msgid ""
- "and try again.\n"
- msgstr ""
- "\n"
--"Es sieht so aus, als tragen Sie eine Zusammenf=C3=BChrung ein.\n"
-+"Es sieht so aus, als committen Sie einen Merge.\n"
- "Falls das nicht korrekt ist, l=C3=B6schen Sie bitte die Datei\n"
- "\t%s\n"
- "und versuchen Sie es erneut.\n"
-@@ -3921,7 +3919,7 @@ msgid ""
- "and try again.\n"
- msgstr ""
- "\n"
--"Es sieht so aus, als tragen Sie ein \"cherry-pick\" ein.\n"
-+"Es sieht so aus, als committen Sie einen \"cherry-pick\".\n"
- "Falls das nicht korrekt ist, l=C3=B6schen Sie bitte die Datei\n"
- "\t%s\n"
- "und versuchen Sie es erneut.\n"
-@@ -3932,10 +3930,10 @@ msgid ""
- "Please enter the commit message for your changes. Lines starting\n"
- "with '%c' will be ignored, and an empty message aborts the commit.\n"
- msgstr ""
--"Bitte geben Sie eine Versionsbeschreibung f=C3=BCr Ihre =C3=84nderung=
-en ein. Zeilen,\n"
-+"Bitte geben Sie eine Commit-Beschreibung f=C3=BCr Ihre =C3=84nderunge=
-n ein. Zeilen,\n"
- "die mit '%c' beginnen, werden ignoriert, und eine leere "
--"Versionsbeschreibung\n"
--"bricht die Eintragung ab.\n"
-+"Beschreibung\n"
-+"bricht den Commit ab.\n"
-=20
- #: builtin/commit.c:742
- #, c-format
-@@ -3944,11 +3942,11 @@ msgid ""
- "with '%c' will be kept; you may remove them yourself if you want to.\=
-n"
- "An empty message aborts the commit.\n"
- msgstr ""
--"Bitte geben Sie eine Versionsbeschreibung f=C3=BCr Ihre =C3=84nderung=
-en ein. Zeilen, "
-+"Bitte geben Sie eine Commit-Beschreibung f=C3=BCr Ihre =C3=84nderunge=
-n ein. Zeilen, "
- "die\n"
- "mit '%c' beginnen, werden beibehalten; wenn Sie m=C3=B6chten, k=C3=B6=
-nnen Sie diese "
- "entfernen.\n"
--"Eine leere Versionsbeschreibung bricht die Eintragung ab.\n"
-+"Eine leere Beschreibung bricht den Commit ab.\n"
-=20
- #: builtin/commit.c:755
- #, c-format
-@@ -3958,20 +3956,20 @@ msgstr "%sAutor:    %s"
- #: builtin/commit.c:762
- #, c-format
- msgid "%sCommitter: %s"
--msgstr "%sEintragender: %s"
-+msgstr "%sCommit-Ersteller: %s"
-=20
- #: builtin/commit.c:782
- msgid "Cannot read index"
--msgstr "Kann Bereitstellung nicht lesen"
-+msgstr "Kann Staging-Area nicht lesen"
-=20
- #: builtin/commit.c:819
- msgid "Error building trees"
--msgstr "Fehler beim Erzeugen der Zweige"
-+msgstr "Fehler beim Erzeugen der Verzeichnisse"
-=20
- #: builtin/commit.c:834 builtin/tag.c:359
- #, c-format
- msgid "Please supply the message using either -m or -F option.\n"
--msgstr "Bitte liefere eine Beschreibung entweder mit der Option -m ode=
-r -F.\n"
-+msgstr "Bitte liefern Sie eine Beschreibung entweder mit der Option -m=
- oder -F.\n"
-=20
- #: builtin/commit.c:931
- #, c-format
-@@ -3991,15 +3989,15 @@ msgstr ""
-=20
- #: builtin/commit.c:987
- msgid "You have nothing to amend."
--msgstr "Sie haben nichts zum nachbessern."
-+msgstr "Sie haben nichts f=C3=BCr \"--amend\"."
-=20
- #: builtin/commit.c:990
- msgid "You are in the middle of a merge -- cannot amend."
--msgstr "Eine Zusammenf=C3=BChrung ist im Gange -- kann nicht nachbesse=
-rn."
-+msgstr "Ein Merge ist im Gange -- kann \"--amend\" nicht ausf=C3=BChre=
-n."
-=20
- #: builtin/commit.c:992
- msgid "You are in the middle of a cherry-pick -- cannot amend."
--msgstr "\"cherry-pick\" ist im Gange -- kann nicht nachbessern."
-+msgstr "\"cherry-pick\" ist im Gange -- kann \"--amend\" nicht ausf=C3=
-=BChren."
-=20
- #: builtin/commit.c:995
- msgid "Options --squash and --fixup cannot be used together"
-@@ -4034,7 +4032,7 @@ msgstr ""
- #: builtin/commit.c:1036
- msgid "Clever... amending the last one with dirty index."
- msgstr ""
--"Klug... die letzte Version mit einer unsauberen Bereitstellung nachbe=
-ssern."
-+"Klug... den letzten Commit mit einer unsauberen Staging-Area nachbess=
-ern."
-=20
- #: builtin/commit.c:1038
- msgid "Explicit paths specified without -i nor -o; assuming --only pat=
-hs..."
-@@ -4061,7 +4059,7 @@ msgstr "zeigt Status im Kurzformat"
-=20
- #: builtin/commit.c:1156 builtin/commit.c:1392
- msgid "show branch information"
--msgstr "zeigt Zweiginformationen"
-+msgstr "zeigt Branchinformationen"
-=20
- #: builtin/commit.c:1158 builtin/commit.c:1394 builtin/push.c:426
- msgid "machine-readable output"
-@@ -4099,7 +4097,7 @@ msgid ""
- "ignore changes to submodules, optional when: all, dirty, untracked. "
- "(Default: all)"
- msgstr ""
--"ignoriert =C3=84nderungen in Unterprojekten, optional wenn: all, dirt=
-y, "
-+"ignoriert =C3=84nderungen in Submodulen, optional wenn: all, dirty, "
- "untracked. (Standard: all)"
-=20
- #: builtin/commit.c:1174
-@@ -4108,31 +4106,31 @@ msgstr "listet unbeobachtete Dateien in Spalten=
- auf"
-=20
- #: builtin/commit.c:1248
- msgid "couldn't look up newly created commit"
--msgstr "Konnte neu erstellte Version nicht nachschlagen."
-+msgstr "Konnte neu erstellten Commit nicht nachschlagen."
-=20
- #: builtin/commit.c:1250
- msgid "could not parse newly created commit"
--msgstr "Konnte neulich erstellte Version nicht analysieren."
-+msgstr "Konnte neulich erstellten Commit nicht analysieren."
-=20
- #: builtin/commit.c:1291
- msgid "detached HEAD"
--msgstr "losgel=C3=B6ste Zweigspitze (HEAD)"
-+msgstr "losgel=C3=B6ster HEAD"
-=20
- #: builtin/commit.c:1293
- msgid " (root-commit)"
--msgstr " (Basis-Version)"
-+msgstr " (Basis-Commit)"
-=20
- #: builtin/commit.c:1360
- msgid "suppress summary after successful commit"
--msgstr "unterdr=C3=BCckt Zusammenfassung nach erfolgreicher Eintragung=
-"
-+msgstr "unterdr=C3=BCckt Zusammenfassung nach erfolgreichem Commit"
-=20
- #: builtin/commit.c:1361
- msgid "show diff in commit message template"
--msgstr "zeigt Unterschiede in Versionsbeschreibungsvorlage an"
-+msgstr "zeigt Unterschiede in Commit-Beschreibungsvorlage an"
-=20
- #: builtin/commit.c:1363
- msgid "Commit message options"
--msgstr "Optionen f=C3=BCr Versionsbeschreibung"
-+msgstr "Optionen f=C3=BCr Commit-Beschreibung"
-=20
- #: builtin/commit.c:1364 builtin/tag.c:457
- msgid "read message from file"
-@@ -4144,7 +4142,7 @@ msgstr "Autor"
-=20
- #: builtin/commit.c:1365
- msgid "override author for commit"
--msgstr "=C3=BCberschreibt Autor von Version"
-+msgstr "=C3=BCberschreibt Autor eines Commits"
-=20
- #: builtin/commit.c:1366 builtin/gc.c:178
- msgid "date"
-@@ -4152,7 +4150,7 @@ msgstr "Datum"
-=20
- #: builtin/commit.c:1366
- msgid "override date for commit"
--msgstr "=C3=BCberschreibt Datum von Version"
-+msgstr "=C3=BCberschreibt Datum eines Commits"
-=20
- #: builtin/commit.c:1367 builtin/merge.c:208 builtin/notes.c:533
- #: builtin/notes.c:690 builtin/tag.c:455
-@@ -4161,31 +4159,31 @@ msgstr "Beschreibung"
-=20
- #: builtin/commit.c:1367
- msgid "commit message"
--msgstr "Versionsbeschreibung"
-+msgstr "Commit-Beschreibung"
-=20
- #: builtin/commit.c:1368
- msgid "reuse and edit message from specified commit"
--msgstr "verwendet wieder und editiert Beschreibung von der angegebenen=
- Version"
-+msgstr "verwendet wieder und editiert Beschreibung des angegebenen Com=
-mits"
-=20
- #: builtin/commit.c:1369
- msgid "reuse message from specified commit"
--msgstr "verwendet Beschreibung der angegebenen Version wieder"
-+msgstr "verwendet Beschreibung des angegebenen Commits wieder"
-=20
- #: builtin/commit.c:1370
- msgid "use autosquash formatted message to fixup specified commit"
- msgstr ""
--"verwendet eine automatisch zusammengesetzte Beschreibung zum Nachbess=
-ern der "
--"angegebenen Version"
-+"verwendet eine automatisch zusammengesetzte Beschreibung zum Nachbess=
-ern des "
-+"angegebenen Commits"
-=20
- #: builtin/commit.c:1371
- msgid "use autosquash formatted message to squash specified commit"
- msgstr ""
- "verwendet eine automatisch zusammengesetzte Beschreibung zum Zusammen=
-f=C3=BChren "
--"der angegebenen Version"
-+"des angegebenen Commits"
-=20
- #: builtin/commit.c:1372
- msgid "the commit is authored by me now (used with -C/-c/--amend)"
--msgstr "Setzt Sie als Autor der Version (verwendet mit -C/-c/--amend)"
-+msgstr "Setzt Sie als Autor des Commits (verwendet mit -C/-c/--amend)"
-=20
- #: builtin/commit.c:1373 builtin/log.c:1113 builtin/revert.c:109
- msgid "add Signed-off-by:"
-@@ -4197,7 +4195,7 @@ msgstr "verwendet angegebene Vorlagendatei"
-=20
- #: builtin/commit.c:1375
- msgid "force edit of commit"
--msgstr "erzwingt Bearbeitung der Version"
-+msgstr "erzwingt Bearbeitung des Commits"
-=20
- #: builtin/commit.c:1376
- msgid "default"
-@@ -4210,7 +4208,7 @@ msgstr ""
-=20
- #: builtin/commit.c:1377
- msgid "include status in commit message template"
--msgstr "f=C3=BCgt Status in die Versionsbeschreibungsvorlage ein"
-+msgstr "f=C3=BCgt Status in die Commit-Beschreibungsvorlage ein"
-=20
- #: builtin/commit.c:1378 builtin/merge.c:215 builtin/tag.c:461
- msgid "key id"
-@@ -4218,20 +4216,20 @@ msgstr "Schl=C3=BCssel-ID"
-=20
- #: builtin/commit.c:1379 builtin/merge.c:216
- msgid "GPG sign commit"
--msgstr "signiert Version mit GPG"
-+msgstr "signiert Commit mit GPG"
-=20
- #. end commit message options
- #: builtin/commit.c:1382
- msgid "Commit contents options"
--msgstr "Optionen f=C3=BCr Versionsinhalt"
-+msgstr "Optionen f=C3=BCr Commit-Inhalt"
-=20
- #: builtin/commit.c:1383
- msgid "commit all changed files"
--msgstr "tr=C3=A4gt alle ge=C3=A4nderten Dateien ein"
-+msgstr "committet alle ge=C3=A4nderten Dateien"
-=20
- #: builtin/commit.c:1384
- msgid "add specified files to index for commit"
--msgstr "tr=C3=A4gt die angegebenen Dateien zus=C3=A4tzlich zur Bereits=
-tellung ein"
-+msgstr "merkt die angegebenen Dateien zus=C3=A4tzlich zum Commit vor"
-=20
- #: builtin/commit.c:1385
- msgid "interactively add files"
-@@ -4243,7 +4241,7 @@ msgstr "interaktives Hinzuf=C3=BCgen von =C3=84nd=
-erungen"
-=20
- #: builtin/commit.c:1387
- msgid "commit only specified files"
--msgstr "tr=C3=A4gt nur die angegebenen Dateien ein"
-+msgstr "committet nur die angegebenen Dateien"
-=20
- #: builtin/commit.c:1388
- msgid "bypass pre-commit hook"
-@@ -4251,11 +4249,11 @@ msgstr "umgeht \"pre-commit hook\""
-=20
- #: builtin/commit.c:1389
- msgid "show what would be committed"
--msgstr "zeigt an, was eingetragen werden w=C3=BCrde"
-+msgstr "zeigt an, was committet werden w=C3=BCrde"
-=20
- #: builtin/commit.c:1400
- msgid "amend previous commit"
--msgstr "=C3=A4ndert vorherige Version"
-+msgstr "=C3=A4ndert vorherigen Commit"
-=20
- #: builtin/commit.c:1401
- msgid "bypass post-rewrite hook"
-@@ -4271,7 +4269,7 @@ msgstr "erlaubt Aufzeichnung einer =C3=84nderung =
-mit einer leeren Beschreibung"
-=20
- #: builtin/commit.c:1441
- msgid "could not parse HEAD commit"
--msgstr "Konnte Version der Zweigspitze (HEAD) nicht analysieren."
-+msgstr "Konnte Commit von HEAD nicht analysieren."
-=20
- #: builtin/commit.c:1479 builtin/merge.c:510
- #, c-format
-@@ -4290,29 +4288,29 @@ msgstr "Konnte MERGE_MODE nicht lesen"
- #: builtin/commit.c:1512
- #, c-format
- msgid "could not read commit message: %s"
--msgstr "Konnte Versionsbeschreibung nicht lesen: %s"
-+msgstr "Konnte Commit-Beschreibung nicht lesen: %s"
-=20
- #: builtin/commit.c:1526
- #, c-format
- msgid "Aborting commit; you did not edit the message.\n"
--msgstr "Eintragung abgebrochen; Sie haben die Beschreibung nicht editi=
-ert.\n"
-+msgstr "Commit abgebrochen; Sie haben die Beschreibung nicht editiert.=
-\n"
-=20
- #: builtin/commit.c:1531
- #, c-format
- msgid "Aborting commit due to empty commit message.\n"
--msgstr "Eintragung aufgrund leerer Versionsbeschreibung abgebrochen.\n=
-"
-+msgstr "Commit aufgrund leerer Beschreibung abgebrochen.\n"
-=20
- #: builtin/commit.c:1546 builtin/merge.c:847 builtin/merge.c:872
- msgid "failed to write commit object"
--msgstr "Fehler beim Schreiben des Versionsobjektes."
-+msgstr "Fehler beim Schreiben des Commit-Objektes."
-=20
- #: builtin/commit.c:1567
- msgid "cannot lock HEAD ref"
--msgstr "Kann Referenz der Zweigspitze (HEAD) nicht sperren."
-+msgstr "Kann Referenz von HEAD nicht sperren."
-=20
- #: builtin/commit.c:1571
- msgid "cannot update HEAD ref"
--msgstr "Kann Referenz der Zweigspitze (HEAD) nicht aktualisieren."
-+msgstr "Kann Referenz von HEAD nicht aktualisieren."
-=20
- #: builtin/commit.c:1582
+ #: builtin/push.c:332
  msgid ""
-@@ -4320,7 +4318,7 @@ msgid ""
- "new_index file. Check that disk is not full or quota is\n"
- "not exceeded, and then \"git reset HEAD\" to recover."
+@@ -7647,13 +7648,13 @@ msgid ""
+ "\n"
+ "    git push <name>\n"
  msgstr ""
--"Das Projektarchiv wurde aktualisiert, aber die \"new_index\"-Datei\n"
-+"Das Repository wurde aktualisiert, aber die \"new_index\"-Datei\n"
- "konnte nicht geschrieben werden. Pr=C3=BCfen Sie, dass Ihre Festplatt=
-e nicht\n"
- "voll und Ihr Kontingent nicht aufgebraucht ist und f=C3=BChren Sie\n"
- "anschlie=C3=9Fend \"git reset HEAD\" zu Wiederherstellung aus."
-@@ -4343,7 +4341,7 @@ msgstr "verwendet systemweite Konfigurationsdatei=
-"
+-"Kein Ziel zum Versenden konfiguriert.\n"
++"Kein Ziel f=C3=BCr \"push\" konfiguriert.\n"
+ "Entweder spezifizieren Sie die URL von der Kommandozeile oder konfigu=
+rieren "
+-"ein externes Projektarchiv unter Benutzung von\n"
++"ein Remote-Repository unter Benutzung von\n"
+ "\n"
+ "    git remote add <Name> <URL>\n"
+ "\n"
+-"und versenden dann unter Benutzung dieses Namens\n"
++"und f=C3=BChren \"push\" dann unter Benutzung dieses Namens aus\n"
+ "\n"
+ "    git push <Name>\n"
 =20
- #: builtin/config.c:54
- msgid "use repository config file"
--msgstr "verwendet Konfigurationsdatei des Projektarchivs"
-+msgstr "verwendet Konfigurationsdatei des Repositories"
-=20
- #: builtin/config.c:55
- msgid "use given config file"
-@@ -4460,17 +4458,17 @@ msgstr "git describe [Optionen] --dirty"
- #: builtin/describe.c:233
- #, c-format
- msgid "annotated tag %s not available"
--msgstr "annotierte Markierung %s ist nicht verf=C3=BCgbar"
-+msgstr "annotierter Tag %s ist nicht verf=C3=BCgbar"
-=20
- #: builtin/describe.c:237
- #, c-format
- msgid "annotated tag %s has no embedded name"
--msgstr "annotierte Markierung %s hat keinen eingebetteten Namen"
-+msgstr "annotierter Tag %s hat keinen eingebetteten Namen"
-=20
- #: builtin/describe.c:239
- #, c-format
- msgid "tag '%s' is really '%s' here"
--msgstr "Markierung '%s' ist eigentlich '%s' hier"
-+msgstr "Tag '%s' ist eigentlich '%s' hier"
-=20
- #: builtin/describe.c:266
- #, c-format
-@@ -4485,7 +4483,7 @@ msgstr "%s ist kein g=C3=BCltiges '%s' Objekt"
- #: builtin/describe.c:286
- #, c-format
- msgid "no tag exactly matches '%s'"
--msgstr "kein Markierung entspricht exakt '%s'"
-+msgstr "kein Tag entspricht exakt '%s'"
-=20
- #: builtin/describe.c:288
- #, c-format
-@@ -4503,8 +4501,8 @@ msgid ""
- "No annotated tags can describe '%s'.\n"
- "However, there were unannotated tags: try --tags."
+@@ -7664,7 +7665,7 @@ msgstr "Die Optionen --all und --tags sind inkomp=
+atibel."
+ #: builtin/push.c:348
+ msgid "--all can't be combined with refspecs"
  msgstr ""
--"Keine annotierten Markierungen k=C3=B6nnen '%s' beschreiben.\n"
--"Jedoch gab es nicht annotierte Markierungen: versuchen Sie --tags."
-+"Keine annotierten Tags k=C3=B6nnen '%s' beschreiben.\n"
-+"Jedoch gab es nicht annotierte Tags: versuchen Sie --tags."
+-"Die Option --all kann nicht mit Referenzspezifikationen kombiniert we=
+rden."
++"Die Option --all kann nicht mit Refspecs kombiniert werden."
 =20
- #: builtin/describe.c:356
- #, c-format
-@@ -4512,13 +4510,13 @@ msgid ""
- "No tags can describe '%s'.\n"
- "Try --always, or create some tags."
+ #: builtin/push.c:353
+ msgid "--mirror and --tags are incompatible"
+@@ -7673,7 +7674,7 @@ msgstr "Die Optionen --mirror und --tags sind ink=
+ompatibel."
+ #: builtin/push.c:354
+ msgid "--mirror can't be combined with refspecs"
  msgstr ""
--"Keine Markierungen k=C3=B6nnen '%s' beschreiben.\n"
--"Versuchen Sie --always oder erstellen Sie einige Markierungen."
-+"Keine Tags k=C3=B6nnen '%s' beschreiben.\n"
-+"Versuchen Sie --always oder erstellen Sie einige Tags."
+-"Die Option --mirror kann nicht mit Referenzspezifikationen kombiniert=
+ werden."
++"Die Option --mirror kann nicht mit Refspecs kombiniert werden."
 =20
- #: builtin/describe.c:377
- #, c-format
- msgid "traversed %lu commits\n"
--msgstr "%lu Versionen durchlaufen\n"
-+msgstr "%lu Commits durchlaufen\n"
+ #: builtin/push.c:359
+ msgid "--all and --mirror are incompatible"
+@@ -7681,7 +7682,7 @@ msgstr "Die Optionen --all und --mirror sind inko=
+mpatibel."
 =20
- #: builtin/describe.c:380
- #, c-format
-@@ -4526,12 +4524,12 @@ msgid ""
- "more than %i tags found; listed %i most recent\n"
- "gave up search at %s\n"
+ #: builtin/push.c:419
+ msgid "repository"
+-msgstr "Projektarchiv"
++msgstr "Repository"
+=20
+ #: builtin/push.c:420
+ msgid "push all refs"
+@@ -7698,7 +7699,7 @@ msgstr "l=C3=B6scht Referenzen"
+ #: builtin/push.c:424
+ msgid "push tags (can't be used with --all or --mirror)"
  msgstr ""
--"mehr als %i Markierungen gefunden; F=C3=BChre die ersten %i auf\n"
-+"mehr als %i Tags gefunden; F=C3=BChre die ersten %i auf\n"
- "Suche bei %s aufgegeben\n"
+-"versendet Markierungen (kann nicht mit --all oder --mirror verwendet =
+werden)"
++"versendet Tags (kann nicht mit --all oder --mirror verwendet werden)"
 =20
- #: builtin/describe.c:402
- msgid "find the tag that comes after the commit"
--msgstr "findet die Markierung, die nach der Version kommt"
-+msgstr "findet den Tag, die nach Commit kommt"
+ #: builtin/push.c:427
+ msgid "force updates"
+@@ -7710,7 +7711,7 @@ msgstr ""
 =20
- #: builtin/describe.c:403
- msgid "debug search strategy on stderr"
-@@ -4543,7 +4541,7 @@ msgstr "verwendet alle Referenzen"
+ #: builtin/push.c:429
+ msgid "control recursive pushing of submodules"
+-msgstr "steuert rekursives Versenden von Unterprojekten"
++msgstr "steuert rekursiven \"push\" von Submodulen"
 =20
- #: builtin/describe.c:405
- msgid "use any tag, even unannotated"
--msgstr "verwendet jede Markierung, auch nicht-annotierte"
-+msgstr "verwendet jeden Tag, auch nicht-annotierte"
+ #: builtin/push.c:431
+ msgid "use thin pack"
+@@ -7722,7 +7723,7 @@ msgstr "'receive pack' Programm"
 =20
- #: builtin/describe.c:406
- msgid "always use long format"
-@@ -4555,15 +4553,15 @@ msgstr "gibt nur exakte =C3=9Cbereinstimmungen =
-aus"
+ #: builtin/push.c:434
+ msgid "set upstream for git pull/status"
+-msgstr "setzt externes Projektarchiv f=C3=BCr \"git pull/status\""
++msgstr "setzt Upstream f=C3=BCr \"git pull/status\""
 =20
- #: builtin/describe.c:411
- msgid "consider <n> most recent tags (default: 10)"
--msgstr "betrachtet die j=C3=BCngsten <n> Markierungen (Standard: 10)"
-+msgstr "betrachtet die j=C3=BCngsten <n> Tags (Standard: 10)"
+ #: builtin/push.c:437
+ msgid "prune locally removed refs"
+@@ -7734,7 +7735,7 @@ msgstr "umgeht \"pre-push hook\""
 =20
- #: builtin/describe.c:413
- msgid "only consider tags matching <pattern>"
--msgstr "betrachtet nur Markierungen die <Muster> entsprechen"
-+msgstr "betrachtet nur Tags die <Muster> entsprechen"
+ #: builtin/push.c:440
+ msgid "push missing but relevant tags"
+-msgstr "versendet fehlende, aber relevante Markierungen"
++msgstr "versendet fehlende, aber relevante Tags"
 =20
- #: builtin/describe.c:415 builtin/name-rev.c:238
- msgid "show abbreviated commit object as fallback"
--msgstr "zeigt gek=C3=BCrztes Versionsobjekt, wenn sonst nichts zutriff=
-t"
-+msgstr "zeigt gek=C3=BCrztes Commit-Objekt, wenn sonst nichts zutrifft=
-"
-=20
- #: builtin/describe.c:416
- msgid "mark"
-@@ -4572,7 +4570,7 @@ msgstr "Kennzeichen"
- #: builtin/describe.c:417
- msgid "append <mark> on dirty working tree (default: \"-dirty\")"
+ #: builtin/push.c:450
+ msgid "--delete is incompatible with --all, --mirror and --tags"
+@@ -7752,35 +7753,34 @@ msgid ""
  msgstr ""
--"f=C3=BCgt <Kennzeichen> bei ge=C3=A4ndertem Arbeitsbaum hinzu (Standa=
-rd: \"-dirty\")"
-+"f=C3=BCgt <Kennzeichen> bei ge=C3=A4ndertem Arbeitsverzeichnis hinzu =
-(Standard: \"-dirty\")"
+ "git read-tree [[-m [--trivial] [--aggressive] | --reset | --prefix=3D=
+<Prefix>] "
+ "[-u [--exclude-per-directory=3D<gitignore>] | -i]] [--no-sparse-check=
+out] [--"
+-"index-output=3D<Datei>] (--empty | <Versionsreferenz1> [<Versionsrefe=
+renz2> "
+-"[<Versionsreferenz3>]])"
++"index-output=3D<Datei>] (--empty | <Commit-Referenz1> [<Commit-Refere=
+nz2> "
++"[<Commit-Referenz3>]])"
 =20
- #: builtin/describe.c:435
- msgid "--long is incompatible with --abbrev=3D0"
-@@ -4584,12 +4582,12 @@ msgstr "Keine Namen gefunden, kann nichts besch=
-reiben."
+ #: builtin/read-tree.c:108
+ msgid "write resulting index to <file>"
+-msgstr "schreibt resultierende Bereitstellung nach <Datei>"
++msgstr "schreibt resultierende Staging-Area nach <Datei>"
 =20
- #: builtin/describe.c:481
- msgid "--dirty is incompatible with committishes"
--msgstr "Die Option --dirty kann nicht mit Versionen verwendet werden."
-+msgstr "Die Option --dirty kann nicht mit Commits verwendet werden."
+ #: builtin/read-tree.c:111
+ msgid "only empty the index"
+-msgstr "leert die Bereitstellung"
++msgstr "leert die Staging-Area"
 =20
- #: builtin/diff.c:79
- #, c-format
- msgid "'%s': not a regular file or symlink"
--msgstr "'%s': keine regul=C3=A4re Datei oder symbolischer Link"
-+msgstr "'%s': keine regul=C3=A4re Datei oder symbolischer Verweis"
+ #: builtin/read-tree.c:113
+ msgid "Merging"
+-msgstr "Zusammenf=C3=BChrung"
++msgstr "Merge"
 =20
- #: builtin/diff.c:228
- #, c-format
-@@ -4598,7 +4596,7 @@ msgstr "Ung=C3=BCltige Option: %s"
+ #: builtin/read-tree.c:115
+ msgid "perform a merge in addition to a read"
+-msgstr "f=C3=BChrt eine Zusammenf=C3=BChrung zus=C3=A4tzlich zum Lesen=
+ aus"
++msgstr "f=C3=BChrt einen Merge zus=C3=A4tzlich zum Lesen aus"
 =20
- #: builtin/diff.c:305
- msgid "Not a git repository"
--msgstr "Kein Git-Projektarchiv"
-+msgstr "Kein Git-Repository"
+ #: builtin/read-tree.c:117
+ msgid "3-way merge if no file level merging required"
+ msgstr ""
+-"3-Wege-Zusammenf=C3=BChrung, wenn keine Zusammenf=C3=BChrung auf Date=
+iebene "
+-"erforderlich ist"
++"3-Wege-Merge, wenn kein Merge auf Dateiebene erforderlich ist"
 =20
- #: builtin/diff.c:348
- #, c-format
-@@ -4608,7 +4606,7 @@ msgstr "Objekt '%s' ist ung=C3=BCltig."
- #: builtin/diff.c:353
- #, c-format
- msgid "more than %d trees given: '%s'"
--msgstr "Mehr als %d Zweige angegeben: '%s'"
-+msgstr "Mehr als %d \"Tree\"-Objekte angegeben: '%s'"
-=20
- #: builtin/diff.c:363
- #, c-format
-@@ -4630,11 +4628,11 @@ msgstr "zeigt Fortschritt nach <n> Objekten an"
-=20
- #: builtin/fast-export.c:660
- msgid "select handling of signed tags"
--msgstr "w=C3=A4hlt Behandlung von signierten Markierungen"
-+msgstr "w=C3=A4hlt Behandlung von signierten Tags"
-=20
- #: builtin/fast-export.c:663
- msgid "select handling of tags that tag filtered objects"
--msgstr "w=C3=A4hlt Behandlung von Markierungen, die gefilterte Objekte=
- markieren"
-+msgstr "w=C3=A4hlt Behandlung von Tags, die gefilterte Objekte markier=
+ #: builtin/read-tree.c:119
+ msgid "3-way merge in presence of adds and removes"
+ msgstr ""
+-"3-Wege-Zusammenf=C3=BChrung bei Vorhandensein von hinzugef=C3=BCgten/=
+entfernten Zeilen"
++"3-Wege-Merge bei Vorhandensein von hinzugef=C3=BCgten/entfernten Zeil=
 en"
 =20
- #: builtin/fast-export.c:666
- msgid "Dump marks to this file"
-@@ -4647,11 +4645,11 @@ msgstr "Importiert Kennzeichen von dieser Datei=
+ #: builtin/read-tree.c:121
+ msgid "same as -m, but discard unmerged entries"
+@@ -7792,11 +7792,11 @@ msgstr "<Unterverzeichnis>/"
+=20
+ #: builtin/read-tree.c:123
+ msgid "read the tree into the index under <subdirectory>/"
+-msgstr "liest den Baum in die Bereitstellung unter <Unterverzeichnis>/=
 "
- #: builtin/fast-export.c:670
- msgid "Fake a tagger when tags lack one"
- msgstr ""
--"erzeugt k=C3=BCnstlich einen Markierungsersteller, wenn die Markierun=
-g keinen hat"
-+"erzeugt k=C3=BCnstlich einen Tag-Ersteller, wenn der Tag keinen hat"
++msgstr "liest das Verzeichnis in die Staging-Area unter <Unterverzeich=
+nis>/"
 =20
- #: builtin/fast-export.c:672
- msgid "Output full tree for each commit"
--msgstr "gibt f=C3=BCr jede Version den gesamten Baum aus"
-+msgstr "gibt f=C3=BCr jeden Commit das gesamte Verzeichnis aus"
-=20
- #: builtin/fast-export.c:674
- msgid "Use the done feature to terminate the stream"
-@@ -4663,7 +4661,7 @@ msgstr "=C3=9Cberspringt Ausgabe von Blob-Daten"
-=20
- #: builtin/fetch.c:20
- msgid "git fetch [<options>] [<repository> [<refspec>...]]"
--msgstr "git fetch [<Optionen>] [<Projektarchiv> [<Referenzspezifikatio=
-n>...]]"
-+msgstr "git fetch [<Optionen>] [<Repository> [<Refspec>...]]"
-=20
- #: builtin/fetch.c:21
- msgid "git fetch [<options>] <group>"
-@@ -4671,7 +4669,7 @@ msgstr "git fetch [<Optionen>] <Gruppe>"
-=20
- #: builtin/fetch.c:22
- msgid "git fetch --multiple [<options>] [(<repository> | <group>)...]"
--msgstr "git fetch --multiple [<Optionen>] [(<Projektarchiv> | <Gruppe>=
-)...]"
-+msgstr "git fetch --multiple [<Optionen>] [(<Repository> | <Gruppe>)..=
-=2E]"
-=20
- #: builtin/fetch.c:23
- msgid "git fetch --all [<options>]"
-@@ -4679,7 +4677,7 @@ msgstr "git fetch --all [<Optionen>]"
-=20
- #: builtin/fetch.c:60
- msgid "fetch from all remotes"
--msgstr "fordert von allen externen Projektarchiven an"
-+msgstr "fordert von allen Remote-Repositories an"
-=20
- #: builtin/fetch.c:62
- msgid "append to .git/FETCH_HEAD instead of overwriting"
-@@ -4687,28 +4685,29 @@ msgstr "h=C3=A4ngt an .git/FETCH_HEAD an, ansta=
-tt zu =C3=BCberschreiben"
-=20
- #: builtin/fetch.c:64
- msgid "path to upload pack on remote end"
--msgstr "Pfad des Programms zum Hochladen von Paketen auf der Gegenseit=
-e"
-+msgstr "Pfad des Programms zum Hochladen von Paketen im Remote-Reposit=
-ory"
-=20
- #: builtin/fetch.c:65
- msgid "force overwrite of local branch"
--msgstr "erzwingt das =C3=9Cberschreiben von lokalen Zweigen"
-+msgstr "erzwingt das =C3=9Cberschreiben von lokalen Branches"
-=20
- #: builtin/fetch.c:67
- msgid "fetch from multiple remotes"
--msgstr "fordert von mehreren externen Projektarchiven an"
-+msgstr "fordert von mehreren Remote-Repositories an"
-=20
- #: builtin/fetch.c:69
- msgid "fetch all tags and associated objects"
--msgstr "fordert alle Markierungen und verbundene Objekte an"
-+msgstr "fordert alle Tags und verbundene Objekte an"
-=20
- #: builtin/fetch.c:71
- msgid "do not fetch all tags (--no-tags)"
--msgstr "fordert nicht alle Markierungen an (--no-tags)"
-+msgstr "fordert nicht alle Tags an (--no-tags)"
-=20
- #: builtin/fetch.c:73
- msgid "prune remote-tracking branches no longer on remote"
- msgstr ""
--"entfernt externe =C3=9Cbernahmezweige, die sich nicht mehr im Fernarc=
-hiv befinden"
-+"entfernt Remote-Tracking-Branches, die sich nicht mehr im Remote-Repo=
-sitory "
-+"befinden"
-=20
- #: builtin/fetch.c:74
- msgid "on-demand"
-@@ -4716,7 +4715,7 @@ msgstr "bei-Bedarf"
-=20
- #: builtin/fetch.c:75
- msgid "control recursive fetching of submodules"
--msgstr "kontrolliert rekursive Anforderungen von Unterprojekten"
-+msgstr "kontrolliert rekursive Anforderungen von Submodulen"
-=20
- #: builtin/fetch.c:79
- msgid "keep downloaded pack"
-@@ -4728,11 +4727,11 @@ msgstr "erlaubt Aktualisierung der \"HEAD\"-Ref=
-erenz"
-=20
- #: builtin/fetch.c:84
- msgid "deepen history of shallow clone"
--msgstr "vertieft die Historie eines flachen Klon"
-+msgstr "vertieft die Historie eines flachen Klons"
-=20
- #: builtin/fetch.c:86
- msgid "convert to a complete repository"
--msgstr "konvertiert zu einem vollst=C3=A4ndigen Projektarchiv"
-+msgstr "konvertiert zu einem vollst=C3=A4ndigen Repository"
-=20
- #: builtin/fetch.c:88 builtin/log.c:1130
- msgid "dir"
-@@ -4740,7 +4739,7 @@ msgstr "Verzeichnis"
-=20
- #: builtin/fetch.c:89
- msgid "prepend this to submodule path output"
--msgstr "stellt dies an die Ausgabe der Unterprojekt-Pfade voran"
-+msgstr "stellt dies an die Ausgabe der Submodul-Pfade voran"
-=20
- #: builtin/fetch.c:92
- msgid "default mode for recursion"
-@@ -4748,7 +4747,7 @@ msgstr "Standard-Modus f=C3=BCr Rekursion"
-=20
- #: builtin/fetch.c:204
- msgid "Couldn't find remote ref HEAD"
--msgstr "Konnte externe Referenz der Zweigspitze (HEAD) nicht finden."
-+msgstr "Konnte Remote-Referenz von HEAD nicht finden."
-=20
- #: builtin/fetch.c:257
- #, c-format
-@@ -4762,7 +4761,7 @@ msgstr "[aktuell]"
- #: builtin/fetch.c:276
- #, c-format
- msgid "! %-*s %-*s -> %s  (can't fetch in current branch)"
--msgstr "! %-*s %-*s -> %s  (kann nicht im aktuellen Zweig anfordern)"
-+msgstr "! %-*s %-*s -> %s  (kann \"fetch\" im aktuellen Branch nicht a=
-usf=C3=BChren)"
-=20
- #: builtin/fetch.c:277 builtin/fetch.c:363
- msgid "[rejected]"
-@@ -4770,7 +4769,7 @@ msgstr "[zur=C3=BCckgewiesen]"
-=20
- #: builtin/fetch.c:288
- msgid "[tag update]"
--msgstr "[Markierungsaktualisierung]"
-+msgstr "[Tag Aktualisierung]"
-=20
- #: builtin/fetch.c:290 builtin/fetch.c:325 builtin/fetch.c:343
- msgid "  (unable to update local ref)"
-@@ -4778,11 +4777,11 @@ msgstr "  (kann lokale Referenz nicht aktualisi=
-eren)"
-=20
- #: builtin/fetch.c:308
- msgid "[new tag]"
--msgstr "[neue Markierung]"
-+msgstr "[neuer Tag]"
-=20
- #: builtin/fetch.c:311
- msgid "[new branch]"
--msgstr "[neuer Zweig]"
-+msgstr "[neuer Branch]"
-=20
- #: builtin/fetch.c:314
- msgid "[new ref]"
-@@ -4822,7 +4821,7 @@ msgid ""
- " 'git remote prune %s' to remove any old, conflicting branches"
- msgstr ""
- "Einige lokale Referenzen konnten nicht aktualisiert werden; versuchen=
- Sie\n"
--"'git remote prune %s' um jeden =C3=A4lteren, widerspr=C3=BCchlichen Z=
-weig zu l=C3=B6schen."
-+"'git remote prune %s' um jeden =C3=A4lteren, widerspr=C3=BCchlichen B=
-ranch zu l=C3=B6schen."
-=20
- #: builtin/fetch.c:552
- #, c-format
-@@ -4846,7 +4845,7 @@ msgstr "(nichts)"
- #, c-format
- msgid "Refusing to fetch into current branch %s of non-bare repository=
+ #: builtin/read-tree.c:126
+ msgid "update working tree with merge result"
+-msgstr "aktualisiert Arbeitsbaum mit Ergebnis der Zusammenf=C3=BChrung=
 "
- msgstr ""
--"Das Anfordern in den aktuellen Zweig %s von einem nicht-blo=C3=9Fen P=
-rojektarchiv "
-+"Der \"fetch\" in den aktuellen Branch %s von einem nicht-Bare-Reposit=
-ory "
- "wurde verweigert."
++msgstr "aktualisiert Arbeitsverzeichnis mit dem Ergebnis des Merges"
 =20
- #: builtin/fetch.c:712
-@@ -4879,13 +4878,13 @@ msgid ""
- "No remote repository specified.  Please, specify either a URL or a\n"
- "remote name from which new revisions should be fetched."
- msgstr ""
--"Kein externes Projektarchiv angegeben. Bitte geben Sie entweder eine =
-URL\n"
--"oder den Namen des externen Archivs an, von welchem neue\n"
-+"Kein Remote-Repository angegeben. Bitte geben Sie entweder eine URL\n=
+ #: builtin/read-tree.c:128
+ msgid "gitignore"
+@@ -7808,11 +7808,11 @@ msgstr "erlaubt explizit ignorierte Dateien zu =
+=C3=BCberschreiben"
+=20
+ #: builtin/read-tree.c:132
+ msgid "don't check the working tree after merging"
+-msgstr "pr=C3=BCft nicht den Arbeitsbaum nach der Zusammenf=C3=BChrung=
 "
-+"oder den Namen des Remote-Repositories an, von welchem neue\n"
- "Revisionen angefordert werden sollen."
++msgstr "pr=C3=BCft nicht das Arbeitsverzeichnis nach dem Merge"
 =20
- #: builtin/fetch.c:935
- msgid "You need to specify a tag name."
--msgstr "Sie m=C3=BCssen den Namen der Markierung angeben."
-+msgstr "Sie m=C3=BCssen den Namen des Tags angeben."
+ #: builtin/read-tree.c:133
+ msgid "don't update the index or the work tree"
+-msgstr "aktualisiert weder die Bereitstellung, noch den Arbeitsbaum"
++msgstr "aktualisiert weder die Staging-Area, noch das Arbeitsverzeichn=
+is"
 =20
- #: builtin/fetch.c:981
- msgid "--depth and --unshallow cannot be used together"
-@@ -4895,27 +4894,27 @@ msgstr ""
- #: builtin/fetch.c:983
- msgid "--unshallow on a complete repository does not make sense"
+ #: builtin/read-tree.c:135
+ msgid "skip applying sparse checkout filter"
+@@ -7831,7 +7831,7 @@ msgid ""
+ "git remote add [-t <branch>] [-m <master>] [-f] [--tags|--no-tags] [-=
+-"
+ "mirror=3D<fetch|push>] <name> <url>"
  msgstr ""
--"Die Option --unshallow kann nicht in einem vollst=C3=A4ndigen Projekt=
-archiv "
-+"Die Option --unshallow kann nicht in einem vollst=C3=A4ndigen Reposit=
-ory "
+-"git remote add [-t <Zweig>] [-m <master>] [-f] [--tags|--no-tags] [--=
+"
++"git remote add [-t <Branch>] [-m <master>] [-f] [--tags|--no-tags] [-=
+-"
+ "mirror=3D<fetch|push>] <Name> <URL>"
+=20
+ #: builtin/remote.c:13 builtin/remote.c:32
+@@ -7844,7 +7844,7 @@ msgstr "git remote remove <Name>"
+=20
+ #: builtin/remote.c:15 builtin/remote.c:42
+ msgid "git remote set-head <name> (-a | -d | <branch>)"
+-msgstr "git remote set-head <Name> (-a | -d | <Zweig>)"
++msgstr "git remote set-head <Name> (-a | -d | <Branch>)"
+=20
+ #: builtin/remote.c:16
+ msgid "git remote [-v | --verbose] show [-n] <name>"
+@@ -7858,12 +7858,11 @@ msgstr "git remote prune [-n | --dry-run] <Name=
+>"
+ msgid ""
+ "git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote=
+>)...]"
+ msgstr ""
+-"git remote [-v | --verbose] update [-p | --prune] [(<Gruppe> | "
+-"<externesProjektarchiv>)...]"
++"git remote [-v | --verbose] update [-p | --prune] [(<Gruppe> | <Remot=
+e>)...]"
+=20
+ #: builtin/remote.c:19
+ msgid "git remote set-branches [--add] <name> <branch>..."
+-msgstr "git remote set-branches [--add] <Name> <Zweig>..."
++msgstr "git remote set-branches [--add] <Name> <Branch>..."
+=20
+ #: builtin/remote.c:20 builtin/remote.c:68
+ msgid "git remote set-url [--push] <name> <newurl> [<oldurl>]"
+@@ -7883,11 +7882,11 @@ msgstr "git remote add [<Optionen>] <Name> <URL=
+>"
+=20
+ #: builtin/remote.c:47
+ msgid "git remote set-branches <name> <branch>..."
+-msgstr "git remote set-branches <Name> <Zweig>..."
++msgstr "git remote set-branches <Name> <Branch>..."
+=20
+ #: builtin/remote.c:48
+ msgid "git remote set-branches --add <name> <branch>..."
+-msgstr "git remote set-branches --add <Name> <Zweig>..."
++msgstr "git remote set-branches --add <Name> <Branch>..."
+=20
+ #: builtin/remote.c:53
+ msgid "git remote show [<options>] <name>"
+@@ -7899,7 +7898,7 @@ msgstr "git remote prune [<Optionen>] <Name>"
+=20
+ #: builtin/remote.c:63
+ msgid "git remote update [<options>] [<group> | <remote>]..."
+-msgstr "git remote update [<Optionen>] [<Gruppe> | <externesProjektarc=
+hiv>]..."
++msgstr "git remote update [<Optionen>] [<Gruppe> | <externesRepository=
+>]..."
+=20
+ #: builtin/remote.c:98
+ #, c-format
+@@ -7921,11 +7920,11 @@ msgstr "unbekanntes Argument f=C3=BCr Option --=
+mirror: %s"
+=20
+ #: builtin/remote.c:163
+ msgid "fetch the remote branches"
+-msgstr "fordert die externen Zweige an"
++msgstr "fordert die Remote-Branches an"
+=20
+ #: builtin/remote.c:165
+ msgid "import all tags and associated objects when fetching"
+-msgstr "importiert alle Markierungen und verbundene Objekte beim Anfor=
+dern"
++msgstr "importiert alle Tags und verbundene Objekte beim Anfordern"
+=20
+ #: builtin/remote.c:168
+ msgid "or do not fetch any tag at all (--no-tags)"
+@@ -7933,11 +7932,11 @@ msgstr "oder fordere gar keine Zweige an (--no-=
+tags)"
+=20
+ #: builtin/remote.c:170
+ msgid "branch(es) to track"
+-msgstr "Zweige zur =C3=9Cbernahme"
++msgstr "Branch(es) zur =C3=9Cbernahme"
+=20
+ #: builtin/remote.c:171
+ msgid "master branch"
+-msgstr "Hauptzweig"
++msgstr "Hauptbranch"
+=20
+ #: builtin/remote.c:172
+ msgid "push|fetch"
+@@ -7946,34 +7945,34 @@ msgstr "push|fetch"
+ #: builtin/remote.c:173
+ msgid "set up remote as a mirror to push to or fetch from"
+ msgstr ""
+-"Aufsetzen des Fernarchivs als Spiegelarchiv zum Versenden und Anforde=
+rn"
++"Aufsetzen des Remote-Repositories als Spiegel-Repository f=C3=BCr \"p=
+ush\" und \"fetch\""
+=20
+ #: builtin/remote.c:185
+ msgid "specifying a master branch makes no sense with --mirror"
+ msgstr ""
+-"Die Option --mirror kann nicht mit der Angabe eines Hauptzweiges verw=
+endet "
++"Die Option --mirror kann nicht mit der Angabe eines Hauptbranches ver=
+wendet "
+ "werden."
+=20
+ #: builtin/remote.c:187
+ msgid "specifying branches to track makes sense only with fetch mirror=
+s"
+ msgstr ""
+-"Die Angabe von zu folgenden Zweigen kann nur mit dem Anfordern von "
++"Die Angabe von zu folgenden Branches kann nur mit dem Anfordern von "
+ "Spiegelarchiven verwendet werden."
+=20
+ #: builtin/remote.c:195 builtin/remote.c:646
+ #, c-format
+ msgid "remote %s already exists."
+-msgstr "externes Projektarchiv %s existiert bereits"
++msgstr "externes Repository %s existiert bereits"
+=20
+ #: builtin/remote.c:199 builtin/remote.c:650
+ #, c-format
+ msgid "'%s' is not a valid remote name"
+-msgstr "'%s' ist kein g=C3=BCltiger Name f=C3=BCr ein externes Projekt=
+archiv"
++msgstr "'%s' ist kein g=C3=BCltiger Name f=C3=BCr ein Remote-Repositor=
+y"
+=20
+ #: builtin/remote.c:243
+ #, c-format
+ msgid "Could not setup master '%s'"
+-msgstr "Konnte symbolische Referenz f=C3=BCr Hauptzweig von '%s' nicht=
+ einrichten"
++msgstr "Konnte symbolische Referenz f=C3=BCr Hauptbranch von '%s' nich=
+t einrichten"
+=20
+ #: builtin/remote.c:299
+ #, c-format
+@@ -7983,7 +7982,7 @@ msgstr "mehr als ein %s"
+ #: builtin/remote.c:339
+ #, c-format
+ msgid "Could not get fetch map for refspec %s"
+-msgstr "Konnte Abholungszuordnung f=C3=BCr Referenzspezifikation %s ni=
+cht bekommen"
++msgstr "Konnte Fetch-Map f=C3=BCr Refspec %s nicht bekommen"
+=20
+ #: builtin/remote.c:440 builtin/remote.c:448
+ msgid "(matching)"
+@@ -8001,7 +8000,7 @@ msgstr "Konnte '%s' nicht an '%s' anh=C3=A4ngen."
+ #: builtin/remote.c:639 builtin/remote.c:792 builtin/remote.c:890
+ #, c-format
+ msgid "No such remote: %s"
+-msgstr "Kein solches externes Archiv: %s"
++msgstr "Kein solches Remote-Repository: %s"
+=20
+ #: builtin/remote.c:656
+ #, c-format
+@@ -8020,8 +8019,8 @@ msgid ""
+ "\t%s\n"
+ "\tPlease update the configuration manually if necessary."
+ msgstr ""
+-"Keine Aktualisierung der nicht standardm=C3=A4=C3=9Figen Referenzspez=
+ifikation zum "
+-"Abholen\n"
++"Keine Aktualisierung der nicht standardm=C3=A4=C3=9Figen Refspec f=C3=
+=BCr "
++"\"fetch\"\n"
+ "\t%s\n"
+ "\tBitte aktualisieren Sie, falls notwendig, die Konfiguration manuell=
+=2E"
+=20
+@@ -8048,7 +8047,7 @@ msgstr "Konnte '%s' nicht erstellen"
+ #: builtin/remote.c:764
+ #, c-format
+ msgid "Could not remove branch %s"
+-msgstr "Konnte Zweig %s nicht l=C3=B6schen"
++msgstr "Konnte Branch %s nicht l=C3=B6schen"
+=20
+ #: builtin/remote.c:834
+ msgid ""
+@@ -8058,18 +8057,18 @@ msgid_plural ""
+ "Note: Some branches outside the refs/remotes/ hierarchy were not remo=
+ved;\n"
+ "to delete them, use:"
+ msgstr[0] ""
+-"Hinweis: Ein Zweig au=C3=9Ferhalb der /refs/remotes/ Hierachie wurde =
+nicht "
++"Hinweis: Ein Branch au=C3=9Ferhalb der /refs/remotes/ Hierachie wurde=
+ nicht "
+ "gel=C3=B6scht;\n"
+ "um diesen zu l=C3=B6schen, benutzen Sie:"
+ msgstr[1] ""
+-"Hinweis: Einige Zweige au=C3=9Fer der /refs/remotes/ Hierarchie wurde=
+n nicht "
++"Hinweis: Einige Branches au=C3=9Fer der /refs/remotes/ Hierarchie wur=
+den nicht "
+ "entfernt;\n"
+ "um diese zu entfernen, benutzen Sie:"
+=20
+ #: builtin/remote.c:943
+ #, c-format
+ msgid " new (next fetch will store in remotes/%s)"
+-msgstr " neu (wird bei n=C3=A4chster Abholung in remotes/%s gespeicher=
+t)"
++msgstr " neu (wird bei n=C3=A4chstem \"fetch\" in remotes/%s gespeiche=
+rt)"
+=20
+ #: builtin/remote.c:946
+ msgid " tracked"
+@@ -8086,30 +8085,31 @@ msgstr " ???"
+ #: builtin/remote.c:991
+ #, c-format
+ msgid "invalid branch.%s.merge; cannot rebase onto > 1 branch"
+-msgstr "ung=C3=BCltiges branch.%s.merge; kann nicht auf > 1 Zweig neu =
+aufbauen"
++msgstr "ung=C3=BCltiges branch.%s.merge; kann Rebase nicht auf > 1 Bra=
+nch "
++"ausf=C3=BChren"
+=20
+ #: builtin/remote.c:998
+ #, c-format
+ msgid "rebases onto remote %s"
+-msgstr "baut neu auf externen Zweig %s auf"
++msgstr "baut neu auf Remote-Branch %s auf"
+=20
+ #: builtin/remote.c:1001
+ #, c-format
+ msgid " merges with remote %s"
+-msgstr " f=C3=BChrt mit externem Zweig %s zusammen"
++msgstr " f=C3=BChrt mit Remote-Branch %s zusammen"
+=20
+ #: builtin/remote.c:1002
+ msgid "    and with remote"
+-msgstr "    und mit externem Zweig"
++msgstr "    und mit Remote-Branch"
+=20
+ #: builtin/remote.c:1004
+ #, c-format
+ msgid "merges with remote %s"
+-msgstr "f=C3=BChrt mit externem Zweig %s zusammen"
++msgstr "f=C3=BChrt mit Remote-Branch %s zusammen"
+=20
+ #: builtin/remote.c:1005
+ msgid "   and with remote"
+-msgstr "   und mit externem Zweig"
++msgstr "   und mit Remote-Branch"
+=20
+ #: builtin/remote.c:1051
+ msgid "create"
+@@ -8153,12 +8153,12 @@ msgstr "    %-*s versendet nach %s"
+=20
+ #: builtin/remote.c:1091
+ msgid "do not query remotes"
+-msgstr "keine Abfrage von Fernarchiven"
++msgstr "keine Abfrage von Remote-Repositories"
+=20
+ #: builtin/remote.c:1118
+ #, c-format
+ msgid "* remote %s"
+-msgstr "* externes Projektarchiv %s"
++msgstr "* Remote-Repository %s"
+=20
+ #: builtin/remote.c:1119
+ #, c-format
+@@ -8177,22 +8177,22 @@ msgstr "  URL zum Versenden: %s"
+ #: builtin/remote.c:1133 builtin/remote.c:1135 builtin/remote.c:1137
+ #, c-format
+ msgid "  HEAD branch: %s"
+-msgstr "  Hauptzweig: %s"
++msgstr "  Hauptbranch: %s"
+=20
+ #: builtin/remote.c:1139
+ #, c-format
+ msgid ""
+ "  HEAD branch (remote HEAD is ambiguous, may be one of the following)=
+:\n"
+ msgstr ""
+-"  Hauptzweig (externer Hauptzweig ist mehrdeutig, k=C3=B6nnte einer d=
+er folgenden "
++"  Hauptbranch (externer HEAD ist mehrdeutig, k=C3=B6nnte einer der fo=
+lgenden "
+ "sein):\n"
+=20
+ #: builtin/remote.c:1151
+ #, c-format
+ msgid "  Remote branch:%s"
+ msgid_plural "  Remote branches:%s"
+-msgstr[0] "  externer Zweig:%s"
+-msgstr[1] "  externe Zweige:%s"
++msgstr[0] "  Remote-Branch:%s"
++msgstr[1] "  Remote-Branches:%s"
+=20
+ #: builtin/remote.c:1154 builtin/remote.c:1181
+ msgid " (status not queried)"
+@@ -8201,8 +8201,8 @@ msgstr " (Zustand nicht abgefragt)"
+ #: builtin/remote.c:1163
+ msgid "  Local branch configured for 'git pull':"
+ msgid_plural "  Local branches configured for 'git pull':"
+-msgstr[0] "  Lokaler Zweig konfiguriert f=C3=BCr 'git pull':"
+-msgstr[1] "  Lokale Zweige konfiguriert f=C3=BCr 'git pull':"
++msgstr[0] "  Lokaler Branch konfiguriert f=C3=BCr 'git pull':"
++msgstr[1] "  Lokale Branches konfiguriert f=C3=BCr 'git pull':"
+=20
+ #: builtin/remote.c:1171
+ msgid "  Local refs will be mirrored by 'git push'"
+@@ -8217,7 +8217,7 @@ msgstr[1] "  Lokale Referenzen konfiguriert f=C3=BC=
+r 'git push'%s:"
+=20
+ #: builtin/remote.c:1199
+ msgid "set refs/remotes/<name>/HEAD according to remote"
+-msgstr "setzt refs/remotes/<Name>/HEAD gem=C3=A4=C3=9F dem Fernarchiv"
++msgstr "setzt refs/remotes/<Name>/HEAD gem=C3=A4=C3=9F dem Remote-Repo=
+sitory"
+=20
+ #: builtin/remote.c:1201
+ msgid "delete refs/remotes/<name>/HEAD"
+@@ -8225,13 +8225,12 @@ msgstr "entfernt refs/remotes/<Name>/HEAD"
+=20
+ #: builtin/remote.c:1216
+ msgid "Cannot determine remote HEAD"
+-msgstr "Kann Hauptzweig des externen Projektarchivs nicht bestimmen"
++msgstr "Kann HEAD des Remote-Repositories nicht bestimmen"
+=20
+ #: builtin/remote.c:1218
+ msgid "Multiple remote HEAD branches. Please choose one explicitly wit=
+h:"
+ msgstr ""
+-"Mehrere Hauptzweige im externen Projektarchiv. Bitte w=C3=A4hlen Sie =
+explizit "
+-"einen aus mit:"
++"Mehrere Hauptbranches im Remote-Repository. Bitte w=C3=A4hlen Sie exp=
+lizit einen aus mit:"
+=20
+ #: builtin/remote.c:1228
+ #, c-format
+@@ -8261,7 +8260,7 @@ msgstr " %s wurde unreferenziert!"
+ #: builtin/remote.c:1281
+ #, c-format
+ msgid "Pruning %s"
+-msgstr "entferne veraltete Zweige von %s"
++msgstr "entferne veraltete Branches von %s"
+=20
+ #: builtin/remote.c:1282
+ #, c-format
+@@ -8271,33 +8270,33 @@ msgstr "URL: %s"
+ #: builtin/remote.c:1295
+ #, c-format
+ msgid " * [would prune] %s"
+-msgstr " * [w=C3=BCrde veralteten Zweig entfernen] %s"
++msgstr " * [w=C3=BCrde veralteten Branch entfernen] %s"
+=20
+ #: builtin/remote.c:1298
+ #, c-format
+ msgid " * [pruned] %s"
+-msgstr "* [veralteten Zweig entfernt] %s"
++msgstr "* [veralteten Branch entfernt] %s"
+=20
+ #: builtin/remote.c:1321
+ msgid "prune remotes after fetching"
+-msgstr "entfernt veraltete Zweige im Fernarchiv nach dem Abholen"
++msgstr "entfernt veraltete Branches im Remote-Repository nach \"fetch\=
+""
+=20
+ #: builtin/remote.c:1387 builtin/remote.c:1461
+ #, c-format
+ msgid "No such remote '%s'"
+-msgstr "Kein solches externes Projektarchiv '%s'"
++msgstr "Kein solches Remote-Repository '%s'"
+=20
+ #: builtin/remote.c:1407
+ msgid "add branch"
+-msgstr "f=C3=BCgt Zweig hinzu"
++msgstr "f=C3=BCgt Branch hinzu"
+=20
+ #: builtin/remote.c:1414
+ msgid "no remote specified"
+-msgstr "kein externes Projektarchiv angegeben"
++msgstr "kein Remote-Repository angegeben"
+=20
+ #: builtin/remote.c:1436
+ msgid "manipulate push URLs"
+-msgstr "manipuliert URLs zum Versenden"
++msgstr "manipuliert URLs f=C3=BCr \"push\""
+=20
+ #: builtin/remote.c:1438
+ msgid "add URL"
+@@ -8324,7 +8323,7 @@ msgstr "Keine solche URL gefunden: %s"
+=20
+ #: builtin/remote.c:1497
+ msgid "Will not delete all non-push URLs"
+-msgstr "Werde keine URLs entfernen, die nicht f=C3=BCr den Versand bes=
+timmt sind"
++msgstr "Werde keine URLs entfernen, die nicht f=C3=BCr \"push\" bestim=
+mt sind"
+=20
+ #: builtin/remote.c:1569
+ msgid "be verbose; must be placed before a subcommand"
+@@ -8360,21 +8359,21 @@ msgstr "git rerere [clean | forget path... | st=
+atus | remaining | diff | gc]"
+=20
+ #: builtin/rerere.c:56
+ msgid "register clean resolutions in index"
+-msgstr "registriert saubere Aufl=C3=B6sungen in der Bereitstellung"
++msgstr "registriert saubere Aufl=C3=B6sungen in der Staging-Area"
+=20
+ #: builtin/reset.c:25
+ msgid ""
+ "git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commi=
+t>]"
+ msgstr ""
+-"git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<Versi=
+on>]"
++"git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<Commi=
+t>]"
+=20
+ #: builtin/reset.c:26
+ msgid "git reset [-q] <tree-ish> [--] <paths>..."
+-msgstr "git reset [-q] <Versionsreferenz> [--] <Pfade>..."
++msgstr "git reset [-q] <Commit-Referenz> [--] <Pfade>..."
+=20
+ #: builtin/reset.c:27
+ msgid "git reset --patch [<tree-ish>] [--] [<paths>...]"
+-msgstr "git reset --patch [<Versionsreferenz>] [--] [<Pfade>...]"
++msgstr "git reset --patch [<Commit-Referenz>] [--] [<Pfade>...]"
+=20
+ #: builtin/reset.c:33
+ msgid "mixed"
+@@ -8398,28 +8397,27 @@ msgstr "keep"
+=20
+ #: builtin/reset.c:73
+ msgid "You do not have a valid HEAD."
+-msgstr "Sie haben keine g=C3=BCltige Zweigspitze (HEAD)."
++msgstr "Sie haben keinen g=C3=BCltigen HEAD."
+=20
+ #: builtin/reset.c:75
+ msgid "Failed to find tree of HEAD."
+-msgstr "Fehler beim Finden des Baumes der Zweigspitze (HEAD)."
++msgstr "Fehler beim Finden des \"Tree\"-Objektes von HEAD."
+=20
+ #: builtin/reset.c:81
+ #, c-format
+ msgid "Failed to find tree of %s."
+-msgstr "Fehler beim Finden des Baumes von %s."
++msgstr "Fehler beim Finden des \"Tree\"-Objektes von %s."
+=20
+ #: builtin/reset.c:98
+ #, c-format
+ msgid "HEAD is now at %s"
+-msgstr "Zweigspitze (HEAD) ist jetzt bei %s"
++msgstr "HEAD ist jetzt bei %s"
+=20
+ #: builtin/reset.c:169
+ #, c-format
+ msgid "Cannot do a %s reset in the middle of a merge."
+ msgstr ""
+-"Kann keine '%s' Zur=C3=BCcksetzung durchf=C3=BChren, w=C3=A4hrend ein=
+e Zusammenf=C3=BChrung im "
+-"Gange ist."
++"Kann keinen '%s'-Reset durchf=C3=BChren, w=C3=A4hrend ein Merge im Ga=
+nge ist."
+=20
+ #: builtin/reset.c:248
+ msgid "be quiet, only report errors"
+@@ -8427,19 +8425,19 @@ msgstr "weniger Ausgaben, meldet nur Fehler"
+=20
+ #: builtin/reset.c:250
+ msgid "reset HEAD and index"
+-msgstr "setzt Zweigspitze (HEAD) und Bereitstellung neu"
++msgstr "setzt HEAD und Staging-Area um"
+=20
+ #: builtin/reset.c:251
+ msgid "reset only HEAD"
+-msgstr "setzt nur Zweigspitze (HEAD) neu"
++msgstr "setzt nur HEAD um"
+=20
+ #: builtin/reset.c:253 builtin/reset.c:255
+ msgid "reset HEAD, index and working tree"
+-msgstr "setzt Zweigspitze (HEAD), Bereitstellung und Arbeitsbaum neu"
++msgstr "setzt HEAD, Staging-Area und Arbeitsverzeichnis um"
+=20
+ #: builtin/reset.c:257
+ msgid "reset HEAD but keep local changes"
+-msgstr "setzt Zweigspitze (HEAD) neu, beh=C3=A4lt aber lokale =C3=84nd=
+erungen"
++msgstr "setzt HEAD um, beh=C3=A4lt aber lokale =C3=84nderungen"
+=20
+ #: builtin/reset.c:275
+ #, c-format
+@@ -8454,7 +8452,7 @@ msgstr "Konnte Objekt '%s' nicht parsen."
+ #: builtin/reset.c:283
+ #, c-format
+ msgid "Failed to resolve '%s' as a valid tree."
+-msgstr "Konnte '%s' nicht als g=C3=BCltigen Baum aufl=C3=B6sen."
++msgstr "Konnte '%s' nicht als g=C3=BCltiges \"Tree\"-Objekt aufl=C3=B6=
+sen."
+=20
+ #: builtin/reset.c:292
+ msgid "--patch is incompatible with --{hard,mixed,soft}"
+@@ -8469,25 +8467,25 @@ msgstr ""
+ #: builtin/reset.c:303
+ #, c-format
+ msgid "Cannot do %s reset with paths."
+-msgstr "Eine '%s' Zur=C3=BCcksetzung mit Pfaden ist nicht m=C3=B6glich=
+=2E"
++msgstr "Ein '%s'-Reset mit Pfaden ist nicht m=C3=B6glich."
+=20
+ #: builtin/reset.c:313
+ #, c-format
+ msgid "%s reset is not allowed in a bare repository"
+-msgstr "'%s' Zur=C3=BCcksetzung ist in einem blo=C3=9Fen Projektarchiv=
+ nicht erlaubt"
++msgstr "'%s'-Reset ist in einem Bare-Repository nicht erlaubt"
+=20
+ #: builtin/reset.c:333
+ #, c-format
+ msgid "Could not reset index file to revision '%s'."
+-msgstr "Konnte Bereitstellungsdatei nicht zu Revision '%s' setzen."
++msgstr "Konnte Staging-Area-Datei nicht zu Commit '%s' setzen."
+=20
+ #: builtin/reset.c:339
+ msgid "Unstaged changes after reset:"
+-msgstr "Nicht bereitgestellte =C3=84nderungen nach Zur=C3=BCcksetzung:=
+"
++msgstr "Nicht zum Commit vorgemerkte =C3=84nderungen nach Zur=C3=BCcks=
+etzung:"
+=20
+ #: builtin/reset.c:344
+ msgid "Could not write new index file."
+-msgstr "Konnte neue Bereitstellungsdatei nicht schreiben."
++msgstr "Konnte neue Staging-Area-Datei nicht schreiben."
+=20
+ #: builtin/rev-parse.c:339
+ msgid "git rev-parse --parseopt [options] -- [<args>...]"
+@@ -8518,7 +8516,7 @@ msgstr ""
+=20
+ #: builtin/revert.c:22
+ msgid "git revert [options] <commit-ish>..."
+-msgstr "git revert [Optionen] <Versionsangabe>..."
++msgstr "git revert [Optionen] <Commit-Angabe>..."
+=20
+ #: builtin/revert.c:23
+ msgid "git revert <subcommand>"
+@@ -8526,7 +8524,7 @@ msgstr "git revert <Unterkommando>"
+=20
+ #: builtin/revert.c:28
+ msgid "git cherry-pick [options] <commit-ish>..."
+-msgstr "git cherry-pick [Optionen] <Versionsangabe>..."
++msgstr "git cherry-pick [Optionen] <Commit-Angabe>..."
+=20
+ #: builtin/revert.c:29
+ msgid "git cherry-pick <subcommand>"
+@@ -8551,11 +8549,11 @@ msgstr "bricht \"revert\" oder \"cherry-pick\" =
+Ablauf ab"
+=20
+ #: builtin/revert.c:106
+ msgid "don't automatically commit"
+-msgstr "tr=C3=A4gt nicht automatisch ein"
++msgstr "committet nicht automatisch"
+=20
+ #: builtin/revert.c:107
+ msgid "edit the commit message"
+-msgstr "Bearbeitung der Versionsbeschreibung"
++msgstr "Bearbeitung der Commit-Beschreibung"
+=20
+ #: builtin/revert.c:110
+ msgid "parent number"
+@@ -8563,7 +8561,7 @@ msgstr "Nummer des Elternteils"
+=20
+ #: builtin/revert.c:112
+ msgid "merge strategy"
+-msgstr "Zusammenf=C3=BChrungsstrategie"
++msgstr "Merge-Strategie"
+=20
+ #: builtin/revert.c:113
+ msgid "option"
+@@ -8571,11 +8569,11 @@ msgstr "Option"
+=20
+ #: builtin/revert.c:114
+ msgid "option for merge strategy"
+-msgstr "Option f=C3=BCr Zusammenf=C3=BChrungsstrategie"
++msgstr "Option f=C3=BCr Merge-Strategie"
+=20
+ #: builtin/revert.c:125
+ msgid "append commit name"
+-msgstr "h=C3=A4ngt Versionsnamen an"
++msgstr "h=C3=A4ngt Commit-Namen an"
+=20
+ #: builtin/revert.c:126
+ msgid "allow fast-forward"
+@@ -8583,15 +8581,15 @@ msgstr "erlaubt Vorspulen"
+=20
+ #: builtin/revert.c:127
+ msgid "preserve initially empty commits"
+-msgstr "erh=C3=A4lt urspr=C3=BCngliche, leere Versionen"
++msgstr "erh=C3=A4lt urspr=C3=BCngliche, leere Commits"
+=20
+ #: builtin/revert.c:128
+ msgid "allow commits with empty messages"
+-msgstr "erlaubt Version mit leerer Beschreibung"
++msgstr "erlaubt Commits mit leerer Beschreibung"
+=20
+ #: builtin/revert.c:129
+ msgid "keep redundant, empty commits"
+-msgstr "beh=C3=A4lt redundante, leere Versionen"
++msgstr "beh=C3=A4lt redundante, leere Commits"
+=20
+ #: builtin/revert.c:133
+ msgid "program error"
+@@ -8615,7 +8613,7 @@ msgid ""
+ "submodule '%s' (or one of its nested submodules) uses a .git director=
+y\n"
+ "(use 'rm -rf' if you really want to remove it including all of its hi=
+story)"
+ msgstr ""
+-"Unterprojekt '%s' (oder ein geschachteltes Unterprojekt hiervon) verw=
+endet\n"
++"Submodul '%s' (oder ein geschachteltes Submodul hiervon) verwendet\n"
+ "ein .git-Verzeichnis (benutzen Sie 'rm -rf' wenn Sie dieses wirklich =
+"
+ "mitsamt\n"
+ "seiner Historie l=C3=B6schen m=C3=B6chten)"
+@@ -8626,8 +8624,8 @@ msgid ""
+ "'%s' has staged content different from both the file and the HEAD\n"
+ "(use -f to force removal)"
+ msgstr ""
+-"'%s' hat bereitgestellten Inhalt unterschiedlich zu der Datei und der=
+\n"
+-"Zweigspitze (HEAD) (benutzen Sie -f um die Entfernung zu erzwingen)"
++"'%s' hat bereitgestellten Inhalt unterschiedlich zu der Datei und\n"
++"HEAD (benutzen Sie -f um die Entfernung zu erzwingen)"
+=20
+ #: builtin/rm.c:180
+ #, c-format
+@@ -8635,7 +8633,7 @@ msgid ""
+ "'%s' has changes staged in the index\n"
+ "(use --cached to keep the file, or -f to force removal)"
+ msgstr ""
+-"'%s' hat =C3=84nderungen in der Bereitstellung\n"
++"'%s' hat zum Commit vorgemerkte =C3=84nderungen\n"
+ "(benutzen Sie --cached um die Datei zu behalten, oder -f um die Entfe=
+rnung "
+ "zu erzwingen)"
+=20
+@@ -8655,7 +8653,7 @@ msgstr "listet keine gel=C3=B6schten Dateien auf"
+=20
+ #: builtin/rm.c:208
+ msgid "only remove from the index"
+-msgstr "entfernt nur aus der Bereitstellung"
++msgstr "entfernt nur aus der Staging-Area"
+=20
+ #: builtin/rm.c:209
+ msgid "override the up-to-date check"
+@@ -8690,11 +8688,11 @@ msgstr "fehlender Autor: %s"
+=20
+ #: builtin/shortlog.c:227
+ msgid "sort output according to the number of commits per author"
+-msgstr "sortiert die Ausgabe entsprechend der Anzahl von Versionen pro=
+ Autor"
++msgstr "sortiert die Ausgabe entsprechend der Anzahl von Commits pro A=
+utor"
+=20
+ #: builtin/shortlog.c:229
+ msgid "Suppress commit descriptions, only provides commit count"
+-msgstr "Unterdr=C3=BCckt Versionsbeschreibungen, liefert nur Anzahl de=
+r Versionen"
++msgstr "Unterdr=C3=BCckt Commit-Beschreibungen, liefert nur Anzahl der=
+ Commits"
+=20
+ #: builtin/shortlog.c:231
+ msgid "Show the email address of each author"
+@@ -8726,19 +8724,19 @@ msgstr "git show-branch (-g|--reflog)[=3D<n>[,<=
+Basis>]] [--list] [<Referenz>]"
+=20
+ #: builtin/show-branch.c:650
+ msgid "show remote-tracking and local branches"
+-msgstr "zeigt externe =C3=9Cbernahmezweige und lokale Zweige an"
++msgstr "zeigt Remote-Tracking und lokale Branches an"
+=20
+ #: builtin/show-branch.c:652
+ msgid "show remote-tracking branches"
+-msgstr "zeigt externe =C3=9Cbernahmezweige an"
++msgstr "zeigt Remote-Tracking-Branches an"
+=20
+ #: builtin/show-branch.c:654
+ msgid "color '*!+-' corresponding to the branch"
+-msgstr "f=C3=A4rbt '*!+-' entsprechend des Zweiges ein"
++msgstr "f=C3=A4rbt '*!+-' entsprechend des Branches ein"
+=20
+ #: builtin/show-branch.c:656
+ msgid "show <n> more commits after the common ancestor"
+-msgstr "zeigt <n> weitere Versionen nach dem gemeinsamen Vorfahren"
++msgstr "zeigt <n> weitere Commits nach dem gemeinsamen Vorg=C3=A4nger-=
+Commit"
+=20
+ #: builtin/show-branch.c:658
+ msgid "synonym to more=3D-1"
+@@ -8750,15 +8748,15 @@ msgstr "unterdr=C3=BCckt Namen"
+=20
+ #: builtin/show-branch.c:661
+ msgid "include the current branch"
+-msgstr "bezieht den aktuellen Zweig ein"
++msgstr "bezieht den aktuellen Branch ein"
+=20
+ #: builtin/show-branch.c:663
+ msgid "name commits with their object names"
+-msgstr "benennt Versionen nach ihren Objektnamen"
++msgstr "benennt Commits nach ihren Objektnamen"
+=20
+ #: builtin/show-branch.c:665
+ msgid "show possible merge bases"
+-msgstr "zeigt m=C3=B6gliche Basen f=C3=BCr Zusammenf=C3=BChrung"
++msgstr "zeigt m=C3=B6gliche Merge-Basen an"
+=20
+ #: builtin/show-branch.c:667
+ msgid "show refs unreachable from any other ref"
+@@ -8766,20 +8764,20 @@ msgstr "zeigt Referenzen die unerreichbar von a=
+llen anderen Referenzen sind"
+=20
+ #: builtin/show-branch.c:669
+ msgid "show commits in topological order"
+-msgstr "zeigt Versionen in topologischer Ordnung"
++msgstr "zeigt Commits in topologischer Ordnung"
+=20
+ #: builtin/show-branch.c:671
+ msgid "show only commits not on the first branch"
+-msgstr "zeigt nur Versionen, die sich nicht im ersten Zweig befinden"
++msgstr "zeigt nur Commits, die sich nicht im ersten Branch befinden"
+=20
+ #: builtin/show-branch.c:673
+ msgid "show merges reachable from only one tip"
+ msgstr ""
+-"zeigt Zusammenf=C3=BChrungen, die nur von einer Zweigspitze aus errei=
+chbar sind"
++"zeigt Merges, die nur von einem Branch aus erreichbar sind"
+=20
+ #: builtin/show-branch.c:675
+ msgid "show commits where no parent comes before its children"
+-msgstr "zeigt Versionen, wo kein Elternteil vor seinem Kind kommt"
++msgstr "zeigt Commits, wo kein Eltern-Commit vor seinem Kind-Commit ko=
+mmt"
+=20
+ #: builtin/show-branch.c:677
+ msgid "<n>[,<base>]"
+@@ -8788,7 +8786,7 @@ msgstr "<n>[,<Basis>]"
+ #: builtin/show-branch.c:678
+ msgid "show <n> most recent ref-log entries starting at base"
+ msgstr ""
+-"zeigt die <n> j=C3=BCngsten Eintr=C3=A4ge im Referenzprotokoll beginn=
+end an der Basis"
++"zeigt die <n> j=C3=BCngsten Eintr=C3=A4ge im Reflog beginnend an der =
+Basis"
+=20
+ #: builtin/show-ref.c:10
+ msgid ""
+@@ -8804,11 +8802,11 @@ msgstr "git show-ref --exclude-existing[=3DMust=
+er] < ref-list"
+=20
+ #: builtin/show-ref.c:165
+ msgid "only show tags (can be combined with heads)"
+-msgstr "zeigt nur Markierungen (kann mit \"heads\" kombiniert werden)"
++msgstr "zeigt nur Tags (kann mit \"heads\" kombiniert werden)"
+=20
+ #: builtin/show-ref.c:166
+ msgid "only show heads (can be combined with tags)"
+-msgstr "zeigt nur Zweigspitzen (kann mit \"tags\" kombiniert werden)"
++msgstr "zeigt nur Branches (kann mit \"tags\" kombiniert werden)"
+=20
+ #: builtin/show-ref.c:167
+ msgid "stricter reference checking, requires exact ref path"
+@@ -8816,11 +8814,11 @@ msgstr "strengere Referenzpr=C3=BCfung, erforde=
+rt exakten Referenzpfad"
+=20
+ #: builtin/show-ref.c:170 builtin/show-ref.c:172
+ msgid "show the HEAD reference"
+-msgstr "zeigt Referenz der Zweigspitze (HEAD)"
++msgstr "zeigt Referenz von HEAD"
+=20
+ #: builtin/show-ref.c:174
+ msgid "dereference tags into object IDs"
+-msgstr "dereferenziert Markierungen in Objekt-Identifikationen"
++msgstr "dereferenziert Tags in Objekt-Identifikationen"
+=20
+ #: builtin/show-ref.c:176
+ msgid "only show SHA1 hash using <n> digits"
+@@ -8835,7 +8833,7 @@ msgstr ""
+ msgid "show refs from stdin that aren't in local repository"
+ msgstr ""
+ "zeigt Referenzen von der Standard-Eingabe, die sich nicht im lokalen =
+"
+-"Projektarchiv befinden, an"
++"Repository befinden, an"
+=20
+ #: builtin/symbolic-ref.c:7
+ msgid "git symbolic-ref [options] name [ref]"
+@@ -8871,23 +8869,23 @@ msgid ""
+ "git tag [-a|-s|-u <key-id>] [-f] [-m <msg>|-F <file>] <tagname> [<hea=
+d>]"
+ msgstr ""
+ "git tag [-a|-s|-u <Schl=C3=BCssel-id>] [-f] [-m <Nachricht>|-F <Datei=
+>] "
+-"<Markierungsname> [<Zweig>]"
++"<Tagname> [<Branch>]"
+=20
+ #: builtin/tag.c:23
+ msgid "git tag -d <tagname>..."
+-msgstr "git tag -d <Markierungsname>..."
++msgstr "git tag -d <Tagname>..."
+=20
+ #: builtin/tag.c:24
+ msgid ""
+ "git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object>] \=
+n"
+ "\t\t[<pattern>...]"
+ msgstr ""
+-"git tag -l [-n[<Nummer>]] [--contains <Version>] [--points-at <Objekt=
+>] \n"
++"git tag -l [-n[<Nummer>]] [--contains <Commit>] [--points-at <Objekt>=
+] \n"
+ "\t\t[<Muster>...]"
+=20
+ #: builtin/tag.c:26
+ msgid "git tag -v <tagname>..."
+-msgstr "git tag -v <Markierungsname>..."
++msgstr "git tag -v <Tagname>..."
+=20
+ #: builtin/tag.c:60
+ #, c-format
+@@ -8897,22 +8895,22 @@ msgstr "fehlerhaftes Objekt bei '%s'"
+ #: builtin/tag.c:207
+ #, c-format
+ msgid "tag name too long: %.*s..."
+-msgstr "Markierungsname zu lang: %.*s..."
++msgstr "Tagname zu lang: %.*s..."
+=20
+ #: builtin/tag.c:212
+ #, c-format
+ msgid "tag '%s' not found."
+-msgstr "Markierung '%s' nicht gefunden."
++msgstr "Tag '%s' nicht gefunden."
+=20
+ #: builtin/tag.c:227
+ #, c-format
+ msgid "Deleted tag '%s' (was %s)\n"
+-msgstr "Gel=C3=B6schte Markierung '%s' (war %s)\n"
++msgstr "Tag '%s' gel=C3=B6scht (war %s)\n"
+=20
+ #: builtin/tag.c:239
+ #, c-format
+ msgid "could not verify the tag '%s'"
+-msgstr "Konnte Markierung '%s' nicht verifizieren"
++msgstr "Konnte Tag '%s' nicht verifizieren"
+=20
+ #: builtin/tag.c:249
+ #, c-format
+@@ -8922,7 +8920,7 @@ msgid ""
+ "Lines starting with '%c' will be ignored.\n"
+ msgstr ""
+ "\n"
+-"Geben Sie eine Markierungsbeschreibung ein.\n"
++"Geben Sie eine Tag-Beschreibung ein.\n"
+ "Zeilen, die mit '%c' beginnen, werden ignoriert.\n"
+=20
+ #: builtin/tag.c:253
+@@ -8934,17 +8932,17 @@ msgid ""
+ "want to.\n"
+ msgstr ""
+ "\n"
+-"Geben Sie eine Markierungsbeschreibung ein.\n"
++"Geben Sie eine Tag-Beschreibung ein.\n"
+ "Zeilen, die mit '%c' beginnen, werden behalten; Sie d=C3=BCrfen diese=
+\n"
+ "selbst entfernen wenn Sie m=C3=B6chten.\n"
+=20
+ #: builtin/tag.c:292
+ msgid "unable to sign the tag"
+-msgstr "konnte Markierung nicht signieren"
++msgstr "konnte Tag nicht signieren"
+=20
+ #: builtin/tag.c:294
+ msgid "unable to write tag file"
+-msgstr "konnte Markierungsdatei nicht schreiben"
++msgstr "konnte Tag-Datei nicht schreiben"
+=20
+ #: builtin/tag.c:319
+ msgid "bad object type."
+@@ -8952,16 +8950,16 @@ msgstr "ung=C3=BCltiger Objekt-Typ"
+=20
+ #: builtin/tag.c:332
+ msgid "tag header too big."
+-msgstr "Markierungskopf zu gro=C3=9F."
++msgstr "Tag-Kopf zu gro=C3=9F."
+=20
+ #: builtin/tag.c:368
+ msgid "no tag message?"
+-msgstr "keine Markierungsbeschreibung?"
++msgstr "keine Tag-Beschreibung?"
+=20
+ #: builtin/tag.c:374
+ #, c-format
+ msgid "The tag message has been left in %s\n"
+-msgstr "Die Markierungsbeschreibung wurde gelassen in %s\n"
++msgstr "Die Tag-Beschreibung wurde gelassen in %s\n"
+=20
+ #: builtin/tag.c:423
+ msgid "switch 'points-at' requires an object"
+@@ -8974,59 +8972,59 @@ msgstr "fehlerhafter Objekt-Name '%s'"
+=20
+ #: builtin/tag.c:445
+ msgid "list tag names"
+-msgstr "listet Markierungsnamen auf"
++msgstr "listet Tagnamen auf"
+=20
+ #: builtin/tag.c:447
+ msgid "print <n> lines of each tag message"
+-msgstr "zeigt <n> Zeilen jeder Markierungsbeschreibung"
++msgstr "zeigt <n> Zeilen jeder Tag-Beschreibung"
+=20
+ #: builtin/tag.c:449
+ msgid "delete tags"
+-msgstr "l=C3=B6scht Markierungen"
++msgstr "l=C3=B6scht Tags"
+=20
+ #: builtin/tag.c:450
+ msgid "verify tags"
+-msgstr "=C3=BCberpr=C3=BCft Markierungen"
++msgstr "=C3=BCberpr=C3=BCft Tags"
+=20
+ #: builtin/tag.c:452
+ msgid "Tag creation options"
+-msgstr "Optionen f=C3=BCr Erstellung von Markierungen"
++msgstr "Optionen f=C3=BCr Erstellung von Tags"
+=20
+ #: builtin/tag.c:454
+ msgid "annotated tag, needs a message"
+-msgstr "annotierte Markierung, ben=C3=B6tigt eine Beschreibung"
++msgstr "annotierter Tag, ben=C3=B6tigt eine Beschreibung"
+=20
+ #: builtin/tag.c:456
+ msgid "tag message"
+-msgstr "Markierungsbeschreibung"
++msgstr "Tag-Beschreibung"
+=20
+ #: builtin/tag.c:458
+ msgid "annotated and GPG-signed tag"
+-msgstr "annotierte und GPG-signierte Markierung"
++msgstr "annotierter und GPG-signierter Tag"
+=20
+ #: builtin/tag.c:462
+ msgid "use another key to sign the tag"
+-msgstr "verwendet einen anderen Schl=C3=BCssel um die Markierung zu si=
+gnieren"
++msgstr "verwendet einen anderen Schl=C3=BCssel um den Tag zu signieren=
+"
+=20
+ #: builtin/tag.c:463
+ msgid "replace the tag if exists"
+-msgstr "ersetzt die Markierung, wenn sie existiert"
++msgstr "ersetzt den Tag, wenn er existiert"
+=20
+ #: builtin/tag.c:464
+ msgid "show tag list in columns"
+-msgstr "zeigt Liste der Markierungen in Spalten"
++msgstr "zeigt Liste der Tags in Spalten"
+=20
+ #: builtin/tag.c:466
+ msgid "Tag listing options"
+-msgstr "Optionen f=C3=BCr Auflistung der Markierungen"
++msgstr "Optionen f=C3=BCr Auflistung der Tags"
+=20
+ #: builtin/tag.c:469
+ msgid "print only tags that contain the commit"
+-msgstr "gibt nur Markierungen aus, die diese Version beinhalten"
++msgstr "gibt nur Tags aus, die diesen Commit beinhalten"
+=20
+ #: builtin/tag.c:475
+ msgid "print only tags of the object"
+-msgstr "gibt nur Markierungen von dem Objekt aus"
++msgstr "gibt nur Tags von dem Objekt aus"
+=20
+ #: builtin/tag.c:504
+ msgid "--column and -n are incompatible"
+@@ -9055,12 +9053,12 @@ msgstr "zu viele Parameter"
+ #: builtin/tag.c:559
+ #, c-format
+ msgid "'%s' is not a valid tag name."
+-msgstr "'%s' ist kein g=C3=BCltiger Markierungsname."
++msgstr "'%s' ist kein g=C3=BCltiger Tagname."
+=20
+ #: builtin/tag.c:564
+ #, c-format
+ msgid "tag '%s' already exists"
+-msgstr "Markierung '%s' existiert bereits"
++msgstr "Tag '%s' existiert bereits"
+=20
+ #: builtin/tag.c:582
+ #, c-format
+@@ -9075,7 +9073,7 @@ msgstr "%s: kann Referenz nicht aktualisieren"
+ #: builtin/tag.c:586
+ #, c-format
+ msgid "Updated tag '%s' (was %s)\n"
+-msgstr "Aktualisierte Markierung '%s' (war %s)\n"
++msgstr "Tag '%s' aktualisiert (war %s)\n"
+=20
+ #: builtin/update-index.c:401
+ msgid "git update-index [options] [--] [<file>...]"
+@@ -9084,12 +9082,12 @@ msgstr "git update-index [Optionen] [--] [<Date=
+i>...]"
+ #: builtin/update-index.c:718
+ msgid "continue refresh even when index needs update"
+ msgstr ""
+-"Aktualisierung fortsetzen, auch wenn die Bereitstellung aktualisiert =
+werden "
++"Aktualisierung fortsetzen, auch wenn die Staging-Area aktualisiert we=
+rden "
+ "muss"
+=20
+ #: builtin/update-index.c:721
+ msgid "refresh: ignore submodules"
+-msgstr "Aktualisierung: ignoriert Unterprojekte"
++msgstr "Aktualisierung: ignoriert Submodule"
+=20
+ #: builtin/update-index.c:724
+ msgid "do not ignore new files"
+@@ -9101,12 +9099,12 @@ msgstr "l=C3=A4sst Dateien Verzeichnisse ersetz=
+en, und umgedreht"
+=20
+ #: builtin/update-index.c:728
+ msgid "notice files missing from worktree"
+-msgstr "beachtet fehlende Dateien im Arbeitsbaum"
++msgstr "beachtet fehlende Dateien im Arbeitsverzeichnis"
+=20
+ #: builtin/update-index.c:730
+ msgid "refresh even if index contains unmerged entries"
+ msgstr ""
+-"aktualisiert, auch wenn die Bereitstellung nicht zusammengef=C3=BChrt=
+e Eintr=C3=A4ge "
++"aktualisiert, auch wenn die Staging-Area nicht zusammengef=C3=BChrte =
+Eintr=C3=A4ge "
+ "beinhaltet"
+=20
+ #: builtin/update-index.c:733
+@@ -9123,7 +9121,7 @@ msgstr "<Modus> <Objekt> <Pfad>"
+=20
+ #: builtin/update-index.c:742
+ msgid "add the specified entry to the index"
+-msgstr "stellt den angegebenen Eintrag zur Eintragung bereit"
++msgstr "merkt den angegebenen Eintrag zum Commit vor"
+=20
+ #: builtin/update-index.c:746
+ msgid "(+/-)x"
+@@ -9152,12 +9150,12 @@ msgstr "l=C3=B6scht \"skip-worktree\"-Bit"
+ #: builtin/update-index.c:763
+ msgid "add to index only; do not add content to object database"
+ msgstr ""
+-"f=C3=BCgt nur der Bereitstellung hinzu; Inhalt wird nicht der Objekt-=
+Datenbank "
+-"hinzugef=C3=BCgt"
++"merkt die =C3=84nderungen nur zum Commit vor; Inhalt wird nicht der "
++"Objekt-Datenbank hinzugef=C3=BCgt"
+=20
+ #: builtin/update-index.c:765
+ msgid "remove named paths even if present in worktree"
+-msgstr "l=C3=B6scht benannte Pfade, auch wenn sie sich im Arbeitsbaum =
+befinden"
++msgstr "l=C3=B6scht benannte Pfade, auch wenn sie sich im Arbeitsverze=
+ichnis befinden"
+=20
+ #: builtin/update-index.c:767
+ msgid "with --stdin: input lines are terminated by null bytes"
+@@ -9169,7 +9167,7 @@ msgstr "liest Liste der zu aktualisierenden Pfade=
+ von der Standard-Eingabe"
+=20
+ #: builtin/update-index.c:773
+ msgid "add entries from standard input to the index"
+-msgstr "f=C3=BCgt Eintr=C3=A4ge von der Standard-Eingabe der Bereitste=
+llung hinzu"
++msgstr "merkt Eintr=C3=A4ge von der Standard-Eingabe zum Commit vor"
+=20
+ #: builtin/update-index.c:777
+ msgid "repopulate stages #2 and #3 for the listed paths"
+@@ -9179,11 +9177,11 @@ msgstr ""
+ #: builtin/update-index.c:781
+ msgid "only update entries that differ from HEAD"
+ msgstr ""
+-"aktualisiert nur Eintr=C3=A4ge, die unterschiedlich zur Zweigspitze (=
+HEAD) sind"
++"aktualisiert nur Eintr=C3=A4ge, die unterschiedlich zu HEAD sind"
+=20
+ #: builtin/update-index.c:785
+ msgid "ignore files missing from worktree"
+-msgstr "ignoriert fehlende Dateien im Arbeitsbaum"
++msgstr "ignoriert fehlende Dateien im Arbeitsverzeichnis"
+=20
+ #: builtin/update-index.c:788
+ msgid "report actions to standard output"
+@@ -9195,7 +9193,7 @@ msgstr "(f=C3=BCr Fremdprogramme) keine gespeiche=
+rten, nicht aufgel=C3=B6ste Konflikte"
+=20
+ #: builtin/update-index.c:794
+ msgid "write index in this format"
+-msgstr "schreibt Bereitstellungsdatei in diesem Format"
++msgstr "schreibt Staging-Area-Datei in diesem Format"
+=20
+ #: builtin/update-ref.c:7
+ msgid "git update-ref [options] -d <refname> [<oldval>]"
+@@ -9235,11 +9233,11 @@ msgstr "zeigt nur Statistiken"
+=20
+ #: builtin/verify-tag.c:17
+ msgid "git verify-tag [-v|--verbose] <tag>..."
+-msgstr "git verify-tag [-v|--verbose] <Markierung>..."
++msgstr "git verify-tag [-v|--verbose] <Tag>..."
+=20
+ #: builtin/verify-tag.c:73
+ msgid "print tag contents"
+-msgstr "gibt Markierungsinhalte aus"
++msgstr "gibt Tag-Inhalte aus"
+=20
+ #: builtin/write-tree.c:13
+ msgid "git write-tree [--missing-ok] [--prefix=3D<prefix>/]"
+@@ -9251,7 +9249,7 @@ msgstr "<Prefix>/"
+=20
+ #: builtin/write-tree.c:27
+ msgid "write tree object for a subdirectory <prefix>"
+-msgstr "schreibt das Baumobjekt f=C3=BCr ein Unterverzeichnis <Prefix>=
+"
++msgstr "schreibt das \"Tree\"-Objekt f=C3=BCr ein Unterverzeichnis <Pr=
+efix>"
+=20
+ #: builtin/write-tree.c:30
+ msgid "only useful for debugging"
+@@ -9286,7 +9284,7 @@ msgstr "benutze <n> Ziffern zur Anzeige von SHA-1=
+s"
+=20
+ #: common-cmds.h:8
+ msgid "Add file contents to the index"
+-msgstr "stellt Dateiinhalte zur Eintragung bereit"
++msgstr "merkt Dateiinhalte zum Commit vor"
+=20
+ #: common-cmds.h:9
+ msgid "Find by binary search the change that introduced a bug"
+@@ -9295,27 +9293,27 @@ msgstr ""
+=20
+ #: common-cmds.h:10
+ msgid "List, create, or delete branches"
+-msgstr "Zeigt an, erstellt oder entfernt Zweige"
++msgstr "Zeigt an, erstellt oder entfernt Branches"
+=20
+ #: common-cmds.h:11
+ msgid "Checkout a branch or paths to the working tree"
+-msgstr "Checkt Zweige oder Pfade im Arbeitszweig aus"
++msgstr "Checkt Branches oder Pfade im Arbeitsverzeichnis aus"
+=20
+ #: common-cmds.h:12
+ msgid "Clone a repository into a new directory"
+-msgstr "Klont ein Projektarchiv in einem neuen Verzeichnis"
++msgstr "Klont ein Repository in einem neuen Verzeichnis"
+=20
+ #: common-cmds.h:13
+ msgid "Record changes to the repository"
+-msgstr "Tr=C3=A4gt =C3=84nderungen in das Projektarchiv ein"
++msgstr "Tr=C3=A4gt =C3=84nderungen in das Repository ein"
+=20
+ #: common-cmds.h:14
+ msgid "Show changes between commits, commit and working tree, etc"
+-msgstr "Zeigt =C3=84nderungen zwischen Versionen, Version und Arbeitsz=
+weig, etc. an"
++msgstr "Zeigt =C3=84nderungen zwischen Commits, Commit und Arbeitsverz=
+eichnis, etc. an"
+=20
+ #: common-cmds.h:15
+ msgid "Download objects and refs from another repository"
+-msgstr "L=C3=A4dt Objekte und Referenzen von einem anderen Projektarch=
+iv herunter"
++msgstr "L=C3=A4dt Objekte und Referenzen von einem anderen Repository =
+herunter"
+=20
+ #: common-cmds.h:16
+ msgid "Print lines matching a pattern"
+@@ -9324,11 +9322,11 @@ msgstr "Stellt Zeilen dar, die einem Muster ent=
+sprechen"
+ #: common-cmds.h:17
+ msgid "Create an empty Git repository or reinitialize an existing one"
+ msgstr ""
+-"Erstellt ein leeres Git-Projektarchiv oder initialisiert ein bestehen=
+des neu"
++"Erstellt ein leeres Git-Repository oder initialisiert ein bestehendes=
+ neu"
+=20
+ #: common-cmds.h:18
+ msgid "Show commit logs"
+-msgstr "Zeigt Versionshistorie an"
++msgstr "Zeigt Commit-Historie an"
+=20
+ #: common-cmds.h:19
+ msgid "Join two or more development histories together"
+@@ -9337,30 +9335,30 @@ msgstr "F=C3=BChrt zwei oder mehr Entwicklungsz=
+weige zusammen"
+ #: common-cmds.h:20
+ msgid "Move or rename a file, a directory, or a symlink"
+ msgstr ""
+-"Verschiebt oder benennt eine Datei, ein Verzeichnis, oder eine symbol=
+ische "
+-"Verkn=C3=BCpfung um"
++"Verschiebt oder benennt eine Datei, ein Verzeichnis, oder einen symbo=
+lischen "
++"Verweis um"
+=20
+ #: common-cmds.h:21
+ msgid "Fetch from and merge with another repository or a local branch"
+ msgstr ""
+-"Fordert Objekte von einem externen Projektarchiv an und f=C3=BChrt si=
+e mit einem "
+-"anderen Projektarchiv oder einem lokalen Zweig zusammen"
++"Fordert Objekte von einem externen Repository an und f=C3=BChrt sie m=
+it einem "
++"anderen Repository oder einem lokalen Branch zusammen"
+=20
+ #: common-cmds.h:22
+ msgid "Update remote refs along with associated objects"
+-msgstr "Aktualisiert externe Referenzen mitsamt den verbundenen Objekt=
+en"
++msgstr "Aktualisiert Remote-Referenzen mitsamt den verbundenen Objekte=
+n"
+=20
+ #: common-cmds.h:23
+ msgid "Forward-port local commits to the updated upstream head"
+-msgstr "Baut lokale Versionen auf einem aktuellerem externen Zweig neu=
+ auf"
++msgstr "Baut lokale Commits auf einem aktuellerem Upstream-Branch neu =
+auf"
+=20
+ #: common-cmds.h:24
+ msgid "Reset current HEAD to the specified state"
+-msgstr "Setzt die aktuelle Zweigspitze (HEAD) zu einem spezifizierten =
+Zustand"
++msgstr "Setzt aktuellen HEAD zu einem spezifizierten Zustand"
+=20
+ #: common-cmds.h:25
+ msgid "Remove files from the working tree and from the index"
+-msgstr "L=C3=B6scht Dateien im Arbeitszweig und von der Bereitstellung=
+"
++msgstr "L=C3=B6scht Dateien im Arbeitsverzeichnis und von der Staging-=
+Area"
+=20
+ #: common-cmds.h:26
+ msgid "Show various types of objects"
+@@ -9368,25 +9366,24 @@ msgstr "Zeigt verschiedene Arten von Objekten a=
+n"
+=20
+ #: common-cmds.h:27
+ msgid "Show the working tree status"
+-msgstr "Zeigt den Zustand des Arbeitszweiges an"
++msgstr "Zeigt den Zustand des Arbeitsverzeichnisses an"
+=20
+ #: common-cmds.h:28
+ msgid "Create, list, delete or verify a tag object signed with GPG"
+ msgstr ""
+ "Erzeugt, listet auf, l=C3=B6scht oder verifiziert ein mit GPG signier=
+tes "
+-"Markierungsobjekt"
++"Tag-Objekt"
+=20
+ #: git-am.sh:50
+ msgid "You need to set your committer info first"
+-msgstr "Sie m=C3=BCssen zuerst die Informationen des Eintragenden setz=
+en."
++msgstr "Sie m=C3=BCssen zuerst die Informationen zum Commit-Ersteller =
+setzen."
+=20
+ #: git-am.sh:95
+ msgid ""
+ "You seem to have moved HEAD since the last 'am' failure.\n"
+ "Not rewinding to ORIG_HEAD"
+ msgstr ""
+-"Sie scheinen seit dem letzten gescheiterten 'am' die Zweigspitze (HEA=
+D)\n"
+-"ge=C3=A4ndert zu haben.\n"
++"Sie scheinen seit dem letzten gescheiterten 'am' HEAD ge=C3=A4ndert z=
+u haben.\n"
+ "Keine Zur=C3=BCcksetzung zu ORIG_HEAD."
+=20
+ #: git-am.sh:105
+@@ -9399,23 +9396,23 @@ msgstr ""
+ "Wenn Sie das Problem gel=C3=B6st haben, f=C3=BChren Sie \"$cmdline --=
+resolved\" aus.\n"
+ "Falls Sie diesen Patch auslassen m=C3=B6chten, f=C3=BChren Sie stattd=
+essen\n"
+ "\"$cmdline --skip\" aus.\n"
+-"Um den urspr=C3=BCnglichen Zweig wiederherzustellen und die Anwendung=
+ der\n"
++"Um den urspr=C3=BCnglichen Branch wiederherzustellen und die Anwendun=
+g der\n"
+ "Patches abzubrechen, f=C3=BChren Sie \"$cmdline --abort\" aus."
+=20
+ #: git-am.sh:121
+ msgid "Cannot fall back to three-way merge."
+-msgstr "Kann nicht zu 3-Wege-Zusammenf=C3=BChrung zur=C3=BCckfallen."
++msgstr "Kann nicht zu 3-Wege-Merge zur=C3=BCckfallen."
+=20
+ #: git-am.sh:137
+ msgid "Repository lacks necessary blobs to fall back on 3-way merge."
+ msgstr ""
+-"Dem Projektarchiv fehlen notwendige Blobs um auf eine 3-Wege-Zusammen=
+f=C3=BChrung "
++"Dem Repository fehlen notwendige Blobs um auf einen 3-Wege-Merge "
+ "zur=C3=BCckzufallen."
+=20
+ #: git-am.sh:139
+ msgid "Using index info to reconstruct a base tree..."
+ msgstr ""
+-"Verwende Informationen aus der Bereitstellung um einen Basisbaum "
++"Verwende Informationen aus der Staging-Area um einen Basisverzeichnis=
+ "
+ "nachzustellen"
+=20
+ #: git-am.sh:154
+@@ -9428,11 +9425,11 @@ msgstr ""
+=20
+ #: git-am.sh:163
+ msgid "Falling back to patching base and 3-way merge..."
+-msgstr "Falle zur=C3=BCck zum Patchen der Basis und der 3-Wege-Zusamme=
+nf=C3=BChrung..."
++msgstr "Falle zur=C3=BCck zum Patchen der Basis und des 3-Wege-Merges.=
+=2E."
+=20
+ #: git-am.sh:179
+ msgid "Failed to merge in the changes."
+-msgstr "Zusammenf=C3=BChrung der =C3=84nderungen fehlgeschlagen"
++msgstr "Merge der =C3=84nderungen fehlgeschlagen"
+=20
+ #: git-am.sh:274
+ msgid "Only one StGIT patch series can be applied at once"
+@@ -9459,7 +9456,7 @@ msgstr ""
+ #, sh-format
+ msgid "previous rebase directory $dotest still exists but mbox given."
+ msgstr ""
+-"Vorheriges Verzeichnis des Neuaufbaus $dotest existiert noch, aber mb=
+ox "
++"Vorheriges Rebase-Verzeichnis $dotest existiert noch, aber mbox "
+ "gegeben."
+=20
+ #: git-am.sh:482
+@@ -9474,7 +9471,7 @@ msgstr "Es ist keine Aufl=C3=B6sung im Gange, es =
+wird nicht fortgesetzt."
+ #, sh-format
+ msgid "Dirty index: cannot apply patches (dirty: $files)"
+ msgstr ""
+-"Unsaubere Bereitstellung: kann Patches nicht anwenden (unsauber: $fil=
+es)"
++"Unsaubere Staging-Area: kann Patches nicht anwenden (unsauber: $files=
+)"
+=20
+ #: git-am.sh:679
+ #, sh-format
+@@ -9486,7 +9483,7 @@ msgstr ""
+ "Patch ist leer. Wurde er falsch aufgeteilt?\n"
+ "Wenn Sie diesen Patch auslassen m=C3=B6chten, f=C3=BChren Sie stattde=
+ssen\n"
+ "\"$cmdline --skip\" aus.\n"
+-"Um den urspr=C3=BCnglichen Zweig wiederherzustellen und die Anwendung=
+ der "
++"Um den urspr=C3=BCnglichen Branch wiederherzustellen und die Anwendun=
+g der "
+ "Patches\n"
+ "abzubrechen, f=C3=BChren Sie \"$cmdline --abort\" aus."
+=20
+@@ -9502,7 +9499,7 @@ msgstr ""
+=20
+ #: git-am.sh:757
+ msgid "Commit Body is:"
+-msgstr "Beschreibung der Eintragung ist:"
++msgstr "Commit-Beschreibung ist:"
+=20
+ #. TRANSLATORS: Make sure to include [y], [n], [e], [v] and [a]
+ #. in your translation. The program will only accept English
+@@ -9532,7 +9529,7 @@ msgid ""
+ "You still have unmerged paths in your index\n"
+ "did you forget to use 'git add'?"
+ msgstr ""
+-"Sie haben immer noch nicht zusammengef=C3=BChrte Pfade in der Bereits=
+tellung.\n"
++"Sie haben immer noch nicht zusammengef=C3=BChrte Pfade in der Staging=
+-Area.\n"
+ "Haben Sie vergessen 'git add' zu benutzen?"
+=20
+ #: git-am.sh:845
+@@ -9580,7 +9577,7 @@ msgstr "'$arg' scheint keine g=C3=BCltige Revisio=
+n zu sein"
+=20
+ #: git-bisect.sh:117
+ msgid "Bad HEAD - I need a HEAD"
+-msgstr "Ung=C3=BCltige Zweigspitze (HEAD) - Zweigspitze (HEAD) wird be=
+n=C3=B6tigt"
++msgstr "Ung=C3=BCltiger HEAD - HEAD wird ben=C3=B6tigt"
+=20
+ #: git-bisect.sh:130
+ #, sh-format
+@@ -9588,15 +9585,15 @@ msgid ""
+ "Checking out '$start_head' failed. Try 'git bisect reset <validbranch=
+>'."
+ msgstr ""
+ "Auschecken von '$start_head' fehlgeschlagen. Versuchen Sie 'git bisec=
+t reset "
+-"<gueltigerzweig>'."
++"<gueltigerbranch>'."
+=20
+ #: git-bisect.sh:140
+ msgid "won't bisect on seeked tree"
+-msgstr "bin=C3=A4re Suche auf gesuchtem Zweig nicht m=C3=B6glich"
++msgstr "bin=C3=A4re Suche auf gesuchtem Branch nicht m=C3=B6glich"
+=20
+ #: git-bisect.sh:144
+ msgid "Bad HEAD - strange symbolic ref"
+-msgstr "Ung=C3=BCltige Zweigspitze (HEAD) - merkw=C3=BCrdige symbolisc=
+he Referenz"
++msgstr "Ung=C3=BCltiger HEAD - merkw=C3=BCrdige symbolische Referenz"
+=20
+ #: git-bisect.sh:189
+ #, sh-format
+@@ -9625,7 +9622,7 @@ msgstr "'git bisect bad' kann nur ein Argument en=
+tgegennehmen."
+ #. this is less optimum.
+ #: git-bisect.sh:273
+ msgid "Warning: bisecting only with a bad commit."
+-msgstr "Warnung: bin=C3=A4re Suche nur mit einer fehlerhaften Version"
++msgstr "Warnung: bin=C3=A4re Suche nur mit einem fehlerhaften Commit"
+=20
+ #. TRANSLATORS: Make sure to include [Y] and [n] in your
+ #. translation. The program will only accept English input
+@@ -9660,7 +9657,7 @@ msgstr "keine bin=C3=A4re Suche im Gange"
+ #: git-bisect.sh:370
+ #, sh-format
+ msgid "'$invalid' is not a valid commit"
+-msgstr "'$invalid' ist keine g=C3=BCltige Version"
++msgstr "'$invalid' ist kein g=C3=BCltiger Commit"
+=20
+ #: git-bisect.sh:379
+ #, sh-format
+@@ -9668,8 +9665,8 @@ msgid ""
+ "Could not check out original HEAD '$branch'.\n"
+ "Try 'git bisect reset <commit>'."
+ msgstr ""
+-"Konnte die urspr=C3=BCngliche Zweigspitze (HEAD) '$branch' nicht ausc=
+hecken.\n"
+-"Versuchen Sie 'git bisect reset <Version>'."
++"Konnte den urspr=C3=BCnglichen HEAD '$branch' nicht auschecken.\n"
++"Versuchen Sie 'git bisect reset <Commit>'."
+=20
+ #: git-bisect.sh:406
+ msgid "No logfile given"
+@@ -9722,10 +9719,9 @@ msgid ""
+ "as appropriate to mark resolution, or use 'git commit -a'."
+ msgstr ""
+ "\"pull\" ist nicht m=C3=B6glich, weil Sie nicht zusammengef=C3=BChrte=
+ Dateien haben.\n"
+-"Bitte korrigieren Sie dies im Arbeitsbaum und benutzen Sie dann 'git =
+add/rm "
+-"<Datei>'\n"
+-"um die Aufl=C3=B6sung entsprechend zu markieren, oder benutzen Sie 'g=
+it commit -"
+-"a'."
++"Bitte korrigieren Sie dies im Arbeitsverzeichnis und benutzen Sie dan=
+n \n"
++"'git add/rm <Datei>' um die Aufl=C3=B6sung entsprechend zu markieren,=
+ oder\n"
++"benutzen Sie 'git commit -a'."
+=20
+ #: git-pull.sh:25
+ msgid "Pull is not possible because you have unmerged files."
+@@ -9735,8 +9731,8 @@ msgstr ""
+ #: git-pull.sh:203
+ msgid "updating an unborn branch with changes added to the index"
+ msgstr ""
+-"Aktualisiere eine ungeborenen Zweig mit =C3=84nderungen, die zur Bere=
+itstellung "
+-"hinzugef=C3=BCgt wurden"
++"Aktualisiere eine ungeborenen Branch mit =C3=84nderungen, die zum Com=
+mit "
++"vorgemerkt sind"
+=20
+ #. The fetch involved updating the current branch.
+ #. The working tree and the index file is still based on the
+@@ -9749,16 +9745,16 @@ msgid ""
+ "Warning: fast-forwarding your working tree from\n"
+ "Warning: commit $orig_head."
+ msgstr ""
+-"Warnung: Die Anforderung aktualisierte die Spitze des aktuellen Zweig=
+es.\n"
+-"Warnung: Spule Ihren Arbeitszweig von Version $orig_head vor."
++"Warnung: \"fetch\" aktualisierte die Spitze des aktuellen Branches.\n=
+"
++"Warnung: Spule Ihr Arbeitsverzeichnis von Commit $orig_head vor."
+=20
+ #: git-pull.sh:260
+ msgid "Cannot merge multiple branches into empty head"
+-msgstr "Kann nicht mehrere Zweige in einen ungeborenen Zweig zusammenf=
+=C3=BChren"
++msgstr "Kann nicht mehrere Branches in einen ungeborenen Branch zusamm=
+enf=C3=BChren"
+=20
+ #: git-pull.sh:264
+ msgid "Cannot rebase onto multiple branches"
+-msgstr "kann nicht auf mehrere Zweige neu aufbauen"
++msgstr "kann Rebase nicht auf mehrere Branches ausf=C3=BChren"
+=20
+ #: git-rebase.sh:53
+ msgid ""
+@@ -9771,17 +9767,16 @@ msgstr ""
+ "aus.\n"
+ "Falls Sie diesen Patch auslassen m=C3=B6chten, f=C3=BChren Sie stattd=
+essen \"git "
+ "rebase --skip\" aus.\n"
+-"Um den urspr=C3=BCnglichen Zweig wiederherzustellen und den Neuaufbau=
+ "
+-"abzubrechen,\n"
++"Um den urspr=C3=BCnglichen Branch wiederherzustellen und den Rebase a=
+bzubrechen,\n"
+ "f=C3=BChren Sie \"git rebase --abort\" aus."
+=20
+ #: git-rebase.sh:160
+ msgid "The pre-rebase hook refused to rebase."
+-msgstr "Der \"pre-rebase hook\" hat den Neuaufbau zur=C3=BCckgewiesen.=
+"
++msgstr "Der \"pre-rebase hook\" hat den Rebase zur=C3=BCckgewiesen."
+=20
+ #: git-rebase.sh:165
+ msgid "It looks like git-am is in progress. Cannot rebase."
+-msgstr "\"git-am\" scheint im Gange zu sein. Kann nicht neu aufbauen."
++msgstr "\"git-am\" scheint im Gange zu sein. Kann Rebase nicht durchf=C3=
+=BChren."
+=20
+ #: git-rebase.sh:296
+ msgid "The --exec option must be used with the --interactive option"
+@@ -9789,24 +9784,24 @@ msgstr "Die Option --exec muss mit --interactiv=
+e verwendet werden."
+=20
+ #: git-rebase.sh:301
+ msgid "No rebase in progress?"
+-msgstr "Kein Neuaufbau im Gange?"
++msgstr "Kein Rebase im Gange?"
+=20
+ #: git-rebase.sh:312
+ msgid "The --edit-todo action can only be used during interactive reba=
+se."
+ msgstr ""
+-"Die --edit-todo Aktion kann nur w=C3=A4hrend eines interaktiven Neuau=
+fbaus "
++"Die --edit-todo Aktion kann nur w=C3=A4hrend eines interaktiven Rebas=
+e "
  "verwendet werden."
 =20
- #: builtin/fetch.c:1002
- msgid "fetch --all does not take a repository argument"
--msgstr "fetch --all akzeptiert kein Projektarchiv als Argument"
-+msgstr "fetch --all akzeptiert kein Repository als Argument"
+ #: git-rebase.sh:319
+ msgid "Cannot read HEAD"
+-msgstr "Kann Zweigspitze (HEAD) nicht lesen"
++msgstr "Kann HEAD nicht lesen"
 =20
- #: builtin/fetch.c:1004
- msgid "fetch --all does not make sense with refspecs"
--msgstr "fetch --all kann nicht mit Referenzspezifikationen verwendet w=
-erden."
-+msgstr "fetch --all kann nicht mit Refspecs verwendet werden."
-=20
- #: builtin/fetch.c:1015
- #, c-format
- msgid "No such remote or remote group: %s"
--msgstr "Kein externes Archiv (einzeln oder Gruppe): %s"
-+msgstr "Kein Remote-Repository (einzeln oder Gruppe): %s"
-=20
- #: builtin/fetch.c:1023
- msgid "Fetching a group and specifying refspecs does not make sense"
- msgstr ""
- "Das Abholen einer Gruppe von externen Archiven kann nicht mit der Ang=
-abe\n"
--"von Referenzspezifikationen verwendet werden."
-+"von Refspecs verwendet werden."
-=20
- #: builtin/fmt-merge-msg.c:13
- msgid "git fmt-merge-msg [-m <message>] [--log[=3D<n>]|--no-log] [--fi=
-le <file>]"
-@@ -5002,7 +5001,7 @@ msgstr "zeigt unreferenzierte Objekte"
-=20
- #: builtin/fsck.c:616
- msgid "report tags"
--msgstr "meldet Markierungen"
-+msgstr "meldet Tags"
-=20
- #: builtin/fsck.c:617
- msgid "report root nodes"
-@@ -5010,11 +5009,11 @@ msgstr "meldet Hauptwurzeln"
-=20
- #: builtin/fsck.c:618
- msgid "make index objects head nodes"
--msgstr "erzeugt Kopfknoten der Bereitstellungsobjekte"
-+msgstr "erzeugt Kopfknoten der Staging-Area-Objekte"
-=20
- #: builtin/fsck.c:619
- msgid "make reflogs head nodes (default)"
--msgstr "erzeugt Kopfknoten des Referenzprotokolls (Standard)"
-+msgstr "erzeugt Kopfknoten des Reflogs (Standard)"
-=20
- #: builtin/fsck.c:620
- msgid "also consider packs and alternate objects"
-@@ -5064,7 +5063,7 @@ msgid ""
- "Auto packing the repository for optimum performance. You may also\n"
- "run \"git gc\" manually. See \"git help gc\" for more information.\n"
- msgstr ""
--"Die Datenbank des Projektarchivs wird f=C3=BCr eine optimale Performa=
-nce\n"
-+"Die Datenbank des Repositories wird f=C3=BCr eine optimale Performanc=
-e\n"
- "komprimiert. Sie k=C3=B6nnen auch \"git gc\" manuell ausf=C3=BChren.\=
-n"
- "Siehe \"git help gc\" f=C3=BCr weitere Informationen.\n"
-=20
-@@ -5092,7 +5091,7 @@ msgstr "Fehler beim Verzeichniswechsel: %s"
- #: builtin/grep.c:443 builtin/grep.c:478
- #, c-format
- msgid "unable to read tree (%s)"
--msgstr "konnte Zweig (%s) nicht lesen"
-+msgstr "konnte \"Tree\"-Objekt (%s) nicht lesen"
-=20
- #: builtin/grep.c:493
- #, c-format
-@@ -5111,7 +5110,7 @@ msgstr "kann '%s' nicht =C3=B6ffnen"
-=20
- #: builtin/grep.c:643
- msgid "search in index instead of in the work tree"
--msgstr "sucht in der Bereitstellung anstatt im Arbeitsbaum"
-+msgstr "sucht in der Staging-Area anstatt im Arbeitsverzeichnis"
-=20
- #: builtin/grep.c:645
- msgid "find in contents not managed by git"
-@@ -5262,7 +5261,7 @@ msgstr "zeigt nur =C3=9Cbereinstimmungen von Date=
-ien, die allen Mustern entsprechen"
-=20
- #: builtin/grep.c:736
- msgid "show parse tree for grep expression"
--msgstr "zeigt geparsten Baum f=C3=BCr \"grep\"-Ausdruck"
-+msgstr "zeigt geparstes Verzeichnis f=C3=BCr \"grep\"-Ausdruck"
-=20
- #: builtin/grep.c:740
- msgid "pager"
-@@ -5287,8 +5286,8 @@ msgstr "keine Muster angegeben"
- #: builtin/grep.c:866
- msgid "--open-files-in-pager only works on the worktree"
- msgstr ""
--"Die Option --open-files-in-pager kann nur innerhalb des Arbeitsbaums =
-"
--"verwendet werden."
-+"Die Option --open-files-in-pager kann nur innerhalb des Arbeitsverzei=
-chnisses"
-+" verwendet werden."
-=20
- #: builtin/grep.c:889
- msgid "--cached or --untracked cannot be used with --no-index."
-@@ -5299,7 +5298,7 @@ msgstr ""
- #: builtin/grep.c:894
- msgid "--no-index or --untracked cannot be used with revs."
- msgstr ""
--"Die Optionen --no-index und --untracked k=C3=B6nnen nicht mit Version=
-en verwendet "
-+"Die Optionen --no-index und --untracked k=C3=B6nnen nicht mit Commits=
- verwendet "
- "werden."
-=20
- #: builtin/grep.c:897
-@@ -5310,7 +5309,7 @@ msgstr ""
-=20
- #: builtin/grep.c:905
- msgid "both --cached and trees are given."
--msgstr "Die Option --cached kann nicht mit Zweigen verwendet werden."
-+msgstr "Die Option --cached kann nicht mit Verzeichnissen verwendet we=
-rden."
-=20
- #: builtin/hash-object.c:60
+ #: git-rebase.sh:322
  msgid ""
-@@ -5440,7 +5439,7 @@ msgstr "Spezifikation von bewusst ignorierten, un=
-beobachteten Dateien"
-=20
- #: builtin/help.c:425
- msgid "Defining submodule properties"
--msgstr "Definition von Unterprojekt-Eigenschaften"
-+msgstr "Definition von Submodul-Eigenschaften"
-=20
- #: builtin/help.c:426
- msgid "Specifying revisions and ranges for Git"
-@@ -5774,17 +5773,17 @@ msgstr "kann Verzeichnis '%s' nicht =C3=B6ffnen=
-"
- #: builtin/init-db.c:97
- #, c-format
- msgid "cannot readlink '%s'"
--msgstr "kann Verkn=C3=BCpfung '%s' nicht lesen"
-+msgstr "kann Verweis '%s' nicht lesen"
-=20
- #: builtin/init-db.c:99
- #, c-format
- msgid "insanely long symlink %s"
--msgstr "zu lange symbolische Verkn=C3=BCpfung %s"
-+msgstr "zu langer symbolischer Verweis %s"
-=20
- #: builtin/init-db.c:102
- #, c-format
- msgid "cannot symlink '%s' '%s'"
--msgstr "kann '%s' nicht mit '%s' symbolisch verkn=C3=BCpfen"
-+msgstr "kann '%s' nicht mit '%s' symbolisch verweisen"
-=20
- #: builtin/init-db.c:106
- #, c-format
-@@ -5834,7 +5833,7 @@ msgstr "Konnte %s nicht nach %s verschieben"
- #: builtin/init-db.c:363
- #, c-format
- msgid "Could not create git link %s"
--msgstr "Konnte git-Verkn=C3=BCpfung %s nicht erstellen"
-+msgstr "Konnte git-Verweis %s nicht erstellen"
-=20
- #.
- #. * TRANSLATORS: The first '%s' is either "Reinitialized
-@@ -5844,7 +5843,7 @@ msgstr "Konnte git-Verkn=C3=BCpfung %s nicht erst=
-ellen"
- #: builtin/init-db.c:420
- #, c-format
- msgid "%s%s Git repository in %s%s\n"
--msgstr "%s%s Git-Projektarchiv in %s%s\n"
-+msgstr "%s%s Git-Repository in %s%s\n"
-=20
- #: builtin/init-db.c:421
- msgid "Reinitialized existing"
-@@ -5877,7 +5876,7 @@ msgstr "Berechtigungen"
- #: builtin/init-db.c:491
- msgid "specify that the git repository is to be shared amongst several=
- users"
+ "You must edit all merge conflicts and then\n"
+ "mark them as resolved using git add"
  msgstr ""
--"gibt an, dass das Git-Projektarchiv mit mehreren Benutzern geteilt wi=
-rd"
-+"gibt an, dass das Git-Repository mit mehreren Benutzern geteilt wird"
+-"Sie m=C3=BCssen alle Zusammenf=C3=BChrungskonflikte editieren und die=
+se dann\n"
++"Sie m=C3=BCssen alle Merge-Konflikte editieren und diese dann\n"
+ "mittels \"git add\" als aufgel=C3=B6st markieren"
 =20
- #: builtin/init-db.c:493 builtin/prune-packed.c:77
- msgid "be quiet"
-@@ -5909,7 +5908,7 @@ msgstr "Kann nicht auf aktuelles Arbeitsverzeichn=
-is zugreifen."
- #: builtin/init-db.c:586
- #, c-format
- msgid "Cannot access work tree '%s'"
--msgstr "Kann nicht auf Arbeitsbaum '%s' zugreifen."
-+msgstr "Kann nicht auf Arbeitsverzeichnis '%s' zugreifen."
-=20
- #: builtin/log.c:40
- msgid "git log [<options>] [<revision range>] [[--] <path>...]\n"
-@@ -5965,11 +5964,11 @@ msgstr "Kann Patch-Datei %s nicht =C3=B6ffnen"
-=20
- #: builtin/log.c:750
- msgid "Need exactly one range."
--msgstr "Brauche genau einen Versionsbereich."
-+msgstr "Brauche genau einen Commit-Bereich."
-=20
- #: builtin/log.c:758
- msgid "Not a range."
--msgstr "Kein Versionsbereich."
-+msgstr "Kein Commit-Bereich."
-=20
- #: builtin/log.c:860
- msgid "Cover letter needs email format"
-@@ -6043,7 +6042,7 @@ msgstr "gibt keine bin=C3=A4ren Unterschiede aus"
- #: builtin/log.c:1138
- msgid "don't include a patch matching a commit upstream"
+ #: git-rebase.sh:340
+@@ -9827,7 +9822,7 @@ msgid ""
+ "valuable there."
  msgstr ""
--"schlie=C3=9Ft keine Patches ein, die einer Version im =C3=9Cbernahmez=
-weig entsprechen"
-+"schlie=C3=9Ft keine Patches ein, die einem Commit im Upstream-Branch =
-entsprechen"
+ "Es sieht so aus, als ob es das Verzeichnis $state_dir_base bereits gi=
+bt\n"
+-"und es k=C3=B6nnte ein anderer Neuaufbau im Gange sein. Wenn das der =
+=46all ist,\n"
++"und es k=C3=B6nnte ein anderer Rebase im Gange sein. Wenn das der Fal=
+l ist,\n"
+ "probieren Sie bitte\n"
+ "\t$cmd_live_rebase\n"
+ "Wenn das nicht der Fall ist, probieren Sie bitte\n"
+@@ -9838,42 +9833,42 @@ msgstr ""
+ #: git-rebase.sh:404
+ #, sh-format
+ msgid "invalid upstream $upstream_name"
+-msgstr "ung=C3=BCltiger =C3=9Cbernahmezweig $upstream_name"
++msgstr "ung=C3=BCltiger Upstream-Branch $upstream_name"
 =20
- #: builtin/log.c:1140
- msgid "show patch format instead of default (patch + stat)"
-@@ -6144,20 +6143,20 @@ msgstr "Fehler beim Erstellen der Ausgabedateie=
-n."
+ #: git-rebase.sh:428
+ #, sh-format
+ msgid "$onto_name: there are more than one merge bases"
+-msgstr "$onto_name: es gibt mehr als eine Zusammenf=C3=BChrungsbasis"
++msgstr "$onto_name: es gibt mehr als eine Merge-Basis"
 =20
- #: builtin/log.c:1484
- msgid "git cherry [-v] [<upstream> [<head> [<limit>]]]"
--msgstr "git cherry [-v] [<=C3=9Cbernahmezweig> [<Arbeitszweig> [<Limit=
->]]]"
-+msgstr "git cherry [-v] [<Upstream> [<Arbeitsbranch> [<Limit>]]]"
+ #: git-rebase.sh:431 git-rebase.sh:435
+ #, sh-format
+ msgid "$onto_name: there is no merge base"
+-msgstr "$onto_name: es gibt keine Zusammenf=C3=BChrungsbasis"
++msgstr "$onto_name: es gibt keine Merge-Basis"
 =20
- #: builtin/log.c:1539
- #, c-format
- msgid ""
- "Could not find a tracked remote branch, please specify <upstream> man=
-ually.\n"
+ #: git-rebase.sh:440
+ #, sh-format
+ msgid "Does not point to a valid commit: $onto_name"
+-msgstr "$onto_name zeigt auf keine g=C3=BCltige Version"
++msgstr "$onto_name zeigt auf keinen g=C3=BCltigen Commit"
+=20
+ #: git-rebase.sh:463
+ #, sh-format
+ msgid "fatal: no such branch: $branch_name"
+-msgstr "fatal: Zweig $branch_name nicht gefunden"
++msgstr "fatal: Branch $branch_name nicht gefunden"
+=20
+ #: git-rebase.sh:483
+ msgid "Please commit or stash them."
+-msgstr "Bitte tragen Sie die =C3=84nderungen ein oder benutzen Sie \"s=
+tash\"."
++msgstr "Bitte committen Sie die =C3=84nderungen oder benutzen Sie \"st=
+ash\"."
+=20
+ #: git-rebase.sh:501
+ #, sh-format
+ msgid "Current branch $branch_name is up to date."
+-msgstr "Aktueller Zweig $branch_name ist auf dem neusten Stand."
++msgstr "Aktueller Branch $branch_name ist auf dem neusten Stand."
+=20
+ #: git-rebase.sh:504
+ #, sh-format
+ msgid "Current branch $branch_name is up to date, rebase forced."
  msgstr ""
--"Konnte gefolgten, externen Zweig nicht finden, bitte geben Sie <upstr=
-eam> "
-+"Konnte gefolgten Remote-Branch nicht finden, bitte geben Sie <Upstrea=
-m> "
- "manuell an.\n"
+-"Aktueller Zweig $branch_name ist auf dem neusten Stand, Neuaufbau erz=
+wungen."
++"Aktueller Branch $branch_name ist auf dem neusten Stand, Rebase erzwu=
+ngen."
 =20
- #: builtin/log.c:1552 builtin/log.c:1554 builtin/log.c:1566
- #, c-format
- msgid "Unknown commit %s"
--msgstr "Unbekannte Version %s"
-+msgstr "Unbekannter Commit %s"
-=20
- #: builtin/ls-files.c:402
- msgid "git ls-files [options] [<file>...]"
-@@ -6165,7 +6164,7 @@ msgstr "git ls-files [Optionen] [<Datei>...]"
-=20
- #: builtin/ls-files.c:459
- msgid "identify the file status with tags"
--msgstr "zeigt den Dateistatus mit Markierungen"
-+msgstr "zeigt den Dateistatus mit Tags"
-=20
- #: builtin/ls-files.c:461
- msgid "use lowercase letters for 'assume unchanged' files"
-@@ -6194,7 +6193,7 @@ msgstr "zeigt ignorierte Dateien in der Ausgabe a=
-n"
-=20
- #: builtin/ls-files.c:474
- msgid "show staged contents' object name in the output"
--msgstr "zeigt Objektnamen von Inhalten in der Bereitstellung in der Au=
-sgabe an"
-+msgstr "zeigt Objektnamen von Inhalten, die zum Commit vorgemerkt sind=
-, in der Ausgabe an"
-=20
- #: builtin/ls-files.c:476
- msgid "show files on the filesystem that need to be removed"
-@@ -6239,17 +6238,17 @@ msgstr "Ausgabe relativ zum Projektverzeichnis"
- #: builtin/ls-files.c:502
- msgid "if any <file> is not in the index, treat this as an error"
+ #: git-rebase.sh:515
+ #, sh-format
+@@ -9884,7 +9879,7 @@ msgstr "=C3=84nderungen von $mb zu $onto:"
+ #: git-rebase.sh:524
+ msgid "First, rewinding head to replay your work on top of it..."
  msgstr ""
--"behandle es als Fehler, wenn sich eine <Datei> nicht in der Bereitste=
-llung "
-+"behandle es als Fehler, wenn sich eine <Datei> nicht in der Staging-A=
-rea "
- "befindet"
+-"Zun=C3=A4chst wird die Zweigspitze zur=C3=BCckgespult, um Ihre =C3=84=
+nderungen\n"
++"Zun=C3=A4chst wird der Branch zur=C3=BCckgespult, um Ihre =C3=84nderu=
+ngen\n"
+ "darauf neu anzuwenden..."
 =20
- #: builtin/ls-files.c:503
- msgid "tree-ish"
--msgstr "Versionsreferenz"
-+msgstr "Commit-Referenz"
+ #: git-rebase.sh:532
+@@ -9898,15 +9893,15 @@ msgstr "git stash clear mit Parametern ist nich=
+t implementiert"
 =20
- #: builtin/ls-files.c:504
- msgid "pretend that paths removed since <tree-ish> are still present"
- msgstr ""
--"gibt vor, dass Pfade, die seit <Versionsreferenz> gel=C3=B6scht wurde=
-n, immer "
-+"gibt vor, dass Pfade, die seit <Commit-Referenz> gel=C3=B6scht wurden=
-, immer "
- "noch vorhanden sind"
+ #: git-stash.sh:74
+ msgid "You do not have the initial commit yet"
+-msgstr "Sie haben bisher noch keine initiale Version"
++msgstr "Sie haben bisher noch keinen initialen Commit"
 =20
- #: builtin/ls-files.c:506
-@@ -6258,19 +6257,19 @@ msgstr "zeigt Ausgaben zur Fehlersuche an"
+ #: git-stash.sh:89
+ msgid "Cannot save the current index state"
+-msgstr "Kann den aktuellen Zustand der Bereitstellung nicht speichern"
++msgstr "Kann den aktuellen Zustand der Staging-Area nicht speichern"
 =20
- #: builtin/ls-tree.c:27
- msgid "git ls-tree [<options>] <tree-ish> [<path>...]"
--msgstr "git ls-tree [<Optionen>] <Versionsreferenz> [<Pfad>...]"
-+msgstr "git ls-tree [<Optionen>] <Commit-Referenz> [<Pfad>...]"
+ #: git-stash.sh:123 git-stash.sh:136
+ msgid "Cannot save the current worktree state"
+-msgstr "Kann den aktuellen Zustand des Arbeitsbaumes nicht speichern"
++msgstr "Kann den aktuellen Zustand des Arbeitsverzeichnisses nicht spe=
+ichern"
 =20
- #: builtin/ls-tree.c:125
- msgid "only show trees"
--msgstr "zeigt nur B=C3=A4ume an"
-+msgstr "zeigt nur Verzeichnisse an"
+ #: git-stash.sh:140
+ msgid "No changes selected"
+@@ -9914,11 +9909,11 @@ msgstr "Keine =C3=84nderungen ausgew=C3=A4hlt"
 =20
- #: builtin/ls-tree.c:127
- msgid "recurse into subtrees"
--msgstr "f=C3=BChrt Rekursion in Teilb=C3=A4umen durch"
-+msgstr "f=C3=BChrt Rekursion in Unterverzeichnissen durch"
+ #: git-stash.sh:143
+ msgid "Cannot remove temporary index (can't happen)"
+-msgstr "Kann tempor=C3=A4re Bereitstellung nicht l=C3=B6schen (kann ni=
+cht passieren)"
++msgstr "Kann tempor=C3=A4re Staging-Area nicht l=C3=B6schen (kann nich=
+t passieren)"
 =20
- #: builtin/ls-tree.c:129
- msgid "show trees when recursing"
--msgstr "zeigt B=C3=A4ume bei Rekursion an"
-+msgstr "zeigt Verzeichnisse bei Rekursion an"
+ #: git-stash.sh:156
+ msgid "Cannot record working tree state"
+-msgstr "Kann Zustand des Arbeitsbaumes nicht aufzeichnen"
++msgstr "Kann Zustand des Arbeitsverzeichnisses nicht aufzeichnen"
 =20
- #: builtin/ls-tree.c:132
- msgid "terminate entries with NUL byte"
-@@ -6291,16 +6290,16 @@ msgstr "verwendet vollst=C3=A4ndige Pfadnamen"
- #: builtin/ls-tree.c:142
- msgid "list entire tree; not just current directory (implies --full-na=
-me)"
- msgstr ""
--"listet den gesamten Baum auf; nicht nur das aktuelle Verzeichnis (imp=
-liziert "
--"--full-name)"
-+"listet das gesamte Verzeichnis auf; nicht nur das aktuelle Verzeichni=
-s "
-+"(impliziert --full-name)"
-=20
- #: builtin/merge.c:43
- msgid "git merge [options] [<commit>...]"
--msgstr "git merge [Optionen] [<Version>...]"
-+msgstr "git merge [Optionen] [<Commit>...]"
-=20
- #: builtin/merge.c:44
- msgid "git merge [options] <msg> HEAD <commit>"
--msgstr "git merge [Optionen] <Beschreibung> HEAD <Version>"
-+msgstr "git merge [Optionen] <Beschreibung> HEAD <Commit>"
-=20
- #: builtin/merge.c:45
- msgid "git merge --abort"
-@@ -6313,7 +6312,7 @@ msgstr "Schalter 'm' erfordert einen Wert."
- #: builtin/merge.c:127
- #, c-format
- msgid "Could not find merge strategy '%s'.\n"
--msgstr "Konnte Zusammenf=C3=BChrungsstrategie '%s' nicht finden.\n"
-+msgstr "Konnte Merge-Strategie '%s' nicht finden.\n"
-=20
- #: builtin/merge.c:128
- #, c-format
-@@ -6328,13 +6327,12 @@ msgstr "Verf=C3=BCgbare benutzerdefinierte Stra=
-tegien sind:"
- #: builtin/merge.c:183
- msgid "do not show a diffstat at the end of the merge"
- msgstr ""
--"zeigt keine Zusammenfassung der Unterschiede am Schluss der Zusammenf=
-=C3=BChrung "
--"an"
-+"zeigt keine Zusammenfassung der Unterschiede am Schluss des Merges an=
+ #. TRANSLATORS: $option is an invalid option, like
+ #. `--blah-blah'. The 7 spaces at the beginning of the
+@@ -9954,7 +9949,7 @@ msgstr "Kann den aktuellen Status nicht speichern=
 "
 =20
- #: builtin/merge.c:186
- msgid "show a diffstat at the end of the merge"
+ #: git-stash.sh:253
+ msgid "Cannot remove worktree changes"
+-msgstr "Kann =C3=84nderungen am Arbeitsbaum nicht l=C3=B6schen"
++msgstr "Kann =C3=84nderungen im Arbeitsverzeichnis nicht l=C3=B6schen"
+=20
+ #: git-stash.sh:352
+ msgid "No stash found."
+@@ -9973,7 +9968,7 @@ msgstr "$reference ist keine g=C3=BCltige Referen=
+z"
+ #: git-stash.sh:393
+ #, sh-format
+ msgid "'$args' is not a stash-like commit"
+-msgstr "'$args' ist keine \"stash\"-artige Version"
++msgstr "'$args' ist kein \"stash\"-artiger Commit"
+=20
+ #: git-stash.sh:404
+ #, sh-format
+@@ -9982,28 +9977,28 @@ msgstr "'$args' ist keine \"stash\"-Referenz"
+=20
+ #: git-stash.sh:412
+ msgid "unable to refresh index"
+-msgstr "unf=C3=A4hig die Bereitstellung zu aktualisieren"
++msgstr "unf=C3=A4hig die Staging-Area zu aktualisieren"
+=20
+ #: git-stash.sh:416
+ msgid "Cannot apply a stash in the middle of a merge"
  msgstr ""
--"zeigt eine Zusammenfassung der Unterschiede am Schluss der Zusammenf=C3=
-=BChrung an"
-+"zeigt eine Zusammenfassung der Unterschiede am Schluss des Merges an"
+-"Kann \"stash\" nicht anwenden, solang eine Zusammenf=C3=BChrung im Ga=
+nge ist"
++"Kann \"stash\" nicht anwenden, solang ein Merge im Gange ist"
 =20
- #: builtin/merge.c:187
- msgid "(synonym to --stat)"
-@@ -6343,22 +6341,21 @@ msgstr "(Synonym f=C3=BCr --stat)"
- #: builtin/merge.c:189
- msgid "add (at most <n>) entries from shortlog to merge commit message=
-"
- msgstr ""
--"f=C3=BCgt (h=C3=B6chstens <n>) Eintr=C3=A4ge von \"shortlog\" zur Bes=
-chreibung der "
--"Zusammenf=C3=BChrung hinzu"
-+"f=C3=BCgt (h=C3=B6chstens <n>) Eintr=C3=A4ge von \"shortlog\" zur Bes=
-chreibung des "
-+"Merge-Commits hinzu"
-=20
- #: builtin/merge.c:192
- msgid "create a single commit instead of doing a merge"
--msgstr "erzeugt eine einzelne Version anstatt einer Zusammenf=C3=BChru=
-ng"
-+msgstr "erzeugt einen einzelnen Commit anstatt eines Merges"
-=20
- #: builtin/merge.c:194
- msgid "perform a commit if the merge succeeds (default)"
- msgstr ""
--"f=C3=BChrt eine Eintragung durch, wenn die Zusammenf=C3=BChrung erfol=
-greich war "
--"(Standard)"
-+"f=C3=BChrt einen Commit durch, wenn der Merge erfolgreich war (Standa=
-rd)"
-=20
- #: builtin/merge.c:196
- msgid "edit message before committing"
--msgstr "Bearbeitung der Versionsbeschreibung vor der Eintragung"
-+msgstr "Bearbeitung der Beschreibung vor dem Commit"
-=20
- #: builtin/merge.c:198
- msgid "allow fast-forward (default)"
-@@ -6370,7 +6367,7 @@ msgstr "bricht ab, wenn kein Vorspulen m=C3=B6gli=
-ch ist"
-=20
- #: builtin/merge.c:203
- msgid "Verify that the named commit has a valid GPG signature"
--msgstr "=C3=BCberpr=C3=BCft die genannte Version auf eine g=C3=BCltige=
- GPG-Signatur"
-+msgstr "=C3=BCberpr=C3=BCft den genannten Commit auf eine g=C3=BCltige=
- GPG-Signatur"
-=20
- #: builtin/merge.c:204 builtin/notes.c:866 builtin/revert.c:112
- msgid "strategy"
-@@ -6378,7 +6375,7 @@ msgstr "Strategie"
-=20
- #: builtin/merge.c:205
- msgid "merge strategy to use"
--msgstr "zu verwendende Zusammenf=C3=BChrungsstrategie"
-+msgstr "zu verwendende Merge-Strategie"
-=20
- #: builtin/merge.c:206
- msgid "option=3Dvalue"
-@@ -6386,17 +6383,16 @@ msgstr "Option=3DWert"
-=20
- #: builtin/merge.c:207
- msgid "option for selected merge strategy"
--msgstr "Option f=C3=BCr ausgew=C3=A4hlte Zusammenf=C3=BChrungsstrategi=
-e"
-+msgstr "Option f=C3=BCr ausgew=C3=A4hlte Merge-Strategie"
-=20
- #: builtin/merge.c:209
- msgid "merge commit message (for a non-fast-forward merge)"
- msgstr ""
--"f=C3=BChrt Versionsbeschreibung zusammen (f=C3=BCr eine Zusammenf=C3=BC=
-hrung, die kein "
--"Vorspulen war)"
-+"f=C3=BChrt Commit-Beschreibung zusammen (f=C3=BCr einen Merge, der ke=
-in Vorspulen war)"
-=20
- #: builtin/merge.c:213
- msgid "abort the current in-progress merge"
--msgstr "bricht die sich im Gange befindliche Zusammenf=C3=BChrung ab"
-+msgstr "bricht den sich im Gange befindlichen Merge ab"
-=20
- #: builtin/merge.c:242
- msgid "could not run stash."
-@@ -6422,7 +6418,7 @@ msgstr " (nichts zu quetschen)"
- #: builtin/merge.c:331
- #, c-format
- msgid "Squash commit -- not updating HEAD\n"
--msgstr "Quetsche Version -- Zweigspitze (HEAD) wird nicht aktualisiert=
-\n"
-+msgstr "Quetsche Commit -- HEAD wird nicht aktualisiert\n"
-=20
- #: builtin/merge.c:363
- msgid "Writing SQUASH_MSG"
-@@ -6436,13 +6432,12 @@ msgstr "Schlie=C3=9Fe SQUASH_MSG ab"
- #, c-format
- msgid "No merge message -- not updating HEAD\n"
- msgstr ""
--"Keine Zusammenf=C3=BChrungsbeschreibung -- Zweigspitze (HEAD) wird ni=
-cht "
--"aktualisiert\n"
-+"Keine Merge-Commit-Beschreibung -- HEAD wird nicht aktualisiert\n"
-=20
- #: builtin/merge.c:438
- #, c-format
- msgid "'%s' does not point to a commit"
--msgstr "'%s' zeigt auf keine Version"
-+msgstr "'%s' zeigt auf keinen Commit"
-=20
- #: builtin/merge.c:550
- #, c-format
-@@ -6451,11 +6446,11 @@ msgstr "Ung=C3=BCltiger branch.%s.mergeoptions =
-String: %s"
-=20
- #: builtin/merge.c:643
- msgid "git write-tree failed to write a tree"
--msgstr "\"git write-tree\" schlug beim Schreiben eines Baumes fehl"
-+msgstr "\"git write-tree\" schlug beim Schreiben eines \"Tree\"-Objekt=
-es fehl"
-=20
- #: builtin/merge.c:671
- msgid "Not handling anything other than two heads merge."
--msgstr "Es wird nur die Zusammenf=C3=BChrung von zwei Zweigen behandel=
-t."
-+msgstr "Es wird nur der Merge von zwei Branches behandelt."
-=20
- #: builtin/merge.c:685
- #, c-format
-@@ -6476,8 +6471,8 @@ msgstr "konnte nicht von '%s' lesen"
- #, c-format
- msgid "Not committing merge; use 'git commit' to complete the merge.\n=
-"
- msgstr ""
--"Zusammenf=C3=BChrung wurde nicht eingetragen; benutzen Sie 'git commi=
-t' um die "
--"Zusammenf=C3=BChrung abzuschlie=C3=9Fen.\n"
-+"Merge wurde nicht committet; benutzen Sie 'git commit' um den Merge "
-+"abzuschlie=C3=9Fen.\n"
-=20
- #: builtin/merge.c:803
- #, c-format
-@@ -6488,17 +6483,16 @@ msgid ""
- "Lines starting with '%c' will be ignored, and an empty message aborts=
-\n"
- "the commit.\n"
- msgstr ""
--"Bitte geben Sie eine Versionsbeschreibung ein um zu erkl=C3=A4ren, wa=
-rum diese "
--"Zusammenf=C3=BChrung erforderlich ist,\n"
--"insbesondere wenn es einen aktualisierten, externen Zweig mit einem T=
-hema-"
--"Zweig zusammenf=C3=BChrt.\n"
-+"Bitte geben Sie eine Commit-Beschreibung ein um zu erkl=C3=A4ren, war=
-um dieser\n"
-+"Merge erforderlich ist, insbesondere wenn es einen aktualisierten\n"
-+"Upstream-Branch mit einem Thema-Branch zusammenf=C3=BChrt.\n"
- "\n"
--"Zeilen beginnend mit '%c' werden ignoriert, und eine leere Beschreibu=
-ng "
--"bricht die Eintragung ab.\n"
-+"Zeilen beginnend mit '%c' werden ignoriert, und eine leere Beschreibu=
-ng\n"
-+"bricht den Commit ab.\n"
-=20
- #: builtin/merge.c:827
- msgid "Empty commit message."
--msgstr "Leere Versionsbeschreibung"
-+msgstr "Leere Commit-Beschreibung"
-=20
- #: builtin/merge.c:839
- #, c-format
-@@ -6509,32 +6503,31 @@ msgstr "Wunderbar.\n"
- #, c-format
- msgid "Automatic merge failed; fix conflicts and then commit the resul=
-t.\n"
- msgstr ""
--"Automatische Zusammenf=C3=BChrung fehlgeschlagen; beheben Sie die Kon=
-flikte und "
--"tragen Sie dann das Ergebnis ein.\n"
-+"Automatischer Merge fehlgeschlagen; beheben Sie die Konflikte und "
-+"committen Sie dann das Ergebnis.\n"
-=20
- #: builtin/merge.c:920
- #, c-format
- msgid "'%s' is not a commit"
--msgstr "'%s' ist keine Version"
-+msgstr "'%s' ist kein Commit"
-=20
- #: builtin/merge.c:961
- msgid "No current branch."
--msgstr "Sie befinden sich auf keinem Zweig."
-+msgstr "Sie befinden sich auf keinem Branch."
-=20
- #: builtin/merge.c:963
- msgid "No remote for the current branch."
--msgstr "Kein externes Archiv f=C3=BCr den aktuellen Zweig."
-+msgstr "Kein Remote-Repository f=C3=BCr den aktuellen Branch."
-=20
- #: builtin/merge.c:965
- msgid "No default upstream defined for the current branch."
- msgstr ""
--"Es ist kein externes Standard-Projektarchiv f=C3=BCr den aktuellen Zw=
-eig "
--"definiert."
-+"Es ist kein Standard-Upstream-Branch f=C3=BCr den aktuellen Branch de=
-finiert."
-=20
- #: builtin/merge.c:970
- #, c-format
- msgid "No remote tracking branch for %s from %s"
--msgstr "Kein externer =C3=9Cbernahmezweig f=C3=BCr %s von %s"
-+msgstr "Kein Remote-Tracking-Branch f=C3=BCr %s von %s"
-=20
- #: builtin/merge.c:1057 builtin/merge.c:1214
- #, c-format
-@@ -6543,20 +6536,20 @@ msgstr "%s - nichts was wir zusammenf=C3=BChren=
- k=C3=B6nnen"
-=20
- #: builtin/merge.c:1125
- msgid "There is no merge to abort (MERGE_HEAD missing)."
--msgstr "Es gibt keine Zusammenf=C3=BChrung zum Abbrechen (vermisse MER=
-GE_HEAD)"
-+msgstr "Es gibt keinen Merge zum Abbrechen (vermisse MERGE_HEAD)"
-=20
- #: builtin/merge.c:1141 git-pull.sh:31
- msgid ""
- "You have not concluded your merge (MERGE_HEAD exists).\n"
- "Please, commit your changes before you can merge."
- msgstr ""
--"Sie haben Ihre Zusammenf=C3=BChrung nicht abgeschlossen (MERGE_HEAD e=
-xistiert).\n"
--"Bitte tragen Sie Ihre =C3=84nderungen ein, bevor Sie zusammenf=C3=BCh=
-ren k=C3=B6nnen."
-+"Sie haben Ihren Merge nicht abgeschlossen (MERGE_HEAD existiert).\n"
-+"Bitte committen Sie Ihre =C3=84nderungen, bevor Sie \"merge\" ausf=C3=
-=BChren k=C3=B6nnen."
-=20
- #: builtin/merge.c:1144 git-pull.sh:34
- msgid "You have not concluded your merge (MERGE_HEAD exists)."
- msgstr ""
--"Sie haben Ihre Zusammenf=C3=BChrung nicht abgeschlossen (MERGE_HEAD e=
-xistiert)."
-+"Sie haben Ihren Merge nicht abgeschlossen (MERGE_HEAD existiert)."
-=20
- #: builtin/merge.c:1148
- msgid ""
-@@ -6564,7 +6557,7 @@ msgid ""
- "Please, commit your changes before you can merge."
- msgstr ""
- "Sie haben \"cherry-pick\" nicht abgeschlossen (CHERRY_PICK_HEAD exist=
-iert).\n"
--"Bitte tragen Sie Ihre =C3=84nderungen ein, bevor Sie zusammenf=C3=BCh=
-ren k=C3=B6nnen."
-+"Bitte committen Sie Ihre =C3=84nderungen, bevor Sie \"merge\" ausf=C3=
-=BChren k=C3=B6nnen."
-=20
- #: builtin/merge.c:1151
- msgid "You have not concluded your cherry-pick (CHERRY_PICK_HEAD exist=
-s)."
-@@ -6581,43 +6574,44 @@ msgstr "Sie k=C3=B6nnen --no-ff nicht mit --ff-=
--only kombinieren."
-=20
- #: builtin/merge.c:1172
- msgid "No commit specified and merge.defaultToUpstream not set."
--msgstr "Keine Version angegeben und merge.defaultToUpstream ist nicht =
-gesetzt."
-+msgstr "Kein Commit angegeben und merge.defaultToUpstream ist nicht ge=
-setzt."
-=20
- #: builtin/merge.c:1204
- msgid "Can merge only exactly one commit into empty head"
--msgstr "Kann nur exakt eine Version in einem leeren Zweig zusammenf=C3=
-=BChren."
-+msgstr "Kann nur exakt einen Commit in einem leeren Branch zusammenf=C3=
-=BChren."
-=20
- #: builtin/merge.c:1207
- msgid "Squash commit into empty head not supported yet"
--msgstr "Bin auf einem Zweig, der noch geboren wird; kann nicht quetsch=
-en."
-+msgstr "Bin auf einem Commit, der noch geboren wird; kann \"squash\" n=
-icht "
-+"ausf=C3=BChren."
-=20
- #: builtin/merge.c:1209
- msgid "Non-fast-forward commit does not make sense into an empty head"
- msgstr ""
--"Nicht vorzuspulende Version kann nicht in einem leeren Zweig verwende=
-t "
-+"Nicht vorzuspulender Commit kann nicht in einem leeren Branch verwend=
-et "
- "werden."
-=20
- #: builtin/merge.c:1265
- #, c-format
- msgid "Commit %s has an untrusted GPG signature, allegedly by %s."
- msgstr ""
--"Version %s hat eine nicht vertrauensw=C3=BCrdige GPG-Signatur, angebl=
-ich von %s."
-+"Commit %s hat eine nicht vertrauensw=C3=BCrdige GPG-Signatur, angebli=
-ch von %s."
-=20
- #: builtin/merge.c:1268
- #, c-format
- msgid "Commit %s has a bad GPG signature allegedly by %s."
--msgstr "Version %s hat eine ung=C3=BCltige GPG-Signatur, angeblich von=
- %s."
-+msgstr "Commit %s hat eine ung=C3=BCltige GPG-Signatur, angeblich von =
-%s."
-=20
- #. 'N'
- #: builtin/merge.c:1271
- #, c-format
- msgid "Commit %s does not have a GPG signature."
--msgstr "Version %s hat keine GPG-Signatur."
-+msgstr "Commit %s hat keine GPG-Signatur."
-=20
- #: builtin/merge.c:1274
- #, c-format
- msgid "Commit %s has a good GPG signature by %s\n"
--msgstr "Version %s hat eine g=C3=BCltige GPG-Signatur von %s\n"
-+msgstr "Commit %s hat eine g=C3=BCltige GPG-Signatur von %s\n"
-=20
- #: builtin/merge.c:1358
- #, c-format
-@@ -6627,7 +6621,7 @@ msgstr "Aktualisiere %s..%s\n"
- #: builtin/merge.c:1397
- #, c-format
- msgid "Trying really trivial in-index merge...\n"
--msgstr "Probiere wirklich triviale \"in-index\"-Zusammenf=C3=BChrung..=
-=2E\n"
-+msgstr "Probiere wirklich trivialen \"in-index\"-Merge...\n"
-=20
- #: builtin/merge.c:1404
- #, c-format
-@@ -6641,22 +6635,22 @@ msgstr "Vorspulen nicht m=C3=B6glich, breche ab=
+ #: git-stash.sh:424
+ msgid "Conflicts in index. Try without --index."
+-msgstr "Konflikte in der Bereitstellung. Versuchen Sie es ohne --index=
 =2E"
- #: builtin/merge.c:1459 builtin/merge.c:1538
- #, c-format
- msgid "Rewinding the tree to pristine...\n"
--msgstr "R=C3=BCcklauf des Zweiges bis zum Ursprung...\n"
-+msgstr "R=C3=BCcklauf des Verzeichnisses bis zum Ursprung...\n"
++msgstr "Konflikte in der Staging-Area. Versuchen Sie es ohne --index."
 =20
- #: builtin/merge.c:1463
- #, c-format
- msgid "Trying merge strategy %s...\n"
--msgstr "Probiere Zusammenf=C3=BChrungsstrategie %s...\n"
-+msgstr "Probiere Merge-Strategie %s...\n"
+ #: git-stash.sh:426
+ msgid "Could not save index tree"
+-msgstr "Konnte Bereitstellungsbaum nicht speichern"
++msgstr "Konnte Staging-Area-Verzeichnis nicht speichern"
 =20
- #: builtin/merge.c:1529
- #, c-format
- msgid "No merge strategy handled the merge.\n"
--msgstr "Keine Zusammenf=C3=BChrungsstrategie behandelt diese Zusammenf=
-=C3=BChrung.\n"
-+msgstr "Keine Merge-Strategie behandelt diesen Merge.\n"
+ #: git-stash.sh:460
+ msgid "Cannot unstage modified files"
+-msgstr "Kann ge=C3=A4nderte Dateien nicht aus der Bereitstellung herau=
+snehmen"
++msgstr "Kann ge=C3=A4nderte Dateien nicht aus der Staging-Area entfern=
+en"
 =20
- #: builtin/merge.c:1531
- #, c-format
- msgid "Merge with strategy %s failed.\n"
--msgstr "Zusammenf=C3=BChrung mit Strategie %s fehlgeschlagen.\n"
-+msgstr "Merge mit Strategie %s fehlgeschlagen.\n"
+ #: git-stash.sh:475
+ msgid "Index was not unstashed."
+-msgstr "Bereitstellung wurde nicht ausgelagert."
++msgstr "Staging-Area wurde nicht aus dem Stash zur=C3=BCckgeladen."
 =20
- #: builtin/merge.c:1540
- #, c-format
-@@ -6667,40 +6661,39 @@ msgstr "Benutzen Sie \"%s\" um die Aufl=C3=B6su=
-ng per Hand vorzubereiten.\n"
- #, c-format
- msgid "Automatic merge went well; stopped before committing as request=
-ed\n"
+ #: git-stash.sh:492
+ #, sh-format
+@@ -10017,7 +10012,7 @@ msgstr "${REV}: Konnte \"stash\"-Eintrag nicht =
+l=C3=B6schen"
+=20
+ #: git-stash.sh:500
+ msgid "No branch name specified"
+-msgstr "Kein Zweigname spezifiziert"
++msgstr "Kein Branchname spezifiziert"
+=20
+ #: git-stash.sh:571
+ msgid "(To restore them type \"git stash apply\")"
+@@ -10032,18 +10027,18 @@ msgstr "Kann eine Komponente von URL '$remote=
+url' nicht extrahieren"
+ #, sh-format
+ msgid "No submodule mapping found in .gitmodules for path '$sm_path'"
  msgstr ""
--"Automatische Zusammenf=C3=BChrung abgeschlossen; halte, wie gew=C3=BC=
-nscht, vor der "
--"Eintragung an\n"
-+"Automatischer Merge abgeschlossen; halte, wie gew=C3=BCnscht, vor dem=
- Commit an\n"
+-"Keine Unterprojekt-Zuordnung in .gitmodules f=C3=BCr Pfad '$sm_path' =
+gefunden"
++"Keine Submodul-Zuordnung in .gitmodules f=C3=BCr Pfad '$sm_path' gefu=
+nden"
 =20
- #: builtin/merge-base.c:26
- msgid "git merge-base [-a|--all] <commit> <commit>..."
--msgstr "git merge-base [-a|--all] <Version> <Version>..."
-+msgstr "git merge-base [-a|--all] <Commit> <Commit>..."
+ #: git-submodule.sh:239
+ #, sh-format
+ msgid "Clone of '$url' into submodule path '$sm_path' failed"
+-msgstr "Klonen von '$url' in Unterprojekt-Pfad '$sm_path' fehlgeschlag=
+en"
++msgstr "Klonen von '$url' in Submodul-Pfad '$sm_path' fehlgeschlagen"
 =20
- #: builtin/merge-base.c:27
- msgid "git merge-base [-a|--all] --octopus <commit>..."
--msgstr "git merge-base [-a|--all] --octopus <Version>..."
-+msgstr "git merge-base [-a|--all] --octopus <Commit>..."
-=20
- #: builtin/merge-base.c:28
- msgid "git merge-base --independent <commit>..."
--msgstr "git merge-base --independent <Version>..."
-+msgstr "git merge-base --independent <Commit>..."
-=20
- #: builtin/merge-base.c:29
- msgid "git merge-base --is-ancestor <commit> <commit>"
--msgstr "git merge-base --is-ancestor <Version> <Version>"
-+msgstr "git merge-base --is-ancestor <Commit> <Commit>"
-=20
- #: builtin/merge-base.c:98
- msgid "output all common ancestors"
--msgstr "Ausgabe aller gemeinsamen Vorfahren"
-+msgstr "Ausgabe aller gemeinsamen Vorg=C3=A4nger-Commits"
-=20
- #: builtin/merge-base.c:99
- msgid "find ancestors for a single n-way merge"
--msgstr "findet Vorfahren f=C3=BCr eine einzelne n-Wege-Zusammenf=C3=BC=
-hrung"
-+msgstr "findet Vorg=C3=A4nger-Commits f=C3=BCr einen einzelnen n-Wege-=
-Merge"
-=20
- #: builtin/merge-base.c:100
- msgid "list revs not reachable from others"
--msgstr "listet Versionen auf, die nicht durch Andere erreichbar sind"
-+msgstr "listet Commits auf, die nicht durch Andere erreichbar sind"
-=20
- #: builtin/merge-base.c:102
- msgid "is the first one ancestor of the other?"
--msgstr "ist der Erste ein Vorfahre von dem Anderen?"
-+msgstr "ist der Erste ein Vorg=C3=A4nger-Commit von dem Anderen?"
-=20
- #: builtin/merge-file.c:8
- msgid ""
-@@ -6716,7 +6709,7 @@ msgstr "sendet Ergebnisse zur Standard-Ausgabe"
-=20
- #: builtin/merge-file.c:34
- msgid "use a diff3 based merge"
--msgstr "verwendet eine diff3 basierte Zusammenf=C3=BChrung"
-+msgstr "verwendet einen diff3 basierten Merge"
-=20
- #: builtin/merge-file.c:35
- msgid "for conflicts, use our version"
-@@ -6756,7 +6749,7 @@ msgstr "erlaubt fehlende Objekte"
-=20
- #: builtin/mktree.c:155
- msgid "allow creation of more than one tree"
--msgstr "erlaubt die Erstellung von mehr als einem Baum"
-+msgstr "erlaubt die Erstellung von mehr als einem \"Tree\"-Objekt"
-=20
- #: builtin/mv.c:14
- msgid "git mv [options] <source>... <destination>"
-@@ -6790,7 +6783,7 @@ msgstr "kann Verzeichnis nicht =C3=BCber Datei ve=
-rschieben"
- #: builtin/mv.c:128
- #, c-format
- msgid "Huh? %.*s is in index?"
--msgstr "Huh? %.*s ist in der Bereitstellung?"
-+msgstr "Huh? %.*s ist zum Commit vorgemerkt?"
-=20
- #: builtin/mv.c:140
- msgid "source directory is empty"
-@@ -6834,7 +6827,7 @@ msgstr "Umbenennung von '%s' fehlgeschlagen"
-=20
- #: builtin/name-rev.c:175
- msgid "git name-rev [options] <commit>..."
--msgstr "git name-rev [Optionen] <Version>..."
-+msgstr "git name-rev [Optionen] <Commit>..."
-=20
- #: builtin/name-rev.c:176
- msgid "git name-rev [options] --all"
-@@ -6850,7 +6843,7 @@ msgstr "zeigt nur Namen an (keine SHA-1)"
-=20
- #: builtin/name-rev.c:230
- msgid "only use tags to name the commits"
--msgstr "verwendet nur Markierungen um die Versionen zu benennen"
-+msgstr "verwendet nur Tags um die Commits zu benennen"
-=20
- #: builtin/name-rev.c:232
- msgid "only use refs matching <pattern>"
-@@ -6858,7 +6851,7 @@ msgstr "verwendet nur Referenzen die <Muster> ent=
-sprechen"
-=20
- #: builtin/name-rev.c:234
- msgid "list all commits reachable from all refs"
--msgstr "listet alle Versionen auf, die von allen Referenzen erreichbar=
- sind"
-+msgstr "listet alle Commits auf, die von allen Referenzen erreichbar s=
-ind"
-=20
- #: builtin/name-rev.c:235
- msgid "read from stdin"
-@@ -7043,7 +7036,8 @@ msgstr "Fehler beim Lesen des Objektes '%s'."
-=20
- #: builtin/notes.c:298
- msgid "Cannot commit uninitialized/unreferenced notes tree"
--msgstr "Kann uninitialisierten/unreferenzierten Notiz-Baum nicht eintr=
-agen."
-+msgstr "Kann uninitialisiertes/unreferenzierte Notiz-Verzeichnis nicht=
- "
-+"committen."
-=20
- #: builtin/notes.c:339
- #, c-format
-@@ -7166,7 +7160,7 @@ msgstr "Allgemeine Optionen"
-=20
- #: builtin/notes.c:865
- msgid "Merge options"
--msgstr "Optionen f=C3=BCr Zusammenf=C3=BChrung"
-+msgstr "Merge-Optionen"
-=20
- #: builtin/notes.c:867
- msgid ""
-@@ -7183,16 +7177,16 @@ msgstr "tr=C3=A4gt nicht zusammengef=C3=BChrte =
-Notizen ein"
- #: builtin/notes.c:871
- msgid "finalize notes merge by committing unmerged notes"
+ #: git-submodule.sh:251
+ #, sh-format
+ msgid "Gitdir '$a' is part of the submodule path '$b' or vice versa"
  msgstr ""
--"schlie=C3=9Ft Zusammenf=C3=BChrung von Notizen ab, in dem nicht zusam=
-mengef=C3=BChrte "
--"Notizen eingetragen werden"
-+"schlie=C3=9Ft Merge von Notizen ab, in dem nicht zusammengef=C3=BChrt=
+-"Git-Verzeichnis '$a' ist Teil des Unterprojekt-Pfades '$b', oder umge=
+kehrt"
++"Git-Verzeichnis '$a' ist Teil des Submodul-Pfades '$b', oder umgekehr=
+t"
+=20
+ #: git-submodule.sh:349
+ #, sh-format
+@@ -10053,7 +10048,7 @@ msgstr "repo URL: '$repo' muss absolut sein ode=
+r mit ./|../ beginnen"
+ #: git-submodule.sh:366
+ #, sh-format
+ msgid "'$sm_path' already exists in the index"
+-msgstr "'$sm_path' existiert bereits in der Bereitstellung"
++msgstr "'$sm_path' ist bereits zum Commit vorgemerkt"
+=20
+ #: git-submodule.sh:370
+ #, sh-format
+@@ -10070,19 +10065,19 @@ msgstr ""
+ #, sh-format
+ msgid "Adding existing repo at '$sm_path' to the index"
+ msgstr ""
+-"F=C3=BCge existierendes Projektarchiv in '$sm_path' der Bereitstellun=
+g hinzu."
++"F=C3=BCge existierendes Repository in '$sm_path' der Staging-Area hin=
+zu."
+=20
+ #: git-submodule.sh:390
+ #, sh-format
+ msgid "'$sm_path' already exists and is not a valid git repo"
+-msgstr "'$sm_path' existiert bereits und ist kein g=C3=BCltiges Git-Pr=
+ojektarchiv"
++msgstr "'$sm_path' existiert bereits und ist kein g=C3=BCltiges Git-Re=
+pository"
+=20
+ #: git-submodule.sh:398
+ #, sh-format
+ msgid "A git directory for '$sm_name' is found locally with remote(s):=
+"
+ msgstr ""
+-"Ein Git-Verzeichnis f=C3=BCr '$sm_name' wurde lokal gefunden mit den =
+=46ernarchiv"
+-"(en):"
++"Ein Git-Verzeichnis f=C3=BCr '$sm_name' wurde lokal gefunden mit den =
+Remote-"
++"Repositories:"
+=20
+ #: git-submodule.sh:400
+ #, sh-format
+@@ -10098,7 +10093,7 @@ msgid ""
+ "use the '--force' option. If the local git directory is not the corre=
+ct repo"
+ msgstr ""
+ "benutzen Sie die Option '--force'. Wenn das lokale Git-Verzeichnis ni=
+cht das "
+-"korrekte Projektarchiv ist"
++"korrekte Repository ist"
+=20
+ #: git-submodule.sh:403
+ #, sh-format
+@@ -10112,23 +10107,23 @@ msgstr ""
+ #: git-submodule.sh:405
+ #, sh-format
+ msgid "Reactivating local git directory for submodule '$sm_name'."
+-msgstr "Reaktiviere lokales Git-Verzeichnis f=C3=BCr Unterprojekt '$sm=
+_name'."
++msgstr "Reaktiviere lokales Git-Verzeichnis f=C3=BCr Submodul '$sm_nam=
+e'."
+=20
+ #: git-submodule.sh:417
+ #, sh-format
+ msgid "Unable to checkout submodule '$sm_path'"
+-msgstr "Unf=C3=A4hig Unterprojekt '$sm_path' auszuchecken"
++msgstr "Unf=C3=A4hig Submodul '$sm_path' auszuchecken"
+=20
+ #: git-submodule.sh:422
+ #, sh-format
+ msgid "Failed to add submodule '$sm_path'"
+-msgstr "Hinzuf=C3=BCgen von Unterprojekt '$sm_path' fehlgeschlagen"
++msgstr "Hinzuf=C3=BCgen von Submodul '$sm_path' fehlgeschlagen"
+=20
+ #: git-submodule.sh:431
+ #, sh-format
+ msgid "Failed to register submodule '$sm_path'"
+ msgstr ""
+-"Fehler beim Eintragen von Unterprojekt '$sm_path' in die Konfiguratio=
+n."
++"Fehler beim Eintragen von Submodul '$sm_path' in die Konfiguration."
+=20
+ #: git-submodule.sh:474
+ #, sh-format
+@@ -10143,48 +10138,48 @@ msgstr "Stoppe bei '$sm_path'; Skript gab nic=
+ht-Null Status zur=C3=BCck."
+ #: git-submodule.sh:532
+ #, sh-format
+ msgid "No url found for submodule path '$sm_path' in .gitmodules"
+-msgstr "Keine URL f=C3=BCr Unterprojekt-Pfad '$sm_path' in .gitmodules=
+ gefunden"
++msgstr "Keine URL f=C3=BCr Submodul-Pfad '$sm_path' in .gitmodules gef=
+unden"
+=20
+ #: git-submodule.sh:541
+ #, sh-format
+ msgid "Failed to register url for submodule path '$sm_path'"
+ msgstr ""
+-"Fehler beim Eintragen der URL f=C3=BCr Unterprojekt-Pfad '$sm_path' i=
+n die "
++"Fehler beim Eintragen der URL f=C3=BCr Submodul-Pfad '$sm_path' in di=
 e "
-+"Notizen committet werden"
+ "Konfiguration."
 =20
- #: builtin/notes.c:873
- msgid "Aborting notes merge resolution"
--msgstr "bricht Konfliktaufl=C3=B6sung bei Zusammenf=C3=BChrung von Not=
-izen ab"
-+msgstr "bricht Konfliktaufl=C3=B6sung beim Merge von Notizen ab"
-=20
- #: builtin/notes.c:875
- msgid "abort notes merge"
--msgstr "bricht Zusammenf=C3=BChrung von Notizen ab"
-+msgstr "bricht Merge von Notizen ab"
-=20
- #: builtin/notes.c:970
- #, c-format
-@@ -7238,12 +7232,12 @@ msgstr "Fehler beim Komprimieren (%d)"
- #: builtin/pack-objects.c:2397
- #, c-format
- msgid "unsupported index version %s"
--msgstr "Nicht unterst=C3=BCtzte Bereitstellungsversion %s"
-+msgstr "Nicht unterst=C3=BCtzte Staging-Area-Version %s"
-=20
- #: builtin/pack-objects.c:2401
- #, c-format
- msgid "bad index version '%s'"
--msgstr "Ung=C3=BCltige Bereitstellungsversion '%s'"
-+msgstr "Ung=C3=BCltige Staging-Area-Version '%s'"
-=20
- #: builtin/pack-objects.c:2424
- #, c-format
-@@ -7342,8 +7336,7 @@ msgstr "schlie=C3=9Ft Objekte ein, die von jeder =
-Referenz erreichbar sind"
- #: builtin/pack-objects.c:2489
- msgid "include objects referred by reflog entries"
+ #: git-submodule.sh:543
+ #, sh-format
+ msgid "Submodule '$name' ($url) registered for path '$sm_path'"
  msgstr ""
--"schlie=C3=9Ft Objekte ein, die von Eintr=C3=A4gen des Referenzprotoko=
-lls referenziert "
--"werden"
-+"schlie=C3=9Ft Objekte ein, die von Eintr=C3=A4gen des Reflogs referen=
-ziert werden"
+-"Unterprojekt '$name' ($url) f=C3=BCr Pfad '$sm_path' in die Konfigura=
+tion "
++"Submodul '$name' ($url) f=C3=BCr Pfad '$sm_path' in die Konfiguration=
+ "
+ "eingetragen"
 =20
- #: builtin/pack-objects.c:2492
- msgid "output pack to stdout"
-@@ -7352,7 +7345,7 @@ msgstr "schreibt Paket in die Standard-Ausgabe"
- #: builtin/pack-objects.c:2494
- msgid "include tag objects that refer to objects to be packed"
+ #: git-submodule.sh:551
+ #, sh-format
+ msgid "Failed to register update mode for submodule path '$sm_path'"
  msgstr ""
--"schlie=C3=9Ft Markierungsobjekte ein, die auf gepackte Objekte refere=
-nzieren"
-+"schlie=C3=9Ft Tag-Objekte ein, die auf gepackte Objekte referenzieren=
+-"Fehler bei =C3=84nderung des Aktualisierungsmodus f=C3=BCr Unterproje=
+kt-Pfad "
++"Fehler bei =C3=84nderung des Aktualisierungsmodus f=C3=BCr Submodul-P=
+fad "
+ "'$sm_path' in der Konfiguration."
+=20
+ #: git-submodule.sh:588
+ #, sh-format
+ msgid "Use '.' if you really want to deinitialize all submodules"
+ msgstr ""
+-"Verwenden Sie '.' wenn Sie wirklich alle Unterprojekte\n"
++"Verwenden Sie '.' wenn Sie wirklich alle Submodule\n"
+ "deinitialisieren m=C3=B6chten."
+=20
+ #: git-submodule.sh:603
+ #, sh-format
+ msgid "Submodule work tree '$sm_path' contains a .git directory"
+ msgstr ""
+-"Arbeitsbaum des Unterprojekts in '$sm_path' enth=C3=A4lt ein .git-Ver=
+zeichnis"
++"Arbeitsverzeichnis des Submoduls in '$sm_path' enth=C3=A4lt ein .git-=
+Verzeichnis"
+=20
+ #: git-submodule.sh:604
+ #, sh-format
+ msgid ""
+ "(use 'rm -rf' if you really want to remove it including all of its hi=
+story)"
+ msgstr ""
+-"(benutzen Sie 'rm -rf' wenn Sie dieses Unterprojekt wirklich mitsamt\=
+n"
++"(benutzen Sie 'rm -rf' wenn Sie dieses Submodul wirklich mitsamt\n"
+ "seiner Historie l=C3=B6schen m=C3=B6chten)"
+=20
+ #: git-submodule.sh:610
+@@ -10193,7 +10188,7 @@ msgid ""
+ "Submodule work tree '$sm_path' contains local modifications; use '-f'=
+ to "
+ "discard them"
+ msgstr ""
+-"Arbeitsbaum von Unterprojekt in '$sm_path' enth=C3=A4lt lokale =C3=84=
+nderungen; "
++"Arbeitsverzeichnis von Submodul in '$sm_path' enth=C3=A4lt lokale =C3=
+=84nderungen; "
+ "verwenden Sie '-f' um diese zu verwerfen"
+=20
+ #: git-submodule.sh:613
+@@ -10204,19 +10199,19 @@ msgstr "Verzeichnis '$sm_path' bereinigt."
+ #: git-submodule.sh:614
+ #, sh-format
+ msgid "Could not remove submodule work tree '$sm_path'"
+-msgstr "Konnte Arbeitsbaum des Unterprojektes in '$sm_path' nicht l=C3=
+=B6schen."
++msgstr "Konnte Arbeitsverzeichnis des Submoduls in '$sm_path' nicht l=C3=
+=B6schen."
+=20
+ #: git-submodule.sh:617
+ #, sh-format
+ msgid "Could not create empty submodule directory '$sm_path'"
+ msgstr ""
+-"Konnte kein leeres Verzeichnis f=C3=BCr Unterprojekt in '$sm_path' er=
+stellen."
++"Konnte kein leeres Verzeichnis f=C3=BCr Submodul in '$sm_path' erstel=
+len."
+=20
+ #: git-submodule.sh:626
+ #, sh-format
+ msgid "Submodule '$name' ($url) unregistered for path '$sm_path'"
+ msgstr ""
+-"Unterprojekt '$name' ($url) f=C3=BCr Pfad '$sm_path' wurde aus der Ko=
+nfiguration "
++"Submodul '$name' ($url) f=C3=BCr Pfad '$sm_path' wurde aus der Konfig=
+uration "
+ "entfernt."
+=20
+ #: git-submodule.sh:731
+@@ -10225,63 +10220,62 @@ msgid ""
+ "Submodule path '$prefix$sm_path' not initialized\n"
+ "Maybe you want to use 'update --init'?"
+ msgstr ""
+-"Unterprojekt-Pfad '$prefix$sm_path' ist nicht initialisiert.\n"
++"Submodul-Pfad '$prefix$sm_path' ist nicht initialisiert.\n"
+ "Vielleicht m=C3=B6chten Sie 'update --init' benutzen?"
+=20
+ #: git-submodule.sh:744
+ #, sh-format
+ msgid "Unable to find current revision in submodule path '$prefix$sm_p=
+ath'"
+ msgstr ""
+-"Konnte aktuelle Revision in Unterprojekt-Pfad '$prefix$sm_path' nicht=
+ finden."
++"Konnte aktuelle Revision in Submodul-Pfad '$prefix$sm_path' nicht fin=
+den."
+=20
+ #: git-submodule.sh:753
+ #, sh-format
+ msgid "Unable to fetch in submodule path '$sm_path'"
+-msgstr "Konnte in Unterprojekt-Pfad '$sm_path' nicht anfordern"
++msgstr "Konnte \"fetch\" in Submodul-Pfad '$sm_path' nicht ausf=C3=BCh=
+ren"
+=20
+ #: git-submodule.sh:777
+ #, sh-format
+ msgid "Unable to fetch in submodule path '$prefix$sm_path'"
+-msgstr "Konnte in Unterprojekt-Pfad '$prefix$sm_path' nicht anfordern"
++msgstr "Konnte \"fetch\" in Submodul-Pfad '$prefix$sm_path' nicht ausf=
+=C3=BChren"
+=20
+ #: git-submodule.sh:791
+ #, sh-format
+ msgid "Unable to rebase '$sha1' in submodule path '$prefix$sm_path'"
+ msgstr ""
+-"Neuaufbau von '$sha1' in Unterprojekt-Pfad '$prefix$sm_path' nicht m=C3=
+=B6glich"
++"Rebase auf '$sha1' in Submodul-Pfad '$prefix$sm_path' nicht m=C3=B6gl=
+ich"
+=20
+ #: git-submodule.sh:792
+ #, sh-format
+ msgid "Submodule path '$prefix$sm_path': rebased into '$sha1'"
+-msgstr "Unterprojekt-Pfad '$prefix$sm_path': neu aufgebaut in '$sha1'"
++msgstr "Submodul-Pfad '$prefix$sm_path': Rebase auf '$sha1'"
+=20
+ #: git-submodule.sh:797
+ #, sh-format
+ msgid "Unable to merge '$sha1' in submodule path '$prefix$sm_path'"
+ msgstr ""
+-"Zusammenf=C3=BChrung von '$sha1' in Unterprojekt-Pfad '$prefix$sm_pat=
+h' "
+-"fehlgeschlagen"
++"Merge von '$sha1' in Submodul-Pfad '$prefix$sm_path' fehlgeschlagen"
+=20
+ #: git-submodule.sh:798
+ #, sh-format
+ msgid "Submodule path '$prefix$sm_path': merged in '$sha1'"
+-msgstr "Unterprojekt-Pfad '$prefix$sm_path': zusammengef=C3=BChrt in '=
+$sha1'"
++msgstr "Submodul-Pfad '$prefix$sm_path': zusammengef=C3=BChrt in '$sha=
+1'"
+=20
+ #: git-submodule.sh:803
+ #, sh-format
+ msgid "Unable to checkout '$sha1' in submodule path '$prefix$sm_path'"
+ msgstr ""
+-"Konnte '$sha1' in Unterprojekt-Pfad '$prefix$sm_path' nicht auschecke=
+n."
++"Konnte '$sha1' in Submodul-Pfad '$prefix$sm_path' nicht auschecken."
+=20
+ #: git-submodule.sh:804
+ #, sh-format
+ msgid "Submodule path '$prefix$sm_path': checked out '$sha1'"
+-msgstr "Unterprojekt-Pfad: '$prefix$sm_path': '$sha1' ausgecheckt"
++msgstr "Submodul-Pfad: '$prefix$sm_path': '$sha1' ausgecheckt"
+=20
+ #: git-submodule.sh:831
+ #, sh-format
+ msgid "Failed to recurse into submodule path '$prefix$sm_path'"
+-msgstr "Fehler bei Rekursion in Unterprojekt-Pfad '$prefix$sm_path'"
++msgstr "Fehler bei Rekursion in Submodul-Pfad '$prefix$sm_path'"
+=20
+ #: git-submodule.sh:939
+ msgid "The --cached option cannot be used with the --files option"
+@@ -10297,18 +10291,18 @@ msgstr "unerwarteter Modus $mod_dst"
+ #: git-submodule.sh:997
+ #, sh-format
+ msgid "  Warn: $name doesn't contain commit $sha1_src"
+-msgstr "  Warnung: $name beinhaltet nicht Version $sha1_src"
++msgstr "  Warnung: $name beinhaltet nicht Commit $sha1_src"
+=20
+ #: git-submodule.sh:1000
+ #, sh-format
+ msgid "  Warn: $name doesn't contain commit $sha1_dst"
+-msgstr "  Warnung: $name beinhaltet nicht Version $sha1_dst"
++msgstr "  Warnung: $name beinhaltet nicht Commit $sha1_dst"
+=20
+ #: git-submodule.sh:1003
+ #, sh-format
+ msgid "  Warn: $name doesn't contain commits $sha1_src and $sha1_dst"
+ msgstr ""
+-"  Warnung: $name beinhaltet nicht die Versionen $sha1_src und $sha1_d=
+st"
++"  Warnung: $name beinhaltet nicht die Commits $sha1_src und $sha1_dst=
 "
 =20
- #: builtin/pack-objects.c:2496
- msgid "keep unreachable objects"
-@@ -7380,7 +7373,7 @@ msgstr "Komprimierungsgrad f=C3=BCr Paketierung"
+ #: git-submodule.sh:1028
+ msgid "blob"
+@@ -10316,21 +10310,21 @@ msgstr "Blob"
 =20
- #: builtin/pack-objects.c:2507
- msgid "do not hide commits by grafts"
--msgstr "verbirgt keine Versionen mit k=C3=BCnstlichen Vorg=C3=A4ngern =
-(\"grafts\")"
-+msgstr "verbirgt keine Commits mit k=C3=BCnstlichen Vorg=C3=A4ngern (\=
-"grafts\")"
+ #: git-submodule.sh:1066
+ msgid "Submodules changed but not updated:"
+-msgstr "Unterprojekte ge=C3=A4ndert, aber nicht aktualisiert:"
++msgstr "Submodule ge=C3=A4ndert, aber nicht aktualisiert:"
 =20
- #: builtin/pack-refs.c:6
- msgid "git pack-refs [options]"
-@@ -7400,7 +7393,7 @@ msgstr "git prune-packed [-n|--dry-run] [-q|--qui=
-et]"
+ #: git-submodule.sh:1068
+ msgid "Submodule changes to be committed:"
+-msgstr "=C3=84nderungen in Unterprojekt zum Eintragen:"
++msgstr "=C3=84nderungen in Submodul zum Committen:"
 =20
- #: builtin/prune.c:12
- msgid "git prune [-n] [-v] [--expire <time>] [--] [<head>...]"
--msgstr "git prune [-n] [-v] [--expire <Zeit>] [--] [<Zweigspitze>...]"
-+msgstr "git prune [-n] [-v] [--expire <Zeit>] [--] [<head>...]"
+ #: git-submodule.sh:1153
+ #, sh-format
+ msgid "Failed to recurse into submodule path '$sm_path'"
+-msgstr "Fehler bei Rekursion in Unterprojekt-Pfad '$sm_path'"
++msgstr "Fehler bei Rekursion in Submodul-Pfad '$sm_path'"
 =20
- #: builtin/prune.c:132
- msgid "do not remove, show only"
-@@ -7416,11 +7409,11 @@ msgstr "l=C3=A4sst Objekte =C3=A4lter als <Zeit=
-> verfallen"
+ #: git-submodule.sh:1216
+ #, sh-format
+ msgid "Synchronizing submodule url for '$prefix$sm_path'"
+-msgstr "Synchronisiere Unterprojekt-URL f=C3=BCr '$prefix$sm_path'"
++msgstr "Synchronisiere Submodul-URL f=C3=BCr '$prefix$sm_path'"
 =20
- #: builtin/push.c:14
- msgid "git push [<options>] [<repository> [<refspec>...]]"
--msgstr "git push [<Optionen>] [<Projektarchiv> [<Referenzspezifikation=
->...]]"
-+msgstr "git push [<Optionen>] [<Repository> [<Refspec>...]]"
-=20
- #: builtin/push.c:45
- msgid "tag shorthand without <tag>"
--msgstr "Kurzschrift f=C3=BCr Markierung ohne <Markierung>"
-+msgstr "Kurzschrift f=C3=BCr Tag ohne <Tag>"
-=20
- #: builtin/push.c:64
- msgid "--delete only accepts plain target ref names"
-@@ -7449,14 +7442,14 @@ msgid ""
- "    git push %s %s\n"
- "%s"
- msgstr ""
--"Der Name des externen =C3=9Cbernahmezweiges stimmt nicht mit dem Name=
-n Ihres\n"
--"aktuellen Zweiges =C3=BCberein. Um auf den =C3=9Cbernahmezweig in dem=
- externen\n"
--"Projektarchiv zu versenden, benutzen Sie:\n"
-+"Der Name des Upstream-Branches stimmt nicht mit dem Namen Ihres\n"
-+"aktuellen Branches =C3=BCberein. Um auf den Upstream-Branch in dem Re=
-mote-\n"
-+"Repository zu versenden, benutzen Sie:\n"
- "\n"
- "    git push %s HEAD:%s\n"
- "\n"
--"Um auf den Zweig mit dem selben Namen in dem externen Projekarchiv\n"
--"zu versenden, benutzen Sie:\n"
-+"Um auf den Branch mit dem selben Namen im Remote-Repository zu versen=
-den,\n"
-+"benutzen Sie:\n"
- "\n"
- "    git push %s %s\n"
- "%s"
-@@ -7470,11 +7463,11 @@ msgid ""
- "\n"
- "    git push %s HEAD:<name-of-remote-branch>\n"
- msgstr ""
--"Sie befinden sich im Moment auf keinem Zweig.\n"
--"Um die Historie, f=C3=BChrend zum aktuellen (freistehende Zweigspitze=
- (HEAD))\n"
-+"Sie befinden sich im Moment auf keinem Branch.\n"
-+"Um die Historie, f=C3=BChrend zum aktuellen (losgel=C3=B6ster HEAD)\n=
-"
- "Status zu versenden, benutzen Sie\n"
- "\n"
--"    git push %s HEAD:<Name-des-externen-Zweiges>\n"
-+"    git push %s HEAD:<Name-des-Remote-Branches>\n"
-=20
- #: builtin/push.c:128
- #, c-format
+ #~ msgid "It took %.2f seconds to enumerate untracked files.  'status =
+-uno'"
+ #~ msgstr ""
 --=20
 1.8.2.1230.g519726a
