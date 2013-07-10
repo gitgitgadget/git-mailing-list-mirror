@@ -1,96 +1,68 @@
-From: Kyle McKay <mackyle@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: What's cooking in git.git (Jul 2013, #03; Tue, 9)
-Date: Wed, 10 Jul 2013 00:00:00 -0700
-Message-ID: <D0E044B4-7252-41CB-A478-BCAC9EAE4AD5@gmail.com>
+Date: Wed, 10 Jul 2013 10:10:16 +0200
+Message-ID: <vpq7ggyal93.fsf@anie.imag.fr>
 References: <7vr4f7tjo0.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	David Rothenberger <daveroth@acm.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 10 09:00:14 2013
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Benoit Person <Benoit.Person@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Wed Jul 10 10:10:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwoNp-0003k1-Fl
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 09:00:13 +0200
+	id 1UwpTy-00007t-Pu
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 10:10:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345Ab3GJHAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jul 2013 03:00:06 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:62956 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751097Ab3GJHAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jul 2013 03:00:05 -0400
-Received: by mail-pa0-f52.google.com with SMTP id kq13so6358378pab.11
-        for <git@vger.kernel.org>; Wed, 10 Jul 2013 00:00:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc:x-mailer;
-        bh=9mKd+JMCQlzyYpZNq/G10puXAO7v0kzCPK69JdQkIxU=;
-        b=E/I+qIfkSIUBNnRYxg4egcliFHHIPM+I0UxMnIcRMefEbHsnkvot7WqyNNT8rsWMSH
-         odlJQC3W6rmtslbdJ354e99elY6kPktNHM1rKBViiMboQDDuX0KUe6unrVLj9MaAdHDP
-         BDMBGJ4PSoHU4gcPppvJOro/myUbtt8GyUEA1kv/SWXlBnc7o0mHX+V8YqdOwUTlE/Xv
-         YD4z5Wmy5RmbKWPWQg4v/og7LQ3oBJIpk9L1LI4+4mqFn9x+MwiE2RYj0Bu3Reyi/D2q
-         g4esQSNI8I5HvgzDYka/kP6mc2BEPjZK2o/wO8163f5DpotQBjUYEL9XtGNduc47dyzg
-         A/+Q==
-X-Received: by 10.66.150.9 with SMTP id ue9mr27930480pab.88.1373439604473;
-        Wed, 10 Jul 2013 00:00:04 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id ix3sm32314626pbc.37.2013.07.10.00.00.02
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 10 Jul 2013 00:00:03 -0700 (PDT)
-In-Reply-To: <7vr4f7tjo0.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.936)
+	id S1751331Ab3GJIKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jul 2013 04:10:32 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:54690 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750736Ab3GJIKa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jul 2013 04:10:30 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r6A8AFX9014205
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 10 Jul 2013 10:10:15 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@imag.fr>)
+	id 1UwpTc-0004Rm-N8; Wed, 10 Jul 2013 10:10:16 +0200
+In-Reply-To: <7vr4f7tjo0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 09 Jul 2013 16:09:35 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 10 Jul 2013 10:10:17 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r6A8AFX9014205
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1374048619.35092@wmeUWR1YP5WEWtZ0sPLrdg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230031>
 
-On Jul 9, 2013, at 16:09, Junio C Hamano wrote:
-> * km/svn-1.8-serf-only (2013-07-07) 2 commits
-> - git-svn: allow git-svn fetching to work using serf
-> - Git.pm: add new temp_is_locked function
+Junio C Hamano <gitster@pobox.com> writes:
+
+> * bp/mediawiki-preview (2013-07-08) 7 commits
+>  - git-remote-mediawiki: add preview subcommand into git mw
+>  - git-remote-mediawiki: add git-mw command
+>  - git-remote-mediawiki: factoring code between git-remote-mediawiki and Git::Mediawiki
+>  - git-remote-mediawiki: update tests to run with the new bin-wrapper
+>  - git-remote-mediawiki: add a git bin-wrapper for developement
+>  - wrap-for-bin: make bin-wrappers chainable
+>  - git-remote-mediawiki: introduction of Git::Mediawiki.pm
 >
-> Comments?
+>  Looks like this is in a fairly good shape?
 
+Yes it is. I think all remarks have been taken into account.
 
-Since neither David nor Jonathan have piped in here (they were the two  
-primarily involved in the discussion).
-
-On Jul 8, 2013, at 09:22, Junio C Hamano wrote:
-> "Kyle J. McKay" <mackyle@gmail.com> writes:
->
->> From: "Kyle J. McKay" <mackyle@gmail.com>
->> Subject: Re: [PATCH v3 0/2] allow git-svn fetching to work using serf
->>
->> This patch allows git-svn to fetch successfully using the
->> serf library when given an https?: url to fetch from.
->>
->> [...]
->
-> Thanks; I've queued this version to 'pu' at least tentatively.
->
-> Is everybody who discussed the issue happy with the direction of
-> this patch?
-
-I will add that David previously indicated this patch works for him:
-
-On Jul 6, 2013, at 00:17, David Rothenberger wrote:
-> On 7/5/2013 8:41 PM, Kyle McKay wrote:
->> This patch allows git-svn to fetch successfully using the
->> serf library when given an https?: url to fetch from.
->
-> Thanks, Kyle. I confirm this is working for my problem cases as
-> well.
-
-Subversion 1.8.0 was released less than a month ago on 2013-06-18 so  
-there probably aren't too many git-svn users affected by this just yet.
-
-Kyle
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
