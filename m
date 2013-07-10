@@ -1,68 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: What's cooking in git.git (Jul 2013, #03; Tue, 9)
-Date: Wed, 10 Jul 2013 10:10:16 +0200
-Message-ID: <vpq7ggyal93.fsf@anie.imag.fr>
-References: <7vr4f7tjo0.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH/RFC] blame: accept multiple -L ranges
+Date: Wed, 10 Jul 2013 11:18:26 +0200
+Message-ID: <87mwpuepst.fsf@linux-k42r.v.cablecom.net>
+References: <1373186706-19284-1-git-send-email-sunshine@sunshineco.com>
+	<7vk3l26695.fsf@alter.siamese.dyndns.org>
+	<CAPig+cQ9sfV+PRqn5vrL0=xOZrKDDmsKdAPiB4PsCFb=jnk4kQ@mail.gmail.com>
+	<7v38rnwuvb.fsf@alter.siamese.dyndns.org>
+	<87ehb7d3za.fsf@hexa.v.cablecom.net>
+	<CAPig+cT9U7L-03Fe5YLft=WS2EZY1B_BhLzkM_sT_3wQQ1g1MQ@mail.gmail.com>
+	<7vy59fv9zr.fsf@alter.siamese.dyndns.org>
+	<87a9lvcztv.fsf@hexa.v.cablecom.net>
+	<7vppurv8bl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Benoit Person <Benoit.Person@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 10 10:10:39 2013
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 10 11:18:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UwpTy-00007t-Pu
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 10:10:39 +0200
+	id 1UwqXh-00014K-NZ
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Jul 2013 11:18:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751331Ab3GJIKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jul 2013 04:10:32 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:54690 "EHLO rominette.imag.fr"
+	id S1753962Ab3GJJS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jul 2013 05:18:29 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:26089 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750736Ab3GJIKa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jul 2013 04:10:30 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r6A8AFX9014205
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 10 Jul 2013 10:10:15 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@imag.fr>)
-	id 1UwpTc-0004Rm-N8; Wed, 10 Jul 2013 10:10:16 +0200
-In-Reply-To: <7vr4f7tjo0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 09 Jul 2013 16:09:35 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 10 Jul 2013 10:10:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r6A8AFX9014205
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@imag.fr
-MailScanner-NULL-Check: 1374048619.35092@wmeUWR1YP5WEWtZ0sPLrdg
+	id S1753381Ab3GJJS3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jul 2013 05:18:29 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 10 Jul
+ 2013 11:18:22 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Wed, 10 Jul 2013 11:18:26 +0200
+In-Reply-To: <7vppurv8bl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 09 Jul 2013 12:31:42 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230032>
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> * bp/mediawiki-preview (2013-07-08) 7 commits
->  - git-remote-mediawiki: add preview subcommand into git mw
->  - git-remote-mediawiki: add git-mw command
->  - git-remote-mediawiki: factoring code between git-remote-mediawiki and Git::Mediawiki
->  - git-remote-mediawiki: update tests to run with the new bin-wrapper
->  - git-remote-mediawiki: add a git bin-wrapper for developement
->  - wrap-for-bin: make bin-wrappers chainable
->  - git-remote-mediawiki: introduction of Git::Mediawiki.pm
+> Thomas Rast <trast@inf.ethz.ch> writes:
 >
->  Looks like this is in a fairly good shape?
+>> If you define it that way, the output of
+>>
+>>   git blame -L 4,6; git blame -L /A/,+20
+>>
+>> is significantly different from
+>>
+>>   git blame -L 4,6 -L /A/,+20
+>>
+>> Not just in the presentation or any possible coalescing, but in the
+>> meaning of the ranges.
+>>
+>> Do you really want to make it that way?
+>
+> Absolutely.  The primary reason I want to be able to specify two
+> ranges at the same time is to follow two functions in a file that
+> appear in separate places, and /A/ might not be unique.  When I want
+> to say "I want to see from here to there, and then from here to
+> there, and then from here to there", it would be very frustrating if
+> "and then" resets what I mean by "here" every time and make these
+> three evaluated independently.
 
-Yes it is. I think all remarks have been taken into account.
+Ok, fair enough.  That is at least an argument other than "trust me, I
+care deeply" :-)
+
+But still, log -L should then be changed to match this behavior (for all
+args affecting a single file).  Currently it always does the scan for
+the start of the range from line 1 of the file.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thomas Rast
+trast@{inf,student}.ethz.ch
