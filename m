@@ -1,331 +1,331 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/4] t4203: test mailmap functionality directly rather than indirectly
-Date: Thu, 11 Jul 2013 12:07:33 -0700
-Message-ID: <7vhag0rk3u.fsf@alter.siamese.dyndns.org>
-References: <1373554528-15775-1-git-send-email-sunshine@sunshineco.com>
-	<1373554528-15775-4-git-send-email-sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] config: add support for http.<url>.* settings
+Date: Thu, 11 Jul 2013 12:26:47 -0700
+Message-ID: <7vd2qorj7s.fsf@alter.siamese.dyndns.org>
+References: <26507a43bd82855050b90f6a2b9d01bd@f74d39fa044aa309eaea14b9f57fe79c>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Jul 11 21:07:52 2013
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Petr Baudis <pasky@ucw.cz>, Jeff King <peff@peff.net>,
+	Daniel Knittl-Frank <knittl89@googlemail.com>,
+	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+	Alejandro Mery <amery@geeks.cl>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 11 21:26:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxMDS-0007XG-Pi
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 21:07:47 +0200
+	id 1UxMW1-00007f-6O
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 21:26:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756572Ab3GKTHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jul 2013 15:07:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33952 "EHLO
+	id S1754513Ab3GKT0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jul 2013 15:26:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50878 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756435Ab3GKTHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jul 2013 15:07:42 -0400
+	id S1751584Ab3GKT0v (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jul 2013 15:26:51 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BDED92F629;
-	Thu, 11 Jul 2013 19:07:39 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AEB52F629;
+	Thu, 11 Jul 2013 19:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OIfFVaoiXdanql5Ejl3YQ7Lvnj8=; b=Cr29hD
-	XG+rvXgJi5glyXsJovIfIhQQvhGYqcdWSQn/lCM4njdzdJk1NugN/DWdQKTP0VW1
-	DcLc2ERKVz2eG0d81oyinFaZ+70X5Na9wE14om3A8IRB5UXy6BIGwixtIS54NsgZ
-	ACwkcvxSvop8UAEnXp6QSIiYDYUwU551VZOQo=
+	:content-type; s=sasl; bh=/cecpfv+qsDsq3dKS8qZTfpZCyA=; b=h/j8RF
+	cMQy9YIfccv0sfh7oc9w4dKGHX1+Z62bM4TmhEuqQZkuPC31pnmfBZVxnZueCefl
+	bkv/nYlmhpyv/aJsnqzkWk67malriHURznLDND/C4OcJIS7drGOvduQUUB5OsTba
+	TGY1bVjMMV/l86/yObI8YNqe3Hip9lD5ood/Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jUIIqQlQP90cLnXuGX0LTG26qhOiu09P
-	MkOxdiShizLLgMCHtf/WV3AEkQtY2+h3JhGH9sOcm6O33qlar6Nd/6Y4F5M4niHL
-	o6+01H8nl4FqL0HROuxbUDmqWe+9wf6Go5fiyQuo6SYvMac36mjzRuygkjJyb7fA
-	q7YKQSLg9E0=
+	:content-type; q=dns; s=sasl; b=fAU0Q14aH08JPGUZfEyui0rwEUOPOv1I
+	2ozdfUnVKKi7ZNe1Nww62Z/yfJME8zhEbqCVM8VSyiGiUV7gVsnZa12dpS8BFklO
+	ZVLGaZrwyZF/DKCOLXgMG4wulJup19aRwNhzKUI6sml4cS+gMcPHbFjnz12PunNT
+	pQb/ehaFzq4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8F622F615;
-	Thu, 11 Jul 2013 19:07:37 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B98E2F627;
+	Thu, 11 Jul 2013 19:26:50 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE7FB2F5F8;
-	Thu, 11 Jul 2013 19:07:34 +0000 (UTC)
-In-Reply-To: <1373554528-15775-4-git-send-email-sunshine@sunshineco.com> (Eric
-	Sunshine's message of "Thu, 11 Jul 2013 10:55:27 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B63852F61D;
+	Thu, 11 Jul 2013 19:26:48 +0000 (UTC)
+In-Reply-To: <26507a43bd82855050b90f6a2b9d01bd@f74d39fa044aa309eaea14b9f57fe79c>
+	(Kyle J. McKay's message of "Thu, 11 Jul 2013 09:47:15 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 251AD6AE-EA5D-11E2-89B2-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D4DBA99A-EA5F-11E2-932E-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230127>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+"Kyle J. McKay" <mackyle@gmail.com> writes:
 
-> With the introduction of check-mailmap, it is now possible to check
-> .mailmap functionality directly rather than indirectly as a side-effect
-> of other commands (such as git-shortlog), therefore, do so.
+> Longer matches take precedence over shorter matches with
+> environment variable settings taking precedence over all.
 
-Does this patch mean that we will now ignore future breakages in
-shortlog and blame if their mailmap integration becomes buggy?
+OK.
 
-I am not convinced it is a good idea if that is what is going on.
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index b4d4887..3731a3a 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1531,6 +1531,17 @@ http.useragent::
+>  	of common USER_AGENT strings (but not including those like git/1.7.1).
+>  	Can be overridden by the 'GIT_HTTP_USER_AGENT' environment variable.
+>  
+> +http.<url>.*::
+> +	Any of the http.* options above can be applied selectively to some urls.
+> +	For example "http.https://example.com.useragent" would set the user
+> +	agent only for https connections to example.com.  The <url> value
+> +	matches a url if it is an exact match or a prefix of the url matching
+> +	at a '/' boundary.  Longer <url> matches take precedence over shorter
+> +	ones with the environment variable settings taking precedence over all.
+> +	Note that <url> must match the url exactly (other than possibly being a
+> +	prefix).  This means any user, password and/or port setting that appears
+> +	in a url must also appear in <url> to have a successful match.
+> +
 
->
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
->  t/t4203-mailmap.sh | 133 ++++++++++++++++++-----------------------------------
->  1 file changed, 45 insertions(+), 88 deletions(-)
->
-> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-> index 8645492..48a000b 100755
-> --- a/t/t4203-mailmap.sh
-> +++ b/t/t4203-mailmap.sh
-> @@ -74,128 +74,96 @@ test_expect_success 'check-mailmap bogus contact' '
->  '
+OK.
+
+> diff --git a/http.c b/http.c
+> index 2d086ae..68dc789 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -30,6 +30,34 @@ static CURL *curl_default;
 >  
->  cat >expect <<\EOF
-> -A U Thor (1):
-> -      initial
-> -
-> -nick1 (1):
-> -      second
-> -
-> +A U Thor <author@example.com>
-> +nick1 <bugs@company.xx>
->  EOF
+>  char curl_errorstr[CURL_ERROR_SIZE];
 >  
->  test_expect_success 'No mailmap' '
-> -	git shortlog HEAD >actual &&
-> +	git check-mailmap --stdin <contacts >actual &&
->  	test_cmp expect actual
->  '
+> +enum http_option_type {
+> +	opt_post_buffer = 0,
+> +	opt_min_sessions,
+> +#ifdef USE_CURL_MULTI
+> +	opt_max_requests,
+> +#endif
+> +	opt_ssl_verify,
+> +	opt_ssl_try,
+> +	opt_ssl_cert,
+> +#if LIBCURL_VERSION_NUM >= 0x070903
+> +	opt_ssl_key,
+> +#endif
+> +#if LIBCURL_VERSION_NUM >= 0x070908
+> +	opt_ssl_capath,
+> +#endif
+> +	opt_ssl_cainfo,
+> +	opt_low_speed,
+> +	opt_low_time,
+> +	opt_no_epsv,
+> +	opt_http_proxy,
+> +	opt_cookie_file,
+> +	opt_user_agent,
+> +	opt_passwd_req,
+> +	opt_max
+> +};
+> +
+> +static int http_option_maxlen[opt_max];
+
+I understand that this is to keep track of the length of the longest
+one that has matched (hence the current candidate).  The name "maxlen"
+captures the "longest" part, but "has matched" is somehow lost.
+
+Can we have a better name here please, or at least a comment to
+clarify what this variable keeps track of.
+
+>  static int curl_ssl_verify = -1;
+>  static int curl_ssl_try;
+>  static const char *ssl_cert;
+> @@ -141,34 +169,99 @@ static void process_curl_messages(void)
+>  }
+>  #endif
 >  
->  cat >expect <<\EOF
-> -Repo Guy (1):
-> -      initial
-> -
-> -nick1 (1):
-> -      second
-> -
-> +Repo Guy <author@example.com>
-> +nick1 <bugs@company.xx>
->  EOF
+> +static int http_options_url_match_prefix(const char *url, const char *url_prefix)
+> +{
+> +	/*
+> +	 * url_prefix matches url if url_prefix is an exact match for url or it
+> +	 * is a prefix of url and the match ends on a path component boundary.
+> +	 * url_prefix is considered to have an implicit '/' on the end for
+> +	 * matching purposes if it does not already and it is shorter than url.
+> +	 * the return value is the length of the match in characters (excluding
+> +	 * any final '/') or 0 for no match.
+> +	 */
+> +	size_t url_len, url_prefix_len = strlen(url_prefix);
+> +	if (!url_prefix_len || strncmp(url, url_prefix, url_prefix_len))
+> +		return 0;
+
+Should "url=http://git.or.xz/git" match "url_prefix=http://git.or.xz/git/"?
+
+> +	url_len = strlen(url);
+> +	if (url_len == url_prefix_len || url[url_prefix_len - 1] == '/' || url[url_prefix_len] == '/')
+> +		return url[url_prefix_len - 1] == '/' ? url_prefix_len - 1 : url_prefix_len;
+
+Overlong lines that are somewhat hard to read.
+
+> +	return 0;
+> +}
+> +
+>  static int http_options(const char *var, const char *value, void *cb)
+>  {
+> -	if (!strcmp("http.sslverify", var)) {
+> +/*
+> + * Macro to ignore matches with a match length less than previously seen
+> + * for the same option type and to remember the largest match length seen so
+> + * far for each option type
+> + */
+> +#define CHECK_MATCHLEN(opt) \
+> +	if (http_option_maxlen[opt] > matchlen) return 0; \
+> +	else http_option_maxlen[opt] = matchlen
+
+Avoid defining a macro _inside_ a function.  Also if you can make it
+a static function, that would be much easier to read.
+
+> +
+> +	const char *url = (const char *)cb;
+> +	const char *key, *dot;
+> +	int matchlen = 0;
+
+> +	key = skip_prefix(var, "http.");
+> +	if (!key)
+> +		return git_default_config(var, value, cb);
+> +
+> +	/*
+> +	 * If the part following the leading "http." contains a '.' then check
+> +	 * to see if the part between "http." and the last '.' is a match to
+> +	 * url.  if it's not then ignore the setting.  Otherwise set key to
+> +	 * point to the option which is the final part after the final '.' and
+> +	 * use key in subsequent comparisons to determine the option type.
+> +	 */
+> +	dot = strrchr(key, '.');
+> +	if (dot) {
+> +		char *config_url = xmemdupz(key, dot - key);
+> +		matchlen = http_options_url_match_prefix(url, config_url);
+> +		free(config_url);
+
+Yikes.  http_options_url_match_prefix() could take a counted string
+to config_url to avoind this repeated allocation and deallocation,
+no?
+
+> +		if (!matchlen)
+> +			return 0;
+> +		key = dot + 1;
+> +	}
+> +
+> +	if (!strcmp("sslverify", key)) {
+> +		CHECK_MATCHLEN(opt_ssl_verify);
+>  		curl_ssl_verify = git_config_bool(var, value);
+>  		return 0;
+>  	}
+> -	if (!strcmp("http.sslcert", var))
+> +	if (!strcmp("sslcert", key)) {
+> +		CHECK_MATCHLEN(opt_ssl_cert);
+>  		return git_config_string(&ssl_cert, var, value);
+> +	}
+>  #if LIBCURL_VERSION_NUM >= 0x070903
+> -	if (!strcmp("http.sslkey", var))
+> +	if (!strcmp("sslkey", key)) {
+> +		CHECK_MATCHLEN(opt_ssl_key);
+>  		return git_config_string(&ssl_key, var, value);
+> +	}
+>  #endif
+>  #if LIBCURL_VERSION_NUM >= 0x070908
+> -	if (!strcmp("http.sslcapath", var))
+> +	if (!strcmp("sslcapath", key)) {
+> +		CHECK_MATCHLEN(opt_ssl_capath);
+>  		return git_config_string(&ssl_capath, var, value);
+> +	}
+>  #endif
+> -	if (!strcmp("http.sslcainfo", var))
+> +	if (!strcmp("sslcainfo", key)) {
+> +		CHECK_MATCHLEN(opt_ssl_cainfo);
+>  		return git_config_string(&ssl_cainfo, var, value);
+> -	if (!strcmp("http.sslcertpasswordprotected", var)) {
+> +	}
+> +	if (!strcmp("sslcertpasswordprotected", key)) {
+> +		CHECK_MATCHLEN(opt_passwd_req);
+>  		if (git_config_bool(var, value))
+>  			ssl_cert_password_required = 1;
+>  		return 0;
+>  	}
+> -	if (!strcmp("http.ssltry", var)) {
+> +	if (!strcmp("ssltry", key)) {
+> +		CHECK_MATCHLEN(opt_ssl_try);
+>  		curl_ssl_try = git_config_bool(var, value);
+>  		return 0;
+>  	}
+> -	if (!strcmp("http.minsessions", var)) {
+> +	if (!strcmp("minsessions", key)) {
+> +		CHECK_MATCHLEN(opt_min_sessions);
+>  		min_curl_sessions = git_config_int(var, value);
+>  #ifndef USE_CURL_MULTI
+>  		if (min_curl_sessions > 1)
+> @@ -177,42 +270,55 @@ static int http_options(const char *var, const char *value, void *cb)
+>  		return 0;
+>  	}
+>  #ifdef USE_CURL_MULTI
+> -	if (!strcmp("http.maxrequests", var)) {
+> +	if (!strcmp("maxrequests", key)) {
+> +		CHECK_MATCHLEN(opt_max_requests);
+>  		max_requests = git_config_int(var, value);
+>  		return 0;
+>  	}
+>  #endif
+> -	if (!strcmp("http.lowspeedlimit", var)) {
+> +	if (!strcmp("lowspeedlimit", key)) {
+> +		CHECK_MATCHLEN(opt_low_speed);
+>  		curl_low_speed_limit = (long)git_config_int(var, value);
+>  		return 0;
+>  	}
+> -	if (!strcmp("http.lowspeedtime", var)) {
+> +	if (!strcmp("lowspeedtime", key)) {
+> +		CHECK_MATCHLEN(opt_low_time);
+>  		curl_low_speed_time = (long)git_config_int(var, value);
+>  		return 0;
+>  	}
 >  
->  test_expect_success 'default .mailmap' '
->  	echo "Repo Guy <author@example.com>" > .mailmap &&
-> -	git shortlog HEAD >actual &&
-> +	git check-mailmap --stdin <contacts >actual &&
->  	test_cmp expect actual
->  '
+> -	if (!strcmp("http.noepsv", var)) {
+> +	if (!strcmp("noepsv", key)) {
+> +		CHECK_MATCHLEN(opt_no_epsv);
+>  		curl_ftp_no_epsv = git_config_bool(var, value);
+>  		return 0;
+>  	}
+> -	if (!strcmp("http.proxy", var))
+> +	if (!strcmp("proxy", key)) {
+> +		CHECK_MATCHLEN(opt_http_proxy);
+>  		return git_config_string(&curl_http_proxy, var, value);
+> +	}
 >  
->  # Using a mailmap file in a subdirectory of the repo here, but
->  # could just as well have been a file outside of the repository
->  cat >expect <<\EOF
-> -Internal Guy (1):
-> -      second
-> -
-> -Repo Guy (1):
-> -      initial
-> -
-> +Repo Guy <author@example.com>
-> +Internal Guy <bugs@company.xx>
->  EOF
->  test_expect_success 'mailmap.file set' '
->  	mkdir -p internal_mailmap &&
->  	echo "Internal Guy <bugs@company.xx>" > internal_mailmap/.mailmap &&
->  	git config mailmap.file internal_mailmap/.mailmap &&
-> -	git shortlog HEAD >actual &&
-> +	git check-mailmap --stdin <contacts >actual &&
->  	test_cmp expect actual
->  '
+> -	if (!strcmp("http.cookiefile", var))
+> +	if (!strcmp("cookiefile", key)) {
+> +		CHECK_MATCHLEN(opt_cookie_file);
+>  		return git_config_string(&curl_cookie_file, var, value);
+> +	}
 >  
->  cat >expect <<\EOF
-> -External Guy (1):
-> -      initial
-> -
-> -Internal Guy (1):
-> -      second
-> -
-> +External Guy <author@example.com>
-> +Internal Guy <bugs@company.xx>
->  EOF
->  test_expect_success 'mailmap.file override' '
->  	echo "External Guy <author@example.com>" >> internal_mailmap/.mailmap &&
->  	git config mailmap.file internal_mailmap/.mailmap &&
-> -	git shortlog HEAD >actual &&
-> +	git check-mailmap --stdin <contacts >actual &&
->  	test_cmp expect actual
->  '
+> -	if (!strcmp("http.postbuffer", var)) {
+> +	if (!strcmp("postbuffer", key)) {
+> +		CHECK_MATCHLEN(opt_post_buffer);
+>  		http_post_buffer = git_config_int(var, value);
+>  		if (http_post_buffer < LARGE_PACKET_MAX)
+>  			http_post_buffer = LARGE_PACKET_MAX;
+>  		return 0;
+>  	}
 >  
->  cat >expect <<\EOF
-> -Repo Guy (1):
-> -      initial
-> -
-> -nick1 (1):
-> -      second
-> -
-> +Repo Guy <author@example.com>
-> +nick1 <bugs@company.xx>
->  EOF
+> -	if (!strcmp("http.useragent", var))
+> +	if (!strcmp("useragent", key)) {
+> +		CHECK_MATCHLEN(opt_user_agent);
+>  		return git_config_string(&user_agent, var, value);
+> +	}
 >  
->  test_expect_success 'mailmap.file non-existent' '
->  	rm internal_mailmap/.mailmap &&
->  	rmdir internal_mailmap &&
-> -	git shortlog HEAD >actual &&
-> +	git check-mailmap --stdin <contacts >actual &&
->  	test_cmp expect actual
->  '
+>  	/* Fall back on the default ones */
+>  	return git_default_config(var, value, cb);
+> +
+> +#undef CHECKLEN
+>  }
 >  
->  cat >expect <<\EOF
-> -Internal Guy (1):
-> -      second
-> -
-> -Repo Guy (1):
-> -      initial
-> -
-> +Repo Guy <author@example.com>
-> +Internal Guy <bugs@company.xy>
->  EOF
+>  static void init_curl_http_auth(CURL *result)
+> @@ -344,7 +450,7 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
 >  
->  test_expect_success 'name entry after email entry' '
->  	mkdir -p internal_mailmap &&
->  	echo "<bugs@company.xy> <bugs@company.xx>" >internal_mailmap/.mailmap &&
->  	echo "Internal Guy <bugs@company.xx>" >>internal_mailmap/.mailmap &&
-> -	git shortlog HEAD >actual &&
-> +	git check-mailmap --stdin <contacts >actual &&
->  	test_cmp expect actual
->  '
+>  	http_is_verbose = 0;
 >  
->  cat >expect <<\EOF
-> -Internal Guy (1):
-> -      second
-> -
-> -Repo Guy (1):
-> -      initial
-> -
-> +Repo Guy <author@example.com>
-> +Internal Guy <bugs@company.xy>
->  EOF
+> -	git_config(http_options, NULL);
+> +	git_config(http_options, (void *)url);
 >  
->  test_expect_success 'name entry after email entry, case-insensitive' '
->  	mkdir -p internal_mailmap &&
->  	echo "<bugs@company.xy> <bugs@company.xx>" >internal_mailmap/.mailmap &&
->  	echo "Internal Guy <BUGS@Company.xx>" >>internal_mailmap/.mailmap &&
-> -	git shortlog HEAD >actual &&
-> +	git check-mailmap --stdin <contacts >actual &&
->  	test_cmp expect actual
->  '
->  
->  cat >expect <<\EOF
-> -A U Thor (1):
-> -      initial
-> -
-> -nick1 (1):
-> -      second
-> -
-> +A U Thor <author@example.com>
-> +nick1 <bugs@company.xx>
->  EOF
->  test_expect_success 'No mailmap files, but configured' '
->  	rm -f .mailmap internal_mailmap/.mailmap &&
-> -	git shortlog HEAD >actual &&
-> +	git check-mailmap --stdin <contacts >actual &&
->  	test_cmp expect actual
->  '
->  
-> @@ -217,54 +185,43 @@ test_expect_success 'setup mailmap blob tests' '
->  
->  test_expect_success 'mailmap.blob set' '
->  	cat >expect <<-\EOF &&
-> -	Blob Guy (1):
-> -	      second
-> -
-> -	Repo Guy (1):
-> -	      initial
-> -
-> +	Repo Guy <author@example.com>
-> +	Blob Guy <bugs@company.xx>
->  	EOF
-> -	git -c mailmap.blob=map:just-bugs shortlog HEAD >actual &&
-> +	git -c mailmap.blob=map:just-bugs check-mailmap --stdin \
-> +		<contacts >actual &&
->  	test_cmp expect actual
->  '
->  
->  test_expect_success 'mailmap.blob overrides .mailmap' '
->  	cat >expect <<-\EOF &&
-> -	Blob Guy (2):
-> -	      initial
-> -	      second
-> -
-> +	Blob Guy <author@example.com>
-> +	Blob Guy <bugs@company.xx>
->  	EOF
-> -	git -c mailmap.blob=map:both shortlog HEAD >actual &&
-> +	git -c mailmap.blob=map:both check-mailmap --stdin \
-> +		<contacts  >actual &&
->  	test_cmp expect actual
->  '
->  
->  test_expect_success 'mailmap.file overrides mailmap.blob' '
->  	cat >expect <<-\EOF &&
-> -	Blob Guy (1):
-> -	      second
-> -
-> -	Internal Guy (1):
-> -	      initial
-> -
-> +	Internal Guy <author@example.com>
-> +	Blob Guy <bugs@company.xx>
->  	EOF
->  	git \
->  	  -c mailmap.blob=map:both \
->  	  -c mailmap.file=internal.map \
-> -	  shortlog HEAD >actual &&
-> +	  check-mailmap --stdin <contacts >actual &&
->  	test_cmp expect actual
->  '
->  
->  test_expect_success 'mailmap.blob can be missing' '
->  	cat >expect <<-\EOF &&
-> -	Repo Guy (1):
-> -	      initial
-> -
-> -	nick1 (1):
-> -	      second
-> -
-> +	Repo Guy <author@example.com>
-> +	nick1 <bugs@company.xx>
->  	EOF
-> -	git -c mailmap.blob=map:nonexistent shortlog HEAD >actual &&
-> +	git -c mailmap.blob=map:nonexistent check-mailmap --stdin \
-> +		<contacts >actual &&
->  	test_cmp expect actual
->  '
->  
-> @@ -273,12 +230,12 @@ test_expect_success 'mailmap.blob defaults to off in non-bare repo' '
->  	(
->  		cd non-bare &&
->  		test_commit one .mailmap "Fake Name <author@example.com>" &&
-> -		echo "     1	Fake Name" >expect &&
-> -		git shortlog -ns HEAD >actual &&
-> +		echo "Fake Name <author@example.com>" >expect &&
-> +		git check-mailmap "A U Thor <author@example.com>" >actual &&
->  		test_cmp expect actual &&
->  		rm .mailmap &&
-> -		echo "     1	A U Thor" >expect &&
-> -		git shortlog -ns HEAD >actual &&
-> +		echo "A U Thor <author@example.com>" >expect &&
-> +		git check-mailmap "A U Thor <author@example.com>" >actual &&
->  		test_cmp expect actual
->  	)
->  '
-> @@ -287,8 +244,8 @@ test_expect_success 'mailmap.blob defaults to HEAD:.mailmap in bare repo' '
->  	git clone --bare non-bare bare &&
->  	(
->  		cd bare &&
-> -		echo "     1	Fake Name" >expect &&
-> -		git shortlog -ns HEAD >actual &&
-> +		echo "Fake Name <author@example.com>" >expect &&
-> +		git check-mailmap "A U Thor <author@example.com>" >actual &&
->  		test_cmp expect actual
->  	)
->  '
+>  	curl_global_init(CURL_GLOBAL_ALL);
