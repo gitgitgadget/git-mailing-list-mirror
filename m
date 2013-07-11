@@ -1,116 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] Corrections to the mailmap file
-Date: Thu, 11 Jul 2013 10:33:15 -0700
-Message-ID: <7vzjttq9wk.fsf@alter.siamese.dyndns.org>
-References: <1372946659-10332-1-git-send-email-stefanbeller@googlemail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [RFC/PATCH 0/1] cygwin: Remove the Win32 l/stat() functions
+Date: Thu, 11 Jul 2013 18:31:54 +0100
+Message-ID: <51DEEC0A.9060001@ramsay1.demon.co.uk>
+References: <51C5FD28.1070004@ramsay1.demon.co.uk> <51C6BC4B.9030905@web.de> <51C8BF2C.2050203@ramsay1.demon.co.uk> <7vy59y4w3r.fsf@alter.siamese.dyndns.org> <51C94425.7050006@alum.mit.edu> <51CB610C.7050501@ramsay1.demon.co.uk> <20130626223552.GA12785@sigill.intra.peff.net> <51CBD2FD.5070905@alum.mit.edu> <51CCC643.1050702@ramsay1.demon.co.uk> <51D06AC8.70206@ramsay1.demon.co.uk> <51DBEDAF.30708@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 11 19:33:41 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, mlevedahl@gmail.com,
+	dpotapov@gmail.com, GIT Mailing-list <git@vger.kernel.org>
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Jul 11 19:41:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxKkN-0005kI-K5
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 19:33:40 +0200
+	id 1UxKrK-0001W3-Fn
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 19:40:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752134Ab3GKRdV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jul 2013 13:33:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53470 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751477Ab3GKRdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jul 2013 13:33:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03E562FD94;
-	Thu, 11 Jul 2013 17:33:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JVV+qCW/3EBSMPOqaiydqX9MvgY=; b=gZv3ZI
-	bOPFBonMs0F2GVwVaQXgc/teFZ1CT4TQPNs6l1vLw1J4XjISwZXUsrcLZjMaA6Vv
-	G4k19cOgYRWXVAbKvSyRbRLvKK2Lh6NVHm3LWZfA8BFSJ3GOfE053LOqtOyLoUkv
-	m0/t/s7iAexGoCAd29GRW80fhbXX/w7Qju8NY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YQ4rxydBXWGm2Y3RsWyBFW6y3XI9C8zD
-	UA2ltvPNxN3AA7XVUkMBw9fo7Eu2syxmpqDTRwT8VVrjTrJt6I5w4loEW5XDOI4c
-	av+N5GNdRW6B/MdPhHxjx/YRUDZD7xdzezXCIxXlqrbxZ3gtaWevq8890yOl8IIQ
-	qHyWfQiHcSI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECAFD2FD93;
-	Thu, 11 Jul 2013 17:33:17 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 494612FD8E;
-	Thu, 11 Jul 2013 17:33:17 +0000 (UTC)
-In-Reply-To: <1372946659-10332-1-git-send-email-stefanbeller@googlemail.com>
-	(Stefan Beller's message of "Thu, 4 Jul 2013 16:04:13 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F8DCCEBA-EA4F-11E2-8C79-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756368Ab3GKRkf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Jul 2013 13:40:35 -0400
+Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:51196 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753783Ab3GKRkd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jul 2013 13:40:33 -0400
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 8492CA64901;
+	Thu, 11 Jul 2013 18:40:31 +0100 (BST)
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id A7685A648F1;
+	Thu, 11 Jul 2013 18:40:30 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
+	Thu, 11 Jul 2013 18:40:28 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <51DBEDAF.30708@web.de>
+X-MDF-HostID: 8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230121>
 
-Stefan Beller <stefanbeller@googlemail.com> writes:
->
-> I noticed many duplicates in email addresses but having the same name by
-> running:
->
->     # Finding out duplicates by comparing names:
->     git shortlog -sne |awk '{ NF--; $1=""; print }' |sort |uniq -d
->
-> Most of these entries are most probably the same person, but we cannot be 
-> sure, as there might be different persons having the same name, then they
-> are only distinguished by the mail address.
->
-> However I suspect most of these to be the same person, having changed 
-> mail addresses.
->
-> Here comes an initial batch of corrections to the mailmap file, which
-> maps people with email addresses of different capitalization onto
-> the same entity.
-> (Example Name@MIT.EDU is the same as Name@mit.edu)
->
-> I intend to contact each of the persons individually and ask whether 
-> just their mail address changed, or if they are indeed different persons.
+Torsten B=C3=B6gershausen wrote:
+> On 30.06.13 19:28, Ramsay Jones wrote:
 
-Has anything happen to this topic sice you posted?
+[ ... ]
 
-I think:
+>>> You have just described my second patch! :D
+>> Unfortunately, I have not had any time to work on the patch this wee=
+kend.
+>> However, despite the patch being a bit rough around the edges, I dec=
+ided
+>> to send it out (see below) to get some early feedback.
+>>
+>> Note that it passes the t3210, t3211, t5500, t3200, t3301, t7606 and=
+ t1301
+>> tests, but I have not run the full test suite.
+>>
+>> Comments welcome.
+>>
+>> ATB,
+>> Ramsay Jones
+>>
+>> -- >8 --
+>> Subject: [PATCH] cygwin: Add fast_[l]stat() functions
+>>
+>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+>> ---
+>>  builtin/apply.c        |  6 +++---
+>>  builtin/commit.c       |  2 +-
+>>  builtin/ls-files.c     |  2 +-
+>>  builtin/rm.c           |  2 +-
+>>  builtin/update-index.c |  2 +-
+>>  check-racy.c           |  2 +-
+>>  compat/cygwin.c        | 12 ------------
+>>  compat/cygwin.h        | 10 +++-------
+>>  diff-lib.c             |  2 +-
+>>  diff.c                 |  2 +-
+>>  entry.c                |  4 ++--
+>>  git-compat-util.h      | 13 +++++++++++--
+>>  help.c                 |  5 +----
+>>  path.c                 |  9 +--------
+>>  preload-index.c        |  2 +-
+>>  read-cache.c           |  6 +++---
+>>  unpack-trees.c         |  8 ++++----
+>>  17 files changed, 36 insertions(+), 53 deletions(-)
+>>
 
- - .(none) is obviously bad, and we can fix without waiting for
-   responses as long as we know the replacement address is the
-   address from the list we usually see on the list (3).
+[ ... ]
 
- - Domain part is defined to be case insensitive (e.g. @mit.edu vs
-   @MIT.EDU), so both forms are equally valid.  The owner of the
-   address may have preferences (1 and 4), though.
+> I managed to apply your patch on next, and run the test suite before =
+and after
+> your patch.
+> The performance running "git status" on a linux kernel is the same as=
+ in v1.8.3.
+>=20
+> Running test suite did not show new failures.
+> The following test cases had failed, and are fixed now:
+> < t1400-update-ref
+> < t3210-pack-refs
+> < t3211-peel-ref
+> < t3306-notes-prune
+> < t5304-prune
+> < t5404-tracking-branches
+> < t5500-fetch-pack
+> < t5505-remote
+> < t5514-fetch-multiple
+> < t5515-fetch-merge-logic
+> < t6030-bisect-porcelain
+> < t9300-fast-import
+> < t9903-bash-prompt
+>=20
+> In short: Thanks, This looks good to me.
 
-   For this, we could just declare we downcase the domain part.
+Thank you for testing this! It is much appreciated.
 
- - The local-part, even though RFC 2821 says "local-part of a
-   mailbox MUST BE treated as case sensitive", is often case
-   insensitive, and User.Name@domain and user.name@domain often name
-   the same mailbox.  The owner of the address may have preferences
-   (5 and 6), though.
+I sent a v2 patch to the list last night. It passes the full
+test suite for me on cygwin 1.5, although there appears to be
+a slight performance problem on MinGW (perhaps!). :(
 
-   For this, we could just declare we Camel.Case the local part,
-   after making sure Camel.Case@domain has been used by the owner of
-   the address on this list.
-
-So where does that leave us?
-
-We can apply without waiting:
-
-  1: downcase domain
-  3: .(none) and we know paulus@samba.org
-  4: downcase domain
-  5: We recently saw Dshco calls himself <Johannes.Schindelin@domain>.
-  6: The latest one from Nov 2009 uses <Toby.Allsopp@domain>.
-
-The only possibly iffy one is Alex Riesen, but <raa.lkml@domain>
-seems to be the one he uses here, so I think 2. is also fine.
+ATB,
+Ramsay Jones
