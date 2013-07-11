@@ -1,74 +1,104 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] blame: accept multiple -L ranges
-Date: Thu, 11 Jul 2013 09:44:48 -0700
-Message-ID: <7vd2qprqpr.fsf@alter.siamese.dyndns.org>
-References: <1373186706-19284-1-git-send-email-sunshine@sunshineco.com>
-	<7vk3l26695.fsf@alter.siamese.dyndns.org>
-	<CAPig+cQ9sfV+PRqn5vrL0=xOZrKDDmsKdAPiB4PsCFb=jnk4kQ@mail.gmail.com>
-	<7v38rnwuvb.fsf@alter.siamese.dyndns.org>
-	<87ehb7d3za.fsf@hexa.v.cablecom.net>
-	<CAPig+cT9U7L-03Fe5YLft=WS2EZY1B_BhLzkM_sT_3wQQ1g1MQ@mail.gmail.com>
-	<7vy59fv9zr.fsf@alter.siamese.dyndns.org>
-	<87a9lvcztv.fsf@hexa.v.cablecom.net>
-	<7vppurv8bl.fsf@alter.siamese.dyndns.org>
-	<87mwpuepst.fsf@linux-k42r.v.cablecom.net>
+Subject: Re: What's cooking in git.git (Jul 2013, #03; Tue, 9)
+Date: Thu, 11 Jul 2013 09:45:13 -0700
+Message-ID: <7v8v1drqp2.fsf@alter.siamese.dyndns.org>
+References: <7vr4f7tjo0.fsf@alter.siamese.dyndns.org>
+	<D0E044B4-7252-41CB-A478-BCAC9EAE4AD5@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jul 11 18:44:56 2013
+Cc: Git List <git@vger.kernel.org>,
+	David Rothenberger <daveroth@acm.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Kyle McKay <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 11 18:45:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxJzE-0003cR-0I
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 18:44:56 +0200
+	id 1UxJzg-00044f-Dz
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 18:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752437Ab3GKQow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jul 2013 12:44:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38374 "EHLO
+	id S1752907Ab3GKQpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jul 2013 12:45:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39386 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752131Ab3GKQov (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jul 2013 12:44:51 -0400
+	id S1752486Ab3GKQpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jul 2013 12:45:19 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 714E72FF12;
-	Thu, 11 Jul 2013 16:44:50 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76BC22FFA8;
+	Thu, 11 Jul 2013 16:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fxgkpd/PiUmyzNDVgi56ewm67Ng=; b=iS7+KV
-	D5xGOp2cIkqr1/fmReHaJGDM4+b/DbaFDXgCeqVx9/2eh8GKypxDUHOsJmPArtQh
-	chf4qCjm0OKQRacG0skJj51sBZK3VVyjwszeHvxvq46PMvovs/qUqfATisQeqtQb
-	UFR0zg00GmI4csz7s9BDDtbRvdj+FlPTFU8dE=
+	:content-type; s=sasl; bh=HM1IVBF21G3sJ0FHsETUMAkJIpo=; b=a1bYtt
+	4WJ+4OzBEZBolzzft64dd0CdZGPKdZgqC/idqP0+iFYlMrlcU+IQeuXQfcdXDBch
+	xd6V3NVVvNqQG1uyYh417CLMLUeMqzXR0YCEiLQFNjtfCiM1ng5ROJMJVQxMtNyT
+	hYX+rCIYNMuxIGKOq5/WanRgUYPYpdKtQZbK0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HKVa8/JpRJC41ja35KwrqtwWSMw1sAde
-	wyNsBp0ECviedJwb5beM4qmUTEeAQfR1vdUbTiwGNd4LhrEWbh38OFYlyr1ekYaD
-	y/+0sjzvH0hYC/Y/ofLMeMceKPGeg47yzyIOXENDomH9X4nR1/qTj1Rgi6FEg2+7
-	ERJNW1YKzNc=
+	:content-type; q=dns; s=sasl; b=M540Aw4iOpabwtE68dkW45g9UHbzM7I5
+	aX6Qfy8lYVVYTids05cdfEEaAi+8TJNjZFyj52iLKGTUKik81XoqC/OblMBzi8bC
+	6yP6EcB780JNPgP6FdC2lU6KxjiaWhlEQXtYOKVGE/kJKXvprIjynLmtQuU0L5S2
+	SHmD6yZpW8A=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65C542FF11;
-	Thu, 11 Jul 2013 16:44:50 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D04022FFA3;
+	Thu, 11 Jul 2013 16:45:16 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B03EF2FF0E;
-	Thu, 11 Jul 2013 16:44:49 +0000 (UTC)
-In-Reply-To: <87mwpuepst.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
-	of "Wed, 10 Jul 2013 11:18:26 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7ABE42FF97;
+	Thu, 11 Jul 2013 16:45:15 +0000 (UTC)
+In-Reply-To: <D0E044B4-7252-41CB-A478-BCAC9EAE4AD5@gmail.com> (Kyle McKay's
+	message of "Wed, 10 Jul 2013 00:00:00 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 33CFE266-EA49-11E2-9411-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 432DEC1C-EA49-11E2-AB67-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230116>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Kyle McKay <mackyle@gmail.com> writes:
 
-> But still, log -L should then be changed to match this behavior (for all
-> args affecting a single file).  Currently it always does the scan for
-> the start of the range from line 1 of the file.
+> On Jul 9, 2013, at 16:09, Junio C Hamano wrote:
+>> * km/svn-1.8-serf-only (2013-07-07) 2 commits
+>> - git-svn: allow git-svn fetching to work using serf
+>> - Git.pm: add new temp_is_locked function
+>>
+>> Comments?
+>
+>
+> Since neither David nor Jonathan have piped in here (they were the two
+> primarily involved in the discussion).
+>
+> On Jul 8, 2013, at 09:22, Junio C Hamano wrote:
+>> "Kyle J. McKay" <mackyle@gmail.com> writes:
+>>
+>>> From: "Kyle J. McKay" <mackyle@gmail.com>
+>>> Subject: Re: [PATCH v3 0/2] allow git-svn fetching to work using serf
+>>>
+>>> This patch allows git-svn to fetch successfully using the
+>>> serf library when given an https?: url to fetch from.
+>>>
+>>> [...]
+>>
+>> Thanks; I've queued this version to 'pu' at least tentatively.
+>>
+>> Is everybody who discussed the issue happy with the direction of
+>> this patch?
+>
+> I will add that David previously indicated this patch works for him:
+>
+> On Jul 6, 2013, at 00:17, David Rothenberger wrote:
+>> On 7/5/2013 8:41 PM, Kyle McKay wrote:
+>>> This patch allows git-svn to fetch successfully using the
+>>> serf library when given an https?: url to fetch from.
+>>
+>> Thanks, Kyle. I confirm this is working for my problem cases as
+>> well.
+>
+> Subversion 1.8.0 was released less than a month ago on 2013-06-18 so
+> there probably aren't too many git-svn users affected by this just
+> yet.
 
-Thanks, I think that makes sense.
+Alright.  Let's advance it to 'next' and see what happens.
