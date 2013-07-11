@@ -1,127 +1,97 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [RFC/PATCH 0/1] cygwin: Remove the Win32 l/stat() functions
-Date: Thu, 11 Jul 2013 18:31:54 +0100
-Message-ID: <51DEEC0A.9060001@ramsay1.demon.co.uk>
-References: <51C5FD28.1070004@ramsay1.demon.co.uk> <51C6BC4B.9030905@web.de> <51C8BF2C.2050203@ramsay1.demon.co.uk> <7vy59y4w3r.fsf@alter.siamese.dyndns.org> <51C94425.7050006@alum.mit.edu> <51CB610C.7050501@ramsay1.demon.co.uk> <20130626223552.GA12785@sigill.intra.peff.net> <51CBD2FD.5070905@alum.mit.edu> <51CCC643.1050702@ramsay1.demon.co.uk> <51D06AC8.70206@ramsay1.demon.co.uk> <51DBEDAF.30708@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 08/10] cat-file: split --batch input lines on whitespace
+Date: Thu, 11 Jul 2013 10:42:07 -0700
+Message-ID: <7vvc4hq9hs.fsf@alter.siamese.dyndns.org>
+References: <20130710113447.GA20113@sigill.intra.peff.net>
+	<20130710114828.GH21963@sigill.intra.peff.net>
+	<CALkWK0mGMZPWowZ0ULNuGKD8w2Q=kN0nEGaOkuWoYKmzD5zGrw@mail.gmail.com>
+	<20130711113653.GD6015@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, mlevedahl@gmail.com,
-	dpotapov@gmail.com, GIT Mailing-list <git@vger.kernel.org>
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jul 11 19:41:03 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	Duy Nguyen <pclouds@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 11 19:42:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxKrK-0001W3-Fn
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 19:40:50 +0200
+	id 1UxKsi-0005Hh-5M
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 19:42:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756368Ab3GKRkf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Jul 2013 13:40:35 -0400
-Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:51196 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753783Ab3GKRkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jul 2013 13:40:33 -0400
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 8492CA64901;
-	Thu, 11 Jul 2013 18:40:31 +0100 (BST)
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id A7685A648F1;
-	Thu, 11 Jul 2013 18:40:30 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
-	Thu, 11 Jul 2013 18:40:28 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <51DBEDAF.30708@web.de>
-X-MDF-HostID: 8
+	id S1755885Ab3GKRmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jul 2013 13:42:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43695 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751918Ab3GKRmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jul 2013 13:42:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2A512FCE4;
+	Thu, 11 Jul 2013 17:42:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0FE60rt/JdddPQIqeTrWxK4pBhg=; b=oLUV0y
+	XucZ+4gtmy9yZVAjuHzGb8bR3o8xOQUWF0mZIOOE5QFEcqc/FwLc/1OWiczKRBgf
+	V2TAaoC/Azp0ZN6vKO4KITUrJthQKI8xN8S5Xo796fFwFvZvDvJBdCmAyBa7R6rp
+	frlqMddFaG/Cgm3lYzAhpENWuBUVFdtjWnVPs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=COu0cjlinOfrPRzziVOeKHKzTlm2Mqjc
+	SwLqo3g3uoUXRz4J7c28kTZMGrVsuqOGtzye1E8y7TKVyc10fGN36HyJeF+XNBWm
+	WfGFrwX2PDDIOaEgxw4EYlxx6d+3qOA9dljkY9QWzlkGYUfmoEU5umBXi+yh7e1b
+	Pp1Ye72Qpu4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE6B82FCE2;
+	Thu, 11 Jul 2013 17:42:10 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61D5A2FCD7;
+	Thu, 11 Jul 2013 17:42:09 +0000 (UTC)
+In-Reply-To: <20130711113653.GD6015@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 11 Jul 2013 07:36:53 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 36117460-EA51-11E2-A9ED-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230122>
 
-Torsten B=C3=B6gershausen wrote:
-> On 30.06.13 19:28, Ramsay Jones wrote:
+Jeff King <peff@peff.net> writes:
 
-[ ... ]
+> On Wed, Jul 10, 2013 at 08:59:51PM +0530, Ramkumar Ramachandra wrote:
+>
+>> Jeff King wrote:
+>> >   git rev-list --objects HEAD |
+>> >   git cat-file --batch-check='%(objectsize) %(text)'
+>> 
+>> If anything, I would have expected %(rest), not %(text).  This atom is
+>> specific to commands that accept input via stdin (i.e. not log, f-e-r,
+>> branch, or anything else I can think of).
+>
+> I considered %(rest) as well. I don't have a strong preference.
+>
+>> Also, this makes me wonder if %(field:0), %(field:1), and probably
+>> %(field:@) are good ideas.  Even if we go down that road, I don't
+>> think %(rest) is a problem per-se.
+>
+> I don't have a use for them, and even if we want to add them later, you
+> would still want to support %(rest) for when the user wants to take the
+> rest of the line verbatim without caring about field-splitting.
+>
+> To be honest, I do not see %(field) as all that useful. If you want to
+> go about rearranging or selecting fields, that is what "cut" (or "awk")
+> is for.  Having fields means you need to specify field separators, and
+> how runs of separators are treated. Other tools already do this.
 
->>> You have just described my second patch! :D
->> Unfortunately, I have not had any time to work on the patch this wee=
-kend.
->> However, despite the patch being a bit rough around the edges, I dec=
-ided
->> to send it out (see below) to get some early feedback.
->>
->> Note that it passes the t3210, t3211, t5500, t3200, t3301, t7606 and=
- t1301
->> tests, but I have not run the full test suite.
->>
->> Comments welcome.
->>
->> ATB,
->> Ramsay Jones
->>
->> -- >8 --
->> Subject: [PATCH] cygwin: Add fast_[l]stat() functions
->>
->> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->> ---
->>  builtin/apply.c        |  6 +++---
->>  builtin/commit.c       |  2 +-
->>  builtin/ls-files.c     |  2 +-
->>  builtin/rm.c           |  2 +-
->>  builtin/update-index.c |  2 +-
->>  check-racy.c           |  2 +-
->>  compat/cygwin.c        | 12 ------------
->>  compat/cygwin.h        | 10 +++-------
->>  diff-lib.c             |  2 +-
->>  diff.c                 |  2 +-
->>  entry.c                |  4 ++--
->>  git-compat-util.h      | 13 +++++++++++--
->>  help.c                 |  5 +----
->>  path.c                 |  9 +--------
->>  preload-index.c        |  2 +-
->>  read-cache.c           |  6 +++---
->>  unpack-trees.c         |  8 ++++----
->>  17 files changed, 36 insertions(+), 53 deletions(-)
->>
+Very true, and more importantly, you cannot still say "my input
+object name is at field N, not at the beginning", so that makes it
+doubly dubious how %(field:$n) would be any useful.
 
-[ ... ]
-
-> I managed to apply your patch on next, and run the test suite before =
-and after
-> your patch.
-> The performance running "git status" on a linux kernel is the same as=
- in v1.8.3.
->=20
-> Running test suite did not show new failures.
-> The following test cases had failed, and are fixed now:
-> < t1400-update-ref
-> < t3210-pack-refs
-> < t3211-peel-ref
-> < t3306-notes-prune
-> < t5304-prune
-> < t5404-tracking-branches
-> < t5500-fetch-pack
-> < t5505-remote
-> < t5514-fetch-multiple
-> < t5515-fetch-merge-logic
-> < t6030-bisect-porcelain
-> < t9300-fast-import
-> < t9903-bash-prompt
->=20
-> In short: Thanks, This looks good to me.
-
-Thank you for testing this! It is much appreciated.
-
-I sent a v2 patch to the list last night. It passes the full
-test suite for me on cygwin 1.5, although there appears to be
-a slight performance problem on MinGW (perhaps!). :(
-
-ATB,
-Ramsay Jones
+> So it would (at best) save you from an extra cut invocation, whereas
+> %(rest) gets you out of doing something much more difficult. Without it,
+> information is lost from your pipeline (so you have to have tee to a
+> separate pipeline, and then reassemble the pieces).
