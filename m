@@ -1,338 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCHv3 10/10] pack-revindex: radix-sort the revindex
-Date: Thu, 11 Jul 2013 08:16:00 -0400
-Message-ID: <20130711121600.GA18710@sigill.intra.peff.net>
-References: <20130710113447.GA20113@sigill.intra.peff.net>
- <20130710115557.GJ21963@sigill.intra.peff.net>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 13/22] documentation: add documentation of the index-v5 file format
+Date: Thu, 11 Jul 2013 14:26:15 +0200
+Message-ID: <87k3kxcmfs.fsf@gmail.com>
+References: <1373184720-29767-1-git-send-email-t.gummerer@gmail.com> <1373184720-29767-14-git-send-email-t.gummerer@gmail.com> <CACsJy8ALSBPq1+TP_YxJ=ecUwpKRY-i2O=+q8qMjtXbjShg3mA@mail.gmail.com> <87mwptcom9.fsf@gmail.com> <CACsJy8BT56_DvQ5Y2newJWn4EZjHZnTquypXpO2qDtN1Qh0zRg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 11 14:16:16 2013
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 11 14:26:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxFn7-0002qy-EG
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 14:16:10 +0200
+	id 1UxFx1-0003pk-RY
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 14:26:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755062Ab3GKMQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jul 2013 08:16:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57547 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754518Ab3GKMQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jul 2013 08:16:03 -0400
-Received: (qmail 29455 invoked by uid 102); 11 Jul 2013 12:17:19 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 11 Jul 2013 07:17:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Jul 2013 08:16:00 -0400
-Content-Disposition: inline
-In-Reply-To: <20130710115557.GJ21963@sigill.intra.peff.net>
+	id S1755632Ab3GKM0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jul 2013 08:26:20 -0400
+Received: from mail-ea0-f173.google.com ([209.85.215.173]:33682 "EHLO
+	mail-ea0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755511Ab3GKM0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jul 2013 08:26:19 -0400
+Received: by mail-ea0-f173.google.com with SMTP id g15so5659864eak.4
+        for <git@vger.kernel.org>; Thu, 11 Jul 2013 05:26:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type;
+        bh=LKZQuiDad+6V16hIu6X5ZYVUR2AboRQWt419/7P+hwU=;
+        b=Ro08vziiTLC1lKCvxvko/6xatN804v+3YzqlLFXqguf2TKzPLQEwy4LoH3b9n+zJZ5
+         R+CEh/ZFjvQ2ANR/EbgBY275UISRcUXdaH3VvhoJvMeC5eLs2b0RTroai28lcdrnlVcC
+         8H/OrGra33aspqOZ337ncobP2sgIuxSItO4NwY11vz/0X/ZN1T5iVgNuTezfnjKdzfPh
+         pRbD8DjPrgF9XSWnOfF10rhv/nbjgNKuQOKyLt0GNyt0zOI00vRBcboQBDQrWGFK8ukt
+         E8QGMyFqphOYDHD/fWhpJgbmQbys4JD/cHLxJ9snAMwUtICRhqzl2jyKq7HFgVxhc0sL
+         5Tpg==
+X-Received: by 10.14.194.133 with SMTP id m5mr41439972een.109.1373545578271;
+        Thu, 11 Jul 2013 05:26:18 -0700 (PDT)
+Received: from localhost ([2a02:27e8:10:1047:0:dacb:1376:714a])
+        by mx.google.com with ESMTPSA id o5sm68698154eef.5.2013.07.11.05.26.16
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 11 Jul 2013 05:26:17 -0700 (PDT)
+In-Reply-To: <CACsJy8BT56_DvQ5Y2newJWn4EZjHZnTquypXpO2qDtN1Qh0zRg@mail.gmail.com>
+User-Agent: Notmuch/0.15.2+119~gf0dfda5 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230097>
 
-  Here's an update of the radix-sort patch. It fixes the "unsigned" issue
-  Brandon pointed out, along with a few other comment/naming/style fixes.
-  I also updated the commit message with more explanation of the
-  timings.
-  
-  The interdiff is:
-  
-  diff --git a/pack-revindex.c b/pack-revindex.c
-  index 9365bc2..b4d2b35 100644
-  --- a/pack-revindex.c
-  +++ b/pack-revindex.c
-  @@ -61,6 +61,10 @@ static void init_pack_revindex(void)
-   
-   /*
-    * This is a least-significant-digit radix sort.
-  + *
-  + * It sorts each of the "n" items in "entries" by its offset field. The "max"
-  + * parameter must be at least as large as the largest offset in the array,
-  + * and lets us quit the sort early.
-    */
-   static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
-   {
-  @@ -78,18 +82,25 @@ static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
-   #define BUCKET_FOR(a, i, bits) (((a)[(i)].offset >> (bits)) & (BUCKETS-1))
-   
-   	/*
-  -	 * We need O(n) temporary storage, so we sort back and forth between
-  -	 * the real array and our tmp storage. To keep them straight, we always
-  -	 * sort from "a" into buckets in "b".
-  +	 * We need O(n) temporary storage. Rather than do an extra copy of the
-  +	 * partial results into "entries", we sort back and forth between the
-  +	 * real array and temporary storage. In each iteration of the loop, we
-  +	 * keep track of them with alias pointers, always sorting from "from"
-  +	 * to "to".
-   	 */
-  -	struct revindex_entry *tmp = xcalloc(n, sizeof(*tmp));
-  -	struct revindex_entry *a = entries, *b = tmp;
-  -	int bits = 0;
-  +	struct revindex_entry *tmp = xmalloc(n * sizeof(*tmp));
-  +	struct revindex_entry *from = entries, *to = tmp;
-  +	int bits;
-   	unsigned *pos = xmalloc(BUCKETS * sizeof(*pos));
-   
-  -	while (max >> bits) {
-  +	/*
-  +	 * If (max >> bits) is zero, then we know that the radix digit we are
-  +	 * on (and any higher) will be zero for all entries, and our loop will
-  +	 * be a no-op, as everybody lands in the same zero-th bucket.
-  +	 */
-  +	for (bits = 0; max >> bits; bits += DIGIT_SIZE) {
-   		struct revindex_entry *swap;
-  -		int i;
-  +		unsigned i;
-   
-   		memset(pos, 0, BUCKETS * sizeof(*pos));
-   
-  @@ -102,7 +113,7 @@ static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
-   		 * previous bucket to get the true index.
-   		 */
-   		for (i = 0; i < n; i++)
-  -			pos[BUCKET_FOR(a, i, bits)]++;
-  +			pos[BUCKET_FOR(from, i, bits)]++;
-   		for (i = 1; i < BUCKETS; i++)
-   			pos[i] += pos[i-1];
-   
-  @@ -112,32 +123,37 @@ static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
-   		 * to avoid using an extra index to count up. And since we are
-   		 * going backwards there, we must also go backwards through the
-   		 * array itself, to keep the sort stable.
-  +		 *
-  +		 * Note that we use an unsigned iterator to make sure we can
-  +		 * handle 2^32-1 objects, even on a 32-bit system. But this
-  +		 * means we cannot use the more obvious "i >= 0" loop condition
-  +		 * for counting backwards, and must instead check for
-  +		 * wrap-around with UINT_MAX.
-   		 */
-  -		for (i = n - 1; i >= 0; i--)
-  -			b[--pos[BUCKET_FOR(a, i, bits)]] = a[i];
-  +		for (i = n - 1; i != UINT_MAX; i--)
-  +			to[--pos[BUCKET_FOR(from, i, bits)]] = from[i];
-   
-   		/*
-  -		 * Now "b" contains the most sorted list, so we swap "a" and
-  -		 * "b" for the next iteration.
-  +		 * Now "to" contains the most sorted list, so we swap "from" and
-  +		 * "to" for the next iteration.
-   		 */
-  -		swap = a;
-  -		a = b;
-  -		b = swap;
-  -
-  -		/* And bump our bits for the next round. */
-  -		bits += DIGIT_SIZE;
-  +		swap = from;
-  +		from = to;
-  +		to = swap;
-   	}
-   
-   	/*
-   	 * If we ended with our data in the original array, great. If not,
-   	 * we have to move it back from the temporary storage.
-   	 */
-  -	if (a != entries)
-  +	if (from != entries)
-   		memcpy(entries, tmp, n * sizeof(*entries));
-   	free(tmp);
-   	free(pos);
-   
-   #undef BUCKET_FOR
-  +#undef BUCKETS
-  +#undef DIGIT_SIZE
-   }
-   
-   /*
+Duy Nguyen <pclouds@gmail.com> writes:
 
--- >8 --
-Subject: [PATCH] pack-revindex: radix-sort the revindex
+> On Thu, Jul 11, 2013 at 6:39 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>>> Question about the possibility of updating index file directly. If git
+>>> updates a few fields of an entry (but not entrycrc yet) and crashes,
+>>> the entry would become corrupt because its entrycrc does not match the
+>>> content. What do we do? Do we need to save a copy of the entry
+>>> somewhere in the index file (maybe in the conflict data section), so
+>>> that the reader can recover the index? Losing the index because of
+>>> bugs is big deal in my opinion. pre-v5 never faces this because we
+>>> keep the original copy til the end.
+>>>
+>>> Maybe entrycrc should not cover stat fields and statcrc. It would make
+>>> refreshing safer. If the above happens during refresh, only statcrc is
+>>> corrupt and we can just refresh the entry. entrycrc still says the
+>>> other fields are good (and they are).
+>>
+>> The original idea was to change the lock-file for partial writing to
+>> make it work for this case.  The exact structure of the file still has
+>> to be defined, but generally it would be done in the following steps:
+>>
+>>   1. Write the changed entry to the lock-file
+>>   2. Change the entry in the index
+>>   3. If we succeed delete the lock-file (commit the transaction)
+>>
+>> If git crashes, and leaves the index corrupted, we can recover the
+>> information from the lock-file and write the new information to the
+>> index file and then delete the lock-file.
+>
+> Ah makes sense. Still concerned about refreshing though. Updated files
+> are usually few while refreshed files could be a lot more, increasing
+> the cost at #1.
 
-The pack revindex stores the offsets of the objects in the
-pack in sorted order, allowing us to easily find the on-disk
-size of each object. To compute it, we populate an array
-with the offsets from the sha1-sorted idx file, and then use
-qsort to order it by offsets.
+Any idea how common refreshing a big part of the cache is?  If it's not
+to common, I'd prefer to leave the stat data and stat crc in the
+entrycrc, as we can inform the user if something is wrong with the
+index, be it from git failing, or from disk corruption.
 
-That does O(n log n) offset comparisons, and profiling shows
-that we spend most of our time in cmp_offset. However, since
-we are sorting on a simple off_t, we can use numeric sorts
-that perform better. A radix sort can run in O(k*n), where k
-is the number of "digits" in our number. For a 64-bit off_t,
-using 16-bit "digits" gives us k=4.
-
-On the linux.git repo, with about 3M objects to sort, this
-yields a 400% speedup. Here are the best-of-five numbers for
-running
-
-  echo HEAD | git cat-file --batch-check="%(objectsize:disk)
-
-on a fully packed repository, which is dominated by time
-spent building the pack revindex:
-
-          before     after
-  real    0m0.834s   0m0.204s
-  user    0m0.788s   0m0.164s
-  sys     0m0.040s   0m0.036s
-
-This matches our algorithmic expectations. log(3M) is ~21.5,
-so a traditional sort is ~21.5n. Our radix sort runs in k*n,
-where k is the number of radix digits. In the worst case,
-this is k=4 for a 64-bit off_t, but we can quit early when
-the largest value to be sorted is smaller. For any
-repository under 4G, k=2. Our algorithm makes two passes
-over the list per radix digit, so we end up with 4n. That
-should yield ~5.3x speedup. We see 4x here; the difference
-is probably due to the extra bucket book-keeping the radix
-sort has to do.
-
-On a smaller repo, the difference is less impressive, as
-log(n) is smaller. For git.git, with 173K objects (but still
-k=2), we see a 2.7x improvement:
-
-          before     after
-  real    0m0.046s   0m0.017s
-  user    0m0.036s   0m0.012s
-  sys     0m0.008s   0m0.000s
-
-On even tinier repos (e.g., a few hundred objects), the
-speedup goes away entirely, as the small advantage of the
-radix sort gets erased by the book-keeping costs (and at
-those sizes, the cost to generate the the rev-index gets
-lost in the noise anyway).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- pack-revindex.c | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 95 insertions(+), 5 deletions(-)
-
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 1aa9754..b4d2b35 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -59,11 +59,101 @@ static int cmp_offset(const void *a_, const void *b_)
- 	/* revindex elements are lazily initialized */
- }
- 
--static int cmp_offset(const void *a_, const void *b_)
-+/*
-+ * This is a least-significant-digit radix sort.
-+ *
-+ * It sorts each of the "n" items in "entries" by its offset field. The "max"
-+ * parameter must be at least as large as the largest offset in the array,
-+ * and lets us quit the sort early.
-+ */
-+static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
- {
--	const struct revindex_entry *a = a_;
--	const struct revindex_entry *b = b_;
--	return (a->offset < b->offset) ? -1 : (a->offset > b->offset) ? 1 : 0;
-+	/*
-+	 * We use a "digit" size of 16 bits. That keeps our memory
-+	 * usage reasonable, and we can generally (for a 4G or smaller
-+	 * packfile) quit after two rounds of radix-sorting.
-+	 */
-+#define DIGIT_SIZE (16)
-+#define BUCKETS (1 << DIGIT_SIZE)
-+	/*
-+	 * We want to know the bucket that a[i] will go into when we are using
-+	 * the digit that is N bits from the (least significant) end.
-+	 */
-+#define BUCKET_FOR(a, i, bits) (((a)[(i)].offset >> (bits)) & (BUCKETS-1))
-+
-+	/*
-+	 * We need O(n) temporary storage. Rather than do an extra copy of the
-+	 * partial results into "entries", we sort back and forth between the
-+	 * real array and temporary storage. In each iteration of the loop, we
-+	 * keep track of them with alias pointers, always sorting from "from"
-+	 * to "to".
-+	 */
-+	struct revindex_entry *tmp = xmalloc(n * sizeof(*tmp));
-+	struct revindex_entry *from = entries, *to = tmp;
-+	int bits;
-+	unsigned *pos = xmalloc(BUCKETS * sizeof(*pos));
-+
-+	/*
-+	 * If (max >> bits) is zero, then we know that the radix digit we are
-+	 * on (and any higher) will be zero for all entries, and our loop will
-+	 * be a no-op, as everybody lands in the same zero-th bucket.
-+	 */
-+	for (bits = 0; max >> bits; bits += DIGIT_SIZE) {
-+		struct revindex_entry *swap;
-+		unsigned i;
-+
-+		memset(pos, 0, BUCKETS * sizeof(*pos));
-+
-+		/*
-+		 * We want pos[i] to store the index of the last element that
-+		 * will go in bucket "i" (actually one past the last element).
-+		 * To do this, we first count the items that will go in each
-+		 * bucket, which gives us a relative offset from the last
-+		 * bucket. We can then cumulatively add the index from the
-+		 * previous bucket to get the true index.
-+		 */
-+		for (i = 0; i < n; i++)
-+			pos[BUCKET_FOR(from, i, bits)]++;
-+		for (i = 1; i < BUCKETS; i++)
-+			pos[i] += pos[i-1];
-+
-+		/*
-+		 * Now we can drop the elements into their correct buckets (in
-+		 * our temporary array).  We iterate the pos counter backwards
-+		 * to avoid using an extra index to count up. And since we are
-+		 * going backwards there, we must also go backwards through the
-+		 * array itself, to keep the sort stable.
-+		 *
-+		 * Note that we use an unsigned iterator to make sure we can
-+		 * handle 2^32-1 objects, even on a 32-bit system. But this
-+		 * means we cannot use the more obvious "i >= 0" loop condition
-+		 * for counting backwards, and must instead check for
-+		 * wrap-around with UINT_MAX.
-+		 */
-+		for (i = n - 1; i != UINT_MAX; i--)
-+			to[--pos[BUCKET_FOR(from, i, bits)]] = from[i];
-+
-+		/*
-+		 * Now "to" contains the most sorted list, so we swap "from" and
-+		 * "to" for the next iteration.
-+		 */
-+		swap = from;
-+		from = to;
-+		to = swap;
-+	}
-+
-+	/*
-+	 * If we ended with our data in the original array, great. If not,
-+	 * we have to move it back from the temporary storage.
-+	 */
-+	if (from != entries)
-+		memcpy(entries, tmp, n * sizeof(*entries));
-+	free(tmp);
-+	free(pos);
-+
-+#undef BUCKET_FOR
-+#undef BUCKETS
-+#undef DIGIT_SIZE
- }
- 
- /*
-@@ -108,7 +198,7 @@ static void create_pack_revindex(struct pack_revindex *rix)
- 	 */
- 	rix->revindex[num_ent].offset = p->pack_size - 20;
- 	rix->revindex[num_ent].nr = -1;
--	qsort(rix->revindex, num_ent, sizeof(*rix->revindex), cmp_offset);
-+	sort_revindex(rix->revindex, num_ent, p->pack_size);
- }
- 
- struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
--- 
-1.8.3.rc3.24.gec82cb9
+On the other hand if refresh_cache is relatively common and usually
+changes a big part of the index we should leave them out, as git can
+still run correctly with incorrect stat data, but takes a little longer,
+because it may have to check the file contents.  That will be trade-off
+to make here.
