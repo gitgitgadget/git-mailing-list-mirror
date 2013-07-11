@@ -1,69 +1,67 @@
-From: Brian Gernhardt <mister.reus@gmail.com>
-Subject: Re: t0008 hang on streaming test (OS X)
-Date: Thu, 11 Jul 2013 12:14:39 -0400
-Message-ID: <88B02BE0-7E79-4094-A41E-56350425F4EF@gernhardtsoftware.com>
-References: <6050FACA-CAD4-4E41-B7DC-D7A2036AA233@gernhardtsoftware.com> <CALWbr2zWVLGNAPFEc7QGjozxXFyuDLD639c=yZkzWhusq1kV8Q@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] cat-file: add --batch-disk-sizes option
+Date: Thu, 11 Jul 2013 09:35:29 -0700
+Message-ID: <7vhag1rr5a.fsf@alter.siamese.dyndns.org>
+References: <20130707100133.GA18717@sigill.intra.peff.net>
+	<20130707100949.GC19143@sigill.intra.peff.net>
+	<7vtxk645vp.fsf@alter.siamese.dyndns.org>
+	<20130710110402.GD9724@sigill.intra.peff.net>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 11 18:14:47 2013
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 11 18:35:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxJVz-0001uc-Hr
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 18:14:44 +0200
+	id 1UxJqO-0003nV-GK
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 18:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932456Ab3GKQOj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jul 2013 12:14:39 -0400
-Received: from mail-qa0-f50.google.com ([209.85.216.50]:65420 "EHLO
-	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932183Ab3GKQOj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Jul 2013 12:14:39 -0400
-Received: by mail-qa0-f50.google.com with SMTP id l18so4304817qak.16
-        for <git@vger.kernel.org>; Thu, 11 Jul 2013 09:14:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=zY+2UONI19SrkyZujxFb/h3ATxvvMOTv7L6DeokGpag=;
-        b=OF85XFgDx9ZjIkPFJT3CxgPGwirCESNF9Yh3zM5QfnIESGplaxXZSR/n4b8v8+2d2R
-         ry9aFAWwWZtzrGhRBDGAgoslBfWM9HAUgtfOWrzQ2iGsGADTPYIrqYWexVhGZL0ydQUM
-         x14CyGFd5UgNmfiVTPMSm7YzQvsfwy1VQqu5Ua9OT1uwqayCyqmODwkpcy+JTkJoyIHg
-         LcNUXCmv6pQPTXz9dQcSJ0I0IppBAIjk8eDbUxAF4lWMXf7hLvNt6peKN77dfLGzoqzK
-         VpjQozKp1Fr33Gv91Axk5Rel0uKjre6Jcpuk7NY6+oBCwnBKaofjlh0SAMDYHo2t1+i1
-         6Tzw==
-X-Received: by 10.224.79.203 with SMTP id q11mr34134801qak.35.1373559278438;
-        Thu, 11 Jul 2013 09:14:38 -0700 (PDT)
-Received: from [10.10.10.10] (cpe-142-105-190-134.rochester.res.rr.com. [142.105.190.134])
-        by mx.google.com with ESMTPSA id a8sm30417682qae.11.2013.07.11.09.14.37
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 11 Jul 2013 09:14:37 -0700 (PDT)
-In-Reply-To: <CALWbr2zWVLGNAPFEc7QGjozxXFyuDLD639c=yZkzWhusq1kV8Q@mail.gmail.com>
-X-Mailer: Apple Mail (2.1508)
+	id S1754146Ab3GKQfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jul 2013 12:35:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34427 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752932Ab3GKQfh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jul 2013 12:35:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D2F12F3B8;
+	Thu, 11 Jul 2013 16:35:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EoE83pGcJ2kKB/HMgtM+qqIXTR4=; b=SAiygE
+	hPST49xGJSbdRVcicfckqK9bpZLX33wXtJQbWuCDCFBw10/7TbQrymTPYz0akC1n
+	ZmCT8tmJFRAzIbqtV07XdwiFWsYfISKxGgvexzfmlQPCK2SHqRfZYixQ7xTrZfEV
+	ZvH3HdCXLggqrzu34luAsLewC0QT0PRGRUofg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dDQcm6fIFLJU1YNNA7Zd6EWsbo8mO89a
+	OfuIVnbqw174YNHeOYuSCO1PaeNSDxrq7UqeYxJiTjp9petcqgm/sqzgNB1RhEYx
+	Ra5Nru/mZ0PfvbINJyYi76iCPcM2wYhFMb+9YxVDUBRE/UnuqLQy+c1d76M7WbOk
+	2cEUQTDGq3Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE3C82F3B4;
+	Thu, 11 Jul 2013 16:35:35 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3DFE42F3A7;
+	Thu, 11 Jul 2013 16:35:34 +0000 (UTC)
+In-Reply-To: <20130710110402.GD9724@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 10 Jul 2013 07:04:04 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E8BA0668-EA47-11E2-9A7E-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230114>
 
+Jeff King <peff@peff.net> writes:
 
-On Jul 10, 2013, at 4:35 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
+> I started on this, and it turned out not to really be any simpler....
+> So I went ahead with the full formats for my re-roll. It turned out
+> pretty reasonable, I think.
 
-> On Wed, Jul 10, 2013 at 6:36 PM, Brian Gernhardt
-> <brian@gernhardtsoftware.com> wrote:
->> I am somewhat stuck on how to fix it.  Any ideas?
-> 
-> I don't have anything to reproduce here, but usually I start
-> investigating this kind of problems by attaching the hung process with
-> gdb to see the current state (if it's stuck in a specific state), or
-> to investigate the end-less loop.
-> That usually help finding a good starting point.
-
-Unfortunately, the hung process is /bin/sh (aka bash).  Using the "Sample" function of Activity Monitor gave me that 100% of the time was spent in libc's _open...  Which enlightens me not at all.
-
-~~ Brian Gernhardt
+Thanks.
