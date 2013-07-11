@@ -1,103 +1,97 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v5 5/5] do not die when error in config parsing of buf occurs
-Date: Fri, 12 Jul 2013 00:48:30 +0200
-Message-ID: <20130711224830.GF26477@book-mint>
-References: <20130711223614.GA26477@book-mint>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] During a shallow fetch, prevent sending over unneeded objects
+Date: Thu, 11 Jul 2013 15:53:58 -0700
+Message-ID: <7vsizkpv21.fsf@alter.siamese.dyndns.org>
+References: <20130711220127.GK10217@login.drsnuggles.stderr.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 12 00:48:38 2013
+Cc: git@vger.kernel.org
+To: Matthijs Kooijman <matthijs@stdin.nl>
+X-From: git-owner@vger.kernel.org Fri Jul 12 00:54:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxPfB-00057a-RH
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 00:48:38 +0200
+	id 1UxPka-0001Wf-De
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 00:54:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756009Ab3GKWse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jul 2013 18:48:34 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.31.40]:39954 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753048Ab3GKWsd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jul 2013 18:48:33 -0400
-Received: from [85.16.23.209] (helo=book-mint)
-	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1UxPf6-0003Xf-3n; Fri, 12 Jul 2013 00:48:32 +0200
-Content-Disposition: inline
-In-Reply-To: <20130711223614.GA26477@book-mint>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1756179Ab3GKWyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jul 2013 18:54:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35398 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752856Ab3GKWyF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jul 2013 18:54:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A6AE301B4;
+	Thu, 11 Jul 2013 22:54:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=syUNVY1W1oe64tfAK7sZuiy2zco=; b=b0hGAa
+	iJkDCpoRgxXBpQq40TpqGRINNAnyp42bj0haHrenlTTYMkEGtVePLtNFe7b1aMsz
+	pDcBuOxeq02AibNgyL35/uW5jNhV9ThGpAX53zRwiuXqvm5n5ETeSG7GMtLtZPh/
+	rD3mB4UfwGI7R1v7O0YRB2znY1YZgwU4LzoDI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MsjyPbdwUGug4YqbeIU/G9Y0g1BSXN/I
+	aY8Tk22uCmrhhROCKujchJgFyN9lpcgLCn3QEI+gRJntqnY/+1uMTwKtLqNG5DIE
+	xnu9+ykw3wV6hk5wQXsrcH5M+ZV70ErJF7Y/OjZT+DLJcsaDISJ7AYhYEWUESR/q
+	TkxLsB1KGP8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2354F301B1;
+	Thu, 11 Jul 2013 22:54:02 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E59E301A3;
+	Thu, 11 Jul 2013 22:53:59 +0000 (UTC)
+In-Reply-To: <20130711220127.GK10217@login.drsnuggles.stderr.nl> (Matthijs
+	Kooijman's message of "Fri, 12 Jul 2013 00:01:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C671FA0E-EA7C-11E2-AF8A-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230149>
 
-If a config parsing error in a file occurs we can die and let the user
-fix the issue. This is different for the buf parsing function since it
-can be used to parse blobs of .gitmodules files. If a parsing error
-occurs here we should proceed since otherwise a database containing such
-an error in a single revision could be rendered unusable.
+Matthijs Kooijman <matthijs@stdin.nl> writes:
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- config.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+[administrivia: you seem to have mail-followup-to that points at you
+and the list; is that really needed???]
 
-diff --git a/config.c b/config.c
-index 75f6ad9..e13a7b6 100644
---- a/config.c
-+++ b/config.c
-@@ -21,6 +21,7 @@ struct config_source {
- 		} buf;
- 	} u;
- 	const char *name;
-+	int die_on_error;
- 	int linenr;
- 	int eof;
- 	struct strbuf value;
-@@ -442,7 +443,10 @@ static int git_parse_source(config_fn_t fn, void *data)
- 		if (get_value(fn, data, var) < 0)
- 			break;
- 	}
--	die("bad config file line %d in %s", cf->linenr, cf->name);
-+	if (cf->die_on_error)
-+		die("bad config file line %d in %s", cf->linenr, cf->name);
-+	else
-+		return error("bad config file line %d in %s", cf->linenr, cf->name);
- }
- 
- static int parse_unit_factor(const char *end, uintmax_t *val)
-@@ -950,7 +954,7 @@ int git_default_config(const char *var, const char *value, void *dummy)
- }
- 
- /*
-- * All source specific fields in the union, name and the callbacks
-+ * All source specific fields in the union, die_on_error, name and the callbacks
-  * fgetc, ungetc, ftell of top need to be initialized before calling
-  * this function.
-  */
-@@ -987,6 +991,7 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
- 
- 		top.u.file = f;
- 		top.name = filename;
-+		top.die_on_error = 1;
- 		top.fgetc = config_file_fgetc;
- 		top.ungetc = config_file_ungetc;
- 		top.ftell = config_file_ftell;
-@@ -1007,6 +1012,7 @@ int git_config_from_buf(config_fn_t fn, const char *name, const char *buf,
- 	top.u.buf.len = len;
- 	top.u.buf.pos = 0;
- 	top.name = name;
-+	top.die_on_error = 0;
- 	top.fgetc = config_buf_fgetc;
- 	top.ungetc = config_buf_ungetc;
- 	top.ftell = config_buf_ftell;
--- 
-1.8.3.2.773.gcfaae5b
+> This happens when a client issues a fetch with a depth bigger or equal
+> to the number of commits the server is ahead of the client.
+
+Do you mean "smaller" (not "bigger")?
+
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 59f43d1..5885f33 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -122,6 +122,14 @@ static int do_rev_list(int in, int out, void *user_data)
+>  	if (prepare_revision_walk(&revs))
+>  		die("revision walk setup failed");
+>  	mark_edges_uninteresting(revs.commits, &revs, show_edge);
+> +	/* In case we create a new shallow root, make sure that all
+> +	 * we don't send over objects that the client already has just
+> +	 * because their "have" revisions are no longer reachable from
+> +	 * the shallow root. */
+> +	for (i = 0; i < have_obj.nr; i++) {
+> +		struct commit *commit = (struct commit *)have_obj.objects[i].item;
+> +		mark_tree_uninteresting(commit->tree);
+> +	}
+
+Hmph.
+
+In your discussion (including the comment), you talk about "shallow
+root" (I think that is the same as what we call "shallow boundary"),
+but in this added block, there is nothing that checks CLIENT_SHALLOW
+or SHALLOW flags to special case that.
+
+Is it a good idea to unconditionally do this for all "have"
+revisions?
+
+Also there is another loop that iterates over "have" revisions just
+above the precontext.  I wonder if this added code belongs in that
+loop.
