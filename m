@@ -1,108 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Brian Gernhardt <mister.reus@gmail.com>
 Subject: Re: t0008 hang on streaming test (OS X)
-Date: Thu, 11 Jul 2013 09:09:55 -0700
-Message-ID: <7vli5drsbw.fsf@alter.siamese.dyndns.org>
-References: <6050FACA-CAD4-4E41-B7DC-D7A2036AA233@gernhardtsoftware.com>
-	<20130711133414.GF6015@sigill.intra.peff.net>
-Mime-Version: 1.0
+Date: Thu, 11 Jul 2013 12:13:14 -0400
+Message-ID: <DBBE19C0-BEF4-46FC-9CB3-7BAA26F493AC@gernhardtsoftware.com>
+References: <6050FACA-CAD4-4E41-B7DC-D7A2036AA233@gernhardtsoftware.com> <20130711133414.GF6015@sigill.intra.peff.net>
+Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
 Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
-	"git\@vger.kernel.org List" <git@vger.kernel.org>
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 11 18:10:08 2013
+X-From: git-owner@vger.kernel.org Thu Jul 11 18:13:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxJRT-000670-HD
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 18:10:04 +0200
+	id 1UxJUc-0000cZ-P5
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 18:13:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932413Ab3GKQJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jul 2013 12:09:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48018 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755817Ab3GKQJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jul 2013 12:09:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3C692F962;
-	Thu, 11 Jul 2013 16:09:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jmLwnPf3jkzV1keRGxziB7Eko1U=; b=aWPERc
-	7OSRQF7OVOpzKhYdLG2hAkt+sQbPo7WgeWOXnE8obKzYHAJ45qyAq29wO3jfnvTd
-	B+zguob0zAghaqWG7QV3nTzypNgObmYekzP4qUR77/xdfZElkTCDg1hPpRgCzfJV
-	0k6YXEWr/vin35eG230S5LGeJ8wG3ql3Ksn88=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hw9Rn4Qnmrq3bhr8Pq1qUvUAlc7CNKHV
-	mxzX4VU8j3EjoSjX2JFrZnVS/8tPw9e2/N2SsOB9grKoASJvYdEAUoeMWStnt3RO
-	wTL6V2DeEL7GN1avWJ9AYCxoaiVabL8sGbR8IoRXrbW9vt/R6JU/lOXoKJMjowm1
-	8i/puH2eYO8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAE802F961;
-	Thu, 11 Jul 2013 16:09:57 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44D312F959;
-	Thu, 11 Jul 2013 16:09:57 +0000 (UTC)
-In-Reply-To: <20130711133414.GF6015@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 11 Jul 2013 09:34:14 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 549EDBC8-EA44-11E2-9A1D-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S932446Ab3GKQNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jul 2013 12:13:14 -0400
+Received: from mail-qe0-f51.google.com ([209.85.128.51]:57241 "EHLO
+	mail-qe0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932183Ab3GKQNN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Jul 2013 12:13:13 -0400
+Received: by mail-qe0-f51.google.com with SMTP id a11so4470698qen.24
+        for <git@vger.kernel.org>; Thu, 11 Jul 2013 09:13:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=1DLuur30Jfu3mgVvnAVdboUGXqnIm1MYJNfxp5C4O5c=;
+        b=sXfzZb3MlsGlT7rbIB1O9fYLaS5SOzNfrndUur99kWyof86RCtP14CPzbNZ1cgcYjA
+         SF2BVLArr5rE3kTiWHVLNCiOvas+vIULJcwvckq80Q0wsOuIreACsN4FY7QoSQoDRJTB
+         RWtsb1S5mx5JRYPPkvDyKj8Dbyz03uF3mpNrOfWNGYTAvM6GJRPF189g+2/3bsmEaBXs
+         kFHirDCVpa0Qbt/3OMvvBfJOUW5bGDlXup3IVoFWUxIeAdhGfdNkdjZtIKvjX2/nC9Ai
+         ctJafPyPE2mVkinM2j2vWbSaECauiGtViV9iCD+JlkVU2+Cuwsy5gEjWMf+YM7OQlfBt
+         DpUg==
+X-Received: by 10.224.65.202 with SMTP id k10mr33599780qai.69.1373559193126;
+        Thu, 11 Jul 2013 09:13:13 -0700 (PDT)
+Received: from [10.10.10.10] (cpe-142-105-190-134.rochester.res.rr.com. [142.105.190.134])
+        by mx.google.com with ESMTPSA id i1sm30399643qas.10.2013.07.11.09.13.11
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 11 Jul 2013 09:13:12 -0700 (PDT)
+In-Reply-To: <20130711133414.GF6015@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.1508)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230112>
 
-Jeff King <peff@peff.net> writes:
+
+On Jul 11, 2013, at 9:34 AM, Jeff King <peff@peff.net> wrote:
 
 > On Wed, Jul 10, 2013 at 12:36:40PM -0400, Brian Gernhardt wrote:
->
->> The newest test in t0008 "streaming support for --stdin", seems to
->> hang sporadically on my MacBook Pro (running 10.8.4).  The hang seems
->> to be related to running it in parallel with other tests, as I can
->> only reliably cause it by running with prove  and -j 3.  However, once
->> that has hung I am able to semi-reliably have it occur by running the
->> test separately (with the test hung in the background, using separate
->> trash directories via the --root option).
->
-> I can't replicate the hang here (on Linux) doing:
->
->   for i in `seq 1 30`; do
->       ./t0008-ignores.sh --root=/tmp/foo/$i &
->   done
+> 
+>> The newest test in t0008 "streaming support for --stdin",
 
-It seems to hang on me with bash, but not dash, here.
+>> Experimentation has led me to find that it is hanging when trying to read the 2nd response from check-ignore.
+
 
 > Do you know which test it is hanging on? You mentioned that you can
 > replicate it outside of "prove"; what does running with "-v" say?
->
+> 
 > The last test in t0008, with the fifos, would make me the most
-> suspicious. The way we do it _should_ be fine, but I'm wondering if the
-> shell is blocking in exec here:
->
->   mkfifo in out &&
->   (git check-ignore -n -v --stdin <in >out &) &&
->   exec 9>in &&
->
-> That is, if the fifo is not opened for some reason by the backgrounded
-> process (there's a race, of course, but the outer shell should just
-> block until the sub-shell actually opens it). I wonder if the
-> descriptor-opening behavior of:
->
->   cmd <in >out &
->
-> is different between shells (that is, if it backgrounds the opening of
-> in and out on some shells, but not on others). But then I would expect
-> it to fail consistently.
->
-> Just for fun, does switching the middle line there to:
->
->   (sh -c "git check-ignore -n -v --stdin <in >out" &) &&
->
-> have any effect?
->
-> -Peff
+> suspicious.
+
+The 2nd `read response <out` line is where it was hanging, based on a variety of echos added to the test.
+
+~~ Brian
