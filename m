@@ -1,71 +1,73 @@
-From: Matt Schoen <mtschoen@gmail.com>
-Subject: limit memory usage on large repositories
-Date: Wed, 10 Jul 2013 17:27:57 -0500
-Message-ID: <CAJj9RsTjp7j7Ew2pSttKRAZfZ6fLt9jL+Q_vmHQCi16FBBbK=w@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC/PATCH 1/4] builtin: add git-check-mailmap command
+Date: Thu, 11 Jul 2013 09:31:25 +0700
+Message-ID: <CACsJy8C6_ycum9RfxgfB0Xa2U7Fk02NyED5VvH6o1pExkcV6vA@mail.gmail.com>
+References: <1373483041-27901-1-git-send-email-sunshine@sunshineco.com> <1373483041-27901-2-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 11 00:28:24 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Marius Storm-Olsen <marius@trolltech.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Jul 11 04:32:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ux2s3-0000TC-Vv
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 00:28:24 +0200
+	id 1Ux6fo-0002iu-DR
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 04:32:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754572Ab3GJW2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jul 2013 18:28:20 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:59114 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754259Ab3GJW2T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jul 2013 18:28:19 -0400
-Received: by mail-wg0-f47.google.com with SMTP id l18so6311740wgh.2
-        for <git@vger.kernel.org>; Wed, 10 Jul 2013 15:28:18 -0700 (PDT)
+	id S1755325Ab3GKCb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jul 2013 22:31:56 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:52604 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754950Ab3GKCbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jul 2013 22:31:55 -0400
+Received: by mail-ob0-f169.google.com with SMTP id up14so9461584obb.14
+        for <git@vger.kernel.org>; Wed, 10 Jul 2013 19:31:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=kXmYf99q/HasCuq3Wobv641KKh3az8J3ZTLGMuJgjbM=;
-        b=EZ/BoEjnSEqBsG68oPmxdCG/x2Y4LEWVUHqjT/tjd/DY4W/o3DibtidGg5nPz0T6fW
-         RcygUtepDBeN6DrzxvZiUymbwH7ixmrzaM8xGdxBVi/ZeVBe7fGBAK1EpWNiy8HIXGnE
-         w/6OotXeNGP5I+Zc4lCE5byFz2je+MwewngD2GGMkDB2fVBaieo81vBNbAdyjrbx2tfO
-         r+ug9K8yspBIvl1U7rodwcKZ+eoVU7i9pPtvuskwNR6c6SrCLT5j9Rlt0HoezId5UyWe
-         38A/oWPVlfcoBQkHx1dy9wheHnvW/YTnt1fe4FLPu3nvWuY31e+Z4sTkrseFk8eOycyP
-         8tAg==
-X-Received: by 10.194.1.226 with SMTP id 2mr19497939wjp.91.1373495298002; Wed,
- 10 Jul 2013 15:28:18 -0700 (PDT)
-Received: by 10.217.94.132 with HTTP; Wed, 10 Jul 2013 15:27:57 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=O70qk6Ci0dh3VI7gLQ8vquXgMLn+c1BgYcPdqVG0E8U=;
+        b=PA8gU4ZhWeL6msXkjlHFBdAM6vlU1QMiS21ma0Bt+P/hvOCWva/LJ6DB3AOU2ArnZd
+         qelLZPETXIE0ZLhV2rHNVIa9Y6QD5B/htAiQ/bHZkj1SDu3Lg4Se6FRartUOiwcaXBts
+         kotD0N0h2+HQQp8Vrn3gXhLPJGiTKLFCuVpyaupvmUXA6mq4hexFoG0VmNgP0c3Ywudc
+         e+czYIgLWaW5292OwFIpESVWhGYdWIaAmhQNXChxGIzZDp+eNn4LFGVQb1mSq39sXmy0
+         6jM96DoMLtErPlb+OuHPXDz3flcuyFeeLhtFHjyeIAKKQSor5HnyFJeuyHOxPViisxkl
+         rK8Q==
+X-Received: by 10.182.142.104 with SMTP id rv8mr25481639obb.3.1373509915262;
+ Wed, 10 Jul 2013 19:31:55 -0700 (PDT)
+Received: by 10.76.88.230 with HTTP; Wed, 10 Jul 2013 19:31:25 -0700 (PDT)
+In-Reply-To: <1373483041-27901-2-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230075>
 
-Hi there,
+On Thu, Jul 11, 2013 at 2:03 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> +static const struct option check_mailmap_options[] = {
+> +       OPT_BOOLEAN(0, "stdin", &use_stdin,
+> +                   N_("also read contacts from stdin")),
+> +       OPT_BOOLEAN('z', NULL, &null_out,
+> +                   N_("null-terminate output lines")),
 
-I've been using git for some time now, and host my remote bare
-repositories on my shared hosting account at Dreamhost.com.  As a
-protective feature on their shared host setup, they enact a policy
-that kills processes that consume too much memory.  This happens to
-git sometimes.
+I think OPT_BOOLEAN is deprecated in favor of OPT_BOOL (or OPT_COUNTUP
+if you really want -z -z -z to mean differently than -z)
 
-By "sometimes" I mean on large repos (>~500MB), when performing
-operations like git gc and git fsck and, most annoyingly, when doing a
-clone.  It seems to happen in the pack phase, but I can't be sure
-exactly.
+> +       maybe_flush_or_die(stdout, "contact to stdout");
 
-I've messed around with the config options like pack.threads and
-pack.sizeLimit, and basically anything on the git config manpage that
-mentions memory.  I limit all of these things to 1 or 0 or 1m when
-applicable, just to be sure. To be honest, I really don't know what
-I'm doing ;)
+On error this function will print
 
-Oddly enough, I'm having trouble reproducing my issue with anything
-but git fsck.  Clones were failing in the past, but after a successful
-git gc, everything seems to be ok(?)
+write failure on 'contact to stdout'
 
-Anyway, I'd like some advice on what settings limit memory usage, and
-exactly how to determine what the memory usage will be with certain
-values.
-
-Thanks!
+maybe maybe_flush_or_die(stdout, "write contact to stdout") or
+something? From i18n point of view, maybe_flush_or_die should not
+compose a sentence this way. Let the second argument be a complete
+sentence so that translators have more freedom. But that's a different
+issue.
+--
+Duy
