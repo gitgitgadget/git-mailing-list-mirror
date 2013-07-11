@@ -1,97 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/10] cat-file: split --batch input lines on whitespace
-Date: Thu, 11 Jul 2013 10:42:07 -0700
-Message-ID: <7vvc4hq9hs.fsf@alter.siamese.dyndns.org>
-References: <20130710113447.GA20113@sigill.intra.peff.net>
-	<20130710114828.GH21963@sigill.intra.peff.net>
-	<CALkWK0mGMZPWowZ0ULNuGKD8w2Q=kN0nEGaOkuWoYKmzD5zGrw@mail.gmail.com>
-	<20130711113653.GD6015@sigill.intra.peff.net>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH 0/6] Corrections to the mailmap file
+Date: Thu, 11 Jul 2013 19:52:49 +0200
+Message-ID: <51DEF0F1.5010204@googlemail.com>
+References: <1372946659-10332-1-git-send-email-stefanbeller@googlemail.com> <7vzjttq9wk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Duy Nguyen <pclouds@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 11 19:42:17 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 11 19:52:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxKsi-0005Hh-5M
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 19:42:16 +0200
+	id 1UxL32-0006HX-A3
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Jul 2013 19:52:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755885Ab3GKRmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jul 2013 13:42:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43695 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751918Ab3GKRmL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jul 2013 13:42:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2A512FCE4;
-	Thu, 11 Jul 2013 17:42:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0FE60rt/JdddPQIqeTrWxK4pBhg=; b=oLUV0y
-	XucZ+4gtmy9yZVAjuHzGb8bR3o8xOQUWF0mZIOOE5QFEcqc/FwLc/1OWiczKRBgf
-	V2TAaoC/Azp0ZN6vKO4KITUrJthQKI8xN8S5Xo796fFwFvZvDvJBdCmAyBa7R6rp
-	frlqMddFaG/Cgm3lYzAhpENWuBUVFdtjWnVPs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=COu0cjlinOfrPRzziVOeKHKzTlm2Mqjc
-	SwLqo3g3uoUXRz4J7c28kTZMGrVsuqOGtzye1E8y7TKVyc10fGN36HyJeF+XNBWm
-	WfGFrwX2PDDIOaEgxw4EYlxx6d+3qOA9dljkY9QWzlkGYUfmoEU5umBXi+yh7e1b
-	Pp1Ye72Qpu4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE6B82FCE2;
-	Thu, 11 Jul 2013 17:42:10 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61D5A2FCD7;
-	Thu, 11 Jul 2013 17:42:09 +0000 (UTC)
-In-Reply-To: <20130711113653.GD6015@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 11 Jul 2013 07:36:53 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 36117460-EA51-11E2-A9ED-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753484Ab3GKRww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jul 2013 13:52:52 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:63215 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752601Ab3GKRwv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jul 2013 13:52:51 -0400
+Received: by mail-wi0-f171.google.com with SMTP id hj3so12953220wib.10
+        for <git@vger.kernel.org>; Thu, 11 Jul 2013 10:52:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=MQ9aEp8LDYusEIbb7gwDkVXJH4vQyQ9x7Z5BD9EIRyY=;
+        b=yWpm6BLNr80B1WF43OZUo2GJeTVle9GgiZGG4P2b20aFGxr4a63osJGhyDuyH4/ZHH
+         yMn7Yyam1kKWgEBiFt8gf2F7QsHkqAAasUs77euZkFLAhWKPj6inbIUL/YeQsYZmxgLR
+         LrGBEuL2YCR96vBJge60QbukpeX8NPqIKpBzZAzlGOAebG7g+PqstNDTxl0sSxOq4FNL
+         6gvmiR5o6ygfH/a/uiyM9VG6BLvtXFz/r7keKkMoqLu3BkU6t6VB1rR3olvfs4iRLnwb
+         vwJEc5sRl2FDO5rLrmJOLatnNsCPIqtEokukUtqy8M/LN/6hjrccigODF6G2sCiQmDn3
+         PqQA==
+X-Received: by 10.180.73.68 with SMTP id j4mr22305033wiv.10.1373565167710;
+        Thu, 11 Jul 2013 10:52:47 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id z6sm43781893wiv.11.2013.07.11.10.52.46
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 11 Jul 2013 10:52:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <7vzjttq9wk.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230123>
 
-Jeff King <peff@peff.net> writes:
+On 07/11/2013 07:33 PM, Junio C Hamano wrote:
+> Stefan Beller <stefanbeller@googlemail.com> writes:
+>>
+>> I noticed many duplicates in email addresses but having the same name by
+>> running:
+>>
+>>     # Finding out duplicates by comparing names:
+>>     git shortlog -sne |awk '{ NF--; $1=""; print }' |sort |uniq -d
+>>
+>> Most of these entries are most probably the same person, but we cannot be 
+>> sure, as there might be different persons having the same name, then they
+>> are only distinguished by the mail address.
+>>
+>> However I suspect most of these to be the same person, having changed 
+>> mail addresses.
+>>
+>> Here comes an initial batch of corrections to the mailmap file, which
+>> maps people with email addresses of different capitalization onto
+>> the same entity.
+>> (Example Name@MIT.EDU is the same as Name@mit.edu)
+>>
+>> I intend to contact each of the persons individually and ask whether 
+>> just their mail address changed, or if they are indeed different persons.
+> 
+> Has anything happen to this topic sice you posted?
+> 
+> I think:
+> 
+>  - .(none) is obviously bad, and we can fix without waiting for
+>    responses as long as we know the replacement address is the
+>    address from the list we usually see on the list (3).
+> 
+>  - Domain part is defined to be case insensitive (e.g. @mit.edu vs
+>    @MIT.EDU), so both forms are equally valid.  The owner of the
+>    address may have preferences (1 and 4), though.
+> 
+>    For this, we could just declare we downcase the domain part.
+> 
+>  - The local-part, even though RFC 2821 says "local-part of a
+>    mailbox MUST BE treated as case sensitive", is often case
+>    insensitive, and User.Name@domain and user.name@domain often name
+>    the same mailbox.  The owner of the address may have preferences
+>    (5 and 6), though.
+> 
+>    For this, we could just declare we Camel.Case the local part,
+>    after making sure Camel.Case@domain has been used by the owner of
+>    the address on this list.
+> 
+> So where does that leave us?
+> 
+> We can apply without waiting:
+> 
+>   1: downcase domain
+>   3: .(none) and we know paulus@samba.org
+>   4: downcase domain
+>   5: We recently saw Dshco calls himself <Johannes.Schindelin@domain>.
+>   6: The latest one from Nov 2009 uses <Toby.Allsopp@domain>.
+> 
+> The only possibly iffy one is Alex Riesen, but <raa.lkml@domain>
+> seems to be the one he uses here, so I think 2. is also fine.
+> 
 
-> On Wed, Jul 10, 2013 at 08:59:51PM +0530, Ramkumar Ramachandra wrote:
->
->> Jeff King wrote:
->> >   git rev-list --objects HEAD |
->> >   git cat-file --batch-check='%(objectsize) %(text)'
->> 
->> If anything, I would have expected %(rest), not %(text).  This atom is
->> specific to commands that accept input via stdin (i.e. not log, f-e-r,
->> branch, or anything else I can think of).
->
-> I considered %(rest) as well. I don't have a strong preference.
->
->> Also, this makes me wonder if %(field:0), %(field:1), and probably
->> %(field:@) are good ideas.  Even if we go down that road, I don't
->> think %(rest) is a problem per-se.
->
-> I don't have a use for them, and even if we want to add them later, you
-> would still want to support %(rest) for when the user wants to take the
-> rest of the line verbatim without caring about field-splitting.
->
-> To be honest, I do not see %(field) as all that useful. If you want to
-> go about rearranging or selecting fields, that is what "cut" (or "awk")
-> is for.  Having fields means you need to specify field separators, and
-> how runs of separators are treated. Other tools already do this.
+To be honest, I did not continue to work on this. I was 
+waiting for the first few patches to be reviewed, because 
+I was not sure how important you all think this topic 
+really is. I know projects, which frown upon such 
+beautyfing commits. Hence I was waiting for an answer, 
+whether such work is appreciated.
 
-Very true, and more importantly, you cannot still say "my input
-object name is at field N, not at the beginning", so that makes it
-doubly dubious how %(field:$n) would be any useful.
+Anyway, last time I tried contributing to git, I was 
+told to explicitely do it in the open. I did forget 
+to CC the mailing list when asking Alex Riesen 
+(2nd patch), whether it's all him.
+I do see the benefit of the openess, when discussing code 
+or documentation, but I wonder if you'd also like to see these
+'Hello, are you the person having email x, y and z?' 
+kind of mails  put on the mailing list as well. 
+That would be 120 to go, which may be undesired?
 
-> So it would (at best) save you from an extra cut invocation, whereas
-> %(rest) gets you out of doing something much more difficult. Without it,
-> information is lost from your pipeline (so you have to have tee to a
-> separate pipeline, and then reassemble the pieces).
+So I'll start contacting the other people now.
+
+
+
+ 
