@@ -1,262 +1,249 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 6/6] t5533: test "push --lockref"
-Date: Thu, 11 Jul 2013 15:26:20 -0700
-Message-ID: <1373581580-13651-7-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 4/6] push --lockref: implement logic to populate old_sha1_expect[]
+Date: Thu, 11 Jul 2013 15:26:18 -0700
+Message-ID: <1373581580-13651-5-git-send-email-gitster@pobox.com>
 References: <1373581580-13651-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 12 00:26:58 2013
+X-From: git-owner@vger.kernel.org Fri Jul 12 00:27:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxPKD-0002ZM-AT
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 00:26:57 +0200
+	id 1UxPKE-0002ZM-DH
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 00:26:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753987Ab3GKW0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jul 2013 18:26:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41885 "EHLO
+	id S1756065Ab3GKW0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jul 2013 18:26:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50834 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755526Ab3GKW0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jul 2013 18:26:35 -0400
+	id S1755488Ab3GKW0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jul 2013 18:26:31 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7283130417
-	for <git@vger.kernel.org>; Thu, 11 Jul 2013 22:26:35 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 035C9303FA
+	for <git@vger.kernel.org>; Thu, 11 Jul 2013 22:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=dCcm
-	kkALe7WFvOWZ8ltOLCXL8Y0=; b=phX2a99xuroN5KTzNwQZpx264DmDtpU2iCpd
-	vTkiBuD6mgcrHd+8IyATg4FubIvZZxlOeknB3W9lmj28pS9NqmDvRrOsft5DpEI8
-	lKWppFXv4a9+QGBENVvvt1Zfxw5ZtMMeqAYub3bl/12vpY+6+zRLCbEbmP2LVlk/
-	tAziZv8=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=HhGL
+	9RxSXYBJ01qZf6S/9Aj6Lz4=; b=k9Uki0YjfLFVf67zA2ryvJBlrygINeFrIGl4
+	7NyCX/CTD5m2FtKsqNAdOHTjJJCEpACmSUHe1oQlP0AzxObeqdSAFBoqSuXeuv2B
+	K7psCpYnr6HrxVvXIT/IsdbWzXnWDBx+/3CZORARo2cYS2QT5pFYMwfSaU6SUtVp
+	0cvv4DE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=qI4IAH
-	ZJW3pCv3pdhm/z4tjyCLhAng6C/0DaxJYDGOIG70G9AqJxBuVMzVHHKYGi7lGi++
-	qLQID6WAdj5nMhTTnfLXR7UxD7+ORHoDo7x+SXGEKJP68V3OxgW1KQu6kXA5x22H
-	3SNYMgIn7XrK8v2ejNSTubMEW+I1xukhcrv8M=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=BvKSGd
+	d0d3T5UI14TosMtwPq/aKPKMw9sbsrxiGLRWM+vuba0/yRRAuPW0GpUq7SNprULO
+	x+w8Ou5cJ2bdlsoPSpnLAW7jlcg7UVbWssuGcxWGl/rUElpteR5ifggoaOUc0cJW
+	XnxeX7FmGmx2bqwI8boAPo8rbdXFaQp4OPypU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6753430416
-	for <git@vger.kernel.org>; Thu, 11 Jul 2013 22:26:35 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE44A303F9
+	for <git@vger.kernel.org>; Thu, 11 Jul 2013 22:26:30 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3D16430410
-	for <git@vger.kernel.org>; Thu, 11 Jul 2013 22:26:34 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0949A303F4
+	for <git@vger.kernel.org>; Thu, 11 Jul 2013 22:26:29 +0000 (UTC)
 X-Mailer: git-send-email 1.8.3.2-911-g2c4daa5
 In-Reply-To: <1373581580-13651-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: F1769A1A-EA78-11E2-8292-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EEF396A8-EA78-11E2-95C1-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230141>
 
-Prepare two repositories, src and dst, the latter of which is a
-clone of the former (with tracking branches), and push from the
-latter into the former, using --lockref=name (using tracking ref for
-"name" when updating "name"), --lockref=name:value, --lockref=name:
-(i.e. check creation), and --lockref (using tracking ref for
-anything that we update).
+This plugs the push_cas_option data collected by the command line
+option parser to the transport system with a new function
+apply_push_cas(), which is called after match_push_refs() has
+already been called.
+
+At this point, we know which remote we are talking to, and what
+remote refs we are going to update, so we can fill in the details
+that may have been missing from the command line, such as
+
+ (1) what abbreviated refname the user gave us matches the actual
+     refname at the remote; and
+
+ (2) which remote tracking branch in our local repository to read the
+     value of the object to expect at the remote.
+
+to populate the old_sha1_expect[] field of each of the remote ref.
+
+Still nobody uses this information, which is the topic of the next
+patch.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t5533-push-cas.sh | 189 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 189 insertions(+)
- create mode 100755 t/t5533-push-cas.sh
+ builtin/push.c      |  6 ++++++
+ builtin/send-pack.c |  3 +++
+ remote.c            | 61 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ remote.h            |  6 ++++++
+ transport.c         |  6 ++++++
+ transport.h         |  4 ++++
+ 6 files changed, 86 insertions(+)
 
-diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-new file mode 100755
-index 0000000..ea1c789
---- /dev/null
-+++ b/t/t5533-push-cas.sh
-@@ -0,0 +1,189 @@
-+#!/bin/sh
+diff --git a/builtin/push.c b/builtin/push.c
+index 31a5ba0..b0e3691 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -299,6 +299,12 @@ static int push_with_options(struct transport *transport, int flags)
+ 	if (thin)
+ 		transport_set_option(transport, TRANS_OPT_THIN, "yes");
+ 
++	if (!is_empty_cas(&cas)) {
++		if (!transport->smart_options)
++			die("underlying transport does not support --lockref option");
++		transport->smart_options->cas = &cas;
++	}
 +
-+test_description='compare & swap push force/delete safety'
+ 	if (verbosity > 0)
+ 		fprintf(stderr, _("Pushing to %s\n"), transport->url);
+ 	err = transport_push(transport, refspec_nr, refspec, flags,
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index a23b26d..6027ead 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -242,6 +242,9 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 	if (match_push_refs(local_refs, &remote_refs, nr_refspecs, refspecs, flags))
+ 		return -1;
+ 
++	if (!is_empty_cas(&cas))
++		apply_push_cas(&cas, remote, remote_refs);
 +
-+. ./test-lib.sh
+ 	set_ref_status_for_push(remote_refs, args.send_mirror,
+ 		args.force_update);
+ 
+diff --git a/remote.c b/remote.c
+index 6014acd..93e5b65 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1978,3 +1978,64 @@ int parseopt_push_cas_option(const struct option *opt, const char *arg, int unse
+ {
+ 	return parse_push_cas_option(opt->value, arg, unset);
+ }
 +
-+setup_srcdst_basic () {
-+	rm -fr src dst &&
-+	git clone --no-local . src &&
-+	git clone --no-local src dst &&
-+	(
-+		cd src && git checkout HEAD^0
-+	)
++int is_empty_cas(const struct push_cas_option *cas)
++{
++	return !cas->use_tracking_for_rest && !cas->nr;
 +}
 +
-+test_expect_success setup '
-+	: create template repository
-+	test_commit A &&
-+	test_commit B &&
-+	test_commit C
-+'
++/*
++ * Look at remote.fetch refspec and see if we have a remote
++ * tracking branch for the refname there.  Fill its current
++ * value in sha1[].
++ * If we cannot do so, return negative to signal an error.
++ */
++static int remote_tracking(struct remote *remote, const char *refname,
++			   unsigned char sha1[20])
++{
++	char *dst;
 +
-+test_expect_success 'push to update (protected)' '
-+	setup_srcdst_basic &&
-+	(
-+		cd dst &&
-+		test_commit D &&
-+		test_must_fail git push --lockref=master:master origin master
-+	) &&
-+	git ls-remote . refs/heads/master >expect &&
-+	git ls-remote src refs/heads/master >actual &&
-+	test_cmp expect actual
-+'
++	dst = apply_refspecs(remote->fetch, remote->fetch_refspec_nr, refname);
++	if (!dst)
++		return -1; /* no tracking ref for refname at remote */
++	if (read_ref(dst, sha1))
++		return -1; /* we know what the tracking ref is but we cannot read it */
++	return 0;
++}
 +
-+test_expect_success 'push to update (protected, forced)' '
-+	setup_srcdst_basic &&
-+	(
-+		cd dst &&
-+		test_commit D &&
-+		git push --force --lockref=master:master origin master
-+	) &&
-+	git ls-remote dst refs/heads/master >expect &&
-+	git ls-remote src refs/heads/master >actual &&
-+	test_cmp expect actual
-+'
++static void apply_cas(struct push_cas_option *cas,
++		      struct remote *remote,
++		      struct ref *ref)
++{
++	int i;
 +
-+test_expect_success 'push to update (protected, tracking)' '
-+	setup_srcdst_basic &&
-+	(
-+		cd src &&
-+		git checkout master &&
-+		test_commit D &&
-+		git checkout HEAD^0
-+	) &&
-+	git ls-remote src refs/heads/master >expect &&
-+	(
-+		cd dst &&
-+		test_commit E &&
-+		git ls-remote . refs/remotes/origin/master >expect &&
-+		test_must_fail git push --lockref=master origin master &&
-+		git ls-remote . refs/remotes/origin/master >actual &&
-+		test_cmp expect actual
-+	) &&
-+	git ls-remote src refs/heads/master >actual &&
-+	test_cmp expect actual
-+'
++	/* Find an explicit --lockref=<name>[:<value>] entry */
++	for (i = 0; i < cas->nr; i++) {
++		struct push_cas *entry = &cas->entry[i];
++		if (!refname_match(entry->refname, ref->name, ref_rev_parse_rules))
++			continue;
++		ref->expect_old_sha1 = 1;
++		if (!entry->use_tracking)
++			hashcpy(ref->old_sha1_expect, cas->entry[i].expect);
++		else if (remote_tracking(remote, ref->name, ref->old_sha1_expect))
++			ref->expect_old_no_trackback = 1;
++		return;
++	}
 +
-+test_expect_success 'push to update (protected, tracking, forced)' '
-+	setup_srcdst_basic &&
-+	(
-+		cd src &&
-+		git checkout master &&
-+		test_commit D &&
-+		git checkout HEAD^0
-+	) &&
-+	(
-+		cd dst &&
-+		test_commit E &&
-+		git ls-remote . refs/remotes/origin/master >expect &&
-+		git push --force --lockref=master origin master
-+	) &&
-+	git ls-remote dst refs/heads/master >expect &&
-+	git ls-remote src refs/heads/master >actual &&
-+	test_cmp expect actual
-+'
++	/* Are we using "--lockref" to cover all? */
++	if (!cas->use_tracking_for_rest)
++		return;
 +
-+test_expect_success 'push to update (allowed)' '
-+	setup_srcdst_basic &&
-+	(
-+		cd dst &&
-+		test_commit D &&
-+		git push --lockref=master:master^ origin master
-+	) &&
-+	git ls-remote dst refs/heads/master >expect &&
-+	git ls-remote src refs/heads/master >actual &&
-+	test_cmp expect actual
-+'
++	ref->expect_old_sha1 = 1;
++	if (remote_tracking(remote, ref->name, ref->old_sha1_expect))
++		ref->expect_old_no_trackback = 1;
++}
 +
-+test_expect_success 'push to update (allowed, tracking)' '
-+	setup_srcdst_basic &&
-+	(
-+		cd dst &&
-+		test_commit D &&
-+		git push --lockref=master origin master
-+	) &&
-+	git ls-remote dst refs/heads/master >expect &&
-+	git ls-remote src refs/heads/master >actual &&
-+	test_cmp expect actual
-+'
++void apply_push_cas(struct push_cas_option *cas,
++		    struct remote *remote,
++		    struct ref *remote_refs)
++{
++	struct ref *ref;
++	for (ref = remote_refs; ref; ref = ref->next)
++		apply_cas(cas, remote, ref);
++}
+diff --git a/remote.h b/remote.h
+index 8070303..4c564c5 100644
+--- a/remote.h
++++ b/remote.h
+@@ -77,10 +77,13 @@ struct ref {
+ 	struct ref *next;
+ 	unsigned char old_sha1[20];
+ 	unsigned char new_sha1[20];
++	unsigned char old_sha1_expect[20]; /* used by expect-old */
+ 	char *symref;
+ 	unsigned int
+ 		force:1,
+ 		forced_update:1,
++		expect_old_sha1:1,
++		expect_old_no_trackback:1,
+ 		deletion:1,
+ 		matched:1;
+ 
+@@ -248,4 +251,7 @@ extern int parseopt_push_cas_option(const struct option *, const char *arg, int
+ extern int parse_push_cas_option(struct push_cas_option *, const char *arg, int unset);
+ extern void clear_cas_option(struct push_cas_option *);
+ 
++extern int is_empty_cas(const struct push_cas_option *);
++void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
 +
-+test_expect_success 'push to update (allowed even though no-ff)' '
-+	setup_srcdst_basic &&
-+	(
-+		cd dst &&
-+		git reset --hard HEAD^ &&
-+		test_commit D &&
-+		git push --lockref=master origin master
-+	) &&
-+	git ls-remote dst refs/heads/master >expect &&
-+	git ls-remote src refs/heads/master >actual &&
-+	test_cmp expect actual
-+'
+ #endif
+diff --git a/transport.c b/transport.c
+index b84dbf0..5dd92b7 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1142,6 +1142,12 @@ int transport_push(struct transport *transport,
+ 			return -1;
+ 		}
+ 
++		if (transport->smart_options &&
++		    transport->smart_options->cas &&
++		    !is_empty_cas(transport->smart_options->cas))
++			apply_push_cas(transport->smart_options->cas,
++				       transport->remote, remote_refs);
 +
-+test_expect_success 'push to delete (protected)' '
-+	setup_srcdst_basic &&
-+	git ls-remote src refs/heads/master >expect &&
-+	(
-+		cd dst &&
-+		test_must_fail git push --lockref=master:master^ origin :master
-+	) &&
-+	git ls-remote src refs/heads/master >actual &&
-+	test_cmp expect actual
-+'
+ 		set_ref_status_for_push(remote_refs,
+ 			flags & TRANSPORT_PUSH_MIRROR,
+ 			flags & TRANSPORT_PUSH_FORCE);
+diff --git a/transport.h b/transport.h
+index b551f99..10f7556 100644
+--- a/transport.h
++++ b/transport.h
+@@ -14,6 +14,7 @@ struct git_transport_options {
+ 	int depth;
+ 	const char *uploadpack;
+ 	const char *receivepack;
++	struct push_cas_option *cas;
+ };
+ 
+ struct transport {
+@@ -127,6 +128,9 @@ struct transport *transport_get(struct remote *, const char *);
+ /* Transfer the data as a thin pack if not null */
+ #define TRANS_OPT_THIN "thin"
+ 
++/* Check the current value of the remote ref */
++#define TRANS_OPT_CAS "cas"
 +
-+test_expect_success 'push to delete (protected, forced)' '
-+	setup_srcdst_basic &&
-+	(
-+		cd dst &&
-+		git push --force --lockref=master:master^ origin :master
-+	) &&
-+	>expect &&
-+	git ls-remote src refs/heads/master >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'push to delete (allowed)' '
-+	setup_srcdst_basic &&
-+	(
-+		cd dst &&
-+		git push --lockref=master origin :master
-+	) &&
-+	>expect &&
-+	git ls-remote src refs/heads/master >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'cover everything with default lockref (protected)' '
-+	setup_srcdst_basic &&
-+	(
-+		cd src &&
-+		git branch naster master^
-+	)
-+	git ls-remote src refs/heads/\* >expect &&
-+	(
-+		cd dst &&
-+		test_must_fail git push --lockref origin master master:naster
-+	) &&
-+	git ls-remote src refs/heads/\* >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'cover everything with default lockref (allowed)' '
-+	setup_srcdst_basic &&
-+	(
-+		cd src &&
-+		git branch naster master^
-+	)
-+	(
-+		cd dst &&
-+		git fetch &&
-+		git push --lockref origin master master:naster
-+	) &&
-+	git ls-remote dst refs/heads/master |
-+	sed -e "s/master/naster/" >expect &&
-+	git ls-remote src refs/heads/naster >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
+ /* Keep the pack that was transferred if not null */
+ #define TRANS_OPT_KEEP "keep"
+ 
 -- 
 1.8.3.2-912-g65cf5cf
