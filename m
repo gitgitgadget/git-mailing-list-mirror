@@ -1,118 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug in .mailmap handling?
-Date: Fri, 12 Jul 2013 13:50:26 -0700
-Message-ID: <7v4nbzjyel.fsf@alter.siamese.dyndns.org>
-References: <51E029B9.20108@googlemail.com>
-	<7vfvvjjzee.fsf@alter.siamese.dyndns.org>
-	<7v8v1bjyyy.fsf@alter.siamese.dyndns.org>
+From: Aaron Schrab <aaron@schrab.com>
+Subject: Re: [PATCH v3] config: add support for http.<url>.* settings
+Date: Fri, 12 Jul 2013 16:58:44 -0400
+Message-ID: <20130712205843.GJ4604@pug.qqx.org>
+References: <9e7edfbc83a7284615af4ca0de39c1b@f74d39fa044aa309eaea14b9f57fe79>
+ <20130712095923.GA4695@sigill.intra.peff.net>
+ <F5272E14-188E-4199-9523-D2ED66574D91@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 12 22:50:36 2013
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	Daniel Knittl-Frank <knittl89@googlemail.com>,
+	Jan =?iso-8859-1?Q?Kr=FCger?= <jk@jk.gs>,
+	Alejandro Mery <amery@geeks.cl>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 12 22:58:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxkIU-0004Nd-Eb
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 22:50:34 +0200
+	id 1UxkQT-0001eO-BQ
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 22:58:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965441Ab3GLUu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 16:50:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55267 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965378Ab3GLUu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jul 2013 16:50:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F94730DFA;
-	Fri, 12 Jul 2013 20:50:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cBbvjg+G8eSSz5vg6PyQqHrxVuk=; b=OM3BjR
-	RRKo0z2VXknteEXduRqlm81uUQYsJ5vW+cVB1Q9BAmpwsUEvoFXa1sS6/dr5OFt9
-	QZf2mqihp6DohP/AY1ZR7LmYOyhC3SccJXyW0awD4Efc0Jb2Xdx1gEp+AFb0y6Ae
-	JPMHyboezp+LN/T81Hpd/rq36T8ohBNmWNALU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uZjmtpn/XF6CdRpDGZDShHiKmuJi9W07
-	eUr+LyrGr82n0t8na5UJvyGEmMVCule7uk8MT/ipPlIFnreM+UMch1AxtBTpywuT
-	F6U3GvdisyG1PWz5UOGAS0B38DVJDb3S7dr49+6a0zaScp4+Z/SnkkW7SeUjIRHK
-	1myF7dAo0uc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56AFF30DF9;
-	Fri, 12 Jul 2013 20:50:28 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9BBFF30DF8;
-	Fri, 12 Jul 2013 20:50:27 +0000 (UTC)
-In-Reply-To: <7v8v1bjyyy.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 12 Jul 2013 13:38:13 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AEB5349A-EB34-11E2-AAE5-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S965446Ab3GLU6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 16:58:45 -0400
+Received: from pug.qqx.org ([50.116.43.67]:33112 "EHLO pug.qqx.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965443Ab3GLU6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 16:58:45 -0400
+Received: by pug.qqx.org (Postfix, from userid 1000)
+	id 382C11D3E3; Fri, 12 Jul 2013 16:58:44 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <F5272E14-188E-4199-9523-D2ED66574D91@gmail.com>
+User-Agent: Mutt/1.5.21+145 (gd0ebb66) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230255>
 
-Junio C Hamano <gitster@pobox.com> writes:
+At 06:07 -0700 12 Jul 2013, "Kyle J. McKay" <mackyle@gmail.com> wrote:
+>I don't think it's necessary to split the URL apart though.  Whatever 
+>URL the user gave to git on the command line (at some point even if 
+>it's now stored as a remote setting in config) complete with URL-
+>encoding, user names, port names, etc. is the same url, possibly 
+>shortened, that needs to be used for the http.<url>.option setting.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Stefan Beller <stefanbeller@googlemail.com> writes:
->>
->>> 	git shortlog -sne
->>> 		 1  A <A@example.org>
->>> 		 1  A <a@example.org>
->>
->> This is coming from mailmap.c::add_mapping() that downcases the
->> e-mail address.
->>
->> changed_email@example.org is mapped to a@example.org because of this
->> downcasing, while "A <A@example.org>" does not have any entry for it
->> in the .mailmap file, so it is given back as-is.  Hence we see two
->> distinct entries.
->
-> I think it is wrong for the parser to lose information by
-> downcasing.
->
-> It is perfectly fine to do the comparison case insensitively, to
-> allow <changed_Email@example.org> in the input is mangled using the
-> entry for <changed_email@example.org> in the .mailmap file; it is
-> not fine to downcase the parsed result, especially the side that is
-> used as the "rewritten result" (i.e. the tokens earlier on the line),
-> as that would mean mangling the output.
->
-> Let me see if I can quickly whip up a fix.
+This seems to be assuming that the configuration is done after the URL 
+is entered and that URLs are always entered manually.  I don't think 
+either of those assumptions is valid.  A user may want to specify http 
+settings for all repositories on a specified host and so add settings 
+for that host to ~/.gitconfig expecting those settings to be used later.  
+A URL in a slightly different format may later be copy+pasted without 
+the user realizing that it won't use that config due to one of the 
+versions being in a non-canonical form.
 
-It might be just the matter of doing this.
+>I think that's simple and very easy to explain and avoids user 
+>confusion and surprise while still allowing a default to be set for a 
+>site but easily overridden for a portion of that site without needing 
+>to worry about the order config files are processed or the order of the 
+>[http "<url>"] sections within them.
 
-I suspect that we could drop the downcasing of old-email, too, but
-the new-email is supposed to be the rewritten result that appears on
-the output, and downcasing it is very wrong.
-
-I also suspect that this was an old workaround for the original
-string-list that did not know how to match items case insensitively,
-which we should have removed when we added case sensitivity support
-to the string-list at around 577f63e7 (Merge branch
-'ap/log-mailmap', 2013-01-20).
-
- mailmap.c | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/mailmap.c b/mailmap.c
-index 418081e..c64a53d 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -56,9 +56,6 @@ static void add_mapping(struct string_list *map,
- 	if (old_email)
- 		for (p = old_email; *p; p++)
- 			*p = tolower(*p);
--	if (new_email)
--		for (p = new_email; *p; p++)
--			*p = tolower(*p);
- 
- 	if (old_email == NULL) {
- 		old_email = new_email;
+I agree that the method is easy to explain, but I think a user may very 
+well be surprised and confused in a scenario like I described above.  
+And having the order not matter (in some cases) for these configuration 
+items deviates from how other configuration values are handled.
