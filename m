@@ -1,66 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-clone.txt: remove the restriction on pushing from a shallow clone
-Date: Thu, 11 Jul 2013 22:54:49 -0700
-Message-ID: <7vy59cnx06.fsf@alter.siamese.dyndns.org>
-References: <1373607462-12836-1-git-send-email-pclouds@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 3/4] t4203: test mailmap functionality directly rather
+ than indirectly
+Date: Fri, 12 Jul 2013 02:05:18 -0400
+Message-ID: <CAPig+cSfqONOFmmXX=s+HWKnLr5eG27jU9xgE7Dki0sycPPz1g@mail.gmail.com>
+References: <1373554528-15775-1-git-send-email-sunshine@sunshineco.com>
+	<1373554528-15775-4-git-send-email-sunshine@sunshineco.com>
+	<7vhag0rk3u.fsf@alter.siamese.dyndns.org>
+	<CAPig+cS7rxFzY8Q3gfTtJkggp-K62SVqsjCotbM3Bkm47L44gg@mail.gmail.com>
+	<20130712005517.GA8482@google.com>
+	<7v7ggwpbut.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 12 07:54:57 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+	Antoine Pelisse <apelisse@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 12 08:05:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxWJk-0005MT-5h
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 07:54:56 +0200
+	id 1UxWTx-0004xv-AR
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 08:05:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752507Ab3GLFyw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jul 2013 01:54:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37829 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752173Ab3GLFyv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Jul 2013 01:54:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FDA52A470;
-	Fri, 12 Jul 2013 05:54:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=JqRMOT8RUjwI
-	SWf6lAeJb8zVXks=; b=bC/3fdHBAze5V+Ms9zPFWpH5YKVHo6fv9whxud0mRSD1
-	1Xiqa0RvhClwsOvpsIlgIP/JX4RN183mQMPJDjMJOXsUOIor3ez9aZDbvdIE4111
-	XdG7adN5ORyVf47+FPEp3GntKVlzpr+3582GdrF/hiRkIYa3mjMJ+3tR5Pvv/YU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=TOvqzN
-	f80M+TVEeVu9UA7H10p9DvgInQbvo0z//WBOI4tOqssImAezCTa6EpVYrbP2mIkr
-	ZU6chsLzd7YOBdLyKHAL9BroHdLL3jR/421iGA3huX7BG/Rl/nZG8s7CRLoPLD1g
-	eVZU4iTHT8cVxQe7A0uUB7WbxcjXCJjsLvVaI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 466322A46E;
-	Fri, 12 Jul 2013 05:54:51 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A96D52A46D;
-	Fri, 12 Jul 2013 05:54:50 +0000 (UTC)
-In-Reply-To: <1373607462-12836-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 12
- Jul 2013 12:37:42 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 90FE0968-EAB7-11E2-A535-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753264Ab3GLGFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 02:05:23 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:63403 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753197Ab3GLGFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 02:05:19 -0400
+Received: by mail-la0-f45.google.com with SMTP id fr10so7464000lab.4
+        for <git@vger.kernel.org>; Thu, 11 Jul 2013 23:05:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=w2F/DTCjSoIn8HRCH/r+D/3eIiI3It0aiHepF8DGgds=;
+        b=m+XYOozeMd8IWbWVHYs9DUiaYyIetBCDGNvG6JQOqGqTwrewMK6oNjozJ9IE711JtN
+         5vfugpNU3+LxCVjA0GarUfd2jLOArlDIWUZq52+XPoVhO10nINn5OmrLz0JtLQb5gYtY
+         jgPJM8Qqd/eSPY1Selv/nfzk0G1d1jwZdNvPyxcjG8jxJ+X5UAMSpt+R7OAT0VBTIUfR
+         DreJ2kUEV3SL4VWkSJQbnHmelXmSQaSBN0vDZzMqNgi+VVI5x3aH+vS7HvR/PY080IZI
+         EMGtY6VzSrXMu8QlKbdD0CkERYantUIZ5S4a78z+nLqQBpjhxQa0Kv6NQ0yoBVMj7FpP
+         vnKg==
+X-Received: by 10.112.97.132 with SMTP id ea4mr18183249lbb.80.1373609118471;
+ Thu, 11 Jul 2013 23:05:18 -0700 (PDT)
+Received: by 10.114.187.78 with HTTP; Thu, 11 Jul 2013 23:05:18 -0700 (PDT)
+In-Reply-To: <7v7ggwpbut.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: b91ymIiS9ompIVJHrwytZJGXvdo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230164>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Fri, Jul 12, 2013 at 1:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> My current thinking is "no" --- the patch has as a justification "Now
+>> we can test these aspects of .mailmap handling directly with a
+>> low-level tool instead of using the tool most people will use, so do
+>> so", which sounds an awful lot like "Reduce test coverage of commonly
+>> used tools, because we can".
+>
+> Yes, that was exactly my reaction that prompted my response.
 
-> +	number of limitations (you cannot clone or fetch from it, nor
-> +	push into it), but is adequate if you are only interested in
-> +	the recent history of a large project with a long history.
-
-Ahh, sorry for the noise.  You still say you cannot push _into_ it.
+Does any of my follow-up commentary result in a different reaction? If
+not, I'll drop patches 3 &4 in the re-roll.
