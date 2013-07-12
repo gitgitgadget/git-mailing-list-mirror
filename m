@@ -1,118 +1,131 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 1/7] cat-file: disable object/refname ambiguity check
- for batch mode
-Date: Fri, 12 Jul 2013 12:30:07 +0200
-Message-ID: <51DFDAAF.60808@alum.mit.edu>
-References: <20130712061533.GA11297@sigill.intra.peff.net> <20130712062004.GA15572@sigill.intra.peff.net> <51DFC2B2.3080300@alum.mit.edu> <20130712092212.GA4859@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] t0008: avoid SIGPIPE race condition on fifo
+Date: Fri, 12 Jul 2013 06:35:23 -0400
+Message-ID: <20130712103522.GA4750@sigill.intra.peff.net>
+References: <6050FACA-CAD4-4E41-B7DC-D7A2036AA233@gernhardtsoftware.com>
+ <20130711133414.GF6015@sigill.intra.peff.net>
+ <7vli5drsbw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 12 12:30:18 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+	"git@vger.kernel.org List" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 12 12:35:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxacD-0000mA-J1
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 12:30:17 +0200
+	id 1UxahF-0004Or-Kq
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 12:35:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757514Ab3GLKaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 06:30:12 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:44364 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757244Ab3GLKaK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Jul 2013 06:30:10 -0400
-X-AuditID: 1207440e-b7f0f6d0000043b7-45-51dfdab18bb6
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 45.D3.17335.1BADFD15; Fri, 12 Jul 2013 06:30:09 -0400 (EDT)
-Received: from [192.168.101.152] (mx.berlin.jpk.com [212.222.128.135] (may be forged))
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r6CAU7Gd002088
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 12 Jul 2013 06:30:08 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <20130712092212.GA4859@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsUixO6iqLvx1v1Ag46LuhZdV7qZLLqnvGW0
-	+NHSw+zA7LFz1l12j2e9exg9Pm+SC2CO4rZJSiwpC85Mz9O3S+DOmL3pM1NBu1jF3e5bbA2M
-	BwW7GDk5JARMJDqezWSGsMUkLtxbz9bFyMUhJHCZUeLztwZmCOcak8SRg3sYQap4BTQlpkxf
-	ywZiswioSjQvnQ0WZxPQlVjU08zUxcjBISoQJnHltypEuaDEyZlPWEBsEQFZie+HN4KVMwtk
-	SBx/PQcsLiwQJfFpwyqoxdsZJfYsnwt2EaeAlcT0w6cZQWYyC6hLrJ8nBNErL7H97RzmCYwC
-	s5CsmIVQNQtJ1QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFusZ6uZkleqkppZsYIaHLt4Ox
-	fb3MIUYBDkYlHl6JY/cChVgTy4orcw8xSnIwKYnysl2+HyjEl5SfUpmRWJwRX1Sak1p8iFGC
-	g1lJhPemGVCONyWxsiq1KB8mJc3BoiTOq7ZE3U9IID2xJDU7NbUgtQgmK8PBoSTBW3ATqFGw
-	KDU9tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0JCMeFKfxxcBIBUnxAO39dwNkb3FBYi5QFKL1
-	FKMux4EfW94zCrHk5eelSonzNoDsEAApyijNg1sBS1SvGMWBPhbm7QCp4gEmObhJr4CWMAEt
-	ub0KbElJIkJKqoGx7ErB7Ghjxxs7J0UvWSqwuYPvysn1hedeV99cF3RjwdYwD43+S09c3zpm
-	N6U9XH9a5HpE9l6zzxc6T1XdPSXB8P35tC1OBxeKSLhosdacNY97PyvRfBvvJNvw 
+	id S1757655Ab3GLKf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 06:35:26 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38201 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757646Ab3GLKfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 06:35:25 -0400
+Received: (qmail 29737 invoked by uid 102); 12 Jul 2013 10:36:43 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Jul 2013 05:36:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jul 2013 06:35:23 -0400
+Content-Disposition: inline
+In-Reply-To: <7vli5drsbw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230193>
 
-On 07/12/2013 11:22 AM, Jeff King wrote:
-> Yet another option is to consider what the check is doing, and
-> accomplish the same thing in a different way. The real pain is that we
-> are individually trying to resolve each object by hitting the filesystem
-> (and doing lots of silly checks on the refname format, when we know it
-> must be valid).
+On Thu, Jul 11, 2013 at 09:09:55AM -0700, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
 > 
-> We don't actually care in this case if the ref list is up to date (we
-> are not trying to update or read a ref, but only know if it exists, and
-> raciness is OK). IOW, could we replace the dwim_ref call for the warning
-> with something that directly queries the ref cache?
+> > On Wed, Jul 10, 2013 at 12:36:40PM -0400, Brian Gernhardt wrote:
+> >
+> >> The newest test in t0008 "streaming support for --stdin", seems to
+> >> hang sporadically on my MacBook Pro (running 10.8.4).  The hang seems
+> >> to be related to running it in parallel with other tests, as I can
+> >> only reliably cause it by running with prove  and -j 3.  However, once
+> >> that has hung I am able to semi-reliably have it occur by running the
+> >> test separately (with the test hung in the background, using separate
+> >> trash directories via the --root option).
+> >
+> > I can't replicate the hang here (on Linux) doing:
+> >
+> >   for i in `seq 1 30`; do
+> >       ./t0008-ignores.sh --root=/tmp/foo/$i &
+> >   done
+> 
+> It seems to hang on me with bash, but not dash, here.
 
-I think it would be quite practical to add an API something like
+Thanks, I was able to replicate it with bash, and like Brian, I saw it
+hanging in the second read. strace revealed that we were blocked on
+open("out").
 
-    struct ref_snapshot *get_ref_snapshot(const char *prefix)
-    void release_ref_snapshot(struct ref_snapshot *)
-    int lookup_ref(struct ref_snapshot *, const char *refname,
-                   unsigned char *sha1, int *flags)
+The patch below should fix it. I'm still not sure why the choice of
+shell matters; it may simply be a timing fluke that bash is more likely
+to hit for some reason.
 
-where prefix is the part of the refs tree that you want included in the
-snapshot (e.g., "refs/heads") and ref_snapshot is probably opaque
-outside of the refs module.
+-- >8 --
+Subject: [PATCH] t0008: avoid SIGPIPE race condition on fifo
 
-Symbolic refs, which are currently not stored in the ref_cache, would
-have to be added because otherwise we would have to do all of the
-lookups anyway.
+To test check-ignore's --stdin feature, we use two fifos to
+send and receive data. We carefully keep a descriptor to its
+input open so that it does not receive EOF between input
+lines. However, we do not do the same for its output. That
+means there is a potential race condition in which
+check-ignore has opened the output pipe once (when we read
+the first line), and then writes the second line before we
+have re-opened the pipe.
 
-I think this would be a good step to take for many reasons, including
-because it would be another useful step in the direction of ref
-transactions.
+In that case, check-ignore gets a SIGPIPE and dies. The
+outer shell then tries to open the output fifo but blocks
+indefinitely, because there is no writer.  We can fix it by
+keeping a descriptor open through the whole procedure.
 
-But with particular respect to "git cat-file", I see problems:
+This should also help if check-ignore dies for any other
+reason (we would already have opened the fifo and would
+therefore not block, but just get EOF on read).
 
-1. get_ref_snapshot() would have to read all loose and packed refs
-within the specified subtree, because loose refs have to be read before
-packed refs.  So the call would be expensive if there are a lot of loose
-refs.  And DWIM wouldn't know in advance where the references might be,
-so it would have to set prefix="".  If many refs are looked up, then it
-would presumably be worth it.  But if only a couple of lookups are done
-and there are a lot of loose refs, then using a cache would probably
-slow things down.
+However, we are technically still susceptible to
+check-ignore dying early, before we have opened the fifo.
+This is an unlikely race and shouldn't generally happen in
+practice, though, so we can hopefully ignore it.
 
-The slowdown could be ameliorated by adding some more intelligence, for
-example only populating the loose refs cache after a certain number of
-lookups have already been done.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t0008-ignores.sh | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-2. A "git cat-file --batch" process can be long-lived.  What guarantees
-would users expect regarding its lookup results?  Currently, its ref
-lookups reflect the state of the repo at the moment the commit
-identifier is written into the pipe.  Using a cache like this would mean
-that ref lookups would always reflect the snapshot taken at the start of
-the "git cat-file" run, regardless of whether the script using it might
-have added or modified some references since then.  I think this would
-have to be considered a regression.
-
-Michael
-
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index a56db80..c29342d 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -697,13 +697,21 @@ test_expect_success PIPE 'streaming support for --stdin' '
+ 	# shell, and then echo to the fd. We make sure to close it at
+ 	# the end, so that the subprocess does get EOF and dies
+ 	# properly.
++	#
++	# Similarly, we must keep "out" open so that check-ignore does
++	# not ever get SIGPIPE trying to write to us. Not only would that
++	# produce incorrect results, but then there would be no writer on the
++	# other end of the pipe, and we would potentially block forever trying
++	# to open it.
+ 	exec 9>in &&
++	exec 8<out &&
+ 	test_when_finished "exec 9>&-" &&
++	test_when_finished "exec 8<&-" &&
+ 	echo >&9 one &&
+-	read response <out &&
++	read response <&8 &&
+ 	echo "$response" | grep "^\.gitignore:1:one	one" &&
+ 	echo >&9 two &&
+-	read response <out &&
++	read response <&8 &&
+ 	echo "$response" | grep "^::	two"
+ '
+ 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.8.3.rc1.30.gff0fb75
