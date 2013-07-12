@@ -1,148 +1,325 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 4/4] add a testcase for checking case insensitivity of mailmap
-Date: Fri, 12 Jul 2013 18:38:42 -0400
-Message-ID: <CAPig+cTE7ELo9xfNqOCq1p7xUgOUrr9WDiRkTbXgHPjqtzeEsw@mail.gmail.com>
-References: <1373665135-32484-1-git-send-email-gitster@pobox.com>
-	<1373665135-32484-5-git-send-email-gitster@pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] fetch: make --prune configurable
+Date: Fri, 12 Jul 2013 15:38:46 -0700
+Message-ID: <7vppunietl.fsf@alter.siamese.dyndns.org>
+References: <1373288217-20580-1-git-send-email-mschub@elegosoft.com>
+	<7vk3l0zypa.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 13 00:39:07 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Sat Jul 13 00:39:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxlzW-0001Xy-V4
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 00:39:07 +0200
+	id 1Uxlzd-0001cH-48
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 00:39:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757836Ab3GLWiq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 18:38:46 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:53127 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757555Ab3GLWip (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jul 2013 18:38:45 -0400
-Received: by mail-lb0-f171.google.com with SMTP id 13so7966761lba.2
-        for <git@vger.kernel.org>; Fri, 12 Jul 2013 15:38:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=oUJkhlCx29n0wlUysU4Szlfyr+a3blsrkUlMUEddyt4=;
-        b=e0p0EPPUStJDCOyTBanTE83/6S7cihFdZvJ3EQ/0C8sHhcS1JHR/rWs4iJhNk/KLVN
-         ftip/A9S/lDYeTD5RmpyxISMsAy0+o73Qikp0HVaZkt6Gb/Vu2a68iOTQpEup1jfvZG6
-         hJMwKH+axpfO7GZaQBZ05XGatyea6llmZAcDHxv/creprsf2iy43yrlaVAiyhJ6bPMx7
-         B0B66BjDpb7UJdVtOXpD+8gHEOlXbUkbK26FQLc1kAQO26bHPGp3KnWhDEOk+K6wWjng
-         fen4ag7lL0D2IO92xi5GeytPR6TQFr4pdoBTCJGKWH0iywE3Sm2cgy5s/z799vw6z2Xv
-         WUxw==
-X-Received: by 10.112.12.225 with SMTP id b1mr20284832lbc.3.1373668722990;
- Fri, 12 Jul 2013 15:38:42 -0700 (PDT)
-Received: by 10.114.187.78 with HTTP; Fri, 12 Jul 2013 15:38:42 -0700 (PDT)
-In-Reply-To: <1373665135-32484-5-git-send-email-gitster@pobox.com>
-X-Google-Sender-Auth: 2QXrgWNDf7zfTwi8CMUFj7IGW28
+	id S1757856Ab3GLWjF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 18:39:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48249 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757852Ab3GLWiy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 18:38:54 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45EBF30C0B;
+	Fri, 12 Jul 2013 22:38:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/O+DgqLpjJn0Q//9ITy44m6upU8=; b=MeGZs7
+	FNQTdv28GMS6DK0CMYaof0z5WnvLDogRZiY0MF3VfuOh+7lKXOJUdI4ShkIuqypO
+	zFHsesc71jfT0K6bQw/bj9480Ec05Kbdlry0PBTZbaZujfh9CKRNwG1/5TuSZuIn
+	1z0XYJr/vHMrPZYpjPEldACVcGiKyd3e6eD5o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MTYTVtnGQnkarobbWIAB4ABzPtxvpvkG
+	RzcTRviTtaGMneqP8i95OeRDf967X5XP2quFGAy3Tv5dLFTycITrcGGj/LgsSlcj
+	wIuc4b+MmV/nc6Q8fJs6BPPfdOGaxMzSbyX2skmyDAhs5n9pmhv3xtqCp43V3CuI
+	0YQMHbR+12k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39BCA30C0A;
+	Fri, 12 Jul 2013 22:38:53 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 07C2230C06;
+	Fri, 12 Jul 2013 22:38:50 +0000 (UTC)
+In-Reply-To: <7vk3l0zypa.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 08 Jul 2013 11:36:01 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D30A21AC-EB43-11E2-BD9A-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230264>
 
-On Fri, Jul 12, 2013 at 5:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> From: Stefan Beller <stefanbeller@googlemail.com>
->
-> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  t/t4203-mailmap.sh | 33 +++++++++++++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
->
-> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-> index 842b754..07152e9 100755
-> --- a/t/t4203-mailmap.sh
-> +++ b/t/t4203-mailmap.sh
-> @@ -409,4 +409,37 @@ test_expect_success 'Blame output (complex mapping)' '
->         test_cmp expect actual.fuzz
->  '
->
-> +test_expect_success 'cleanup after mailmap.blob tests' '
-> +       rm -f .mailmap
-> +'
+Here is my previous review comments in a squashable patch form.  The
+result seems to pass all 27 combinations (fetch.prune, remote.*.prune
+and command line all are tristate yes/no/unspecified).
 
-This "test" was copied from earlier in the file, but the description
-was not updated; it has nothing to do with mailmap.blob tests for
-which cleanup has already taken place.
+Without the fix-up in *.c files, three combinations seem to fail.
 
-It's also misleading since no .mailmap file exists at this point.
-Instead, configuration key mailmap.file is set to
-internal_mailmap/.mailmap, so if you need to clean up anything, it
-would be that.
+ Documentation/config.txt |   3 +-
+ builtin/fetch.c          |  41 +++++++++-------
+ remote.c                 |   1 +
+ t/t5510-fetch.sh         | 118 ++++++++++++++++++++++++++++++++---------------
+ 4 files changed, 108 insertions(+), 55 deletions(-)
 
-(You're also recreating .mailmap from scratch directly in your test
-via "echo foo >.mailmap", so this "test" doesn't really add anything.)
-
-> +cat >expect <<\EOF
-> +     2 A <A@example.org>
-> +     2 Other Author <other@author.xx>
-> +     2 Santa Claus <santa.claus@northpole.xx>
-> +     1 A U Thor <author@example.com>
-> +     1 CTO <cto@company.xx>
-> +     1 Some Dude <some@dude.xx>
-> +EOF
-> +
-> +test_expect_success 'Test case sensitivity of Names' '
-
-s/Names/names/
-
-Also, most of the test descriptions in this script start with
-lowercase, so s/Test/test/ would be appropriate.
-
-> +       # do a commit:
-> +       echo "asdf" > test1
-
-Git practice normally avoids whitespace after the redirection
-operator. This particular test script, has a mix of ">foo" and ">
-foo", but we may want to avoid adding more of the latter form.
-
-> +       git add test1
-> +       git commit -a --author="A <A@example.org>" -m "add test1"
-> +
-> +       # commit with same name, but different email
-> +       # (different capitalization does the trick already,
-> +       # but here I am going to use a different mail)
-
-Without context of the mailing list discussion, the reader does not
-know what "trick" is or precisely how this may have failed in the
-past. It's also not clear why the test is being performed with a
-different email address entirely rather than one which differs only by
-case (which is what the test description talks about).
-
-> +       echo "asdf" > test2
-
-Whitespace after redirection.
-
-> +       git add test2
-> +       git commit -a --author="A <changed_email@example.org>" -m "add test2"
-> +
-> +       # Adding the line to the mailmap should make life easy, so we know
-> +       # it is the same person
-
-The comment can probably be dropped, as the new .mailmap entry is
-self-explanatory.
-
-> +       echo "A <A@example.org> <changed_email@example.org>" > .mailmap
-
-Whitespace after redirection.
-
-> +
-> +       git shortlog -sne HEAD >actual && test_cmp expect actual
-
-For consistency with more other tests, perhaps break the line apart:
-
-  git shortlog -sne HEAD >actual &&
-  test_cmp expect actual
-
-> +'
-> +
->  test_done
-> --
-> 1.8.3.2-941-gda9c3c8
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index fc39f3a..e4ce7c4 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1051,7 +1051,7 @@ fetch.unpackLimit::
+ 
+ fetch.prune::
+ 	If true, fetch will automatically behave as if the `--prune`
+-	option was given on the command line.
++	option was given on the command line.  See also `remote.<name>.prune`.
+ 
+ format.attach::
+ 	Enable multipart/mixed attachments as the default for
+@@ -1992,6 +1992,7 @@ remote.<name>.prune::
+ 	When set to true, fetching from this remote by default will also
+ 	remove any remote-tracking branches which no longer exist on the
+ 	remote (as if the `--prune` option was give on the command line).
++	Overrides `fetch.prune` settings, if any.
+ 
+ remotes.<group>::
+ 	The list of remotes which are fetched by "git remote update
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 082450b..08ab948 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -30,13 +30,10 @@ enum {
+ 	TAGS_SET = 2
+ };
+ 
+-enum {
+-	PRUNE_UNSET = 0,
+-	PRUNE_DEFAULT = 1,
+-	PRUNE_FORCE = 2
+-};
++static int fetch_prune_config = -1; /* unspecified */
++static int prune = -1; /* unspecified */
++#define PRUNE_BY_DEFAULT 0 /* do we prune by default? */
+ 
+-static int prune = PRUNE_DEFAULT;
+ static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
+ static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ static int tags = TAGS_DEFAULT, unshallow;
+@@ -64,12 +61,10 @@ static int option_parse_recurse_submodules(const struct option *opt,
+ static int git_fetch_config(const char *k, const char *v, void *cb)
+ {
+ 	if (!strcmp(k, "fetch.prune")) {
+-		int boolval = git_config_bool(k, v);
+-		if (boolval)
+-			prune = PRUNE_FORCE;
++		fetch_prune_config = git_config_bool(k, v);
+ 		return 0;
+ 	}
+-	return git_default_config(k, v, cb);
++	return 0;
+ }
+ 
+ static struct option builtin_fetch_options[] = {
+@@ -87,8 +82,8 @@ static struct option builtin_fetch_options[] = {
+ 		    N_("fetch all tags and associated objects"), TAGS_SET),
+ 	OPT_SET_INT('n', NULL, &tags,
+ 		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
+-	OPT_BOOLEAN('p', "prune", &prune,
+-		    N_("prune remote-tracking branches no longer on remote")),
++	OPT_BOOL('p', "prune", &prune,
++		 N_("prune remote-tracking branches no longer on remote")),
+ 	{ OPTION_CALLBACK, 0, "recurse-submodules", NULL, N_("on-demand"),
+ 		    N_("control recursive fetching of submodules"),
+ 		    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+@@ -756,8 +751,11 @@ static int do_fetch(struct transport *transport,
+ 		free_refs(ref_map);
+ 		return 1;
+ 	}
+-	if (prune == PRUNE_FORCE || (transport->remote->prune && prune)) {
+-		/* If --tags was specified, pretend the user gave us the canonical tags refspec */
++	if (prune) {
++		/*
++		 * If --tags was specified, pretend that the user gave us
++		 * the canonical tags refspec
++		 */
+ 		if (tags == TAGS_SET) {
+ 			const char *tags_str = "refs/tags/*:refs/tags/*";
+ 			struct refspec *tags_refspec, *refspec;
+@@ -866,10 +864,8 @@ static void add_options_to_argv(struct argv_array *argv)
+ {
+ 	if (dry_run)
+ 		argv_array_push(argv, "--dry-run");
+-	if (prune == PRUNE_FORCE)
++	if (prune > 0)
+ 		argv_array_push(argv, "--prune");
+-	else if (prune == PRUNE_UNSET)
+-		argv_array_push(argv, "--no-prune");
+ 	if (update_head_ok)
+ 		argv_array_push(argv, "--update-head-ok");
+ 	if (force)
+@@ -936,6 +932,17 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
+ 		    "remote name from which new revisions should be fetched."));
+ 
+ 	transport = transport_get(remote, NULL);
++
++	if (prune < 0) {
++		/* no command line request */
++		if (0 <= transport->remote->prune)
++			prune = transport->remote->prune;
++		else if (0 <= fetch_prune_config)
++			prune = fetch_prune_config;
++		else
++			prune = PRUNE_BY_DEFAULT;
++	}
++
+ 	transport_set_verbosity(transport, verbosity, progress);
+ 	if (upload_pack)
+ 		set_option(TRANS_OPT_UPLOADPACK, upload_pack);
+diff --git a/remote.c b/remote.c
+index d0ddbef..89be211 100644
+--- a/remote.c
++++ b/remote.c
+@@ -148,6 +148,7 @@ static struct remote *make_remote(const char *name, int len)
+ 	}
+ 
+ 	ret = xcalloc(1, sizeof(struct remote));
++	ret->prune = -1;  /* unspecified */
+ 	ALLOC_GROW(remotes, remotes_nr + 1, remotes_alloc);
+ 	remotes[remotes_nr++] = ret;
+ 	if (len)
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 33fe3d5..019535f 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -471,43 +471,87 @@ test_expect_success "should be able to fetch with duplicate refspecs" '
+ 	)
+ '
+ 
+-test_expect_success 'fetch should prune when fetch.prune is true' '
+-  cd "$D" &&
+-  git branch somebranch &&
+-  (
+-    cd one &&
+-    git fetch &&
+-    test -f .git/refs/remotes/origin/somebranch
+-  ) &&
+-  git branch -d somebranch &&
+-  (
+-    cd one &&
+-    git config fetch.prune true &&
+-    git fetch --no-prune &&
+-    test -f .git/refs/remotes/origin/somebranch &&
+-    git fetch &&
+-    ! test -f .git/refs/remotes/origin/somebranch
+-  )
+-'
+-
+-test_expect_success 'fetch should prune when remote.<name>.prune is true' '
+-  cd "$D" &&
+-  git branch somebranch &&
+-  (
+-    cd one &&
+-    git fetch &&
+-    test -f .git/refs/remotes/origin/somebranch
+-  ) &&
+-  git branch -d somebranch &&
+-  (
+-    cd one &&
+-    git config remote.origin.prune true &&
+-    git fetch --no-prune &&
+-    test -f .git/refs/remotes/origin/somebranch &&
+-    git fetch &&
+-    ! test -f .git/refs/remotes/origin/somebranch
+-  )
+-'
++# configured prune tests
++
++set_config_tristate () {
++	# var=$1 val=$2
++	case "$2" in
++	unset)  test_unconfig "$1" ;;
++	*)	git config "$1" "$2" ;;
++	esac
++}
++
++test_configured_prune () {
++	fetch_prune=$1 remote_origin_prune=$2 cmdline=$3 expected=$4
++
++	test_expect_success "prune fetch.prune=$1 remote.origin.prune=$2${3:+ $3}; $4" '
++		# make sure a newbranch is there in . and also in one
++		git branch -f newbranch &&
++		(
++			cd one &&
++			test_unconfig fetch.prune &&
++			test_unconfig remote.origin.prune &&
++			git fetch &&
++			git rev-parse --verify refs/remotes/origin/newbranch
++		)
++
++		# now remove it
++		git branch -d newbranch &&
++
++		# then test
++		(
++			cd one &&
++			set_config_tristate fetch.prune $fetch_prune &&
++			set_config_tristate remote.origin.prune $remote_origin_prune &&
++
++			git fetch $cmdline &&
++			case "$expected" in
++			pruned)
++				test_must_fail git rev-parse --verify refs/remotes/origin/newbranch
++				;;
++			kept)
++				git rev-parse --verify refs/remotes/origin/newbranch
++				;;
++			esac
++		)
++	'
++}
++
++test_configured_prune unset unset ""		kept
++test_configured_prune unset unset "--no-prune"	kept
++test_configured_prune unset unset "--prune"	pruned
++
++test_configured_prune false unset ""		kept
++test_configured_prune false unset "--no-prune"	kept
++test_configured_prune false unset "--prune"	pruned
++
++test_configured_prune true  unset ""		pruned
++test_configured_prune true  unset "--prune"	pruned
++test_configured_prune true  unset "--no-prune"	kept
++
++test_configured_prune unset false ""		kept
++test_configured_prune unset false "--no-prune"	kept
++test_configured_prune unset false "--prune"	pruned
++
++test_configured_prune false false ""		kept
++test_configured_prune false false "--no-prune"	kept
++test_configured_prune false false "--prune"	pruned
++
++test_configured_prune true  false ""		kept
++test_configured_prune true  false "--prune"	pruned
++test_configured_prune true  false "--no-prune"	kept
++
++test_configured_prune unset true  ""		pruned
++test_configured_prune unset true  "--no-prune"	kept
++test_configured_prune unset true  "--prune"	pruned
++
++test_configured_prune false true  ""		pruned
++test_configured_prune false true  "--no-prune"	kept
++test_configured_prune false true  "--prune"	pruned
++
++test_configured_prune true  true  ""		pruned
++test_configured_prune true  true  "--prune"	pruned
++test_configured_prune true  true  "--no-prune"	kept
+ 
+ test_expect_success 'all boundary commits are excluded' '
+ 	test_commit base &&
+-- 
+1.8.3.2-941-gda9c3c8
