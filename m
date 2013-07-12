@@ -1,69 +1,102 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 3/4] t4203: test mailmap functionality directly rather
- than indirectly
-Date: Fri, 12 Jul 2013 02:05:18 -0400
-Message-ID: <CAPig+cSfqONOFmmXX=s+HWKnLr5eG27jU9xgE7Dki0sycPPz1g@mail.gmail.com>
-References: <1373554528-15775-1-git-send-email-sunshine@sunshineco.com>
-	<1373554528-15775-4-git-send-email-sunshine@sunshineco.com>
-	<7vhag0rk3u.fsf@alter.siamese.dyndns.org>
-	<CAPig+cS7rxFzY8Q3gfTtJkggp-K62SVqsjCotbM3Bkm47L44gg@mail.gmail.com>
-	<20130712005517.GA8482@google.com>
-	<7v7ggwpbut.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/7] cat-file --batch-check performance improvements
+Date: Fri, 12 Jul 2013 02:15:34 -0400
+Message-ID: <20130712061533.GA11297@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 12 08:05:33 2013
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 12 08:15:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxWTx-0004xv-AR
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 08:05:29 +0200
+	id 1UxWdq-0004AV-7l
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 08:15:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753264Ab3GLGFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 02:05:23 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:63403 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753197Ab3GLGFT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jul 2013 02:05:19 -0400
-Received: by mail-la0-f45.google.com with SMTP id fr10so7464000lab.4
-        for <git@vger.kernel.org>; Thu, 11 Jul 2013 23:05:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=w2F/DTCjSoIn8HRCH/r+D/3eIiI3It0aiHepF8DGgds=;
-        b=m+XYOozeMd8IWbWVHYs9DUiaYyIetBCDGNvG6JQOqGqTwrewMK6oNjozJ9IE711JtN
-         5vfugpNU3+LxCVjA0GarUfd2jLOArlDIWUZq52+XPoVhO10nINn5OmrLz0JtLQb5gYtY
-         jgPJM8Qqd/eSPY1Selv/nfzk0G1d1jwZdNvPyxcjG8jxJ+X5UAMSpt+R7OAT0VBTIUfR
-         DreJ2kUEV3SL4VWkSJQbnHmelXmSQaSBN0vDZzMqNgi+VVI5x3aH+vS7HvR/PY080IZI
-         EMGtY6VzSrXMu8QlKbdD0CkERYantUIZ5S4a78z+nLqQBpjhxQa0Kv6NQ0yoBVMj7FpP
-         vnKg==
-X-Received: by 10.112.97.132 with SMTP id ea4mr18183249lbb.80.1373609118471;
- Thu, 11 Jul 2013 23:05:18 -0700 (PDT)
-Received: by 10.114.187.78 with HTTP; Thu, 11 Jul 2013 23:05:18 -0700 (PDT)
-In-Reply-To: <7v7ggwpbut.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: b91ymIiS9ompIVJHrwytZJGXvdo
+	id S1752554Ab3GLGPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 02:15:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36458 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751480Ab3GLGPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 02:15:37 -0400
+Received: (qmail 16171 invoked by uid 102); 12 Jul 2013 06:16:55 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Jul 2013 01:16:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jul 2013 02:15:34 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230165>
 
-On Fri, Jul 12, 2013 at 1:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> My current thinking is "no" --- the patch has as a justification "Now
->> we can test these aspects of .mailmap handling directly with a
->> low-level tool instead of using the tool most people will use, so do
->> so", which sounds an awful lot like "Reduce test coverage of commonly
->> used tools, because we can".
->
-> Yes, that was exactly my reaction that prompted my response.
+In my earlier series introducing "git cat-file --batch-check=<format>",
+found here:
 
-Does any of my follow-up commentary result in a different reaction? If
-not, I'll drop patches 3 &4 in the re-roll.
+  http://thread.gmane.org/gmane.comp.version-control.git/229761/focus=230041
+
+I spent a little time optimizing revindex generation, and measured by
+requesting information on a single object from a large repository. This
+series takes the next logical step: requesting a large number of objects
+from a large repository.
+
+There are two major optimizations here:
+
+  1. Avoiding extra ref lookups due to the warning in 798c35f (get_sha1:
+     warn about full or short object names that look like refs,
+     2013-05-29).
+
+  2. Avoiding extra work for delta type resolution when the user has not
+     asked for %(objecttype).
+
+I prepared the series on top of jk/in-pack-size-measurement, and
+certainly optimization 2 is pointless without it (before that topic,
+--batch-check always printed the type).
+
+However, the first optimization affects regular --batch-check, and
+represents a much more serious performance regression. It looks like
+798c35f is in master, but hasn't been released yet, so assuming these
+topics graduate before the next release, it should be OK. But if not, we
+should consider pulling the first patch out and applying it (or
+something like it) separately.
+
+The results for running (in linux.git):
+
+  $ git rev-list --objects --all >objects
+  $ git cat-file --batch-check='%(objectsize:disk)' <objects >/dev/null
+
+are:
+
+        before     after
+  real  1m17.143s  0m7.205s
+  user  0m27.684s  0m6.580s
+  sys   0m49.320s  0m0.608s
+
+Now, _most_ of that speedup is coming from the first patch, and it's
+quite trivial. The rest of the patches involve a lot of refactoring, and
+only manage to eke out one more second of performance, so it may not be
+worth it (though I think the result actually cleans up the
+sha1_object_info_extended interface a bit, and is worth it). Individual
+timings are in the commit messages.
+
+The patches are:
+
+  [1/7]: cat-file: disable object/refname ambiguity check for batch mode
+
+Optimization 1.
+
+  [2/7]: sha1_object_info_extended: rename "status" to "type"
+  [3/7]: sha1_loose_object_info: make type lookup optional
+  [4/7]: packed_object_info: hoist delta type resolution to helper
+  [5/7]: packed_object_info: make type lookup optional
+  [6/7]: sha1_object_info_extended: make type calculation optional
+
+Optimization 2.
+
+  [7/7]: sha1_object_info_extended: pass object_info to helpers
+
+Optional cleanup.
+
+-Peff
