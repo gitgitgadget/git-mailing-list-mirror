@@ -1,102 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/7] sha1_object_info_extended: rename "status" to "type"
-Date: Fri, 12 Jul 2013 02:21:22 -0400
-Message-ID: <20130712062122.GB15572@sigill.intra.peff.net>
-References: <20130712061533.GA11297@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/4] builtin: add git-check-mailmap command
+Date: Fri, 12 Jul 2013 02:24:43 -0400
+Message-ID: <CAPig+cTwXe7rSKUgJPVHbAvrxYbmL77xNXtLyUeRnd8Taxtrdw@mail.gmail.com>
+References: <1373554528-15775-1-git-send-email-sunshine@sunshineco.com>
+	<1373554528-15775-2-git-send-email-sunshine@sunshineco.com>
+	<7vli5crk8l.fsf@alter.siamese.dyndns.org>
+	<CAPig+cQvnKSxZ5M6zW_r6Y9xwZ0Ch99JDq4SccYXCRof9svsOg@mail.gmail.com>
+	<7vbo68pbwm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 12 08:21:31 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+	Antoine Pelisse <apelisse@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 12 08:24:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxWjQ-0000Dk-PN
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 08:21:29 +0200
+	id 1UxWmg-0002mf-3i
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 08:24:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752994Ab3GLGVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 02:21:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36507 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752208Ab3GLGVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jul 2013 02:21:24 -0400
-Received: (qmail 16566 invoked by uid 102); 12 Jul 2013 06:22:42 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Jul 2013 01:22:42 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jul 2013 02:21:22 -0400
-Content-Disposition: inline
-In-Reply-To: <20130712061533.GA11297@sigill.intra.peff.net>
+	id S1752631Ab3GLGYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 02:24:46 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:45593 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751616Ab3GLGYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 02:24:45 -0400
+Received: by mail-lb0-f174.google.com with SMTP id x10so7437080lbi.33
+        for <git@vger.kernel.org>; Thu, 11 Jul 2013 23:24:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=aXwLEtkBGYBMo4OdIcdVSXHEM4AyihXJ8EJcIJT5da4=;
+        b=jOlHnVyM3r6QAJQJxS0jHuN2n0JLcAD+wnY/sFhXDQdM5pYytVLCnrxJGdRlVpl0Fd
+         RZMI+EExubNxdhAzgCDwQN/CP0cibq5vR0YBEQYIWFeXAopnGeE4nFX7C2/aijddusEe
+         Cao3hlxJJH8+4SnyeNw5hzSvLiqszj95QEGF6bEIBu8FVi0cXFrhPAN7XYJfAhaYHfR4
+         sFxDnlkNab7fNJUYL/mOxMMyXx5jj4XFL3T6VgX119NTuNQjXTXer1CBorhpNdDEmmGI
+         NMaUSAX/XnKvjR5lpfoE1pIOy/5jgNhZ54O5ia1YKw9UlYY9Oku5WsRh5AKEfK+WrtRV
+         uTFQ==
+X-Received: by 10.112.97.132 with SMTP id ea4mr18209958lbb.80.1373610283643;
+ Thu, 11 Jul 2013 23:24:43 -0700 (PDT)
+Received: by 10.114.187.78 with HTTP; Thu, 11 Jul 2013 23:24:43 -0700 (PDT)
+In-Reply-To: <7vbo68pbwm.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: ji3AuwIU-1Ph2LrqUuLR7TVLweE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230173>
 
-The value we get from each low-level object_info function
-(e.g., loose, packed) is actually the object type (or -1 for
-error). Let's explicitly call it "type", which will make
-further refactorings easier to read.
+On Fri, Jul 12, 2013 at 1:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+>>>         For each contact information (either in the form of ``Name
+>>>         <user@host>'' or ...)
+>>>
+>>> in order to clarify that the two forms of input is what you call
+>>> "contact information".
+>>
+>> Is this easier to read?
+>>
+>>     For each ``Name $$<user@host>$$'' or ``$$<user@host>$$'' from the
+>>     command-line or standard input (when using `--stdin`), print a line
+>>     showing either the canonical name and email address (see "Mapping
+>>     Authors" below), or the input ``Name $$<user@host>$$'' or
+>>     ``$$<user@host>$$'' if there is no mapping for that person.
+>
+> I find it easier than your original, but I do not know if you would
+> want to repeat the "Name... or <user@host>" at the end.  It does not
+> seem to add much useful information and is distracting.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- sha1_file.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+Next attempt:
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 4c2365f..e826066 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2394,7 +2394,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
- {
- 	struct cached_object *co;
- 	struct pack_entry e;
--	int status, rtype;
-+	int type, rtype;
- 
- 	co = find_cached_object(sha1);
- 	if (co) {
-@@ -2408,23 +2408,23 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
- 
- 	if (!find_pack_entry(sha1, &e)) {
- 		/* Most likely it's a loose object. */
--		status = sha1_loose_object_info(sha1, oi->sizep, oi->disk_sizep);
--		if (status >= 0) {
-+		type = sha1_loose_object_info(sha1, oi->sizep, oi->disk_sizep);
-+		if (type >= 0) {
- 			oi->whence = OI_LOOSE;
--			return status;
-+			return type;
- 		}
- 
- 		/* Not a loose object; someone else may have just packed it. */
- 		reprepare_packed_git();
- 		if (!find_pack_entry(sha1, &e))
--			return status;
-+			return type;
- 	}
- 
--	status = packed_object_info(e.p, e.offset, oi->sizep, &rtype,
--				    oi->disk_sizep);
--	if (status < 0) {
-+	type = packed_object_info(e.p, e.offset, oi->sizep, &rtype,
-+				  oi->disk_sizep);
-+	if (type < 0) {
- 		mark_bad_packed_object(e.p, sha1);
--		status = sha1_object_info_extended(sha1, oi);
-+		type = sha1_object_info_extended(sha1, oi);
- 	} else if (in_delta_base_cache(e.p, e.offset)) {
- 		oi->whence = OI_DBCACHED;
- 	} else {
-@@ -2435,7 +2435,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
- 					 rtype == OBJ_OFS_DELTA);
- 	}
- 
--	return status;
-+	return type;
- }
- 
- int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
--- 
-1.8.3.rc3.24.gec82cb9
+    For each ``Name $$<user@host>$$'' or ``$$<user@host>$$'' from the
+    command-line or standard input (when using `--stdin`) look up the
+    person's canonical name and email address (see "Mapping Authors"
+    below). If found, print them; otherwise print the input as-is.
+
+>> In check-attr, null_term_line indicates that _input_ lines are
+>> null-terminated. In check-ignore, null_term_lines is overloaded (and
+>> perhaps abused) to mean that both _input_ and _output_ lines are
+>> null-terminated.
+>
+> That is unfortunate but it is good that you found the breakage.  As
+> we do not have --nul-terminated-input and --nul-terminated-output
+> options separtely, -z should apply to both input and output.  What
+> b4666852 (check-attr: Add --stdin option, 2008-10-07) did is broken.
+
+I can make git-check-mailmap behave this way, however, other than
+git-check-ignore (which is quite new), there doesn't seem to be any
+precedence (that I can find) anywhere else in git which ties input and
+output null-termination to a single switch. Is it desirable to do so
+or should the user have more fine-grained control? ("xargs -0" comes
+to mind when thinking of a null-termination input switch.)
+
+> Also "git check-ignore -h" advertises "-z" as only affecting "--stdin",
+> which is also wrong.  It does affect both input and output as it should,
+> so it should be described as such, I think.
+
+I also noticed this. (It was copied from check-attr.c).
