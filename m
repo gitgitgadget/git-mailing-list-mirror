@@ -1,131 +1,91 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 09/19] ls-files.c: use index api
-Date: Fri, 12 Jul 2013 19:26:54 +0200
-Message-ID: <1373650024-3001-10-git-send-email-t.gummerer@gmail.com>
-References: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com>
-Cc: t.gummerer@gmail.com, trast@inf.ethz.ch, mhagger@alum.mit.edu,
-	gitster@pobox.com, pclouds@gmail.com, robin.rosenberg@dewire.com,
-	sunshine@sunshineco.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 12 19:29:16 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] open() error checking
+Date: Fri, 12 Jul 2013 10:29:12 -0700
+Message-ID: <7vtxjzlmaf.fsf@alter.siamese.dyndns.org>
+References: <cover.1373618940.git.trast@inf.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, "Dale R. Worley" <worley@alum.mit.edu>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jul 12 19:29:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uxh9g-0003tu-GD
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 19:29:16 +0200
+	id 1Uxh9l-0003w7-OJ
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 19:29:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965107Ab3GLR3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 13:29:11 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:52885 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964904Ab3GLR3K (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jul 2013 13:29:10 -0400
-Received: by mail-pa0-f49.google.com with SMTP id ld11so9222557pab.22
-        for <git@vger.kernel.org>; Fri, 12 Jul 2013 10:29:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=qiimqnn5KVGABY+UUXGXSGB5YG5vXU4lDb7PXugzvzk=;
-        b=vstvGe+tCQLFi28lABXrMYFnRKXciV8zN2uCdcJDagaF+zztn8k8lBQxVsIS3HDfuw
-         fZnDu11rBd8j5YgkfBHrmdKB8KPuZM2Zlam+OIS/D3yAQZ9sypCo8Jvm7JJr9Wmj4dpy
-         W8jqJN4LakJ2wnWTM8HFu4xTrE59yWRYyP7XA7pqLVEw62JfwPdjBCbhd39p5dldSKjm
-         5e/avFG79BdtPrsKY/fWngKD/ViVM0Ys+2Xdoev2Ozr+7ZlQN0W5gz1p+KXGbakUDG32
-         iAblFW8aOeNlu7E0/xb5bfYagQEnUDtzW1YE69d885utQGaeER0iZAs5gKIlMuqwZ2IN
-         AI9g==
-X-Received: by 10.66.154.132 with SMTP id vo4mr43645653pab.63.1373650149531;
-        Fri, 12 Jul 2013 10:29:09 -0700 (PDT)
-Received: from localhost ([2001:470:6d:596:9227:e4ff:feea:9196])
-        by mx.google.com with ESMTPSA id y6sm46409703pbl.23.2013.07.12.10.29.05
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 12 Jul 2013 10:29:09 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.453.g1dfc63d
-In-Reply-To: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com>
+	id S965133Ab3GLR3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 13:29:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62389 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964904Ab3GLR3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 13:29:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 224552F429;
+	Fri, 12 Jul 2013 17:29:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wDtIU0AFekDrN+Ou0Lgk8f8i8Qw=; b=ph24TH
+	ZYl/ykpiEXVX0ayyF8jOy4jknGGwa9w8xdEbuS3rGOpd1rrVKzTVLkYBje5bMZuM
+	HLCwUw6okU67HYNJwvcLijL7QR39FjJsKELhO4aABQ11SqmoCx3ixTMUbwiN5hqZ
+	50VEtYx72tdNq1yBiruh8nHV2SJ/LwXhhTTnc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TQkLuEgPQosBDnnAyQ1PVoXJ9eeZVcOO
+	HwVazuoDXwZT9prAFoVipb/s3tCCTTbXtxkKsRORy+2bRqZPABAo52wIiHe8jIRu
+	xq8Hwi+mcyMfkd9DaYKcU8BnrqT8Uf8apBXymfUVm05RBkQKbYvpkswhSDU7nGZv
+	ahdDtA7Pt3E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 184682F428;
+	Fri, 12 Jul 2013 17:29:15 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 606852F424;
+	Fri, 12 Jul 2013 17:29:14 +0000 (UTC)
+In-Reply-To: <cover.1373618940.git.trast@inf.ethz.ch> (Thomas Rast's message
+	of "Fri, 12 Jul 2013 10:58:34 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 927E6254-EB18-11E2-826E-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230220>
 
-Use the index api to read only part of the index, if the on-disk version
-of the index is index-v5.
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- builtin/ls-files.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+> #1 is Dale's suggested change.  Dale, to include it we'd need your
+> Signed-off-by as per Documentation/SubmittingPatches.
+>
+> #2 is a similar error-checking fix; I reviewed 'git grep "\bopen\b"'
+> and found one case where the return value was obviously not tested.
+> The corresponding Windows code path has the same problem, but I dare
+> not touch it; perhaps someone from the Windows side can look into it?
+>
+> I originally had a four-patch series to open 0/1/2 from /dev/null, but
+> then I noticed that this was shot down in 2008:
+>
+>   http://thread.gmane.org/gmane.comp.version-control.git/93605/focus=93896
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 08d9786..80cc398 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -31,6 +31,7 @@ static const char *prefix;
- static int max_prefix_len;
- static int prefix_len;
- static const char **pathspec;
-+static struct pathspec pathspec_struct;
- static int error_unmatch;
- static char *ps_matched;
- static const char *with_tree;
-@@ -457,6 +458,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 	struct dir_struct dir;
- 	struct exclude_list *el;
- 	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
-+	struct filter_opts *opts = xmalloc(sizeof(*opts));
- 	struct option builtin_ls_files_options[] = {
- 		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
- 			N_("paths are separated with NUL character"),
-@@ -522,9 +524,6 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		prefix_len = strlen(prefix);
- 	git_config(git_default_config, NULL);
- 
--	if (read_cache() < 0)
--		die("index file corrupt");
--
- 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
- 			ls_files_usage, 0);
- 	el = add_exclude_list(&dir, EXC_CMDL, "--exclude option");
-@@ -556,14 +555,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		setup_work_tree();
- 
- 	pathspec = get_pathspec(prefix, argv);
--
--	/* be nice with submodule paths ending in a slash */
--	if (pathspec)
--		strip_trailing_slash_from_submodules();
--
--	/* Find common prefix for all pathspec's */
--	max_prefix = common_prefix(pathspec);
--	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
-+	init_pathspec(&pathspec_struct, pathspec);
- 
- 	/* Treat unmatching pathspec elements as errors */
- 	if (pathspec && error_unmatch) {
-@@ -573,6 +565,23 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		ps_matched = xcalloc(1, num);
- 	}
- 
-+	if (!with_tree) {
-+		memset(opts, 0, sizeof(*opts));
-+		opts->pathspec = &pathspec_struct;
-+		opts->read_staged = 1;
-+		if (show_resolve_undo)
-+			opts->read_resolve_undo = 1;
-+		read_cache_filtered(opts);
-+	} else {
-+		read_cache();
-+	}
-+	/* be nice with submodule paths ending in a slash */
-+	if (pathspec)
-+		strip_trailing_slash_from_submodules();
-+
-+	max_prefix = common_prefix(pathspec);
-+	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
-+
- 	if ((dir.flags & DIR_SHOW_IGNORED) && !exc_given)
- 		die("ls-files --ignored needs some exclude pattern");
- 
--- 
-1.8.3.453.g1dfc63d
+The way I recall the thread was not "shot down" but more like
+"fizzled out without seeing a clear consensus".  As a normal POSIX
+program, we do rely on fd#2 connected to an error stream, and I do
+agree with the general sentiment of that old thread that it is very
+wrong for warning() or die() to write to a pipe or file descriptor
+we opened for some other purpose, corrupting the destination.
+
+I briefly wondered if we can do the sanity check lazily (e.g. upon
+first warning() see of fd#2 is open and otherwise die silently), but
+we may open a fd (e.g. to create a new loose object) that may happen
+to grab fd#2 and then it is too late for us to do anything about it,
+so...
+
+> Do you want to resurrect this?
+>
+> The worst part about it is that because we don't have a stderr to rely
+> on, we can't simply die("stop playing mind games").
+
+Right.
