@@ -1,218 +1,193 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/7] sha1_object_info_extended: make type calculation optional
-Date: Fri, 12 Jul 2013 02:34:57 -0400
-Message-ID: <20130712063457.GF15572@sigill.intra.peff.net>
+Subject: [PATCH 7/7] sha1_object_info_extended: pass object_info to helpers
+Date: Fri, 12 Jul 2013 02:37:53 -0400
+Message-ID: <20130712063752.GG15572@sigill.intra.peff.net>
 References: <20130712061533.GA11297@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 12 08:35:07 2013
+X-From: git-owner@vger.kernel.org Fri Jul 12 08:38:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxWwc-0002BI-9h
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 08:35:06 +0200
+	id 1UxWzP-0004OK-L6
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 08:38:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753405Ab3GLGfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 02:35:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36608 "EHLO peff.net"
+	id S1752934Ab3GLGhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 02:37:55 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36627 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753192Ab3GLGe7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jul 2013 02:34:59 -0400
-Received: (qmail 17275 invoked by uid 102); 12 Jul 2013 06:36:17 -0000
+	id S1752136Ab3GLGhz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 02:37:55 -0400
+Received: (qmail 17523 invoked by uid 102); 12 Jul 2013 06:39:13 -0000
 Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Jul 2013 01:36:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jul 2013 02:34:57 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Jul 2013 01:39:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jul 2013 02:37:53 -0400
 Content-Disposition: inline
 In-Reply-To: <20130712061533.GA11297@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230180>
 
-Each caller of sha1_object_info_extended sets up an
-object_info struct to tell the function which elements of
-the object it wants to get. Until now, getting the type of
-the object has always been required (and it is returned via
-the return type rather than a pointer in object_info).
+We take in a "struct object_info" which contains pointers to
+storage for items the caller cares about. But then rather
+than pass the whole object to the low-level loose/packed
+helper functions, we pass the individual pointers.
 
-This can involve actually opening a loose object file to
-determine its type, or following delta chains to determine a
-packed file's base type. These effects produce a measurable
-slow-down when doing a "cat-file --batch-check" that does
-not include %(objecttype).
-
-This patch adds a "typep" query to struct object_info, so
-that it can be optionally queried just like size and
-disk_size. As a result, the return type of the function is
-no longer the object type, but rather 0/-1 for success/error.
-
-As there are only three callers total, we just fix up each
-caller rather than keep a compatibility wrapper:
-
-  1. The simpler sha1_object_info wrapper continues to
-     always ask for and return the type field.
-
-  2. The istream_source function wants to know the type, and
-     so always asks for it.
-
-  3. The cat-file batch code asks for the type only when
-     %(objecttype) is part of the format string.
-
-On linux.git, the best-of-five for running:
-
-  $ git rev-list --objects --all >objects
-  $ time git cat-file --batch-check='%(objectsize:disk)'
-
-on a fully packed repository goes from:
-
-  real    0m8.680s
-  user    0m8.160s
-  sys     0m0.512s
-
-to:
-
-  real    0m7.205s
-  user    0m6.580s
-  sys     0m0.608s
+Let's pass the whole struct instead, which will make adding
+more items later easier.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This ends up changing the behavior of sha1_object_info_extended without
-changing its function signature. Given that it is a fairly inactive area
-of the code and that there are no topics in flight, I think this is OK.
-But an alternative could be to add (yet another) wrapper to leave the
-first two call-sites untouched.
+This one is an optional cleanup. The diff is quite noisy due to all of
+the s/foo/oi->foo/, so it is arguable whether the result is nicer or
+not. It would make later additions to object_info nicer, but I do not
+plan to add any more.
 
- builtin/cat-file.c |  7 ++++---
- cache.h            |  1 +
- sha1_file.c        | 20 +++++++++++++-------
- streaming.c        |  2 +-
- 4 files changed, 19 insertions(+), 11 deletions(-)
+It _would_ have been a nice cleanup to do at the beginning of the series
+(and further diffs would not have to add extra parameters to the
+function calls), but that would make the incremental "learn to do type
+optionally" patches quite awkward.
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index fe5c77f..163ce6c 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -150,7 +150,9 @@ static void expand_atom(struct strbuf *sb, const char *atom, int len,
- 		if (!data->mark_query)
- 			strbuf_addstr(sb, sha1_to_hex(data->sha1));
- 	} else if (is_atom("objecttype", atom, len)) {
--		if (!data->mark_query)
-+		if (data->mark_query)
-+			data->info.typep = &data->type;
-+		else
- 			strbuf_addstr(sb, typename(data->type));
- 	} else if (is_atom("objectsize", atom, len)) {
- 		if (data->mark_query)
-@@ -229,8 +231,7 @@ static int batch_one_object(const char *obj_name, struct batch_options *opt,
- 		return 0;
- 	}
- 
--	data->type = sha1_object_info_extended(data->sha1, &data->info);
--	if (data->type <= 0) {
-+	if (sha1_object_info_extended(data->sha1, &data->info) < 0) {
- 		printf("%s missing\n", obj_name);
- 		fflush(stdout);
- 		return 0;
-diff --git a/cache.h b/cache.h
-index c1fd82c..d3b770c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1130,6 +1130,7 @@ struct object_info {
- 
- struct object_info {
- 	/* Request */
-+	enum object_type *typep;
- 	unsigned long *sizep;
- 	unsigned long *disk_sizep;
- 
+So I am on the fence over this one, and do not mind too much if it gets
+dropped.
+
+ sha1_file.c | 49 ++++++++++++++++++++++---------------------------
+ 1 file changed, 22 insertions(+), 27 deletions(-)
+
 diff --git a/sha1_file.c b/sha1_file.c
-index 2a1e230..52f7a1e 100644
+index 52f7a1e..563f521 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -2452,24 +2452,26 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
- {
- 	struct cached_object *co;
- 	struct pack_entry e;
--	int type, rtype;
-+	int rtype;
+@@ -1783,8 +1783,7 @@ static int packed_object_info(struct packed_git *p, off_t obj_offset,
+ }
  
- 	co = find_cached_object(sha1);
- 	if (co) {
-+		if (oi->typep)
-+			*(oi->typep) = co->type;
- 		if (oi->sizep)
- 			*(oi->sizep) = co->size;
- 		if (oi->disk_sizep)
- 			*(oi->disk_sizep) = 0;
- 		oi->whence = OI_CACHED;
--		return co->type;
-+		return 0;
+ static int packed_object_info(struct packed_git *p, off_t obj_offset,
+-			      enum object_type *typep, unsigned long *sizep,
+-			      unsigned long *disk_sizep)
++			      struct object_info *oi)
+ {
+ 	struct pack_window *w_curs = NULL;
+ 	unsigned long size;
+@@ -1797,7 +1796,7 @@ static int packed_object_info(struct packed_git *p, off_t obj_offset,
+ 	 */
+ 	type = unpack_object_header(p, &w_curs, &curpos, &size);
+ 
+-	if (sizep) {
++	if (oi->sizep) {
+ 		if (type == OBJ_OFS_DELTA || type == OBJ_REF_DELTA) {
+ 			off_t tmp_pos = curpos;
+ 			off_t base_offset = get_delta_base(p, &w_curs, &tmp_pos,
+@@ -1806,24 +1805,24 @@ static int packed_object_info(struct packed_git *p, off_t obj_offset,
+ 				type = OBJ_BAD;
+ 				goto out;
+ 			}
+-			*sizep = get_size_from_delta(p, &w_curs, tmp_pos);
+-			if (*sizep == 0) {
++			*oi->sizep = get_size_from_delta(p, &w_curs, tmp_pos);
++			if (*oi->sizep == 0) {
+ 				type = OBJ_BAD;
+ 				goto out;
+ 			}
+ 		} else {
+-			*sizep = size;
++			*oi->sizep = size;
+ 		}
  	}
+ 
+-	if (disk_sizep) {
++	if (oi->disk_sizep) {
+ 		struct revindex_entry *revidx = find_pack_revindex(p, obj_offset);
+-		*disk_sizep = revidx[1].offset - obj_offset;
++		*oi->disk_sizep = revidx[1].offset - obj_offset;
+ 	}
+ 
+-	if (typep) {
+-		*typep = packed_to_object_type(p, obj_offset, type, &w_curs, curpos);
+-		if (*typep < 0) {
++	if (oi->typep) {
++		*oi->typep = packed_to_object_type(p, obj_offset, type, &w_curs, curpos);
++		if (*oi->typep < 0) {
+ 			type = OBJ_BAD;
+ 			goto out;
+ 		}
+@@ -2404,9 +2403,7 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ }
+ 
+ static int sha1_loose_object_info(const unsigned char *sha1,
+-				  enum object_type *typep,
+-				  unsigned long *sizep,
+-				  unsigned long *disk_sizep)
++				  struct object_info *oi)
+ {
+ 	int status;
+ 	unsigned long mapsize, size;
+@@ -2418,12 +2415,12 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 	 * If we don't care about type or size, then we don't
+ 	 * need to look inside the object at all.
+ 	 */
+-	if (!typep && !sizep) {
+-		if (disk_sizep) {
++	if (!oi->typep && !oi->sizep) {
++		if (oi->disk_sizep) {
+ 			struct stat st;
+ 			if (stat_sha1_file(sha1, &st) < 0)
+ 				return -1;
+-			*disk_sizep = st.st_size;
++			*oi->disk_sizep = st.st_size;
+ 		}
+ 		return 0;
+ 	}
+@@ -2431,19 +2428,19 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 	map = map_sha1_file(sha1, &mapsize);
+ 	if (!map)
+ 		return -1;
+-	if (disk_sizep)
+-		*disk_sizep = mapsize;
++	if (oi->disk_sizep)
++		*oi->disk_sizep = mapsize;
+ 	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
+ 		status = error("unable to unpack %s header",
+ 			       sha1_to_hex(sha1));
+ 	else if ((status = parse_sha1_header(hdr, &size)) < 0)
+ 		status = error("unable to parse %s header", sha1_to_hex(sha1));
+-	else if (sizep)
+-		*sizep = size;
++	else if (oi->sizep)
++		*oi->sizep = size;
+ 	git_inflate_end(&stream);
+ 	munmap(map, mapsize);
+-	if (typep)
+-		*typep = status;
++	if (oi->typep)
++		*oi->typep = status;
+ 	return 0;
+ }
+ 
+@@ -2468,8 +2465,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
  
  	if (!find_pack_entry(sha1, &e)) {
  		/* Most likely it's a loose object. */
--		if (!sha1_loose_object_info(sha1, &type,
-+		if (!sha1_loose_object_info(sha1, oi->typep,
- 					    oi->sizep, oi->disk_sizep)) {
+-		if (!sha1_loose_object_info(sha1, oi->typep,
+-					    oi->sizep, oi->disk_sizep)) {
++		if (!sha1_loose_object_info(sha1, oi)) {
  			oi->whence = OI_LOOSE;
--			return type;
-+			return 0;
+ 			return 0;
  		}
- 
- 		/* Not a loose object; someone else may have just packed it. */
-@@ -2478,7 +2480,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
+@@ -2480,8 +2476,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
  			return -1;
  	}
  
--	rtype = packed_object_info(e.p, e.offset, &type, oi->sizep,
-+	rtype = packed_object_info(e.p, e.offset, oi->typep, oi->sizep,
- 				   oi->disk_sizep);
+-	rtype = packed_object_info(e.p, e.offset, oi->typep, oi->sizep,
+-				   oi->disk_sizep);
++	rtype = packed_object_info(e.p, e.offset, oi);
  	if (rtype < 0) {
  		mark_bad_packed_object(e.p, sha1);
-@@ -2493,15 +2495,19 @@ int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
- 					 rtype == OBJ_OFS_DELTA);
- 	}
- 
--	return type;
-+	return 0;
- }
- 
- int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
- {
-+	enum object_type type;
- 	struct object_info oi = {0};
- 
-+	oi.typep = &type;
- 	oi.sizep = sizep;
--	return sha1_object_info_extended(sha1, &oi);
-+	if (sha1_object_info_extended(sha1, &oi) < 0)
-+		return -1;
-+	return type;
- }
- 
- static void *read_packed_sha1(const unsigned char *sha1,
-diff --git a/streaming.c b/streaming.c
-index cac282f..870657a 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -111,11 +111,11 @@ static enum input_source istream_source(const unsigned char *sha1,
- 	unsigned long size;
- 	int status;
- 
-+	oi->typep = type;
- 	oi->sizep = &size;
- 	status = sha1_object_info_extended(sha1, oi);
- 	if (status < 0)
- 		return stream_error;
--	*type = status;
- 
- 	switch (oi->whence) {
- 	case OI_LOOSE:
+ 		return sha1_object_info_extended(sha1, oi);
 -- 
 1.8.3.rc3.24.gec82cb9
