@@ -1,111 +1,148 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/4] mailmap: do not downcase mailmap entries
-Date: Fri, 12 Jul 2013 14:38:53 -0700
-Message-ID: <1373665135-32484-3-git-send-email-gitster@pobox.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 4/4] add a testcase for checking case insensitivity of mailmap
+Date: Fri, 12 Jul 2013 18:38:42 -0400
+Message-ID: <CAPig+cTE7ELo9xfNqOCq1p7xUgOUrr9WDiRkTbXgHPjqtzeEsw@mail.gmail.com>
 References: <1373665135-32484-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 12 23:39:31 2013
+	<1373665135-32484-5-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 13 00:39:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uxl3r-0003ju-7K
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 23:39:31 +0200
+	id 1UxlzW-0001Xy-V4
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 00:39:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965491Ab3GLVjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 17:39:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55968 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965446Ab3GLVjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jul 2013 17:39:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F99630321
-	for <git@vger.kernel.org>; Fri, 12 Jul 2013 21:39:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=QlMl
-	dUA7Mt9qMlAivmvrfYxzHbU=; b=c1RNVK6fFX/7uIoWHTMsQeFxm5J+5IDkWGsk
-	9ODWmOjlml80zj/Jq9hczfYCOl1+LSzzXenRgJFwnKt/c9dxlbAy4zFH5BYlazmG
-	Txf+I8YoozYbgKlyWW/1sGjDD/a6MmcbRwho3U9DqbxgdA0+0nWCvxujC3gep1yi
-	OTa4hT8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=QbwqsV
-	nfPharZG2Lcr9Sk5+B/+gVdsDxhQRgdrkx6kzSlsgFZTLanT14FbYZuqZIeewy4s
-	wrP/X6CrTaaZC+malRizj+1mP1y6OR+qSAs9UbejgDuk8dy+BOX3jq7Hm54bIgVD
-	e5STH3Nb+wW2+KJz08GSWXX385J4LswQP3ZrU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74AFF30320
-	for <git@vger.kernel.org>; Fri, 12 Jul 2013 21:39:01 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6E3B3031E
-	for <git@vger.kernel.org>; Fri, 12 Jul 2013 21:39:00 +0000 (UTC)
-X-Mailer: git-send-email 1.8.3.2-941-gda9c3c8
-In-Reply-To: <1373665135-32484-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 77049F66-EB3B-11E2-8F64-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757836Ab3GLWiq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 18:38:46 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:53127 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757555Ab3GLWip (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 18:38:45 -0400
+Received: by mail-lb0-f171.google.com with SMTP id 13so7966761lba.2
+        for <git@vger.kernel.org>; Fri, 12 Jul 2013 15:38:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=oUJkhlCx29n0wlUysU4Szlfyr+a3blsrkUlMUEddyt4=;
+        b=e0p0EPPUStJDCOyTBanTE83/6S7cihFdZvJ3EQ/0C8sHhcS1JHR/rWs4iJhNk/KLVN
+         ftip/A9S/lDYeTD5RmpyxISMsAy0+o73Qikp0HVaZkt6Gb/Vu2a68iOTQpEup1jfvZG6
+         hJMwKH+axpfO7GZaQBZ05XGatyea6llmZAcDHxv/creprsf2iy43yrlaVAiyhJ6bPMx7
+         B0B66BjDpb7UJdVtOXpD+8gHEOlXbUkbK26FQLc1kAQO26bHPGp3KnWhDEOk+K6wWjng
+         fen4ag7lL0D2IO92xi5GeytPR6TQFr4pdoBTCJGKWH0iywE3Sm2cgy5s/z799vw6z2Xv
+         WUxw==
+X-Received: by 10.112.12.225 with SMTP id b1mr20284832lbc.3.1373668722990;
+ Fri, 12 Jul 2013 15:38:42 -0700 (PDT)
+Received: by 10.114.187.78 with HTTP; Fri, 12 Jul 2013 15:38:42 -0700 (PDT)
+In-Reply-To: <1373665135-32484-5-git-send-email-gitster@pobox.com>
+X-Google-Sender-Auth: 2QXrgWNDf7zfTwi8CMUFj7IGW28
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230263>
 
-The email addresses in the records read from the .mailmap file are
-downcased very early, and then used to match against e-mail
-addresses in the input.  Because we do use case insensitive version
-of string list to manage these entries, there is no need to do this,
-and worse yet, downcasing the rewritten/canonical e-mail read from
-the .mailmap file loses information.
+On Fri, Jul 12, 2013 at 5:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> From: Stefan Beller <stefanbeller@googlemail.com>
+>
+> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  t/t4203-mailmap.sh | 33 +++++++++++++++++++++++++++++++++
+>  1 file changed, 33 insertions(+)
+>
+> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+> index 842b754..07152e9 100755
+> --- a/t/t4203-mailmap.sh
+> +++ b/t/t4203-mailmap.sh
+> @@ -409,4 +409,37 @@ test_expect_success 'Blame output (complex mapping)' '
+>         test_cmp expect actual.fuzz
+>  '
+>
+> +test_expect_success 'cleanup after mailmap.blob tests' '
+> +       rm -f .mailmap
+> +'
 
-Stop doing that, and also make the string list used to keep multiple
-names for an mailmap entry case insensitive (the code that uses the
-list, lookup_prefix(), expects a case insensitive match).
+This "test" was copied from earlier in the file, but the description
+was not updated; it has nothing to do with mailmap.blob tests for
+which cleanup has already taken place.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- mailmap.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+It's also misleading since no .mailmap file exists at this point.
+Instead, configuration key mailmap.file is set to
+internal_mailmap/.mailmap, so if you need to clean up anything, it
+would be that.
 
-diff --git a/mailmap.c b/mailmap.c
-index 418081e..a7e92db 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -51,14 +51,6 @@ static void add_mapping(struct string_list *map,
- {
- 	struct mailmap_entry *me;
- 	int index;
--	char *p;
--
--	if (old_email)
--		for (p = old_email; *p; p++)
--			*p = tolower(*p);
--	if (new_email)
--		for (p = new_email; *p; p++)
--			*p = tolower(*p);
- 
- 	if (old_email == NULL) {
- 		old_email = new_email;
-@@ -68,13 +60,17 @@ static void add_mapping(struct string_list *map,
- 	if ((index = string_list_find_insert_index(map, old_email, 1)) < 0) {
- 		/* mailmap entry exists, invert index value */
- 		index = -1 - index;
-+		me = (struct mailmap_entry *)map->items[index].util;
- 	} else {
- 		/* create mailmap entry */
--		struct string_list_item *item = string_list_insert_at_index(map, index, old_email);
--		item->util = xcalloc(1, sizeof(struct mailmap_entry));
--		((struct mailmap_entry *)item->util)->namemap.strdup_strings = 1;
-+		struct string_list_item *item;
-+
-+		item = string_list_insert_at_index(map, index, old_email);
-+		me = xcalloc(1, sizeof(struct mailmap_entry));
-+		me->namemap.strdup_strings = 1;
-+		me->namemap.cmp = strcasecmp;
-+		item->util = me;
- 	}
--	me = (struct mailmap_entry *)map->items[index].util;
- 
- 	if (old_name == NULL) {
- 		debug_mm("mailmap: adding (simple) entry for %s at index %d\n", old_email, index);
--- 
-1.8.3.2-941-gda9c3c8
+(You're also recreating .mailmap from scratch directly in your test
+via "echo foo >.mailmap", so this "test" doesn't really add anything.)
+
+> +cat >expect <<\EOF
+> +     2 A <A@example.org>
+> +     2 Other Author <other@author.xx>
+> +     2 Santa Claus <santa.claus@northpole.xx>
+> +     1 A U Thor <author@example.com>
+> +     1 CTO <cto@company.xx>
+> +     1 Some Dude <some@dude.xx>
+> +EOF
+> +
+> +test_expect_success 'Test case sensitivity of Names' '
+
+s/Names/names/
+
+Also, most of the test descriptions in this script start with
+lowercase, so s/Test/test/ would be appropriate.
+
+> +       # do a commit:
+> +       echo "asdf" > test1
+
+Git practice normally avoids whitespace after the redirection
+operator. This particular test script, has a mix of ">foo" and ">
+foo", but we may want to avoid adding more of the latter form.
+
+> +       git add test1
+> +       git commit -a --author="A <A@example.org>" -m "add test1"
+> +
+> +       # commit with same name, but different email
+> +       # (different capitalization does the trick already,
+> +       # but here I am going to use a different mail)
+
+Without context of the mailing list discussion, the reader does not
+know what "trick" is or precisely how this may have failed in the
+past. It's also not clear why the test is being performed with a
+different email address entirely rather than one which differs only by
+case (which is what the test description talks about).
+
+> +       echo "asdf" > test2
+
+Whitespace after redirection.
+
+> +       git add test2
+> +       git commit -a --author="A <changed_email@example.org>" -m "add test2"
+> +
+> +       # Adding the line to the mailmap should make life easy, so we know
+> +       # it is the same person
+
+The comment can probably be dropped, as the new .mailmap entry is
+self-explanatory.
+
+> +       echo "A <A@example.org> <changed_email@example.org>" > .mailmap
+
+Whitespace after redirection.
+
+> +
+> +       git shortlog -sne HEAD >actual && test_cmp expect actual
+
+For consistency with more other tests, perhaps break the line apart:
+
+  git shortlog -sne HEAD >actual &&
+  test_cmp expect actual
+
+> +'
+> +
+>  test_done
+> --
+> 1.8.3.2-941-gda9c3c8
