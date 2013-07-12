@@ -1,118 +1,85 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Bug in .mailmap handling?
-Date: Fri, 12 Jul 2013 22:35:36 +0200
-Message-ID: <51E06898.3070303@googlemail.com>
-References: <51E029B9.20108@googlemail.com> <7vfvvjjzee.fsf@alter.siamese.dyndns.org>
+Date: Fri, 12 Jul 2013 13:38:13 -0700
+Message-ID: <7v8v1bjyyy.fsf@alter.siamese.dyndns.org>
+References: <51E029B9.20108@googlemail.com>
+	<7vfvvjjzee.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 12 22:35:43 2013
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 12 22:38:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uxk44-0002ZH-EB
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 22:35:40 +0200
+	id 1Uxk6r-0004V8-IB
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 22:38:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965401Ab3GLUfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 16:35:36 -0400
-Received: from mail-we0-f172.google.com ([74.125.82.172]:54799 "EHLO
-	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965331Ab3GLUff (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jul 2013 16:35:35 -0400
-Received: by mail-we0-f172.google.com with SMTP id q56so8566645wes.3
-        for <git@vger.kernel.org>; Fri, 12 Jul 2013 13:35:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=JQT2J3p2PrK6WL5uDpV5LtlX5r9JSL+zw3rs+KvxncY=;
-        b=b7cOlTbAFdAKDSyyVlnTuXOe6ZDg3m/YEp1V+RDqYrqbpEVzpNN6Pf1oK4OFTD3yEv
-         +eECJPEP1jchCWDiKUBflbXxUVCQZGj7cV1SwhNaZ200n2ziCOySBmWR9uDsffvhD8PW
-         K3bmIZJcu16+NX2EEi9wfj1nTbvWcU3FQZW0zqi+SMJzpxq8/Of08zqfuGXVUUDoSD9y
-         1cipqgMqZ4feQq6igZLzh9X95TiMx0eCU5di5X/vl8cqp4bdvTbcZH+WaF4vnY9FePh8
-         NNYXXOZSNSd9uTI+zvKUrTr5HK6wO8Qg8ntdQm5osG6o3amHcuqKeQbfdF5AqSI15vDV
-         CUww==
-X-Received: by 10.194.90.244 with SMTP id bz20mr25952106wjb.69.1373661334266;
-        Fri, 12 Jul 2013 13:35:34 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id a6sm5370174wib.10.2013.07.12.13.35.32
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 12 Jul 2013 13:35:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <7vfvvjjzee.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.6
+	id S965415Ab3GLUiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 16:38:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59027 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965377Ab3GLUiQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 16:38:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42FEE3072F;
+	Fri, 12 Jul 2013 20:38:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dZ6gjdBgWzWzVNKK5WfuST6tAFA=; b=eSewDH
+	ZdIvd0IRsBlfwTHHaqD5QMFzzIwD7rKJHLWL5f0+5olMHFEm+Exjbw/+ZGeP+5Pr
+	CThcFR0VjzaUE5lP3ljqvP0Yozwd6rnBbjkntZIKO01Z8yP6VCr6pAmOCR6UWPmK
+	1WrjmAej8M55vy93LQQdBtFdwijRhtbSR4fHg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eMtCe2QzxogcqZPDiFpVcOxqBhE4svJs
+	+8eNQ2gWv06tYpJDPcFLyuGhlp63KzcpPB0IUhGuMnyRjr0AfKDwR1LD5U5svPB/
+	xQySXrj69/tONNmJqQZ/iFO7ySQ8Hqdi85r91793kZnEAkEg6mqguCg8cucktzxy
+	TZbQKBizGaw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36A1F3072E;
+	Fri, 12 Jul 2013 20:38:16 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 64B7A3072B;
+	Fri, 12 Jul 2013 20:38:15 +0000 (UTC)
+In-Reply-To: <7vfvvjjzee.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 12 Jul 2013 13:28:57 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FA444272-EB32-11E2-BBF7-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230251>
 
-On 07/12/2013 10:28 PM, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
 > Stefan Beller <stefanbeller@googlemail.com> writes:
-> 
->> 	# Adding the line to the mailmap should make life easy, so we know
->> 	# it's the same person
->> 	echo "A <A@example.org> <changed_email@example.org>" > .mailmap
-> 
-> While I was looking at this, I noticed this piece of code:
-> 
-> diff --git a/mailmap.c b/mailmap.c
-> index 2a7b366..418081e 100644
-> --- a/mailmap.c
-> +++ b/mailmap.c
-> @@ -122,7 +122,7 @@ static char *parse_name_and_email(char *buffer, char **name,
->  	while (nend > nstart && isspace(*nend))
->  		--nend;
->  
-> -	*name = (nstart < nend ? nstart : NULL);
-> +	*name = (nstart <= nend ? nstart : NULL);
->  	*email = left+1;
->  	*(nend+1) = '\0';
->  	*right++ = '\0';
-> 
-> The function is given a buffer "A <A@example.org>...", nstart scans
-> from the beginning of the buffer, skipping whitespaces (there isn't
-> any, so nstart points at the buffer), while nend starts from one
-> byte before the first '<' and skips whitespaces backwards and ends
-> at the first non-whitespace (i.e. it hits "A" at the beginning of
-> the buffer).  nstart == nend in this case for a single-letter name,
-> and an off-by-one error makes it fail to pick up the name, which
-> makes the entry equivalent to
-> 
-> 	<A@example.org> <changed_email@example.org>
-> 
-> without the name.  I do not think this bug affected anything you
-> observed, though.
-> 
+>
 >> 	git shortlog -sne
 >> 		 1  A <A@example.org>
 >> 		 1  A <a@example.org>
-> 
+>
 > This is coming from mailmap.c::add_mapping() that downcases the
 > e-mail address.
-> 
+>
 > changed_email@example.org is mapped to a@example.org because of this
 > downcasing, while "A <A@example.org>" does not have any entry for it
 > in the .mailmap file, so it is given back as-is.  Hence we see two
 > distinct entries.
-> 
 
-So do I understand it right, we're having 2 bugs in here?
+I think it is wrong for the parser to lose information by
+downcasing.
 
-One being triggered by the short name, only one character.
-So if you want to debug the other bug with a longer name,
-you can either use a made up name, or run
-    git shortlog -sne |grep Knut
-in the git repository having the mailmap file already updated.
-The way the mailmap file is written, I'd assume only one line
-to be found, as of now 2 lines come up
-     2	Knut Franke <knut.franke@gmx.de>
-     1	Knut Franke <Knut.Franke@gmx.de>
+It is perfectly fine to do the comparison case insensitively, to
+allow <changed_Email@example.org> in the input is mangled using the
+entry for <changed_email@example.org> in the .mailmap file; it is
+not fine to downcase the parsed result, especially the side that is
+used as the "rewritten result" (i.e. the tokens earlier on the line),
+as that would mean mangling the output.
 
-which seems to downcase the whole first email.
+Let me see if I can quickly whip up a fix.
