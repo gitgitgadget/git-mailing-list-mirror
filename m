@@ -1,119 +1,79 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Bug in .mailmap handling?
-Date: Fri, 12 Jul 2013 18:07:21 +0200
-Message-ID: <51E029B9.20108@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] wt-status: use "format" function attribute for status_printf
+Date: Fri, 12 Jul 2013 09:10:30 -0700
+Message-ID: <7vfvvjoj2h.fsf@alter.siamese.dyndns.org>
+References: <20130710001659.GA11643@sigill.intra.peff.net>
+	<20130710002328.GC19423@sigill.intra.peff.net>
+	<7vmwpvt28j.fsf@alter.siamese.dyndns.org>
+	<20130710052859.GA5339@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 12 18:07:26 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matt Kraai <kraai@ftbfs.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jul 12 18:10:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxfsU-0004Sa-5F
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 18:07:26 +0200
+	id 1Uxfvc-0006mW-I4
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 18:10:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964904Ab3GLQHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 12:07:22 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:62825 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964785Ab3GLQHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jul 2013 12:07:21 -0400
-Received: by mail-wi0-f176.google.com with SMTP id ey16so866328wid.15
-        for <git@vger.kernel.org>; Fri, 12 Jul 2013 09:07:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=2tJGuzBBBNA7MdYtbFAe4KUGjb/QX8kUwamGY/bQcSo=;
-        b=JGjG0NveM7nDZCXuGtXZ0RPW1OqCUatTH6Bt9PDoS0Gy7LQ7W/hjL25cJBJ6yaJlA4
-         2PN/xnBpyPjWTmqJ8x1rLCt8lQMl9Oua3FOYIaZyOQDWC8Po0q62gQjmPpzE8/LlVClW
-         atmUq8IoW4qxey/uhNcJzdmW1weTjf74k8tmwD9v9TAAY37Xc4JeVIBTPPxix8LTrwEj
-         sdCTbLnu/7KzzPuVBX01/ij0CPFIerc+LaupQgbQxsDubqpQcc6Mwq4jsbZxz+aCysHy
-         5jzaW9w2SDqnY7todr9R6HwyFh26/c9pCIVQRBqcpdZwIvLVAgTwAwOyo9eeIDRvsq8s
-         r7ow==
-X-Received: by 10.194.82.97 with SMTP id h1mr24314234wjy.95.1373645240312;
-        Fri, 12 Jul 2013 09:07:20 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id z6sm4280296wiv.11.2013.07.12.09.07.19
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 12 Jul 2013 09:07:19 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-X-Enigmail-Version: 1.4.6
+	id S932912Ab3GLQKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 12:10:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59859 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932699Ab3GLQKf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 12:10:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 814F83020F;
+	Fri, 12 Jul 2013 16:10:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+dXed5uEbRhBhBYC6ZNd3rwvB6U=; b=bcHdJK
+	NH9qtfgm6Xs3qMqpIjKuP/LJB2w3Lg5MtDzyAARXdpq/ppt1VPqiFV4Iflh9/HF4
+	nKRt/L7dCiPR9BeU/K3aebFOuA8E3T1cu1D/traICQnHw5uncIh1A/F0afpgvunH
+	cCC+ylY/xjaexrpMKZYckbkawcvym0hDUZOCg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kPpOvuwOIRcEeO+91kDrIFPK136vPZn7
+	/Lg7W5Ie5TmDSuInjZ+gv2amKQygATXIzSgWyvXmgBPhtG/7HxO7NdJWLwuIttjG
+	//X2ex8O3QYYIUKKFGqzKy/2Kzkgnt1jzBkibd+WJ7nCt6UhT+9TNEhozo5uei4O
+	nU7CBsM7yvg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75F693020E;
+	Fri, 12 Jul 2013 16:10:32 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D58F93020C;
+	Fri, 12 Jul 2013 16:10:31 +0000 (UTC)
+In-Reply-To: <20130710052859.GA5339@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 10 Jul 2013 01:28:59 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 93A6D482-EB0D-11E2-969E-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230202>
 
-Hello,
+Jeff King <peff@peff.net> writes:
 
-you may have noticed I am currently trying to bring the 
-mailmap file of git itself up to date. I noticed
-some behavior, which I did not expect. Have a look yourself:
+> On Tue, Jul 09, 2013 at 10:26:04PM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> ...
+>> > I'm torn on this one. It really does provide us with more compile-time
+>> > safety checks, but it's annoying that "-Wall -Werror" will no longer
+>> > work out of the box.
+>> 
+>> Yeah, that is a show-stopper for me X-<.
+>
+> You can "fix" it with -Wno-zero-format-length, so the hassle is not
+> huge. But I am also inclined to just drop this one. We have lived
+> without the extra safety for a long time, and list review does tend to
+> catch such problems in practice.
 
----
-	# prepare test environment:
-	mkdir testmailmap
-	cd testmailmap/
-	git init
-
-	# do a commit:
-	echo "asdf" > test1 
-	git add test1
-	git commit -a --author="A <A@example.org>" -m "add test1"
-
-	# commit with same name, but different email 
-	# (different capitalization does the trick already, 
-	# but here I am going to use a different mail)
-	echo "asdf" > test2
-	git add test2
-	git commit -a --author="A <changed_email@example.org>" -m "add test2"
-
-	# how do we know it's the same person?
-	git shortlog
-	A (2):
-		  add test1
-		  add test2
-
-	# reports as expected:
-	git shortlog -sne
-		  1  A <A@example.org>
-		  1  A <changed_email@example.org>
-		  
-	# Adding the line to the mailmap should make life easy, so we know
-	# it's the same person
-	echo "A <A@example.org> <changed_email@example.org>" > .mailmap
-
-	# Come on, I just wanted to have it reported as one person!
-	git shortlog -sne
-		 1  A <A@example.org>
-		 1  A <a@example.org>
-		 
-	# So let's try another line in the mailmap file, (small 'a')
-	echo "A <a@example.org> <changed_email@example.org>" > .mailmap
-
-	# We're not there yet?
-	git shortlog -sne
-		 1  A <A@example.org>
-		 1  A <a@example.org>
-
-	# Now let's write it rather explicit: 
-	# (essentially just write 2 lines into the mailmap file)
-	cat << EOF > .mailmap
-	A <a@example.org> <changed_email@example.org>
-	A <a@example.org> <A@example.org>
-	EOF
-		 
-	# works as expected now
-	git shortlog -sne
-		 2  A <a@example.org>
-
-	# works as expected now as well
-	git shortlog      
-	A (2):
-		  add test1
-		  add test2
+I am tempted to actually merge the original one as-is without any of
+the workaround, and just tell people to use -Wno-format-zero-length.
