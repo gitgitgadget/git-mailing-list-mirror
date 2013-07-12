@@ -1,129 +1,227 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 13/19] read-cache: read resolve-undo data
-Date: Fri, 12 Jul 2013 19:26:58 +0200
-Message-ID: <1373650024-3001-14-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH v2 14/19] read-cache: read cache-tree in index-v5
+Date: Fri, 12 Jul 2013 19:26:59 +0200
+Message-ID: <1373650024-3001-15-git-send-email-t.gummerer@gmail.com>
 References: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com>
 Cc: t.gummerer@gmail.com, trast@inf.ethz.ch, mhagger@alum.mit.edu,
 	gitster@pobox.com, pclouds@gmail.com, robin.rosenberg@dewire.com,
 	sunshine@sunshineco.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 12 19:30:51 2013
+X-From: git-owner@vger.kernel.org Fri Jul 12 19:31:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxhB8-0004z1-1M
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 19:30:46 +0200
+	id 1UxhBs-0005Wy-Kd
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Jul 2013 19:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965192Ab3GLRam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 13:30:42 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:34637 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964904Ab3GLRal (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jul 2013 13:30:41 -0400
-Received: by mail-pa0-f53.google.com with SMTP id tj12so9241301pac.12
-        for <git@vger.kernel.org>; Fri, 12 Jul 2013 10:30:41 -0700 (PDT)
+	id S965217Ab3GLRb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jul 2013 13:31:27 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:44041 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964965Ab3GLRb0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jul 2013 13:31:26 -0400
+Received: by mail-pd0-f173.google.com with SMTP id v14so8749643pde.18
+        for <git@vger.kernel.org>; Fri, 12 Jul 2013 10:31:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=DjIOf8I2FHvNY2F0BahhhRvR8xEsvXjbdKctQPrYVLo=;
-        b=ppg4D7/GhLxjOKacnJcuj8e/RCQgAgf2jF89gjDXU8psciLdJG1tmGg8SQWoEDVtJ8
-         jiTXmfAW4pmgFoXYywPAa6qLsbJG6pX2il/FTkemgs5d9B5MNGFR7AI7kPBLkbfpGKBA
-         mtTgShzK/eVbIvRuQpOLrPkrumeOHS3CRQ7offbaVGQszBJAYJtQgHGW5RtxxaC1nDqk
-         EXDppqQ0Z8O80DM+2UsEC1fmNPpEMmfwNOKlTHilrux5b3+Su+Ra4GdQ/LW3egaKerMA
-         gF4n87268jknwdcUsTEuJP+sYa8ez7h1kpkhA5MdNbxJ8M9Md6DrZeFAM6JbAhhYI2A1
-         tzMA==
-X-Received: by 10.66.246.106 with SMTP id xv10mr24285146pac.100.1373650241192;
-        Fri, 12 Jul 2013 10:30:41 -0700 (PDT)
+        bh=ataiT3bmxI4FG+D2i0dxmHevfMvNFm3/AqjmUirBAXc=;
+        b=sxgnXUKHbJsXV5DH/UBooPzGeOJFG05bfYFxNu5xPG6Uqh7SFk58087qv5xrAelb6X
+         q+Q3+6+OllA9RRIMBTEv4F6SBKC9YP6h4g05f+bm8XeEnYOesWpczq+SZeUHPIfcqfOt
+         IMMdSm5Qkr9Bk1Wq+QAmbXNOWeDG01TMQ2KysRJvaRYxWtOxyjVD0Nu9lTyoOXjPzwT+
+         uVZ4DE/2+si0316EGX6mMi+9P83j4j4CCjo2ayPnlHwReS0WgRKfxYi7TwjtqOUQ+IAw
+         jJaCdzM5n67LB+RpOas0VVcGaiCYME4bJLTRmKueSHCGRyqqsudjlFbgb+LTTfk7SUJp
+         nFYw==
+X-Received: by 10.66.67.5 with SMTP id j5mr43519836pat.176.1373650285904;
+        Fri, 12 Jul 2013 10:31:25 -0700 (PDT)
 Received: from localhost ([2001:470:6d:596:9227:e4ff:feea:9196])
-        by mx.google.com with ESMTPSA id py4sm3168879pbc.14.2013.07.12.10.30.36
+        by mx.google.com with ESMTPSA id lk9sm31386452pab.2.2013.07.12.10.30.59
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 12 Jul 2013 10:30:40 -0700 (PDT)
+        Fri, 12 Jul 2013 10:31:25 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.453.g1dfc63d
 In-Reply-To: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230226>
 
-Make git read the resolve-undo data from the index.
+Since the cache-tree data is saved as part of the directory data,
+we already read it at the beginning of the index. The cache-tree
+is only converted from this directory data.
 
-Since the resolve-undo data is joined with the conflicts in
-the ondisk format of the index file version 5, conflicts and
-resolved data is read at the same time, and the resolve-undo
-data is then converted to the in-memory format.
+The cache-tree data is arranged in a tree, with the children sorted by
+pathlen at each node, while the ondisk format is sorted lexically.
+So we have to rebuild this format from the on-disk directory list.
 
-Helped-by: Thomas Rast <trast@student.ethz.ch>
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- read-cache-v5.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ cache-tree.c    |   2 +-
+ cache-tree.h    |   6 ++++
+ read-cache-v5.c | 100 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 107 insertions(+), 1 deletion(-)
 
+diff --git a/cache-tree.c b/cache-tree.c
+index 37e4d00..f4b0917 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -31,7 +31,7 @@ void cache_tree_free(struct cache_tree **it_p)
+ 	*it_p = NULL;
+ }
+ 
+-static int subtree_name_cmp(const char *one, int onelen,
++int subtree_name_cmp(const char *one, int onelen,
+ 			    const char *two, int twolen)
+ {
+ 	if (onelen < twolen)
+diff --git a/cache-tree.h b/cache-tree.h
+index 55d0f59..9aac493 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -21,10 +21,16 @@ struct cache_tree {
+ 	struct cache_tree_sub **down;
+ };
+ 
++struct directory_queue {
++	struct directory_queue *down;
++	struct directory_entry *de;
++};
++
+ struct cache_tree *cache_tree(void);
+ void cache_tree_free(struct cache_tree **);
+ void cache_tree_invalidate_path(struct cache_tree *, const char *);
+ struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char *);
++int subtree_name_cmp(const char *, int, const char *, int);
+ 
+ void cache_tree_write(struct strbuf *, struct cache_tree *root);
+ struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
 diff --git a/read-cache-v5.c b/read-cache-v5.c
-index 00112ea..853b97d 100644
+index 853b97d..0b9c320 100644
 --- a/read-cache-v5.c
 +++ b/read-cache-v5.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "read-cache.h"
-+#include "string-list.h"
- #include "resolve-undo.h"
- #include "cache-tree.h"
- #include "dir.h"
-@@ -447,6 +448,43 @@ static int read_conflicts(struct conflict_entry **head,
+@@ -448,6 +448,103 @@ static int read_conflicts(struct conflict_entry **head,
  	return 0;
  }
  
-+static void resolve_undo_convert_v5(struct index_state *istate,
-+				    struct conflict_entry *conflict)
++static struct cache_tree *convert_one(struct directory_queue *queue, int dirnr)
 +{
-+	int i;
++	int i, subtree_nr;
++	struct cache_tree *it;
++	struct directory_queue *down;
 +
-+	while (conflict) {
-+		struct string_list_item *lost;
-+		struct resolve_undo_info *ui;
-+		struct conflict_part *cp;
++	it = cache_tree();
++	it->entry_count = queue[dirnr].de->de_nentries;
++	subtree_nr = queue[dirnr].de->de_nsubtrees;
++	if (0 <= it->entry_count)
++		hashcpy(it->sha1, queue[dirnr].de->sha1);
 +
-+		if (conflict->entries &&
-+		    (conflict->entries->flags & CONFLICT_CONFLICTED) != 0) {
-+			conflict = conflict->next;
-+			continue;
++	/*
++	 * Just a heuristic -- we do not add directories that often but
++	 * we do not want to have to extend it immediately when we do,
++	 * hence +2.
++	 */
++	it->subtree_alloc = subtree_nr + 2;
++	it->down = xcalloc(it->subtree_alloc, sizeof(struct cache_tree_sub *));
++	down = queue[dirnr].down;
++	for (i = 0; i < subtree_nr; i++) {
++		struct cache_tree *sub;
++		struct cache_tree_sub *subtree;
++		char *buf, *name;
++
++		name = "";
++		buf = strtok(down[i].de->pathname, "/");
++		while (buf) {
++			name = buf;
++			buf = strtok(NULL, "/");
 +		}
-+		if (!istate->resolve_undo) {
-+			istate->resolve_undo = xcalloc(1, sizeof(struct string_list));
-+			istate->resolve_undo->strdup_strings = 1;
-+		}
-+
-+		lost = string_list_insert(istate->resolve_undo, conflict->name);
-+		if (!lost->util)
-+			lost->util = xcalloc(1, sizeof(*ui));
-+		ui = lost->util;
-+
-+		cp = conflict->entries;
-+		for (i = 0; i < 3; i++)
-+			ui->mode[i] = 0;
-+		while (cp) {
-+			ui->mode[conflict_stage(cp) - 1] = cp->entry_mode;
-+			hashcpy(ui->sha1[conflict_stage(cp) - 1], cp->sha1);
-+			cp = cp->next;
-+		}
-+		conflict = conflict->next;
++		sub = convert_one(down, i);
++		if(!sub)
++			goto free_return;
++		subtree = cache_tree_sub(it, name);
++		subtree->cache_tree = sub;
 +	}
++	if (subtree_nr != it->subtree_nr)
++		die("cache-tree: internal error");
++	return it;
++ free_return:
++	cache_tree_free(&it);
++	return NULL;
 +}
 +
- static int read_entries(struct index_state *istate, struct directory_entry **de,
- 			unsigned int *entry_offset, void **mmap,
- 			unsigned long mmap_size, unsigned int *nr,
-@@ -460,6 +498,7 @@ static int read_entries(struct index_state *istate, struct directory_entry **de,
- 	conflict_queue = NULL;
- 	if (read_conflicts(&conflict_queue, *de, mmap, mmap_size) < 0)
- 		return -1;
-+	resolve_undo_convert_v5(istate, conflict_queue);
- 	for (i = 0; i < (*de)->de_nfiles; i++) {
- 		if (read_entry(&ce,
- 			       *de,
++static int compare_cache_tree_elements(const void *a, const void *b)
++{
++	const struct directory_entry *de1, *de2;
++
++	de1 = ((const struct directory_queue *)a)->de;
++	de2 = ((const struct directory_queue *)b)->de;
++	return subtree_name_cmp(de1->pathname, de1->de_pathlen,
++				de2->pathname, de2->de_pathlen);
++}
++
++static struct directory_entry *sort_directories(struct directory_entry *de,
++						struct directory_queue *queue)
++{
++	int i, nsubtrees;
++
++	nsubtrees = de->de_nsubtrees;
++	for (i = 0; i < nsubtrees; i++) {
++		struct directory_entry *new_de;
++		de = de->next;
++		new_de = xmalloc(directory_entry_size(de->de_pathlen));
++		memcpy(new_de, de, directory_entry_size(de->de_pathlen));
++		queue[i].de = new_de;
++		if (de->de_nsubtrees) {
++			queue[i].down = xcalloc(de->de_nsubtrees,
++					sizeof(struct directory_queue));
++			de = sort_directories(de,
++					queue[i].down);
++		}
++	}
++	qsort(queue, nsubtrees, sizeof(struct directory_queue),
++			compare_cache_tree_elements);
++	return de;
++}
++
++/*
++ * This function modifies the directory argument that is given to it.
++ * Don't use it if the directory entries are still needed after.
++ */
++static struct cache_tree *cache_tree_convert_v5(struct directory_entry *de)
++{
++	struct directory_queue *queue;
++
++	if (!de->de_nentries)
++		return NULL;
++	queue = xcalloc(1, sizeof(struct directory_queue));
++	queue[0].de = de;
++	queue[0].down = xcalloc(de->de_nsubtrees, sizeof(struct directory_queue));
++
++	sort_directories(de, queue[0].down);
++	return convert_one(queue, 0);
++}
++
+ static void resolve_undo_convert_v5(struct index_state *istate,
+ 				    struct conflict_entry *conflict)
+ {
+@@ -644,6 +741,7 @@ static int read_index_filtered_v5(struct index_state *istate, void *mmap,
+ 		} else
+ 			de = de->next;
+ 	}
++	istate->cache_tree = cache_tree_convert_v5(root_directory);
+ 	istate->cache_nr = nr;
+ 	return 0;
+ }
+@@ -665,6 +763,8 @@ static int read_index_v5(struct index_state *istate, void *mmap,
+ 		if (read_entries(istate, &de, &entry_offset, &mmap,
+ 				 mmap_size, &nr, &foffsetblock) < 0)
+ 			return -1;
++
++	istate->cache_tree = cache_tree_convert_v5(root_directory);
+ 	istate->cache_nr = nr;
+ 	return 0;
+ }
 -- 
 1.8.3.453.g1dfc63d
