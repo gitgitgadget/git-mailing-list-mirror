@@ -1,146 +1,140 @@
-From: Doug Bell <madcityzen@gmail.com>
-Subject: Re: [PATCH] show-ref: make --head always show the HEAD ref
-Date: Fri, 12 Jul 2013 21:01:50 -0500
-Message-ID: <59D4F790-70BA-41DB-80A3-13AD397B3FCF@gmail.com>
-References: <1369894105-48434-1-git-send-email-madcityzen@gmail.com> <7v38rlt88j.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH] t4203: fix checks for email address remapping
+Date: Sat, 13 Jul 2013 08:29:32 +0200
+Message-ID: <51E0F3CC.3040304@googlemail.com>
+References: <1373675709-40486-1-git-send-email-sunshine@sunshineco.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 13 04:11:50 2013
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sat Jul 13 08:29:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxpJN-00036A-Nm
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 04:11:50 +0200
+	id 1UxtKp-0004kU-4P
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 08:29:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758036Ab3GMCLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jul 2013 22:11:31 -0400
-Received: from gremmie.emeraldkingdom.com ([199.48.129.190]:65490 "EHLO
-	mail.digitalarcadia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757946Ab3GMCLa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Jul 2013 22:11:30 -0400
-X-Greylist: delayed 575 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Jul 2013 22:11:30 EDT
-Received: from gremmie.emeraldkingdom.com (unknown [127.0.0.1])
-	by mail.digitalarcadia.com (Postfix) with ESMTP id D20F79BA91;
-	Sat, 13 Jul 2013 01:30:11 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at digitalarcadia.com
-Received: from mail.digitalarcadia.com ([127.0.0.1])
-	by gremmie.emeraldkingdom.com (gremmie.emeraldkingdom.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id tTlr6_bhFQH1; Sat, 13 Jul 2013 01:30:10 +0000 (UTC)
-Received: from [192.168.1.34] (c-67-162-112-255.hsd1.il.comcast.net [67.162.112.255])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: doug@doublecluepon.com)
-	by mail.digitalarcadia.com (Postfix) with ESMTPSA id D4D7C9B9D8;
-	Sat, 13 Jul 2013 01:30:08 +0000 (UTC)
-In-Reply-To: <7v38rlt88j.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1508)
+	id S1751410Ab3GMG3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jul 2013 02:29:30 -0400
+Received: from mail-ea0-f181.google.com ([209.85.215.181]:59605 "EHLO
+	mail-ea0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751169Ab3GMG33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 02:29:29 -0400
+Received: by mail-ea0-f181.google.com with SMTP id a15so6795085eae.26
+        for <git@vger.kernel.org>; Fri, 12 Jul 2013 23:29:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=tI/HxIPFl72UtQeE5BlBjoTWqhZixzziR3f19H5mqac=;
+        b=P8dKuWbyCpqkVykUObMerQmXE4u2UUjtSOY+0y6OLNc7Ii1vvKFhbaF/n2FKsCMYSY
+         0/mVemMpMrS0IQTS6+EIz8O9ujOnbXmS2JxejconQrKAkRrI1yawtuQhd8OiXfkdFmGk
+         RZtObbm95FIvi2WYAn3IjIKvdqKrPeAWLDdhtMcJJ6qYXQ/IKv6dSHqIJQotdqc2QR3h
+         xpwwHWj6PqpCpuHhyE1d+sCAEgO5x7N1gh6caRxvHL/3cDZcy1ZQNvF8SZYMq/MikjWF
+         t+h+mA3hdMQzE8Y6Z8QwKhdZQ1XOxxClklNrr+8UQSv30bkLSCyGP7ZwAeoJOWCNH/RQ
+         oqww==
+X-Received: by 10.15.52.5 with SMTP id o5mr50906386eew.58.1373696968350;
+        Fri, 12 Jul 2013 23:29:28 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id n45sm84634277eew.1.2013.07.12.23.29.26
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 12 Jul 2013 23:29:27 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <1373675709-40486-1-git-send-email-sunshine@sunshineco.com>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230276>
 
-On Jul 11, 2013, at 10:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
+On 07/13/2013 02:35 AM, Eric Sunshine wrote:
+> Two tests in t4203-mailmap.sh set up the mapping <bugs@company.xx> =>
+> <bugs@company.xy> in an apparent attempt to check that email address
+> remapping works as expected (in addition to name remapping which is also
+> tested).  To test the remapping, git-shortlog is invoked but the
+> invocation lacks the -e option instructing it to show email addresses,
+> hence the tests do not actually prove that address remapping succeeded.
+> Fix this by instructing git-shortlog to output email addresses as well.
+> 
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+> 
+> The very last git-shortlog "complex" test in the script does use -e and
+> checks that email address remapping actually works, so it's not clear
+> that this patch is needed. The <bugs@company.xx> => <bugs@company.xy>
+> remapping done by the two tests touched by this patch, however, is
+> misleading to the reader since it seems to imply that these two tests
+> want to check address remapping as well. Perhaps a better change would
+> be to remove the address remapping from these two tests.
+> 
+> 
+>  t/t4203-mailmap.sh | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+> index 842b754..3cf64de 100755
+> --- a/t/t4203-mailmap.sh
+> +++ b/t/t4203-mailmap.sh
+> @@ -102,10 +102,10 @@ test_expect_success 'mailmap.file non-existent' '
+>  '
+>  
+>  cat >expect <<\EOF
+> -Internal Guy (1):
+> +Internal Guy <bugs@company.xy> (1):
+>        second
+>  
+> -Repo Guy (1):
+> +Repo Guy <author@example.com> (1):
+>        initial
+>  
+>  EOF
+> @@ -114,15 +114,15 @@ test_expect_success 'name entry after email entry' '
+>  	mkdir -p internal_mailmap &&
+>  	echo "<bugs@company.xy> <bugs@company.xx>" >internal_mailmap/.mailmap &&
+>  	echo "Internal Guy <bugs@company.xx>" >>internal_mailmap/.mailmap &&
+> -	git shortlog HEAD >actual &&
+> +	git shortlog -e HEAD >actual &&
+>  	test_cmp expect actual
+>  '
+>  
+>  cat >expect <<\EOF
+> -Internal Guy (1):
+> +Internal Guy <bugs@company.xy> (1):
+>        second
+>  
+> -Repo Guy (1):
+> +Repo Guy <author@example.com> (1):
+>        initial
+>  
+>  EOF
+> @@ -131,7 +131,7 @@ test_expect_success 'name entry after email entry, case-insensitive' '
+>  	mkdir -p internal_mailmap &&
+>  	echo "<bugs@company.xy> <bugs@company.xx>" >internal_mailmap/.mailmap &&
+>  	echo "Internal Guy <BUGS@Company.xx>" >>internal_mailmap/.mailmap &&+
 
-> Doug Bell <madcityzen@gmail.com> writes:
-> 
->> The docs seem to say that doing
->> 
->> 	git show-ref --head --tags
->> 
->> would show both the HEAD ref and all the tag refs. However, doing
->> both --head and either of --tags or --heads would filter out the HEAD
->> ref.
->> 
->> Signed-off-by: Doug Bell <madcityzen@gmail.com>
->> ---
-> 
-> I think this patch fell through the cracks, and looking at it, I am
-> somewhat torn.
-> 
-> The command help for "--head" says "show the HEAD reference", which
-> may mean:
-> 
-> (1) in addition to everything else the command would do if there
->     weren't this option specified, show HEAD;
-> 
-> (2) show the HEAD and nothing else; or
-> 
-> (3) add HEAD to the candidates to be shown, but apply the usual
->     filtering rule based on --heads, --tags and/or pattern
->     arguments.
-> 
-> While the last interpretation is what we have used since the
-> beginning of the command at 358ddb62 (Add "git show-ref" builtin
-> command, 2006-09-15), I tend to agree with you that the first
-> interpretation may make more sense, at least from the end user's
-> point of view.
+So here it is capitalized email address (BUGS@), but at the expect file
+it's still lower cased. I think this is a bug.
+Junio was trying to fix it in 543f99173c2d2f648d8f846e24875150f7de03d3
+(origin/jc/mailmap-case-insensitivity)
+So I think we need another yet test case there:
+commited:
+    Internal Guy <BUGS@Company.xx>
+    Internal Guy <bugs@company.xy>
 
-> 
-> But at a deeper level, it makes the command somewhat inconsistent.
-> 
-> What happens in the command is
-> 
-> - We iterate over "candidates to be shown", which is usually
->   "everything under refs/", but with "--head", HEAD is added to
->   this set.  For each of these candidates:
-> 
->   - if one or more <pattern> parameters are given, reject the
->     candidate ref if it does not tail-match with any of the
->     patterns;
-> 
->   - if either "--heads" or "--tags" is given, among the ones that
->     pass <pattern> filter, check if they:
-> 
->     - begin with "refs/heads/" (if "--heads" is given); or
->     - begin with "refs/tags/" (if "--tags" is given).
-> 
->     and reject those that don't.
-> 
->   - show it if it is still surviving after these two tests.
-> 
-> And taht is why "git show-ref --tags master v1.3.0" shows only the
-> v1.3.0 tag without showing the master branch, and giving "--heads"
-> instead of "--tags" yields only the master branch without the tag.
-> 
-> The semantics your patch wants, by changing the definition of
-> "--head" from (3) to (1), is:
-> 
-> - If "--head" is given, show HEAD no matter what.
-> 
-> - Iterate over everything under refs/, and for each of them, do the
->   same filter-and-show as we currently do (see above).
-> 
-> While I think the new semantics is also understandable as the
-> current one, and personally I think it is a better behaviour than
-> the current one, it will require an update to the document to
-> highlight that "--head" is special-cased in a big way, to bypass all
-> the filtering that is applied to normal refs.
-> 
-> A few additional observations (these are not complaints to this
-> patch and please do not take them as such):
-> 
-> - The command help says "(can be combined with heads)" for "--tags"
->   and vice versa, but does not mention their interaction with
->   "--head".  This is because we take interpretation (3) above and
->   do not treat "--head" as a mechanism to add to <pattern>
->   parameter like these two.
-> 
-> - The command help for "--heads" and "--tags" says "only show
->   heads/tags", which technically does not contradict with "can be
->   combined with" above, but a logical consequence of combining
->   ought to be showing nothing, as a ref cannot be a head (an old
->   nomenclature for a "branch") and a tag at the same time.  
-> 
-> I think we should find a word better than "only" to use here, but I
-> am not sure what would be a good phrase to use.
-> 
+Having just one entry in the mailmap
+    Internal Guy <BUGS@Company.xx> <bugs@Company.xy>
 
-The reason I had initially wanted both --tags and --head was I wanted to compare HEAD against all the tags to see which one(s) I was on (if any). I was eventually pointed to `git describe`, but I ended up just using show-ref without any options and filtering the result using Perl (the entire application is in Perl, so this wasn't a big deal). Then, yeah, I figured it was confusing enough to either patch the code or the docs.
+should still work with the "shortlog -e"
 
-For the doc changes, I think if it's explained that by default it show-ref shows refs/{tags,heads,remotes}, it becomes easier to explain what the options will end up doing. I'll put together a second patch.
+> -	git shortlog HEAD >actual &&
+> +	git shortlog -e HEAD >actual &&
+>  	test_cmp expect actual
+>  '
+>  
+> 
