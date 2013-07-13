@@ -1,113 +1,126 @@
 From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH] http.c: fix parsing of http.sslCertPasswordProtected variable
-Date: Sat, 13 Jul 2013 12:28:15 -0700
-Message-ID: <35166ba04d1ce901e0fb63a5c522970@f74d39fa044aa309eaea14b9f57fe79>
-References: <7v38rjlif4.fsf@alter.siamese.dyndns.org> <20130712190531.GD8482@google.com>
-Cc: git@vger.kernel.org, Mark Lodato <lodatom@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 13 21:28:44 2013
+Subject: Re: [PATCH v3] config: add support for http.<url>.* settings
+Date: Sat, 13 Jul 2013 12:46:17 -0700
+Message-ID: <47B58075-3FDD-48E5-9047-8650F7FC5E3B@gmail.com>
+References: <9e7edfbc83a7284615af4ca0de39c1b@f74d39fa044aa309eaea14b9f57fe79> <7voba8pu6r.fsf@alter.siamese.dyndns.org> <455666C5-7663-4361-BF34-378D3EAE2891@gmail.com> <7vsizjn390.fsf@alter.siamese.dyndns.org> <7v4nbyic57.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Petr Baudis <pasky@ucw.cz>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Daniel Knittl-Frank <knittl89@googlemail.com>,
+	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	Alejandro Mery <amery@geeks.cl>
+To: Junio C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>
+X-From: git-owner@vger.kernel.org Sat Jul 13 21:46:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uy5Up-0000qg-EO
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 21:28:43 +0200
+	id 1Uy5ly-0003aH-It
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 21:46:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758204Ab3GMT2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jul 2013 15:28:25 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:35601 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752316Ab3GMT2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jul 2013 15:28:25 -0400
-Received: by mail-pb0-f43.google.com with SMTP id md12so9981354pbc.2
-        for <git@vger.kernel.org>; Sat, 13 Jul 2013 12:28:24 -0700 (PDT)
+	id S1753103Ab3GMTqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jul 2013 15:46:22 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:43651 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752460Ab3GMTqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 15:46:21 -0400
+Received: by mail-pa0-f43.google.com with SMTP id hz11so9981689pad.16
+        for <git@vger.kernel.org>; Sat, 13 Jul 2013 12:46:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Fs86FvXErn6zze3I5WhHtNOPcn66kTGmnMpgmpnJWAU=;
-        b=iZAngZSQyZDsGmn4I99yQhGHP2GDYqKuNNd++ZToc5x6rWRbBhRHI1eRfN+qqxu1sI
-         ZZUOFYYdbmebeDYvcXoWQnpCeyC6MB7VEQgg0uCRlZbiVFg0wGl4Uf0dUTvTPXf2R4tR
-         3KLdPyXCplb1x3xwmLB3Gqmktvx4ynSgSE+Rg+0XRHQ+N8rzok+YQF9saVJCv94IrO8Q
-         ZyZsd9zSz61aZrMtyFxvcUs6EJgY/AY61EWhS/vtP/xOiMKNkIUFbpSN794613BGCNge
-         SHA3Ncnou1vKvdd3fZQ4VCFm7qwHkU2195AlS8Rv0/KO/16HTmYyMZ3fq1ut2Yw7HAw8
-         7wEA==
-X-Received: by 10.66.249.202 with SMTP id yw10mr48395683pac.145.1373743704256;
-        Sat, 13 Jul 2013 12:28:24 -0700 (PDT)
-Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id qu10sm52051682pbb.12.2013.07.13.12.28.22
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc:x-mauler;
+        bh=h+IabmDDHdUPu9rfqh531grRVVR2f+sTkkCh+8lZ5NM=;
+        b=aeRgx+18yx35ioGccinJ+N4z7oKcXW6mQakMQlB9UMzhO5ponIE8n/ICpOlrkgC5UK
+         IDCVCiA23XGMUczQURTCouqxG8NDNllL3Obr2ydmcnsRqaKNKFT77DND54qrQZw25Heg
+         SuH0gsbQJGALu9sqp3/Z3Dtszp0qyOcLip3hV7JYYhCtN4vB33GhWVjey7VeMwXQJKnf
+         a7VzmEejrxjPp4mXFNoRFJzHzINDENV5mAlavDXg6JMF7idIvX2HCCJDD4mPPH8OSLZO
+         M5WrKYvIkNM2MxdG+kCuQtQ+hIvEGVOf+VF0Tn3AEYqQK2qHUMKh7KFMwtOR47kcQTDq
+         WIQQ==
+X-Received: by 10.69.8.65 with SMTP id di1mr2502622pbd.32.1373744780923;
+        Sat, 13 Jul 2013 12:46:20 -0700 (PDT)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id om2sm52071288pbb.34.2013.07.13.12.46.18
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 13 Jul 2013 12:28:23 -0700 (PDT)
-In-Reply-To: <20130712190531.GD8482@google.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 13 Jul 2013 12:46:19 -0700 (PDT)
+In-Reply-To: <7v4nbyic57.fsf@alter.siamese.dyndns.org>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230288>
 
-On Jul 12, 2013, at 12:05, Jonathan Nieder wrote:
-> Junio C Hamano wrote:
+On Jul 12, 2013, at 13:58, Aaron Schrab wrote:
+> At 06:07 -0700 12 Jul 2013, "Kyle J. McKay" <mackyle@gmail.com> wrote:
+>> I don't think it's necessary to split the URL apart though.   
+>> Whatever URL the user gave to git on the command line (at some  
+>> point even if it's now stored as a remote setting in config)  
+>> complete with URL-
+>> encoding, user names, port names, etc. is the same url, possibly  
+>> shortened, that needs to be used for the http.<url>.option setting.
 >
->> The existing code triggers only when the configuration variable is
->> set to true.  Once the variable is set to true in a more generic
->> configuration file (e.g. ~/.gitconfig), it cannot be overriden to
->> false in the repository specific one (e.g. .git/config).
-> [...]
->> --- a/http.c
->> +++ b/http.c
->> @@ -160,8 +160,7 @@ static int http_options(const char *var, const  
->> char *value, void *cb)
->> 	if (!strcmp("http.sslcainfo", var))
->> 		return git_config_string(&ssl_cainfo, var, value);
->> 	if (!strcmp("http.sslcertpasswordprotected", var)) {
->> -		if (git_config_bool(var, value))
->> -			ssl_cert_password_required = 1;
->> +		ssl_cert_password_required = git_config_bool(var, value);
+> This seems to be assuming that the configuration is done after the  
+> URL is entered and that URLs are always entered manually.  I don't  
+> think either of those assumptions is valid.  A user may want to  
+> specify http settings for all repositories on a specified host and  
+> so add settings for that host to ~/.gitconfig expecting those  
+> settings to be used later.  A URL in a slightly different format may  
+> later be copy+pasted without the user realizing that it won't use  
+> that config due to one of the versions being in a non-canonical form.
+
+That seems like a very reasonable expectation to me.
+
+>> I think that's simple and very easy to explain and avoids user  
+>> confusion and surprise while still allowing a default to be set for  
+>> a site but easily overridden for a portion of that site without  
+>> needing to worry about the order config files are processed or the  
+>> order of the [http "<url>"] sections within them.
 >
-> Thanks for catching it.  The documentation doesn't say anything about
-> this "can only enable and cannot disable" behavior and the usual
-> pattern is to allow later settings to override earlier ones, so this
-> change looks good.
->
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> I agree that the method is easy to explain, but I think a user may  
+> very well be surprised and confused in a scenario like I described  
+> above.  And having the order not matter (in some cases) for these  
+> configuration items deviates from how other configuration values are  
+> handled.
 
-Looks good to me too.
 
-> FWIW the GIT_SSL_CERT_PASSWORD_PROTECTED envvar has a similar "can
-> only enable" behavior, but since it's documented, that's not as big
-> of a problem.
+On Jul 13, 2013, at 10:48, Junio C Hamano wrote:
+> The only remaining issue is if matching strictly at the textual
+> level is too limiting.  I personally have no strong opinion myself
+> on it, and if we start with a limited form, we can always loosen it
+> later, so...
 
-Hmmm.  git help config says:
 
-> Can be overridden by the GIT_SSL_CERT_PASSWORD_PROTECTED environment
-> variable.
+The full on everything is to split the URL into all its pieces,  
+canonizing (according to RFC 1738) the pieces and probably allowing  
+omitted parts to act like wildcards.  I'm not opposed to doing this  
+work if that's the consensus.
 
-in the http.sslCertPasswordProtected section of the help.  It doesn't
-say it can only be overridden to on.  Is there some other documentation
-for that somewhere I'm missing about being can-only-enable?
+However, there's probably a shortcut to all that work that will  
+address Aaron's concern.
 
-If not, perhaps a change something like the following could be added
-to the patch:
+I expect it will be easier just to normalize the URL without  
+splitting.  That is, lowercase the parts that are case-insensitive  
+(scheme and host name) and adjust the URL-escaping to remove URL  
+escaping (%xx) from characters that don't need it but add it to any  
+for which it is required that are not escaped (according to RFC 1738).
 
-diff --git a/http.c b/http.c
-index 2d086ae..83fc6b4 100644
---- a/http.c
-+++ b/http.c
-@@ -404,11 +404,10 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 		curl_ftp_no_epsv = 1;
- 
- 	if (url) {
-+		int pwdreq = git_env_bool("GIT_SSL_CERT_PASSWORD_PROTECTED", -1);
- 		credential_from_url(&http_auth, url);
--		if (!ssl_cert_password_required &&
--		    getenv("GIT_SSL_CERT_PASSWORD_PROTECTED") &&
--		    !prefixcmp(url, "https://"))
--			ssl_cert_password_required = 1;
-+		if (pwdreq != -1 && !prefixcmp(url, "https://"))
-+			ssl_cert_password_required = pwdreq;
- 	}
- 
- #ifndef NO_CURL_EASY_DUPHANDLE
--- 
+Basically a url_normalize function added to url.{h,c}.  It can take a  
+const char * and return a char * that needs to be free'd.  (Perhaps it  
+should live in http.c until some other file needs to use it and  
+migrate then?)
+
+This should guarantee a match in the scenario Aaron proposes above and  
+still has pretty much the same easy explanation to the user.
+
+Shall I go ahead and add that to the next patch version?
+
+Or proceed with what's there right now (there are a few pending  
+updates from reviewers) and then, as Junio says above, adjust it later  
+if needed?
