@@ -1,126 +1,166 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH v3] config: add support for http.<url>.* settings
-Date: Sat, 13 Jul 2013 12:46:17 -0700
-Message-ID: <47B58075-3FDD-48E5-9047-8650F7FC5E3B@gmail.com>
-References: <9e7edfbc83a7284615af4ca0de39c1b@f74d39fa044aa309eaea14b9f57fe79> <7voba8pu6r.fsf@alter.siamese.dyndns.org> <455666C5-7663-4361-BF34-378D3EAE2891@gmail.com> <7vsizjn390.fsf@alter.siamese.dyndns.org> <7v4nbyic57.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	Petr Baudis <pasky@ucw.cz>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Daniel Knittl-Frank <knittl89@googlemail.com>,
-	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
-	Alejandro Mery <amery@geeks.cl>
-To: Junio C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>
-X-From: git-owner@vger.kernel.org Sat Jul 13 21:46:27 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/7] push: document --lockref
+Date: Sat, 13 Jul 2013 13:08:09 -0700
+Message-ID: <7vr4f2gr4m.fsf@alter.siamese.dyndns.org>
+References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
+	<1373399610-8588-1-git-send-email-gitster@pobox.com>
+	<1373399610-8588-8-git-send-email-gitster@pobox.com>
+	<51DC7199.2050302@kdbg.org> <7vhag3v59o.fsf@alter.siamese.dyndns.org>
+	<51DC78C0.9030202@kdbg.org> <7v38rnv0zt.fsf@alter.siamese.dyndns.org>
+	<7vvc4jtjqa.fsf@alter.siamese.dyndns.org> <51DF1F56.9000705@kdbg.org>
+	<7vzjtspwvo.fsf@alter.siamese.dyndns.org> <51E03B18.5040502@kdbg.org>
+	<7vli5bllsd.fsf@alter.siamese.dyndns.org> <51E0605E.9020902@kdbg.org>
+	<7vy59biih4.fsf@alter.siamese.dyndns.org> <51E0F93A.8050201@kdbg.org>
+	<7vwqougwec.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Jul 13 22:08:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uy5ly-0003aH-It
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 21:46:26 +0200
+	id 1Uy67N-0000JF-4h
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 22:08:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753103Ab3GMTqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jul 2013 15:46:22 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:43651 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752460Ab3GMTqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jul 2013 15:46:21 -0400
-Received: by mail-pa0-f43.google.com with SMTP id hz11so9981689pad.16
-        for <git@vger.kernel.org>; Sat, 13 Jul 2013 12:46:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc:x-mauler;
-        bh=h+IabmDDHdUPu9rfqh531grRVVR2f+sTkkCh+8lZ5NM=;
-        b=aeRgx+18yx35ioGccinJ+N4z7oKcXW6mQakMQlB9UMzhO5ponIE8n/ICpOlrkgC5UK
-         IDCVCiA23XGMUczQURTCouqxG8NDNllL3Obr2ydmcnsRqaKNKFT77DND54qrQZw25Heg
-         SuH0gsbQJGALu9sqp3/Z3Dtszp0qyOcLip3hV7JYYhCtN4vB33GhWVjey7VeMwXQJKnf
-         a7VzmEejrxjPp4mXFNoRFJzHzINDENV5mAlavDXg6JMF7idIvX2HCCJDD4mPPH8OSLZO
-         M5WrKYvIkNM2MxdG+kCuQtQ+hIvEGVOf+VF0Tn3AEYqQK2qHUMKh7KFMwtOR47kcQTDq
-         WIQQ==
-X-Received: by 10.69.8.65 with SMTP id di1mr2502622pbd.32.1373744780923;
-        Sat, 13 Jul 2013 12:46:20 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id om2sm52071288pbb.34.2013.07.13.12.46.18
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 13 Jul 2013 12:46:19 -0700 (PDT)
-In-Reply-To: <7v4nbyic57.fsf@alter.siamese.dyndns.org>
-X-Mauler: Craptastic (2.936)
+	id S1758219Ab3GMUIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jul 2013 16:08:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34032 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758213Ab3GMUIN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 16:08:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CBC23021E;
+	Sat, 13 Jul 2013 20:08:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GBXBMc+n+oiZBQNqlAUHS4GG//k=; b=Of6RCz
+	iB0UWHEC/QBLQC0Ol1swmkCfPKdjs8uBi0U1CGM44CKsK7zygKNKEXtT57SHnHh0
+	PJ8hMgwyqL2aYihr2UklKBrozJRT07vLsfFQNGmMbLiKLttwwdE2ZLb1z1kZj336
+	puQ+wdUe+3kI2PG10Re9h/v1h7vsd1rXgiwDY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fFJCjTOSgyiyRBieJAW7P7qN0a3TVa0N
+	gBJ85yu3c+UhAoFilREKwRmnWEWuH0pmlCoA0LlCp+FfuMWTQgPkQjy64/YcR/U0
+	s12Nk5+Y1mEQQ9WyMCzYT/qsSmpUUsUkTNB6hzdNxj1OVO5r1UN18BgqMGcIGpFc
+	nAIB4cOGHtM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EA523021C;
+	Sat, 13 Jul 2013 20:08:11 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA33830219;
+	Sat, 13 Jul 2013 20:08:10 +0000 (UTC)
+In-Reply-To: <7vwqougwec.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sat, 13 Jul 2013 11:14:19 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F0FC30CE-EBF7-11E2-AF08-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230289>
 
-On Jul 12, 2013, at 13:58, Aaron Schrab wrote:
-> At 06:07 -0700 12 Jul 2013, "Kyle J. McKay" <mackyle@gmail.com> wrote:
->> I don't think it's necessary to split the URL apart though.   
->> Whatever URL the user gave to git on the command line (at some  
->> point even if it's now stored as a remote setting in config)  
->> complete with URL-
->> encoding, user names, port names, etc. is the same url, possibly  
->> shortened, that needs to be used for the http.<url>.option setting.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> If "--lockref" automatically implies "--allow-no-ff" (the design in
+> the reposted patch), you cannot express that combination.  But once
+> you use "--lockref" in such a situation , for the push to succeed,
+> you know that the push replaces not just _any_ ancestor of what you
+> are pushing, but replaces the exact current value.  So I do not think
+> your implicit introduction of --allow-no-ff via redefining the
+> semantics of the plus prefix is not adding much value (if any),
+> while making the common case less easy to use.
 >
-> This seems to be assuming that the configuration is done after the  
-> URL is entered and that URLs are always entered manually.  I don't  
-> think either of those assumptions is valid.  A user may want to  
-> specify http settings for all repositories on a specified host and  
-> so add settings for that host to ~/.gitconfig expecting those  
-> settings to be used later.  A URL in a slightly different format may  
-> later be copy+pasted without the user realizing that it won't use  
-> that config due to one of the versions being in a non-canonical form.
-
-That seems like a very reasonable expectation to me.
-
->> I think that's simple and very easy to explain and avoids user  
->> confusion and surprise while still allowing a default to be set for  
->> a site but easily overridden for a portion of that site without  
->> needing to worry about the order config files are processed or the  
->> order of the [http "<url>"] sections within them.
+>> No; --lockref only adds the check that the destination is at the
+>> expected revision, but does *NOT* override the no-ff check.
 >
-> I agree that the method is easy to explain, but I think a user may  
-> very well be surprised and confused in a scenario like I described  
-> above.  And having the order not matter (in some cases) for these  
-> configuration items deviates from how other configuration values are  
-> handled.
+> You _could_ do it in that way, but that is less useful.
+
+Another issue I have with the proposal is that we close the door to
+"force only this one" convenience we have with "+ref" vs "--force
+ref".  Assuming that it is useful to require lockref while still
+making sure that the usual "must fast-forward" rule is followed (if
+that is not the case, I do not see a reason why your proposal is any
+useful---am I missing something?), I would prefer to allow users a
+way to decorate this basic syntax to say:
+
+    git push --lockref master jch pu
+
+things like
+
+ (1) pu may not fast-forward and please override that "must
+     fast-forward" check from it, while still keeping the lockref
+     safety (e.g. "+pu" that does not --force, which is your
+     proposal);
+
+ (2) any of them may not fast-forward and please override that "must
+     fast-forward" check from it, while still keeping the lockref
+     safety (without adding "--allow-no-ff", I do not see how it is
+     possible with your proposal, short of forcing user to add "+"
+     everywhere);
+
+ (3) I know jch does not fast-forward so please override the "must
+     fast-forward", but still apply the lockref safety, pu may not
+     even satisfy lockref safety so please force it (as the "only
+     force this one" semantics is removed from "+", I do not see how
+     it is possible with your proposal).
+
+So I would understand if your proposal _were_ to
+
+ * add "--allow-no-ff" option;
+
+ * change the meaning of "+ref" to "--allow-no-ff for only this
+   ref"; and
+
+ * add a new "*ref" (or whatever new syntax) to still allow people
+   to say "--force only this ref".
+
+but we still need to assume that it makes sense to ask lockref but
+still want to ensure the update fast-forwards.  I personally do not
+think it does [*1*].
+
+The semantics the posted patch (rerolled to allow "--force" push
+anything) implements lets "--lockref" to imply "--allow-no-ff" and
+that makes it much simpler; we do not have to deal with any of the
+above complexity.
 
 
-On Jul 13, 2013, at 10:48, Junio C Hamano wrote:
-> The only remaining issue is if matching strictly at the textual
-> level is too limiting.  I personally have no strong opinion myself
-> on it, and if we start with a limited form, we can always loosen it
-> later, so...
+[Footnote]
 
+ *1* The assurance --lockref gives is a lot stronger than "must
+     fast-forward".  You may have fetched the topic whose tip was at
+     commit X, and rebased it on top of X~4 to create a new history
+     leading to Y.
 
-The full on everything is to split the URL into all its pieces,  
-canonizing (according to RFC 1738) the pieces and probably allowing  
-omitted parts to act like wildcards.  I'm not opposed to doing this  
-work if that's the consensus.
+           o----o----Y
+          /
+     o---o----o----o----o----X
+	X~4
 
-However, there's probably a shortcut to all that work that will  
-address Aaron's concern.
+     When you "git push --lockref=topic:X Y:X", you are requiring
+     their tip to be still at X.  Other people's change cannot be to
+     add something on top of X (which will be lost if we replace the
+     tip of the topic with Y).
 
-I expect it will be easier just to normalize the URL without  
-splitting.  That is, lowercase the parts that are case-insensitive  
-(scheme and host name) and adjust the URL-escaping to remove URL  
-escaping (%xx) from characters that don't need it but add it to any  
-for which it is required that are not escaped (according to RFC 1738).
+     If your change were not a rebase but to build one of you own:
 
-Basically a url_normalize function added to url.{h,c}.  It can take a  
-const char * and return a char * that needs to be free'd.  (Perhaps it  
-should live in http.c until some other file needs to use it and  
-migrate then?)
+     o---o----o----o----o----X---Y
 
-This should guarantee a match in the scenario Aaron proposes above and  
-still has pretty much the same easy explanation to the user.
+     your "git push --lockref=topic:X Y:X" still requires the tip is
+     at X.  If somebody rewound the tip to X~2 in the meantime
+     (because they decided the tip 2 commits were not good), your
+     "git push Y:X" without the "--lockref" will lose their rewind,
+     because Y will still be a fast-forward update of X~2.
+     "--lockref=topic:X" will protect you in this case as well.
 
-Shall I go ahead and add that to the next patch version?
-
-Or proceed with what's there right now (there are a few pending  
-updates from reviewers) and then, as Junio says above, adjust it later  
-if needed?
+     So I think "--lockref" that automatically disables "must
+     fast-forward" check is the right thing to do, as we are
+     replacing the weaker "must fast-forward" with something
+     stronger.  I do not think we are getting anything from forcing
+     the user to say "--allow-no-ff" with "+ref" syntax when the
+     user says "--lockref".  It is not making it safer, and it is
+     making it less convenient.
