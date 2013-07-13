@@ -1,188 +1,80 @@
-From: "Kirill A. Korinskiy" <catap@catap.ru>
-Subject: [PATCH] Add config options remotes.prune and remote.<name>.prune
-Date: Sat, 13 Jul 2013 19:43:07 +0400
-Message-ID: <1373730187-33332-1-git-send-email-catap@catap.ru>
-Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jul 13 17:43:34 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] mailmap: Testing the single letter name case.
+Date: Sat, 13 Jul 2013 10:38:06 -0700
+Message-ID: <7v8v1aicn5.fsf@alter.siamese.dyndns.org>
+References: <1373665135-32484-2-git-send-email-gitster@pobox.com>
+	<1373700020-30436-1-git-send-email-stefanbeller@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: sunshine@sunshineco.com, git@vger.kernel.org
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 13 19:38:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uy1yu-0003OA-SS
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 17:43:33 +0200
+	id 1Uy3mD-0007T7-Rp
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 19:38:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007Ab3GMPn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jul 2013 11:43:29 -0400
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:63279 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751752Ab3GMPn2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jul 2013 11:43:28 -0400
-Received: by mail-lb0-f180.google.com with SMTP id o10so8245322lbi.25
-        for <git@vger.kernel.org>; Sat, 13 Jul 2013 08:43:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
-        bh=JgriPpu26RucT19btseLfe7+ZtByksurdJlQuNqlqYA=;
-        b=AeM9xIq7wrJoD9JFJda74uRHI9RpZYZUn+SlXbgjXwKOII5xtPtpLfdj73T+7zESzW
-         9L0TBHgwUiNSYWhtqoD/x4wPppISSLDtptGph2TiHoe5HtNrp/KgYSx2hjXCXVZlIyWn
-         j0HR5MXxrpl45ZYvvVfZ/7IeCA06xxuWA/FMsnprJoYYm/H1YAALhpxgrQOUrdFknH2g
-         oSFZIlL7/EPRmde4udUh0Yo2wRsWLayuv2Q9dUYw2VVya+pJHyeUCjbnOOhl7AEbjwSE
-         wArTKjsOTmz4hmElhOKgGNEsIrAcB9sFSpOoHkGq/aekQW9QUXLJVR8V+/EfjoHwisJH
-         FNcA==
-X-Received: by 10.112.55.9 with SMTP id n9mr21706905lbp.5.1373730206429;
-        Sat, 13 Jul 2013 08:43:26 -0700 (PDT)
-Received: from localhost.localdomain ([77.241.39.208])
-        by mx.google.com with ESMTPSA id c4sm16166488lae.7.2013.07.13.08.43.25
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 13 Jul 2013 08:43:25 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.4 (Apple Git-37)
-X-Gm-Message-State: ALoCoQmljPs14R6AFL1EHJIpp7x/mhIGTTl4S/9MUGjUaQqXhHjulmy9yN1KnLI9IdcBOaVQoJ4h
+	id S1758144Ab3GMRiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jul 2013 13:38:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52593 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752058Ab3GMRiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 13:38:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4189D300F4;
+	Sat, 13 Jul 2013 17:38:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RpMXQJv+5P4jjvmUx8qLoLvf7uQ=; b=ZNJ1vP
+	l9vlA8VbqmXf6oGuiafVfhLK9iy1m5WQzJi7jypwoLkeoSBtS0OxSYQxoIOZ+/Qy
+	2wQyGf3m1ySnkUbBGNZcHpqBo8XaQ4ftDWK5bvs82od0eXrhUHITksrMnoqehwh3
+	JZzYs8zqPyijN/Zil7frPVO9hKSUpydonFtVY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TLi1xuUvwk8KGFhQxWHACf7+pYaC3Ei8
+	iOp1SYjK7ZX3R2jP83guZwwY0jv5S+P7EFnnJggzjiXCKjW4fzQ0Z+Lp+jW+l1mS
+	BR1umdS4ZtB0IFyCohFm2DIZ3drijEObneNLNlkYjdiqmcQJHrbO81OS7Uj8U7DJ
+	A1bEf077l1Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 352A5300F2;
+	Sat, 13 Jul 2013 17:38:09 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72CB8300F1;
+	Sat, 13 Jul 2013 17:38:08 +0000 (UTC)
+In-Reply-To: <1373700020-30436-1-git-send-email-stefanbeller@googlemail.com>
+	(Stefan Beller's message of "Sat, 13 Jul 2013 09:20:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FB3D69AA-EBE2-11E2-9C7A-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230284>
 
-From: "Kirill A. Korinskiy" <catap@catap.ru>
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-Basic idea is a make behavior `git remote update --prune'
-to `git remote update' as default to specify or all remotes repos.
+> This is a regression test for a66e77eab70a08938fdc2227b7ada0f0465c6991
 
-Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
----
- builtin/fetch.c   |  4 +++-
- builtin/remote.c  | 13 +++++++++++++
- remote.c          |  2 ++
- remote.h          |  2 ++
- t/t5505-remote.sh | 33 +++++++++++++++++++++++++++++++++
- 5 files changed, 53 insertions(+), 1 deletion(-)
+Sorry, I do not quite get this.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index d784b2e..cf23218 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -769,7 +769,7 @@ static int do_fetch(struct transport *transport,
- 		free_refs(ref_map);
- 		retcode = 1;
- 		goto cleanup;
--	}
-+	}	
- 	if (prune) {
- 		/* If --tags was specified, pretend the user gave us the canonical tags refspec */
- 		if (tags == TAGS_SET) {
-@@ -983,7 +983,9 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
- 	sigchain_push_common(unlock_pack_on_signal);
- 	atexit(unlock_pack);
- 	refspec = parse_fetch_refspec(ref_nr, refs);
-+	prune += remote->prune;
- 	exit_code = do_fetch(transport, refspec, ref_nr);
-+	prune -= remote->prune;
- 	free_refspec(ref_nr, refspec);
- 	transport_disconnect(transport);
- 	transport = NULL;
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 5e54d36..86e4ed5 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1313,6 +1313,15 @@ static int get_remote_default(const char *key, const char *value, void *priv)
- 	return 0;
- }
- 
-+static int get_remote_prune(const char *key, const char *value, void *priv)
-+{
-+	if (strcmp(key, "remotes.prune") == 0) {
-+		int *found = priv;
-+		*found = git_config_bool(key, value);
-+	}
-+	return 0;
-+}
-+
- static int update(int argc, const char **argv)
- {
- 	int i, prune = 0;
-@@ -1332,6 +1341,10 @@ static int update(int argc, const char **argv)
- 
- 	fetch_argv[fetch_argc++] = "fetch";
- 
-+	if (!prune) {
-+		git_config(get_remote_prune, &prune);
-+	}
-+
- 	if (prune)
- 		fetch_argv[fetch_argc++] = "--prune";
- 	if (verbose)
-diff --git a/remote.c b/remote.c
-index 6f57830..e6f2acb 100644
---- a/remote.c
-+++ b/remote.c
-@@ -404,6 +404,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		remote->skip_default_update = git_config_bool(key, value);
- 	else if (!strcmp(subkey, ".skipfetchall"))
- 		remote->skip_default_update = git_config_bool(key, value);
-+	else if (!strcmp(subkey, ".prune"))
-+		remote->prune = git_config_bool(key, value);
- 	else if (!strcmp(subkey, ".url")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
-diff --git a/remote.h b/remote.h
-index cf56724..8a79bd3 100644
---- a/remote.h
-+++ b/remote.h
-@@ -41,6 +41,8 @@ struct remote {
- 	int skip_default_update;
- 	int mirror;
- 
-+	int prune;
-+
- 	const char *receivepack;
- 	const char *uploadpack;
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index ee5d65d..a278ac2 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -614,6 +614,39 @@ test_expect_success 'update --prune' '
- 	)
- '
- 
-+test_expect_success 'prune update by config set remotes.prune' '
-+	(
-+		cd test &&
-+		git remote update &&
-+		git rev-parse refs/remotes/origin/side2 &&
-+		git rev-parse refs/remotes/origin/side3 &&
-+		git config remotes.prune true &&
-+		git remote update &&
-+		git config --unset remotes.prune &&
-+		test_must_fail git rev-parse refs/remotes/origin/side3
-+	)
-+'
-+
-+test_expect_success 'prune update by config set remote.origin.prune' '
-+	(
-+		cd one &&
-+		git branch -m side2 side3
-+	) &&
-+	(
-+		cd test &&
-+		git config remote.origin.prune true &&
-+		git remote update &&
-+		(
-+			cd ../one &&
-+			git branch -m side3 side2
-+		) &&
-+		git config --unset remote.origin.prune &&
-+		git rev-parse refs/remotes/origin/side3 &&
-+		test_must_fail git rev-parse refs/remotes/origin/side2
-+	)
-+'
-+
-+
- cat >one/expect <<-\EOF
-   apis/master
-   apis/side
--- 
-1.7.12.4 (Apple Git-37)
+If you apply the patch on top of the said commit before that commit, the
+new test does not pass.
+
+But if you apply the patch on top of the said commit, the new test
+still does not pass.
+
+So I am having hard time guessing what you meant by "regression
+test".  It is not "a66e77 broke something that ought to work, and
+this shows the breakage".  It is not "a66e77 fixed something and
+this shows the previous breakage that got fixed."
+
+It may be because the test is depending on ShortName not to be
+downcased incorrectly, which was to be fixed by a later commit.  But
+after applying this on top of jc/mailmap-case-insensitivity topic,
+the test does not pass (and reverting a66e77 does not seem to affect
+the result, either).
