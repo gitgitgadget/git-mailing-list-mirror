@@ -1,162 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/7] push: document --lockref
-Date: Sat, 13 Jul 2013 11:14:19 -0700
-Message-ID: <7vwqougwec.fsf@alter.siamese.dyndns.org>
-References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
-	<1373399610-8588-1-git-send-email-gitster@pobox.com>
-	<1373399610-8588-8-git-send-email-gitster@pobox.com>
-	<51DC7199.2050302@kdbg.org> <7vhag3v59o.fsf@alter.siamese.dyndns.org>
-	<51DC78C0.9030202@kdbg.org> <7v38rnv0zt.fsf@alter.siamese.dyndns.org>
-	<7vvc4jtjqa.fsf@alter.siamese.dyndns.org> <51DF1F56.9000705@kdbg.org>
-	<7vzjtspwvo.fsf@alter.siamese.dyndns.org> <51E03B18.5040502@kdbg.org>
-	<7vli5bllsd.fsf@alter.siamese.dyndns.org> <51E0605E.9020902@kdbg.org>
-	<7vy59biih4.fsf@alter.siamese.dyndns.org> <51E0F93A.8050201@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Jul 13 20:14:36 2013
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH] http.c: fix parsing of http.sslCertPasswordProtected variable
+Date: Sat, 13 Jul 2013 12:28:15 -0700
+Message-ID: <35166ba04d1ce901e0fb63a5c522970@f74d39fa044aa309eaea14b9f57fe79>
+References: <7v38rjlif4.fsf@alter.siamese.dyndns.org> <20130712190531.GD8482@google.com>
+Cc: git@vger.kernel.org, Mark Lodato <lodatom@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 13 21:28:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uy4L5-0004p4-0z
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 20:14:35 +0200
+	id 1Uy5Up-0000qg-EO
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 21:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758178Ab3GMSOY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jul 2013 14:14:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42480 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758110Ab3GMSOW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jul 2013 14:14:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1E4A30BDF;
-	Sat, 13 Jul 2013 18:14:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TbCIL+SMs52PlwyT+EiFUF6/fCA=; b=oAXZds
-	Owqm/VUIO44HXey7BsAjkwZYZb5pkV2iWYY11Uh6tWcrmrcb3pBGyE/AD58Uwl6N
-	s4rWahGmozs6uhA5ZC4v6Jw2Qm6sli2cuTDiqN12BC7zar8LBb6s4F8zpK0H4Yg8
-	1OarC2dbNwyXmYeeGKCZB4TLAHRgxyzcboFCU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O6+byK2SGgE2QN6bGXL4+mffCh07dkO2
-	nSXvGS41ftcYmo+ppKq9O66BAyYjg8TnmvrpDo0AweihHkpcO2qOtnc124dZbyw4
-	OBGO/cmaLSfGDugFp8zKA0MRUbYii01njCuQ0Bo2RzBng06BQxHomsJyS4Tj6Vfh
-	4mJ1/kgt7lE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8B1530BDE;
-	Sat, 13 Jul 2013 18:14:21 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 059FC30BDD;
-	Sat, 13 Jul 2013 18:14:20 +0000 (UTC)
-In-Reply-To: <51E0F93A.8050201@kdbg.org> (Johannes Sixt's message of "Sat, 13
-	Jul 2013 08:52:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0A2F151C-EBE8-11E2-ACAC-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758204Ab3GMT2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jul 2013 15:28:25 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:35601 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752316Ab3GMT2Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 15:28:25 -0400
+Received: by mail-pb0-f43.google.com with SMTP id md12so9981354pbc.2
+        for <git@vger.kernel.org>; Sat, 13 Jul 2013 12:28:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Fs86FvXErn6zze3I5WhHtNOPcn66kTGmnMpgmpnJWAU=;
+        b=iZAngZSQyZDsGmn4I99yQhGHP2GDYqKuNNd++ZToc5x6rWRbBhRHI1eRfN+qqxu1sI
+         ZZUOFYYdbmebeDYvcXoWQnpCeyC6MB7VEQgg0uCRlZbiVFg0wGl4Uf0dUTvTPXf2R4tR
+         3KLdPyXCplb1x3xwmLB3Gqmktvx4ynSgSE+Rg+0XRHQ+N8rzok+YQF9saVJCv94IrO8Q
+         ZyZsd9zSz61aZrMtyFxvcUs6EJgY/AY61EWhS/vtP/xOiMKNkIUFbpSN794613BGCNge
+         SHA3Ncnou1vKvdd3fZQ4VCFm7qwHkU2195AlS8Rv0/KO/16HTmYyMZ3fq1ut2Yw7HAw8
+         7wEA==
+X-Received: by 10.66.249.202 with SMTP id yw10mr48395683pac.145.1373743704256;
+        Sat, 13 Jul 2013 12:28:24 -0700 (PDT)
+Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id qu10sm52051682pbb.12.2013.07.13.12.28.22
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 13 Jul 2013 12:28:23 -0700 (PDT)
+In-Reply-To: <20130712190531.GD8482@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230287>
 
-Johannes Sixt <j6t@kdbg.org> writes:
-
-> I am suggesting that +refspec would *not* override the match/mismatch
-> safety, but --force would.
-
-OK.
-
-I earlier did not read from your message that you wanted to change
-"+refspec" to mean "allow non-ff push", so the two entries in your
-table:
-
->                        ff   noff     ff      noff
->                       match match mismatch mismatch
+On Jul 12, 2013, at 12:05, Jonathan Nieder wrote:
+> Junio C Hamano wrote:
 >
-> --lockref +refspec     ok    ok    denied   denied
-> --lockref  refspec     ok  denied  denied   denied
-
-did not make sense to me.  If you are making "+refspec" to mean
-"--allow-no-ff refspec", then above is at least internally
-consistent.
-
->> Let's look at noff/match case.  That is the only interesting one.
->> 
->> This should fail:
->> 
->> 	git push topic
->> 
->> due to no-ff.
+>> The existing code triggers only when the configuration variable is
+>> set to true.  Once the variable is set to true in a more generic
+>> configuration file (e.g. ~/.gitconfig), it cannot be overriden to
+>> false in the repository specific one (e.g. .git/config).
+> [...]
+>> --- a/http.c
+>> +++ b/http.c
+>> @@ -160,8 +160,7 @@ static int http_options(const char *var, const  
+>> char *value, void *cb)
+>> 	if (!strcmp("http.sslcainfo", var))
+>> 		return git_config_string(&ssl_cainfo, var, value);
+>> 	if (!strcmp("http.sslcertpasswordprotected", var)) {
+>> -		if (git_config_bool(var, value))
+>> -			ssl_cert_password_required = 1;
+>> +		ssl_cert_password_required = git_config_bool(var, value);
 >
-> Yes.
+> Thanks for catching it.  The documentation doesn't say anything about
+> this "can only enable and cannot disable" behavior and the usual
+> pattern is to allow later settings to override earlier ones, so this
+> change looks good.
 >
->> Your table above makes this fail:
->> 
->>         git push --lockref topic
->> 
->> and the user has to force it,
->
-> Of course.
->
->> like this?
->> 
->> 	git push --lockref --force topic ;# or alternatively
->>         git push --lockref +topic
->> 
->> Why is it even necessary?
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-> Because it is no-ff. How do you achieve the push today (without
-> --lockref)? You use one of these two options. It does not change with
-> --lockref.
+Looks good to me too.
 
-But by going that route, you are making --lockref _less_ useful, no?
+> FWIW the GIT_SSL_CERT_PASSWORD_PROTECTED envvar has a similar "can
+> only enable" behavior, but since it's documented, that's not as big
+> of a problem.
 
-"git push topic" in no-ff/match case fails as it should.  The whole
-purpose of "--lockref" is to make this case easier and safer than
-the today's system, where the anything-goes "--force" is the only
-way to make this push.  We want to give a user who
+Hmmm.  git help config says:
 
- - rebased the topic, and
+> Can be overridden by the GIT_SSL_CERT_PASSWORD_PROTECTED environment
+> variable.
 
- - knows where the topic at the remote should be
+in the http.sslCertPasswordProtected section of the help.  It doesn't
+say it can only be overridden to on.  Is there some other documentation
+for that somewhere I'm missing about being can-only-enable?
 
-a way to say "I know I am pushing a no-ff, and I want to make sure
-the current value is this" in order to avoid losing somebody else's
-work queued on top of the topic at the remote while he was rebasing.
+If not, perhaps a change something like the following could be added
+to the patch:
 
-You _CAN_ introduce a new --allow-no-ff at the same time and fail a
-no-ff/match push:
-
-	git push --lockref topic
-
-and then allow it back with:
-
-	git push --lockref --allow-no-ff topic
-	git push --lockref +topic ;# +topic is now --allow-no-ff topic
-
-but why _SHOULD_ we?  As soon as the user _says_ --lockref, the user
-is telling us he is pushing a no-ff.  If that is not the case, the
-user can push without --lockref in the first place.
-
-The only potential thing you are gaining with such a change is that
-you are allowing people to say "this will fast-forward _and_ the I
-know the current value; if either of these two assumptions is
-violated, please fail this push".
-
-If "--lockref" automatically implies "--allow-no-ff" (the design in
-the reposted patch), you cannot express that combination.  But once
-you use "--lockref" in such a situation , for the push to succeed,
-you know that the push replaces not just _any_ ancestor of what you
-are pushing, but replaces the exact current value.  So I do not think
-your implicit introduction of --allow-no-ff via redefining the
-semantics of the plus prefix is not adding much value (if any),
-while making the common case less easy to use.
-
-> No; --lockref only adds the check that the destination is at the
-> expected revision, but does *NOT* override the no-ff check.
-
-You _could_ do it in that way, but that is less useful.
+diff --git a/http.c b/http.c
+index 2d086ae..83fc6b4 100644
+--- a/http.c
++++ b/http.c
+@@ -404,11 +404,10 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 		curl_ftp_no_epsv = 1;
+ 
+ 	if (url) {
++		int pwdreq = git_env_bool("GIT_SSL_CERT_PASSWORD_PROTECTED", -1);
+ 		credential_from_url(&http_auth, url);
+-		if (!ssl_cert_password_required &&
+-		    getenv("GIT_SSL_CERT_PASSWORD_PROTECTED") &&
+-		    !prefixcmp(url, "https://"))
+-			ssl_cert_password_required = 1;
++		if (pwdreq != -1 && !prefixcmp(url, "https://"))
++			ssl_cert_password_required = pwdreq;
+ 	}
+ 
+ #ifndef NO_CURL_EASY_DUPHANDLE
+-- 
