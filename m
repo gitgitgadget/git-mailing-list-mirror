@@ -1,92 +1,162 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: [PATCH] mailmap: Testing the single letter name case.
-Date: Sat, 13 Jul 2013 20:14:20 +0200
-Message-ID: <51E198FC.5080005@googlemail.com>
-References: <1373665135-32484-2-git-send-email-gitster@pobox.com> <1373700020-30436-1-git-send-email-stefanbeller@googlemail.com> <7v8v1aicn5.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/7] push: document --lockref
+Date: Sat, 13 Jul 2013 11:14:19 -0700
+Message-ID: <7vwqougwec.fsf@alter.siamese.dyndns.org>
+References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
+	<1373399610-8588-1-git-send-email-gitster@pobox.com>
+	<1373399610-8588-8-git-send-email-gitster@pobox.com>
+	<51DC7199.2050302@kdbg.org> <7vhag3v59o.fsf@alter.siamese.dyndns.org>
+	<51DC78C0.9030202@kdbg.org> <7v38rnv0zt.fsf@alter.siamese.dyndns.org>
+	<7vvc4jtjqa.fsf@alter.siamese.dyndns.org> <51DF1F56.9000705@kdbg.org>
+	<7vzjtspwvo.fsf@alter.siamese.dyndns.org> <51E03B18.5040502@kdbg.org>
+	<7vli5bllsd.fsf@alter.siamese.dyndns.org> <51E0605E.9020902@kdbg.org>
+	<7vy59biih4.fsf@alter.siamese.dyndns.org> <51E0F93A.8050201@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: sunshine@sunshineco.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 13 20:14:26 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Jul 13 20:14:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uy4Ks-0004gb-T7
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 20:14:23 +0200
+	id 1Uy4L5-0004p4-0z
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 20:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964825Ab3GMSOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jul 2013 14:14:16 -0400
-Received: from mail-we0-f169.google.com ([74.125.82.169]:54699 "EHLO
-	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757659Ab3GMSOO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jul 2013 14:14:14 -0400
-Received: by mail-we0-f169.google.com with SMTP id n57so9081947wev.28
-        for <git@vger.kernel.org>; Sat, 13 Jul 2013 11:14:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=6we63oh5ksYYn7yqmOPOBNrZw+yxnWkIAPnuNGenZgo=;
-        b=zM1VyzgIpM4Pr8g5maCCmcCrrrqeQDTbzbpVyWc8qlbImc8yKGNiffUoUYSGAA21HZ
-         5VL1Z9VzowtA6b6/19lIX7vY81P+Cj2nmUtv3hfoVO+9i8toxfT3PQKy895HFeHoOxcP
-         BhFis3TH0h/b6KMJut9DX4vdL40AlJ0ZuhFU/rQdqAezJ+iGPn10UxxWUxkklzpj7J+6
-         o2ppE43t0u/MRRs6h6zaPeBk8C3VTZ/Tboy5zOwUvGfkkoHHANTwgQQDIQNXNDlgsoFi
-         7Dmltf5YD2dtP5rFJk1L705MAz2+L8mygSnBiBj9v50L5peWruZid0O3vCVVIt6ErEy6
-         IhmA==
-X-Received: by 10.180.13.5 with SMTP id d5mr4603606wic.56.1373739253169;
-        Sat, 13 Jul 2013 11:14:13 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id nb12sm10214264wic.7.2013.07.13.11.14.11
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 13 Jul 2013 11:14:12 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <7v8v1aicn5.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.6
+	id S1758178Ab3GMSOY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jul 2013 14:14:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42480 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758110Ab3GMSOW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 14:14:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1E4A30BDF;
+	Sat, 13 Jul 2013 18:14:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TbCIL+SMs52PlwyT+EiFUF6/fCA=; b=oAXZds
+	Owqm/VUIO44HXey7BsAjkwZYZb5pkV2iWYY11Uh6tWcrmrcb3pBGyE/AD58Uwl6N
+	s4rWahGmozs6uhA5ZC4v6Jw2Qm6sli2cuTDiqN12BC7zar8LBb6s4F8zpK0H4Yg8
+	1OarC2dbNwyXmYeeGKCZB4TLAHRgxyzcboFCU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O6+byK2SGgE2QN6bGXL4+mffCh07dkO2
+	nSXvGS41ftcYmo+ppKq9O66BAyYjg8TnmvrpDo0AweihHkpcO2qOtnc124dZbyw4
+	OBGO/cmaLSfGDugFp8zKA0MRUbYii01njCuQ0Bo2RzBng06BQxHomsJyS4Tj6Vfh
+	4mJ1/kgt7lE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8B1530BDE;
+	Sat, 13 Jul 2013 18:14:21 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 059FC30BDD;
+	Sat, 13 Jul 2013 18:14:20 +0000 (UTC)
+In-Reply-To: <51E0F93A.8050201@kdbg.org> (Johannes Sixt's message of "Sat, 13
+	Jul 2013 08:52:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0A2F151C-EBE8-11E2-ACAC-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230286>
 
-On 07/13/2013 07:38 PM, Junio C Hamano wrote:
-> Stefan Beller <stefanbeller@googlemail.com> writes:
-> 
->> This is a regression test for a66e77eab70a08938fdc2227b7ada0f0465c6991
-> 
-> Sorry, I do not quite get this.
-> 
-> If you apply the patch on top of the said commit before that commit, the
-> new test does not pass.
-> 
-> But if you apply the patch on top of the said commit, the new test
-> still does not pass.
-> 
-> So I am having hard time guessing what you meant by "regression
-> test".  It is not "a66e77 broke something that ought to work, and
-> this shows the breakage".  It is not "a66e77 fixed something and
-> this shows the previous breakage that got fixed."
-> 
-> It may be because the test is depending on ShortName not to be
-> downcased incorrectly, which was to be fixed by a later commit.  But
-> after applying this on top of jc/mailmap-case-insensitivity topic,
-> the test does not pass (and reverting a66e77 does not seem to affect
-> the result, either).
-> 
+Johannes Sixt <j6t@kdbg.org> writes:
 
-I am sorry for the bad wording, sorry for wasting your time.
+> I am suggesting that +refspec would *not* override the match/mismatch
+> safety, but --force would.
 
-This patch was meant to replace 134d1ac9be2ce97c60a7e9187c32980681811cb5
-(current test, latest commit on mailmap-case-insensitivity)
+OK.
 
-Indeed the patch tests for both bugs unintentionally.
-So both the one letter name is being used and the email
-case sensitivity is checked.
-So maybe I should redo it again and make 2 explicit test cases
-for each of the fixes?
+I earlier did not read from your message that you wanted to change
+"+refspec" to mean "allow non-ff push", so the two entries in your
+table:
 
-Stefan
+>                        ff   noff     ff      noff
+>                       match match mismatch mismatch
+>
+> --lockref +refspec     ok    ok    denied   denied
+> --lockref  refspec     ok  denied  denied   denied
+
+did not make sense to me.  If you are making "+refspec" to mean
+"--allow-no-ff refspec", then above is at least internally
+consistent.
+
+>> Let's look at noff/match case.  That is the only interesting one.
+>> 
+>> This should fail:
+>> 
+>> 	git push topic
+>> 
+>> due to no-ff.
+>
+> Yes.
+>
+>> Your table above makes this fail:
+>> 
+>>         git push --lockref topic
+>> 
+>> and the user has to force it,
+>
+> Of course.
+>
+>> like this?
+>> 
+>> 	git push --lockref --force topic ;# or alternatively
+>>         git push --lockref +topic
+>> 
+>> Why is it even necessary?
+
+> Because it is no-ff. How do you achieve the push today (without
+> --lockref)? You use one of these two options. It does not change with
+> --lockref.
+
+But by going that route, you are making --lockref _less_ useful, no?
+
+"git push topic" in no-ff/match case fails as it should.  The whole
+purpose of "--lockref" is to make this case easier and safer than
+the today's system, where the anything-goes "--force" is the only
+way to make this push.  We want to give a user who
+
+ - rebased the topic, and
+
+ - knows where the topic at the remote should be
+
+a way to say "I know I am pushing a no-ff, and I want to make sure
+the current value is this" in order to avoid losing somebody else's
+work queued on top of the topic at the remote while he was rebasing.
+
+You _CAN_ introduce a new --allow-no-ff at the same time and fail a
+no-ff/match push:
+
+	git push --lockref topic
+
+and then allow it back with:
+
+	git push --lockref --allow-no-ff topic
+	git push --lockref +topic ;# +topic is now --allow-no-ff topic
+
+but why _SHOULD_ we?  As soon as the user _says_ --lockref, the user
+is telling us he is pushing a no-ff.  If that is not the case, the
+user can push without --lockref in the first place.
+
+The only potential thing you are gaining with such a change is that
+you are allowing people to say "this will fast-forward _and_ the I
+know the current value; if either of these two assumptions is
+violated, please fail this push".
+
+If "--lockref" automatically implies "--allow-no-ff" (the design in
+the reposted patch), you cannot express that combination.  But once
+you use "--lockref" in such a situation , for the push to succeed,
+you know that the push replaces not just _any_ ancestor of what you
+are pushing, but replaces the exact current value.  So I do not think
+your implicit introduction of --allow-no-ff via redefining the
+semantics of the plus prefix is not adding much value (if any),
+while making the common case less easy to use.
+
+> No; --lockref only adds the check that the destination is at the
+> expected revision, but does *NOT* override the no-ff check.
+
+You _could_ do it in that way, but that is less useful.
