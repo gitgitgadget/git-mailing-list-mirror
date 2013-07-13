@@ -1,303 +1,143 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RESEND][PATCH 00/15] Towards a more awesome git branch
-Date: Sat, 13 Jul 2013 19:31:39 +0700
-Message-ID: <20130713123139.GA19512@lanh>
-References: <1373365946-9230-1-git-send-email-artagnon@gmail.com>
+From: =?UTF-8?B?TWFudGFzIE1pa3VsxJduYXM=?= <grawity@gmail.com>
+Subject: Segfault in `git describe`
+Date: Sat, 13 Jul 2013 16:27:33 +0300
+Message-ID: <krrkk0$kri$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 13 14:31:52 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 13 15:28:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxyzP-0007et-0K
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 14:31:51 +0200
+	id 1Uxzrp-0006nP-7Q
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 15:28:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140Ab3GMMbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jul 2013 08:31:32 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:48235 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751623Ab3GMMbb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jul 2013 08:31:31 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rq2so9921175pbb.33
-        for <git@vger.kernel.org>; Sat, 13 Jul 2013 05:31:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=MGriNqeJ+pfpYbGb0bv+5+sCmZFViKR7cok82OX10Fg=;
-        b=C5Wy4TzUIi3ix3YNwYhutbg3NiPzdVHYLZCoYBbGj666d2PJK7stoy167QRm7I/CGe
-         uK9miy8XuxJiHu+oBhmX6SzMU88139oncY4gCbeWXcbi93qRU22lMSSeu7HM7q04Cng8
-         duLvJyG1J4OJ7K4gkNDhTYujiJnDkmlhbvoADbyKHi7PJGCEreR+4E/eJBVCrJxBjsuK
-         BlntQgD73G9Ygvcbqwq2WJ1RYiCYOtBxegIinxt4gSxcHQ0heuW5BSmEGxUuveDf43T+
-         AQX39/8YuxKlOeeIndOBwVInGYRGERf9wa6GYAwknMFWGmKR6uxaU0mmwOUyz8T+YdYr
-         Ix1Q==
-X-Received: by 10.69.0.168 with SMTP id az8mr2861475pbd.51.1373718688994;
-        Sat, 13 Jul 2013 05:31:28 -0700 (PDT)
-Received: from lanh ([115.73.199.234])
-        by mx.google.com with ESMTPSA id z14sm37440902pbt.0.2013.07.13.05.31.25
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 13 Jul 2013 05:31:28 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 13 Jul 2013 19:31:39 +0700
-Content-Disposition: inline
-In-Reply-To: <1373365946-9230-1-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757919Ab3GMN1s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Jul 2013 09:27:48 -0400
+Received: from plane.gmane.org ([80.91.229.3]:39154 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751201Ab3GMN1r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 09:27:47 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1UxzrV-0006b9-AA
+	for git@vger.kernel.org; Sat, 13 Jul 2013 15:27:45 +0200
+Received: from 78-60-211-195.static.zebra.lt ([78.60.211.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Jul 2013 15:27:45 +0200
+Received: from grawity by 78-60-211-195.static.zebra.lt with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Jul 2013 15:27:45 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 78-60-211-195.static.zebra.lt
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130625 Thunderbird/17.0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230281>
 
-On Tue, Jul 09, 2013 at 04:02:11PM +0530, Ramkumar Ramachandra wrote:
-> Hi,
-> 
-> I'm sending this out in the hope of attracting some reviews.  It's an
-> unedited resend, and there were zero conflicts from the rebase.
+I have a clone of linux.git with various stuff added to it (remotes for
+'stable' and 'next', a bunch of local tags, and historical repositories
+imported using `git replace`).
 
-I still don't like my callback idea. How about this? It's refactoring
-a bit so that you can now extract the color parsing and alignment code
-from pretty.c and add them to for-each-ref as new atoms in --format.
-As this is simply extending --format, the syntax unification idea is
-put back on the shelf and won't hinder your work.
+Yesterday, I noticed that `git describe`, built from git.git master
+(v1.8.3.2-804-g0da7a53, gcc 4.8) would simply crash when run in that
+repository, with the following backtrace:
 
-parse_color() can be used to generate color escape sequences. For
-alignment, you can do something like this:
+> Program terminated with signal 11, Segmentation fault.
+> #0  0x00000000004c39dc in hashcpy (sha_src=3D0x1c <Address 0x1c out o=
+f bounds>,=20
+>     sha_dst=3D0x7fffc0b4d610 "\242\271\301\366 \201&\346\337l\002B\21=
+4P\037\210ShX\022")
+>     at cache.h:694
+> 694		memcpy(sha_dst, sha_src, 20);
+> (gdb) bt
+> #0  0x00000000004c39dc in hashcpy (sha_src=3D0x1c <Address 0x1c out o=
+f bounds>,=20
+>     sha_dst=3D0x7fffc0b4d610 "\242\271\301\366 \201&\346\337l\002B\21=
+4P\037\210ShX\022")
+>     at cache.h:694
+> #1  peel_ref (refname=3Drefname@entry=3D0x1fe2d10 "refs/tags/next-201=
+30607",=20
+>     sha1=3Dsha1@entry=3D0x7fffc0b4d610 "\242\271\301\366 \201&\346\33=
+7l\002B\214P\037\210ShX\022") at refs.c:1586
+> #2  0x0000000000424194 in get_name (path=3D0x1fe2d10 "refs/tags/next-=
+20130607",=20
+>     sha1=3D0x1fe2ce8 "\222V\356\276S5\tk\231Hi\264\r=3D\336\315\302\2=
+25\347\257\300N\376\327\064@\237ZDq[T\246\312\033T\260\314\362\025refs/=
+tags/next-20130607", flag=3D<optimized out>,=20
+>     cb_data=3D<optimized out>) at builtin/describe.c:156
+> #3  0x00000000004c1c21 in do_one_ref (entry=3D0x1fe2ce0, cb_data=3D0x=
+7fffc0b4d7c0)
+>     at refs.c:646
+> #4  0x00000000004c318d in do_for_each_entry_in_dir (dir=3D0x1fe1728,=20
+>     offset=3D<optimized out>, fn=3D0x4c1bc0 <do_one_ref>, cb_data=3D0=
+x7fffc0b4d7c0)
+>     at refs.c:672
+> #5  0x00000000004c33d1 in do_for_each_entry_in_dirs (dir1=3D0x1fdf4d8=
+, dir2=3D0x1fd6318,=20
+>     cb_data=3D0x7fffc0b4d7c0, fn=3D0x4c1bc0 <do_one_ref>) at refs.c:7=
+16
+> #6  0x00000000004c33d1 in do_for_each_entry_in_dirs (dir1=3D0x1fdf1f8=
+, dir2=3D0x1fd62d8,=20
+>     cb_data=3D0x7fffc0b4d7c0, fn=3D0x4c1bc0 <do_one_ref>) at refs.c:7=
+16
+> #7  0x00000000004c3540 in do_for_each_entry (refs=3Drefs@entry=3D0x7a=
+2800 <ref_cache>,=20
+>     base=3Dbase@entry=3D0x509cc6 "", cb_data=3Dcb_data@entry=3D0x7fff=
+c0b4d7c0,=20
+>     fn=3D0x4c1bc0 <do_one_ref>) at refs.c:1689
+> #8  0x00000000004c3ff8 in do_for_each_ref (cb_data=3Dcb_data@entry=3D=
+0x0, flags=3D1, trim=3D0,=20
+>     fn=3Dfn@entry=3D0x424120 <get_name>, base=3D0x509cc6 "", refs=3D0=
+x7a2800 <ref_cache>)
+>     at refs.c:1724
+> #9  for_each_rawref (fn=3Dfn@entry=3D0x424120 <get_name>, cb_data=3Dc=
+b_data@entry=3D0x0)
+>     at refs.c:1873
+> #10 0x0000000000424f5b in cmd_describe (argc=3D0, argv=3D0x7fffc0b4dd=
+c0, prefix=3D0x0)
+>     at builtin/describe.c:466
+> #11 0x000000000040596d in run_builtin (argv=3D0x7fffc0b4ddc0, argc=3D=
+1,=20
+>     p=3D0x760b40 <commands.21352+576>) at git.c:291
+> #12 handle_internal_command (argc=3D1, argv=3D0x7fffc0b4ddc0) at git.=
+c:453
+> #13 0x0000000000404d6e in run_argv (argv=3D0x7fffc0b4dc78, argcp=3D0x=
+7fffc0b4dc5c)
+>     at git.c:499
+> #14 main (argc=3D1, av=3D<optimized out>) at git.c:575
+> (gdb)=20
 
-pad_an_item();
-process_following_atom_after_the_alignment_atom();
-align_an_item();
+According to `git bisect`, the first bad commit is:
 
-I'm afraid it needs a bit more work on the for-each-ref side and may
-even need some fixups (I tested t4205 only and it passed, but I may
-have left some bugs)
+commit 9a489f3c17d6c974b18c47cf406404ca2a721c87
+Author: Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Mon Apr 22 21:52:22 2013 +0200
 
--- 8< --
-diff --git a/pretty.c b/pretty.c
-index 9e43154..40a30a4 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -766,19 +766,23 @@ enum trunc_type {
- 	trunc_right
- };
- 
-+struct alignment {
-+	enum flush_type flush_type;
-+	enum trunc_type truncate;
-+	int padding;
-+};
-+
- struct format_commit_context {
- 	const struct commit *commit;
- 	const struct pretty_print_context *pretty_ctx;
- 	unsigned commit_header_parsed:1;
- 	unsigned commit_message_parsed:1;
- 	struct signature_check signature_check;
--	enum flush_type flush_type;
--	enum trunc_type truncate;
- 	char *message;
- 	char *commit_encoding;
- 	size_t width, indent1, indent2;
- 	int auto_color;
--	int padding;
-+	struct alignment alignment;
- 
- 	/* These offsets are relative to the start of the commit message. */
- 	struct chunk author;
-@@ -957,7 +961,7 @@ static int format_reflog_person(struct strbuf *sb,
- 
- static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
- 			  const char *placeholder,
--			  struct format_commit_context *c)
-+			  int color_setting)
- {
- 	if (placeholder[1] == '(') {
- 		const char *begin = placeholder + 2;
-@@ -967,7 +971,7 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
- 		if (!end)
- 			return 0;
- 		if (!prefixcmp(begin, "auto,")) {
--			if (!want_color(c->pretty_ctx->color))
-+			if (!want_color(color_setting))
- 				return end - placeholder + 1;
- 			begin += 5;
- 		}
-@@ -995,7 +999,7 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
- 
- static size_t parse_padding_placeholder(struct strbuf *sb,
- 					const char *placeholder,
--					struct format_commit_context *c)
-+					struct alignment *c)
- {
- 	const char *ch = placeholder;
- 	enum flush_type flush_type;
-@@ -1076,7 +1080,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 			c->auto_color = 1;
- 			return 7; /* consumed 7 bytes, "C(auto)" */
- 		} else {
--			int ret = parse_color(sb, placeholder, c);
-+			int ret = parse_color(sb, placeholder,
-+					      c->pretty_ctx->color);
- 			if (ret)
- 				c->auto_color = 0;
- 			/*
-@@ -1126,7 +1131,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 
- 	case '<':
- 	case '>':
--		return parse_padding_placeholder(sb, placeholder, c);
-+		return parse_padding_placeholder(sb, placeholder, &c->alignment);
- 	}
- 
- 	/* these depend on the commit */
-@@ -1291,12 +1296,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 	return 0;	/* unknown placeholder */
- }
- 
--static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
--				    const char *placeholder,
--				    struct format_commit_context *c)
-+static int pad_an_item(struct strbuf *sb, int padding)
- {
--	struct strbuf local_sb = STRBUF_INIT;
--	int total_consumed = 0, len, padding = c->padding;
- 	if (padding < 0) {
- 		const char *start = strrchr(sb->buf, '\n');
- 		int occupied;
-@@ -1305,9 +1306,17 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
- 		occupied = utf8_strnwidth(start, -1, 1);
- 		padding = (-padding) - occupied;
- 	}
-+	return padding;
-+}
-+
-+static int format_an_item(const char *placeholder,
-+			  struct strbuf *local_sb,
-+			  struct format_commit_context *c)
-+{
-+	int total_consumed = 0;
- 	while (1) {
- 		int modifier = *placeholder == 'C';
--		int consumed = format_commit_one(&local_sb, placeholder, c);
-+		int consumed = format_commit_one(local_sb, placeholder, c);
- 		total_consumed += consumed;
- 
- 		if (!modifier)
-@@ -1319,9 +1328,19 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
- 		placeholder++;
- 		total_consumed++;
- 	}
--	len = utf8_strnwidth(local_sb.buf, -1, 1);
-+	return total_consumed;
-+}
- 
--	if (c->flush_type == flush_left_and_steal) {
-+static void align_an_item(struct strbuf *sb, /* in UTF-8 */
-+			  struct strbuf *item,
-+			  enum flush_type flush_type,
-+			  enum trunc_type truncate,
-+			  int padding)
-+{
-+	int len;
-+
-+	len = utf8_strnwidth(item->buf, -1, 1);
-+	if (flush_type == flush_left_and_steal) {
- 		const char *ch = sb->buf + sb->len - 1;
- 		while (len > padding && ch > sb->buf) {
- 			const char *p;
-@@ -1343,55 +1362,68 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
- 			 * got a good ansi sequence, put it back to
- 			 * local_sb as we're cutting sb
- 			 */
--			strbuf_insert(&local_sb, 0, p, ch + 1 - p);
-+			strbuf_insert(item, 0, p, ch + 1 - p);
- 			ch = p - 1;
- 		}
- 		strbuf_setlen(sb, ch + 1 - sb->buf);
--		c->flush_type = flush_left;
-+		flush_type = flush_left;
- 	}
- 
- 	if (len > padding) {
--		switch (c->truncate) {
-+		switch (truncate) {
- 		case trunc_left:
--			strbuf_utf8_replace(&local_sb,
-+			strbuf_utf8_replace(item,
- 					    0, len - (padding - 2),
- 					    "..");
- 			break;
- 		case trunc_middle:
--			strbuf_utf8_replace(&local_sb,
-+			strbuf_utf8_replace(item,
- 					    padding / 2 - 1,
- 					    len - (padding - 2),
- 					    "..");
- 			break;
- 		case trunc_right:
--			strbuf_utf8_replace(&local_sb,
-+			strbuf_utf8_replace(item,
- 					    padding - 2, len - (padding - 2),
- 					    "..");
- 			break;
- 		case trunc_none:
- 			break;
- 		}
--		strbuf_addstr(sb, local_sb.buf);
-+		strbuf_addstr(sb, item->buf);
- 	} else {
- 		int sb_len = sb->len, offset = 0;
--		if (c->flush_type == flush_left)
-+		if (flush_type == flush_left)
- 			offset = padding - len;
--		else if (c->flush_type == flush_both)
-+		else if (flush_type == flush_both)
- 			offset = (padding - len) / 2;
- 		/*
- 		 * we calculate padding in columns, now
- 		 * convert it back to chars
- 		 */
--		padding = padding - len + local_sb.len;
-+		padding = padding - len + item->len;
- 		strbuf_grow(sb, padding);
- 		strbuf_setlen(sb, sb_len + padding);
- 		memset(sb->buf + sb_len, ' ', sb->len - sb_len);
--		memcpy(sb->buf + sb_len + offset, local_sb.buf,
--		       local_sb.len);
-+		memcpy(sb->buf + sb_len + offset, item->buf,
-+		       item->len);
- 	}
-+}
-+
-+static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
-+				    const char *placeholder,
-+				    struct format_commit_context *c)
-+{
-+	int consumed, padding;
-+	struct strbuf local_sb = STRBUF_INIT;
-+
-+	padding = pad_an_item(sb, c->alignment.padding);
-+	consumed = format_an_item(placeholder, &local_sb, c);
-+	align_an_item(sb, &local_sb, c->alignment.flush_type,
-+		      c->alignment.truncate, padding);
- 	strbuf_release(&local_sb);
--	c->flush_type = no_flush;
--	return total_consumed;
-+	c->alignment.flush_type = no_flush;
-+	return consumed;
- }
- 
- static size_t format_commit_item(struct strbuf *sb, /* in UTF-8 */
-@@ -1424,7 +1456,7 @@ static size_t format_commit_item(struct strbuf *sb, /* in UTF-8 */
- 		placeholder++;
- 
- 	orig_len = sb->len;
--	if (((struct format_commit_context *)context)->flush_type != no_flush)
-+	if (((struct format_commit_context *)context)->alignment.flush_type != no_flush)
- 		consumed = format_and_pad_commit(sb, placeholder, context);
- 	else
- 		consumed = format_commit_one(sb, placeholder, context);
--- 8< --
+    refs: extract a function peel_entry()
+
+The crash happens only in repositories that have at least one replaced
+object in the branch's history. Running `git --no-replace-objects
+describe` avoids the crash.
+
+The crash happens only if there are any tags under .git/refs/tags/ that
+do not exist in .git/packed-refs, or if I remove all "peeled" lines fro=
+m
+=2Egit/packed-refs (including the '#' line; /^[#^]/d).
+
+A quick way to reproduce this with git.git master is:
+
+git tag -f test-tag HEAD~10
+git replace -f HEAD $(git --no-replace-objects cat-file commit HEAD \
+  | sed 's/@/@test/' | git hash-object --stdin -t commit -w)
+=2E/git describe
+
+--=20
+Mantas Mikul=C4=97nas <grawity@gmail.com>
