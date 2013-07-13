@@ -1,326 +1,303 @@
-From: Michael Schubert <mschub@elegosoft.com>
-Subject: [PATCH v2] fetch: make --prune configurable
-Date: Sat, 13 Jul 2013 11:36:24 +0200
-Message-ID: <1373708184-22672-1-git-send-email-mschub@elegosoft.com>
-Cc: git@vger.kernel.org, Michael Schubert <mschub@elegosoft.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 13 11:47:38 2013
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RESEND][PATCH 00/15] Towards a more awesome git branch
+Date: Sat, 13 Jul 2013 19:31:39 +0700
+Message-ID: <20130713123139.GA19512@lanh>
+References: <1373365946-9230-1-git-send-email-artagnon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 13 14:31:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UxwQT-0006sz-9u
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 11:47:37 +0200
+	id 1UxyzP-0007et-0K
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 14:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932067Ab3GMJrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jul 2013 05:47:21 -0400
-Received: from mx0.elegosoft.com ([78.47.87.163]:40545 "EHLO mx0.elegosoft.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758172Ab3GMJrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jul 2013 05:47:19 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id D1BD0DF142;
-	Sat, 13 Jul 2013 11:47:17 +0200 (CEST)
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zQr+QJPUPKab; Sat, 13 Jul 2013 11:47:17 +0200 (CEST)
-Received: from localhost.localdomain (g225086070.adsl.alicedsl.de [92.225.86.70])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 79C29DF141;
-	Sat, 13 Jul 2013 11:47:17 +0200 (CEST)
-X-Mailer: git-send-email 1.8.3.1.g243ed41
+	id S932140Ab3GMMbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jul 2013 08:31:32 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:48235 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751623Ab3GMMbb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 08:31:31 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rq2so9921175pbb.33
+        for <git@vger.kernel.org>; Sat, 13 Jul 2013 05:31:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=MGriNqeJ+pfpYbGb0bv+5+sCmZFViKR7cok82OX10Fg=;
+        b=C5Wy4TzUIi3ix3YNwYhutbg3NiPzdVHYLZCoYBbGj666d2PJK7stoy167QRm7I/CGe
+         uK9miy8XuxJiHu+oBhmX6SzMU88139oncY4gCbeWXcbi93qRU22lMSSeu7HM7q04Cng8
+         duLvJyG1J4OJ7K4gkNDhTYujiJnDkmlhbvoADbyKHi7PJGCEreR+4E/eJBVCrJxBjsuK
+         BlntQgD73G9Ygvcbqwq2WJ1RYiCYOtBxegIinxt4gSxcHQ0heuW5BSmEGxUuveDf43T+
+         AQX39/8YuxKlOeeIndOBwVInGYRGERf9wa6GYAwknMFWGmKR6uxaU0mmwOUyz8T+YdYr
+         Ix1Q==
+X-Received: by 10.69.0.168 with SMTP id az8mr2861475pbd.51.1373718688994;
+        Sat, 13 Jul 2013 05:31:28 -0700 (PDT)
+Received: from lanh ([115.73.199.234])
+        by mx.google.com with ESMTPSA id z14sm37440902pbt.0.2013.07.13.05.31.25
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 13 Jul 2013 05:31:28 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 13 Jul 2013 19:31:39 +0700
+Content-Disposition: inline
+In-Reply-To: <1373365946-9230-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230280>
 
-Without "git fetch --prune", remote-tracking branches for a branch
-the other side already has removed will stay forever.  Some people
-want to always run "git fetch --prune".
+On Tue, Jul 09, 2013 at 04:02:11PM +0530, Ramkumar Ramachandra wrote:
+> Hi,
+> 
+> I'm sending this out in the hope of attracting some reviews.  It's an
+> unedited resend, and there were zero conflicts from the rebase.
 
-To accommodate users who want to either prune always or when fetching
-from a particular remote, add two new configuration variables
-"fetch.prune" and "remote.<name>.prune":
+I still don't like my callback idea. How about this? It's refactoring
+a bit so that you can now extract the color parsing and alignment code
+from pretty.c and add them to for-each-ref as new atoms in --format.
+As this is simply extending --format, the syntax unification idea is
+put back on the shelf and won't hinder your work.
 
- - "fetch.prune" allows to enable prune for all fetch operations.
+parse_color() can be used to generate color escape sequences. For
+alignment, you can do something like this:
 
- - "remote.<name>.prune" allows to change the behaviour per remote.
+pad_an_item();
+process_following_atom_after_the_alignment_atom();
+align_an_item();
 
-The latter will naturally override the former, and the --[no-]prune
-option from the command line will override the configured default.
+I'm afraid it needs a bit more work on the for-each-ref side and may
+even need some fixups (I tested t4205 only and it passed, but I may
+have left some bugs)
 
-Since --prune is a potentially destructive operation (Git doesn't
-keep reflogs for deleted references yet), we don't want to prune
-without users consent, so this configuration will not be on by
-default.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Michael Schubert <mschub@elegosoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
-Junio, thank you for your detailed feedback and writing the patch.
-
-I didn't find time during the week to write a v2 and I don't feel I
-should take any credit here, so please feel free to take authorship
-completely.
-
-Thanks.
-
-
- Documentation/config.txt | 10 ++++++
- builtin/fetch.c          | 39 ++++++++++++++++++++---
- remote.c                 |  3 ++
- remote.h                 |  1 +
- t/t5510-fetch.sh         | 82 ++++++++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 130 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6e53fc5..e4ce7c4 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1049,6 +1049,10 @@ fetch.unpackLimit::
- 	especially on slow filesystems.  If not set, the value of
- 	`transfer.unpackLimit` is used instead.
- 
-+fetch.prune::
-+	If true, fetch will automatically behave as if the `--prune`
-+	option was given on the command line.  See also `remote.<name>.prune`.
-+
- format.attach::
- 	Enable multipart/mixed attachments as the default for
- 	'format-patch'.  The value can also be a double quoted string
-@@ -1984,6 +1988,12 @@ remote.<name>.vcs::
- 	Setting this to a value <vcs> will cause Git to interact with
- 	the remote with the git-remote-<vcs> helper.
- 
-+remote.<name>.prune::
-+	When set to true, fetching from this remote by default will also
-+	remove any remote-tracking branches which no longer exist on the
-+	remote (as if the `--prune` option was give on the command line).
-+	Overrides `fetch.prune` settings, if any.
-+
- remotes.<group>::
- 	The list of remotes which are fetched by "git remote update
- 	<group>".  See linkgit:git-remote[1].
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 4b6b1df..08ab948 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -30,7 +30,11 @@ enum {
- 	TAGS_SET = 2
+-- 8< --
+diff --git a/pretty.c b/pretty.c
+index 9e43154..40a30a4 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -766,19 +766,23 @@ enum trunc_type {
+ 	trunc_right
  };
  
--static int all, append, dry_run, force, keep, multiple, prune, update_head_ok, verbosity;
-+static int fetch_prune_config = -1; /* unspecified */
-+static int prune = -1; /* unspecified */
-+#define PRUNE_BY_DEFAULT 0 /* do we prune by default? */
++struct alignment {
++	enum flush_type flush_type;
++	enum trunc_type truncate;
++	int padding;
++};
 +
-+static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
- static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
- static int tags = TAGS_DEFAULT, unshallow;
- static const char *depth;
-@@ -54,6 +58,15 @@ static int option_parse_recurse_submodules(const struct option *opt,
- 	return 0;
+ struct format_commit_context {
+ 	const struct commit *commit;
+ 	const struct pretty_print_context *pretty_ctx;
+ 	unsigned commit_header_parsed:1;
+ 	unsigned commit_message_parsed:1;
+ 	struct signature_check signature_check;
+-	enum flush_type flush_type;
+-	enum trunc_type truncate;
+ 	char *message;
+ 	char *commit_encoding;
+ 	size_t width, indent1, indent2;
+ 	int auto_color;
+-	int padding;
++	struct alignment alignment;
+ 
+ 	/* These offsets are relative to the start of the commit message. */
+ 	struct chunk author;
+@@ -957,7 +961,7 @@ static int format_reflog_person(struct strbuf *sb,
+ 
+ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+ 			  const char *placeholder,
+-			  struct format_commit_context *c)
++			  int color_setting)
+ {
+ 	if (placeholder[1] == '(') {
+ 		const char *begin = placeholder + 2;
+@@ -967,7 +971,7 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+ 		if (!end)
+ 			return 0;
+ 		if (!prefixcmp(begin, "auto,")) {
+-			if (!want_color(c->pretty_ctx->color))
++			if (!want_color(color_setting))
+ 				return end - placeholder + 1;
+ 			begin += 5;
+ 		}
+@@ -995,7 +999,7 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+ 
+ static size_t parse_padding_placeholder(struct strbuf *sb,
+ 					const char *placeholder,
+-					struct format_commit_context *c)
++					struct alignment *c)
+ {
+ 	const char *ch = placeholder;
+ 	enum flush_type flush_type;
+@@ -1076,7 +1080,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 			c->auto_color = 1;
+ 			return 7; /* consumed 7 bytes, "C(auto)" */
+ 		} else {
+-			int ret = parse_color(sb, placeholder, c);
++			int ret = parse_color(sb, placeholder,
++					      c->pretty_ctx->color);
+ 			if (ret)
+ 				c->auto_color = 0;
+ 			/*
+@@ -1126,7 +1131,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 
+ 	case '<':
+ 	case '>':
+-		return parse_padding_placeholder(sb, placeholder, c);
++		return parse_padding_placeholder(sb, placeholder, &c->alignment);
+ 	}
+ 
+ 	/* these depend on the commit */
+@@ -1291,12 +1296,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	return 0;	/* unknown placeholder */
  }
  
-+static int git_fetch_config(const char *k, const char *v, void *cb)
-+{
-+	if (!strcmp(k, "fetch.prune")) {
-+		fetch_prune_config = git_config_bool(k, v);
-+		return 0;
-+	}
-+	return 0;
-+}
-+
- static struct option builtin_fetch_options[] = {
- 	OPT__VERBOSITY(&verbosity),
- 	OPT_BOOLEAN(0, "all", &all,
-@@ -69,8 +82,8 @@ static struct option builtin_fetch_options[] = {
- 		    N_("fetch all tags and associated objects"), TAGS_SET),
- 	OPT_SET_INT('n', NULL, &tags,
- 		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
--	OPT_BOOLEAN('p', "prune", &prune,
--		    N_("prune remote-tracking branches no longer on remote")),
-+	OPT_BOOL('p', "prune", &prune,
-+		 N_("prune remote-tracking branches no longer on remote")),
- 	{ OPTION_CALLBACK, 0, "recurse-submodules", NULL, N_("on-demand"),
- 		    N_("control recursive fetching of submodules"),
- 		    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
-@@ -739,7 +752,10 @@ static int do_fetch(struct transport *transport,
- 		return 1;
- 	}
- 	if (prune) {
--		/* If --tags was specified, pretend the user gave us the canonical tags refspec */
-+		/*
-+		 * If --tags was specified, pretend that the user gave us
-+		 * the canonical tags refspec
-+		 */
- 		if (tags == TAGS_SET) {
- 			const char *tags_str = "refs/tags/*:refs/tags/*";
- 			struct refspec *tags_refspec, *refspec;
-@@ -848,7 +864,7 @@ static void add_options_to_argv(struct argv_array *argv)
+-static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+-				    const char *placeholder,
+-				    struct format_commit_context *c)
++static int pad_an_item(struct strbuf *sb, int padding)
  {
- 	if (dry_run)
- 		argv_array_push(argv, "--dry-run");
--	if (prune)
-+	if (prune > 0)
- 		argv_array_push(argv, "--prune");
- 	if (update_head_ok)
- 		argv_array_push(argv, "--update-head-ok");
-@@ -916,6 +932,17 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
- 		    "remote name from which new revisions should be fetched."));
- 
- 	transport = transport_get(remote, NULL);
+-	struct strbuf local_sb = STRBUF_INIT;
+-	int total_consumed = 0, len, padding = c->padding;
+ 	if (padding < 0) {
+ 		const char *start = strrchr(sb->buf, '\n');
+ 		int occupied;
+@@ -1305,9 +1306,17 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+ 		occupied = utf8_strnwidth(start, -1, 1);
+ 		padding = (-padding) - occupied;
+ 	}
++	return padding;
++}
 +
-+	if (prune < 0) {
-+		/* no command line request */
-+		if (0 <= transport->remote->prune)
-+			prune = transport->remote->prune;
-+		else if (0 <= fetch_prune_config)
-+			prune = fetch_prune_config;
-+		else
-+			prune = PRUNE_BY_DEFAULT;
-+	}
-+
- 	transport_set_verbosity(transport, verbosity, progress);
- 	if (upload_pack)
- 		set_option(TRANS_OPT_UPLOADPACK, upload_pack);
-@@ -973,6 +1000,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	for (i = 1; i < argc; i++)
- 		strbuf_addf(&default_rla, " %s", argv[i]);
++static int format_an_item(const char *placeholder,
++			  struct strbuf *local_sb,
++			  struct format_commit_context *c)
++{
++	int total_consumed = 0;
+ 	while (1) {
+ 		int modifier = *placeholder == 'C';
+-		int consumed = format_commit_one(&local_sb, placeholder, c);
++		int consumed = format_commit_one(local_sb, placeholder, c);
+ 		total_consumed += consumed;
  
-+	git_config(git_fetch_config, NULL);
-+
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_fetch_options, builtin_fetch_usage, 0);
+ 		if (!modifier)
+@@ -1319,9 +1328,19 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+ 		placeholder++;
+ 		total_consumed++;
+ 	}
+-	len = utf8_strnwidth(local_sb.buf, -1, 1);
++	return total_consumed;
++}
  
-diff --git a/remote.c b/remote.c
-index 68eb99b..89be211 100644
---- a/remote.c
-+++ b/remote.c
-@@ -148,6 +148,7 @@ static struct remote *make_remote(const char *name, int len)
+-	if (c->flush_type == flush_left_and_steal) {
++static void align_an_item(struct strbuf *sb, /* in UTF-8 */
++			  struct strbuf *item,
++			  enum flush_type flush_type,
++			  enum trunc_type truncate,
++			  int padding)
++{
++	int len;
++
++	len = utf8_strnwidth(item->buf, -1, 1);
++	if (flush_type == flush_left_and_steal) {
+ 		const char *ch = sb->buf + sb->len - 1;
+ 		while (len > padding && ch > sb->buf) {
+ 			const char *p;
+@@ -1343,55 +1362,68 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+ 			 * got a good ansi sequence, put it back to
+ 			 * local_sb as we're cutting sb
+ 			 */
+-			strbuf_insert(&local_sb, 0, p, ch + 1 - p);
++			strbuf_insert(item, 0, p, ch + 1 - p);
+ 			ch = p - 1;
+ 		}
+ 		strbuf_setlen(sb, ch + 1 - sb->buf);
+-		c->flush_type = flush_left;
++		flush_type = flush_left;
  	}
  
- 	ret = xcalloc(1, sizeof(struct remote));
-+	ret->prune = -1;  /* unspecified */
- 	ALLOC_GROW(remotes, remotes_nr + 1, remotes_alloc);
- 	remotes[remotes_nr++] = ret;
- 	if (len)
-@@ -419,6 +420,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		remote->skip_default_update = git_config_bool(key, value);
- 	else if (!strcmp(subkey, ".skipfetchall"))
- 		remote->skip_default_update = git_config_bool(key, value);
-+	else if (!strcmp(subkey, ".prune"))
-+		remote->prune = git_config_bool(key, value);
- 	else if (!strcmp(subkey, ".url")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
-diff --git a/remote.h b/remote.h
-index cf56724..4db3498 100644
---- a/remote.h
-+++ b/remote.h
-@@ -40,6 +40,7 @@ struct remote {
- 	int fetch_tags;
- 	int skip_default_update;
- 	int mirror;
-+	int prune;
- 
- 	const char *receivepack;
- 	const char *uploadpack;
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index d7a19a1..019535f 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -471,6 +471,88 @@ test_expect_success "should be able to fetch with duplicate refspecs" '
- 	)
- '
- 
-+# configured prune tests
-+
-+set_config_tristate () {
-+	# var=$1 val=$2
-+	case "$2" in
-+	unset)  test_unconfig "$1" ;;
-+	*)	git config "$1" "$2" ;;
-+	esac
+ 	if (len > padding) {
+-		switch (c->truncate) {
++		switch (truncate) {
+ 		case trunc_left:
+-			strbuf_utf8_replace(&local_sb,
++			strbuf_utf8_replace(item,
+ 					    0, len - (padding - 2),
+ 					    "..");
+ 			break;
+ 		case trunc_middle:
+-			strbuf_utf8_replace(&local_sb,
++			strbuf_utf8_replace(item,
+ 					    padding / 2 - 1,
+ 					    len - (padding - 2),
+ 					    "..");
+ 			break;
+ 		case trunc_right:
+-			strbuf_utf8_replace(&local_sb,
++			strbuf_utf8_replace(item,
+ 					    padding - 2, len - (padding - 2),
+ 					    "..");
+ 			break;
+ 		case trunc_none:
+ 			break;
+ 		}
+-		strbuf_addstr(sb, local_sb.buf);
++		strbuf_addstr(sb, item->buf);
+ 	} else {
+ 		int sb_len = sb->len, offset = 0;
+-		if (c->flush_type == flush_left)
++		if (flush_type == flush_left)
+ 			offset = padding - len;
+-		else if (c->flush_type == flush_both)
++		else if (flush_type == flush_both)
+ 			offset = (padding - len) / 2;
+ 		/*
+ 		 * we calculate padding in columns, now
+ 		 * convert it back to chars
+ 		 */
+-		padding = padding - len + local_sb.len;
++		padding = padding - len + item->len;
+ 		strbuf_grow(sb, padding);
+ 		strbuf_setlen(sb, sb_len + padding);
+ 		memset(sb->buf + sb_len, ' ', sb->len - sb_len);
+-		memcpy(sb->buf + sb_len + offset, local_sb.buf,
+-		       local_sb.len);
++		memcpy(sb->buf + sb_len + offset, item->buf,
++		       item->len);
+ 	}
 +}
 +
-+test_configured_prune () {
-+	fetch_prune=$1 remote_origin_prune=$2 cmdline=$3 expected=$4
++static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
++				    const char *placeholder,
++				    struct format_commit_context *c)
++{
++	int consumed, padding;
++	struct strbuf local_sb = STRBUF_INIT;
 +
-+	test_expect_success "prune fetch.prune=$1 remote.origin.prune=$2${3:+ $3}; $4" '
-+		# make sure a newbranch is there in . and also in one
-+		git branch -f newbranch &&
-+		(
-+			cd one &&
-+			test_unconfig fetch.prune &&
-+			test_unconfig remote.origin.prune &&
-+			git fetch &&
-+			git rev-parse --verify refs/remotes/origin/newbranch
-+		)
-+
-+		# now remove it
-+		git branch -d newbranch &&
-+
-+		# then test
-+		(
-+			cd one &&
-+			set_config_tristate fetch.prune $fetch_prune &&
-+			set_config_tristate remote.origin.prune $remote_origin_prune &&
-+
-+			git fetch $cmdline &&
-+			case "$expected" in
-+			pruned)
-+				test_must_fail git rev-parse --verify refs/remotes/origin/newbranch
-+				;;
-+			kept)
-+				git rev-parse --verify refs/remotes/origin/newbranch
-+				;;
-+			esac
-+		)
-+	'
-+}
-+
-+test_configured_prune unset unset ""		kept
-+test_configured_prune unset unset "--no-prune"	kept
-+test_configured_prune unset unset "--prune"	pruned
-+
-+test_configured_prune false unset ""		kept
-+test_configured_prune false unset "--no-prune"	kept
-+test_configured_prune false unset "--prune"	pruned
-+
-+test_configured_prune true  unset ""		pruned
-+test_configured_prune true  unset "--prune"	pruned
-+test_configured_prune true  unset "--no-prune"	kept
-+
-+test_configured_prune unset false ""		kept
-+test_configured_prune unset false "--no-prune"	kept
-+test_configured_prune unset false "--prune"	pruned
-+
-+test_configured_prune false false ""		kept
-+test_configured_prune false false "--no-prune"	kept
-+test_configured_prune false false "--prune"	pruned
-+
-+test_configured_prune true  false ""		kept
-+test_configured_prune true  false "--prune"	pruned
-+test_configured_prune true  false "--no-prune"	kept
-+
-+test_configured_prune unset true  ""		pruned
-+test_configured_prune unset true  "--no-prune"	kept
-+test_configured_prune unset true  "--prune"	pruned
-+
-+test_configured_prune false true  ""		pruned
-+test_configured_prune false true  "--no-prune"	kept
-+test_configured_prune false true  "--prune"	pruned
-+
-+test_configured_prune true  true  ""		pruned
-+test_configured_prune true  true  "--prune"	pruned
-+test_configured_prune true  true  "--no-prune"	kept
-+
- test_expect_success 'all boundary commits are excluded' '
- 	test_commit base &&
- 	test_commit oneside &&
--- 
-1.8.3.1.g243ed41
++	padding = pad_an_item(sb, c->alignment.padding);
++	consumed = format_an_item(placeholder, &local_sb, c);
++	align_an_item(sb, &local_sb, c->alignment.flush_type,
++		      c->alignment.truncate, padding);
+ 	strbuf_release(&local_sb);
+-	c->flush_type = no_flush;
+-	return total_consumed;
++	c->alignment.flush_type = no_flush;
++	return consumed;
+ }
+ 
+ static size_t format_commit_item(struct strbuf *sb, /* in UTF-8 */
+@@ -1424,7 +1456,7 @@ static size_t format_commit_item(struct strbuf *sb, /* in UTF-8 */
+ 		placeholder++;
+ 
+ 	orig_len = sb->len;
+-	if (((struct format_commit_context *)context)->flush_type != no_flush)
++	if (((struct format_commit_context *)context)->alignment.flush_type != no_flush)
+ 		consumed = format_and_pad_commit(sb, placeholder, context);
+ 	else
+ 		consumed = format_commit_one(sb, placeholder, context);
+-- 8< --
