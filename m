@@ -1,71 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Sixt <j6t@kdbg.org>
 Subject: Re: [PATCH 7/7] push: document --lockref
-Date: Sat, 13 Jul 2013 13:08:09 -0700
-Message-ID: <7vr4f2gr4m.fsf@alter.siamese.dyndns.org>
-References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
-	<1373399610-8588-1-git-send-email-gitster@pobox.com>
-	<1373399610-8588-8-git-send-email-gitster@pobox.com>
-	<51DC7199.2050302@kdbg.org> <7vhag3v59o.fsf@alter.siamese.dyndns.org>
-	<51DC78C0.9030202@kdbg.org> <7v38rnv0zt.fsf@alter.siamese.dyndns.org>
-	<7vvc4jtjqa.fsf@alter.siamese.dyndns.org> <51DF1F56.9000705@kdbg.org>
-	<7vzjtspwvo.fsf@alter.siamese.dyndns.org> <51E03B18.5040502@kdbg.org>
-	<7vli5bllsd.fsf@alter.siamese.dyndns.org> <51E0605E.9020902@kdbg.org>
-	<7vy59biih4.fsf@alter.siamese.dyndns.org> <51E0F93A.8050201@kdbg.org>
-	<7vwqougwec.fsf@alter.siamese.dyndns.org>
+Date: Sat, 13 Jul 2013 22:17:31 +0200
+Message-ID: <51E1B5DB.9080904@kdbg.org>
+References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org> <1373399610-8588-1-git-send-email-gitster@pobox.com> <1373399610-8588-8-git-send-email-gitster@pobox.com> <51DC7199.2050302@kdbg.org> <7vhag3v59o.fsf@alter.siamese.dyndns.org> <51DC78C0.9030202@kdbg.org> <7v38rnv0zt.fsf@alter.siamese.dyndns.org> <7vvc4jtjqa.fsf@alter.siamese.dyndns.org> <51DF1F56.9000705@kdbg.org> <7vzjtspwvo.fsf@alter.siamese.dyndns.org> <51E03B18.5040502@kdbg.org> <7vli5bllsd.fsf@alter.siamese.dyndns.org> <51E0605E.9020902@kdbg.org> <7vy59biih4.fsf@alter.siamese.dyndns.org> <51E0F93A.8050201@kdbg.org> <7vwqougwec.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Jul 13 22:08:33 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 13 22:17:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uy67N-0000JF-4h
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 22:08:33 +0200
+	id 1Uy6GQ-0006NJ-GS
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 22:17:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758219Ab3GMUIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jul 2013 16:08:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34032 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758213Ab3GMUIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jul 2013 16:08:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CBC23021E;
-	Sat, 13 Jul 2013 20:08:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GBXBMc+n+oiZBQNqlAUHS4GG//k=; b=Of6RCz
-	iB0UWHEC/QBLQC0Ol1swmkCfPKdjs8uBi0U1CGM44CKsK7zygKNKEXtT57SHnHh0
-	PJ8hMgwyqL2aYihr2UklKBrozJRT07vLsfFQNGmMbLiKLttwwdE2ZLb1z1kZj336
-	puQ+wdUe+3kI2PG10Re9h/v1h7vsd1rXgiwDY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fFJCjTOSgyiyRBieJAW7P7qN0a3TVa0N
-	gBJ85yu3c+UhAoFilREKwRmnWEWuH0pmlCoA0LlCp+FfuMWTQgPkQjy64/YcR/U0
-	s12Nk5+Y1mEQQ9WyMCzYT/qsSmpUUsUkTNB6hzdNxj1OVO5r1UN18BgqMGcIGpFc
-	nAIB4cOGHtM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EA523021C;
-	Sat, 13 Jul 2013 20:08:11 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA33830219;
-	Sat, 13 Jul 2013 20:08:10 +0000 (UTC)
-In-Reply-To: <7vwqougwec.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 13 Jul 2013 11:14:19 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F0FC30CE-EBF7-11E2-AF08-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758255Ab3GMURh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jul 2013 16:17:37 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:17836 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1758238Ab3GMURg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 16:17:36 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 2FAAC1000B;
+	Sat, 13 Jul 2013 22:17:33 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id CCA8C19F61C;
+	Sat, 13 Jul 2013 22:17:32 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <7vwqougwec.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230290>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+Am 13.07.2013 20:14, schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+>>> Your table above makes this fail:
+>>>
+>>>         git push --lockref topic
+>>>
+>>> and the user has to force it,
+>>
+>> Of course.
+>>
+>>> like this?
+>>>
+>>> 	git push --lockref --force topic ;# or alternatively
+>>>         git push --lockref +topic
+>>>
+>>> Why is it even necessary?
+> 
+>> Because it is no-ff. How do you achieve the push today (without
+>> --lockref)? You use one of these two options. It does not change with
+>> --lockref.
+> 
+> But by going that route, you are making --lockref _less_ useful, no?
+> 
+> "git push topic" in no-ff/match case fails as it should.  The whole
+> purpose of "--lockref" is to make this case easier and safer than
+> the today's system, where the anything-goes "--force" is the only
+> way to make this push.  We want to give a user who
+> 
+>  - rebased the topic, and
+> 
+>  - knows where the topic at the remote should be
+> 
+> a way to say "I know I am pushing a no-ff, and I want to make sure
+> the current value is this" in order to avoid losing somebody else's
+> work queued on top of the topic at the remote while he was rebasing.
+> 
+> You _CAN_ introduce a new --allow-no-ff at the same time and fail a
+> no-ff/match push:
+> 
+> 	git push --lockref topic
+> 
+> and then allow it back with:
+> 
+> 	git push --lockref --allow-no-ff topic
+> 	git push --lockref +topic ;# +topic is now --allow-no-ff topic
+> 
+> but why _SHOULD_ we?  As soon as the user _says_ --lockref, the user
+> is telling us he is pushing a no-ff.  If that is not the case, the
+> user can push without --lockref in the first place.
+> 
+> The only potential thing you are gaining with such a change is that
+> you are allowing people to say "this will fast-forward _and_ the I
+> know the current value; if either of these two assumptions is
+> violated, please fail this push".
+> 
 > If "--lockref" automatically implies "--allow-no-ff" (the design in
 > the reposted patch), you cannot express that combination.  But once
 > you use "--lockref" in such a situation , for the push to succeed,
@@ -74,93 +100,45 @@ Junio C Hamano <gitster@pobox.com> writes:
 > your implicit introduction of --allow-no-ff via redefining the
 > semantics of the plus prefix is not adding much value (if any),
 > while making the common case less easy to use.
->
+> 
 >> No; --lockref only adds the check that the destination is at the
 >> expected revision, but does *NOT* override the no-ff check.
->
+> 
 > You _could_ do it in that way, but that is less useful.
 
-Another issue I have with the proposal is that we close the door to
-"force only this one" convenience we have with "+ref" vs "--force
-ref".  Assuming that it is useful to require lockref while still
-making sure that the usual "must fast-forward" rule is followed (if
-that is not the case, I do not see a reason why your proposal is any
-useful---am I missing something?), I would prefer to allow users a
-way to decorate this basic syntax to say:
+All you have been saying is that you find your
 
-    git push --lockref master jch pu
+   git push --lockref there topic
 
-things like
+is more useful than my
 
- (1) pu may not fast-forward and please override that "must
-     fast-forward" check from it, while still keeping the lockref
-     safety (e.g. "+pu" that does not --force, which is your
-     proposal);
+   git push --lockref there +topic
 
- (2) any of them may not fast-forward and please override that "must
-     fast-forward" check from it, while still keeping the lockref
-     safety (without adding "--allow-no-ff", I do not see how it is
-     possible with your proposal, short of forcing user to add "+"
-     everywhere);
+You are trading crystal clear semantics to save users ONE character to
+type. IMO, it's a bad deal.
 
- (3) I know jch does not fast-forward so please override the "must
-     fast-forward", but still apply the lockref safety, pu may not
-     even satisfy lockref safety so please force it (as the "only
-     force this one" semantics is removed from "+", I do not see how
-     it is possible with your proposal).
+The crystal clear semantics would be:
 
-So I would understand if your proposal _were_ to
+ - to override no-ff safety, use +refspec;
 
- * add "--allow-no-ff" option;
+ - to override "mismatch" safety, do not use --lockref/use --no-lockref;
 
- * change the meaning of "+ref" to "--allow-no-ff for only this
-   ref"; and
+ - do not use --force unless you know the consequences.
 
- * add a new "*ref" (or whatever new syntax) to still allow people
-   to say "--force only this ref".
+I actually think that by implying allow-no-ff in --lockref, you are
+hurting users who have configured a push refspec without a + prefix:
+They suddenly do not get the push denied when it is not a fast-forward
+anymore. For example, when you have
 
-but we still need to assume that it makes sense to ask lockref but
-still want to ensure the update fast-forwards.  I personally do not
-think it does [*1*].
+    [remote "ko"]
+        push = master
+        push = +pu
 
-The semantics the posted patch (rerolled to allow "--force" push
-anything) implements lets "--lockref" to imply "--allow-no-ff" and
-that makes it much simpler; we do not have to deal with any of the
-above complexity.
+and you accidentally rewound master before the point that is already
+published, then
 
+   git push --lockref ko
 
-[Footnote]
+will happily push the rewound master.
 
- *1* The assurance --lockref gives is a lot stronger than "must
-     fast-forward".  You may have fetched the topic whose tip was at
-     commit X, and rebased it on top of X~4 to create a new history
-     leading to Y.
-
-           o----o----Y
-          /
-     o---o----o----o----o----X
-	X~4
-
-     When you "git push --lockref=topic:X Y:X", you are requiring
-     their tip to be still at X.  Other people's change cannot be to
-     add something on top of X (which will be lost if we replace the
-     tip of the topic with Y).
-
-     If your change were not a rebase but to build one of you own:
-
-     o---o----o----o----o----X---Y
-
-     your "git push --lockref=topic:X Y:X" still requires the tip is
-     at X.  If somebody rewound the tip to X~2 in the meantime
-     (because they decided the tip 2 commits were not good), your
-     "git push Y:X" without the "--lockref" will lose their rewind,
-     because Y will still be a fast-forward update of X~2.
-     "--lockref=topic:X" will protect you in this case as well.
-
-     So I think "--lockref" that automatically disables "must
-     fast-forward" check is the right thing to do, as we are
-     replacing the weaker "must fast-forward" with something
-     stronger.  I do not think we are getting anything from forcing
-     the user to say "--allow-no-ff" with "+ref" syntax when the
-     user says "--lockref".  It is not making it safer, and it is
-     making it less convenient.
+-- Hannes
