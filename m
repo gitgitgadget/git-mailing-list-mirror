@@ -1,160 +1,99 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 7/7] push: document --lockref
-Date: Sat, 13 Jul 2013 23:11:23 +0200
-Message-ID: <51E1C27B.7070705@kdbg.org>
-References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org> <1373399610-8588-1-git-send-email-gitster@pobox.com> <1373399610-8588-8-git-send-email-gitster@pobox.com> <51DC7199.2050302@kdbg.org> <7vhag3v59o.fsf@alter.siamese.dyndns.org> <51DC78C0.9030202@kdbg.org> <7v38rnv0zt.fsf@alter.siamese.dyndns.org> <7vvc4jtjqa.fsf@alter.siamese.dyndns.org> <51DF1F56.9000705@kdbg.org> <7vzjtspwvo.fsf@alter.siamese.dyndns.org> <51E03B18.5040502@kdbg.org> <7vli5bllsd.fsf@alter.siamese.dyndns.org> <51E0605E.9020902@kdbg.org> <7vy59biih4.fsf@alter.siamese.dyndns.org> <51E0F93A.8050201@kdbg.org> <7vwqougwec.fsf@alter.siamese.dyndns.org> <7vr4f2gr4m.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] git-clone.txt: remove the restriction on pushing from a
+ shallow clone
+Date: Sat, 13 Jul 2013 14:25:41 -0700
+Message-ID: <20130713212541.GA10951@google.com>
+References: <1373607462-12836-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 13 23:11:33 2013
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 13 23:26:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uy76I-0007Nr-I8
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 23:11:31 +0200
+	id 1Uy7KU-0008DO-0S
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 23:26:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751227Ab3GMVL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jul 2013 17:11:26 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:25900 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751065Ab3GMVLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jul 2013 17:11:25 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 4212413004A;
-	Sat, 13 Jul 2013 23:11:24 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id AD56A19F61C;
-	Sat, 13 Jul 2013 23:11:23 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <7vr4f2gr4m.fsf@alter.siamese.dyndns.org>
+	id S1750965Ab3GMVZu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Jul 2013 17:25:50 -0400
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:34878 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750893Ab3GMVZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 17:25:49 -0400
+Received: by mail-pb0-f51.google.com with SMTP id um15so10133320pbc.10
+        for <git@vger.kernel.org>; Sat, 13 Jul 2013 14:25:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=5AyU1kyhqURKzCX8/ujWLgSGDh2W5+aJTieUWlx7lWE=;
+        b=0K1gXd/Z7FGeJowpvDAUz1XnXYFcaOcoWL3ukVdSqVpXsH8R/0cc+RwqM/bSqZvdrV
+         fJhV9suViBu3SOKOFmnUiuuszS12Si2utsf2FhOszgcOnzx4FEOIgqLkz8+P44ew0QW+
+         Sj0hZPthdu3r4KfpVA8iCzaFMPfRlGmhsz5mDD1tNRb+D6RSvZtRwE89y29sYqPb6Rfv
+         vu9n2/8BfbSJNeyiEUbT19VMaccVMLqyVVnqsrhTi0U8lLtYUYo2Y5ld5mwj8ihy4u+y
+         D+QepZggv6D2KyoHv1PiYl5cbKAUBai+gzR4cOW8Ua6sZNMuNJYCTJKNHP08kKyNwKgz
+         yHpQ==
+X-Received: by 10.68.6.97 with SMTP id z1mr39909984pbz.3.1373750749286;
+        Sat, 13 Jul 2013 14:25:49 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id qv4sm52352484pbc.16.2013.07.13.14.25.47
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 13 Jul 2013 14:25:48 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1373607462-12836-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230294>
 
-Am 13.07.2013 22:08, schrieb Junio C Hamano:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> If "--lockref" automatically implies "--allow-no-ff" (the design in
->> the reposted patch), you cannot express that combination.  But once
->> you use "--lockref" in such a situation , for the push to succeed,
->> you know that the push replaces not just _any_ ancestor of what you
->> are pushing, but replaces the exact current value.  So I do not think
->> your implicit introduction of --allow-no-ff via redefining the
->> semantics of the plus prefix is not adding much value (if any),
->> while making the common case less easy to use.
->>
->>> No; --lockref only adds the check that the destination is at the
->>> expected revision, but does *NOT* override the no-ff check.
->>
->> You _could_ do it in that way, but that is less useful.
-> 
-> Another issue I have with the proposal is that we close the door to
-> "force only this one" convenience we have with "+ref" vs "--force
-> ref".  Assuming that it is useful to require lockref while still
-> making sure that the usual "must fast-forward" rule is followed (if
-> that is not the case, I do not see a reason why your proposal is any
-> useful---am I missing something?),
+Hi,
 
-The ability to express "require both fast-forward and --lockref" is just
-an artefact of the independence of fast-forward-ness and --lockref in my
-proposal. It is not something that I think is absolutely necessary.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-> I would prefer to allow users a
-> way to decorate this basic syntax to say:
-> 
->     git push --lockref master jch pu
-> 
-> things like
-> 
->  (1) pu may not fast-forward and please override that "must
->      fast-forward" check from it, while still keeping the lockref
->      safety (e.g. "+pu" that does not --force, which is your
->      proposal);
+> Since 52fed6e (receive-pack: check connectivity before concluding "gi=
+t
+> push" - 2011-09-02), receive-pack is prepared to deal with broken
+> push, a shallow push can't cause any corruption. Update the document
+> to reflect that.
 
-That must be a misunderstanding. In my proposal
+Hmm, what happens when pushing to servers without that commit?  Do you
+think it should be applied to Debian squeeze for server operators that
+haven't upgraded yet to the current stable release?
 
-    git push --lockref +pu
+[...]
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -182,11 +182,13 @@ objects from the source repository into a pack =
+in the cloned repository.
+>  --depth <depth>::
+>  	Create a 'shallow' clone with a history truncated to the
+>  	specified number of revisions.  A shallow repository has a
+> -	number of limitations (you cannot clone or fetch from
+> -	it, nor push from nor into it), but is adequate if you
+> -	are only interested in the recent history of a large project
+> -	with a long history, and would want to send in fixes
+> -	as patches.
+> +	number of limitations (you cannot clone or fetch from it, nor
+> +	push into it), but is adequate if you are only interested in
+> +	the recent history of a large project with a long history.
+> ++
+> +Pushing from a shallow clone should be avoided if the git version on
+> +the receiver end is older than v1.7.10, or any other git
+> +implementation that does not perform connectivity check.
 
-would do what you need here. I don't know where you get the idea that
-these two
+"git name-rev --tags" tells me 52fed6e was applied during 1.7.8-rc0,
+so it might make sense to s/1.7.10/1.7.8/ here.
 
-    git push --lockref +pu
-    git push +pu
+Aside from that nit,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-would be different with regard to non-fast-forward-ness. The table
-entries were correct.
-
-[Please do not use the option name "--force" in the discussion unless
-you mean "all kinds of safety off".]
-
->  (2) any of them may not fast-forward and please override that "must
->      fast-forward" check from it, while still keeping the lockref
->      safety (without adding "--allow-no-ff", I do not see how it is
->      possible with your proposal, short of forcing user to add "+"
->      everywhere);
-
-The point of my proposal is to force users to add + when they want to
-allow non-fast-forward. Usually, this is shorter to type anyway than to
-insert --force or --allow-no-ff in the command.
-
-> 
->  (3) I know jch does not fast-forward so please override the "must
->      fast-forward", but still apply the lockref safety, pu may not
->      even satisfy lockref safety so please force it (as the "only
->      force this one" semantics is removed from "+", I do not see how
->      it is possible with your proposal).
-
-I think
-
-   git push --lockref=jch +jch +pu
-
-would do.
-
-> The semantics the posted patch (rerolled to allow "--force" push
-> anything) implements lets "--lockref" to imply "--allow-no-ff" and
-> that makes it much simpler; we do not have to deal with any of the
-> above complexity.
-
-But see my other post, where this hurts users who have a fast-forward
-push refspec configured.
-
-> [Footnote]
-> 
->  *1* The assurance --lockref gives is a lot stronger than "must
->      fast-forward".
-...
->      If your change were not a rebase but to build one of you own:
-> 
->      o---o----o----o----o----X---Y
-> 
->      your "git push --lockref=topic:X Y:X" still requires the tip is
->      at X.  If somebody rewound the tip to X~2 in the meantime
->      (because they decided the tip 2 commits were not good), your
->      "git push Y:X" without the "--lockref" will lose their rewind,
->      because Y will still be a fast-forward update of X~2.
->      "--lockref=topic:X" will protect you in this case as well.
-
-Good point.
-
->      So I think "--lockref" that automatically disables "must
->      fast-forward" check is the right thing to do, as we are
->      replacing the weaker "must fast-forward" with something
->      stronger.
-
-But I do not share this conclusion. My conclusion is that your proposal
-replaces one kind of check with a very different kind of check.
-
->      I do not think we are getting anything from forcing
->      the user to say "--allow-no-ff" with "+ref" syntax when the
->      user says "--lockref".
-
-Is this the same misunderstanding? My proposal does not require
---allow-no-ff with +ref syntax when --lockref is used.
-
--- Hannes
+Thanks,
+Jonathan
