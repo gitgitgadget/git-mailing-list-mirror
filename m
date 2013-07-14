@@ -1,96 +1,63 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] mailmap: Testing the single letter name case.
-Date: Sat, 13 Jul 2013 22:38:27 -0400
-Message-ID: <CAPig+cRQ5yVYjY==5P+kKJycdHDp9avzcxHvZj34GJ3oBAcesg@mail.gmail.com>
-References: <1373665135-32484-2-git-send-email-gitster@pobox.com>
-	<1373700020-30436-1-git-send-email-stefanbeller@googlemail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 00/19] Index-v5
+Date: Sun, 14 Jul 2013 09:59:00 +0700
+Message-ID: <CACsJy8AhmYBjzqPtF3f9Gk8hq2bk8-PtFCto9_4AkRePomvhAQ@mail.gmail.com>
+References: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 14 04:38:49 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 14 04:59:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyCD2-0001E3-V0
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 04:38:49 +0200
+	id 1UyCXO-0005X5-K3
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 04:59:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752215Ab3GNCia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jul 2013 22:38:30 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:43829 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752192Ab3GNCi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jul 2013 22:38:29 -0400
-Received: by mail-lb0-f173.google.com with SMTP id v1so8601002lbd.4
-        for <git@vger.kernel.org>; Sat, 13 Jul 2013 19:38:28 -0700 (PDT)
+	id S1752211Ab3GNC7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jul 2013 22:59:32 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:51525 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752192Ab3GNC7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 22:59:31 -0400
+Received: by mail-ob0-f177.google.com with SMTP id ta17so12652074obb.36
+        for <git@vger.kernel.org>; Sat, 13 Jul 2013 19:59:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=z7iIxvgAaCXMr23iHXZ4Qg+239mEIhitYLr2fi0FKO0=;
-        b=Uux5KbfPRcC4pQfbk8OfFlzQDYc29m81iicggYlIOnFKkslVUvGaUaIC1aU3eAmPLe
-         wDXzqMrlST6CYr+6m5oNWQNKMNVMg0cxsvLl7+5cMbEAtYD6E1OwWsUSaNq13UlnNdCY
-         9oAtEgB3vuA3JOemBtZvGpDElF2HuNIKnqECCXd1+E2xaa1M20KcN7ek3AahUGAWTpFY
-         +IlTT4aSM7fpOwoDp5yiExQHphU2zDpH+EvT4wmVxOV92IEaKPgyEBrYN7iIUltoX+am
-         MoGhV+B8S9Ctt3NxeUqkL8uEf2LBoBSsCMogu/sNfnHM8YKVJcnTVTZLdxrni4tQPESk
-         VoOw==
-X-Received: by 10.112.19.162 with SMTP id g2mr22105968lbe.9.1373769507999;
- Sat, 13 Jul 2013 19:38:27 -0700 (PDT)
-Received: by 10.114.187.78 with HTTP; Sat, 13 Jul 2013 19:38:27 -0700 (PDT)
-In-Reply-To: <1373700020-30436-1-git-send-email-stefanbeller@googlemail.com>
-X-Google-Sender-Auth: woYaJV7-gaiuaf0q7DcNxO6-PnE
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=IAjUtwCo0e62wv4gPANXPcDke/6C/fjL3Af7J4CE3BI=;
+        b=IgbalS9DyFnmqEKNOd8jhqaB5TD3HgWt4+Jo11cMiQmo/6+g3HL92o6eqb4mv4Q+3x
+         YSIJMQUNsEr3OA/Pb4PEQY243oaqx8uysC3ctk9VvUuloNZZ7QTp/WVJk9OXvsdVY7Co
+         m8W1CcCYdCZIdrbPTnts3kWTaq6PNdAHbCgSMy7iLr76NNuuj+S8tK9F2KRdhNdkBYed
+         nSUxGH85MKY5VQEO9Ii2LXqUC+TdM9T9X5bT/GAmEeQQdOq14RYKgSwQpVia3woDdT2M
+         RSwGX6l0Tis4tMtEwjuwVIXFGmEWv+tjfmig6xNMcXUGVZBDLHXojjwnoEgvfBjCLxMU
+         6KEA==
+X-Received: by 10.60.54.232 with SMTP id m8mr39769249oep.35.1373770770742;
+ Sat, 13 Jul 2013 19:59:30 -0700 (PDT)
+Received: by 10.76.88.230 with HTTP; Sat, 13 Jul 2013 19:59:00 -0700 (PDT)
+In-Reply-To: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230300>
 
-On Sat, Jul 13, 2013 at 3:20 AM, Stefan Beller
-<stefanbeller@googlemail.com> wrote:
-> This is a regression test for a66e77eab70a08938fdc2227b7ada0f0465c6991
->
-> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
-> ---
->  t/t4203-mailmap.sh | 41 +++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
->
-> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-> index 842b754..9ec87a2 100755
-> --- a/t/t4203-mailmap.sh
-> +++ b/t/t4203-mailmap.sh
-> @@ -409,4 +409,45 @@ test_expect_success 'Blame output (complex mapping)' '
->         test_cmp expect actual.fuzz
->  '
->
-> +# Regression test
-> +# Using a single letter name to check for off-by-one errors in parse_name_and_email
-> +test_expect_success 'check mapping for short names' '
-> +       echo one >two &&
-> +       git add two &&
-> +       git commit --author "A <shortname@company.xx>" -m "eighth" &&
-> +
-> +       echo two >> two &&
+On Sat, Jul 13, 2013 at 12:26 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>  t/perf/p0003-index.sh                            |   59 +
+>  t/t2104-update-index-skip-worktree.sh            |    1 +
 
-s/>> />>/
-
-> +       git add two &&
-> +       git commit --author "A <ShortName@company.xy>" -m "nineth" &&
-> +
-> +       echo "A <ShortName@company.xy> <shortname@company.xx>" >> .mailmap &&
-
-s/>> />>/
-
-> +       git shortlog HEAD -e >actual
-
-Broken &&-chain: s/actual/actual &&/
-
-> +
-> +       test_cmp expect actual
-> +'
-> +
->  test_done
-> --
-> 1.8.3.2.776.gfcf213d
->
+For such a big code addition, the test part seems modest. Speaking
+from my experience, I rarely run perf tests and "make test" does not
+activate v5 code at all. A few more tests would be nice. The good news
+is I changed default index version to 5 and ran "make test", all
+passed.
+--
+Duy
