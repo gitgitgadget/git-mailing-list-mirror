@@ -1,110 +1,133 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: ANNOUNCE: git-imerge -- Incremental merge and rebase for git
-Date: Sun, 14 Jul 2013 07:33:27 +0200
-Message-ID: <51E23827.6010601@alum.mit.edu>
+Subject: [PATCH v4 0/2] git-multimail: a replacement for post-receive-email
+Date: Sun, 14 Jul 2013 10:09:01 +0200
+Message-ID: <1373789343-3189-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 14 07:33:50 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Chris Hiestand <chrishiestand@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Michiel Holtkamp <git@elfstone.nl>,
+	=?UTF-8?q?Stefan=20N=C3=A4we?= <stefan.naewe@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Ramkumar Ramachandra <artagnon@gmail.com>,
+	John Keeping <john@keeping.me.uk>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 14 10:10:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyEwP-0006qO-TM
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 07:33:50 +0200
+	id 1UyHNt-0001SX-Ap
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 10:10:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751189Ab3GNFdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jul 2013 01:33:31 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:59822 "EHLO
+	id S1751782Ab3GNIJt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jul 2013 04:09:49 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:48889 "EHLO
 	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751212Ab3GNFda (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Jul 2013 01:33:30 -0400
-X-AuditID: 1207440f-b7f786d000001f20-da-51e2382ac44a
+	by vger.kernel.org with ESMTP id S1751674Ab3GNIJd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Jul 2013 04:09:33 -0400
+X-AuditID: 1207440f-b7f786d000001f20-9b-51e25cbcc5d6
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 2C.F6.07968.A2832E15; Sun, 14 Jul 2013 01:33:30 -0400 (EDT)
-Received: from [192.168.69.140] (p4FDD4B13.dip0.t-ipconnect.de [79.221.75.19])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id E5.68.07968.CBC52E15; Sun, 14 Jul 2013 04:09:32 -0400 (EDT)
+Received: from michael.fritz.box (p4FDD4B13.dip0.t-ipconnect.de [79.221.75.19])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r6E5XSHl007841
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Sun, 14 Jul 2013 01:33:29 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsUixO6iqKtl8SjQYN4sbouuK91MDowenzfJ
-	BTBGcdskJZaUBWem5+nbJXBnfJp2g7XgomjF0sMr2BoYPwh2MXJySAiYSCxrOMkMYYtJXLi3
-	nq2LkYtDSOAyo8SX66vZIZwXTBITjp1nBaniFdCW2PtrDhOIzSKgKjG39wRYnE1AV2JRTzNQ
-	nINDVCBM4spvVYhyQYmTM5+wgNgiQCW7nl1lA7GFBVwlWlZ9A1vMLKAj8a7vAZQtL7H97Rzm
-	CYy8s5C0z0JSNgtJ2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFuiZ6uZkleqkppZsYIcHE
-	v4Oxa73MIUYBDkYlHt4L+x8GCrEmlhVX5h5ilORgUhLl3a73KFCILyk/pTIjsTgjvqg0J7X4
-	EKMEB7OSCO8yZaAcb0piZVVqUT5MSpqDRUmcV32Jup+QQHpiSWp2ampBahFMVoaDQ0mC96cZ
-	UKNgUWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJpSUY8KMLii4ExBpLiAdorbg6yt7ggMRco
-	CtF6ilGX48CPLe8ZhVjy8vNSpcR5HUGKBECKMkrz4FbAUscrRnGgj4V5TUCqeIBpB27SK6Al
-	TEBLbq+6D7KkJBEhJdXA2O/PEByqw/DCpmlG2oXFnSyz7MMvy906sM7xtp2xY8jOZRMdaxue
-	8s98IB9n3XujK17/y+Wr1Ro3L04t5LTN3LtsWu/EuF8L7pe7Ktjxv5oSk2hkuTRnVrt5JFfG
-	d0YHS0PW5Av6x+yaVM67t2d6NO0oSXdezBlv/dpfvvr0VJfYVRXzpb2UWIozEg21 
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r6E89Jwk013667
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 14 Jul 2013 04:09:29 -0400
+X-Mailer: git-send-email 1.8.3.2
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqLsn5lGgwaMbuharZj5mt1j77A6T
+	xbWTi1ks9nZ3slp0XelmsmjovcJsceP8LlaLtzeXMFpc+rye1aLxSZHF7RXzmS3en/3P7MDj
+	8ff9ByaPc3sXsnjsnHWX3WPil+OsHmcfPWD2uHhJ2ePzJjmPA5cfswVwRHHbJCWWlAVnpufp
+	2yVwZ7Sue8RasF2y4uXBL8wNjE0iXYycHBICJhKvd05hgrDFJC7cW8/WxcjFISRwmVFi6aJ3
+	jBDOeSaJ5R92MIJUsQnoSizqaQbrEBFQk5jYdogFpIhZYC2LxNwDh1hBEsIC3hKTnxxhAbFZ
+	BFQl7r9aD9bMK+As8efHVHaIdQoSy76sZYaIC0qcnPkEqJ4DaJC6xPp5QiBhZgF5ieats5kn
+	MPLNQlI1C6FqFpKqBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0TfRyM0v0UlNKNzFCooIf
+	6Jn1MocYBTgYlXh4L+x/GCjEmlhWXJl7iFGSg0lJlHd/6KNAIb6k/JTKjMTijPii0pzU4kOM
+	EhzMSiK8y5SBcrwpiZVVqUX5MClpDhYlcV71Jep+QgLpiSWp2ampBalFMFkZDg4lCd7qKKBG
+	waLU9NSKtMycEoQ0EwcniOAC2cADtOF+NMiG4oLE3OLMdIiiU4yKUuK8Z0AmCIAkMkrz4AbA
+	0tcrRnGgf4R5r4O08wBTH1z3K6DBTECDb6+6DzK4JBEhJdXAWNt7TeD+qWVev/R4T1yQOt+7
+	vqEhxXa11enHnwy2pGdkfq3PvmfM9iPP/Pnlt2+dQlaqqvgzJO+MbIyPj66Vdoqf 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230310>
 
-I've alluded to this little project of mine on the mailing list before,
-but I've never really announced it properly.  So here we go...
+This is the fourth iteration submission of git-multimail to Git.  The
+earlier submissions have all gotten a lot of good feedback, which has
+mostly been implemented.  This submission differs from v3 in the
+following ways:
 
-git-imerge [1] is an open-source tool that helps you perform difficult
-Git merges and rebases by allowing conflicts to be resolved
-incrementally.  The tool breaks the full merge down into pairwise merges
-of one commit from each branch.  When a pairwise merge conflicts, the
-tool asks you to resolve the conflict, which is hopefully small enough
-to be tractable.  Each completed pairwise merge is recorded as a step
-towards completing the full merge.  When all of the pairwise merges are
-done, the results can be converted into a merge or rebase as you choose.
+* Renames the directory within the Git project from
+  contrib/hooks/git-multimail/ to contrib/hooks/multimail/.  The
+  "git-" seems redundant within the Git project [1].  I have no strong
+  feelings either way.
 
-git-imerge has two primary goals:
+* Includes the latest version of the upstream project.  Highlights:
 
-* Reduce the pain of resolving merge conflicts to its unavoidable
-  minimum, by finding and presenting the smallest possible conflicts,
-  namely those between the changes introduced by one commit from each
-  branch.
+  * A change in how git-multimail is configured via Python.  I wasn't
+    happy with the old method; concerns were not separated well
+    enough.  I wanted to get this right before more people start
+    writing against the internal API.  The new version uses mixin
+    classes, which is a technique that can easily be overdone.  But in
+    this case I was happy with the way that it permitted different
+    aspects of the configuration to be disentangled quite well.  (This
+    doesn't change how the script is configured externally via "git
+    config"; that has been stable for quite some time already.)
 
-* Allow a merge to be saved, tested, interrupted, published, and
-  collaborated on while it is in progress.
+  * Fixes a scalability issue for repos with lots of refs that was
+    pointed out by =C3=86var Bjarmason.
 
-The hope is to rescue that branch that has diverged so far from master
-that merging it seems intractable and the only alternative seems to be
-to abandon the branch and start again.  (I think we've all been there!)
+  * Allows an arbitrary program to be substituted in place of
+    /usr/sbin/sendmail when using the SendMailer.
 
-I think that it is easiest to understand the concept of incremental
-merging visually, and therefore I recommend the video of my git-imerge
-presentation [2] from the GitMerge 2013 conference (20 min) as a good
-introduction.  The full slides for that talk are available in the
-git-imerge repository under doc/presentations/GitMerge-2013.  At the
-same conference, I was interviewed about git-imerge by Thomas Ferris
-Nicolaisen for his GitMinutes Podcast #12 [3].
+  * Improvements suggested by Ramkumar Ramachandra's code review
+    (thanks!).
 
-To learn how to use the git-imerge tool itself, I suggest the blog
-article "git-imerge: A Practical Introduction" [4] and also the help
-built unto the command ("git-imerge --help" and "git-imerge SUBCOMMAND
---help").  If you want more information, the theory and benefits of
-incremental merging are described in minute detail in a series of blog
-articles [5].
+  * Various documentation improvements.
 
-git-imerge is still experimental, due to a lack of time to work on it.
-But it is already (cautiously) usable, and I am very excited about the
-idea and would love to get feedback and help from the community.
+* Adds a new file, README.Git, which explains the relationship between
+  the Git and git-multimail projects, and documents the version of the
+  upstream project that corresponds to the code being submitted to the
+  Git project.
 
-Michael
+* Adds a notice to contrib/hooks/multimail/post-receive deprecating
+  that script and pointing users to git-multimail.
 
-[1] https://github.com/mhagger/git-imerge
-[2] http://www.youtube.com/watch?v=FMZ2_-Ny_zc
-[3]
-http://episodes.gitminutes.com/2013/06/gitminutes-12-git-merge-2013-part-4.html
-[4]
-http://softwareswirl.blogspot.com/2013/05/git-imerge-practical-introduction.html
-[5] http://softwareswirl.blogspot.com/search/label/git-imerge
+The upstream project also now includes better tests.  Though I am not
+including the tests in the code submitted to the Git project,
+obviously the code benefits from them.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+[1] I also got the feeling that Junio prefers the new directory name,
+    though there is a good chance that I read more into one of his
+    emails than he intended.
+
+Michael Haggerty (2):
+  git-multimail: an improved replacement for post-receive-email
+  post-receive-email: deprecate script in favor of git-multimail
+
+ contrib/hooks/multimail/README                     |  486 ++++
+ contrib/hooks/multimail/README.Git                 |   15 +
+ .../README.migrate-from-post-receive-email         |  146 ++
+ contrib/hooks/multimail/git_multimail.py           | 2394 ++++++++++++=
+++++++++
+ contrib/hooks/multimail/migrate-mailhook-config    |  270 +++
+ contrib/hooks/multimail/post-receive               |   90 +
+ contrib/hooks/post-receive-email                   |   17 +-
+ 7 files changed, 3414 insertions(+), 4 deletions(-)
+ create mode 100644 contrib/hooks/multimail/README
+ create mode 100644 contrib/hooks/multimail/README.Git
+ create mode 100644 contrib/hooks/multimail/README.migrate-from-post-re=
+ceive-email
+ create mode 100755 contrib/hooks/multimail/git_multimail.py
+ create mode 100755 contrib/hooks/multimail/migrate-mailhook-config
+ create mode 100755 contrib/hooks/multimail/post-receive
+
+--=20
+1.8.3.2
