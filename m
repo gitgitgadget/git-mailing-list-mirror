@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 20/46] ls-files: convert to use parse_pathspec
-Date: Sun, 14 Jul 2013 15:35:43 +0700
-Message-ID: <1373790969-13000-21-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 21/46] archive: convert to use parse_pathspec
+Date: Sun, 14 Jul 2013 15:35:44 +0700
+Message-ID: <1373790969-13000-22-git-send-email-pclouds@gmail.com>
 References: <1373790969-13000-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,178 +11,146 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 14 10:38:22 2013
+X-From: git-owner@vger.kernel.org Sun Jul 14 10:38:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyHoz-0002GV-Pr
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 10:38:22 +0200
+	id 1UyHp5-0002Kh-KN
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 10:38:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752091Ab3GNIiS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jul 2013 04:38:18 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:55952 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751680Ab3GNIiR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jul 2013 04:38:17 -0400
-Received: by mail-pa0-f42.google.com with SMTP id rl6so10324950pac.15
-        for <git@vger.kernel.org>; Sun, 14 Jul 2013 01:38:16 -0700 (PDT)
+	id S1752138Ab3GNIiX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jul 2013 04:38:23 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:39713 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751680Ab3GNIiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jul 2013 04:38:22 -0400
+Received: by mail-pa0-f44.google.com with SMTP id lj1so10309399pab.17
+        for <git@vger.kernel.org>; Sun, 14 Jul 2013 01:38:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=JVAtqnw9cPEXg1HlnZRRhx2+Jmt0fqH86uZCi3Ai+Xc=;
-        b=zufvIJEKtTQqOqMf/HwUKkeUrz1B3Fjg9+D1JCHN0vdBBu3FkM2+Ckufg5dwUe6zpx
-         vzkiYQ804OeR6hoXSuB94oBfDpjkoF9PUIIqmJQUDmwiiHNOBP5aBLN8b4voNcjB9lMT
-         cWeaLixYOgCxVOK4TfA76I0Pj452X9inXiNKv+UqesETOzp1FAs6ZzuIPAu7vV2MBy/D
-         4JWEejI91wqrTqphrvyLhGKSEDAEjNZlOI+P0lgjjv2+b5ZMldC8OfUDMhAsDN+IRNN+
-         M9RjbZ2oKb0E4hmEN8YZxid2MolMklSQitRpEacM7kuyEgDj6lyb//wRW92rTle1hLiX
-         q5+A==
-X-Received: by 10.66.178.174 with SMTP id cz14mr50685337pac.136.1373791096198;
-        Sun, 14 Jul 2013 01:38:16 -0700 (PDT)
+        bh=UTE0ij/my7zbrferiSqqGtB6hMB3tuyrpFklqZ3m+Ek=;
+        b=q5Gb/NR7fLsZgJ1n12PJ+FK8Jox8DMsKZj0Bi8gSpIXA9ms5NOn5OetU597JyA/3HF
+         bFEDRrqml74b/27wXHEVf+QtpemyBrTVnm03Q2JgdE73zfETnI2L8zL9oWaCB8XzjP4m
+         G0M3NBswOtVWpT1x+/rJUI23RgZMcWDco8KvUieyfTV9lDc2TyRtnr6jMHexQ6wQOPSv
+         UcWDsExhQ3PaRBqydYwj3Pjf7ulEDZZac4usCPKOgS/rhkVvqMXVNsYfAogfGf7QAbgP
+         fvVyHPQUBIN3X4ndDupRGuZ5Ge0aP2flAWm9SQLyw8ni4oNXbPWcAyIq3x7jHnndOqcR
+         zWDw==
+X-Received: by 10.66.169.42 with SMTP id ab10mr50998986pac.14.1373791102057;
+        Sun, 14 Jul 2013 01:38:22 -0700 (PDT)
 Received: from lanh ([115.73.210.100])
-        by mx.google.com with ESMTPSA id om2sm54539787pbb.34.2013.07.14.01.38.13
+        by mx.google.com with ESMTPSA id zv11sm57848518pab.3.2013.07.14.01.38.19
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 14 Jul 2013 01:38:15 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 14 Jul 2013 15:38:27 +0700
+        Sun, 14 Jul 2013 01:38:21 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 14 Jul 2013 15:38:33 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1373790969-13000-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230333>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/ls-files.c | 46 +++++++++++++---------------------------------
- 1 file changed, 13 insertions(+), 33 deletions(-)
+ archive.c | 19 +++++++++++--------
+ archive.h |  4 +++-
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 30357df..f1be425 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -31,7 +31,7 @@ static int debug_mode;
- static const char *prefix;
- static int max_prefix_len;
- static int prefix_len;
--static const char **pathspec;
-+static struct pathspec pathspec;
- static int error_unmatch;
- static char *ps_matched;
- static const char *with_tree;
-@@ -60,7 +60,7 @@ static void show_dir_entry(const char *tag, struct di=
-r_entry *ent)
- 	if (len >=3D ent->len)
- 		die("git ls-files: internal error - directory entry not superset of =
-prefix");
+diff --git a/archive.c b/archive.c
+index c699a2d..99fadc8 100644
+--- a/archive.c
++++ b/archive.c
+@@ -5,7 +5,6 @@
+ #include "archive.h"
+ #include "parse-options.h"
+ #include "unpack-trees.h"
+-#include "pathspec.h"
 =20
--	if (!match_pathspec(pathspec, ent->name, ent->len, len, ps_matched))
-+	if (!match_pathspec_depth(&pathspec, ent->name, ent->len, len, ps_mat=
-ched))
- 		return;
+ static char const * const archive_usage[] =3D {
+ 	N_("git archive [options] <tree-ish> [<path>...]"),
+@@ -152,7 +151,6 @@ int write_archive_entries(struct archiver_args *arg=
+s,
+ 	struct archiver_context context;
+ 	struct unpack_trees_options opts;
+ 	struct tree_desc t;
+-	struct pathspec pathspec;
+ 	int err;
 =20
- 	fputs(tag, stdout);
-@@ -135,7 +135,7 @@ static void show_ce_entry(const char *tag, struct c=
-ache_entry *ce)
- 	if (len >=3D ce_namelen(ce))
- 		die("git ls-files: internal error - cache entry not superset of pref=
-ix");
+ 	if (args->baselen > 0 && args->base[args->baselen - 1] =3D=3D '/') {
+@@ -187,10 +185,8 @@ int write_archive_entries(struct archiver_args *ar=
+gs,
+ 		git_attr_set_direction(GIT_ATTR_INDEX, &the_index);
+ 	}
 =20
--	if (!match_pathspec(pathspec, ce->name, ce_namelen(ce), len, ps_match=
-ed))
-+	if (!match_pathspec_depth(&pathspec, ce->name, ce_namelen(ce), len, p=
-s_matched))
- 		return;
+-	init_pathspec(&pathspec, args->pathspec);
+-	err =3D read_tree_recursive(args->tree, "", 0, 0, &pathspec,
++	err =3D read_tree_recursive(args->tree, "", 0, 0, &args->pathspec,
+ 				  write_archive_entry, &context);
+-	free_pathspec(&pathspec);
+ 	if (err =3D=3D READ_TREE_RECURSIVE)
+ 		err =3D 0;
+ 	return err;
+@@ -223,7 +219,7 @@ static int path_exists(struct tree *tree, const cha=
+r *path)
+ 	struct pathspec pathspec;
+ 	int ret;
 =20
- 	if (tag && *tag && show_valid_bit &&
-@@ -191,7 +191,7 @@ static void show_ru_info(void)
- 		len =3D strlen(path);
- 		if (len < max_prefix_len)
- 			continue; /* outside of the prefix */
--		if (!match_pathspec(pathspec, path, len, max_prefix_len, ps_matched)=
-)
-+		if (!match_pathspec_depth(&pathspec, path, len, max_prefix_len, ps_m=
-atched))
- 			continue; /* uninterested */
- 		for (i =3D 0; i < 3; i++) {
- 			if (!ui->mode[i])
-@@ -216,7 +216,7 @@ static void show_files(struct dir_struct *dir)
+-	init_pathspec(&pathspec, paths);
++	parse_pathspec(&pathspec, 0, 0, "", paths);
+ 	ret =3D read_tree_recursive(tree, "", 0, 0, &pathspec, reject_entry, =
+NULL);
+ 	free_pathspec(&pathspec);
+ 	return ret !=3D 0;
+@@ -232,11 +228,18 @@ static int path_exists(struct tree *tree, const c=
+har *path)
+ static void parse_pathspec_arg(const char **pathspec,
+ 		struct archiver_args *ar_args)
+ {
+-	ar_args->pathspec =3D pathspec =3D get_pathspec("", pathspec);
++	/*
++	 * must be consistent with parse_pathspec in path_exists()
++	 * Also if pathspec patterns are dependent, we're in big
++	 * trouble as we test each one separately
++	 */
++	parse_pathspec(&ar_args->pathspec, 0,
++		       PATHSPEC_PREFER_FULL,
++		       "", pathspec);
+ 	if (pathspec) {
+ 		while (*pathspec) {
+ 			if (**pathspec && !path_exists(ar_args->tree, *pathspec))
+-				die("path not found: %s", *pathspec);
++				die(_("pathspec '%s' did not match any files"), *pathspec);
+ 			pathspec++;
+ 		}
+ 	}
+diff --git a/archive.h b/archive.h
+index 895afcd..4a791e1 100644
+--- a/archive.h
++++ b/archive.h
+@@ -1,6 +1,8 @@
+ #ifndef ARCHIVE_H
+ #define ARCHIVE_H
 =20
- 	/* For cached/deleted files we don't need to even do the readdir */
- 	if (show_others || show_killed) {
--		fill_directory(dir, pathspec);
-+		fill_directory(dir, pathspec.raw);
- 		if (show_others)
- 			show_other_files(dir);
- 		if (show_killed)
-@@ -284,21 +284,6 @@ static void prune_cache(const char *prefix)
- 	active_nr =3D last;
- }
-=20
--static void strip_trailing_slash_from_submodules(void)
--{
--	const char **p;
--
--	for (p =3D pathspec; *p !=3D NULL; p++) {
--		int len =3D strlen(*p), pos;
--
--		if (len < 1 || (*p)[len - 1] !=3D '/')
--			continue;
--		pos =3D cache_name_pos(*p, len - 1);
--		if (pos >=3D 0 && S_ISGITLINK(active_cache[pos]->ce_mode))
--			*p =3D xstrndup(*p, len - 1);
--	}
--}
--
- /*
-  * Read the tree specified with --with-tree option
-  * (typically, HEAD) into stage #1 and then
-@@ -552,23 +537,18 @@ int cmd_ls_files(int argc, const char **argv, con=
-st char *cmd_prefix)
- 	if (require_work_tree && !is_inside_work_tree())
- 		setup_work_tree();
-=20
--	pathspec =3D get_pathspec(prefix, argv);
--
--	/* be nice with submodule paths ending in a slash */
--	if (pathspec)
--		strip_trailing_slash_from_submodules();
-+	parse_pathspec(&pathspec, 0,
-+		       PATHSPEC_PREFER_CWD |
-+		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
-+		       prefix, argv);
-=20
- 	/* Find common prefix for all pathspec's */
--	max_prefix =3D common_prefix(pathspec);
-+	max_prefix =3D common_prefix(pathspec.raw);
- 	max_prefix_len =3D max_prefix ? strlen(max_prefix) : 0;
-=20
- 	/* Treat unmatching pathspec elements as errors */
--	if (pathspec && error_unmatch) {
--		int num;
--		for (num =3D 0; pathspec[num]; num++)
--			;
--		ps_matched =3D xcalloc(1, num);
--	}
-+	if (pathspec.nr && error_unmatch)
-+		ps_matched =3D xcalloc(1, pathspec.nr);
-=20
- 	if ((dir.flags & DIR_SHOW_IGNORED) && !exc_given)
- 		die("ls-files --ignored needs some exclude pattern");
-@@ -595,7 +575,7 @@ int cmd_ls_files(int argc, const char **argv, const=
- char *cmd_prefix)
-=20
- 	if (ps_matched) {
- 		int bad;
--		bad =3D report_path_error(ps_matched, pathspec, prefix);
-+		bad =3D report_path_error(ps_matched, pathspec.raw, prefix);
- 		if (bad)
- 			fprintf(stderr, "Did you forget to 'git add'?\n");
-=20
++#include "pathspec.h"
++
+ struct archiver_args {
+ 	const char *base;
+ 	size_t baselen;
+@@ -8,7 +10,7 @@ struct archiver_args {
+ 	const unsigned char *commit_sha1;
+ 	const struct commit *commit;
+ 	time_t time;
+-	const char **pathspec;
++	struct pathspec pathspec;
+ 	unsigned int verbose : 1;
+ 	unsigned int worktree_attributes : 1;
+ 	unsigned int convert : 1;
 --=20
 1.8.2.83.gc99314b
