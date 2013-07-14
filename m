@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 07/46] parse_pathspec: add PATHSPEC_PREFER_{CWD,FULL}
-Date: Sun, 14 Jul 2013 15:35:30 +0700
-Message-ID: <1373790969-13000-8-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 08/46] Convert some get_pathspec() calls to parse_pathspec()
+Date: Sun, 14 Jul 2013 15:35:31 +0700
+Message-ID: <1373790969-13000-9-git-send-email-pclouds@gmail.com>
 References: <1373790969-13000-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,119 +11,147 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 14 10:37:09 2013
+X-From: git-owner@vger.kernel.org Sun Jul 14 10:37:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyHnn-0001Qu-2O
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 10:37:07 +0200
+	id 1UyHnv-0001Vs-1y
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 10:37:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751924Ab3GNIhC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jul 2013 04:37:02 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:37305 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751680Ab3GNIhB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jul 2013 04:37:01 -0400
-Received: by mail-pa0-f49.google.com with SMTP id ld11so10211533pab.36
-        for <git@vger.kernel.org>; Sun, 14 Jul 2013 01:37:01 -0700 (PDT)
+	id S1751941Ab3GNIhI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jul 2013 04:37:08 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:58622 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751680Ab3GNIhH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jul 2013 04:37:07 -0400
+Received: by mail-pa0-f53.google.com with SMTP id tj12so10189299pac.40
+        for <git@vger.kernel.org>; Sun, 14 Jul 2013 01:37:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=QHNukuxCCuQZ7RzGU9ZSI2vR3vG2uaYBvGS2igECxMI=;
-        b=lmTAO6BoF81swZZX0Kx5NkgsW2tKS5saI2ZvFs6zrapCDCFuFt6IfhJzO4ns3Y4dRg
-         3ViPBOhfkquMwWJNDWqZjoXwEQVptur6Z8pN+ZPBFBhU5SFcIe/PrpGAhdwjRS+EuWW3
-         gHJiTqmrE90z7Dm1Ny6As87ysbNJgr2OmR+h3CPJS4cSWyUdFNtmAtFpYJpokLnwBgWR
-         hc4yA2IQ0zW3J3ldOlWE7nuIm0dWpM8A4gXaqW4cthATfFQaPXn5Eooim491hHPTdiLE
-         pN10lwAnjiKNhgN+1MR1PKgDfsqLSQlZUbI3jB8lOJzANmlN54Ho74JxJ/FUDnb/sDcF
-         BZWw==
-X-Received: by 10.66.169.42 with SMTP id ab10mr50995858pac.14.1373791020977;
-        Sun, 14 Jul 2013 01:37:00 -0700 (PDT)
+        bh=3Fx+13tFWOeBn70xicva1cItimCesZM23MYCymfQomk=;
+        b=iupufcXzeo3peahKaZ4oBSExV62VAKLczeXZNl7KRT5bNsQ8FnGpDZ2zYKGLrFfTqi
+         vdcntR4XSpksKx6j/YRkqQI1+Q5FUa/Vq2ApjMGTAiq2wCRPQLCp425Wg+1yXHAg5030
+         lQaSGiPoe4WQKnVSuhnl3dhnl4jPw7ryBsImt4eqDg474TWbZw5B16FkH8uIhG3Lk4fj
+         0/juz1rBr8FEaaRHrmaqMkSyCRILAVzXWwUtZgw5GGkJAM48TSjH4lug3Qtc3KI6yjMM
+         O8pv/H/1kGITtQpmLAJMjDE/x0BQLujivKgRIU/ATixHIEoF1/7IkfNyvNlFkAKC85Gm
+         6B6A==
+X-Received: by 10.68.130.38 with SMTP id ob6mr11516098pbb.154.1373791026698;
+        Sun, 14 Jul 2013 01:37:06 -0700 (PDT)
 Received: from lanh ([115.73.210.100])
-        by mx.google.com with ESMTPSA id dg3sm54548865pbc.24.2013.07.14.01.36.58
+        by mx.google.com with ESMTPSA id ai6sm57805852pad.15.2013.07.14.01.37.03
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 14 Jul 2013 01:37:00 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 14 Jul 2013 15:37:12 +0700
+        Sun, 14 Jul 2013 01:37:06 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 14 Jul 2013 15:37:18 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1373790969-13000-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230320>
 
-We have two ways of dealing with empty pathspec:
+These call sites follow the pattern:
 
-1. limit it to current prefix
-2. match the entire working directory
+   paths =3D get_pathspec(prefix, argv);
+   init_pathspec(&pathspec, paths);
 
-Some commands go with #1, some #2. get_pathspec() and parse_pathspec()
-only support #1. Make parse_pathspec() reject empty pathspec by
-default. #1 and #2 can be specified via new flags. This makes it more
-expressive about default behavior at command level.
+which can be converted into a single parse_pathspec() call.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- pathspec.c | 13 ++++++++++++-
- pathspec.h |  4 ++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ builtin/grep.c         |  6 +++---
+ builtin/ls-tree.c      | 10 +++++++++-
+ builtin/update-index.c |  5 +++--
+ revision.c             |  4 ++--
+ 4 files changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/pathspec.c b/pathspec.c
-index f94beb6..6d99a3d 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -271,10 +271,20 @@ void parse_pathspec(struct pathspec *pathspec,
- 	if (!entry && !prefix)
- 		return;
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 4de49df..1a6c028 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -631,7 +631,6 @@ int cmd_grep(int argc, const char **argv, const cha=
+r *prefix)
+ 	const char *show_in_pager =3D NULL, *default_pager =3D "dummy";
+ 	struct grep_opt opt;
+ 	struct object_array list =3D OBJECT_ARRAY_INIT;
+-	const char **paths =3D NULL;
+ 	struct pathspec pathspec;
+ 	struct string_list path_list =3D STRING_LIST_INIT_NODUP;
+ 	int i;
+@@ -858,8 +857,9 @@ int cmd_grep(int argc, const char **argv, const cha=
+r *prefix)
+ 			verify_filename(prefix, argv[j], j =3D=3D i);
+ 	}
 =20
-+	if ((flags & PATHSPEC_PREFER_CWD) &&
-+	    (flags & PATHSPEC_PREFER_FULL))
-+		die("BUG: PATHSPEC_PREFER_CWD and PATHSPEC_PREFER_FULL are incompati=
-ble");
-+
- 	/* No arguments with prefix -> prefix pathspec */
- 	if (!entry) {
- 		static const char *raw[2];
-=20
-+		if (flags & PATHSPEC_PREFER_FULL)
-+			return;
-+
-+		if (!(flags & PATHSPEC_PREFER_CWD))
-+			die("BUG: PATHSPEC_PREFER_CWD requires arguments");
-+
- 		pathspec->items =3D item =3D xmalloc(sizeof(*item));
- 		memset(item, 0, sizeof(*item));
- 		item->match =3D prefix;
-@@ -340,7 +350,8 @@ const char **get_pathspec(const char *prefix, const=
- char **pathspec)
- 	struct pathspec ps;
- 	parse_pathspec(&ps,
- 		       PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP,
--		       0, prefix, pathspec);
+-	paths =3D get_pathspec(prefix, argv + i);
+-	init_pathspec(&pathspec, paths);
++	parse_pathspec(&pathspec, 0,
 +		       PATHSPEC_PREFER_CWD,
-+		       prefix, pathspec);
- 	return ps.raw;
- }
++		       prefix, argv + i);
+ 	pathspec.max_depth =3D opt.max_depth;
+ 	pathspec.recursive =3D 1;
 =20
-diff --git a/pathspec.h b/pathspec.h
-index cc5841b..d630e8b 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -24,6 +24,10 @@ struct pathspec {
- 	} *items;
- };
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 93fc3a0..bdb03f3 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -167,7 +167,15 @@ int cmd_ls_tree(int argc, const char **argv, const=
+ char *prefix)
+ 	if (get_sha1(argv[0], sha1))
+ 		die("Not a valid object name %s", argv[0]);
 =20
-+/* parse_pathspec flags */
-+#define PATHSPEC_PREFER_CWD (1<<0) /* No args means match cwd */
-+#define PATHSPEC_PREFER_FULL (1<<1) /* No args means match everything =
-*/
-+
- extern int init_pathspec(struct pathspec *, const char **);
- extern void parse_pathspec(struct pathspec *pathspec,
- 			   unsigned magic_mask,
+-	init_pathspec(&pathspec, get_pathspec(prefix, argv + 1));
++	/*
++	 * show_recursive() rolls its own matching code and is
++	 * generally ignorant of 'struct pathspec'. The magic mask
++	 * cannot be lifted until it is converted to use
++	 * match_pathspec_depth() or tree_entry_interesting()
++	 */
++	parse_pathspec(&pathspec, 0,
++		       PATHSPEC_PREFER_CWD,
++		       prefix, argv + 1);
+ 	for (i =3D 0; i < pathspec.nr; i++)
+ 		pathspec.items[i].nowildcard_len =3D pathspec.items[i].len;
+ 	pathspec.has_wildcard =3D 0;
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index b9c2bd0..e795818 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -547,10 +547,11 @@ static int do_reupdate(int ac, const char **av,
+ 	 */
+ 	int pos;
+ 	int has_head =3D 1;
+-	const char **paths =3D get_pathspec(prefix, av + 1);
+ 	struct pathspec pathspec;
+=20
+-	init_pathspec(&pathspec, paths);
++	parse_pathspec(&pathspec, 0,
++		       PATHSPEC_PREFER_CWD,
++		       prefix, av + 1);
+=20
+ 	if (read_ref("HEAD", head_sha1))
+ 		/* If there is no HEAD, that means it is an initial
+diff --git a/revision.c b/revision.c
+index 2f0142f..cdc7f45 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2120,8 +2120,8 @@ int setup_revisions(int argc, const char **argv, =
+struct rev_info *revs, struct s
+ 		 */
+ 		ALLOC_GROW(prune_data.path, prune_data.nr+1, prune_data.alloc);
+ 		prune_data.path[prune_data.nr++] =3D NULL;
+-		init_pathspec(&revs->prune_data,
+-			      get_pathspec(revs->prefix, prune_data.path));
++		parse_pathspec(&revs->prune_data, 0, 0,
++			       revs->prefix, prune_data.path);
+ 	}
+=20
+ 	if (revs->def =3D=3D NULL)
 --=20
 1.8.2.83.gc99314b
