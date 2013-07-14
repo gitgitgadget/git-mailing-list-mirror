@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 39/46] Rename field "raw" to "_raw" in struct pathspec
-Date: Sun, 14 Jul 2013 15:36:02 +0700
-Message-ID: <1373790969-13000-40-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 40/46] parse_pathspec: make sure the prefix part is wildcard-free
+Date: Sun, 14 Jul 2013 15:36:03 +0700
+Message-ID: <1373790969-13000-41-git-send-email-pclouds@gmail.com>
 References: <1373790969-13000-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,151 +11,276 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 14 10:40:17 2013
+X-From: git-owner@vger.kernel.org Sun Jul 14 10:40:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyHqo-0003VB-42
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 10:40:14 +0200
+	id 1UyHqu-0003Yx-MF
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 10:40:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752518Ab3GNIkI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jul 2013 04:40:08 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:54199 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752498Ab3GNIkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jul 2013 04:40:06 -0400
-Received: by mail-pa0-f53.google.com with SMTP id tj12so10274753pac.26
-        for <git@vger.kernel.org>; Sun, 14 Jul 2013 01:40:06 -0700 (PDT)
+	id S1752521Ab3GNIkO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jul 2013 04:40:14 -0400
+Received: from mail-pb0-f54.google.com ([209.85.160.54]:53686 "EHLO
+	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752498Ab3GNIkM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jul 2013 04:40:12 -0400
+Received: by mail-pb0-f54.google.com with SMTP id ro2so10393167pbb.27
+        for <git@vger.kernel.org>; Sun, 14 Jul 2013 01:40:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=gbB9tUnqs2lUJHOstAqEb9UUEbnQaQt+rAx8VgtH7Yo=;
-        b=JwOesM3ViIDL4WDmU5JhTQ4PYAtdwZE1csn8FaXJBaIYTVZo6ao/MMaMqOOGagiI+s
-         AXNer9GqH5MtGAOfW2XeQOjyafmFK5B98Eo4YM4G1NBwUMc38BVt0PJWsJ5m8TnGbtCc
-         FOnid5Ho4n5R2CBdnQzMDCmtFOIbBCaasIdtnTBB/zMboSiF1Eabmje4DQINuvNrX6Jt
-         heIwkl9xhFnwOGOW0yGqqliaHDFsMO0EUsD49L4jihm/kouCf2P/YMAn6032HQHwbRr2
-         bGB/csj/9iXJm/mCqAIcYqe0RbV7wUCsjhapiYOlbuQJxf0jXnXP4639Jy55IEEvqWJT
-         x1vg==
-X-Received: by 10.66.122.99 with SMTP id lr3mr50905745pab.187.1373791206148;
-        Sun, 14 Jul 2013 01:40:06 -0700 (PDT)
+        bh=mr7+JfWAaHMraRKmh1+0EFGx+2Q8kmTW1HBG+vTMweU=;
+        b=qVIKicljX99zNsCcQqfCXkChDok9N43+jBuXSdwCru7k0gcNXflvwdKzQs6G2vDmTP
+         fwDmVN6b9oonvipf3VivlTKrHy3Tf3za7zp48V0pVbKeM9x5cWFuFw9zvBKaWTXMgI0q
+         /Om4zL5raOo1/32kCaTN5XZpevGDOA3BuE83XOX5vnIh8emMxdc83hjUY3nqR+YAYAfU
+         otAdtf03BHt2nAabXFQG8oQmEFK7PRBmKkTOw0JFENSlQK7TE14767xfLkRL7jS3xHD9
+         m+CC9m+4mS1L9JUwuNTjVuNH5PWyfLyyL7KaCdBwQSrwdweT+0b6N6s1KPafZG1yZ6yg
+         0kag==
+X-Received: by 10.68.138.131 with SMTP id qq3mr49089513pbb.10.1373791212042;
+        Sun, 14 Jul 2013 01:40:12 -0700 (PDT)
 Received: from lanh ([115.73.210.100])
-        by mx.google.com with ESMTPSA id we2sm57862781pab.0.2013.07.14.01.40.03
+        by mx.google.com with ESMTPSA id td4sm57800736pac.20.2013.07.14.01.40.08
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 14 Jul 2013 01:40:05 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 14 Jul 2013 15:40:17 +0700
+        Sun, 14 Jul 2013 01:40:11 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 14 Jul 2013 15:40:23 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1373790969-13000-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230352>
 
-This patch is essentially no-op. It helps catching new use of this
-field though. This field is introduced as an intermediate step for the
-pathspec conversion and will be removed eventually. At this stage no
-more access sites should be introduced.
+Prepending prefix to pathspec is a trick to workaround the fact that
+commands can be executed in a subdirectory, but all git commands run
+at worktree's root. The prefix part should always be treated as
+literal string. Make it so.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/ls-tree.c | 2 +-
- dir.c             | 4 ++--
- pathspec.c        | 6 +++---
- pathspec.h        | 2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ cache.h    |  2 ++
+ path.c     | 15 ++++++++++++++-
+ pathspec.c | 21 +++++++++++++++++----
+ pathspec.h |  2 +-
+ setup.c    | 24 ++++++++++++++++++++----
+ 5 files changed, 54 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index bdb03f3..1c4f48e 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -36,7 +36,7 @@ static int show_recursive(const char *base, int basel=
-en, const char *pathname)
- 	if (ls_options & LS_RECURSIVE)
- 		return 1;
+diff --git a/cache.h b/cache.h
+index b0ed117..13e3c94 100644
+--- a/cache.h
++++ b/cache.h
+@@ -414,6 +414,7 @@ extern void setup_work_tree(void);
+ extern const char *setup_git_directory_gently(int *);
+ extern const char *setup_git_directory(void);
+ extern char *prefix_path(const char *prefix, int len, const char *path=
+);
++extern char *prefix_path_gently(const char *prefix, int len, int *rema=
+ining, const char *path);
+ extern const char *prefix_filename(const char *prefix, int len, const =
+char *path);
+ extern int check_filename(const char *prefix, const char *name);
+ extern void verify_filename(const char *prefix,
+@@ -741,6 +742,7 @@ const char *real_path(const char *path);
+ const char *real_path_if_valid(const char *path);
+ const char *absolute_path(const char *path);
+ const char *relative_path(const char *abs, const char *base);
++int normalize_path_copy_len(char *dst, const char *src, int *prefix_le=
+n);
+ int normalize_path_copy(char *dst, const char *src);
+ int longest_ancestor_length(const char *path, struct string_list *pref=
+ixes);
+ char *strip_path_suffix(const char *path, const char *suffix);
+diff --git a/path.c b/path.c
+index 04ff148..f4b49d6 100644
+--- a/path.c
++++ b/path.c
+@@ -492,8 +492,14 @@ const char *relative_path(const char *abs, const c=
+har *base)
+  *
+  * Note that this function is purely textual.  It does not follow syml=
+inks,
+  * verify the existence of the path, or make any system calls.
++ *
++ * prefix_len !=3D NULL is for a specific case of prefix_pathspec():
++ * assume that src =3D=3D dst and src[0..prefix_len-1] is already
++ * normalized, any time "../" eats up to the prefix_len part,
++ * prefix_len is reduced. In the end prefix_len is the remaining
++ * prefix that has not been overridden by user pathspec.
+  */
+-int normalize_path_copy(char *dst, const char *src)
++int normalize_path_copy_len(char *dst, const char *src, int *prefix_le=
+n)
+ {
+ 	char *dst0;
 =20
--	s =3D pathspec.raw;
-+	s =3D pathspec._raw;
- 	if (!s)
- 		return 0;
-=20
-diff --git a/dir.c b/dir.c
-index 9423fbb..bf22498 100644
---- a/dir.c
-+++ b/dir.c
-@@ -152,7 +152,7 @@ int fill_directory(struct dir_struct *dir, const st=
-ruct pathspec *pathspec)
- 	len =3D common_prefix_len(pathspec);
-=20
- 	/* Read the directory and prune it */
--	read_directory(dir, pathspec->nr ? pathspec->raw[0] : "", len, pathsp=
-ec);
-+	read_directory(dir, pathspec->nr ? pathspec->_raw[0] : "", len, paths=
-pec);
- 	return len;
+@@ -568,11 +574,18 @@ int normalize_path_copy(char *dst, const char *sr=
+c)
+ 		/* Windows: dst[-1] cannot be backslash anymore */
+ 		while (dst0 < dst && dst[-1] !=3D '/')
+ 			dst--;
++		if (prefix_len && *prefix_len > dst - dst0)
++			*prefix_len =3D dst - dst0;
+ 	}
+ 	*dst =3D '\0';
+ 	return 0;
  }
 =20
-@@ -1293,7 +1293,7 @@ int read_directory(struct dir_struct *dir, const =
-char *path, int len, const stru
- 	if (has_symlink_leading_path(path, len))
- 		return dir->nr;
-=20
--	simplify =3D create_simplify(pathspec ? pathspec->raw : NULL);
-+	simplify =3D create_simplify(pathspec ? pathspec->_raw : NULL);
- 	if (!len || treat_leading_path(dir, path, len, simplify))
- 		read_directory_recursive(dir, path, len, 0, simplify);
- 	free_simplify(simplify);
++int normalize_path_copy(char *dst, const char *src)
++{
++	return normalize_path_copy_len(dst, src, NULL);
++}
++
+ /*
+  * path =3D Canonical absolute path
+  * prefixes =3D string_list containing normalized, absolute paths with=
+out
 diff --git a/pathspec.c b/pathspec.c
-index 3d1386d..da802e2 100644
+index da802e2..71e5eaf 100644
 --- a/pathspec.c
 +++ b/pathspec.c
-@@ -287,7 +287,7 @@ void parse_pathspec(struct pathspec *pathspec,
+@@ -150,10 +150,14 @@ static unsigned prefix_pathspec(struct pathspec_i=
+tem *item,
+ 	magic |=3D short_magic;
+ 	*p_short_magic =3D short_magic;
+=20
+-	if (magic & PATHSPEC_FROMTOP)
++	if (magic & PATHSPEC_FROMTOP) {
+ 		match =3D xstrdup(copyfrom);
+-	else
+-		match =3D prefix_path(prefix, prefixlen, copyfrom);
++		prefixlen =3D 0;
++	} else {
++		match =3D prefix_path_gently(prefix, prefixlen, &prefixlen, copyfrom=
+);
++		if (!match)
++			die(_("%s: '%s' is outside repository"), elt, copyfrom);
++	}
+ 	*raw =3D item->match =3D match;
+ 	/*
+ 	 * Prefix the pathspec (keep all magic) and assign to
+@@ -167,6 +171,7 @@ static unsigned prefix_pathspec(struct pathspec_ite=
+m *item,
+ 	} else
+ 		item->original =3D elt;
+ 	item->len =3D strlen(item->match);
++	item->prefix =3D prefixlen;
+=20
+ 	if ((flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) &&
+ 	    (item->len >=3D 1 && item->match[item->len - 1] =3D=3D '/') &&
+@@ -198,13 +203,20 @@ static unsigned prefix_pathspec(struct pathspec_i=
+tem *item,
+=20
+ 	if (limit_pathspec_to_literal())
+ 		item->nowildcard_len =3D item->len;
+-	else
++	else {
+ 		item->nowildcard_len =3D simple_length(item->match);
++		if (item->nowildcard_len < prefixlen)
++			item->nowildcard_len =3D prefixlen;
++	}
+ 	item->flags =3D 0;
+ 	if (item->nowildcard_len < item->len &&
+ 	    item->match[item->nowildcard_len] =3D=3D '*' &&
+ 	    no_wildcard(item->match + item->nowildcard_len + 1))
+ 		item->flags |=3D PATHSPEC_ONESTAR;
++
++	/* sanity checks, pathspec matchers assume these are sane */
++	assert(item->nowildcard_len <=3D item->len &&
++	       item->prefix         <=3D item->len);
+ 	return magic;
+ }
+=20
+@@ -284,6 +296,7 @@ void parse_pathspec(struct pathspec *pathspec,
+ 		item->match =3D prefix;
+ 		item->original =3D prefix;
+ 		item->nowildcard_len =3D item->len =3D strlen(prefix);
++		item->prefix =3D item->len;
  		raw[0] =3D prefix;
  		raw[1] =3D NULL;
  		pathspec->nr =3D 1;
--		pathspec->raw =3D raw;
-+		pathspec->_raw =3D raw;
- 		return;
- 	}
-=20
-@@ -297,7 +297,7 @@ void parse_pathspec(struct pathspec *pathspec,
-=20
- 	pathspec->nr =3D n;
- 	pathspec->items =3D item =3D xmalloc(sizeof(*item) * n);
--	pathspec->raw =3D argv;
-+	pathspec->_raw =3D argv;
- 	prefixlen =3D prefix ? strlen(prefix) : 0;
-=20
- 	for (i =3D 0; i < n; i++) {
-@@ -357,7 +357,7 @@ const char **get_pathspec(const char *prefix, const=
- char **pathspec)
- 		       PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP,
- 		       PATHSPEC_PREFER_CWD,
- 		       prefix, pathspec);
--	return ps.raw;
-+	return ps._raw;
- }
-=20
- void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
 diff --git a/pathspec.h b/pathspec.h
-index 31a9c96..0f6739d 100644
+index 0f6739d..2f3532e 100644
 --- a/pathspec.h
 +++ b/pathspec.h
-@@ -11,7 +11,7 @@
- #define PATHSPEC_ONESTAR 1	/* the pathspec pattern sastisfies GFNM_ONE=
-STAR */
+@@ -21,7 +21,7 @@ struct pathspec {
+ 		const char *match;
+ 		const char *original;
+ 		unsigned magic;
+-		int len;
++		int len, prefix;
+ 		int nowildcard_len;
+ 		int flags;
+ 	} *items;
+diff --git a/setup.c b/setup.c
+index d1ece5d..ff4499e 100644
+--- a/setup.c
++++ b/setup.c
+@@ -5,7 +5,19 @@
+ static int inside_git_dir =3D -1;
+ static int inside_work_tree =3D -1;
 =20
- struct pathspec {
--	const char **raw; /* get_pathspec() result, not freed by free_pathspe=
-c() */
-+	const char **_raw; /* get_pathspec() result, not freed by free_pathsp=
-ec() */
- 	int nr;
- 	unsigned int has_wildcard:1;
- 	unsigned int recursive:1;
+-static char *prefix_path_gently(const char *prefix, int len, const cha=
+r *path)
++/*
++ * Normalize "path", prepending the "prefix" for relative paths. If
++ * remaining_prefix is not NULL, return the actual prefix still
++ * remains in the path. For example, prefix =3D sub1/sub2/ and path is
++ *
++ *  foo          -> sub1/sub2/foo  (full prefix)
++ *  ../foo       -> sub1/foo       (remaining prefix is sub1/)
++ *  ../../bar    -> bar            (no remaining prefix)
++ *  ../../sub1/sub2/foo -> sub1/sub2/foo (but no remaining prefix)
++ *  `pwd`/../bar -> sub1/bar       (no remaining prefix)
++ */
++char *prefix_path_gently(const char *prefix, int len,
++			 int *remaining_prefix, const char *path)
+ {
+ 	const char *orig =3D path;
+ 	char *sanitized;
+@@ -13,13 +25,17 @@ static char *prefix_path_gently(const char *prefix,=
+ int len, const char *path)
+ 		const char *temp =3D real_path(path);
+ 		sanitized =3D xmalloc(len + strlen(temp) + 1);
+ 		strcpy(sanitized, temp);
++		if (remaining_prefix)
++			*remaining_prefix =3D 0;
+ 	} else {
+ 		sanitized =3D xmalloc(len + strlen(path) + 1);
+ 		if (len)
+ 			memcpy(sanitized, prefix, len);
+ 		strcpy(sanitized + len, path);
++		if (remaining_prefix)
++			*remaining_prefix =3D len;
+ 	}
+-	if (normalize_path_copy(sanitized, sanitized))
++	if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix))
+ 		goto error_out;
+ 	if (is_absolute_path(orig)) {
+ 		size_t root_len, len, total;
+@@ -44,7 +60,7 @@ static char *prefix_path_gently(const char *prefix, i=
+nt len, const char *path)
+=20
+ char *prefix_path(const char *prefix, int len, const char *path)
+ {
+-	char *r =3D prefix_path_gently(prefix, len, path);
++	char *r =3D prefix_path_gently(prefix, len, NULL, path);
+ 	if (!r)
+ 		die("'%s' is outside repository", path);
+ 	return r;
+@@ -53,7 +69,7 @@ char *prefix_path(const char *prefix, int len, const =
+char *path)
+ int path_inside_repo(const char *prefix, const char *path)
+ {
+ 	int len =3D prefix ? strlen(prefix) : 0;
+-	char *r =3D prefix_path_gently(prefix, len, path);
++	char *r =3D prefix_path_gently(prefix, len, NULL, path);
+ 	if (r) {
+ 		free(r);
+ 		return 1;
 --=20
 1.8.2.83.gc99314b
