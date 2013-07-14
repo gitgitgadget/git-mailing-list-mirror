@@ -1,83 +1,84 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH 4/4] diff.c: Do not initialize a variable, which gets reassigned anyway.
-Date: Sun, 14 Jul 2013 23:35:49 +0200
-Message-ID: <1373837749-14402-4-git-send-email-stefanbeller@googlemail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/4] daemon.c:handle: Remove unneeded check for null
+ pointer.
+Date: Sun, 14 Jul 2013 14:48:12 -0700
+Message-ID: <20130714214812.GA13444@google.com>
 References: <1373837749-14402-1-git-send-email-stefanbeller@googlemail.com>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 14 23:36:02 2013
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 14 23:48:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyTxa-0001VY-9v
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 23:36:02 +0200
+	id 1UyU9i-00010X-QI
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 23:48:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753338Ab3GNVf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jul 2013 17:35:56 -0400
-Received: from mail-ee0-f45.google.com ([74.125.83.45]:50117 "EHLO
-	mail-ee0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753334Ab3GNVfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jul 2013 17:35:55 -0400
-Received: by mail-ee0-f45.google.com with SMTP id c1so7220056eek.32
-        for <git@vger.kernel.org>; Sun, 14 Jul 2013 14:35:54 -0700 (PDT)
+	id S1753335Ab3GNVsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Jul 2013 17:48:21 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:36192 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753304Ab3GNVsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jul 2013 17:48:20 -0400
+Received: by mail-pb0-f42.google.com with SMTP id un1so10685528pbc.15
+        for <git@vger.kernel.org>; Sun, 14 Jul 2013 14:48:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=0v3w+xedRXG/S27B8eZQvwJSJTALT8Sy4VGGgwLGIUE=;
-        b=of1AmqPEkiIs7gCM9cMvJz4603FdvoMUOhwmpogHYv2QfLzsymzXsSrTigEck9jy94
-         6I45aON0DBS2S2aWcc3vJoj+jhqEkeGwWELvuE5c3Lmz73EO674EDTccd2zM6g0fJcGi
-         EV7g1ABWv13w83BNpAZ33+SyaWZgvlt9XpIZDjP3tJ/liO5oPGUWKFGnJOTdsy7oP668
-         26jWIqufU5FiihWNzM5YI9d+5QbFCvw0UbAajb3BQ/UCJmC0XVMLcjSeJdkXq3pxOTF1
-         IMdVEVqKwHtbFDY062KpR0I3Yvod3buL9Hn6Ai2UcVlJDGYK6dR690+R74nKt/xDBJ9q
-         wfxg==
-X-Received: by 10.14.183.135 with SMTP id q7mr54750687eem.97.1373837754151;
-        Sun, 14 Jul 2013 14:35:54 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id i2sm97578659eeu.4.2013.07.14.14.35.52
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=aKIwEtmdAFWhv7gnm1DnM7+OWFB0KY5HaiNP9XqbNr8=;
+        b=pdI8AnHQM35cWEwAgpQE6Lp1Pl7d9eEN5RfpqoJUH5bFyzOxyi2ZOcsjJWaxG6YzH5
+         k/QRp4OQpz9L2CweaBttk/NAa8Z45W295U0h7+3LzGKt148MLUPQwLcVc26BKxHQg0pK
+         Ib0k+4iaXuF7PipvVv4c398v9vS7BkOxkBP5Q6wTqNBr8iNsXZJzqyCAVYC3gcN6n0Rm
+         FDzy/3vLIyipWyqmNSoyatJoOOf+xdyqTIo9lM4S0ly4Ps9rrBVcXYw8d9gj9Jw1s0s5
+         X+GznhsfCaHToTgrZ2ta0YBDNc3AXzbaEslydrh3ZDgRBeDEeL+dmRqhnzuXx7mwNxi3
+         qKSw==
+X-Received: by 10.68.34.165 with SMTP id a5mr50535851pbj.156.1373838499745;
+        Sun, 14 Jul 2013 14:48:19 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id eg3sm60605523pac.1.2013.07.14.14.48.18
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 14 Jul 2013 14:35:53 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.2.806.gdee5b9b
+        Sun, 14 Jul 2013 14:48:19 -0700 (PDT)
+Content-Disposition: inline
 In-Reply-To: <1373837749-14402-1-git-send-email-stefanbeller@googlemail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230397>
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
----
- diff.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Hi,
 
-diff --git a/diff.c b/diff.c
-index e53ddad..24382d7 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1677,21 +1677,19 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 		}
- 
- 		/*
- 		 * scale the add/delete
- 		 */
- 		add = added;
- 		del = deleted;
- 
- 		if (graph_width <= max_change) {
--			int total = add + del;
--
--			total = scale_linear(add + del, graph_width, max_change);
-+			int total = scale_linear(add + del, graph_width, max_change);
- 			if (total < 2 && add && del)
- 				/* width >= 2 due to the sanity check */
- 				total = 2;
- 			if (add < del) {
- 				add = scale_linear(add, graph_width, max_change);
- 				del = total - add;
- 			} else {
- 				del = scale_linear(del, graph_width, max_change);
- 				add = total - del;
--- 
-1.8.3.2.806.gdee5b9b
+Stefan Beller wrote:
+
+> addr doesn't need to be checked at that line as it it already accessed
+> 7 lines before in the if (addr->sa_family).
+
+Good catch.  This asymmetry has been present since the lines were first
+introduced (all guarded by "if (addr)") in v1.4.1-rc1~3^2~4 (Log peer
+address when git-daemon called from inetd, 2006-06-20).
+
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -754,19 +754,19 @@ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
+>  	}
+>  
+>  	if (addr->sa_family == AF_INET) {
+>  		struct sockaddr_in *sin_addr = (void *) addr;
+>  		inet_ntop(addr->sa_family, &sin_addr->sin_addr, addrbuf + 12,
+>  		    sizeof(addrbuf) - 12);
+>  		snprintf(portbuf, sizeof(portbuf), "REMOTE_PORT=%d",
+>  		    ntohs(sin_addr->sin_port));
+>  #ifndef NO_IPV6
+> -	} else if (addr && addr->sa_family == AF_INET6) {
+> +	} else if (addr->sa_family == AF_INET6) {
+
+At this point 'addr' is &ss.sa from service_loop, so it really cannot
+be NULL.
+
+So fwiw, I like this patch.
