@@ -1,99 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] git-clone.txt: remove the restriction on pushing from a
- shallow clone
-Date: Sat, 13 Jul 2013 14:25:41 -0700
-Message-ID: <20130713212541.GA10951@google.com>
-References: <1373607462-12836-1-git-send-email-pclouds@gmail.com>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: [PATCH] http.c: fix parsing of http.sslCertPasswordProtected variable
+Date: Sat, 13 Jul 2013 20:37:58 -0400
+Message-ID: <CAHREChiOE8oMWQYFY_7yzf1tz-4E2_L5W9--k33vwATFSrR==A@mail.gmail.com>
+References: <7v38rjlif4.fsf@alter.siamese.dyndns.org> <20130712190531.GD8482@google.com>
+ <7vtxjzk13q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 13 23:26:15 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	git list <git@vger.kernel.org>,
+	"Kyle J. McKay" <mackyle@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 14 02:38:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uy7KU-0008DO-0S
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Jul 2013 23:26:10 +0200
+	id 1UyAKd-0004Ls-E4
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Jul 2013 02:38:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750965Ab3GMVZu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Jul 2013 17:25:50 -0400
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:34878 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750893Ab3GMVZt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jul 2013 17:25:49 -0400
-Received: by mail-pb0-f51.google.com with SMTP id um15so10133320pbc.10
-        for <git@vger.kernel.org>; Sat, 13 Jul 2013 14:25:49 -0700 (PDT)
+	id S1751609Ab3GNAiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jul 2013 20:38:20 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:40881 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751433Ab3GNAiT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jul 2013 20:38:19 -0400
+Received: by mail-ob0-f175.google.com with SMTP id xn12so12638506obc.6
+        for <git@vger.kernel.org>; Sat, 13 Jul 2013 17:38:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=5AyU1kyhqURKzCX8/ujWLgSGDh2W5+aJTieUWlx7lWE=;
-        b=0K1gXd/Z7FGeJowpvDAUz1XnXYFcaOcoWL3ukVdSqVpXsH8R/0cc+RwqM/bSqZvdrV
-         fJhV9suViBu3SOKOFmnUiuuszS12Si2utsf2FhOszgcOnzx4FEOIgqLkz8+P44ew0QW+
-         Sj0hZPthdu3r4KfpVA8iCzaFMPfRlGmhsz5mDD1tNRb+D6RSvZtRwE89y29sYqPb6Rfv
-         vu9n2/8BfbSJNeyiEUbT19VMaccVMLqyVVnqsrhTi0U8lLtYUYo2Y5ld5mwj8ihy4u+y
-         D+QepZggv6D2KyoHv1PiYl5cbKAUBai+gzR4cOW8Ua6sZNMuNJYCTJKNHP08kKyNwKgz
-         yHpQ==
-X-Received: by 10.68.6.97 with SMTP id z1mr39909984pbz.3.1373750749286;
-        Sat, 13 Jul 2013 14:25:49 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id qv4sm52352484pbc.16.2013.07.13.14.25.47
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 13 Jul 2013 14:25:48 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1373607462-12836-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=J0l5s5HdqxjzXBuauVOS2Zf0IizF2M/JxlTKaotHtZ8=;
+        b=Ota+lC5hFZi8DBPlyhDhRGUXNoz+nv6EJ3wHumJQ16bMWNLM44++zIEc6sT9q4Slz7
+         ZH+wdA7Uf/72scQaaFPbG+FVaMl0s8wbNVNatqGTnR65dIf1G1Sljs6y8idrF2O4QNcU
+         r9JKKaQrGpzJwNyy6mxuoBmQT9nP1dDdW0wtarJeAw4TPwpas/XivdHCNQUQX3m4T8Dz
+         3omcB7Lmx2E+l29ryqOqKNDUciXL4ZhKkagVClRfpwkpQLgiQQyvvBKoz9EypKZLv7rf
+         0FgrFKnAQPxQFSNXIe06CIbnfEhVf+wuLRiWmSIf+zUIKM6r20A78A4g5VzqbGX2URAq
+         dAHA==
+X-Received: by 10.182.16.137 with SMTP id g9mr40149988obd.17.1373762298815;
+ Sat, 13 Jul 2013 17:38:18 -0700 (PDT)
+Received: by 10.182.95.42 with HTTP; Sat, 13 Jul 2013 17:37:58 -0700 (PDT)
+In-Reply-To: <7vtxjzk13q.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230295>
 
-Hi,
+On Fri, Jul 12, 2013 at 3:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+> > FWIW the GIT_SSL_CERT_PASSWORD_PROTECTED envvar has a similar "can
+> > only enable" behavior, but since it's documented, that's not as big
+> > of a problem.  Do you remember why it was written that way?
+>
+> Not me ;-).
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Because that's how GIT_NO_VERIFY, GIT_CURL_FTP_NO_EPSV, and
+GIT_CURL_VERBOSE (and perhaps others) work.  That said, I agree that
+parsing the variable's value as a boolean would make much more sense.
+Perhaps this is how all of those variables should work?
 
-> Since 52fed6e (receive-pack: check connectivity before concluding "gi=
-t
-> push" - 2011-09-02), receive-pack is prepared to deal with broken
-> push, a shallow push can't cause any corruption. Update the document
-> to reflect that.
+> > When that setting was first added[1], there was some mention of
+> > autodetection if libcurl could learn to do that.  Did it happen?
+>
+> I do not think so, but let's see if our resident cURL guru has
+> something to say about it.
 
-Hmm, what happens when pushing to servers without that commit?  Do you
-think it should be applied to Debian squeeze for server operators that
-haven't upgraded yet to the current stable release?
-
-[...]
-> --- a/Documentation/git-clone.txt
-> +++ b/Documentation/git-clone.txt
-> @@ -182,11 +182,13 @@ objects from the source repository into a pack =
-in the cloned repository.
->  --depth <depth>::
->  	Create a 'shallow' clone with a history truncated to the
->  	specified number of revisions.  A shallow repository has a
-> -	number of limitations (you cannot clone or fetch from
-> -	it, nor push from nor into it), but is adequate if you
-> -	are only interested in the recent history of a large project
-> -	with a long history, and would want to send in fixes
-> -	as patches.
-> +	number of limitations (you cannot clone or fetch from it, nor
-> +	push into it), but is adequate if you are only interested in
-> +	the recent history of a large project with a long history.
-> ++
-> +Pushing from a shallow clone should be avoided if the git version on
-> +the receiver end is older than v1.7.10, or any other git
-> +implementation that does not perform connectivity check.
-
-"git name-rev --tags" tells me 52fed6e was applied during 1.7.8-rc0,
-so it might make sense to s/1.7.10/1.7.8/ here.
-
-Aside from that nit,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks,
-Jonathan
+I tried back in 2009 but eventually gave up, so unfortunately no.
+Maybe the situation in libcurl has changed since then?  (If you are
+interested in pursing this, please let me know and I can give you the
+details of what I tried.)
