@@ -1,122 +1,77 @@
-From: Dirk Wallenstein <halsmit@t-online.de>
-Subject: [PATCH] howto: Use all-space indentation in ASCII art
-Date: Mon, 15 Jul 2013 18:46:58 +0200
-Message-ID: <20130715164658.GA8675@bottich>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Thomas Ackermann <th.acker@arcor.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 15 19:04:28 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2 3/5] Documentation/git-show.txt: include common diff options, like git-log.txt
+Date: Mon, 15 Jul 2013 19:05:12 +0200
+Message-ID: <1373907914-8020-4-git-send-email-Matthieu.Moy@imag.fr>
+References: <7vppujbwuh.fsf@alter.siamese.dyndns.org>
+ <1373907914-8020-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: stefanbeller@googlemail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jul 15 19:05:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UymCJ-0002kV-8R
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 19:04:27 +0200
+	id 1UymDL-0003KR-Cz
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 19:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933397Ab3GORET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 13:04:19 -0400
-Received: from mailout02.t-online.de ([194.25.134.17]:43517 "EHLO
-	mailout02.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932687Ab3GORES (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 13:04:18 -0400
-X-Greylist: delayed 1031 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Jul 2013 13:04:17 EDT
-Received: from fwd57.aul.t-online.de (fwd57.aul.t-online.de )
-	by mailout02.t-online.de with smtp 
-	id 1UylvU-0004No-N3; Mon, 15 Jul 2013 18:47:04 +0200
-Received: from localhost (TcbRu6Z1Qhkno2oF8QLUVRVBJJY2MVcZYb4drd7dbTfAl4XPCyE5kvPvtbTZ11YQ3T@[178.202.219.43]) by fwd57.t-online.de
-	with esmtp id 1UylvQ-1rTiOu0; Mon, 15 Jul 2013 18:47:00 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-ID: TcbRu6Z1Qhkno2oF8QLUVRVBJJY2MVcZYb4drd7dbTfAl4XPCyE5kvPvtbTZ11YQ3T
-X-TOI-MSGID: 487a5aa5-070a-4c88-a3a4-3ab2e9a41851
+	id S932971Ab3GORF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 13:05:27 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:47172 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932728Ab3GORF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 13:05:26 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r6FH5HGD009976
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 15 Jul 2013 19:05:17 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1UymD9-0003g4-L3; Mon, 15 Jul 2013 19:05:19 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1UymD9-00026i-Ac; Mon, 15 Jul 2013 19:05:19 +0200
+X-Mailer: git-send-email 1.8.3.1.495.g13f33cf.dirty
+In-Reply-To: <1373907914-8020-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 15 Jul 2013 19:05:18 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r6FH5HGD009976
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1374512718.32683@fLyDkQxv98Psn13hOcFNPQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230491>
 
-Keep the sketch aligned independent of the tabstop width used.
-
-Signed-off-by: Dirk Wallenstein <halsmit@t-online.de>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- Documentation/howto/revert-a-faulty-merge.txt | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ Documentation/git-show.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/Documentation/howto/revert-a-faulty-merge.txt b/Documentation/howto/revert-a-faulty-merge.txt
-index 075418e..4b75bfc 100644
---- a/Documentation/howto/revert-a-faulty-merge.txt
-+++ b/Documentation/howto/revert-a-faulty-merge.txt
-@@ -30,7 +30,7 @@ The history immediately after the "revert of the merge" would look like
- this:
+diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
+index ae4edcc..4e617e6 100644
+--- a/Documentation/git-show.txt
++++ b/Documentation/git-show.txt
+@@ -45,6 +45,15 @@ include::pretty-options.txt[]
+ include::pretty-formats.txt[]
  
-  ---o---o---o---M---x---x---W
--	       /
-+               /
-        ---A---B
  
- where A and B are on the side development that was not so good, M is the
-@@ -47,7 +47,7 @@ After the developers of the side branch fix their mistakes, the history
- may look like this:
++COMMON DIFF OPTIONS
++-------------------
++
++:git-log: 1
++include::diff-options.txt[]
++
++include::diff-generate-patch.txt[]
++
++
+ EXAMPLES
+ --------
  
-  ---o---o---o---M---x---x---W---x
--	       /
-+               /
-        ---A---B-------------------C---D
- 
- where C and D are to fix what was broken in A and B, and you may already
-@@ -81,7 +81,7 @@ In such a situation, you would want to first revert the previous revert,
- which would make the history look like this:
- 
-  ---o---o---o---M---x---x---W---x---Y
--	       /
-+               /
-        ---A---B-------------------C---D
- 
- where Y is the revert of W.  Such a "revert of the revert" can be done
-@@ -93,14 +93,14 @@ This history would (ignoring possible conflicts between what W and W..Y
- changed) be equivalent to not having W nor Y at all in the history:
- 
-  ---o---o---o---M---x---x-------x----
--	       /
-+               /
-        ---A---B-------------------C---D
- 
- and merging the side branch again will not have conflict arising from an
- earlier revert and revert of the revert.
- 
-  ---o---o---o---M---x---x-------x-------*
--	       /                       /
-+               /                       /
-        ---A---B-------------------C---D
- 
- Of course the changes made in C and D still can conflict with what was
-@@ -111,13 +111,13 @@ faulty A and B, and redone the changes on top of the updated mainline
- after the revert, the history would have looked like this:
- 
-  ---o---o---o---M---x---x---W---x---x
--	       /                 \
-+               /                 \
-        ---A---B                   A'--B'--C'
- 
- If you reverted the revert in such a case as in the previous example:
- 
-  ---o---o---o---M---x---x---W---x---x---Y---*
--	       /                 \         /
-+               /                 \         /
-        ---A---B                   A'--B'--C'
- 
- where Y is the revert of W, A' and B' are rerolled A and B, and there may
-@@ -129,7 +129,7 @@ lot of overlapping changes that result in conflicts.  So do not do "revert
- of revert" blindly without thinking..
- 
-  ---o---o---o---M---x---x---W---x---x
--	       /                 \
-+               /                 \
-        ---A---B                   A'--B'--C'
- 
- In the history with rebased side branch, W (and M) are behind the merge
 -- 
-1.8.3.2.50.g531c8dd
+1.8.3.1.495.g13f33cf.dirty
