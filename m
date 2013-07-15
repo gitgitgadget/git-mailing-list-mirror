@@ -1,197 +1,100 @@
-From: =?UTF-8?Q?Mantas_Mikul=C4=97nas?= <grawity@gmail.com>
-Subject: Re: Segfault in `git describe`
-Date: Mon, 15 Jul 2013 16:31:38 +0300
-Message-ID: <CAPWNY8Ua=3t4jeDvkj3Aw2Ouvv+0r1kWrET5GNq9uS8PasGudQ@mail.gmail.com>
-References: <krrkk0$kri$1@ger.gmane.org>
-	<51E3F337.8070708@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 2/2] post-receive-email: deprecate script in favor of git-multimail
+Date: Mon, 15 Jul 2013 06:38:22 -0700
+Message-ID: <7vip0cdju9.fsf@alter.siamese.dyndns.org>
+References: <1373789343-3189-1-git-send-email-mhagger@alum.mit.edu>
+	<1373789343-3189-3-git-send-email-mhagger@alum.mit.edu>
+	<20130715060245.GD2962@elie.Belkin> <vpqoba4gr9h.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jul 15 15:31:55 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Chris Hiestand <chrishiestand@gmail.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>,
+	Michiel Holtkamp <git@elfstone.nl>,
+	Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	John Keeping <john@keeping.me.uk>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jul 15 15:38:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyisU-0001Dc-LF
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 15:31:47 +0200
+	id 1Uyiz0-00052T-RR
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 15:38:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756878Ab3GONbl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jul 2013 09:31:41 -0400
-Received: from mail-la0-f49.google.com ([209.85.215.49]:54624 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756873Ab3GONbk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jul 2013 09:31:40 -0400
-Received: by mail-la0-f49.google.com with SMTP id ea20so9270814lab.22
-        for <git@vger.kernel.org>; Mon, 15 Jul 2013 06:31:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=KGl+JlTc1QSFK9/HOGnczNPYjO7dw+e9/DvqPTwNva8=;
-        b=RuvrojRYVDvl4vtS/6i1G47BoL9LdioSX9YUCwHbTQxr86xVRwqsti9IAWs8jjv9PT
-         4N+1pRf0O34hiwJHOXWiIVEQuAIQd7Fv/6vghIFBDhqJ8716bvKXDlw0n5b+hN2WpvRG
-         1t3y5H3QbDyIIJ+hVWADgaPWlZCH57fViGn7RQPAsN+sxidWDcSSvtovZO6LoPKGBHAg
-         8m5GzJP/0UmUGaf6rE2IkzDAPRlYYuhpufXb4kSO2C+5pdZpYkUH0+Yj0BmncvqUyICO
-         DW/ANL+CT/nYmy7QhAnJ+Vgk31e//OvKsvui+jqQrCEeC4lCW3krmmLjLAVksHaFkzkS
-         rn2g==
-X-Received: by 10.112.167.100 with SMTP id zn4mr24341362lbb.44.1373895098681;
- Mon, 15 Jul 2013 06:31:38 -0700 (PDT)
-Received: by 10.112.127.193 with HTTP; Mon, 15 Jul 2013 06:31:38 -0700 (PDT)
-In-Reply-To: <51E3F337.8070708@alum.mit.edu>
+	id S1755439Ab3GONi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 09:38:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63105 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755349Ab3GONi0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 09:38:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33DF92FD51;
+	Mon, 15 Jul 2013 13:38:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=32OLM8PoNQ6MSvc4HAAru2Rl19c=; b=ZohFTA
+	tXgzJnuln/qOQ0o4jKOoyBTKMBfXsd+ay6s6XHziNyf18Up8op7i8qH+gafNFIZ9
+	o9HT6ScXeTRLmeQ1deHpwPbLHgzYMW1TVerHy899EUquyToHBJ8Q3u6J5aVtsYUd
+	kVEoCoItTjS7uki7gmiPc5g1YmamuCQ8dhTEY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ngi16AfKuUOfBhRpdvDhEKIMFEVjM8Ww
+	g95rPQKssjPbYAUhVsiuN5JdPLKPMZPXC2RV9hXb7v6SZsdc6jqvBZWHSUnDjETo
+	sCZDlAzojCPxxGMCyD+pl0kYfcZ1VsdkITAuRdhWke952tYHNPkKS+BbR2Gpw7qH
+	th6l9SnAxtE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26CF82FD50;
+	Mon, 15 Jul 2013 13:38:25 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 678062FD4E;
+	Mon, 15 Jul 2013 13:38:24 +0000 (UTC)
+In-Reply-To: <vpqoba4gr9h.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	15 Jul 2013 10:29:46 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D28EEEB2-ED53-11E2-A8FB-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230469>
 
-On Mon, Jul 15, 2013 at 4:03 PM, Michael Haggerty <mhagger@alum.mit.edu=
-> wrote:
-> On 07/13/2013 03:27 PM, Mantas Mikul=C4=97nas wrote:
->> I have a clone of linux.git with various stuff added to it (remotes =
-for
->> 'stable' and 'next', a bunch of local tags, and historical repositor=
-ies
->> imported using `git replace`).
->>
->> Yesterday, I noticed that `git describe`, built from git.git master
->> (v1.8.3.2-804-g0da7a53, gcc 4.8) would simply crash when run in that
->> repository, with the following backtrace:
->>
->>> Program terminated with signal 11, Segmentation fault.
->>> #0  0x00000000004c39dc in hashcpy (sha_src=3D0x1c <Address 0x1c out=
- of bounds>,
->>>     sha_dst=3D0x7fffc0b4d610 "\242\271\301\366 \201&\346\337l\002B\=
-214P\037\210ShX\022")
->>>     at cache.h:694
->>> 694          memcpy(sha_dst, sha_src, 20);
->>> (gdb) bt
->>> #0  0x00000000004c39dc in hashcpy (sha_src=3D0x1c <Address 0x1c out=
- of bounds>,
->>>     sha_dst=3D0x7fffc0b4d610 "\242\271\301\366 \201&\346\337l\002B\=
-214P\037\210ShX\022")
->>>     at cache.h:694
->>> #1  peel_ref (refname=3Drefname@entry=3D0x1fe2d10 "refs/tags/next-2=
-0130607",
->>>     sha1=3Dsha1@entry=3D0x7fffc0b4d610 "\242\271\301\366 \201&\346\=
-337l\002B\214P\037\210ShX\022") at refs.c:1586
->>> #2  0x0000000000424194 in get_name (path=3D0x1fe2d10 "refs/tags/nex=
-t-20130607",
->>>     sha1=3D0x1fe2ce8 "\222V\356\276S5\tk\231Hi\264\r=3D\336\315\302=
-\225\347\257\300N\376\327\064@\237ZDq[T\246\312\033T\260\314\362\025ref=
-s/tags/next-20130607", flag=3D<optimized out>,
->>>     cb_data=3D<optimized out>) at builtin/describe.c:156
->>> #3  0x00000000004c1c21 in do_one_ref (entry=3D0x1fe2ce0, cb_data=3D=
-0x7fffc0b4d7c0)
->>>     at refs.c:646
->>> #4  0x00000000004c318d in do_for_each_entry_in_dir (dir=3D0x1fe1728=
-,
->>>     offset=3D<optimized out>, fn=3D0x4c1bc0 <do_one_ref>, cb_data=3D=
-0x7fffc0b4d7c0)
->>>     at refs.c:672
->>> #5  0x00000000004c33d1 in do_for_each_entry_in_dirs (dir1=3D0x1fdf4=
-d8, dir2=3D0x1fd6318,
->>>     cb_data=3D0x7fffc0b4d7c0, fn=3D0x4c1bc0 <do_one_ref>) at refs.c=
-:716
->>> #6  0x00000000004c33d1 in do_for_each_entry_in_dirs (dir1=3D0x1fdf1=
-f8, dir2=3D0x1fd62d8,
->>>     cb_data=3D0x7fffc0b4d7c0, fn=3D0x4c1bc0 <do_one_ref>) at refs.c=
-:716
->>> #7  0x00000000004c3540 in do_for_each_entry (refs=3Drefs@entry=3D0x=
-7a2800 <ref_cache>,
->>>     base=3Dbase@entry=3D0x509cc6 "", cb_data=3Dcb_data@entry=3D0x7f=
-ffc0b4d7c0,
->>>     fn=3D0x4c1bc0 <do_one_ref>) at refs.c:1689
->>> #8  0x00000000004c3ff8 in do_for_each_ref (cb_data=3Dcb_data@entry=3D=
-0x0, flags=3D1, trim=3D0,
->>>     fn=3Dfn@entry=3D0x424120 <get_name>, base=3D0x509cc6 "", refs=3D=
-0x7a2800 <ref_cache>)
->>>     at refs.c:1724
->>> #9  for_each_rawref (fn=3Dfn@entry=3D0x424120 <get_name>, cb_data=3D=
-cb_data@entry=3D0x0)
->>>     at refs.c:1873
->>> #10 0x0000000000424f5b in cmd_describe (argc=3D0, argv=3D0x7fffc0b4=
-ddc0, prefix=3D0x0)
->>>     at builtin/describe.c:466
->>> #11 0x000000000040596d in run_builtin (argv=3D0x7fffc0b4ddc0, argc=3D=
-1,
->>>     p=3D0x760b40 <commands.21352+576>) at git.c:291
->>> #12 handle_internal_command (argc=3D1, argv=3D0x7fffc0b4ddc0) at gi=
-t.c:453
->>> #13 0x0000000000404d6e in run_argv (argv=3D0x7fffc0b4dc78, argcp=3D=
-0x7fffc0b4dc5c)
->>>     at git.c:499
->>> #14 main (argc=3D1, av=3D<optimized out>) at git.c:575
->>> (gdb)
->>
->> According to `git bisect`, the first bad commit is:
->>
->> commit 9a489f3c17d6c974b18c47cf406404ca2a721c87
->> Author: Michael Haggerty <mhagger@alum.mit.edu>
->> Date:   Mon Apr 22 21:52:22 2013 +0200
->>
->>     refs: extract a function peel_entry()
->>
->> The crash happens only in repositories that have at least one replac=
-ed
->> object in the branch's history. Running `git --no-replace-objects
->> describe` avoids the crash.
->>
->> The crash happens only if there are any tags under .git/refs/tags/ t=
-hat
->> do not exist in .git/packed-refs, or if I remove all "peeled" lines =
-from
->> .git/packed-refs (including the '#' line; /^[#^]/d).
->>
->> A quick way to reproduce this with git.git master is:
->>
->> git tag -f test-tag HEAD~10
->> git replace -f HEAD $(git --no-replace-objects cat-file commit HEAD =
-\
->>   | sed 's/@/@test/' | git hash-object --stdin -t commit -w)
->> ./git describe
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> Thanks for the bug report.
+>> (3)
+>> 	# An example hook ...
+>> 	#
+>> 	# Warning: this script is no longer actively maintained.  Consider
+>> 	# switching to ...
+>>
+>> I prefer (2), which makes it clear to the reader that it is dangerous
+>> to keep using the script (since no one is actively chasing down bugs)
+>> while also making it clear why a potentially buggy script with a good
+>> natural successor is still in contrib for now.  What do you think?
 >
-> I think the cause of this bug is that peel_entry() is causing a neste=
-d
-> call to do_for_each_entry() to look up the replace reference, which
-> resets current_ref to NULL between the test and the dereference of
-> current_ref in peel_ref().
+> I don't think it is dangerous to keep using the old script. If you look
+> at its history, it's pretty stable these day. I think it has known bugs
+> in new revision detections that are fixed by git-multimail, but nothing
+> really blocking IMHO.
 >
-> Unfortunately, I cannot reproduce the failure by following your recip=
-e
-> (though I didn't have a lot of time yet for this).  I suppose that my
-> repo starts out in a slightly different state than yours and therefor=
-e I
-> don't get the same results.  If you could find a recipe to reproduce =
-the
-> problem, starting either with an empty repo, or perhaps a fresh clone=
- of
-> git.git, and double-check that you don't have any unusual config opti=
-ons
-> that might be affecting things, that would be very helpful.
+> There are two good reasons to use it: 1) you already use it, and you're
+> too lazy to change (e.g. because it's packaged by Debian and is already
+> there on your server), and 2) you don't have Python on your server.
 
-Hmm, yes, just creating a new tag doesn't break in another
-freshly-cloned repo, either.
+Well said.
 
-However,
+> I think the notice still deserve the "***NOTICE***" or whatever makes it
+> visible enough to distinguish it from the traditional licence &
+> non-warranty header, but I don't think we should kill the old script too
+> early.
 
-> =E2=80=A6or if I remove all "peeled" lines from .git/packed-refs (inc=
-luding the '#' line; /^[#^]/d).
-
-still works for reproducing the crash. When packed-refs does not have
-any peeled refs, older git versions do it manually (I assume for
-compatibility with even older git versions), while the latest one
-crashes. This recipe should work:
-
-git pack-refs --all --prune
-sed -i '/^[#^]/d' .git/packed-refs
-git replace -f HEAD $(git --no-replace-objects cat-file commit HEAD \
-    | sed 's/@/@test/' | git hash-object --stdin -t commit -w)
-~/src/git/git describe
-
---
-Mantas Mikul=C4=97nas <grawity@gmail.com>
+True.  I personally felt that Jonathan's (1) read the most natural
+(i.e. showing no strong preference, just let the users decide).
