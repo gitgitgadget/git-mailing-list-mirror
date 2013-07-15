@@ -1,146 +1,72 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCHv2 3/3] l10n: de.po: switch from pure German to German+English (part 3)
-Date: Mon, 15 Jul 2013 23:53:49 +0200
-Message-ID: <877ggr1ocy.fsf@hexa.v.cablecom.net>
-References: <1371057331-3917-1-git-send-email-ralf.thielow@gmail.com>
-	<1373478890-8480-1-git-send-email-ralf.thielow@gmail.com>
-	<1373478890-8480-2-git-send-email-ralf.thielow@gmail.com>
-	<1373478890-8480-3-git-send-email-ralf.thielow@gmail.com>
-	<1373478890-8480-4-git-send-email-ralf.thielow@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] howto: Use all-space indentation in ASCII art
+Date: Mon, 15 Jul 2013 15:00:17 -0700
+Message-ID: <7v61wba3gu.fsf@alter.siamese.dyndns.org>
+References: <20130715164658.GA8675@bottich>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <trast@student.ethz.ch>, <jk@jk.gs>, <stimming@tuhh.de>,
-	<git@vger.kernel.org>
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 15 23:53:58 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nanako Shiraishi <nanako3@lavabit.com>,
+	Thomas Ackermann <th.acker@arcor.de>
+To: Dirk Wallenstein <halsmit@t-online.de>
+X-From: git-owner@vger.kernel.org Tue Jul 16 00:00:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyqiU-0007di-0V
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 23:53:58 +0200
+	id 1Uyqoi-0002gg-Tc
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 00:00:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758128Ab3GOVxw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jul 2013 17:53:52 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:32956 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758116Ab3GOVxv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jul 2013 17:53:51 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 15 Jul
- 2013 23:53:49 +0200
-Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 15 Jul
- 2013 23:53:50 +0200
-In-Reply-To: <1373478890-8480-4-git-send-email-ralf.thielow@gmail.com> (Ralf
-	Thielow's message of "Wed, 10 Jul 2013 19:54:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S1755310Ab3GOWAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 18:00:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58141 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755095Ab3GOWAU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 18:00:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DBD231B26;
+	Mon, 15 Jul 2013 22:00:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PbCXLONIv5h1mT0xJsAAUaCghP8=; b=twtKMh
+	6MyaosQUHamfucQvsBG09mahiZG1J4rbf4QM4SAwhGxBNa6PKvw/2VDhfp9VSK+Y
+	EkuB+uCju82bp2zbxXLRdPHiYamI13U5asCJe+dQXD7TDHSPwZjdn0AxsIztCHpE
+	C4+2xP5z3NrGzd38u6icRRTsKlJmubHolPf+Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LSWzs1JVDdVZMXxqx7PUAfugF1QuXPjM
+	fLW32cLHtllCCl1efrpUSG0pO2dG/vaOcUmLn7NNhXVxrxO1I18IVRZ86a29DiAn
+	LHFnCSpGj4m0IecbeCqnbGtufTcvCDzjmroBiYlmW89ImdWFjfDDxeXQCPHS/Ra5
+	n1J7E25BLDE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 751C131B25;
+	Mon, 15 Jul 2013 22:00:19 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD33231B23;
+	Mon, 15 Jul 2013 22:00:18 +0000 (UTC)
+In-Reply-To: <20130715164658.GA8675@bottich> (Dirk Wallenstein's message of
+	"Mon, 15 Jul 2013 18:46:58 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F0234B12-ED99-11E2-A772-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230529>
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
+Dirk Wallenstein <halsmit@t-online.de> writes:
 
->  #: builtin/remote.c:187
->  msgid "specifying branches to track makes sense only with fetch mirr=
-ors"
->  msgstr ""
-> -"Die Angabe von zu folgenden Zweigen kann nur mit dem Anfordern von =
-"
-> +"Die Angabe von zu folgenden Branches kann nur mit dem Anfordern von=
- "
->  "Spiegelarchiven verwendet werden."
+> Keep the sketch aligned independent of the tabstop width used.
 
-Spiegelarchiv -> Spiegel-Repository
+Thanks.
 
-> @@ -8058,18 +8057,18 @@ msgid_plural ""
->  "Note: Some branches outside the refs/remotes/ hierarchy were not re=
-moved;\n"
->  "to delete them, use:"
->  msgstr[0] ""
-> -"Hinweis: Ein Zweig au=C3=9Ferhalb der /refs/remotes/ Hierachie wurd=
-e nicht "
-> +"Hinweis: Ein Branch au=C3=9Ferhalb der /refs/remotes/ Hierachie wur=
-de nicht "
->  "gel=C3=B6scht;\n"
->  "um diesen zu l=C3=B6schen, benutzen Sie:"
->  msgstr[1] ""
-> -"Hinweis: Einige Zweige au=C3=9Fer der /refs/remotes/ Hierarchie wur=
-den nicht "
-> +"Hinweis: Einige Branches au=C3=9Fer der /refs/remotes/ Hierarchie w=
-urden nicht "
->  "entfernt;\n"
->  "um diese zu entfernen, benutzen Sie:"
+This is a source text to be formatted into HTML, isn't it?
 
-Not new, but refs/remotes/ probably shouldn't have a leading slash (at
-least that's the convention in English).
+In our sources, a HT indents to multiple of 8 columns.  As long as
+the output HTML produced from the source can be seen on a terminal
+with any tab-width correctly, I do not see any reason to apply this
+patch.
 
->  #: builtin/remote.c:998
->  #, c-format
->  msgid "rebases onto remote %s"
-> -msgstr "baut neu auf externen Zweig %s auf"
-> +msgstr "baut neu auf Remote-Branch %s auf"
-
-In the glossary you have
-
-    rebase       =3D "rebase" benutzen
-    rebase       =3D Rebase
-
-So "neuaufbauen" seems to be out?
-
->  #: builtin/show-branch.c:675
->  msgid "show commits where no parent comes before its children"
-> -msgstr "zeigt Versionen, wo kein Elternteil vor seinem Kind kommt"
-> +msgstr "zeigt Commits, wo kein Eltern-Commit vor seinem Kind-Commit =
-kommt"
-
-Not specific to the German versions, but the "where" should really be
-"in such a way", e.g. simply "so dass".
-
-> @@ -8871,23 +8869,23 @@ msgid ""
->  "git tag [-a|-s|-u <key-id>] [-f] [-m <msg>|-F <file>] <tagname> [<h=
-ead>]"
->  msgstr ""
->  "git tag [-a|-s|-u <Schl=C3=BCssel-id>] [-f] [-m <Nachricht>|-F <Dat=
-ei>] "
-> -"<Markierungsname> [<Zweig>]"
-> +"<Tagname> [<Branch>]"
-
-Not new, but <head> here should be <Commit>.
-
-(Yes I know, it can even be another object type.  Let's not confuse the
-users.)
-
-> @@ -9735,8 +9731,8 @@ msgstr ""
->  #: git-pull.sh:203
->  msgid "updating an unborn branch with changes added to the index"
->  msgstr ""
-> -"Aktualisiere eine ungeborenen Zweig mit =C3=84nderungen, die zur Be=
-reitstellung "
-> -"hinzugef=C3=BCgt wurden"
-> +"Aktualisiere eine ungeborenen Branch mit =C3=84nderungen, die zum C=
-ommit "
-> +"vorgemerkt sind"
-
-Gender mismatch in "eine ungeborenen".
-
->  #: git-submodule.sh:744
->  #, sh-format
->  msgid "Unable to find current revision in submodule path '$prefix$sm=
-_path'"
->  msgstr ""
-> -"Konnte aktuelle Revision in Unterprojekt-Pfad '$prefix$sm_path' nic=
-ht finden."
-> +"Konnte aktuelle Revision in Submodul-Pfad '$prefix$sm_path' nicht f=
-inden."
-
-Revision -> Commit as per the glossary?
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Am I missing something???
