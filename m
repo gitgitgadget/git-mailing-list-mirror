@@ -1,83 +1,124 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v2 1/2] send-email: squelch warning from Net::SMTP::SSL
-Date: Mon, 15 Jul 2013 05:07:41 +0200
-Message-ID: <51E3677D.6040903@web.de>
-References: <1373025947-26495-1-git-send-email-artagnon@gmail.com> <1373025947-26495-2-git-send-email-artagnon@gmail.com> <51D82970.5070108@web.de> <20130706143256.GX862789@vauxhall.crustytoothpaste.net> <51D83C7E.8000902@web.de> <CALkWK0kAfZLqyCO+e+0PH0-MmjMYX1nJmit5Qb5L3Qf6nyhC9Q@mail.gmail.com> <20130714170316.GE11097@vauxhall.crustytoothpaste.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/6] templates: Use heredoc in pre-commit hook
+Date: Sun, 14 Jul 2013 20:22:43 -0700
+Message-ID: <7vwqosfqws.fsf@alter.siamese.dyndns.org>
+References: <CAD77+gSX1ggBWHhGwxRUBPGQ6ONJd76SO-3tU05QT47iKCv9hg@mail.gmail.com>
+	<1373818879-1698-1-git-send-email-richih.mailinglist@gmail.com>
+	<1373818879-1698-2-git-send-email-richih.mailinglist@gmail.com>
+	<20130714180916.GB1267@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7Zn?= =?UTF-8?B?ZXJzaGF1c2Vu?= 
-	<tboegi@web.de>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Mon Jul 15 05:07:56 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 15 05:22:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyZ8m-0006PY-26
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 05:07:56 +0200
+	id 1UyZND-0004Vn-Dz
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 05:22:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753889Ab3GODHw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jul 2013 23:07:52 -0400
-Received: from mout.web.de ([212.227.15.14]:58225 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753295Ab3GODHv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jul 2013 23:07:51 -0400
-Received: from [192.168.1.18] ([68.61.5.157]) by smtp.web.de (mrweb001) with
- ESMTPA (Nemesis) id 0LpwMZ-1UUBrM3kGN-00ficp; Mon, 15 Jul 2013 05:07:45 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <20130714170316.GE11097@vauxhall.crustytoothpaste.net>
-X-Provags-ID: V03:K0:HJPhZEJZEp7/eCX3jP1O9Eou6Q5G1XC3cLvA5IQNMyGCi2AtexD
- jMT1XcuGpsFSGuw+gslp4hI+19H8GniVX4YdWSzIKPvDO+V9cvio4eoh98+H52RwwntHRG2
- U57x4hlDErfpj91GCX3A9w1zQhjkGxdejbV68FouPdJ/oaRv3fYQFl3Ieyx6OpmGfU6/PGn
- hR14qgNkGsPwAxOK3tE9w==
+	id S1753911Ab3GODWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Jul 2013 23:22:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57786 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753871Ab3GODWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jul 2013 23:22:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3ABC12835A;
+	Mon, 15 Jul 2013 03:22:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7dERnlX14I56q9siFyHfWf86Tl0=; b=jskGDm
+	jsMhlf9GnLZ8Mg2Q568eG2vRKuoY2MgJhkD7fmM/dMCvGd+kFk1K7tsAw2ddU7l9
+	3xUq2AdxA2ALbVu7dMK8VcI77DaVHFW2jNFfKKD+afOt7KTguKECd7rpWUuTIYX4
+	bpxL287bbZj5BCNMjbLRBL+OlBtlHR/QltCw4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uFBvsSBXpkjqZUC2PRdlnlsFjhai0IF0
+	1FDDypfmPcK5LW6tDtZ2knVgRV24nAQgcKtCOSnnDuL4+qqLg34nB8pC/AGjfXBu
+	u3W1J1u4KHcHeZCSf7b1RILFXBYFC8yDAzIG92fKuWeV5ju9CexHPERlYC4c6M6E
+	sNUlPHMesV0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E43D28359;
+	Mon, 15 Jul 2013 03:22:46 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 68F2328354;
+	Mon, 15 Jul 2013 03:22:45 +0000 (UTC)
+Importance: high
+In-Reply-To: <20130714180916.GB1267@google.com> (Jonathan Nieder's message of
+	"Sun, 14 Jul 2013 11:09:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D1269422-ECFD-11E2-86A4-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230406>
 
-On 2013-07-14 19.03, brian m. carlson wrote:
-> On Sun, Jul 14, 2013 at 07:19:10PM +0530, Ramkumar Ramachandra wrote:
->> Torsten B=C3=B6gershausen wrote:
->>> /usr/bin/perl -MIO::Socket::SSL -e 'print "$IO::Socket::SSL::VERSIO=
-N\n";'
->>> 1.22
->>
->> This is ancient!  (I have 1.84).  Is it not possible to do an
->> ssl-verify-peer in older versions (is it exported as something else)=
-?
->> The older versions don't display the warning anyway, and this series
->> is about squelching the warning in newer versions.  Does
->>
->>   require IO::Socket::SSL qw(SSL_VERIFY_NONE SSL_VERIFY_PEER) or pri=
-nt
->> "warning: not using SSL_VERIFY_PEER due to outdated IO::Socket::SSL"
->=20
-> require doesn't take a list of symbols to import, and the import dies=
- if
-> it fails.  You need:
->=20
-> require IO::Socket::SSL;
-> eval {
-> 	IO::Socket::SSL->import(qw(SSL_VERIFY_NONE SSL_VERIFY_PEER));
-> };
-> if ($@) {
-> 	warn "Not using SSL_VERIFY_PEER due to outdated IO::Socket::SSL\n";
-> 	# Do something different here.
-> }
->=20
-> I didn't stick the require in the eval because git-send-email will fa=
-il
-> in this case anyway if you don't have it, since Net::SMTP::SSL requir=
-es
-> it.  Let me know if you want a patch for this on top of the existing =
-two
-> in this series and I'll provide one.
->=20
-Please send a patch if possible.
-I can volonteer to test it here, but it can take a couple of days to re=
-spond.
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+>> Based on 98770971aef8d1cbc78876d9023d10aa25df0526 in original patch
+>> series from 2013-06-10.
+>
+> Please don't include this.  The audience for the commit message
+> doesn't have that commit to compare to.
+>
+> If you want to preserve the original date, the way to do that is
+> a "Date:" field at the top of the message body.
+>
+> 	Date: Fri, 28 Jun 2013 21:16:19 +0530
+
+And you generally should not do that, either.
+
+The first date of the publication of _this_ version is recorded on
+the Date: header of this message, not the "original path series"
+that this round which is _based on_ (meaning, "different from") that
+old one.  We do not want to see the date of the old one, either.
+
+>
+> 	Spawning a new subprocess for ...
+>
+> [...]
+>> --- a/templates/hooks--pre-commit.sample
+>> +++ b/templates/hooks--pre-commit.sample
+>> @@ -31,18 +31,19 @@ if [ "$allownonascii" != "true" ] &&
+>>  	test $(git diff --cached --name-only --diff-filter=A -z $against |
+>>  	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
+>>  then
+>> -	echo "Error: Attempt to add a non-ascii file name."
+>> -	echo
+>> -	echo "This can cause problems if you want to work"
+>> -	echo "with people on other platforms."
+>> -	echo
+>> -	echo
+>> -	echo "If you know what you are doing you can disable this"
+>> -	echo "check using:"
+>> -	echo
+>> -	echo "  git config hooks.allownonascii true"
+>> -	echo
+>> +	cat <<-EOF
+>> +Error: Attempt to add a non-ascii file name.
+>
+> Using
+>
+> 	cat <<\EOF
+>
+> would make reading easier since the reader then doesn't have to worry
+> about whether the text being cat'ed is indented or uses variable
+> substitutions.
+>
+>> -	echo "To be portable it is advisable to rename the file ..."
+>> +To be portable it is advisable to rename the file.
+>
+> Yes, nice.
+>
+> With the above nits addressed, this change looks to be going in the
+> right direction.  Thanks.
+>
+> Hope that helps,
+> Jonathan
