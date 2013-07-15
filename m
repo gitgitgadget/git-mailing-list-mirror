@@ -1,112 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jul 2013, #05; Fri, 12)
-Date: Mon, 15 Jul 2013 12:32:38 -0700
-Message-ID: <7vy597aaax.fsf@alter.siamese.dyndns.org>
-References: <7vk3kvie4h.fsf@alter.siamese.dyndns.org>
-	<vpqd2qkgr19.fsf@anie.imag.fr>
+Subject: Re: What's cooking in git.git (Jul 2013, #03; Tue, 9)
+Date: Mon, 15 Jul 2013 12:33:50 -0700
+Message-ID: <7vtxjvaa8x.fsf@alter.siamese.dyndns.org>
+References: <7vr4f7tjo0.fsf@alter.siamese.dyndns.org>
+	<51E436B5.6000303@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jul 15 21:32:47 2013
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Mon Jul 15 21:33:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyoVq-0003BA-9s
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 21:32:46 +0200
+	id 1UyoWz-0003m2-FN
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 21:33:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754740Ab3GOTcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 15:32:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38582 "EHLO
+	id S1754764Ab3GOTdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 15:33:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44313 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754358Ab3GOTcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 15:32:41 -0400
+	id S1754668Ab3GOTdx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 15:33:53 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21FC43155C;
-	Mon, 15 Jul 2013 19:32:41 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9971D3161A;
+	Mon, 15 Jul 2013 19:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3GxJZXoMLgw+QYC2A9I0y0tuJk0=; b=jmnO5G
-	UUZ1u8TsIJgOAKYJVFEwn+oVnRLiMeXh7t7KllWW01+iXzfcWabNxAeg0tmY3kME
-	coRonMyf5L7z2OIaHrB0LZNYxojN9R3zOHFusu/7QrE2RY5NTkHtXWwjmkpnHs2k
-	1rUxUPuT3KMm01vZH8c67G9koD7F3EV/OMjUU=
+	:content-type; s=sasl; bh=4OD+CpW4lv7xCkMhJYmcoM6DVRI=; b=onqylR
+	gaLZjeevgLgYiKs14rHE3eXWff1qlwXKATQRaYiCSoJPcvsylIgM/oLz16p8zij7
+	QxMIYAyZ2WmNKYOFHs7EuI8dPgGFMOLYsHgvwWgocUjGgM1bsOL1DYX+pHXPjrVx
+	858njIoRXmSWBROI1meb6rE6D6qW2UBQptoIo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=a0wv7EFHpiefw9M5RE7nUBQ7C6DJkMwh
-	P+zZNlHumxU/PZQXiJ6eRd4sPg6g2kjRHcL58egg4VT6njoQ0aZal5eiWcwhrO6U
-	2KcbKB2MdZlONKL1b7Gx0XrLeSneJFIyggIcNF1Jb2zTAyq5atJVYI2wb7rv4PhB
-	eU25vhA31A4=
+	:content-type; q=dns; s=sasl; b=ANEumHv8TK9Os+Wne1gC0xNG+LaDwsY/
+	367zFbkmnMBeEMopmd51iUJezP1phXP0bMn4vYTnwRn4o1g1J7avLqwLzRUM/Qyw
+	SzBrre0RaLoWH/UYSUAErJqmgVFRGPw1sdbWgMw4VoIMniK9y7pGBAT4pBCR4QaP
+	yk7Z2zvk73w=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1308B3155A;
-	Mon, 15 Jul 2013 19:32:41 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DBCD31619;
+	Mon, 15 Jul 2013 19:33:52 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 543FF31555;
-	Mon, 15 Jul 2013 19:32:40 +0000 (UTC)
-In-Reply-To: <vpqd2qkgr19.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
-	15 Jul 2013 10:34:42 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E770131614;
+	Mon, 15 Jul 2013 19:33:51 +0000 (UTC)
+In-Reply-To: <51E436B5.6000303@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Mon, 15 Jul 2013 18:51:49 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 50060E3A-ED85-11E2-A736-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7AB3881A-ED85-11E2-AFE9-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230518>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+>> [Stalled]
+>> 
+>> * rj/read-default-config-in-show-ref-pack-refs (2013-06-17) 3 commits
+>>  - ### DONTMERGE: needs better explanation on what config they need
+>>  - pack-refs.c: Add missing call to git_config()
+>>  - show-ref.c: Add missing call to git_config()
+>> 
+>>  The changes themselves are probably good, but it is unclear what
+>>  basic setting needs to be read for which exact operation.
+>> 
+>>  Waiting for clarification.
+>>  $gmane/228294
 >
->> * bp/mediawiki-preview (2013-07-08) 7 commits
->>   (merged to 'next' on 2013-07-12 at 870890a)
->>  + git-remote-mediawiki: add preview subcommand into git mw
->>  + git-remote-mediawiki: add git-mw command
->>  + git-remote-mediawiki: factoring code between git-remote-mediawiki and Git::Mediawiki
->>  + git-remote-mediawiki: update tests to run with the new bin-wrapper
->>  + git-remote-mediawiki: add a git bin-wrapper for developement
->>  + wrap-for-bin: make bin-wrappers chainable
->>  + git-remote-mediawiki: introduction of Git::Mediawiki.pm
->>
->>  Add a command to allow previewing the contents locally before
->>  pushing it out, when working with a MediaWiki remote.
->>
->>  I personally do not think this belongs to Git.  If you are working
->>  on a set of AsciiDoc source files, you sure do want to locally
->>  format to preview what you will be pushing out, and if you are
->>  working on a set of C or Java source files, you do want to test it
->>  before pushing it out, too.  That kind of thing belongs to your
->>  build script, not to your SCM.
->
-> There's one big difference: when you use AsciiDoc/C/Java/... your build
-> system works locally. "git mw preview" uses the remote wiki to do the
-> rendering.
->
-> It doesn't do so with the remote-helper interface, but uses
-> the same remote and same configuration as the remote-helper, and it
-> shares some code with it. It seems logical to let it leave next to the
-> remote-helper (but clearly in contrib/, not in the core Git).
+> Sorry, still on my TODO list. (Having said that, I'm no longer sure
+> that these patches do the right thing! ;-)
 
-Hmph, I do not see it fundamentally different from using distcc to
-compile not locally.
-
-Your build infrastructure can (ab)use the configuration mechanism
-for Git to store necessary information to find out what workers are
-willing to help your compilation.  The mediawiki-preview program is
-talking over MediaWiki protocol, and it may reuse the same
-credential information stored in the config to talk to the same
-MediaWiki installation in connect_maybe() and sending the updated
-page contents to ask it to render, but I do not see a fundamental
-reason why the worker has to be the same MediaWiki installation as
-your "repository".
-
-So, no, I do not see a "big" difference there.
-
-That does not mean I'd retract what I already said in the previous
-issue of "What's cooking", i.e.
-
->> But I'll let it pass, as this is only a contrib/ thing.
-
-;-)
+Then let's discard them without prejudice.
