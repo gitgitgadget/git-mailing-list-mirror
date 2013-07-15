@@ -1,170 +1,112 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [RFC/PATCH] Add the NO_SENTINEL build variable
-Date: Mon, 15 Jul 2013 18:38:22 +0100
-Message-ID: <51E4338E.4090003@ramsay1.demon.co.uk>
+Subject: [PATCH] Fix some sparse warnings
+Date: Mon, 15 Jul 2013 18:31:29 +0100
+Message-ID: <51E431F1.6050002@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
 	GIT Mailing-list <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 15 19:53:42 2013
+X-From: git-owner@vger.kernel.org Mon Jul 15 19:53:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uymxs-0003Ds-Ti
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 19:53:37 +0200
+	id 1Uymy3-0003L1-UK
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 19:53:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753536Ab3GORxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 13:53:30 -0400
-Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:49047 "EHLO
+	id S1753590Ab3GORxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 13:53:38 -0400
+Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:49017 "EHLO
 	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753516Ab3GORx2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 13:53:28 -0400
+	with ESMTP id S1752910Ab3GORxZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 13:53:25 -0400
 Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 2521C1280C8;
-	Mon, 15 Jul 2013 18:53:27 +0100 (BST)
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id BAC631280B5;
+	Mon, 15 Jul 2013 18:53:23 +0100 (BST)
 Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 048DB1280A8;
-	Mon, 15 Jul 2013 18:53:26 +0100 (BST)
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id D596D1280A8;
+	Mon, 15 Jul 2013 18:53:22 +0100 (BST)
 Received: from [193.237.126.196] (unknown [193.237.126.196])
 	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
-	Mon, 15 Jul 2013 18:53:25 +0100 (BST)
+	Mon, 15 Jul 2013 18:53:21 +0100 (BST)
 User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
 X-MDF-HostID: 22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230502>
 
+
+Sparse issues three "Using plain integer as NULL pointer" warnings.
+Each warning relates to the use of an '{0}' initialiser expression
+in the declaration of an 'struct object_info'. The first field of
+this structure has pointer type. Thus, in order to suppress these
+warnings, we replace the initialiser expression with '{NULL}'.
 
 Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 ---
 
 Hi Jeff,
 
-One of the three gcc compilers that I use does not understand the
-sentinel function attribute. (so, it spews 108 warning messages)
+If you need to re-roll the patches in your 'jk/in-pack-size-measurement'
+branch, could you please squash this (or something like it) into the
+patches equivalent to commit 7c07385d ("zero-initialize object_info structs",
+07-07-2013) [sha1_file.c and streaming.c] and commit 778d263a ("cat-file: add
+--batch-disk-sizes option", 07-07-2013) [builtin/cat-file.c].
 
-Is this, or something like it, too ugly for you to squash into
-your patch? :-D
+Thanks!
 
 ATB,
 Ramsay Jones
 
 
- Makefile          | 6 ++++++
- argv-array.h      | 2 +-
- builtin/revert.c  | 4 ++--
- exec_cmd.h        | 2 +-
- git-compat-util.h | 6 ++++++
- run-command.h     | 2 +-
- 6 files changed, 17 insertions(+), 5 deletions(-)
+ builtin/cat-file.c | 2 +-
+ sha1_file.c        | 2 +-
+ streaming.c        | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 9c0da06..63b539c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -224,6 +224,9 @@ all::
- # Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile feedback,
- # as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
- #
-+# Define NO_SENTINEL if you have a compiler which does not understand the
-+# sentinel function attribute.
-+#
- # Define USE_NSEC below if you want git to care about sub-second file mtimes
- # and ctimes. Note that you need recent glibc (at least 2.2.4) for this, and
- # it will BREAK YOUR LOCAL DIFFS! show-diff and anything using it will likely
-@@ -1232,6 +1235,9 @@ endif
- ifdef NO_NORETURN
- 	BASIC_CFLAGS += -DNO_NORETURN
- endif
-+ifdef NO_SENTINEL
-+	BASIC_CFLAGS += -DNO_SENTINEL
-+endif
- ifdef NO_NSEC
- 	BASIC_CFLAGS += -DNO_NSEC
- endif
-diff --git a/argv-array.h b/argv-array.h
-index e805748..31bc492 100644
---- a/argv-array.h
-+++ b/argv-array.h
-@@ -15,7 +15,7 @@ void argv_array_init(struct argv_array *);
- void argv_array_push(struct argv_array *, const char *);
- __attribute__((format (printf,2,3)))
- void argv_array_pushf(struct argv_array *, const char *fmt, ...);
--__attribute__((sentinel))
-+SENTINEL(0)
- void argv_array_pushl(struct argv_array *, ...);
- void argv_array_pop(struct argv_array *);
- void argv_array_clear(struct argv_array *);
-diff --git a/builtin/revert.c b/builtin/revert.c
-index b8b5174..6aedc18 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -54,7 +54,7 @@ static int option_parse_x(const struct option *opt,
- 	return 0;
- }
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index bf12883..860576e 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -135,7 +135,7 @@ static int batch_one_object(const char *obj_name, int print_contents)
+ 	if (print_contents == BATCH)
+ 		contents = read_sha1_file(sha1, &type, &size);
+ 	else if (print_contents == BATCH_DISK_SIZES) {
+-		struct object_info oi = {0};
++		struct object_info oi = {NULL};
+ 		oi.disk_sizep = &size;
+ 		type = sha1_object_info_extended(sha1, &oi);
+ 	}
+diff --git a/sha1_file.c b/sha1_file.c
+index 4c2365f..e4ab0a4 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2440,7 +2440,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
  
--__attribute__((sentinel))
-+SENTINEL(0)
- static void verify_opt_compatible(const char *me, const char *base_opt, ...)
+ int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
  {
- 	const char *this_opt;
-@@ -71,7 +71,7 @@ static void verify_opt_compatible(const char *me, const char *base_opt, ...)
- 		die(_("%s: %s cannot be used with %s"), me, this_opt, base_opt);
- }
+-	struct object_info oi = {0};
++	struct object_info oi = {NULL};
  
--__attribute__((sentinel))
-+SENTINEL(0)
- static void verify_opt_mutually_compatible(const char *me, ...)
+ 	oi.sizep = sizep;
+ 	return sha1_object_info_extended(sha1, &oi);
+diff --git a/streaming.c b/streaming.c
+index cac282f..5710065 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -135,7 +135,7 @@ struct git_istream *open_istream(const unsigned char *sha1,
+ 				 struct stream_filter *filter)
  {
- 	const char *opt1, *opt2 = NULL;
-diff --git a/exec_cmd.h b/exec_cmd.h
-index 307b55c..75c0a82 100644
---- a/exec_cmd.h
-+++ b/exec_cmd.h
-@@ -7,7 +7,7 @@ extern const char *git_exec_path(void);
- extern void setup_path(void);
- extern const char **prepare_git_cmd(const char **argv);
- extern int execv_git_cmd(const char **argv); /* NULL terminated */
--__attribute__((sentinel))
-+SENTINEL(0)
- extern int execl_git_cmd(const char *cmd, ...);
- extern const char *system_path(const char *path);
+ 	struct git_istream *st;
+-	struct object_info oi = {0};
++	struct object_info oi = {NULL};
+ 	const unsigned char *real = lookup_replace_object(sha1);
+ 	enum input_source src = istream_source(real, type, &oi);
  
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 9f1eaca..e846e01 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -300,6 +300,12 @@ extern char *gitbasename(char *);
- #endif
- #endif
- 
-+#if defined(__GNUC__) && !defined(NO_SENTINEL)
-+#define SENTINEL(n) __attribute__((sentinel(n)))
-+#else
-+#define SENTINEL(n)
-+#endif
-+
- #include "compat/bswap.h"
- 
- #ifdef USE_WILDMATCH
-diff --git a/run-command.h b/run-command.h
-index 0a47679..8e75671 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -46,7 +46,7 @@ int finish_command(struct child_process *);
- int run_command(struct child_process *);
- 
- extern char *find_hook(const char *name);
--__attribute__((sentinel))
-+SENTINEL(0)
- extern int run_hook(const char *index_file, const char *name, ...);
- 
- #define RUN_COMMAND_NO_STDIN 1
 -- 
 1.8.3
