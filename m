@@ -1,100 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/2] post-receive-email: deprecate script in favor of git-multimail
-Date: Mon, 15 Jul 2013 06:38:22 -0700
-Message-ID: <7vip0cdju9.fsf@alter.siamese.dyndns.org>
-References: <1373789343-3189-1-git-send-email-mhagger@alum.mit.edu>
-	<1373789343-3189-3-git-send-email-mhagger@alum.mit.edu>
-	<20130715060245.GD2962@elie.Belkin> <vpqoba4gr9h.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Chris Hiestand <chrishiestand@gmail.com>,
-	Marc Branchaud <mbranchaud@xiplink.com>,
-	Michiel Holtkamp <git@elfstone.nl>,
-	Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	John Keeping <john@keeping.me.uk>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jul 15 15:38:31 2013
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH] Use compat/regex on Cygwin
+Date: Mon, 15 Jul 2013 10:10:53 -0400
+Message-ID: <1373897453-18799-1-git-send-email-mlevedahl@gmail.com>
+Cc: Mark Levedahl <mlevedahl@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 15 16:11:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uyiz0-00052T-RR
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 15:38:31 +0200
+	id 1UyjUb-0006r5-VL
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 16:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755439Ab3GONi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 09:38:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63105 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755349Ab3GONi0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 09:38:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33DF92FD51;
-	Mon, 15 Jul 2013 13:38:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=32OLM8PoNQ6MSvc4HAAru2Rl19c=; b=ZohFTA
-	tXgzJnuln/qOQ0o4jKOoyBTKMBfXsd+ay6s6XHziNyf18Up8op7i8qH+gafNFIZ9
-	o9HT6ScXeTRLmeQ1deHpwPbLHgzYMW1TVerHy899EUquyToHBJ8Q3u6J5aVtsYUd
-	kVEoCoItTjS7uki7gmiPc5g1YmamuCQ8dhTEY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ngi16AfKuUOfBhRpdvDhEKIMFEVjM8Ww
-	g95rPQKssjPbYAUhVsiuN5JdPLKPMZPXC2RV9hXb7v6SZsdc6jqvBZWHSUnDjETo
-	sCZDlAzojCPxxGMCyD+pl0kYfcZ1VsdkITAuRdhWke952tYHNPkKS+BbR2Gpw7qH
-	th6l9SnAxtE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26CF82FD50;
-	Mon, 15 Jul 2013 13:38:25 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 678062FD4E;
-	Mon, 15 Jul 2013 13:38:24 +0000 (UTC)
-In-Reply-To: <vpqoba4gr9h.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
-	15 Jul 2013 10:29:46 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D28EEEB2-ED53-11E2-A8FB-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757293Ab3GOOLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 10:11:05 -0400
+Received: from mail-qe0-f49.google.com ([209.85.128.49]:60449 "EHLO
+	mail-qe0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757136Ab3GOOLE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 10:11:04 -0400
+Received: by mail-qe0-f49.google.com with SMTP id cz11so6354370qeb.22
+        for <git@vger.kernel.org>; Mon, 15 Jul 2013 07:11:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=T2hY6UwAoGRisP0j3tCk+B99C9Dc8YfjvGwaoxOMeXQ=;
+        b=R2Vb76DQ8GCNyS5ZJ/1FLTg4tLGGDSv9B03d/VqvVJWWbXYr/NTH03G2NqiHDY2amu
+         XjBjp+0TdNBPWtKZZSEor4QkvxKgq1t8ahwAw2mXJyqFTNo8ai5GvR+G5VU+mmvcvhFp
+         mGccd4vUHWrLjUNvTv1By7TM1bkYJDanZOUj4DZS10YVtY74nmksLXBCCJofjDwKorcL
+         zH+uXzuWlSt/L0MZNR6M59vT8ddlc8ZhnUy3DCLxrwXonti82VCY5J6K4hNqBwcewYRH
+         wZckLA4fdYOLmVOYX7iXoNiiKM1pVp889GrJsjW9HeTBOTwin9FhUdp4Nrj81IccQKq9
+         +TGw==
+X-Received: by 10.224.57.83 with SMTP id b19mr42828478qah.78.1373897463155;
+        Mon, 15 Jul 2013 07:11:03 -0700 (PDT)
+Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
+        by mx.google.com with ESMTPSA id l2sm55480942qez.2.2013.07.15.07.11.01
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Jul 2013 07:11:02 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2.0.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230470>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Cygwin's regex library does not pass git's tests, so don't use it. This
+fixes failures in t4018 and t4034.
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> (3)
->> 	# An example hook ...
->> 	#
->> 	# Warning: this script is no longer actively maintained.  Consider
->> 	# switching to ...
->>
->> I prefer (2), which makes it clear to the reader that it is dangerous
->> to keep using the script (since no one is actively chasing down bugs)
->> while also making it clear why a potentially buggy script with a good
->> natural successor is still in contrib for now.  What do you think?
->
-> I don't think it is dangerous to keep using the old script. If you look
-> at its history, it's pretty stable these day. I think it has known bugs
-> in new revision detections that are fixed by git-multimail, but nothing
-> really blocking IMHO.
->
-> There are two good reasons to use it: 1) you already use it, and you're
-> too lazy to change (e.g. because it's packaged by Debian and is already
-> there on your server), and 2) you don't have Python on your server.
+Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+---
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-Well said.
-
-> I think the notice still deserve the "***NOTICE***" or whatever makes it
-> visible enough to distinguish it from the traditional licence &
-> non-warranty header, but I don't think we should kill the old script too
-> early.
-
-True.  I personally felt that Jonathan's (1) read the most natural
-(i.e. showing no strong preference, just let the users decide).
+diff --git a/config.mak.uname b/config.mak.uname
+index 7ac541e..6901597 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -165,6 +165,7 @@ ifeq ($(uname_O),Cygwin)
+ 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
+ 	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
++	NO_REGEX = UnfortunatelyYes
+ 	# There are conflicting reports about this.
+ 	# On some boxes NO_MMAP is needed, and not so elsewhere.
+ 	# Try commenting this out if you suspect MMAP is more efficient
+-- 
+1.8.3.2.0.13
