@@ -1,69 +1,80 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] Use compat/regex on Cygwin
-Date: Mon, 15 Jul 2013 10:10:53 -0400
-Message-ID: <1373897453-18799-1-git-send-email-mlevedahl@gmail.com>
-Cc: Mark Levedahl <mlevedahl@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 15 16:11:13 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit: Fix a memory leak in determine_author_info
+Date: Mon, 15 Jul 2013 07:42:56 -0700
+Message-ID: <7vehazevf3.fsf@alter.siamese.dyndns.org>
+References: <1373810463-7144-1-git-send-email-stefanbeller@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 15 16:43:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyjUb-0006r5-VL
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 16:11:10 +0200
+	id 1UyjzU-0000Gd-R0
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 16:43:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757293Ab3GOOLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 10:11:05 -0400
-Received: from mail-qe0-f49.google.com ([209.85.128.49]:60449 "EHLO
-	mail-qe0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757136Ab3GOOLE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 10:11:04 -0400
-Received: by mail-qe0-f49.google.com with SMTP id cz11so6354370qeb.22
-        for <git@vger.kernel.org>; Mon, 15 Jul 2013 07:11:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=T2hY6UwAoGRisP0j3tCk+B99C9Dc8YfjvGwaoxOMeXQ=;
-        b=R2Vb76DQ8GCNyS5ZJ/1FLTg4tLGGDSv9B03d/VqvVJWWbXYr/NTH03G2NqiHDY2amu
-         XjBjp+0TdNBPWtKZZSEor4QkvxKgq1t8ahwAw2mXJyqFTNo8ai5GvR+G5VU+mmvcvhFp
-         mGccd4vUHWrLjUNvTv1By7TM1bkYJDanZOUj4DZS10YVtY74nmksLXBCCJofjDwKorcL
-         zH+uXzuWlSt/L0MZNR6M59vT8ddlc8ZhnUy3DCLxrwXonti82VCY5J6K4hNqBwcewYRH
-         wZckLA4fdYOLmVOYX7iXoNiiKM1pVp889GrJsjW9HeTBOTwin9FhUdp4Nrj81IccQKq9
-         +TGw==
-X-Received: by 10.224.57.83 with SMTP id b19mr42828478qah.78.1373897463155;
-        Mon, 15 Jul 2013 07:11:03 -0700 (PDT)
-Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
-        by mx.google.com with ESMTPSA id l2sm55480942qez.2.2013.07.15.07.11.01
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 15 Jul 2013 07:11:02 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.2.0.13
+	id S1757609Ab3GOOnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 10:43:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59861 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757499Ab3GOOm7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 10:42:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6EE0E30C66;
+	Mon, 15 Jul 2013 14:42:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FkvH9oJXdsebVMAyQ1uXssG9YA8=; b=CE3/Lt
+	RyJBBS8fteg5pShaD56bTkbUI2AeTc5GorDCIugNxq47cmOZFs0Q1NMwovT5C18W
+	IqrKxrh1YOVlR8yLbKPESvBwUxrxvvTpE09BNth9d6U+mmvuV4j5tU23BNBCJWDT
+	HiXCnq4JXCTBkbvWAzTbQgIBQeQTPpEF4SKdQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yYUgO0guu4wVic1CGQrnOW79CdT8deyx
+	SvQ7DPfYiZ7dcbGkZ2DW9nQTgHhkH9vlqcvvN+kyvediNDNixy8sjAxm7AvFbG4U
+	ncFLXE5LRABeIotcj5di6+n5z1F43Jp6WxhUfbnwtq5LLvfQ8NwRST/8tZ3kyMaR
+	pKSAVUYlqw8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65E9A30C65;
+	Mon, 15 Jul 2013 14:42:58 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C321F30C5D;
+	Mon, 15 Jul 2013 14:42:57 +0000 (UTC)
+In-Reply-To: <1373810463-7144-1-git-send-email-stefanbeller@googlemail.com>
+	(Stefan Beller's message of "Sun, 14 Jul 2013 16:01:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D737E1FE-ED5C-11E2-B3EA-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230471>
 
-Cygwin's regex library does not pass git's tests, so don't use it. This
-fixes failures in t4018 and t4034.
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
- config.mak.uname | 1 +
- 1 file changed, 1 insertion(+)
+> The date variable is assigned new memory via xmemdupz and 2 lines later
+> it is assigned new memory again via xmalloc, but the first assignment
+> is never freed nor used.
+> ---
+>  builtin/commit.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 790e5ab..00da83c 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -534,7 +534,6 @@ static void determine_author_info(struct strbuf *author_ident)
+>  					(lb - strlen(" ") -
+>  					 (a + strlen("\nauthor "))));
+>  		email = xmemdupz(lb + strlen("<"), rb - (lb + strlen("<")));
+> -		date = xmemdupz(rb + strlen("> "), eol - (rb + strlen("> ")));
+>  		len = eol - (rb + strlen("> "));
+>  		date = xmalloc(len + 2);
+>  		*date = '@';
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 7ac541e..6901597 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -165,6 +165,7 @@ ifeq ($(uname_O),Cygwin)
- 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
- 	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
-+	NO_REGEX = UnfortunatelyYes
- 	# There are conflicting reports about this.
- 	# On some boxes NO_MMAP is needed, and not so elsewhere.
- 	# Try commenting this out if you suspect MMAP is more efficient
--- 
-1.8.3.2.0.13
+Makes sense. I'd assume this is signed-off?
