@@ -1,125 +1,74 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] do_one_ref(): save and restore value of current_ref
-Date: Mon, 15 Jul 2013 17:24:17 +0200
-Message-ID: <1373901857-28431-1-git-send-email-mhagger@alum.mit.edu>
-References: <CAPWNY8Ua=3t4jeDvkj3Aw2Ouvv+0r1kWrET5GNq9uS8PasGudQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/5] diff: allow --patch to override -s/--no-patch
+Date: Mon, 15 Jul 2013 17:28:08 +0200
+Message-ID: <vpqa9lnderb.fsf@anie.imag.fr>
+References: <vpqa9lof2e4.fsf@anie.imag.fr>
+	<1373893639-13413-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1373893639-13413-3-git-send-email-Matthieu.Moy@imag.fr>
+	<7v61wbeuix.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?Mantas=20Mikul=C4=97nas?= <grawity@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain
+Cc: git@vger.kernel.org, stefanbeller@googlemail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 15 17:25:07 2013
+X-From: git-owner@vger.kernel.org Mon Jul 15 17:29:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uyke5-0007Mw-8t
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 17:25:01 +0200
+	id 1UykiY-0001KD-4F
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 17:29:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932686Ab3GOPYu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jul 2013 11:24:50 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:63069 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932914Ab3GOPYg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jul 2013 11:24:36 -0400
-X-AuditID: 1207440e-b7f0f6d0000043b7-fc-51e41433f552
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id B6.A5.17335.33414E15; Mon, 15 Jul 2013 11:24:36 -0400 (EDT)
-Received: from michael.berlin.jpk.com (mx.berlin.jpk.com [212.222.128.135] (may be forged))
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r6FFOUlt018101
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 15 Jul 2013 11:24:34 -0400
-X-Mailer: git-send-email 1.8.3.2
-In-Reply-To: <CAPWNY8Ua=3t4jeDvkj3Aw2Ouvv+0r1kWrET5GNq9uS8PasGudQ@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqGsi8iTQ4PZuFouuK91MFg29V5gt
-	XrYfYLa4vWI+swOLx9/3H5g8ds66y+5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGavv7WMt
-	2CVY0bP7AlsD4y+eLkZODgkBE4mGrtXsELaYxIV769m6GLk4hAQuM0pM+raLCcK5zSTx/NY2
-	sCo2AV2JRT3NTCC2iICaxMS2QywgNrNAN6NES0sWiC0s4CKxr/E7K4jNIqAq8ePyS7B6XqD4
-	8ouLWSC2KUgs+7KWuYuRg4NTIFDixxFukLCQQIDEm7lXoMoFJU7OfMICUsIsoC6xfp4QxCZ5
-	ieats5knMArMQlI1C6FqFpKqBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0jfVyM0v0UlNK
-	NzFCQplvB2P7eplDjAIcjEo8vBI8TwKFWBPLiitzDzFKcjApifImCQOF+JLyUyozEosz4otK
-	c1KLDzFKcDArifDageR4UxIrq1KL8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK8
-	jiCNgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ8aAojS8GxilIigdory3Y3uKCxFyg
-	KETrKUZdjslnt7xnFGLJy89LlRLnDQYpEgApyijNg1sBS1yvGMWBPhaGqOIBJj24Sa+AljAB
-	LWme/RhkSUkiQkqqgTFiosx5TqVfOa/bD+YtCEk8JcS+2Lgl9FxnKYN0aOLuDfnZ8zM3qD54
-	XeSufbj36/mb+nVRzD136mu1yk+0v/hR4Ff0l8PX4Fh8ZKLR9T3PzXc5y+/9FaBs 
+	id S933091Ab3GOP3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 11:29:34 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41945 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932675Ab3GOP3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 11:29:33 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r6FFS7cj013173
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 15 Jul 2013 17:28:09 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Uykh7-0002XE-7I; Mon, 15 Jul 2013 17:28:09 +0200
+In-Reply-To: <7v61wbeuix.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 15 Jul 2013 08:02:14 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 15 Jul 2013 17:28:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r6FFS7cj013173
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1374506894.13642@48DAdGgkF6TJo5VRiZ4M1w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230479>
 
-If do_one_ref() is called recursively, then the inner call should not
-permanently overwrite the value stored in current_ref by the outer
-call.  Aside from the tiny optimization loss, peel_ref() expects the
-value of current_ref not to change across a call to peel_entry().  But
-in the presence of replace references that assumption could be
-violated by a recursive call to do_one_ref:
+Junio C Hamano <gitster@pobox.com> writes:
 
-do_for_each_entry()
-  do_one_ref()
-    builtin/describe.c:get_name()
-      peel_ref()
-        peel_entry()
-          peel_object ()
-            deref_tag_noverify()
-              parse_object()
-                lookup_replace_object()
-                  do_lookup_replace_object()
-                    prepare_replace_object()
-                      do_for_each_ref()
-                        do_for_each_entry()
-                          do_for_each_entry_in_dir()
-                            do_one_ref()
+> I am wondering if the difference after this patch between "-p" and
+> "-U8" is deliberate, or just an accident coming from the way the
+> original was written in ee1e5412 (git diff: support "-U" and
+> "--unified" options properly, 2006-05-13).
 
-The inner call to do_one_ref() was unconditionally setting current_ref
-to NULL when it was done, causing peel_ref() to perform an invalid
-memory access.
+No, it isn't. I just didn't notice the -U case.
 
-So change do_one_ref() to save the old value of current_ref before
-overwriting it, and restore the old value afterward rather than
-setting it to NULL.
+> If the original were written in this way:
+>
+> 	if (!strcmp(arg, "-p") || !strcmp(arg, "-u") || !strcmp(arg, "--patch") ||
+>             opt_arg(arg, 'U', "unified", &options->context))
+>   		options->output_format |= DIFF_FORMAT_PATCH;
 
-Reported by: Mantas Mikul=C4=97nas <grawity@gmail.com>
+Yes, this seems to be a better way.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+There are other cases like --patch-with-raw, I'll send a reroll.
 
-diff --git a/refs.c b/refs.c
-index 4302206..222baf2 100644
---- a/refs.c
-+++ b/refs.c
-@@ -634,7 +634,9 @@ struct ref_entry_cb {
- static int do_one_ref(struct ref_entry *entry, void *cb_data)
- {
- 	struct ref_entry_cb *data =3D cb_data;
-+	struct ref_entry *old_current_ref;
- 	int retval;
-+
- 	if (prefixcmp(entry->name, data->base))
- 		return 0;
-=20
-@@ -642,10 +644,12 @@ static int do_one_ref(struct ref_entry *entry, vo=
-id *cb_data)
- 	      !ref_resolves_to_object(entry))
- 		return 0;
-=20
-+	/* Store the old value, in case this is a recursive call: */
-+	old_current_ref =3D current_ref;
- 	current_ref =3D entry;
- 	retval =3D data->fn(entry->name + data->trim, entry->u.value.sha1,
- 			  entry->flag, data->cb_data);
--	current_ref =3D NULL;
-+	current_ref =3D old_current_ref;
- 	return retval;
- }
-=20
---=20
-1.8.3.2
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
