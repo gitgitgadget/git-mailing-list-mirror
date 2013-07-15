@@ -1,7 +1,7 @@
 From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: [PATCH v5 5/5] tests: add new test for the url_normalize function
-Date: Mon, 15 Jul 2013 02:51:02 -0700
-Message-ID: <62be3b26b7b98206f330b9e6f833523@f74d39fa044aa309eaea14b9f57fe79>
+Subject: [PATCH v5 3/5] config: add support for http.<url>.* settings
+Date: Mon, 15 Jul 2013 02:51:00 -0700
+Message-ID: <ddd9d565c61c057e84871a9237b763c@f74d39fa044aa309eaea14b9f57fe79>
 References: <506e5f642a838b95e0dd5b1f0fa1cfe@f74d39fa044aa309eaea14b9f57fe79>
 Cc: David Aguilar <davvid@gmail.com>, Petr Baudis <pasky@ucw.cz>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -12,284 +12,358 @@ Cc: David Aguilar <davvid@gmail.com>, Petr Baudis <pasky@ucw.cz>,
 	Alejandro Mery <amery@geeks.cl>,
 	Aaron Schrab <aaron@schrab.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 15 11:51:33 2013
+X-From: git-owner@vger.kernel.org Mon Jul 15 11:51:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyfRJ-0006b8-4k
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 11:51:29 +0200
+	id 1UyfRP-0006gH-Oy
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 11:51:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754782Ab3GOJvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 05:51:24 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:37651 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754771Ab3GOJvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 05:51:22 -0400
-Received: by mail-pd0-f169.google.com with SMTP id y10so10683278pdj.28
-        for <git@vger.kernel.org>; Mon, 15 Jul 2013 02:51:21 -0700 (PDT)
+	id S1754788Ab3GOJv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 05:51:28 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:53123 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754726Ab3GOJvS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 05:51:18 -0400
+Received: by mail-pd0-f181.google.com with SMTP id 14so10634792pdj.12
+        for <git@vger.kernel.org>; Mon, 15 Jul 2013 02:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=31GXZT0EXz1RX0DGaMxHJG8zZGWudpWdLqJw7Og9e0Y=;
-        b=uDtqxOWuGWnAOuuQ75/ni64f7qtmu06i8z5e2NCff9GFBywqpAc0Om6woDLaT9/bXM
-         eTu6TgaZiirzIR5qnPRsYHlHaGuO8LtJ9yEP6DhC9H6Q+8DUZEekm0j2muvhWSHPHLQZ
-         RDPeh7x0PwHnH1Fyg9xdWvmBg7jBgHpgVo6XCbD6+SQB1K7ewfaSbmN/ruuRDNzKHhNy
-         Q2eUAy00EepxnbiXY2emKI9ofae2XnhNT9t76yBelLj+gUYTaUFBSjtQv9+krno9gKll
-         olx0jLUkniMNWLNBYHEznbGjtqP3IyvdiomKmxBYrCtJof0zbXQYGLSEsttu/GhV+oUG
-         1blQ==
-X-Received: by 10.66.120.136 with SMTP id lc8mr37767513pab.182.1373881881444;
-        Mon, 15 Jul 2013 02:51:21 -0700 (PDT)
+        bh=zOePx0P3rq5iAhAQ5ZOSpn3H+y0VzwAJdkcFCnvzBEE=;
+        b=UiPefWRycv4MU0aQtWbLDT0kHX0iEKeomG4auetDdbj3NoSl4RDNXitpR4md5hGHBo
+         KcoGalFSLWa/XJ0QGmFePDwf9lwIxxCEtH0o9p3IuZRBDrx2uJz9qWEpjrfxCxYQpCBf
+         Gk4vpmk+vEXF3dIxRDhbTNDWLaMtlcJjDRbub4huhhVfhiWSGyvy6ehxINjnmzoU0IkH
+         mSWOM3kNUD2dWkO6jJfNTMcStZTNcK8RX93tMKqg2NTHPaMSVmOtmqBJ455Yp9f9qqGf
+         9NEWsetAMbuCJB6vBRuPes2DGyRlXo58Snc1cYZe6NV46M59LTVlshocEtiU1ykVWjXH
+         QHxA==
+X-Received: by 10.68.197.136 with SMTP id iu8mr52657706pbc.183.1373881877502;
+        Mon, 15 Jul 2013 02:51:17 -0700 (PDT)
 Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id wr9sm60041274pbc.7.2013.07.15.02.51.19
+        by mx.google.com with ESMTPSA id wr9sm60041274pbc.7.2013.07.15.02.51.15
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 15 Jul 2013 02:51:20 -0700 (PDT)
+        Mon, 15 Jul 2013 02:51:16 -0700 (PDT)
 In-Reply-To: <506e5f642a838b95e0dd5b1f0fa1cfe@f74d39fa044aa309eaea14b9f57fe79>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230454>
 
-In order to perform sane URL matching for http.<url>.* options,
-http.c normalizes URLs before performing matches.
+The credentials configuration values already support url-specific
+configuration items in the form credential.<url>.*.  This patch
+adds similar support for http configuration values.
 
-A new test-url-normalize test program is introduced along with
-a new t5200-url-normalize.sh script to run the tests.
+The <url> value is considered a match to a url if the <url> value
+is either an exact match or a prefix of the url which ends on a
+path component boundary ('/').  So "https://example.com/test" will
+match "https://example.com/test" and "https://example.com/test/too"
+but not "https://example.com/testextra".
 
-Since the url_normalize function currently lives in http.c this
-test will be skipped if NO_CURL is defined since http.c is skipped
-in that case.
+Longer matches take precedence over shorter matches with
+environment variable settings taking precedence over all.
+
+With this configuration:
+
+[http]
+        useragent = other-agent
+        noEPSV = true
+[http "https://example.com"]
+        useragent = example-agent
+        sslVerify = false
+[http "https://example.com/path"]
+        useragent = path-agent
+
+The "https://other.example.com/" url will have useragent
+"other-agent" and sslVerify will be on.
+
+The "https://example.com/" url will have useragent
+"example-agent" and sslVerify will be off.
+
+The "https://example.com/path/sub" url will have useragent
+"path-agent" and sslVerify will be off.
+
+All three of the examples will have noEPSV enabled.
 
 Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
 ---
- .gitignore               |   1 +
- Makefile                 |   5 +++
- t/t5200-url-normalize.sh | 109 +++++++++++++++++++++++++++++++++++++++++++++++
- test-url-normalize.c     |  62 +++++++++++++++++++++++++++
- 4 files changed, 177 insertions(+)
- create mode 100755 t/t5200-url-normalize.sh
- create mode 100644 test-url-normalize.c
+ Documentation/config.txt |  15 +++++
+ http.c                   | 169 ++++++++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 167 insertions(+), 17 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index efa8db0..b60a9df 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -201,6 +201,7 @@
- /test-string-list
- /test-subprocess
- /test-svn-fe
-+/test-url-normalize
- /test-wildmatch
- /common-cmds.h
- *.tar.gz
-diff --git a/Makefile b/Makefile
-index 0600eb4..195c62a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -580,6 +580,7 @@ TEST_PROGRAMS_NEED_X += test-sigchain
- TEST_PROGRAMS_NEED_X += test-string-list
- TEST_PROGRAMS_NEED_X += test-subprocess
- TEST_PROGRAMS_NEED_X += test-svn-fe
-+TEST_PROGRAMS_NEED_X += test-url-normalize
- TEST_PROGRAMS_NEED_X += test-wildmatch
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 81856dd..ceced99 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1531,6 +1531,21 @@ http.useragent::
+ 	of common USER_AGENT strings (but not including those like git/1.7.1).
+ 	Can be overridden by the 'GIT_HTTP_USER_AGENT' environment variable.
  
- TEST_PROGRAMS = $(patsubst %,%$X,$(TEST_PROGRAMS_NEED_X))
-@@ -2278,6 +2279,10 @@ test-parse-options$X: parse-options.o parse-options-cb.o
++http.<url>.*::
++	Any of the http.* options above can be applied selectively to some urls.
++	For example "http.https://example.com.useragent" would set the user
++	agent only for https connections to example.com.  The <url> value
++	matches a url if it is an exact match or a prefix of the url matching
++	at a "/" boundary.  Longer <url> matches take precedence over shorter
++	ones with the environment variable settings taking precedence over all.
++	Note that <url> must match the url passed to git exactly (other than
++	possibly being a prefix).  This means any user, password and/or port
++	setting that appears in a url as well as any %XX escapes that are
++	present must also appear in <url> to have a successful match.  The urls
++	that are matched against are those given directly to git commands.  In
++	other words, use exactly the same url that was passed to git (possibly
++	shortened) for the <url> value of the config setting.
++
+ i18n.commitEncoding::
+ 	Character encoding the commit messages are stored in; Git itself
+ 	does not care per se, but this information is necessary e.g. when
+diff --git a/http.c b/http.c
+index 9542a59..758e5b1 100644
+--- a/http.c
++++ b/http.c
+@@ -30,6 +30,34 @@ static CURL *curl_default;
  
- test-svn-fe$X: vcs-svn/lib.a
+ char curl_errorstr[CURL_ERROR_SIZE];
  
-+test-url-normalize$X: test-url-normalize.o GIT-LDFLAGS $(GITLIBS)
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-+		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
++enum http_option_type {
++	OPT_POST_BUFFER,
++	OPT_MIN_SESSIONS,
++	OPT_SSL_VERIFY,
++	OPT_SSL_TRY,
++	OPT_SSL_CERT,
++	OPT_SSL_CAINFO,
++	OPT_LOW_SPEED,
++	OPT_LOW_TIME,
++	OPT_NO_EPSV,
++	OPT_HTTP_PROXY,
++	OPT_COOKIE_FILE,
++	OPT_USER_AGENT,
++	OPT_PASSWD_REQ,
++#ifdef USE_CURL_MULTI
++	OPT_MAX_REQUESTS,
++#endif
++#if LIBCURL_VERSION_NUM >= 0x070903
++	OPT_SSL_KEY,
++#endif
++#if LIBCURL_VERSION_NUM >= 0x070908
++	OPT_SSL_CAPATH,
++#endif
++	OPT_MAX
++};
 +
- .PRECIOUS: $(TEST_OBJS)
++static size_t http_option_max_matched_len[OPT_MAX];
++
+ static int curl_ssl_verify = -1;
+ static int curl_ssl_try;
+ static const char *ssl_cert;
+@@ -141,33 +169,121 @@ static void process_curl_messages(void)
+ }
+ #endif
  
- test-%$X: test-%.o GIT-LDFLAGS $(GITLIBS)
-diff --git a/t/t5200-url-normalize.sh b/t/t5200-url-normalize.sh
-new file mode 100755
-index 0000000..40ebcd3
---- /dev/null
-+++ b/t/t5200-url-normalize.sh
-@@ -0,0 +1,109 @@
-+#!/bin/sh
-+
-+test_description='url normalization'
-+. ./test-lib.sh
-+
-+if test -n "$NO_CURL"; then
-+	skip_all='skipping test, git built without http support'
-+	test_done
-+fi
-+
-+# Note that only file: URLs should be allowed without a host
-+
-+test_expect_success 'url scheme' '
-+	! test-url-normalize "" &&
-+	! test-url-normalize "_" &&
-+	! test-url-normalize "scheme" &&
-+	! test-url-normalize "scheme:" &&
-+	! test-url-normalize "scheme:/" &&
-+	! test-url-normalize "scheme://" &&
-+	! test-url-normalize "file" &&
-+	! test-url-normalize "file:" &&
-+	! test-url-normalize "file:/" &&
-+	test-url-normalize "file://" &&
-+	! test-url-normalize "://acme.co" &&
-+	! test-url-normalize "x_test://acme.co" &&
-+	! test-url-normalize "schem%6e://" &&
-+	test-url-normalize "x-Test+v1.0://acme.co" &&
-+	test "$(test-url-normalize -p "AbCdeF://x.Y")" = "abcdef://x.y/"
-+'
-+
-+test_expect_success 'url authority' '
-+	! test-url-normalize "scheme://user:pass@" &&
-+	! test-url-normalize "scheme://?" &&
-+	! test-url-normalize "scheme://#" &&
-+	! test-url-normalize "scheme:///" &&
-+	! test-url-normalize "scheme://:" &&
-+	! test-url-normalize "scheme://:555" &&
-+	test-url-normalize "file://user:pass@" &&
-+	test-url-normalize "file://?" &&
-+	test-url-normalize "file://#" &&
-+	test-url-normalize "file:///" &&
-+	test-url-normalize "file://:" &&
-+	test-url-normalize "file://:555" &&
-+	test-url-normalize "scheme://user:pass@host" &&
-+	test-url-normalize "scheme://@host" &&
-+	test-url-normalize "scheme://%00@host" &&
-+	! test-url-normalize "scheme://%%@host" &&
-+	! test-url-normalize "scheme://host_" &&
-+	test-url-normalize "scheme://user:pass@host/" &&
-+	test-url-normalize "scheme://@host/" &&
-+	test-url-normalize "scheme://host/" &&
-+	test-url-normalize "scheme://host?x" &&
-+	test-url-normalize "scheme://host#x" &&
-+	test-url-normalize "scheme://host/@" &&
-+	test-url-normalize "scheme://host?@x" &&
-+	test-url-normalize "scheme://host#@x" &&
-+	test-url-normalize "scheme://[::1]" &&
-+	test-url-normalize "scheme://[::1]/" &&
-+	! test-url-normalize "scheme://hos%41/" &&
-+	test-url-normalize "scheme://[invalid....:/" &&
-+	test-url-normalize "scheme://invalid....:]/" &&
-+	! test-url-normalize "scheme://invalid....:[/" &&
-+	! test-url-normalize "scheme://invalid....:["
-+'
-+
-+test_expect_success 'url port' '
-+	test-url-normalize "xyz://q@some.host:" &&
-+	test-url-normalize "xyz://q@some.host:456" &&
-+	test-url-normalize "xyz://q@some.host:0" &&
-+	test-url-normalize "xyz://q@some.host:99999" &&
-+	test-url-normalize "http://q@some.host:80" &&
-+	test-url-normalize "https://q@some.host:443"
-+	! test-url-normalize "http://q@:8008" &&
-+	! test-url-normalize "http://:8080" &&
-+	! test-url-normalize "http://:" &&
-+	test-url-normalize "xyz://q@some.host:456/" &&
-+	test-url-normalize "xyz://[::1]:456/" &&
-+	test-url-normalize "xyz://[::1]:/" &&
-+	test-url-normalize "xyz://[::1]:000/" &&
-+	! test-url-normalize "xyz://[::1]:0%300/" &&
-+	! test-url-normalize "xyz://[::1]:030f/"
-+'
-+
-+test_expect_success 'url general escapes' '
-+	! test-url-normalize "http://x.y?%fg" &&
-+	test "$(test-url-normalize -p "X://W/%7e%41^%3a")" = "x://w/~A%5E%3A" &&
-+	test "$(test-url-normalize -p "X://W/:/?#[]@")" = "x://w/:/?#[]@" &&
-+	test "$(test-url-normalize -p "X://W/$&()*+,;=")" = "x://w/$&()*+,;=" &&
-+	test "$(test-url-normalize -p "X://W/'\''")" = "x://w/'\''" &&
-+	test "$(test-url-normalize -p "X://W?'\!'")" = "x://w/?'\!'"
-+';#'
-+
-+test_expect_success 'url username/password escapes' '
-+	test "$(test-url-normalize -p "x://%41%62(^):%70+d@foo")" = "x://Ab(%5E):p+d@foo/"
-+'
-+
-+test_expect_success 'url normalized lengths' '
-+	test "$(test-url-normalize -l "Http://%4d%65:%4d^%70@The.Host")" = 25 &&
-+	test "$(test-url-normalize -l "http://%41:%42@x.y/%61/")" = 17 &&
-+	test "$(test-url-normalize -l "http://@x.y/^")" = 14
-+'
-+
-+test_expect_success 'url equivalents' '
-+	test-url-normalize "httP://x" "Http://X/" &&
-+	test-url-normalize "Http://%4d%65:%4d^%70@The.Host" "hTTP://Me:%4D^p@the.HOST:80/" &&
-+	test-url-normalize "https://@x.y/^" "httpS://x.y:443/^"
-+'
-+
-+test_done
-diff --git a/test-url-normalize.c b/test-url-normalize.c
-new file mode 100644
-index 0000000..1872964
---- /dev/null
-+++ b/test-url-normalize.c
-@@ -0,0 +1,62 @@
-+#ifdef NO_CURL
-+
-+int main()
++static size_t http_options_url_match_prefix(const char *url,
++					    const char *url_prefix,
++					    size_t url_prefix_len)
 +{
-+	return 125;
++	/*
++	 * url_prefix matches url if url_prefix is an exact match for url or it
++	 * is a prefix of url and the match ends on a path component boundary.
++	 * Both url and url_prefix are considered to have an implicit '/' on the
++	 * end for matching purposes if they do not already.
++	 *
++	 * url must be NUL terminated.  url_prefix_len is the length of
++	 * url_prefix which need not be NUL terminated.
++	 *
++	 * The return value is the length of the match in characters (excluding
++	 * any final '/') or 0 for no match.  Passing "/" as url_prefix will
++	 * always cause 0 to be returned.
++	 */
++	size_t url_len;
++	if (url_prefix_len && url_prefix[url_prefix_len - 1] == '/')
++		url_prefix_len--;
++	if (!url_prefix_len || strncmp(url, url_prefix, url_prefix_len))
++		return 0;
++	url_len = strlen(url);
++	if ((url_len == url_prefix_len) || (url[url_prefix_len] == '/'))
++		return url_prefix_len;
++	return 0;
 +}
 +
-+#else /* !NO_CURL */
-+
-+#include "http.c"
-+
-+#define url_normalize(u,s) http_options_url_normalize(u,s)
-+
-+int main(int argc, char **argv)
++static int new_match_is_shorter(size_t matchlen, enum http_option_type opt)
 +{
-+	const char *usage = "test-url-normalize [-p | -l] <url1> | <url1> <url2>";
-+	char *url1, *url2;
-+	int opt_p = 0, opt_l = 0;
++	/*
++	 * Compare matchlen to the last matched length of option opt and
++	 * return true if matchlen is shorter than the last matched length
++	 * (meaning the config setting should be ignored).  Upon seeing the
++	 * _same_ key (i.e. new key has the same match length which is therefore
++	 * not shorter) the new setting will override the previous setting.
++	 * Otherwise return false and record matchlen as the current last
++	 * matched length of option opt.
++	 */
++	if (matchlen < http_option_max_matched_len[opt])
++		return 1;
++	http_option_max_matched_len[opt] = matchlen;
++	return 0;
++}
++
+ static int http_options(const char *var, const char *value, void *cb)
+ {
+-	if (!strcmp("http.sslverify", var)) {
++	const char *url = cb;
++	const char *key, *dot;
++	size_t matchlen = 0;
++
++	key = skip_prefix(var, "http.");
++	if (!key)
++		return git_default_config(var, value, cb);
 +
 +	/*
-+	 * For one url, succeed if url_normalize succeeds on it, fail otherwise.
-+	 * For two urls, succeed only if url_normalize succeeds on both and
-+	 * the results compare equal with strcmp.  If -p is given (one url only)
-+	 * and url_normalize succeeds, print the result followed by "\n".  If
-+	 * -l is given (one url only) and url_normalize succeeds, print the
-+	 * returned length in decimal followed by "\n".
++	 * If the part following the leading "http." contains a '.' then check
++	 * to see if the part between "http." and the last '.' is a match to
++	 * url.  If it's not then ignore the setting.  Otherwise set key to
++	 * point to the option which is the part after the final '.' and
++	 * use key in subsequent comparisons to determine the option type.
 +	 */
-+
-+	if (argc > 1 && !strcmp(argv[1], "-p")) {
-+		opt_p = 1;
-+		argc--;
-+		argv++;
-+	} else if (argc > 1 && !strcmp(argv[1], "-l")) {
-+		opt_l = 1;
-+		argc--;
-+		argv++;
++	dot = strrchr(key, '.');
++	if (dot) {
++		matchlen = http_options_url_match_prefix(url, key, dot - key);
++		if (!matchlen)
++			return 0;
++		key = dot + 1;
 +	}
 +
-+	if (argc < 2 || argc > 3)
-+		die(usage);
-+
-+	if (argc == 2) {
-+		size_t s;
-+		url1 = url_normalize(argv[1], &s);
-+		if (!url1)
-+			return 1;
-+		if (opt_p)
-+			printf("%s\n", url1);
-+		if (opt_l)
-+			printf("%u\n", (unsigned)s);
-+		return 0;
++	if (!strcmp("sslverify", key)) {
++		if (new_match_is_shorter(matchlen, OPT_SSL_VERIFY))
++			return 0;
+ 		curl_ssl_verify = git_config_bool(var, value);
+ 		return 0;
+ 	}
+-	if (!strcmp("http.sslcert", var))
++	if (!strcmp("sslcert", key)) {
++		if (new_match_is_shorter(matchlen, OPT_SSL_CERT))
++			return 0;
+ 		return git_config_string(&ssl_cert, var, value);
 +	}
-+
-+	if (opt_p || opt_l)
-+		die(usage);
-+
-+	url1 = url_normalize(argv[1], NULL);
-+	url2 = url_normalize(argv[2], NULL);
-+	return (url1 && url2 && !strcmp(url1, url2)) ? 0 : 1;
-+}
-+
-+#endif /* !NO_CURL */
+ #if LIBCURL_VERSION_NUM >= 0x070903
+-	if (!strcmp("http.sslkey", var))
++	if (!strcmp("sslkey", key)) {
++		if (new_match_is_shorter(matchlen, OPT_SSL_KEY))
++			return 0;
+ 		return git_config_string(&ssl_key, var, value);
++	}
+ #endif
+ #if LIBCURL_VERSION_NUM >= 0x070908
+-	if (!strcmp("http.sslcapath", var))
++	if (!strcmp("sslcapath", key)) {
++		if (new_match_is_shorter(matchlen, OPT_SSL_CAPATH))
++			return 0;
+ 		return git_config_string(&ssl_capath, var, value);
++	}
+ #endif
+-	if (!strcmp("http.sslcainfo", var))
++	if (!strcmp("sslcainfo", key)) {
++		if (new_match_is_shorter(matchlen, OPT_SSL_CAINFO))
++			return 0;
+ 		return git_config_string(&ssl_cainfo, var, value);
+-	if (!strcmp("http.sslcertpasswordprotected", var)) {
++	}
++	if (!strcmp("sslcertpasswordprotected", key)) {
++		if (new_match_is_shorter(matchlen, OPT_PASSWD_REQ))
++			return 0;
+ 		ssl_cert_password_required = git_config_bool(var, value);
+ 		return 0;
+ 	}
+-	if (!strcmp("http.ssltry", var)) {
++	if (!strcmp("ssltry", key)) {
++		if (new_match_is_shorter(matchlen, OPT_SSL_TRY))
++			return 0;
+ 		curl_ssl_try = git_config_bool(var, value);
+ 		return 0;
+ 	}
+-	if (!strcmp("http.minsessions", var)) {
++	if (!strcmp("minsessions", key)) {
++		if (new_match_is_shorter(matchlen, OPT_MIN_SESSIONS))
++			return 0;
+ 		min_curl_sessions = git_config_int(var, value);
+ #ifndef USE_CURL_MULTI
+ 		if (min_curl_sessions > 1)
+@@ -176,39 +292,58 @@ static int http_options(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ #ifdef USE_CURL_MULTI
+-	if (!strcmp("http.maxrequests", var)) {
++	if (!strcmp("maxrequests", key)) {
++		if (new_match_is_shorter(matchlen, OPT_MAX_REQUESTS))
++			return 0;
+ 		max_requests = git_config_int(var, value);
+ 		return 0;
+ 	}
+ #endif
+-	if (!strcmp("http.lowspeedlimit", var)) {
++	if (!strcmp("lowspeedlimit", key)) {
++		if (new_match_is_shorter(matchlen, OPT_LOW_SPEED))
++			return 0;
+ 		curl_low_speed_limit = (long)git_config_int(var, value);
+ 		return 0;
+ 	}
+-	if (!strcmp("http.lowspeedtime", var)) {
++	if (!strcmp("lowspeedtime", key)) {
++		if (new_match_is_shorter(matchlen, OPT_LOW_TIME))
++			return 0;
+ 		curl_low_speed_time = (long)git_config_int(var, value);
+ 		return 0;
+ 	}
+ 
+-	if (!strcmp("http.noepsv", var)) {
++	if (!strcmp("noepsv", key)) {
++		if (new_match_is_shorter(matchlen, OPT_NO_EPSV))
++			return 0;
+ 		curl_ftp_no_epsv = git_config_bool(var, value);
+ 		return 0;
+ 	}
+-	if (!strcmp("http.proxy", var))
++	if (!strcmp("proxy", key)) {
++		if (new_match_is_shorter(matchlen, OPT_HTTP_PROXY))
++			return 0;
+ 		return git_config_string(&curl_http_proxy, var, value);
++	}
+ 
+-	if (!strcmp("http.cookiefile", var))
++	if (!strcmp("cookiefile", key)) {
++		if (new_match_is_shorter(matchlen, OPT_COOKIE_FILE))
++			return 0;
+ 		return git_config_string(&curl_cookie_file, var, value);
++	}
+ 
+-	if (!strcmp("http.postbuffer", var)) {
++	if (!strcmp("postbuffer", key)) {
++		if (new_match_is_shorter(matchlen, OPT_POST_BUFFER))
++			return 0;
+ 		http_post_buffer = git_config_int(var, value);
+ 		if (http_post_buffer < LARGE_PACKET_MAX)
+ 			http_post_buffer = LARGE_PACKET_MAX;
+ 		return 0;
+ 	}
+ 
+-	if (!strcmp("http.useragent", var))
++	if (!strcmp("useragent", key)) {
++		if (new_match_is_shorter(matchlen, OPT_USER_AGENT))
++			return 0;
+ 		return git_config_string(&user_agent, var, value);
++	}
+ 
+ 	/* Fall back on the default ones */
+ 	return git_default_config(var, value, cb);
+@@ -343,7 +478,7 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 
+ 	http_is_verbose = 0;
+ 
+-	git_config(http_options, NULL);
++	git_config(http_options, (void *)url);
+ 
+ 	curl_global_init(CURL_GLOBAL_ALL);
+ 
 -- 
 1.8.3
