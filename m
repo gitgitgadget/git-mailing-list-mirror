@@ -1,88 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] Documentation: Update manpage for pre-commit hook
-Date: Mon, 15 Jul 2013 09:54:07 -0700
-Message-ID: <7vhafvbw7k.fsf@alter.siamese.dyndns.org>
-References: <CAD77+gSX1ggBWHhGwxRUBPGQ6ONJd76SO-3tU05QT47iKCv9hg@mail.gmail.com>
-	<1373818879-1698-1-git-send-email-richih.mailinglist@gmail.com>
-	<1373818879-1698-5-git-send-email-richih.mailinglist@gmail.com>
+From: Dirk Wallenstein <halsmit@t-online.de>
+Subject: [PATCH] howto: Use all-space indentation in ASCII art
+Date: Mon, 15 Jul 2013 18:46:58 +0200
+Message-ID: <20130715164658.GA8675@bottich>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Richard Hartmann <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 15 18:54:17 2013
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Thomas Ackermann <th.acker@arcor.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 15 19:04:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uym2R-0005oz-TY
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 18:54:16 +0200
+	id 1UymCJ-0002kV-8R
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 19:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932167Ab3GOQyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 12:54:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40877 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757620Ab3GOQyK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 12:54:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C41D30010;
-	Mon, 15 Jul 2013 16:54:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fybOMbL4ZozZ6DRWfwaLRp+VetU=; b=KJ2hhY
-	Qt8q7IFJopJNYu9dtdUuUcYWXO+cXvOr66gX3SQ3LcMfldOcNkGvQqwrO0+rkiQ3
-	qVuUwHdZYZMnvokDryRGYIIot/+4QjabuGJJwbZWI8zHdZ4L0Io1PF0fV0l9G2bH
-	8ndmhIABETXLt21O64JP7mAWs2uNZDz56YHOg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bcarbl9bLDNXSVIbj80jYqmXh49HBoai
-	LzEYQ0xLJaU3paoQ3k3sdfMku3dg1zKz2vFqUb5KOCptZiLHA6BH1sIAw0x6TpGu
-	C9kfE4YWwFFoIastaoxyjqqppTOHW/akV5x4vIEX8D13XQzIAQssAnsTs8F2wzoZ
-	CaqMwR98g5g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 909EE3000F;
-	Mon, 15 Jul 2013 16:54:09 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D3DA93000C;
-	Mon, 15 Jul 2013 16:54:08 +0000 (UTC)
-In-Reply-To: <1373818879-1698-5-git-send-email-richih.mailinglist@gmail.com>
-	(Richard Hartmann's message of "Sun, 14 Jul 2013 18:21:17 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2ABD8BFA-ED6F-11E2-AC31-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S933397Ab3GORET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 13:04:19 -0400
+Received: from mailout02.t-online.de ([194.25.134.17]:43517 "EHLO
+	mailout02.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932687Ab3GORES (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 13:04:18 -0400
+X-Greylist: delayed 1031 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Jul 2013 13:04:17 EDT
+Received: from fwd57.aul.t-online.de (fwd57.aul.t-online.de )
+	by mailout02.t-online.de with smtp 
+	id 1UylvU-0004No-N3; Mon, 15 Jul 2013 18:47:04 +0200
+Received: from localhost (TcbRu6Z1Qhkno2oF8QLUVRVBJJY2MVcZYb4drd7dbTfAl4XPCyE5kvPvtbTZ11YQ3T@[178.202.219.43]) by fwd57.t-online.de
+	with esmtp id 1UylvQ-1rTiOu0; Mon, 15 Jul 2013 18:47:00 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-ID: TcbRu6Z1Qhkno2oF8QLUVRVBJJY2MVcZYb4drd7dbTfAl4XPCyE5kvPvtbTZ11YQ3T
+X-TOI-MSGID: 487a5aa5-070a-4c88-a3a4-3ab2e9a41851
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230490>
 
-Richard Hartmann <richih.mailinglist@gmail.com> writes:
+Keep the sketch aligned independent of the tabstop width used.
 
-> Verbatim copy of 4b8234b2693af634a77ea059331d1658e070f6d7 in original
-> patch series from 2013-06-10.
+Signed-off-by: Dirk Wallenstein <halsmit@t-online.de>
+---
+ Documentation/howto/revert-a-faulty-merge.txt | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-As Jonathan said, this is not a commit log message.
-
-I've applied up to 3/6 with fixups, but will stop here for now.
-
->
-> Signed-off-by: Richard Hartmann <richih.mailinglist@gmail.com>
-> ---
->  Documentation/githooks.txt |    3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index b9003fe..1276730 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -80,7 +80,8 @@ causes the 'git commit' to abort.
->  
->  The default 'pre-commit' hook, when enabled, catches introduction
->  of lines with trailing whitespaces and aborts the commit when
-> -such a line is found.
-> +such a line is found. It will also prevent addition of non-ASCII
-> +file names.
->  
->  All the 'git commit' hooks are invoked with the environment
->  variable `GIT_EDITOR=:` if the command will not bring up an editor
+diff --git a/Documentation/howto/revert-a-faulty-merge.txt b/Documentation/howto/revert-a-faulty-merge.txt
+index 075418e..4b75bfc 100644
+--- a/Documentation/howto/revert-a-faulty-merge.txt
++++ b/Documentation/howto/revert-a-faulty-merge.txt
+@@ -30,7 +30,7 @@ The history immediately after the "revert of the merge" would look like
+ this:
+ 
+  ---o---o---o---M---x---x---W
+-	       /
++               /
+        ---A---B
+ 
+ where A and B are on the side development that was not so good, M is the
+@@ -47,7 +47,7 @@ After the developers of the side branch fix their mistakes, the history
+ may look like this:
+ 
+  ---o---o---o---M---x---x---W---x
+-	       /
++               /
+        ---A---B-------------------C---D
+ 
+ where C and D are to fix what was broken in A and B, and you may already
+@@ -81,7 +81,7 @@ In such a situation, you would want to first revert the previous revert,
+ which would make the history look like this:
+ 
+  ---o---o---o---M---x---x---W---x---Y
+-	       /
++               /
+        ---A---B-------------------C---D
+ 
+ where Y is the revert of W.  Such a "revert of the revert" can be done
+@@ -93,14 +93,14 @@ This history would (ignoring possible conflicts between what W and W..Y
+ changed) be equivalent to not having W nor Y at all in the history:
+ 
+  ---o---o---o---M---x---x-------x----
+-	       /
++               /
+        ---A---B-------------------C---D
+ 
+ and merging the side branch again will not have conflict arising from an
+ earlier revert and revert of the revert.
+ 
+  ---o---o---o---M---x---x-------x-------*
+-	       /                       /
++               /                       /
+        ---A---B-------------------C---D
+ 
+ Of course the changes made in C and D still can conflict with what was
+@@ -111,13 +111,13 @@ faulty A and B, and redone the changes on top of the updated mainline
+ after the revert, the history would have looked like this:
+ 
+  ---o---o---o---M---x---x---W---x---x
+-	       /                 \
++               /                 \
+        ---A---B                   A'--B'--C'
+ 
+ If you reverted the revert in such a case as in the previous example:
+ 
+  ---o---o---o---M---x---x---W---x---x---Y---*
+-	       /                 \         /
++               /                 \         /
+        ---A---B                   A'--B'--C'
+ 
+ where Y is the revert of W, A' and B' are rerolled A and B, and there may
+@@ -129,7 +129,7 @@ lot of overlapping changes that result in conflicts.  So do not do "revert
+ of revert" blindly without thinking..
+ 
+  ---o---o---o---M---x---x---W---x---x
+-	       /                 \
++               /                 \
+        ---A---B                   A'--B'--C'
+ 
+ In the history with rebased side branch, W (and M) are behind the merge
+-- 
+1.8.3.2.50.g531c8dd
