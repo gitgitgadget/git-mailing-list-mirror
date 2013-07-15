@@ -1,173 +1,202 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCHv2 1/3] l10n: de.po: switch from pure German to German+English (part 1)
-Date: Mon, 15 Jul 2013 23:53:38 +0200
-Message-ID: <87a9ln1od9.fsf@hexa.v.cablecom.net>
+Subject: Re: [PATCHv2 2/3] l10n: de.po: switch from pure German to German+English (part 2)
+Date: Mon, 15 Jul 2013 23:53:45 +0200
+Message-ID: <878v171od2.fsf@hexa.v.cablecom.net>
 References: <1371057331-3917-1-git-send-email-ralf.thielow@gmail.com>
 	<1373478890-8480-1-git-send-email-ralf.thielow@gmail.com>
 	<1373478890-8480-2-git-send-email-ralf.thielow@gmail.com>
+	<1373478890-8480-3-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: <trast@student.ethz.ch>, <jk@jk.gs>, <stimming@tuhh.de>,
 	<git@vger.kernel.org>
 To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 15 23:53:51 2013
+X-From: git-owner@vger.kernel.org Mon Jul 15 23:53:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyqiJ-0007Xz-RH
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 23:53:48 +0200
+	id 1UyqiP-0007b1-Cd
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 23:53:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758114Ab3GOVxn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jul 2013 17:53:43 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:38705 "EHLO edge20.ethz.ch"
+	id S1758115Ab3GOVxs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jul 2013 17:53:48 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:32951 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758100Ab3GOVxl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jul 2013 17:53:41 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 15 Jul
- 2013 23:53:36 +0200
-Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 15 Jul
- 2013 23:53:39 +0200
-In-Reply-To: <1373478890-8480-2-git-send-email-ralf.thielow@gmail.com> (Ralf
-	Thielow's message of "Wed, 10 Jul 2013 19:54:48 +0200")
+	id S1758100Ab3GOVxr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Jul 2013 17:53:47 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 15 Jul
+ 2013 23:53:45 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 15 Jul
+ 2013 23:53:46 +0200
+In-Reply-To: <1373478890-8480-3-git-send-email-ralf.thielow@gmail.com> (Ralf
+	Thielow's message of "Wed, 10 Jul 2013 19:54:49 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230527>
 
 Ralf Thielow <ralf.thielow@gmail.com> writes:
 
->  #: merge-recursive.c:268
->  msgid "error building trees"
-> -msgstr "Fehler beim Erstellen der B=C3=A4ume"
-> +msgstr "Fehler beim Erstellen der Verzeichnisse"
+>  #: builtin/clone.c:73
+>  msgid "create a mirror repository (implies bare)"
+> -msgstr "erstellt ein Spiegelarchiv (impliziert blo=C3=9Fes Projektar=
+chiv)"
+> +msgstr "erstellt ein Spiegelarchiv (impliziert Bare-Repository)"
 
-This should remain "B=C3=A4ume" or possibly '"Tree"-Objekte', as it ref=
-ers to
-a failure within write_tree_from_memory().
+Perhaps it's better to just say --bare here?
 
->  #: merge-recursive.c:1815
->  #, c-format
->  msgid "merging of trees %s and %s failed"
-> -msgstr "Zusammenf=C3=BChren der B=C3=A4ume %s und %s fehlgeschlagen"
-> +msgstr "Zusammenf=C3=BChren der Verzeichnisse %s und %s fehlgeschlag=
-en"
+>  #: builtin/clone.c:93
+>  msgid "path to git-upload-pack on the remote"
+> -msgstr "Pfad zu \"git-upload-pack\" auf der Gegenseite"
+> +msgstr "Pfad zu \"git-upload-pack\" im Remote-Repository"
 
-Similarly; here merge_trees() is failing.
+Here 'remote' does not refer to a repository, but the machine in
+general.  I guess "Gegenseite" was okay.
 
->  #: pathspec.c:99
->  #, c-format
->  msgid "'%s' is beyond a symbolic link"
-> -msgstr "'%s' ist =C3=BCber einem symbolischen Link"
-> +msgstr "'%s' ist hinter einem symbolischen Verweis"
+>  #: builtin/commit.c:819
+>  msgid "Error building trees"
+> -msgstr "Fehler beim Erzeugen der Zweige"
+> +msgstr "Fehler beim Erzeugen der Verzeichnisse"
 
-Good fix for a pretty bad preimage :-)
+Similar to the one in merge-recursive.c, this is an internal function
+that writes trees failing (update_main_cache_tree() in this case).  So
+neither old nor new German translations are in fact correct; it is abou=
+t
+tree objects.
 
->  #: remote.c:1787
->  msgid "  (use \"git push\" to publish your local commits)\n"
-> -msgstr "  (benutzen Sie \"git push\" um lokalen Versionen herauszubr=
-ingen)\n"
-> +msgstr "  (benutzen Sie \"git push\" um lokale Commits herauszubring=
-en)\n"
-
-I don't see this in the glossary.  "Publizieren" is a perfectly good
-german word, can't we use this?  "Herausbringen" allows some other
-interpretations that "publizieren" doesn't.
-
->  #: sequencer.c:1119
->  msgid "Can't revert as initial commit"
-> -msgstr "R=C3=BCcknahme-Version kann nicht initial sein."
-> +msgstr "Revert-Commit kann nicht initial sein."
-
-Not a new problem, but how about
-
-  Kann nicht als allerersten Commit einen Revert ausf=C3=BChren.
-
-(This should then go into the glossary for "initial commit".)
-
->  #: sequencer.c:1120
->  msgid "Can't cherry-pick into empty head"
-> -msgstr "Kann \"cherry-pick\" nicht in einem leeren Zweig ausf=C3=BCh=
-ren."
-> +msgstr "Kann \"cherry-pick\" nicht in einem leeren Branch ausf=C3=BC=
-hren."
-
-Could reuse the same formulation as above; the symptom is the same,
-though not the English message.
-
-> @@ -1494,7 +1496,7 @@ msgstr "  (alle Konflikte behoben: f=C3=BChren =
-Sie \"git commit\" aus)"
->  #: wt-status.c:970
->  #, c-format
->  msgid "You are currently reverting commit %s."
-> -msgstr "Sie nehmen gerade Version '%s' zur=C3=BCck."
-> +msgstr "Sie nehmen gerade Commit '%s' zur=C3=BCck."
-
-"Revert" is partly untranslated in other messages.  Any strong opinions=
-?
-If you would like to consistently leave it untranslated, this message
-could be
-
-  Sie sind gerade an einem Revert von Commit '%s'.
-
->  #: builtin/apply.c:3850
->  #, c-format
->  msgid "corrupt patch for subproject %s"
-> -msgstr "fehlerhafter Patch f=C3=BCr Unterprojekt %s"
-> +msgstr "fehlerhafter Patch f=C3=BCr Submodul %s"
-
-We could change this on the English side too, though the patch format i=
-s
-frozen and calls them "subprojects" (sigh).
-
-> @@ -2330,12 +2331,12 @@ msgstr "erwartet keinen Kontext"
->  #: builtin/apply.c:4406
->  msgid "leave the rejected hunks in corresponding *.rej files"
+>  #: builtin/commit.c:1371
+>  msgid "use autosquash formatted message to squash specified commit"
 >  msgstr ""
-> -"hinterl=C3=A4sst zur=C3=BCckgewiesene Patch-Bereiche in den entspre=
-chenden *.rej "
-> +"hinterl=C3=A4sst zur=C3=BCckgewiesene Patch-Bl=C3=B6cke in den ents=
-prechenden *.rej "
->  "Dateien"
+>  "verwendet eine automatisch zusammengesetzte Beschreibung zum Zusamm=
+enf=C3=BChren "
+> -"der angegebenen Version"
+> +"des angegebenen Commits"
 
-Not a new problem, but "in entsprechenden *.rej" (dropping the article)
-would be more accurate, wouldn't it?
+Shouldn't the "Zusammenf=C3=BChren" also change to "Mergen"?
 
->  #: builtin/blame.c:2369
->  msgid "Ignore whitespace differences"
-> -msgstr "Ignoriert Unterschiede in Leerzeichen"
-> +msgstr "Ignoriert Unterschiede in Whitespaces"
+> @@ -4503,8 +4501,8 @@ msgid ""
+>  "No annotated tags can describe '%s'.\n"
+>  "However, there were unannotated tags: try --tags."
+>  msgstr ""
+> -"Keine annotierten Markierungen k=C3=B6nnen '%s' beschreiben.\n"
+> -"Jedoch gab es nicht annotierte Markierungen: versuchen Sie --tags."
+> +"Keine annotierten Tags k=C3=B6nnen '%s' beschreiben.\n"
+> +"Jedoch gab es nicht annotierte Tags: versuchen Sie --tags."
 
-  Ignoriert Unterschiede in Whitespace
+You could add a clarifying dash to make it easier to read:
 
-(dropping the final s)?
+  Jedoch gab es nicht-annotierte Tags: versuchen Sie --tags.
 
-I saw that you matched the German gender of the English words to the
-gender that your favorite translation has in German, which I think is
-fine.  But whitespace is not countable (at least in my ears), and I
-think that should be inherited into the pseudo-German usage.
+(My German teacher probably hates me now.)
 
->  #: builtin/branch.c:585
+> @@ -4572,7 +4570,7 @@ msgstr "Kennzeichen"
+>  #: builtin/describe.c:417
+>  msgid "append <mark> on dirty working tree (default: \"-dirty\")"
+>  msgstr ""
+> -"f=C3=BCgt <Kennzeichen> bei ge=C3=A4ndertem Arbeitsbaum hinzu (Stan=
+dard: \"-dirty\")"
+> +"f=C3=BCgt <Kennzeichen> bei ge=C3=A4ndertem Arbeitsverzeichnis hinz=
+u (Standard: \"-dirty\")"
+
+Here you have dirty -> ge=C3=A4ndertes Arbeitsverzeichnis ("modified
+worktree"), but in other places I saw clean (relating to worktree) ->
+sauber.
+
+How about always talking about an (un)modified worktree, i.e.,
+ge=C3=A4ndertem/unver=C3=A4ndertem Arbeitsbaum?
+
+>  #: builtin/fetch.c:64
+>  msgid "path to upload pack on remote end"
+> -msgstr "Pfad des Programms zum Hochladen von Paketen auf der Gegense=
+ite"
+> +msgstr "Pfad des Programms zum Hochladen von Paketen im Remote-Repos=
+itory"
+
+Similar to the message in clone.c, this does not refer to a
+repo-specific path and should probably remain "auf der Gegenseite".
+
+>  #: builtin/fetch.c:1023
+>  msgid "Fetching a group and specifying refspecs does not make sense"
+>  msgstr ""
+>  "Das Abholen einer Gruppe von externen Archiven kann nicht mit der A=
+ngabe\n"
+> -"von Referenzspezifikationen verwendet werden."
+> +"von Refspecs verwendet werden."
+
+You missed an instance of "externe Archive" here.
+
+>  #: builtin/fsck.c:618
+>  msgid "make index objects head nodes"
+> -msgstr "erzeugt Kopfknoten der Bereitstellungsobjekte"
+> +msgstr "erzeugt Kopfknoten der Staging-Area-Objekte"
+>=20
+>  #: builtin/fsck.c:619
+>  msgid "make reflogs head nodes (default)"
+> -msgstr "erzeugt Kopfknoten des Referenzprotokolls (Standard)"
+> +msgstr "erzeugt Kopfknoten des Reflogs (Standard)"
+
+Not a new problem, but none of these (including English) is particularl=
+y
+enlightening without context.  The message refers to fsck starting an
+unreachability and verification walk at a list of objects.  This option
+(--cache) adds all blobs in the index to that list.
+
+So perhaps simply
+
+  pr=C3=BCfe Objekte in der Staging Area
+
+and then similarly change all the "head nodes" talk to an application o=
+f
+"pr=C3=BCfen".
+
+>  #: builtin/grep.c:905
+>  msgid "both --cached and trees are given."
+> -msgstr "Die Option --cached kann nicht mit Zweigen verwendet werden.=
+"
+> +msgstr "Die Option --cached kann nicht mit Verzeichnissen verwendet =
+werden."
+
+"Trees" here refers to a tree object.
+
+>  #: builtin/init-db.c:102
 >  #, c-format
->  msgid "(no branch, bisect started on %s)"
-> -msgstr "(kein Zweig, Neuaufbau begonnen bei %s)"
-> +msgstr "(kein Branch, Rebase begonnen bei %s)"
+>  msgid "cannot symlink '%s' '%s'"
+> -msgstr "kann '%s' nicht mit '%s' symbolisch verkn=C3=BCpfen"
+> +msgstr "kann '%s' nicht mit '%s' symbolisch verweisen"
 
-You turned bisect into rebase (not new, but still).
+Is "verweisen" transitive?  Perhaps
 
->  #: builtin/checkout.c:1053
->  msgid "new unparented branch"
-> -msgstr "neuer Zweig ohne Elternversion"
-> +msgstr "neuer Branch ohne Elternversion"
+  Kann symbolischen Verweis '%s' auf '%s' nicht erstellen
 
-Elternversions should become Eltern-Commit according to the glossary.
+>  #: builtin/log.c:1138
+>  msgid "don't include a patch matching a commit upstream"
+>  msgstr ""
+> -"schlie=C3=9Ft keine Patches ein, die einer Version im =C3=9Cbernahm=
+ezweig entsprechen"
+> +"schlie=C3=9Ft keine Patches ein, die einem Commit im Upstream-Branc=
+h entsprechen"
+
+Perhaps it doesn't matter, but: the use of "upstream" here does not
+refer to the upstream config, but the argument to format-patch.  Which
+might be the upstream, but the user is free to specify e.g. HEAD~1
+instead.
+
+>  #: builtin/log.c:1484
+>  msgid "git cherry [-v] [<upstream> [<head> [<limit>]]]"
+> -msgstr "git cherry [-v] [<=C3=9Cbernahmezweig> [<Arbeitszweig> [<Lim=
+it>]]]"
+> +msgstr "git cherry [-v] [<Upstream> [<Arbeitsbranch> [<Limit>]]]"
+
+Perhaps lose the "Arbeits" to reduce possible confusion -- AFAICT it is
+only used as a direct equivalent of "work" in "worktree".
 
 --=20
 Thomas Rast
