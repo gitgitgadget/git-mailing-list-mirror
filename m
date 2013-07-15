@@ -1,95 +1,67 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v3 5/6] Documentation: move description of -s, --no-patch to diff-options.txt
-Date: Mon, 15 Jul 2013 19:55:24 +0200
-Message-ID: <1373910925-18422-6-git-send-email-Matthieu.Moy@imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 1/6] t4000-diff-format.sh: modernize style
+Date: Mon, 15 Jul 2013 11:00:09 -0700
+Message-ID: <20130715180009.GD14690@google.com>
 References: <20130715173536.GB14690@google.com>
  <1373910925-18422-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: jrnieder@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jul 15 19:57:42 2013
+ <1373910925-18422-2-git-send-email-Matthieu.Moy@imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Jul 15 20:00:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uyn1p-0005FD-0q
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 19:57:41 +0200
+	id 1Uyn4T-0006gP-PN
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 20:00:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753718Ab3GOR5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 13:57:30 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:45526 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753688Ab3GOR5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 13:57:25 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r6FHtu7s010132
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 15 Jul 2013 19:55:56 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Uyn0A-00043o-PJ; Mon, 15 Jul 2013 19:55:58 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1Uyn0A-0004oW-FD; Mon, 15 Jul 2013 19:55:58 +0200
-X-Mailer: git-send-email 1.8.3.1.495.g13f33cf.dirty
-In-Reply-To: <1373910925-18422-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 15 Jul 2013 19:55:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r6FHtu7s010132
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1374515761.27905@dk5rKxHCbbKBzIzjkfwS7w
+	id S1753601Ab3GOSAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 14:00:14 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:53244 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752949Ab3GOSAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 14:00:13 -0400
+Received: by mail-pd0-f177.google.com with SMTP id p10so10918452pdj.36
+        for <git@vger.kernel.org>; Mon, 15 Jul 2013 11:00:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=CRV12f3jXTFiPm1ij0Bxzlia3igu45pHEP0ldMOanZE=;
+        b=H3qa1P+sFspMUcmPTpxBF9JlwAs8kYIHnmfyyZ2ZyVfb85w0Ovlg2Y9328hHMYRD4Y
+         BzVRoyuiiOgTpFnJE91ylS0+0V33WHVzahcTfQThmgxMccsVnshY1anbSK9fPFE4ZeAB
+         4VnqwOiXC/Z2yOk8nothVC/mxMep8wkjMBE/5mkdZGksGb8qdSCyYK1EJXfFMujoKqVK
+         f8HVcy/bDAm3jxC2HE2GZ5xyU/34vjfBm9sctVmjoCG5+Up9LFZ8JBuZMxL/I38Sa2gq
+         D3BQt9dLB5WYpr83Z/5LqLmT9k5pnv7YJscrbtIQYGBef1+5kNo8oF6fZ+Arb/KXK7jR
+         uI5w==
+X-Received: by 10.68.35.131 with SMTP id h3mr30955186pbj.140.1373911212830;
+        Mon, 15 Jul 2013 11:00:12 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id pq1sm19100880pbb.26.2013.07.15.11.00.11
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Jul 2013 11:00:12 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1373910925-18422-2-git-send-email-Matthieu.Moy@imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230510>
 
-Technically, "-s, --no-patch" is implemented in diff.c ("git diff
---no-patch" is essentially useless, but valid). From the user point of
-view, this allows the documentation to show up in "git show --help",
-which is one of the most useful use of the option.
+Matthieu Moy wrote:
 
-While we're there, add a sentence explaining why the option can be
-useful.
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+>  t/t4000-diff-format.sh | 18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/diff-options.txt     | 5 +++++
- Documentation/rev-list-options.txt | 4 ----
- 2 files changed, 5 insertions(+), 4 deletions(-)
+This test script can use more cleanup, but as preparation for later
+patches in this series the above is enough. :)  If I forget to do more
+cleanup as a followup, feel free to kick me.
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 87e92d6..bbed2cd 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -26,6 +26,11 @@ ifndef::git-format-patch[]
- 	{git-diff? This is the default.}
- endif::git-format-patch[]
- 
-+-s::
-+--no-patch::
-+	Suppress diff output. Useful for commands like `git show` that
-+	show the patch by default, or to cancel the effect of `--patch`.
-+
- -U<n>::
- --unified=<n>::
- 	Generate diffs with <n> lines of context instead of
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index c128a85..e632e85 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -849,8 +849,4 @@ options may be given. See linkgit:git-diff-files[1] for more options.
- -t::
- 
- 	Show the tree objects in the diff output. This implies '-r'.
--
---s::
----no-patch::
--	Suppress diff output.
- endif::git-rev-list[]
--- 
-1.8.3.1.495.g13f33cf.dirty
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
