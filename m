@@ -1,68 +1,83 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] mailmap: Testing the single letter name case.
-Date: Sun, 14 Jul 2013 22:31:50 -0400
-Message-ID: <CAPig+cR8zhcZ9_Gjq9mv0kPMe7F=szeSANG1b3J3gitoWCZaxA@mail.gmail.com>
-References: <1373665135-32484-2-git-send-email-gitster@pobox.com>
-	<1373700020-30436-1-git-send-email-stefanbeller@googlemail.com>
-	<7v8v1aicn5.fsf@alter.siamese.dyndns.org>
-	<51E198FC.5080005@googlemail.com>
-	<7vk3kugqkl.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v2 1/2] send-email: squelch warning from Net::SMTP::SSL
+Date: Mon, 15 Jul 2013 05:07:41 +0200
+Message-ID: <51E3677D.6040903@web.de>
+References: <1373025947-26495-1-git-send-email-artagnon@gmail.com> <1373025947-26495-2-git-send-email-artagnon@gmail.com> <51D82970.5070108@web.de> <20130706143256.GX862789@vauxhall.crustytoothpaste.net> <51D83C7E.8000902@web.de> <CALkWK0kAfZLqyCO+e+0PH0-MmjMYX1nJmit5Qb5L3Qf6nyhC9Q@mail.gmail.com> <20130714170316.GE11097@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Stefan Beller <stefanbeller@googlemail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 15 04:32:00 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7Zn?= =?UTF-8?B?ZXJzaGF1c2Vu?= 
+	<tboegi@web.de>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Jul 15 05:07:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyYZz-0006uf-7r
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 04:31:59 +0200
+	id 1UyZ8m-0006PY-26
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 05:07:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753858Ab3GOCbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jul 2013 22:31:53 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:53867 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753819Ab3GOCbx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jul 2013 22:31:53 -0400
-Received: by mail-la0-f45.google.com with SMTP id fr10so9085377lab.4
-        for <git@vger.kernel.org>; Sun, 14 Jul 2013 19:31:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=akX2LMPkyL1CxvOBKnuPRlSEx456eLY6L0//bs8mS3M=;
-        b=OoTCWJQ2hnCQWXSeBuU2yhOMQmOrFqvhKJ8fpIb5dmGEm4qeA2J8Yw+Gk6jI2Bv1jd
-         QqELQa5zsCIEczXwXLpH46MOcwq3Z/eRQiErT56A+bcTe3uiiKJcZGfNViXt2RmFs9Hp
-         mNpHoU04VTTsQZHrVeokYH8xvN9thyuxTs50gyg45hLnIZ9cj9tcmh3SuBLIQFih1nSM
-         tWamin8IZZgv4f3hZ9UhABrPUxFWSQgBpZYYIZ1pE8zOulbsIlaUyZpVsgkkQYyW837o
-         NY613UerwNhsL4rnO5hfL8NkUkfFXeX/UAQjQjFTEtK+efCLDVbh9XgDlrm1xRMuPjNo
-         CTLA==
-X-Received: by 10.152.44.225 with SMTP id h1mr23196437lam.90.1373855511052;
- Sun, 14 Jul 2013 19:31:51 -0700 (PDT)
-Received: by 10.114.187.78 with HTTP; Sun, 14 Jul 2013 19:31:50 -0700 (PDT)
-In-Reply-To: <7vk3kugqkl.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: X5E5wWf-Udx7oUHjCFWf8-k8E6A
+	id S1753889Ab3GODHw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jul 2013 23:07:52 -0400
+Received: from mout.web.de ([212.227.15.14]:58225 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753295Ab3GODHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jul 2013 23:07:51 -0400
+Received: from [192.168.1.18] ([68.61.5.157]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0LpwMZ-1UUBrM3kGN-00ficp; Mon, 15 Jul 2013 05:07:45 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <20130714170316.GE11097@vauxhall.crustytoothpaste.net>
+X-Provags-ID: V03:K0:HJPhZEJZEp7/eCX3jP1O9Eou6Q5G1XC3cLvA5IQNMyGCi2AtexD
+ jMT1XcuGpsFSGuw+gslp4hI+19H8GniVX4YdWSzIKPvDO+V9cvio4eoh98+H52RwwntHRG2
+ U57x4hlDErfpj91GCX3A9w1zQhjkGxdejbV68FouPdJ/oaRv3fYQFl3Ieyx6OpmGfU6/PGn
+ hR14qgNkGsPwAxOK3tE9w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230405>
 
-On Sat, Jul 13, 2013 at 4:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <stefanbeller@googlemail.com> writes:
->
->> Indeed the patch tests for both bugs unintentionally.
->
-> I was puzzled because I do not think that is what is happening with
-> the posted patch.
->
-> The off-by-one fix seems to be correct from code inspection, but the
-> new test does not seem to demonstrate a case where the code before
-> the fix misbehaves.
-
-I've written tests which check for the two bugs which Junio's patches
-fix. I'll be sending them along with a re-roll of Junio's series along
-with a few other fixes to mailmap's debug mode.
+On 2013-07-14 19.03, brian m. carlson wrote:
+> On Sun, Jul 14, 2013 at 07:19:10PM +0530, Ramkumar Ramachandra wrote:
+>> Torsten B=C3=B6gershausen wrote:
+>>> /usr/bin/perl -MIO::Socket::SSL -e 'print "$IO::Socket::SSL::VERSIO=
+N\n";'
+>>> 1.22
+>>
+>> This is ancient!  (I have 1.84).  Is it not possible to do an
+>> ssl-verify-peer in older versions (is it exported as something else)=
+?
+>> The older versions don't display the warning anyway, and this series
+>> is about squelching the warning in newer versions.  Does
+>>
+>>   require IO::Socket::SSL qw(SSL_VERIFY_NONE SSL_VERIFY_PEER) or pri=
+nt
+>> "warning: not using SSL_VERIFY_PEER due to outdated IO::Socket::SSL"
+>=20
+> require doesn't take a list of symbols to import, and the import dies=
+ if
+> it fails.  You need:
+>=20
+> require IO::Socket::SSL;
+> eval {
+> 	IO::Socket::SSL->import(qw(SSL_VERIFY_NONE SSL_VERIFY_PEER));
+> };
+> if ($@) {
+> 	warn "Not using SSL_VERIFY_PEER due to outdated IO::Socket::SSL\n";
+> 	# Do something different here.
+> }
+>=20
+> I didn't stick the require in the eval because git-send-email will fa=
+il
+> in this case anyway if you don't have it, since Net::SMTP::SSL requir=
+es
+> it.  Let me know if you want a patch for this on top of the existing =
+two
+> in this series and I'll provide one.
+>=20
+Please send a patch if possible.
+I can volonteer to test it here, but it can take a couple of days to re=
+spond.
