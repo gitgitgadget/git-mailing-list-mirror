@@ -1,201 +1,172 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 12/19] read-cache: read index-v5
-Date: Mon, 15 Jul 2013 17:12:45 +0700
-Message-ID: <CACsJy8DDRN5aTOzxuiGSa6UjbBiVUYwHjPcnN+8mw4xKmvkx-A@mail.gmail.com>
-References: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com> <1373650024-3001-13-git-send-email-t.gummerer@gmail.com>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Bug in "git show"?
+Date: Mon, 15 Jul 2013 13:25:59 +0200
+Message-ID: <51E3DC47.70107@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 15 12:13:21 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 15 13:25:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyfmS-000227-Do
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 12:13:20 +0200
+	id 1Uygue-0007ao-Qe
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 13:25:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754878Ab3GOKNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 06:13:16 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:60482 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754869Ab3GOKNP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 06:13:15 -0400
-Received: by mail-ob0-f177.google.com with SMTP id ta17so13635717obb.8
-        for <git@vger.kernel.org>; Mon, 15 Jul 2013 03:13:15 -0700 (PDT)
+	id S1755829Ab3GOLZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 07:25:48 -0400
+Received: from mail-bk0-f53.google.com ([209.85.214.53]:63617 "EHLO
+	mail-bk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755793Ab3GOLZs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 07:25:48 -0400
+Received: by mail-bk0-f53.google.com with SMTP id e11so4459660bkh.26
+        for <git@vger.kernel.org>; Mon, 15 Jul 2013 04:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=bCt6yvdu+SbuULJyeejzeEREqCtHQVcgTZETdvuCQeY=;
-        b=PzUmmJdv43tMLsfmp40QRh+81v4w0RCT2q5WRVMOGW05KjOzKq5JYKj6dhHP43Mb1k
-         1s1ROIER4BnMaMenV53Q4Z9JLQclyqXmbWg47d8PGK7Vo2FvLt961nQixD5PDbJPSVCx
-         IxPGxRIvfIkWckL7/mQFbpazbfJv4OHUCiJNygsN7Nui/jNgEtEdVZjfuQupJdn+wQ4K
-         izSAET8RS54FZaLkakItyU24AyqYudYXULarLjcpvauVa9j7VTELap0Ut97kyKj6VIrA
-         Pus/n3qbNbn/aoJh34py2KBg+HjnLAn18gmGeyuilAVXuG82SK3cfUfa0DLT0H0694nh
-         wPvw==
-X-Received: by 10.182.142.104 with SMTP id rv8mr38341353obb.3.1373883195145;
- Mon, 15 Jul 2013 03:13:15 -0700 (PDT)
-Received: by 10.76.88.230 with HTTP; Mon, 15 Jul 2013 03:12:45 -0700 (PDT)
-In-Reply-To: <1373650024-3001-13-git-send-email-t.gummerer@gmail.com>
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=xg8Bq9KzT4FdvgS1t9/GcCWg7bXkEpQIsxfpqY5O2vA=;
+        b=LITouJjB1tGzbCpwudiPv2tuspOarUbivU+UHul6B8zBELYy+3HR8yjLpuaj9oBZ7U
+         rjVW2OAPuC5K7YEASMdbmIdir0m8S/5DXafgHEqJSMg+uwG/s7aKSneU5j/P2SjsNcM6
+         TRGgvBmfh7QRujW1WOgy3R17Loj3wvw/RnFeueKQ8BLlc+V3WShWuCvqJQO7YKawrXCv
+         D5yu+yxIKhV/qrp3oCndWeQjUfQ/k/rzRBGfu0XKPmyKLo6xZ7cH9BzvsC2oj1XFvgys
+         rb0uLBJPtbYAVZKJYPZ4uerCCwy83mFybRLh8X4iYEtJsMhvz8ojb5jI7eTVSimtN99F
+         eyrw==
+X-Received: by 10.205.14.138 with SMTP id pq10mr7607640bkb.123.1373887546505;
+        Mon, 15 Jul 2013 04:25:46 -0700 (PDT)
+Received: from [131.234.75.130] (eduroam-75-130.uni-paderborn.de. [131.234.75.130])
+        by mx.google.com with ESMTPSA id lb14sm12052868bkb.6.2013.07.15.04.25.45
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 15 Jul 2013 04:25:45 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230457>
 
-A little bit more..
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Sat, Jul 13, 2013 at 12:26 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> +static void ce_queue_push(struct cache_entry **head,
-> +                            struct cache_entry **tail,
-> +                            struct cache_entry *ce)
-> +{
-> +       if (!*head) {
-> +               *head = *tail = ce;
-> +               (*tail)->next = NULL;
-> +               return;
-> +       }
-> +
-> +       (*tail)->next = ce;
-> +       ce->next = NULL;
-> +       *tail = (*tail)->next;
+Hello,
 
-No no no. "next" is for name-hash.c don't "reuse" it here. And I don't
-think you really need to maintain a linked list of cache_entries by
-the way. More on read_entries comments below..
+so I wanted to write a script using some git commands,
+but the output of the git commands is not as expected.
+I am using
 
-> +}
-> +
-> +static struct cache_entry *ce_queue_pop(struct cache_entry **head)
-> +{
-> +       struct cache_entry *ce;
-> +
-> +       ce = *head;
-> +       *head = (*head)->next;
-> +       return ce;
-> +}
+git --version
+git version 1.8.3.2.804.g0da7a53
+(current origin/master at git://github.com/gitster/git.git)
 
-Same as ce_queue_push.
+The command I am trying to use is
+git --no-pager show --format="%ad" <commit>
 
-> +static int read_entries(struct index_state *istate, struct directory_entry **de,
-> +                       unsigned int *entry_offset, void **mmap,
-> +                       unsigned long mmap_size, unsigned int *nr,
-> +                       unsigned int *foffsetblock)
-> +{
-> +       struct cache_entry *head = NULL, *tail = NULL;
-> +       struct conflict_entry *conflict_queue;
-> +       struct cache_entry *ce;
-> +       int i;
-> +
-> +       conflict_queue = NULL;
-> +       if (read_conflicts(&conflict_queue, *de, mmap, mmap_size) < 0)
-> +               return -1;
-> +       for (i = 0; i < (*de)->de_nfiles; i++) {
-> +               if (read_entry(&ce,
-> +                              *de,
-> +                              entry_offset,
-> +                              mmap,
-> +                              mmap_size,
-> +                              foffsetblock) < 0)
-> +                       return -1;
-> +               ce_queue_push(&head, &tail, ce);
-> +               *foffsetblock += 4;
-> +
-> +               /*
-> +                * Add the conflicted entries at the end of the index file
-> +                * to the in memory format
-> +                */
-> +               if (conflict_queue &&
-> +                   (conflict_queue->entries->flags & CONFLICT_CONFLICTED) != 0 &&
-> +                   !cache_name_compare(conflict_queue->name, conflict_queue->namelen,
-> +                                       ce->name, ce_namelen(ce))) {
-> +                       struct conflict_part *cp;
-> +                       cp = conflict_queue->entries;
-> +                       cp = cp->next;
-> +                       while (cp) {
-> +                               ce = convert_conflict_part(cp,
-> +                                               conflict_queue->name,
-> +                                               conflict_queue->namelen);
-> +                               ce_queue_push(&head, &tail, ce);
-> +                               conflict_part_head_remove(&cp);
-> +                       }
-> +                       conflict_entry_head_remove(&conflict_queue);
-> +               }
+Expected output:
+sb@sb:~/OSS/git$ git show --format="%ad" 0da7a53^
+Fri Jul 12 12:04:19 2013 -0700
 
-I start to wonder if separating staged entries is a good idea. It
-seems to make the code more complicated. The good point about conflict
-section at the end of the file is you can just truncate() it out.
-Another way is putting staged entries in fileentries, sorted
-alphabetically then by stage number, and a flag indicating if the
-entry is valid. When you remove resolve an entry, just set the flag to
-invalid (partial write), so that read code will skip it.
+sb@sb:~/OSS/git$ git show --format="%ad" 0da7a53^^
+Fri Jul 12 12:04:17 2013 -0700
 
-I think this approach is reasonably cheap (unless there are a lot of
-conflicts) and it simplifies this piece of code. truncate() may be
-overrated anyway. In my experience, I "git add <path>" as soon as I
-resolve <path> (so that "git diff" shrinks). One entry at a time, one
-index write at a time. I don't think I ever resolve everything then
-"git add -u .", which is where truncate() shines because staged
-entries are removed all at once. We should optimize for one file
-resolution at a time, imo.
+sb@sb:~/OSS/git$ git show --format="%ad" 0da7a53^^^
+Fri Jul 12 12:04:16 2013 -0700
 
-> +       }
-> +
-> +       *de = (*de)->next;
-> +
-> +       while (head) {
-> +               if (*de != NULL
-> +                   && strcmp(head->name, (*de)->pathname) > 0) {
-> +                       read_entries(istate,
-> +                                    de,
-> +                                    entry_offset,
-> +                                    mmap,
-> +                                    mmap_size,
-> +                                    nr,
-> +                                    foffsetblock);
-> +               } else {
-> +                       ce = ce_queue_pop(&head);
-> +                       set_index_entry(istate, *nr, ce);
-> +                       (*nr)++;
-> +                       ce->next = NULL;
-> +               }
+sb@sb:~/OSS/git$ git show --format="%ad" 0da7a53^^^^
+Fri Jul 12 12:04:14 2013 -0700
 
-In this loop, you do some sort of merge sort combining a list of
-sorted files and a list of sorted directories (which will be expanded
-to bunches of files by the recursive read_entries). strcmp() does two
-things. Assume we're in directory 'a', it makes sure that subdirectory
-'a/b' is only inserted after file 'a/a' is inserted to maintain index
-sort order. It also makes sure that 'de' of an outside directory 'b'
-will not be expanded here. strcmp will be called for every file,
-checking _full_ path. Sounds expensive.
+sb@sb:~/OSS/git$ git show --format="%ad" 0da7a53^^^^^
+Fri Jul 12 12:04:12 2013 -0700
 
-If you maintain two pointers first_subdir and next_sibling in "de" as
-in my previous mail, you know "de" 'b' is out without string
-comparison (de->next_sibling would be NULL). With that, the purpose of
-strcmp is simply making sure that 'a/b' is inserted after 'a/a'.
-Because we know all possible "de" is a subdirectory of 'a', we don't
-need to compare the prefix 'a/'. We still need to strcmp on every
-file, but we only need to compare the file name, not the leading
-directory anymore. Cheaper.
+sb@sb:~/OSS/git$ git show --format="%ad" 0da7a53^^^^^^
+Fri Jul 12 12:04:10 2013 -0700
 
-Going further, I wonder if we could eliminate strcmp completely. We
-could store dummy entries in fileentries to mark the positions of the
-subdirectories. When we encounter a dummy entry, we call
-read_entries() instead of set_index_entry.
+sb@sb:~/OSS/git$ git show --format="%ad" 0da7a53^^^^^^^
+Fri Jul 12 12:04:09 2013 -0700
 
-If you merge the "read_entry" for loop in this while loop, you don't
-need to maintain a linked list of ce to pop out one by one here.
+sb@sb:~/OSS/git$ git show --format="%ad" 0da7a53^^^^^^^^
+Fri Jul 12 12:04:07 2013 -0700
 
-> +       }
-> +       return 0;
-> +}
-> +
--- 
-Duy
+However I sometimes also get:
+sb@sb:~/OSS/git$ git show --format="%ad" 0da7a53
+Fri Jul 12 10:49:34 2013 -0700
+
+diff --git a/Documentation/RelNotes/1.8.4.txt
+b/Documentation/RelNotes/1.8.4.txt
+index 0e50df8..4250e5a 100644
+- --- a/Documentation/RelNotes/1.8.4.txt
++++ b/Documentation/RelNotes/1.8.4.txt
+@@ -79,6 +79,13 @@ Foreign interfaces, subsystems and ports.
+
+ UI, Workflows & Features
+
++ * "gitweb" learned to optionally place extra links that point at the
++   levels higher than the Gitweb pages themselves in the breadcrumbs,
++   so that it can be used as part of a larger installation.
++
++ * "git log --format=" now honors i18n.logoutputencoding configuration
++   variable.
++
+  * The "push.default=simple" mode of "git push" has been updated to
+    behave like "current" without requiring a remote tracking
+    information, when you push to a remote that is different from where
+
+
+sb@sb:~/OSS/git$ git show --format="%ad" 0da7a53^^^^^^^^
+Fri Jul 12 12:04:07 2013 -0700
+
+diff --cc t/t5505-remote.sh
+index ee5d65d,8d0f3e3..8f6e392
+- --- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@@ -61,25 -62,25 +61,25 @@@ test_expect_success C_LOCALE_OUTPUT 're
+  '
+
+  test_expect_success 'add another remote' '
+ -(
+ -      cd test &&
+ -      git remote add -f second ../two &&
+ -      tokens_match "origin second" "$(git remote)" &&
+ -      check_tracking_branch second master side another &&
+ -      git for-each-ref "--format=%(refname)" refs/remotes |
+ -      sed -e "/^refs\/remotes\/origin\//d" \
+ -          -e "/^refs\/remotes\/second\//d" >actual &&
+ -      >expect &&
+
+
+
+
+So at some commits, also the diff is shown, which should not happen
+if you're using --format="%ad" to my understanding.
+
+So far it seems to be deterministic here. (Each commit either always
+behaves correctly or incorrectly). Initially I suspected it being
+different for merges or no-merges, but I gut the unexpected behavior
+for both merge and non-merge commits.
+
+Can somebody confirm this behavior or has any idea, whether I am doing
+something wrong here?
+
+Thanks,
+Stefan
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJR49xHAAoJEJQCPTzLflhqiFcP/0S5M71urjn1Fh5Cz2950wBl
+cs6+r9wKF5366wv3Ombfh0KrOPQCE7Yv1GWk2r2L008BWrz0wgnsl1xnMnAT00dH
+1WzmupWExxwXHAueDisq2qL4dubFrnVxKWvpwxBd3JBbsWNXeTGl5o6dl69zaXdx
+JHzIHvw1/vrxoCLaflitjcQezuFITOVVoNsYawK12gznjxujONm0sej5TBFUw784
+K5KTJNJqxzUf9+Z+88hg2oif7kJlugTIqtH5sRMVwXrkpc12f+HcwROg0srE5ITc
+8WpK0s7xgZokUCohMhUXlLAOYJwAZju+K1LExkrQ9T32oP4iAKsJpqcRLAAX6Ig7
+OeaWUQ2WX2CfYDExjuV6h+FXAU0qT87iv3PgeZWAnmgDQPUwFboIxuF1Nrpq/FOY
+Ioe2YOsFOdhmuDjCHEfu0aVNOeejHS8LEkC1IUI/+PzDlEJC/b17SwEdrD4aVCPj
+RZhz2zI8ZxYHP9ITvMDs1VQRP6jMSAwEtAWg7ac7ypETToOIAxRp2j9Rrjayt8A5
+/TZ++wMh7G4Tm/D9+iutQnqzE8E8eiT6i7LgAcDSA3g6oq7/hUzupKU2lc+znO2J
+wxiwdqYBHWtw1Jc8eaZAJC/NMfxbRzOSCx4lJbO+tpXP0pR/OPIg2f2wUXcAh3zH
+JC9GdEUVIwN34j2ueoZ8
+=G6Oc
+-----END PGP SIGNATURE-----
