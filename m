@@ -1,74 +1,81 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/5] diff: allow --patch to override -s/--no-patch
-Date: Mon, 15 Jul 2013 17:28:08 +0200
-Message-ID: <vpqa9lnderb.fsf@anie.imag.fr>
-References: <vpqa9lof2e4.fsf@anie.imag.fr>
-	<1373893639-13413-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1373893639-13413-3-git-send-email-Matthieu.Moy@imag.fr>
-	<7v61wbeuix.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-clone.txt: remove the restriction on pushing from a shallow clone
+Date: Mon, 15 Jul 2013 08:31:18 -0700
+Message-ID: <7voba3dem1.fsf@alter.siamese.dyndns.org>
+References: <1373607462-12836-1-git-send-email-pclouds@gmail.com>
+	<20130713212541.GA10951@google.com>
+	<CACsJy8ATX8aJJ40sF5XSoVpy=X1ZTLj5qpthrTQ52fv40QNn7w@mail.gmail.com>
+	<7vfvvhgeif.fsf@alter.siamese.dyndns.org>
+	<CACsJy8Bx_o+9S1N_uieQaV8NBbc3T_MR_VCvF+fM==Dy-vt7tw@mail.gmail.com>
+	<CACsJy8DELmhBwBCk9hmg4EpQxGeCRDPaSEr5rYp=CiMjq8j54Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, stefanbeller@googlemail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 15 17:29:40 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 15 17:31:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UykiY-0001KD-4F
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 17:29:38 +0200
+	id 1UykkK-0002Gc-38
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 17:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933091Ab3GOP3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 11:29:34 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41945 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932675Ab3GOP3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 11:29:33 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r6FFS7cj013173
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 15 Jul 2013 17:28:09 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Uykh7-0002XE-7I; Mon, 15 Jul 2013 17:28:09 +0200
-In-Reply-To: <7v61wbeuix.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 15 Jul 2013 08:02:14 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 15 Jul 2013 17:28:09 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r6FFS7cj013173
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1374506894.13642@48DAdGgkF6TJo5VRiZ4M1w
+	id S932236Ab3GOPbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 11:31:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42326 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757603Ab3GOPbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 11:31:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA95831F37;
+	Mon, 15 Jul 2013 15:31:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KsD7kxJakb/NCOxMIvsQsXaZMN4=; b=qe1wDA
+	7THE3rEJiYbV6o3+byQ1RzVCQtQ2MZeZSfCo4JRsyj0Archf933Pji7lAFoEy6Tw
+	HfCoTvGvxDN1BB/HCleAArj56Rb8U1WHY/b3JYH4dbH8UDoSEiNTnp2kexQSGVOS
+	fDAnxCpRPp7ytPXEzIVe+ldYQhrn496R+yLXc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Mqz0eWGrdzatPV7z/lf4uV6Kofd7xiQ+
+	cHMr5hU1F0rIvllrc1UrXv7h8B1o8ReePlw+CGnXOtBwex5RBrS6vzp+jqc7jOkD
+	/EjbbCLW9CibNQiIKbrATJd3jeCX7WUAXH8m6BvLwgsDg/vnBuklCPxPDuJb4S2B
+	aMTUU4w2Hg8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF60731F36;
+	Mon, 15 Jul 2013 15:31:20 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2D4E631F31;
+	Mon, 15 Jul 2013 15:31:20 +0000 (UTC)
+In-Reply-To: <CACsJy8DELmhBwBCk9hmg4EpQxGeCRDPaSEr5rYp=CiMjq8j54Q@mail.gmail.com>
+	(Duy Nguyen's message of "Mon, 15 Jul 2013 13:33:49 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 992CD07A-ED63-11E2-AD53-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230480>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> I am wondering if the difference after this patch between "-p" and
-> "-U8" is deliberate, or just an accident coming from the way the
-> original was written in ee1e5412 (git diff: support "-U" and
-> "--unified" options properly, 2006-05-13).
-
-No, it isn't. I just didn't notice the -U case.
-
-> If the original were written in this way:
+> On Mon, Jul 15, 2013 at 8:01 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>> Also, the sender may have cloned from the receiver (fully) and then
+>>> fetched a different history shallowly from elsewhere.  The receiver
+>>> may have no commit on that history, including the shallow-bottom.
+>>>
+>>
+>> Hmm.. right. And the receiver needs to setup proper graft to seal the
+>> shallow bottom. So it's really not safe to do pushing from a shallow
+>> repo without 52fed6e
 >
-> 	if (!strcmp(arg, "-p") || !strcmp(arg, "-u") || !strcmp(arg, "--patch") ||
->             opt_arg(arg, 'U', "unified", &options->context))
->   		options->output_format |= DIFF_FORMAT_PATCH;
+> Because this makes pushing from a shallow repo fall into "mostly
+> works" category, I withdraw this patch.
 
-Yes, this seems to be a better way.
-
-There are other cases like --patch-with-raw, I'll send a reroll.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Yeah, "reliably fails when it shouldn't" may be safer than before
+that patch, but the fact that you cannot push from a shallow one
+still remains, so we probably shouldn't tell the users to use it.
