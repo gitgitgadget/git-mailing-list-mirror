@@ -1,231 +1,126 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v1.8.3.3
-Date: Mon, 15 Jul 2013 14:13:46 -0700
-Message-ID: <7vk3kra5md.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v2 00/46] "struct pathspec" conversion and :(glob) and :(icase)
+Date: Mon, 15 Jul 2013 14:43:36 -0700
+Message-ID: <7va9lna48n.fsf@alter.siamese.dyndns.org>
+References: <1373790969-13000-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Mon Jul 15 23:14:09 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jul 15 23:43:48 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Uyq5v-000404-Jt
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 15 Jul 2013 23:14:08 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1UyqYb-00027o-2S
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 23:43:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757302Ab3GOVN5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 15 Jul 2013 17:13:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40304 "EHLO
+	id S1755343Ab3GOVnk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jul 2013 17:43:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36488 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755086Ab3GOVNz convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 15 Jul 2013 17:13:55 -0400
+	id S1755239Ab3GOVnj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Jul 2013 17:43:39 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3842431A82;
-	Mon, 15 Jul 2013 21:13:51 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2CB431FD9;
+	Mon, 15 Jul 2013 21:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=tCy7gEOx4NkM/enXEHpIX9Lok
-	TA=; b=mHEDsrcRA0VCL2ELQEAoInAgV1wNvmekvONTA3OBAlGfFXA+PZu9ufZ2/
-	57sAj4sHzygupG4dbxJN/BBlj+TTeyz+yZOQ9hsZm2HuKYrFSYY/2PQNAum0m9hY
-	FDiKEV7UqY/1w0/xseS9QQHSEywAK7avYn99eUbQ4yrAD/sam8=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=YROioB5okT1w
+	ht0kUMh3sT7sTEw=; b=q3LXQC1JqgVcqa9X/pu4WtPq1Gn8520wj5Gz/WMlT+b9
+	l9T8B3cUCx+OPMn/xta/FJlsC9VY1NTkPu5QgjVjSehacqPxt+HnFYUDq+m8OdBs
+	FC4KlODtXPOYOe0nPv2pM1Etxx5TDkj7k1lGBPloKfk032UUdvKEb+IOyBJ0XbU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=LjDEjfNXzSmerr9/Nm7
-	WCvcU/t3CT1/uRwHmMd8OeoJ7mflgo0QDCGfQ759K7v2q+oYNKea4uf9D0d3MEk1
-	ldDOPK7COZZNLIZVDJp39uLNCqZv33m02XBes889XyQ2PYcDG0UDh+XPCa5HRVk+
-	Ycad3qqQKR27z70aTGyTiFFY=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=YDkDZ8
+	F2/ZsktnAaWBEhXd+3UVy1/W3KEJkJB3DJm+sTm/LuutuOgJXuZDwBrP7Z5DfUt8
+	wcnfHTv1fwnpsYzFK3NQ16NlqHeyshJ6NXQgkksS/rhUamIdaYUr9F5pEIDn/RiH
+	5uqyVjGgfS2A0uoyOMsoWEongDOfwGqUrGdJo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0407331A81;
-	Mon, 15 Jul 2013 21:13:51 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B91A431FD8;
+	Mon, 15 Jul 2013 21:43:38 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8BAB731A77;
-	Mon, 15 Jul 2013 21:13:48 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0BC4731FD7;
+	Mon, 15 Jul 2013 21:43:37 +0000 (UTC)
+In-Reply-To: <1373790969-13000-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 14
+ Jul 2013 15:35:23 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 70F8FCDE-ED93-11E2-9D5E-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: 9B949D32-ED97-11E2-A9DE-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230523>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230524>
 
-The latest maintenance release Git v1.8.3.3 is now available at
-the usual places.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-The release tarballs are found at:
+> Compared to the last round [1] this series mainly fixes comments and
+> commit messages suggested by Eric and Junio. It also fixes a conflict
+> with cb/log-follow-with-combined (in master) and introduces :(icase)
+> mentioned in the last round.
+>
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/226892
+>
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (46):
+>   clean: remove unused variable "seen"
+>   ...
+>   parse_pathspec: accept :(icase)path syntax
 
-    http://code.google.com/p/git-core/downloads/list
+This was a good exercise for git-imerge.  I merged it just below the
+"2.0 migration topic" that is kept outside the 'next' first by hand,
+and then used imerge.  Interested parties may try to do this, after
+fetching from me:
 
-and their SHA-1 checksums are:
 
-417cb12660446702bffc5c2c83cbb6e7f1e60c79  git-1.8.3.3.tar.gz
-c6104064c1276b2405a281e104fc54ff86f7299d  git-htmldocs-1.8.3.3.tar.gz
-07361cfd38b8c57207b9a5f8bf0c4456b7229b52  git-manpages-1.8.3.3.tar.gz
+	$ git checkout cb5d2fc
+	$ git branch nd/magic-pathspec 93d93537
+	$ git imerge start --first-parent --name bogo nd/magic-pathspec
 
-The following public repositories all have a copy of the v1.8.3.3
-tag and the maint branch that the tag points at:
+	... imerge thinks and then will stop, asking you to resolve
+	... and commit, repeatedly.  Do the next two steps until it
+        ... stops.
 
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://code.google.com/p/git-core/
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
+	$ edit
+        $ git commit -a --no-edit && git imerge continue
 
-Also, http://www.kernel.org/pub/software/scm/git/ has copies of the
-release tarballs.
+	... and then
+        $ git imerge finish
 
-Git v1.8.3.3 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
+The imerge program was a bit under-help (yet), and also it was a bit
+cumbersome at times having to resolve trivial and obvious two
+conflicts in the same file (e.g. the series adds description for
+GIT_*_PATHSPECS environment variables to Documentation/git.txt in
+two separate patches, and the resolution is obvious for a single
+merge, but imerge wants me to resolve them in two steps), but in the
+end, after "imerge finish", it produced identical result as my hand
+merge, so at least it seems to be doing something right ;-)
 
-=46ixes since v1.8.3.2
---------------------
+A few things I noticed:
 
- * "git apply" parsed patches that add new files, generated by programs
-   other than Git, incorrectly.  This is an old breakage in v1.7.11.
+ - It was not immediately clear from "git imerge -h" text what the
+   simplest "hello world" workflow was.
 
- * Older cURL wanted piece of memory we call it with to be stable, but
-   we updated the auth material after handing it to a call.
+ - It was not clear what it wanted for --name parameter (it becomes
+   the name of the temporary and final branch that stores the
+   result).
 
- * "git pull" into nothing trashed "local changes" that were in the
-   index.
+ - The final step "imerge finish" gave me this ugliness:
 
- * Many "git submodule" operations did not work on a submodule at a
-   path whose name is not in ASCII.
+     Merge commit 93d9353... into commit cb5d2fc7
 
- * "cherry-pick" had a small leak in its error codepath.
+   Perhaps you can at least use the initial branch name
+   "nd/magic-pathspec" I gave you, and use "git fmt-merge-msg"?
 
- * Logic used by git-send-email to suppress cc mishandled names like
-   "A U. Thor" <author@example.xz>, where the human readable part
-   needs to be quoted (the user input may not have the double quotes
-   around the name, and comparison was done between quoted and
-   unquoted strings).  It also mishandled names that need RFC2047
-   quoting.
+A bigger test will be to try merging jn/add-2.0-u-A-sans-pathspec
+and jc/add-2.0-ignore-removal topics on top of the merge result
+(2857023 in today's pushout).  These two merges, especially the
+latter one, have to involve some "evil merges", so it would be
+interesting to see how well it fares.
 
- * "gitweb" forgot to clear a global variable $search_regexp upon each
-   request, mistakenly carrying over the previous search to a new one
-   when used as a persistent CGI.
-
- * The wildmatch engine did not honor WM_CASEFOLD option correctly.
-
- * "git log -c --follow $path" segfaulted upon hitting the commit that
-   renamed the $path being followed.
-
- * When a reflog notation is used for implicit "current branch",
-   e.g. "git log @{u}", we did not say which branch and worse said
-   "branch ''" in the error messages.
-
- * Mac OS X does not like to write(2) more than INT_MAX number of
-   bytes; work it around by chopping write(2) into smaller pieces.
-
- * Newer MacOS X encourages the programs to compile and link with
-   their CommonCrypto, not with OpenSSL.
-
-Also contains various minor documentation updates.
-
-----------------------------------------------------------------
-
-Changes since v1.8.3.2 are as follows:
-
-Andrew Pimlott (2):
-      lib-rebase: document exec_ in FAKE_LINES
-      t7500: fix flipped actual/expect
-
-Anthony Ramine (1):
-      wildmatch: properly fold case everywhere
-
-Brandon Casey (1):
-      http.c: don't rewrite the user:passwd string multiple times
-
-Charles McGarvey (1):
-      gitweb: fix problem causing erroneous project list
-
-Chris Rorvick (1):
-      git.txt: remove stale comment regarding GIT_WORK_TREE
-
-Clemens Buchacher (1):
-      fix segfault with git log -c --follow
-
-David Aguilar (4):
-      Makefile: fix default regex settings on Darwin
-      Makefile: add support for Apple CommonCrypto facility
-      cache.h: eliminate SHA-1 deprecation warnings on Mac OS X
-      imap-send: eliminate HMAC deprecation warnings on Mac OS X
-
-Dmitry Marakasov (1):
-      contrib/git-subtree: Use /bin/sh interpreter instead of /bin/bash
-
-=46elipe Contreras (4):
-      read-cache: fix wrong 'the_index' usage
-      read-cache: trivial style cleanups
-      sequencer: remove useless indentation
-      sequencer: avoid leaking message buffer when refusing to create a=
-n empty commit
-
-=46ilipe Cabecinhas (1):
-      compate/clipped-write.c: large write(2) fails on Mac OS X/XNU
-
-=46redrik Gustafsson (1):
-      handle multibyte characters in name
-
-Jeff King (1):
-      pull: update unborn branch tip after index
-
-John Keeping (1):
-      git-config: update doc for --get with multiple values
-
-Junio C Hamano (6):
-      deprecate core.statinfo at Git 2.0 boundary
-      t5551: do not use unportable sed '\+'
-      Documentation/diff-index: mention two modes of operation
-      Start preparing for 1.8.3.3
-      Update draft release notes to 1.8.3.3
-      Git 1.8.3.3
-
-Michael S. Tsirkin (9):
-      t/send-email.sh: add test for suppress-cc=3Dself
-      send-email: fix suppress-cc=3Dself on cccmd
-      t/send-email: test suppress-cc=3Dself on cccmd
-      send-email: make --suppress-cc=3Dself sanitize input
-      t/send-email: add test with quoted sender
-      t/send-email: test suppress-cc=3Dself with non-ascii
-      test-send-email: test for pre-sanitized self name
-      send-email: add test for duplicate utf8 name
-      send-email: sanitize author when writing From line
-
-Ramkumar Ramachandra (6):
-      sha1_name: fix error message for @{u}
-      sha1_name: fix error message for @{<N>}, @{<date>}
-      diffcore-pickaxe: make error messages more consistent
-      diffcore-pickaxe doc: document -S and -G properly
-      check-ignore doc: fix broken link to ls-files page
-      fixup-builtins: retire an old transition helper script
-
-Ren=C3=A9 Scharfe (2):
-      t5004: avoid using tar for checking emptiness of archive
-      t5004: resurrect original empty tar archive test
-
-Richard Hansen (1):
-      Documentation/merge-options.txt: restore `-e` option
-
-SZEDER G=C3=A1bor (1):
-      test: spell 'ls-files --delete' option correctly in test descript=
-ions
-
-Thomas Rast (2):
-      pull: merge into unborn by fast-forwarding from empty tree
-      apply: carefully strdup a possibly-NULL name
-
-Torsten B=C3=B6gershausen (1):
-      t7400: test of UTF-8 submodule names pass under Mac OS
-
-Vikrant Varma (2):
-      help: add help_unknown_ref()
-      merge: use help_unknown_ref()
+In any case, thanks for a fun tool.
