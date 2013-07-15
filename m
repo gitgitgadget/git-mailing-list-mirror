@@ -1,65 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] gitweb: Ensure OPML text fits inside its box.
-Date: Sun, 14 Jul 2013 16:49:15 -0700
-Message-ID: <20130714234915.GB19057@google.com>
-References: <E1Uwb6x-0002XI-Ah@hermes-2.csi.cam.ac.uk>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] git-clone.txt: remove the restriction on pushing from a
+ shallow clone
+Date: Mon, 15 Jul 2013 08:01:40 +0700
+Message-ID: <CACsJy8Bx_o+9S1N_uieQaV8NBbc3T_MR_VCvF+fM==Dy-vt7tw@mail.gmail.com>
+References: <1373607462-12836-1-git-send-email-pclouds@gmail.com>
+ <20130713212541.GA10951@google.com> <CACsJy8ATX8aJJ40sF5XSoVpy=X1ZTLj5qpthrTQ52fv40QNn7w@mail.gmail.com>
+ <7vfvvhgeif.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-To: Tony Finch <dot@dotat.at>
-X-From: git-owner@vger.kernel.org Mon Jul 15 01:49:38 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 15 03:02:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyW2r-0005wR-KE
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 01:49:37 +0200
+	id 1UyXBP-0008D8-EY
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 03:02:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470Ab3GNXtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jul 2013 19:49:20 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:37562 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753444Ab3GNXtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jul 2013 19:49:19 -0400
-Received: by mail-pa0-f46.google.com with SMTP id fa11so10698266pad.33
-        for <git@vger.kernel.org>; Sun, 14 Jul 2013 16:49:19 -0700 (PDT)
+	id S1753686Ab3GOBCM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jul 2013 21:02:12 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:53618 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753261Ab3GOBCL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Jul 2013 21:02:11 -0400
+Received: by mail-oa0-f43.google.com with SMTP id i7so15256138oag.30
+        for <git@vger.kernel.org>; Sun, 14 Jul 2013 18:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=rAJ3rQM8aM7V4KlZ1dSSJZ6C5QurB5wI19qlxJ7eN3U=;
-        b=to9hqphV/bYfKDqkCimTWu4GhottnDVwh/fLweg58GKmjsq66PcykGw3HTHuH+qf64
-         gzAZSkqWDghFhQXCv6yzl2mUUveP9UJ0EmMOImnnFMRzhxH25c0wK6wmC0ZFP8hb/HKO
-         Bo6SjUUndbGDsKPv3zCuMnvMor2NPQ99jmE4wj/6uG95SkIm1r5LJeBAU5qL8zv54Dy/
-         q6SwaIK2M0d4dsANu08dJcnhs4PRqAU6niIVwoKcAzLTy6jEFl8GxAwlBn1v9zz2on54
-         Y/Hfc9za7idpeeKG1nMfu91S8GzGOn7yekDvNtpM41Omy0NXWTP1dnKxtZIer4BMTYxd
-         Tvig==
-X-Received: by 10.68.238.9 with SMTP id vg9mr51222931pbc.66.1373845759332;
-        Sun, 14 Jul 2013 16:49:19 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id ai6sm60913593pad.15.2013.07.14.16.49.17
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 14 Jul 2013 16:49:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <E1Uwb6x-0002XI-Ah@hermes-2.csi.cam.ac.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=yktU6YWU1stB5gWXBg90vd1BsIz7o75xt4w2NzJbHA4=;
+        b=msVNcXgz8uirq2IqqdaNkRGdKA7KGfx04y45ZfxWd2/3pdKk+jxv6+aiZHan1r4fXU
+         gv7rR9GwuQdEnGleFRxoieQ8sX29r8uQ+IJ/ntBukxSsMa+asq2D5yiBpE4JKVElhUBi
+         pufPXG9a/RL/tvEHJqBYeQ+1vJJENcTp32Emwy+4w7yHKNF0ucO61H1sXKv6BdLAAcUr
+         yKxekHnz2QlvAxYA1pOIxG9KETLD+0hixji0MsAcmsT1+vD6uaYmnx7rWrqRPLzNcZlj
+         kC543a31KlLG1FSJIT5j1bKnc7lw3rEAOIeOFQv1sjPAhKRFDtUxtNHgehHXBDkUQ/GX
+         fGlw==
+X-Received: by 10.182.214.39 with SMTP id nx7mr42124548obc.20.1373850130763;
+ Sun, 14 Jul 2013 18:02:10 -0700 (PDT)
+Received: by 10.76.88.230 with HTTP; Sun, 14 Jul 2013 18:01:40 -0700 (PDT)
+In-Reply-To: <7vfvvhgeif.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230403>
 
-Tony Finch wrote:
+On Mon, Jul 15, 2013 at 1:52 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> On Sun, Jul 14, 2013 at 4:25 AM, Jonathan Nieder <jrnieder@gmail.com=
+> wrote:
+>>> Hi,
+>>>
+>>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>>>
+>>>> Since 52fed6e (receive-pack: check connectivity before concluding =
+"git
+>>>> push" - 2011-09-02), receive-pack is prepared to deal with broken
+>>>> push, a shallow push can't cause any corruption. Update the docume=
+nt
+>>>> to reflect that.
+>>>
+>>> Hmm, what happens when pushing to servers without that commit?  Do =
+you
+>>> think it should be applied to Debian squeeze for server operators t=
+hat
+>>> haven't upgraded yet to the current stable release?
+>>
+>> This is pushing _from_ a shallow repo, where the sender repo's old
+>> objects is a subset of the receiver's.
+>
+> The "subset" assumption does not necessarily hold, does it?  The
+> receiver may have rewound its tips and pruned since then.
+>
+> Also, the sender may have cloned from the receiver (fully) and then
+> fetched a different history shallowly from elsewhere.  The receiver
+> may have no commit on that history, including the shallow-bottom.
+>
 
-> The rss_logo CSS style has a fixed width which is too narrow for
-> the string "OPML". Replace the fixed width with horizontal padding
-> so the text fits with nice margins.
-
-Sounds sensible.  Can we have your sign-off?  (Likewise for the next
-patch.)
-
-Thanks,
-Jonathan
+Hmm.. right. And the receiver needs to setup proper graft to seal the
+shallow bottom. So it's really not safe to do pushing from a shallow
+repo without 52fed6e
+--
+Duy
