@@ -1,87 +1,231 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] t9200 - Allow cvs version 1.12
-Date: Mon, 15 Jul 2013 16:36:25 -0400
-Message-ID: <1373920585-22370-1-git-send-email-mlevedahl@gmail.com>
-Cc: Mark Levedahl <mlevedahl@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v1.8.3.3
+Date: Mon, 15 Jul 2013 14:13:46 -0700
+Message-ID: <7vk3kra5md.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 15 22:36:46 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+X-From: linux-kernel-owner@vger.kernel.org Mon Jul 15 23:14:09 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UypVm-0001bj-6B
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 22:36:46 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Uyq5v-000404-Jt
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 15 Jul 2013 23:14:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754902Ab3GOUgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 16:36:32 -0400
-Received: from mail-qc0-f182.google.com ([209.85.216.182]:63038 "EHLO
-	mail-qc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754342Ab3GOUgc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 16:36:32 -0400
-Received: by mail-qc0-f182.google.com with SMTP id e10so6455455qcy.41
-        for <git@vger.kernel.org>; Mon, 15 Jul 2013 13:36:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=truawPXql1A2Wd6UOhIaStR6sy1YVGXMVfr4dWucxQM=;
-        b=yYTthndkOCViZGtPCZ4xIvonTltUMLudvaJsBSgbOkyDInnn0DCjwCDdqZB/c3cEuB
-         Rh2BOMj0c1nydSnhhcwNm7UB9CPYSusNEz7pGdUHP4g79R4dbiLPMaplE5RsyXi7CWt0
-         xrcA9PCBlVNF4DmhVrsIX99VwgioJR2TqdnESaL8zY7IhXMfdvxcP2R2rytqjpXUVwZ8
-         5nlue2k3KWOnpmo5WqA3Tc7nrQIxQK5pYBZRRVhAIs172utunbsHvkTDaQLy3gKBjiPY
-         7oKQSCO1JuMu5xTdNm6fyDO9RDy+ufHPDA3OdLGGJ5gz8oqKDIPHJzZPKmfVvoKeP/t3
-         ZQqA==
-X-Received: by 10.49.130.8 with SMTP id oa8mr52793532qeb.87.1373920591340;
-        Mon, 15 Jul 2013 13:36:31 -0700 (PDT)
-Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
-        by mx.google.com with ESMTPSA id a8sm58780823qae.11.2013.07.15.13.36.29
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 15 Jul 2013 13:36:30 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.2.0.13
-Sender: git-owner@vger.kernel.org
+	id S1757302Ab3GOVN5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 15 Jul 2013 17:13:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40304 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755086Ab3GOVNz convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 15 Jul 2013 17:13:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3842431A82;
+	Mon, 15 Jul 2013 21:13:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=tCy7gEOx4NkM/enXEHpIX9Lok
+	TA=; b=mHEDsrcRA0VCL2ELQEAoInAgV1wNvmekvONTA3OBAlGfFXA+PZu9ufZ2/
+	57sAj4sHzygupG4dbxJN/BBlj+TTeyz+yZOQ9hsZm2HuKYrFSYY/2PQNAum0m9hY
+	FDiKEV7UqY/1w0/xseS9QQHSEywAK7avYn99eUbQ4yrAD/sam8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=LjDEjfNXzSmerr9/Nm7
+	WCvcU/t3CT1/uRwHmMd8OeoJ7mflgo0QDCGfQ759K7v2q+oYNKea4uf9D0d3MEk1
+	ldDOPK7COZZNLIZVDJp39uLNCqZv33m02XBes889XyQ2PYcDG0UDh+XPCa5HRVk+
+	Ycad3qqQKR27z70aTGyTiFFY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0407331A81;
+	Mon, 15 Jul 2013 21:13:51 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8BAB731A77;
+	Mon, 15 Jul 2013 21:13:48 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 70F8FCDE-ED93-11E2-9D5E-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230522>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230523>
 
-cvs v1.12 does not correctly handle "cvs co -d $DIR", which is shorthand
-for "mkdir $DIR, cd $DIR, cvs co, cd -". So, use the latter form.
+The latest maintenance release Git v1.8.3.3 is now available at
+the usual places.
 
-Also cvs v1.12 does not necessarily match cvs v1.11 in the format of
-CVS/Entries, and this causes a false failure in subtest 14. Eliminate
-checking CVS/Entries for this one test, but keep the test that the
-created file exists and is checked out.
+The release tarballs are found at:
 
-With these changes, all tests in t9200 pass on Cygwin using its default
-cvs version 1.12.
+    http://code.google.com/p/git-core/downloads/list
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
- t/t9200-git-cvsexportcommit.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+and their SHA-1 checksums are:
 
-diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-index 3fb3368..17cb554 100755
---- a/t/t9200-git-cvsexportcommit.sh
-+++ b/t/t9200-git-cvsexportcommit.sh
-@@ -28,7 +28,8 @@ rm -rf "$CVSROOT" "$CVSWORK"
- 
- cvs init &&
- test -d "$CVSROOT" &&
--cvs -Q co -d "$CVSWORK" . &&
-+mkdir -p "$CVSWORK" &&
-+(cd "$CVSWORK" && cvs -Q co .) &&
- echo >empty &&
- git add empty &&
- git commit -q -a -m "Initial" 2>/dev/null ||
-@@ -313,7 +314,6 @@ test_expect_success 'commit a file with leading spaces in the name' '
- 	git commit -m "Add a file with a leading space" &&
- 	id=$(git rev-parse HEAD) &&
- 	git cvsexportcommit -w "$CVSWORK" -c $id &&
--	check_entries "$CVSWORK" " space/1.1/|DS/1.1/|attic_gremlin/1.3/|release-notes/1.2/" &&
- 	test_cmp "$CVSWORK/ space" " space"
- 
- '
--- 
-1.8.3.2.0.63
+417cb12660446702bffc5c2c83cbb6e7f1e60c79  git-1.8.3.3.tar.gz
+c6104064c1276b2405a281e104fc54ff86f7299d  git-htmldocs-1.8.3.3.tar.gz
+07361cfd38b8c57207b9a5f8bf0c4456b7229b52  git-manpages-1.8.3.3.tar.gz
+
+The following public repositories all have a copy of the v1.8.3.3
+tag and the maint branch that the tag points at:
+
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://code.google.com/p/git-core/
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
+
+Also, http://www.kernel.org/pub/software/scm/git/ has copies of the
+release tarballs.
+
+Git v1.8.3.3 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+
+=46ixes since v1.8.3.2
+--------------------
+
+ * "git apply" parsed patches that add new files, generated by programs
+   other than Git, incorrectly.  This is an old breakage in v1.7.11.
+
+ * Older cURL wanted piece of memory we call it with to be stable, but
+   we updated the auth material after handing it to a call.
+
+ * "git pull" into nothing trashed "local changes" that were in the
+   index.
+
+ * Many "git submodule" operations did not work on a submodule at a
+   path whose name is not in ASCII.
+
+ * "cherry-pick" had a small leak in its error codepath.
+
+ * Logic used by git-send-email to suppress cc mishandled names like
+   "A U. Thor" <author@example.xz>, where the human readable part
+   needs to be quoted (the user input may not have the double quotes
+   around the name, and comparison was done between quoted and
+   unquoted strings).  It also mishandled names that need RFC2047
+   quoting.
+
+ * "gitweb" forgot to clear a global variable $search_regexp upon each
+   request, mistakenly carrying over the previous search to a new one
+   when used as a persistent CGI.
+
+ * The wildmatch engine did not honor WM_CASEFOLD option correctly.
+
+ * "git log -c --follow $path" segfaulted upon hitting the commit that
+   renamed the $path being followed.
+
+ * When a reflog notation is used for implicit "current branch",
+   e.g. "git log @{u}", we did not say which branch and worse said
+   "branch ''" in the error messages.
+
+ * Mac OS X does not like to write(2) more than INT_MAX number of
+   bytes; work it around by chopping write(2) into smaller pieces.
+
+ * Newer MacOS X encourages the programs to compile and link with
+   their CommonCrypto, not with OpenSSL.
+
+Also contains various minor documentation updates.
+
+----------------------------------------------------------------
+
+Changes since v1.8.3.2 are as follows:
+
+Andrew Pimlott (2):
+      lib-rebase: document exec_ in FAKE_LINES
+      t7500: fix flipped actual/expect
+
+Anthony Ramine (1):
+      wildmatch: properly fold case everywhere
+
+Brandon Casey (1):
+      http.c: don't rewrite the user:passwd string multiple times
+
+Charles McGarvey (1):
+      gitweb: fix problem causing erroneous project list
+
+Chris Rorvick (1):
+      git.txt: remove stale comment regarding GIT_WORK_TREE
+
+Clemens Buchacher (1):
+      fix segfault with git log -c --follow
+
+David Aguilar (4):
+      Makefile: fix default regex settings on Darwin
+      Makefile: add support for Apple CommonCrypto facility
+      cache.h: eliminate SHA-1 deprecation warnings on Mac OS X
+      imap-send: eliminate HMAC deprecation warnings on Mac OS X
+
+Dmitry Marakasov (1):
+      contrib/git-subtree: Use /bin/sh interpreter instead of /bin/bash
+
+=46elipe Contreras (4):
+      read-cache: fix wrong 'the_index' usage
+      read-cache: trivial style cleanups
+      sequencer: remove useless indentation
+      sequencer: avoid leaking message buffer when refusing to create a=
+n empty commit
+
+=46ilipe Cabecinhas (1):
+      compate/clipped-write.c: large write(2) fails on Mac OS X/XNU
+
+=46redrik Gustafsson (1):
+      handle multibyte characters in name
+
+Jeff King (1):
+      pull: update unborn branch tip after index
+
+John Keeping (1):
+      git-config: update doc for --get with multiple values
+
+Junio C Hamano (6):
+      deprecate core.statinfo at Git 2.0 boundary
+      t5551: do not use unportable sed '\+'
+      Documentation/diff-index: mention two modes of operation
+      Start preparing for 1.8.3.3
+      Update draft release notes to 1.8.3.3
+      Git 1.8.3.3
+
+Michael S. Tsirkin (9):
+      t/send-email.sh: add test for suppress-cc=3Dself
+      send-email: fix suppress-cc=3Dself on cccmd
+      t/send-email: test suppress-cc=3Dself on cccmd
+      send-email: make --suppress-cc=3Dself sanitize input
+      t/send-email: add test with quoted sender
+      t/send-email: test suppress-cc=3Dself with non-ascii
+      test-send-email: test for pre-sanitized self name
+      send-email: add test for duplicate utf8 name
+      send-email: sanitize author when writing From line
+
+Ramkumar Ramachandra (6):
+      sha1_name: fix error message for @{u}
+      sha1_name: fix error message for @{<N>}, @{<date>}
+      diffcore-pickaxe: make error messages more consistent
+      diffcore-pickaxe doc: document -S and -G properly
+      check-ignore doc: fix broken link to ls-files page
+      fixup-builtins: retire an old transition helper script
+
+Ren=C3=A9 Scharfe (2):
+      t5004: avoid using tar for checking emptiness of archive
+      t5004: resurrect original empty tar archive test
+
+Richard Hansen (1):
+      Documentation/merge-options.txt: restore `-e` option
+
+SZEDER G=C3=A1bor (1):
+      test: spell 'ls-files --delete' option correctly in test descript=
+ions
+
+Thomas Rast (2):
+      pull: merge into unborn by fast-forwarding from empty tree
+      apply: carefully strdup a possibly-NULL name
+
+Torsten B=C3=B6gershausen (1):
+      t7400: test of UTF-8 submodule names pass under Mac OS
+
+Vikrant Varma (2):
+      help: add help_unknown_ref()
+      merge: use help_unknown_ref()
