@@ -1,112 +1,72 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] Fix some sparse warnings
-Date: Mon, 15 Jul 2013 18:31:29 +0100
-Message-ID: <51E431F1.6050002@ramsay1.demon.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 15 19:53:55 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v3 0/6] Make "git show -s" easier to discover for users
+Date: Mon, 15 Jul 2013 19:55:19 +0200
+Message-ID: <1373910925-18422-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <20130715173536.GB14690@google.com>
+Cc: jrnieder@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jul 15 19:56:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uymy3-0003L1-UK
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 19:53:48 +0200
+	id 1Uyn0M-0004TD-40
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 19:56:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753590Ab3GORxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 13:53:38 -0400
-Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:49017 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752910Ab3GORxZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 13:53:25 -0400
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id BAC631280B5;
-	Mon, 15 Jul 2013 18:53:23 +0100 (BST)
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id D596D1280A8;
-	Mon, 15 Jul 2013 18:53:22 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
-	Mon, 15 Jul 2013 18:53:21 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-X-MDF-HostID: 22
+	id S1753477Ab3GOR4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 13:56:05 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:48124 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753082Ab3GOR4D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 13:56:03 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r6FHtppX011559
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 15 Jul 2013 19:55:52 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Uyn05-00043Y-QR; Mon, 15 Jul 2013 19:55:53 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1Uyn05-0004o6-Ee; Mon, 15 Jul 2013 19:55:53 +0200
+X-Mailer: git-send-email 1.8.3.1.495.g13f33cf.dirty
+In-Reply-To: <20130715173536.GB14690@google.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 15 Jul 2013 19:55:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r6FHtppX011559
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1374515756.75842@E2XiAkon7hmvP+T5Vg9F9g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230503>
 
+Compared to v2, I just added tests. Strongly inspired from Jonathan's,
+but there's one more, and I chose the "modern" indentation style
+(hence a clean-up patch before, to avoid mixed-style in the same file).
 
-Sparse issues three "Using plain integer as NULL pointer" warnings.
-Each warning relates to the use of an '{0}' initialiser expression
-in the declaration of an 'struct object_info'. The first field of
-this structure has pointer type. Thus, in order to suppress these
-warnings, we replace the initialiser expression with '{NULL}'.
+Matthieu Moy (6):
+  t4000-diff-format.sh: modernize style
+  diff: allow --no-patch as synonym for -s
+  diff: allow --patch & cie to override -s/--no-patch
+  Documentation/git-show.txt: include common diff options, like
+    git-log.txt
+  Documentation: move description of -s, --no-patch to diff-options.txt
+  Documentation/git-log.txt: capitalize section names
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
+ Documentation/diff-options.txt     |  5 +++++
+ Documentation/git-log.txt          |  8 ++++----
+ Documentation/git-show.txt         |  9 +++++++++
+ Documentation/rev-list-options.txt |  3 ---
+ diff.c                             | 30 ++++++++++++++++++------------
+ t/t4000-diff-format.sh             | 35 ++++++++++++++++++++++++++---------
+ 6 files changed, 62 insertions(+), 28 deletions(-)
 
-Hi Jeff,
-
-If you need to re-roll the patches in your 'jk/in-pack-size-measurement'
-branch, could you please squash this (or something like it) into the
-patches equivalent to commit 7c07385d ("zero-initialize object_info structs",
-07-07-2013) [sha1_file.c and streaming.c] and commit 778d263a ("cat-file: add
---batch-disk-sizes option", 07-07-2013) [builtin/cat-file.c].
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
-
- builtin/cat-file.c | 2 +-
- sha1_file.c        | 2 +-
- streaming.c        | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index bf12883..860576e 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -135,7 +135,7 @@ static int batch_one_object(const char *obj_name, int print_contents)
- 	if (print_contents == BATCH)
- 		contents = read_sha1_file(sha1, &type, &size);
- 	else if (print_contents == BATCH_DISK_SIZES) {
--		struct object_info oi = {0};
-+		struct object_info oi = {NULL};
- 		oi.disk_sizep = &size;
- 		type = sha1_object_info_extended(sha1, &oi);
- 	}
-diff --git a/sha1_file.c b/sha1_file.c
-index 4c2365f..e4ab0a4 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2440,7 +2440,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
- 
- int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
- {
--	struct object_info oi = {0};
-+	struct object_info oi = {NULL};
- 
- 	oi.sizep = sizep;
- 	return sha1_object_info_extended(sha1, &oi);
-diff --git a/streaming.c b/streaming.c
-index cac282f..5710065 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -135,7 +135,7 @@ struct git_istream *open_istream(const unsigned char *sha1,
- 				 struct stream_filter *filter)
- {
- 	struct git_istream *st;
--	struct object_info oi = {0};
-+	struct object_info oi = {NULL};
- 	const unsigned char *real = lookup_replace_object(sha1);
- 	enum input_source src = istream_source(real, type, &oi);
- 
 -- 
-1.8.3
+1.8.3.1.495.g13f33cf.dirty
