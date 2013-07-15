@@ -1,109 +1,136 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: [PATCH] .mailmap: Combine more (email, name) to individual persons
-Date: Mon, 15 Jul 2013 09:06:59 +0200
-Message-ID: <51E39F93.4070700@googlemail.com>
-References: <1373796899-23378-1-git-send-email-stefanbeller@googlemail.com> <1373796899-23378-2-git-send-email-stefanbeller@googlemail.com> <20130715061045.GE2962@elie.Belkin>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v4 2/2] post-receive-email: deprecate script in favor
+ of git-multimail
+Date: Mon, 15 Jul 2013 10:17:10 +0200
+Message-ID: <51E3B006.5010503@alum.mit.edu>
+References: <1373789343-3189-1-git-send-email-mhagger@alum.mit.edu> <1373789343-3189-3-git-send-email-mhagger@alum.mit.edu> <20130715060245.GD2962@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigA21D919ECCE88BE76291E577"
-Cc: git@vger.kernel.org, gitster@pobox.com
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Chris Hiestand <chrishiestand@gmail.com>,
+	Marc Branchaud <mbranchaud@xiplink.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Michiel Holtkamp <git@elfstone.nl>,
+	=?ISO-8859-1?Q?Stefan_N=E4we?= <stefan.naewe@gmail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmas?= =?ISO-8859-1?Q?on?= 
+	<avarab@gmail.com>, Ramkumar Ramachandra <artagnon@gmail.com>,
+	John Keeping <john@keeping.me.uk>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 15 09:06:58 2013
+X-From: git-owner@vger.kernel.org Mon Jul 15 10:17:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uycs6-0001fq-65
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 09:06:58 +0200
+	id 1UydyD-0005LU-OB
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 10:17:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754119Ab3GOHGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 03:06:51 -0400
-Received: from mail-wg0-f54.google.com ([74.125.82.54]:58753 "EHLO
-	mail-wg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750753Ab3GOHGv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 03:06:51 -0400
-Received: by mail-wg0-f54.google.com with SMTP id n11so9778348wgh.33
-        for <git@vger.kernel.org>; Mon, 15 Jul 2013 00:06:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type;
-        bh=6uYzmvaPtmqdskpiDm5MCn0JdNbERP4OgV4P3S1TDMA=;
-        b=SDumf3FMNIGUTXHLmbctYWRjPYZgf+hO0l/O8N4X/mQ3XvamSm/ar0ZrylirK4Rj9T
-         Odq0g1Br+xLkI6Fn0vRMhZHO2aj3urZe/tb3yyL1VK2oJ6AsDvb5IF2zRh0DhFi0G+ds
-         Rm5WFs2M5Rj8bvxvl2gf/auQCa3XvSsuJbfXIjCELpUbbl0kCIH5VVNt5cQWyVMy1z3i
-         g6fUR++Rkb0u+woiVfB93elmZeqjF0RmjgAjYzxjfkBQyVTnxcTT69Izqu5AZDqqK5Qd
-         fSZUPDtCrueeas+28Jqx+0wsoU1+lDR0q2LGoSrCvcmaNbQAcWHFycYSO+cCP/oMwmxI
-         DsOw==
-X-Received: by 10.180.39.136 with SMTP id p8mr7939257wik.11.1373872008773;
-        Mon, 15 Jul 2013 00:06:48 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id d8sm18782852wiz.0.2013.07.15.00.06.46
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 15 Jul 2013 00:06:47 -0700 (PDT)
+	id S1754038Ab3GOIRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 04:17:17 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:56590 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752825Ab3GOIRQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Jul 2013 04:17:16 -0400
+X-AuditID: 12074411-b7f296d000001209-79-51e3b00bd9d5
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 71.4E.04617.B00B3E15; Mon, 15 Jul 2013 04:17:15 -0400 (EDT)
+Received: from [192.168.101.152] (mx.berlin.jpk.com [212.222.128.135] (may be forged))
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r6F8HBR5000577
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 15 Jul 2013 04:17:12 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <20130715061045.GE2962@elie.Belkin>
-X-Enigmail-Version: 1.4.6
+In-Reply-To: <20130715060245.GD2962@elie.Belkin>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOKsWRmVeSWpSXmKPExsUixO6iqMu94XGgwcW78harZj5mt1j77A6T
+	xbWTi1ks9nZ3slp0XelmsmjovcJsceP8LlaLtzeXMFpc+rye1aLxSZHF+7P/mR24Pc7tXcji
+	sXPWXXaPiV+Os3qcffSA2ePiJWWPz5vkPA5cfswWwB7FbZOUWFIWnJmep2+XwJ2xd+NtpoJ/
+	ohUTzks1MG4V7GLk5JAQMJH4NP8iK4QtJnHh3nq2LkYuDiGBy4wSu+cuYgJJCAlcY5L4ecwO
+	xOYV0Jb4vXcpO4jNIqAqcfT0RRYQm01AV2JRTzNQPQeHqECYxJXfqhDlghInZz4BKxER0JB4
+	/ukb2HxmgXYWiWOPPoIlhAViJJ4dm8gMsXg+o8TWnT1sIAlOAQOJmX/+g13HLKAj8a7vATOE
+	LS+x/e0c5gmMArOQLJmFpGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3RN9XIzS/RS
+	U0o3MUIiRnAH44yTcocYBTgYlXh4M9QeBwqxJpYVV+YeYpTkYFIS5f2xGijEl5SfUpmRWJwR
+	X1Sak1p8iFGCg1lJhHeZ8qNAId6UxMqq1KJ8mJQ0B4uSOC/fEnU/IYH0xJLU7NTUgtQimKwM
+	B4eSBO+StUBDBYtS01Mr0jJzShDSTBycIMO5pESKU/NSUosSS0sy4kGRGl8MjFWQFA/Q3rMg
+	7bzFBYm5QFGI1lOMuhwHfmx5zyjEkpeflyolzvsEpEgApCijNA9uBSw9vmIUB/pYmFdgHVAV
+	DzC1wk16BbSECWhJ82ywJSWJCClgMuI2mJLQJK53ym3xWV3hqU9ltJc6zn32fe2j 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230437>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigA21D919ECCE88BE76291E577
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+On 07/15/2013 08:02 AM, Jonathan Nieder wrote:
+> Michael Haggerty wrote:
+> 
+>> Add a notice to the top of post-receive-email explaining that the
+>> script is no longer under active development and pointing the user to
+>> git-multimail.
+> 
+> I think the spirit of this patch is sane.  Some thoughts on wording:
+> 
+> [...]
+>> --- a/contrib/hooks/post-receive-email
+>> +++ b/contrib/hooks/post-receive-email
+>> @@ -2,10 +2,19 @@
+>>  #
+>>  # Copyright (c) 2007 Andy Parkins
+>>  #
+>> -# An example hook script to mail out commit update information.  This hook
+>> -# sends emails listing new revisions to the repository introduced by the
+>> -# change being reported.  The rule is that (for branch updates) each commit
+>> -# will appear on one email and one email only.
+>> +# An example hook script to mail out commit update information.
+>> +#
+>> +# ***NOTICE***: This script is no longer under active development.  It
+>> +# has been superseded by git-multimail, which is more capable and
+>> +# configurable and is largely backwards-compatible with this script;
+>> +# please see "contrib/hooks/multimail/".  For instructions on how to
+>> +# migrate from post-receive-email to git-multimail, please see
+>> +# "README.migrate-from-post-receive-email" in that directory.
+> 
+> I think I'd say something like
+> 
+> (1)
+> 	# An example hook script to mail out commit update information.
+> 	#
+> 	# This script is kept for compatibility, but it is no longer actively
+> 	# maintained.  Consider switching to git-multimail, which is more
+> 	# configurable and largely compatible with this script.  See
+> 	# contrib/hooks/multimail/README.migrate-from-post-receive.
+> 	#
+> 	# This hook sends emails listing new revisions ...
+> 
+> or, if I wanted to emphasize the warning,
+> 
+> (2)
+> 	# An example hook ...
+> 	#
+> 	# Warning: this script is kept for compatibility, but it is no longer
+> 	# actively maintained.  Consider switching to ...
+> 
+> or, if I wanted to avoid seeming to promise that the script will be
+> around in the future,
+> 
+> (3)
+> 	# An example hook ...
+> 	#
+> 	# Warning: this script is no longer actively maintained.  Consider
+> 	# switching to ...
+> 
+> I prefer (2), which makes it clear to the reader that it is dangerous
+> to keep using the script (since no one is actively chasing down bugs)
+> while also making it clear why a potentially buggy script with a good
+> natural successor is still in contrib for now.  What do you think?
 
-On 07/15/2013 08:10 AM, Jonathan Nieder wrote:
-> Stefan Beller wrote:
->=20
->> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
->=20
-> Markup and methodology look correct.
->=20
-> Fwiw,
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
->=20
-> Is this meant to be squashed with 94b410bb (.mailmap: Map email
-> addresses to names, 2013-07-12)?
->=20
-> Ciao,
-> Jonathan
->=20
+Honestly, as the main author of git-multimail, I am biased and think it
+would be better for other people to make the decision about if/how/when
+to annotate post-receive-email.  Any of your suggestions are fine with me.
 
-As you like, either squash it, or just commit on top of it.
-It's the very same kind of changes, so a squash might be better.
+Michael
 
-Thanks,
-Stefan
-
-
---------------enigA21D919ECCE88BE76291E577
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJR45+TAAoJEJQCPTzLflhqmR0P/jKV4hbXzAZ3pVJqHi4odceh
-KF9wrNfrOwg9pe8Ah6mbGXChb5u+t6RULVQvrTOGYdqH2/D8iHMIB0qxqWkMujg/
-8AfqOfVPpJ2LPB3O3PF1r/x6HJJsdhaVzU5mzM9SpsKo4+CUI1v62JA9LUdlC4P6
-7d3sNgjmKvKq8Oc97MGbgSRyo+vXmCPbXF2JJS1AgqQJ+fPUsOqDEQGvgfN2rIz3
-7EieYD47MqKonkVpAgnFa6OrPfF2SGUTWJ6SBqnJIOuYeMxuZ1jiSrfclqBXrG+x
-bulmRH6eKXisYpFCSL6AeC5KQ00sjfPsETdY4OcES7om/bv18dNtPsc/JZ4LqlwY
-vP1FuSUPhJ75GTOriCoL0C7LoX88308xzawyrMep5nSjAwCGuM9eupsvCs1rFArS
-9PnX6Uk+dRoVfvw0TXWZ8mtxGrVTLFemCIbnC88o/cP3lWTNhnzTwZRoXgblCBpx
-rDh3MQ4k+ZFZL17Q6Vw1mI2Viu7jXLvdYiCuIgls52TsaG2llcOt5LrjQ42gDoL5
-Em7FozXaR1FvQUCtXzrAsQN8240+goZCP0YZ/+1qifManV+pSMA84JkEEeG4KsPU
-Z5frnNrnwgbH/AL2wgu7BzUvjwFXmGsANASeNAFEZcsVbbnv8MuILPlPownb8zsV
-ZcaLPYPyNN/Em0MD6wp6
-=lCtL
------END PGP SIGNATURE-----
-
---------------enigA21D919ECCE88BE76291E577--
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
