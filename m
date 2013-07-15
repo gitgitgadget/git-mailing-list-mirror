@@ -1,136 +1,89 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 2/2] post-receive-email: deprecate script in favor
- of git-multimail
-Date: Mon, 15 Jul 2013 10:17:10 +0200
-Message-ID: <51E3B006.5010503@alum.mit.edu>
-References: <1373789343-3189-1-git-send-email-mhagger@alum.mit.edu> <1373789343-3189-3-git-send-email-mhagger@alum.mit.edu> <20130715060245.GD2962@elie.Belkin>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4 2/2] post-receive-email: deprecate script in favor of git-multimail
+Date: Mon, 15 Jul 2013 10:29:46 +0200
+Message-ID: <vpqoba4gr9h.fsf@anie.imag.fr>
+References: <1373789343-3189-1-git-send-email-mhagger@alum.mit.edu>
+	<1373789343-3189-3-git-send-email-mhagger@alum.mit.edu>
+	<20130715060245.GD2962@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Chris Hiestand <chrishiestand@gmail.com>,
 	Marc Branchaud <mbranchaud@xiplink.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Michiel Holtkamp <git@elfstone.nl>,
-	=?ISO-8859-1?Q?Stefan_N=E4we?= <stefan.naewe@gmail.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmas?= =?ISO-8859-1?Q?on?= 
-	<avarab@gmail.com>, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Stefan =?iso-8859-1?Q?N=E4we?= <stefan.naewe@gmail.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
 	John Keeping <john@keeping.me.uk>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 15 10:17:22 2013
+X-From: git-owner@vger.kernel.org Mon Jul 15 10:30:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UydyD-0005LU-OB
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 10:17:22 +0200
+	id 1UyeAl-0003pE-Ia
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Jul 2013 10:30:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754038Ab3GOIRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 04:17:17 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:56590 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752825Ab3GOIRQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jul 2013 04:17:16 -0400
-X-AuditID: 12074411-b7f296d000001209-79-51e3b00bd9d5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 71.4E.04617.B00B3E15; Mon, 15 Jul 2013 04:17:15 -0400 (EDT)
-Received: from [192.168.101.152] (mx.berlin.jpk.com [212.222.128.135] (may be forged))
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r6F8HBR5000577
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 15 Jul 2013 04:17:12 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <20130715060245.GD2962@elie.Belkin>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOKsWRmVeSWpSXmKPExsUixO6iqMu94XGgwcW78harZj5mt1j77A6T
-	xbWTi1ks9nZ3slp0XelmsmjovcJsceP8LlaLtzeXMFpc+rye1aLxSZHF+7P/mR24Pc7tXcji
-	sXPWXXaPiV+Os3qcffSA2ePiJWWPz5vkPA5cfswWwB7FbZOUWFIWnJmep2+XwJ2xd+NtpoJ/
-	ohUTzks1MG4V7GLk5JAQMJH4NP8iK4QtJnHh3nq2LkYuDiGBy4wSu+cuYgJJCAlcY5L4ecwO
-	xOYV0Jb4vXcpO4jNIqAqcfT0RRYQm01AV2JRTzNQPQeHqECYxJXfqhDlghInZz4BKxER0JB4
-	/ukb2HxmgXYWiWOPPoIlhAViJJ4dm8gMsXg+o8TWnT1sIAlOAQOJmX/+g13HLKAj8a7vATOE
-	LS+x/e0c5gmMArOQLJmFpGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3RN9XIzS/RS
-	U0o3MUIiRnAH44yTcocYBTgYlXh4M9QeBwqxJpYVV+YeYpTkYFIS5f2xGijEl5SfUpmRWJwR
-	X1Sak1p8iFGCg1lJhHeZ8qNAId6UxMqq1KJ8mJQ0B4uSOC/fEnU/IYH0xJLU7NTUgtQimKwM
-	B4eSBO+StUBDBYtS01Mr0jJzShDSTBycIMO5pESKU/NSUosSS0sy4kGRGl8MjFWQFA/Q3rMg
-	7bzFBYm5QFGI1lOMuhwHfmx5zyjEkpeflyolzvsEpEgApCijNA9uBSw9vmIUB/pYmFdgHVAV
-	DzC1wk16BbSECWhJ82ywJSWJCClgMuI2mJLQJK53ym3xWV3hqU9ltJc6zn32fe2j 
+	id S1754486Ab3GOIaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 04:30:11 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:60384 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754468Ab3GOIaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 04:30:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r6F8Tk1T029131
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 15 Jul 2013 10:29:48 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1UyeAF-0005hk-14; Mon, 15 Jul 2013 10:29:47 +0200
+In-Reply-To: <20130715060245.GD2962@elie.Belkin> (Jonathan Nieder's message of
+	"Sun, 14 Jul 2013 23:02:45 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 15 Jul 2013 10:29:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r6F8Tk1T029131
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1374481793.96775@lo4lxNjMz7+5eI7BRhJEFw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230438>
 
-On 07/15/2013 08:02 AM, Jonathan Nieder wrote:
-> Michael Haggerty wrote:
-> 
->> Add a notice to the top of post-receive-email explaining that the
->> script is no longer under active development and pointing the user to
->> git-multimail.
-> 
-> I think the spirit of this patch is sane.  Some thoughts on wording:
-> 
-> [...]
->> --- a/contrib/hooks/post-receive-email
->> +++ b/contrib/hooks/post-receive-email
->> @@ -2,10 +2,19 @@
->>  #
->>  # Copyright (c) 2007 Andy Parkins
->>  #
->> -# An example hook script to mail out commit update information.  This hook
->> -# sends emails listing new revisions to the repository introduced by the
->> -# change being reported.  The rule is that (for branch updates) each commit
->> -# will appear on one email and one email only.
->> +# An example hook script to mail out commit update information.
->> +#
->> +# ***NOTICE***: This script is no longer under active development.  It
->> +# has been superseded by git-multimail, which is more capable and
->> +# configurable and is largely backwards-compatible with this script;
->> +# please see "contrib/hooks/multimail/".  For instructions on how to
->> +# migrate from post-receive-email to git-multimail, please see
->> +# "README.migrate-from-post-receive-email" in that directory.
-> 
-> I think I'd say something like
-> 
-> (1)
-> 	# An example hook script to mail out commit update information.
-> 	#
-> 	# This script is kept for compatibility, but it is no longer actively
-> 	# maintained.  Consider switching to git-multimail, which is more
-> 	# configurable and largely compatible with this script.  See
-> 	# contrib/hooks/multimail/README.migrate-from-post-receive.
-> 	#
-> 	# This hook sends emails listing new revisions ...
-> 
-> or, if I wanted to emphasize the warning,
-> 
-> (2)
-> 	# An example hook ...
-> 	#
-> 	# Warning: this script is kept for compatibility, but it is no longer
-> 	# actively maintained.  Consider switching to ...
-> 
-> or, if I wanted to avoid seeming to promise that the script will be
-> around in the future,
-> 
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
 > (3)
 > 	# An example hook ...
 > 	#
 > 	# Warning: this script is no longer actively maintained.  Consider
 > 	# switching to ...
-> 
+>
 > I prefer (2), which makes it clear to the reader that it is dangerous
 > to keep using the script (since no one is actively chasing down bugs)
 > while also making it clear why a potentially buggy script with a good
 > natural successor is still in contrib for now.  What do you think?
 
-Honestly, as the main author of git-multimail, I am biased and think it
-would be better for other people to make the decision about if/how/when
-to annotate post-receive-email.  Any of your suggestions are fine with me.
+I don't think it is dangerous to keep using the old script. If you look
+at its history, it's pretty stable these day. I think it has known bugs
+in new revision detections that are fixed by git-multimail, but nothing
+really blocking IMHO.
 
-Michael
+There are two good reasons to use it: 1) you already use it, and you're
+too lazy to change (e.g. because it's packaged by Debian and is already
+there on your server), and 2) you don't have Python on your server.
+
+I think the notice still deserve the "***NOTICE***" or whatever makes it
+visible enough to distinguish it from the traditional licence &
+non-warranty header, but I don't think we should kill the old script too
+early.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
