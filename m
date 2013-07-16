@@ -1,67 +1,68 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] t3032 - make compatible with systems using \r\n as a
- line ending
-Date: Tue, 16 Jul 2013 11:59:33 -0700
-Message-ID: <20130716185933.GO14690@google.com>
-References: <51E591FF.7030600@gmail.com>
- <1374000592-31845-1-git-send-email-mlevedahl@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 1/2] apply, entry: speak of submodules instead of subprojects
+Date: Tue, 16 Jul 2013 21:05:34 +0200
+Message-ID: <51E5997E.2090607@web.de>
+References: <87bo631odi.fsf@hexa.v.cablecom.net> <8df0d41caa10a38e46783bebd3148a7b8445dd47.1373966389.git.trast@inf.ethz.ch> <20130716180739.GK14690@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 16 20:59:44 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jul 16 21:11:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzATP-0004lb-Kj
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 20:59:43 +0200
+	id 1UzAeZ-0004Fl-Qf
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 21:11:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933295Ab3GPS7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 14:59:39 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:57705 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932984Ab3GPS7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 14:59:38 -0400
-Received: by mail-pb0-f53.google.com with SMTP id xb12so1011755pbc.26
-        for <git@vger.kernel.org>; Tue, 16 Jul 2013 11:59:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ECEoDE+DSOyR8aRoR5WJazMsNECroOs0tBn7Rq88AcY=;
-        b=zjCCAZrtOjUEyEz+IbpFJgR7GrXzYbY4wgtdMbWIoDIwFVy+HF3npbpS4HAeltTa57
-         QL0QJmO+5FFFCaYKekp3hbmTWRsKvjkFXfc0ErKej8DzPLqDiAjQICqVwrri3DqqGi1K
-         cqW/te/v45igc89K42LgWPY6ilwq0w7NUCA5P/sHFG1dKXK/OMAS2f0JJya8pXLUhgUB
-         COI37LkWGKszPItmXlhoP5dNudgEMBoVsUbvqkUPNcYQg+4Rp6li0n3Ox21li9C/eXFN
-         /Wkkn/KFanpaHBOv0QTszHpQU9ACn9fXepuemB232cDpFYIJdSNXrcf1ZwgF6qZnzf/Y
-         fQMA==
-X-Received: by 10.66.51.102 with SMTP id j6mr3991131pao.80.1374001177349;
-        Tue, 16 Jul 2013 11:59:37 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id vi8sm3324018pbc.31.2013.07.16.11.59.36
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 16 Jul 2013 11:59:36 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1374000592-31845-1-git-send-email-mlevedahl@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933696Ab3GPTLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 15:11:11 -0400
+Received: from mout.web.de ([212.227.17.11]:61277 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933253Ab3GPTLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 15:11:10 -0400
+Received: from [192.168.178.41] ([91.3.141.105]) by smtp.web.de (mrweb003)
+ with ESMTPA (Nemesis) id 0Md4le-1UiBwe2rEQ-00IG4e; Tue, 16 Jul 2013 21:05:39
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <20130716180739.GK14690@google.com>
+X-Enigmail-Version: 1.5.1
+X-Provags-ID: V03:K0:NQuy9g5vRj8d3KeKTZPzA9+ujeFSteuWhjkciqjxsYBXtZAaY1G
+ tXIWCmhKK0vZyhnLlGqjUuAcpyi6ey8Xfqu1WjY73zpdG0Oe3uIEDRKnTUx9Mu4DmVGNWoP
+ t/NXu+M0H7fd56y5n4AsO3jg3Xj2xPOOnQDrTKDpaRPfwzUUQkW9fK40ngfio7GxfFB2XSw
+ OVhepQypeD9ONVTy5h25g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230578>
 
-Mark Levedahl wrote:
+Am 16.07.2013 20:07, schrieb Jonathan Nieder:
+> Thomas Rast wrote:
+> 
+>> There are only four (with some generous rounding) instances in the
+>> current source code where we speak of "subproject" instead of
+>> "submodule".  They are as follows:
+> [...]
+>> Let's at least change the error messages to consistently call them
+>> "submodule".
+>>
+>> Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+>> ---
+>> This and the next one are message changes for things I found during my
+>> review.
+> 
+> Thanks.  It's nice when translation results in the messages in English
+> being improved, too.
 
-> Subtests 6, 7, and 9 rely test that merge-recursive correctly
-> ignores whitespace when so directed. Change the particular whitespace
-> sequences to be ones that are not known line endings so the whitespace
-> is not changed when being extracted by line oriented grep.
+Obviously I like this change too. ;-)
 
-merge-recursive needs to be able to deal with \r at EOL, too, so if at
-all possible I would prefer to see the test fixed to pass on Cygwin
-some other way.
-
-Thanks.
+But a 'git grep "corrupt patch for sub"' shows some files in the po
+directory still containing that string on current master. Shouldn't
+they be changed too or is this just a sign of me not understanding
+the translation process?
