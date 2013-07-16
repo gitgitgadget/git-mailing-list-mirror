@@ -1,97 +1,107 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v4 6/6] Documentation/git-log.txt: capitalize section names
-Date: Tue, 16 Jul 2013 10:05:40 +0200
-Message-ID: <1373961940-31614-7-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH v4 2/6] diff: allow --no-patch as synonym for -s
+Date: Tue, 16 Jul 2013 10:05:36 +0200
+Message-ID: <1373961940-31614-3-git-send-email-Matthieu.Moy@imag.fr>
 References: <20130715185843.GH14690@google.com>
  <1373961940-31614-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: jrnieder@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 16 10:24:36 2013
+X-From: git-owner@vger.kernel.org Tue Jul 16 10:24:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uz0Yl-0005Xr-Fs
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 10:24:35 +0200
+	id 1Uz0Z1-0005iK-Ok
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 10:24:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753928Ab3GPIY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 04:24:27 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36109 "EHLO shiva.imag.fr"
+	id S1753901Ab3GPIYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 04:24:22 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:36098 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753892Ab3GPIYZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 04:24:25 -0400
+	id S1753725Ab3GPIYS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 04:24:18 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r6G8OFPk008149
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r6G8OCKD008121
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 16 Jul 2013 10:24:15 +0200
+	Tue, 16 Jul 2013 10:24:12 +0200
 Received: from anie.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
 	(envelope-from <moy@imag.fr>)
-	id 1Uz0YS-0001z7-2h; Tue, 16 Jul 2013 10:24:16 +0200
+	id 1Uz0YP-0001yv-6l; Tue, 16 Jul 2013 10:24:13 +0200
 Received: from moy by anie.imag.fr with local (Exim 4.80)
 	(envelope-from <moy@imag.fr>)
-	id 1Uz0YR-0008KN-PP; Tue, 16 Jul 2013 10:24:15 +0200
+	id 1Uz0YO-0008K3-TF; Tue, 16 Jul 2013 10:24:12 +0200
 X-Mailer: git-send-email 1.8.3.1.495.g13f33cf.dirty
 In-Reply-To: <1373961940-31614-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 16 Jul 2013 10:24:15 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 16 Jul 2013 10:24:12 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r6G8OFPk008149
+X-MailScanner-ID: r6G8OCKD008121
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1374567858.8429@koGeIm9durYVjv4WXQY+FA
+MailScanner-NULL-Check: 1374567853.80916@bWO3wnIG0kRdJub5gc2AhA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230545>
 
-This is the convention in most other files and even at the beginning of
-git-log.txt
+This follows the usual convention of having a --no-foo option to negate
+--foo.
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- Documentation/git-log.txt | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/rev-list-options.txt |  1 +
+ diff.c                             |  2 +-
+ t/t4000-diff-format.sh             | 12 ++++++++++++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 2ea79ba..2eda5e4 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -97,7 +97,7 @@ include::rev-list-options.txt[]
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index e157ec3..c128a85 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -851,5 +851,6 @@ options may be given. See linkgit:git-diff-files[1] for more options.
+ 	Show the tree objects in the diff output. This implies '-r'.
  
- include::pretty-formats.txt[]
+ -s::
++--no-patch::
+ 	Suppress diff output.
+ endif::git-rev-list[]
+diff --git a/diff.c b/diff.c
+index 6578690..6bd821d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3551,7 +3551,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->output_format |= DIFF_FORMAT_NAME;
+ 	else if (!strcmp(arg, "--name-status"))
+ 		options->output_format |= DIFF_FORMAT_NAME_STATUS;
+-	else if (!strcmp(arg, "-s"))
++	else if (!strcmp(arg, "-s") || !strcmp(arg, "--no-patch"))
+ 		options->output_format |= DIFF_FORMAT_NO_OUTPUT;
+ 	else if (!prefixcmp(arg, "--stat"))
+ 		/* --stat, --stat-width, --stat-name-width, or --stat-count */
+diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
+index 2b5dffc..3b9a9ae 100755
+--- a/t/t4000-diff-format.sh
++++ b/t/t4000-diff-format.sh
+@@ -59,4 +59,16 @@ test_expect_success 'validate git diff-files -p output.' '
+ 	compare_diff_patch expected actual
+ '
  
--Common diff options
-+COMMON DIFF OPTIONS
- -------------------
- 
- :git-log: 1
-@@ -105,7 +105,7 @@ include::diff-options.txt[]
- 
- include::diff-generate-patch.txt[]
- 
--Examples
-+EXAMPLES
- --------
- `git log --no-merges`::
- 
-@@ -161,12 +161,12 @@ git log -L '/int main/',/^}/:main.c::
- `git log -3`::
- 	Limits the number of commits to show to 3.
- 
--Discussion
-+DISCUSSION
- ----------
- 
- include::i18n.txt[]
- 
--Configuration
-+CONFIGURATION
- -------------
- 
- See linkgit:git-config[1] for core variables and linkgit:git-diff[1]
++test_expect_success 'git diff-files -s after editing work tree' '
++	git diff-files -s >actual 2>err &&
++	test_must_be_empty actual &&
++	test_must_be_empty err
++'
++
++test_expect_success 'git diff-files --no-patch as synonym for -s' '
++	git diff-files --no-patch >actual 2>err &&
++	test_must_be_empty actual &&
++	test_must_be_empty err
++'
++
+ test_done
 -- 
 1.8.3.1.495.g13f33cf.dirty
