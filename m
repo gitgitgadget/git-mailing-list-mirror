@@ -1,72 +1,97 @@
-From: Dirk Wallenstein <halsmit@t-online.de>
-Subject: Re: [PATCH] howto: Use all-space indentation in ASCII art
-Date: Tue, 16 Jul 2013 10:24:13 +0200
-Message-ID: <20130716082413.GA27283@bottich>
-References: <20130715164658.GA8675@bottich>
- <7v61wba3gu.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nanako Shiraishi <nanako3@lavabit.com>,
-	Thomas Ackermann <th.acker@arcor.de>
-To: Junio C Hamano <gitster@pobox.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v4 6/6] Documentation/git-log.txt: capitalize section names
+Date: Tue, 16 Jul 2013 10:05:40 +0200
+Message-ID: <1373961940-31614-7-git-send-email-Matthieu.Moy@imag.fr>
+References: <20130715185843.GH14690@google.com>
+ <1373961940-31614-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: jrnieder@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
 X-From: git-owner@vger.kernel.org Tue Jul 16 10:24:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uz0Yk-0005Xr-U6
+	id 1Uz0Yl-0005Xr-Fs
 	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 10:24:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753905Ab3GPIYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 04:24:24 -0400
-Received: from mailout01.t-online.de ([194.25.134.80]:53515 "EHLO
-	mailout01.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753892Ab3GPIYW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 04:24:22 -0400
-Received: from fwd53.aul.t-online.de (fwd53.aul.t-online.de )
-	by mailout01.t-online.de with smtp 
-	id 1Uz0YV-00083w-RZ; Tue, 16 Jul 2013 10:24:19 +0200
-Received: from localhost (rIagUiZ-whcdm-KKHk1aIuzeq7+cpjwzaXz-LdKyykalGNwZBRcNyQ8s8WdMOT8QGo@[178.202.201.83]) by fwd53.t-online.de
-	with esmtp id 1Uz0YR-1QTthY0; Tue, 16 Jul 2013 10:24:15 +0200
-Content-Disposition: inline
-In-Reply-To: <7v61wba3gu.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-ID: rIagUiZ-whcdm-KKHk1aIuzeq7+cpjwzaXz-LdKyykalGNwZBRcNyQ8s8WdMOT8QGo
-X-TOI-MSGID: 461c4397-f988-4c8a-9b0d-933b5d28c67e
+	id S1753928Ab3GPIY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 04:24:27 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:36109 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753892Ab3GPIYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 04:24:25 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r6G8OFPk008149
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 16 Jul 2013 10:24:15 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Uz0YS-0001z7-2h; Tue, 16 Jul 2013 10:24:16 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1Uz0YR-0008KN-PP; Tue, 16 Jul 2013 10:24:15 +0200
+X-Mailer: git-send-email 1.8.3.1.495.g13f33cf.dirty
+In-Reply-To: <1373961940-31614-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 16 Jul 2013 10:24:15 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r6G8OFPk008149
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1374567858.8429@koGeIm9durYVjv4WXQY+FA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230544>
 
-On Mon, Jul 15, 2013 at 03:00:17PM -0700, Junio C Hamano wrote:
-> Dirk Wallenstein <halsmit@t-online.de> writes:
-> 
-> > Keep the sketch aligned independent of the tabstop width used.
-> 
-> Thanks.
-> 
-> This is a source text to be formatted into HTML, isn't it?
-> 
-> In our sources, a HT indents to multiple of 8 columns.  As long as
-> the output HTML produced from the source can be seen on a terminal
-> with any tab-width correctly, I do not see any reason to apply this
-> patch.
-> 
-> Am I missing something???
-> 
+This is the convention in most other files and even at the beginning of
+git-log.txt
 
-Those text files are installed as documentation (at least on my distribution).
-They have a *.txt suffix, which tells me that they are meant to be read.  If those
-would ever be opened with a text editor where the user has set the default
-tabstop width to something other than 8 it would teach something nonsensical.
-Not to mention if those files would have been printed with the wrong setting.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git-log.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Why would you want to limit those files to be source for HTML only?
-
-The HTML after this patch is still fine.
-
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 2ea79ba..2eda5e4 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -97,7 +97,7 @@ include::rev-list-options.txt[]
+ 
+ include::pretty-formats.txt[]
+ 
+-Common diff options
++COMMON DIFF OPTIONS
+ -------------------
+ 
+ :git-log: 1
+@@ -105,7 +105,7 @@ include::diff-options.txt[]
+ 
+ include::diff-generate-patch.txt[]
+ 
+-Examples
++EXAMPLES
+ --------
+ `git log --no-merges`::
+ 
+@@ -161,12 +161,12 @@ git log -L '/int main/',/^}/:main.c::
+ `git log -3`::
+ 	Limits the number of commits to show to 3.
+ 
+-Discussion
++DISCUSSION
+ ----------
+ 
+ include::i18n.txt[]
+ 
+-Configuration
++CONFIGURATION
+ -------------
+ 
+ See linkgit:git-config[1] for core variables and linkgit:git-diff[1]
 -- 
-Cheers,
-  Dirk
+1.8.3.1.495.g13f33cf.dirty
