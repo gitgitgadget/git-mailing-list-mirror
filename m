@@ -1,81 +1,110 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] howto: Use all-space indentation in ASCII art
-Date: Tue, 16 Jul 2013 14:42:46 -0400
-Message-ID: <51E59426.7020809@gmail.com>
-References: <20130715164658.GA8675@bottich> <7v61wba3gu.fsf@alter.siamese.dyndns.org> <20130716082413.GA27283@bottich> <20130716182627.GM14690@google.com>
-Reply-To: gitzilla@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Dirk Wallenstein <halsmit@t-online.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Thomas Ackermann <th.acker@arcor.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 16 20:42:59 2013
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH] t3032 - make compatible with systems using \r\n as a line ending
+Date: Tue, 16 Jul 2013 14:49:52 -0400
+Message-ID: <1374000592-31845-1-git-send-email-mlevedahl@gmail.com>
+References: <51E591FF.7030600@gmail.com>
+Cc: Mark Levedahl <mlevedahl@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 16 20:50:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzADC-0002yw-Da
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 20:42:58 +0200
+	id 1UzAK2-0007Pl-0u
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 20:50:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933324Ab3GPSmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 14:42:54 -0400
-Received: from mail-ve0-f182.google.com ([209.85.128.182]:53344 "EHLO
-	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754926Ab3GPSmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 14:42:53 -0400
-Received: by mail-ve0-f182.google.com with SMTP id ox1so770096veb.41
-        for <git@vger.kernel.org>; Tue, 16 Jul 2013 11:42:52 -0700 (PDT)
+	id S933530Ab3GPSt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 14:49:58 -0400
+Received: from mail-gh0-f180.google.com ([209.85.160.180]:46268 "EHLO
+	mail-gh0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933353Ab3GPSt5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 14:49:57 -0400
+Received: by mail-gh0-f180.google.com with SMTP id f18so270620ghb.11
+        for <git@vger.kernel.org>; Tue, 16 Jul 2013 11:49:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=X25jTeGwN1QfM79LpttXnEhEfOijdSBoQZsqrCkpvVs=;
-        b=MMSf2Ch3+JvkgIXES2qGXlen9Z2TjFeYpgaTJHKB3ntHdiMVoZajdwRz936RXseGgx
-         E3Xc+eJVzeRoSKW2Msj392Rnq5iXGYJ0Zeo9e5q18kImMZBpLQdzC00h637PQR1Zm7KD
-         UnD2Kq0dj/0kDG620II2HvcNmI+lAdfb2/nCyDIaSyWz/9PwJnT/crt2JK8C0wzjNVvu
-         D4C2FL3bv1gfyL9KO3NsgqIowKWoS6o0snqA4ehgVLIj6Jmw09vxKw+OiCfbjkeXzg7e
-         8lCvHe0YGbFO40ebuUB0rHOWd4L2xJzfynQZI69CEwpnJ9EzOkIkRkIk/taSGgMznqRs
-         Ystw==
-X-Received: by 10.220.109.8 with SMTP id h8mr885860vcp.5.1374000172745;
-        Tue, 16 Jul 2013 11:42:52 -0700 (PDT)
-Received: from [10.0.1.133] (50-88-155-14.res.bhn.net. [50.88.155.14])
-        by mx.google.com with ESMTPSA id lm13sm545180vec.8.2013.07.16.11.42.51
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=HW7RqVI34sR7KXNrenZCCEtBoJMhJn1yg3K5NgjlKxw=;
+        b=npHh5CjNZga/kCB8/MKllPxc1G75cEZy9f0pwVExDoQ74455tAU1WxzzaSCZ/GiVjL
+         nwrF2DdeiXG8o2jMHzgc2ZTrCOmIrp4owhbhVB0iOJtofEXBJVyjNxWPp0+FojEzlU82
+         eGlZYXP2hV06ToqEXYNkTfc5v58pACDm17mB4P+MTAYQABNGmrvAHc7OnF3NVsPhv194
+         Wux3+62Mp+xCZ7AezYwEtJhGX32d+UssPgRL2WOzG2P5/83++Kl+ObYgVNAbsFQ5MqJz
+         r3xQaJF9JiqzI0agyLtVl50kmI5urMTd5zc98qWjEWiPkwKXWjFeEWxqWHak0k0cJbHm
+         1Qxg==
+X-Received: by 10.236.87.107 with SMTP id x71mr849771yhe.10.1374000596888;
+        Tue, 16 Jul 2013 11:49:56 -0700 (PDT)
+Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
+        by mx.google.com with ESMTPSA id s80sm2922296yhe.27.2013.07.16.11.49.55
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 16 Jul 2013 11:42:52 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130704 Icedove/17.0.7
-In-Reply-To: <20130716182627.GM14690@google.com>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 16 Jul 2013 11:49:56 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2.0.13
+In-Reply-To: <51E591FF.7030600@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230575>
 
->
->> Those text files are installed as documentation (at least on my distribution).
->
-> That's probably a distribution bug (or a git makefile bug, depending
-> on how you look at it).  It would be better to ship the HTML
-> documentation, converted to text, instead of keeping the version with
-> markup including occasional random \ signs, linkgit:, ``, etc.
->
-> What distribution do you use?  (As maintainer of packaging for a Linux
-> distro, I know at least one that is guilty of this.)
->
+Subtests 6, 7, and 9 rely test that merge-recursive correctly
+ignores whitespace when so directed. Change the particular whitespace
+sequences to be ones that are not known line endings so the whitespace
+is not changed when being extracted by line oriented grep.
 
- From the AcsiiDoc Home Page:
+Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+---
+ t/t3032-merge-recursive-options.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-=begin quote=
-You write an AsciiDoc document the same way you would write a normal 
-text document, there are no markup tags or weird format notations. 
-AsciiDoc files are designed to be viewed, edited and printed directly or 
-translated to other presentation formats using the asciidoc(1) command.
-=end quote=
-
-So, the asciidoc "source" files should be readable in their unprocessed 
-form. And, not using tabs in ASCII art doesn't appear to have any downside.
+diff --git a/t/t3032-merge-recursive-options.sh b/t/t3032-merge-recursive-options.sh
+index 2b17311..52e275c 100755
+--- a/t/t3032-merge-recursive-options.sh
++++ b/t/t3032-merge-recursive-options.sh
+@@ -92,7 +92,7 @@ test_expect_success 'setup' '
+ 			s/Polemarchus interposing./Polemarchus, interposing.Q/
+ 			/justice and holiness/ s/$/Q/
+ 			/pay your debts/ s/$/Q/
+-		" text.txt | q_to_cr >text.txt+ &&
++		" text.txt | q_to_tab >text.txt+ &&
+ 	mv text.txt+ text.txt &&
+ 	git commit -a -m "Clarify" &&
+ 	git show-branch --all
+@@ -125,7 +125,7 @@ test_expect_success '-Xignore-space-change makes cherry-pick succeed' '
+ '
+ 
+ test_expect_success '--ignore-space-change: our w/s-only change wins' '
+-	q_to_cr <<-\EOF >expected &&
++	q_to_tab <<-\EOF >expected &&
+ 	    justice and holiness and is the nurse of his age and theQ
+ 	EOF
+ 
+@@ -150,7 +150,7 @@ test_expect_success '--ignore-space-change: does not ignore new spaces' '
+ 	cat <<-\EOF >expected1 &&
+ 	Well said, Cephalus, I replied; but as con cerning justice, what is
+ 	EOF
+-	q_to_cr <<-\EOF >expected2 &&
++	q_to_tab <<-\EOF >expected2 &&
+ 	un intentionally; and when he departs to the world below he is not inQ
+ 	EOF
+ 
+@@ -174,7 +174,7 @@ test_expect_success '--ignore-all-space drops their new spaces' '
+ '
+ 
+ test_expect_success '--ignore-all-space keeps our new spaces' '
+-	q_to_cr <<-\EOF >expected &&
++	q_to_tab <<-\EOF >expected &&
+ 	un intentionally; and when he departs to the world below he is not inQ
+ 	EOF
+ 
+@@ -185,7 +185,7 @@ test_expect_success '--ignore-all-space keeps our new spaces' '
+ '
+ 
+ test_expect_success '--ignore-space-at-eol' '
+-	q_to_cr <<-\EOF >expected &&
++	q_to_tab <<-\EOF >expected &&
+ 	<<<<<<< HEAD
+ 	is not in his right mind; ought I to give them back to him?  No oneQ
+ 	=======
+-- 
+1.8.3.2.0.13
