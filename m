@@ -1,161 +1,67 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH] send-email: improve SSL certificate verification
-Date: Tue, 16 Jul 2013 00:15:06 +0000
-Message-ID: <20130716001506.GG11097@vauxhall.crustytoothpaste.net>
-References: <1373025947-26495-1-git-send-email-artagnon@gmail.com>
- <1373025947-26495-2-git-send-email-artagnon@gmail.com>
- <51D82970.5070108@web.de>
- <20130706143256.GX862789@vauxhall.crustytoothpaste.net>
- <51D83C7E.8000902@web.de>
- <CALkWK0kAfZLqyCO+e+0PH0-MmjMYX1nJmit5Qb5L3Qf6nyhC9Q@mail.gmail.com>
- <20130714170316.GE11097@vauxhall.crustytoothpaste.net>
- <51E3677D.6040903@web.de>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH] t9200 - Allow cvs version 1.12
+Date: Mon, 15 Jul 2013 22:05:03 -0400
+Message-ID: <51E4AA4F.6090008@gmail.com>
+References: <1373920585-22370-1-git-send-email-mlevedahl@gmail.com> <7v1u6za379.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Jul 16 02:15:21 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 16 04:05:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UysvI-0008PH-2Y
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 02:15:20 +0200
+	id 1Uyudd-0001B7-D2
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 04:05:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755367Ab3GPAPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 20:15:14 -0400
-Received: from qmta01.emeryville.ca.mail.comcast.net ([76.96.30.16]:32926 "EHLO
-	qmta01.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755247Ab3GPAPN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jul 2013 20:15:13 -0400
-Received: from omta13.emeryville.ca.mail.comcast.net ([76.96.30.52])
-	by qmta01.emeryville.ca.mail.comcast.net with comcast
-	id 0ntx1m00717UAYkA1oFCFe; Tue, 16 Jul 2013 00:15:12 +0000
-Received: from castro.crustytoothpaste.net ([173.11.243.49])
-	by omta13.emeryville.ca.mail.comcast.net with comcast
-	id 0oFA1m00h14fh3h8ZoFByR; Tue, 16 Jul 2013 00:15:12 +0000
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 37F1D28074;
-	Tue, 16 Jul 2013 00:15:10 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <51E3677D.6040903@web.de>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.10-rc7-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1373933712;
-	bh=pcfXP0Dh9Qd1NK6Sr3ncEq9+zQ0DgxX/PI/DFPjLI6I=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=SOOOhlA37XL1e73dBeKUQt2sjJtOLTKD8v07GFuAt77yLiBChElw7bDq2i6qjkg9Z
-	 EUxDnJk5AWr2s/adJtD+BpMLLwkVFZN2DNMul6FinJSAWkaOAumIAwTVG9C+XCMSzs
-	 Fg7nJFw9+C5m0qIMH25uglh1KViZukydI5CR51I3KOZJkIgE31fMIRa3LzbIqJ8rtQ
-	 w+x1+2hVG3MR+iXIzOt3hqDCKRgSgFFdpA6Zs1tUmmpjw86PBbG/AOVKKMIAyE0JOI
-	 lDvW39p4QovkKXX4/cKGQqw/mqHSEnbBU+C9lM+t7fg6lYUVQDuyDRCZpGlgdt2dhd
-	 scnPzcw+JMZYg==
+	id S1755793Ab3GPCFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 22:05:08 -0400
+Received: from mail-qa0-f42.google.com ([209.85.216.42]:33572 "EHLO
+	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755466Ab3GPCFH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 22:05:07 -0400
+Received: by mail-qa0-f42.google.com with SMTP id hu16so2017951qab.1
+        for <git@vger.kernel.org>; Mon, 15 Jul 2013 19:05:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=o0Ve7LBJNpXEZ925ShS70K20qnRiyELjLXdDU1WD8b0=;
+        b=uXA+vkjQtlpI5lYOgeKEFZ2MIe7M+7gZknv6ukxiAGLLXh/YBUuEJ6ebMKVtt+Tm8g
+         ReVLPEDZyvjsjr5XmGp7ygzUeJxUuCPHUlFNC26N3XpX/8DbrRUETTsYV6kQKvoC3jZ+
+         EV6GZOvfUoRoIPrGfziiGtpSokAs6E6pvlkqu6+BmeSrEOcJvpNmEOs0LYz7xAzJVehK
+         4mcreKQc57JK/uyZUAXo6+yDEM0nWG2cOeAdlAZ5PViHwXkfPRvR/sKaBqlXX5Kcmpxf
+         6aPWD8aW4+r49t+sGxhho9VpHhJsCHOqHjsg6v/FkC5hcGEKAkVkITnQYfDYmkwEiliC
+         bKOQ==
+X-Received: by 10.224.68.6 with SMTP id t6mr222908qai.76.1373940305632;
+        Mon, 15 Jul 2013 19:05:05 -0700 (PDT)
+Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
+        by mx.google.com with ESMTPSA id w2sm59535526qec.8.2013.07.15.19.05.04
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Jul 2013 19:05:04 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130625 Thunderbird/17.0.7
+In-Reply-To: <7v1u6za379.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230534>
 
-The SSL and TLS code for SMTP is non-trivial, so refactor it into a separate
-function for ease of use.  Handle both files and directories as sources for CA
-certificates.  Also add handling for older version of IO::Socket::SSL that do
-not support the SSL_VERIFY_PEER and SSL_VERIFY_NONE constants; in this case,
-print a warning and inform the user of this fact.
+On 07/15/2013 06:06 PM, Junio C Hamano wrote:
+> Mark Levedahl <mlevedahl@gmail.com> writes:
+>
+>> cvs v1.12 does not correctly handle "cvs co -d $DIR", which is shorthand
+>> for "mkdir $DIR, cd $DIR, cvs co, cd -". So, use the latter form.
+> Hmph, I think I've been using 1.12.13 and without seeing such a
+> breakage.  Do you mean "exactly v1.12", not "v1.12.x series"?
+>
+Hmm, good instincts. Cygwin includes 1.12.13 which is what I used. I 
+downloaded the sources, rebuilt, everything works fine, so apparently 
+the Cygwin provided cvs binary is corrupt. I apologize for the noise, 
+will take this to the Cygwin list.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
-
-This is completely untested.  I used perl -c, but that's it.
-
- git-send-email.perl | 50 ++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 36 insertions(+), 14 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 095b6fb..11fb2d0 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1083,6 +1083,37 @@ sub smtp_auth_maybe {
- 	return $auth;
- }
- 
-+sub ssl_verify_params {
-+	require IO::Socket::SSL;
-+	eval {
-+		IO::Socket::SSL->import(qw/SSL_VERIFY_PEER SSL_VERIFY_NONE/);
-+	};
-+	if ($@) {
-+		print STDERR "Not using SSL_VERIFY_PEER due to out-of-date IO::Socket::SSL.\n";
-+		return;
-+	}
-+
-+	if (!defined $smtp_ssl_cert_path) {
-+		$smtp_ssl_cert_path ||= "/etc/ssl/certs";
-+	}
-+
-+	if (!$smtp_ssl_cert_path) {
-+		return (SSL_verify_mode => SSL_VERIFY_NONE());
-+	}
-+	elsif (-d $smtp_ssl_cert_path) {
-+		return (SSL_verify_mode => SSL_VERIFY_PEER(),
-+			SSL_ca_path => $smtp_ssl_cert_path);
-+	}
-+	elsif (-f $smtp_ssl_cert_path) {
-+		return (SSL_verify_mode => SSL_VERIFY_PEER(),
-+			SSL_ca_file => $smtp_ssl_cert_path);
-+	}
-+	else {
-+		print STDERR "Not using SSL_VERIFY_PEER because the CA path does not exist.\n";
-+		return (SSL_verify_mode => SSL_VERIFY_NONE());
-+	}
-+}
-+
- # Returns 1 if the message was sent, and 0 otherwise.
- # In actuality, the whole program dies when there
- # is an error sending a message.
-@@ -1187,7 +1218,8 @@ X-Mailer: git-send-email $gitversion
- 			$smtp_domain ||= maildomain();
- 			$smtp ||= Net::SMTP::SSL->new($smtp_server,
- 						      Hello => $smtp_domain,
--						      Port => $smtp_server_port);
-+						      Port => $smtp_server_port,
-+							  ssl_verify_params());
- 		}
- 		else {
- 			require Net::SMTP;
-@@ -1203,19 +1235,9 @@ X-Mailer: git-send-email $gitversion
- 				$smtp->command('STARTTLS');
- 				$smtp->response();
- 				if ($smtp->code == 220) {
--					# Attempt to use a ca-certificate by default
--					$smtp_ssl_cert_path |= "/etc/ssl/certs";
--					if (-d $smtp_ssl_cert_path) {
--						$smtp = Net::SMTP::SSL->start_SSL($smtp,
--										  SSL_verify_mode => SSL_VERIFY_PEER,
--										  SSL_ca_path => $smtp_ssl_cert_path)
--							or die "STARTTLS failed! ".$smtp->message;
--					} else {
--						print STDERR "warning: Using SSL_VERIFY_NONE.  See sendemail.smtpsslcertpath.\n";
--						$smtp = Net::SMTP::SSL->start_SSL($smtp,
--										  SSL_verify_mode => SSL_VERIFY_NONE)
--							or die "STARTTLS failed! ".$smtp->message;
--					}
-+					$smtp = Net::SMTP::SSL->start_SSL($smtp,
-+									  ssl_verify_params())
-+						or die "STARTTLS failed! ".$smtp->message;
- 					$smtp_encryption = '';
- 					# Send EHLO again to receive fresh
- 					# supported commands
--- 
-1.8.3.2.923.g2a18ff8.dirty
-
-
--- 
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+Mark
