@@ -1,66 +1,67 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: t3032 incompatible with Cygwin/Windows
-Date: Tue, 16 Jul 2013 14:33:35 -0400
-Message-ID: <51E591FF.7030600@gmail.com>
+From: Dirk Wallenstein <halsmit@t-online.de>
+Subject: Re: [PATCH] howto: Use all-space indentation in ASCII art
+Date: Tue, 16 Jul 2013 20:38:12 +0200
+Message-ID: <20130716183812.GA11138@bottich>
+References: <20130715164658.GA8675@bottich>
+ <7v61wba3gu.fsf@alter.siamese.dyndns.org>
+ <20130716082413.GA27283@bottich>
+ <20130716182627.GM14690@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 16 20:33:47 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Thomas Ackermann <th.acker@arcor.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 16 20:38:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzA4G-0005f6-91
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 20:33:44 +0200
+	id 1UzA8s-00009b-45
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 20:38:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933813Ab3GPSdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 14:33:40 -0400
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:45395 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933000Ab3GPSdj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 14:33:39 -0400
-Received: by mail-qa0-f53.google.com with SMTP id g10so626081qah.12
-        for <git@vger.kernel.org>; Tue, 16 Jul 2013 11:33:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=FY3/bEyB/kxDKhdQsL+9y3EslpmIO1aZZbXFO5NkgNc=;
-        b=MzW5PoZjOHcoMmrUtUd7Gta7v/les0NWf6kTpKMcOnhW56xbjWRdZ8B+yoVO7DvQcW
-         s6IXWdOm/1DZAr9xLc/pHWrssBddQOoWPtDDd3w57jSN5e0H4az5bmkEt742LgbFTXpr
-         +zOuf11ldNqze7tVe9LkCbVh+ebxWBMH5+HpOx4VMOPhM0pqVQ+QlIOTBdtOW7lQb5iK
-         AekFwdTVWPkKP+S0p5jtIfvknTVPASnOmZA8VMHBsAE39+okgK6TQjlyjiS/5yJMNPY6
-         WzadX4baFes2siKQPnWF8HPXQO4mGgLrd3B62Se9IQVThauWQQ+C0OdBb9Cek8cxKFnX
-         TMZA==
-X-Received: by 10.224.163.72 with SMTP id z8mr4938699qax.59.1373999617858;
-        Tue, 16 Jul 2013 11:33:37 -0700 (PDT)
-Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
-        by mx.google.com with ESMTPSA id a8sm6450242qae.11.2013.07.16.11.33.36
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 16 Jul 2013 11:33:37 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130625 Thunderbird/17.0.7
+	id S933425Ab3GPSi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 14:38:26 -0400
+Received: from mailout06.t-online.de ([194.25.134.19]:36645 "EHLO
+	mailout06.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933165Ab3GPSiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 14:38:25 -0400
+Received: from fwd11.aul.t-online.de (fwd11.aul.t-online.de )
+	by mailout06.t-online.de with smtp 
+	id 1UzA8i-00067D-KR; Tue, 16 Jul 2013 20:38:20 +0200
+Received: from localhost (r1nvSyZvwhti+dlYetcgQlzLKqJIYhVPmt4xDLWIitpRrHX8p49LEJbM1JkSz6SQ-Q@[178.202.218.27]) by fwd11.t-online.de
+	with esmtp id 1UzA8c-1Cy1gG0; Tue, 16 Jul 2013 20:38:14 +0200
+Content-Disposition: inline
+In-Reply-To: <20130716182627.GM14690@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-ID: r1nvSyZvwhti+dlYetcgQlzLKqJIYhVPmt4xDLWIitpRrHX8p49LEJbM1JkSz6SQ-Q
+X-TOI-MSGID: f0e5055e-460a-4a5d-9935-6eadf54d9842
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230573>
 
-Subtests 6,7, and 9 of t3032 fail on Cygwin, and I presume will fail on 
-msysgit for similar reasons. Looking at test 6, the expected result is a 
-line ending with \r\n in text.txt. This line is extracted with grep 
-(grep 'justice and holiness' text.txt > actual), with unavoidable result 
-that on Cygwin the line ending is \n. This happens because on Cygwin, 
-the text utils are compiled to open files in text mode meaning than \n 
-and \r\n are both recognized as EOL markers. Thus, even though text.txt 
-is an exact match for what is created on Linux, the test fails because 
-\r\n cannot be distinguished by the available tools.
+On Tue, Jul 16, 2013 at 11:26:27AM -0700, Jonathan Nieder wrote:
+> Dirk Wallenstein wrote:
+> 
+> > Those text files are installed as documentation (at least on my distribution).
+> 
+> That's probably a distribution bug (or a git makefile bug, depending
+> on how you look at it).  It would be better to ship the HTML
+> documentation, converted to text, instead of keeping the version with
+> markup including occasional random \ signs, linkgit:, ``, etc.
+They are also installed if I only use Git's makefile.
+> 
+> What distribution do you use?  (As maintainer of packaging for a Linux
+> distro, I know at least one that is guilty of this.)
 
-I'm not sure the right way forward. I did confirm that by substituting 
-"q_to_tab" for "q_to_cr" in t3032, the test pass on Cygwin and on Linux. 
-Perhaps t3032 should be so amended to avoid use of a non-portable line 
-ending construct?
+Ubuntu.
+As an aside, I had to run manual creation as root.  Otherwise it did hang
+(XMLTO).  Is that an Ubuntu bug?  Sorry, just because you seem to know
+about this.
 
-Mark
+-- 
+Cheers,
+  Dirk
