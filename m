@@ -1,67 +1,90 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH] t9200 - Allow cvs version 1.12
-Date: Mon, 15 Jul 2013 22:05:03 -0400
-Message-ID: <51E4AA4F.6090008@gmail.com>
-References: <1373920585-22370-1-git-send-email-mlevedahl@gmail.com> <7v1u6za379.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [RFC/PATCH v2 1/1] cygwin: Add fast_lstat() and fast_fstat()
+ functions
+Date: Tue, 16 Jul 2013 04:06:53 +0200
+Message-ID: <51E4AABD.9010701@web.de>
+References: <51DDC2AF.9010504@ramsay1.demon.co.uk> <51E2CE97.2040900@gmail.com> <7vppuja9ip.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: Mark Levedahl <mlevedahl@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	mhagger@alum.mit.edu, Jeff King <peff@peff.net>,
+	Johannes Sixt <j6t@kdbg.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, tboegi@web.de,
+	dpotapov@gmail.com, GIT Mailing-list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 16 04:05:16 2013
+X-From: git-owner@vger.kernel.org Tue Jul 16 04:07:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uyudd-0001B7-D2
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 04:05:13 +0200
+	id 1Uyufi-0002Is-K6
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 04:07:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755793Ab3GPCFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 22:05:08 -0400
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:33572 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755466Ab3GPCFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 22:05:07 -0400
-Received: by mail-qa0-f42.google.com with SMTP id hu16so2017951qab.1
-        for <git@vger.kernel.org>; Mon, 15 Jul 2013 19:05:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=o0Ve7LBJNpXEZ925ShS70K20qnRiyELjLXdDU1WD8b0=;
-        b=uXA+vkjQtlpI5lYOgeKEFZ2MIe7M+7gZknv6ukxiAGLLXh/YBUuEJ6ebMKVtt+Tm8g
-         ReVLPEDZyvjsjr5XmGp7ygzUeJxUuCPHUlFNC26N3XpX/8DbrRUETTsYV6kQKvoC3jZ+
-         EV6GZOvfUoRoIPrGfziiGtpSokAs6E6pvlkqu6+BmeSrEOcJvpNmEOs0LYz7xAzJVehK
-         4mcreKQc57JK/uyZUAXo6+yDEM0nWG2cOeAdlAZ5PViHwXkfPRvR/sKaBqlXX5Kcmpxf
-         6aPWD8aW4+r49t+sGxhho9VpHhJsCHOqHjsg6v/FkC5hcGEKAkVkITnQYfDYmkwEiliC
-         bKOQ==
-X-Received: by 10.224.68.6 with SMTP id t6mr222908qai.76.1373940305632;
-        Mon, 15 Jul 2013 19:05:05 -0700 (PDT)
-Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
-        by mx.google.com with ESMTPSA id w2sm59535526qec.8.2013.07.15.19.05.04
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 15 Jul 2013 19:05:04 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130625 Thunderbird/17.0.7
-In-Reply-To: <7v1u6za379.fsf@alter.siamese.dyndns.org>
+	id S1756200Ab3GPCHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 22:07:17 -0400
+Received: from mout.web.de ([212.227.17.11]:50133 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755908Ab3GPCHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 22:07:16 -0400
+Received: from [192.168.1.18] ([68.61.5.157]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0MOj14-1V2mXg0rgM-0063pd; Tue, 16 Jul 2013 04:06:56 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <7vppuja9ip.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V03:K0:FJHEbDDvPq5/baI+8tQoOhi9fLAAcA6OicMFu5NSLQCc2n8YdUJ
+ JQe1bbLE8wCowm7MzUcg6QdFqKfGAobhyAcd9FYPCzN/h60Yse+GbypnGBTCoNvwvbKV11s
+ tqKr0Ygv09gXCbx8/pwk/s3Omuoo31WMfG491sEQmv5FDqqBPx2o6lTD74JvCQOMhAzKxDF
+ GrCDwToxfWPTzF/lre6YQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230535>
 
-On 07/15/2013 06:06 PM, Junio C Hamano wrote:
+On 2013-07-15 21.49, Junio C Hamano wrote:
 > Mark Levedahl <mlevedahl@gmail.com> writes:
->
->> cvs v1.12 does not correctly handle "cvs co -d $DIR", which is shorthand
->> for "mkdir $DIR, cd $DIR, cvs co, cd -". So, use the latter form.
-> Hmph, I think I've been using 1.12.13 and without seeing such a
-> breakage.  Do you mean "exactly v1.12", not "v1.12.x series"?
->
-Hmm, good instincts. Cygwin includes 1.12.13 which is what I used. I 
-downloaded the sources, rebuilt, everything works fine, so apparently 
-the Cygwin provided cvs binary is corrupt. I apologize for the noise, 
-will take this to the Cygwin list.
+> 
+>>> In order to limit the adverse effects caused by this implementation,
+>>> we provide a new "fast stat" interface, which allows us to use this
+>>> only for interactions with the index (i.e. the cached stat data).
+>>>
+>>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+>>> ---
+>>
+>> I've tested this on Cygwin 1.7 on WIndows 7 , comparing to the results
+>> using your prior patch (removing the Cygwin specific lstat entirely)
+>> and get the same results with both, so this seems ok from me.
+>>
+>> My comparison point was created by reverting your current patch from
+>> pu, then reapplying your earlier patch on top, so the only difference
+>> was which approach was used to address the stat functions.
+>>
+>> Caveats:
+>> 1) I don't find any speed improvement of the current patch over the
+>> previous one (the tests actually ran faster with the earlier patch,
+>> though the difference was less than 1%).
+Hm, measuring the time for the test suite is one thing,
+did you measure the time of "git status" with and without the patch?
 
-Mark
+(I don't have my test system at hand, so I can test in a few days/weeks)
+
+>> 2) I still question this whole approach, especially having this
+>> non-POSIX compliant mode be the default. Running in this mode breaks
+>> interoperability with Linux, but providing a Linux environment is the
+>> *primary* goal of Cygwin.
+> 
+> Sounds like we are better off without this patch, and instead remove
+> the "schizophrenic stat"?  I do not have a strong opinion either
+> way, except that I tend to agree with your point 2) above.
+
+My understanding is that we want both:
+Introduction of fast_lstat() as phase 1,
+and the removal of the "schizophrenic stat" in compat/cygwin.c
+as phase 2. (or do I missunderstand something ?)
+
+
+And yes, phase 3:
+The day we have a both reliable and fast 
+lstat() in cygwin, we can remove compat/cygwin.[ch]
