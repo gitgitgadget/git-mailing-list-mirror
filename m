@@ -1,94 +1,70 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 4/5] config: improve support for http.<url>.* settings
-Date: Mon, 15 Jul 2013 19:12:51 -0400
-Message-ID: <CAPig+cQTNXgPyD4qiQPyQeSHWY0Y=_Qnd2i9LfVqQDA1DJNDxg@mail.gmail.com>
-References: <506e5f642a838b95e0dd5b1f0fa1cfe@f74d39fa044aa309eaea14b9f57fe79>
-	<dcbaa11c8595f48814aa39a75ad18ea@f74d39fa044aa309eaea14b9f57fe79>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, David Aguilar <davvid@gmail.com>,
-	Petr Baudis <pasky@ucw.cz>, Junio C Hamano <gitster@pobox.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Daniel Knittl-Frank <knittl89@googlemail.com>,
-	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
-	Alejandro Mery <amery@geeks.cl>,
-	Aaron Schrab <aaron@schrab.com>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 16 01:12:58 2013
+Subject: [PATCH] git-log.txt: fix typesetting of example "git-log -L" invocation
+Date: Mon, 15 Jul 2013 20:10:36 -0400
+Message-ID: <1373933436-28599-1-git-send-email-sunshine@sunshineco.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 16 02:11:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uyrwv-0004Vr-Rl
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 01:12:58 +0200
+	id 1Uysrf-0006hn-Sw
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 02:11:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755082Ab3GOXMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 19:12:54 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:49378 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754916Ab3GOXMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 19:12:53 -0400
-Received: by mail-lb0-f170.google.com with SMTP id t13so94444lbd.29
-        for <git@vger.kernel.org>; Mon, 15 Jul 2013 16:12:51 -0700 (PDT)
+	id S1755367Ab3GPALc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 20:11:32 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:39135 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755264Ab3GPALb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 20:11:31 -0400
+Received: by mail-ie0-f173.google.com with SMTP id k13so154442iea.18
+        for <git@vger.kernel.org>; Mon, 15 Jul 2013 17:11:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=yGL2kmj0LHxHKZ7+08NsbuRGvgHeQAbZJD01MyI3P0Y=;
-        b=rgrQI2Db70Rj4SPbvW4n27e56j52oKkp/P/gS1JeL84w0nTYjuf1vYK8FyIdsa5avP
-         yaLpPObkn6UwXij8Cixd4VMiKDxIzCkP07aOFBBp6KLIpwd9nxzIo35HltY96cKrJdhu
-         7NZTflmosWcryk9OXZTcqjhTRjhQvPqsZth1o9SMGdqsLhFxEpjUPEzInq5gcigTszom
-         CNEgEPlpQxOrJrBox5RBjd0W00X2XFSJMHqUkacw+sRap0HO4/OFNQuHy2QVZ7poXqlW
-         ghwX13ICyIIf8b9Q81kG3Byw5hvZkBjb3wf3Rh5jHu3aRk7pMMMs8pwflCP6sbP6E33r
-         AuuA==
-X-Received: by 10.152.87.172 with SMTP id az12mr26246371lab.24.1373929971521;
- Mon, 15 Jul 2013 16:12:51 -0700 (PDT)
-Received: by 10.114.187.78 with HTTP; Mon, 15 Jul 2013 16:12:51 -0700 (PDT)
-In-Reply-To: <dcbaa11c8595f48814aa39a75ad18ea@f74d39fa044aa309eaea14b9f57fe79>
-X-Google-Sender-Auth: 37-2Ey1pC-cy3ZFk1rmzdvu2gz4
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=f7e0zB3XAo3IFpcqpdf7rBDHw/gfZIhtnlnzyAn86xM=;
+        b=o0LMQhERSk3UkSgU4rTUf5t90ukvXgLgkLp/1niMhjhZyJy8RkwHG9jiy2it8U7sE2
+         JQW+dmMBqbAjWhRH/yqjwoXy5XlWF9TYQr+HVMXRL3kM9FaxXYXlGD3an63Ue4sZFNjq
+         XLiLw/NhM3F45hMvlzRENLSyWnoqp8R7uIooewQJ6s9CbduNtGbefZEUdBL9lu1+AXf1
+         BKGQxUkSYEfbZfpmepAdKLRcF5Iq4inNhKQx/qY08F9xB8ZmmuHMlRYpENUZGVo3aN9i
+         6VR9nPOpf1RefIrbRlkCEadZn7Mbit5oYaqj7HXMh6odTWLHsDWpdHm0890flvhQzBYf
+         PS7w==
+X-Received: by 10.50.119.74 with SMTP id ks10mr8423651igb.59.1373933490903;
+        Mon, 15 Jul 2013 17:11:30 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
+        by mx.google.com with ESMTPSA id t10sm21449855igz.9.2013.07.15.17.11.28
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Jul 2013 17:11:29 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.3.1016.g4f0baba
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230532>
 
-On Mon, Jul 15, 2013 at 5:51 AM, Kyle J. McKay <mackyle@gmail.com> wrote:
-> Improve on the http.<url>.* url matching behavior by first
-> normalizing the urls before they are compared.
->
-> diff --git a/http.c b/http.c
-> index 758e5b1..d04386e 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -169,6 +169,210 @@ static void process_curl_messages(void)
->  }
->  #endif
->
-> +static int append_normalized_escapes(struct strbuf *buf,
-> +                                    const char *from,
-> +                                    size_t from_len,
-> +                                    const char *esc_extra,
-> +                                    const char *esc_ok)
-> +{
-> +       /*
-> +        * Append to strbuf buf characters from string from with length from_len
+All surrounding examples are typeset as monospaced text. Follow suit.
 
-s/from string from/from string/
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ Documentation/git-log.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> +        * while unescaping characters that do not need to be escaped and
-> +        * escaping characters that do.  The set of characters to escape (the
-> +        * complement of which is unescaped) starts out as the RFC 3986 unsafe
-> +        * characters (0x00-0x1F,0x7F-0xFF," <>\"#%{}|\\^`").  If esc_extra
-> +        * is not NULL, those additional characters will also always be escaped.
-> +        * If esc_ok is not NULL, those characters will be left escaped if found
-> +        * that way, but will not be unescaped otherwise (used for delimiters).
-> +        * If a %-escape sequence is encountered that is not followed by 2
-> +        * hexadecimal digits, the sequence is invalid and false (0) will be
-> +        * returned.  Otherwise true (1) will be returned for success.
-> +        *
-> +        * Note that all %-escape sequences will be normalized to UPPERCASE
-> +        * as indicated in RFC 3986.  Unless included in esc_extra or esc_ok
-> +        * alphanumerics and "-._~" will always be unescaped as per RFC 3986.
-> +        */
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 2ea79ba..2ee6962 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -153,7 +153,7 @@ Examples
+ 	This makes sense only when following a strict policy of merging all
+ 	topic branches when staying on a single integration branch.
+ 
+-git log -L '/int main/',/^}/:main.c::
++`git log -L '/int main/',/^}/:main.c`::
+ 
+ 	Shows how the function `main()` in the file 'main.c' evolved
+ 	over time.
+-- 
+1.8.3.3.1016.g4f0baba
