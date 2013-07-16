@@ -1,60 +1,67 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: repo consistency under crashes and power failures?
-Date: Tue, 16 Jul 2013 08:17:20 +0200
-Message-ID: <51E4E570.1060403@viscovery.net>
-References: <rmiy597iujc.fsf@fnord.ir.bbn.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Fix some sparse warnings
+Date: Tue, 16 Jul 2013 02:21:22 -0400
+Message-ID: <20130716062122.GA4964@sigill.intra.peff.net>
+References: <51E431F1.6050002@ramsay1.demon.co.uk>
+ <51E4E0C0.3060604@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Greg Troxel <gdt@ir.bbn.com>
-X-From: git-owner@vger.kernel.org Tue Jul 16 08:17:34 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Jul 16 08:21:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UyyZk-0002LH-SP
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 08:17:29 +0200
+	id 1Uyydf-0004Py-PZ
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 08:21:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658Ab3GPGRZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 02:17:25 -0400
-Received: from so.liwest.at ([212.33.55.13]:32036 "EHLO so.liwest.at"
+	id S1751857Ab3GPGV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 02:21:27 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46441 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751458Ab3GPGRY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 02:17:24 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UyyZc-000687-HG; Tue, 16 Jul 2013 08:17:20 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 4BB7D1660F;
-	Tue, 16 Jul 2013 08:17:20 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <rmiy597iujc.fsf@fnord.ir.bbn.com>
-X-Spam-Score: -1.0 (-)
+	id S1751618Ab3GPGV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 02:21:26 -0400
+Received: (qmail 1355 invoked by uid 102); 16 Jul 2013 06:22:47 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Jul 2013 01:22:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Jul 2013 02:21:22 -0400
+Content-Disposition: inline
+In-Reply-To: <51E4E0C0.3060604@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230542>
 
-Am 7/15/2013 19:48, schrieb Greg Troxel:
-> Clearly there is the possibility of creating a corrupt repository when
-> receiving objects and updating refs, if a crash or power failure causes
-> data not to get written to disk but that data is pointed to.  Journaling
-> mitigates this, but I'd argue that programs should function safely with
-> only the guarantees from POSIX.
+On Tue, Jul 16, 2013 at 07:57:20AM +0200, Johannes Sixt wrote:
 
-Even under POSIX, "guarantees" and "crash/power failure" do not mesh well.
-This has been under dispute recently, for example:
+> Am 7/15/2013 19:31, schrieb Ramsay Jones:
+> > Sparse issues three "Using plain integer as NULL pointer" warnings.
+> > Each warning relates to the use of an '{0}' initialiser expression
+> > in the declaration of an 'struct object_info'.
+> 
+> I question the value of this warning. Initialization with '= {0}' is a
+> well-established idiom, and sparse should know about it. Also, plain 0
+> *is* a null pointer constant.
 
-http://thread.gmane.org/gmane.comp.standards.posix.austin.general/7456/focus=7487
+I agree with you. It's not a bug, and I think sparse is being overly
+picky here; it is missing the forest for the trees in interpreting the
+idiom.
 
-The best we can achieve with POSIX alone is "to make bad consequences less
-likely".
+Still, it may be worth tweaking in the name of eliminating compiler
+noise, since it does not cost us very much to do so (and I believe we
+have done so in the past, too).
 
-Jonathan already mentioned the knob that allows you to trade performance
-for more safety.
+We could also ask people with sparse to turn off the "use NULL instead
+of 0" warning, but I think it _is_ a useful warning elsewhere (even
+though it is never a bug, it violates our style guidelines and may be an
+indication of a bug). It would be nice if sparse learned to ignore the
+warning in this particular idiom, but I am not going to hold my breath
+for that.
 
--- Hannes
+-Peff
