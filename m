@@ -1,67 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Fix some sparse warnings
-Date: Tue, 16 Jul 2013 02:21:22 -0400
-Message-ID: <20130716062122.GA4964@sigill.intra.peff.net>
-References: <51E431F1.6050002@ramsay1.demon.co.uk>
- <51E4E0C0.3060604@viscovery.net>
+From: Dirk Wallenstein <halsmit@t-online.de>
+Subject: Re: [PATCH] howto: Use all-space indentation in ASCII art
+Date: Tue, 16 Jul 2013 10:24:13 +0200
+Message-ID: <20130716082413.GA27283@bottich>
+References: <20130715164658.GA8675@bottich>
+ <7v61wba3gu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Jul 16 08:21:33 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nanako Shiraishi <nanako3@lavabit.com>,
+	Thomas Ackermann <th.acker@arcor.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 16 10:24:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uyydf-0004Py-PZ
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 08:21:32 +0200
+	id 1Uz0Yk-0005Xr-U6
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 10:24:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857Ab3GPGV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 02:21:27 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46441 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751618Ab3GPGV0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 02:21:26 -0400
-Received: (qmail 1355 invoked by uid 102); 16 Jul 2013 06:22:47 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Jul 2013 01:22:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Jul 2013 02:21:22 -0400
+	id S1753905Ab3GPIYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 04:24:24 -0400
+Received: from mailout01.t-online.de ([194.25.134.80]:53515 "EHLO
+	mailout01.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753892Ab3GPIYW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 04:24:22 -0400
+Received: from fwd53.aul.t-online.de (fwd53.aul.t-online.de )
+	by mailout01.t-online.de with smtp 
+	id 1Uz0YV-00083w-RZ; Tue, 16 Jul 2013 10:24:19 +0200
+Received: from localhost (rIagUiZ-whcdm-KKHk1aIuzeq7+cpjwzaXz-LdKyykalGNwZBRcNyQ8s8WdMOT8QGo@[178.202.201.83]) by fwd53.t-online.de
+	with esmtp id 1Uz0YR-1QTthY0; Tue, 16 Jul 2013 10:24:15 +0200
 Content-Disposition: inline
-In-Reply-To: <51E4E0C0.3060604@viscovery.net>
+In-Reply-To: <7v61wba3gu.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-ID: rIagUiZ-whcdm-KKHk1aIuzeq7+cpjwzaXz-LdKyykalGNwZBRcNyQ8s8WdMOT8QGo
+X-TOI-MSGID: 461c4397-f988-4c8a-9b0d-933b5d28c67e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230543>
 
-On Tue, Jul 16, 2013 at 07:57:20AM +0200, Johannes Sixt wrote:
-
-> Am 7/15/2013 19:31, schrieb Ramsay Jones:
-> > Sparse issues three "Using plain integer as NULL pointer" warnings.
-> > Each warning relates to the use of an '{0}' initialiser expression
-> > in the declaration of an 'struct object_info'.
+On Mon, Jul 15, 2013 at 03:00:17PM -0700, Junio C Hamano wrote:
+> Dirk Wallenstein <halsmit@t-online.de> writes:
 > 
-> I question the value of this warning. Initialization with '= {0}' is a
-> well-established idiom, and sparse should know about it. Also, plain 0
-> *is* a null pointer constant.
+> > Keep the sketch aligned independent of the tabstop width used.
+> 
+> Thanks.
+> 
+> This is a source text to be formatted into HTML, isn't it?
+> 
+> In our sources, a HT indents to multiple of 8 columns.  As long as
+> the output HTML produced from the source can be seen on a terminal
+> with any tab-width correctly, I do not see any reason to apply this
+> patch.
+> 
+> Am I missing something???
+> 
 
-I agree with you. It's not a bug, and I think sparse is being overly
-picky here; it is missing the forest for the trees in interpreting the
-idiom.
+Those text files are installed as documentation (at least on my distribution).
+They have a *.txt suffix, which tells me that they are meant to be read.  If those
+would ever be opened with a text editor where the user has set the default
+tabstop width to something other than 8 it would teach something nonsensical.
+Not to mention if those files would have been printed with the wrong setting.
 
-Still, it may be worth tweaking in the name of eliminating compiler
-noise, since it does not cost us very much to do so (and I believe we
-have done so in the past, too).
+Why would you want to limit those files to be source for HTML only?
 
-We could also ask people with sparse to turn off the "use NULL instead
-of 0" warning, but I think it _is_ a useful warning elsewhere (even
-though it is never a bug, it violates our style guidelines and may be an
-indication of a bug). It would be nice if sparse learned to ignore the
-warning in this particular idiom, but I am not going to hold my breath
-for that.
+The HTML after this patch is still fine.
 
--Peff
+-- 
+Cheers,
+  Dirk
