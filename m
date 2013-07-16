@@ -1,90 +1,127 @@
 From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [RFC/PATCH v2 1/1] cygwin: Add fast_lstat() and fast_fstat()
- functions
-Date: Tue, 16 Jul 2013 04:06:53 +0200
-Message-ID: <51E4AABD.9010701@web.de>
-References: <51DDC2AF.9010504@ramsay1.demon.co.uk> <51E2CE97.2040900@gmail.com> <7vppuja9ip.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] send-email: improve SSL certificate verification
+Date: Tue, 16 Jul 2013 04:33:55 +0200
+Message-ID: <51E4B113.8000009@web.de>
+References: <1373025947-26495-1-git-send-email-artagnon@gmail.com> <1373025947-26495-2-git-send-email-artagnon@gmail.com> <51D82970.5070108@web.de> <20130706143256.GX862789@vauxhall.crustytoothpaste.net> <51D83C7E.8000902@web.de> <CALkWK0kAfZLqyCO+e+0PH0-MmjMYX1nJmit5Qb5L3Qf6nyhC9Q@mail.gmail.com> <20130714170316.GE11097@vauxhall.crustytoothpaste.net> <51E3677D.6040903@web.de> <20130716001506.GG11097@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Mark Levedahl <mlevedahl@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	mhagger@alum.mit.edu, Jeff King <peff@peff.net>,
-	Johannes Sixt <j6t@kdbg.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, tboegi@web.de,
-	dpotapov@gmail.com, GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 16 04:07:26 2013
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Tue Jul 16 04:34:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uyufi-0002Is-K6
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 04:07:22 +0200
+	id 1Uyv5j-0000E4-Ie
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 04:34:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756200Ab3GPCHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jul 2013 22:07:17 -0400
-Received: from mout.web.de ([212.227.17.11]:50133 "EHLO mout.web.de"
+	id S1756156Ab3GPCeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jul 2013 22:34:11 -0400
+Received: from mout.web.de ([212.227.15.4]:64890 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755908Ab3GPCHQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jul 2013 22:07:16 -0400
-Received: from [192.168.1.18] ([68.61.5.157]) by smtp.web.de (mrweb001) with
- ESMTPA (Nemesis) id 0MOj14-1V2mXg0rgM-0063pd; Tue, 16 Jul 2013 04:06:56 +0200
+	id S1753710Ab3GPCeL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jul 2013 22:34:11 -0400
+Received: from [192.168.1.18] ([68.61.5.157]) by smtp.web.de (mrweb103) with
+ ESMTPA (Nemesis) id 0MPHKO-1V3Inc2mky-004QVh; Tue, 16 Jul 2013 04:33:59 +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <7vppuja9ip.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V03:K0:FJHEbDDvPq5/baI+8tQoOhi9fLAAcA6OicMFu5NSLQCc2n8YdUJ
- JQe1bbLE8wCowm7MzUcg6QdFqKfGAobhyAcd9FYPCzN/h60Yse+GbypnGBTCoNvwvbKV11s
- tqKr0Ygv09gXCbx8/pwk/s3Omuoo31WMfG491sEQmv5FDqqBPx2o6lTD74JvCQOMhAzKxDF
- GrCDwToxfWPTzF/lre6YQ==
+In-Reply-To: <20130716001506.GG11097@vauxhall.crustytoothpaste.net>
+X-Provags-ID: V03:K0:yKCHs5UokKuIhCVQkgBoTku9tXyr3TZg9ns2jAvNl+hI2DSekjt
+ SvHM2ktPfnUEPtSZbm/yEhd676o6RG6B7yQSOl59/fKvQHYYtS6VEZMAWb1TAJz1sF4Vlmh
+ T64Bjv9rDDh8U4JRlTwLE8YHNAbWEm2sPLDNshVOlgq3dWUkC7mGUwo77O47xsrX4Xou8Dm
+ Lj8MiWpmzbsbFUmiwaR7w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230536>
 
-On 2013-07-15 21.49, Junio C Hamano wrote:
-> Mark Levedahl <mlevedahl@gmail.com> writes:
-> 
->>> In order to limit the adverse effects caused by this implementation,
->>> we provide a new "fast stat" interface, which allows us to use this
->>> only for interactions with the index (i.e. the cached stat data).
->>>
->>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->>> ---
->>
->> I've tested this on Cygwin 1.7 on WIndows 7 , comparing to the results
->> using your prior patch (removing the Cygwin specific lstat entirely)
->> and get the same results with both, so this seems ok from me.
->>
->> My comparison point was created by reverting your current patch from
->> pu, then reapplying your earlier patch on top, so the only difference
->> was which approach was used to address the stat functions.
->>
->> Caveats:
->> 1) I don't find any speed improvement of the current patch over the
->> previous one (the tests actually ran faster with the earlier patch,
->> though the difference was less than 1%).
-Hm, measuring the time for the test suite is one thing,
-did you measure the time of "git status" with and without the patch?
+[snip]
+I wasn't sure where to apply the patch, so I manually copy/paste it
+on top of pu:
+commit 6b1ca0f4d443ee8716857b871b0513ae85c9f112
+Merge: bce90ab f351fcf
 
-(I don't have my test system at hand, so I can test in a few days/weeks)
-
->> 2) I still question this whole approach, especially having this
->> non-POSIX compliant mode be the default. Running in this mode breaks
->> interoperability with Linux, but providing a Linux environment is the
->> *primary* goal of Cygwin.
-> 
-> Sounds like we are better off without this patch, and instead remove
-> the "schizophrenic stat"?  I do not have a strong opinion either
-> way, except that I tend to agree with your point 2) above.
-
-My understanding is that we want both:
-Introduction of fast_lstat() as phase 1,
-and the removal of the "schizophrenic stat" in compat/cygwin.c
-as phase 2. (or do I missunderstand something ?)
+Thanks, t9001 passes on Mac OS X 10.6.
+To be sure I didn't messed it up, please see the diff below.
+When it shows up on pu, I can re-test of course.
 
 
-And yes, phase 3:
-The day we have a both reliable and fast 
-lstat() in cygwin, we can remove compat/cygwin.[ch]
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index a9a6661..a965b8e 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -28,7 +28,7 @@ use File::Temp qw/ tempdir tempfile /;
+ use File::Spec::Functions qw(catfile);
+ use Error qw(:try);
+ use Git;
+-use IO::Socket::SSL qw(SSL_VERIFY_PEER SSL_VERIFY_NONE);
++#use IO::Socket::SSL qw(SSL_VERIFY_PEER SSL_VERIFY_NONE);
+ 
+ Getopt::Long::Configure qw/ pass_through /;
+ 
+@@ -1092,19 +1092,34 @@ sub smtp_auth_maybe {
+ # Helper to come up with SSL/TLS certification validation params
+ # and warn when doing no verification
+ sub ssl_verify_params {
+-    if ($smtp_ssl_verify == 0) {
+-        return (SSL_verify_mode => IO::Socket::SSL->SSL_VERIFY_NONE);
++    require IO::Socket::SSL;
++    eval {
++        IO::Socket::SSL->import(qw/SSL_VERIFY_PEER SSL_VERIFY_NONE/);
++    };
++    if ($@) {
++        print STDERR "Not using SSL_VERIFY_PEER due to out-of-date IO::Socket::SSL.\n";
++        return;
+     }
+ 
+-    if (! defined $smtp_ssl_cert_path) {
+-        return (SSL_verify_mode => IO::Socket::SSL->SSL_VERIFY_PEER);
+-    } elsif (-f $smtp_ssl_cert_path) {
+-        return (SSL_verify_mode => IO::Socket::SSL->SSL_VERIFY_PEER,
+-            SSL_ca_file => $smtp_ssl_cert_path);
+-    } else {
+-        return (SSL_verify_mode => IO::Socket::SSL->SSL_VERIFY_PEER,
++    if (!defined $smtp_ssl_cert_path) {
++        $smtp_ssl_cert_path ||= "/etc/ssl/certs";
++    }
++
++    if (!$smtp_ssl_cert_path) {
++        return (SSL_verify_mode => SSL_VERIFY_NONE());
++    }
++    elsif (-d $smtp_ssl_cert_path) {
++        return (SSL_verify_mode => SSL_VERIFY_PEER(),
+             SSL_ca_path => $smtp_ssl_cert_path);
+     }
++    elsif (-f $smtp_ssl_cert_path) {
++        return (SSL_verify_mode => SSL_VERIFY_PEER(),
++            SSL_ca_file => $smtp_ssl_cert_path);
++    }
++    else {
++        print STDERR "Not using SSL_VERIFY_PEER because the CA path does not exist.\n";
++        return (SSL_verify_mode => SSL_VERIFY_NONE());
++    }
+ }
+ 
+ # Returns 1 if the message was sent, and 0 otherwise.
+@@ -1229,13 +1244,8 @@ X-Mailer: git-send-email $gitversion
+                 if ($smtp->code == 220) {
+                     $smtp = Net::SMTP::SSL->start_SSL($smtp,
+                                       ssl_verify_params())
+-                        or die "STARTTLS failed! ".$smtp->message;
+-                    $smtp_encryption = '';
+-                    # Send EHLO again to receive fresh
+-                    # supported commands
+-                    $smtp->hello($smtp_domain);
+-                } else {
+-                    die "Server does not support STARTTLS! ".$smtp->message;
++                        or die "STARTTLS failed! ".$smtp->message;
++
+                 }
+             }
+         }
