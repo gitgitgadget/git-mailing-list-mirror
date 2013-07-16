@@ -1,97 +1,153 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH 2/2] show-branch: fix description of --date-order
-Date: Tue, 16 Jul 2013 22:11:23 +0200
-Message-ID: <87ehayqn84.fsf@hexa.v.cablecom.net>
-References: <8df0d41caa10a38e46783bebd3148a7b8445dd47.1373966389.git.trast@inf.ethz.ch>
-	<8768923c2d317d02beabbf1bff2f61927e126f81.1373966389.git.trast@inf.ethz.ch>
-	<20130716182254.GL14690@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, Ralf Thielow <ralf.thielow@gmail.com>,
-	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 16 22:11:33 2013
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH] t3032 - make compatible with systems using \r\n as a line ending
+Date: Tue, 16 Jul 2013 16:32:49 -0400
+Message-ID: <1374006769-1878-1-git-send-email-mlevedahl@gmail.com>
+References: <20130716185933.GO14690@google.com>
+Cc: Mark Levedahl <mlevedahl@gmail.com>
+To: git@vger.kernel.org, jrnieder@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jul 16 22:32:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzBas-0005o7-Ny
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 22:11:31 +0200
+	id 1UzBve-0001yj-Q6
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 22:32:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933532Ab3GPUL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 16:11:26 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:34428 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933133Ab3GPULZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 16:11:25 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 16 Jul
- 2013 22:11:22 +0200
-Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 16 Jul
- 2013 22:11:23 +0200
-In-Reply-To: <20130716182254.GL14690@google.com> (Jonathan Nieder's message of
-	"Tue, 16 Jul 2013 11:22:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S933921Ab3GPUcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 16:32:55 -0400
+Received: from mail-qe0-f42.google.com ([209.85.128.42]:58952 "EHLO
+	mail-qe0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933606Ab3GPUcy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 16:32:54 -0400
+Received: by mail-qe0-f42.google.com with SMTP id s14so685240qeb.29
+        for <git@vger.kernel.org>; Tue, 16 Jul 2013 13:32:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=Cuuy9c1AC2dHBoW9U6SxNpIc3Yupzo+ngryBZH4Vcv8=;
+        b=QhQ7Gm0406/YKmkpw5aBK7b2hnaukarl6LQab3eJaAjWxHVStU9UY5Y2BxPD7iblMU
+         JOR6fyV3E9t/oz1MU47ay29jXAIc4ZFZEnN+ZwkK+PSZCc1SLCXkq8Jb2WokrwiQofY3
+         6Ip1804V2R1O43WTup++edRYK5Hp7u8UhuTloxAeH7ceF5AulnO214wQew/B2kNQWZu1
+         +XY/ww3HBEMfhA+m5D05RIP3po2wTmuYEJ4YbdNcDmCjCwvfzJ499vry3w57CwaQLvbE
+         5qXOOpdy2h52tuM0B4HbRLUF0mbv6GIW/tS2P/juqCkXMM2KbYI5TZUWMt2wTW9SZOSd
+         dTqw==
+X-Received: by 10.224.79.203 with SMTP id q11mr5784561qak.35.1374006773575;
+        Tue, 16 Jul 2013 13:32:53 -0700 (PDT)
+Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
+        by mx.google.com with ESMTPSA id 11sm4123051qek.1.2013.07.16.13.32.52
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 16 Jul 2013 13:32:52 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2.0.13
+In-Reply-To: <20130716185933.GO14690@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230582>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Subtests 6, 7, and 9 rely test that merge-recursive correctly
+ignores whitespace when so directed. These tests create and test for
+lines ending in \r\n, but as this is a valid line separator on Windows,
+convert such lines in the output to avoid confusion by line-oriented
+grep.
 
-> Thomas Rast wrote:
->
->> The existing description reads as if it somehow applies a filter.
->> Change it to explain that it is merely about the ordering.
-> [...]
->>  		OPT_SET_INT(0, "date-order", &sort_order,
->> -			    N_("show commits where no parent comes before its "
->> +			    N_("sort commits such that no parent comes before its "
->>  			       "children"),
->>  			    REV_SORT_BY_COMMIT_DATE),
->
-> I fear this wording tweak doesn't go far enough.  The above
-> description seems to describe --topo-order just as well as
-> --date-order.
->
-> How about something like
->
-> 		N_("topologically sort, maintaining date order where possible"),
->
-> ?  I haven't checked the code to see if that's accurate, though.
+Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+---
+Sorry, forgot to copy Jonathan...
 
-Same laziness here, as I never actually use show-branch.  However,
-you're right, I missed that it also has --topo-order (with a much saner
-message).  So I think we can safely assume that it's the same meaning as
-for git-log:
+ t/t3032-merge-recursive-options.sh | 22 +++++++++++++---------
+ t/test-lib-functions.sh            |  4 ++++
+ 2 files changed, 17 insertions(+), 9 deletions(-)
 
->  - by default, commits are listed in commit date order (newest first)
->
->  - with --topo-order, they are topologically sorted in such a way as
->    to ensure that in cases like
->
-> 	---1---2---4---7
-> 	    \           \
-> 	     3---5---6---8
->
->    (from git-log(1)), parallel tracks are not interleaved
->
->  - with --date-order, they are topologically sorted but less
->    aggressively, in particular matching commit date order in the
->    usual case that that is already topologically sorted.
-> 
-> That would make --topo-order stronger than "show commits in
-> topological order" --- it should say something like "sort trying to
-> avoid breaking up lines of development".
-
-Depending on how you look at it, the lines of development are kept
-together purely by coincidence or algorithmic convenience...
-
+diff --git a/t/t3032-merge-recursive-options.sh b/t/t3032-merge-recursive-options.sh
+index 2b17311..41ba184 100755
+--- a/t/t3032-merge-recursive-options.sh
++++ b/t/t3032-merge-recursive-options.sh
+@@ -125,13 +125,14 @@ test_expect_success '-Xignore-space-change makes cherry-pick succeed' '
+ '
+ 
+ test_expect_success '--ignore-space-change: our w/s-only change wins' '
+-	q_to_cr <<-\EOF >expected &&
++	cat <<-\EOF >expected &&
+ 	    justice and holiness and is the nurse of his age and theQ
+ 	EOF
+ 
+ 	git read-tree --reset -u HEAD &&
+ 	git merge-recursive --ignore-space-change HEAD^ -- HEAD remote &&
+-	grep "justice and holiness" text.txt >actual &&
++	cr_to_q <text.txt > text.txt+ &&
++	grep "justice and holiness" text.txt+ >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -150,14 +151,15 @@ test_expect_success '--ignore-space-change: does not ignore new spaces' '
+ 	cat <<-\EOF >expected1 &&
+ 	Well said, Cephalus, I replied; but as con cerning justice, what is
+ 	EOF
+-	q_to_cr <<-\EOF >expected2 &&
++	cat <<-\EOF >expected2 &&
+ 	un intentionally; and when he departs to the world below he is not inQ
+ 	EOF
+ 
+ 	git read-tree --reset -u HEAD &&
+ 	git merge-recursive --ignore-space-change HEAD^ -- HEAD remote &&
+-	grep "Well said" text.txt >actual1 &&
+-	grep "when he departs" text.txt >actual2 &&
++	cr_to_q <text.txt >text.txt+
++	grep "Well said" text.txt+ >actual1 &&
++	grep "when he departs" text.txt+ >actual2 &&
+ 	test_cmp expected1 actual1 &&
+ 	test_cmp expected2 actual2
+ '
+@@ -174,18 +176,19 @@ test_expect_success '--ignore-all-space drops their new spaces' '
+ '
+ 
+ test_expect_success '--ignore-all-space keeps our new spaces' '
+-	q_to_cr <<-\EOF >expected &&
++	cat <<-\EOF >expected &&
+ 	un intentionally; and when he departs to the world below he is not inQ
+ 	EOF
+ 
+ 	git read-tree --reset -u HEAD &&
+ 	git merge-recursive --ignore-all-space HEAD^ -- HEAD remote &&
+-	grep "when he departs" text.txt >actual &&
++	cr_to_q <text.txt >text.txt+ &&
++	grep "when he departs" text.txt+ >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ test_expect_success '--ignore-space-at-eol' '
+-	q_to_cr <<-\EOF >expected &&
++	cat <<-\EOF >expected &&
+ 	<<<<<<< HEAD
+ 	is not in his right mind; ought I to give them back to him?  No oneQ
+ 	=======
+@@ -196,7 +199,8 @@ test_expect_success '--ignore-space-at-eol' '
+ 	git read-tree --reset -u HEAD &&
+ 	test_must_fail git merge-recursive --ignore-space-at-eol \
+ 						 HEAD^ -- HEAD remote &&
+-	conflict_hunks text.txt >actual &&
++	cr_to_q <text.txt >text.txt+ &&
++	conflict_hunks text.txt+ >actual &&
+ 	test_cmp expected actual
+ '
+ 
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index a7e9aac..aa8e38f 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -87,6 +87,10 @@ q_to_cr () {
+ 	tr Q '\015'
+ }
+ 
++cr_to_q () {
++	tr '\015' Q
++}
++
+ q_to_tab () {
+ 	tr Q '\011'
+ }
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.8.3.2.0.13
