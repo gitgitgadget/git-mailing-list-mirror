@@ -1,97 +1,98 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v4 1/6] t4000-diff-format.sh: modernize style
-Date: Tue, 16 Jul 2013 10:05:35 +0200
-Message-ID: <1373961940-31614-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <20130715185843.GH14690@google.com>
- <1373961940-31614-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: jrnieder@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 16 10:27:46 2013
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: [PATCH 1/2] apply, entry: speak of submodules instead of subprojects
+Date: Tue, 16 Jul 2013 11:21:59 +0200
+Message-ID: <8df0d41caa10a38e46783bebd3148a7b8445dd47.1373966389.git.trast@inf.ethz.ch>
+References: <87bo631odi.fsf@hexa.v.cablecom.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 16 11:22:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uz0bp-0007LY-V8
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 10:27:46 +0200
+	id 1Uz1SU-0003r5-1Q
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 11:22:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753351Ab3GPI1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 04:27:40 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33673 "EHLO rominette.imag.fr"
+	id S1753766Ab3GPJWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 05:22:04 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:5548 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752860Ab3GPI1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 04:27:37 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r6G8OBMI014770
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 16 Jul 2013 10:24:11 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Uz0YO-0001ys-Dw; Tue, 16 Jul 2013 10:24:12 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1Uz0YO-0008Jx-41; Tue, 16 Jul 2013 10:24:12 +0200
-X-Mailer: git-send-email 1.8.3.1.495.g13f33cf.dirty
-In-Reply-To: <1373961940-31614-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 16 Jul 2013 10:24:11 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r6G8OBMI014770
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1374567854.58321@b+S1gzlXlCotgdKMvd1Gvg
+	id S1752815Ab3GPJWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 05:22:03 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 16 Jul
+ 2013 11:21:58 +0200
+Received: from linux-k42r.v.cablecom.net (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 16 Jul
+ 2013 11:21:59 +0200
+X-Mailer: git-send-email 1.8.3.2.998.g1d087bc
+In-Reply-To: <87bo631odi.fsf@hexa.v.cablecom.net>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230551>
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+There are only four (with some generous rounding) instances in the
+current source code where we speak of "subproject" instead of
+"submodule".  They are as follows:
+
+* one error message in git-apply and two in entry.c
+
+* the patch format for submodule changes
+
+The latter was introduced in 0478675 (Expose subprojects as special
+files to "git diff" machinery, 2007-04-15), apparently before the
+terminology was settled.  We can of course not change the patch
+format.
+
+Let's at least change the error messages to consistently call them
+"submodule".
+
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
 ---
- t/t4000-diff-format.sh | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
-index 6ddd469..2b5dffc 100755
---- a/t/t4000-diff-format.sh
-+++ b/t/t4000-diff-format.sh
-@@ -15,17 +15,17 @@ line 3'
- cat path0 >path1
- chmod +x path1
+This and the next one are message changes for things I found during my
+review.
+
+ builtin/apply.c | 2 +-
+ entry.c         | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 0e9b631..f1d4cc9 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -3847,7 +3847,7 @@ static void add_index_file(const char *path, unsigned mode, void *buf, unsigned
+ 		const char *s = buf;
  
--test_expect_success \
--    'update-index --add two files with and without +x.' \
--    'git update-index --add path0 path1'
-+test_expect_success 'update-index --add two files with and without +x.' '
-+	git update-index --add path0 path1
-+'
- 
- mv path0 path0-
- sed -e 's/line/Line/' <path0- >path0
- chmod +x path0
- rm -f path1
--test_expect_success \
--    'git diff-files -p after editing work tree.' \
--    'git diff-files -p >current'
-+test_expect_success 'git diff-files -p after editing work tree.' '
-+	git diff-files -p >actual
-+'
- 
- # that's as far as it comes
- if [ "$(git config --get core.filemode)" = false ]
-@@ -55,8 +55,8 @@ deleted file mode 100755
- -line 3
- EOF
- 
--test_expect_success \
--    'validate git diff-files -p output.' \
--    'compare_diff_patch current expected'
-+test_expect_success 'validate git diff-files -p output.' '
-+	compare_diff_patch expected actual
-+'
- 
- test_done
+ 		if (get_sha1_hex(s + strlen("Subproject commit "), ce->sha1))
+-			die(_("corrupt patch for subproject %s"), path);
++			die(_("corrupt patch for submodule %s"), path);
+ 	} else {
+ 		if (!cached) {
+ 			if (lstat(path, &st) < 0)
+diff --git a/entry.c b/entry.c
+index d7c131d..6af4b6a 100644
+--- a/entry.c
++++ b/entry.c
+@@ -199,9 +199,9 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
+ 		break;
+ 	case S_IFGITLINK:
+ 		if (to_tempfile)
+-			return error("cannot create temporary subproject %s", path);
++			return error("cannot create temporary submodule %s", path);
+ 		if (mkdir(path, 0777) < 0)
+-			return error("cannot create subproject directory %s", path);
++			return error("cannot create submodule directory %s", path);
+ 		break;
+ 	default:
+ 		return error("unknown file mode for %s in index", path);
 -- 
-1.8.3.1.495.g13f33cf.dirty
+1.8.3.2.998.g1d087bc
