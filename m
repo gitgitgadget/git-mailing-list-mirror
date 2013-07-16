@@ -1,88 +1,124 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 4/5] config: improve support for http.<url>.* settings
-Date: Tue, 16 Jul 2013 06:01:37 -0400
-Message-ID: <CAPig+cQnm6=YEKLd-LBhsrUH75Lnn9whjS3KeZMaNVRMWAS2RQ@mail.gmail.com>
-References: <506e5f642a838b95e0dd5b1f0fa1cfe@f74d39fa044aa309eaea14b9f57fe79>
-	<dcbaa11c8595f48814aa39a75ad18ea@f74d39fa044aa309eaea14b9f57fe79>
-	<CAPig+cQTNXgPyD4qiQPyQeSHWY0Y=_Qnd2i9LfVqQDA1DJNDxg@mail.gmail.com>
-	<4D163C69-2228-4895-AE47-377A5A71FD5E@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, David Aguilar <davvid@gmail.com>,
-	Petr Baudis <pasky@ucw.cz>, Junio C Hamano <gitster@pobox.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Daniel Knittl-Frank <knittl89@googlemail.com>,
-	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
-	Alejandro Mery <amery@geeks.cl>,
-	Aaron Schrab <aaron@schrab.com>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 16 12:01:45 2013
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: [PATCH 0/2] git diff -q option removal
+Date: Tue, 16 Jul 2013 12:28:05 +0200
+Message-ID: <1373970487-32595-1-git-send-email-stefanbeller@googlemail.com>
+References: <20130714220739.GC13444@google.com>
+Cc: Stefan Beller <stefanbeller@googlemail.com>
+To: git@vger.kernel.org, jrnieder@gmail.com, trast@student.ethz.ch,
+	gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jul 16 12:28:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uz24l-0000Pr-Ue
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 12:01:44 +0200
+	id 1Uz2UU-0005ZC-KF
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 12:28:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754260Ab3GPKBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 06:01:40 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:36131 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754166Ab3GPKBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 06:01:39 -0400
-Received: by mail-lb0-f171.google.com with SMTP id 13so433717lba.2
-        for <git@vger.kernel.org>; Tue, 16 Jul 2013 03:01:38 -0700 (PDT)
+	id S1754734Ab3GPK2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 06:28:14 -0400
+Received: from mail-wg0-f43.google.com ([74.125.82.43]:45816 "EHLO
+	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753905Ab3GPK2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 06:28:13 -0400
+Received: by mail-wg0-f43.google.com with SMTP id z11so427738wgg.34
+        for <git@vger.kernel.org>; Tue, 16 Jul 2013 03:28:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=/oxwhBn6W6pVSbUjJVH6bSt1/dhwplhlNvN3iZ9/D+o=;
-        b=0+XlbmKgTGAcAE61VtwRVWfX/Y+fu23wGHP50UjJM7hslUIpIcFoT32vtGziXgasou
-         CFAViJFUBz784N5lpA+tSiFK46E6yGdCzVOIoLQw/IergcCcf54thId8bsqGT0ENKm3i
-         RTl/f4FFI2b1Zh20VD1lo5L4Ayv8fOitrfQIhWPPBXRkRGEGC+KBAfNQppXtPFsuV1sI
-         z05OF5bEvMDa2xa1fXgOfW4pfxSFp25FmptAreTbvvTZTC8mVX6RgBohMH567211RAWN
-         HDZb+zM+ICImfxhl6Hm5d78qS695zPoe+j2y4gclblcK7G3lMAMcdlRZwPx+2zHF08af
-         vsoQ==
-X-Received: by 10.112.19.162 with SMTP id g2mr798063lbe.9.1373968897887; Tue,
- 16 Jul 2013 03:01:37 -0700 (PDT)
-Received: by 10.114.187.78 with HTTP; Tue, 16 Jul 2013 03:01:37 -0700 (PDT)
-In-Reply-To: <4D163C69-2228-4895-AE47-377A5A71FD5E@gmail.com>
-X-Google-Sender-Auth: nE5X9rOmbFkUY9qNlLqM6_VTnxU
+        d=googlemail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=fLBw5kRi7WJQo1m6A2UT4vw8sI28+RCtZVZ1bSvI/2g=;
+        b=Bk66Y1l43kQxOwpz0HNk7X3P0mbdzh+et1njE4qGXGTuAFyfyTcbZEwpHqMUTn2cYm
+         iFrgoX5/4mGQP9hLz4OK4w4E1YOma7sgGTDot+fjhBo5k6N7KPKBTHvg66mJZr9l5PS/
+         QudRPfGts8wZxNOZDq6svyO3cYmXqTxpeqU6IzcYBAIzvW5hj9nTzcP6dEwD2PnAdxmo
+         pbJLtu7Pb/hYHNi3PjZfeq2YX354VWV9HHSRA7JdpgSfzCbK/n5YJwOZ1rBeh8bLIY0F
+         3GZ1tYX5v4J2FOF3i+N1S6/z3jzTBg/tzFY6Ku5DWntpe5G7BStfRGzmSOJf6SfYBfcY
+         8tEw==
+X-Received: by 10.194.9.101 with SMTP id y5mr596265wja.86.1373970492721;
+        Tue, 16 Jul 2013 03:28:12 -0700 (PDT)
+Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id fd3sm26748467wic.10.2013.07.16.03.28.10
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 16 Jul 2013 03:28:11 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.3.10.g2733812
+In-Reply-To: <20130714220739.GC13444@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230560>
 
-On Tue, Jul 16, 2013 at 5:53 AM, Kyle J. McKay <mackyle@gmail.com> wrote:
-> On Jul 15, 2013, at 16:12, Eric Sunshine wrote:
->>
->> On Mon, Jul 15, 2013 at 5:51 AM, Kyle J. McKay <mackyle@gmail.com> wrote:
->>>
->>> +static int append_normalized_escapes(struct strbuf *buf,
->>> +                                    const char *from,
->>> +                                    size_t from_len,
->>> +                                    const char *esc_extra,
->>> +                                    const char *esc_ok)
->>> +{
->>> +       /*
->>> +        * Append to strbuf buf characters from string from with length
->>> from_len
->>
->>
->> s/from string from/from string/
+On 07/15/2013 12:07 AM, Jonathan Nieder wrote:
+> This feature was obviously never tested with --no-index, so I agree it
+> makes sense to remove it.  Probably the commit message and a comment
+> should say so, though.  E.g.:
 >
-> Hmmm.  Actually it's meant to say "from string <parameter with name from>".
+>       diff --no-index: remove nonfunctional "-q" handling
 >
-> Do quotes make it read better:
+>       Before v1.5.6-rc1~41^2~2, the option parsing for diff --no-index
+>       and "git diff-files" shared code.  In "git diff-files", "-q" means
+>       to be silent about removed files.  In "git diff --no-index", in
+>       various versions it has been an error, an infinite loop, or a no-op.
+> 
+>       Simplify the code to clarify that it is now a no-op, continuing to
+>       accept and ignore the -q option in "git diff --no-index" to avoid
+>       breaking scripts.
 >
->   from string `from'
+> I wouldn't mind removing support for "-q" altogether, by the way (as a
+> separate change).
 >
-> Or do you think it needs to be:
+> Hope that helps,
+> Jonathan
 >
->   from string parameter `from'
 
-Ah, I see now. Thanks for clarifying. Quoting 'from' (and the other
-arguments) probably would make it sufficiently readable.
+I am resending the commit with a different wording, thanks to Jonathan.   
+
+However I tried to remove support for -q in a separate commit, and
+I have some questions about the structure of the files.
+(I am sure it's documented, but I cannot find it, so please hint me 
+where to read.)
+
+The changes in the following patch are in diff_no_index.c, but the
+diff_no_index(...) is called from cmd_diff, which is in builtin/diff.c
+That cmd_diff is actually called from git.c having the
+{ "diff", cmd_diff }, entry in handle_internal_command.
+
+My question now is this: Why is the builtin/diff.c relying on stuff
+outside of builtin/ ? Wouldn't it be better to move all these files
+(such as diff_no_index.c) into the builtin folder as well?
+
+Regarding the removal of the -q option, I tried it in the second patch.
+Is it as easy as that, or am I missing the point?
+
+The first patch doesn't change the behavior, so I'd assume it's safe to 
+apply it to origin/sb/misc-fixes, whereas the second patch will make 
+git diff complain about the -q option, so I'd assume it would wait for the
+next major release?
+
+Before:
+	touch actual_file
+	git diff -q  actual_file no_file
+	error: Could not access 'no_file'
+	echo $?
+	1
+
+After:
+	touch actual_file
+	git diff -q  actual_file no_file
+	fatal: invalid diff option/value: -q
+	echo $?
+	128
+
+Thanks,
+Stefan
+
+Stefan Beller (2):
+  diff --no-index: remove nonfunctional "-q" handling
+  git diff: Remove -q option to stay silent on missing files.
+
+ Documentation/git-diff-files.txt | 6 +-----
+ diff-no-index.c                  | 5 -----
+ 2 files changed, 1 insertion(+), 10 deletions(-)
+
+-- 
+1.8.2.3.10.g2733812
