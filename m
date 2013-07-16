@@ -1,102 +1,204 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] Cygwin has trustable filemode
-Date: Tue, 16 Jul 2013 22:20:03 +0100
-Message-ID: <51E5B903.9050601@ramsay1.demon.co.uk>
-References: <1373818390-14451-1-git-send-email-mlevedahl@gmail.com>
+Subject: Re: [PATCH v2 00/19] Index-v5
+Date: Tue, 16 Jul 2013 22:03:40 +0100
+Message-ID: <51E5B52C.7050603@ramsay1.demon.co.uk>
+References: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 16 23:44:09 2013
+Cc: git@vger.kernel.org, trast@inf.ethz.ch, mhagger@alum.mit.edu,
+	gitster@pobox.com, pclouds@gmail.com, robin.rosenberg@dewire.com,
+	sunshine@sunshineco.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 16 23:44:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzD2W-0001se-Ng
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 23:44:09 +0200
+	id 1UzD2V-0001se-T9
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 23:44:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933678Ab3GPVoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 17:44:04 -0400
-Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:34273 "EHLO
+	id S933657Ab3GPVoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 17:44:01 -0400
+Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:34261 "EHLO
 	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933648Ab3GPVoC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 17:44:02 -0400
+	with ESMTP id S933284Ab3GPVoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 17:44:00 -0400
 Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id F02C91280B3;
-	Tue, 16 Jul 2013 22:44:00 +0100 (BST)
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 27C0A1280AE;
+	Tue, 16 Jul 2013 22:43:58 +0100 (BST)
 Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 163441280A0;
-	Tue, 16 Jul 2013 22:44:00 +0100 (BST)
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id C34AB1280A8;
+	Tue, 16 Jul 2013 22:43:56 +0100 (BST)
 Received: from [193.237.126.196] (unknown [193.237.126.196])
 	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
-	Tue, 16 Jul 2013 22:43:59 +0100 (BST)
+	Tue, 16 Jul 2013 22:43:54 +0100 (BST)
 User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <1373818390-14451-1-git-send-email-mlevedahl@gmail.com>
+In-Reply-To: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com>
 X-MDF-HostID: 22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230587>
 
-Mark Levedahl wrote:
-> The supported Cygwin distribution on supported Windows versions provides
-> complete support for POSIX filemodes, so enable this by default. git as
-> distributed by the Cygwin project is configured this way.
+Thomas Gummerer wrote:
+> Hi,
 > 
-> This fixes one testsuite failure:
-> t3300 test 17 (diff-index -M -p with mode change quotes funny filename)
+> previous rounds (without api) are at $gmane/202752, $gmane/202923,
+> $gmane/203088 and $gmane/203517, the previous round with api was at
+> $gmane/229732.  Thanks to Junio, Duy and Eric for their comments on
+> the previous round.
 
-Huh? How is it running that test? Does cygwin 1.7 somehow allow tabs in
-filenames? For me, on cygwin 1.5, that test reports:
+If I remember correctly, the original version of this series had the
+same problem as Michael's "Fix some reference-related races" series
+(now in master). In particular, you had introduced an 'index_changed()'
+function which does essentially the same job as 'stat_validity_check()'
+in the new reference handling API. I seem to remember advising you
+not to compare st_uid, st_gid and st_ino on __CYGWIN__.
 
-    $ ./t3300-funny-names.sh
-    1..0 # SKIP Your filesystem does not allow tabs in filenames
-    $
+I haven't had time to look at this version of your series yet, but it
+may be worth taking a look at stat_validity_check(). (although that is
+causing failures on cygwin at the moment! ;-)
 
-> Historical notes: Earlier versions of Cygwin (version 1.5 and prior) had 
-> various methods for supporting posix file modes on different file systems, 
-> often using extended attributes, and this support was optional.  Such 
-> versions of Cygwin are not available on any public mirror and are not 
-> supported by the Cygwin project. The currently available Cygwin supports 
-> POSIX file modes without exception - this is not an optional 
-> configuration. The support does depend upon the underlying file system 
-> (neither Linux nor Cygwin can set an execute bit on a FAT file system as 
-> FAT has no such support), but as this is no different than Linux, the
-> default should not treat Cygwin differently than Linux.  
+Also, I can't recall if I mentioned it to you at the time, but your
+index reading code was (unnecessarily) calling munmap() twice on the
+same buffer (without an intervening mmap()). This causes problems for
+systems that have the NO_MMAP build variable set. In particular, the
+compat/mmap.c code will attempt to free() the allocated memory block
+twice, with unpredictable results.
 
-The motivation for the original patch had more to do with "windows people"
-using win32 text editors which set the executable bit inappropriately.
-(see commit c869753e).
-
-Since I use cygwin tools (vim), I don't have this problem. :-D
-
-> Users who desire the non-POSIX mode of operation must explicitly set 
-> core.filemode=False, accepting non-interoperability with Linux.  
-> 
-> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
-> ---
->  config.mak.uname | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 7ac541e..779d06a 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -163,7 +163,6 @@ ifeq ($(uname_O),Cygwin)
->  	NO_THREAD_SAFE_PREAD = YesPlease
->  	NEEDS_LIBICONV = YesPlease
->  	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
-> -	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
->  	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
->  	# There are conflicting reports about this.
->  	# On some boxes NO_MMAP is needed, and not so elsewhere.
-> 
-
-Should you revert commit c869753e ("Force core.filemode to false
-on Cygwin.", 30-12-2006) instead?
+I wrote a patch to address this at the time (Hmm, seems to be built
+on v1.8.1), but didn't submit it since your patch didn't progress. :-D
+I have included the patch below.
 
 ATB,
 Ramsay Jones
+
+-- >8 --
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Date: Sun, 9 Sep 2012 20:50:32 +0100
+Subject: [PATCH] mmap.c: Keep log of mmap() blocks to avoid double-delete bug
+
+When compiling with the NO_MMAP build variable set, the built-in
+'git_mmap()' and 'git_munmap()' compatibility routines use simple
+memory allocation and file I/O to emulate the required behaviour.
+The current implementation is vulnerable to the "double-delete" bug
+(where the pointer returned by malloc() is passed to free() two or
+more times), should the mapped memory block address be passed to
+munmap() multiple times.
+
+In order to guard the implementation from such a calling sequence,
+we keep a list of mmap-block descriptors, which we then consult to
+determine the validity of the input pointer to munmap(). This then
+allows 'git_munmap()' to return -1 on error, as required, with
+errno set to EINVAL.
+
+Using a list in the log of mmap-ed blocks, along with the resulting
+linear search, means that the performance of the code is directly
+proportional to the number of concurrently active memory mapped
+file regions. The number of such regions is not expected to be
+excessive.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+ compat/mmap.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 56 insertions(+), 1 deletion(-)
+
+diff --git a/compat/mmap.c b/compat/mmap.c
+index c9d46d1..400e034 100644
+--- a/compat/mmap.c
++++ b/compat/mmap.c
+@@ -1,14 +1,61 @@
+ #include "../git-compat-util.h"
+ 
++struct mmbd {  /* memory mapped block descriptor */
++	struct mmbd *next;  /* next in list */
++	void   *start;      /* pointer to memory mapped block */
++	size_t length;      /* length of memory mapped block */
++};
++
++static struct mmbd *head;  /* head of mmb descriptor list */
++
++
++static void add_desc(struct mmbd *desc, void *start, size_t length)
++{
++	desc->start = start;
++	desc->length = length;
++	desc->next = head;
++	head = desc;
++}
++
++static void free_desc(struct mmbd *desc)
++{
++	if (head == desc)
++		head = head->next;
++	else {
++		struct mmbd *d = head;
++		for (; d; d = d->next) {
++			if (d->next == desc) {
++				d->next = desc->next;
++				break;
++			}
++		}
++	}
++	free(desc);
++}
++
++static struct mmbd *find_desc(void *start)
++{
++	struct mmbd *d = head;
++	for (; d; d = d->next) {
++		if (d->start == start)
++			return d;
++	}
++	return NULL;
++}
++
+ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset)
+ {
+ 	size_t n = 0;
++	struct mmbd *desc = NULL;
+ 
+ 	if (start != NULL || !(flags & MAP_PRIVATE))
+ 		die("Invalid usage of mmap when built with NO_MMAP");
+ 
+ 	start = xmalloc(length);
+-	if (start == NULL) {
++	desc = xmalloc(sizeof(*desc));
++	if (!start || !desc) {
++		free(start);
++		free(desc);
+ 		errno = ENOMEM;
+ 		return MAP_FAILED;
+ 	}
+@@ -25,18 +72,26 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
+ 			if (errno == EAGAIN || errno == EINTR)
+ 				continue;
+ 			free(start);
++			free(desc);
+ 			errno = EACCES;
+ 			return MAP_FAILED;
+ 		}
+ 
+ 		n += count;
+ 	}
++	add_desc(desc, start, length);
+ 
+ 	return start;
+ }
+ 
+ int git_munmap(void *start, size_t length)
+ {
++	struct mmbd *d = find_desc(start);
++	if (!d) {
++		errno = EINVAL;
++		return -1;
++	}
++	free_desc(d);
+ 	free(start);
+ 	return 0;
+ }
+-- 
+1.8.3
