@@ -1,73 +1,97 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v4 0/6] Make "git show -s" easier to discover for users
-Date: Tue, 16 Jul 2013 10:05:34 +0200
-Message-ID: <1373961940-31614-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH v4 1/6] t4000-diff-format.sh: modernize style
+Date: Tue, 16 Jul 2013 10:05:35 +0200
+Message-ID: <1373961940-31614-2-git-send-email-Matthieu.Moy@imag.fr>
 References: <20130715185843.GH14690@google.com>
+ <1373961940-31614-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: jrnieder@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 16 10:27:44 2013
+X-From: git-owner@vger.kernel.org Tue Jul 16 10:27:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uz0bl-0007KH-Up
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 10:27:42 +0200
+	id 1Uz0bp-0007LY-V8
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 10:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753248Ab3GPI1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 04:27:35 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33670 "EHLO rominette.imag.fr"
+	id S1753351Ab3GPI1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 04:27:40 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33673 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752860Ab3GPI1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 04:27:34 -0400
+	id S1752860Ab3GPI1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 04:27:37 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r6G8O9qF014766
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r6G8OBMI014770
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 16 Jul 2013 10:24:10 +0200
+	Tue, 16 Jul 2013 10:24:11 +0200
 Received: from anie.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
 	(envelope-from <moy@imag.fr>)
-	id 1Uz0YM-0001yc-Kn; Tue, 16 Jul 2013 10:24:10 +0200
+	id 1Uz0YO-0001ys-Dw; Tue, 16 Jul 2013 10:24:12 +0200
 Received: from moy by anie.imag.fr with local (Exim 4.80)
 	(envelope-from <moy@imag.fr>)
-	id 1Uz0YM-0008Js-9h; Tue, 16 Jul 2013 10:24:10 +0200
+	id 1Uz0YO-0008Jx-41; Tue, 16 Jul 2013 10:24:12 +0200
 X-Mailer: git-send-email 1.8.3.1.495.g13f33cf.dirty
-In-Reply-To: <20130715185843.GH14690@google.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 16 Jul 2013 10:24:10 +0200 (CEST)
+In-Reply-To: <1373961940-31614-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 16 Jul 2013 10:24:11 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r6G8O9qF014766
+X-MailScanner-ID: r6G8OBMI014770
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1374567854.5789@MZrTK00FkBIVT3XrKtavrA
+MailScanner-NULL-Check: 1374567854.58321@b+S1gzlXlCotgdKMvd1Gvg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230550>
 
-One real fix since v3: there was an incorrect file name in a test
-(noticed by Jonathan). Now, all actual outputs are called "actual".
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ t/t4000-diff-format.sh | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-Other than that: extra tests, and style fixes in commit messages.
-
-Matthieu Moy (6):
-  t4000-diff-format.sh: modernize style
-  diff: allow --no-patch as synonym for -s
-  diff: allow --patch & cie to override -s/--no-patch
-  Documentation/git-show.txt: include common diff options, like
-    git-log.txt
-  Documentation: move description of -s, --no-patch to diff-options.txt
-  Documentation/git-log.txt: capitalize section names
-
- Documentation/diff-options.txt     |  5 ++++
- Documentation/git-log.txt          |  8 +++----
- Documentation/git-show.txt         |  9 +++++++
- Documentation/rev-list-options.txt |  3 ---
- diff.c                             | 30 ++++++++++++++----------
- t/t4000-diff-format.sh             | 48 +++++++++++++++++++++++++++++++-------
- 6 files changed, 75 insertions(+), 28 deletions(-)
-
+diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
+index 6ddd469..2b5dffc 100755
+--- a/t/t4000-diff-format.sh
++++ b/t/t4000-diff-format.sh
+@@ -15,17 +15,17 @@ line 3'
+ cat path0 >path1
+ chmod +x path1
+ 
+-test_expect_success \
+-    'update-index --add two files with and without +x.' \
+-    'git update-index --add path0 path1'
++test_expect_success 'update-index --add two files with and without +x.' '
++	git update-index --add path0 path1
++'
+ 
+ mv path0 path0-
+ sed -e 's/line/Line/' <path0- >path0
+ chmod +x path0
+ rm -f path1
+-test_expect_success \
+-    'git diff-files -p after editing work tree.' \
+-    'git diff-files -p >current'
++test_expect_success 'git diff-files -p after editing work tree.' '
++	git diff-files -p >actual
++'
+ 
+ # that's as far as it comes
+ if [ "$(git config --get core.filemode)" = false ]
+@@ -55,8 +55,8 @@ deleted file mode 100755
+ -line 3
+ EOF
+ 
+-test_expect_success \
+-    'validate git diff-files -p output.' \
+-    'compare_diff_patch current expected'
++test_expect_success 'validate git diff-files -p output.' '
++	compare_diff_patch expected actual
++'
+ 
+ test_done
 -- 
 1.8.3.1.495.g13f33cf.dirty
