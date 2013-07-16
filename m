@@ -1,104 +1,87 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH 2/2] diff: Remove -q to stay silent on missing files.
-Date: Tue, 16 Jul 2013 12:28:07 +0200
-Message-ID: <1373970487-32595-3-git-send-email-stefanbeller@googlemail.com>
-References: <20130714220739.GC13444@google.com>
- <1373970487-32595-1-git-send-email-stefanbeller@googlemail.com>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: git@vger.kernel.org, jrnieder@gmail.com, trast@student.ethz.ch,
-	gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 16 12:28:43 2013
+From: Dirk Wallenstein <halsmit@t-online.de>
+Subject: [PATCH] request-pull: improve error message for invalid revision args
+Date: Tue, 16 Jul 2013 12:46:48 +0200
+Message-ID: <20130716104648.GA13275@bottich>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 16 12:47:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uz2Ur-0005mM-8n
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 12:28:41 +0200
+	id 1Uz2mh-0006u0-0q
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Jul 2013 12:47:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932081Ab3GPK2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jul 2013 06:28:25 -0400
-Received: from mail-we0-f178.google.com ([74.125.82.178]:33317 "EHLO
-	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754817Ab3GPK2T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jul 2013 06:28:19 -0400
-Received: by mail-we0-f178.google.com with SMTP id u53so439213wes.37
-        for <git@vger.kernel.org>; Tue, 16 Jul 2013 03:28:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=tRDDVyjbKSSvDh9+IlPVuq51/0p8PGFBSFfbGwyJGwg=;
-        b=ioKlKB7kOvezkWgkaANFKVUsRNnoxMPXJzlCKfM3RsQPvgNMsUOIqmwFMyTuwriR9i
-         2Q6t+YSQv223p1SodICWM6Tx6+7hzQTLRawXs2z26mUucVMdn8weyALZb6UZhUTjrwhv
-         oolGNcBu9dZogA2Uly+iKd1u9Hh9V35lrNuEOcDguvb/kEfJdAQx23d78U6RVQ0+Gjas
-         mHQvwStwiKPdSWiAZrK1C9kxCM2kqczdoGJTivxlknS1XzSdz+v1nHgebwsBJC7c2yQS
-         wWcI23pVMJT0Hx162JwzzCYDlnRNE/aYY57bmENDQswk1ltZbhiSHAZwPC4JLaaXyWTW
-         B2OA==
-X-Received: by 10.180.96.227 with SMTP id dv3mr576236wib.59.1373970497737;
-        Tue, 16 Jul 2013 03:28:17 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id fb9sm26789236wid.2.2013.07.16.03.28.16
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 16 Jul 2013 03:28:17 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.3.10.g2733812
-In-Reply-To: <1373970487-32595-1-git-send-email-stefanbeller@googlemail.com>
+	id S1754976Ab3GPKrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jul 2013 06:47:01 -0400
+Received: from mailout08.t-online.de ([194.25.134.20]:38305 "EHLO
+	mailout08.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754204Ab3GPKrA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jul 2013 06:47:00 -0400
+Received: from fwd15.aul.t-online.de (fwd15.aul.t-online.de )
+	by mailout08.t-online.de with smtp 
+	id 1Uz2mW-00054V-Kd; Tue, 16 Jul 2013 12:46:56 +0200
+Received: from localhost (rPdTpZZArhnycZLVdUflCjYDWnXv--SSaoxFkEVTIVJfEp75okp0U0BcxolGJRagKt@[178.202.201.83]) by fwd15.t-online.de
+	with esmtp id 1Uz2mQ-0kxEmW0; Tue, 16 Jul 2013 12:46:50 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-ID: rPdTpZZArhnycZLVdUflCjYDWnXv--SSaoxFkEVTIVJfEp75okp0U0BcxolGJRagKt
+X-TOI-MSGID: ca9042aa-c751-492b-bfd6-72a07c1f1500
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230563>
 
-This feature was not tested in the test suite, hence we'd remove it for
-now. It doesn't seem to be often used anyway.
-A google search for "git diff -q" (match string exactly) only returned
-http://stackoverflow.com/questions/11021287/git-detect-if-there-are-untracked-files-quickly
-where "git diff -q" was quoted for its exit code behavior regarding files
-being found or not.
+When an invalid revision is specified, the error message is:
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
-Proposed-by: <Jonathan Nieder> <jrnieder@gmail.com>
+    fatal: Needed a single revision
+
+This is misleading because, you might think there is something wrong
+with the command line as a whole.
+
+Now the user gets a more meaningful error message, showing the invalid
+revision.
+
+Signed-off-by: Dirk Wallenstein <halsmit@t-online.de>
 ---
- Documentation/git-diff-files.txt | 6 +-----
- diff-no-index.c                  | 2 --
- 2 files changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/Documentation/git-diff-files.txt b/Documentation/git-diff-files.txt
-index 906774f..d118cfb 100644
---- a/Documentation/git-diff-files.txt
-+++ b/Documentation/git-diff-files.txt
-@@ -9,7 +9,7 @@ git-diff-files - Compares files in the working tree and the index
- SYNOPSIS
- --------
- [verse]
--'git diff-files' [-q] [-0|-1|-2|-3|-c|--cc] [<common diff options>] [<path>...]
-+'git diff-files' [-0|-1|-2|-3|-c|--cc] [<common diff options>] [<path>...]
+Notes:
+    I assume, it is not worth the trouble to even try to change the message from
+    rev-parse for this.  People might parse the messages, which is probably why
+    this message still exists.
+
+ git-request-pull.sh | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/git-request-pull.sh b/git-request-pull.sh
+index d566015..f38f0f9 100755
+--- a/git-request-pull.sh
++++ b/git-request-pull.sh
+@@ -51,8 +51,18 @@ fi
+ tag_name=$(git describe --exact "$head^0" 2>/dev/null)
  
- DESCRIPTION
- -----------
-@@ -41,10 +41,6 @@ omit diff output for unmerged entries and just show "Unmerged".
- 	diff, similar to the way 'diff-tree' shows a merge
- 	commit with these flags.
+ test -n "$base" && test -n "$url" || usage
+-baserev=$(git rev-parse --verify "$base"^0) &&
+-headrev=$(git rev-parse --verify "$head"^0) || exit
++
++baserev=$(git rev-parse --verify "$base"^0 2>/dev/null)
++if test -z "$baserev"
++then
++    die "fatal: Not a valid revision: $base"
++fi
++
++headrev=$(git rev-parse --verify "$head"^0 2>/dev/null)
++if test -z "$headrev"
++then
++    die "fatal: Not a valid revision: $head"
++fi
  
---q::
--	Remain silent even on nonexistent files
--
--
- include::diff-format.txt[]
- 
- GIT
-diff --git a/diff-no-index.c b/diff-no-index.c
-index 419cd78..98a9cf1 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -223,8 +223,6 @@ void diff_no_index(struct rev_info *revs,
- 		int j;
- 		if (!strcmp(argv[i], "--no-index"))
- 			i++;
--		else if (!strcmp(argv[i], "-q"))
--			i++;
- 		else if (!strcmp(argv[i], "--"))
- 			i++;
- 		else {
+ merge_base=$(git merge-base $baserev $headrev) ||
+ die "fatal: No commits in common between $base and $head"
 -- 
-1.8.2.3.10.g2733812
+1.8.3.2.51.g8658a4c
