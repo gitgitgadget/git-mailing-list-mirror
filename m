@@ -1,114 +1,89 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Fix some sparse warnings
-Date: Thu, 18 Jul 2013 00:16:36 +0200
-Message-ID: <51E717C4.6010606@googlemail.com>
-References: <51E431F1.6050002@ramsay1.demon.co.uk> <51E4E0C0.3060604@viscovery.net> <20130716062122.GA4964@sigill.intra.peff.net> <6BDA2E3E7318418BBB2C19B475B2B118@PhilipOakley> <51E715D8.9040307@googlemail.com>
+Date: Wed, 17 Jul 2013 16:22:44 -0700
+Message-ID: <7vd2qg6abf.fsf@alter.siamese.dyndns.org>
+References: <51E431F1.6050002@ramsay1.demon.co.uk>
+	<51E4E0C0.3060604@viscovery.net>
+	<20130716062122.GA4964@sigill.intra.peff.net>
+	<6BDA2E3E7318418BBB2C19B475B2B118@PhilipOakley>
+	<51E715D8.9040307@googlemail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig5A550DC214B87E42B54B6470"
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Philip Oakley <philipoakley@iee.org>, Jeff King <peff@peff.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Junio C Hamano <gitster@pobox.com>,
 	GIT Mailing-list <git@vger.kernel.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu Jul 18 00:16:56 2013
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 18 01:22:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uza1o-0007Wo-53
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 00:16:56 +0200
+	id 1Uzb3e-0007vz-Gm
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 01:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755406Ab3GQWQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jul 2013 18:16:39 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:51916 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753522Ab3GQWQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jul 2013 18:16:38 -0400
-Received: by mail-ee0-f46.google.com with SMTP id d41so1310940eek.19
-        for <git@vger.kernel.org>; Wed, 17 Jul 2013 15:16:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type;
-        bh=wuhq8UGs34hMFJ/EmvCPFUxB3s347S2l6hOuxCEpYoo=;
-        b=VS2Ntvj6S8bADTi0sBTVzO0lOEL5/JePUn9NX7QKvdIeXjUCf+1ee+034VNcOTGwoy
-         nBvWg+GS1hVZ5Q3j/bAuYlmSe6XJz6Cci91R5T2S+zPzZ/wNVgqUubXUUzAtjyYNl/98
-         nC2Dls4eJEhNFoN/7u70aZwPVPeHH/QTUTqbpu0On4Ew290bAwPMjavKEZlmMqjDJQur
-         LWMKo25OM26X2ajA3dOzMlFQaHLIzS+ojU75K/bUPJeiLUFwmwxmOuhGvBF63RdIMGKl
-         Qc3SIxB7hPjjayCMraxqqXg5u5p5afIV94lr8pFjF7je6+n5AlN4VBS5u/9kGJlAuDUd
-         VSuA==
-X-Received: by 10.15.35.65 with SMTP id f41mr8323814eev.61.1374099397327;
-        Wed, 17 Jul 2013 15:16:37 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id l42sm14150997eeo.14.2013.07.17.15.16.36
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 17 Jul 2013 15:16:36 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <51E715D8.9040307@googlemail.com>
-X-Enigmail-Version: 1.4.6
+	id S934212Ab3GQXWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jul 2013 19:22:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64220 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934206Ab3GQXWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jul 2013 19:22:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0604E31FBE;
+	Wed, 17 Jul 2013 23:22:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Pnn7A53WNYLiuCmN0y3rkYlOI30=; b=yCZSst
+	51fAd7FCUb7L0nvcb7DeeK5PoeTx8DkEWoa5yWuEK86NBsPND8ewQEddFx9tSJ2r
+	20y+q6+Ha+bP5nqVaDLCwvMU6flc0uSkCRxlLPeCkTn9Jq3MRCGkd6gdiE3n7QSA
+	y2pHROQ+KbfdePGOPtk3vrkybfolw7yxpv6yQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=khMo5Tp63TmklKWeZU0kGglb6HCGm++O
+	RAgsv6TPgiqj8qHoMVTcE5ClH4ILQup85Y1PpM+SNzf1Lh/Xm8dOKBXyaq1Xo8+C
+	JLKld2MrMwiAo8ht+BIaKRWklSDQ0VT3Wl3YXjyuin1fnSzjMrhQ9y9HjVAR3bKT
+	lG72WAjiyuI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EEE9C31FBD;
+	Wed, 17 Jul 2013 23:22:46 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 27FC731FBB;
+	Wed, 17 Jul 2013 23:22:46 +0000 (UTC)
+In-Reply-To: <51E715D8.9040307@googlemail.com> (Stefan Beller's message of
+	"Thu, 18 Jul 2013 00:08:24 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C9CC9AA0-EF37-11E2-8806-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230662>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig5A550DC214B87E42B54B6470
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-On 07/18/2013 12:08 AM, Stefan Beller wrote:
->=20
-> So I started using the clang code analyzer on git. One of the=20
-> first warnings actually is this:
->=20
+> And the parse_object_buffer looks like this with respect to the eaten 
+> variable:
+> 	struct object *parse_object_buffer(...)
+> 	{
+> 		int eaten = 0;
+> 		if (something)
+> 			return NULL;
+> 		...
+> 		if (something_different)
+> 			eaten=1;
+> 		*eaten_p = eaten;
+> 	}
+> ...
+> Was there a particular idea or goal behind first having a local eaten
+> variable, which later near the correct return of the function was used to set the 
+> eaten_p?
 
-So in case somebody else would also like to play around with the
-clang static code analyzer:
-
-# get clang:
-cd <good location>
-git clone http://llvm.org/git/llvm.git
-cd llvm/tools
-git clone http://llvm.org/git/clang
-cd <good location>
-mkdir build && cd build
-cmake ..
-# if desired make install
-
-# in the Makefile of git change
-CC =3D <good location>/llvm/tools/clang/tools/scan-build/ccc-analyzer
-# then obviously:
-make clean
-make
-
-
---------------enig5A550DC214B87E42B54B6470
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJR5xfEAAoJEJQCPTzLflhqczIP/2wnDXITslrSyDtzBWzJjNT5
-JLXAoIrz45rMLEjLGtNa7xpY40u0nJMA6OUKgiV14O4qcB065yFjhkct0+2cnUGP
-+C3e7yvDrlcB5Lx+2YPbduIabKN4ZPRzRdgufjviMKCWgFWxfdPCfOGBlWgfdD19
-Jrev6oRaxXVX8I+bNIxnGGLf+njNL+uE1SDaV6qa512VpO14t+13DT4KySEomQ1J
-wkukPP9ePrhBo4Kn3231jM0DIsxpJPbu5/C5GwjWkzfnGi1BORv7BS34ECjS+Thy
-AZr8kkV9CPLIUES3XpLedquoHHJqsWRNKJ28Gw2AoJUMU9CYKeHQ5uONILVEggi1
-F522ZCzbfQDo5ThxTRKisJgLPURwu7TXzSjTj53dK9+DKDwFA8yPnMyTuNJTyXTU
-+XnOZSK0cKM8FH7Hc+SG18oUsmMlLfOfSCBx36VH5uH67FRYJoWtIAmabFdB8yfs
-kzcmvzlHUvKIR0Ba1R2Ss6u78hEJj/CEBW0Eflqqzz70eiE0yCZydt4YiwAbm4jW
-UP24sZRHByLfOiXjUrh3Oe0b8vtkQP2AUuq2rznohcqnjAzevc5Rh5YCAluEX2Ws
-435y2ZYl1V0fUcVDsz8Qr2aMKDg3pHM8ozrWkrGRSyG4N+IEAuAGTzFass9DeIoh
-n9PMZrk2BCs31kM4+7wf
-=sd6H
------END PGP SIGNATURE-----
-
---------------enig5A550DC214B87E42B54B6470--
+I didn't run "blame" to see the evolution of this function, but I
+suspect that the original code, when the "eaten" local variable was
+introduced, very much tried to do exactly what you suspect.  The
+early return codepaths you see in today's code may be much newer,
+added without much thinking about the exact issue you are bringing
+up.
