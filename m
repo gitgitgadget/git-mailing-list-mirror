@@ -1,54 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Fix some sparse warnings
-Date: Wed, 17 Jul 2013 07:47:32 +0200
-Message-ID: <51E62FF4.60809@viscovery.net>
-References: <51E431F1.6050002@ramsay1.demon.co.uk> <51E4E0C0.3060604@viscovery.net> <20130716062122.GA4964@sigill.intra.peff.net> <6BDA2E3E7318418BBB2C19B475B2B118@PhilipOakley> <51E5B8BD.8090202@googlemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Philip Oakley <philipoakley@iee.org>, Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 17 07:47:44 2013
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCHv3 0/3] Switch German translation to G+E
+Date: Wed, 17 Jul 2013 07:51:16 +0200
+Message-ID: <1374040279-4828-1-git-send-email-ralf.thielow@gmail.com>
+References: <87bo631odi.fsf@hexa.v.cablecom.net>
+Cc: jk@jk.gs, stimming@tuhh.de, git@vger.kernel.org,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: trast@inf.ethz.ch
+X-From: git-owner@vger.kernel.org Wed Jul 17 07:51:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzKaV-0001Rq-Rp
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 07:47:44 +0200
+	id 1UzKeF-0003Oc-3R
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 07:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751897Ab3GQFrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jul 2013 01:47:40 -0400
-Received: from so.liwest.at ([212.33.55.13]:46470 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751520Ab3GQFrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jul 2013 01:47:39 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1UzKaL-0006YA-UR; Wed, 17 Jul 2013 07:47:34 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 763AE1660F;
-	Wed, 17 Jul 2013 07:47:33 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <51E5B8BD.8090202@googlemail.com>
-X-Enigmail-Version: 1.5.1
-X-Spam-Score: -1.0 (-)
+	id S1752042Ab3GQFv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jul 2013 01:51:28 -0400
+Received: from mail-ea0-f170.google.com ([209.85.215.170]:54769 "EHLO
+	mail-ea0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751985Ab3GQFv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jul 2013 01:51:26 -0400
+Received: by mail-ea0-f170.google.com with SMTP id h10so785767eaj.15
+        for <git@vger.kernel.org>; Tue, 16 Jul 2013 22:51:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=4eKXod4HUvBn+NhhCA/QNAwSUZO0fDiisfboXskPGJA=;
+        b=LV7G9pb2TUkR7Syvk/kBtGNe8uPpKSwaZeGZkC9akHTWwPb7SXfeARvzUJLeB7PY4y
+         SZipr6tQlWtPoJLh6FbcBeiLJQKteiB6zewlG6eo4uxietPuqYglXGRiHhvxXgFK/yCU
+         ob7+hJM4MzAC7H0Y8R7zYS3k0YRWbiW5HgNOY+Bdw7jVfQF3XELsmX8HrtbbFjYtzfhf
+         besZGXd4rTPcUzSPqsL4TzA7aUPj/MzAMtcYnvIQvixygZiMQyxVdEkUKqBLmpUjJ/Lk
+         37R/wkQakC2N0JWelLwuZU8A9d0c4fusVDMRmG+IR1sqZo2qWOQyS/9UzJarTXolKvBu
+         ngWQ==
+X-Received: by 10.15.73.197 with SMTP id h45mr4515721eey.146.1374040285733;
+        Tue, 16 Jul 2013 22:51:25 -0700 (PDT)
+Received: from localhost (dslb-188-103-254-174.pools.arcor-ip.net. [188.103.254.174])
+        by mx.google.com with ESMTPSA id p49sm8042385eeu.2.2013.07.16.22.51.24
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 16 Jul 2013 22:51:24 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.1230.g519726a
+In-Reply-To: <87bo631odi.fsf@hexa.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230601>
 
->>>> I question the value of this warning. Initialization with '=
->>>> {0}' is a well-established idiom, and sparse should know about
->>>> it.
+Thanks for your review Thomas!
 
-Thanks everyone for your feedback. But I really wanted to call only the
-warning in the case of the '= {0}' idiom into question, not about 0 vs.
-NULL in general.
+V3 fixes a couple of problems Thomas noticed.
 
--- Hannes
+Ralf Thielow (3):
+  l10n: de.po: switch from pure German to German+English (part 1)
+  l10n: de.po: switch from pure German to German+English (part 2)
+  l10n: de.po: switch from pure German to German+English (part 3)
+
+ po/de.po | 1831 +++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 909 insertions(+), 922 deletions(-)
+
+-- 
+1.8.2.1230.g519726a
