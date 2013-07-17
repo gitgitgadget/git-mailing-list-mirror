@@ -1,112 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] request-pull: improve error message for invalid revision args
-Date: Wed, 17 Jul 2013 10:06:21 -0700
-Message-ID: <7vr4ex6rqq.fsf@alter.siamese.dyndns.org>
-References: <20130716104648.GA13275@bottich>
+Subject: Re: [PATCH 4/7] remote.c: add command line option parser for --lockref
+Date: Wed, 17 Jul 2013 10:06:44 -0700
+Message-ID: <7vmwpl6rq3.fsf@alter.siamese.dyndns.org>
+References: <7vfvvwk7ce.fsf@alter.siamese.dyndns.org>
+	<1373399610-8588-1-git-send-email-gitster@pobox.com>
+	<1373399610-8588-5-git-send-email-gitster@pobox.com>
+	<20130716221318.GA2337@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Dirk Wallenstein <halsmit@t-online.de>
-X-From: git-owner@vger.kernel.org Wed Jul 17 19:06:29 2013
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Jul 17 19:06:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzVBM-0007vQ-S0
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 19:06:29 +0200
+	id 1UzVBm-0008Dg-HV
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 19:06:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756536Ab3GQRGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jul 2013 13:06:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53325 "EHLO
+	id S932516Ab3GQRGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jul 2013 13:06:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52736 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755884Ab3GQRGY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jul 2013 13:06:24 -0400
+	id S1755796Ab3GQRGr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jul 2013 13:06:47 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E311731B2B;
-	Wed, 17 Jul 2013 17:06:23 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA15531B70;
+	Wed, 17 Jul 2013 17:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CQ14MBvV/6A1eOoXQXyhPn/A5cY=; b=tPKARW
-	Z6HlVve2VhYMCQvEnJGCPcFDGsE7Alj+/hBXxxa6HVpaCdCYC/eHOtiSmEB1r9Qr
-	bsy2gHWwSr9vMHPXU00YwqiCg+1PcgVE7rdAteTS5CjtFnIoNymtqlfZ4gtdgfXm
-	imIYoKcFkv5GyzvJjzXicax0YX/R0kN7M4VnE=
+	:content-type; s=sasl; bh=zrtSzWaL9Isd8TdLLNSbhE1PqGk=; b=dpdIpL
+	5yylvqz25kjAkSfxXzzw3RC1D/JNN/ZGY/8gBfhWq94BSwmxfZ5Pex72Lt2+iloJ
+	r42dhT5AB1OKBaIZxF1mNnjhOgY/d/S1KAQeQSJa5n7bueFjJGCGvJOhBRpT5bLq
+	XD4c9sTXnuwGxfUYRMpjeIno1b0IncXrPDq/Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WkcEPj7MsWVRbL9yrnUt0VHcVW8fOZr6
-	zwgLmfGfGSXoXp37zQTyR+u1xWGEI4Y45sw6k47jfwlpYmKRZBNunZMWRTzEjfpR
-	PI1HlBp4uxDN1zXC6zG4k2CQ/UiJYvGUxweTWcS57GZ3Dn1ye3Euz5QBRU5hJG9h
-	prtmML6fCNM=
+	:content-type; q=dns; s=sasl; b=gHZCv2FBbot0ijtpdUamXOP479br6Qvq
+	yS1rHB6x5wxJGcIuqkytk0s9vL/J6V9T2H8QPPh4c9FiTCjp3+8k1K+ANqwYwb5M
+	REojkNa58KVJ7oZFSS9OUF79ou7KN2iJzjh/FrIRDYEXjguLGpQQ9M7hW2LEC43l
+	8slYArNeBHc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7E5E31B2A;
-	Wed, 17 Jul 2013 17:06:23 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE52231B6F;
+	Wed, 17 Jul 2013 17:06:46 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32AAA31B26;
-	Wed, 17 Jul 2013 17:06:23 +0000 (UTC)
-In-Reply-To: <20130716104648.GA13275@bottich> (Dirk Wallenstein's message of
-	"Tue, 16 Jul 2013 12:46:48 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4EA6A31B6E;
+	Wed, 17 Jul 2013 17:06:46 +0000 (UTC)
+In-Reply-To: <20130716221318.GA2337@serenity.lan> (John Keeping's message of
+	"Tue, 16 Jul 2013 23:13:39 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 35446AEA-EF03-11E2-AD8F-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 430BA724-EF03-11E2-9F10-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230636>
 
-Dirk Wallenstein <halsmit@t-online.de> writes:
+John Keeping <john@keeping.me.uk> writes:
 
-> When an invalid revision is specified, the error message is:
+> On Tue, Jul 09, 2013 at 12:53:27PM -0700, Junio C Hamano wrote:
+>> diff --git a/remote.c b/remote.c
+>> index 81bc876..e9b423a 100644
+>> --- a/remote.c
+>> +++ b/remote.c
+>> @@ -1938,3 +1938,62 @@ struct ref *get_stale_heads(struct refspec *refs, int ref_count, struct ref *fet
+>>  	string_list_clear(&ref_names, 0);
+>>  	return stale_refs;
+>>  }
+>> +
+>> +/*
+>> + * Lockref aka CAS
+>> + */
+>> +void clear_cas_option(struct push_cas_option *cas)
+>> +{
+>> +	int i;
+>> +
+>> +	for (i = 0; i < cas->nr; i++)
+>> +		free(cas->entry->refname);
 >
->     fatal: Needed a single revision
+> Should this be
 >
-> This is misleading because, you might think there is something wrong
-> with the command line as a whole.
+> 	free(cas->entry[i]->refname);
 >
-> Now the user gets a more meaningful error message, showing the invalid
-> revision.
->
-> Signed-off-by: Dirk Wallenstein <halsmit@t-online.de>
-> ---
->
-> Notes:
->     I assume, it is not worth the trouble to even try to change the message from
->     rev-parse for this.  People might parse the messages, which is probably why
->     this message still exists.
+> ?
 
-You are right---such a change will break existing scripts, so it is
-not just "not worth the trouble" but is actively wrong to change the
-error message.
-
->  git-request-pull.sh | 14 ++++++++++++--
->  1 file changed, 12 insertions(+), 2 deletions(-)
->
-> diff --git a/git-request-pull.sh b/git-request-pull.sh
-> index d566015..f38f0f9 100755
-> --- a/git-request-pull.sh
-> +++ b/git-request-pull.sh
-> @@ -51,8 +51,18 @@ fi
->  tag_name=$(git describe --exact "$head^0" 2>/dev/null)
->  
->  test -n "$base" && test -n "$url" || usage
-> -baserev=$(git rev-parse --verify "$base"^0) &&
-> -headrev=$(git rev-parse --verify "$head"^0) || exit
-> +
-> +baserev=$(git rev-parse --verify "$base"^0 2>/dev/null)
-
-Use "--quiet" instead?
-
-> +if test -z "$baserev"
-> +then
-> +    die "fatal: Not a valid revision: $base"
-> +fi
-> +
-> +headrev=$(git rev-parse --verify "$head"^0 2>/dev/null)
-> +if test -z "$headrev"
-> +then
-> +    die "fatal: Not a valid revision: $head"
-> +fi
->  
->  merge_base=$(git merge-base $baserev $headrev) ||
->  die "fatal: No commits in common between $base and $head"
+Yes, I think so.
