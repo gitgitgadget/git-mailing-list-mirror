@@ -1,7 +1,7 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 4/6] t8001/t8002 (blame): add blame -L :funcname tests
-Date: Wed, 17 Jul 2013 17:25:30 -0400
-Message-ID: <1374096332-7891-5-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH 5/6] blame-options.txt: place each -L option variation on its own line
+Date: Wed, 17 Jul 2013 17:25:31 -0400
+Message-ID: <1374096332-7891-6-git-send-email-sunshine@sunshineco.com>
 References: <1374096332-7891-1-git-send-email-sunshine@sunshineco.com>
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Thomas Rast <trast@student.ethz.ch>,
@@ -13,125 +13,69 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzZEv-0003yB-Dn
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 23:26:25 +0200
+	id 1UzZEv-0003yB-Uh
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 23:26:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932141Ab3GQV0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jul 2013 17:26:20 -0400
-Received: from mail-oa0-f51.google.com ([209.85.219.51]:54589 "EHLO
-	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756114Ab3GQV0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jul 2013 17:26:11 -0400
-Received: by mail-oa0-f51.google.com with SMTP id i4so3272899oah.10
-        for <git@vger.kernel.org>; Wed, 17 Jul 2013 14:26:11 -0700 (PDT)
+	id S1757429Ab3GQV0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jul 2013 17:26:19 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:58082 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757400Ab3GQV0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jul 2013 17:26:13 -0400
+Received: by mail-oa0-f42.google.com with SMTP id j6so3289469oag.15
+        for <git@vger.kernel.org>; Wed, 17 Jul 2013 14:26:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=LktoQDQXy4JxP85Knf2xCOrXF5HOJCiILlrqLAhHpUA=;
-        b=wy82m2H0sc4bnsyYkXMIuSI5Icnjg9llBiip9Mw76znHY65OdIzKGejE8KvYIr4vTz
-         cai8Qtop9ku0ixpDkfiLlSR9+75CGaCOvxgng+Oi7PNHkAskAEpf1f+hG9dWa24e2Bm+
-         2AH9RifxaWufa945GgmLvwhUt6TVOTRkdMon19VPCeGy793EEoUNvmfRZS/RlxsbAJ/K
-         gUTA3jgJIY/lmxh8XDEkOYUBSjoc4dU9rYKkbL7bRBssSLPfN+g6PXdvb4pfvEeta2er
-         dTHgR5Hiw3OzvU9bczqRaO6fBgy6UfY0HUD8IIDuDemlqWfPWMGZj8Ma9NEQjXyXOk+v
-         GX/w==
-X-Received: by 10.182.176.67 with SMTP id cg3mr4486713obc.65.1374096371324;
-        Wed, 17 Jul 2013 14:26:11 -0700 (PDT)
+        bh=Z5PBEBckMK41TbHF6SEtiNFUgsc8MOw5VJpI8OpA4NA=;
+        b=k0LXy0t21ZosHTekI6XJbSSeV1L80w/JWEQnZGa3ZSHPODOgd66qtsQBWYvktDUbYk
+         uqcPaEVLZMjy0nRC6qiLlET4htZlYpe1wOzkKSMy7qhPG3wK1j7iQsjztsQcS4/2Tw3k
+         pwWfonbiaa+87wGg7eFVSdmAGtcgIDDU8tHkkFEZ9m77W5VkxTT9E2/rwXnp91AdzMle
+         u+V5Hd5cRryJxHtZYjj5+vZUVNg1x6Igqt/puua610QxuhOVnzcSFe/K6dUTcy0OwTqu
+         wln1FJeLVLg/XSpKC3f4LJ4ztSVuExcTi9MAHDzcsm94Q4d5RG0nmSkxFV8j37iJW2pZ
+         8m9w==
+X-Received: by 10.182.130.228 with SMTP id oh4mr4682623obb.38.1374096373302;
+        Wed, 17 Jul 2013 14:26:13 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
-        by mx.google.com with ESMTPSA id ps5sm10308187oeb.8.2013.07.17.14.26.09
+        by mx.google.com with ESMTPSA id ps5sm10308187oeb.8.2013.07.17.14.26.11
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Jul 2013 14:26:10 -0700 (PDT)
+        Wed, 17 Jul 2013 14:26:12 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.3.1016.g4f0baba
 In-Reply-To: <1374096332-7891-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230656>
 
-git-blame inherited "-L :funcname" support when "-L :funcname:file" was
-implemented for git-log. Add tests.
+Standard practice in Git documentation is for each variation of an
+option (such as: -p / --porcelain) to be placed on its own line in the
+OPTIONS table. The -L option does not follow suit. It cuddles
+"-L <start>,<end>" and "-L :<regex>", separated by a comma. This is
+inconsistent and potentially confusing since the comma separating them
+is typeset the same as the comma in "<start>,<end>". Fix this by placing
+each variation on its own line.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/annotate-tests.sh | 48 ++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 46 insertions(+), 2 deletions(-)
+ Documentation/blame-options.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index b6a7478..0bfee00 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -3,17 +3,19 @@
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index e9f984b..624b353 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -9,7 +9,8 @@
+ --show-stats::
+ 	Include additional statistics at the end of blame output.
  
- check_count () {
- 	head= &&
-+	file='file' &&
- 	options= &&
- 	while :
- 	do
- 		case "$1" in
- 		-h) head="$2"; shift; shift ;;
-+		-f) file="$2"; shift; shift ;;
- 		-*) options="$options $1"; shift ;;
- 		*) break ;;
- 		esac
- 	done &&
--	echo "$PROG $options file $head" >&4 &&
--	$PROG $options file $head >actual &&
-+	echo "$PROG $options $file $head" >&4 &&
-+	$PROG $options $file $head >actual &&
- 	perl -e '
- 		my %expect = (@ARGV);
- 		my %count = map { $_ => 0 } keys %expect;
-@@ -231,6 +233,48 @@ test_expect_success 'blame -L ,Y (Y > nlines)' '
- 	test_must_fail $PROG -L,12345 file
- '
+--L <start>,<end>, -L :<regex>::
++-L <start>,<end>::
++-L :<regex>::
+ 	Annotate only the given line range.  <start> and <end> can take
+ 	one of these forms:
  
-+test_expect_success 'setup -L :regex' '
-+	tr Q "\\t" >hello.c <<-\EOF &&
-+	int main(int argc, const char *argv[])
-+	{
-+	Qputs("hello");
-+	}
-+	EOF
-+	git add hello.c &&
-+	GIT_AUTHOR_NAME="F" GIT_AUTHOR_EMAIL="F@test.git" \
-+	git commit -m "hello" &&
-+
-+	mv hello.c hello.orig &&
-+	sed -e "/}/i\\
-+	Qputs(\"goodbye\");" <hello.orig | tr Q "\\t" >hello.c &&
-+	GIT_AUTHOR_NAME="G" GIT_AUTHOR_EMAIL="G@test.git" \
-+	git commit -a -m "goodbye" &&
-+
-+	mv hello.c hello.orig &&
-+	echo "#include <stdio.h>" >hello.c &&
-+	cat hello.orig >>hello.c &&
-+	tr Q "\\t" >>hello.c <<-\EOF
-+	void mail()
-+	{
-+	Qputs("mail");
-+	}
-+	EOF
-+	GIT_AUTHOR_NAME="H" GIT_AUTHOR_EMAIL="H@test.git" \
-+	git commit -a -m "mail"
-+'
-+
-+test_expect_success 'blame -L :literal' '
-+	check_count -f hello.c -L:main F 4 G 1
-+'
-+
-+test_expect_success 'blame -L :regex' '
-+	check_count -f hello.c "-L:m[a-z][a-z]l" H 4
-+'
-+
-+test_expect_success 'blame -L :nomatch' '
-+	test_must_fail $PROG -L:nomatch hello.c
-+'
-+
- test_expect_success 'blame -L bogus' '
- 	test_must_fail $PROG -L file &&
- 	test_must_fail $PROG -L1,+ file &&
 -- 
 1.8.3.3.1016.g4f0baba
