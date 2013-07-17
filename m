@@ -1,114 +1,79 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH] .mailmap: Combine more (email, name) to individual persons
-Date: Wed, 17 Jul 2013 22:16:31 +0200
-Message-ID: <1374092191-29851-1-git-send-email-stefanbeller@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] apply, entry: speak of submodules instead of subprojects
+Date: Wed, 17 Jul 2013 13:34:38 -0700
+Message-ID: <7vhaft53j5.fsf@alter.siamese.dyndns.org>
+References: <87bo631odi.fsf@hexa.v.cablecom.net>
+	<8df0d41caa10a38e46783bebd3148a7b8445dd47.1373966389.git.trast@inf.ethz.ch>
+	<20130716180739.GK14690@google.com> <51E5997E.2090607@web.de>
+	<8738res1yc.fsf@hexa.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 17 22:16:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, <git@vger.kernel.org>,
+	"Ralf Thielow" <ralf.thielow@gmail.com>,
+	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Jul 17 22:34:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzY9P-0004Fg-R6
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 22:16:40 +0200
+	id 1UzYQv-0006gx-Sp
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 22:34:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932306Ab3GQUQg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Jul 2013 16:16:36 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:43115 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752191Ab3GQUQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jul 2013 16:16:34 -0400
-Received: by mail-wi0-f175.google.com with SMTP id m6so5893125wiv.2
-        for <git@vger.kernel.org>; Wed, 17 Jul 2013 13:16:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=2KMsSxCyDlMOH0970jxbRVpAoQn4rhywF5U/fQkHbgo=;
-        b=E9oYnoXjsCisorkmh25OFt8Fr3yxlQc/3AS3oSujQQMBJU4Yc1NfpEY2MP51rxALa3
-         nlQcl63WNAhz04wj2/VBgMPVKy1PPC+HeqvQnbTtvVLBh+4mw9grtxnu8I3nvTFWmdbK
-         BcjBae3MfeDtoi+2t4K7aKetCRbvHjwjrU6vOr7Ew7VnXOnSrcy3bpMtG5PfKMHaxnI4
-         0rIrc5dnBmj8xEV8CUrkJVKfYN2I7JfvLTgNLj1xoFIq3SBJn4cTB6u/SFyz+SlMjWI5
-         Zwb3TCSWOWU7CQc3I1gr24w7Z9yEe2eDjhmApeQZE/zGAZp1S30tJCjF5cvnxxVGHR/3
-         JbNQ==
-X-Received: by 10.180.160.144 with SMTP id xk16mr16995095wib.62.1374092193696;
-        Wed, 17 Jul 2013 13:16:33 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id z6sm12050414wiv.11.2013.07.17.13.16.32
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Jul 2013 13:16:32 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.3.754.g9c3c367.dirty
+	id S1752033Ab3GQUem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jul 2013 16:34:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45293 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751985Ab3GQUel (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jul 2013 16:34:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 557953147E;
+	Wed, 17 Jul 2013 20:34:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hjMzzV469gcTEBkMUOy8UpYC3ho=; b=i7JDSp
+	7BOXZHFJzbcMfCkqqWjjOBMum7fq+xMxR8fx0fWQnsT3j3nxBzpgWRcb88U7t1rq
+	Kzsx7pWCEydcMowsmQQDfwQ8tNfUtsFtA+g5i3ghfHm8VvPoNGe7nUgueuQW1Jsr
+	nSlim9TdkgCkSyZ5ysDoIss3+KDzDTp+PR4iU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uMX7DzMIIvLvjVb165QLFMLnZlIZNffT
+	//HYk0FlY2Em58JCbx6dZzsUdsnYuqk7Bgh9FYCkhs0dqSXRcMRiNo9+J0sgurEz
+	znfPFC/2NhGo37pqUGJCNgU6gZfC7I/91wLlaL0CEOywvh3C2gqBeW7m51Ogbf6b
+	lmWlweWmIKk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 463543147B;
+	Wed, 17 Jul 2013 20:34:40 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9AED931477;
+	Wed, 17 Jul 2013 20:34:39 +0000 (UTC)
+In-Reply-To: <8738res1yc.fsf@hexa.v.cablecom.net> (Thomas Rast's message of
+	"Tue, 16 Jul 2013 22:07:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4DC41904-EF20-11E2-8240-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230648>
 
-I got more responses from people regarding the .mailmap file.
-All added persons gave permission to add them to the .mailmap file.
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
----
- .mailmap | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+>> But a 'git grep "corrupt patch for sub"' shows some files in the po
+>> directory still containing that string on current master. Shouldn't
+>> they be changed too or is this just a sign of me not understanding
+>> the translation process?
+>
+> I haven't checked any guides, but I imagine that the resulting manual
+> translation update is what prompts the translators to also check if they
+> need to adapt the message.
 
-diff --git a/.mailmap b/.mailmap
-index 9430d14..df8898f 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -28,8 +28,7 @@ Chris Shoemaker <c.shoemaker@cox.net>
- Chris Wright <chrisw@sous-sol.org> <chrisw@osdl.org>
- Csaba Henk <csaba@gluster.com> <csaba@lowlife.hu>
- Dan Johnson <computerdruid@gmail.com>
--Dana L. How <danahow@gmail.com>
--Dana L. How <how@deathvalley.cswitch.com>
-+Dana L. How <danahow@gmail.com> <how@deathvalley.cswitch.com>
- Daniel Barkalow <barkalow@iabervon.org>
- David Brown <git@davidb.org> <davidb@quicinc.com>
- David D. Kilzer <ddkilzer@kilzer.net>
-@@ -52,6 +51,7 @@ Fr=C3=A9d=C3=A9ric Heitzmann <frederic.heitzmann@gmai=
-l.com>
- Garry Dolley <gdolley@ucla.edu> <gdolley@arpnetworks.com>
- Greg Price <price@mit.edu> <price@MIT.EDU>
- Greg Price <price@mit.edu> <price@ksplice.com>
-+Heiko Voigt <hvoigt@hvoigt.net> <git-list@hvoigt.net>
- H. Merijn Brand <h.m.brand@xs4all.nl> H.Merijn Brand <h.m.brand@xs4all=
-=2Enl>
- H. Peter Anvin <hpa@zytor.com> <hpa@bonde.sc.orionmulti.com>
- H. Peter Anvin <hpa@zytor.com> <hpa@smyrno.hos.anvin.org>
-@@ -74,7 +74,8 @@ Johannes Schindelin <Johannes.Schindelin@gmx.de> <joh=
-annes.schindelin@gmx.de>
- Johannes Sixt <j6t@kdbg.org> <J.Sixt@eudaptics.com>
- Johannes Sixt <j6t@kdbg.org> <j.sixt@viscovery.net>
- Johannes Sixt <j6t@kdbg.org> <johannes.sixt@telecom.at>
--Jon Loeliger <jdl@freescale.com>
-+Jon Loeliger <jdl@jdl.com> <jdl@freescale.com>
-+Jon Loeliger <jdl@jdl.com> <jdl@freescale.org>
- Jon Seymour <jon.seymour@gmail.com> <jon@blackcubes.dyndns.org>
- Jonathan Nieder <jrnieder@gmail.com> <jrnieder@uchicago.edu>
- Jonathan del Strother <jon.delStrother@bestbefore.tv> <maillist@steels=
-kies.com>
-@@ -175,10 +176,13 @@ Sean Estabrooks <seanlkml@sympatico.ca>
- Sebastian Schuberth <sschuberth@gmail.com> <sschuberth@visageimaging.c=
-om>
- Seth Falcon <seth@userprimary.net> <sfalcon@fhcrc.org>
- Shawn O. Pearce <spearce@spearce.org>
-+Simon Hausmann <hausmann@kde.org> <simon@lst.de>
-+Simon Hausmann <hausmann@kde.org> <shausman@trolltech.com>
- Stefan Naewe <stefan.naewe@gmail.com> <stefan.naewe@atlas-elektronik.c=
-om>
- Stefan Naewe <stefan.naewe@gmail.com> <stefan.naewe@googlemail.com>
- Stefan Sperling <stsp@elego.de> <stsp@stsp.name>
- Stephen Boyd <bebarino@gmail.com> <sboyd@codeaurora.org>
-+Steven Drake <sdrake@xnet.co.nz> <sdrake@ihug.co.nz>
- Steven Grimm <koreth@midwinter.com> <sgrimm@sgrimm-mbp.local>
- Steven Walter <stevenrwalter@gmail.com> <swalter@lexmark.com>
- Steven Walter <stevenrwalter@gmail.com> <swalter@lpdev.prtdev.lexmark.=
-com>
---=20
-1.8.3.3.754.g9c3c367.dirty
+I would suggest to leave the *.po files as they are.  I suspect that
+some translations might already use a translation of "submodule",
+and others use "subproject". All of them should make sure their
+translation is appropriate when *.pot is updated.
