@@ -1,88 +1,91 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] t6131 - skip tests if on case-insensitive file system
-Date: Wed, 17 Jul 2013 20:42:48 +0700
-Message-ID: <CACsJy8Ayyb7kTydXFxoeqNQgGemdUXXzAc3ZwEbT5dCuk_tkQA@mail.gmail.com>
-References: <1374067336-6545-1-git-send-email-mlevedahl@gmail.com>
+From: Zane Bitter <zbitter@redhat.com>
+Subject: [StGit PATCH] Fix dirty index errors when resolving conflicts
+Date: Wed, 17 Jul 2013 15:57:10 +0200
+Message-ID: <20130717135454.16504.69116.stgit@zbitter.fedora>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 17 15:43:23 2013
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: jacob.e.keller@intel.com, peter.p.waskiewicz.jr@intel.com,
+	catalin.marinas@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 17 15:57:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzS0o-0006OS-Vl
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 15:43:23 +0200
+	id 1UzSEN-0006ef-Qz
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 15:57:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755426Ab3GQNnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jul 2013 09:43:19 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:35323 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755339Ab3GQNnS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jul 2013 09:43:18 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h1so2527360oag.19
-        for <git@vger.kernel.org>; Wed, 17 Jul 2013 06:43:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=yURyqiM6C2IVOePwSF5r4sq/FLGoTwK3+SYshRqXiJM=;
-        b=EKqn5Xwf+j/1ErfutXyiGtRDcpas+ZIa+jsr0D8WOHJluw8Fk1RIY0ep79FL2AesfY
-         fbMp3RnqS5GdX2Hbpz6Ig1IWAgbbpdYwHlERgYr5j9CrUyCccbDOMNLRuKOhxuumawOB
-         OSXKuio0SDCbItPzPepaHTT530ltax1BAm7vkzuPtP+skOSbxQ8UmSSCV632SdLWFTl8
-         1jcYBD05QwCLmSbXdToupaJyRKiMXvOk8vg0L4QivoG5uV0WgGQSN/0W3TvcL45qELev
-         CDMiyocgTBdlwIN5knF95XCej6tIM5hywJ1s82xqESZ7debuHgl3XhX0DCjPMJaCkFQM
-         3log==
-X-Received: by 10.182.153.72 with SMTP id ve8mr2573205obb.39.1374068598300;
- Wed, 17 Jul 2013 06:43:18 -0700 (PDT)
-Received: by 10.76.88.230 with HTTP; Wed, 17 Jul 2013 06:42:48 -0700 (PDT)
-In-Reply-To: <1374067336-6545-1-git-send-email-mlevedahl@gmail.com>
+	id S1755181Ab3GQN5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jul 2013 09:57:20 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:6124 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754176Ab3GQN5T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jul 2013 09:57:19 -0400
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r6HDvC49013041
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 17 Jul 2013 09:57:13 -0400
+Received: from zbitter.fedora (vpn1-5-30.ams2.redhat.com [10.36.5.30])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id r6HDvBMk020458;
+	Wed, 17 Jul 2013 09:57:11 -0400
+User-Agent: StGit/0.17-dirty
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230626>
 
-On Wed, Jul 17, 2013 at 8:22 PM, Mark Levedahl <mlevedahl@gmail.com> wrote:
-> This test fails on Cygwin where the default system configuration does not
-> support case sensitivity (only case retention), so don't run the test on
-> such systems.
+The patch 6e8fdc58c786a45d7a63c5edf9c702f1874a7a19 causes StGit to raise
+"warnings" (actually: errors) in the event that there are changes staged in
+the index and a refresh is performed without specifying either --index or
+--force. This is great for preventing an entire class of common mistakes,
+but is also a giant pain when resolving conflicts after a pull/rebase.
+Depending on the workflow in use, this may occur with a frequency anywhere
+between "never" and "mulitple times on every pull".
 
-Yeah. I knew this when I wrote this test but forgot to put the check
-in. Thanks. We can re-enable the test later, as it does not really
-need case-insensitive filesystems.
+This patch removes the pain by:
+ - Reporting unresolved conflicts *before* complaining about staged
+   changes, since it goes without saying that, when present, these are the
+   main problem.
+ - Not complaining about staged changes if there are no unstaged changes in
+   the working directory, since the presence of --index is immaterial in
+   this case.
 
->
-> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
-> ---
->  t/t6131-pathspec-icase.sh | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/t/t6131-pathspec-icase.sh b/t/t6131-pathspec-icase.sh
-> index 3215eef..8d4a7fc 100755
-> --- a/t/t6131-pathspec-icase.sh
-> +++ b/t/t6131-pathspec-icase.sh
-> @@ -3,6 +3,12 @@
->  test_description='test case insensitive pathspec limiting'
->  . ./test-lib.sh
->
-> +if test_have_prereq CASE_INSENSITIVE_FS
-> +then
-> +       skip_all='skipping case sensitive tests - case insensitive file system'
-> +       test_done
-> +fi
-> +
->  test_expect_success 'create commits with glob characters' '
->         test_commit bar bar &&
->         test_commit bAr bAr &&
-> --
-> 1.8.3.2.0.63
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
---
-Duy
+Signed-off-by: Zane Bitter <zbitter@redhat.com>
+---
+ stgit/commands/refresh.py |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/stgit/commands/refresh.py b/stgit/commands/refresh.py
+index a2bab42..331c18d 100644
+--- a/stgit/commands/refresh.py
++++ b/stgit/commands/refresh.py
+@@ -247,18 +247,19 @@ def func(parser, options, args):
+     patch_name = get_patch(stack, options.patch)
+     paths = list_files(stack, patch_name, args, options.index, options.update)
+ 
+-    # Make sure the index is clean before performing a full refresh
+-    if not options.index and not options.force:
+-        if not stack.repository.default_index.is_clean(stack.head):
+-            raise common.CmdException(
+-                'The index is dirty. Did you mean --index? To force a full refresh use --force.')
+-
+     # Make sure there are no conflicts in the files we want to
+     # refresh.
+     if stack.repository.default_index.conflicts() & paths:
+         raise common.CmdException(
+             'Cannot refresh -- resolve conflicts first')
+ 
++    # Make sure the index is clean before performing a full refresh
++    if not options.index and not options.force:
++        if not (stack.repository.default_index.is_clean(stack.head) or
++                stack.repository.default_iw.worktree_clean()):
++            raise common.CmdException(
++                'The index is dirty. Did you mean --index? To force a full refresh use --force.')
++
+     # Commit index to temp patch, and absorb it into the target patch.
+     retval, temp_name = make_temp_patch(
+         stack, patch_name, paths, temp_index = path_limiting)
