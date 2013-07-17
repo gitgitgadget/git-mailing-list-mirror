@@ -1,77 +1,88 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Git counterpart to SVN bugtraq properties?
-Date: Wed, 17 Jul 2013 14:33:57 +0100
-Message-ID: <20130717133357.GB2337@serenity.lan>
-References: <51E69612.6020201@syntevo.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] t6131 - skip tests if on case-insensitive file system
+Date: Wed, 17 Jul 2013 20:42:48 +0700
+Message-ID: <CACsJy8Ayyb7kTydXFxoeqNQgGemdUXXzAc3ZwEbT5dCuk_tkQA@mail.gmail.com>
+References: <1374067336-6545-1-git-send-email-mlevedahl@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Marc Strapetz <marc.strapetz@syntevo.com>
-X-From: git-owner@vger.kernel.org Wed Jul 17 15:34:15 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 17 15:43:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzRrw-0000Rx-Vu
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 15:34:13 +0200
+	id 1UzS0o-0006OS-Vl
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Jul 2013 15:43:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755313Ab3GQNeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jul 2013 09:34:08 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:49965 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754831Ab3GQNeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jul 2013 09:34:07 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 259251980DF;
-	Wed, 17 Jul 2013 14:34:07 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -10.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yERDyDIMQgUF; Wed, 17 Jul 2013 14:34:04 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 2E5B96064C7;
-	Wed, 17 Jul 2013 14:34:00 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <51E69612.6020201@syntevo.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755426Ab3GQNnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jul 2013 09:43:19 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:35323 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755339Ab3GQNnS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jul 2013 09:43:18 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h1so2527360oag.19
+        for <git@vger.kernel.org>; Wed, 17 Jul 2013 06:43:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=yURyqiM6C2IVOePwSF5r4sq/FLGoTwK3+SYshRqXiJM=;
+        b=EKqn5Xwf+j/1ErfutXyiGtRDcpas+ZIa+jsr0D8WOHJluw8Fk1RIY0ep79FL2AesfY
+         fbMp3RnqS5GdX2Hbpz6Ig1IWAgbbpdYwHlERgYr5j9CrUyCccbDOMNLRuKOhxuumawOB
+         OSXKuio0SDCbItPzPepaHTT530ltax1BAm7vkzuPtP+skOSbxQ8UmSSCV632SdLWFTl8
+         1jcYBD05QwCLmSbXdToupaJyRKiMXvOk8vg0L4QivoG5uV0WgGQSN/0W3TvcL45qELev
+         CDMiyocgTBdlwIN5knF95XCej6tIM5hywJ1s82xqESZ7debuHgl3XhX0DCjPMJaCkFQM
+         3log==
+X-Received: by 10.182.153.72 with SMTP id ve8mr2573205obb.39.1374068598300;
+ Wed, 17 Jul 2013 06:43:18 -0700 (PDT)
+Received: by 10.76.88.230 with HTTP; Wed, 17 Jul 2013 06:42:48 -0700 (PDT)
+In-Reply-To: <1374067336-6545-1-git-send-email-mlevedahl@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230625>
 
-On Wed, Jul 17, 2013 at 03:03:14PM +0200, Marc Strapetz wrote:
-> I'm looking for a specification or guidelines on how a Git client should
-> integrate with bug tracking systems. For SVN, one can use
-> bugtraq-properties [1] to specify e.g. the issue tracker URL or how to
-> parse the bug ID from a commit message. AFAIU, there is nothing
-> comparable for Git [2]? If that's actually the case, is someone
-> interested in working out a similar specification for Git?
-> 
-> [1] http://code.google.com/p/tortoisesvn/source/browse/tags/version_1.2.0/doc/issuetrackers.txt
-> 
-> [2] http://stackoverflow.com/questions/17545548
+On Wed, Jul 17, 2013 at 8:22 PM, Mark Levedahl <mlevedahl@gmail.com> wrote:
+> This test fails on Cygwin where the default system configuration does not
+> support case sensitivity (only case retention), so don't run the test on
+> such systems.
 
-The Git way to record the issue ID as a footer in the commit message.
-See for example [1].  Although I'm not aware of any standard for naming
-this footer.
+Yeah. I knew this when I wrote this test but forgot to put the check
+in. Thanks. We can re-enable the test later, as it does not really
+need case-insensitive filesystems.
 
-In terms of recording the URL and other data, I think you'd want a
-dotfile in the repository (perhaps .bugzilla).  This shoudld probably be
-in the gitconfig format, like .gitmodules.
-
-I think "all" it needs is to draw up a spec for the names of keys and
-format of their values, along with the format of footer(s) identifying
-issues associated with a commit and to persuade UI developers to support
-it... ;-)
-
-[1] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=4a88f73f14f6d6c94616538427e1235a6d0a5885
+>
+> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+> ---
+>  t/t6131-pathspec-icase.sh | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/t/t6131-pathspec-icase.sh b/t/t6131-pathspec-icase.sh
+> index 3215eef..8d4a7fc 100755
+> --- a/t/t6131-pathspec-icase.sh
+> +++ b/t/t6131-pathspec-icase.sh
+> @@ -3,6 +3,12 @@
+>  test_description='test case insensitive pathspec limiting'
+>  . ./test-lib.sh
+>
+> +if test_have_prereq CASE_INSENSITIVE_FS
+> +then
+> +       skip_all='skipping case sensitive tests - case insensitive file system'
+> +       test_done
+> +fi
+> +
+>  test_expect_success 'create commits with glob characters' '
+>         test_commit bar bar &&
+>         test_commit bAr bAr &&
+> --
+> 1.8.3.2.0.63
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--
+Duy
