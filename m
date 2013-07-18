@@ -1,58 +1,84 @@
-From: Jaap Eldering <eldering@a-eskwadraat.nl>
-Subject: git subtree push mangles commit message newlines
-Date: Thu, 18 Jul 2013 23:22:33 +0200
-Message-ID: <20130718212233.GB22040@a-eskwadraat.nl>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH] t3032 - make compatible with systems using \r\n as a
+ line ending
+Date: Thu, 18 Jul 2013 17:47:10 -0400
+Message-ID: <51E8625E.6020808@gmail.com>
+References: <51E591FF.7030600@gmail.com> <1374000592-31845-1-git-send-email-mlevedahl@gmail.com> <20130716185933.GO14690@google.com> <51E83FA7.5080706@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 18 23:39:44 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Jul 18 23:47:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzvvL-0006ls-Ia
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 23:39:43 +0200
+	id 1Uzw2h-0002Fw-0Q
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 23:47:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934529Ab3GRVji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 17:39:38 -0400
-Received: from square.phys.uu.nl ([131.211.39.72]:36199 "EHLO
-	square.phys.uu.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934521Ab3GRVjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 17:39:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=a-eskwadraat.nl; s=alef;
-	h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date; bh=Jzi/ODSaZdukzVNkVcYBYc8NRFF5GKq8hNaj/FPhqhA=;
-	b=WrowjlBEt/Jvfh6Ic9I9hu3CKRnTLCVmgqZ0A9w2ZHELt08MSLFUhUo0U3taiaaNR46oLuzKFRVN8gcJK3xkKFA+vXpflSvtgutjDxt/KJx7QXj6JDlno6f3OEHKsDSku+Rk/Yges56dFQLFOOIm7zA7QWOR0EFpZmx0nP3dtbw=;
-Received: from nikola.localdomain ([10.14.0.2])
-	by square.phys.uu.nl with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <eldering@A-Eskwadraat.nl>)
-	id 1Uzvej-0002qi-LF
-	for git@vger.kernel.org; Thu, 18 Jul 2013 23:22:33 +0200
-Received: from eldering by nikola.localdomain with local (Exim 4.72)
-	(envelope-from <eldering@A-Eskwadraat.nl>)
-	id 1Uzvej-0005z6-Gj
-	for git@vger.kernel.org; Thu, 18 Jul 2013 23:22:33 +0200
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1759153Ab3GRVrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 17:47:14 -0400
+Received: from mail-qe0-f42.google.com ([209.85.128.42]:44629 "EHLO
+	mail-qe0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752818Ab3GRVrN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 17:47:13 -0400
+Received: by mail-qe0-f42.google.com with SMTP id s14so2085170qeb.29
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 14:47:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=R2OrTNFWeZhc4UObZ7N4DzpN6b78APgPZhfxlWLAwA8=;
+        b=d2oUQi+C2LEsQSE3OSsCIgZ3PF9fCfWiTKShsvVFvRo5cxAiiERcy0hY9AybcFEn7P
+         B0mQIIukwZmmAuZV+Yu/EcZniVJo0qSvo1Jn/LiJMCwjQnZg68eq8Ws07DVuMeqCcWcr
+         O+d+rqaAWVR39cbWzcJgSXMtTciFuAgH8EE3dxJIZMvsjTDDK00UU1QkbPIJWPSIFlg5
+         Zn3Xk9uuwQKSDtjbAV0bRdobTYCW0p5+aACg9qU4aihdHE/8A+xeRrsy0h8vOJNrCWNn
+         4h7w2PuYbalcmDlNRcRd+rTGIFo3alNuY8m40JTNFL4zWUKCPXMBHOjmQGlhpezhSnrW
+         UlTw==
+X-Received: by 10.229.124.68 with SMTP id t4mr3373185qcr.93.1374184033157;
+        Thu, 18 Jul 2013 14:47:13 -0700 (PDT)
+Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
+        by mx.google.com with ESMTPSA id s9sm16013470qeo.3.2013.07.18.14.47.11
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jul 2013 14:47:12 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130625 Thunderbird/17.0.7
+In-Reply-To: <51E83FA7.5080706@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230753>
 
-Hi all,
+On 07/18/2013 03:19 PM, Ramsay Jones wrote:
+> Jonathan Nieder wrote:
+>> Mark Levedahl wrote:
+>>
+>>> Subtests 6, 7, and 9 rely test that merge-recursive correctly
+>>> ignores whitespace when so directed. Change the particular whitespace
+>>> sequences to be ones that are not known line endings so the whitespace
+>>> is not changed when being extracted by line oriented grep.
+>> merge-recursive needs to be able to deal with \r at EOL, too, so if at
+>> all possible I would prefer to see the test fixed to pass on Cygwin
+>> some other way.
+> Maybe use -U/--binary option to grep? Indeed, if you look at the top of
+> that test file, you will see:
+>
+>      test_have_prereq SED_STRIPS_CR && SED_OPTIONS=-b
+>      test_have_prereq MINGW && export GREP_OPTIONS=-U
+>
+> which may explain why it works for me on MinGW, but not why it works on
+> cygwin 1.5.
+>
+> ATB,
+> Ramsay Jones
+>
+>
+>
+>
+>
+Thanks, hadn't noticed that, it leads to a much better patch.
 
-I recently started using git-subtree and ran into a small issue when
-pushing to the subtree repository: newlines in the commit message seem
-not to be preserved.
-
-I was using git-subtree from [1], but can also reproduce this with the
-version from the main git source-tree commit 634392b26275fe, and I
-don't see any changes that could affect this behaviour since then.
-
-Best,
-Jaap
-
-[1] https://github.com/helmo/git/tree/subtree-updates/contrib/subtree
+Mark
