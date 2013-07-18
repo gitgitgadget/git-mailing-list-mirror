@@ -1,77 +1,101 @@
-From: Yamada Saburo <devil.tamachan@gmail.com>
-Subject: [PATCH5/(4+1)] Fix git-gui/po/ja.po
-Date: Fri, 19 Jul 2013 06:13:00 +0900
-Message-ID: <CAPM==H+kp3cGyYkX68CeqbMqr_6d5Kvd-f3X-DZgDfMb0YN4yA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] Add the NO_SENTINEL build variable
+Date: Thu, 18 Jul 2013 14:25:10 -0700
+Message-ID: <7vli531ryh.fsf@alter.siamese.dyndns.org>
+References: <51E4338E.4090003@ramsay1.demon.co.uk>
+	<20130715181357.GF14690@google.com>
+	<51E82582.1030204@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-2022-JP
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 18 23:13:09 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Jul 18 23:25:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzvVb-00020h-Q8
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 23:13:08 +0200
+	id 1UzvhV-00088A-G9
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 23:25:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759405Ab3GRVND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 17:13:03 -0400
-Received: from mail-ve0-f182.google.com ([209.85.128.182]:37644 "EHLO
-	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759224Ab3GRVNC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 17:13:02 -0400
-Received: by mail-ve0-f182.google.com with SMTP id ox1so2931633veb.27
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 14:13:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=Pl7Vzl+Md5XqBh7whH1CLt24yVLMO7uR2/zo4pB6U6o=;
-        b=p1hFKal+gBY/ShMdUWqZGSSzc5UdcbTCSt3bROXXymR9HPBbaSsmLna3ic0rCezic3
-         0vxxhp9irv9Wd9UmkVVckvbJ3ZQLbYSh/t6u7SGlEO7nfLxoRTkar+h26a/KelEatAxw
-         X2rEzDafYNr0MZ2J8Hp6mof8U9YO035hwhrXbWysdifpAemowsIYHVqubtqLRinK5a1U
-         IJev5lFoCcoCef54XgmsOAUHN+B7dozFziAA2leqTkD2bVy/3dhAaNKC7E4gE8uLxDIZ
-         6nxat+xuPImM7lB5OG+aBiRusofTfGMa0PNyHXbClr7qquXyV+mrOj+GllKsdtAHFQbh
-         PZTQ==
-X-Received: by 10.58.29.111 with SMTP id j15mr4770708veh.76.1374181980901;
- Thu, 18 Jul 2013 14:13:00 -0700 (PDT)
-Received: by 10.221.24.7 with HTTP; Thu, 18 Jul 2013 14:13:00 -0700 (PDT)
+	id S933659Ab3GRVZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 17:25:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37935 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759195Ab3GRVZU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 17:25:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C0ADE321AA;
+	Thu, 18 Jul 2013 21:25:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kY5kG3QcVZlKYmpQtZz0vD23Vk0=; b=vtQ+DR
+	hn0N6b4NN3Pm2It5gn9y44e7j9qOey7/7rqXsoM3drGeGoYBem0h5G2tFAMc4mBj
+	XLnbnvLLaqZAkjqb24187Hz6nJ7SS6B3ZDqmH7+2g+83iY22wJQUdgbAV9u4Tlha
+	gnpXRAylV7C9GRu4x8n6yr0IQCrP4MqenFClg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IS6iOEkVMVev/cnPJSEFUYVY5NmIpOJI
+	5YikHmBzc6rpKis64BoxU8cv5B/vP61PRvplKiFqT8Qu3zHevIdRa9wmwKOmgkII
+	P9QmrjFbQyC3MWN6leohy7XeV4l4Jv3DiCWm4IhuqDnr1tKhvXE2XxGfBiHW4eSg
+	utBkzZN2uO0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B66273219F;
+	Thu, 18 Jul 2013 21:25:18 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0075032196;
+	Thu, 18 Jul 2013 21:25:17 +0000 (UTC)
+In-Reply-To: <51E82582.1030204@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Thu, 18 Jul 2013 18:27:30 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8B23B0CC-EFF0-11E2-A6C9-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230748>
 
-Signed-off-by: Yamada Saburo <devil.tamachan@gmail.com>
----
- git-gui/po/ja.po | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-diff --git a/git-gui/po/ja.po b/git-gui/po/ja.po
-index 05215b9..83aeb05 100644
---- a/git-gui/po/ja.po
-+++ b/git-gui/po/ja.po
-@@ -9,9 +9,8 @@ msgstr ""
- "Report-Msgid-Bugs-To: \n"
- "POT-Creation-Date: 2013-07-10 03:38+0900\n"
- "PO-Revision-Date: 2010-02-02 19:03+0900\n"
--"Last-Translator: しらいし ななこ <nanako3@lavabit.com>, devil.tamachan
-<devil.tamachan@gmail.com>\n"
-+"Last-Translator: Yamada Saburo <devil.tamachan@gmail.com>\n"
- "Language-Team: Japanese\n"
--"Language: \n"
- "MIME-Version: 1.0\n"
- "Content-Type: text/plain; charset=UTF-8\n"
- "Content-Transfer-Encoding: 8bit\n"
-@@ -131,7 +130,7 @@ msgstr "ファイルタイプ変更、コミット未予定"
+> Jonathan Nieder wrote:
+>> Ramsay Jones wrote:
+>> 
+>>> One of the three gcc compilers that I use does not understand the
+>>> sentinel function attribute. (so, it spews 108 warning messages)
+>> 
+>> Do you know what version of gcc introduced the sentinel attribute?
+>> Would it make sense for the ifdef in git-compat-util.h to be keyed on 
+>> __GNUC__ and __GNUC_MINOR__ instead of a new makefile flag?
+>> 
+>
+> I have on old (v4.2.1) gcc repo on Linux and looking at
+>
+>     ~/gcc-4.2.1/gcc/ChangeLog-2004
+>
+> I can see that the sentinel attribute was added on 2004-09-04 by
+> Kaveh R. Ghazi.
+>
+> Also, I find "bump version string to version 4.0.0" was on 2004-09-09
+> and "bump version string to version 3.5.0" was on 2004-01-16.
+>
+> Several of my system header files (on Linux) imply that the
+> sentinel attribute is supported by __GNUC__ >= 4. (One of them,
+> ansidecl.h, states that gcc 3.5 supports it but ...)
 
- #: git-gui.sh:2088 git-gui.sh:2089
- msgid "File type changed, old type staged for commit"
--msgstr "ファイルタイプ変更、コミット予定の形式が古い"
-+msgstr "ファイルタイプ変更、元のファイルタイプでの変更をコミット予定済"
+Perhaps a message from yesterday would have helped?
 
- #: git-gui.sh:2090
- msgid "File type changed, staged"
--- 
-1.8.1.msysgit.1
+ http://article.gmane.org/gmane.comp.version-control.git/230633
+
+seems to indicate that checking for version 4 is sufficient.
+
+Also I asked you to split the __attribute__((sentinel(n)) support
+into a separate patch.  We currently do not pass anything but 0
+(meaning, the sentinel is always at the end), and SENTINEL in all
+capital is easy enough to grep for when somebody _does_ want to have
+such a support, so I'd prefer not to see __attribute__((sentinel(n))
+until it becomes necessary.
+
+Thanks.
