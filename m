@@ -1,74 +1,96 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: git svn fetch segfault on exit
-Date: Thu, 18 Jul 2013 14:18:16 +0200
-Message-ID: <878v146ozb.fsf@linux-k42r.v.cablecom.net>
-References: <51E7B382.8050302@gmail.com>
+Subject: [PATCH v2 1/2] apply, entry: speak of submodules instead of subprojects
+Date: Thu, 18 Jul 2013 14:26:55 +0200
+Message-ID: <a3c2312256eb222459ae92ad073a95834e51da1a.1374150389.git.trast@inf.ethz.ch>
+References: <87bo631odi.fsf@hexa.v.cablecom.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: Jonathan Lambrechts <jonathanlambrechts@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 18 14:18:32 2013
+Cc: <jk@jk.gs>, <stimming@tuhh.de>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 18 14:27:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UznAF-0004Qp-R7
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 14:18:32 +0200
+	id 1UznIW-0000iz-KH
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 14:27:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758914Ab3GRMSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 08:18:21 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:3304 "EHLO edge10.ethz.ch"
+	id S1758036Ab3GRM1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 08:27:00 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:16250 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757988Ab3GRMST (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 08:18:19 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 18 Jul
- 2013 14:18:12 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Thu, 18 Jul 2013 14:18:16 +0200
-In-Reply-To: <51E7B382.8050302@gmail.com> (Jonathan Lambrechts's message of
-	"Thu, 18 Jul 2013 11:21:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1757183Ab3GRM07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 08:26:59 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 18 Jul
+ 2013 14:26:49 +0200
+Received: from linux-k42r.v.cablecom.net (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 18 Jul
+ 2013 14:26:57 +0200
+X-Mailer: git-send-email 1.8.3.3.1053.g4beaad1
+In-Reply-To: <87bo631odi.fsf@hexa.v.cablecom.net>
 X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230687>
 
-Jonathan Lambrechts <jonathanlambrechts@gmail.com> writes:
+There are only four (with some generous rounding) instances in the
+current source code where we speak of "subproject" instead of
+"submodule".  They are as follows:
 
-> Every git svn call that involves a fetch produces a segmentation fault
-> on exit (but the operation succeeds).
->
-> *** Error in `/usr/bin/perl': double free or corruption (!prev):
-> 0x0000000002ce1ac0 ***
-> ======= Backtrace: =========
-> /usr/lib/libc.so.6(+0x788ae)[0x7fd4d83798ae]
-> /usr/lib/libc.so.6(+0x79587)[0x7fd4d837a587]
-> /usr/lib/libapr-1.so.0(apr_allocator_destroy+0x1d)[0x7fd4d568e9ad]
-> /usr/lib/libapr-1.so.0(apr_pool_terminate+0x30)[0x7fd4d568f590]
-> /usr/lib/perl5/vendor_perl/auto/SVN/_Core/_Core.so(_wrap_apr_terminate+0x50)[0x7fd4d6886920]
-> /usr/lib/perl5/core_perl/CORE/libperl.so(Perl_pp_entersub+0x571)[0x7fd4d876f821]
-> /usr/lib/perl5/core_perl/CORE/libperl.so(Perl_runops_standard+0x16)[0x7fd4d8767e26]
-> /usr/lib/perl5/core_perl/CORE/libperl.so(Perl_call_sv+0x3b0)[0x7fd4d86f93b0]
-> /usr/lib/perl5/core_perl/CORE/libperl.so(Perl_call_list+0x2c7)[0x7fd4d86fb477]
-> /usr/lib/perl5/core_perl/CORE/libperl.so(perl_destruct+0x1321)[0x7fd4d86fca91]
-> /usr/bin/perl(main+0x111)[0x400e01]
-> /usr/lib/libc.so.6(__libc_start_main+0xf5)[0x7fd4d8322a15]
-> /usr/bin/perl[0x400e71]
+* one error message in git-apply and two in entry.c
 
-Can you check if your version of the perl subversion bindings were
-compiled against the perl and subversion versions that you have
-installed?
+* the patch format for submodule changes
 
-Perl -- as an interpreted language -- is mostly supposed to be safe from
-such segfaults, and since git-svn is pure perl, the likely culprit is in
-the bindings or the svn libraries.  And the easiest way to get that to
-break is a version mismatch.
+The latter was introduced in 0478675 (Expose subprojects as special
+files to "git diff" machinery, 2007-04-15), apparently before the
+terminology was settled.  We can of course not change the patch
+format.
 
+Let's at least change the error messages to consistently call them
+"submodule".
+
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ builtin/apply.c | 2 +-
+ entry.c         | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 0e9b631..f1d4cc9 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -3847,7 +3847,7 @@ static void add_index_file(const char *path, unsigned mode, void *buf, unsigned
+ 		const char *s = buf;
+ 
+ 		if (get_sha1_hex(s + strlen("Subproject commit "), ce->sha1))
+-			die(_("corrupt patch for subproject %s"), path);
++			die(_("corrupt patch for submodule %s"), path);
+ 	} else {
+ 		if (!cached) {
+ 			if (lstat(path, &st) < 0)
+diff --git a/entry.c b/entry.c
+index d7c131d..6af4b6a 100644
+--- a/entry.c
++++ b/entry.c
+@@ -199,9 +199,9 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
+ 		break;
+ 	case S_IFGITLINK:
+ 		if (to_tempfile)
+-			return error("cannot create temporary subproject %s", path);
++			return error("cannot create temporary submodule %s", path);
+ 		if (mkdir(path, 0777) < 0)
+-			return error("cannot create subproject directory %s", path);
++			return error("cannot create submodule directory %s", path);
+ 		break;
+ 	default:
+ 		return error("unknown file mode for %s in index", path);
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.8.3.3.1053.g4beaad1
