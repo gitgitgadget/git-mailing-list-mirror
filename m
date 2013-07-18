@@ -1,130 +1,187 @@
 From: Yamada Saburo <devil.tamachan@gmail.com>
-Subject: Fwd: [PATCH 4/4] Update Japanese translation (Git-gui)
-Date: Fri, 19 Jul 2013 05:52:08 +0900
-Message-ID: <CAPM==HLEiwcP6ubgBh42j3w0VPMzXVhfjB9VM=6QWGxvk7M9jg@mail.gmail.com>
-References: <CAPM==H+fCx3k-iL2x4GQLtVxg662CqiPuD0g4v2+_a8MTrG4gQ@mail.gmail.com>
-	<7vzjtj1zmw.fsf@alter.siamese.dyndns.org>
-	<CAPM==HK6o+vMbrb0o16qiKAG2azvBDPdXrXWaVro1W=Z-rXr7Q@mail.gmail.com>
+Subject: Fwd: [PATCH 2/4] Update git-gui/po/ja.po (Git-gui Japanese)
+Date: Fri, 19 Jul 2013 05:52:57 +0900
+Message-ID: <CAPM==HK3F5pw0ZPLbRMQZBsW3DFn=JjFxqux9H5optostpjCiw@mail.gmail.com>
+References: <CAPM==HJy65+LoJZ3A_DUuyq0LZhZQ_XpB0djMKbeSnY_PAUasw@mail.gmail.com>
+	<7v4nbr3eqy.fsf@alter.siamese.dyndns.org>
+	<CAPM==H+nSZLQ-VOE7WJkJYRcQfVLZsy7XbEeFvCyv=zwghJHzg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-2022-JP
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 18 22:52:22 2013
+X-From: git-owner@vger.kernel.org Thu Jul 18 22:53:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzvBS-00089l-U3
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 22:52:19 +0200
+	id 1UzvCB-0008TN-6b
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 22:53:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964783Ab3GRUwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 16:52:12 -0400
-Received: from mail-vc0-f182.google.com ([209.85.220.182]:45448 "EHLO
-	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759359Ab3GRUwJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 16:52:09 -0400
-Received: by mail-vc0-f182.google.com with SMTP id id13so2714690vcb.27
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 13:52:08 -0700 (PDT)
+	id S964812Ab3GRUw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 16:52:59 -0400
+Received: from mail-vc0-f196.google.com ([209.85.220.196]:45986 "EHLO
+	mail-vc0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759381Ab3GRUw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 16:52:58 -0400
+Received: by mail-vc0-f196.google.com with SMTP id ha12so432885vcb.11
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 13:52:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :content-type:content-transfer-encoding;
-        bh=y5O7J2mb4MlN92V5LO/0ruhM2bNyzYoFxGwH89lnOwo=;
-        b=LnTga++fcvXvriX6jX5FNZihxHmrFlHi8SffS/gVPKUDxIMA8Gm2VDg+U/OVZeP/aV
-         JDHFtOAL1VIo0ERbjkHYAcjCg9GdAwyzF9PVD3JnfijBEQqDQLVDsE9HmL5z9Qk8EeoQ
-         UTvdRRzhE7Ken69jDBcEabDia4pkqxebqrfdlaKfkkyNL8bZWv83Ot6xlQgeKZH+kRH8
-         NK9oV5XSWyU6u/K00z1QHSQagv0RkI4ZPxh+5TlkiP0VpA/4IwdXM5/RfG0GfsCZ/PJU
-         KQHBdHRvDw4vGBbkV5BW43wnjSfQDb4WfEpgxZZuyPxzFVQEES2u4RB6HqZCxBMHPNS5
-         wESg==
-X-Received: by 10.221.63.2 with SMTP id xc2mr4698060vcb.74.1374180728287; Thu,
- 18 Jul 2013 13:52:08 -0700 (PDT)
-Received: by 10.221.24.7 with HTTP; Thu, 18 Jul 2013 13:52:08 -0700 (PDT)
-In-Reply-To: <CAPM==HK6o+vMbrb0o16qiKAG2azvBDPdXrXWaVro1W=Z-rXr7Q@mail.gmail.com>
+        bh=qmyN3jx5+7fbdZSj6MT6EJy+KZpBkyyc8hmYmG/gIuc=;
+        b=dCUeaBHWVHzxjsswcsrnCr460z2vvac06PR3/548l7XZ9RzcJ9mvCM1R6/kB4eWKAA
+         RsPo2i6xRYZw7CjFK/wlxTZ/hKMVoxdDU9S1x/JuVc811NQTUtde7JDfgWjDg/rI5yJs
+         +bCSf84lgwac0xNkzdUDxE5PErl97vj3ij4GlETSf4sVQ/+OGJh8ms2lXCugJ/0MA+46
+         WMbaUuIL6+5951rybQ+Is/UMJ1AFKT1STlJUokZkpR2z92msWt8ATKycQ5P3jq9TuRa8
+         NhXZPemq3NdOAGXWKucfA517ma/esYMBwC+WpvY/Cy/1KGLQPc9fDTWwsVv2G4PNFy/A
+         sfaw==
+X-Received: by 10.58.34.69 with SMTP id x5mr4754352vei.11.1374180778003; Thu,
+ 18 Jul 2013 13:52:58 -0700 (PDT)
+Received: by 10.221.24.7 with HTTP; Thu, 18 Jul 2013 13:52:57 -0700 (PDT)
+In-Reply-To: <CAPM==H+nSZLQ-VOE7WJkJYRcQfVLZsy7XbEeFvCyv=zwghJHzg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230744>
 
 ---------- Forwarded message ----------
 From: Yamada Saburo <devil.tamachan@gmail.com>
 Date: 2013/7/19
-Subject: Re: [PATCH 4/4] Update Japanese translation (Git-gui)
+Subject: Re: [PATCH 2/4] Update git-gui/po/ja.po (Git-gui Japanese)
 To: Junio C Hamano <gitster@pobox.com>
 
 
 Hi Hamano,
 
-> dubious ones like this (there is no change to the string, just the
-> way msgstr is formatted to make them all overlong single strings).
-changed by QT Linguist for Win.
+> I suspect that is not a name
+Real name.
 
->  Perhaps "元のファイルタイプでの変更をコミット予定済", or something?
-Your translation looks right. New mail is due to be thrown later here.
+>> +"Language: \n"
+>What is this about????
+I used QT Linguist for Win. This line append by QT Linguist.
+
+> fuzzy & No translation??? x7
+translated in Patch4/4.
 
 Thanks
 
 2013/7/19 Junio C Hamano <gitster@pobox.com>:
 > 悪魔野玉茶無  <devil.tamachan@gmail.com> writes:
 >
->> @@ -124,26 +127,23 @@ msgstr "コミット予定済、ファイル無し"
->>
->>  #: git-gui.sh:2087
->>  msgid "File type changed, not staged"
->> -msgstr "ファイル型変更、コミット未予定"
->> +msgstr "ファイルタイプ変更、コミット未予定"
+> I suspect that is not a name (and I somehow have suspicion that the
+> S-o-b is not real, either), but if you send patches as somebody that
+> does not match your sign-off, please add
 >
-> There are good changes like this in this patch, and ...
+>         From: Yamada Saburo <devil.tamachan@gmail.com>
 >
->>  #: git-gui.sh:3095
->>  #, tcl-format
->>  msgid "fatal: cannot stat path %s: No such file or directory"
->> -msgstr ""
->> -"致命的: パス %s が stat できません。そのようなファイルやディレクトリはありま"
->> -"せん"
->> +msgstr "致命的: パス %s が stat できません。そのようなファイルやディレクトリはありません"
+> followed by a blank line at the very beginning of the e-mail body.
+> That will override the e-mail From: line your MUA puts in your
+> message and record the commit as authored by "Yamada Saburo".
 >
-> dubious ones like this (there is no change to the string, just the
-> way msgstr is formatted to make them all overlong single strings).
->
->>  #: git-gui.sh:2088 git-gui.sh:2089
->> -#, fuzzy
->>  msgid "File type changed, old type staged for commit"
->> -msgstr "ファイル型変更、コミット未予定"
->> +msgstr "ファイルタイプ変更、コミット予定の形式が古い"
->
-> Is this correct?  I do not personally use git-gui, but I _think_
-> this message is given when you did something like this:
->
->         edit file ;# "file" is a regular file
->         git add file
->         rm file
->         ln -s something file ;# "file" is now a symbolic link
->
-> at this point, "git status" would say "MT file".  The latter half of
-> the translated Japanese reads "format planned to commit is ancient".
->
-> Perhaps "元のファイルタイプでの変更をコミット予定済", or something?
->
-> In any case, I think the organization of the series should be
->
->         [PATCH 1/3] git-gui: mark yes/no/ask for translation
->
-> which is your 3/4, and then
->
->         [PATCH 2/3] git-gui: update git-gui/po/git-gui.pot
->
-> which is your 1/4, and then
->
->         [PATCH 3/3] git-gui: update Japanese translation
->
-> which is all the changes to git-gui/po/ja.po in your 2/4 and 4/4.
->
-> Also I forgot to notice when I was reading the earlier patches, but
-> git-gui has a separate root commit, so please base your work on
-> Pat Thoyts's tree at:
->
->     git://repo.or.cz/git-gui
+>> Signed-off-by: Yamada Saburo <devil.tamachan@gmail.com>
+>> ---
 >
 > Thanks.
+>
+>>  git-gui/po/ja.po | 1066 +++++++++++++++++++++++++++++-------------------------
+>>  1 file changed, 583 insertions(+), 483 deletions(-)
+>>
+>> diff --git a/git-gui/po/ja.po b/git-gui/po/ja.po
+>> index 9aff249..0bbe504 100644
+>> --- a/git-gui/po/ja.po
+>> +++ b/git-gui/po/ja.po
+>> @@ -7,41 +7,42 @@ msgid ""
+>>  msgstr ""
+>>  "Project-Id-Version: git-gui\n"
+>>  "Report-Msgid-Bugs-To: \n"
+>> -"POT-Creation-Date: 2010-01-26 15:47-0800\n"
+>> +"POT-Creation-Date: 2013-07-10 02:45+0900\n"
+>>  "PO-Revision-Date: 2010-02-02 19:03+0900\n"
+>>  "Last-Translator: しらいし ななこ <nanako3@lavabit.com>\n"
+>
+> 山田三郎 would be the last translater, no?
+>
+>>  "Language-Team: Japanese\n"
+>> +"Language: \n"
+>
+> What is this about????
+>
+>>  "MIME-Version: 1.0\n"
+>>  "Content-Type: text/plain; charset=UTF-8\n"
+>>  "Content-Transfer-Encoding: 8bit\n"
+>
+>> -#: git-gui.sh:1921
+>> +#: git-gui.sh:2088 git-gui.sh:2089
+>> +#, fuzzy
+>> +msgid "File type changed, old type staged for commit"
+>> +msgstr "ファイル型変更、コミット未予定"
+>
+> If this is no longer fuzzy, please resolve it by removing "#, fuzzy"
+> marker.
+>
+> Also, this translation seems to be incomplete.  It may be OK for
+> some strings (e.g. "RegExp" that seems to be a label of a checkbox
+> or something) to be the same as the original, but some others may
+> need a bit more work.
+>
+> I wonder if there is a mechanism in *.po files to differentiate
+> between "I looked at this entry and using the original string as the
+> template is fine" and "I didn't translate this string, but it should
+> be".  I think the following entries seem to fall into the latter
+> category.
+>
+>> -#: lib/commit.tcl:272
+>> +#: lib/commit.tcl:269
+>> +msgid ""
+>> +"You are about to commit on a detached head. This is a potentially dangerous "
+>> +"thing to do because if you switch to another branch you will lose your "
+>> +"changes and it can be difficult to retrieve them later from the reflog. You "
+>> +"should probably cancel this commit and create a new branch to continue.\n"
+>> +" \n"
+>> +" Do you really want to proceed with your Commit?"
+>> +msgstr ""
+>
+> No translation???
+>
+>> -#: lib/index.tcl:398
+>> +#: lib/index.tcl:380
+>> +#, tcl-format
+>> +msgid "Stage %d untracked files?"
+>> +msgstr ""
+>
+> No translation???
+>
+>> -#: lib/option.tcl:149
+>> +#: lib/option.tcl:151
+>> +msgid "Use Textconv For Diffs and Blames"
+>> +msgstr ""
+>
+> No translation???
+>
+>> -#: lib/option.tcl:153
+>> +#: lib/option.tcl:156
+>> +msgid "Additional Diff Parameters"
+>> +msgstr ""
+>
+> No translation???
+>
+>> +#: lib/option.tcl:160
+>> +msgid "Warn before committing to a detached head"
+>> +msgstr ""
+>
+> No translation???
+>
+>> +#: lib/option.tcl:161
+>> +msgid "Staging of untracked files"
+>> +msgstr ""
+>
+> No translation???
+>
+>> +#: lib/transport.tcl:25
+>> +msgid "fetch all remotes"
+>> +msgstr ""
+>
+> No translation???
