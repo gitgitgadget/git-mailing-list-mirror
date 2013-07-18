@@ -1,118 +1,92 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH v4 2/2] git-svn: allow git-svn fetching to work using serf
-Date: Thu, 18 Jul 2013 16:31:52 -0700
-Message-ID: <53FD2913-2A8E-42E1-9C76-D0AEBD76E0DA@gmail.com>
-References: <8a6adfae744011599e410da7a46808b@f74d39fa044aa309eaea14b9f57fe79> <ac83ba2812aee248275a0760bb39a00@f74d39fa044aa309eaea14b9f57fe79> <20130718192943.GT14690@google.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	David Rothenberger <daveroth@acm.org>,
-	Eric Wong <normalperson@yhbt.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 19 01:32:01 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH v2 1/1] cygwin: Add fast_lstat() and fast_fstat() functions
+Date: Thu, 18 Jul 2013 16:32:11 -0700
+Message-ID: <7vd2qf1m2s.fsf@alter.siamese.dyndns.org>
+References: <51DDC2AF.9010504@ramsay1.demon.co.uk>
+	<51E2CE97.2040900@gmail.com> <7vppuja9ip.fsf@alter.siamese.dyndns.org>
+	<51E4AABD.9010701@web.de> <51E4C400.6000009@gmail.com>
+	<51E82AE0.9050707@ramsay1.demon.co.uk> <51E862FC.4090607@web.de>
+	<51E86E02.4060208@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	mhagger@alum.mit.edu, Jeff King <peff@peff.net>,
+	Johannes Sixt <j6t@kdbg.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, dpotapov@gmail.com,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 19 01:32:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uzxg0-0000Jf-Ka
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 01:32:01 +0200
+	id 1UzxgI-0000S8-CJ
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 01:32:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934645Ab3GRXb5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Jul 2013 19:31:57 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:65037 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934602Ab3GRXb4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Jul 2013 19:31:56 -0400
-Received: by mail-pa0-f53.google.com with SMTP id tj12so3776049pac.12
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 16:31:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc:x-mauler;
-        bh=BCU71Ffqme8w96QW/L5BXvL4F6vi9hwdfXhtaZYt1Vg=;
-        b=Dj6gqxvV9CTXBhvBGe/8/Zfhu0cDZvlODj8Ts0K5jpr8b5tEZlopO/TtzGBZiIsQmd
-         bRZuOkI98N8/RrYHR8obT3xrslmx/HsjyWr7V7+1eRVXoGuV2fat+ats1L9xtYikmpgu
-         twaAlyfAfBBlEvDkYuZQszgn2GOiPYzjGMx2kkrEhK9B20SE/4XWorIA55lOaPbNzOPU
-         QzqVpSl3n0lZg0IN3FzO1Dy6H4v/sx1Sj0cVkjIr+eKYlwk15P1kU/VSL9b4d242mlwG
-         iA+G7/VGrAZdoPaLuSOUAl6n/lNJdaT0JB7f4FvcSUpwzDT0iT6228k4HiEb+3u9ZE5w
-         gynw==
-X-Received: by 10.66.232.42 with SMTP id tl10mr15126064pac.159.1374190315648;
-        Thu, 18 Jul 2013 16:31:55 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id qu10sm16036525pbb.12.2013.07.18.16.31.53
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Jul 2013 16:31:54 -0700 (PDT)
-In-Reply-To: <20130718192943.GT14690@google.com>
-X-Mauler: Craptastic (2.936)
+	id S934677Ab3GRXcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 19:32:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63118 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934602Ab3GRXcN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 19:32:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C72A32DD0;
+	Thu, 18 Jul 2013 23:32:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O9qVzHcd6DSC5euUPD6yWjUPN7o=; b=rurYG6
+	SauFjcje44VI1qKCqp9zCjmcUiSWYY90iDhQfG8vw3DoVUmexH/cNNi17bnNeYXV
+	8HMsLcmjrP2pfw6ok0F+4yV69mrX7CZv7Dzgbc3Qjq1dvo/VjrXH0Iia62HLnARf
+	GaxOs+4+1cLw7LpoJ/j4XfVOhWsldFobAvInY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UKh7RWWYFBGtj/X9xAnf4vFZVZK1T7CB
+	gRrK3hdBZ84ADyvhOU10wAcSk3VPz2CgRCPesv7hRNoWfXTvTCB8ENrpXZG5fJ7J
+	lvg0VVoA5jBjmHVWwDEAtxQQjd7bFBkotJ8zd4flrKmfCz1AqVi6vbUmvAmZH5po
+	toytHETDX6s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3024432DCF;
+	Thu, 18 Jul 2013 23:32:13 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 832AF32DCE;
+	Thu, 18 Jul 2013 23:32:12 +0000 (UTC)
+In-Reply-To: <51E86E02.4060208@gmail.com> (Mark Levedahl's message of "Thu, 18
+	Jul 2013 18:36:50 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 45CF468C-F002-11E2-B28B-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230767>
 
-On Jul 18, 2013, at 12:29, Jonathan Nieder wrote:
-> (cc-ing Eric Wong, who maintains git-svn and knows both it and
-> the libsvn perl bindings much better than I do)
-> Kyle J. McKay wrote:
->
->> David Rothenberger <daveroth@acm.org> has determined the cause to
->> be that ra_serf does not drive the delta editor in a depth-first
->> manner [...]. Instead, the calls come in this order:
->
-> Thanks.
->
-> Sorry to nitpick, but the problem is not depth-first versus
-> breadth-first versus random.  Blaming the traversal order makes this
-> completely confusing.  The actual problem is that the driver asks us
-> to keep multiple files open at a time.
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-On Sun, 07 Jul 2013 18:00:40 GMT, Branko =C4=8Cibej wrote:
-> On 07.07.2013 19:40, Jonathan Nieder wrote:
->> (cc-ing subversion's users@ list for advice)
->> Kyle McKay wrote:
->>> On Jul 6, 2013, at 18:37, Jonathan Nieder wrote:
->>
->>>
->>>> Kyle McKay wrote:
->>>>> Begin forwarded message:
->>>>>> [2] http://subversion.tigris.org/issues/show_bug.cgi?id=3D2932
->>>>>
->>>> Ah, thanks for the context.
->>>>
->>>> It's still not clear to me how we know that ra_serf driving the =20
->>>> editor
->>>> in a non depth-first manner is the problem here.  Has that =20
->>>> explanation
->>>> been confirmed somehow?
->>> [...]
->>> Since ra_serf makes multiple connections to the server (hard-coded
->>> to 4 prior to svn 1.8, defaults to 4 in svn 1.8 but can be set to
->>> between 1 and 8) it makes sense there would be multiple active call=
-s
->>> to apply_textdelta if processing is done as results are received on
->>> the multiple connections.
->> Ah, that's worrisome.  Do I understand you correctly that to work =20
->> with
->> ra_serf in skelta mode, callers need to make their apply_textdelta
->> callback thread-safe?
->
-> No; the editor drive is single-threaded, but the order of the =20
-> operations
-> isn't strictly depth-first.
+> Unlike the results on the fast Win7 laptop, the above show
+> statistically significant slow down from the fast_lstat approach. I'm
+> just not seeing a case for the special case handling, and of course
+> Junio has already voted with his preference of removing the special
+> case stuff as well.
 
+Please don't take what I said as any "vote" in this thread.  I do
+not have a first-hand data to back anything up.
 
-Brane also describes this as a non-depth-first traversal order which =20
-is the root of the problem.  If the order of operations were strictly =20
-depth-first, the previous file would end up being closed before the =20
-next one's opened.
+I was primarily trying to see my understanding of the consensus of
+the thread was correct. If we can do without s/lstat/fast_lstat/
+almost everywhere in the codebase, of course, I would be happier, as
+it would give us one less thing to worry about.
 
-> The approach taken in this patch would be racy if the driver calls us
-> multiple times concurrently (since temp_acquire can fail).  I believe
-> it doesn't but haven't checked.
-
-Brane says the editor drive is single-threaded so that doesn't seem =20
-like a problem.
+If the assumptions like "they were declining minority and only lose
+population over time", "it is easy for them to revert the removal
+and keep going", and "removal will not hurt them too much in the
+first place, only a few hundred milliseconds", that might trump the
+longer-term maintainability issue, and we may end up having to carry
+that win32 stat implementation a bit longer until these users all
+switch to Cygwin 1.7, but judging from the "cvs binary seems to be
+built incorrectly" incident the other day, it might be the case some
+users still hesitate to update, fearing that 1.7 series may not be
+solid enough, perhaps?
