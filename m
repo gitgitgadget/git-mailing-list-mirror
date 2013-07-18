@@ -1,77 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/2] Finishing touches to "name-rev" fix
-Date: Thu, 18 Jul 2013 15:16:06 -0700
-Message-ID: <1374185768-7537-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 19 00:16:36 2013
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [RFC/PATCH v2 1/1] cygwin: Add fast_lstat() and fast_fstat()
+ functions
+Date: Thu, 18 Jul 2013 18:36:50 -0400
+Message-ID: <51E86E02.4060208@gmail.com>
+References: <51DDC2AF.9010504@ramsay1.demon.co.uk> <51E2CE97.2040900@gmail.com> <7vppuja9ip.fsf@alter.siamese.dyndns.org> <51E4AABD.9010701@web.de> <51E4C400.6000009@gmail.com> <51E82AE0.9050707@ramsay1.demon.co.uk> <51E862FC.4090607@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <gitster@pobox.com>, mhagger@alum.mit.edu,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, dpotapov@gmail.com,
+	GIT Mailing-list <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Jul 19 00:37:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzwUw-0007oS-5b
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 00:16:30 +0200
+	id 1Uzwol-00018F-50
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 00:36:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932961Ab3GRWQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 18:16:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63186 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759460Ab3GRWQO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 18:16:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BD18322CC
-	for <git@vger.kernel.org>; Thu, 18 Jul 2013 22:16:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id; s=sasl; bh=I35E5debXXspfAYAKyVIvQVtxNk
-	=; b=ItMyUmlBZyEx+ET1mT+MrGiNX1tXLtNU8CLgpytXUxbrL+mtwt4K8MNo+kf
-	frsDrH93WTKQkLX6wn2w3Ep7zRpq+qPhoOe6xgS9gmkgVPJhLjY3+Cs3Mh/OWW/I
-	z7/gSkNuXbZBfRC9GghbOakPtXWW8VJsYpWCQT/RHJPrgpBY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id; q=dns; s=sasl; b=lSOk4bDOeec2zCTeWD+D1FX7Y0lIW
-	ONRKgpBR72pSet2nJKYL+9dOPoStu6liWJvs2JD2810kvACa9+Gswzd6os39Xc7G
-	oEOX712Gc3vLTv/VeY9R9KXh6X8wVK25ggUuwhQDAtQDDSC+d38L0qksNK+5UHDT
-	y294Z7H5h9ThZs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FF8A322CB
-	for <git@vger.kernel.org>; Thu, 18 Jul 2013 22:16:11 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 590EC322CA
-	for <git@vger.kernel.org>; Thu, 18 Jul 2013 22:16:10 +0000 (UTC)
-X-Mailer: git-send-email 1.8.3.3-992-gf0e5e44
-X-Pobox-Relay-ID: A67D877E-EFF7-11E2-8DD8-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759467Ab3GRWgz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Jul 2013 18:36:55 -0400
+Received: from mail-qc0-f180.google.com ([209.85.216.180]:55230 "EHLO
+	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759107Ab3GRWgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 18:36:54 -0400
+Received: by mail-qc0-f180.google.com with SMTP id a1so2035384qcx.11
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 15:36:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=HbwAEgZd8bisfTSEY/qeAjhErz+mac3JfocG5/yuREE=;
+        b=A6q0TierPLC+PSDT4UwavrkUyPiePTBtdVCYEC+LPnMZQZAgo24oZdcBenaT70DtiB
+         glZrSh7el4YHMLYC/lipomICrKPxHVGJhMvIJaftHXARzRn/f/AJ6LLAlzQ9ivk4GiLN
+         xeY8BMzzq84QR/Vd09zAgkt6N5/ulIp4V074UpiBdituatduARz5kPWsRYWGGdSAvLHW
+         /1sp8X08PrLOABKQiq6ZAi+skAUzlMuvxHRxM1lU2SKHhmePGbgSPDvKp6w4ciqD9pDF
+         JQ6DFez5Dxy6J+mwGNJyPwZPPPegBmXJNUFcYCH0PInFkLJscu86vmlz7SwLoDgFJcWV
+         mvsA==
+X-Received: by 10.49.71.14 with SMTP id q14mr14456542qeu.90.1374187013468;
+        Thu, 18 Jul 2013 15:36:53 -0700 (PDT)
+Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
+        by mx.google.com with ESMTPSA id a8sm19317899qae.11.2013.07.18.15.36.51
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jul 2013 15:36:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130625 Thunderbird/17.0.7
+In-Reply-To: <51E862FC.4090607@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230760>
 
-This is an update to finish the jc/name-rev-exact-ref topic, which
-fixed the command to convert an object name that points at a tag to
-a refname of the tag (earlier, it did not show anything).  The
-codepath to handle its command line arguments, however, fed the
-commit that the tag points at to the underlying naming machinery.
+On 07/18/2013 05:49 PM, Torsten B=F6gershausen wrote:
+> On 2013-07-18 19.50, Ramsay Jones wrote:
+>>
+>> Hmm, that looks good. :-D
+>>
+>> Torsten reported a performance boost using the win32 stat() implemen=
+tation
+>> on a linux git repo (2s -> 1s, if I recall correctly) on cygwin 1.7.
+>> Do you have a larger repo available to test?
+> (I have a 5 years old Dual Core, 2.5 Ghz, 1 TB hard disk, Win XP, cyg=
+win 1.7)
+> On that machine I can see the performance boost.
+> Which kind of computers are you guys using?
+>
+> SSD/hard disk ?
+> How much RAM ?
+> Which OS ?
+> Is there a difference between Win XP, Win7, Win8?
+>
+> [snip]
+>
+>
+My previous results were from a Win 7 laptop, 2.7 GHz 2nd generation I7=
+,=20
+8 Gig Ram, 250 GByte spinning rust drive, all formatted NTFS.
 
-The first patch in this follow-up series corrects it for the command
-line codepath.
+Here's some more results, running WinXP in VirtualBox on my older Linux=
+=20
+laptop (2.5 GHz Penryn dual core, 500 GByte spinning rust, virtual file=
+=20
+system is NTFS). First, results using Ramsay's last patch on pu adding=20
+the fast_lstat: Timing results are after first doing 5 'git status runs=
+'=20
+to assure the cache is hot:
 
-The second patch is a related fix for "git describe".  The command
-is about naming the given commit in relation to a tag in its
-neighbourhood, and while it does allow the input to be a commit-ish
-(e.g. a tag that points at a commit), it did not unwrap it down to
-commit, which is a bug (it is like "git commit-tree -p $tag" that
-would mistakenly record a tag object as one of the parents of the
-resulting commit).
+% using the fast_lstat and friends...
+/usr/local/src/git>time git -c core.filemode=3Dfalse status >& /dev/nul=
+l
 
-Junio C Hamano (2):
-  name-rev: differentiate between tags and commits they point at
-  describe: fix --contains when a tag is given as input
+real    0m0.469s
+user    0m0.062s
+sys     0m0.436s
+/usr/local/src/git>
 
- builtin/describe.c  |  3 ++-
- builtin/name-rev.c  | 41 ++++++++++++++++++++++++++++++++---------
- t/t6120-describe.sh | 24 ++++++++++++++++++++++++
- 3 files changed, 58 insertions(+), 10 deletions(-)
+/usr/local/src/git>time git -c core.filemode=3Dtrue status >& /dev/null
 
--- 
-1.8.3.3-992-gf0e5e44
+real    0m0.719s
+user    0m0.030s
+sys     0m0.686s
+/usr/local/src/git>
+
+And now the same. but using Ramsay's first patch that removes all win32=
+=20
+stat stuff and forces everything to go through Cygwin's normal stat/fst=
+at:
+% stat - with / without core.filemode, no win32 stats
+/usr/local/src/git>time git -c core.filemode=3Dfalse status >& /dev/nul=
+l
+
+real    0m0.328s
+user    0m0.093s
+sys     0m0.264s
+/usr/local/src/git>
+
+/usr/local/src/git>time git -c core.filemode=3Dtrue status >& /dev/null
+
+real    0m0.625s
+user    0m0.124s
+sys     0m0.500s
+/usr/local/src/git>
+
+
+Unlike the results on the fast Win7 laptop, the above show statisticall=
+y=20
+significant slow down from the fast_lstat approach. I'm just not seeing=
+=20
+a case for the special case handling, and of course Junio has already=20
+voted with his preference of removing the special case stuff as well.
+
+Mark
