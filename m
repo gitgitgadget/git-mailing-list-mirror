@@ -1,223 +1,113 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: gitk: "Show origin of this line" triggered programatically
-Date: Thu, 18 Jul 2013 19:38:22 +0200
-Message-ID: <1l67wml.upjrrz1nq48l7M%lists@haller-berlin.de>
-Cc: paulus@samba.org (Paul Mackerras),
-	angavrilov@gmail.com (Alexander Gavrilov),
-	sitaramc@gmail.com (Sitaram Chamarty)
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 18 19:45:15 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] git_mkstemps: correctly test return value of open()
+Date: Thu, 18 Jul 2013 10:46:37 -0700
+Message-ID: <7v4nbr4v7m.fsf@alter.siamese.dyndns.org>
+References: <cover.1373618940.git.trast@inf.ethz.ch>
+	<9af38018d55c95a6807d305bb3a088e48916baac.1373618940.git.trast@inf.ethz.ch>
+	<878v16kfqy.fsf@linux-k42r.v.cablecom.net>
+	<7v38rd6l3j.fsf@alter.siamese.dyndns.org> <51E7E05E.4000201@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@inf.ethz.ch>,
+	"Dale R. Worley" <worley@alum.mit.edu>, git@vger.kernel.org,
+	Jonas Fonseca <fonseca@diku.dk>
+To: Drew Northup <n1xim.email@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 18 19:46:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzsGQ-0004As-K7
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 19:45:15 +0200
+	id 1UzsHs-00053i-8B
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 19:46:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759112Ab3GRRpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 13:45:08 -0400
-Received: from server90.greatnet.de ([83.133.96.186]:51359 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758954Ab3GRRpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 13:45:07 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jul 2013 13:45:06 EDT
-Received: from [10.1.15.233] (nat1.ableton.net [217.110.199.117])
-	by server90.greatnet.de (Postfix) with ESMTPA id 520D63B0DC5;
-	Thu, 18 Jul 2013 19:38:22 +0200 (CEST)
-User-Agent: MacSOUP/2.8.4b3 (Mac OS X version 10.8.4 (x86))
+	id S1759245Ab3GRRqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 13:46:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44763 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759037Ab3GRRqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 13:46:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42E6A32E9F;
+	Thu, 18 Jul 2013 17:46:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RWncCjEpqdSamucdML1k7xQXz5w=; b=GYXoXR
+	Ee0FJsQLvxtadc+mJ/drwr9hyIq4CCneoqJEazSvIRuYdZ1SyA2yyQcpdVATv+ml
+	OVLNhwhjVPiRWrOCxI++sF0qsmgyUg+PdIxhmjudMq0d+lluUw4H7MfKBUh6ckEn
+	oztEXXEvgD6hkL03odh+yMU71jxqvHVbkbU0k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FnaXy3Ay4KMRK8S5bFt3HSz1eclgv24Q
+	L9QUnv3RzHRneJXVF1d7QSL7mYj7tpt9E5nUunZqCzCeLROLym+v2IuLcf813F7h
+	4Et19wvVxhhHr8ubCi90HPmgb0w1pWrGpvSpPwCU7HCcGMJ875BAN3aHhHt7j/kc
+	UKcDUnozfFk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3682732E9D;
+	Thu, 18 Jul 2013 17:46:39 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8026132E9B;
+	Thu, 18 Jul 2013 17:46:38 +0000 (UTC)
+In-Reply-To: <51E7E05E.4000201@gmail.com> (Drew Northup's message of "Thu, 18
+	Jul 2013 08:32:30 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FF531132-EFD1-11E2-AA25-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230714>
 
-The "Show origin of this line" context menu command on a line in a patch
-in gitk is by far my most frequently used way of navigating back in
-history. It's so much faster than git gui blame.
+Drew Northup <n1xim.email@gmail.com> writes:
 
-Now, I wish it were available right from my text editor, showing me the
-origin of the line under the cursor when working with code.
+> I presume that I should apply this change to my porting of
+> git_mkstemps_mode() to tig. If there are no complaints about this for
+> a couple of days I will do so.
 
-In fact, it is; I have been using this feature in a roughly hacked way
-for a couple of months now, and I don't want to miss it any more. Most
-of my co-workers are jealous when they see it.
+Hmph, Thomas and I were actually asking you to give us
 
-I'd like to get it into gitk for real now, and I need some guidance on
-the best way to implement it.
+	Signed-off-by: Drew Northup <n1xim.email@gmail.com>
 
-I can see two ways:
+for the patch in question.  If tig has the same issue, applying that
+same patch there may make sense, but that is an independent issue.
 
-1) Add an option like '--show-origin=foo.cpp:25'. This would run
-   "git blame" on the given line in the working copy, and highlight the
-   result.
+Thanks.
 
-2) Add an option like '--select-file=foo.cpp:25'. This would be used in
-   combination with the existing --select-commit option to simply
-   highlight a given line in the patch (so the caller needs to do the
-   initial git blame himself).
-
-There are pros and cons to both. 1) is certainly easier to use from a
-text editor scripter's point of view (a simple one-liner in most cases),
-whereas 2) probably needs a glue script to run the initial git blame. On
-the other hand, that glue script could also take care of restricting the
-history to a week or so forward from the target commit, which makes gitk
-load much faster. Also, 2) could be used from git gui blame's "Show
-history context" command, which currently only selects the commit but
-can't highlight the line.
-
-So I think I'd lean towards option 2).  Below is the prototype that I
-have been using; not sure how buggy it is. If we go this route, one
-question would be whether we want to ship the glue script too, and how.
-
-Any opinions?
-
--Stefan
-
-
-
->From 80acb168ef13a55521e9b821450800450660769d Mon Sep 17 00:00:00 2001
-From: Stefan Haller <stefan@haller-berlin.de>
-Date: Thu, 18 Jul 2013 18:55:11 +0200
-Subject: [PATCH] gitk: Add options --select-file and --select-line
-
-These can be used in combination with --select-commit to jump to a given
-line in a patch. This can be useful for scripting your text editor to bring
-up gitk showing you the place in the history that last modified the line
-you are on.
-
-For example, given this little glue script, saved as "show_line_in_gitk.rb"
-somewhere in your path:
-
-        #!/usr/bin/env ruby
-
-        if ARGV.length != 2
-          puts "Usage: #{$0} <file> <line>"
-          exit 1
-        end
-
-        file, line = ARGV
-        blame_output = `git blame -p -L#{line},+1 "#{file}"`
-        exit 1 if $?.exitstatus != 0
-
-        blame_output_lines = blame_output.split("\n")
-        commit, line = blame_output_lines[0].split
-
-        file = blame_output_lines.grep(/^filename /)[0][9..-1]
-        date = blame_output_lines.grep(/^committer-time /)[0][15..-1]
-        datestr = Time.at(date.to_i + 60 * 60 * 24 * 7).to_s
-
-        system "gitk --before='#{datestr}' \
-                --select-commit=#{commit} \
-                --select-file='#{file}' \
-                --select-line=#{line} &"
-
-you could add this function to your .vimrc:
-
-    function! ShowLineInGitk()
-        execute "!show_line_in_gitk.rb " . expand("%p") . " " . line(".")
-    endfunction
-
-and map it to a key.
----
- gitk | 32 +++++++++++++++++++++++++++++---
- 1 file changed, 29 insertions(+), 3 deletions(-)
-
-diff --git a/gitk b/gitk
-index 5cd00d8..318a484 100755
---- a/gitk
-+++ b/gitk
-@@ -464,12 +464,17 @@ proc stop_rev_list {view} {
- }
- 
- proc reset_pending_select {selid} {
--    global pending_select mainheadid selectheadid
-+    global pending_select pending_select_file pending_select_line
-+    global mainheadid selectheadid selectfile select_line
- 
-     if {$selid ne {}} {
-        set pending_select $selid
-     } elseif {$selectheadid ne {}} {
-        set pending_select $selectheadid
-+       if {$selectfile ne {}} {
-+           set pending_select_file $selectfile
-+           set pending_select_line $select_line
-+       }
-     } else {
-        set pending_select $mainheadid
-     }
-@@ -1597,6 +1602,17 @@ proc getcommitlines {fd inst view updating}  {
-     return 2
- }
- 
-+proc select_pending_line {} {
-+    global pending_select pending_select_file pending_select_line
-+
-+    if {[info exists pending_select_file]} {
-+       selectline [rowofcommit $pending_select] 1 \
-+           [list $pending_select_file $pending_select_line]
-+    } else {
-+       selectline [rowofcommit $pending_select] 1
-+    }
-+}
-+
- proc chewcommits {} {
-     global curview hlview viewcomplete
-     global pending_select
-@@ -1611,7 +1627,7 @@ proc chewcommits {} {
-            reset_pending_select {}
- 
-            if {[commitinview $pending_select $curview]} {
--               selectline [rowofcommit $pending_select] 1
-+               select_pending_line
-            } else {
-                set row [first_real_row]
-                selectline $row 1
-@@ -5083,7 +5099,7 @@ proc layoutmore {} {
-     if {[info exists pending_select] &&
-        [commitinview $pending_select $curview]} {
-        update
--       selectline [rowofcommit $pending_select] 1
-+       select_pending_line
-     }
-     drawvisible
- }
-@@ -7082,6 +7098,8 @@ proc selectline {l isnew {desired_loc {}}} {
-     global autoselect autosellen jump_to_here
- 
-     catch {unset pending_select}
-+    catch {unset pending_select_file}
-+    catch {unset pending_select_line}
-     $canv delete hover
-     normalline
-     unsel_reflist
-@@ -11940,6 +11958,8 @@ if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
- 
- set selecthead {}
- set selectheadid {}
-+set selectfile {}
-+set select_line {}
- 
- set revtreeargs {}
- set cmdline_files {}
-@@ -11955,6 +11975,12 @@ foreach arg $argv {
-        "--select-commit=*" {
-            set selecthead [string range $arg 16 end]
-        }
-+       "--select-file=*" {
-+           set selectfile [string range $arg 14 end]
-+       }
-+       "--select-line=*" {
-+           set select_line [string range $arg 14 end]
-+       }
-        "--argscmd=*" {
-            set revtreeargscmd [string range $arg 10 end]
-        }
--- 
-1.8.3.2.747.g15edaa9
-
-
--- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+>
+> REF: $gmane/229961
+>
+> On 07/17/2013 03:29 PM, Junio C Hamano wrote:
+>> Thomas Rast<trast@inf.ethz.ch>  writes:
+>>> Thomas Rast<trast@inf.ethz.ch>  writes:
+>>>> From: "Dale R. Worley"<worley@alum.mit.edu>
+>>>>
+>>>> open() returns -1 on failure, and indeed 0 is a possible success value
+>>>> if the user closed stdin in our process.  Fix the test.
+>>>>
+>>>> Signed-off-by: Thomas Rast<trast@inf.ethz.ch>
+>
+>>>>   wrapper.c | 2 +-
+>>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/wrapper.c b/wrapper.c
+>>>> index dd7ecbb..6a015de 100644
+>>>> --- a/wrapper.c
+>>>> +++ b/wrapper.c
+>>>> @@ -322,7 +322,7 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
+>>>>   		template[5] = letters[v % num_letters]; v /= num_letters;
+>>>>
+>>>>   		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, mode);
+>>>> -		if (fd>  0)
+>>>> +		if (fd>= 0)
+>>>>   			return fd;
+>>>>   		/*
+>>>>   		 * Fatal error (EPERM, ENOSPC etc).
+>
+>
+> --
+> -Drew Northup
+> --------------------------------------------------------------
+> "As opposed to vegetable or mineral error?"
+> -John Pescatore, SANS NewsBites Vol. 12 Num. 59
