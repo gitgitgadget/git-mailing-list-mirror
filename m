@@ -1,46 +1,47 @@
 From: =?ISO-2022-JP?B?GyRCMC1LYkxuNkxDY0w1GyhC?= 
 	<devil.tamachan@gmail.com>
 Subject: [PATCH 1/4] Update git-gui/po/git-gui.pot
-Date: Fri, 19 Jul 2013 02:22:58 +0900
-Message-ID: <CAPM==HJO=O7GbhLo6MVjEq=yC4-2nX513q8sPvR2SD9eruGZTA@mail.gmail.com>
+Date: Fri, 19 Jul 2013 02:13:28 +0900
+Message-ID: <CAPM==H+yzc5mFsN2DDzQAqvy-AhqUdSU91q7v9TDRWkpz+Jppw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 18 19:23:08 2013
+X-From: git-owner@vger.kernel.org Thu Jul 18 19:31:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uzruz-0008WG-Vy
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 19:23:07 +0200
+	id 1Uzs34-0004i3-98
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 19:31:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759107Ab3GRRXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 13:23:00 -0400
-Received: from mail-ve0-f196.google.com ([209.85.128.196]:64653 "EHLO
-	mail-ve0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758971Ab3GRRW7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 13:22:59 -0400
-Received: by mail-ve0-f196.google.com with SMTP id da11so407961veb.3
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 10:22:58 -0700 (PDT)
+	id S1754991Ab3GRRbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 13:31:22 -0400
+Received: from mail-vc0-f196.google.com ([209.85.220.196]:48562 "EHLO
+	mail-vc0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754745Ab3GRRbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 13:31:20 -0400
+X-Greylist: delayed 1071 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jul 2013 13:31:20 EDT
+Received: by mail-vc0-f196.google.com with SMTP id ha12so409847vcb.7
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 10:31:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:date:message-id:subject:from:to:content-type;
         bh=co7fonpu3CweQzBfifWo+TqgrQVqTINBOjHahfblLcc=;
-        b=v5mi6ktXwpfcQlS9J+KOBdVvLyz27Xq4syyTcJxOVLMQ8IKOZN+JwQTn1PhgURYGYC
-         /wR7aMYUHRGsolD7SEG83P6loT6uUk/yGOZH3FmdW6mXJJSapIQkO3IGu5IfcRqlAkCH
-         EZj6Qw+ViDuQ49hLbddMlms8FE1JRub6SiAkY6Dv/tV5vres71IpSFPXOxLpcxH8hdOy
-         wnlxA3wwV3eQD7+S74CWci0wcWGYRYqetCQA0xVM/WqqKqYkrh3/T54haMI54lllRi29
-         yS4JcC2lGc0f5tbLwzG1TdeH7zUMpSUrg61eMMpR1xEUGHQc8naGxqsW89Tz8g3NV7rK
-         bRuQ==
-X-Received: by 10.220.203.197 with SMTP id fj5mr4544029vcb.60.1374168178405;
- Thu, 18 Jul 2013 10:22:58 -0700 (PDT)
-Received: by 10.221.24.7 with HTTP; Thu, 18 Jul 2013 10:22:58 -0700 (PDT)
+        b=aFFL+CjB6ALsT6gg84eDxe+js1T54F4Fm99dddiiAe7Q493qvKk39Hs08nnma6dEzX
+         3v2fweVYt6su4YshApN1FC5cc0H3xEyW0GnKjpyY9me7pWis02/j+42XdHpP5mlp5i4p
+         eSOphvLLqP4zwL7Uc1KsmN9mdYW3/0yj6/qNxpPvYBEtqdYTMuSnMs7qX24gZFpKVnez
+         d/k7L/Cndfcig8oZDZCUoWN5V34Q/q3b9SU3PpRaCEGLYVldVsFR2h8zMPQVh/WaALpN
+         1FBDti7w1FkCDD2VXcQD8Ad+nddAGeoGAyAStUr0tATQEHwop1bY7/AjyOtu6nUEr4+g
+         YsLQ==
+X-Received: by 10.58.234.161 with SMTP id uf1mr4326706vec.57.1374167608517;
+ Thu, 18 Jul 2013 10:13:28 -0700 (PDT)
+Received: by 10.221.24.7 with HTTP; Thu, 18 Jul 2013 10:13:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230708>
 
 Signed-off-by: Yamada Saburo <devil.tamachan@gmail.com>
 ---
