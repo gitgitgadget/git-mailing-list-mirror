@@ -1,187 +1,63 @@
-From: Yamada Saburo <devil.tamachan@gmail.com>
-Subject: Fwd: [PATCH 2/4] Update git-gui/po/ja.po (Git-gui Japanese)
-Date: Fri, 19 Jul 2013 05:52:57 +0900
-Message-ID: <CAPM==HK3F5pw0ZPLbRMQZBsW3DFn=JjFxqux9H5optostpjCiw@mail.gmail.com>
-References: <CAPM==HJy65+LoJZ3A_DUuyq0LZhZQ_XpB0djMKbeSnY_PAUasw@mail.gmail.com>
-	<7v4nbr3eqy.fsf@alter.siamese.dyndns.org>
-	<CAPM==H+nSZLQ-VOE7WJkJYRcQfVLZsy7XbEeFvCyv=zwghJHzg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] git_mkstemps: correctly test return value of open()
+Date: Thu, 18 Jul 2013 13:54:35 -0700
+Message-ID: <CAPc5daVVDCHqjyDV3zYVV33EFYjea7ge84+CE=M=QXagxnHd-A@mail.gmail.com>
+References: <cover.1373618940.git.trast@inf.ethz.ch> <9af38018d55c95a6807d305bb3a088e48916baac.1373618940.git.trast@inf.ethz.ch>
+ <878v16kfqy.fsf@linux-k42r.v.cablecom.net> <7v38rd6l3j.fsf@alter.siamese.dyndns.org>
+ <51E7E05E.4000201@gmail.com> <7v4nbr4v7m.fsf@alter.siamese.dyndns.org> <201307182032.r6IKWtWC016218@freeze.ariadne.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-2022-JP
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 18 22:53:06 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: n1xim.email@gmail.com, trast@inf.ethz.ch, git@vger.kernel.org,
+	fonseca@diku.dk
+To: "Dale R. Worley" <worley@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jul 18 22:55:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzvCB-0008TN-6b
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 22:53:03 +0200
+	id 1UzvE5-0000zd-IN
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 22:55:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964812Ab3GRUw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 16:52:59 -0400
-Received: from mail-vc0-f196.google.com ([209.85.220.196]:45986 "EHLO
-	mail-vc0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759381Ab3GRUw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 16:52:58 -0400
-Received: by mail-vc0-f196.google.com with SMTP id ha12so432885vcb.11
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 13:52:58 -0700 (PDT)
+	id S964817Ab3GRUy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 16:54:57 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:46858 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759187Ab3GRUy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 16:54:57 -0400
+Received: by mail-la0-f44.google.com with SMTP id er20so2930076lab.17
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 13:54:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=qmyN3jx5+7fbdZSj6MT6EJy+KZpBkyyc8hmYmG/gIuc=;
-        b=dCUeaBHWVHzxjsswcsrnCr460z2vvac06PR3/548l7XZ9RzcJ9mvCM1R6/kB4eWKAA
-         RsPo2i6xRYZw7CjFK/wlxTZ/hKMVoxdDU9S1x/JuVc811NQTUtde7JDfgWjDg/rI5yJs
-         +bCSf84lgwac0xNkzdUDxE5PErl97vj3ij4GlETSf4sVQ/+OGJh8ms2lXCugJ/0MA+46
-         WMbaUuIL6+5951rybQ+Is/UMJ1AFKT1STlJUokZkpR2z92msWt8ATKycQ5P3jq9TuRa8
-         NhXZPemq3NdOAGXWKucfA517ma/esYMBwC+WpvY/Cy/1KGLQPc9fDTWwsVv2G4PNFy/A
-         sfaw==
-X-Received: by 10.58.34.69 with SMTP id x5mr4754352vei.11.1374180778003; Thu,
- 18 Jul 2013 13:52:58 -0700 (PDT)
-Received: by 10.221.24.7 with HTTP; Thu, 18 Jul 2013 13:52:57 -0700 (PDT)
-In-Reply-To: <CAPM==H+nSZLQ-VOE7WJkJYRcQfVLZsy7XbEeFvCyv=zwghJHzg@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=44I0SLwJSyN+bHfSRq5VxTJf82360UArc6IS6VQmmMs=;
+        b=Qg+uWbPrCD3pTSeF/JxqejWu06Ln9TURcDEfOcP2BTcxdPIO+M9bDTClpT9GaesiTC
+         efWQQm2N1HOsgSuImAfXHFBUzXbsIZgLwgrejtgJY62O9FDjZaYFg8/4XsbvMC+9osrs
+         9cCp5/Y81aA8JxDPjyGi7kIZNU8Ey/w5ld/ZR8vX48BuQWiaQn6tpio8m+u1JRhUAhT6
+         7IIq05znfISeuaGjNTm6MG9uqU4pypiN3WwUJyVhufBifimtZvuoaRiIbsivqlRa3IdV
+         FjPKVnAyJFgCMeULN88HUcdwVxC0A4+C6rM2CycbtPPXpr9ZraSl09kIMEe0bC6sMATx
+         jtYQ==
+X-Received: by 10.152.5.197 with SMTP id u5mr6009240lau.59.1374180895550; Thu,
+ 18 Jul 2013 13:54:55 -0700 (PDT)
+Received: by 10.112.64.73 with HTTP; Thu, 18 Jul 2013 13:54:35 -0700 (PDT)
+In-Reply-To: <201307182032.r6IKWtWC016218@freeze.ariadne.com>
+X-Google-Sender-Auth: xKIiXuJpWUscyi1Jx-hKDocv3fo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230745>
 
----------- Forwarded message ----------
-From: Yamada Saburo <devil.tamachan@gmail.com>
-Date: 2013/7/19
-Subject: Re: [PATCH 2/4] Update git-gui/po/ja.po (Git-gui Japanese)
-To: Junio C Hamano <gitster@pobox.com>
+On Thu, Jul 18, 2013 at 1:32 PM, Dale R. Worley <worley@alum.mit.edu> wrote:
+> I've been looking into writing a proper test for this patch.  My first
+> attempt tests the symptom that was seen initially, that "git commit"
+> fails if fd 0 is closed.
+>
+> One problem is how to arrange for fd 0 to be closed.  I could use the
+> bash redirection "<&-", but I think you want to be more portable than
+> that.
 
+That's just a plain-vanilla part of POSIX shell behaviour, no?
 
-Hi Hamano,
-
-> I suspect that is not a name
-Real name.
-
->> +"Language: \n"
->What is this about????
-I used QT Linguist for Win. This line append by QT Linguist.
-
-> fuzzy & No translation??? x7
-translated in Patch4/4.
-
-Thanks
-
-2013/7/19 Junio C Hamano <gitster@pobox.com>:
-> 悪魔野玉茶無  <devil.tamachan@gmail.com> writes:
->
-> I suspect that is not a name (and I somehow have suspicion that the
-> S-o-b is not real, either), but if you send patches as somebody that
-> does not match your sign-off, please add
->
->         From: Yamada Saburo <devil.tamachan@gmail.com>
->
-> followed by a blank line at the very beginning of the e-mail body.
-> That will override the e-mail From: line your MUA puts in your
-> message and record the commit as authored by "Yamada Saburo".
->
->> Signed-off-by: Yamada Saburo <devil.tamachan@gmail.com>
->> ---
->
-> Thanks.
->
->>  git-gui/po/ja.po | 1066 +++++++++++++++++++++++++++++-------------------------
->>  1 file changed, 583 insertions(+), 483 deletions(-)
->>
->> diff --git a/git-gui/po/ja.po b/git-gui/po/ja.po
->> index 9aff249..0bbe504 100644
->> --- a/git-gui/po/ja.po
->> +++ b/git-gui/po/ja.po
->> @@ -7,41 +7,42 @@ msgid ""
->>  msgstr ""
->>  "Project-Id-Version: git-gui\n"
->>  "Report-Msgid-Bugs-To: \n"
->> -"POT-Creation-Date: 2010-01-26 15:47-0800\n"
->> +"POT-Creation-Date: 2013-07-10 02:45+0900\n"
->>  "PO-Revision-Date: 2010-02-02 19:03+0900\n"
->>  "Last-Translator: しらいし ななこ <nanako3@lavabit.com>\n"
->
-> 山田三郎 would be the last translater, no?
->
->>  "Language-Team: Japanese\n"
->> +"Language: \n"
->
-> What is this about????
->
->>  "MIME-Version: 1.0\n"
->>  "Content-Type: text/plain; charset=UTF-8\n"
->>  "Content-Transfer-Encoding: 8bit\n"
->
->> -#: git-gui.sh:1921
->> +#: git-gui.sh:2088 git-gui.sh:2089
->> +#, fuzzy
->> +msgid "File type changed, old type staged for commit"
->> +msgstr "ファイル型変更、コミット未予定"
->
-> If this is no longer fuzzy, please resolve it by removing "#, fuzzy"
-> marker.
->
-> Also, this translation seems to be incomplete.  It may be OK for
-> some strings (e.g. "RegExp" that seems to be a label of a checkbox
-> or something) to be the same as the original, but some others may
-> need a bit more work.
->
-> I wonder if there is a mechanism in *.po files to differentiate
-> between "I looked at this entry and using the original string as the
-> template is fine" and "I didn't translate this string, but it should
-> be".  I think the following entries seem to fall into the latter
-> category.
->
->> -#: lib/commit.tcl:272
->> +#: lib/commit.tcl:269
->> +msgid ""
->> +"You are about to commit on a detached head. This is a potentially dangerous "
->> +"thing to do because if you switch to another branch you will lose your "
->> +"changes and it can be difficult to retrieve them later from the reflog. You "
->> +"should probably cancel this commit and create a new branch to continue.\n"
->> +" \n"
->> +" Do you really want to proceed with your Commit?"
->> +msgstr ""
->
-> No translation???
->
->> -#: lib/index.tcl:398
->> +#: lib/index.tcl:380
->> +#, tcl-format
->> +msgid "Stage %d untracked files?"
->> +msgstr ""
->
-> No translation???
->
->> -#: lib/option.tcl:149
->> +#: lib/option.tcl:151
->> +msgid "Use Textconv For Diffs and Blames"
->> +msgstr ""
->
-> No translation???
->
->> -#: lib/option.tcl:153
->> +#: lib/option.tcl:156
->> +msgid "Additional Diff Parameters"
->> +msgstr ""
->
-> No translation???
->
->> +#: lib/option.tcl:160
->> +msgid "Warn before committing to a detached head"
->> +msgstr ""
->
-> No translation???
->
->> +#: lib/option.tcl:161
->> +msgid "Staging of untracked files"
->> +msgstr ""
->
-> No translation???
->
->> +#: lib/transport.tcl:25
->> +msgid "fetch all remotes"
->> +msgstr ""
->
-> No translation???
+http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_07_05
