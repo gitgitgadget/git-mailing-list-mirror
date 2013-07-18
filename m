@@ -1,65 +1,65 @@
-From: Rahul Bansal <rahul.bansal@rtcamp.com>
-Subject: Git tag output order is incorrect (IMHO)
-Date: Thu, 18 Jul 2013 20:57:00 +0530
-Message-ID: <840FACA0-7E13-41DB-A0F8-124FAB53BFBD@rtcamp.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 18 17:27:12 2013
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Git tag output order is incorrect (IMHO)
+Date: Thu, 18 Jul 2013 22:51:55 +0700
+Message-ID: <CACsJy8CpZHTCr0=MkSpfurPW_fyLGN_zd4uSzvBSYbuqH8aXew@mail.gmail.com>
+References: <840FACA0-7E13-41DB-A0F8-124FAB53BFBD@rtcamp.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Rahul Bansal <rahul.bansal@rtcamp.com>
+X-From: git-owner@vger.kernel.org Thu Jul 18 17:52:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uzq6q-0003jZ-09
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 17:27:12 +0200
+	id 1UzqVL-0000yn-9h
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 17:52:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758329Ab3GRP1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 11:27:07 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:50370 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756756Ab3GRP1G convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Jul 2013 11:27:06 -0400
-Received: by mail-pb0-f41.google.com with SMTP id rp16so3322270pbb.14
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 08:27:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version:x-mailer:x-gm-message-state;
-        bh=WXzFoF3MedFdYvCy99AOvZZB7zaFYDgedAcISSED9Pg=;
-        b=E6HkTq1GKg2sRvciWtFudQmj7nEHhdfx22xFf37AtS5DnOh5y6emdz5Cy4ZA0x+RXO
-         SrY8x71Utj6eYpdZbpX1VynU1eukag3+iaaJoA2n/iol3+7HvJ2dWhnIZLyf3QlCxPMV
-         YiHyPxejXvNRKNH7q6OtZFfKiFUEgooUc7PBIZwaCQvUv1bfzWgZzJNHmr5MqK30Ohi/
-         /3sSEx2Mhhn4Qe7fHmEE0YAknKg6E9sT8DPxpz+RKT/oDe0m4amx2Aqy7uHtEggDXX3I
-         MlpDhAgzvrG/pkKOGxcFZw4MhNn7J8JBhUWCamKYTd7cT7txmpCcp3by/kJAUfcNBzbh
-         DPtw==
-X-Received: by 10.68.219.194 with SMTP id pq2mr12727425pbc.151.1374161225151;
-        Thu, 18 Jul 2013 08:27:05 -0700 (PDT)
-Received: from [192.168.0.11] ([115.115.82.210])
-        by mx.google.com with ESMTPSA id om2sm14332252pbb.34.2013.07.18.08.27.03
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 18 Jul 2013 08:27:04 -0700 (PDT)
-X-Mailer: Apple Mail (2.1508)
-X-Gm-Message-State: ALoCoQkT9gv0WUTyPkHwbdosziEOCYV+NdHRYaCEnupGPxhBhq6Qj1hLIVaoRinoeXAlHUD3JqhI
+	id S932474Ab3GRPw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 11:52:27 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:48329 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932148Ab3GRPw0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 11:52:26 -0400
+Received: by mail-ob0-f177.google.com with SMTP id ta17so3835330obb.22
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 08:52:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=FZlKqkRW9EUggMCZT8PUALgy32h1Nt3daYr1/0joBKk=;
+        b=gpiL2Jk1/eASSlwjEu4aRyK45pcFZoJUDDwLLWw7I+8QcoeDFbRtJNQ8wIykZ0SH/e
+         ycszjuoZl4VJk2hwX2+f7gVeJkMjr/QPSCQYqyMxSk78FItjV3YeMryNVBaOAuPRHH49
+         m2s3r1bNS3MZs96mbJ8GvlMONEmIgSNEBggkDHEoRPA+m6KkwVyoy/GM/E964GYIUdjJ
+         iq9QcVKunlUbx5eMks8UNOR9wPKz478z37chHfR6abYEyJAS/z8x5+x3qdE4AhAWOMVG
+         f76Tws7waP3CYjn7STC5yRPLZdxcJDJwYDbv1pFnLzSExbfZ6B91aHS4+6dy3yNOqXoA
+         W+Lg==
+X-Received: by 10.60.47.41 with SMTP id a9mr13750731oen.78.1374162745883; Thu,
+ 18 Jul 2013 08:52:25 -0700 (PDT)
+Received: by 10.76.88.230 with HTTP; Thu, 18 Jul 2013 08:51:55 -0700 (PDT)
+In-Reply-To: <840FACA0-7E13-41DB-A0F8-124FAB53BFBD@rtcamp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230695>
 
-I am posting here first time, so please excuse me if this is not right place to send something like this.
+On Thu, Jul 18, 2013 at 10:27 PM, Rahul Bansal <rahul.bansal@rtcamp.com> wrote:
+> I am posting here first time, so please excuse me if this is not right place to send something like this.
+>
+> Please check - http://stackoverflow.com/questions/6091306/can-i-make-git-print-x-y-z-style-tag-names-in-a-sensible-order
+>
+> And also - https://github.com/gitlabhq/gitlabhq/issues/4565
+>
+> IMHO "git tag" is expected to show tag-list ordered by versions.
+>
+> It may be case, that people do not follow same version numbering convention. Most people after x.9.x increment major version (that is why they may not be affected because of this)
+>
+> Another option like "git tag --date-asc" can be added which will print tags by creation date. (As long as people do not create backdated tag, this will work).
 
-Please check - http://stackoverflow.com/questions/6091306/can-i-make-git-print-x-y-z-style-tag-names-in-a-sensible-order
+Try
 
-And also - https://github.com/gitlabhq/gitlabhq/issues/4565
-
-IMHO "git tag" is expected to show tag-list ordered by versions. 
-
-It may be case, that people do not follow same version numbering convention. Most people after x.9.x increment major version (that is why they may not be affected because of this)
-
-Another option like "git tag --date-asc" can be added which will print tags by creation date. (As long as people do not create backdated tag, this will work).
-
-Thanks,
--Rahul
+git for-each-ref --sort=committerdate --format='%(refname:short)' refs/tags
+--
+Duy
