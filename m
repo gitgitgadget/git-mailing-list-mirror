@@ -1,96 +1,97 @@
-From: Marc Strapetz <marc.strapetz@syntevo.com>
-Subject: Re: Git counterpart to SVN bugtraq properties?
-Date: Thu, 18 Jul 2013 15:32:51 +0200
-Message-ID: <51E7EE83.5020905@syntevo.com>
-References: <51E69612.6020201@syntevo.com> <20130717133357.GB2337@serenity.lan>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] pull: require choice between rebase/merge on
+ non-fast-forward pull
+Date: Thu, 18 Jul 2013 15:30:09 +0100
+Message-ID: <20130718143009.GC2337@serenity.lan>
+References: <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
+ <20130523102959.GP9448@inner.h.apk.li>
+ <20130523110839.GT27005@serenity.lan>
+ <7vd2shheic.fsf@alter.siamese.dyndns.org>
+ <20130523164114.GV27005@serenity.lan>
+ <7vbo81e7gs.fsf@alter.siamese.dyndns.org>
+ <20130523215557.GX27005@serenity.lan>
+ <7vli75cpom.fsf@alter.siamese.dyndns.org>
+ <CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
+ <7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu Jul 18 15:33:02 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andreas Krey <a.krey@gmx.de>,
+	John Szakmeister <john@szakmeister.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 18 16:30:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzoKK-0005qk-Ek
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 15:33:00 +0200
+	id 1UzpDv-0004hv-Fn
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 16:30:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758994Ab3GRNc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 09:32:56 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.31.98]:58449 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758989Ab3GRNcz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 09:32:55 -0400
-Received: from [217.91.110.92] (helo=[192.168.93.202])
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <marc.strapetz@syntevo.com>)
-	id 1UzoKC-0002Ni-Gq; Thu, 18 Jul 2013 15:32:52 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <20130717133357.GB2337@serenity.lan>
-X-Enigmail-Version: 1.5.1
-X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
+	id S1754625Ab3GROaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 10:30:23 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:38147 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753893Ab3GROaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 10:30:22 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 373AD606519;
+	Thu, 18 Jul 2013 15:30:21 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -10.999
+X-Spam-Level: 
+X-Spam-Status: No, score=-10.999 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5KF2an19U+s5; Thu, 18 Jul 2013 15:30:20 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id CC00E60651C;
+	Thu, 18 Jul 2013 15:30:19 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id B6BDD161E359;
+	Thu, 18 Jul 2013 15:30:19 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id q5aKCbWoCnje; Thu, 18 Jul 2013 15:30:19 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id A775E161E34B;
+	Thu, 18 Jul 2013 15:30:11 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230693>
 
-On 17.07.2013 15:33, John Keeping wrote:
-> On Wed, Jul 17, 2013 at 03:03:14PM +0200, Marc Strapetz wrote:
->> I'm looking for a specification or guidelines on how a Git client should
->> integrate with bug tracking systems. For SVN, one can use
->> bugtraq-properties [1] to specify e.g. the issue tracker URL or how to
->> parse the bug ID from a commit message. AFAIU, there is nothing
->> comparable for Git [2]? If that's actually the case, is someone
->> interested in working out a similar specification for Git?
->>
->> [1] http://code.google.com/p/tortoisesvn/source/browse/tags/version_1.2.0/doc/issuetrackers.txt
->>
->> [2] http://stackoverflow.com/questions/17545548
-> 
-> The Git way to record the issue ID as a footer in the commit message.
-> See for example [1].  Although I'm not aware of any standard for naming
-> this footer.
+On Thu, Jun 27, 2013 at 12:48:52PM -0700, Junio C Hamano wrote:
+> diff --git a/git-pull.sh b/git-pull.sh
+> index 638aabb..4a6a863 100755
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -264,6 +274,30 @@ case "$merge_head" in
+>  		die "$(gettext "Cannot rebase onto multiple branches")"
+>  	fi
+>  	;;
+> +*)
+> +	# integrating with a single other history
+> +	merge_head=${merge_head% }
+> +	if test -z "$rebase$no_ff$ff_only${squash#--no-squash}" &&
+> +		test -n "$orig_head" &&
+> +		! $(git merge-base --is-ancestor "$orig_head" "$merge_head")
 
-I wasn't aware of that and probably I'm not the only one. For instance,
-we are using JIRA and typical commit messages look like
+I think this needs to be:
 
- SG-1234: fix something
+	! $(git merge-base --is-ancestor "$orig_head" "$merge_head" ||
+	    git merge-base --is-ancestor "$merge_head" "$orig_head")
 
- More details on what has been fixed ...
-
-So the issues ID is present in the first line. This has the advantage
-that every GUI client will display it, as usually the short version of
-the commit message (which is used everywhere) reaches up to the first
-dot or LF. Hence it's pretty easy to display a hyperlink for the
-"SG-1234" part. bugtraq properties allow to define whether the issue ID
-should be appended to the top or bottom of the commit message. So looks
-like such an option makes sense for Git as well.
-
-> In terms of recording the URL and other data, I think you'd want a
-> dotfile in the repository (perhaps .bugzilla).  This shoudld probably be
-> in the gitconfig format, like .gitmodules.
-
-Having such a file sounds reasonable for storing the defaults, though
-let's call it .bugtraq or have some other more general name. Similar to
-.gitmodules, it makes sense to have the actual properties stored in
-$GIT_DIR/config which can be "initialized" from this .bugtraq file. The
-arguments are the same as for submodules: URLs stored in .bugtraq might
-need to be changed, depending on the client location (firewall/proxy...).
-
-Or we could just have $GIT_DIR/config properties *optionally*,
-overriding the .bugtraq properties, as for most users the default
-configuration will work fine anyway.
-
-> I think "all" it needs is to draw up a spec for the names of keys and
-> format of their values, along with the format of footer(s) identifying
-> issues associated with a commit and to persuade UI developers to support
-> it... ;-)
-
-I'll try to compose something here. But I'm wondering how we could
-attract a couple of developers or users to join in this discussion?
-
--Marc
+in order to avoid printing the message when "git pull" does not fetch
+any new changes and the user has some new commits.
