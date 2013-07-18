@@ -1,85 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/19] Index-v5
-Date: Wed, 17 Jul 2013 16:58:14 -0700
-Message-ID: <7v7ggo68o9.fsf@alter.siamese.dyndns.org>
-References: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com>
-	<CACsJy8AhmYBjzqPtF3f9Gk8hq2bk8-PtFCto9_4AkRePomvhAQ@mail.gmail.com>
-	<87ehb0cgqt.fsf@gmail.com>
-	<CACsJy8AiRCRvGmj4ZV+sc68d1z=S7YrRgPtPgEK+-zzNg7HcsA@mail.gmail.com>
-	<87oba1siz6.fsf@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 18 01:58:23 2013
+Subject: [PATCH 1/6] diff: pass the whole diff_options to diffcore_apply_filter()
+Date: Wed, 17 Jul 2013 17:30:01 -0700
+Message-ID: <1374107406-14357-2-git-send-email-gitster@pobox.com>
+References: <7vvc496ruf.fsf@alter.siamese.dyndns.org>
+ <1374107406-14357-1-git-send-email-gitster@pobox.com>
+Cc: Stefan Beller <stefanbeller@googlemail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 18 02:30:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uzbby-0000V6-0z
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 01:58:22 +0200
+	id 1Uzc6v-0006Up-PI
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 02:30:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757617Ab3GQX6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jul 2013 19:58:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34811 "EHLO
+	id S933607Ab3GRAaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jul 2013 20:30:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33967 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756209Ab3GQX6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jul 2013 19:58:17 -0400
+	id S1756575Ab3GRAaN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jul 2013 20:30:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F80A31521;
-	Wed, 17 Jul 2013 23:58:16 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA76D20AA1;
+	Thu, 18 Jul 2013 00:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CQFlXdlDvQUgql0yntUmIcU+jdk=; b=NHtq6J
-	9nXcstLK9T6TLUJMAeYAoUz3TxdqThz5HuwieEa1UEiWrZXixLyKdLKIYoBsgaU/
-	IAJ0FjZ12G5IEtmiA6ikkQzmFOJ7B88WY1+pychf0/JxuQG4mr3mCq4QaS3RyIKi
-	/4vPAfMoD6SuYgIIf5bzoRoQyttNTkmwOafhY=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=ysG7
+	JbsfpfXzU51qbv1jl/w/f9Y=; b=vwxIiOBcLQUAqvrIC5NDjwHFZ5S45F5sC7mp
+	OjoGTrRZv5sbkVKnkgcRnz6ymwx6eBUNamqoExSDw9nzltsRjLd7r7NvgW2wR3Uk
+	UFYA8z802M/z5+dZ61toZ31mWUGU7+Jh+X8ztDaAv5b1kyV5Galvbj4qfAbBZ9Xg
+	d0SJ5ec=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NGRTDdu8l+nsWiorrSIpTH7BtlT6XuwE
-	FzfGi/ovfNwbbDuoeLTXXDN9NwGZSr562QJZtv7mSBLOSgPfWUCG3V0fzeBKnhnL
-	0QHlLWJFZ0xTdjS0nobwLfPdGgqja6XHICsktF1Sb3yqoNTlNtQiz8+JjUKJ7kih
-	3k4b1ipPLI4=
+	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+	n7unh3dEkwQqwjKrnm6PPjEh3oP9lBU1bm+g8PTzJNNJ5tU8JRYZH4S45MHEFAGy
+	jFA12Aeqxy6qpo/ZspsOb/DAKqti3g7TdAci0vI1zrrtWRwU/mTpA09CrD4eRG5a
+	imV4ksgcfGlJBZt4OLDzVLF4zuPMSyfSZXB3It2nQls=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5293731520;
-	Wed, 17 Jul 2013 23:58:16 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D050720AA0;
+	Thu, 18 Jul 2013 00:30:12 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9FA213151F;
-	Wed, 17 Jul 2013 23:58:15 +0000 (UTC)
-In-Reply-To: <87oba1siz6.fsf@gmail.com> (Thomas Gummerer's message of "Wed, 17
-	Jul 2013 10:12:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BF08B266-EF3C-11E2-A9F6-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C35A20A97;
+	Thu, 18 Jul 2013 00:30:11 +0000 (UTC)
+X-Mailer: git-send-email 1.8.3.3-962-gf04df43
+In-Reply-To: <1374107406-14357-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 34C6BE04-EF41-11E2-96A4-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230665>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+The --diff-filter=<arg> option given by the user is kept as a
+string, and passed to the underlying diffcore_apply_filter()
+function as a string for each resulting path we run number of
+strchr() to see if each class of change among ACDMRTXUB is meant to
+be given.
 
-> Ah ok, I understand.  I think it's best to add a GIT_INDEX_VERSION=x
-> config option to config.mak, where x is the index version that should be
-> tested.
+Change the function signature to pass the whole diff_options, so
+that we can pre-parse this string in the next patch.
 
-Whatever you do, please do not call it GIT_INDEX_VERSION _if_ it is
-only to be used while testing.  Have string "TEST" somewhere in the
-name, and make t/test-lib-functions.sh take notice.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ diff.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Currently, the way for the user to show the preference as to which
-index version to use is to explicitly set the version once, and then
-we will (try to) propagate it inside the repository.
-
-I would not mind if we add a mechanism to make write_index() notice
-the environment variable GIT_INDEX_VERSION and write the index in
-that version.  But that is conceptually very different from whatever
-you give "make VARIABLE=blah" from the command line when building
-Git (or set in config.mak which amounts to the same thing).
+diff --git a/diff.c b/diff.c
+index 649ec86..41c64f2 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4509,11 +4509,13 @@ free_queue:
+ 	}
+ }
+ 
+-static void diffcore_apply_filter(const char *filter)
++static void diffcore_apply_filter(struct diff_options *options)
+ {
+ 	int i;
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+ 	struct diff_queue_struct outq;
++	const char *filter = options->filter;
++
+ 	DIFF_QUEUE_CLEAR(&outq);
+ 
+ 	if (!filter)
+@@ -4661,7 +4663,7 @@ void diffcore_std(struct diff_options *options)
+ 	if (!options->found_follow)
+ 		/* See try_to_follow_renames() in tree-diff.c */
+ 		diff_resolve_rename_copy();
+-	diffcore_apply_filter(options->filter);
++	diffcore_apply_filter(options);
+ 
+ 	if (diff_queued_diff.nr && !DIFF_OPT_TST(options, DIFF_FROM_CONTENTS))
+ 		DIFF_OPT_SET(options, HAS_CHANGES);
+-- 
+1.8.3.3-962-gf04df43
