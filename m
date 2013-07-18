@@ -1,63 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] git_mkstemps: correctly test return value of open()
-Date: Thu, 18 Jul 2013 13:54:35 -0700
-Message-ID: <CAPc5daVVDCHqjyDV3zYVV33EFYjea7ge84+CE=M=QXagxnHd-A@mail.gmail.com>
-References: <cover.1373618940.git.trast@inf.ethz.ch> <9af38018d55c95a6807d305bb3a088e48916baac.1373618940.git.trast@inf.ethz.ch>
- <878v16kfqy.fsf@linux-k42r.v.cablecom.net> <7v38rd6l3j.fsf@alter.siamese.dyndns.org>
- <51E7E05E.4000201@gmail.com> <7v4nbr4v7m.fsf@alter.siamese.dyndns.org> <201307182032.r6IKWtWC016218@freeze.ariadne.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Add the GIT_SENTINEL macro
+Date: Thu, 18 Jul 2013 14:06:52 -0700
+Message-ID: <20130718210652.GX14690@google.com>
+References: <51E849C4.7020305@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: n1xim.email@gmail.com, trast@inf.ethz.ch, git@vger.kernel.org,
-	fonseca@diku.dk
-To: "Dale R. Worley" <worley@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jul 18 22:55:03 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Jul 18 23:07:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzvE5-0000zd-IN
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 22:55:01 +0200
+	id 1UzvPh-0007Lp-Dq
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 23:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964817Ab3GRUy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 16:54:57 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:46858 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759187Ab3GRUy5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 16:54:57 -0400
-Received: by mail-la0-f44.google.com with SMTP id er20so2930076lab.17
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 13:54:55 -0700 (PDT)
+	id S933287Ab3GRVG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 17:06:57 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:64612 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933212Ab3GRVG4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 17:06:56 -0400
+Received: by mail-pb0-f41.google.com with SMTP id rp16so3647502pbb.0
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 14:06:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=44I0SLwJSyN+bHfSRq5VxTJf82360UArc6IS6VQmmMs=;
-        b=Qg+uWbPrCD3pTSeF/JxqejWu06Ln9TURcDEfOcP2BTcxdPIO+M9bDTClpT9GaesiTC
-         efWQQm2N1HOsgSuImAfXHFBUzXbsIZgLwgrejtgJY62O9FDjZaYFg8/4XsbvMC+9osrs
-         9cCp5/Y81aA8JxDPjyGi7kIZNU8Ey/w5ld/ZR8vX48BuQWiaQn6tpio8m+u1JRhUAhT6
-         7IIq05znfISeuaGjNTm6MG9uqU4pypiN3WwUJyVhufBifimtZvuoaRiIbsivqlRa3IdV
-         FjPKVnAyJFgCMeULN88HUcdwVxC0A4+C6rM2CycbtPPXpr9ZraSl09kIMEe0bC6sMATx
-         jtYQ==
-X-Received: by 10.152.5.197 with SMTP id u5mr6009240lau.59.1374180895550; Thu,
- 18 Jul 2013 13:54:55 -0700 (PDT)
-Received: by 10.112.64.73 with HTTP; Thu, 18 Jul 2013 13:54:35 -0700 (PDT)
-In-Reply-To: <201307182032.r6IKWtWC016218@freeze.ariadne.com>
-X-Google-Sender-Auth: xKIiXuJpWUscyi1Jx-hKDocv3fo
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=A4UhosKp1OaRp9/4qkqACXUSfF0d+GFvqoDFXb/at6k=;
+        b=WOIcljtx8ze3mo3wqp2dRV2+pQWKeZAgiwqalLQ7OqRVG11CUOVYjkdgKLErirNg4K
+         1ND2KAFVMWCSpTXSD/y4VXHle8DeZPbSB+DjjmymOnY/KWwW1RxkcBb/ZJvYcPbIsZ8q
+         Ddb4Jg1PtlvSxWY77f/u214MRa3P1NFB8ejnDTO+UgO90z1/FKkUJgYmfjgF6jItg2tQ
+         pCLr5TPom70bIPgeqyR+HV97+GEN2DsM6MS8+QQ8yw71Gab1XGKZnL4PD31vKVYQQeX+
+         ZC+b+wj/oGPBOARdHwz7QbKVQfKfQbSNbILUuWFFEExgr/d6XYRgFoJyOIEixif50HXp
+         TiGw==
+X-Received: by 10.68.218.199 with SMTP id pi7mr13958234pbc.19.1374181616117;
+        Thu, 18 Jul 2013 14:06:56 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id bb1sm5724971pbc.10.2013.07.18.14.06.54
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jul 2013 14:06:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <51E849C4.7020305@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230746>
 
-On Thu, Jul 18, 2013 at 1:32 PM, Dale R. Worley <worley@alum.mit.edu> wrote:
-> I've been looking into writing a proper test for this patch.  My first
-> attempt tests the symptom that was seen initially, that "git commit"
-> fails if fd 0 is closed.
->
-> One problem is how to arrange for fd 0 to be closed.  I could use the
-> bash redirection "<&-", but I think you want to be more portable than
-> that.
+Ramsay Jones wrote:
 
-That's just a plain-vanilla part of POSIX shell behaviour, no?
+> This was built on the next branch
 
-http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_07_05
+All the uses of the sentinel attribute seem to come from
+eccb6149 (use "sentinel" function attribute for variadic
+lists, 2013-07-09), so this should be okay to go on top of the
+jk/gcc-function-attributes branch.
+
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -303,6 +303,13 @@ extern char *gitbasename(char *);
+>  #endif
+>  #endif
+>  
+> +/* The sentinel attribute is valid from gcc version 4.0 */
+> +#if defined(__GNUC__) && (__GNUC__ >= 4)
+> +#define GIT_SENTINEL(n) __attribute__((sentinel(n)))
+> +#else
+> +#define GIT_SENTINEL(n)
+> +#endif
+
+I'd mildly prefer
+
+	#if ...
+	#define GIT_SENTINEL __attribute__((sentinel))
+	#else
+	...
+
+(without the numeric parameter).  I don't know any function in git
+(or any other project for that matter) that takes extra parameters
+after the NULL sentinel.
+
+But I don't care much, so
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks for a pleasant patch.
+Jonathan
