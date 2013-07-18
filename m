@@ -1,78 +1,124 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: git svn exits with error error closing pipe: Bad file descriptor
-Date: Thu, 18 Jul 2013 14:52:07 +0200
-Message-ID: <20130718125207.GA14823@camk.edu.pl>
+From: Drew Northup <n1xim.email@gmail.com>
+Subject: Re: [PATCH] TIG: Fix to reinstate proper operation with no arguments
+Date: Thu, 18 Jul 2013 09:30:11 -0400
+Message-ID: <51E7EDE3.4080205@gmail.com>
+References: <1374123113-3889-1-git-send-email-n1xim.email@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 18 15:25:56 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jonas Fonseca <fonseca@diku.dk>
+To: Drew Northup <n1xim.email@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 18 15:30:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzoDS-0001tI-CF
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 15:25:54 +0200
+	id 1UzoHm-0004R8-KK
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 15:30:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758946Ab3GRNZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 09:25:49 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:39458 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758547Ab3GRNZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 09:25:48 -0400
-X-Greylist: delayed 1994 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jul 2013 09:25:48 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 0B8835F0002
-	for <git@vger.kernel.org>; Thu, 18 Jul 2013 14:53:27 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id G4atkxX2RnDE for <git@vger.kernel.org>;
-	Thu, 18 Jul 2013 14:53:11 +0200 (CEST)
-Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 61CBD5F0005
-	for <git@vger.kernel.org>; Thu, 18 Jul 2013 14:53:02 +0200 (CEST)
-Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
-	id F394C4811F; Thu, 18 Jul 2013 14:52:07 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754189Ab3GRNaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 09:30:16 -0400
+Received: from mail-ye0-f174.google.com ([209.85.213.174]:52309 "EHLO
+	mail-ye0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753943Ab3GRNaP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 09:30:15 -0400
+Received: by mail-ye0-f174.google.com with SMTP id m9so928022yen.33
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 06:30:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=JgVRXflMgXvl1FWMajby+r9U66o49l1d/2+e2eNxiuY=;
+        b=f7HmS4DwV+ZonZfKfVaXsrmE0iOWpb9DggY52XtUnj/wLeWVYgBlzH93hjb+HombLr
+         vyb+S4ZFGRWNo0ArO9GQ9v+S0X8sxhXwJ2Apup1FReArCfO5gSRJPMBOYBBpLvfRlnkN
+         phWYT5zsl3u4ZI63zW5Jagp1HdJuTXLOnk7yuCy35XpSD9YPl4Ri2aPUn+WZJxyPGVfD
+         SsnoztJFfXG/zXWUd8pybt8eYj3nE0k+I2mlEs+NWl/sxLX+VFHjW6lnlZxnVk2GrWRm
+         wcpDmLEq+iUPP0uUspMQKLgA1i0i1SCHsRUGuV2ojhsmdNR3r4FpEXHthmunrdIIl/8y
+         FV9g==
+X-Received: by 10.236.70.9 with SMTP id o9mr5659648yhd.35.1374154213979;
+        Thu, 18 Jul 2013 06:30:13 -0700 (PDT)
+Received: from [192.168.0.37] (pool-70-16-105-6.port.east.myfairpoint.net. [70.16.105.6])
+        by mx.google.com with ESMTPSA id s80sm14657136yhe.27.2013.07.18.06.30.12
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 18 Jul 2013 06:30:13 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.28) Gecko/20120314 Thunderbird/3.1.20
+In-Reply-To: <1374123113-3889-1-git-send-email-n1xim.email@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230691>
 
-After upgrade to subversion 1.8.0 on some repositories
-git svn clone shows two warnings:
+Somehow this patch breaks the main view to not open the correct commit 
+in diff view when <enter> is pressed. Back to the debugger...
 
-error closing pipe: Bad file descriptor at
-/home/users/kornet/giti/libexec/git-core/git-svn line 0.
+On 07/18/2013 12:51 AM, Drew Northup wrote:
+> Since c7d67ab running "tig" with no options has failed with the
+> error "tig: No revisions match the given arguments." This was due
+> to a change in how the arguments for the back-end git call was
+> being constructed. This change caused the blank field left in
+> place of "(encoding_arg)" when it is empty to not overwrite
+> "buf" which then caused the value in "buf" to be copied into
+> dst_argv twice. The resulting git command failed if there was no
+> available revision named "log" as shown in the trace.
+>
+>  From the TIG_TRACE log:
+> git log log --no-color --pretty=raw --parents --parents --
+> fatal: bad revision 'log'
+>
+> This fix works by teaching tig that when it is supplied with a
+> blank field in the source argument buffer that it should skip
+> over that field and continue instead of copying the previous
+> field value into the destination buffer a second time.
+>
+> github issue # 167
+>
+> Signed-off-by: Drew Northup<n1xim.email@gmail.com>
+> ---
+>
+> This should apply cleanly to the tig public master whether the
+> mkstemps() patch I wrote has been applied or not.
+>
+>   tig.c | 9 +++++++--
+>   1 file changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/tig.c b/tig.c
+> index ba9ba98..1016cfe 100644
+> --- a/tig.c
+> +++ b/tig.c
+> @@ -3105,10 +3105,11 @@ static bool
+>   format_append_arg(struct format_context *format, const char ***dst_argv, const char *arg)
+>   {
+>   	format->bufpos = 0;
+> +	int len = 0;
+>
+>   	while (arg) {
+>   		char *next = strstr(arg, "%(");
+> -		int len = next ? next - arg : strlen(arg);
+> +		len = next ? next - arg : strlen(arg);
+>
+>   		if (len&&  !string_format_from(format->buf,&format->bufpos, "%.*s", len, arg))
+>   			return FALSE;
+> @@ -3119,7 +3120,11 @@ format_append_arg(struct format_context *format, const char ***dst_argv, const c
+>   		arg = next ? strchr(next, ')') + 1 : NULL;
+>   	}
+>
+> -	return argv_append(dst_argv, format->buf);
+> +	if(len){
+> +		return argv_append(dst_argv, format->buf);
+> +	} else {
+> +		return TRUE;
+> +	}
+>   }
+>
+>   static bool
 
-at exit. They appear because process git cat-file --batch exits before
-command_close_bidi_pipe is called by destructor during perl exit.  The
-solution is to call the destructor explicitly, e.q.:
-
-index ff1ce3d..6811738 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2068,6 +2068,10 @@ sub gc_directory {
-        }
- }
- 
-+END {
-+    undef $_repository;
-+}
-+
- __END__
- 
- Data structures:
-
-However I'm not sure whether it is not a symptom of some other error.
-What's confuses me more is that the warnings don't appear for all
-repositories. For example they appear for  http://svn.pld-linux.org/svn/cdpl/
-while cloning http://svn.pld-linux.org/svn/atob ends normally.
-On the other hand it is consistent between two different machines with
-different Linux distributions and perl versions.
 
 -- 
-  Kacper Kornet
+--
+-Drew Northup
+--------------------------------------------------------------
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
