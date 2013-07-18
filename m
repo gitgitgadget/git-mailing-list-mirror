@@ -1,124 +1,96 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: [PATCH] TIG: Fix to reinstate proper operation with no arguments
-Date: Thu, 18 Jul 2013 09:30:11 -0400
-Message-ID: <51E7EDE3.4080205@gmail.com>
-References: <1374123113-3889-1-git-send-email-n1xim.email@gmail.com>
+From: Marc Strapetz <marc.strapetz@syntevo.com>
+Subject: Re: Git counterpart to SVN bugtraq properties?
+Date: Thu, 18 Jul 2013 15:32:51 +0200
+Message-ID: <51E7EE83.5020905@syntevo.com>
+References: <51E69612.6020201@syntevo.com> <20130717133357.GB2337@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jonas Fonseca <fonseca@diku.dk>
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 18 15:30:23 2013
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Jul 18 15:33:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzoHm-0004R8-KK
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 15:30:22 +0200
+	id 1UzoKK-0005qk-Ek
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 15:33:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754189Ab3GRNaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 09:30:16 -0400
-Received: from mail-ye0-f174.google.com ([209.85.213.174]:52309 "EHLO
-	mail-ye0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753943Ab3GRNaP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 09:30:15 -0400
-Received: by mail-ye0-f174.google.com with SMTP id m9so928022yen.33
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 06:30:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=JgVRXflMgXvl1FWMajby+r9U66o49l1d/2+e2eNxiuY=;
-        b=f7HmS4DwV+ZonZfKfVaXsrmE0iOWpb9DggY52XtUnj/wLeWVYgBlzH93hjb+HombLr
-         vyb+S4ZFGRWNo0ArO9GQ9v+S0X8sxhXwJ2Apup1FReArCfO5gSRJPMBOYBBpLvfRlnkN
-         phWYT5zsl3u4ZI63zW5Jagp1HdJuTXLOnk7yuCy35XpSD9YPl4Ri2aPUn+WZJxyPGVfD
-         SsnoztJFfXG/zXWUd8pybt8eYj3nE0k+I2mlEs+NWl/sxLX+VFHjW6lnlZxnVk2GrWRm
-         wcpDmLEq+iUPP0uUspMQKLgA1i0i1SCHsRUGuV2ojhsmdNR3r4FpEXHthmunrdIIl/8y
-         FV9g==
-X-Received: by 10.236.70.9 with SMTP id o9mr5659648yhd.35.1374154213979;
-        Thu, 18 Jul 2013 06:30:13 -0700 (PDT)
-Received: from [192.168.0.37] (pool-70-16-105-6.port.east.myfairpoint.net. [70.16.105.6])
-        by mx.google.com with ESMTPSA id s80sm14657136yhe.27.2013.07.18.06.30.12
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 18 Jul 2013 06:30:13 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.28) Gecko/20120314 Thunderbird/3.1.20
-In-Reply-To: <1374123113-3889-1-git-send-email-n1xim.email@gmail.com>
+	id S1758994Ab3GRNc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 09:32:56 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.98]:58449 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758989Ab3GRNcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 09:32:55 -0400
+Received: from [217.91.110.92] (helo=[192.168.93.202])
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <marc.strapetz@syntevo.com>)
+	id 1UzoKC-0002Ni-Gq; Thu, 18 Jul 2013 15:32:52 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <20130717133357.GB2337@serenity.lan>
+X-Enigmail-Version: 1.5.1
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230692>
 
-Somehow this patch breaks the main view to not open the correct commit 
-in diff view when <enter> is pressed. Back to the debugger...
+On 17.07.2013 15:33, John Keeping wrote:
+> On Wed, Jul 17, 2013 at 03:03:14PM +0200, Marc Strapetz wrote:
+>> I'm looking for a specification or guidelines on how a Git client should
+>> integrate with bug tracking systems. For SVN, one can use
+>> bugtraq-properties [1] to specify e.g. the issue tracker URL or how to
+>> parse the bug ID from a commit message. AFAIU, there is nothing
+>> comparable for Git [2]? If that's actually the case, is someone
+>> interested in working out a similar specification for Git?
+>>
+>> [1] http://code.google.com/p/tortoisesvn/source/browse/tags/version_1.2.0/doc/issuetrackers.txt
+>>
+>> [2] http://stackoverflow.com/questions/17545548
+> 
+> The Git way to record the issue ID as a footer in the commit message.
+> See for example [1].  Although I'm not aware of any standard for naming
+> this footer.
 
-On 07/18/2013 12:51 AM, Drew Northup wrote:
-> Since c7d67ab running "tig" with no options has failed with the
-> error "tig: No revisions match the given arguments." This was due
-> to a change in how the arguments for the back-end git call was
-> being constructed. This change caused the blank field left in
-> place of "(encoding_arg)" when it is empty to not overwrite
-> "buf" which then caused the value in "buf" to be copied into
-> dst_argv twice. The resulting git command failed if there was no
-> available revision named "log" as shown in the trace.
->
->  From the TIG_TRACE log:
-> git log log --no-color --pretty=raw --parents --parents --
-> fatal: bad revision 'log'
->
-> This fix works by teaching tig that when it is supplied with a
-> blank field in the source argument buffer that it should skip
-> over that field and continue instead of copying the previous
-> field value into the destination buffer a second time.
->
-> github issue # 167
->
-> Signed-off-by: Drew Northup<n1xim.email@gmail.com>
-> ---
->
-> This should apply cleanly to the tig public master whether the
-> mkstemps() patch I wrote has been applied or not.
->
->   tig.c | 9 +++++++--
->   1 file changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/tig.c b/tig.c
-> index ba9ba98..1016cfe 100644
-> --- a/tig.c
-> +++ b/tig.c
-> @@ -3105,10 +3105,11 @@ static bool
->   format_append_arg(struct format_context *format, const char ***dst_argv, const char *arg)
->   {
->   	format->bufpos = 0;
-> +	int len = 0;
->
->   	while (arg) {
->   		char *next = strstr(arg, "%(");
-> -		int len = next ? next - arg : strlen(arg);
-> +		len = next ? next - arg : strlen(arg);
->
->   		if (len&&  !string_format_from(format->buf,&format->bufpos, "%.*s", len, arg))
->   			return FALSE;
-> @@ -3119,7 +3120,11 @@ format_append_arg(struct format_context *format, const char ***dst_argv, const c
->   		arg = next ? strchr(next, ')') + 1 : NULL;
->   	}
->
-> -	return argv_append(dst_argv, format->buf);
-> +	if(len){
-> +		return argv_append(dst_argv, format->buf);
-> +	} else {
-> +		return TRUE;
-> +	}
->   }
->
->   static bool
+I wasn't aware of that and probably I'm not the only one. For instance,
+we are using JIRA and typical commit messages look like
 
+ SG-1234: fix something
 
--- 
---
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+ More details on what has been fixed ...
+
+So the issues ID is present in the first line. This has the advantage
+that every GUI client will display it, as usually the short version of
+the commit message (which is used everywhere) reaches up to the first
+dot or LF. Hence it's pretty easy to display a hyperlink for the
+"SG-1234" part. bugtraq properties allow to define whether the issue ID
+should be appended to the top or bottom of the commit message. So looks
+like such an option makes sense for Git as well.
+
+> In terms of recording the URL and other data, I think you'd want a
+> dotfile in the repository (perhaps .bugzilla).  This shoudld probably be
+> in the gitconfig format, like .gitmodules.
+
+Having such a file sounds reasonable for storing the defaults, though
+let's call it .bugtraq or have some other more general name. Similar to
+.gitmodules, it makes sense to have the actual properties stored in
+$GIT_DIR/config which can be "initialized" from this .bugtraq file. The
+arguments are the same as for submodules: URLs stored in .bugtraq might
+need to be changed, depending on the client location (firewall/proxy...).
+
+Or we could just have $GIT_DIR/config properties *optionally*,
+overriding the .bugtraq properties, as for most users the default
+configuration will work fine anyway.
+
+> I think "all" it needs is to draw up a spec for the names of keys and
+> format of their values, along with the format of footer(s) identifying
+> issues associated with a commit and to persuade UI developers to support
+> it... ;-)
+
+I'll try to compose something here. But I'm wondering how we could
+attract a couple of developers or users to join in this discussion?
+
+-Marc
