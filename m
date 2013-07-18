@@ -1,80 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/3] Switch German translation to G+E
-Date: Thu, 18 Jul 2013 12:37:00 -0700
-Message-ID: <7vr4ev1wyr.fsf@alter.siamese.dyndns.org>
-References: <1374040279-4828-1-git-send-email-ralf.thielow@gmail.com>
-	<1374078276-3510-1-git-send-email-ralf.thielow@gmail.com>
-	<87txjs6pdl.fsf@linux-k42r.v.cablecom.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [RFC/PATCH] Add the NO_SENTINEL build variable
+Date: Thu, 18 Jul 2013 18:27:30 +0100
+Message-ID: <51E82582.1030204@ramsay1.demon.co.uk>
+References: <51E4338E.4090003@ramsay1.demon.co.uk> <20130715181357.GF14690@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <tr@thomasrast.ch>,
-	Ralf Thielow <ralf.thielow@gmail.com>, <jk@jk.gs>,
-	<stimming@tuhh.de>, <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 18 21:37:13 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 18 22:28:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uzu0l-0004BJ-D1
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 21:37:11 +0200
+	id 1UzuoK-00041X-EY
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 22:28:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759317Ab3GRThF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 15:37:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49758 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759194Ab3GRThD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 15:37:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F45E32B66;
-	Thu, 18 Jul 2013 19:37:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=miMScrNYmDLV2cG8awgwtRXNDw8=; b=BQe6Z4
-	k0a5x4DTnxTUMZN8gvueGAqTROG5+YskKuOc1CUywW/gQKUVIlzNApSwIL0rU8NG
-	aCxl237JQvBotNGSEJQAxqRjgQjh4Z1FCop27CzeMI9gKoBFzMIIKzgqtDdIvyWD
-	5Z7kTA7PngSUr42RPpGD3lR4qxodAwtKdYeoI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QPmybOEH7c5EXl5B5pOJkCLDrFc/2c6y
-	ECc6cpJAI0XY6ymNoihq5xXq+EsoB1zXLoIfVZxejMamXiaiWaR07gsnzrVSxP98
-	ZZ3TAvti+l+bNOtVSddc7Iysc0c38jMzs09ebmxABct66rGDV2+5UVS7wfKPTYDL
-	tqRqHDzX6YM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 237E232B65;
-	Thu, 18 Jul 2013 19:37:03 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A4E832B62;
-	Thu, 18 Jul 2013 19:37:02 +0000 (UTC)
-In-Reply-To: <87txjs6pdl.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
-	of "Thu, 18 Jul 2013 14:09:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B8589A2-EFE1-11E2-B049-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S934240Ab3GRU2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 16:28:21 -0400
+Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:49923 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933027Ab3GRU2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 16:28:20 -0400
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 5866A1280A7;
+	Thu, 18 Jul 2013 21:28:18 +0100 (BST)
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id A38D91280A6;
+	Thu, 18 Jul 2013 21:28:17 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
+	Thu, 18 Jul 2013 21:28:16 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <20130715181357.GF14690@google.com>
+X-MDF-HostID: 22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230732>
 
-Thomas Rast <tr@thomasrast.ch> writes:
+Jonathan Nieder wrote:
+> Ramsay Jones wrote:
+> 
+>> One of the three gcc compilers that I use does not understand the
+>> sentinel function attribute. (so, it spews 108 warning messages)
+> 
+> Do you know what version of gcc introduced the sentinel attribute?
+> Would it make sense for the ifdef in git-compat-util.h to be keyed on 
+> __GNUC__ and __GNUC_MINOR__ instead of a new makefile flag?
+> 
 
-> Ralf Thielow <ralf.thielow@gmail.com> writes:
->
->> This is a resend of v3 because at least one patch was
->> damaged last time for whatever reason.
->>
->> Ralf Thielow (3):
->>   l10n: de.po: switch from pure German to German+English (part 1)
->>   l10n: de.po: switch from pure German to German+English (part 2)
->>   l10n: de.po: switch from pure German to German+English (part 3)
->
-> Thanks, this one applied cleanly.
->
-> Acked-by: Thomas Rast <trast@inf.ethz.ch>
+I have on old (v4.2.1) gcc repo on Linux and looking at
 
-Let's make sure our i18n coordinator is aware of this effort.
+    ~/gcc-4.2.1/gcc/ChangeLog-2004
 
-Thanks.
+I can see that the sentinel attribute was added on 2004-09-04 by
+Kaveh R. Ghazi.
+
+Also, I find "bump version string to version 4.0.0" was on 2004-09-09
+and "bump version string to version 3.5.0" was on 2004-01-16.
+
+Several of my system header files (on Linux) imply that the
+sentinel attribute is supported by __GNUC__ >= 4. (One of them,
+ansidecl.h, states that gcc 3.5 supports it but ...)
+
+ATB,
+Ramsay Jones
