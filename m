@@ -1,93 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Add the GIT_SENTINEL macro
-Date: Thu, 18 Jul 2013 14:06:52 -0700
-Message-ID: <20130718210652.GX14690@google.com>
-References: <51E849C4.7020305@ramsay1.demon.co.uk>
+From: Yamada Saburo <devil.tamachan@gmail.com>
+Subject: [PATCH5/(4+1)] Fix git-gui/po/ja.po
+Date: Fri, 19 Jul 2013 06:13:00 +0900
+Message-ID: <CAPM==H+kp3cGyYkX68CeqbMqr_6d5Kvd-f3X-DZgDfMb0YN4yA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Jul 18 23:07:02 2013
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 18 23:13:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzvPh-0007Lp-Dq
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 23:07:01 +0200
+	id 1UzvVb-00020h-Q8
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 23:13:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933287Ab3GRVG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 17:06:57 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:64612 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933212Ab3GRVG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 17:06:56 -0400
-Received: by mail-pb0-f41.google.com with SMTP id rp16so3647502pbb.0
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 14:06:56 -0700 (PDT)
+	id S1759405Ab3GRVND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 17:13:03 -0400
+Received: from mail-ve0-f182.google.com ([209.85.128.182]:37644 "EHLO
+	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759224Ab3GRVNC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 17:13:02 -0400
+Received: by mail-ve0-f182.google.com with SMTP id ox1so2931633veb.27
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 14:13:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=A4UhosKp1OaRp9/4qkqACXUSfF0d+GFvqoDFXb/at6k=;
-        b=WOIcljtx8ze3mo3wqp2dRV2+pQWKeZAgiwqalLQ7OqRVG11CUOVYjkdgKLErirNg4K
-         1ND2KAFVMWCSpTXSD/y4VXHle8DeZPbSB+DjjmymOnY/KWwW1RxkcBb/ZJvYcPbIsZ8q
-         Ddb4Jg1PtlvSxWY77f/u214MRa3P1NFB8ejnDTO+UgO90z1/FKkUJgYmfjgF6jItg2tQ
-         pCLr5TPom70bIPgeqyR+HV97+GEN2DsM6MS8+QQ8yw71Gab1XGKZnL4PD31vKVYQQeX+
-         ZC+b+wj/oGPBOARdHwz7QbKVQfKfQbSNbILUuWFFEExgr/d6XYRgFoJyOIEixif50HXp
-         TiGw==
-X-Received: by 10.68.218.199 with SMTP id pi7mr13958234pbc.19.1374181616117;
-        Thu, 18 Jul 2013 14:06:56 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id bb1sm5724971pbc.10.2013.07.18.14.06.54
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Jul 2013 14:06:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <51E849C4.7020305@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=Pl7Vzl+Md5XqBh7whH1CLt24yVLMO7uR2/zo4pB6U6o=;
+        b=p1hFKal+gBY/ShMdUWqZGSSzc5UdcbTCSt3bROXXymR9HPBbaSsmLna3ic0rCezic3
+         0vxxhp9irv9Wd9UmkVVckvbJ3ZQLbYSh/t6u7SGlEO7nfLxoRTkar+h26a/KelEatAxw
+         X2rEzDafYNr0MZ2J8Hp6mof8U9YO035hwhrXbWysdifpAemowsIYHVqubtqLRinK5a1U
+         IJev5lFoCcoCef54XgmsOAUHN+B7dozFziAA2leqTkD2bVy/3dhAaNKC7E4gE8uLxDIZ
+         6nxat+xuPImM7lB5OG+aBiRusofTfGMa0PNyHXbClr7qquXyV+mrOj+GllKsdtAHFQbh
+         PZTQ==
+X-Received: by 10.58.29.111 with SMTP id j15mr4770708veh.76.1374181980901;
+ Thu, 18 Jul 2013 14:13:00 -0700 (PDT)
+Received: by 10.221.24.7 with HTTP; Thu, 18 Jul 2013 14:13:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230747>
 
-Ramsay Jones wrote:
+Signed-off-by: Yamada Saburo <devil.tamachan@gmail.com>
+---
+ git-gui/po/ja.po | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-> This was built on the next branch
+diff --git a/git-gui/po/ja.po b/git-gui/po/ja.po
+index 05215b9..83aeb05 100644
+--- a/git-gui/po/ja.po
++++ b/git-gui/po/ja.po
+@@ -9,9 +9,8 @@ msgstr ""
+ "Report-Msgid-Bugs-To: \n"
+ "POT-Creation-Date: 2013-07-10 03:38+0900\n"
+ "PO-Revision-Date: 2010-02-02 19:03+0900\n"
+-"Last-Translator: しらいし ななこ <nanako3@lavabit.com>, devil.tamachan
+<devil.tamachan@gmail.com>\n"
++"Last-Translator: Yamada Saburo <devil.tamachan@gmail.com>\n"
+ "Language-Team: Japanese\n"
+-"Language: \n"
+ "MIME-Version: 1.0\n"
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+@@ -131,7 +130,7 @@ msgstr "ファイルタイプ変更、コミット未予定"
 
-All the uses of the sentinel attribute seem to come from
-eccb6149 (use "sentinel" function attribute for variadic
-lists, 2013-07-09), so this should be okay to go on top of the
-jk/gcc-function-attributes branch.
+ #: git-gui.sh:2088 git-gui.sh:2089
+ msgid "File type changed, old type staged for commit"
+-msgstr "ファイルタイプ変更、コミット予定の形式が古い"
++msgstr "ファイルタイプ変更、元のファイルタイプでの変更をコミット予定済"
 
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -303,6 +303,13 @@ extern char *gitbasename(char *);
->  #endif
->  #endif
->  
-> +/* The sentinel attribute is valid from gcc version 4.0 */
-> +#if defined(__GNUC__) && (__GNUC__ >= 4)
-> +#define GIT_SENTINEL(n) __attribute__((sentinel(n)))
-> +#else
-> +#define GIT_SENTINEL(n)
-> +#endif
-
-I'd mildly prefer
-
-	#if ...
-	#define GIT_SENTINEL __attribute__((sentinel))
-	#else
-	...
-
-(without the numeric parameter).  I don't know any function in git
-(or any other project for that matter) that takes extra parameters
-after the NULL sentinel.
-
-But I don't care much, so
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks for a pleasant patch.
-Jonathan
+ #: git-gui.sh:2090
+ msgid "File type changed, staged"
+-- 
+1.8.1.msysgit.1
