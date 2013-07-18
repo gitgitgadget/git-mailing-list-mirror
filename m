@@ -1,92 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 1/2] Git.pm: add new temp_is_locked function
-Date: Thu, 18 Jul 2013 12:35:52 -0700
-Message-ID: <20130718193552.GU14690@google.com>
-References: <1373170849-9150-1-git-send-email-mackyle@gmail.com>
- <1373170849-9150-2-git-send-email-mackyle@gmail.com>
- <loom.20130718T202918-857@post.gmane.org>
- <842D3E63-9E6B-45F0-A7F6-03082C4D067F@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/3] Switch German translation to G+E
+Date: Thu, 18 Jul 2013 12:37:00 -0700
+Message-ID: <7vr4ev1wyr.fsf@alter.siamese.dyndns.org>
+References: <1374040279-4828-1-git-send-email-ralf.thielow@gmail.com>
+	<1374078276-3510-1-git-send-email-ralf.thielow@gmail.com>
+	<87txjs6pdl.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Rothenberger <daveroth@acm.org>, git@vger.kernel.org
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 18 21:36:08 2013
+Cc: Thomas Rast <tr@thomasrast.ch>,
+	Ralf Thielow <ralf.thielow@gmail.com>, <jk@jk.gs>,
+	<stimming@tuhh.de>, <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 18 21:37:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Uztzk-0003bV-3A
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 21:36:08 +0200
+	id 1Uzu0l-0004BJ-D1
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 21:37:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933776Ab3GRTf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 15:35:57 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:64740 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933632Ab3GRTf4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 15:35:56 -0400
-Received: by mail-pa0-f53.google.com with SMTP id tj12so3551481pac.40
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 12:35:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=axbLXUxOMd+N7uro2VI0f2AXyAbLWLZ/TSlSbwpLEAM=;
-        b=VqbNYLz3xs1Olh4QVMAR6dA3v2QNQcLVk8VEHeLJcb5P8+Qgtr0KybganjgxRe1ZnL
-         Nzp6+P5lL2LWxDbUUxdG98cPOsMcA+Vz8vjxbdHke8uiQ7bJMNLG+jgVhssqIOAzeG4Z
-         W3u9vt1p5+SqQqXPTBbSIwCLUV6Rfou38K9D3zRdjuP4KIBdgCGhOc9xgCtgBRIPBVFK
-         h32tJCu+whXhYijpitwwxe6BWdGgiWsdEomgXZzqmrudXcNuvH8av90whgmzYeYHzyLj
-         nvI7d22E98a9cFY4AuveNklLptWcalFNb5PrVOJU4wcEn6OlkvxkZYzgX/ewGwQJHND6
-         1IHw==
-X-Received: by 10.68.97.229 with SMTP id ed5mr13679840pbb.37.1374176156306;
-        Thu, 18 Jul 2013 12:35:56 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id ep4sm15256574pbd.35.2013.07.18.12.35.54
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Jul 2013 12:35:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <842D3E63-9E6B-45F0-A7F6-03082C4D067F@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759317Ab3GRThF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 15:37:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49758 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759194Ab3GRThD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 15:37:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F45E32B66;
+	Thu, 18 Jul 2013 19:37:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=miMScrNYmDLV2cG8awgwtRXNDw8=; b=BQe6Z4
+	k0a5x4DTnxTUMZN8gvueGAqTROG5+YskKuOc1CUywW/gQKUVIlzNApSwIL0rU8NG
+	aCxl237JQvBotNGSEJQAxqRjgQjh4Z1FCop27CzeMI9gKoBFzMIIKzgqtDdIvyWD
+	5Z7kTA7PngSUr42RPpGD3lR4qxodAwtKdYeoI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QPmybOEH7c5EXl5B5pOJkCLDrFc/2c6y
+	ECc6cpJAI0XY6ymNoihq5xXq+EsoB1zXLoIfVZxejMamXiaiWaR07gsnzrVSxP98
+	ZZ3TAvti+l+bNOtVSddc7Iysc0c38jMzs09ebmxABct66rGDV2+5UVS7wfKPTYDL
+	tqRqHDzX6YM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 237E232B65;
+	Thu, 18 Jul 2013 19:37:03 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A4E832B62;
+	Thu, 18 Jul 2013 19:37:02 +0000 (UTC)
+In-Reply-To: <87txjs6pdl.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
+	of "Thu, 18 Jul 2013 14:09:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6B8589A2-EFE1-11E2-B049-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230731>
 
-Kyle J. McKay wrote:
+Thomas Rast <tr@thomasrast.ch> writes:
 
-> That change was made as a result of this feedback:
+> Ralf Thielow <ralf.thielow@gmail.com> writes:
 >
-> On Jul 6, 2013, at 17:11, Jonathan Nieder wrote:
->> Kyle McKay wrote:
+>> This is a resend of v3 because at least one patch was
+>> damaged last time for whatever reason.
 >>
->>> The temp_is_locked function can be used to determine whether
->>> or not a given name previously passed to temp_acquire is
->>> currently locked.
->> [...]
->>> +=item temp_is_locked ( NAME )
->>> +
->>> +Returns true if the file mapped to C<NAME> is currently locked.
->>> +
->>> +If true is returned, an attempt to C<temp_acquire()> the same
->>
-> [snip]
+>> Ralf Thielow (3):
+>>   l10n: de.po: switch from pure German to German+English (part 1)
+>>   l10n: de.po: switch from pure German to German+English (part 2)
+>>   l10n: de.po: switch from pure German to German+English (part 3)
 >
->> Looking more closely, it looks like this is factoring out the idiom
->> for checking if a name is already in use from the _temp_cache
->> function.  Would it make sense for _temp_cache to call this helper?
+> Thanks, this one applied cleanly.
 >
-> So I think the answer is it does not make sense for _temp_cache to
-> call this helper.
+> Acked-by: Thomas Rast <trast@inf.ethz.ch>
 
-Thanks for looking into it.
-
-Sorry for the confusion.  The point of my question was an example of a
-way to make sure the internal API stays easy to understand.  But it
-seems to have backfired, and this is a small enough isolated change
-that I think it's okay to say "let's clean it up later".
-
-> Will release a v4 in just a moment with that single change reverted.
+Let's make sure our i18n coordinator is aware of this effort.
 
 Thanks.
