@@ -1,118 +1,80 @@
-From: Jonathan Lambrechts <jonathanlambrechts@gmail.com>
-Subject: git svn fetch segfault on exit
-Date: Thu, 18 Jul 2013 11:21:06 +0200
-Message-ID: <51E7B382.8050302@gmail.com>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH 0/6] fix blame -L regression; add tests
+Date: Thu, 18 Jul 2013 14:04:15 +0200
+Message-ID: <87zjtk6pmo.fsf@linux-k42r.v.cablecom.net>
+References: <1374096332-7891-1-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 18 11:19:40 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Bo Yang <struggleyb.nku@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Jul 18 14:04:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzkN9-00010C-AA
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 11:19:39 +0200
+	id 1Uzmwl-0005YC-Nk
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Jul 2013 14:04:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757458Ab3GRJTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 05:19:34 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:63324 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752935Ab3GRJTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 05:19:32 -0400
-Received: by mail-wg0-f44.google.com with SMTP id m15so2650457wgh.23
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 02:19:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=5/PpFMo/euDN4Os8UyqzwyV9x+2Nprw4BCr/NlA4BEg=;
-        b=FkDWW/VScn8wDB/e0+45ZSvxsXBoR1EaIrSMSYQeKvpk/3EpxJkzHA6VKIG8Yt6uK1
-         y+UDa7TAdYCEql/uvwkhotaAUfBK8+DnWkHvmDc5eFmrV4XVXH84cuW97z6J483p9Zvp
-         0NN2gqWQE9anjBNk1CE7TOEVw5C36TTndewhaexRBuwDNsBSk53QMiarx0LbTuUhZw94
-         LTF8Mwe7+Jxy3P8ooRE7KQ9WW7EWWRgfricyJBUNsGUVfZ9D0t4/HAjxzvdSuNyAtZ9o
-         LMXVQ5dLNBGkE0yPacnc6lj3boQKdrbL10EmhdNcLT1o1m7dRda/yg5U3pTBhPhSr8iF
-         k5XA==
-X-Received: by 10.194.249.195 with SMTP id yw3mr7180077wjc.65.1374139170816;
-        Thu, 18 Jul 2013 02:19:30 -0700 (PDT)
-Received: from [130.104.237.90] ([130.104.237.90])
-        by mx.google.com with ESMTPSA id h8sm15142374wie.1.2013.07.18.02.19.29
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 18 Jul 2013 02:19:30 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130625 Thunderbird/17.0.7
+	id S1758772Ab3GRMEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 08:04:31 -0400
+Received: from psi.thgersdorf.net ([176.9.98.78]:60507 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757635Ab3GRMEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 08:04:31 -0400
+X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jul 2013 08:04:30 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 092834D6588;
+	Thu, 18 Jul 2013 14:04:30 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id iD-LrCmLQncp; Thu, 18 Jul 2013 14:04:15 +0200 (CEST)
+Received: from linux-k42r.v.cablecom.net.ethz.ch (pctrast.inf.ethz.ch [129.132.153.233])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 9EDD94D6507;
+	Thu, 18 Jul 2013 14:04:15 +0200 (CEST)
+In-Reply-To: <1374096332-7891-1-git-send-email-sunshine@sunshineco.com> (Eric
+	Sunshine's message of "Wed, 17 Jul 2013 17:25:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230683>
 
-Hi,
-I'm using archlinux with git version 1.8.3.3, svn version 1.8.0 
-(r1490375) and perl v5.18.0 (built for x86_64-linux-thread-multi)
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Every git svn call that involves a fetch produces a segmentation fault 
-on exit (but the operation succeeds).
+> This series fixes a regression in "blame -L X,-N", adds blame -L tests,
+> and makes minor documentation adjustments. The tests, in particular,
+> were motivated by the desire to revisit and continue working on [1]
+> which extends git-blame to accept multiple -L's. That topic will need to
+> extend blame -L tests, of which there were essentially none.
+>
+> Patches [2/6] (modernize style) and [3/6] (add blame -L tests) are
+> intentionally independent of the "git log -L" topic (from earlier this
+> year) to which the other patches are related.  This independence should
+> allow these two patches to graduate at their own pace without being tied
+> to "git log -L".
+>
+> [1]: http://thread.gmane.org/gmane.comp.version-control.git/229755/
+>
+> Eric Sunshine (6):
+>   line-range: fix "blame -L X,-N" regression
+>   t8001/t8002 (blame): modernize style
+>   t8001/t8002 (blame): add blame -L tests
+>   t8001/t8002 (blame): add blame -L :funcname tests
+>   blame-options.txt: place each -L option variation on its own line
+>   blame-options.txt: explain that -L <start> and <end> are optional
 
-*** Error in `/usr/bin/perl': double free or corruption (!prev): 
-0x0000000002ce1ac0 ***
-======= Backtrace: =========
-/usr/lib/libc.so.6(+0x788ae)[0x7fd4d83798ae]
-/usr/lib/libc.so.6(+0x79587)[0x7fd4d837a587]
-/usr/lib/libapr-1.so.0(apr_allocator_destroy+0x1d)[0x7fd4d568e9ad]
-/usr/lib/libapr-1.so.0(apr_pool_terminate+0x30)[0x7fd4d568f590]
-/usr/lib/perl5/vendor_perl/auto/SVN/_Core/_Core.so(_wrap_apr_terminate+0x50)[0x7fd4d6886920]
-/usr/lib/perl5/core_perl/CORE/libperl.so(Perl_pp_entersub+0x571)[0x7fd4d876f821]
-/usr/lib/perl5/core_perl/CORE/libperl.so(Perl_runops_standard+0x16)[0x7fd4d8767e26]
-/usr/lib/perl5/core_perl/CORE/libperl.so(Perl_call_sv+0x3b0)[0x7fd4d86f93b0]
-/usr/lib/perl5/core_perl/CORE/libperl.so(Perl_call_list+0x2c7)[0x7fd4d86fb477]
-/usr/lib/perl5/core_perl/CORE/libperl.so(perl_destruct+0x1321)[0x7fd4d86fca91]
-/usr/bin/perl(main+0x111)[0x400e01]
-/usr/lib/libc.so.6(__libc_start_main+0xf5)[0x7fd4d8322a15]
-/usr/bin/perl[0x400e71]
+Thanks, and except for the comment I just sent out,
+Acked-by: Thomas Rast <trast@inf.ethz.ch>
 
-This bug has already been reported by others on subversion mailing list 
-and and archlinux bbs:
-https://bugs.archlinux.org/task/36070
-http://permalink.gmane.org/gmane.comp.version-control.subversion.user/114019
+In case it wasn't obvious to anyone else: the tests do actually verify
+that the right lines were picked, by counting how often each author is
+blamed.
 
-I tried to fix it but the problem is that I know absolutely nothing of 
-perl. Anyway, I noticed that with the modifications bellow (in 
-Git::SVN::Ra::new) the crash does not occur (I do not think it's a real 
-fix though).
-
---- /usr/share/perl5/vendor_perl/Git/SVN/Ra.pm.orig    2013-07-18 
-11:15:23.584625508 +0200
-+++ /usr/share/perl5/vendor_perl/Git/SVN/Ra.pm    2013-07-18 
-11:16:14.624622422 +0200
-@@ -79,7 +79,6 @@
-      SVN::_Core::svn_config_ensure($config_dir, undef);
-      my ($baton, $callbacks) = 
-SVN::Core::auth_open_helper(_auth_providers);
-      my $config = SVN::Core::config_get_config($config_dir);
--    $RA = undef;
-      my $dont_store_passwords = 1;
-      my $conf_t = ${$config}{'config'};
-      {
-@@ -108,7 +107,7 @@
-                            config => $config,
-                    pool => SVN::Pool->new,
-                            auth_provider_callbacks => $callbacks);
--    $RA = bless $self, $class;
-+    $self = bless $self, $class;
-
-      # Make sure its canonicalized
-      $self->url($url);
-@@ -118,7 +117,7 @@
-      $self->{cache} = { check_path => { r => 0, data => {} },
-                         get_dir => { r => 0, data => {} } };
-
--    return $RA;
-+    return $self;
-  }
-
-  sub url {
-
-
-Jonathan
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
