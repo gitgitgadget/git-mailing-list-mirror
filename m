@@ -1,133 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] rev-parse(1): logically group options
-Date: Fri, 19 Jul 2013 13:35:10 -0700
-Message-ID: <7v4nbquw3l.fsf@alter.siamese.dyndns.org>
-References: <8ab5f3c276e6f623a8056674c9306334efc9fefe.1374174438.git.john@keeping.me.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 6/6] diff: deprecate -q option to diff-files
+Date: Fri, 19 Jul 2013 14:01:06 -0700
+Message-ID: <20130719210106.GZ14690@google.com>
+References: <7vvc496ruf.fsf@alter.siamese.dyndns.org>
+ <1374107406-14357-1-git-send-email-gitster@pobox.com>
+ <1374107406-14357-7-git-send-email-gitster@pobox.com>
+ <20130719033126.GA27853@google.com>
+ <7vip07ypu7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri Jul 19 22:35:21 2013
+Cc: git@vger.kernel.org, Stefan Beller <stefanbeller@googlemail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 19 23:01:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0HOa-0003UW-Mz
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 22:35:21 +0200
+	id 1V0Hnh-0008TE-7f
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 23:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751639Ab3GSUfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 16:35:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60101 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750902Ab3GSUfN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 16:35:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFC5D310A4;
-	Fri, 19 Jul 2013 20:35:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+rG4CyjX+uKFEACO9ba8ojfRE0E=; b=A0HHet
-	qXSPaXrtEwucBxKWgSDZ01vS0L6Xyu5SCmLn/m+DjOC2/PVqwRrsYnPUhEunNWVm
-	ssGwngWIfc7002uAhgYKGakgMm4sfU6FeRFKCFQeuIpFSOYzmG4wMtwr9604Q2ge
-	XoGWd89I5PQYGzTscSktcDxGYSIf5Cod6wuTk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CcYuVhWMCQshuhrXXIIoQqsO2/07XybQ
-	cIIvyA4t+5Oj/kZn24OtdEJd3TKSnfbSowltOlz+SmNqoq4w4CSnsDOS9AxmOFEE
-	bqX710Dvp16SaMwsyPht5nzCVaVcRozKq517pRWs4imXsVtKwfvitR/8MOt59j5X
-	RYxrniRIj5g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4159310A2;
-	Fri, 19 Jul 2013 20:35:12 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0FF0E310A1;
-	Fri, 19 Jul 2013 20:35:11 +0000 (UTC)
-In-Reply-To: <8ab5f3c276e6f623a8056674c9306334efc9fefe.1374174438.git.john@keeping.me.uk>
-	(John Keeping's message of "Thu, 18 Jul 2013 20:07:29 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B5E073B4-F0B2-11E2-9960-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752444Ab3GSVBN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 17:01:13 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:45451 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751416Ab3GSVBK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 17:01:10 -0400
+Received: by mail-pd0-f177.google.com with SMTP id p10so4688907pdj.22
+        for <git@vger.kernel.org>; Fri, 19 Jul 2013 14:01:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=EO/WiWZ25EzLbqHTbJpcsGHpTqFMGafcFXKzhaKZd/0=;
+        b=aq544s6PftlY0i5IcLV88QWUAzlM5JjKXdyACvJkQb1mmG/S4BYQIl4TEV/ZIJuBb7
+         iIwVc1/3m9u2JdtszgjrkucGoaKgtCzIIdsSjnbecLtWrWaFg74HFOVDVhBuLiBB/tyz
+         M8uXqgIdfj7MaSjLU94gJBQtmky/LrvktD3zIO9c52I+a8KE9FFng9JpIpGpde3DG3IW
+         hEF8wP2BV44kR97TMoc2FACEYU59bhyzRoNsNKIfXPyNKb67/phPSeTwzdhhBHNbNGMT
+         EjKN918NGo9GJJHxJ4K61quMoAtDmboIdgt5jCojbvXB6rVgYxidY7L3nLf9GSe3kafA
+         D9lw==
+X-Received: by 10.68.2.69 with SMTP id 5mr19186926pbs.124.1374267670055;
+        Fri, 19 Jul 2013 14:01:10 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id fl2sm24396479pab.23.2013.07.19.14.01.08
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 19 Jul 2013 14:01:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vip07ypu7.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230851>
 
-John Keeping <john@keeping.me.uk> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> The options section of the git-rev-parse manual page has grown
-> organically so that there now does not seem to be much logic behind the
-> ordering of the options.  It also does not make it clear that certain
-> options must appear first on the command line.
+>> I don't mind seeing support for "-q" dropped, but I really don't think
+>> it's worth delaying git 2.0 for that.  Would s/in Git 2.0/in some
+>> future release/ be ok?
 >
-> Address this by reorganising the options into groups with subheadings.
-> The text of option descriptions does not change.
->
-> Signed-off-by: John Keeping <john@keeping.me.uk>
+> I do not think keeping the support for "-q" in is any huge burden.
+> We do not have to remove it, forever, for that matter.
 
-The idea to introduce a general grouping makes a lot of sense, I think.
+I agree with the above, which is why I don't want a promise to remove
+the "-q" option to cause Git 2.0 to be delayed.  It would be better to
+schedule it for Git 3.0, or for another unspecified future git
+release.
 
-> +Operation Modes
-> +~~~~~~~~~~~~~~~
-> +
-> +Each of these options must appear first on the command line.
-> +
-> +--local-env-vars::
-> +	List the GIT_* environment variables that are local to the
-> +	repository (e.g. GIT_DIR or GIT_WORK_TREE, but not GIT_EDITOR).
-> +	Only the names of the variables are listed, not their value,
-> +	even if they are set.
+I thought the 2.0 boundary was a time for changes that everyone
+already knew we should make, where we had been waiting for a good
+moment to change behavior while giving people adequate warning to
+avoid disrupting them too much.  We have a good collection of those
+for 2.0, and the next batch can wait until 3.0.
 
-Honestly speaking, "must appear first" for "--local-env-vars" is a
-bug in implementations of this option, I think.  It does not make
-sense to ask
-
-	git rev-parse --local-env-vars -- Makefile
-
-and the command operates on "--" and "Makefile" in the normal
-operation mode, not "local-env-vars" mode.
-
-> +
->  --parseopt::
->  	Use 'git rev-parse' in option parsing mode (see PARSEOPT section below).
->  
-> +--resolve-git-dir <path>::
-> +	Check if <path> is a valid repository or a gitfile that
-> +	points at a valid repository, and print the location of the
-> +	repository.  If <path> is a gitfile then the resolved path
-> +	to the real repository is printed.
-> +
-> +--sq-quote::
-> +	Use 'git rev-parse' in shell quoting mode (see SQ-QUOTE
-> +	section below). In contrast to the `--sq` option below, this
-> +	mode does only quoting. Nothing else is done to command input.
-
-> +Options for Input
-> +~~~~~~~~~~~~~~~~~
->  
-> +--show-toplevel::
-> +	Show the absolute path of the top-level directory.
-> +
-> +--show-cdup::
-> +	When the command is invoked from a subdirectory, show the
-> +	path of the top-level directory relative to the current
-> +	directory (typically a sequence of "../", or an empty string).
-> +
->  --is-inside-git-dir::
->  	When the current working directory is below the repository
->  	directory print "true", otherwise "false".
-> @@ -188,17 +219,10 @@ print a message to stderr and exit with nonzero status.
->  --is-bare-repository::
->  	When the repository is bare print "true", otherwise "false".
->  
-> +--show-prefix::
-> +	When the command is invoked from a subdirectory, show the
-> +	path of the current directory relative to the top-level
-> +	directory.
-
-I am not sure if --show-*, --is-*, and --git-dir belongs to "options
-for input".  They are truly kitchen sink options to ask for various
-aspects of the repository and directory, and it may be equally valid
-(or even more valid) to consider them as separate operation modes.
+Sorry for the lack of clarity,
+Jonathan
