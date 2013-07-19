@@ -1,83 +1,152 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH] Cygwin has trustable filemode
-Date: Fri, 19 Jul 2013 14:17:52 -0400
-Message-ID: <51E982D0.5040505@gmail.com>
-References: <1373818390-14451-1-git-send-email-mlevedahl@gmail.com> <1374245631-15955-1-git-send-email-mlevedahl@gmail.com> <7vtxjqwlj2.fsf@alter.siamese.dyndns.org>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Git Clone Parameter
+Date: Fri, 19 Jul 2013 18:19:39 +0100
+Organization: OPDS
+Message-ID: <101D1917805742BE86814C6E6E51C378@PhilipOakley>
+References: <FB572366-0B1D-4053-9255-979CB213B160@gmail.com> <7v4nbqzj7u.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 19 20:18:04 2013
+Cc: "Git List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Allan Acheampong" <allanadjei@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 19 20:20:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0FFg-0002my-FD
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 20:18:00 +0200
+	id 1V0FIC-0004Iu-J9
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 20:20:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760995Ab3GSSR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 14:17:56 -0400
-Received: from mail-qc0-f171.google.com ([209.85.216.171]:32919 "EHLO
-	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760991Ab3GSSRz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 14:17:55 -0400
-Received: by mail-qc0-f171.google.com with SMTP id n1so2480776qcw.2
-        for <git@vger.kernel.org>; Fri, 19 Jul 2013 11:17:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=6zD172pIQPFJYy0OtaMD2mY6BL9qnHZxeL9f9VpRPzU=;
-        b=GxLJ+goXFYWvCdAfojU2fcTico1mb31JlF7rY053JCN+OkobCCRpGMbs9GFtREuzQT
-         fLRihuqA7xF6xCUoxB8VB+t7A/k2Ycb69ntYsS3Rn8TjZJzNFdHTWYmxr1G8KvOUNSXA
-         gmAiJtw2Z3zFiYJEzmrQSm6t4O7FSh83hoZfrE0PAd3C3glup5zQAxg4zHQF221veZrx
-         NEMZ4tMilCm1GH/EHa3sBDqXip/kwofNAV1Grv//akNawjzp33AO4UJRy4OGOg90bycs
-         5eVRYwpIHahaYhEC9TFsnoiRkjqVAMFSjNEAtDTM/OfQMIEJpZ+tvZA8YX3FxW7uTRjy
-         EzmQ==
-X-Received: by 10.49.85.4 with SMTP id d4mr19215538qez.10.1374257874399;
-        Fri, 19 Jul 2013 11:17:54 -0700 (PDT)
-Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
-        by mx.google.com with ESMTPSA id 2sm24086615qap.7.2013.07.19.11.17.52
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 19 Jul 2013 11:17:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130625 Thunderbird/17.0.7
-In-Reply-To: <7vtxjqwlj2.fsf@alter.siamese.dyndns.org>
+	id S1760997Ab3GSSUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 14:20:33 -0400
+Received: from smtp2go.com ([207.58.142.213]:56994 "EHLO smtp2go.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760631Ab3GSSUc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 14:20:32 -0400
+X-Greylist: delayed 3666 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Jul 2013 14:20:32 EDT
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230836>
 
-On 07/19/2013 12:40 PM, Junio C Hamano wrote:
-> Thanks, will replace.
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Friday, July 19, 2013 4:02 PM
+> Allan Acheampong <allanadjei@gmail.com> writes:
 >
-> What do we want to do with the compat/regex build-time switch?
+>> ... I'm new to git, but I found it very
+>> confusing to understand the difference between "remote" ,
+>> "remotes". Is it in the cloned repo, or is it in a remote place?
+>> If its local, why doesn't it get shown when I do 'git branch' but
+>> when I do 'git branch -a'.
+
+Allan,
+This (not being sure about local remote branches and distant remote
+branches, while coping with multiple remote servers) appears to be a
+common problem for new folks, which those well versed in the use of Git
+have become well used to so don't see the problem.
+
+For the uninitiated, the lack of distinct terminology can cause no end
+of confusion as most explanations presume that you will implicitly
+understand the context, which can't be true for such newbies. It doesn't
+help that the 'remotes' model of the Git DVCS fits a work flow style
+that isn't the same as the expectation of the newbie.
+
+For example, in a larger collaboration there can be many many branches
+(on a communal server) that essentially belong to other contributors
+which one would never be interested in, and you (and they) would want
+ignored.
+
+>> ...
+>> For example, I create a project locally
+>> with multiple branches, push it, delete it locally and clone it
+>> back to my machine. On a 'git branch' I would only see the head
+>> branch.
+
+Junio explains below how your suggestion of 'only the head branch'
+viewpoint is too limiting (among other things).
+
+That said, if you have a terminology for the distinction between the
+confusing aspects (once understood), then that would be worth something
+to help ease the path of understanding for others. I had the same
+confusions for a while, and even now have to use some of the awkward
+terminology I used above, so any improvements in that area would be
+useful. -- Branching models are an endless source of discussion!
+
+Philip
+
+>> ...
+>> I'd like to know your opinions about that and what you think about
+>> the suggestion.
 >
-> IIRC, this was only needed for 1.7 and not 1.5, and I also would
-> expect (without anything to back-up, so this is more a faith than
-> expectation) over time the "new library" would have a working regex
-> library.
+> Not very interested, for a few reasons:
 >
-
-The situation is that Cygwin uses newlib rather than glibc, and does so 
-for licesnsing reasons (redhat sells licenses to developers allowing 
-closed source applications built using Cygwin). So, there must be a 
-compelling need to fix the library - git has a simple work around, so 
-isn't the case. Also, Cygwin has a perl regex library for those 
-demanding more complete / correct regex solution. So, I make no 
-prediction on when the newlib regex functions are fixed.
-
-Related: Should we have separate settings for 1.5 and 1.7 for several 
-variables? Conflicts I see not reflected in config.mak.uname on pu:
-     trustable filemode   (1.7 has, 1.5 does not)
-     MMAP/Pread (1.7 pread is thread safe, 1.5 I dont think was, MMAP 
-utility is convolved in this)
-     regex - 1.7 is broken, per Ramsay 1.5 works
-
-If you think its worth it, I'll create a patch series with the above and 
-justifications for the different settings that I know.
-
-Mark
+> (1) It is actively harmful if the aim is to blur the distinction
+>     between local branches and remote-tracking branches. New users
+>     will be in a lot of hurt if they are not aware that the
+>     'master' branch in their repository is unique and different
+>     from the 'master' branch of everybody else's repository and the
+>     'origin' remote repository they cloned from.
+>
+> (2) It is not necessary. You can do interesting things to the
+>     history on your local branch, like creating new commits to grow
+>     the branch, only after checking it out. And modern Git lets you
+>     say
+>
+>     $ git checkout topic
+>
+>     and it DWIMs the request to "check out the topic branch" to do
+>     the equivalent of
+>
+>     $ git branch -t topic origin/topic && git checkout topic
+>
+>     when 'topic' does not exist as your local branch and there is a
+>     single remote (i.e. 'origin') that has a remote-tracking branch
+>     of that same name 'topic'. This lets you create a corresponding
+>     local branch lazily any time you want to work on extending the
+>     work on a branch taken from the remote, and output from "git
+>     branch --list" to be meaningful: it only lists your local
+>     branch, the ones you have already said that you are interested
+>     in working on in this repository.
+>
+> (3) It makes "git branch --list" output less useful if you create
+>     local branches that correspond to all the branches taken from
+>     the remote.  You cannot tell which ones you have worked on and
+>     which ones you haven't even touched yet.
+>
+> Having said that, it is fairly trivial to script it, if you really
+> want to do so, ignoring all of the above downsides.  Something like:
+>
+> git for-each-ref --format='%(refname)' refs/remotes/origin/ |
+> sed -e 's|^refs/remotes/origin/||' -e '/^HEAD$/d' |
+> while read branchname
+>        do
+> git show-ref -q --verify "refs/heads/$branchname" ||
+>                git branch -t "$branchname" "origin/$branchname"
+> done
+>
+> But for the reasons stated, it is not a particularly good way to
+> work to start from many local branches that are copies of all the
+> remote-tracking branches, many of which you may not even touch, so I
+> personally do not think we would want to add such an option to
+> "clone".  The implementation would be fairly trivial, as you can see
+> from the "trivial script" above, but it would encourage a wrong
+> workflow.
+>
+> Older Git around 1.4.x days used to conflate remote-tracking
+> branches and local branches, and threw everything in refs/heads/
+> hierarchy, which had the exact set of problems above, and that is
+> why modern Git uses refs/remotes/origin/ hierarchy to store the
+> remote-tracking branches separately, for less cluttered local branch
+> namespace.
+>
