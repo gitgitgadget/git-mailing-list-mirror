@@ -1,65 +1,65 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [RFC] checkout --rebase
-Date: Fri, 19 Jul 2013 15:51:41 +0530
-Message-ID: <CALkWK0m-ZpVvvgAB_yzooah0=veeNDudahs=4ur2YHN03h-h4g@mail.gmail.com>
+Subject: [RFC] Delete current branch
+Date: Fri, 19 Jul 2013 16:05:04 +0530
+Message-ID: <CALkWK0=8q4J2yi2to_+41kJSA5E59CBwkG69Hj7MmTPgUnSh5Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 19 12:22:27 2013
+X-From: git-owner@vger.kernel.org Fri Jul 19 12:35:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V07pT-0003Zz-F2
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 12:22:27 +0200
+	id 1V082P-000401-Sz
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 12:35:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759675Ab3GSKWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 06:22:22 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:53654 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750949Ab3GSKWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 06:22:22 -0400
-Received: by mail-ie0-f169.google.com with SMTP id 10so9367234ied.0
-        for <git@vger.kernel.org>; Fri, 19 Jul 2013 03:22:21 -0700 (PDT)
+	id S965229Ab3GSKfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 06:35:46 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:51092 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965089Ab3GSKfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 06:35:45 -0400
+Received: by mail-ie0-f180.google.com with SMTP id f4so8985886iea.39
+        for <git@vger.kernel.org>; Fri, 19 Jul 2013 03:35:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=digj9DSfAwRrccke8s86eIci11Mm7fZvknlKS/n31PM=;
-        b=ymaILUvMvivfYsJWNIsaF2GAmZmQiT6rUlOWLJMhSbVILF62Dn4iQU9XwZKf8j4x+R
-         Z+AJ8b5sgyTLnOTxuX5e3tXkhdiXhSAzAlfwf6LlL76OdacNoVBvoixfOytO1Dkd7Pch
-         RWQo2N72DByUp2fjqQTrmml8MVo2Au85Y0HiQe/tpEVxIWZQoLuTSPYo3DQkxjA3QUrl
-         N3o75rADLuXIduvF9AvM3PqXnXhfL9kXN+LIy01vjh1wHYXJ5UtTHavGf3/X8nYEX/aI
-         3Mt6V8CTKsQbRke+HLq/4ccLJeA5OUjMc5LhHDYd5+qcDPEWzGNDrPrGAvLuIPU0sL+1
-         EUFA==
-X-Received: by 10.43.9.4 with SMTP id ou4mr9650209icb.53.1374229341704; Fri,
- 19 Jul 2013 03:22:21 -0700 (PDT)
-Received: by 10.64.37.130 with HTTP; Fri, 19 Jul 2013 03:21:41 -0700 (PDT)
+        bh=xGlOplgfYv1TJ23hQSoeTWBqF9/7ktu04a4bX7kI4UI=;
+        b=Cl7qKqqI/eIkqoaMvuvoaRKlPhDn09TFjV2DGwke/sY/RnnKw309W/rTrGZxtluM3A
+         JCQZBeR//jV+mZt8hidsjuL6k7rCcHSDiux3t4+NxCDe5hp3tAFNY4LFL7DzRH1+yUyn
+         4tQVnI1vOfiwr62s2KQkynCr1NuF3zJqxIzt/z2a+kiVp9EZQH1WBJ3bVnjAyVuStMzG
+         T0k0zA3S8U0AwOzpd1wHFCVAVCahBsi0UoJc0IPHewaf42dKX5Jeb4W9VJl4QAMA/jRM
+         m0PlS42JLd587NKUJbiBN/JS/buZFypj2cLjePlsRzn1NOMg+CY640i2SIOLoYTv/J7W
+         IApQ==
+X-Received: by 10.43.88.3 with SMTP id ay3mr9286013icc.61.1374230144948; Fri,
+ 19 Jul 2013 03:35:44 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Fri, 19 Jul 2013 03:35:04 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230789>
 
 Hi,
 
-I'm often work on small topic branches, and find myself doing this quite often:
+Many of my ideas turn out to be really stupid, and I need to throw
+away my feature branch.  So, I find myself doing this often:
 
-  # on branch master
-  $ git checkout um-build
-  $ git rebase master
+  # on branch menuconfig-jk
+  $ git checkout master
+  $ git branch -D<BACKSAPCE>
+  # er, what was the branch name again?
+  $ git checkout -
+  # Ah
+  $ git checkout master
+  $ git branch -D menuconfig-jk
 
-This is horribly inefficient; the first operation takes a _really_
-long time to complete, since master updates itself very often and I
-have to check out an old worktree.  So, I work around this issue by
-doing:
+So, I scripted it for myself.  Perhaps we should get the functionality
+in core as `git branch -Dc` (c for "current"; or something)?
 
-  # on branch master
-  $ git checkout -b um-build-2
-  $ git cherry-pick ..um-build
-  $ git branch -M um-build
-
-... and I scripted it.  Perhaps we should get this functionality in
-core, as `git checkout --rebase` (or something)?
+Also, perhaps a `git describe -` corresponding to `git checkout -`?
+Then I can use it with --contains --all to get the name of the
+previous branch.
 
 Thanks.
