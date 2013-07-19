@@ -1,68 +1,97 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC] Delete current branch
-Date: Fri, 19 Jul 2013 20:05:29 +0530
-Message-ID: <CALkWK0kGF+d8Jk-TVfb6iwk6LuOcD-Uuuj6DHf-4YeVAFLSvuw@mail.gmail.com>
-References: <CALkWK0=8q4J2yi2to_+41kJSA5E59CBwkG69Hj7MmTPgUnSh5Q@mail.gmail.com>
- <87y592y67f.fsf@igel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Documentation/git-checkout.txt: Inconsistent naming of paths arguments
+Date: Fri, 19 Jul 2013 07:36:16 -0700
+Message-ID: <7va9lizkf3.fsf@alter.siamese.dyndns.org>
+References: <CAJTcR-1RxLEaUe+c5yXEuKeC5Ert4FGm0=kUi7H-M-a+-Cp9-g@mail.gmail.com>
+	<CACsJy8DdVxwsf5xyDSDCe97kTPGdjvwQcMEPRNCCGXjF1z4eyw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Fri Jul 19 16:36:16 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Adam =?utf-8?Q?Brengesj=C3=B6?= <ca.brengesjo@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 19 16:36:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0Bn5-000064-KE
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 16:36:15 +0200
+	id 1V0BnE-0000C6-C9
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 16:36:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755384Ab3GSOgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 10:36:12 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:55721 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509Ab3GSOgK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 10:36:10 -0400
-Received: by mail-ie0-f177.google.com with SMTP id w15so1244635iea.22
-        for <git@vger.kernel.org>; Fri, 19 Jul 2013 07:36:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=FMU9beHBZp+SqUJLBpfqJtWSpFJKh1NqE50TxpXLmUM=;
-        b=sRDOE+bL8bpD5opygATtjpahuR1kuM0aQeIFGytMevs0/LyIkt5GS6ykm2e8Y7lkrL
-         xLmR5xnQMAxcnXs3G4vrLf1RXsy0PnRPdTvJy4IIfNTfG6M93T5qJs9KLvAeW2wt/2Hj
-         CHY0vTUcIO5yuHWV3NNbEFn+QiU1SuCz94vZQ4a8TttryhmScbT3QvkL2QcSicEW3NRm
-         ggdNDEIjiUD9Dz45UJ5QHMpYGeJfsVUL+wPCpcg80EvgJH2T2YA4YtTFwS4sjoKraspk
-         CcLw2q6FvjaiPT0fNIW5fJurdDfB/EVsL/YMOtnyFSkcNbcKz9jilIpFYMjN7B2U89b0
-         q1bA==
-X-Received: by 10.43.145.69 with SMTP id jt5mr10674813icc.65.1374244570035;
- Fri, 19 Jul 2013 07:36:10 -0700 (PDT)
-Received: by 10.64.37.130 with HTTP; Fri, 19 Jul 2013 07:35:29 -0700 (PDT)
-In-Reply-To: <87y592y67f.fsf@igel.home>
+	id S1755250Ab3GSOgU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jul 2013 10:36:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46154 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752140Ab3GSOgU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Jul 2013 10:36:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F7AE2F743;
+	Fri, 19 Jul 2013 14:36:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=wmntt5XDtung
+	pzqe2rsFpZkjOEk=; b=d42M19SMXQrrdYH5neif3CLsc3Tv2X0U1nIV2YEEDdlm
+	nT914TBe3vG+aJdltoNWGocMcY2ajO303VRgJXN3gWf2hCqJ03s21preQbpLxq2t
+	2k8BLgsTsWz5JGynq4HMVtQtOtXFQ2UwAMl2TqcSIcogpD9CwUawVWAwpLzkoFk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qetOrV
+	rfq4Jl3ejNo5oPCNI3qJHRN/H7TWhPd7bIro75CwoH8TnhMAtyAjYXHP4GsaGhmh
+	pA3et33hz8vS0Ia38vqAXALqKRxIF/qyX0J/A0+vRd6vb5oK34Z1M07xDp7OpdfY
+	XsB/gNJ9XAFPx4/9fngcaWeLvn+4aGz7jPgto=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33DA72F741;
+	Fri, 19 Jul 2013 14:36:19 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 814062F73F;
+	Fri, 19 Jul 2013 14:36:18 +0000 (UTC)
+In-Reply-To: <CACsJy8DdVxwsf5xyDSDCe97kTPGdjvwQcMEPRNCCGXjF1z4eyw@mail.gmail.com>
+	(Duy Nguyen's message of "Fri, 19 Jul 2013 14:40:18 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 92E393FA-F080-11E2-8017-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230809>
 
-Andreas Schwab wrote:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
+
+> On Fri, Jul 19, 2013 at 2:16 PM, Adam Brengesj=C3=B6 <ca.brengesjo@gm=
+ail.com> wrote:
+>> From SYNOPSIS:
+>>
+>> git checkout [-p|--patch] [<tree-ish>] [--] [<paths>=E2=80=A6]
+>>
+>>
+>> From DESCRIPTION
+>>
+>> git checkout [-p|--patch] [<tree-ish>] [--] <pathspec>=E2=80=A6
+>>
+>>
+>>
+>> 1. Named <paths> in SYNOPSIS, but <pathspec> in DESCRIPTION. (It's
+>> referred to as <path> in the body text).
+>>
+>> 2. <paths> is marked as optional in SYNOPSIS, but <pathspec> is not.
+>>
+>> I'm not submitting a patch now, as I'm not sure which is correct.
 >
->>   # er, what was the branch name again?
->>   $ git checkout -
->
-> You could take a look in the reflog.
+> If I'm not mistaken, "git checkout" takes pathspec in all cases.
 
-Yeah, or use the @{-N} revision to do that for me.  My scripted
-version is essentially:
+Correct.
 
-  test "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" || exit 1
-  git checkout master
-  git branch -D @{-1}
+And I think -p form (which I do not use myself so please double
+check) can be run with an empty pathspec.
 
-The main problem is the hard-coding of "master": I suppose I could
-replace that with @{-1} too.
+It looks somewhat idiotic that
 
-Not a big deal: I was just wondering if others use it often enough for
-it to become `branch -Dc` in core; @{-N} is quite obscure.
+	git checkout master
+        git checout -p next
+
+will finish on the 'master' branch, with random selected bits of
+differences for 'master' to go to 'next' applied to the index and
+the working tree, but that seems to be how it works.
