@@ -1,79 +1,73 @@
 From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: [PATCH 1/1] Git.pm: revert _temp_cache use of temp_is_locked
-Date: Thu, 18 Jul 2013 17:16:16 -0700
-Message-ID: <7c02d1e993907797fab2731677a1367@f74d39fa044aa309eaea14b9f57fe79>
-References: <3e0c11386c2e091f09c554bf0ba091d@f74d39fa044aa309eaea14b9f57fe79>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 19 02:16:32 2013
+Subject: Re: [PATCH v4 0/2] allow git-svn fetching to work using serf
+Date: Thu, 18 Jul 2013 17:16:44 -0700
+Message-ID: <ACCFF6B2-010B-465A-A011-E56BCE64C119@gmail.com>
+References: <8a6adfae744011599e410da7a46808b@f74d39fa044aa309eaea14b9f57fe79> <7v8v131lye.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 19 02:16:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1UzyN5-00041P-IA
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 02:16:32 +0200
+	id 1UzyNQ-0004CJ-DE
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 02:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934820Ab3GSAQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 20:16:28 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:59271 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759509Ab3GSAQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 20:16:27 -0400
-Received: by mail-pa0-f48.google.com with SMTP id kp12so3746118pab.7
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 17:16:26 -0700 (PDT)
+	id S934825Ab3GSAQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 20:16:48 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:36184 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934805Ab3GSAQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 20:16:47 -0400
+Received: by mail-pa0-f41.google.com with SMTP id bj3so3804992pad.0
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 17:16:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=B6kV1ApOXVVXy/zcWXtcATFzs1DMQb/uIfES+547kIU=;
-        b=lbc5XPuJPyJUBsbz4bEyGDbslpU3yGWUxXdxHPPdZ3jZ3rbBOo19qLwvXF3xAO7Ype
-         PAqTFbmRDxehqSmKOq/5TYJcpQ0KKOujlKCWp5s8esQWayf5K+7dyrPnKzIthBAN6a8y
-         8uQWwipHKW6jaSKLbXPsDmzOPIE0SjYjNq/EeHX/aHlSkSkjfErMEDWnJwBJHPk5cYgF
-         sSDFmXD0qjTuXR/cuJ9zwX4hJtRkZkC/WnI1W0OzxgacMiQ9dK/H0Wq6XzmkNiQSman8
-         M321MyeIiGhZpZux5yRVAFDGNkP7/QzE8+1l0RV2zOt5IGw7fu9+3431NzCuYvEkhcEu
-         cS4g==
-X-Received: by 10.68.1.226 with SMTP id 2mr14202733pbp.150.1374192986716;
-        Thu, 18 Jul 2013 17:16:26 -0700 (PDT)
-Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id mr3sm16136191pbb.27.2013.07.18.17.16.25
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc:x-mauler;
+        bh=qCZ9prAcwsdLkVyTKiiR0i8GFU2wSoI1JHPKHzDa+lg=;
+        b=fKLyPK85r5RVxlLW1/IZ+lTYZuTv17cnwi+HBEdFYOBHA8uBsEz4wuPzX6/m7LJCbR
+         lL5povLnIauRQmE6zRW2CFQvuXgykGd9Dag5WJWE4zX8n3gZstV48RxNKxYCivg0XuCt
+         iNNo5iT4eg1LIfnJXapwYpCMcKB7ZgzLEVq6FN5TPFr+Orp9CcOgm9cn5xNshDTH6q2/
+         r/Z/ITmK9EmCQkIUjoxZqzRD8OMOmKYNN7kotm/sRXB65NwlnLlXURSZVl7L45Il8h16
+         vJXP2Sb+QORl+yBWYHCcTzM+rg8AGBHZGvPTuGtMb1yOMJSDk3DmBmRg39d0OaS4gd3W
+         VIaQ==
+X-Received: by 10.66.222.1 with SMTP id qi1mr15679933pac.53.1374193007434;
+        Thu, 18 Jul 2013 17:16:47 -0700 (PDT)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id iq6sm16216528pbc.1.2013.07.18.17.16.46
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 18 Jul 2013 17:16:26 -0700 (PDT)
-In-Reply-To: <3e0c11386c2e091f09c554bf0ba091d@f74d39fa044aa309eaea14b9f57fe79>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jul 2013 17:16:46 -0700 (PDT)
+In-Reply-To: <7v8v131lye.fsf@alter.siamese.dyndns.org>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230772>
 
-When the temp_is_locked function was introduced, there was
-a desire to make _temp_cache use it.  Unfortunately due to the
-various tests and logic flow involved changing the _temp_cache
-function to use the new temp_is_locked function is problematic
-as _temp_cache needs a slightly different test than is provided
-by the temp_is_locked function.
+On Jul 18, 2013, at 16:34, Junio C Hamano wrote:
+> "Kyle J. McKay" <mackyle@gmail.com> writes:
+>
+>> This patch allows git-svn to fetch successfully using the
+>> serf library when given an https?: url to fetch from.
+>> ...
+>> Versions v2-v3 of the patch introduced a bug when attempting
+>> to change the _temp_cache function to use the new
+>> temp_is_locked function at the suggestion of a reviewer.
+>
+> Err, excuse me, is this meant to _replace_ what is already in 'next'
+> for the past 6 days?
+>
+> Could you feed an incremental update, highlighting where the update
+> improves compared to the previous attempt in the log message?
 
-This change reverts use of temp_is_locked in the _temp_cache
-function and restores the original code that existed there
-before the temp_is_locked function was added.
-
-Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
----
- perl/Git.pm | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 0ba15b9..204fdc6 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -1277,7 +1277,7 @@ sub _temp_cache {
- 
- 	my $temp_fd = \$TEMP_FILEMAP{$name};
- 	if (defined $$temp_fd and $$temp_fd->opened) {
--		if (temp_is_locked($name)) {
-+		if ($TEMP_FILES{$$temp_fd}{locked}) {
- 			throw Error::Simple("Temp file with moniker '" .
- 				$name . "' already in use");
- 		}
--- 
-1.8.3
+OK.  I have sent out an "incremental update against 'next' branch'"  
+patch based on how a set of recent incremental updates to 'next' was  
+sent to the list on 2013-07-04.  If that is not what you had in mind,  
+I apologize in advance.
