@@ -1,91 +1,133 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] Cygwin has trustable filemode
-Date: Fri, 19 Jul 2013 10:53:51 -0400
-Message-ID: <1374245631-15955-1-git-send-email-mlevedahl@gmail.com>
-References: <1373818390-14451-1-git-send-email-mlevedahl@gmail.com>
-Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jul 19 16:54:53 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git Clone Parameter
+Date: Fri, 19 Jul 2013 08:02:13 -0700
+Message-ID: <7v4nbqzj7u.fsf@alter.siamese.dyndns.org>
+References: <FB572366-0B1D-4053-9255-979CB213B160@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Allan Acheampong <allanadjei@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 19 17:02:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0C57-0001yg-9z
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 16:54:53 +0200
+	id 1V0CCL-00065S-4Y
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 17:02:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677Ab3GSOyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 10:54:49 -0400
-Received: from mail-qa0-f49.google.com ([209.85.216.49]:56862 "EHLO
-	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509Ab3GSOys (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 10:54:48 -0400
-Received: by mail-qa0-f49.google.com with SMTP id hu16so2361854qab.15
-        for <git@vger.kernel.org>; Fri, 19 Jul 2013 07:54:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=fGYwKd1bl2/mjfZ628e67TxYXw6lxCgVto1nZLs3yaI=;
-        b=f7IHsCHi0gppAX4H+RHQQfnTGA7JirNFQ1zDq1524OYjgTQr3fhJgjfdD5K5p2lrJ5
-         FcYQhRtdzrXsc/AreJ690o20znPvSI+8AuQXNz46lKZ3uTXY1wM1GsifGpLogb5Fp9V/
-         cX/RYx3pOyoT9z24KVGb9+8+FjMi9+XRCksj5/mEmWyRky7Fp1xg8y38jbvirefVaVke
-         9NkWjjGu5M4DlayHFrFz+sG28rv9s2iSZ4yzqnDmz3JCysmrmUl4DbKW5GxdZ1GDQSVo
-         7P9iI4WTgW3MXuUJ6phZbfckC5sgqIBNEHnbyau/xu8I3eCXgqhp23uQByxTA7GIyBHs
-         thOA==
-X-Received: by 10.224.23.7 with SMTP id p7mr8823738qab.88.1374245688018;
-        Fri, 19 Jul 2013 07:54:48 -0700 (PDT)
-Received: from mark-laptop.lan (pool-72-66-83-222.washdc.fios.verizon.net. [72.66.83.222])
-        by mx.google.com with ESMTPSA id i1sm22997147qas.10.2013.07.19.07.54.45
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 19 Jul 2013 07:54:46 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.2.0.13
-In-Reply-To: <1373818390-14451-1-git-send-email-mlevedahl@gmail.com>
+	id S1751721Ab3GSPCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 11:02:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37070 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751167Ab3GSPCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 11:02:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2B5830123;
+	Fri, 19 Jul 2013 15:02:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HS+Z7g/YhYuWgTCN0wNnvn4XQ+Q=; b=ntvQvh
+	TLa7iub717YFwbO2y1DVoc4ag7+sCIFFMdU9PBQvqFXtUSokPbLX9Dx/SXGBYf4X
+	iVPVXwwWClgp7ReWwPHVKOTjYl21cNKoNzDpEvX9r5te5KZnCCRG66rhHJi1TDZw
+	D1hc95Jol57gulYwMxPTli64CjpJtWfXohtEA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EMIXJgVO5A8fElYi1H8u/KencmDvfM/+
+	hHuyktgng1PwZEpIgI4ysGsNI3mWMT80ohwMADiyA3bxtsOXeC0eOUQH7TDdHNT+
+	QvEu++sfxwLvHfn0gJOX4ZT/CGE7ToJLT5FHECRlMtLm+MyNRsUbSp7Gol5obO3j
+	tGs1WjbWSJI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D881B30122;
+	Fri, 19 Jul 2013 15:02:15 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0BA4530120;
+	Fri, 19 Jul 2013 15:02:14 +0000 (UTC)
+In-Reply-To: <FB572366-0B1D-4053-9255-979CB213B160@gmail.com> (Allan
+	Acheampong's message of "Fri, 19 Jul 2013 11:21:01 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 32A5098E-F084-11E2-A2E4-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230812>
 
-The supported Cygwin distribution on supported Windows versions provides
-complete support for POSIX filemodes, so enable this by default. git as
-distributed by the Cygwin project is configured this way.
+Allan Acheampong <allanadjei@gmail.com> writes:
 
-This fixes one testsuite failure:
-t3300 test 17 (diff-index -M -p with mode change quotes funny filename)
+> ... I'm new to git, but I found it very
+> confusing to understand the difference between "remote" ,
+> "remotes". Is it in the cloned repo, or is it in a remote place?
+> If its local, why doesn't it get shown when I do 'git branch' but
+> when I do 'git branch -a'.
+> ...
+> For example, I create a project locally
+> with multiple branches, push it, delete it locally and clone it
+> back to my machine. On a 'git branch' I would only see the head
+> branch.
+> ...
+> I'd like to know your opinions about that and what you think about
+> the suggestion.
 
-Historical notes: Cygwin version 1.7 supports Windows-XP and newer, thus 
-dropped support for all OS variants that lack NTFS and/or the full win32 
-api, and since late 1.5 development, Cygwin maps POSIX modes to NTFS ACLs 
-by default.  Cygwin 1.5 supported OS variants that used FAT as the native 
-file system, and had optional methods for providing POSIX file modes on 
-top of FAT12/16 and NTFS, though not FAT32.  Also, support for POSIX modes 
-on top of FAT were dropped later in 1.5.  Thus, POSIX filemode support 
-could not be expected by default on a Cygwin 1.5 installation, but is 
-expected by default on a 1.7 installation.
+Not very interested, for a few reasons:
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
-Junio - The above notes are more accurate than in my previous commit message,
-so if this commit survives into next/master, I would prefer this version as
-opposed to the one now on pu (da875762)
+ (1) It is actively harmful if the aim is to blur the distinction
+     between local branches and remote-tracking branches. New users
+     will be in a lot of hurt if they are not aware that the
+     'master' branch in their repository is unique and different
+     from the 'master' branch of everybody else's repository and the
+     'origin' remote repository they cloned from.
 
-Mark
+ (2) It is not necessary. You can do interesting things to the
+     history on your local branch, like creating new commits to grow
+     the branch, only after checking it out. And modern Git lets you
+     say
 
- config.mak.uname | 1 -
- 1 file changed, 1 deletion(-)
+     $ git checkout topic
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 174703b..bf5db47 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -164,7 +164,6 @@ ifeq ($(uname_O),Cygwin)
- 	NO_THREAD_SAFE_PREAD = YesPlease
- 	NEEDS_LIBICONV = YesPlease
- 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
--	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
- 	# There are conflicting reports about this.
- 	# On some boxes NO_MMAP is needed, and not so elsewhere.
--- 
-1.8.3.2.0.13
+     and it DWIMs the request to "check out the topic branch" to do
+     the equivalent of
+
+     $ git branch -t topic origin/topic && git checkout topic
+
+     when 'topic' does not exist as your local branch and there is a
+     single remote (i.e. 'origin') that has a remote-tracking branch
+     of that same name 'topic'. This lets you create a corresponding
+     local branch lazily any time you want to work on extending the
+     work on a branch taken from the remote, and output from "git
+     branch --list" to be meaningful: it only lists your local
+     branch, the ones you have already said that you are interested
+     in working on in this repository.
+
+ (3) It makes "git branch --list" output less useful if you create
+     local branches that correspond to all the branches taken from
+     the remote.  You cannot tell which ones you have worked on and
+     which ones you haven't even touched yet.
+
+Having said that, it is fairly trivial to script it, if you really
+want to do so, ignoring all of the above downsides.  Something like:
+
+	git for-each-ref --format='%(refname)' refs/remotes/origin/ |
+	sed -e 's|^refs/remotes/origin/||' -e '/^HEAD$/d' |
+	while read branchname
+        do
+		git show-ref -q --verify "refs/heads/$branchname" ||
+                git branch -t "$branchname" "origin/$branchname"
+	done
+
+But for the reasons stated, it is not a particularly good way to
+work to start from many local branches that are copies of all the
+remote-tracking branches, many of which you may not even touch, so I
+personally do not think we would want to add such an option to
+"clone".  The implementation would be fairly trivial, as you can see
+from the "trivial script" above, but it would encourage a wrong
+workflow.
+
+Older Git around 1.4.x days used to conflate remote-tracking
+branches and local branches, and threw everything in refs/heads/
+hierarchy, which had the exact set of problems above, and that is
+why modern Git uses refs/remotes/origin/ hierarchy to store the
+remote-tracking branches separately, for less cluttered local branch
+namespace.
