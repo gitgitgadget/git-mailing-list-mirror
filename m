@@ -1,69 +1,74 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 6/6] diff: deprecate -q option to diff-files
-Date: Thu, 18 Jul 2013 20:31:26 -0700
-Message-ID: <20130719033126.GA27853@google.com>
-References: <7vvc496ruf.fsf@alter.siamese.dyndns.org>
- <1374107406-14357-1-git-send-email-gitster@pobox.com>
- <1374107406-14357-7-git-send-email-gitster@pobox.com>
+Subject: Re: [PATCH] Add the GIT_SENTINEL macro
+Date: Thu, 18 Jul 2013 20:36:34 -0700
+Message-ID: <20130719033634.GB27853@google.com>
+References: <51E849C4.7020305@ramsay1.demon.co.uk>
+ <7vr4evz0oc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stefan Beller <stefanbeller@googlemail.com>
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jeff King <peff@peff.net>,
+	GIT Mailing-list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 19 05:31:39 2013
+X-From: git-owner@vger.kernel.org Fri Jul 19 05:36:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V01Pv-0005Vn-9q
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 05:31:39 +0200
+	id 1V01Uq-0007d5-DM
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 05:36:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759611Ab3GSDbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 23:31:35 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:47532 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759603Ab3GSDbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 23:31:34 -0400
-Received: by mail-pa0-f43.google.com with SMTP id hz11so3905187pad.30
-        for <git@vger.kernel.org>; Thu, 18 Jul 2013 20:31:34 -0700 (PDT)
+	id S933502Ab3GSDgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 23:36:40 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:58325 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755062Ab3GSDgj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 23:36:39 -0400
+Received: by mail-pb0-f42.google.com with SMTP id un1so3918644pbc.29
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 20:36:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=T4IMOV7BULETeNOxUHoo0K9fKWNgTRyxYC028enDyXk=;
-        b=aQrP5864conGsWfeV0e9t61OYvPfuFY6GIim5tVCmDKnLcHjHrLLt29V9uh6NAYgPi
-         td/wZsMpRFRXsEpuYGGn4JKGISSDJL8R24kMQeIh/rC3TBOCWjT+/wb4CJS1QHGz97A6
-         ddqfw3SkBWist9CJsEWIWdIUgLp8B+p4487ZBISukQ1ryoQ934A0Mh/LHHVfHWgp0ryQ
-         I3YYRZgcwEJsA9tfbuVmE7nvsJ/w/zt1RFGpi04pycLc82R0oSu4dMP3Vb5eo/oskcNR
-         ffBymjhkwYXmNFX/wXT3CxNreNKrJ2Z/gVqMpfCc7yGEtN9TK+CT8ODQkmkL6jsECym/
-         dLEA==
-X-Received: by 10.66.149.131 with SMTP id ua3mr15980640pab.49.1374204694516;
-        Thu, 18 Jul 2013 20:31:34 -0700 (PDT)
+        bh=C5MiVF1GRkoNwIkk2E+E0Lh49GMgM4Xokv9aWdvHO6U=;
+        b=wbdAvo9RGw9I4W5ALWXdp0PupXt+oCoeo6dqwCKVbzQ3ycc4d3vvmKF5e27z0y0QZj
+         yE5f5Vw49m1xEbVxxea1kdFsitrQB1khRtvWaVu5CMYSGLkOv3Wt0q4AX1pWtS6qOnt4
+         fWxeMNs/UBAKO9jlVPYYMr3cVBwNK2Tij/vbQeqtDpLln6U4bDzUPsco3sMpfWp7f41h
+         PUEET0I7iMd8N62ZP5oyDfVcDq/HHEh0T8XgIGeqDZnHxmgAv9QhQ2iPgYm9rY6D038k
+         Euff6vV+IedZxwqThgaAL/tMYqdL/Avn0LJVYS5slOAX2sdohSpDs27lcwedRO/1naTx
+         H6Nw==
+X-Received: by 10.66.189.225 with SMTP id gl1mr16309856pac.22.1374204999187;
+        Thu, 18 Jul 2013 20:36:39 -0700 (PDT)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id qb15sm19877345pab.13.2013.07.18.20.31.32
+        by mx.google.com with ESMTPSA id dg3sm16871853pbc.24.2013.07.18.20.36.37
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Jul 2013 20:31:33 -0700 (PDT)
+        Thu, 18 Jul 2013 20:36:38 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1374107406-14357-7-git-send-email-gitster@pobox.com>
+In-Reply-To: <7vr4evz0oc.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230778>
 
 Junio C Hamano wrote:
 
-> We should remove the support for "-q" in Git 2.0.
+> It seems to apply well on the tip of jk/gcc-function-attributes.
+>
+>  - This macro is not about "git" at all, so I'll edit the patch to
+>    call it GCC_ATTR_SENTINEL before applying.
 
-Nooooo.  I hope you are teasing.
+Would naming it something like LAST_ARG_MUST_BE_NULL instead make
+sense?  That way, if some other compiler gains a different syntax for
+the same annotation, it would be possible to do
 
-I don't mind seeing support for "-q" dropped, but I really don't think
-it's worth delaying git 2.0 for that.  Would s/in Git 2.0/in some
-future release/ be ok?
-
-The patch text itself looks good.
-
-Thanks,
-Jonathan
+	#if defined(__GNUC__) && __GNUC__ >= 4
+	# define LAST_ARG_MUST_BE_NULL __attribute__((sentinel))
+	#elif defined(_MSC_VER) && _MSC_VER > 27
+	# define LAST_ARG_MUST_BE_NULL __declspec(lastargnull)
+	#else
+	# define LAST_ARG_MUST_BE_NULL
+	#endif
