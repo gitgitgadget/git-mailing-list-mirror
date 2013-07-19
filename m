@@ -1,71 +1,79 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Documentation/git-checkout.txt: Inconsistent naming of paths arguments
-Date: Fri, 19 Jul 2013 14:40:18 +0700
-Message-ID: <CACsJy8DdVxwsf5xyDSDCe97kTPGdjvwQcMEPRNCCGXjF1z4eyw@mail.gmail.com>
-References: <CAJTcR-1RxLEaUe+c5yXEuKeC5Ert4FGm0=kUi7H-M-a+-Cp9-g@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] git add -e: Explicitly specify that patch should have no color
+Date: Fri, 19 Jul 2013 10:49:41 +0200
+Message-ID: <vpqehavndcq.fsf@anie.imag.fr>
+References: <1374188284-27638-1-git-send-email-andrew.kw.w@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?Q?Adam_Brengesj=C3=B6?= <ca.brengesjo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 19 09:41:01 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 19 10:49:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V05JE-0002Ye-8b
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 09:41:00 +0200
+	id 1V06Nw-0006QC-NN
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 10:49:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753126Ab3GSHku convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jul 2013 03:40:50 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:56207 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752745Ab3GSHks convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jul 2013 03:40:48 -0400
-Received: by mail-oa0-f47.google.com with SMTP id m1so5469437oag.20
-        for <git@vger.kernel.org>; Fri, 19 Jul 2013 00:40:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=xtBB03wvQOdSZ2FEi1zx2pntG/fBV5YfMcvbubT9i4U=;
-        b=gIujHSLCdOYpkM8Mre0cwYiuU2f772OtmD00dRQzR34pB0kecFn14evmdLmSJfp0do
-         6tH8F9Y4zWNFrs07kEnJh6SHLs3pmM8TvB2KEJkxYF4RCqDsbNQW7IE2aEhdr64tOpSw
-         b8NxnbmKOFlAS/483Z+0MtojLt0cj2pB+Hhtthn+UuhiFnKW6VFYMk67zMRshLH6SK5E
-         uMmIneD6f+B27pAe33AG/4W+fauyCwgytzbWyhZDyDf/WG3qaffvKztfM4Lmbuq/3JYZ
-         y8u2iQ4Ri7HpGQaoFp5AOUM+F4O0LY+A+iq/hPqWeFX8vVMvpm+HI5bJsweaSszlVFO8
-         Q3RQ==
-X-Received: by 10.60.83.116 with SMTP id p20mr16686050oey.83.1374219648141;
- Fri, 19 Jul 2013 00:40:48 -0700 (PDT)
-Received: by 10.76.88.230 with HTTP; Fri, 19 Jul 2013 00:40:18 -0700 (PDT)
-In-Reply-To: <CAJTcR-1RxLEaUe+c5yXEuKeC5Ert4FGm0=kUi7H-M-a+-Cp9-g@mail.gmail.com>
+	id S1760019Ab3GSItv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 04:49:51 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:42062 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759877Ab3GSIts (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 04:49:48 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r6J8nfEU028597
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 19 Jul 2013 10:49:41 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1V06Ni-0000YA-5t; Fri, 19 Jul 2013 10:49:42 +0200
+In-Reply-To: <1374188284-27638-1-git-send-email-andrew.kw.w@gmail.com> (Andrew
+	Wong's message of "Thu, 18 Jul 2013 18:58:04 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 19 Jul 2013 10:49:41 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r6J8nfEU028597
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1374828583.81347@rLqbW+YWpisif9SCTy8Idw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230785>
 
-On Fri, Jul 19, 2013 at 2:16 PM, Adam Brengesj=C3=B6 <ca.brengesjo@gmai=
-l.com> wrote:
-> From SYNOPSIS:
->
-> git checkout [-p|--patch] [<tree-ish>] [--] [<paths>=E2=80=A6]
->
->
-> From DESCRIPTION
->
-> git checkout [-p|--patch] [<tree-ish>] [--] <pathspec>=E2=80=A6
->
->
->
-> 1. Named <paths> in SYNOPSIS, but <pathspec> in DESCRIPTION. (It's
-> referred to as <path> in the body text).
->
-> 2. <paths> is marked as optional in SYNOPSIS, but <pathspec> is not.
->
-> I'm not submitting a patch now, as I'm not sure which is correct.
+Andrew Wong <andrew.kw.w@gmail.com> writes:
 
-If I'm not mistaken, "git checkout" takes pathspec in all cases.
---
-Duy
+> After this commit:
+>     4c7f1819b3c142ace98269a556bc929c80e7c9fd make color.ui default to 'auto'
+> the patch file for 'git add -e' receives all the color codes.  This is because
+> diffopt.use_color defaults to -1, which causes want_color to now return 'auto'.
+
+Oops, indeed. The code was relying on the user's config not being loaded
+(hence color.ui was previously ignored), and now has to explicitely
+disable color.
+
+I'm wondering whether there are other instances of this. I checked that
+"git format-patch" is not broken, but I hope we did not forget others.
+
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -343,6 +343,7 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+>  
+>  	argc = setup_revisions(argc, argv, &rev, NULL);
+>  	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
+> +	rev.diffopt.use_color = 0;
+>  	DIFF_OPT_SET(&rev.diffopt, IGNORE_DIRTY_SUBMODULES);
+>  	out = open(file, O_CREAT | O_WRONLY, 0666);
+>  	if (out < 0)
+
+Acknowledged-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
