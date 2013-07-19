@@ -1,9 +1,9 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 2/4] config: improve support for http.<url>.* settings
-Date: Fri, 19 Jul 2013 12:59:43 -0700
-Message-ID: <7vehauuxqo.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v6 1/4] config: add support for http.<url>.* settings
+Date: Fri, 19 Jul 2013 13:08:36 -0700
+Message-ID: <7va9liuxbv.fsf@alter.siamese.dyndns.org>
 References: <9a5e7ef2eb19b10b28f154b3d5e03cd@f74d39fa044aa309eaea14b9f57fe79>
-	<2cca0770a1e8495ac1418834c57f23d@f74d39fa044aa309eaea14b9f57fe79>
+	<296e6ff588bb131a7e8274738d4378c@f74d39fa044aa309eaea14b9f57fe79>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
@@ -16,90 +16,104 @@ Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
 	Aaron Schrab <aaron@schrab.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 19 21:59:54 2013
+X-From: git-owner@vger.kernel.org Fri Jul 19 22:08:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0GqG-0001VM-0z
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 21:59:52 +0200
+	id 1V0Gyq-0006K4-IV
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 22:08:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751420Ab3GST7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 15:59:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63413 "EHLO
+	id S1751596Ab3GSUIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 16:08:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37990 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751084Ab3GST7r (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 15:59:47 -0400
+	id S1751148Ab3GSUIj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 16:08:39 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFB433286E;
-	Fri, 19 Jul 2013 19:59:46 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2845932AFD;
+	Fri, 19 Jul 2013 20:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jgzxPgPIqvvjcKKQdWaJ+Bf9o1Q=; b=vSF4zL
-	wJs7KDT6cpYKDL8RFcDmBV0CdQkzBMDmv2FyrupycBp0O1Qhj7FuU4cY3lvfEexn
-	Ht0CWRJGJTzVY2N+damQhIgZzz9IWQEj0y6JQRLk8MveTlBNsInjM51kKTus8pLq
-	davwpG/YRoWRDozlI9r7TRExhn0QuxZN6dymo=
+	:content-type; s=sasl; bh=lGCl5nN21rK2xtrlzJ5sEiNHCMg=; b=XyXn1c
+	8NoFlOXU5qMkOtmT8tmoR3qizI7c2RVwGi0KNQ0Wg1Ufn/deXgJLSbe5dx2G8Wrp
+	reJfgdVCbtQyau/GIDgt+ru45xPRnnm9ktKz7beuFsdnvVOc6jDuJKt9Dz/Ua6yO
+	SM0LJxuuUoDHlhwFGYtFcS/+3D4H2W1sIeGMA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NO/N7+ipp02leWGnZhIeK8E5m3TOIAMj
-	hOOJwXfaV6sA/XQqmXRsrP5nhVSUwn4R/3ZjIFicE8bStyhShvPlqfnghUYlhywJ
-	zovmw4S5BZojlO3MSnP1VrPuAr6JZ7nQKjKOtwUQHacu/pVif6vpPwn8YAvG0V29
-	KM/BaFKxtLM=
+	:content-type; q=dns; s=sasl; b=AmlpSsE3pHleqDPkDevH58CqUM2v8erz
+	odDj8LV6lc/Xd4JsXQ626YQMCQfzbtGOY5Ywbpp5kuVJ2io4LT3NojsgjckGP95A
+	13GvBmrlVFNYf842IaBztt1a7eWRLXvKLQnBbbt8EMcB3Hx2JrOhR9FrYmZTthRM
+	dpd4zPmAv6w=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A34CE3286D;
-	Fri, 19 Jul 2013 19:59:46 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 190F632AFC;
+	Fri, 19 Jul 2013 20:08:39 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A13FC3286A;
-	Fri, 19 Jul 2013 19:59:45 +0000 (UTC)
-In-Reply-To: <2cca0770a1e8495ac1418834c57f23d@f74d39fa044aa309eaea14b9f57fe79>
-	(Kyle J. McKay's message of "Fri, 19 Jul 2013 05:48:43 -0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 311A332AFB;
+	Fri, 19 Jul 2013 20:08:38 +0000 (UTC)
+In-Reply-To: <296e6ff588bb131a7e8274738d4378c@f74d39fa044aa309eaea14b9f57fe79>
+	(Kyle J. McKay's message of "Fri, 19 Jul 2013 05:48:42 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C2869C74-F0AD-11E2-A714-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FFEA01E0-F0AE-11E2-B0A0-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230845>
 
 "Kyle J. McKay" <mackyle@gmail.com> writes:
 
-> +#define URL_ALPHA "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-> +#define URL_DIGIT "0123456789"
-> +#define URL_HEXDIGIT URL_DIGIT "ABCDEFabcdef"
-> +#define URL_ALPHADIGIT URL_ALPHA URL_DIGIT
-> +#define URL_SCHEME_CHARS URL_ALPHADIGIT "+.-"
-> +#define URL_HOST_CHARS URL_ALPHADIGIT ".-[:]" /* IPv6 literals need [:] */
-> +#define URL_UNSAFE_CHARS " <>\"%{}|\\^`" /* plus 0x00-0x1F,0x7F-0xFF */
-> +#define URL_GEN_RESERVED ":/?#[]@"
-> +#define URL_SUB_RESERVED "!$&'()*+,;="
-> +#define URL_RESERVED URL_GEN_RESERVED URL_SUB_RESERVED /* only allowed delims */
+> +static size_t http_option_max_matched_len[OPT_MAX];
+>  ...
+> +static int new_match_is_shorter(size_t matchlen, enum http_option_type opt)
+> +{
+> +	/*
+> +	 * Compare matchlen to the last matched length of option opt and
+> +	 * return true if matchlen is shorter than the last matched length
+> +	 * (meaning the config setting should be ignored).  Upon seeing the
+> +	 * _same_ key (i.e. new key has the same match length which is therefore
+> +	 * not shorter) the new setting will override the previous setting.
+> +	 * Otherwise return false and record matchlen as the current last
+> +	 * matched length of option opt.
+> +	 */
+> +	if (matchlen < http_option_max_matched_len[opt])
+> +		return 1;
+> +	http_option_max_matched_len[opt] = matchlen;
+> +	return 0;
+> +}
 > + ...
-> +	while (from_len) {
-> +		int ch = *from++;
-> +		int was_esc = 0;
-> +
-> +		from_len--;
-> +		if (ch == '%') {
-> +			if (from_len < 2 ||
-> +			    !strchr(URL_HEXDIGIT, from[0]) ||
-> +			    !strchr(URL_HEXDIGIT, from[1]))
+> @@ -337,7 +472,7 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+>  
+>  	http_is_verbose = 0;
+>  
+> -	git_config(http_options, NULL);
+> +	git_config(http_options, (void *)url);
 
-I actually do like the readability of the approach in this patch,
-but these repeated strchrs() in a loop may want to be optimized,
-using a trick similar to what is used in ctype.c::sane_ctype[].
+Can http_init() be called more than once?  max-matched-len (and
+leter user-matched as well) is initialized to zero at the link time,
+and never reset after it is used for matching the configuration file
+entries with a single URL.
 
-A small build-time-only program or script gen-http-ctype.perl that
-defines and uses these URL_* cpp macros and generates a C source
-file http-ctype-gen.c that can be #included from http.c, with
-something like this in the Makefile:
+If this function is called more than once, the code needs to
+memset(0) the array(s), don't it?
 
-	http-ctype-gen.c: gen-http-ctype.perl
-		rm -f $@ $@+
-                $(PERL_PATH) gen-http-ctype.perl >$@+
-                mv $@+ $@
-	http.o: http.c http-ctype-gen.c
+Another possibility, which might be better, is to package that array
+and the url into a structure, have it on the stackframe of this
+function, i.e.
 
-would give us both readability and efficiency, perhaps?
+	struct match_url_state {
+        	const char *url;
+
+		size_t http_option_max_matched_len[OPT_MAX];
+		int http_option_user_matched[OPT_MAX];
+	} match_url_state = {NULL};
+
+	git_config(http_options, &match_url_state);
+
+or something.  In any case, you no longer have to cast the second
+parameter of git_config to (void *) only to defeat constness ;-)
+
+>  	curl_global_init(CURL_GLOBAL_ALL);
