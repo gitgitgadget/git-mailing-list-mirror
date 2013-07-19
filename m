@@ -1,71 +1,54 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC] Delete current branch
-Date: Fri, 19 Jul 2013 21:12:02 +0530
-Message-ID: <CALkWK0m-q=Aoof62zhXnUYsJ7PQZwTLbQ50BUEmufVO4gtWNUA@mail.gmail.com>
-References: <CALkWK0=8q4J2yi2to_+41kJSA5E59CBwkG69Hj7MmTPgUnSh5Q@mail.gmail.com>
- <7vr4euy4c6.fsf@alter.siamese.dyndns.org>
+Subject: Re: Git Clone Parameter
+Date: Fri, 19 Jul 2013 21:14:11 +0530
+Message-ID: <CALkWK0kdVrsLy=pwZvn5de+L54gWbU0hmDTXpHHDKQbXiE_wdw@mail.gmail.com>
+References: <FB572366-0B1D-4053-9255-979CB213B160@gmail.com>
+ <CALkWK0=q62SmQwDPKjRv+Z8D59Uy=Kpanth8QFYFJ=xOA5JCtw@mail.gmail.com> <7vvc46y4il.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
+Cc: Allan Acheampong <allanadjei@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 19 17:42:49 2013
+X-From: git-owner@vger.kernel.org Fri Jul 19 17:44:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0CpU-0004rY-Dy
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 17:42:48 +0200
+	id 1V0CrY-00065a-Bn
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 17:44:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760833Ab3GSPmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 11:42:44 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:45061 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760774Ab3GSPmn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 11:42:43 -0400
-Received: by mail-ie0-f179.google.com with SMTP id c10so9896645ieb.10
-        for <git@vger.kernel.org>; Fri, 19 Jul 2013 08:42:43 -0700 (PDT)
+	id S1760446Ab3GSPow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 11:44:52 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:57455 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752615Ab3GSPow (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 11:44:52 -0400
+Received: by mail-ie0-f170.google.com with SMTP id e11so9836548iej.1
+        for <git@vger.kernel.org>; Fri, 19 Jul 2013 08:44:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=D6mfV8alHbTDET/g8xWQA9lyDidYk/VOyZlJvkgqB2o=;
-        b=zwlgdKLE/nTcDW9ou9hSMUmLhPX9yGjz/yXlXvlsJOIkV5Gh7L1qJtRNloYAcfXKHo
-         BDUxsz0ebPJb1LI3FMMgg7V0nFkm8GjbrYOY1RD11yNMu8nC5VCVzY4pNpFWyWy/ECo1
-         ryodgg/4zt2zTlJJ6Bxvj/24N2nKj/B92ic3o8DbqQ8KRVDzm/MHb661VhnYQ6jdk6QG
-         YcPh0jD8Rrzw4SVQDx+IlB3smkYGCAwzThprm7YiKTbVwKzbhHAJHcNSzSpOmu0QggbR
-         H7fHRHrl5lw+gSU9tPQ+Zb4ef9bCda/ZWxj7WsBjqRRaEJyD4bsIU/RhsbZk8TIfhooi
-         88DQ==
-X-Received: by 10.43.145.69 with SMTP id jt5mr11044693icc.65.1374248563063;
- Fri, 19 Jul 2013 08:42:43 -0700 (PDT)
-Received: by 10.64.37.130 with HTTP; Fri, 19 Jul 2013 08:42:02 -0700 (PDT)
-In-Reply-To: <7vr4euy4c6.fsf@alter.siamese.dyndns.org>
+        bh=DC4QjGtCQAouPk/WXX9GvQgFGcuJHfDtH7RWoW3xwvY=;
+        b=UILDshA2rfW9DOZFT51L/ujoP+gFv+ARa0yXqhq/5vooY6e9dyW1QeTuV2XCrj8J0Q
+         eOXWumSfzpsDbmFiuOkEtNLlC6Jx8+11IHZsQ2Y5nCe7FWeWghjT83ShQ+Hh8C3n7nop
+         YYOsbIpisSbiI4nNSHaf4o8qTCC99vrrYdQVX0+mXSp5M5T0+ncYIhjEwo1uxd8HDf+H
+         eGwyA4dPLgBlEk2P98LGEM9E72VnCqlz5S1V8urujQgsCIP3BhnuBGWuoFIAnXzWZx6/
+         X1oqbn1AKPypSe6zEYLEr7MT2/VouxTz/2tS9BtSnQjr6/waTumFpjknja13tTdv0bXn
+         XrCg==
+X-Received: by 10.43.88.3 with SMTP id ay3mr10836103icc.61.1374248691696; Fri,
+ 19 Jul 2013 08:44:51 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Fri, 19 Jul 2013 08:44:11 -0700 (PDT)
+In-Reply-To: <7vvc46y4il.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230818>
 
 Junio C Hamano wrote:
-> Did you know that the general way to spell the branch previously you
-> were on is "@{-1}" and "checkout -" is an ugly special case that is
-> possible only because "checkout" does not happen to take a "-" as a
-> valid argument that means something else (like the more usual "read
-> from standard input")?
+> You would at least need "xargs -n 1" for the produced command line
+> to make any sense, and it is wasteful to actually check out each
+> and every branch to the working tree only to create it.
 
-I disagree that it is ugly: it's a very commonly used shortcut that I
-like.  I love it so much that I have the following in my ~/.zshrc:
-
-function - () {
-	if test "true" = "$(g rp --is-inside-work-tree 2>/dev/null)"; then
-		g co -
-	else
-		cd - >/dev/null
-	fi
-}
-
-So, I just
-
-  $ -
-
-to switch back and forth :)
+Right.  xargs -n 1, git branch, and refname:short.
