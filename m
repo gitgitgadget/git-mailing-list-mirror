@@ -1,152 +1,90 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Git Clone Parameter
-Date: Fri, 19 Jul 2013 18:19:39 +0100
-Organization: OPDS
-Message-ID: <101D1917805742BE86814C6E6E51C378@PhilipOakley>
-References: <FB572366-0B1D-4053-9255-979CB213B160@gmail.com> <7v4nbqzj7u.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/19] Index-v5
+Date: Fri, 19 Jul 2013 11:25:46 -0700
+Message-ID: <7vehauwgnp.fsf@alter.siamese.dyndns.org>
+References: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com>
+	<CACsJy8AhmYBjzqPtF3f9Gk8hq2bk8-PtFCto9_4AkRePomvhAQ@mail.gmail.com>
+	<87ehb0cgqt.fsf@gmail.com>
+	<CACsJy8AiRCRvGmj4ZV+sc68d1z=S7YrRgPtPgEK+-zzNg7HcsA@mail.gmail.com>
+	<87oba1siz6.fsf@gmail.com> <7v7ggo68o9.fsf@alter.siamese.dyndns.org>
+	<87vc46lacn.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Allan Acheampong" <allanadjei@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 19 20:20:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 19 20:25:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0FIC-0004Iu-J9
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 20:20:36 +0200
+	id 1V0FNJ-0007Jv-UT
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 20:25:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760997Ab3GSSUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 14:20:33 -0400
-Received: from smtp2go.com ([207.58.142.213]:56994 "EHLO smtp2go.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760631Ab3GSSUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 14:20:32 -0400
-X-Greylist: delayed 3666 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Jul 2013 14:20:32 EDT
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1759986Ab3GSSZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 14:25:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47557 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751330Ab3GSSZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 14:25:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DC2032822;
+	Fri, 19 Jul 2013 18:25:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/C58vG7F5FZP8Xz3UIBtPDIMJA4=; b=tSA8XE
+	ZQRJkDh4SLWQ6v1rg8rASp3aGv8fpqgYQbcjrILGrMn8aBqDubJvwSk/VzPHOEH7
+	BwK6ABtVvMr6rw5FGmrqQ6DM9hR14zS4aARe6jgPSeusWgkGmDx/OXE2MT3oFhBW
+	GE3X2jaW4EjqiL6n2Nls0onS7bRGXuCi/jY2A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gl7Q+oP7VNtcmEURBg25heKLQGU8R7OQ
+	yVt56a3OONkE2rL7++7yS0/qhXFNwxMYug5T3dBTT9OSdAxVYovzUI8KmWB2aaTV
+	pdyNYg/o/H8Q4hKtRxGGCFmH2gAeQLPSLO/W1ESYeLGIIiceyvO6mXmCrIDV3e5E
+	OOdPFKF4gg4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01B2D32821;
+	Fri, 19 Jul 2013 18:25:49 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4775832820;
+	Fri, 19 Jul 2013 18:25:48 +0000 (UTC)
+In-Reply-To: <87vc46lacn.fsf@gmail.com> (Thomas Gummerer's message of "Fri, 19
+	Jul 2013 19:37:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A24E60C0-F0A0-11E2-92E9-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230837>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Friday, July 19, 2013 4:02 PM
-> Allan Acheampong <allanadjei@gmail.com> writes:
->
->> ... I'm new to git, but I found it very
->> confusing to understand the difference between "remote" ,
->> "remotes". Is it in the cloned repo, or is it in a remote place?
->> If its local, why doesn't it get shown when I do 'git branch' but
->> when I do 'git branch -a'.
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-Allan,
-This (not being sure about local remote branches and distant remote
-branches, while coping with multiple remote servers) appears to be a
-common problem for new folks, which those well versed in the use of Git
-have become well used to so don't see the problem.
+> What I currently did is add a environment variable GIT_INDEX_VERSION
+> that is used only if there is no index yet, to make sure existing
+> repositories aren't affected and still have to be converted explicitly
+> by using git update-index.
+>
+> For the tests I simply did export GIT_INDEX_VERSION in test-lib.sh to
+> allow the addition of GIT_INDEX_VERSION in config.mak.  Should I rename
+> that to GIT_INDEX_VERSION_TEST and do something like
+>
+> set_index_version() {
+>         export GIT_INDEX_VERSION=$GIT_INDEX_VERSION_TEST
+> }
+>
+> in test-lib-functions.sh instead, does that make sense?
 
-For the uninitiated, the lack of distinct terminology can cause no end
-of confusion as most explanations presume that you will implicitly
-understand the context, which can't be true for such newbies. It doesn't
-help that the 'remotes' model of the Git DVCS fits a work flow style
-that isn't the same as the expectation of the newbie.
+Mostly Yes ;-).  You have to write it in a valid POSIX shell, i.e.
 
-For example, in a larger collaboration there can be many many branches
-(on a communal server) that essentially belong to other contributors
-which one would never be interested in, and you (and they) would want
-ignored.
-
->> ...
->> For example, I create a project locally
->> with multiple branches, push it, delete it locally and clone it
->> back to my machine. On a 'git branch' I would only see the head
->> branch.
-
-Junio explains below how your suggestion of 'only the head branch'
-viewpoint is too limiting (among other things).
-
-That said, if you have a terminology for the distinction between the
-confusing aspects (once understood), then that would be worth something
-to help ease the path of understanding for others. I had the same
-confusions for a while, and even now have to use some of the awkward
-terminology I used above, so any improvements in that area would be
-useful. -- Branching models are an endless source of discussion!
-
-Philip
-
->> ...
->> I'd like to know your opinions about that and what you think about
->> the suggestion.
->
-> Not very interested, for a few reasons:
->
-> (1) It is actively harmful if the aim is to blur the distinction
->     between local branches and remote-tracking branches. New users
->     will be in a lot of hurt if they are not aware that the
->     'master' branch in their repository is unique and different
->     from the 'master' branch of everybody else's repository and the
->     'origin' remote repository they cloned from.
->
-> (2) It is not necessary. You can do interesting things to the
->     history on your local branch, like creating new commits to grow
->     the branch, only after checking it out. And modern Git lets you
->     say
->
->     $ git checkout topic
->
->     and it DWIMs the request to "check out the topic branch" to do
->     the equivalent of
->
->     $ git branch -t topic origin/topic && git checkout topic
->
->     when 'topic' does not exist as your local branch and there is a
->     single remote (i.e. 'origin') that has a remote-tracking branch
->     of that same name 'topic'. This lets you create a corresponding
->     local branch lazily any time you want to work on extending the
->     work on a branch taken from the remote, and output from "git
->     branch --list" to be meaningful: it only lists your local
->     branch, the ones you have already said that you are interested
->     in working on in this repository.
->
-> (3) It makes "git branch --list" output less useful if you create
->     local branches that correspond to all the branches taken from
->     the remote.  You cannot tell which ones you have worked on and
->     which ones you haven't even touched yet.
->
-> Having said that, it is fairly trivial to script it, if you really
-> want to do so, ignoring all of the above downsides.  Something like:
->
-> git for-each-ref --format='%(refname)' refs/remotes/origin/ |
-> sed -e 's|^refs/remotes/origin/||' -e '/^HEAD$/d' |
-> while read branchname
->        do
-> git show-ref -q --verify "refs/heads/$branchname" ||
->                git branch -t "$branchname" "origin/$branchname"
-> done
->
-> But for the reasons stated, it is not a particularly good way to
-> work to start from many local branches that are copies of all the
-> remote-tracking branches, many of which you may not even touch, so I
-> personally do not think we would want to add such an option to
-> "clone".  The implementation would be fairly trivial, as you can see
-> from the "trivial script" above, but it would encourage a wrong
-> workflow.
->
-> Older Git around 1.4.x days used to conflate remote-tracking
-> branches and local branches, and threw everything in refs/heads/
-> hierarchy, which had the exact set of problems above, and that is
-> why modern Git uses refs/remotes/origin/ hierarchy to store the
-> remote-tracking branches separately, for less cluttered local branch
-> namespace.
->
+	set_index_version () {
+		GIT_INDEX_VERSION=$TEST_GIT_INDEX_VERSION
+                export GIT_INDEX_VERSION
+	}
