@@ -1,60 +1,65 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Git Clone Parameter
-Date: Fri, 19 Jul 2013 15:31:29 +0530
-Message-ID: <CALkWK0=q62SmQwDPKjRv+Z8D59Uy=Kpanth8QFYFJ=xOA5JCtw@mail.gmail.com>
-References: <FB572366-0B1D-4053-9255-979CB213B160@gmail.com>
+Subject: [RFC] checkout --rebase
+Date: Fri, 19 Jul 2013 15:51:41 +0530
+Message-ID: <CALkWK0m-ZpVvvgAB_yzooah0=veeNDudahs=4ur2YHN03h-h4g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Allan Acheampong <allanadjei@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 19 12:02:17 2013
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 19 12:22:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V07Vv-0007vp-Iv
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 12:02:15 +0200
+	id 1V07pT-0003Zz-F2
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 12:22:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760094Ab3GSKCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 06:02:11 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:50591 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759996Ab3GSKCK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 06:02:10 -0400
-Received: by mail-ie0-f177.google.com with SMTP id w15so770236iea.36
-        for <git@vger.kernel.org>; Fri, 19 Jul 2013 03:02:09 -0700 (PDT)
+	id S1759675Ab3GSKWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 06:22:22 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:53654 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750949Ab3GSKWW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 06:22:22 -0400
+Received: by mail-ie0-f169.google.com with SMTP id 10so9367234ied.0
+        for <git@vger.kernel.org>; Fri, 19 Jul 2013 03:22:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=gAEQtC6slZIX2EF+4F9Gklz0QkDhKss83wbPbGmYo4k=;
-        b=q/USXp1WoAV2kwfAdb76aRKSEiRMUdgNz5cVnuH+MT0u3gY63vVBIr3MV0kflZYGv8
-         bjcO4ZkqprRtSxdsT/8ehaukPvm0qZ4+ujVQr9zXRyAYYGvJJOBvpm7sVdb5yBzG+tq9
-         3hBDXNe/x5kWv9h3DHzLpCypsiiEWgWQCQ56vRiAaZekJ/gVnnSPpumT51S9bcdTvZ5H
-         gnz03Oceq+73zmRHKgKDxqLp7GW56sUH/FuLyemFjjbYA992n8Ma6q29IjPpKaSMAIv3
-         OMad3yjo1yWMEfRJE/K/773v3+Uucuc2aNXzGCQGfK98e9qoBwDMQVnV2CDB9Vm8t5Jp
-         IUkw==
-X-Received: by 10.43.118.136 with SMTP id fq8mr9283248icc.101.1374228129463;
- Fri, 19 Jul 2013 03:02:09 -0700 (PDT)
-Received: by 10.64.37.130 with HTTP; Fri, 19 Jul 2013 03:01:29 -0700 (PDT)
-In-Reply-To: <FB572366-0B1D-4053-9255-979CB213B160@gmail.com>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=digj9DSfAwRrccke8s86eIci11Mm7fZvknlKS/n31PM=;
+        b=ymaILUvMvivfYsJWNIsaF2GAmZmQiT6rUlOWLJMhSbVILF62Dn4iQU9XwZKf8j4x+R
+         Z+AJ8b5sgyTLnOTxuX5e3tXkhdiXhSAzAlfwf6LlL76OdacNoVBvoixfOytO1Dkd7Pch
+         RWQo2N72DByUp2fjqQTrmml8MVo2Au85Y0HiQe/tpEVxIWZQoLuTSPYo3DQkxjA3QUrl
+         N3o75rADLuXIduvF9AvM3PqXnXhfL9kXN+LIy01vjh1wHYXJ5UtTHavGf3/X8nYEX/aI
+         3Mt6V8CTKsQbRke+HLq/4ccLJeA5OUjMc5LhHDYd5+qcDPEWzGNDrPrGAvLuIPU0sL+1
+         EUFA==
+X-Received: by 10.43.9.4 with SMTP id ou4mr9650209icb.53.1374229341704; Fri,
+ 19 Jul 2013 03:22:21 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Fri, 19 Jul 2013 03:21:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230788>
 
-Allan Acheampong wrote:
-> I could write a script with for each in but thats way too much hassle
+Hi,
 
-  $ git for-each-ref --format="%(refname)" refs/remotes/origin/ | sed
-'s/refs\/remotes\/origin\///;/HEAD\|master/d' | xargs git checkout -b
+I'm often work on small topic branches, and find myself doing this quite often:
 
-(completely untested ofcourse)
+  # on branch master
+  $ git checkout um-build
+  $ git rebase master
 
-Do you see what the problem is immediately?  There's nothing special
-about "origin": I could have branches with the same name on several
-remotes.  Without detaching local branches from remote branches, there
-is no distributed workflow: your central workflow is just a special
-case.
+This is horribly inefficient; the first operation takes a _really_
+long time to complete, since master updates itself very often and I
+have to check out an old worktree.  So, I work around this issue by
+doing:
+
+  # on branch master
+  $ git checkout -b um-build-2
+  $ git cherry-pick ..um-build
+  $ git branch -M um-build
+
+... and I scripted it.  Perhaps we should get this functionality in
+core, as `git checkout --rebase` (or something)?
+
+Thanks.
