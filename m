@@ -1,97 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Documentation/git-checkout.txt: Inconsistent naming of paths arguments
-Date: Fri, 19 Jul 2013 07:36:16 -0700
-Message-ID: <7va9lizkf3.fsf@alter.siamese.dyndns.org>
-References: <CAJTcR-1RxLEaUe+c5yXEuKeC5Ert4FGm0=kUi7H-M-a+-Cp9-g@mail.gmail.com>
-	<CACsJy8DdVxwsf5xyDSDCe97kTPGdjvwQcMEPRNCCGXjF1z4eyw@mail.gmail.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH v2 03/19] read-cache: move index v2 specific functions to their own file
+Date: Fri, 19 Jul 2013 16:53:51 +0200
+Message-ID: <87ppueha80.fsf@gmail.com>
+References: <1373650024-3001-1-git-send-email-t.gummerer@gmail.com> <1373650024-3001-4-git-send-email-t.gummerer@gmail.com> <CACsJy8A9E5yEQZTfw6sT+2VZfDHLx5iC-mb+otRkez7f-5Mq0Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Adam =?utf-8?Q?Brengesj=C3=B6?= <ca.brengesjo@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 19 16:36:24 2013
+X-From: git-owner@vger.kernel.org Fri Jul 19 16:54:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0BnE-0000C6-C9
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 16:36:24 +0200
+	id 1V0C4R-0001YJ-1Z
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 16:54:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755250Ab3GSOgU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jul 2013 10:36:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46154 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752140Ab3GSOgU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jul 2013 10:36:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F7AE2F743;
-	Fri, 19 Jul 2013 14:36:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=wmntt5XDtung
-	pzqe2rsFpZkjOEk=; b=d42M19SMXQrrdYH5neif3CLsc3Tv2X0U1nIV2YEEDdlm
-	nT914TBe3vG+aJdltoNWGocMcY2ajO303VRgJXN3gWf2hCqJ03s21preQbpLxq2t
-	2k8BLgsTsWz5JGynq4HMVtQtOtXFQ2UwAMl2TqcSIcogpD9CwUawVWAwpLzkoFk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qetOrV
-	rfq4Jl3ejNo5oPCNI3qJHRN/H7TWhPd7bIro75CwoH8TnhMAtyAjYXHP4GsaGhmh
-	pA3et33hz8vS0Ia38vqAXALqKRxIF/qyX0J/A0+vRd6vb5oK34Z1M07xDp7OpdfY
-	XsB/gNJ9XAFPx4/9fngcaWeLvn+4aGz7jPgto=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33DA72F741;
-	Fri, 19 Jul 2013 14:36:19 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 814062F73F;
-	Fri, 19 Jul 2013 14:36:18 +0000 (UTC)
-In-Reply-To: <CACsJy8DdVxwsf5xyDSDCe97kTPGdjvwQcMEPRNCCGXjF1z4eyw@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 19 Jul 2013 14:40:18 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 92E393FA-F080-11E2-8017-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760185Ab3GSOx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 10:53:59 -0400
+Received: from mail-ea0-f179.google.com ([209.85.215.179]:59428 "EHLO
+	mail-ea0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760274Ab3GSOx4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 10:53:56 -0400
+Received: by mail-ea0-f179.google.com with SMTP id b15so2481609eae.10
+        for <git@vger.kernel.org>; Fri, 19 Jul 2013 07:53:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type;
+        bh=GJiPwRcu55KzCqbALI/1YBSmnm038u+1bCZsU1lgKOw=;
+        b=Tv0hddph1dnLuGZLI8CFde5Sdd+OcSK9DiBtQrlGHJVW69B3iB1qUgKXvOmQssDktA
+         xO6EUK3uek9UVNqXpAw9yPwIRJPI98rVCbr728mad3Vd2C2qLsqRDx8pN++kZHFOmfY+
+         QepcXACIhdJidXwO0B2ghhmFB5PTzH9VSVA2C4rFlE+ZDG0gaDG+wwGcmr6ntrjWpLgu
+         HltJq4XEM4sRDPK8boWOuI17WKKLZu18GvSd0Lsg4cTywwpOqcN2pHGcr0tFgWBp3Na/
+         NhTleo5qeMmo7eem+m1D26Pk2UtanLxExmSF/YBaKM2tw5JSO6grt/+8yGEbYxTf6Tph
+         akvg==
+X-Received: by 10.15.41.71 with SMTP id r47mr16164800eev.63.1374245635747;
+        Fri, 19 Jul 2013 07:53:55 -0700 (PDT)
+Received: from localhost ([2a02:27e8:10:1047:0:dacb:1376:714a])
+        by mx.google.com with ESMTPSA id w43sm28031698eez.6.2013.07.19.07.53.52
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 19 Jul 2013 07:53:54 -0700 (PDT)
+In-Reply-To: <CACsJy8A9E5yEQZTfw6sT+2VZfDHLx5iC-mb+otRkez7f-5Mq0Q@mail.gmail.com>
+User-Agent: Notmuch/0.15.2+119~gf0dfda5 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230810>
 
 Duy Nguyen <pclouds@gmail.com> writes:
 
-> On Fri, Jul 19, 2013 at 2:16 PM, Adam Brengesj=C3=B6 <ca.brengesjo@gm=
-ail.com> wrote:
->> From SYNOPSIS:
+> On Sat, Jul 13, 2013 at 12:26 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>> @@ -489,8 +479,8 @@ extern void *read_blob_data_from_index(struct index_state *, const char *, unsig
+>>  #define CE_MATCH_RACY_IS_DIRTY         02
+>>  /* do stat comparison even if CE_SKIP_WORKTREE is true */
+>>  #define CE_MATCH_IGNORE_SKIP_WORKTREE  04
+>> -extern int ie_match_stat(const struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
+>> -extern int ie_modified(const struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
+>> +extern int ie_match_stat(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
+>> +extern int ie_modified(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
 >>
->> git checkout [-p|--patch] [<tree-ish>] [--] [<paths>=E2=80=A6]
->>
->>
->> From DESCRIPTION
->>
->> git checkout [-p|--patch] [<tree-ish>] [--] <pathspec>=E2=80=A6
->>
->>
->>
->> 1. Named <paths> in SYNOPSIS, but <pathspec> in DESCRIPTION. (It's
->> referred to as <path> in the body text).
->>
->> 2. <paths> is marked as optional in SYNOPSIS, but <pathspec> is not.
->>
->> I'm not submitting a patch now, as I'm not sure which is correct.
 >
-> If I'm not mistaken, "git checkout" takes pathspec in all cases.
+> I would rather we keep "const struct index_state*" if we could. I
+> tried putting "const" back and found that ce_match_stat_basic() calls
+> set_istate_ops(), which writes to "struct index_state". Putting
+> set_istate_ops() in ce_match_stat_basic() may seem convenient, but
+> does not make much sense (why would a match_stat function update
+> index_ops?). I think you could move it out and
+>
+>  - read_index calls set_istate_ops
+>  - (bonus) discard_index probably should reset "version" field to zero
+> and clear internal_ops
+>  - the callers that use index without read_index must call
+> initialize_index() or something, which in turn calls set_istate_ops.
+> initialize_index() may take the preferred index version
+>  - do not let update-index modifies version field directly when
+> --index-version is given. Wrap it with set_index_version() or
+> something, so we can do internal conversion from one version to
+> another if needed
+>  - remove set_istate_ops in write_index(), we may need internal_ops
+> long before writing. When write_index is called, internal_ops should
+> be already initialized
 
-Correct.
-
-And I think -p form (which I do not use myself so please double
-check) can be run with an empty pathspec.
-
-It looks somewhat idiotic that
-
-	git checkout master
-        git checout -p next
-
-will finish on the 'master' branch, with random selected bits of
-differences for 'master' to go to 'next' applied to the index and
-the working tree, but that seems to be how it works.
+Ok, this makes sense.  The only thing that I'm a little worried about is
+catching all code paths that need to initialize the index.  I'll
+implement these suggestions in the re-roll.
