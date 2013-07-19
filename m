@@ -1,124 +1,133 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] pull: require choice between rebase/merge on
- non-fast-forward pull
-Date: Fri, 19 Jul 2013 16:29:20 -0400
-Message-ID: <CAPig+cQEtKc+tfDgqVWYL2JtxXc=wvS=P7_O=XJzizz1BN=n4A@mail.gmail.com>
-References: <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
-	<20130523102959.GP9448@inner.h.apk.li>
-	<20130523110839.GT27005@serenity.lan>
-	<7vd2shheic.fsf@alter.siamese.dyndns.org>
-	<20130523164114.GV27005@serenity.lan>
-	<7vbo81e7gs.fsf@alter.siamese.dyndns.org>
-	<20130523215557.GX27005@serenity.lan>
-	<7vli75cpom.fsf@alter.siamese.dyndns.org>
-	<CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
-	<7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
-	<20130718143009.GC2337@serenity.lan>
-	<871u6v93a8.fsf@igel.home>
-	<7vmwpj3g0l.fsf@alter.siamese.dyndns.org>
-	<7vvc471x1s.fsf_-_@alter.siamese.dyndns.org>
-	<CAPig+cTXn4hdKoCjnNXmybNxYt0Bt_QuxsfFxiA5b0J1FxUUmQ@mail.gmail.com>
-	<7vy592wmcs.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] rev-parse(1): logically group options
+Date: Fri, 19 Jul 2013 13:35:10 -0700
+Message-ID: <7v4nbquw3l.fsf@alter.siamese.dyndns.org>
+References: <8ab5f3c276e6f623a8056674c9306334efc9fefe.1374174438.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, John Keeping <john@keeping.me.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andreas Krey <a.krey@gmx.de>,
-	John Szakmeister <john@szakmeister.net>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 19 22:29:31 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri Jul 19 22:35:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0HIs-0000Nb-Qv
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 22:29:27 +0200
+	id 1V0HOa-0003UW-Mz
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 22:35:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751790Ab3GSU3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 16:29:23 -0400
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:42632 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751778Ab3GSU3V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 16:29:21 -0400
-Received: by mail-lb0-f177.google.com with SMTP id 10so3747541lbf.36
-        for <git@vger.kernel.org>; Fri, 19 Jul 2013 13:29:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=zqQDeZjtkx+ZrCbolcE9yAhhGotOSXnQaYMgBsP0XMU=;
-        b=QzTe/R1fDBI/92pScY4K/1MFXRZYIMKeRuSPph8cdcFwrCZ1rlEuihj5708rAadQdA
-         rhk0mrNQ3r0cH357A7g8O9f00xCiS6ky+GbY44evfxLlb3LMNGsZfmt0TNYoJK4efPsc
-         9gTw4aBlgrf5msy2j1Ilczt6D1sVqLCEvePrV4q1fohL3pICEyXKhBoOa8/gGN3Vv0sq
-         Nv7/uuLZO9UMuV/xw3rCXnHPCm8FEnzKeblDENL2kUqJ1xb7oYv7IFx/hyweOsTtsmlQ
-         3xUU15eiR3D+N2BiU7+2uVOmncyXJ0lzZ9lU3x88BhDpBhM4O3pthHdxiR4DTCSKq8Tc
-         dphg==
-X-Received: by 10.112.97.132 with SMTP id ea4mr7951422lbb.80.1374265760337;
- Fri, 19 Jul 2013 13:29:20 -0700 (PDT)
-Received: by 10.114.187.78 with HTTP; Fri, 19 Jul 2013 13:29:20 -0700 (PDT)
-In-Reply-To: <7vy592wmcs.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: aSY0E_Ng5RcdCqoNujJr1_9YhGg
+	id S1751639Ab3GSUfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 16:35:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60101 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750902Ab3GSUfN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 16:35:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFC5D310A4;
+	Fri, 19 Jul 2013 20:35:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+rG4CyjX+uKFEACO9ba8ojfRE0E=; b=A0HHet
+	qXSPaXrtEwucBxKWgSDZ01vS0L6Xyu5SCmLn/m+DjOC2/PVqwRrsYnPUhEunNWVm
+	ssGwngWIfc7002uAhgYKGakgMm4sfU6FeRFKCFQeuIpFSOYzmG4wMtwr9604Q2ge
+	XoGWd89I5PQYGzTscSktcDxGYSIf5Cod6wuTk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CcYuVhWMCQshuhrXXIIoQqsO2/07XybQ
+	cIIvyA4t+5Oj/kZn24OtdEJd3TKSnfbSowltOlz+SmNqoq4w4CSnsDOS9AxmOFEE
+	bqX710Dvp16SaMwsyPht5nzCVaVcRozKq517pRWs4imXsVtKwfvitR/8MOt59j5X
+	RYxrniRIj5g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4159310A2;
+	Fri, 19 Jul 2013 20:35:12 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0FF0E310A1;
+	Fri, 19 Jul 2013 20:35:11 +0000 (UTC)
+In-Reply-To: <8ab5f3c276e6f623a8056674c9306334efc9fefe.1374174438.git.john@keeping.me.uk>
+	(John Keeping's message of "Thu, 18 Jul 2013 20:07:29 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B5E073B4-F0B2-11E2-9960-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230849>
 
-On Fri, Jul 19, 2013 at 12:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+John Keeping <john@keeping.me.uk> writes:
+
+> The options section of the git-rev-parse manual page has grown
+> organically so that there now does not seem to be much logic behind the
+> ordering of the options.  It also does not make it clear that certain
+> options must appear first on the command line.
 >
->>> +When `git pull` that does not explicitly specify what branch from
->>> +which repository is to be integrated with your history on the
->>> +command line, recent Git will refuse to work until you specify how
->>> +that integration should happen, either with a command line option
->>> +(`--merge` or `--rebase`) or a configuration variable (`pull.rebase`
->>> +or `branch.<name>.rebase`, which is the same as `--merge`
->>> +(`--rebase`) when set to `false` (`true`) respectively.
->>
->> This paragraph-long single sentence may be intimidating. Perhaps some
->> simplification is possible:
->>
->>     As a safety measure, bare `git pull` (without repository or
->>     branch) needs to be told how to integrate pulled changes with
->>     your history; either via `--merge` or `--rebase`.  Also see
->>     configuration variables `pull.rebase` and `branch.<name>.rebase`
->>     in linkgit:git-config[1].
->>
->> I intentionally omitted the true/false explanation of the
->> configuration variables since the user can follow the link and read
->> about them. It also may make sense to drop mention of those variables
->> altogether since they are already described (including link) in the
->> description of --rebase.
->>
->> I also intentionally omitted "recent Git" since it's rather nebulous.
+> Address this by reorganising the options into groups with subheadings.
+> The text of option descriptions does not change.
 >
-> Looks much better than the original.  I would further suggest
-> dropping the "As a safety measure, bare " at the beginning.
->
->       `git pull` (without repository or branch on the command line)
->       needs to be told how to integrate the changes with your
->       history via either `--merge` or `--rebase` (see configuration
->       variables `pull.rebase` and `branch.<name>.rebase` in
->       linkgit:git-config[1]).
->
-> perhaps?
+> Signed-off-by: John Keeping <john@keeping.me.uk>
 
-That works; or without the mentioning the configuration variables at
-all (assuming the reader will discover them from reading --rebase
-description):
+The idea to introduce a general grouping makes a lot of sense, I think.
 
-    `git pull` (without repository or branch on the command line)
-    needs to be told how to integrate the changes with your history
-    via either `--merge` or `--rebase`.
+> +Operation Modes
+> +~~~~~~~~~~~~~~~
+> +
+> +Each of these options must appear first on the command line.
+> +
+> +--local-env-vars::
+> +	List the GIT_* environment variables that are local to the
+> +	repository (e.g. GIT_DIR or GIT_WORK_TREE, but not GIT_EDITOR).
+> +	Only the names of the variables are listed, not their value,
+> +	even if they are set.
 
-Dropping the parenthetical comment might improve flow slightly:
+Honestly speaking, "must appear first" for "--local-env-vars" is a
+bug in implementations of this option, I think.  It does not make
+sense to ask
 
-    Without repository or branch on the command line, `git pull`
-    needs to be told how to integrate the changes with your history,
-    via either `--merge` or `--rebase`.
+	git rev-parse --local-env-vars -- Makefile
 
-With or without mention of the configuration options, either phrasing
-seems pretty easy to digest.
+and the command operates on "--" and "Makefile" in the normal
+operation mode, not "local-env-vars" mode.
+
+> +
+>  --parseopt::
+>  	Use 'git rev-parse' in option parsing mode (see PARSEOPT section below).
+>  
+> +--resolve-git-dir <path>::
+> +	Check if <path> is a valid repository or a gitfile that
+> +	points at a valid repository, and print the location of the
+> +	repository.  If <path> is a gitfile then the resolved path
+> +	to the real repository is printed.
+> +
+> +--sq-quote::
+> +	Use 'git rev-parse' in shell quoting mode (see SQ-QUOTE
+> +	section below). In contrast to the `--sq` option below, this
+> +	mode does only quoting. Nothing else is done to command input.
+
+> +Options for Input
+> +~~~~~~~~~~~~~~~~~
+>  
+> +--show-toplevel::
+> +	Show the absolute path of the top-level directory.
+> +
+> +--show-cdup::
+> +	When the command is invoked from a subdirectory, show the
+> +	path of the top-level directory relative to the current
+> +	directory (typically a sequence of "../", or an empty string).
+> +
+>  --is-inside-git-dir::
+>  	When the current working directory is below the repository
+>  	directory print "true", otherwise "false".
+> @@ -188,17 +219,10 @@ print a message to stderr and exit with nonzero status.
+>  --is-bare-repository::
+>  	When the repository is bare print "true", otherwise "false".
+>  
+> +--show-prefix::
+> +	When the command is invoked from a subdirectory, show the
+> +	path of the current directory relative to the top-level
+> +	directory.
+
+I am not sure if --show-*, --is-*, and --git-dir belongs to "options
+for input".  They are truly kitchen sink options to ask for various
+aspects of the repository and directory, and it may be equally valid
+(or even more valid) to consider them as separate operation modes.
