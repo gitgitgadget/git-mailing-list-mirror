@@ -1,81 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add the GIT_SENTINEL macro
-Date: Thu, 18 Jul 2013 20:30:27 -0700
-Message-ID: <7vr4evz0oc.fsf@alter.siamese.dyndns.org>
-References: <51E849C4.7020305@ramsay1.demon.co.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 6/6] diff: deprecate -q option to diff-files
+Date: Thu, 18 Jul 2013 20:31:26 -0700
+Message-ID: <20130719033126.GA27853@google.com>
+References: <7vvc496ruf.fsf@alter.siamese.dyndns.org>
+ <1374107406-14357-1-git-send-email-gitster@pobox.com>
+ <1374107406-14357-7-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Fri Jul 19 05:30:37 2013
+Cc: git@vger.kernel.org, Stefan Beller <stefanbeller@googlemail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 19 05:31:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V01Ot-00053x-JC
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 05:30:35 +0200
+	id 1V01Pv-0005Vn-9q
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 05:31:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759625Ab3GSDac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jul 2013 23:30:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62034 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755182Ab3GSDaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jul 2013 23:30:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4F7A26875;
-	Fri, 19 Jul 2013 03:30:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jKHOklwqfi3OM4G53O3xJh8o2NE=; b=tSQB/d
-	QFcv2Sb080drbEJ7ZD+NLcEF+pCF3Dhtv4EZ2IG3/mqirk3nMPYmt1bMyeNe8VQY
-	dRxBOJmhfZ+1pmqWimept8dScHAO53a3k6vXT6lisRHbgEr0nAs5PuKPhQxgKFtl
-	ZqIsVh/AFw0fHgGU5Zq7wEH9W3I27wJ88fzrQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mJl+1diMGBajVI7PeF60b+alwsehaJo0
-	kv3s/bdYCS6nB7LTGvD9wX+4IEit2Tw2vB2/FNN5gJ2ekDDXqBVIZXfGa7+7V/xc
-	KMBhvW+6Qnfad5t8F+sZucg3M+rkXa2XxEMh0v00BU4b+7iFgMkIqVQtnYNvMME7
-	5n5/PbH5168=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC4C026874;
-	Fri, 19 Jul 2013 03:30:29 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3268D26871;
-	Fri, 19 Jul 2013 03:30:29 +0000 (UTC)
-In-Reply-To: <51E849C4.7020305@ramsay1.demon.co.uk> (Ramsay Jones's message of
-	"Thu, 18 Jul 2013 21:02:12 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8F3C442A-F023-11E2-A7BA-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759611Ab3GSDbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jul 2013 23:31:35 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:47532 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759603Ab3GSDbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jul 2013 23:31:34 -0400
+Received: by mail-pa0-f43.google.com with SMTP id hz11so3905187pad.30
+        for <git@vger.kernel.org>; Thu, 18 Jul 2013 20:31:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=T4IMOV7BULETeNOxUHoo0K9fKWNgTRyxYC028enDyXk=;
+        b=aQrP5864conGsWfeV0e9t61OYvPfuFY6GIim5tVCmDKnLcHjHrLLt29V9uh6NAYgPi
+         td/wZsMpRFRXsEpuYGGn4JKGISSDJL8R24kMQeIh/rC3TBOCWjT+/wb4CJS1QHGz97A6
+         ddqfw3SkBWist9CJsEWIWdIUgLp8B+p4487ZBISukQ1ryoQ934A0Mh/LHHVfHWgp0ryQ
+         I3YYRZgcwEJsA9tfbuVmE7nvsJ/w/zt1RFGpi04pycLc82R0oSu4dMP3Vb5eo/oskcNR
+         ffBymjhkwYXmNFX/wXT3CxNreNKrJ2Z/gVqMpfCc7yGEtN9TK+CT8ODQkmkL6jsECym/
+         dLEA==
+X-Received: by 10.66.149.131 with SMTP id ua3mr15980640pab.49.1374204694516;
+        Thu, 18 Jul 2013 20:31:34 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id qb15sm19877345pab.13.2013.07.18.20.31.32
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 18 Jul 2013 20:31:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1374107406-14357-7-git-send-email-gitster@pobox.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230777>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+Junio C Hamano wrote:
 
-> The sentinel function attribute is not understood by versions of
-> the gcc compiler prior to v4.0. At present, for earlier versions
-> of gcc, the build issues 108 warnings related to the unknown
-> attribute. In order to suppress the warnings, we conditionally
-> define the GIT_SENTINEL macro to provide the sentinel attribute
-> for gcc v4.0 and newer.
->
-> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-> ---
->
-> This was built on the next branch
+> We should remove the support for "-q" in Git 2.0.
 
-It seems to apply well on the tip of jk/gcc-function-attributes.
+Nooooo.  I hope you are teasing.
 
+I don't mind seeing support for "-q" dropped, but I really don't think
+it's worth delaying git 2.0 for that.  Would s/in Git 2.0/in some
+future release/ be ok?
 
- - This macro is not about "git" at all, so I'll edit the patch to
-   call it GCC_ATTR_SENTINEL before applying.
+The patch text itself looks good.
 
- - Also I'll drop the (0) at the end.
-
-Thanks.
+Thanks,
+Jonathan
