@@ -1,177 +1,64 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH] status_printf_ln: Suppress false positive warnings of empty format string.
-Date: Fri, 19 Jul 2013 16:08:09 +0200
-Message-ID: <1374242889-14239-1-git-send-email-stefanbeller@googlemail.com>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: peff@peff.net, gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 19 16:08:25 2013
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [RFC] Delete current branch
+Date: Fri, 19 Jul 2013 16:28:36 +0200
+Message-ID: <87y592y67f.fsf@igel.home>
+References: <CALkWK0=8q4J2yi2to_+41kJSA5E59CBwkG69Hj7MmTPgUnSh5Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 19 16:28:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0BM5-0007lH-TE
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 16:08:22 +0200
+	id 1V0Bfp-0003nZ-Oa
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Jul 2013 16:28:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752320Ab3GSOIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 10:08:15 -0400
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:44157 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751167Ab3GSOIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 10:08:13 -0400
-Received: by mail-wi0-f169.google.com with SMTP id c10so681825wiw.0
-        for <git@vger.kernel.org>; Fri, 19 Jul 2013 07:08:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=a00qAnjJ4kvggNbtVQA0p2vPmdMp0MHfnvkjG1ZKzsE=;
-        b=pV1rfrkzA4hK2yRdB0tfHlUCMWOBBwzJDdC/3ENkHg1Bv/j4FjtqC5Ez/QPLwMNwYV
-         JyT/wfD7IAbH9yPZO7uhve5GjSwsOfRy1kOugtQFyS7sigFsoqueL7z1sYPAbfUOK/j9
-         8hTS8T3J+G7yCZqvwW6vcsLjreXflLp5RvHTnLNURyPoQA5ZWF++Mb7WGPkFDcAhNds7
-         2cGZeJJnIktm/jN99Is+sks+9XvM88s2BI/VyIzRuCuWf4uHaXeZ/fXAc848uUkrX8Xq
-         jGkGwv1IiTMEATRSv54aPkYwxmq8QdnH9F22tPwA2DTETiIim81B5oHn5r4kgWEVLyav
-         9k0A==
-X-Received: by 10.194.108.73 with SMTP id hi9mr1195246wjb.85.1374242891849;
-        Fri, 19 Jul 2013 07:08:11 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id fb9sm48706799wid.2.2013.07.19.07.08.10
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 19 Jul 2013 07:08:11 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.3.754.g9c3c367.dirty
+	id S1752722Ab3GSO2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 10:28:41 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:40752 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752100Ab3GSO2l (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 10:28:41 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3bxZMV5dQsz3hhmV;
+	Fri, 19 Jul 2013 16:28:38 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3bxZMV5NVjzbbsM;
+	Fri, 19 Jul 2013 16:28:38 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id H1_9ptoiGjHF; Fri, 19 Jul 2013 16:28:37 +0200 (CEST)
+X-Auth-Info: Po7/4NIMI8yAqWj4sPDsW9uPKqCqaKkLVMSMK+oFQ3s=
+Received: from igel.home (ppp-88-217-119-182.dynamic.mnet-online.de [88.217.119.182])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Fri, 19 Jul 2013 16:28:37 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 870C0E498A; Fri, 19 Jul 2013 16:28:37 +0200 (CEST)
+X-Yow: Somewhere in suburban Honolulu, an unemployed bellhop is whipping up
+ a batch of illegal psilocybin chop suey!!
+In-Reply-To: <CALkWK0=8q4J2yi2to_+41kJSA5E59CBwkG69Hj7MmTPgUnSh5Q@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Fri, 19 Jul 2013 16:05:04 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230807>
 
-This is a response to 8dd0ee823f1829a3aa228c3c73e31de5c89b5317.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Instead of having an empty string as format for the printf like function
-status_printf_ln, we could insert an empty string into the format
-parameter.
+>   # er, what was the branch name again?
+>   $ git checkout -
 
-A similar fixup commit is found in linux (2e4c332913b5), but there
-the empty string is replaced by a string containing one whitespace.
+You could take a look in the reflog.
 
-To determine, which approach is better I setup 2 test programs, which
-either have a whitespace format (" ") or the empty string ("%s", ""),
-looking like:
--
-	#include <stdlib.h>
-	#include <stdio.h>
-	int main (int argc, char** argv) {
-		long i;
-		for (i = 0; i < 1024*1024*1024; ++i)
-			printf(" ");
-	}
--
-Checking the required time of the programs, while redirecting the actual
-output (the billion white spaces compared to nothing) to /dev/null
-indicates that the approach used in this patch is faster regardless
-of the optimization level of gcc.
+Andreas.
 
-Also this patch doesn't change output, which favors this approach over
-the whitespace approach.
-
-The only thing left to discuss, whether this patch is worth it, as it
-only suppresses false positive warnings from gcc, but makes the
-code slightly harder to read.
-
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
----
- builtin/commit.c |  2 +-
- wt-status.c      | 18 +++++++++---------
- 2 files changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 65cf2a7..34bc274 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -773,7 +773,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 				committer_ident.buf);
- 
- 		if (ident_shown)
--			status_printf_ln(s, GIT_COLOR_NORMAL, "");
-+			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
- 
- 		saved_color_setting = s->use_color;
- 		s->use_color = 0;
-diff --git a/wt-status.c b/wt-status.c
-index cb24f1f..912ed88 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -179,7 +179,7 @@ static void wt_status_print_unmerged_header(struct wt_status *s)
- 	} else {
- 		status_printf_ln(s, c, _("  (use \"git add/rm <file>...\" as appropriate to mark resolution)"));
- 	}
--	status_printf_ln(s, c, "");
-+	status_printf_ln(s, c, "%s", "");
- }
- 
- static void wt_status_print_cached_header(struct wt_status *s)
-@@ -195,7 +195,7 @@ static void wt_status_print_cached_header(struct wt_status *s)
- 		status_printf_ln(s, c, _("  (use \"git reset %s <file>...\" to unstage)"), s->reference);
- 	else
- 		status_printf_ln(s, c, _("  (use \"git rm --cached <file>...\" to unstage)"));
--	status_printf_ln(s, c, "");
-+	status_printf_ln(s, c, "%s", "");
- }
- 
- static void wt_status_print_dirty_header(struct wt_status *s,
-@@ -214,7 +214,7 @@ static void wt_status_print_dirty_header(struct wt_status *s,
- 	status_printf_ln(s, c, _("  (use \"git checkout -- <file>...\" to discard changes in working directory)"));
- 	if (has_dirty_submodules)
- 		status_printf_ln(s, c, _("  (commit or discard the untracked or modified content in submodules)"));
--	status_printf_ln(s, c, "");
-+	status_printf_ln(s, c, "%s", "");
- }
- 
- static void wt_status_print_other_header(struct wt_status *s,
-@@ -226,12 +226,12 @@ static void wt_status_print_other_header(struct wt_status *s,
- 	if (!advice_status_hints)
- 		return;
- 	status_printf_ln(s, c, _("  (use \"git %s <file>...\" to include in what will be committed)"), how);
--	status_printf_ln(s, c, "");
-+	status_printf_ln(s, c, "%s", "");
- }
- 
- static void wt_status_print_trailer(struct wt_status *s)
- {
--	status_printf_ln(s, color(WT_STATUS_HEADER, s), "");
-+	status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
- }
- 
- #define quote_path quote_path_relative
-@@ -1192,7 +1192,7 @@ void wt_status_print(struct wt_status *s)
- 				on_what = _("Not currently on any branch.");
- 			}
- 		}
--		status_printf(s, color(WT_STATUS_HEADER, s), "");
-+		status_printf(s, color(WT_STATUS_HEADER, s), "%s", "");
- 		status_printf_more(s, branch_status_color, "%s", on_what);
- 		status_printf_more(s, branch_color, "%s\n", branch_name);
- 		if (!s->is_initial)
-@@ -1205,9 +1205,9 @@ void wt_status_print(struct wt_status *s)
- 	free(state.detached_from);
- 
- 	if (s->is_initial) {
--		status_printf_ln(s, color(WT_STATUS_HEADER, s), "");
-+		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
- 		status_printf_ln(s, color(WT_STATUS_HEADER, s), _("Initial commit"));
--		status_printf_ln(s, color(WT_STATUS_HEADER, s), "");
-+		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
- 	}
- 
- 	wt_status_print_updated(s);
-@@ -1224,7 +1224,7 @@ void wt_status_print(struct wt_status *s)
- 		if (s->show_ignored_files)
- 			wt_status_print_other(s, &s->ignored, _("Ignored files"), "add -f");
- 		if (advice_status_u_option && 2000 < s->untracked_in_ms) {
--			status_printf_ln(s, GIT_COLOR_NORMAL, "");
-+			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
- 			status_printf_ln(s, GIT_COLOR_NORMAL,
- 					 _("It took %.2f seconds to enumerate untracked files. 'status -uno'\n"
- 					   "may speed it up, but you have to be careful not to forget to add\n"
 -- 
-1.8.3.3.754.g9c3c367.dirty
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
