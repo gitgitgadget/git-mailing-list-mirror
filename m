@@ -1,104 +1,103 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] pull: require choice between rebase/merge on
- non-fast-forward pull
-Date: Fri, 19 Jul 2013 18:30:16 -0400
-Message-ID: <CAPig+cT83Zv5aDDTYhfLOQ-ymCckwHDhxE6ChHUQKWQbfPdG6A@mail.gmail.com>
-References: <CAEBDL5WqYPYnU=YoCa2gMzcJCxeNbFmFgfWnHh=+HuouXLLsxg@mail.gmail.com>
-	<20130523102959.GP9448@inner.h.apk.li>
-	<20130523110839.GT27005@serenity.lan>
-	<7vd2shheic.fsf@alter.siamese.dyndns.org>
-	<20130523164114.GV27005@serenity.lan>
-	<7vbo81e7gs.fsf@alter.siamese.dyndns.org>
-	<20130523215557.GX27005@serenity.lan>
-	<7vli75cpom.fsf@alter.siamese.dyndns.org>
-	<CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com>
-	<7v4ncjs5az.fsf_-_@alter.siamese.dyndns.org>
-	<20130718143009.GC2337@serenity.lan>
-	<871u6v93a8.fsf@igel.home>
-	<7vmwpj3g0l.fsf@alter.siamese.dyndns.org>
-	<7vvc471x1s.fsf_-_@alter.siamese.dyndns.org>
-	<CAPig+cTXn4hdKoCjnNXmybNxYt0Bt_QuxsfFxiA5b0J1FxUUmQ@mail.gmail.com>
-	<7vy592wmcs.fsf@alter.siamese.dyndns.org>
-	<CAPig+cQEtKc+tfDgqVWYL2JtxXc=wvS=P7_O=XJzizz1BN=n4A@mail.gmail.com>
-	<7vzjtitco6.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Delete current branch
+Date: Fri, 19 Jul 2013 15:52:19 -0700
+Message-ID: <7vmwpitb6k.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0=8q4J2yi2to_+41kJSA5E59CBwkG69Hj7MmTPgUnSh5Q@mail.gmail.com>
+	<7vr4euy4c6.fsf@alter.siamese.dyndns.org>
+	<CALkWK0m-q=Aoof62zhXnUYsJ7PQZwTLbQ50BUEmufVO4gtWNUA@mail.gmail.com>
+	<7vppuewl6h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, John Keeping <john@keeping.me.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andreas Krey <a.krey@gmx.de>,
-	John Szakmeister <john@szakmeister.net>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 20 00:30:33 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 20 00:52:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0JBv-0003A3-0I
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Jul 2013 00:30:23 +0200
+	id 1V0JXG-0005h1-Vv
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Jul 2013 00:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752067Ab3GSWaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 18:30:19 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:63544 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751682Ab3GSWaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 18:30:18 -0400
-Received: by mail-la0-f42.google.com with SMTP id eh20so1506619lab.1
-        for <git@vger.kernel.org>; Fri, 19 Jul 2013 15:30:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=K2hHReoOvc46SeAkiO+Q1SEZzp3IH4HGv//4FUzbsOY=;
-        b=TyhjDZDWPsKMv25QYXEFCLF0C+mJio5wzXZiV2FG7MQYX1E6wBtpuDbLIGtWvV7xk3
-         ZyJMUfb7g9035XLr6WyRVdmkYYJ+OMaxxnlPIhtUFBVyPp13BgMwotDj3atsdwqY9jpo
-         oo2wY4+N3zhqWqONEXFA60UJhfXMdSqTL/zCZuevyCEfn25faSKuI9k2KsLsk7ymLqM1
-         wSEsP2hwjS5iHpO9+av9iSAVBFxYfk/OydsxXkbPZUy3ZeVIjvr4+8IoP/a4Y4N599hW
-         dg0lAPl2ozbmnSg19IIRetT1Xbuc74Zu+cwCtbWitD3ChTh8AAShN0YrLXJRTiQXQ8bA
-         VsAQ==
-X-Received: by 10.152.43.82 with SMTP id u18mr8068168lal.86.1374273016651;
- Fri, 19 Jul 2013 15:30:16 -0700 (PDT)
-Received: by 10.114.187.78 with HTTP; Fri, 19 Jul 2013 15:30:16 -0700 (PDT)
-In-Reply-To: <7vzjtitco6.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: r2kpLnr3DyLGi-p7RQkKRl2vZwI
+	id S1752719Ab3GSWwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jul 2013 18:52:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39220 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752484Ab3GSWwW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jul 2013 18:52:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 616E132A45;
+	Fri, 19 Jul 2013 22:52:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bmLgvnIbMvVrVpdxshr+5eKqtng=; b=fEr9PO
+	YeL05sH31F6xzTgxgUsFv172MhjmtTH6azAz/xLfth1IVUPuHysHWale6/DAL2T0
+	oR/8PI9OxBGFZCc7Kt3uZ6orOdp1vvYcQ3wOywSc1QW9h+hevQQCtVkq5grMDIRO
+	9Ol1ArFftItjnFNjGodQabRNE4CO5BnnXYRDQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=En3vhTSaJ/zp6/ei3gCytWb8RGVgN14R
+	rlkIpAIrwd8VIY/NraziIY+7OiRv2WTBcxs3MiHI6L8WeSMYlBFQFYZnQ+VJb3b0
+	lncyfjZlj5PUTU+Y5btBCcR7tl0vKOs/ng63ddRPS8kDHN73NycvpdKLB/2YwgcU
+	jmqAquPq0tQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 555F932A44;
+	Fri, 19 Jul 2013 22:52:21 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C3FB32A43;
+	Fri, 19 Jul 2013 22:52:20 +0000 (UTC)
+In-Reply-To: <7vppuewl6h.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 19 Jul 2013 09:48:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DE7CD2F0-F0C5-11E2-B3C9-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230855>
 
-On Fri, Jul 19, 2013 at 6:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 >
->> Dropping the parenthetical comment might improve flow slightly:
+>> Junio C Hamano wrote:
+>>> Did you know that the general way to spell the branch previously you
+>>> were on is "@{-1}" and "checkout -" is an ugly special case that is
+>>> possible only because "checkout" does not happen to take a "-" as a
+>>> valid argument that means something else (like the more usual "read
+>>> from standard input")?
 >>
->>     Without repository or branch on the command line, `git pull`
->>     needs to be told how to integrate the changes with your history,
->>     via either `--merge` or `--rebase`.
->>
->> With or without mention of the configuration options, either phrasing
->> seems pretty easy to digest.
+>> I disagree that it is ugly: it's a very commonly used shortcut that I
+>> like.
 >
-> Yeah, that reads much better, but I do prefer to see something that
-> explains this is often "just make sure you use the one that suits
-> your project and always use that".  How about something like this?
+> It does not matter if you like it or not ;-).
 >
->     With no repository or branch on the command line, `git pull` needs
->     to be told how to integrate the changes with your history.
+> I do agree that "checkout -" is 100% more pleasing to the eye than
+> "checkout @{-1}" from visual "prettyness" point of view.
 >
->     This can be done via either `--merge` or `--rebase` option, but most
->     people would want to decide which method matches the workflow of the
->     project once, and set the configuration variable `pull.rebase` or
->     `branch.<name>.rebase` to stick to it; see linkgit:git-config[1].
+> But there is a very commonly accepted long tradition for "-" to mean
+> "read from the standard input", so we cannot reuse it to mean "the
+> branch I was previously on" for every command without first making
+> sure the command will never want to use "-" for the other common
+> purpose.
+>
+> That limits the context we could use "-" and we cannot consistently
+> use it everywhere. I find _that_ ugly from the "design cleanliness"
+> point of view.
 
-At this point, I'm probably just bike-shedding. Perhaps?
+Having said all that.
 
-    With no repository or branch on the command line, `git pull`
-    needs to be told how to integrate the changes with your history,
-    via either `--merge` or `--rebase`.
+d18ba221 (sha1_name: support @{-N} syntax in get_sha1(), 2009-01-17)
+was primarily for the follow-up patch 696acf45 (checkout: implement
+"-" abbreviation, add docs and tests, 2009-01-17).  Two years after
+them, we finally did 4e8115ff (merge: allow "-" as a short-hand for
+"previous branch", 2011-04-07).
 
-    To match a project's workflow and make the choice of merge or
-    rebase permanent, set configuration variable `pull.rebase` or
-    `branch.<name>.rebase` (see linkgit:git-config[1]).
+There is no reason we cannot continue.
+
+As long as the addition is carefully prepared so that we know it
+will not conflict (or be confused by users) with possible other uses
+of "-", I do not think we would mind "git branch -D -" and other
+commands to learn "-" as a synonym for @{-1}.
