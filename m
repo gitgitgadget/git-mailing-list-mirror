@@ -1,65 +1,79 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH] Fix compilation on OS X.
-Date: Sat, 20 Jul 2013 14:06:48 +0200
-Message-ID: <51EA7D58.3050800@web.de>
-References: <1374306567-16640-1-git-send-email-tsunanet@gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: Git-P4 Bug With Filename Case Change
+Date: Sat, 20 Jul 2013 09:34:18 -0400
+Message-ID: <20130720133418.GA18479@padd.com>
+References: <897B3B32-0200-4290-AA16-DCAF42923CE0@imgtec.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Benoit Sigoure <tsunanet@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 20 14:07:26 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Aaron Dwyer <Aaron.Dwyer@imgtec.com>
+X-From: git-owner@vger.kernel.org Sat Jul 20 15:34:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0VwX-0000ea-Hy
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Jul 2013 14:07:21 +0200
+	id 1V0XJ3-0007vw-JX
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Jul 2013 15:34:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752460Ab3GTMGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jul 2013 08:06:53 -0400
-Received: from mout.web.de ([212.227.17.12]:63685 "EHLO mout.web.de"
+	id S1754045Ab3GTNeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Jul 2013 09:34:23 -0400
+Received: from honk.padd.com ([74.3.171.149]:57001 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751656Ab3GTMGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jul 2013 08:06:52 -0400
-Received: from [10.0.0.74] ([107.0.115.51]) by smtp.web.de (mrweb004) with
- ESMTPA (Nemesis) id 0MW6Ib-1UcSbj0aSX-00XGwV for <git@vger.kernel.org>; Sat,
- 20 Jul 2013 14:06:50 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <1374306567-16640-1-git-send-email-tsunanet@gmail.com>
-X-Provags-ID: V03:K0:rkycuQg3dA0bH33rAP5/aN74QFfBrm5uep0z+e6Ql+3UH1dJNzj
- tQ7U3PjK2PgNJmROSFEId6dQVQTyq142sA1GzeBjoRNhHY8WWUDW11LH8M8prGy5JY10VVx
- Qc07c2EfoDxcv2/Qbk8tWX8K+KIWBbEdbeSPlrzN0NO+n35sO/LaK3GWi5oZ+eLi00FDITp
- fFdbxbx8Hd4agc1lFQr0Q==
+	id S1753986Ab3GTNeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jul 2013 09:34:22 -0400
+Received: from arf.padd.com (unknown [50.105.10.190])
+	by honk.padd.com (Postfix) with ESMTPSA id 75AAC1E55;
+	Sat, 20 Jul 2013 06:34:21 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id AD01623A3E; Sat, 20 Jul 2013 09:34:18 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <897B3B32-0200-4290-AA16-DCAF42923CE0@imgtec.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230896>
 
-On 2013-07-20 09.49, Benoit Sigoure wrote:
-> +#ifdef __APPLE__
-> +// On OS X libc headers don't define this symbol.
-> +extern char **environ;
-> +#endif
-> +
-A more generic approach could be:
+Aaron.Dwyer@imgtec.com wrote on Wed, 17 Jul 2013 22:11 +0000:
+> 	We recently have moved our project from Git to Perforce and those of us who prefer Git still are using Git p4 to stay in Git land.  One of the files in our repository was renamed while still in Git, but the rename only consisted of a case change of a character in the name.  Now, on an OS X box with a case insensitive file system (not sure if that matters), one of our guys cloned from perforce with Git p4 and used @all to get all history.  When this operation is finished, the file name is in its original state, not the newer renamed state.
 
-In the file "config.mak.uname": Define a variable in the Darwin section like this
-NO_EXT_ENVIRON = UnfortunatelyYes
+So original file "Foo", new file "foo", to make it concrete.
 
-In "Makefile", pick it up, and convert it into a compiler option:
-ifdef NO_EXT_ENVIRON
-	BASIC_CFLAGS += -DNO_EXT_ENVIRON
-endif
+The "git p4 clone" command generates an internal .git/ history of
+the entire p4 repository, before checking out any files in the
+workspace.  It does this without touching the filesystem, so I
+would expect it never to mangle case, even on OSX.
 
-And in "git-compat-util.h", add these lines "at a good place":
-#ifdef NO_EXT_ENVIRON
-extern char **environ;
-#endif
+You should be able to verify this with:
 
-This will allow other OS to use the NO_EXT_ENVIRON when needed,.
+    mkdir test1
+    cd test1
+    git init
+    git p4 clone --bare --destination . //depot/proj@all
 
-Thanks for working on this.
-/Torsten
+    git ls-tree HEAD
+
+and see that "foo" is there, not "Foo".
+
+Then check that the rename really did happen:
+
+    git log --stat --summary --follow -- foo
+
+should show a "rename Foo => foo" in there somewhere.
+
+Does this all work?  I'd like to clear up this confusing part
+first.
+
+> 	Perforce doesn't respect that file as being in the repository.  We noticed this after making a local Git commit and upon issuing a Git p4 submit, things go haywire with "file(s) not opened on this client" and nothing getting submitted.
+
+Yep, it's all bad from there-on, I'm sure.
+
+I'm a bit out of my depth on case-insensitive file systems.  Do
+check if the cloner in question has core.ignorecase config option
+set:
+
+    git config --get core.ignorecase
+
+
+		-- Pete
