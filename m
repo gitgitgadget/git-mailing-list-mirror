@@ -1,93 +1,75 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] Cygwin has trustable filemode
-Date: Sat, 20 Jul 2013 21:12:11 +0100
-Message-ID: <51EAEF1B.6090300@ramsay1.demon.co.uk>
-References: <1373818390-14451-1-git-send-email-mlevedahl@gmail.com> <1374245631-15955-1-git-send-email-mlevedahl@gmail.com> <7vtxjqwlj2.fsf@alter.siamese.dyndns.org> <51E982D0.5040505@gmail.com>
+From: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
+Subject: Re: [PATCH 2/2] Fix typos in comments
+Date: Sat, 20 Jul 2013 22:30:38 +0200
+Message-ID: <20130720203037.GA3753@domone>
+References: <20130720190707.GA30044@domone>
+ <20130720191311.GB30044@domone>
+ <CALkWK0kzsVLGXZsxWO5rYahb39LSTFvGuE3hZaCgrJ=nuaoo7w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 20 22:19:16 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 20 22:30:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0dcZ-0001cT-GY
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Jul 2013 22:19:15 +0200
+	id 1V0dnj-0005TU-NE
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Jul 2013 22:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754903Ab3GTUTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jul 2013 16:19:12 -0400
-Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:43061 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754860Ab3GTUTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jul 2013 16:19:11 -0400
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id C0779A6484A;
-	Sat, 20 Jul 2013 21:19:09 +0100 (BST)
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id C3E38A6483E;
-	Sat, 20 Jul 2013 21:19:07 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
-	Sat, 20 Jul 2013 21:19:02 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <51E982D0.5040505@gmail.com>
-X-MDF-HostID: 8
+	id S1755001Ab3GTUao convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Jul 2013 16:30:44 -0400
+Received: from popelka.ms.mff.cuni.cz ([195.113.20.131]:46331 "EHLO
+	popelka.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754966Ab3GTUan (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jul 2013 16:30:43 -0400
+Received: from domone.kolej.mff.cuni.cz (popelka.ms.mff.cuni.cz [195.113.20.131])
+	by popelka.ms.mff.cuni.cz (Postfix) with ESMTPS id 89B23639A5;
+	Sat, 20 Jul 2013 22:30:38 +0200 (CEST)
+Received: by domone.kolej.mff.cuni.cz (Postfix, from userid 1000)
+	id 28FB55FB94; Sat, 20 Jul 2013 22:30:38 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0kzsVLGXZsxWO5rYahb39LSTFvGuE3hZaCgrJ=nuaoo7w@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.97.6 at popelka.ms.mff.cuni.cz
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-1.8 required=5.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	UNPARSEABLE_RELAY autolearn=ham version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	popelka.ms.mff.cuni.cz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230910>
 
-Mark Levedahl wrote:
-> On 07/19/2013 12:40 PM, Junio C Hamano wrote:
->> Thanks, will replace.
->>
->> What do we want to do with the compat/regex build-time switch?
->>
->> IIRC, this was only needed for 1.7 and not 1.5, and I also would
->> expect (without anything to back-up, so this is more a faith than
->> expectation) over time the "new library" would have a working regex
->> library.
->>
-> 
-> The situation is that Cygwin uses newlib rather than glibc, and does so 
-> for licesnsing reasons (redhat sells licenses to developers allowing 
-> closed source applications built using Cygwin). So, there must be a 
-> compelling need to fix the library - git has a simple work around, so 
-> isn't the case. Also, Cygwin has a perl regex library for those 
-> demanding more complete / correct regex solution. So, I make no 
-> prediction on when the newlib regex functions are fixed.
-> 
-> Related: Should we have separate settings for 1.5 and 1.7 for several 
-> variables?
+On Sun, Jul 21, 2013 at 01:21:10AM +0530, Ramkumar Ramachandra wrote:
+> Ond=C5=99ej B=C3=ADlka wrote:
+> > diff --git a/builtin/checkout.c b/builtin/checkout.c
+> > index 7fe0bff..9f29bb2 100644
+> > --- a/builtin/checkout.c
+> > +++ b/builtin/checkout.c
+> > @@ -1137,7 +1137,7 @@ int cmd_checkout(int argc, const char **argv,=
+ const char *prefix)
+> >          *  3) git checkout <something> [<paths>]
+> >          *
+> >          * including "last branch" syntax and DWIM-ery for names of
+> > -        * remote branches, erroring out for invalid or ambiguous c=
+ases.
+> > +        * remote branches, erring out for invalid or ambiguous cas=
+es.
+>=20
+> Didn't look through the entire patch, but this caught me eye: what's
+> wrong with "erroring out"?
+Well aspell did not know it so I thought that erring is more
+appropriate. Now it looks more murky, see
+http://english.stackexchange.com/questions/3059/is-errored-correct-usag=
+e
 
-We already do.
-
->               Conflicts I see not reflected in config.mak.uname on pu:
->      trustable filemode   (1.7 has, 1.5 does not)
-
-I see no need for any difference here. puzzled.
-
->      MMAP/Pread (1.7 pread is thread safe, 1.5 I dont think was, MMAP 
-> utility is convolved in this)
-
-pread() is now thread-safe? great! (It must have been a fairly recent
-change; last time I looked it was still not thread-safe on 1.7.)
-
->      regex - 1.7 is broken, per Ramsay 1.5 works
-
-I don't see any reason not to use the compat/regex routines on both
-cygwin 1.5 and 1.7.  However, I wouldn't object to restricting the use
-of the compat routines to cygwin 1.7 either!
-
-> If you think its worth it, I'll create a patch series with the above and 
-> justifications for the different settings that I know.
-
-As far as I can see, only the pread() and maybe MMAP and regex setting
-need to change from the current setup.
-
-ATB,
-Ramsay Jones
+I am ok with removing this correction.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
