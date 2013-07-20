@@ -1,66 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git tag output order is incorrect (IMHO)
-Date: Fri, 19 Jul 2013 20:22:41 -0400
-Message-ID: <20130720002241.GA22143@sigill.intra.peff.net>
-References: <840FACA0-7E13-41DB-A0F8-124FAB53BFBD@rtcamp.com>
- <87wqon7ok4.fsf@igel.home>
- <7vli52uym0.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: One question about git-format-patch
+Date: Fri, 19 Jul 2013 17:32:46 -0700
+Message-ID: <7vehaut6j5.fsf@alter.siamese.dyndns.org>
+References: <804161F448B352478D7503429A0B7F27CA94AC@ex10-mbx-36002.ant.amazon.com>
+	<CAPc5daW6ohYxJP0eyfW0DT_Q-E8v0quweRBwJCAZOVrEMWchjA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Rahul Bansal <rahul.bansal@rtcamp.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 20 02:23:07 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: "Hua\, Siyuan" <siyuahua@amazon.com>
+X-From: git-owner@vger.kernel.org Sat Jul 20 02:32:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0Kx0-0001HL-LA
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Jul 2013 02:23:06 +0200
+	id 1V0L6T-0004v3-Pl
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Jul 2013 02:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753375Ab3GTAWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jul 2013 20:22:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53330 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753143Ab3GTAWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jul 2013 20:22:47 -0400
-Received: (qmail 19653 invoked by uid 102); 20 Jul 2013 00:22:47 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 19 Jul 2013 19:22:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Jul 2013 20:22:41 -0400
-Content-Disposition: inline
-In-Reply-To: <7vli52uym0.fsf@alter.siamese.dyndns.org>
+	id S1753226Ab3GTAcu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jul 2013 20:32:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57343 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751849Ab3GTAct convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Jul 2013 20:32:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B385426321;
+	Sat, 20 Jul 2013 00:32:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ZafneFBjExX9
+	bk/2LkxBCpvN8Gg=; b=xe29FOOWJTcoonnVpJj4cqtlOmTcP2QFa2nbMbHEWNFu
+	olZo/lCfPCDJIxkSmZKF8NYQXTzPmw6PbpyjAGvHsWIwFlLb1tCoLwa4Hd8ZXLxm
+	knv6lMSUtS1MYsrh+SBGvelf7Xfk6cBVijIfwF97H4TPYAlTxpkx11uj1YbhHjM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=DOJPls
+	0NSC/oUD1/TNKu3IuK2oLK1FBg1Z9kXcOtr9nH+1AArgDhD0rK1essTjXyDJIGzu
+	s73H+meZOO62NC6ci2KCxWHOzfaAUPhixrNRY1Mg36YLkXk5K2DVLzbbB1j2tdtt
+	9WRWG4cvZnos4g3+0Z/JdBFVZ+roMfVxVoidE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A84AE26320;
+	Sat, 20 Jul 2013 00:32:48 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 087E82631E;
+	Sat, 20 Jul 2013 00:32:47 +0000 (UTC)
+In-Reply-To: <CAPc5daW6ohYxJP0eyfW0DT_Q-E8v0quweRBwJCAZOVrEMWchjA@mail.gmail.com>
+	(Junio C. Hamano's message of "Fri, 19 Jul 2013 16:06:08 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E718AAFC-F0D3-11E2-A46C-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230868>
 
-On Fri, Jul 19, 2013 at 12:40:55PM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Andreas Schwab <schwab@linux-m68k.org> writes:
-> 
-> > Rahul Bansal <rahul.bansal@rtcamp.com> writes:
-> >
-> >> IMHO "git tag" is expected to show tag-list ordered by versions. 
-> >
-> > A git tag can be anything, not related to versions at all.
-> 
-> Correct.
-> 
-> But that does not prevent somebody to add "git tag --sort=X" option
-> to the command, just like "git for-each-ref" has "--sort=X" option.
+>> I=E2=80=99m a git user, and recently I=E2=80=99ve noticed there=E2=80=
+=99re some differences between
+>> =E2=80=9C$ git format-patch =E2=80=93n=E2=80=9D and =E2=80=9C$ git f=
+ormat-patch HEAD~n=E2=80=9D. According to the
+>> documentation: =E2=80=9C-<n> Prepare patches from the topmost <n> co=
+mmits.=E2=80=9D
+>
+> Correct.  However, HEAD~n will prepare patches for commits that are
+> not ancestor of HEAD~n.
+>
+> And there may well be a lot more than n such commits, unless you are
+> working on a strictly linear history.
 
-A while ago I started on (but did not get very far on) unifying the ref
-selection code for for-each-ref, tag, and branch. It would be nice if
-they all supported the same set of --contains/--points-at/--merged/--sort,
-etc.
+Every once in a while, a illustration would help new folks. =20
 
-I do plan to finish it eventually, but if anyone else feels like picking
-it up, I'd be glad to review patches and/or share my work-in-progress as
-a starting point.
+In this history (as always, the time and ancestry topology flows
+from left to right):
 
--Peff
+           E-------F---G
+          /       /
+     A---B---C---D
+
+imagine that your HEAD is at commit G.
+
+ - G~1 =3D=3D G^ =3D=3D F
+ - G~2 =3D=3D G^^ =3D=3D E (suppose F is a merge of D made on E)
+ - G~3 =3D=3D G^^^ =3D=3D B
+ - G~4 =3D=3D G^^^^ =3D=3D A
+
+so "git format-patch HEAD~4" will give you B, C, D, E and G (five
+commits).
+
+Asking for "git format-patch -n 4" does not make much sense in a
+history like this, but it will give you G, D, C, E and at that point
+you have seen 4 commits, so you won't get B.
+
+Note that if F were a merge of E made on D, that would make
+
+ - G~2 =3D=3D G^^ =3D=3D D
+ - G~3 =3D=3D G^^^ =3D=3D C
+ - G~4 =3D=3D G^^^^ =3D=3D B
+
+And "git format-patch HEAD~4" will give you C, D, E and G (four
+commits).
