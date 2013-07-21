@@ -1,83 +1,140 @@
-From: Benoit Sigoure <tsunanet@gmail.com>
-Subject: [PATCH] Revert "compat/unsetenv.c: Fix a sparse warning"
-Date: Sun, 21 Jul 2013 12:54:08 -0700
-Message-ID: <1374436448-8199-1-git-send-email-tsunanet@gmail.com>
-References: <1374387454-27800-1-git-send-email-tsunanet@gmail.com>
-Cc: tboegi@web.de, gitster@pobox.com,
-	Benoit Sigoure <tsunanet@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 21 21:55:31 2013
+From: Andreas Amann <a.amann@ucc.ie>
+Subject: [PATCH v2] gitk: Add a "Save file as" menu item
+Date: Sun, 21 Jul 2013 20:55:40 +0100
+Message-ID: <87wqojhemb.fsf@msstf091.ucc.ie>
+References: <87ppuculyi.fsf@msstf091.ucc.ie> <alpine.DEB.2.00.1307211910250.9615@ds9.cixit.se>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Paul Mackerras <paulus@samba.org>,
+	Peter Krefting <peter@softwolves.pp.se>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jul 21 21:55:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0zj8-0008Iw-NC
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jul 2013 21:55:31 +0200
+	id 1V0zjT-0008Vb-0g
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jul 2013 21:55:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756041Ab3GUTz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jul 2013 15:55:27 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:40987 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755934Ab3GUTz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jul 2013 15:55:26 -0400
-Received: by mail-ee0-f46.google.com with SMTP id d41so3349085eek.19
-        for <git@vger.kernel.org>; Sun, 21 Jul 2013 12:55:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=etCHht/aBZjY06VuMXmvSdgMOYjdIqCDRvhXoFGfltw=;
-        b=dw/dlR8ry2VK/ffuautbS7IAeJX5TtelHowAwlONTVhF6D5QbxTSyGFZswF37IINo5
-         GLXZz6suXeTqC8i6jwYznPhrYaEv54TVqKxBcM2pPKVzCPNMYjLVhHuNwMOk2NzarnK9
-         hgWikSV4dJinFum+TI2hPpLp1h8AM4opQG2WZV0BOwRD0VzCg5nP2GScuOv5+c7Wr7fm
-         6681duPBx0yig9CT/F1Z+rRadfore/VTRkPcfHkncXagsbwbhHDTlJHgwaOkvHs0bsH9
-         VXgc0uYgQSd1r9ysxYRRP7KaAxbLPMgd90CNurCnOewlQDN7PS6Pkdauz6UTHAguPU4i
-         LCuA==
-X-Received: by 10.14.98.6 with SMTP id u6mr24435971eef.62.1374436525013;
-        Sun, 21 Jul 2013 12:55:25 -0700 (PDT)
-Received: from magrathea.tsunanet.net (magrathea.tsunanet.net. [142.4.212.106])
-        by mx.google.com with ESMTPSA id b7sm45220276eef.16.2013.07.21.12.55.22
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 21 Jul 2013 12:55:24 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1374387454-27800-1-git-send-email-tsunanet@gmail.com>
+	id S1756045Ab3GUTzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jul 2013 15:55:47 -0400
+Received: from ch1ehsobe001.messaging.microsoft.com ([216.32.181.181]:13218
+	"EHLO ch1outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755934Ab3GUTzq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Jul 2013 15:55:46 -0400
+Received: from mail66-ch1-R.bigfish.com (10.43.68.243) by
+ CH1EHSOBE015.bigfish.com (10.43.70.65) with Microsoft SMTP Server id
+ 14.1.225.22; Sun, 21 Jul 2013 19:55:46 +0000
+Received: from mail66-ch1 (localhost [127.0.0.1])	by mail66-ch1-R.bigfish.com
+ (Postfix) with ESMTP id EED071201FA;	Sun, 21 Jul 2013 19:55:45 +0000 (UTC)
+X-Forefront-Antispam-Report: CIP:143.239.1.23;KIP:(null);UIP:(null);IPV:NLI;H:mail3.ucc.ie;RD:mail3.ucc.ie;EFVD:NLI
+X-SpamScore: 0
+X-BigFish: VPS0(zzzz1f42h208ch1ee6h1de0h1d18h1fdah2073h1202h1e76h1d1ah1d2ah1fc6hzz1de098h1de097hz2fh2a8h668h839hd24he5bhf0ahfa3h107ah11b5h121eh1288h12a5h12a9h12bdh12e5h137ah13b6h1441h14afh1504h1537h153bh162dh1631h1758h18e1h1946h19b5h1b0ah1d0ch1d2eh1d3fh1dfeh1dffh1e1dh1155h)
+Received-SPF: pass (mail66-ch1: domain of ucc.ie designates 143.239.1.23 as permitted sender) client-ip=143.239.1.23; envelope-from=a.amann@ucc.ie; helo=mail3.ucc.ie ;mail3.ucc.ie ;
+Received: from mail66-ch1 (localhost.localdomain [127.0.0.1]) by mail66-ch1
+ (MessageSwitch) id 1374436542347290_31542; Sun, 21 Jul 2013 19:55:42 +0000
+ (UTC)
+Received: from CH1EHSMHS024.bigfish.com (snatpool1.int.messaging.microsoft.com
+ [10.43.68.245])	by mail66-ch1.bigfish.com (Postfix) with ESMTP id 46A8F60049;
+	Sun, 21 Jul 2013 19:55:42 +0000 (UTC)
+Received: from mail3.ucc.ie (143.239.1.23) by CH1EHSMHS024.bigfish.com
+ (10.43.70.24) with Microsoft SMTP Server (TLS) id 14.16.227.3; Sun, 21 Jul
+ 2013 19:55:41 +0000
+Received: from msstf091.ucc.ie (msstf091.ucc.ie [143.239.76.91])	by
+ mail3.ucc.ie (8.14.4/8.14.4) with ESMTP id r6LJtepq032065;	Sun, 21 Jul 2013
+ 20:55:40 +0100
+Received: by msstf091.ucc.ie (Postfix, from userid 1000)	id 89571A0939; Sun,
+ 21 Jul 2013 20:55:40 +0100 (IST)
+In-Reply-To: <alpine.DEB.2.00.1307211910250.9615@ds9.cixit.se>
+User-Agent: Notmuch/0.15.2 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+X-OriginatorOrg: ucc.ie
+X-FOPE-CONNECTOR: Id%0$Dn%*$RO%0$TLS%0$FQDN%$TlsDn%
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230942>
 
-This reverts commit ec535cc27e6c4f5e0b1d157e04f5511f166ecd9d.
+Previously, there was no easy way to save a particular file from the
+currently selected revision.
 
-POSIX explicitly states "the [environ] variable, which
-must be declared by the user if it is to be used directly".
-Not declaring it causes compilation to fail on OS X.
+This patch adds a menu item "Save file as" to the file list popup
+menu, which opens a file selection dialog to determine the name under
+which a file should be saved.  The default filename is of the form
+"[shortid] basename".  If the current revision is the index, the
+default pattern is of the form "[index] basename".  This works for
+both, the "Patch" and "Tree" view.  The menu item is disabled for the
+"local uncommitted changes" fake revision.
 
-Instead don't declare the variable on MinGW, as it causes
-a spurious warning there.
-
-Signed-off-by: Benoit Sigoure <tsunanet@gmail.com>
+Signed-off-by: Andreas Amann <andreas.amann@web.de>
 ---
+ gitk | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-Resending as I forgot to Sign-off the previous patch.
-
- compat/unsetenv.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/compat/unsetenv.c b/compat/unsetenv.c
-index 4ea1856..bf5fd70 100644
---- a/compat/unsetenv.c
-+++ b/compat/unsetenv.c
-@@ -2,6 +2,9 @@
+diff --git a/gitk b/gitk
+index 5cd00d8..b5a70b5 100755
+--- a/gitk
++++ b/gitk
+@@ -2595,6 +2595,7 @@ proc makewindow {} {
+ 	{mc "Highlight this too" command {flist_hl 0}}
+ 	{mc "Highlight this only" command {flist_hl 1}}
+ 	{mc "External diff" command {external_diff}}
++	{mc "Save file as" command {save_file_as}}
+ 	{mc "Blame parent commit" command {external_blame 1}}
+     }
+     $flist_menu configure -tearoff 0
+@@ -3378,6 +3379,7 @@ proc sel_flist {w x y} {
+ proc pop_flist_menu {w X Y x y} {
+     global ctext cflist cmitmode flist_menu flist_menu_file
+     global treediffs diffids
++    global nullid
  
- void gitunsetenv (const char *name)
- {
-+#if !defined(__MINGW32__)
-+     extern char **environ;
-+#endif
-      int src, dst;
-      size_t nmln;
+     stopfinding
+     set l [lindex [split [$w index "@$x,$y"] "."] 0]
+@@ -3395,6 +3397,12 @@ proc pop_flist_menu {w X Y x y} {
+     }
+     # Disable "External diff" item in tree mode
+     $flist_menu entryconf 2 -state $xdiffstate
++    set savefilestate "normal"
++    if {[lindex $diffids 0] eq $nullid} {
++	set savefilestate "disabled"
++    }
++    # Disable "Save file as" item "local uncommited changes" revision
++    $flist_menu entryconf 3 -state $savefilestate
+     tk_popup $flist_menu $X $Y
+ }
  
+@@ -3496,6 +3504,30 @@ proc external_diff_get_one_file {diffid filename diffdir} {
+ 	       "revision $diffid"]
+ }
+ 
++proc save_file_as {} {
++    global nullid nullid2
++    global flist_menu_file
++    global diffids
++
++    set diffid [lindex $diffids 0]
++    if {$diffid == $nullid} {
++	return
++    } elseif {$diffid == $nullid2} {
++	set diffidtext [mc "index"]
++	set diffid ""
++	set whattext $diffidtext
++    } else {
++	set diffidtext [shortids $diffid]
++	set whattext "[mc "revision"] $diffidtext"
++    }
++    set difffile "\[$diffidtext\] [file tail $flist_menu_file]"
++    set difffile [tk_getSaveFile -initialfile $difffile -title [mc "Save file as"] -parent .]
++    if {$difffile eq {}} {
++	return
++    }
++    save_file_from_commit $diffid:$flist_menu_file $difffile $whattext
++}
++
+ proc external_diff {} {
+     global nullid nullid2
+     global flist_menu_file
 -- 
-1.8.2.1.539.g4196a96
+1.8.3.3
