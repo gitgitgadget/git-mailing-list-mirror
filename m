@@ -1,70 +1,78 @@
-From: tsuna <tsunanet@gmail.com>
-Subject: Re: [PATCH] Fix compilation on OS X.
-Date: Sat, 20 Jul 2013 23:10:12 -0700
-Message-ID: <CAFKYj4dRFvTwM_x0mXsOLQCTuw9nAvh3b4bZ+Omg7M5DVNnVzA@mail.gmail.com>
-References: <1374306567-16640-1-git-send-email-tsunanet@gmail.com>
- <51EA7D58.3050800@web.de> <7vr4essbkv.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 21 08:10:38 2013
+From: Benoit Sigoure <tsunanet@gmail.com>
+Subject: [PATCH] Revert "compat/unsetenv.c: Fix a sparse warning"
+Date: Sat, 20 Jul 2013 23:17:34 -0700
+Message-ID: <1374387454-27800-1-git-send-email-tsunanet@gmail.com>
+References: <7vr4essbkv.fsf@alter.siamese.dyndns.org>
+Cc: tboegi@web.de, gitster@pobox.com,
+	Benoit Sigoure <tsunanet@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 21 08:19:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0mqr-0003ko-Ar
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jul 2013 08:10:37 +0200
+	id 1V0mzL-0006aD-0H
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jul 2013 08:19:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752222Ab3GUGKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jul 2013 02:10:33 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:42832 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751676Ab3GUGKc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jul 2013 02:10:32 -0400
-Received: by mail-ie0-f169.google.com with SMTP id at20so1716940iec.0
-        for <git@vger.kernel.org>; Sat, 20 Jul 2013 23:10:32 -0700 (PDT)
+	id S1752213Ab3GUGTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jul 2013 02:19:19 -0400
+Received: from mail-ea0-f171.google.com ([209.85.215.171]:35937 "EHLO
+	mail-ea0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751676Ab3GUGTS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jul 2013 02:19:18 -0400
+Received: by mail-ea0-f171.google.com with SMTP id m14so3131208eaj.16
+        for <git@vger.kernel.org>; Sat, 20 Jul 2013 23:19:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=zCEdytAj9L6s889rfjnWSnJ6F/5lQl7d3+DZXPtoohU=;
-        b=yxTRYjpRILGwsAQxLRvejWZS9jseX8dh3rUdRrkNBs37a1K0fs4TWwLh+uP9M62tUp
-         OR+KOuLSET/9D0cipBEI2xg0vLoHlpeRHGloisFlqw5tilZFzUMFueMr0UE3kHvtmNyA
-         oLJuXjKyN+UiReZ6ju8/wWeP6CmbLNA+9CaVUNtr2s9Wm7JOHFRlg7ybHy1DBaNyMir6
-         vY5Uozqr+agz/50AguBcT3j+zc09cNhvnhYzCbvGy7gMXPxHlJzkg40jRHU+FVpVGFAn
-         WBjJrD0z2xptO3w0nLbUqN7HJjBOxRWCZxyOCzYbP79my3JcwSh5U0VC6xYQYMJ1Flkw
-         ttRA==
-X-Received: by 10.50.109.161 with SMTP id ht1mr15797940igb.60.1374387032255;
- Sat, 20 Jul 2013 23:10:32 -0700 (PDT)
-Received: by 10.64.34.148 with HTTP; Sat, 20 Jul 2013 23:10:12 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=X+1JVbyq7meFQo3rYriITczX3uIg8UdQF2+uPt9362I=;
+        b=0fSpqs+ym1HoT2UFr+KlbrKsF0dOL6hGNpH6c25vsTUNk9/xkCz7Dr3Yz54xZRvbAu
+         LdeugeN4VgQ4bqvsMksHiT+EqVgy2sKaFm0k6IJ8f3Z3VOE7Dp4Wfi6xI+kpxTlKO69+
+         9EuQ0C6mhVGaBhjtKWGK535/z3jzQjBZyMsbnqpU7B0hn+8DKZM871rGhKc231GoLOiI
+         ruiEnX1WhyxmXYkO3Uffm1SFWXs1Dm6hPOL2RTwd5GwwllUm3hNwosY/4Bl1MSTK1Ktr
+         oBMfgWHGU5tvamVNAsOaUXS5VPziJAG5HUC3CN5Utx4Nfe66uGhilflhR/MwvthpGLjI
+         E+yg==
+X-Received: by 10.14.219.6 with SMTP id l6mr21426331eep.152.1374387557564;
+        Sat, 20 Jul 2013 23:19:17 -0700 (PDT)
+Received: from magrathea.tsunanet.net (magrathea.tsunanet.net. [142.4.212.106])
+        by mx.google.com with ESMTPSA id cg12sm40534542eeb.7.2013.07.20.23.19.15
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 20 Jul 2013 23:19:16 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
 In-Reply-To: <7vr4essbkv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230918>
 
-On Sat, Jul 20, 2013 at 10:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Actually, it is _wrong_ for us to rely on system header files to
-> define this symbol for us.  Declaring "extern char **environ" is
-> responsibility of the user programs (like us).
+This reverts commit ec535cc27e6c4f5e0b1d157e04f5511f166ecd9d.
 
-Actually, that's right.  The C99 standard doesn't mention anything
-about `environ' (only 7.20.4.5 defines `getenv') and POSIX explicitly
-states "the [environ] variable, which must be declared by the user if
-it is to be used directly"
-(http://pubs.opengroup.org/onlinepubs/9699919799/functions/environ.html)
+POSIX explicitly states "the [environ] variable, which
+must be declared by the user if it is to be used directly".
+Not declaring it causes compilation to fail on OS X.
 
-> When _GNU_SOURCE is defined glibc header (I think it is unistd.h)
-> seem to define it for us.
->
-> Perhaps the correct fix is to revert ec535cc2 for everybody, and if
-> MinGW needs such a workaround, do it inside #ifndef MINGW?
+Instead don't declare the variable on MinGW, as it causes
+a spurious warning there.
+---
+ compat/unsetenv.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-That sounds right.
-
+diff --git a/compat/unsetenv.c b/compat/unsetenv.c
+index 4ea1856..bf5fd70 100644
+--- a/compat/unsetenv.c
++++ b/compat/unsetenv.c
+@@ -2,6 +2,9 @@
+ 
+ void gitunsetenv (const char *name)
+ {
++#if !defined(__MINGW32__)
++     extern char **environ;
++#endif
+      int src, dst;
+      size_t nmln;
+ 
 -- 
-Benoit "tsuna" Sigoure
+1.8.2.1.539.g4196a96
