@@ -1,83 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: tsuna <tsunanet@gmail.com>
 Subject: Re: [PATCH] Fix compilation on OS X.
-Date: Sat, 20 Jul 2013 22:53:36 -0700
-Message-ID: <7vr4essbkv.fsf@alter.siamese.dyndns.org>
+Date: Sat, 20 Jul 2013 23:10:12 -0700
+Message-ID: <CAFKYj4dRFvTwM_x0mXsOLQCTuw9nAvh3b4bZ+Omg7M5DVNnVzA@mail.gmail.com>
 References: <1374306567-16640-1-git-send-email-tsunanet@gmail.com>
-	<51EA7D58.3050800@web.de>
+ <51EA7D58.3050800@web.de> <7vr4essbkv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Benoit Sigoure <tsunanet@gmail.com>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Jul 21 07:54:06 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 21 08:10:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0mao-0006p1-W9
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jul 2013 07:54:03 +0200
+	id 1V0mqr-0003ko-Ar
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jul 2013 08:10:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260Ab3GUFxn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Jul 2013 01:53:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48882 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750970Ab3GUFxm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Jul 2013 01:53:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30AB12A9A4;
-	Sun, 21 Jul 2013 05:53:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=YLbdZUVjHbxi
-	Xgn2l+TTX8SE+5I=; b=WJcLg4PaDuFldKHb08JmBzZszP4IXawSEyzNTthepINq
-	C72bmg1avE6LiRpHLXWK+UwoSUyXPMwc8C9QP7NNouVjO2QOzb2kr0GfPoH5e4kL
-	jtD7IUEYJ/xAFsQmAz+KlMt0EcfcqgduKXSMJEv9lq2OnO5YP/Wp7eQJoarSP7s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=vj8wwX
-	sGh5toUGHm26yali7DyafsGESOmHl+/HJNg2GEEP8O1EMbareINRWsRkUhmdDF1W
-	yhXigZfNazav2dQxQc6LftKS2d6giaipANLLxlXq8V8E7IShPv1FUgeOjQoMF6DN
-	nmgbul4SHgIQVm8L/Sc3L1WXoecNSrXKDs7vs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25BC62A9A3;
-	Sun, 21 Jul 2013 05:53:39 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 861412A99F;
-	Sun, 21 Jul 2013 05:53:38 +0000 (UTC)
-In-Reply-To: <51EA7D58.3050800@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Sat, 20 Jul 2013 14:06:48 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E3B558D2-F1C9-11E2-9801-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752222Ab3GUGKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jul 2013 02:10:33 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:42832 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751676Ab3GUGKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jul 2013 02:10:32 -0400
+Received: by mail-ie0-f169.google.com with SMTP id at20so1716940iec.0
+        for <git@vger.kernel.org>; Sat, 20 Jul 2013 23:10:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=zCEdytAj9L6s889rfjnWSnJ6F/5lQl7d3+DZXPtoohU=;
+        b=yxTRYjpRILGwsAQxLRvejWZS9jseX8dh3rUdRrkNBs37a1K0fs4TWwLh+uP9M62tUp
+         OR+KOuLSET/9D0cipBEI2xg0vLoHlpeRHGloisFlqw5tilZFzUMFueMr0UE3kHvtmNyA
+         oLJuXjKyN+UiReZ6ju8/wWeP6CmbLNA+9CaVUNtr2s9Wm7JOHFRlg7ybHy1DBaNyMir6
+         vY5Uozqr+agz/50AguBcT3j+zc09cNhvnhYzCbvGy7gMXPxHlJzkg40jRHU+FVpVGFAn
+         WBjJrD0z2xptO3w0nLbUqN7HJjBOxRWCZxyOCzYbP79my3JcwSh5U0VC6xYQYMJ1Flkw
+         ttRA==
+X-Received: by 10.50.109.161 with SMTP id ht1mr15797940igb.60.1374387032255;
+ Sat, 20 Jul 2013 23:10:32 -0700 (PDT)
+Received: by 10.64.34.148 with HTTP; Sat, 20 Jul 2013 23:10:12 -0700 (PDT)
+In-Reply-To: <7vr4essbkv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230917>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On Sat, Jul 20, 2013 at 10:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Actually, it is _wrong_ for us to rely on system header files to
+> define this symbol for us.  Declaring "extern char **environ" is
+> responsibility of the user programs (like us).
 
-> On 2013-07-20 09.49, Benoit Sigoure wrote:
->> +#ifdef __APPLE__
->> +// On OS X libc headers don't define this symbol.
->> +extern char **environ;
->> +#endif
->> +
-> A more generic approach could be:
+Actually, that's right.  The C99 standard doesn't mention anything
+about `environ' (only 7.20.4.5 defines `getenv') and POSIX explicitly
+states "the [environ] variable, which must be declared by the user if
+it is to be used directly"
+(http://pubs.opengroup.org/onlinepubs/9699919799/functions/environ.html)
+
+> When _GNU_SOURCE is defined glibc header (I think it is unistd.h)
+> seem to define it for us.
 >
-> In the file "config.mak.uname": Define a variable in the Darwin secti=
-on like this
-> NO_EXT_ENVIRON =3D UnfortunatelyYes
+> Perhaps the correct fix is to revert ec535cc2 for everybody, and if
+> MinGW needs such a workaround, do it inside #ifndef MINGW?
 
-Actually, it is _wrong_ for us to rely on system header files to
-define this symbol for us.  Declaring "extern char **environ" is
-responsibility of the user programs (like us).
+That sounds right.
 
-When _GNU_SOURCE is defined glibc header (I think it is unistd.h)
-seem to define it for us.
-
-Perhaps the correct fix is to revert ec535cc2 for everybody, and if
-MinGW needs such a workaround, do it inside #ifndef MINGW?
+-- 
+Benoit "tsuna" Sigoure
