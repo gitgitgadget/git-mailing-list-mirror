@@ -1,140 +1,90 @@
-From: Andreas Amann <a.amann@ucc.ie>
-Subject: [PATCH v2] gitk: Add a "Save file as" menu item
-Date: Sun, 21 Jul 2013 20:55:40 +0100
-Message-ID: <87wqojhemb.fsf@msstf091.ucc.ie>
-References: <87ppuculyi.fsf@msstf091.ucc.ie> <alpine.DEB.2.00.1307211910250.9615@ds9.cixit.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix some sparse warnings
+Date: Sun, 21 Jul 2013 13:58:58 -0700
+Message-ID: <7vmwpfsk8d.fsf@alter.siamese.dyndns.org>
+References: <51E84F4E.3050600@ramsay1.demon.co.uk>
+	<20130721173936.GA10647@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Paul Mackerras <paulus@samba.org>,
-	Peter Krefting <peter@softwolves.pp.se>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 21 21:55:54 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 21 22:59:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0zjT-0008Vb-0g
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Jul 2013 21:55:51 +0200
+	id 1V10ij-0006xJ-7s
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jul 2013 22:59:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756045Ab3GUTzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jul 2013 15:55:47 -0400
-Received: from ch1ehsobe001.messaging.microsoft.com ([216.32.181.181]:13218
-	"EHLO ch1outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755934Ab3GUTzq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Jul 2013 15:55:46 -0400
-Received: from mail66-ch1-R.bigfish.com (10.43.68.243) by
- CH1EHSOBE015.bigfish.com (10.43.70.65) with Microsoft SMTP Server id
- 14.1.225.22; Sun, 21 Jul 2013 19:55:46 +0000
-Received: from mail66-ch1 (localhost [127.0.0.1])	by mail66-ch1-R.bigfish.com
- (Postfix) with ESMTP id EED071201FA;	Sun, 21 Jul 2013 19:55:45 +0000 (UTC)
-X-Forefront-Antispam-Report: CIP:143.239.1.23;KIP:(null);UIP:(null);IPV:NLI;H:mail3.ucc.ie;RD:mail3.ucc.ie;EFVD:NLI
-X-SpamScore: 0
-X-BigFish: VPS0(zzzz1f42h208ch1ee6h1de0h1d18h1fdah2073h1202h1e76h1d1ah1d2ah1fc6hzz1de098h1de097hz2fh2a8h668h839hd24he5bhf0ahfa3h107ah11b5h121eh1288h12a5h12a9h12bdh12e5h137ah13b6h1441h14afh1504h1537h153bh162dh1631h1758h18e1h1946h19b5h1b0ah1d0ch1d2eh1d3fh1dfeh1dffh1e1dh1155h)
-Received-SPF: pass (mail66-ch1: domain of ucc.ie designates 143.239.1.23 as permitted sender) client-ip=143.239.1.23; envelope-from=a.amann@ucc.ie; helo=mail3.ucc.ie ;mail3.ucc.ie ;
-Received: from mail66-ch1 (localhost.localdomain [127.0.0.1]) by mail66-ch1
- (MessageSwitch) id 1374436542347290_31542; Sun, 21 Jul 2013 19:55:42 +0000
- (UTC)
-Received: from CH1EHSMHS024.bigfish.com (snatpool1.int.messaging.microsoft.com
- [10.43.68.245])	by mail66-ch1.bigfish.com (Postfix) with ESMTP id 46A8F60049;
-	Sun, 21 Jul 2013 19:55:42 +0000 (UTC)
-Received: from mail3.ucc.ie (143.239.1.23) by CH1EHSMHS024.bigfish.com
- (10.43.70.24) with Microsoft SMTP Server (TLS) id 14.16.227.3; Sun, 21 Jul
- 2013 19:55:41 +0000
-Received: from msstf091.ucc.ie (msstf091.ucc.ie [143.239.76.91])	by
- mail3.ucc.ie (8.14.4/8.14.4) with ESMTP id r6LJtepq032065;	Sun, 21 Jul 2013
- 20:55:40 +0100
-Received: by msstf091.ucc.ie (Postfix, from userid 1000)	id 89571A0939; Sun,
- 21 Jul 2013 20:55:40 +0100 (IST)
-In-Reply-To: <alpine.DEB.2.00.1307211910250.9615@ds9.cixit.se>
-User-Agent: Notmuch/0.15.2 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
-X-OriginatorOrg: ucc.ie
-X-FOPE-CONNECTOR: Id%0$Dn%*$RO%0$TLS%0$FQDN%$TlsDn%
+	id S1756096Ab3GUU7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jul 2013 16:59:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40786 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756064Ab3GUU7C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jul 2013 16:59:02 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9223E32DFD;
+	Sun, 21 Jul 2013 20:59:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cHAgZTS+j1f1yvPSiL7MqxkcomM=; b=EGNDcK
+	DD4Qjkvzn25KDyenzC9j4BY+WHTCuossadfNKfKYiLKJhZoyvKOg0/39DMQkUS1D
+	YgKAFE8NG7lAsUwfn3WBWngbx+ZH2N8AuoEnZOTPedsn+nm33fRULNmpE4NDxE5z
+	fAs7TqMiow/uj+GZPeD4wCJtkF2GnZsJS896E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JVv8RSBWpWGJvSgJop7Pri1Y2kSNfprI
+	a3foW+WW8CoS0WVp6zlOTzzJYUsa7xMjFXjvMi4D2SnjOEXV6qhvj75ZfSIxk0CP
+	p0uTG8Do/j7eJdPMkxeG+qqfvYnIw/SN+h78r2JQYVQ1gdxt4ah+HMfr5oARtiax
+	hqqq1VAh3/o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8553A32DFC;
+	Sun, 21 Jul 2013 20:59:00 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D13AB32DF8;
+	Sun, 21 Jul 2013 20:58:59 +0000 (UTC)
+In-Reply-To: <20130721173936.GA10647@elie.Belkin> (Jonathan Nieder's message
+	of "Sun, 21 Jul 2013 10:39:37 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5DBB5806-F248-11E2-BCA5-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230943>
 
-Previously, there was no easy way to save a particular file from the
-currently selected revision.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-This patch adds a menu item "Save file as" to the file list popup
-menu, which opens a file selection dialog to determine the name under
-which a file should be saved.  The default filename is of the form
-"[shortid] basename".  If the current revision is the index, the
-default pattern is of the form "[index] basename".  This works for
-both, the "Patch" and "Tree" view.  The menu item is disabled for the
-"local uncommitted changes" fake revision.
+> How about something like the following?
+>
+> diff --git i/cache.h w/cache.h
+> index f2915509..ba028b75 100644
+> --- i/cache.h
+> +++ w/cache.h
+> @@ -1124,6 +1124,7 @@ struct object_info {
+>  		} packed;
+>  	} u;
+>  };
+> +#define OBJECT_INFO_INIT { NULL, NULL, OI_CACHED, { { NULL, 0, 0 } } }
 
-Signed-off-by: Andreas Amann <andreas.amann@web.de>
----
- gitk | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+There are quite a many hits from
 
-diff --git a/gitk b/gitk
-index 5cd00d8..b5a70b5 100755
---- a/gitk
-+++ b/gitk
-@@ -2595,6 +2595,7 @@ proc makewindow {} {
- 	{mc "Highlight this too" command {flist_hl 0}}
- 	{mc "Highlight this only" command {flist_hl 1}}
- 	{mc "External diff" command {external_diff}}
-+	{mc "Save file as" command {save_file_as}}
- 	{mc "Blame parent commit" command {external_blame 1}}
-     }
-     $flist_menu configure -tearoff 0
-@@ -3378,6 +3379,7 @@ proc sel_flist {w x y} {
- proc pop_flist_menu {w X Y x y} {
-     global ctext cflist cmitmode flist_menu flist_menu_file
-     global treediffs diffids
-+    global nullid
- 
-     stopfinding
-     set l [lindex [split [$w index "@$x,$y"] "."] 0]
-@@ -3395,6 +3397,12 @@ proc pop_flist_menu {w X Y x y} {
-     }
-     # Disable "External diff" item in tree mode
-     $flist_menu entryconf 2 -state $xdiffstate
-+    set savefilestate "normal"
-+    if {[lindex $diffids 0] eq $nullid} {
-+	set savefilestate "disabled"
-+    }
-+    # Disable "Save file as" item "local uncommited changes" revision
-+    $flist_menu entryconf 3 -state $savefilestate
-     tk_popup $flist_menu $X $Y
- }
- 
-@@ -3496,6 +3504,30 @@ proc external_diff_get_one_file {diffid filename diffdir} {
- 	       "revision $diffid"]
- }
- 
-+proc save_file_as {} {
-+    global nullid nullid2
-+    global flist_menu_file
-+    global diffids
-+
-+    set diffid [lindex $diffids 0]
-+    if {$diffid == $nullid} {
-+	return
-+    } elseif {$diffid == $nullid2} {
-+	set diffidtext [mc "index"]
-+	set diffid ""
-+	set whattext $diffidtext
-+    } else {
-+	set diffidtext [shortids $diffid]
-+	set whattext "[mc "revision"] $diffidtext"
-+    }
-+    set difffile "\[$diffidtext\] [file tail $flist_menu_file]"
-+    set difffile [tk_getSaveFile -initialfile $difffile -title [mc "Save file as"] -parent .]
-+    if {$difffile eq {}} {
-+	return
-+    }
-+    save_file_from_commit $diffid:$flist_menu_file $difffile $whattext
-+}
-+
- proc external_diff {} {
-     global nullid nullid2
-     global flist_menu_file
--- 
-1.8.3.3
+	$ git grep '= { *NULL *};'
+
+only some of which are "char *var[] = { NULL }", which is perfectly
+fine, but others are to initialise "struct foo" (or "foo_t" which is
+typedef'ed) that share the same "writing NULL means the initialiser
+knows the order of the fields".
+
+I doubt if the above #define is a maintainable solution, and worse
+yet, thinking about the fact that such a macro is necessary only for
+a structure whose first field happens to be of a pointer type, it
+strongly suggests me that it is not conceptually the right thing to
+do.
+
+Can't we have sparse fixed (or skip this specific warning) instead?
