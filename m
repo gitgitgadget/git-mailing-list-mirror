@@ -1,80 +1,83 @@
-From: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
-Subject: American or British English?
-Date: Sat, 20 Jul 2013 22:56:20 +0200
-Message-ID: <20130720205620.GA3825@domone>
-References: <20130720190707.GA30044@domone>
- <20130720191311.GB30044@domone>
- <20130720193905.GA3904@vauxhall.crustytoothpaste.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix compilation on OS X.
+Date: Sat, 20 Jul 2013 22:53:36 -0700
+Message-ID: <7vr4essbkv.fsf@alter.siamese.dyndns.org>
+References: <1374306567-16640-1-git-send-email-tsunanet@gmail.com>
+	<51EA7D58.3050800@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Sat Jul 20 22:56:30 2013
+Cc: Benoit Sigoure <tsunanet@gmail.com>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Jul 21 07:54:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V0eCb-0005ft-Py
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Jul 2013 22:56:30 +0200
+	id 1V0mao-0006p1-W9
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Jul 2013 07:54:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755085Ab3GTU40 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Jul 2013 16:56:26 -0400
-Received: from popelka.ms.mff.cuni.cz ([195.113.20.131]:47548 "EHLO
-	popelka.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754974Ab3GTU4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jul 2013 16:56:25 -0400
-Received: from domone.kolej.mff.cuni.cz (popelka.ms.mff.cuni.cz [195.113.20.131])
-	by popelka.ms.mff.cuni.cz (Postfix) with ESMTPS id 0709943003;
-	Sat, 20 Jul 2013 22:56:21 +0200 (CEST)
-Received: by domone.kolej.mff.cuni.cz (Postfix, from userid 1000)
-	id A804B5FB94; Sat, 20 Jul 2013 22:56:20 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20130720193905.GA3904@vauxhall.crustytoothpaste.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.97.6 at popelka.ms.mff.cuni.cz
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-1.8 required=5.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	UNPARSEABLE_RELAY autolearn=ham version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	popelka.ms.mff.cuni.cz
+	id S1751260Ab3GUFxn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Jul 2013 01:53:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48882 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750970Ab3GUFxm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Jul 2013 01:53:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30AB12A9A4;
+	Sun, 21 Jul 2013 05:53:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=YLbdZUVjHbxi
+	Xgn2l+TTX8SE+5I=; b=WJcLg4PaDuFldKHb08JmBzZszP4IXawSEyzNTthepINq
+	C72bmg1avE6LiRpHLXWK+UwoSUyXPMwc8C9QP7NNouVjO2QOzb2kr0GfPoH5e4kL
+	jtD7IUEYJ/xAFsQmAz+KlMt0EcfcqgduKXSMJEv9lq2OnO5YP/Wp7eQJoarSP7s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=vj8wwX
+	sGh5toUGHm26yali7DyafsGESOmHl+/HJNg2GEEP8O1EMbareINRWsRkUhmdDF1W
+	yhXigZfNazav2dQxQc6LftKS2d6giaipANLLxlXq8V8E7IShPv1FUgeOjQoMF6DN
+	nmgbul4SHgIQVm8L/Sc3L1WXoecNSrXKDs7vs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25BC62A9A3;
+	Sun, 21 Jul 2013 05:53:39 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 861412A99F;
+	Sun, 21 Jul 2013 05:53:38 +0000 (UTC)
+In-Reply-To: <51EA7D58.3050800@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Sat, 20 Jul 2013 14:06:48 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E3B558D2-F1C9-11E2-9801-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230916>
 
-On Sat, Jul 20, 2013 at 07:39:06PM +0000, brian m. carlson wrote:
-> On Sat, Jul 20, 2013 at 09:13:12PM +0200, Ond=C5=99ej B=C3=ADlka wrot=
-e:
-> > A dictionary that I generated is following, patch is below.
-> >=20
-> >              alloted allocated
->=20
-> "allotted" is a valid word, and I think it would work fine in the cod=
-e.
-> It's probably what was intended, anyway.
->=20
-OK, I am not native speaker so I sometimes choose simpler variant.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> >            behaviour behavior
-> >            colourful colorful
-> >          initialised initialized
->=20
-> I'm not sure whether git has a standard for which dialect of English =
-is
-> to be used, but the three words on the left are considered correct in
-> most non-American dialects.  Characterizing them as "typos" isn't
-> strictly correct.  Perhaps "Convert comments to American English" is
-> more accurate?
+> On 2013-07-20 09.49, Benoit Sigoure wrote:
+>> +#ifdef __APPLE__
+>> +// On OS X libc headers don't define this symbol.
+>> +extern char **environ;
+>> +#endif
+>> +
+> A more generic approach could be:
 >
-Yeah, on most projects I seen preference for consistently using America=
-n
-versions. How you decide is matter of preference.
-> --=20
-> brian m. carlson / brian with sandals: Houston, Texas, US
-> +1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion o=
-nly
-> OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B=
-187
+> In the file "config.mak.uname": Define a variable in the Darwin secti=
+on like this
+> NO_EXT_ENVIRON =3D UnfortunatelyYes
+
+Actually, it is _wrong_ for us to rely on system header files to
+define this symbol for us.  Declaring "extern char **environ" is
+responsibility of the user programs (like us).
+
+When _GNU_SOURCE is defined glibc header (I think it is unistd.h)
+seem to define it for us.
+
+Perhaps the correct fix is to revert ec535cc2 for everybody, and if
+MinGW needs such a workaround, do it inside #ifndef MINGW?
