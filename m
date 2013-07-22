@@ -1,169 +1,129 @@
-From: Yamada Saburo <devil.tamachan@gmail.com>
-Subject: Re: [PATCH v2 3/3] Update po/ja.po
-Date: Tue, 23 Jul 2013 07:58:33 +0900
-Message-ID: <CAPM==H+_rpNojKjJe3-fJSXp0_8ishws=N7BsU7TJpfr2yG31A@mail.gmail.com>
-References: <CAPM==HJ4pTrb5cp0gNNef3PDdk5Sae-aw0ADzsb7zOY4VjDMVA@mail.gmail.com>
-	<7vsiz69qfh.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Random typofixes.
+Date: Mon, 22 Jul 2013 16:06:02 -0700
+Message-ID: <7vfvv69ov9.fsf@alter.siamese.dyndns.org>
+References: <20130722210223.GA26492@domone.kolej.mff.cuni.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-2022-JP
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 23 00:58:40 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
+X-From: git-owner@vger.kernel.org Tue Jul 23 01:06:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1P3v-0005T1-J5
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 00:58:39 +0200
+	id 1V1PBF-0006C0-9K
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 01:06:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751655Ab3GVW6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jul 2013 18:58:35 -0400
-Received: from mail-vc0-f176.google.com ([209.85.220.176]:39762 "EHLO
-	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751387Ab3GVW6f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jul 2013 18:58:35 -0400
-Received: by mail-vc0-f176.google.com with SMTP id ha12so5232280vcb.35
-        for <git@vger.kernel.org>; Mon, 22 Jul 2013 15:58:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Jjw95Fo4CTHh8/ZTw/f7CVtAwBdjmFDLgLUgZVp3tBg=;
-        b=OjOyH/fxsPU8OeCyW1ex/LopRDTeMdPPbct3dnICwdqCoqA+Fq+flszURt6svjQMLQ
-         GeYd/Ppff9rwAWwgrHS7rxkhQQjMD7YYHIKwuSpNdA+OIs9uHULSz275XSqI0whlFDXZ
-         IV/gn6t45CtSrTiS53A+h5aJ2RlUlKOrG1MFkrgzzI+ymSlXW3B/2+JRN3kUTO18lEEz
-         Bd4yfpIWglHY0xBebH33qGiSKNxi9GOtwAiWUqEeUMsDJFQc6oweXRuDcYNmvRCuOFYV
-         VY2zInfjTJgn7Q8sxpUMcTAi08gNu1SxetzwGXTma6EiqpzKO4Wu8nQWmEwo08umcGHD
-         uv5A==
-X-Received: by 10.220.42.84 with SMTP id r20mr9987473vce.87.1374533913958;
- Mon, 22 Jul 2013 15:58:33 -0700 (PDT)
-Received: by 10.221.24.7 with HTTP; Mon, 22 Jul 2013 15:58:33 -0700 (PDT)
-In-Reply-To: <7vsiz69qfh.fsf@alter.siamese.dyndns.org>
+	id S1752055Ab3GVXGI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jul 2013 19:06:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52359 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751808Ab3GVXGH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Jul 2013 19:06:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B64128156;
+	Mon, 22 Jul 2013 23:06:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=QczxftB/joI1
+	vOUnvJ1juK6cvRo=; b=cpfm5HichsVGPsIobZ3AuriarVwbql07cPJo7NkTdN3J
+	uujKqPRYrHklYynW1aDEhlq1YV4BPJdnqiL7SmeDEthOupaRg+HzKRy8D3gXh4ah
+	h6z4vU7TzQCshf0NbLQazV+wnUUgFzvL1xqxcl7caDMbZ4071g9eRkdxTj/4emA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kfH7ZX
+	BUG00spce5K6cJlRWBZZTEOwhIYWjBiR1NIshpmuF4cJR24FLffwocNrC2AiZ5z3
+	xNkkIxQobo1bIaLZ5rb/YVSLcoMvKDrzUeQ8FDaw+oyEpScxVZUdUuXsd7hePyT0
+	Qw4IIPs1SCjygejBgWF76rP4DhUUU00blr6Wg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12A3428153;
+	Mon, 22 Jul 2013 23:06:05 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B34C28151;
+	Mon, 22 Jul 2013 23:06:04 +0000 (UTC)
+In-Reply-To: <20130722210223.GA26492@domone.kolej.mff.cuni.cz>
+ (=?utf-8?Q?=22Ond=C5=99ej=09B=C3=ADlka=22's?= message of "Mon, 22 Jul 2013
+ 23:02:23 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 48B5CCEE-F323-11E2-84CD-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231009>
 
-Is free translation impossible? I want to give priority to ease of use.
-Does Mr. Hamano know that it is said that Japanese translation of
-Git-gui is very unclear? It is wonderful that my translation is
-severely examined so far by me compared with a former translator.
+Ond=C5=99ej B=C3=ADlka <neleai@seznam.cz> writes:
 
-Compiled .msg file so that it can try easily was uploaded.
-https://docs.google.com/file/d/0B7h5NcRw8uVCSHMyVnFzQzJaZFU/edit?usp=sharing
+> Hi, this is refactored version of my previous typofix patch. I avoid
+> here controversional fixes.
+> I am writing a https://github.com/neleai/stylepp tool to handle
+> various style issues.
+>
+> To simplify review I wrote a utility:
+>
+> stylepp_strip_diff
+>
+> That takes a patch file, strips surrounding lines and prints interval=
+s
+> that were changes.
+>
+> Its output is below and patch follows:
+> ...
 
-2013/7/23 Junio C Hamano <gitster@pobox.com>:
-> Yamada Saburo <devil.tamachan@gmail.com> writes:
->
->> -#: git-gui.sh:2893
->> +#: git-gui.sh:2983 git-gui.sh:3115
->> +msgid "Usage"
->> +msgstr "使用状況"
->
-> Is this correct?  I am not familiar with the context this string
-> appears, but shouldn't it be "使い方"?
->
->> -#: lib/choose_repository.tcl:479
->> +#: lib/choose_repository.tcl:480
->>  msgid "Source Location:"
->>  msgstr "ソースの位置"
->>
->> -#: lib/choose_repository.tcl:490
->> +#: lib/choose_repository.tcl:489
->>  msgid "Target Directory:"
->> -msgstr "先ディレクトリ:"
->> +msgstr "保存ディレクトリ:"
->
-> I think this is better translation than the original (the Target is
-> about where the new clone appears), but a few lines above we see
-> "Source Location", which may want to be reworded.  Perhaps
->
->     クローン元リポジトリ
->     クローン先リポジトリ
->
-> ???
->
->> -#: lib/commit.tcl:272
->> +#: lib/commit.tcl:269
->> +msgid ""
->> +"You are about to commit on a detached head. This is a potentially dangerous "
->> +"thing to do because if you switch to another branch you will lose your "
->> +"changes and it can be difficult to retrieve them later from the reflog. You "
->> +"should probably cancel this commit and create a new branch to continue.\n"
->> +" \n"
->> +" Do you really want to proceed with your Commit?"
->> +msgstr ""
->> +"あなたはdetached "
->> +"head状態でコミットしようとしています。これは危険な操作です。もし続行すれば、他ブランチへ切り替えた際に変更を失ったり、reflogで変更を復元することが困難になります。あなたは次の操作をするべきです。1.
->> "
->
-> The line wrapping of this look somewhat fishy.  It technically is
-> correct, but ending the line with an explicit \n and closing dq,
-> i.e.
->
->         "あなたはdetached head状態...べきです。\n"
->
-> would be more natural and less error prone.
->
-> Also, the original says "potentially dangerous", but "potentially"
-> is lost in translation.  I am not sure if the difference matters
-> very much, but since I noticed it....
->
->> +"このコミットをキャンセルする。2. 新しいブランチを作り、コミットし直す。\n"
->
-> Also, the original doesn't say "1. cancel this commit. 2. Create a
-> new branch to recommit", and it is better without 1./2., which may
-> be mistaken as if the user can do one of two things.
->
->> +"\n"
->> +"本当にこの危険なコミットを実行しますか？"
->
-> The last sentence in the original only says "your Commit", without
-> saying "Dangerous".
->
-> In short, the translated text is far more alarming than the original
-> phrasing.
->
->> -#: lib/option.tcl:132
->> +#: lib/option.tcl:134
->>  msgid "Global (All Repositories)"
->> -msgstr "大域（全てのリポジトリ）"
->> +msgstr "標準設定（全てのリポジトリ）"
->
-> The translation reads "Standard", not "Global".  「全体設定」, perhaps?
->
->> -#: lib/option.tcl:142
->> +#: lib/option.tcl:144
->>  msgid "Merge Verbosity"
->> -msgstr "マージの冗長度"
->> +msgstr "マージのエラー出力レベル (0-5, 標準2、最高5)(merge.verbosity)"
->
-> The original does not have 0-5, 2, nor 5.  Translation shouldn't add
-> one.
->
-> If it will help the users to add these, please first add them to the
-> original so that users of all languages would benefit and then
-> translate the result.
->
->> -#: lib/option.tcl:143
->> +#: lib/option.tcl:145
->>  msgid "Show Diffstat After Merge"
->> -msgstr "マージ後に diffstat を表示"
->> +msgstr "マージ後に変更量のグラフを表示 (git diff --stat)"
->
-> Ditto.
->
->> -#: lib/option.tcl:150
->> +#: lib/option.tcl:153
->>  msgid "Minimum Letters To Blame Copy On"
->> -msgstr "コピーを検知する最少文字数"
->> +msgstr "他ファイルから移動/コピーを検知する最少文字数 (標準値40)"
->
-> Ditto.
->
-> Pat, this patch is not quite ready.
->
-> Thanks.
+Next time please omit all of the above.  We can test-apply and then
+run "diff --word-diff" to get a comparison that is much easier to
+read.
+
+> diff --git a/Documentation/RelNotes/1.8.2.txt b/Documentation/RelNote=
+s/1.8.2.txt
+> index fc606ae..5da2a9d 100644
+> --- a/Documentation/RelNotes/1.8.2.txt
+> +++ b/Documentation/RelNotes/1.8.2.txt
+> @@ -67,7 +67,7 @@ UI, Workflows & Features
+>   * The completion script (in contrib/completion) used to let the
+>     default completer to suggest pathnames, which gave too many
+>     irrelevant choices (e.g. "git add" would not want to add an
+> -   unmodified path).  It learnt to use a more git-aware logic to
+> +   unmodified path).  It learned to use a more git-aware logic to
+
+I'd leave the original as-is (cf. http://bit.ly/1bH8OlT).
+
+> diff --git a/Documentation/howto/revert-branch-rebase.txt b/Documenta=
+tion/howto/revert-branch-rebase.txt
+> index 84dd839..29a7cfa 100644
+> --- a/Documentation/howto/revert-branch-rebase.txt
+> +++ b/Documentation/howto/revert-branch-rebase.txt
+> @@ -12,7 +12,7 @@ How to revert an existing commit
+>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> =20
+>  One of the changes I pulled into the 'master' branch turns out to
+> -break building Git with GCC 2.95.  While they were well intentioned
+> +break building Git with GCC 2.95.  While they were well intended
+
+Likewise (cf. http://bit.ly/12HZx4x), but it needs a hyphen between
+these two words, which I'll add before applying the patch.
+
+> diff --git a/Documentation/technical/racy-git.txt b/Documentation/tec=
+hnical/racy-git.txt
+> index f716d6d..242a044 100644
+> --- a/Documentation/technical/racy-git.txt
+> +++ b/Documentation/technical/racy-git.txt
+> @@ -46,7 +46,7 @@ because in-core timestamps can have finer granulari=
+ty than
+>  on-disk timestamps, resulting in meaningless changes when an
+>  inode is evicted from the inode cache.  See commit 8ce13b0
+>  of git://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
+> -([PATCH] Sync in core time granuality with filesystems,
+> +([PATCH] Sync in core time granularity with filesystems,
+>  2005-01-04).
+
+This is dubious, as it is referring to what is already cast in
+stone, but I'll apply the update as-is, with the rest of the patch.
+
+Thanks.  It really shows we cannot spell X-<.
