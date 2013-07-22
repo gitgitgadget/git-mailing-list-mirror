@@ -1,155 +1,201 @@
-From: Paul Campbell <pcampbell@kemitix.net>
-Subject: Re: git subtree push-all and pull-all
-Date: Mon, 22 Jul 2013 20:35:47 +0100
-Message-ID: <CALeLG_=x30qR1LFiKzz+NZu6vAf3GAL2tTCsbCz0Zm6J+udAcg@mail.gmail.com>
-References: <CALemSr4Z+p7v_wQn7EOFTVHjtMYgxqGSBZf3zU5pn-eW_SEG5A@mail.gmail.com>
-	<20130707125430.GA23197@paksenarrion.iveqy.com>
-	<CALemSr4Q_En+9eAbu2oRO-=EYt78sCB4nQjSO67W_m=nxu6KiQ@mail.gmail.com>
-	<51DBD636.7070601@initfour.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Gareth Collins <gareth.o.collins@gmail.com>,
-	Fredrik Gustafsson <iveqy@iveqy.com>, git <git@vger.kernel.org>
-To: Herman van Rink <rink@initfour.nl>
-X-From: git-owner@vger.kernel.org Mon Jul 22 21:35:54 2013
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH v8 4/4] config: allow http.<url>.* any user matching
+Date: Mon, 22 Jul 2013 13:24:06 -0700
+Message-ID: <DF5B20F8-33C2-4F72-A78B-97EE1FB4A522@gmail.com>
+References: <3c7fc982841069ce79faf227e007815@f74d39fa044aa309eaea14b9f57fe79> <7dfaadb69accede33b88ae2d9e47a48@f74d39fa044aa309eaea14b9f57fe79> <7vehaqcw66.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Petr Baudis <pasky@ucw.cz>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Daniel Knittl-Frank <knittl89@googlemail.com>,
+	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	Alejandro Mery <amery@geeks.cl>,
+	Aaron Schrab <aaron@schrab.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 22 22:24:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1Ltg-0001oB-KE
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Jul 2013 21:35:52 +0200
+	id 1V1MeZ-00019H-PC
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Jul 2013 22:24:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932966Ab3GVTfs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jul 2013 15:35:48 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:62097 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932820Ab3GVTfr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Jul 2013 15:35:47 -0400
-Received: by mail-ob0-f169.google.com with SMTP id up14so8702102obb.14
-        for <git@vger.kernel.org>; Mon, 22 Jul 2013 12:35:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=DDP7n/rmEG0p7VTimOru35OjAylKhzkTEW2QcsmK7VM=;
-        b=DeoPwIP5vOjPKoRzp3o3k7DlA+V5ElKsI2sLFfU7lukF9S02Nj8JrCk4u1t0tP4Vd5
-         +n0XOA2fncrjsl0cxWfrIoaJ8RtDAmhhsE1vPcqmeBKLwfpMWryTNkvUg3oEUIIB2MKd
-         x0+uDt8JDmT3FHBw58BXtNSycgv7lBkWIozUju8R6pIRoNO2Dl6U/N33goKPiqbuHsIU
-         JX9LyXzgn/aOKSuS7kMu3LbM8oVJif/D2qnSBSD8yiVe0Faxb2+HvJNKavZuErYn87K3
-         uwdPjQqM8I0Ect3SQFgagu7/A4w/DuvLOlRsJJxryyWgwWBTqVXq5wu72pXw0PSeOVMv
-         U6YA==
-X-Received: by 10.182.215.193 with SMTP id ok1mr21815581obc.78.1374521747348;
- Mon, 22 Jul 2013 12:35:47 -0700 (PDT)
-Received: by 10.76.9.2 with HTTP; Mon, 22 Jul 2013 12:35:47 -0700 (PDT)
-X-Originating-IP: [2.102.87.146]
-In-Reply-To: <51DBD636.7070601@initfour.nl>
-X-Gm-Message-State: ALoCoQnZr3p1DBAMc3mSbkMXPz292orGzMbdKDWAai749vweySuM+4qKia+NLVuCdFDov4MFV+qV
+	id S933358Ab3GVUYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jul 2013 16:24:14 -0400
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:47850 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933259Ab3GVUYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jul 2013 16:24:11 -0400
+Received: by mail-pb0-f50.google.com with SMTP id wz7so7524162pbc.9
+        for <git@vger.kernel.org>; Mon, 22 Jul 2013 13:24:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc:x-mauler;
+        bh=cL4SssdEoCN+7YxSu2ZtHPDrntP6qExfDnyW0qN8DfA=;
+        b=D+Qt7f+CzAidtZfcwWdeb0p5STJdrkXBlqnxQeFeH8KtzLUNUMKeq2oigubrYsvf+A
+         +ONL4qqvMyTatAIoY9Zjs0LWp3eoZERoFCjA6R2Z20peirrjxrManXA1utUsluZDXblz
+         U1CRA2qN3VPnJMTwQEhX5ILjJuKUt/O6s6hn+JVpDf8ok2vGotou+/j5NNT+8VG4oCgM
+         Bta5mH0i4F+biNrlDf09pKKaR9gk4K+cjWyaVFs/WcztLjZhEimaGYLgTD43MGHzeTdR
+         V6D6nz2PsbK9LG5pt2e0g+CYqAt5Jd9BeJtSaQ5Z5oy3WYCryc+L9LVmMNiRBlYPTnrq
+         vo2w==
+X-Received: by 10.66.7.164 with SMTP id k4mr33355990paa.142.1374524650548;
+        Mon, 22 Jul 2013 13:24:10 -0700 (PDT)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id we2sm41000010pab.0.2013.07.22.13.24.08
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 22 Jul 2013 13:24:09 -0700 (PDT)
+In-Reply-To: <7vehaqcw66.fsf@alter.siamese.dyndns.org>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230989>
 
-Hi,
+On Jul 22, 2013, at 11:00, Junio C Hamano wrote:
+> "Kyle J. McKay" <mackyle@gmail.com> writes:
+>
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index e461f32..c418adf 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -1517,15 +1517,26 @@ http.<url>.*::
+>> 	Any of the http.* options above can be applied selectively to some  
+>> urls.
+>> 	For example "http.https://example.com.useragent" would set the user
+>> 	agent only for https connections to example.com.  The <url> value
+>> +	matches a url if it refers to the same scheme, host and port and  
+>> the
+>> +	path portion is an exact match or a prefix that matches at a "/"
+>> +	boundary.  If <url> does not include a user name, it will match a  
+>> url
+>> +	with any username otherwise the user name must match as well (the
+>> +	password part, if present in the url, is always ignored).  Longer  
+>> <url>
+>> +	path matches take precedence over shorter matches no matter what  
+>> order
+>> +	they occur in.  For example, if both "https://user@example.com/ 
+>> path" and
+>> +	"https://example.com/path/name" are used as a config <url> value  
+>> and
+>> +	then "https://user@example.com/path/name/here" is passed to a git
+>> +	command, the settings in the "https://example.com/path/name"  
+>> section
+>> +	will be preferred because that <url> has a longer path length  
+>> match than
+>> +	"https://user@example.com/path" even though the latter did match  
+>> the
+>> +	user.  For same length matches, the last one wins except that a  
+>> same
+>> +	length <url> match that includes a user name will be preferred  
+>> over a
+>> +	same length <url> match that does not.  The urls are normalized  
+>> before
+>> +	matching so that equivalent urls that are simply spelled  
+>> differently
+>> +	will match properly.  Environment variable settings always  
+>> override any
+>> +	matches.  The urls that are matched against are those given  
+>> directly to
+>> +	git commands.  This means any urls visited as a result of a  
+>> redirection
+>> +	do not participate in matching.
+>
+> A solid wall of text is somewhat hard to read, so I'd queue the
+> equivalent of the following "git diff -w" output on top.
 
-Sorry for the delay. Not been monitoring the list lately.
+Can I send out the change as a 'fixup!' patch?  Or do I need to send a  
+new v9 patch series with the documentation update?
 
-I'm afraid work stopped for two reasons. Lack of interest from the
-list was the main one. I understand subtree isn't used much and
-subsequently there wasn't much interest in reviewing the patches I was
-putting out. As a result I lost interest.
+> I also was
+> trying to see if we can clarify the "length comparison" only refers
+> to the length of the path part, excluding the length of "user@"
+> (i.e. when comparing "https://user@example.com/path" with
+> "https://example.com/path", they are of the same length), which you
+> can see in the first three lines below.
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index c418adf..635ed5d 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1521,9 +1521,11 @@ http.<url>.*::
+> 	path portion is an exact match or a prefix that matches at a "/"
+> 	boundary.  If <url> does not include a user name, it will match a url
+> 	with any username otherwise the user name must match as well (the
+> -	password part, if present in the url, is always ignored).  Longer  
+> <url>
+> -	path matches take precedence over shorter matches no matter what  
+> order
+> -	they occur in.  For example, if both "https://user@example.com/ 
+> path" and
+> +	password part, if present in the url, is always ignored).  A <url>
+> +	with longer path matches take precedence over shorter matches no  
+> matter
+> +	what order they occur in the configuration file.
+> ++
+> +For example, if both "https://user@example.com/path" and
+> "https://example.com/path/name" are used as a config <url> value and
+> then "https://user@example.com/path/name/here" is passed to a git
+> command, the settings in the "https://example.com/path/name" section
 
+OK.
 
+> I am not yet convinced that the precedence rule specified in this
+> what we want (I do not have an example why it is *not* what we want,
+> either).  Another definition could be "if user@ is present in the
+> request, give lower precedence to config entries for the site
+> without user@ than entries with user@", and I do not have a strong
+> opinion myself which one between the two is better (and there may be
+> third and other possible rule).
+>
+> Comments?
 
-On Tue, Jul 9, 2013 at 10:21 AM, Herman van Rink <rink@initfour.nl> wro=
-te:
-> On 08-07-13 17:20, Gareth Collins wrote:
->>
->> Hello Fredrik,
->>
->> Thanks for the suggestion! Adding in Paul Campbell and Herman Van Ri=
-nk
->> who worked on this before.
->
->
-> Paul Campbell has been working hard on multiple branches in
-> https://github.com/kemitix/git
-> But work appears to have stopped. :(
->
-> There is also a recent blogpost:
-> http://ruleant.blogspot.nl/2013/06/git-subtree-module-with-gittrees-c=
-onfig.html
->
-> Thanks for your interest, I'd love to see this get integrated....
->
->
->>
->> thanks again,
->> Gareth
->>
->> On Sun, Jul 7, 2013 at 8:54 AM, Fredrik Gustafsson <iveqy@iveqy.com>
->> wrote:
->>>
->>> On Wed, Jul 03, 2013 at 03:56:36PM -0400, Gareth Collins wrote:
->>>>
->>>> Hello,
->>>>
->>>> I see over the last year (on the web and in this mailing list) the=
-re
->>>> was some activity to extend subtree with a .gittrees file and
->>>> push-all/pull-all commands.
->>>>
->>>> Perhaps I missed it, but looking through the latest git code on th=
-e
->>>> github mirror I can't find any reference to the .gittrees file or
->>>> these commands.
->>>>
->>>> Does anyone know the status of this feature? Was it decided that t=
-his
->>>> was a bad idea and the feature has been rejected? Or is this a fea=
-ture
->>>> still "cooking"...which will likely make it into git mainline at s=
-ome
->>>> point?
->>>>
->>>> I ask because I would like to use something like this to be able t=
-o
->>>> keep a combined repository and separate project repositories in sy=
-nc.
->>>> Of course, if it was decided that this feature is fundamentally a =
-bad
->>>> idea then I will do something different.
->>>>
->>>> Any pointers would be a big help.
->>>>
->>>> thanks in advance,
->>>> Gareth Collins
->>>
->>> Still no answer to this? I suggest that you CC the persons discussi=
-ng
->>> this the last time.
->>>
->>> --
->>> Med v=E4nliga h=E4lsningar
->>> Fredrik Gustafsson
->>>
->>> tel: 0733-608274
->>> e-post: iveqy@iveqy.com
->
->
->
-> --
->
-> Met vriendelijke groet / Regards,
->
-> Herman van Rink
-> Initfour websolutions
->
+Consider this site:
 
+example.com/
+example.com/dir
+example.com/dir/sub
+example.com/dir/sub/public
 
+Suppose I want to configure a particular key for example.com/dir/sub  
+for a particular user, say "contractor".
 
---=20
-Paul [W] Campbell
+I can configure:
+
+[http "https://contractor@example.com/dir/sub"]
+   sslkey=contractor_key
+
+But then I want to configure a completely different key for the public  
+area example.com/dir/sub/public no matter what user.  I just add this:
+
+[http "https://example.com/dir/sub/public"]
+   sslkey=public_key
+
+But if entries with usernames take precedence it won't work.  The only  
+way to do it is to list every possible user for "example.com/dir1/sub1/ 
+public" in its own new section and then continue to add a new config  
+section every time a new user name is encountered.
+
+Conversely, if a special key is supposed to be used for the user  
+"contractor" everywhere on the site at or below "example.com/dir/sub",  
+then the above configuration doesn't work unless user matches take  
+precedence.  With the current code, one additional entry would have to  
+be added like so:
+
+[http "https://contractor@example.com/dir/sub/public"]
+   sslkey=contractor_key
+
+So my thinking was that having user matches take precedence over path  
+length matches can result in endless additions to the config file  
+(because you have to list all the other users to override a sub area  
+and that could be a large list) whereas having path length matches  
+take precedence over user matches will only result in a few, finite  
+additions to the config file (the number of already-configured items  
+with a longer path).
