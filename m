@@ -1,104 +1,106 @@
-From: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
-Subject: Re: Dead link
-Date: Mon, 22 Jul 2013 10:02:17 +0200
-Message-ID: <20130722080217.GB15550@domone>
-References: <20130720192238.GA30833@domone>
- <CALkWK0ktWTcgNSjTtkjJ5ogjE5YAVRdq+HZpQ51-DFObsCjQrQ@mail.gmail.com>
- <20130720194655.GA30946@domone>
- <7vppubr19m.fsf@alter.siamese.dyndns.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFC] blame: accept multiple -L ranges
+Date: Mon, 22 Jul 2013 04:12:50 -0400
+Message-ID: <CAPig+cTh2t_Rc13U_F-prmm=sjs2OEHX5AX2DbC5DH+Tx_E5jg@mail.gmail.com>
+References: <1373186706-19284-1-git-send-email-sunshine@sunshineco.com>
+	<7vk3l26695.fsf@alter.siamese.dyndns.org>
+	<CAPig+cQ9sfV+PRqn5vrL0=xOZrKDDmsKdAPiB4PsCFb=jnk4kQ@mail.gmail.com>
+	<7v38rnwuvb.fsf@alter.siamese.dyndns.org>
+	<87ehb7d3za.fsf@hexa.v.cablecom.net>
+	<CAPig+cT9U7L-03Fe5YLft=WS2EZY1B_BhLzkM_sT_3wQQ1g1MQ@mail.gmail.com>
+	<7vy59fv9zr.fsf@alter.siamese.dyndns.org>
+	<87a9lvcztv.fsf@hexa.v.cablecom.net>
+	<7vppurv8bl.fsf@alter.siamese.dyndns.org>
+	<51DC6B37.9030108@alum.mit.edu>
+	<7vli5fv5ud.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Thomas Rast <trast@inf.ethz.ch>, Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 22 10:02:46 2013
+X-From: git-owner@vger.kernel.org Mon Jul 22 10:13:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1B4w-0004uL-HL
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Jul 2013 10:02:46 +0200
+	id 1V1BF2-0007a9-6c
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Jul 2013 10:13:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752544Ab3GVICl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jul 2013 04:02:41 -0400
-Received: from popelka.ms.mff.cuni.cz ([195.113.20.131]:59452 "EHLO
-	popelka.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753156Ab3GVICh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jul 2013 04:02:37 -0400
-Received: from domone.kolej.mff.cuni.cz (popelka.ms.mff.cuni.cz [195.113.20.131])
-	by popelka.ms.mff.cuni.cz (Postfix) with ESMTPS id 7C2D76828D;
-	Mon, 22 Jul 2013 10:02:32 +0200 (CEST)
-Received: by domone.kolej.mff.cuni.cz (Postfix, from userid 1000)
-	id 4321E601E0; Mon, 22 Jul 2013 10:02:17 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vppubr19m.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.97.6 at popelka.ms.mff.cuni.cz
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-1.8 required=5.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	UNPARSEABLE_RELAY autolearn=ham version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	popelka.ms.mff.cuni.cz
+	id S1756025Ab3GVING (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jul 2013 04:13:06 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:52521 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753885Ab3GVINE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jul 2013 04:13:04 -0400
+Received: by mail-la0-f44.google.com with SMTP id er20so5063517lab.17
+        for <git@vger.kernel.org>; Mon, 22 Jul 2013 01:12:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=EyVQf4C4Z2aw5O/TAaXT+6DzH7J23vmClJsTbmSCKl8=;
+        b=oEH2KLEP/D6bbdyurCPWXMK9yCh1xac1Njy3p3XOkFEDNyGMnnS2KVzvryC/DTW8PX
+         JMqWvvMqZEjA8DWRgpa85kfOQ4C/sf44o9rffgWZet+mFTeXhF6Qn9tudqYKq4KPfRFT
+         cGGSTu0GSO1XdR0MLHdQpBM+ok+xVMQiTDJDTvroSQgYZTWh9WnbRxXNGnyJ8BeeVJBB
+         v5BSW8vsnQz5RkWbWlMnsA/SIA6Am7/2V+YqUCVZW1eCgNtUtLA85Gk7VCR42YLpBoNd
+         lo19NTidnCesM+2lgyAyo48TXwd8LuHYY+IQFpH1t8tiz7FzWKE8OWK0UiBAhaO8rtHl
+         oHdQ==
+X-Received: by 10.112.77.164 with SMTP id t4mr11660569lbw.52.1374480770510;
+ Mon, 22 Jul 2013 01:12:50 -0700 (PDT)
+Received: by 10.114.187.78 with HTTP; Mon, 22 Jul 2013 01:12:50 -0700 (PDT)
+In-Reply-To: <7vli5fv5ud.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: P263suKXnh-PaILP2F3VRIkPDCg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230967>
 
-On Sun, Jul 21, 2013 at 03:33:57PM -0700, Junio C Hamano wrote:
-> Thanks; the patch seems to cover all the instances.
->=20
-> Sign off?
-ok
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+On Tue, Jul 9, 2013 at 4:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>
+>> It would be more general to support "follow the second match to /A/"
+>> *independent* of whether the first match is also followed.  I think your
+>> proposal only allows the second to be followed if the first is also
+>> followed.  Therefore it seems to me that your wish is to add a
+>> side-effect to one feature so that you can use it to obtain a simulacrum
+>> of a second feature, instead of building the second feature directly.
+>>
+>> Perhaps allow <start> and <end> to be a sequence of forms like
+>>
+>> /A//A/,+20
+>
+> Remember "A" is just a placeholder and in real life it would be more
+> than one character.  It is just as annoying as hell you have to type
+> it again.
+>
+> I am not saying that a mode that resets the "start searching from
+> here" pointer to the beginning of the file is useless.  For example,
+> I would not mind typing a special character, e.g.
+>
+>     -L <begin1>,<end1> -L !<begin2>,<end2>
+>
+> that resets the search pointer to the beginning, for a rare case
+> where I want the search for <begin2> to restart at the top.
+>
+> But the thing is, the default matters.  And it is far more common,
+> at least to me, when I want to say "from here to there, and then
+> from here to there", to expect the second "from here" would be below
+> the first one I already specified, while I am looking at the current
+> state of a single file from top to bottom and notice two places I am
+> interested in.
 
-Signed-off-by: Ond=C5=99ej B=C3=ADlka <neleai@seznam.cz>
----
+The proposal currently is only for "-L /RE/,whatever" to behave in a
+relative fashion, beginning the search at the end of the last range
+specified via -L (or line 1 if there is no previous -L).
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.=
-txt
-index e364007..fe723e4 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -4675,5 +4675,5 @@ Write a chapter on using plumbing and writing scr=
-ipts.
- Alternates, clone -reference, etc.
-=20
- More on recovery from repository corruption.  See:
--	http://marc.theaimsgroup.com/?l=3Dgit&m=3D117263864820799&w=3D2
--	http://marc.theaimsgroup.com/?l=3Dgit&m=3D117147855503798&w=3D2
-+	http://marc.info/?l=3Dgit&m=3D117263864820799&w=3D2
-+	http://marc.info/?l=3Dgit&m=3D117147855503798&w=3D2
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 541dc6b..82049c7 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -473,7 +473,7 @@ static char *find_name_gnu(const char *line, const =
-char *def, int p_value)
-=20
- 	/*
- 	 * Proposed "new-style" GNU patch/diff format; see
--	 * http://marc.theaimsgroup.com/?l=3Dgit&m=3D112927316408690&w=3D2
-+	 * http://marc.info/?l=3Dgit&m=3D112927316408690&w=3D2
- 	 */
- 	if (unquote_c_style(&name, line, NULL)) {
- 		strbuf_release(&name);
-diff --git a/t/t6021-merge-criss-cross.sh b/t/t6021-merge-criss-cross.s=
-h
-index 331b9b0..d15b313 100755
---- a/t/t6021-merge-criss-cross.sh
-+++ b/t/t6021-merge-criss-cross.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2005 Fredrik Kuivinen
- #
-=20
--# See http://marc.theaimsgroup.com/?l=3Dgit&m=3D111463358500362&w=3D2 =
-for a
-+# See http://marc.info/?l=3Dgit&m=3D111463358500362&w=3D2 for a
- # nice description of what this is about.
-=20
-=20
+Would it also make sense to support "-L +N,whatever" as relative to
+the end of the last range specified via -L (or 1 if none).
+
+I ask because the implementation changes needed to also support "-L
++N,whatever" appear to be less invasive than those only allowing "-L
+/RE/,whatever/" to be relative. On the other hand, supporting "-L
++N,whatever" requires more documentation. I don't necessarily consider
+less invasive changes as a good reason to support "-L +N,whatever" but
+it got me thinking about it.
