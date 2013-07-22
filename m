@@ -1,71 +1,104 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2013, #07; Sun, 21)
-Date: Mon, 22 Jul 2013 14:48:17 +0700
-Message-ID: <CACsJy8BsiXL9P5Rd9QZzG5Rtyd=0ewBbFRLwbAyumgTWwjJd5A@mail.gmail.com>
-References: <7vy58zozdk.fsf@alter.siamese.dyndns.org> <51ECDFFC.8000500@web.de>
+From: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
+Subject: Re: Dead link
+Date: Mon, 22 Jul 2013 10:02:17 +0200
+Message-ID: <20130722080217.GB15550@domone>
+References: <20130720192238.GA30833@domone>
+ <CALkWK0ktWTcgNSjTtkjJ5ogjE5YAVRdq+HZpQ51-DFObsCjQrQ@mail.gmail.com>
+ <20130720194655.GA30946@domone>
+ <7vppubr19m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Jul 22 09:48:54 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 22 10:02:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1ArU-0007F1-LG
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Jul 2013 09:48:53 +0200
+	id 1V1B4w-0004uL-HL
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Jul 2013 10:02:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756692Ab3GVHss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jul 2013 03:48:48 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:39012 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756513Ab3GVHss (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jul 2013 03:48:48 -0400
-Received: by mail-ob0-f182.google.com with SMTP id va7so7824819obc.13
-        for <git@vger.kernel.org>; Mon, 22 Jul 2013 00:48:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=tfSOyyazt2BbVn71ucgGXwhAE/im/g/7uuML3Xro/Ow=;
-        b=jja7N33a7j5BhumMlt4W4vK50GSiIlC6yI7V2xbF6pOTsdlRDxAx+1TYqH6+EQLCQA
-         0AK5A9YCFdbsLSbxBhXtEDRfJGUKAjq3Fw2sDukb+lVIJR07x3qSgpae/e7wUTM1mgDT
-         Io9IJNH0xGkadGIxCX5wlqdDlhPlN7Mny4OYBdYAXfaimMi0Yzwi7/B05ealQlDHrsob
-         TaZZJ4UlW+3siy17F+gD//jV0xmzwnt2DfaGu8eUEldFdhd2hLvRWU5X7tqHHYyeAYk8
-         fvPEHe1kzoStl3q7NtdxeuxriPHvY5BdWqwlIsuNcaREdPwwBB1DTPscL4OdMZtYWLBW
-         yrHg==
-X-Received: by 10.182.119.229 with SMTP id kx5mr2522196obb.23.1374479327454;
- Mon, 22 Jul 2013 00:48:47 -0700 (PDT)
-Received: by 10.182.240.168 with HTTP; Mon, 22 Jul 2013 00:48:17 -0700 (PDT)
-In-Reply-To: <51ECDFFC.8000500@web.de>
+	id S1752544Ab3GVICl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jul 2013 04:02:41 -0400
+Received: from popelka.ms.mff.cuni.cz ([195.113.20.131]:59452 "EHLO
+	popelka.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753156Ab3GVICh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jul 2013 04:02:37 -0400
+Received: from domone.kolej.mff.cuni.cz (popelka.ms.mff.cuni.cz [195.113.20.131])
+	by popelka.ms.mff.cuni.cz (Postfix) with ESMTPS id 7C2D76828D;
+	Mon, 22 Jul 2013 10:02:32 +0200 (CEST)
+Received: by domone.kolej.mff.cuni.cz (Postfix, from userid 1000)
+	id 4321E601E0; Mon, 22 Jul 2013 10:02:17 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vppubr19m.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.97.6 at popelka.ms.mff.cuni.cz
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-1.8 required=5.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	UNPARSEABLE_RELAY autolearn=ham version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	popelka.ms.mff.cuni.cz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/230966>
 
-On Mon, Jul 22, 2013 at 2:32 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> Am 22.07.2013 08:57, schrieb Junio C Hamano:
->> * jl/submodule-mv (2013-04-23) 5 commits
->>  . submodule.c: duplicate real_path's return value
->>  . rm: delete .gitmodules entry of submodules removed from the work tree
->>  . Teach mv to update the path entry in .gitmodules for moved submodules
->>  . Teach mv to move submodules using a gitfile
->>  . Teach mv to move submodules together with their work trees
->>
->>  "git mv A B" when moving a submodule A does "the right thing",
->>  inclusing relocating its working tree and adjusting the paths in
->>  the .gitmodules file.
->>
->>  Ejected from 'pu', as it conflicts with nd/magic-pathspec.
->
-> So I'll base my upcoming re-roll on pu, right?
+On Sun, Jul 21, 2013 at 03:33:57PM -0700, Junio C Hamano wrote:
+> Thanks; the patch seems to cover all the instances.
+>=20
+> Sign off?
+ok
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-The conflicted part is the use of common_prefix. I think you might be
-able to avoid the conflict by using quote.c:path_relative() instead of
-common_prefix() and prepending "../" manually. Or not, I did not read
-path_relative() carefully, nor your connect_work_tree_and_git_dir().
---
-Duy
+Signed-off-by: Ond=C5=99ej B=C3=ADlka <neleai@seznam.cz>
+---
+
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.=
+txt
+index e364007..fe723e4 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -4675,5 +4675,5 @@ Write a chapter on using plumbing and writing scr=
+ipts.
+ Alternates, clone -reference, etc.
+=20
+ More on recovery from repository corruption.  See:
+-	http://marc.theaimsgroup.com/?l=3Dgit&m=3D117263864820799&w=3D2
+-	http://marc.theaimsgroup.com/?l=3Dgit&m=3D117147855503798&w=3D2
++	http://marc.info/?l=3Dgit&m=3D117263864820799&w=3D2
++	http://marc.info/?l=3Dgit&m=3D117147855503798&w=3D2
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 541dc6b..82049c7 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -473,7 +473,7 @@ static char *find_name_gnu(const char *line, const =
+char *def, int p_value)
+=20
+ 	/*
+ 	 * Proposed "new-style" GNU patch/diff format; see
+-	 * http://marc.theaimsgroup.com/?l=3Dgit&m=3D112927316408690&w=3D2
++	 * http://marc.info/?l=3Dgit&m=3D112927316408690&w=3D2
+ 	 */
+ 	if (unquote_c_style(&name, line, NULL)) {
+ 		strbuf_release(&name);
+diff --git a/t/t6021-merge-criss-cross.sh b/t/t6021-merge-criss-cross.s=
+h
+index 331b9b0..d15b313 100755
+--- a/t/t6021-merge-criss-cross.sh
++++ b/t/t6021-merge-criss-cross.sh
+@@ -3,7 +3,7 @@
+ # Copyright (c) 2005 Fredrik Kuivinen
+ #
+=20
+-# See http://marc.theaimsgroup.com/?l=3Dgit&m=3D111463358500362&w=3D2 =
+for a
++# See http://marc.info/?l=3Dgit&m=3D111463358500362&w=3D2 for a
+ # nice description of what this is about.
+=20
+=20
