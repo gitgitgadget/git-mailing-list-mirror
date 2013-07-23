@@ -1,92 +1,84 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 00/16] First class shallow clone
-Date: Tue, 23 Jul 2013 08:20:54 +0700
-Message-ID: <CACsJy8AJjXMATEPrAgSYOgpZcR_khC=9S28H8LuCvuTuJk0x8w@mail.gmail.com>
+Subject: Re: [PATCH v2 15/16] config: add core.noshallow to prevent turning a
+ repo into a shallow one
+Date: Tue, 23 Jul 2013 08:28:00 +0700
+Message-ID: <CACsJy8Ddac5r7opAgtk-CAkc=jwmBmmOs7FU6DziysCZ=992dQ@mail.gmail.com>
 References: <1374065234-870-1-git-send-email-pclouds@gmail.com>
- <1374314290-5976-1-git-send-email-pclouds@gmail.com> <79A9AB6FF00042D1B3E0D26B9855CCAB@PhilipOakley>
+ <1374314290-5976-1-git-send-email-pclouds@gmail.com> <1374314290-5976-16-git-send-email-pclouds@gmail.com>
+ <BF5D998BFA5241938531635E1D8B79DF@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Tue Jul 23 03:21:30 2013
+X-From: git-owner@vger.kernel.org Tue Jul 23 03:28:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1RI9-0005d7-SG
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 03:21:30 +0200
+	id 1V1RP2-0006Dq-97
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 03:28:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753059Ab3GWBV0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jul 2013 21:21:26 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:48082 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023Ab3GWBVZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Jul 2013 21:21:25 -0400
-Received: by mail-ob0-f181.google.com with SMTP id 16so8836275obc.40
-        for <git@vger.kernel.org>; Mon, 22 Jul 2013 18:21:24 -0700 (PDT)
+	id S1751407Ab3GWB2c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jul 2013 21:28:32 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:51950 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750747Ab3GWB2b convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Jul 2013 21:28:31 -0400
+Received: by mail-ob0-f182.google.com with SMTP id va7so8981795obc.13
+        for <git@vger.kernel.org>; Mon, 22 Jul 2013 18:28:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=u30cnIGodyNAPt2CArz42DEZJemxuL76K9Ef7z/P4Fo=;
-        b=UKeLURBHHvC/rG+pEC968wVFPmw8QfuGZYJa7oEm7ieAK1GmwpZC/IK2bYI5assEsa
-         lTQT2aMZUXimq9sKz+e0MnTxMOpCL5CZDKOHvL9EuN+5mWz8TTyWhKY8CbWrvQYBZOuA
-         6Hhrt2a4FbbWgBwgojkShRKcTE6XhxZPf3f6SXU0Tcljva+3RQVXub9juvezLZH6rY9O
-         s9YRTH5lG7HbPcN4HmIUYbjyuGkUXEwjWziaJeIAhyHYL8YxLmFq3ZKqLVDuc4uzqcWn
-         uwKROBX8unEY93d86tp01Wlbf0t3YcL8vZv7aNHnHqfx/jvuttlqCUB2NCDXTP7bnqhq
-         UQWA==
-X-Received: by 10.60.45.138 with SMTP id n10mr28103811oem.101.1374542484728;
- Mon, 22 Jul 2013 18:21:24 -0700 (PDT)
-Received: by 10.182.240.168 with HTTP; Mon, 22 Jul 2013 18:20:54 -0700 (PDT)
-In-Reply-To: <79A9AB6FF00042D1B3E0D26B9855CCAB@PhilipOakley>
+        bh=jDM9zz8P4+HIxiyZ/telmS/MLgUJ5CZ6+QqRXTAgYVk=;
+        b=RvGFjzgDVnjQOxs9GcvKy0DK+YjCautjh1HbOwK6iGLJYTvtiyqDtOatz3n1jkXHxc
+         T5g6e9TOm6GV20zWmQMwCiCYgXvbUPvkAE3YemoLqLZZjscu6Q6lyxfnBJZNfVBcpyHe
+         KpG9ws/C1LkbtNDta0GVknno7BwYSSn1edI9PaQ2qVPuhsXRmDpwIxb/Hls5XXIT7fQ5
+         wz/S8jZbkXuPKM3XJunAQAuLHHFnS06dv+pHv5/XHEAsyr/QQskSkZLPXN/TPO5hs9Ab
+         eoRtjDFseR9gALwXani6dcpAGhPBDO8oMJcTO7M04MRnHvihMldZI6rR6ZtbEj5JF+R4
+         2/lQ==
+X-Received: by 10.182.213.10 with SMTP id no10mr22185615obc.76.1374542910988;
+ Mon, 22 Jul 2013 18:28:30 -0700 (PDT)
+Received: by 10.182.240.168 with HTTP; Mon, 22 Jul 2013 18:28:00 -0700 (PDT)
+In-Reply-To: <BF5D998BFA5241938531635E1D8B79DF@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231015>
 
-On Tue, Jul 23, 2013 at 6:41 AM, Philip Oakley <philipoakley@iee.org> w=
+On Tue, Jul 23, 2013 at 2:23 AM, Philip Oakley <philipoakley@iee.org> w=
 rote:
 > From: "Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy" <pclouds@gmail.com>
-> Subject: [PATCH v2 00/16] First class shallow clone
+> Subject: [PATCH v2 15/16] config: add core.noshallow to prevent turni=
+ng a
+> repo into a shallow one
 >
-> It's nice to see that shallow can be a first class clone.
+> Surely this should be the default now that it is possible to corrupt =
+a
+> golden repo by pushing/fetching a shallow repository to it and it the=
+n
+> becomes shallow, and all the followers become shallow as well, with
+> consequent problems (IIUC) [PATCH v2 05/16].
 >
-> Thinking outside the box, does this infrastructure offer the opportun=
-ity to
-> maybe add a date based depth option that would establish the shallow
-> watermark based on date rather than count. (e.g. the "deepen" SP dept=
-h could
+> It would be just as easy to change the config to core.allowshallow wh=
+ich
+> then must be enabled by the user, and can be mentioned in the shallow=
+ clone
+> option's documentation.
 
-I've been carefully avoiding the deepen issues because, as you see,
-it's complicated. But no, this series does not enable or disable new
-deeepen mechanisms. They can always be added as protocol extensions.
-Still thinking if it's worth exposing a (restricted form of) rev-list
-to the protocol..
+Clarification, it's not really "corrupt". If you have full history
+from a ref "A", fetching from another shallow clone does not touch the
+history of ref A at all (that is if you do _not_ specify --depth). It
+may add a a shallow ref B, which is the reason the whole repo becomes
+shallow. The same goes for push. This is not implemented, but I'm
+thinking of adding "clean .git/shallow" to git repack -ad. Then if you
+delete ref B and repack -ad, the repo could become full again.
 
-> have an alternate with a leading 'T' to indicate a time limit ratherv=
- than
-> revision count - I'm expecting such a format would be an error for ex=
-isting
-> servers).
->
-> My other thought was this style of cut limit list may also allow a bi=
-g file
-> limit to do a similar process of listing objects (e.g. blobs) that ar=
-e
-> size-shallow in the repo, though it maybe a long list on some repos, =
-or with
-> a small size limit.
-
-This one, on the other hand, changes the "shape" of the repo (now with
-holes) and might need to go through the same process we do with this
-series. Maybe we should prepare for it now. Do you have a use case for
-size-based filtering? What can we do with a repo with some arbitrary
-blobs missing? Another form of this is narrow clone, where we cut by
-paths, not by blob size. Narrow clone sounds more useful to me because
-it's easier to control what we leave out.
+But yeah, maybe defaulting to no shallow is better. Will do so in the
+reroll unless someone objects.
 --
 Duy
