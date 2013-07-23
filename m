@@ -1,68 +1,60 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH] rm: do not set a variable twice without intermediate reading.
-Date: Tue, 23 Jul 2013 11:19:22 +0200
-Message-ID: <1374571162-22881-1-git-send-email-stefanbeller@googlemail.com>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v3 0/6]
+Date: Tue, 23 Jul 2013 09:33:02 +0000 (UTC)
+Message-ID: <loom.20130723T113216-324@post.gmane.org>
+References: <1374561800-938-1-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 23 11:19:15 2013
+X-From: git-owner@vger.kernel.org Tue Jul 23 11:33:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1YkU-0008Cc-VF
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 11:19:15 +0200
+	id 1V1YyD-0008CL-Gq
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 11:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755827Ab3GWJTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jul 2013 05:19:11 -0400
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:41274 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752241Ab3GWJTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jul 2013 05:19:09 -0400
-Received: by mail-wg0-f51.google.com with SMTP id e11so6724817wgh.18
-        for <git@vger.kernel.org>; Tue, 23 Jul 2013 02:19:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=4xJv/yfrmc02odo/sYHYW+sJIf10lNi6ZyK+a00LpHE=;
-        b=OzXo42s8ucGVk1gQBCNSglpYcN8ztLn99Zh9QB0z6RInqHcNSseQvYTJpQXDx7GGBe
-         8qy603DeLfCbV/x9LoReTFgTmMJ7k9s5XMkkMaTZRKiEF9Ztmq0WSAhDx+w6F1zaeVKl
-         OWpobCLbzpMSfftE14Ich+6EWzWEWsE7pSIcjjfa4Q4F+EEVHNkiwBknrAgU8dGGu02F
-         h0EWe04b+GU6wUCx3ZiWtHx2ke/81xU8r940U9a+jxD8MdIDUig5gYng0vqhQsmn/v5F
-         E8xVJcQ85E6SbRWQLGvkCjN22sDu9ZusWdGX1RFfN5MAPPCjXwEDqsatxQI6DUUYISCF
-         pSVg==
-X-Received: by 10.194.91.194 with SMTP id cg2mr22998542wjb.53.1374571148450;
-        Tue, 23 Jul 2013 02:19:08 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id d8sm4498017wiz.0.2013.07.23.02.19.07
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 23 Jul 2013 02:19:07 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.3.1135.ge2c9e63
+	id S1756124Ab3GWJdV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jul 2013 05:33:21 -0400
+Received: from plane.gmane.org ([80.91.229.3]:49258 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755728Ab3GWJdU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jul 2013 05:33:20 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1V1Yy7-00083F-2d
+	for git@vger.kernel.org; Tue, 23 Jul 2013 11:33:19 +0200
+Received: from eim39.neoplus.adsl.tpnet.pl ([83.21.128.39])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Jul 2013 11:33:19 +0200
+Received: from jnareb by eim39.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Jul 2013 11:33:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 83.21.128.39 (Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu Chromium/25.0.1364.160 Chrome/25.0.1364.160 Safari/537.22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231033>
 
-Just the next line assigns a non-null value to seen.
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
----
- builtin/rm.c | 1 -
- 1 file changed, 1 deletion(-)
+>=20
+> This is mostly unchanged since the previous round, except that
+>=20
+>  * The option is spelled "--force-with-lease=3D<ref>:<expect>".
+>    Nobody liked "cas" as it was too technical, many disliked
+>    "lockref" because "lock" sounded as if push by others were
+>    excluded by it while in fact this is to fail us.
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 5b63d3f..df85f98 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -316,7 +316,6 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	parse_pathspec(&pathspec, 0, PATHSPEC_PREFER_CWD, prefix, argv);
- 	refresh_index(&the_index, REFRESH_QUIET, &pathspec, NULL, NULL);
- 
--	seen = NULL;
- 	seen = xcalloc(pathspec.nr, 1);
- 
- 	for (i = 0; i < active_nr; i++) {
--- 
-1.8.3.3.1135.ge2c9e63
+Perhaps "--force-gently" ? :-)
+
+--=20
+Jakub Nar=C4=99bski
