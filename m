@@ -1,111 +1,104 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: getting git from kernel.org is failing
-Date: Tue, 23 Jul 2013 21:41:44 +0200
-Message-ID: <51EEDC78.4000507@googlemail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v2 15/16] config: add core.noshallow to prevent turning a repo into a shallow one
+Date: Tue, 23 Jul 2013 20:44:39 +0100
+Organization: OPDS
+Message-ID: <3791504D7BB44F5BB08DC5AC34E1CE0E@PhilipOakley>
+References: <1374065234-870-1-git-send-email-pclouds@gmail.com> <1374314290-5976-1-git-send-email-pclouds@gmail.com> <1374314290-5976-16-git-send-email-pclouds@gmail.com> <BF5D998BFA5241938531635E1D8B79DF@PhilipOakley> <CACsJy8Ddac5r7opAgtk-CAkc=jwmBmmOs7FU6DziysCZ=992dQ@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigFDF8439E90EA124D8C4896CC"
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 23 21:41:53 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	reply-type=original
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Duy Nguyen" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 23 21:44:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1iT2-0001pB-2Z
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 21:41:52 +0200
+	id 1V1iVd-0005Eb-6W
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 21:44:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934057Ab3GWTls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jul 2013 15:41:48 -0400
-Received: from mail-we0-f171.google.com ([74.125.82.171]:58648 "EHLO
-	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933618Ab3GWTlr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jul 2013 15:41:47 -0400
-Received: by mail-we0-f171.google.com with SMTP id q55so3525277wes.2
-        for <git@vger.kernel.org>; Tue, 23 Jul 2013 12:41:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :x-enigmail-version:content-type;
-        bh=UtB7/z9IrCThhL3H8NfBcAMkTTald+f/Rxdz3UdG5Jw=;
-        b=huUXVdtVgAOsNsLxWB5vdcsUokvhlJPtN1S2YXtXDtyF828zDN4meWnJSalBA7RQLm
-         Xs0LEoNsXl8hFr1nmVduOPExglTq7xsPi5Yxu/FaO8Ihc77wwLS+1gjExwAteSW3ckUs
-         WAflQIIs4XMD1HwMV4+34Y2Enp4d87kpjDX8KsJfg7muAj3+wAlrpRFTAB3lNPb/vSV8
-         6rhJrlZ52v6ZtB/+fUSjDWin/ntJl0xMZ2FzNoXfvgFzxxAhgYjN7QtFtLTA/O4lMitn
-         l72fnRk/FpjA42zNqzR+MPYC94eWuGSR+Xbt6+E6A0bCBTXeXYnCYDJeTtMEjJvFEZQ6
-         S1Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :x-enigmail-version:content-type;
-        bh=UtB7/z9IrCThhL3H8NfBcAMkTTald+f/Rxdz3UdG5Jw=;
-        b=ljVGNhJcl07+MxsUYf8NRaHX5Xn850wr4+J9bsV/0a/7QMcXYBHogttUEJqmMH9imF
-         NsscNsJZdf4s8kZNlcqV+6V8ADQec5W8t/jX05h00LQjzeprfhzQL/Fjr7gxiLAKSn/u
-         tCfzQWZA0lSDOcSU3wDsgrqLqj6fCym8XlqJ1rQpeA381oInBlzFWlocomf0vVfOU3wD
-         GmklZt40fwW/gyN4/neGEsxilkiEd9AvTao63CpEn0ch+htTKdQLhFTQGBfPadeK7nIp
-         iMWVybyrQl7VJxK9Zu8+sBXqz3hRCVRrsRUn0BOZTVPh0YkNZBY3+pffejCpGNEcFpQm
-         b0IQ==
-X-Received: by 10.180.77.74 with SMTP id q10mr172367wiw.28.1374608505827;
-        Tue, 23 Jul 2013 12:41:45 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id j20sm476310wie.7.2013.07.23.12.41.44
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 23 Jul 2013 12:41:45 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-X-Enigmail-Version: 1.4.6
+	id S934035Ab3GWTo3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jul 2013 15:44:29 -0400
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:38679 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933618Ab3GWTo2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jul 2013 15:44:28 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvYNAKfb7lFZ8YYB/2dsb2JhbABbgwaEDoU+uBABAwGBEhd0gh8FAQEFCAEBGQ8BBR4BASELAgMFAgEDDgMEAQEBAgIFIQICFAEECBIGBw8IBhMIAgECAwGHbQMTpmSIZw2IXoEoi2qBVC1qDYJZM24Djn+Gd44QhSaBW4E6Ow
+X-IPAS-Result: AvYNAKfb7lFZ8YYB/2dsb2JhbABbgwaEDoU+uBABAwGBEhd0gh8FAQEFCAEBGQ8BBR4BASELAgMFAgEDDgMEAQEBAgIFIQICFAEECBIGBw8IBhMIAgECAwGHbQMTpmSIZw2IXoEoi2qBVC1qDYJZM24Djn+Gd44QhSaBW4E6Ow
+X-IronPort-AV: E=Sophos;i="4.89,729,1367967600"; 
+   d="scan'208";a="435606287"
+Received: from host-89-241-134-1.as13285.net (HELO PhilipOakley) ([89.241.134.1])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 23 Jul 2013 20:44:27 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231054>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigFDF8439E90EA124D8C4896CC
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+=46rom: "Duy Nguyen" <pclouds@gmail.com>
+Sent: Tuesday, July 23, 2013 2:28 AM
+> On Tue, Jul 23, 2013 at 2:23 AM, Philip Oakley <philipoakley@iee.org>=
+=20
+> wrote:
+>> From: "Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy" <pclouds@gmail.com=
+>
+>> Subject: [PATCH v2 15/16] config: add core.noshallow to prevent=20
+>> turning a
+>> repo into a shallow one
+>>
+>> Surely this should be the default now that it is possible to corrupt=
+=20
+>> a
+>> golden repo by pushing/fetching a shallow repository to it and it=20
+>> then
+>> becomes shallow, and all the followers become shallow as well, with
+>> consequent problems (IIUC) [PATCH v2 05/16].
+>>
+>> It would be just as easy to change the config to core.allowshallow=20
+>> which
+>> then must be enabled by the user, and can be mentioned in the shallo=
+w=20
+>> clone
+>> option's documentation.
+>
+> Clarification, it's not really "corrupt". If you have full history
+> from a ref "A", fetching from another shallow clone does not touch th=
+e
+> history of ref A at all
 
-git clone https://git.kernel.org/cgit/git/git.git
-Cloning into 'git'...
-error: Unable to get pack index https://git.kernel.org/cgit/git/git.git/o=
-bjects/pack/pack-1e2bca8b5127039cff42b1cd3d47767fb577cd4f.idx
-error: Unable to get pack file https://git.kernel.org/cgit/git/git.git/ob=
-jects/pack/pack-6bfd3af75af71d7bf66a80d6374ac09245ad3ce5.pack
-The requested URL returned error: 404 Not found
-error: Unable to find bce6db96a333c2d47b07580c5a9207cf10935378 under http=
-s://git.kernel.org/cgit/git/git.git
-Cannot obtain needed blob bce6db96a333c2d47b07580c5a9207cf10935378
-while processing commit 5addd1c7531cc644787cd562a3c22a3b714c7d77.
-error: Fetch failed.
+>   (that is if you do _not_ specify --depth).
 
-as reported by ivegy on freenode/#git-devel
+I hadn't appreciated this conditional.
+> It
+> may add a a shallow ref B, which is the reason the whole repo becomes
+> shallow.
+I had read the initial commit message (in 05/16) as implying that it wa=
+s=20
+possible to fool someone into pulling a shallow repo and that would mak=
+e=20
+their repo just as shallow (that's without a --depth argument to the=20
+command). Had that been the case then it would have been possible to=20
+loose some data from deep in the DAG. Glad to hear I was mistaken.=20
+Perhaps if your comment above is included in the commit message to=20
+ensure that clarification is there.
 
-Stefan
-
-
---------------enigFDF8439E90EA124D8C4896CC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJR7tx4AAoJEJQCPTzLflhqM8oP/RbeXr7k5p4NhJ8cDsAAbiBA
-SWGVO27b6JDLBbeFVCVecza1xAps/fEKHoJn8r3iSHFr8hpI6Y/AxNrWcN5oPA+z
-3a0CYhDMX7ABUXy9wnmFlWLZUuIZzHkxaQd1yFY+HE3tzF+Vg4KYQCX/w9eGouqV
-MXryCzVq9VVU3//RbDAZzWayl7J71MtQVhPTzKW9G0zfo/mVvs1BEVjEPKXZm/Sy
-4cX4Wyk8zEuCyCQh2ARGgB+ug0C/fUQvR1iVKtr8uICVAM/yGPfr5HEIo19M306g
-lL634GEm5Fp9Y9bXMiLuJDClNBdOubCoxJdiAFDfWH7aLrq/Okx7pZJR/F4ZnhG/
-Fw6gPFCSczIp4reKxzZAf/uC6Lw2I9NBsBOdZyqVIrpVVu7bmEsr2mokAQ/ja+Ta
-CE9DZTolBRnkEV6RTwZKvIlwryi32NuCMlD994OQFl+cPkBZ3enWwzmoQdGWHXkR
-5W+c5emjsmAvn7/iRBRIYzrVWWMaMq7fJSBIRpi7sTIJ8gyq7zfrgeSrk6XxZKMq
-7/H0yCK23OqVkEfHKimiievuyiDJ+ac47KsVWNe89hsa1HiDCuKY1nZMAZz1QT6B
-ZUy62x6uAmgoC3cbVUVqSQoKo8wY4HTLx7zmt+phva7cDtObeFiILKzcOfM4cjNT
-WzQt+rwFT0xKfIhJFqou
-=31pQ
------END PGP SIGNATURE-----
-
---------------enigFDF8439E90EA124D8C4896CC--
+>The same goes for push. This is not implemented, but I'm
+> thinking of adding "clean .git/shallow" to git repack -ad. Then if yo=
+u
+> delete ref B and repack -ad, the repo could become full again.
+>
+> But yeah, maybe defaulting to no shallow is better. Will do so in the
+> reroll unless someone objects.
+> --
+> Duy
+> --
+Philip=20
