@@ -1,70 +1,69 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 05/16] fetch-pack: support fetching from a shallow repository
-Date: Tue, 23 Jul 2013 09:06:40 +0700
-Message-ID: <CACsJy8C3Cb+W-GSnz2VzmRBvs980yKZNskGKqjG2+89JfHYEvQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 15/16] config: add core.noshallow to prevent turning a repo into a shallow one
+Date: Mon, 22 Jul 2013 21:06:32 -0700
+Message-ID: <7v38r5apiv.fsf@alter.siamese.dyndns.org>
 References: <1374065234-870-1-git-send-email-pclouds@gmail.com>
- <1374314290-5976-1-git-send-email-pclouds@gmail.com> <1374314290-5976-6-git-send-email-pclouds@gmail.com>
- <DADC072FCD7749C8B51D9DE594D67AB7@PhilipOakley>
+	<1374314290-5976-1-git-send-email-pclouds@gmail.com>
+	<1374314290-5976-16-git-send-email-pclouds@gmail.com>
+	<BF5D998BFA5241938531635E1D8B79DF@PhilipOakley>
+	<CACsJy8Ddac5r7opAgtk-CAkc=jwmBmmOs7FU6DziysCZ=992dQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Tue Jul 23 04:07:21 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 23 06:07:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1S0T-00042F-I3
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 04:07:17 +0200
+	id 1V1TsP-0008Os-5j
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 06:07:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752526Ab3GWCHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jul 2013 22:07:11 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:39691 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751343Ab3GWCHK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jul 2013 22:07:10 -0400
-Received: by mail-oa0-f53.google.com with SMTP id k14so9835781oag.40
-        for <git@vger.kernel.org>; Mon, 22 Jul 2013 19:07:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=W6Pcyxj2KBteyJsHtHPhpmegZ1NZnhZbTH2BTkR9icM=;
-        b=xdi4EsjIgNnxHmzVir1Jc25ViabKe5lJtvUuUvg8BTV/CzZK9eqYhew7m5BGq1uPED
-         +IVVc6z1vzgkCAVLFo+M4BtabwelmzVuXXqi60SoZR3VY3SniIB0iL/mf+Mx1gxBLN6Z
-         mUmUw5lCh+CQHfVncTLh+FKsj0RHkwYtmZIIap1KaMUvnAnTLAgu0tJ68mP6N2ryTUvv
-         ak0Zo509K+W9iweHz8cIzxxtAOBwLMO7DnVBphwurydTkjdtmmBOA4g/hYpFkvu35yL8
-         /MrFE6sL89uxclhlukvZT0tsMsYE6pwyVYf49C+YJVbWLja+3O8sz7eYLwNQsU0hABO8
-         caJw==
-X-Received: by 10.60.94.136 with SMTP id dc8mr28190168oeb.89.1374545230160;
- Mon, 22 Jul 2013 19:07:10 -0700 (PDT)
-Received: by 10.182.240.168 with HTTP; Mon, 22 Jul 2013 19:06:40 -0700 (PDT)
-In-Reply-To: <DADC072FCD7749C8B51D9DE594D67AB7@PhilipOakley>
+	id S1753497Ab3GWEGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jul 2013 00:06:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59817 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752415Ab3GWEGf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jul 2013 00:06:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDD7A2B62C;
+	Tue, 23 Jul 2013 04:06:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NI3Xtlg0BoAUbtepihGTTp/KPDg=; b=NnrJam
+	ivHx89KlHg4SsGHwufjyb4ZIet69rh6k3YFnbIpxlS8hfhf3ElS2nD5mWKuD0Iid
+	9A4AzUeEzM1ITvM2oq8hywwLRmNliJLU9831JIIg71L+x8BSYkk0LkPXy+ebdFKm
+	OIeuCMle0Bp6o5AAZD3OMtvyhp+qn1nXlEhhg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bqRGe/6wMmumoYu0Q49FXEwubn+ys3uX
+	oTaOVLY7aXwA6thOFY25hiP6J31qSEG8U3548/B+YwvSNuZHQ3SXmtPutygyU1hi
+	xODFFGMEJxg1+nfqXqlntDiqkYaB/+GzPi7pQ97wXRvabEdIDNwuvZUjpgfuifpL
+	PbPj6RDPdig=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD2F62B62B;
+	Tue, 23 Jul 2013 04:06:34 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E83B2B62A;
+	Tue, 23 Jul 2013 04:06:34 +0000 (UTC)
+In-Reply-To: <CACsJy8Ddac5r7opAgtk-CAkc=jwmBmmOs7FU6DziysCZ=992dQ@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 23 Jul 2013 08:28:00 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4351D93A-F34D-11E2-BC3B-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231017>
 
-On Tue, Jul 23, 2013 at 2:10 AM, Philip Oakley <philipoakley@iee.org> wrote:
->>             And a full repository may automatically become shallow if
->> you fetch from a shallow repository.
->
->
-> This "sounds" risky: Perhaps add a note about '[PATCH v2 15/16] config: add
-> core.noshallow to prevent turning a repo into a shallow one' which will
-> become available later in the series. The later core.noshallow may be a
-> hostage to fortune.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-core.noshallow is one way. Another is reject new shallow history (i.e.
-no additions to .git/shallow) unless the user explicitly asks so
-either via --depth or a new option --shallow. This does not mean that
-fetching from a shallow clone always fails without either of those
-options. The shallow clone may provide updates to an existing ref and
-_not_ introduce new shallow grafts and that would be successful.
-core.noshallow (or an opposite alternative) is probably the only way
-for push.
---
-Duy
+> But yeah, maybe defaulting to no shallow is better. Will do so in the
+> reroll unless someone objects.
+
+No objections from me ;-).
+Thanks.
