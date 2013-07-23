@@ -1,128 +1,72 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v2 00/16] First class shallow clone
-Date: Tue, 23 Jul 2013 23:33:22 +0100
-Organization: OPDS
-Message-ID: <8BDFF5EEBDC8422681F1AB2C0A153CC6@PhilipOakley>
-References: <1374065234-870-1-git-send-email-pclouds@gmail.com> <1374314290-5976-1-git-send-email-pclouds@gmail.com> <79A9AB6FF00042D1B3E0D26B9855CCAB@PhilipOakley> <CACsJy8AJjXMATEPrAgSYOgpZcR_khC=9S28H8LuCvuTuJk0x8w@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Duy Nguyen" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 24 00:32:58 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] Documentation/git-clean: fix description for range
+Date: Wed, 24 Jul 2013 06:22:43 +0800
+Message-ID: <8d333586a314b8c108a01dbf9b76764b51f0a5a5.1374618147.git.worldhello.net@gmail.com>
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 24 00:33:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1l8c-0003yZ-4e
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 00:32:58 +0200
+	id 1V1l8t-0004MD-8E
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 00:33:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934922Ab3GWWcw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jul 2013 18:32:52 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:15515 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934583Ab3GWWcv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Jul 2013 18:32:51 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvYNAC0E71FZ8YYB/2dsb2JhbABbgwaEDoU+uBQBAwGBExd0gh8FAQEFCAEBGQ8BBR4BASELAgMFAgEDDgMEAQEBAgIFIQICFAEECBIGBw8IBhMIAgECAwGHbQMTpm6IWg2IXoEoi2qBNCAtaoJmM24Djn+Gd44QhSaDFTuBLQ
-X-IPAS-Result: AvYNAC0E71FZ8YYB/2dsb2JhbABbgwaEDoU+uBQBAwGBExd0gh8FAQEFCAEBGQ8BBR4BASELAgMFAgEDDgMEAQEBAgIFIQICFAEECBIGBw8IBhMIAgECAwGHbQMTpm6IWg2IXoEoi2qBNCAtaoJmM24Djn+Gd44QhSaDFTuBLQ
-X-IronPort-AV: E=Sophos;i="4.89,731,1367967600"; 
-   d="scan'208";a="417274342"
-Received: from host-89-241-134-1.as13285.net (HELO PhilipOakley) ([89.241.134.1])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 23 Jul 2013 23:32:49 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S935019Ab3GWWdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jul 2013 18:33:07 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:49553 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934882Ab3GWWdE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jul 2013 18:33:04 -0400
+Received: by mail-pd0-f172.google.com with SMTP id z10so8662591pdj.17
+        for <git@vger.kernel.org>; Tue, 23 Jul 2013 15:33:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=vyijrwlQzBtOtAnpOpu0n7TfdXsvrQWZAkQEV4IZD2A=;
+        b=vl4cPXTyHCTSJEC+gk0FRTtuuXiv7/HA9mTdUbH5q/pReMi/dUIt89r7f7RGJp0wtM
+         RwCWZid0xNOhAYqQ90gbo+CxcPIEEdT1wjYGCIqXL1PFYi09DbVzB9kfAmOBdjzrRtgZ
+         7EmHQnh4fFkWPVyYbg2AyTdHaVFwY+h+7SVl98Z/HOoRbWFGp47AKucqMMjPZ6Bv9AlG
+         CqsBE/bHZIxruAnnrVQqSLu8A5iLsr5eMbexclQc3AODb9dWJMQlIaaWbqijdZcXrx3J
+         Ot/U/3oNYGdgihfisGaWmOSP1CcnPGOmrfibZvKkFkzYtXL94d8go4YeQ+5LosaDpi7j
+         ePPA==
+X-Received: by 10.68.242.105 with SMTP id wp9mr38823208pbc.153.1374618784125;
+        Tue, 23 Jul 2013 15:33:04 -0700 (PDT)
+Received: from localhost.localdomain ([114.246.130.173])
+        by mx.google.com with ESMTPSA id e7sm30734131pbc.11.2013.07.23.15.33.00
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 23 Jul 2013 15:33:02 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2.1052.g3a6d627
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231067>
 
-=46rom: "Duy Nguyen" <pclouds@gmail.com>
-Sent: Tuesday, July 23, 2013 2:20 AM
-> On Tue, Jul 23, 2013 at 6:41 AM, Philip Oakley <philipoakley@iee.org>=
-=20
-> wrote:
->> From: "Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy" <pclouds@gmail.com=
->
->> Subject: [PATCH v2 00/16] First class shallow clone
->>
->> It's nice to see that shallow can be a first class clone.
->>
->> Thinking outside the box, does this infrastructure offer the=20
->> opportunity to
->> maybe add a date based depth option that would establish the shallow
->> watermark based on date rather than count. (e.g. the "deepen" SP=20
->> depth could
->
-> I've been carefully avoiding the deepen issues because, as you see,
-> it's complicated. But no, this series does not enable or disable new
-> deeepen mechanisms. They can always be added as protocol extensions.
-> Still thinking if it's worth exposing a (restricted form of) rev-list
-> to the protocol..
+The descriptions of "select by numbers" section for interactive
+git-clean are borrowed from git-add, and one sentence should be
+replaced.
 
-Interesting idea.
->
->> have an alternate with a leading 'T' to indicate a time limit rather=
-v=20
->> than
->> revision count - I'm expecting such a format would be an error for=20
->> existing
->> servers).
->>
->> My other thought was this style of cut limit list may also allow a=20
->> big file
->> limit to do a similar process of listing objects (e.g. blobs) that=20
->> are
->> size-shallow in the repo, though it maybe a long list on some repos,=
-=20
->> or with
->> a small size limit.
->
-> This one, on the other hand, changes the "shape" of the repo (now wit=
-h
-> holes) and might need to go through the same process we do with this
-> series. Maybe we should prepare for it now. Do you have a use case fo=
-r
-> size-based filtering? What can we do with a repo with some arbitrary
-> blobs missing? Another form of this is narrow clone, where we cut by
-> paths, not by blob size. Narrow clone sounds more useful to me becaus=
-e
-> it's easier to control what we leave out.
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ Documentation/git-clean.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-In some sense a project with a sub-module is a narrow clone, split at a=
-=20
-'commit' object. There have been comments on the git-user list about th=
-e=20
-problem of accidental adding of large files which then make the repo's=20
-foot print pretty large as one use case [Git is consuming very much=20
-RAM]. The bigFileThreshold being one way of spotting such files as=20
-separate objects, and 'trimming' them.
-
-It doesn't feel right to 'track files and directories` as paths for=20
-doing a narrow clone - it'd probably fall into the same trap as trackin=
-g=20
-file renames. However if one tracks trees and blobs (as a list of sha1=20
-values, possibly with their source path) then it should it should be=20
-possible to allow work on the repo with those empty directories/files i=
-n=20
-the same manner as is used for sub-modules, possibly with some form of=20
-git-link file as an alternate marker.
-
-The thought process is to map sub-module working onto the other object=20
-types (blobs and trees). The user would be unable to edit the trimmed=20
-files/directories anyway, so its sha1 value can't change, allowing it t=
-o=20
-be included in the next commit in the branch series.
-
-Philip
-
-> --
-> Duy
-> --
+diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+index 75fb543..8997922 100644
+--- a/Documentation/git-clean.txt
++++ b/Documentation/git-clean.txt
+@@ -111,7 +111,7 @@ select by numbers::
+    '>>' like this, you can make more than one selection, concatenated
+    with whitespace or comma.  Also you can say ranges.  E.g. "2-5 7,9"
+    to choose 2,3,4,5,7,9 from the list.  If the second number in a
+-   range is omitted, all remaining patches are taken.  E.g. "7-" to
++   range is omitted, all remaining items are selected.  E.g. "7-" to
+    choose 7,8,9 from the list.  You can say '*' to choose everything.
+    Also when you are satisfied with the filtered result, press ENTER
+    (empty) back to the main menu.
+-- 
+1.8.3.2.1052.g3a6d627
