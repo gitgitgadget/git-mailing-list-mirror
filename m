@@ -1,81 +1,81 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH] log: use true parents for diff even when rewriting
-Date: Tue, 23 Jul 2013 09:49:52 +0200
-Message-ID: <20130723074952.GB1754@pengutronix.de>
-References: <20130722090854.GA22222@pengutronix.de>
- <a598aec3e3c90de4d2c08e58ee0a4828edc80ac2.1374527806.git.trast@inf.ethz.ch>
- <7v61w2clli.fsf@alter.siamese.dyndns.org>
- <87k3khpwhh.fsf@linux-k42r.v.cablecom.net>
+From: Miklos Vajna <vmiklos@suse.cz>
+Subject: Re: What's cooking in git.git (Jul 2013, #03; Tue, 9)
+Date: Tue, 23 Jul 2013 11:07:00 +0200
+Message-ID: <20130723090659.GB9639@suse.cz>
+References: <7vr4f7tjo0.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kmcQ1ws143H7O6q9kRmdBxMDVYBWVBKp+0Hy0acpn7VA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="O3RTKUHj+75w1tg5"
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jul 23 09:50:29 2013
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 23 11:07:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1XMb-00020Z-5t
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 09:50:29 +0200
+	id 1V1YYs-00020J-NE
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Jul 2013 11:07:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754576Ab3GWHuX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jul 2013 03:50:23 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:46316 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755362Ab3GWHt5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jul 2013 03:49:57 -0400
-Received: from dude.hi.pengutronix.de ([2001:6f8:1178:2:21e:67ff:fe11:9c5c])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1V1XM2-0006zG-Br; Tue, 23 Jul 2013 09:49:54 +0200
-Received: from ukl by dude.hi.pengutronix.de with local (Exim 4.80)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1V1XM0-0006cS-Ke; Tue, 23 Jul 2013 09:49:52 +0200
+	id S1753584Ab3GWJHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jul 2013 05:07:08 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:59518 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752779Ab3GWJHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jul 2013 05:07:07 -0400
+Received: from relay2.suse.de (unknown [195.135.220.254])
+	by mx2.suse.de (Postfix) with ESMTP id A6AE0A41E0;
+	Tue, 23 Jul 2013 11:07:05 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <87k3khpwhh.fsf@linux-k42r.v.cablecom.net>
+In-Reply-To: <CALkWK0kmcQ1ws143H7O6q9kRmdBxMDVYBWVBKp+0Hy0acpn7VA@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:21e:67ff:fe11:9c5c
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231031>
 
-Hello Thomas,
 
-On Tue, Jul 23, 2013 at 09:27:06AM +0200, Thomas Rast wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> > Conceptually I can see how this will change the history
-> > simplification in the vertical direction (skipping the ancestry
-> > chain and jumping directly to the closest grandparent that touched
-> > the specified path), but I am not sure how well this interacts with
-> > history simplification in the horizontal direciton (culling
-> > irrelevant side branches from the merge).
+--O3RTKUHj+75w1tg5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+On Tue, Jul 23, 2013 at 12:53:25PM +0530, Ramkumar Ramachandra <artagnon@gm=
+ail.com> wrote:
+> Junio C Hamano wrote:
+> > * mv/merge-ff-tristate (2013-07-02) 1 commit
+> >   (merged to 'next' on 2013-07-09 at c32b95d)
+> >  + merge: handle --ff/--no-ff/--ff-only as a tri-state option
 >=20
-> But isn't that similarly confusing for the user as Uwe's original
-> problem?  Suddenly we'd be showing a merge commit as an ordinary one,
-> simply because the merged history did not affect the filtered
-> pathspecs.  Thus we would show everything that has been merged on the
-> *other* files as a big diff.  Would that be useful?  It would certain=
-ly
-> be a big difference in how the commit is shown.
-the merge is only included in the output if on both parent paths the
-file is touched. So this is a non-issue, isn't it? (Well, only if it ha=
-s
-more than 2 parents and not all ancestor paths touch the file, the
-number of parents shown is changed.)
+> Sorry I didn't notice sooner, but I was confused by the second test
+> title this added:
+>=20
+> test_expect_success 'option --ff-only overwrites merge.ff=3Donly config' '
+> 	git reset --hard c0 &&
+> 	test_config merge.ff only &&
+> 	git merge --no-ff c1
+> '
+>=20
+> How is --ff-only overwriting merge.ff=3Donly here?  Was it a typo?
 
-Best regards
-Uwe
+Yes, it's a typo in the test name. Thanks for spotting that!
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Miklos
+
+--O3RTKUHj+75w1tg5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iEYEARECAAYFAlHuR7MACgkQe81tAgORUJZuZQCgn98wx3ikJ6ngKO0pSQ/7Q9/I
+bAcAnjE4io3KhlIzXFEJBwmYoEaVZvfQ
+=AZQk
+-----END PGP SIGNATURE-----
+
+--O3RTKUHj+75w1tg5--
