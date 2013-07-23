@@ -1,79 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] http: Add http.savecookies option to write out HTTP cookies
-Date: Tue, 23 Jul 2013 15:27:28 -0700
-Message-ID: <7vk3kg7vzj.fsf@alter.siamese.dyndns.org>
-References: <1374613676-20889-1-git-send-email-dborowitz@google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/5] t4211: demonstrate empty -L range crash
+Date: Tue, 23 Jul 2013 19:15:24 -0400
+Message-ID: <CAPig+cTPcFJ_kfQ7zveE-Uf-itRRw2O99vQ61Or0QHvkKnxc_g@mail.gmail.com>
+References: <1374589688-27751-1-git-send-email-sunshine@sunshineco.com>
+	<1374589688-27751-3-git-send-email-sunshine@sunshineco.com>
+	<20130723175942.GA21019@goldbirke>
+	<7vvc416qvq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: dborowitz@google.com
-X-From: git-owner@vger.kernel.org Wed Jul 24 00:43:38 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	Git List <git@vger.kernel.org>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Bo Yang <struggleyb.nku@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 24 01:15:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1lIv-0000iT-Um
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 00:43:38 +0200
+	id 1V1lnn-0008A2-8G
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 01:15:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934707Ab3GWWnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jul 2013 18:43:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37996 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934669Ab3GWW1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jul 2013 18:27:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74553334BD;
-	Tue, 23 Jul 2013 22:27:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CFzB32xS4Sp9vOQ+jGty8Fzjg0Q=; b=SRXS4a
-	J3XpzxaBjOmw2GaIPlJ9krS0Hi1h/1Bi0GrMtoiqcyBrkoiytq8Tl3V1aptnzR2w
-	YvgHHrXHsJ5Je6HQJ4JNmHtP10+5aqwXimWC3TKd9IDQFpu76Gen4r6BAjQOj/zS
-	b0QQ1vPokfu5mbT1hnNn2XWHZfPLouKA2K8rU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CsS/4t/rGUkihH4PhAkKhG7blt7iC+8w
-	IwRs+H80dBV81k4z49PhYq2qFWZVRTLSGwBP+qx9rxqZ+cO5gLlaoaGeaf1zCzIo
-	e0zn0ictRA5B9zeNeRnjkSwcyJFGr4iT9QjvI6uUahQwHh7IX66wOcmYLBVsjjAB
-	t0mk8Vbebx8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61CE8334BC;
-	Tue, 23 Jul 2013 22:27:32 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B7329334B6;
-	Tue, 23 Jul 2013 22:27:30 +0000 (UTC)
-In-Reply-To: <1374613676-20889-1-git-send-email-dborowitz@google.com>
-	(dborowitz@google.com's message of "Tue, 23 Jul 2013 14:07:56 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1018A644-F3E7-11E2-B379-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S933930Ab3GWXP0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jul 2013 19:15:26 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:44049 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933386Ab3GWXPZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jul 2013 19:15:25 -0400
+Received: by mail-lb0-f173.google.com with SMTP id v1so6763289lbd.32
+        for <git@vger.kernel.org>; Tue, 23 Jul 2013 16:15:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nbgKFWuzWcXOESGcvS6NrZqTyPcBQCkHfAyiOM1Gwo4=;
+        b=WUKo8r2hiJOY0q4pIfeVR7sf4BZFhnfu1n9WhtZ1tqJQ/7rOdoRqZlC1lr6dp7J5+w
+         E5RVXALGSy5rIN/XWpgSYM1YXbzdRfdiz8PnJwpgeGuMxe3vtmeGmpx4uaEk0ZCbI40G
+         B/RfmKJkPOYifCVPw+3HqsSAdV6KUkD5aNsPTKoDlKuoXmdznKZ0FlatBBfp8djAYXkW
+         yqRFDMYSid60SKBEHQ7kHVGxE9dzikt8bS2GvcW6SEHFBhoVYpmVT7gB2CkTyr2ZGj3a
+         WxJAten/koo9W6xLxuivX+p5TAqzLINDSI/c0mqIqQTA4+O6iISwwa57a5V1hm1IMptT
+         VNcA==
+X-Received: by 10.112.77.164 with SMTP id t4mr15155738lbw.52.1374621324479;
+ Tue, 23 Jul 2013 16:15:24 -0700 (PDT)
+Received: by 10.114.187.78 with HTTP; Tue, 23 Jul 2013 16:15:24 -0700 (PDT)
+In-Reply-To: <7vvc416qvq.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 0l1uRqL3fJrUHmCaH14p-IGaDW4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231070>
 
-dborowitz@google.com writes:
+On Tue, Jul 23, 2013 at 3:03 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> SZEDER G=E1bor <szeder@ira.uka.de> writes:
+>> You could avoid the 'cat' here and patch in 4/5 by doing $(wc -l <b.=
+c).
+> Correct.
 
-> From: Dave Borowitz <dborowitz@google.com>
->
-> HTTP servers may send Set-Cookie headers in a response and expect them
-> to be set on subsequent requests. By default, libcurl behavior is to
-> store such cookies in memory and reuse them across requests within a
-> single session. However, it may also make sense, depending on the
-> server and the cookies, to store them across sessions. Provide users
-> an option to enable this behavior, writing cookies out to the same
-> file specified in http.cookiefile.
-> ---
+Thanks, I like that better.
 
-Makes sense.
+Unfortunately, what actually got queued on 'next', after applying this
+fix-up and re-ordering the patch series, is slightly bogus.  The diff
+for f8395edc (range-set: satisfy non-empty ranges invariant) looks
+like this:
 
-I briefly wondered if users want to be able to selectively store
-cookies only from certain sites but not from others.  But if we are
-going to build this on top of Kyle J. McKay's "Per URL http.<url>.* 
-configuration" series, that will fall out as a natural consequence,
-I think.
+@@ -67,7 +67,8 @@ test_bad_opts "-L :foo:b.c" "no match"
+ # There is a separate bug when an empty -L range is the first -L encou=
+ntered,
+ # thus to demonstrate this particular bug, the empty -L range must fol=
+low a
+ # non-empty -L range.
+-test_expect_failure '-L {empty-range} (any -L)' '
++test_expect_success '-L {empty-range} (any -L)' '
++ n=3D$(expr $(cat b.c | wc -l) + 1) &&
+  n=3D$(expr $(wc -l <b.c) + 1) &&
+  git log -L1,1:b.c -L$n:b.c
+ '
 
-Please sign-off your patch.  Thanks.
+which incorrectly adds back the $(cat b.c | wc -l) line just above the
+fixed $(wc -l <b.c) line.
