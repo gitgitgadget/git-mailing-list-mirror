@@ -1,46 +1,70 @@
-From: Jonathon Mah <me@JonathonMah.com>
-Subject: Re: git tag usability issue: Lightweight vs Annotated confusion for the end user (ex. git describe default)
-Date: Wed, 24 Jul 2013 12:09:38 -0700
-Message-ID: <032D5084-C70F-4F62-8F62-975ADEA56ED6@JonathonMah.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: daniele.segato@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jul 24 21:10:13 2013
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: What's cooking in git.git (Jul 2013, #07; Sun, 21)
+Date: Wed, 24 Jul 2013 20:03:31 +0100
+Message-ID: <51F02503.7030102@ramsay1.demon.co.uk>
+References: <7vy58zozdk.fsf@alter.siamese.dyndns.org> <51EDBC7D.7060200@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jul 24 21:10:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V24Rw-0002m5-Tx
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 21:10:13 +0200
+	id 1V24SC-00035Z-6n
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 21:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752742Ab3GXTKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jul 2013 15:10:07 -0400
-Received: from ipmail06.adl2.internode.on.net ([150.101.137.129]:23249 "EHLO
-	ipmail06.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751222Ab3GXTKG convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jul 2013 15:10:06 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AuUVAGMl8FEyiIWrPGdsb2JhbAANTotOtiOBLAMBAQEBOIJZAQEBAzs/BRY7Ti2ICqcMkkqPSjMdgnxuA4kqoV2BWQ
-Received: from c-50-136-133-171.hsd1.ca.comcast.net (HELO [192.168.120.50]) ([50.136.133.171])
-  by ipmail06.adl2.internode.on.net with ESMTP; 25 Jul 2013 04:39:42 +0930
-X-Mailer: Apple Mail (2.1508)
+	id S1753231Ab3GXTKW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Jul 2013 15:10:22 -0400
+Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:53863 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753045Ab3GXTKV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jul 2013 15:10:21 -0400
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id F24D9A643C9;
+	Wed, 24 Jul 2013 20:10:18 +0100 (BST)
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 5EAC0A6454A;
+	Wed, 24 Jul 2013 20:10:18 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
+	Wed, 24 Jul 2013 20:10:17 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <51EDBC7D.7060200@web.de>
+X-MDF-HostID: 8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231113>
 
->         Some git command (ex. git describe) by default only consider 
-> annotated tags.
+Torsten B=F6gershausen wrote:
+> =20
+>> ml/cygwin-updates:
+>>      cygwin: stop forcing core.filemode=3Dfalse
+>=20
+> I like that: cygwin behaves more like Unix/Linux.
+>=20
+> Just a side-comment: When working on NTFS, cygwin
+> will set core.filemode=3Dtrue, and as a result of that,
+> the "cheating lstat" code is not used any more.
+>=20
+> So it is not run under the test suite (typically NTFS),
+> and therefore "untested by default".
 
-I always add --tags when I call git-describe. Is there any reason this shouldn't become the new default (quickly, before git 2.0 perhaps)? I wasn't able to find any reason for the current behavior with just a little digging.
+Indeed, the next branch is now "fixed". :-D
 
+>=20
+>> * rj/cygwin-clarify-use-of-cheating-lstat (2013-07-18) 1 commit
+>>  - cygwin: Remove the Win32 l/stat() implementation
+> =20
+>>  I am personally in favor of this simpler solution.  Comments?
+> Me too, thanks to all contributors
 
+Thank you for taking the time to help address this issue!
 
-Jonathon Mah
-me@JonathonMah.com
+ATB,
+Ramsay Jones
