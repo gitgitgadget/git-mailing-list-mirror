@@ -1,109 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Incompatible '+=' syntax in git-completion.bash
-Date: Wed, 24 Jul 2013 08:31:01 -0700
-Message-ID: <7v38r46klm.fsf@alter.siamese.dyndns.org>
-References: <CAK6R3tz73t1HQ2AkeimFDGnmZbFT1PJ5idTbKt8QwsPOSaYqQg@mail.gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: [PATCH v2 00/16] First class shallow clone
+Date: Wed, 24 Jul 2013 18:50:49 +0200
+Message-ID: <b66fdf09-5e84-4ecc-899d-cebc644f74b7@email.android.com>
+References: <1374065234-870-1-git-send-email-pclouds@gmail.com> <1374314290-5976-1-git-send-email-pclouds@gmail.com> <79A9AB6FF00042D1B3E0D26B9855CCAB@PhilipOakley> <CACsJy8AJjXMATEPrAgSYOgpZcR_khC=9S28H8LuCvuTuJk0x8w@mail.gmail.com> <8BDFF5EEBDC8422681F1AB2C0A153CC6@PhilipOakley> <CACsJy8AzFogspTih4mJoog6MGEWgmuae2KmFysQ0-siCvfH2yA@mail.gmail.com> <CAA01CsrHaCGrt37r4bn1OBY-=skJXZBHOaPH=Gsz-8BCmiW6jQ@mail.gmail.com> <CACsJy8BouRHZAmCKQ779iAUiEX-rK9_FSrxu9V-bn6MCBTBEzg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthew Wang <mattwyl@gmail.com>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 24 17:31:17 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 24 18:51:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2121-0002Bu-9n
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 17:31:13 +0200
+	id 1V22HQ-0004Ki-JL
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 18:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754347Ab3GXPbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jul 2013 11:31:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45558 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754230Ab3GXPbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jul 2013 11:31:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EC923153C;
-	Wed, 24 Jul 2013 15:31:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nwJR8P8KJlTrYsl4/lpbpukRJlo=; b=XdSvnE
-	NEnEe2rd3Sk30Ni9khNhdReOLRM6iTZ0bUrEBWQFGDEuAAPzA2ucXJs0LhEqVXpW
-	CAp4KmTJqjQQkw5gy07l3P3W0pfPyusI5gM9lXxnbZweS0Z+v8ZWcYEGPcGU/VOX
-	hCht4JhZTqV2MiNqOAm0Tct1owD8Zl9FUsMYw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uSA/OLo1lzBbyWM1Kce4HEG1PZKOOoq2
-	5rhlB50JZh3oSA0nWKFMe2MTTGjYiyHNqAVBvNumoQhw6ndpTRm+jMLjnrs/sBQl
-	nRWbuz5ky+O6Q/Qg6C3EhVrvulhGX+5wbxBOvydMAKTie+rANSBv8zbY6AkjhvcJ
-	zn7Jkcvb9/w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 329E33153A;
-	Wed, 24 Jul 2013 15:31:04 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F8C931537;
-	Wed, 24 Jul 2013 15:31:03 +0000 (UTC)
-In-Reply-To: <CAK6R3tz73t1HQ2AkeimFDGnmZbFT1PJ5idTbKt8QwsPOSaYqQg@mail.gmail.com>
-	(Matthew Wang's message of "Wed, 24 Jul 2013 09:54:04 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0CF64086-F476-11E2-BDC6-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754805Ab3GXQvH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Jul 2013 12:51:07 -0400
+Received: from mail-bk0-f45.google.com ([209.85.214.45]:47856 "EHLO
+	mail-bk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754762Ab3GXQvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jul 2013 12:51:06 -0400
+Received: by mail-bk0-f45.google.com with SMTP id je9so271028bkc.4
+        for <git@vger.kernel.org>; Wed, 24 Jul 2013 09:51:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=user-agent:in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding:subject:from:date:to:cc:message-id;
+        bh=b8ATzRueXCq0XsWhvs2vvv0VHACruWrY0MksiVkkoMs=;
+        b=x6G9KtSiJQnLT5czQzdhwub639BvLmCxuR0tILSOQq5hb4/iDWdjzm/JFrRgbtmvd3
+         9LOCzSct0WBifPapli+Q+JIKfkHdSj0XFz4j1d9fKhAVfrNSSd3YRHPgFfIO4R4C1xSZ
+         gyuXmkOxnAvOjikbww1UOyqFoyNsZIWmgR8dwk0f+Z+u4n5Zaj6pVNqlc8hmxYbjzciM
+         rQU9gOv7tXxLwDmDb8pQHWIRLSE2X/pZv2c90RZJKhBUwOE0Lvh35eZ0Ga8p2o5bleMN
+         VgKduHOKDBB2t9DckKzns2q8u+TJAJpMs64rvQMGQ8D+ASAqutVp7q1U3EQ6roEE/HPi
+         yfYA==
+X-Received: by 10.204.61.193 with SMTP id u1mr5481625bkh.119.1374684663864;
+        Wed, 24 Jul 2013 09:51:03 -0700 (PDT)
+Received: from [100.104.126.139] ([46.77.124.240])
+        by mx.google.com with ESMTPSA id ct12sm9943230bkb.12.2013.07.24.09.51.01
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 24 Jul 2013 09:51:03 -0700 (PDT)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CACsJy8BouRHZAmCKQ779iAUiEX-rK9_FSrxu9V-bn6MCBTBEzg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231106>
 
-Matthew Wang <mattwyl@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> napisa=C5=82:
+>On Wed, Jul 24, 2013 at 3:30 PM, Piotr Krukowiecki
+><piotr.krukowiecki@gmail.com> wrote:
+>> (resending, as my phone mail client decided to send it in html, sorr=
+y
+>> about that)
+>>
+>> On Wed, Jul 24, 2013 at 3:57 AM, Duy Nguyen <pclouds@gmail.com>
+>wrote:
+>>> On Wed, Jul 24, 2013 at 5:33 AM, Philip Oakley
+><philipoakley@iee.org> wrote:
+>>>> There have been comments on the git-user list about the
+>>>> problem of accidental adding of large files which then make the
+>repo's foot
+>>>> print pretty large as one use case [Git is consuming very much
+>RAM]. The
+>>>> bigFileThreshold being one way of spotting such files as separate
+>objects,
+>>>> and 'trimming' them.
+>>>
+>>> I think rewriting history to remove those accidents is better than
+>>> working around it (the same for accidentally committing password).
+>We
+>>> might be able to spot problems early, maybe warn user at commit tim=
+e
+>>> that they have added an exceptionally large blob, maybe before push
+>>> time..
+>>
+>> I can imagine a situation where large files were part of the project
+>> at some point in history (they were required to build/use it) and
+>> later were removed because build/project has changed.
+>>
+>> It would be useful to have the history for log/blame/etc even if you
+>> could not build/use old versions. A warning when checking
+>> out/branching such incomplete tree would be needed.
+>
+>That's what shallow clone is for. You fetch the latest (not including
+>old large blobs) and work on top. For archaeology, make a full clone.
+>Or do you mean log/blame/etc other paths that don't touch big blobs,
+>and the clone is still incomplete?
 
-> I noticed a change in commit 734b2f0 on
-> contrib/completion/git-completion.bash which reverted a syntax fix for
-> '+=' syntax [1], the syntax does not work for bash < 3.1.  As far as I
-> know, bash 3.0.x is still widely used on some old servers, could
-> someone add the fix back again?
 
-Does anybody know of a reason why a[$#a+1]=$c notation should not be
-used for zsh?  If there isn't, I think we should cherry-pick
-
-    50c5885e (git-completion.bash: replace zsh notation that breaks
-    bash 3.X, 2013-01-18)
-
-by Brandon on top of 'master' or on 6bf931a5 (Merge branch
-'fc/zsh-leftover-bits', 2013-06-02).
-
-Thanks.
-
--- >8 --
-From: Brandon Casey <drafnel@gmail.com>
-Date: Fri, 18 Jan 2013 11:24:01 -0800
-Subject: [PATCH] git-completion.bash: replace zsh notation that breaks bash 3.X
-
-When commit d8b45314 began separating the zsh completion from the bash
-completion, it introduced a zsh completion "bridge" section into the bash
-completion script for zsh users to use until they migrated to the zsh
-script.  The zsh '+=()' append-to-array notation prevents bash 3.00.15 on
-CentOS 4.x from loading the completion script and breaks test 9902.  We can
-easily work around this by using standard Bash array notation.
-
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index a4c48e1..2f99420 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2431,7 +2431,7 @@ if [[ -n ${ZSH_VERSION-} ]]; then
- 				--*=*|*.) ;;
- 				*) c="$c " ;;
- 				esac
--				array+=("$c")
-+				array[$#array+1]="$c"
- 			done
- 			compset -P '*[=:]'
- 			compadd -Q -S '' -p "${2-}" -a -- array && _ret=0
--- 
-1.8.3.4-995-g2e35dd8
+Yes, for example if large files were removed recently the last-n-commit=
+s-shallow would be useless from blame/log POV.=20
