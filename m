@@ -1,81 +1,115 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] do_one_ref(): save and restore value of current_ref
-Date: Wed, 24 Jul 2013 07:35:24 -0700
-Message-ID: <51EFE62C.4070003@alum.mit.edu>
-References: <CAPWNY8Ua=3t4jeDvkj3Aw2Ouvv+0r1kWrET5GNq9uS8PasGudQ@mail.gmail.com> <1373901857-28431-1-git-send-email-mhagger@alum.mit.edu> <7voba04ir8.fsf@alter.siamese.dyndns.org> <51E97ACA.40300@alum.mit.edu> <7vppueuyw4.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 4/4] config: allow http.<url>.* any user matching
+Date: Wed, 24 Jul 2013 08:00:21 -0700
+Message-ID: <7vfvv46m0q.fsf@alter.siamese.dyndns.org>
+References: <3c7fc982841069ce79faf227e007815@f74d39fa044aa309eaea14b9f57fe79>
+	<7dfaadb69accede33b88ae2d9e47a48@f74d39fa044aa309eaea14b9f57fe79>
+	<7vehaqcw66.fsf@alter.siamese.dyndns.org>
+	<DF5B20F8-33C2-4F72-A78B-97EE1FB4A522@gmail.com>
+	<20130724064258.GA30074@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?TWFudGFzIE1pa3VsxJduYXM=?= <grawity@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 24 16:35:52 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	Daniel Knittl-Frank <knittl89@googlemail.com>,
+	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+	Alejandro Mery <amery@geeks.cl>,
+	Aaron Schrab <aaron@schrab.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 24 17:00:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V20AQ-0001b5-P7
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 16:35:51 +0200
+	id 1V20YQ-0005Le-BJ
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 17:00:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410Ab3GXOfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jul 2013 10:35:33 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:62963 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754122Ab3GXOf2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Jul 2013 10:35:28 -0400
-X-AuditID: 12074414-b7f626d0000001f1-4c-51efe62f83fa
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id FF.86.00497.F26EFE15; Wed, 24 Jul 2013 10:35:27 -0400 (EDT)
-Received: from [192.168.0.17] (24-182-26-32.dhcp.slto.ca.charter.com [24.182.26.32])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r6OEZO0K026588
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 24 Jul 2013 10:35:26 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <7vppueuyw4.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqKv/7H2gwdH9BhZdV7qZLBp6rzBb
-	vGw/wOzA7LFz1l12j4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M6Y1PqLqWAZe8XDe7tYGhgf
-	s3YxcnBICJhILF6Q38XICWSKSVy4t56ti5GLQ0jgMqPE5U9XoJwrTBLr1l5hAqniFdCWmNw2
-	lw3EZhFQldj3u4UZxGYT0JVY1NPMBDJUVCBM4spvVYhyQYmTM5+wgNgiAmoSE9sOgdnMAjES
-	R86fARspLOAh8fHrThaIXb8ZJba1/wGbySlgJrH+dTs7yExmAXWJ9fOEIHrlJba/ncM8gVFg
-	FpIVsxCqZiGpWsDIvIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI10IvN7NELzWldBMjJGxFdjAe
-	OSl3iFGAg1GJh7dg1rtAIdbEsuLK3EOMkhxMSqK88Y/eBwrxJeWnVGYkFmfEF5XmpBYfYpTg
-	YFYS4X37ACjHm5JYWZValA+TkuZgURLn/bZY3U9IID2xJDU7NbUgtQgmK8PBoSTBe/oJUKNg
-	UWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJpSUY8KErji4FxCpLiAdp7G6Sdt7ggMRcoCtF6
-	ilGX48CPLe8ZhVjy8vNSpcR5X4EUCYAUZZTmwa2AJalXjOJAHwvz/gap4gEmOLhJr4CWMAEt
-	cW0AW1KSiJCSamCcf3yBoAir77PHJSkHEtfYhCjt5r7t5tJYJWS9KHui3IsbjLtv+l+uXd/4
-	QeWQ+RQxiQnXb/0rvXf62YJnS8pm7lxz2/2caqd2nAHzE/VgliOpd4/FcLmezmtd 
+	id S1753865Ab3GXPA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jul 2013 11:00:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52138 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753853Ab3GXPAY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jul 2013 11:00:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E5B8323E2;
+	Wed, 24 Jul 2013 15:00:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1SuAJ2b5sQxxPGxwyKthPhlKye0=; b=rYJYvd
+	bk6dseHkHqvFMvCwC2c5dLQDXLxN14qfG/lsQbHrZsCDQ8s2QssBba+8n3xxpY37
+	dDmnd2jmHiOI5OnzdCaA0JtLFd9mNTwUCjvysPnN5vyllDsYzlQz9BHIHkgIOzEY
+	I/24Ra6FVwoYAsy3FigY0zeaG8THp8iFttrZc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=utbib3nGqwwbjXw3s+k86K6GSOgJWKfh
+	ruisJ6djzdmWp0leHTsVpLDIxo7SYZ+BI7wzOTsqzXjU6Q2ucKq559a9BVhA330g
+	dR7DgREyzWsXwQR1ohHGO1a4cpIff1Jwvw2scAjSC3dIFUgncqk7Xf6sRZ27FAGX
+	0yJgrlc/XlE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FF9A323E1;
+	Wed, 24 Jul 2013 15:00:23 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8ACBB323DE;
+	Wed, 24 Jul 2013 15:00:22 +0000 (UTC)
+In-Reply-To: <20130724064258.GA30074@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 24 Jul 2013 02:42:59 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C3B75260-F471-11E2-A1AB-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231101>
 
-On 07/19/2013 12:34 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> I sent the patch shortly before leaving for a trip so I didn't have time
->> to make it as complete as I would have liked.  But given that the
->> problem was already in master, and the fix is pretty simple, I wanted to
->> send the fix right away.  When I have some time I can fix it up better,
-> 
-> That is very much appreciated.  How would you describe this fix in a
-> two-to-three line paragraph in Release Notes?
+Jeff King <peff@peff.net> writes:
 
-How about:
+>   1. The explanation and special-casing of username is a little
+>      complicated to explain.
+>
+>   2. The behavior for resolving the value when faced with multiple
+>      possibilities is completely unlike the rest of the config system
+>      (both dropping last-one-wins, and unlike the URL matching for
+>      credentials).
+>
+> I think we can decide that (2) is worth it if your semantics are more
+> flexible in practice. It would be nice to see real-world feedback on how
+> people use it before setting the behavior in stone, but there's sort of
+> a chicken and egg problem there.
+>
+> For (1), I wonder if the explanation would be simpler if the precedences
+> of each sub-part were simply laid out. That is, would it be correct to
+> say something like:
+>
+>   For a config key to match a URL, each element of the config key (if
+>   present) is compared to that of the URL, in the following order:
+>
+>     1. Protocol (e.g., `https` in `https://example.com/`). This field
+>        must match exactly between the config key and the URL.
+>
+>     2. Host/domain name (e.g., `example.com` in `https://example.com/`).
+>        This field must match exactly between the config key and the URL.
+>
+>     3. Path (e.g., `repo.git` in `https://example.com/repo.git`). This
+>        field is prefix-matched by slash-delimited path elements, so that
+>        config key `foo/` matches URL `foo/bar`. Longer matches take
+>        precedence (so `foo/bar`, if it exists, is a better match than
+>        just `foo/`).
+>
+>     4. Username (e.g., `user` in `https://user@example.com/repo.git`).
+>
+>   The list above is ordered by decreasing precedence; a URL that matches
+>   a config key's path is preferred to one that matches its username.
+>
+> I don't know if that is more or less clear of an explanation. It makes
+> more sense to me, but that is probably because I wrote it. 
 
-    Fix a NULL-pointer dereference during nested iterations over
-    references (for example, when replace references are being used).
-
-Unfortunately I don't have time now to audit the code more carefully to
-figure out what other circumstances might have triggered the bug.
-
-Hope that helps,
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+The above reads very clearly to me, too.  We may want to add that
+the Username, if exists on the configuration key name, must match
+exactly to the one in the URL the variable is queried for
+(i.e. anonymous requests never match configuration for a specific
+user).
