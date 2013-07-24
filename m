@@ -1,81 +1,95 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: [PATCH v2 00/16] First class shallow clone
-Date: Wed, 24 Jul 2013 10:30:12 +0200
-Message-ID: <CAA01CsrHaCGrt37r4bn1OBY-=skJXZBHOaPH=Gsz-8BCmiW6jQ@mail.gmail.com>
-References: <1374065234-870-1-git-send-email-pclouds@gmail.com>
-	<1374314290-5976-1-git-send-email-pclouds@gmail.com>
-	<79A9AB6FF00042D1B3E0D26B9855CCAB@PhilipOakley>
-	<CACsJy8AJjXMATEPrAgSYOgpZcR_khC=9S28H8LuCvuTuJk0x8w@mail.gmail.com>
-	<8BDFF5EEBDC8422681F1AB2C0A153CC6@PhilipOakley>
-	<CACsJy8AzFogspTih4mJoog6MGEWgmuae2KmFysQ0-siCvfH2yA@mail.gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] [SIGNED-OFF] remotes-hg: bugfix for fetching non local remotes
+Date: Wed, 24 Jul 2013 10:52:12 +0200
+Message-ID: <CALWbr2zRsCk1N5xUUDQeWX6CbvLHYWnxiYpea+etoWvXHNhPEA@mail.gmail.com>
+References: <1374615616-4730-1-git-send-email-dev@joernhees.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 24 10:30:25 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Joern Hees <dev@joernhees.de>
+X-From: git-owner@vger.kernel.org Wed Jul 24 10:52:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1uSm-0005cE-R8
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 10:30:25 +0200
+	id 1V1uo1-0006YH-3p
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 10:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750857Ab3GXIaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jul 2013 04:30:17 -0400
-Received: from mail-ee0-f50.google.com ([74.125.83.50]:58045 "EHLO
-	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750750Ab3GXIaO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jul 2013 04:30:14 -0400
-Received: by mail-ee0-f50.google.com with SMTP id d49so70183eek.37
-        for <git@vger.kernel.org>; Wed, 24 Jul 2013 01:30:13 -0700 (PDT)
+	id S1751941Ab3GXIwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jul 2013 04:52:15 -0400
+Received: from mail-qc0-f182.google.com ([209.85.216.182]:55501 "EHLO
+	mail-qc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751758Ab3GXIwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jul 2013 04:52:13 -0400
+Received: by mail-qc0-f182.google.com with SMTP id e10so82650qcy.13
+        for <git@vger.kernel.org>; Wed, 24 Jul 2013 01:52:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=UMjZk+AAi/pHvybDCDB0Hm8zccwzH4QIG71V59y7XSw=;
-        b=fDpyY22jLU5Vso8kkIfPypX2m/MG9Xthe2Gt7V0xQiKQPyXwcAQqM4YzMAZGfaoOQC
-         j8q0N12anmHGLf5EX3Eo7ddb2AyAszNCtYqyqU9nMzA79t4l4svYAk9SxaIlD2jB8VzL
-         4py5XF/DgnttDFopxlUOwTuecYILDMwIWjtkYOVXel1eoBT6LoTcbMudZ2WH8+eFaQtF
-         qqpIlqQNsZfSmeA80ZKhtnqfODVLUtyGXqJHM7eugPG+nuvKNimbb+/guos4IyIlOMuz
-         wdKlz6BmZLRB3BGdjhghlpBlp4kH00ncJDm0UNegBncui23R2H6kuFGcp04/3cUWUAKK
-         j2rw==
-X-Received: by 10.15.23.194 with SMTP id h42mr35846463eeu.123.1374654613189;
- Wed, 24 Jul 2013 01:30:13 -0700 (PDT)
-Received: by 10.223.98.193 with HTTP; Wed, 24 Jul 2013 01:30:12 -0700 (PDT)
-In-Reply-To: <CACsJy8AzFogspTih4mJoog6MGEWgmuae2KmFysQ0-siCvfH2yA@mail.gmail.com>
+        bh=+ZU076VbWZdFExpqX5jDaewYLAMJIbfb9564CeVrXz4=;
+        b=GOqxo79UOQ1u5T8TrZVZGIT77E5GYDzJ9u+WFiILceCtZdvzhnz8uv9ynINPQ7tzhg
+         /p0mwbQkeXIN01HmHDx/5BPSgiZLCEjODklP2NbEHTVQLyg6gnsDuyQlJ8aVU31O7PCP
+         X9QFZjMknycLxY2MQSuLNimN4KE4eAEq/Zu1izWg6WzhS4256s9OGxUZEg12Wh3WUMAB
+         El6vyVxuyjhDTPAeSDECfgaOGuDjbCO74sVu0Z2ZZP3N2BH4mXbI1I6fhOYVGVPeZ6Ik
+         uuzFAj8hgApxKcMJydxJ1ixUPdsYuq9ucLpf+Wk6TDoDftItlp0jVKh9yEqPTloO1gZH
+         nXrw==
+X-Received: by 10.224.182.79 with SMTP id cb15mr44093371qab.48.1374655932618;
+ Wed, 24 Jul 2013 01:52:12 -0700 (PDT)
+Received: by 10.49.64.67 with HTTP; Wed, 24 Jul 2013 01:52:12 -0700 (PDT)
+In-Reply-To: <1374615616-4730-1-git-send-email-dev@joernhees.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231089>
 
-(resending, as my phone mail client decided to send it in html, sorry
-about that)
+On Tue, Jul 23, 2013 at 11:40 PM, Joern Hees <dev@joernhees.de> wrote:
+> 6796d49 introduced a bug by making shared_path == ".git/hg' which
+> will most likely exist already, causing a new remote never to be
+> cloned and subsequently causing hg.share to fail with error msg:
+> "mercurial.error.RepoError: repository .git/hg not found"
 
-On Wed, Jul 24, 2013 at 3:57 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Jul 24, 2013 at 5:33 AM, Philip Oakley <philipoakley@iee.org> wrote:
->> There have been comments on the git-user list about the
->> problem of accidental adding of large files which then make the repo's foot
->> print pretty large as one use case [Git is consuming very much RAM]. The
->> bigFileThreshold being one way of spotting such files as separate objects,
->> and 'trimming' them.
->
-> I think rewriting history to remove those accidents is better than
-> working around it (the same for accidentally committing password). We
-> might be able to spot problems early, maybe warn user at commit time
-> that they have added an exceptionally large blob, maybe before push
-> time..
+Indeed, no clone is performed if the .git/hg dir already exists.
+I think it assumes that it's already done.
+That will certainly lead to the failure you are reporting.
 
-I can imagine a situation where large files were part of the project
-at some point in history (they were required to build/use it) and
-later were removed because build/project has changed.
+Also, the directory can be created to store marks for a local repository.
+remote-hg won't require nor do a local clone in .git/hg for local repositories.
 
-It would be useful to have the history for log/blame/etc even if you
-could not build/use old versions. A warning when checking
-out/branching such incomplete tree would be needed.
+It should also be noted that once .git/hg is not empty, it will no
+longer be possible to create a mercurial repository in there (it will
+die with "destination '.git/hg'  is not empty")
 
--- 
-Piotr Krukowiecki
+I think the best way would be to create the shared repository in
+.git/hg/$share, with $share being a path that can't be a remote name
+(so that it doesn't conflict with remote directories),
+and then apply the following patch (copied in gmail)
+
+diff --git a/contrib/remote-helpers/git-remote-hg
+b/contrib/remote-helpers/git-remote-hg
+index 0194c67..21c8091 100755
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -390,7 +390,7 @@ def get_repo(url, alias):
+         if not os.path.exists(dirname):
+             os.makedirs(dirname)
+     else:
+-        shared_path = os.path.join(gitdir, 'hg')
++        shared_path = os.path.join(gitdir, 'hg', $share)
+         if not os.path.exists(shared_path):
+             try:
+                 hg.clone(myui, {}, url, shared_path, update=False, pull=True)
+
+That way, the share can be created even if .git/hg already exists
+(because of a previous import, before the shared machinery existed, or
+because you already have a local remote).
+
+> Changing gitdir to dirname causes shared_path ==
+> .git/hg/<remote_name>/hg. The call to hg.share with local_path ==
+> .git/hg/<remote_name>/clone works again.
+
+I think that will be a problem, because then the shared_path will no
+longer be shared, will it ?
