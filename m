@@ -1,99 +1,119 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: [PATCH v2 00/16] First class shallow clone
-Date: Wed, 24 Jul 2013 18:50:49 +0200
-Message-ID: <b66fdf09-5e84-4ecc-899d-cebc644f74b7@email.android.com>
-References: <1374065234-870-1-git-send-email-pclouds@gmail.com> <1374314290-5976-1-git-send-email-pclouds@gmail.com> <79A9AB6FF00042D1B3E0D26B9855CCAB@PhilipOakley> <CACsJy8AJjXMATEPrAgSYOgpZcR_khC=9S28H8LuCvuTuJk0x8w@mail.gmail.com> <8BDFF5EEBDC8422681F1AB2C0A153CC6@PhilipOakley> <CACsJy8AzFogspTih4mJoog6MGEWgmuae2KmFysQ0-siCvfH2yA@mail.gmail.com> <CAA01CsrHaCGrt37r4bn1OBY-=skJXZBHOaPH=Gsz-8BCmiW6jQ@mail.gmail.com> <CACsJy8BouRHZAmCKQ779iAUiEX-rK9_FSrxu9V-bn6MCBTBEzg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 3/4] tests: add new test for the url_normalize function
+Date: Wed, 24 Jul 2013 10:14:59 -0700
+Message-ID: <7vy58v6fsc.fsf@alter.siamese.dyndns.org>
+References: <3c7fc982841069ce79faf227e007815@f74d39fa044aa309eaea14b9f57fe79>
+	<60d85be89d27515d913ae15e10c332f@f74d39fa044aa309eaea14b9f57fe79>
+	<20130724065933.GC30074@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 24 18:51:15 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	Daniel Knittl-Frank <knittl89@googlemail.com>,
+	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+	Alejandro Mery <amery@geeks.cl>,
+	Aaron Schrab <aaron@schrab.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 24 19:15:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V22HQ-0004Ki-JL
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 18:51:12 +0200
+	id 1V22ee-0000kw-KY
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 19:15:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754805Ab3GXQvH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Jul 2013 12:51:07 -0400
-Received: from mail-bk0-f45.google.com ([209.85.214.45]:47856 "EHLO
-	mail-bk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754762Ab3GXQvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jul 2013 12:51:06 -0400
-Received: by mail-bk0-f45.google.com with SMTP id je9so271028bkc.4
-        for <git@vger.kernel.org>; Wed, 24 Jul 2013 09:51:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=b8ATzRueXCq0XsWhvs2vvv0VHACruWrY0MksiVkkoMs=;
-        b=x6G9KtSiJQnLT5czQzdhwub639BvLmCxuR0tILSOQq5hb4/iDWdjzm/JFrRgbtmvd3
-         9LOCzSct0WBifPapli+Q+JIKfkHdSj0XFz4j1d9fKhAVfrNSSd3YRHPgFfIO4R4C1xSZ
-         gyuXmkOxnAvOjikbww1UOyqFoyNsZIWmgR8dwk0f+Z+u4n5Zaj6pVNqlc8hmxYbjzciM
-         rQU9gOv7tXxLwDmDb8pQHWIRLSE2X/pZv2c90RZJKhBUwOE0Lvh35eZ0Ga8p2o5bleMN
-         VgKduHOKDBB2t9DckKzns2q8u+TJAJpMs64rvQMGQ8D+ASAqutVp7q1U3EQ6roEE/HPi
-         yfYA==
-X-Received: by 10.204.61.193 with SMTP id u1mr5481625bkh.119.1374684663864;
-        Wed, 24 Jul 2013 09:51:03 -0700 (PDT)
-Received: from [100.104.126.139] ([46.77.124.240])
-        by mx.google.com with ESMTPSA id ct12sm9943230bkb.12.2013.07.24.09.51.01
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 24 Jul 2013 09:51:03 -0700 (PDT)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CACsJy8BouRHZAmCKQ779iAUiEX-rK9_FSrxu9V-bn6MCBTBEzg@mail.gmail.com>
+	id S1751222Ab3GXRPG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jul 2013 13:15:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54256 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751005Ab3GXRPE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jul 2013 13:15:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 880812C5AA;
+	Wed, 24 Jul 2013 17:15:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BNDR5/57AVPXAQQwcH0FAY11x60=; b=gp91EP
+	6txoBq+VTnhVsQtNP3MrmCqoz6bP19di7PWFs8vAE/F9HqmZQJXvYr/z7I9cmzGl
+	T4hamK9YIAtGb/jexhj17N66HNPlXRAfP+guUyyJ41rgP+DvQ6yNoUOEn3ic4CqI
+	uw81CMMUBUFiBHV3OorMGURBRL/RhFiJe50ng=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uUNmkdp5Nd7N0j/t+MW3tAzorn3G6cl2
+	dRLiTeyCHil00fvU4gtyYrHa1OUr/O+559ZnMIBSk21yKlmYUXBslUxS7aPZG/xp
+	edYo187vr8sN993wsES1rmorpP+rxtmT5+kFUQSUoyOjaQAndBZRe/Rn7mBUU+uS
+	XLM8GxlJNkc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BDAE2C5A8;
+	Wed, 24 Jul 2013 17:15:02 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 650E62C5A2;
+	Wed, 24 Jul 2013 17:15:01 +0000 (UTC)
+In-Reply-To: <20130724065933.GC30074@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 24 Jul 2013 02:59:33 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 93152D9A-F484-11E2-B0CA-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231107>
 
-Duy Nguyen <pclouds@gmail.com> napisa=C5=82:
->On Wed, Jul 24, 2013 at 3:30 PM, Piotr Krukowiecki
-><piotr.krukowiecki@gmail.com> wrote:
->> (resending, as my phone mail client decided to send it in html, sorr=
-y
->> about that)
->>
->> On Wed, Jul 24, 2013 at 3:57 AM, Duy Nguyen <pclouds@gmail.com>
->wrote:
->>> On Wed, Jul 24, 2013 at 5:33 AM, Philip Oakley
-><philipoakley@iee.org> wrote:
->>>> There have been comments on the git-user list about the
->>>> problem of accidental adding of large files which then make the
->repo's foot
->>>> print pretty large as one use case [Git is consuming very much
->RAM]. The
->>>> bigFileThreshold being one way of spotting such files as separate
->objects,
->>>> and 'trimming' them.
->>>
->>> I think rewriting history to remove those accidents is better than
->>> working around it (the same for accidentally committing password).
->We
->>> might be able to spot problems early, maybe warn user at commit tim=
-e
->>> that they have added an exceptionally large blob, maybe before push
->>> time..
->>
->> I can imagine a situation where large files were part of the project
->> at some point in history (they were required to build/use it) and
->> later were removed because build/project has changed.
->>
->> It would be useful to have the history for log/blame/etc even if you
->> could not build/use old versions. A warning when checking
->> out/branching such incomplete tree would be needed.
+Jeff King <peff@peff.net> writes:
+
+> That is, would a shell script ever want to say "what is the value of
+> this config variable for url $X"? Certainly our test scripts want to,
+> and having a test-* program covers that, but might user scripts want to
+> do the same? Or even to introduce its own URL-matched config options?
 >
->That's what shallow clone is for. You fetch the latest (not including
->old large blobs) and work on top. For archaeology, make a full clone.
->Or do you mean log/blame/etc other paths that don't touch big blobs,
->and the clone is still incomplete?
+> How hard would it be to convert the "-c" option of test-url-normalize
+> into something like:
+>
+>   git config --file=foo --url http noepsv $URL
+>
+> which would look for http.$URL.noepsv matches.
 
+Lovely.
 
-Yes, for example if large files were removed recently the last-n-commit=
-s-shallow would be useless from blame/log POV.=20
+>> +#if LIBCURL_VERSION_NUM >= 0x070903
+>> +	else if (!strcmp("sslkey", opt_lc.buf))
+>> +		printf("%s\n", ssl_key);
+>> +#endif
+>> +#if LIBCURL_VERSION_NUM >= 0x070908
+>> +	else if (!strcmp("sslcapath", opt_lc.buf))
+>> +		printf("%s\n", ssl_capath);
+>> +#endif
+>> [...]
+>
+> Do we need to have the complete list of options here, including curl
+> version limitations? It seems like this will eventually get out of date
+> with the list of options. Would it be sufficient to test just one (or
+> even just handle a fake "http.$URL.foo" variable)?
+
+Yeah, and that will be in line with "git config --url" direction.
+
+Another thing we may want to consider is to see if we can
+restructure the http_options interface a bit, so that the caller can
+be agonistic to the actual meaning of the key.  For example,
+
+  "git config --url http notknownyet $URL" 
+
+may want to be able to show the value for http.<pattern>.notknownyet
+for the most matching <pattern> for a given $URL, without knowing
+what the variable means, just like any other configuration that is
+queried via the "git config" program.  The caller may want to pass
+further type information like --bool, --int and --path as needed.
+
+>> +#define url_normalize(u) http_options_url_normalize(u)
+>
+> Does this macro do anything besides shorten the name? Is the extra
+> level of indirection to the reader worth it?
+
+Probably not.
+
+Thanks.
