@@ -1,77 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] document 'quiet' receive-pack capability
-Date: Wed, 24 Jul 2013 04:03:43 -0400
-Message-ID: <20130724080342.GD4425@sigill.intra.peff.net>
-References: <20130724080051.GA3890@sigill.intra.peff.net>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: [PATCH v2 00/16] First class shallow clone
+Date: Wed, 24 Jul 2013 10:30:12 +0200
+Message-ID: <CAA01CsrHaCGrt37r4bn1OBY-=skJXZBHOaPH=Gsz-8BCmiW6jQ@mail.gmail.com>
+References: <1374065234-870-1-git-send-email-pclouds@gmail.com>
+	<1374314290-5976-1-git-send-email-pclouds@gmail.com>
+	<79A9AB6FF00042D1B3E0D26B9855CCAB@PhilipOakley>
+	<CACsJy8AJjXMATEPrAgSYOgpZcR_khC=9S28H8LuCvuTuJk0x8w@mail.gmail.com>
+	<8BDFF5EEBDC8422681F1AB2C0A153CC6@PhilipOakley>
+	<CACsJy8AzFogspTih4mJoog6MGEWgmuae2KmFysQ0-siCvfH2yA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 24 10:03:55 2013
+X-From: git-owner@vger.kernel.org Wed Jul 24 10:30:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V1u37-0004nJ-Uw
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 10:03:54 +0200
+	id 1V1uSm-0005cE-R8
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Jul 2013 10:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173Ab3GXIDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jul 2013 04:03:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36981 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751919Ab3GXIDq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jul 2013 04:03:46 -0400
-Received: (qmail 23454 invoked by uid 102); 24 Jul 2013 08:03:46 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 24 Jul 2013 03:03:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jul 2013 04:03:43 -0400
-Content-Disposition: inline
-In-Reply-To: <20130724080051.GA3890@sigill.intra.peff.net>
+	id S1750857Ab3GXIaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jul 2013 04:30:17 -0400
+Received: from mail-ee0-f50.google.com ([74.125.83.50]:58045 "EHLO
+	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750750Ab3GXIaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jul 2013 04:30:14 -0400
+Received: by mail-ee0-f50.google.com with SMTP id d49so70183eek.37
+        for <git@vger.kernel.org>; Wed, 24 Jul 2013 01:30:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=UMjZk+AAi/pHvybDCDB0Hm8zccwzH4QIG71V59y7XSw=;
+        b=fDpyY22jLU5Vso8kkIfPypX2m/MG9Xthe2Gt7V0xQiKQPyXwcAQqM4YzMAZGfaoOQC
+         j8q0N12anmHGLf5EX3Eo7ddb2AyAszNCtYqyqU9nMzA79t4l4svYAk9SxaIlD2jB8VzL
+         4py5XF/DgnttDFopxlUOwTuecYILDMwIWjtkYOVXel1eoBT6LoTcbMudZ2WH8+eFaQtF
+         qqpIlqQNsZfSmeA80ZKhtnqfODVLUtyGXqJHM7eugPG+nuvKNimbb+/guos4IyIlOMuz
+         wdKlz6BmZLRB3BGdjhghlpBlp4kH00ncJDm0UNegBncui23R2H6kuFGcp04/3cUWUAKK
+         j2rw==
+X-Received: by 10.15.23.194 with SMTP id h42mr35846463eeu.123.1374654613189;
+ Wed, 24 Jul 2013 01:30:13 -0700 (PDT)
+Received: by 10.223.98.193 with HTTP; Wed, 24 Jul 2013 01:30:12 -0700 (PDT)
+In-Reply-To: <CACsJy8AzFogspTih4mJoog6MGEWgmuae2KmFysQ0-siCvfH2yA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231088>
 
-This was added in c207e34 (fix push --quiet: add 'quiet'
-capability to receive-pack, 2012-01-08) but never
-documented.
+(resending, as my phone mail client decided to send it in html, sorry
+about that)
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/technical/protocol-capabilities.txt | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+On Wed, Jul 24, 2013 at 3:57 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Jul 24, 2013 at 5:33 AM, Philip Oakley <philipoakley@iee.org> wrote:
+>> There have been comments on the git-user list about the
+>> problem of accidental adding of large files which then make the repo's foot
+>> print pretty large as one use case [Git is consuming very much RAM]. The
+>> bigFileThreshold being one way of spotting such files as separate objects,
+>> and 'trimming' them.
+>
+> I think rewriting history to remove those accidents is better than
+> working around it (the same for accidentally committing password). We
+> might be able to spot problems early, maybe warn user at commit time
+> that they have added an exceptionally large blob, maybe before push
+> time..
 
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-index d35159e..ec131b6 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/technical/protocol-capabilities.txt
-@@ -18,7 +18,7 @@ NOT advertise capabilities it does not understand.
- and server advertised.  As a consequence of these rules, server MUST
- NOT advertise capabilities it does not understand.
- 
--The 'report-status' and 'delete-refs' capabilities are sent and
-+The 'report-status', 'delete-refs', and 'quiet' capabilities are sent and
- recognized by the receive-pack (push to server) process.
- 
- The 'ofs-delta' and 'side-band-64k' capabilities are sent and recognized
-@@ -200,3 +200,13 @@ to delete references.
- value of a reference update.  It is not sent back by the client, it
- simply informs the client that it can be sent zero-id values
- to delete references.
-+
-+quiet
-+-----
-+
-+If the receive-pack server advertises the 'quiet' capability, it is
-+capable of silencing human-readable progress output which otherwise may
-+be shown when processing the received pack. A send-pack client should
-+respond with the 'quiet' capability to suppress server-side progress
-+reporting if the local progress reporting is also being suppressed
-+(e.g., via `push -q`, or if stderr does not go to a tty).
+I can imagine a situation where large files were part of the project
+at some point in history (they were required to build/use it) and
+later were removed because build/project has changed.
+
+It would be useful to have the history for log/blame/etc even if you
+could not build/use old versions. A warning when checking
+out/branching such incomplete tree would be needed.
+
 -- 
-1.8.3.rc1.30.gff0fb75
+Piotr Krukowiecki
