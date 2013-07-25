@@ -1,66 +1,84 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH v3] remotes-hg: bugfix for fetching non local remotes
-Date: Thu, 25 Jul 2013 23:10:24 +0200
-Message-ID: <CALWbr2x9fG=diZPN-Wkq+-7bstoVmN_pnXN0EPi=4MZQVRuYXg@mail.gmail.com>
-References: <1374712977-3215-1-git-send-email-dev@joernhees.de>
-	<CAMP44s16bRx0p_F=PTcy9bekg_5TVC_GsQjzOev6xkpCEWcjAw@mail.gmail.com>
-	<CALWbr2wN6k8JBCwLFC=TjTC_sg7Uh8AEsMOBKfH9aBxDEcV4oQ@mail.gmail.com>
-	<CAMP44s2v+CF7x+S6_47CiPb6RMXu+iy06gqWNjus4vff5J8z3g@mail.gmail.com>
+From: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
+Subject: Re: [RFC] Faster git grep.
+Date: Thu, 25 Jul 2013 23:31:00 +0200
+Message-ID: <20130725213100.GA28551@domone.kolej.mff.cuni.cz>
+References: <20130725182905.GA7664@domone.kolej.mff.cuni.cz>
+ <7vli4u4bkm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Joern Hees <dev@joernhees.de>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 25 23:10:30 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 25 23:31:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2Snu-0008OE-9O
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 23:10:30 +0200
+	id 1V2T89-00065s-JW
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 23:31:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756538Ab3GYVK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jul 2013 17:10:26 -0400
-Received: from mail-qc0-f180.google.com ([209.85.216.180]:40205 "EHLO
-	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756502Ab3GYVKZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jul 2013 17:10:25 -0400
-Received: by mail-qc0-f180.google.com with SMTP id a1so1215792qcx.11
-        for <git@vger.kernel.org>; Thu, 25 Jul 2013 14:10:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=9Lrnnr7zeE+o5n4vGypnRmTXsPrsPT5FbG3D7WtzBvk=;
-        b=lppT9Kx3V8MDalIa/SOugTWoGxXKkE1XJ17M58Ui1p2TXn9o0y9ND12NIpA0cJJFKi
-         eh4K1bXHEWgXdLE93W+7PkXt7o07S4AiWPyQlJEfFxwBCUp3peOhOheXCj8wOjEXdlA7
-         28BHfjKvY6pJdRtmx5sOaFWRjegIZW1GCkHx2d5+a7JnnfeO63K6ARu3IaeKh6utoaq0
-         bwlTOnwXCZHXaImcPIZYlYrpxoj986AqT9jQOSGNqYZGkyfHaiJBNlMHZlb1RQOkiDGG
-         bt1gVUqpVJqvEWKDKjNF8FWypEiX4t3MQM8pMwkC9N2xXbI3Se/SAz7kL6s5mhmDjVtN
-         lJTw==
-X-Received: by 10.224.32.131 with SMTP id c3mr38900794qad.62.1374786624935;
- Thu, 25 Jul 2013 14:10:24 -0700 (PDT)
-Received: by 10.49.64.67 with HTTP; Thu, 25 Jul 2013 14:10:24 -0700 (PDT)
-In-Reply-To: <CAMP44s2v+CF7x+S6_47CiPb6RMXu+iy06gqWNjus4vff5J8z3g@mail.gmail.com>
+	id S1755909Ab3GYVbI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jul 2013 17:31:08 -0400
+Received: from popelka.ms.mff.cuni.cz ([195.113.20.131]:34214 "EHLO
+	popelka.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754810Ab3GYVbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jul 2013 17:31:06 -0400
+Received: from domone.kolej.mff.cuni.cz (popelka.ms.mff.cuni.cz [195.113.20.131])
+	by popelka.ms.mff.cuni.cz (Postfix) with ESMTPS id 6CF6B61D58;
+	Thu, 25 Jul 2013 23:31:01 +0200 (CEST)
+Received: by domone.kolej.mff.cuni.cz (Postfix, from userid 1000)
+	id A0F4F5FB95; Thu, 25 Jul 2013 23:31:00 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vli4u4bkm.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.97.6 at popelka.ms.mff.cuni.cz
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-1.8 required=5.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	UNPARSEABLE_RELAY autolearn=ham version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	popelka.ms.mff.cuni.cz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231153>
 
-On Thu, Jul 25, 2013 at 10:40 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> That's true. Maybe something like:
+On Thu, Jul 25, 2013 at 01:41:13PM -0700, Junio C Hamano wrote:
+> Ond=C5=99ej B=C3=ADlka <neleai@seznam.cz> writes:
+>=20
+> > One solution would be to use same trick as was done in google code.=
+=20
+> > Build and keep database of trigraphs and which files contain how ma=
+ny of
+> > them. When querry is made then check
+> > only these files that have appropriate combination of trigraphs.
+>=20
+> This depends on how you go about trying to reducing the database
+> overhead, I think.  For example, a very naive approach would be to
+> create such trigraph hit index for each and every commit for all
+> paths.  When "git grep $commit $pattern" is run, you would consult
+> such table with $commit and potential trigraphs derived from the
+> $pattern to grab the potential paths your hits _might_ be in.
 >
-> for x in repos:
->   local_hg = os.path.join(shared_path, x, 'clone', '.hg')
->   if os.path.exists(local_hg):
->     shutil.copytree(local_hg, hg_path)
->     break
+Do you think that git grep $commit $pattern is run in more than 1%=20
+of cases than git grep $pattern ?
 
-I think that would work, but I think the patch from Joern Hees would
-have to be reverted first (as it's merged in next)
-
-Cheers,
-Antoine
+If grepping random commit in history is important use case then keeping
+db information in history makes sense. Otherwise just having database
+for current version and updating it on the fly as version changes is
+enough.
+> But the contents of a path usually do not change in each and every
+> commit.  So you may want to instead index with the blob object names
+> (i.e. which trigraphs appear in what blobs).  But once you go that
+> route, your "git grep $commit $pattern" needs to read and enumerate
+> all the blobs that appear in $commit's tree, and see which blobs may
+> potentially have hits.  Then you would need to build an index every
+> time you make a new commit for blobs whose trigraphs have not been
+> counted.
+>=20
+> Nice thing is that once a blob (or a commit for that matter) is
+> created and its object name is known, its contents will not change,
+> so you can index once and reuse it many times.  But I am not yet
+> convinced if pre-indexing is an overall win, compared to the cost of
+> maintaining such a database.
