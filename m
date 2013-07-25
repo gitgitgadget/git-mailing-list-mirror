@@ -1,98 +1,98 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/5] range-set and line-log bug fixes
-Date: Thu, 25 Jul 2013 09:09:19 -0400
-Message-ID: <CAPig+cToEX1b+3q-Mhw_ukvZzqSDnRR7bJymC962t+qkZE25fw@mail.gmail.com>
-References: <1374589688-27751-1-git-send-email-sunshine@sunshineco.com>
-	<CAPig+cRWaKv6UN5pZLwonXBpHnFE7+4ELXTnE+2nLr8h83bX6Q@mail.gmail.com>
-	<51F0EBF5.80105@viscovery.net>
+From: Daniele Segato <daniele.segato@gmail.com>
+Subject: [PATCH] git-tag man: when to use lightweight or annotated tags
+Date: Thu, 25 Jul 2013 15:45:10 +0200
+Message-ID: <51F12BE6.80606@gmail.com>
+References: <51EFA9A9.4010103@gmail.com> <7vtxjj66kn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Thomas Rast <trast@inf.ethz.ch>,
-	Bo Yang <struggleyb.nku@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jul 25 15:09:32 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 25 15:45:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2LIM-0007kV-Hg
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 15:09:26 +0200
+	id 1V2Lr7-0005UR-0C
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 15:45:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755595Ab3GYNJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jul 2013 09:09:22 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:53470 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755430Ab3GYNJV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jul 2013 09:09:21 -0400
-Received: by mail-lb0-f172.google.com with SMTP id a16so1527170lbj.31
-        for <git@vger.kernel.org>; Thu, 25 Jul 2013 06:09:20 -0700 (PDT)
+	id S1755892Ab3GYNpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jul 2013 09:45:17 -0400
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:37814 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755510Ab3GYNpP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jul 2013 09:45:15 -0400
+Received: by mail-wg0-f47.google.com with SMTP id j13so1640819wgh.2
+        for <git@vger.kernel.org>; Thu, 25 Jul 2013 06:45:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=ofKUVtyYLSzyX9fDgfI43oquQPv+gdrPh0adzawLFno=;
-        b=rPDfgVH4uUDXQaLLhtwXsjntzhcjnw6WI0zu98L2Ivgkgl7+kCPP7EHOd0U8R8oRzi
-         8/iONbT34DCX4tF0UzYIWgmBfwXxKfz5OIemSH/4G6Sw4idAMCG1Sq+7/aLWSLECWWoZ
-         pkf+NIHF27O53p5xxIfdeCOkDs8a68HlKXwDg6X2qlFd0tZGhA10aJXKZj/ECkDMBpkO
-         Li2BfYuLbPwZCxUNFgKlVkjVZwd/eyWtBMMtKZe95ykZua4LGtnyiIKZ8O7qPxQ1oUlf
-         AL22WEadaPWiLL8ugK9cONYCwZcN3CMzXkVshpTYBm8wForMkaxOYJbib2jkmOcoO1q9
-         uI5Q==
-X-Received: by 10.112.73.33 with SMTP id i1mr3243664lbv.24.1374757760181; Thu,
- 25 Jul 2013 06:09:20 -0700 (PDT)
-Received: by 10.114.187.78 with HTTP; Thu, 25 Jul 2013 06:09:19 -0700 (PDT)
-In-Reply-To: <51F0EBF5.80105@viscovery.net>
-X-Google-Sender-Auth: JKRLkESszj1R1FQYayslNwMjWZc
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=F9mJmJT8beQ9wx+TtIRhoykImI7YdQJe9MBAgjgYZRw=;
+        b=DWE0Sm1iga5rUjU1W7mh7LlDk/0tHbqbW96tL/5KLobDRETfsa0RJh6QqQ3o39pNQ4
+         Risgf8WC80ZgycVN/Rdmo265bTZinyfOKRgCjw7XsXfEJcRcwUXQi4P8HOcrbIxBD/Vo
+         BEcaU6hyj+xkQH/qxJaTfllIZCfa4f8Osm2LpGPLszT1qwpbHWVoi74+ALmfAPvT6jsE
+         tLeWqakL327dhkBQwnNrU2KoGw7DBJA4pgvykwEb3/FMxuQ2ZUiCmTDWkCGIzOvyr1kY
+         8f9bzDUjYIMjmkK9oKtj/XtxAnQ1fjcd/wXOenDie2avtlV2nZy+NQr6WrdS6C8mMzSw
+         N43Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=F9mJmJT8beQ9wx+TtIRhoykImI7YdQJe9MBAgjgYZRw=;
+        b=GDKEW59YALn5pyfR8/UhDg5/g64PymI3lYJbIzclbzS3VX5wFK5i97KbjC5DJqY1HM
+         K4gHrh8kEbl4bNWOtDBLYy5vQ2FGrcM9XOnyRlFbf9kn9scs3Jt7RQ9ccPxZoSBrYptg
+         oc83ydYaBAr0cVtpVPYECyXny3nhO6bsfG+ccpq4Uc8/s3nQ53+BEEzEHEF3EUPq2iIe
+         PFgOJjpKjUrhNmGcj+SDXpBXbn3HjJqIoqEtGa6rwUSvdxZNmL7doncVwt/TLPocB7pZ
+         WmRpBxAhYPUsJBNHD9ZFV5zsFRxeTOmwUNBqdM61MnODgXf0gXXwbuYs4sEAK+3+dHuf
+         Kyzg==
+X-Received: by 10.180.38.37 with SMTP id d5mr2171455wik.37.1374759914052;
+        Thu, 25 Jul 2013 06:45:14 -0700 (PDT)
+Received: from [192.168.88.89] (2-229-44-241.ip195.fastwebnet.it. [2.229.44.241])
+        by mx.google.com with ESMTPSA id s19sm3849768wik.11.2013.07.25.06.45.12
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 25 Jul 2013 06:45:12 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <7vtxjj66kn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231134>
 
-On Thu, Jul 25, 2013 at 5:12 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 7/25/2013 10:03, schrieb Eric Sunshine:
->> The tests in this series identify real bugs in dealing with empty
->> ranges, which the subsequent patches fix. The test are possible
->> because one can specify an empty range via blame/log -L, however, I
->> now realize that the ability for -L to create empty ranges was never
->> intended or part of the design, but is in fact itself a bug.
-> ...
->> * Should we drop these new t4211 tests which guard against real potential bugs?
->>
->> * Should we add custom C code to the test suite to make the
->> empty-range testing possible?
->>
->> * Should we introduce another (undocumented) loophole just for the
->> sake of the tests?
->
-> IIUC, the tests you added are protecting the *implementation* of range-set
-> functions. For tests of the implementation, we usually write test-foo
-> programs that call the functions directly.
+ From d0f4eca712e7cf74286bfab306763a8a571b6c95 Mon Sep 17 00:00:00 2001
+From: Daniele Segato <daniele.segato@gmail.com>
+Date: Thu, 25 Jul 2013 15:33:18 +0200
+Subject: [PATCH] git-tag man: when to use lightweight or annotated tags
 
-You understand correctly. The added t4211 tests check range-set and
-line-log functionality.
+stress the difference between the two with suggestion on when the user
+should use one in place of the other.
 
-range-set is an implementation detail of git-log's -L and is entirely
-private (static to the implementation file), so there's no API to test
-via a test-foo program. It is sufficiently generic that its API could
-(some day) be published, thus allowing a test-foo program, however,
-doing so would involve writing documentation and covering its entire
-API with tests: a large enough task in itself, and quite orthogonal to
-fixing the log/blame -L loophole.
+Signed-off-by: Daniele Segato <daniele.segato@gmail.com>
+---
+  Documentation/git-tag.txt |    4 ++++
+  1 file changed, 4 insertions(+)
 
-line-log is partially public, however, the code in which the bug was
-discovered is private (static) and likely always will be since it is
-not generic. Moreover, once the -L loophole is closed, there will be
-no way to trigger the case under consideration via its public API, so
-again there is no opportunity for a test-foo program.
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 22894cb..48f5504 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -36,6 +36,10 @@ are absent, `-a` is implied.
+  Otherwise just a tag reference for the SHA-1 object name of the commit 
+object is
+  created (i.e. a lightweight tag).
 
-Thus, the question remains: What to do with these two tests once the
--L loophole is closed? Remove them?
-
-> Tests invoking git should test the observable behavior. Therefore, if
-> calling a git utility with "-Lfoo,+0" should be an error, then the test
-> suite should mark such a call with test_must_fail. I guess this rules out
-> the loophole approach.
-
-Indeed, nicely stated.
++Annotated and Lightweight tags are not the same thing for git and you 
+shouldn't
++mix them up. Annotated tags are meant for release while lightweight 
+tags are
++meant to tag random commits.
++
+  A GnuPG signed tag object will be created when `-s` or `-u
+  <key-id>` is used.  When `-u <key-id>` is not used, the
+  committer identity for the current user is used to find the
+-- 
+1.7.10.4
