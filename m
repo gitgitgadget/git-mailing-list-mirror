@@ -1,99 +1,49 @@
-From: Paul Campbell <pcampbell@kemitix.net>
-Subject: Re: git subtree push-all and pull-all
-Date: Thu, 25 Jul 2013 12:19:27 +0100
-Message-ID: <CALeLG_khS=n4K3AuRFMZhRx30tzwcAKt7UPG8d1Tu5YeOkPaPA@mail.gmail.com>
-References: <CALemSr4Z+p7v_wQn7EOFTVHjtMYgxqGSBZf3zU5pn-eW_SEG5A@mail.gmail.com>
-	<20130707125430.GA23197@paksenarrion.iveqy.com>
-	<CALemSr4Q_En+9eAbu2oRO-=EYt78sCB4nQjSO67W_m=nxu6KiQ@mail.gmail.com>
-	<51DBD636.7070601@initfour.nl>
-	<CALeLG_=x30qR1LFiKzz+NZu6vAf3GAL2tTCsbCz0Zm6J+udAcg@mail.gmail.com>
-	<51F0F728.6090709@initfour.nl>
+From: =?koi8-r?B?ydfBzs/XIMnXwc4=?= <xowirun@yandex.ru>
+Subject: git and cyrillic branches
+Date: Thu, 25 Jul 2013 15:19:48 +0300
+Message-ID: <922031374754788@web29h.yandex.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Gareth Collins <gareth.o.collins@gmail.com>,
-	Fredrik Gustafsson <iveqy@iveqy.com>,
-	git <git@vger.kernel.org>,
-	Dieter Adriaenssens <dieter.adriaenssens@gmail.com>
-To: Herman van Rink <rink@initfour.nl>
-X-From: git-owner@vger.kernel.org Thu Jul 25 13:19:33 2013
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 25 14:27:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2Ja0-0000b6-L1
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 13:19:32 +0200
+	id 1V2Kdh-0005SW-No
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 14:27:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755591Ab3GYLT3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jul 2013 07:19:29 -0400
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:38621 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755345Ab3GYLT2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jul 2013 07:19:28 -0400
-Received: by mail-oa0-f44.google.com with SMTP id l20so392839oag.31
-        for <git@vger.kernel.org>; Thu, 25 Jul 2013 04:19:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type:x-gm-message-state;
-        bh=s8cC03+TEKQ7o8PtTT7Fxd5tHgIaRUil/4UhgBgZY/4=;
-        b=RmYWFymoEDRsIQ7UaVSO2sHCqsF/k3yoq9n0tw0RUAyS+85OUEC2kbKeO5lFQkBfqB
-         tgSN8uR/t8Y40h15ClNy5gRRHWNLCu9zfR5A9pV5yCjm9Y8gIswquwK0+yekUyNyQYKg
-         1r8LYSkCe4pVvNetYsGG5a6DUIq6JSLXNAfsWvHHiVPe9jM5HScqjosc08zFLj5CjOin
-         M9acBlhywWQWeTZ0rk95GhGy0345eTUzUqlF8p0ndzWPLzj/nz6MuCvvXcMbmwbZBeUf
-         0i+A0SPGdlLlcr584TPXMzv3Psc0e2QE/15cAjxtwYiJPdenh6KP9pGqe5RKO8UHvIQC
-         HFZQ==
-X-Received: by 10.60.56.229 with SMTP id d5mr41267152oeq.7.1374751167669; Thu,
- 25 Jul 2013 04:19:27 -0700 (PDT)
-Received: by 10.76.9.2 with HTTP; Thu, 25 Jul 2013 04:19:27 -0700 (PDT)
-X-Originating-IP: [212.219.195.16]
-In-Reply-To: <51F0F728.6090709@initfour.nl>
-X-Gm-Message-State: ALoCoQmJntHg6DhbuFCQObex2ph4ZOqCY888yoOXxy7047y69b81v3W4Ql2N01Gtt1dGiwQ/KxTU
+	id S1755450Ab3GYM1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jul 2013 08:27:21 -0400
+Received: from forward5h.mail.yandex.net ([84.201.186.23]:34718 "EHLO
+	forward5h.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755358Ab3GYM1V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jul 2013 08:27:21 -0400
+X-Greylist: delayed 446 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Jul 2013 08:27:21 EDT
+Received: from web29h.yandex.ru (web29h.yandex.ru [84.201.187.163])
+	by forward5h.mail.yandex.net (Yandex) with ESMTP id 90809D01928
+	for <git@vger.kernel.org>; Thu, 25 Jul 2013 16:19:49 +0400 (MSK)
+Received: from 127.0.0.1 (localhost.localdomain [127.0.0.1])
+	by web29h.yandex.ru (Yandex) with ESMTP id 1EEA83396AE;
+	Thu, 25 Jul 2013 16:19:49 +0400 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1374754789; bh=eQwX8mdNqEpwakTjCvutzDM96fCruxI4E089Wx5yd7Q=;
+	h=From:To:Subject:Date;
+	b=w4sfYIg5GOk8hRHV6GSA4wZIrHZC4zxCq0iHsZs+2vRme9uw0D0C8Pfe3kkUPsdAT
+	 kgAuUfRvlFMbWS+Xf9LpLjISg76B4DBmlNf38PYwpXCxB6Cn96WhR7UeNL9lrP0G7j
+	 xAKPrah1ZVn29Q49PSd/t5LISli6xrt5652Ttpgw=
+Received: from client.yota.ru (client.yota.ru [188.162.36.106]) by web29h.yandex.ru with HTTP;
+	Thu, 25 Jul 2013 16:19:48 +0400
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231131>
 
-I agree with the idea of maintaining git-subtree outside of contrib.
-However, you would need the commitment of apenwarr, or whoever hosts
-the master repo, to merge in any pull requests or we are no further
-forward. (apenwarr appears not to have been active on github since
-early May).
-
-On Thu, Jul 25, 2013 at 11:00 AM, Herman van Rink <rink@initfour.nl> wrote:
-> On 22-07-13 21:35, Paul Campbell wrote:
->>
->> Hi,
->>
->> Sorry for the delay. Not been monitoring the list lately.
->>
->> I'm afraid work stopped for two reasons. Lack of interest from the
->> list was the main one. I understand subtree isn't used much and
->> subsequently there wasn't much interest in reviewing the patches I was
->> putting out. As a result I lost interest.
->>
->
-> It seems to be hard to get anything done on such a busy list. :( Especially
-> when the maintainers lack time/attention for such a contrib.
->
-> I think including it in the contrib folder has not done us any good.
->
-> Maybe we should just focus on maintaining a separate repo, which could be
-> based of https://github.com/apenwarr/git-subtree (which has already 92
-> forks, including one of mine). And obviously integrate all the recent work
-> from Paul.
->
->
-> --
->
-> Met vriendelijke groet / Regards,
->
-> Herman van Rink
-> Initfour websolutions
->
-
-
-
--- 
-Paul [W] Campbell
+hello! there is problem vith git and cyrillic (utf-8) names of branches. branch creates perfectly, but when i clone this remote branch to local host, there are 2 bugs:
+1) "git branch" doesnt show checked branch with asterisk (while on remote server it does)
+2) "git push" gives 2 errors: "fatal: BRANCH_NAME cannot be resolved to branch." and "fatal: The remote end hung up unexpectedly"
+thanks.
