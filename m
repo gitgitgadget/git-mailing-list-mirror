@@ -1,53 +1,98 @@
-From: Konstantin Khomoutov <kostix+git@007spb.ru>
-Subject: Re: git and cyrillic branches
-Date: Thu, 25 Jul 2013 16:45:22 +0400
-Message-ID: <20130725164522.f8841abf18742cc5f6e0fdbe@domain007.com>
-References: <922031374754788@web29h.yandex.ru>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 0/5] range-set and line-log bug fixes
+Date: Thu, 25 Jul 2013 09:09:19 -0400
+Message-ID: <CAPig+cToEX1b+3q-Mhw_ukvZzqSDnRR7bJymC962t+qkZE25fw@mail.gmail.com>
+References: <1374589688-27751-1-git-send-email-sunshine@sunshineco.com>
+	<CAPig+cRWaKv6UN5pZLwonXBpHnFE7+4ELXTnE+2nLr8h83bX6Q@mail.gmail.com>
+	<51F0EBF5.80105@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=KOI8-R
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?KOI8-R?Q?=C9=D7=C1=CE=CF=D7_=C9=D7=C1=CE?= <xowirun@yandex.ru>
-X-From: git-owner@vger.kernel.org Thu Jul 25 14:45:30 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Thomas Rast <trast@inf.ethz.ch>,
+	Bo Yang <struggleyb.nku@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jul 25 15:09:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2KvC-0006Wj-0V
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 14:45:30 +0200
+	id 1V2LIM-0007kV-Hg
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 15:09:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755882Ab3GYMp0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jul 2013 08:45:26 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:46991 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755857Ab3GYMpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jul 2013 08:45:25 -0400
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r6PCjMC0014062;
-	Thu, 25 Jul 2013 16:45:23 +0400
-In-Reply-To: <922031374754788@web29h.yandex.ru>
-X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1755595Ab3GYNJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jul 2013 09:09:22 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:53470 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755430Ab3GYNJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jul 2013 09:09:21 -0400
+Received: by mail-lb0-f172.google.com with SMTP id a16so1527170lbj.31
+        for <git@vger.kernel.org>; Thu, 25 Jul 2013 06:09:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=ofKUVtyYLSzyX9fDgfI43oquQPv+gdrPh0adzawLFno=;
+        b=rPDfgVH4uUDXQaLLhtwXsjntzhcjnw6WI0zu98L2Ivgkgl7+kCPP7EHOd0U8R8oRzi
+         8/iONbT34DCX4tF0UzYIWgmBfwXxKfz5OIemSH/4G6Sw4idAMCG1Sq+7/aLWSLECWWoZ
+         pkf+NIHF27O53p5xxIfdeCOkDs8a68HlKXwDg6X2qlFd0tZGhA10aJXKZj/ECkDMBpkO
+         Li2BfYuLbPwZCxUNFgKlVkjVZwd/eyWtBMMtKZe95ykZua4LGtnyiIKZ8O7qPxQ1oUlf
+         AL22WEadaPWiLL8ugK9cONYCwZcN3CMzXkVshpTYBm8wForMkaxOYJbib2jkmOcoO1q9
+         uI5Q==
+X-Received: by 10.112.73.33 with SMTP id i1mr3243664lbv.24.1374757760181; Thu,
+ 25 Jul 2013 06:09:20 -0700 (PDT)
+Received: by 10.114.187.78 with HTTP; Thu, 25 Jul 2013 06:09:19 -0700 (PDT)
+In-Reply-To: <51F0EBF5.80105@viscovery.net>
+X-Google-Sender-Auth: JKRLkESszj1R1FQYayslNwMjWZc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231133>
 
-On Thu, 25 Jul 2013 15:19:48 +0300
-=C9=D7=C1=CE=CF=D7 =C9=D7=C1=CE <xowirun@yandex.ru> wrote:
+On Thu, Jul 25, 2013 at 5:12 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Am 7/25/2013 10:03, schrieb Eric Sunshine:
+>> The tests in this series identify real bugs in dealing with empty
+>> ranges, which the subsequent patches fix. The test are possible
+>> because one can specify an empty range via blame/log -L, however, I
+>> now realize that the ability for -L to create empty ranges was never
+>> intended or part of the design, but is in fact itself a bug.
+> ...
+>> * Should we drop these new t4211 tests which guard against real potential bugs?
+>>
+>> * Should we add custom C code to the test suite to make the
+>> empty-range testing possible?
+>>
+>> * Should we introduce another (undocumented) loophole just for the
+>> sake of the tests?
+>
+> IIUC, the tests you added are protecting the *implementation* of range-set
+> functions. For tests of the implementation, we usually write test-foo
+> programs that call the functions directly.
 
-> hello! there is problem vith git and cyrillic (utf-8) names of
-> branches. branch creates perfectly, but when i clone this remote
-> branch to local host, there are 2 bugs:
-> 1) "git branch" doesnt show checked branch with asterisk (while on
-> remote server it does)
-> 2) "git push" gives 2 errors: "fatal: BRANCH_NAME cannot be resolved
-> to branch." and "fatal: The remote end hung up unexpectedly" thanks.
+You understand correctly. The added t4211 tests check range-set and
+line-log functionality.
 
-Works for me across two Debian systems: both have Git 1.7.10.4; user
-accounts on both systems have LANG=3Den_US.UTF-8 configured in their
-environment.
+range-set is an implementation detail of git-log's -L and is entirely
+private (static to the implementation file), so there's no API to test
+via a test-foo program. It is sufficiently generic that its API could
+(some day) be published, thus allowing a test-foo program, however,
+doing so would involve writing documentation and covering its entire
+API with tests: a large enough task in itself, and quite orthogonal to
+fixing the log/blame -L loophole.
 
-Do both of your systems (local and remote) have an UTF-8-enabled (or
-encoding-agnostic, like "C") locale active?
+line-log is partially public, however, the code in which the bug was
+discovered is private (static) and likely always will be since it is
+not generic. Moreover, once the -L loophole is closed, there will be
+no way to trigger the case under consideration via its public API, so
+again there is no opportunity for a test-foo program.
+
+Thus, the question remains: What to do with these two tests once the
+-L loophole is closed? Remove them?
+
+> Tests invoking git should test the observable behavior. Therefore, if
+> calling a git utility with "-Lfoo,+0" should be an error, then the test
+> suite should mark such a call with test_must_fail. I guess this rules out
+> the loophole approach.
+
+Indeed, nicely stated.
