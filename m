@@ -1,68 +1,70 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 0/5] range-set and line-log bug fixes
-Date: Thu, 25 Jul 2013 11:12:21 +0200
-Message-ID: <51F0EBF5.80105@viscovery.net>
-References: <1374589688-27751-1-git-send-email-sunshine@sunshineco.com> <CAPig+cRWaKv6UN5pZLwonXBpHnFE7+4ELXTnE+2nLr8h83bX6Q@mail.gmail.com>
+From: Herman van Rink <rink@initfour.nl>
+Subject: Re: git subtree push-all and pull-all
+Date: Thu, 25 Jul 2013 12:00:08 +0200
+Organization: Initfour Websolutions
+Message-ID: <51F0F728.6090709@initfour.nl>
+References: <CALemSr4Z+p7v_wQn7EOFTVHjtMYgxqGSBZf3zU5pn-eW_SEG5A@mail.gmail.com> <20130707125430.GA23197@paksenarrion.iveqy.com> <CALemSr4Q_En+9eAbu2oRO-=EYt78sCB4nQjSO67W_m=nxu6KiQ@mail.gmail.com> <51DBD636.7070601@initfour.nl> <CALeLG_=x30qR1LFiKzz+NZu6vAf3GAL2tTCsbCz0Zm6J+udAcg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Thomas Rast <trast@inf.ethz.ch>,
-	Bo Yang <struggleyb.nku@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Jul 25 11:12:50 2013
+Cc: Gareth Collins <gareth.o.collins@gmail.com>,
+	Fredrik Gustafsson <iveqy@iveqy.com>,
+	git <git@vger.kernel.org>,
+	Dieter Adriaenssens <dieter.adriaenssens@gmail.com>
+To: Paul Campbell <pcampbell@kemitix.net>
+X-From: git-owner@vger.kernel.org Thu Jul 25 12:00:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2HbM-00073g-G7
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 11:12:48 +0200
+	id 1V2ILT-0006m1-SH
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 12:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755465Ab3GYJMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jul 2013 05:12:44 -0400
-Received: from so.liwest.at ([212.33.55.13]:52155 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754948Ab3GYJM2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jul 2013 05:12:28 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1V2Hav-0006s3-N3; Thu, 25 Jul 2013 11:12:21 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 6C6BB1660F;
-	Thu, 25 Jul 2013 11:12:21 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <CAPig+cRWaKv6UN5pZLwonXBpHnFE7+4ELXTnE+2nLr8h83bX6Q@mail.gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1755283Ab3GYKAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jul 2013 06:00:24 -0400
+Received: from hosted-by.initfour.nl ([83.137.144.7]:52988 "EHLO
+	mail.initfour.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753121Ab3GYKAW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jul 2013 06:00:22 -0400
+Received: from [192.168.42.73] (initfour.xs4all.nl [80.101.157.228])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: helmo@INITFOUR.NL)
+	by mail.initfour.nl (Postfix) with ESMTPSA id 01D2D9FC20F;
+	Thu, 25 Jul 2013 12:00:15 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <CALeLG_=x30qR1LFiKzz+NZu6vAf3GAL2tTCsbCz0Zm6J+udAcg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231129>
 
-Am 7/25/2013 10:03, schrieb Eric Sunshine:
-> The tests in this series identify real bugs in dealing with empty
-> ranges, which the subsequent patches fix. The test are possible
-> because one can specify an empty range via blame/log -L, however, I
-> now realize that the ability for -L to create empty ranges was never
-> intended or part of the design, but is in fact itself a bug.
-...
-> * Should we drop these new t4211 tests which guard against real potential bugs?
-> 
-> * Should we add custom C code to the test suite to make the
-> empty-range testing possible?
-> 
-> * Should we introduce another (undocumented) loophole just for the
-> sake of the tests?
+On 22-07-13 21:35, Paul Campbell wrote:
+> Hi,
+>
+> Sorry for the delay. Not been monitoring the list lately.
+>
+> I'm afraid work stopped for two reasons. Lack of interest from the
+> list was the main one. I understand subtree isn't used much and
+> subsequently there wasn't much interest in reviewing the patches I was
+> putting out. As a result I lost interest.
+>
 
-IIUC, the tests you added are protecting the *implementation* of range-set
-functions. For tests of the implementation, we usually write test-foo
-programs that call the functions directly.
+It seems to be hard to get anything done on such a busy list. :( 
+Especially when the maintainers lack time/attention for such a contrib.
 
-Tests invoking git should test the observable behavior. Therefore, if
-calling a git utility with "-Lfoo,+0" should be an error, then the test
-suite should mark such a call with test_must_fail. I guess this rules out
-the loophole approach.
+I think including it in the contrib folder has not done us any good.
 
--- Hannes
+Maybe we should just focus on maintaining a separate repo, which could 
+be based of https://github.com/apenwarr/git-subtree (which has already 
+92 forks, including one of mine). And obviously integrate all the recent 
+work from Paul.
+
+-- 
+
+Met vriendelijke groet / Regards,
+
+Herman van Rink
+Initfour websolutions
