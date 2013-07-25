@@ -1,84 +1,104 @@
-From: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
-Subject: Re: [RFC] Faster git grep.
-Date: Thu, 25 Jul 2013 23:31:00 +0200
-Message-ID: <20130725213100.GA28551@domone.kolej.mff.cuni.cz>
-References: <20130725182905.GA7664@domone.kolej.mff.cuni.cz>
- <7vli4u4bkm.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: [REQUEST 0/1] Requesting your signed-off-by
+Date: Thu, 25 Jul 2013 15:39:12 -0700
+Message-ID: <4b44f95a1b574b5d92a15254e4e8523@f74d39fa044aa309eaea14b9f57fe79>
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 25 23:31:26 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jul 26 00:39:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2T89-00065s-JW
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 23:31:25 +0200
+	id 1V2UC0-0007Tx-Sf
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 00:39:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755909Ab3GYVbI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jul 2013 17:31:08 -0400
-Received: from popelka.ms.mff.cuni.cz ([195.113.20.131]:34214 "EHLO
-	popelka.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754810Ab3GYVbG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jul 2013 17:31:06 -0400
-Received: from domone.kolej.mff.cuni.cz (popelka.ms.mff.cuni.cz [195.113.20.131])
-	by popelka.ms.mff.cuni.cz (Postfix) with ESMTPS id 6CF6B61D58;
-	Thu, 25 Jul 2013 23:31:01 +0200 (CEST)
-Received: by domone.kolej.mff.cuni.cz (Postfix, from userid 1000)
-	id A0F4F5FB95; Thu, 25 Jul 2013 23:31:00 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vli4u4bkm.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.97.6 at popelka.ms.mff.cuni.cz
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-1.8 required=5.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	UNPARSEABLE_RELAY autolearn=ham version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	popelka.ms.mff.cuni.cz
+	id S1756766Ab3GYWjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jul 2013 18:39:23 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:36541 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755514Ab3GYWjX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jul 2013 18:39:23 -0400
+Received: by mail-pa0-f42.google.com with SMTP id lj1so2543151pab.29
+        for <git@vger.kernel.org>; Thu, 25 Jul 2013 15:39:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=+arolwmqCV/5Tj/fRHszdbCNqrQkctydlbeBbpHEPyY=;
+        b=X3EaFfT4z07yamK8G3ZSP2sClcm8jXKLBjrhWcgAoUnCqxIR4N0hsM01fOIsrAwYR3
+         UmpWByCLXYhH50x3zlR49kluVz4A4gYoyBQtmZ76HB4nEGJw5QsU/wM+PYPUwcOqtFOQ
+         Wr9RuOYZUIycvgUa4OElPia2IdxQ1PC7EodWOcNVzr9fzKjJwnaY3qHis7P8zvtvhwE1
+         g5ZGZPnLonxVx+IRp/iKzfTEvDWg34JuV+c2bQU64C/U8l8lZSm9WaFefxM4WeMDwT59
+         IGU1CsiKfTTWW0dM+q1uwSEVINJLXI50K3kYnibMQ/25ZrZfqWQyasxFmIVknU30C2qA
+         Wh1g==
+X-Received: by 10.68.17.230 with SMTP id r6mr50211182pbd.112.1374791962361;
+        Thu, 25 Jul 2013 15:39:22 -0700 (PDT)
+Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id uj1sm362905pac.21.2013.07.25.15.39.20
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 25 Jul 2013 15:39:21 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231154>
 
-On Thu, Jul 25, 2013 at 01:41:13PM -0700, Junio C Hamano wrote:
-> Ond=C5=99ej B=C3=ADlka <neleai@seznam.cz> writes:
->=20
-> > One solution would be to use same trick as was done in google code.=
-=20
-> > Build and keep database of trigraphs and which files contain how ma=
-ny of
-> > them. When querry is made then check
-> > only these files that have appropriate combination of trigraphs.
->=20
-> This depends on how you go about trying to reducing the database
-> overhead, I think.  For example, a very naive approach would be to
-> create such trigraph hit index for each and every commit for all
-> paths.  When "git grep $commit $pattern" is run, you would consult
-> such table with $commit and potential trigraphs derived from the
-> $pattern to grab the potential paths your hits _might_ be in.
->
-Do you think that git grep $commit $pattern is run in more than 1%=20
-of cases than git grep $pattern ?
+Peff,
 
-If grepping random commit in history is important use case then keeping
-db information in history makes sense. Otherwise just having database
-for current version and updating it on the fly as version changes is
-enough.
-> But the contents of a path usually do not change in each and every
-> commit.  So you may want to instead index with the blob object names
-> (i.e. which trigraphs appear in what blobs).  But once you go that
-> route, your "git grep $commit $pattern" needs to read and enumerate
-> all the blobs that appear in $commit's tree, and see which blobs may
-> potentially have hits.  Then you would need to build an index every
-> time you make a new commit for blobs whose trigraphs have not been
-> counted.
->=20
-> Nice thing is that once a blob (or a commit for that matter) is
-> created and its object name is known, its contents will not change,
-> so you can index once and reuse it many times.  But I am not yet
-> convinced if pre-indexing is an overall win, compared to the cost of
-> maintaining such a database.
+The tentative patch included in the following [REQUEST 1/1] message includes
+so much of your suggested text from:
+
+> From: Jeff King <peff@peff.net>
+> Date: July 23, 2013 23:42:59 PDT
+> Subject: Re: [PATCH v8 4/4] config: allow http.<url>.* any user matching
+> 
+[...]
+> For (1), I wonder if the explanation would be simpler if the precedences
+> of each sub-part were simply laid out. That is, would it be correct to
+> say something like:
+> 
+>  For a config key to match a URL, each element of the config key (if
+>  present) is compared to that of the URL, in the following order:
+> 
+>    1. Protocol (e.g., `https` in `https://example.com/`). This field
+>       must match exactly between the config key and the URL.
+> 
+>    2. Host/domain name (e.g., `example.com` in `https://example.com/`).
+>       This field must match exactly between the config key and the URL.
+> 
+>    3. Path (e.g., `repo.git` in `https://example.com/repo.git`). This
+>       field is prefix-matched by slash-delimited path elements, so that
+>       config key `foo/` matches URL `foo/bar`. Longer matches take
+>       precedence (so `foo/bar`, if it exists, is a better match than
+>       just `foo/`).
+> 
+>    4. Username (e.g., `user` in `https://user@example.com/repo.git`).
+> 
+>  The list above is ordered by decreasing precedence; a URL that matches
+>  a config key's path is preferred to one that matches its username.
+
+that I do not feel comfortable submitting a patch containing it under my name
+without your 'Signed-off-by:' as I feel it would be a copyright violation to
+do otherwise.  Since the 'Signed-off-by' mechanism is how the Git project
+handles this, I'm asking for a reply to the following [REQUEST 1/1] message
+that includes the full patch text with a 'Signed-off-by' line added from you
+before I include it in any patch series (after which I will add my own
+'Signed-off-by' for the other changes I made).
+
+If you would prefer to simply submit your own patch with the changes,
+I have no objection and will simply refer to that as a required patch instead.
+
+Thanks,
+
+Kyle
+
+
+Kyle J. McKay (1):
+  docs: update http.<url>.* options documentation
+
+ Documentation/config.txt | 60 +++++++++++++++++++++++++++++-------------------
+ 1 file changed, 37 insertions(+), 23 deletions(-)
+
+-- 
+1.8.3
