@@ -1,93 +1,91 @@
-From: Daniele Segato <daniele.segato@gmail.com>
-Subject: Re: git tag usability issue: Lightweight vs Annotated confusion for
- the end user (ex. git describe default)
-Date: Thu, 25 Jul 2013 15:48:02 +0200
-Message-ID: <51F12C92.6060200@gmail.com>
-References: <51EFA9A9.4010103@gmail.com> <7vtxjj66kn.fsf@alter.siamese.dyndns.org>
+From: Konstantin Khomoutov <kostix+git@007spb.ru>
+Subject: Re: git and cyrillic branches
+Date: Thu, 25 Jul 2013 18:28:51 +0400
+Message-ID: <20130725182851.c17d3ed662434d1d91838949@domain007.com>
+References: <922031374754788@web29h.yandex.ru>
+	<20130725164522.f8841abf18742cc5f6e0fdbe@domain007.com>
+	<992731374757601@web29h.yandex.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 25 15:48:27 2013
+Content-Type: text/plain; charset=KOI8-R
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Konstantin Khomoutov <kostix+git@007spb.ru>
+To: =?KOI8-R?Q?=CB=D3=CF=D7=C9=D2=C1=CE?= <xowirun@yandex.ru>
+X-From: git-owner@vger.kernel.org Thu Jul 25 16:30:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2Lu4-0001FU-6c
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 15:48:24 +0200
+	id 1V2MYi-0002EU-Oy
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Jul 2013 16:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755609Ab3GYNsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jul 2013 09:48:19 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:38607 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755417Ab3GYNsT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jul 2013 09:48:19 -0400
-Received: by mail-wi0-f176.google.com with SMTP id ey16so5641963wid.3
-        for <git@vger.kernel.org>; Thu, 25 Jul 2013 06:48:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=pJlwUTHgPt59weRjPOSuCP5/VzLoxTFKa5bN4KmaVuo=;
-        b=SLR9LlBVT6jNHQFIKFsUqPwulSGFPjJuoH3a83G+O66YgWyVn1ypmAieajyWJkBC84
-         1EP1W2Z8a0Wvjm8jIFrLLRJ1Vf1zXKRHu8Sn6vsBH5Kf7WQ0j+kurhhIFISwPF7O2vSU
-         9eU0fJJ6Ke4wtg69zmkJ/TelE1/ovGXRsQ+p44GEwZXhsP2lztSmFhdZSZ565esll4iH
-         OiU2bxbpPnEFp7kVqNxCDsRrmmE9phhzNSE5DnM08N83hS/77MV4Ad7E3kujtPSzcA9/
-         tnOVFinqzHFlQonhI9AmYH8aopNxFr4XIsDgjK2iPGHLAa4xlOxCDV9BBIc5Mj21YR3t
-         FRGw==
-X-Received: by 10.180.9.212 with SMTP id c20mr2113704wib.55.1374760086256;
-        Thu, 25 Jul 2013 06:48:06 -0700 (PDT)
-Received: from [192.168.88.89] (2-229-44-241.ip195.fastwebnet.it. [2.229.44.241])
-        by mx.google.com with ESMTPSA id s19sm3867110wik.11.2013.07.25.06.48.04
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 25 Jul 2013 06:48:05 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <7vtxjj66kn.fsf@alter.siamese.dyndns.org>
+	id S1756108Ab3GYOaU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jul 2013 10:30:20 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:48111 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756059Ab3GYOaS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jul 2013 10:30:18 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id r6PEUEU4018918;
+	Thu, 25 Jul 2013 18:30:15 +0400
+X-Sieve: CMU Sieve 2.2
+In-Reply-To: <992731374757601@web29h.yandex.ru>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231136>
 
-On 07/24/2013 10:34 PM, Junio C Hamano wrote:
-> Daniele Segato <daniele.segato@gmail.com> writes:
+On Thu, 25 Jul 2013 17:06:41 +0400
+=CB=D3=CF=D7=C9=D2=C1=CE <xowirun@yandex.ru> wrote:
+
+> >> =9Ahello! there is problem vith git and cyrillic (utf-8) names of
+> >> =9Abranches. branch creates perfectly, but when i clone this remot=
+e
+> >> =9Abranch to local host, there are 2 bugs:
+> >> =9A1) "git branch" doesnt show checked branch with asterisk (while=
+ on
+> >> =9Aremote server it does)
+> >> =9A2) "git push" gives 2 errors: "fatal: BRANCH_NAME cannot be
+> >> resolved to branch." and "fatal: The remote end hung up
+> >> unexpectedly" thanks.
+> >
+> > Works for me across two Debian systems: both have Git 1.7.10.4; use=
+r
+> > accounts on both systems have LANG=3Den_US.UTF-8 configured in thei=
+r
+> > environment.
+> >
+> > Do both of your systems (local and remote) have an UTF-8-enabled (o=
+r
+> > encoding-agnostic, like "C") locale active?
 >
->> Annotated and Lightweight tags are not the same thing
->> for git and you shouldn't mix them up. Annotated tags are meant for
->> release while lightweight tags are meant to tag random commits.
->
-> Nicely explained.
->
-> This is one of those "we who worked on Git (not worked "with" Git)
-> for a long time _know_ it and do not need it to be explained, and we
-> didn't spot that it is not explained in the documentation for new
-> people."
+> oh, yes indeed. i was pushing from mac to ubuntu, but ubuntu to
+> ubuntu works fine. although #locale gives almost identical output, so
+> it is something to work out. =D3=D0=C1=D3=C9=C2=CF =DA=C1 =D0=CF=CD=CF=
+=DD=D8! 25.07.2013, 16:45,
 
-Good!
+I'm afraid, this might be not that simple: Git received certain tweaks
+to work around certain problems Mac OS X has (as I understand it) with
+handling UTF-8 on various filesystems it supports; in particular, see
+commits 76759c7dff53e8c84e975b88cb8245587c14c7ba [1]
+and b856ad623e4f686815986c0b9341dd1bfd791e71 [2] which were released as
+part of v1.7.12.
 
-Any change in adding an option to filter tags list by annotated only?
+So... I'm not sure, but I beleive these fixes might have been related t=
+o
+handling filenames in the work tree and the index only, not branches, a=
+s
+having branches with non-ASCII names is a weird idea to most
+developers, I think.  So the question is: do you have Git >=3D 1.7.12 o=
+n
+your Mac OS X machine?  If so, do you still experience this problem (I
+think that Macs do not have non-UTF-8 locales anyway, so this is
+unlikely the root cause).
 
+P.S.
+Please don't top-post as this breaks discussion flow and hence sucks.
 
->
-> Care to roll a documentation patch (and get a commit count for
-> yourself ;-)?
-
-I tried, just sent the patch, hopefully I managed to follow the guide I 
-found here: 
-http://repo.or.cz/w/git.git?a=blob;f=Documentation/SubmittingPatches;hb=HEAD
-
-As you suggested I removed the "title" line and the reference to git 
-describe default.
-
-If I did something wrong please explain me what and I'll fix it
-
->
-> Thanks.
-
-You're Welcome :-)
-
-Cheers,
-Daniele Segato
+1. https://github.com/git/git/commit/76759c7
+2. https://github.com/git/git/commit/b856ad6
