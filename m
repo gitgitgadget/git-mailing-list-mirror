@@ -1,74 +1,99 @@
-From: David Abdurachmanov <david.abd@gmail.com>
-Subject: "fatal: reference is not a tree:" on git checkout <branch>
-Date: Fri, 26 Jul 2013 11:52:32 +0200
-Message-ID: <CC257523-1C84-4F73-9AB0-D1B5A5ECDC45@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+From: Colin Guthrie <gmane@colin.guthr.ie>
+Subject: Re: [PATCH] send-email: squelch warning from Net::SMTP::SSL
+Date: Fri, 26 Jul 2013 10:29:40 +0100
+Message-ID: <kstfht$p0e$1@ger.gmane.org>
+References: <1373019511-13232-1-git-send-email-artagnon@gmail.com> <20130705104557.GL9161@serenity.lan> <CALkWK0nWvmuxfZJF_Mk2MmJNxz4+=46m_pBtzjSZprLxABhNeA@mail.gmail.com> <vpqbo6hw8e9.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 26 11:52:42 2013
+X-From: git-owner@vger.kernel.org Fri Jul 26 11:55:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2ehV-0003dF-L8
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 11:52:41 +0200
+	id 1V2ejv-000660-N1
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 11:55:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755325Ab3GZJwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jul 2013 05:52:37 -0400
-Received: from mail-ee0-f45.google.com ([74.125.83.45]:49536 "EHLO
-	mail-ee0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751192Ab3GZJwh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Jul 2013 05:52:37 -0400
-Received: by mail-ee0-f45.google.com with SMTP id b15so1450614eek.32
-        for <git@vger.kernel.org>; Fri, 26 Jul 2013 02:52:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:date:message-id
-         :to:mime-version:x-mailer;
-        bh=MPmg8rapK/Ve/c16fsOsIkiKh4Wofq5cyVL2h2ZOXA8=;
-        b=uQOu7dXVvZhXySAfbCrz1V07SPwoaYaTX84mKRx43d90q/z63NFEuJHRN/cw2d80Xj
-         MOULyY9uz1Y43OLwfXvA5vB4qUwSD77QwKBsIexOhntlFZ2pfZdjHeeF6LVb/1okM3eJ
-         6NBW0bgtJXablHwYBzUZvIaPi7FktHwlQTm6a883ebx1/RNVarSOziLPOvzKAkFih5zO
-         b3rMzEWpv9MCGpxY/yf2rajICFnLTg5nRviK3EoS7TGqDm9CkzZSL5BpuLuOwHlwQsBB
-         zmOic57Xt2myDw7I7zLn5rZ0i4QNkxHlL66h5vQ7Q2GLbWiCqngDV9/wczJ0Oyhwd4B7
-         QJLw==
-X-Received: by 10.15.73.197 with SMTP id h45mr45923807eey.146.1374832355429;
-        Fri, 26 Jul 2013 02:52:35 -0700 (PDT)
-Received: from pb-d-128-141-104-61.cern.ch (pb-d-128-141-104-61.cern.ch. [128.141.104.61])
-        by mx.google.com with ESMTPSA id p49sm79872199eeu.2.2013.07.26.02.52.33
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 26 Jul 2013 02:52:34 -0700 (PDT)
-X-Mailer: Apple Mail (2.1283)
+	id S1757776Ab3GZJzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jul 2013 05:55:07 -0400
+Received: from plane.gmane.org ([80.91.229.3]:34402 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756079Ab3GZJzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 05:55:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1V2ejn-0005yW-RR
+	for git@vger.kernel.org; Fri, 26 Jul 2013 11:55:03 +0200
+Received: from brent.tribalogic.net ([78.86.109.144])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Jul 2013 11:55:03 +0200
+Received: from gmane by brent.tribalogic.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Jul 2013 11:55:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: brent.tribalogic.net
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130625 Thunderbird/17.0.7
+In-Reply-To: <vpqbo6hw8e9.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231177>
 
-Hi,
+'Twas brillig, and Matthieu Moy at 05/07/13 12:31 did gyre and gimble:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> 
+>> John Keeping wrote:
+>>> I don't think this is really "fix", it's more plastering over the
+>>> problem.
+>>
+>> It defaulted to SSL_VERIFY_NONE before Net::SMTP::SSL was updated, and
+>> the behavior hasn't changed now.  The new version simply asks us to be
+>> explicit about SSL_VERIFY_NONE, so we are aware about it.
+> 
+> "We" as "the Git developers", yes. But your change makes sure users are
+> _not_ aware about it. There's a long history of software ignoring SSL
+> certificates by default, I don't think we should cast in stone that we
+> don't want SSL certificate verification.
 
-Reproduce:
+For what it's worth, after upgrading here, I got this error at the
+server side:
 
-$ git clone https://github.com/cms-sw/cmsdist.git
-$ git branch -a | grep devel-gcc48
-remotes/origin/IB/CMSSW_7_0_X/devel-gcc48
-$ git checkout IB/CMSSW_7_0_X/devel-gcc48
-fatal: reference is not a tree: IB/CMSSW_7_0_X/devel-gcc48
+Jul 26 10:15:41 foo.example.com postfix/smtpd[7736]: warning: TLS
+library problem: 7736:error:14094418:SSL routines:SSL3_READ_BYTES:tlsv1
+alert unknown ca:s3_pkt.c:1256:SSL alert number 48:
 
-It has stopped to work with the last pull request. All the references on Google 
-talk about submodules, which I don't use. Any ideas what could be causing this
-issue?
 
-You can get into detached state by:
-$ git checkout origin/IB/CMSSW_7_0_X/devel-gcc48 
+This is because my postfix doesn't have a ca bundle configured but all
+other mail clients have been fine before.
 
-You also can checkout a branch by doing:
-$ git clone -b IB/CMSSW_7_0_X/devel-gcc48 https://github.com/cms-sw/cmsdist.git
-$ git branch
-* IB/CMSSW_7_0_X/devel-gcc48
+With the original patch here I could continue.
 
-Thanks,
-david
+I'd really love to see an option to set this to none in the .gitconfig,
+but agree with the principle that it should be one by default and the
+setting should over ride that.
+
+All the best
+
+Col
+
+PS I'm mainly posting this such that people searching the intertubes for
+the postfix error above and git-send-email will match at least this
+message and find the fix/workaround :)
+
+-- 
+
+Colin Guthrie
+gmane(at)colin.guthr.ie
+http://colin.guthr.ie/
+
+Day Job:
+  Tribalogic Limited http://www.tribalogic.net/
+Open Source:
+  Mageia Contributor http://www.mageia.org/
+  PulseAudio Hacker http://www.pulseaudio.org/
+  Trac Hacker http://trac.edgewall.org/
