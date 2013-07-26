@@ -1,127 +1,96 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] git-tag man: when to use lightweight or annotated tags
-Date: Fri, 26 Jul 2013 10:51:52 -0400
-Message-ID: <51F28D08.8050507@xiplink.com>
-References: <51EFA9A9.4010103@gmail.com> <7vtxjj66kn.fsf@alter.siamese.dyndns.org> <51F12BE6.80606@gmail.com> <51F13A8F.9040400@xiplink.com> <51F23706.5040009@gmail.com> <51F2375E.1080003@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/4] document 'allow-tip-sha1-in-want' capability
+Date: Fri, 26 Jul 2013 08:36:02 -0700
+Message-ID: <7vsiz12v19.fsf@alter.siamese.dyndns.org>
+References: <20130724080342.GD4425@sigill.intra.peff.net>
+	<1374836514-17741-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Daniele Segato <daniele.segato@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 26 16:53:03 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 26 17:36:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2jO9-0001oi-SJ
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 16:53:02 +0200
+	id 1V2k3x-0001aN-SV
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 17:36:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759137Ab3GZOw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jul 2013 10:52:56 -0400
-Received: from smtp122.dfw.emailsrvr.com ([67.192.241.122]:43357 "EHLO
-	smtp122.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759212Ab3GZOwz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jul 2013 10:52:55 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp22.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id 6B9D61705E4
-	for <git@vger.kernel.org>; Fri, 26 Jul 2013 10:52:55 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: from smtp106.ord1c.emailsrvr.com (smtp106.ord1c.emailsrvr.com [108.166.43.106])
-	by smtp22.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTPS id 4EE5517054C
-	for <git@vger.kernel.org>; Fri, 26 Jul 2013 10:52:55 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp6.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 0506F981EF;
-	Fri, 26 Jul 2013 10:51:42 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp6.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id B3CB5981A6;
-	Fri, 26 Jul 2013 10:51:41 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <51F2375E.1080003@gmail.com>
+	id S1757783Ab3GZPgK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 11:36:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34414 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755643Ab3GZPgH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Jul 2013 11:36:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF59B32765;
+	Fri, 26 Jul 2013 15:36:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=kp1pc56C7RV2
+	AUwrYuc2UHWOh4A=; b=TMaZaZzpCwncww1SGFolWQWyQf4Z20EweR2m2tKslSo6
+	/nUfdx61Q4HwZxbpOXh8O8p5ArqtmbdJ7CgDv66tH31DjI3D2uY2tFHA/pCs9lP9
+	VYiA6rLRXx0t/oStYq7f/aUnVeYIZx591Uw7q2PWpaARV5Beahsd4f97fVFsDko=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=S/HuCw
+	k8bAYDXhNrivQgeHP+N8dzJmtXVRn9ZdQmki/RLz9UNA+b4PQLBMRKktEqk3R0Ce
+	SL4+JP8NthmCqKvW8ULv7isatYhWClTYrimXkfEHg+nXEdZhTR4TiCuhSi4bsKmd
+	Ahv5MlPqJBk6iw8W0pLC5s41duTV0YYXt5hWw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A619F32764;
+	Fri, 26 Jul 2013 15:36:05 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ED01832763;
+	Fri, 26 Jul 2013 15:36:04 +0000 (UTC)
+In-Reply-To: <1374836514-17741-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 26
+ Jul 2013 18:01:54 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1577292A-F609-11E2-B9E5-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231188>
 
-On 13-07-26 04:46 AM, Daniele Segato wrote:
-> From 34fdcb56e5784699ffa327ebfcd2c5cd99b61d2d Mon Sep 17 00:00:00 2001
-> From: Daniele Segato <daniele.segato@gmail.com>
-> Date: Thu, 25 Jul 2013 15:33:18 +0200
-> Subject: [PATCH] git-tag man: when to use lightweight or annotated tags
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-When sending a patch to the list it's not necessary to include these headers,
-as the git tools will extract them from the email itself.
-
-Also, when sending a revision to a previously posted patch it's customary to
-include a revision number, e.g. "[PATCHv2]".
-
-> stress the difference between the two with suggestion on when the user
-> should use one in place of the other.
-> 
-> Signed-off-by: Daniele Segato <daniele.segato@gmail.com>
+> See 390eb36 (upload-pack: optionally allow fetching from the tips of
+> hidden refs - 2013-01-28) for more information.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 > ---
->  Documentation/git-tag.txt |    7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-> index 22894cb..5c6284e 100644
-> --- a/Documentation/git-tag.txt
-> +++ b/Documentation/git-tag.txt
-> @@ -26,7 +26,7 @@ to delete, list or verify tags.
->  Unless `-f` is given, the named tag must not yet exist.
-> 
->  If one of `-a`, `-s`, or `-u <key-id>` is passed, the command
-> -creates a 'tag' object, and requires a tag message.  Unless
-> +creates a 'tag' object called 'Annotated tag', and requires a tag message.
+>  Maybe this too for completeness..
 
-1) Don't capitalize "annotated" -- it's not capitalized anywhere else in the
-text.  The same goes for "lightweight".
+You are absolutely right, and this exists only on the fetch vs
+upload-pack side, so there is no need to update the introductory
+text and the change in this patch is sufficient and complete.
 
-2) I find the phrasing here awkward.  The important thing to convey is that
-"annotated tag" is a synonym for "tag object".  The proposed text implies
-that there can be other kinds of tag objects that are not annotated tags, but
-I don't think that's true.  I've mulled over different ways of introducing
-the "annotated tag" term here, but I can't come up with a succinct way to do
-it.  I think it's better to just introduce the term later.
+Thanks.
 
-> Unless
->  `-m <msg>` or `-F <file>` is given, an editor is started for the user to type
->  in the tag message.
-> 
-> @@ -36,6 +36,11 @@ are absent, `-a` is implied.
->  Otherwise just a tag reference for the SHA-1 object name of the commit
-> object is
->  created (i.e. a lightweight tag).
-> 
-> +'Annotated' and 'Lightweight' tags are not the same thing for git and you
-> shouldn't
-> +mix them up. Annotated tags are meant for release while lightweight tags are
-> +meant for private or temporary object labels. Most git commands only consider
-> +Annotated tags by default.
+>  Documentation/technical/protocol-capabilities.txt | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/Documentation/technical/protocol-capabilities.txt b/Docu=
+mentation/technical/protocol-capabilities.txt
+> index ec131b6..31cbe07 100644
+> --- a/Documentation/technical/protocol-capabilities.txt
+> +++ b/Documentation/technical/protocol-capabilities.txt
+> @@ -210,3 +210,10 @@ be shown when processing the received pack. A se=
+nd-pack client should
+>  respond with the 'quiet' capability to suppress server-side progress
+>  reporting if the local progress reporting is also being suppressed
+>  (e.g., via `push -q`, or if stderr does not go to a tty).
 > +
-
-I'm sorry, but I feel this misses the mark.
-
-It's redundant to say the tag types are not the same thing, since the fact
-that they have different names already implies that.  Also, to me the
-admonition "you shouldn't mix them up" is just a scary warning that conveys
-no helpful information.
-
-Furthermore, I think simply stating that the tag types are meant for
-particular uses without explaining why is too glib.  Although it may be
-natural in your circumstances to think of the tag types rigidly, I do not
-think that's true for all git users and I don't think the documentation
-should assume there's a One True Way to use tags.
-
-The text should give readers enough information to decide for themselves how
-they want to use the different types of tags.  That's why I included the
-annotated tag's contents in my suggestion, so that readers could figure out
-which tag type best meets their needs.
-
-What you've proposed is a step in the right direction, but I think you need
-to go further.
-
-		M.
+> +allow-tip-sha1-in-want
+> +----------------------
+> +
+> +If the upload-pack server advertises this capability, fetch-pack may
+> +send "want" lines with SHA-1s that exist at the server but are not
+> +advertised by upload-pack.
