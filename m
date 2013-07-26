@@ -1,125 +1,90 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH] branch: make sure the upstream remote is configured
-Date: Fri, 26 Jul 2013 19:39:37 +0200
-Message-ID: <1374860377-17652-1-git-send-email-cmn@elego.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 26 19:47:25 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] commit: correct advice about aborting a cherry-pick
+Date: Fri, 26 Jul 2013 23:42:00 +0530
+Message-ID: <1374862320-22637-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 26 20:15:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2m6s-0005Mo-72
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 19:47:22 +0200
+	id 1V2mYO-0003d1-PD
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 20:15:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751120Ab3GZRq7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 13:46:59 -0400
-Received: from hessy.cmartin.tk ([78.47.67.53]:45632 "EHLO hessy.dwim.me"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1750754Ab3GZRq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jul 2013 13:46:58 -0400
-X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Jul 2013 13:46:58 EDT
-Received: from cmartin.tk (unknown [IPv6:2001:6f8:900:8cd0:922b:34ff:fe1c:e3e4])
-	by hessy.dwim.me (Postfix) with ESMTPA id 2B6A78001B
-	for <git@vger.kernel.org>; Fri, 26 Jul 2013 19:39:38 +0200 (CEST)
-Received: (nullmailer pid 17689 invoked by uid 1000);
-	Fri, 26 Jul 2013 17:39:37 -0000
-X-Mailer: git-send-email 1.8.3
+	id S1758651Ab3GZSPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jul 2013 14:15:44 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:62712 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751612Ab3GZSPo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 14:15:44 -0400
+Received: by mail-pb0-f41.google.com with SMTP id rp16so2339839pbb.28
+        for <git@vger.kernel.org>; Fri, 26 Jul 2013 11:15:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=EVlgiQw2PJ4srllIjzoazG+nK58Bbn9sDg23N2dtFBo=;
+        b=E59BXaqknD6M4UHLa7uaB6Dx1LKpIQLG098qnzrVW3shCPvSZSP03kRs6xtxV13LxQ
+         cIA+Gb+4rpTCerNw845V9bUrfOBHIPJgUWxYvTdta1pY6JofTrxzM4on5HCYlWJraw7T
+         qvLF+RJ2bWsb7RKJNeHfBJhueFYIFmxwag6dP9pHvYn64yANnIqbXCNund5MXnPzNweQ
+         2In5k5OdX0Tlcmp/wXRCwM2GTe00Cvf1TL2W0Ol/4eZXOXQQ8UKwSe1k4g6h1WHkEc/f
+         hSGojhu5MuEHIfYY9CLrCm+gyLQ9EE/Ze4a8dmGjjegpxz8Nhxr1C6lIRTul3yViFpqz
+         bDXw==
+X-Received: by 10.68.255.1 with SMTP id am1mr54857017pbd.68.1374862543743;
+        Fri, 26 Jul 2013 11:15:43 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.210.116])
+        by mx.google.com with ESMTPSA id nv6sm61465047pbc.6.2013.07.26.11.15.41
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 26 Jul 2013 11:15:42 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc0.1.g8f6a3e5.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231193>
 
-A command of e.g.
+When a cherry-pick results in an empty commit, git prints:
 
-    git push --set-upstream /tmp/t master
+  The previous cherry-pick is now empty, possibly due to conflict resolution.
+  If you wish to commit it anyway, use:
 
-will call install_branch_config() with a remote name of "/tmp/t". This
-function will set the 'branch.master.remote' key to, which is
-nonsensical as there is no remote by that name.
+      git commit --allow-empty
 
-Instead, make sure that the remote given does exist when writing the
-configuration and warn if it does not. In order to distinguish named
-remotes, introduce REMOTE_NONE as the default origin for remotes,
-which the functions reading from the different sources will
-overwrite. Thus, an origin of REMOTE_NONE means it has been created at
-run-time in order to push to it.
+  Otherwise, please use 'git reset'
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+The last line is plain wrong in the case of a ranged pick, as a 'git
+reset' will fail to remove $GIT_DIR/sequencer, failing a subsequent
+cherry-pick or revert.  Change the advice to:
+
+  git cherry-pick --abort
+
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
+ Another candidate for maint?
 
-It's somewhat surprising that there didn't seem to be a way to
-distinguish named remotes from those created from a command-line path,
-but I guess nobody needed to.
+ I'd also really like to squelch this with an advice.* variable; any
+ suggestions?
 
- branch.c                 | 11 +++++++++++
- remote.h                 |  1 +
- t/t5523-push-upstream.sh |  5 +++++
- 3 files changed, 17 insertions(+)
+ builtin/commit.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/branch.c b/branch.c
-index c5c6984..cefb8f6 100644
---- a/branch.c
-+++ b/branch.c
-@@ -53,6 +53,7 @@ void install_branch_config(int flag, const char *loca=
-l, const char *origin, cons
- 	int remote_is_branch =3D !prefixcmp(remote, "refs/heads/");
- 	struct strbuf key =3D STRBUF_INIT;
- 	int rebasing =3D should_setup_rebase(origin);
-+	struct remote *r =3D remote_get(origin);
-=20
- 	if (remote_is_branch
- 	    && !strcmp(local, shortname)
-@@ -62,6 +63,16 @@ void install_branch_config(int flag, const char *loc=
-al, const char *origin, cons
- 		return;
- 	}
-=20
-+	/*
-+	 * Make sure that the remote passed is a configured remote, or
-+	 * we end up setting 'branch.foo.remote =3D /tmp/t' which is
-+	 * nonsensical.
-+	 */
-+	if (origin && strcmp(origin, ".") && r->origin =3D=3D REMOTE_NONE) {
-+		warning(_("there is no remote named '%s', no upstream configuration =
-will be set."), origin);
-+		return;
-+	}
-+
- 	strbuf_addf(&key, "branch.%s.remote", local);
- 	git_config_set(key.buf, origin ? origin : ".");
-=20
-diff --git a/remote.h b/remote.h
-index cf56724..92f6e33 100644
---- a/remote.h
-+++ b/remote.h
-@@ -2,6 +2,7 @@
- #define REMOTE_H
-=20
- enum {
-+	REMOTE_NONE,
- 	REMOTE_CONFIG,
- 	REMOTE_REMOTES,
- 	REMOTE_BRANCHES
-diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-index 3683df1..e84c2f8 100755
---- a/t/t5523-push-upstream.sh
-+++ b/t/t5523-push-upstream.sh
-@@ -71,6 +71,11 @@ test_expect_success 'push -u HEAD' '
- 	check_config headbranch upstream refs/heads/headbranch
- '
-=20
-+test_expect_success 'push -u <url>' '
-+        git push -u parent HEAD 2>err &&
-+        grep "no upstream configuration will be set" err
-+'
-+
- test_expect_success TTY 'progress messages go to tty' '
- 	ensure_fresh_upstream &&
-=20
---=20
-1.8.3
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 003bd7d..1b213f7 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -64,7 +64,10 @@ N_("The previous cherry-pick is now empty, possibly due to conflict resolution.\
+ "\n"
+ "    git commit --allow-empty\n"
+ "\n"
+-"Otherwise, please use 'git reset'\n");
++"Otherwise, use:\n"
++"\n"
++"    git cherry-pick --abort\n"
++"\n");
+ 
+ static const char *use_message_buffer;
+ static const char commit_editmsg[] = "COMMIT_EDITMSG";
+-- 
+1.8.4.rc0.1.g8f6a3e5.dirty
