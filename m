@@ -1,84 +1,87 @@
-From: Kristian Freed <kristian.freed@gmail.com>
-Subject: What is the best way to perform a complex refactoring spanning
- multiple repositories?
-Date: Fri, 26 Jul 2013 11:56:44 +0100
-Message-ID: <CAFw3YtRyTAehOWpRkpwLWUjOFC6eB7Mk6=r_RGcjREGGHNafKA@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 5/4] document 'allow-tip-sha1-in-want' capability
+Date: Fri, 26 Jul 2013 18:01:54 +0700
+Message-ID: <1374836514-17741-1-git-send-email-pclouds@gmail.com>
+References: <20130724080342.GD4425@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 26 12:57:13 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 26 13:01:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2fhv-0000Cc-Us
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 12:57:12 +0200
+	id 1V2fmI-0004Oe-O6
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 13:01:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758286Ab3GZK5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jul 2013 06:57:08 -0400
-Received: from mail-wg0-f42.google.com ([74.125.82.42]:35480 "EHLO
-	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756819Ab3GZK5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jul 2013 06:57:06 -0400
-Received: by mail-wg0-f42.google.com with SMTP id j13so651167wgh.5
-        for <git@vger.kernel.org>; Fri, 26 Jul 2013 03:57:04 -0700 (PDT)
+	id S1758578Ab3GZLBi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 07:01:38 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:51338 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758575Ab3GZLBh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 07:01:37 -0400
+Received: by mail-pd0-f182.google.com with SMTP id r10so2807749pdi.27
+        for <git@vger.kernel.org>; Fri, 26 Jul 2013 04:01:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=L9nq510TiHq1yL69vxPocstmX4pflmIQuKNjWKl8n94=;
-        b=MlfhHz72r9XI0nycl+WOUOFD6C0TFgDmNUaaU67AApT3o7GL5K8mt1/Mpn21vQWiHS
-         CxvtQAbGuoaKCOCg/JZZgaeqwM7b7J2NQDV0cZ6lM1Pe491VGcQESYDdV7bn5vR3y+ET
-         4T/EWuoRvaTeY7b1ulCDpcxlkK8IRAF+avoHGkYX7SVxhwQcyNaeCx6WdBfBNgE0+PJx
-         R480/4mv33iKdB+26AfOZEC5pQyDO427XYOFZlRS4Eyd6f7fb0kThq+O/hdPzRaiFyDS
-         Lz0ESj8GW8BS+R7KDK0wBdr5G110+0b64x/IcLaqO9RRZjdO5FjcxEoCRLdelx8R5F4v
-         VTBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=L9nq510TiHq1yL69vxPocstmX4pflmIQuKNjWKl8n94=;
-        b=aWyD9l83xaKN5BHFRj63wHjvRSh/2guwUOgapK+vOzciz7WXlFvRO4GpaOEPXMkMZo
-         PFMh69jAj4n7gNUG2SrKgctXO1C/2d73uCgUB3tDcCgk2vT5yi18VPcmgzOYh2nBkKT+
-         FaFEcnNre61SS1bA9aWnOKCDEGIndJZBGhJ7+bejZHckJb1yCCnSh1i4aL2f90xhdjYj
-         jlL2yPejCLGgZS/CFa73AmGBOVftgdXwGIJJ0g0VTKZCjwa0iXBzFD539dY8Drx5OdaO
-         tWnrawjPfiSd4bEdx1YMm0ET1gOBiZQ7j4anEQrewV7fSCXNfgf8ttWb6nTMOb/io4b2
-         t3/Q==
-X-Received: by 10.180.78.137 with SMTP id b9mr5259834wix.16.1374836224636;
- Fri, 26 Jul 2013 03:57:04 -0700 (PDT)
-Received: by 10.194.77.11 with HTTP; Fri, 26 Jul 2013 03:56:44 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=zSBeZhzS1m21INItzNEFSbSYYMH0RIRE+2+j5QZljE4=;
+        b=Ua1s5khWDD4KxI8PjVUxGaUbntWzZBCYEl2l6kHfgX6tOyAp45vAZK+BOvdImrg44p
+         kdbjBnty0XeujJF4qHLvIsRfxRHpgPfPGy3Igjzgl3MQ2m+MsjzKuX4sdEh2QrkM+SWA
+         pL2pQwRzezQdHiz4I2zJxhTCal9zy1mfWpvaLIMeDUDe/sGkG+tT1zVwcM+pKZRcfmck
+         wvYK2cmr9bYjLSkNRJE/q65TBLwsIZ/ib4BxUI5zhD5OxbmsrmkEtW7LOkSAsTZ8JgR0
+         OJuZ9IwPKW7WQU7KEX/y76PDpSLQM4GnuvIYGkMdPBXAZ0wdd8NrnZVpttl/0QBnsBMd
+         Ye7A==
+X-Received: by 10.68.238.230 with SMTP id vn6mr38827282pbc.66.1374836497209;
+        Fri, 26 Jul 2013 04:01:37 -0700 (PDT)
+Received: from lanh ([115.73.246.132])
+        by mx.google.com with ESMTPSA id fa5sm18620633pbb.3.2013.07.26.04.01.33
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 26 Jul 2013 04:01:36 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Fri, 26 Jul 2013 18:02:02 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
+In-Reply-To: <20130724080342.GD4425@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231180>
 
-Hi,
+See 390eb36 (upload-pack: optionally allow fetching from the tips of
+hidden refs - 2013-01-28) for more information.
 
-I need to re-organize a project using git. This project currently has
-3 separate (central) repositories and I will need to move a large
-number of files back and forth between them. While doing this, there
-is development going on on each branch, and the restructuring will
-take some time. I have been continuously rebasing my refactor branches
-from master in each respective repository.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Maybe this too for completeness..
 
-Is there an established way of doing this sort of complex cross
-repository refactoring in a way that preserves the history across
-repositories and takes advantage of git's rename merge logic across
-repositories, by say moving all repos into a third one, do the merge
-and move back?
+ Documentation/technical/protocol-capabilities.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Effectively, I have three repositories, A, B, and C. I want to move
-files from B to A and C and preserve history. This is not a simple
-move of one directory, but a large number of individual files being
-moved to new locations, renamed, updated etc. I have been working
-across A, B, and C, moving and updating files, but this will obviously
-not keep the history of the files being moved across repositories. I
-imagine that it would be possible to create a new repository D, import
-A, B, and C into sub directories, rebase to merge the individual
-commits on A, B, and C into one new big commit on D that will make git
-understand that files have been moved across, not just removed in one
-place and deleted from another, then apply the changes back to each
-individual repository?
-
-Thanks,
-Kristian
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Docume=
+ntation/technical/protocol-capabilities.txt
+index ec131b6..31cbe07 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -210,3 +210,10 @@ be shown when processing the received pack. A send=
+-pack client should
+ respond with the 'quiet' capability to suppress server-side progress
+ reporting if the local progress reporting is also being suppressed
+ (e.g., via `push -q`, or if stderr does not go to a tty).
++
++allow-tip-sha1-in-want
++----------------------
++
++If the upload-pack server advertises this capability, fetch-pack may
++send "want" lines with SHA-1s that exist at the server but are not
++advertised by upload-pack.
+--=20
+1.8.2.83.gc99314b
