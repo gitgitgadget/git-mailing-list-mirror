@@ -1,99 +1,141 @@
-From: Colin Guthrie <gmane@colin.guthr.ie>
-Subject: Re: [PATCH] send-email: squelch warning from Net::SMTP::SSL
-Date: Fri, 26 Jul 2013 10:29:40 +0100
-Message-ID: <kstfht$p0e$1@ger.gmane.org>
-References: <1373019511-13232-1-git-send-email-artagnon@gmail.com> <20130705104557.GL9161@serenity.lan> <CALkWK0nWvmuxfZJF_Mk2MmJNxz4+=46m_pBtzjSZprLxABhNeA@mail.gmail.com> <vpqbo6hw8e9.fsf@anie.imag.fr>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] config doc: quote paths, fixing tilde-interpretation
+Date: Fri, 26 Jul 2013 16:12:02 +0530
+Message-ID: <1374835322-6452-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 26 11:55:12 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 26 12:45:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2ejv-000660-N1
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 11:55:12 +0200
+	id 1V2fWx-0005fU-9U
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 12:45:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757776Ab3GZJzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jul 2013 05:55:07 -0400
-Received: from plane.gmane.org ([80.91.229.3]:34402 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756079Ab3GZJzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jul 2013 05:55:06 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1V2ejn-0005yW-RR
-	for git@vger.kernel.org; Fri, 26 Jul 2013 11:55:03 +0200
-Received: from brent.tribalogic.net ([78.86.109.144])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Jul 2013 11:55:03 +0200
-Received: from gmane by brent.tribalogic.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Jul 2013 11:55:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: brent.tribalogic.net
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130625 Thunderbird/17.0.7
-In-Reply-To: <vpqbo6hw8e9.fsf@anie.imag.fr>
+	id S1756819Ab3GZKpr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 06:45:47 -0400
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:39767 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754686Ab3GZKpq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 06:45:46 -0400
+Received: by mail-pb0-f51.google.com with SMTP id um15so1893587pbc.24
+        for <git@vger.kernel.org>; Fri, 26 Jul 2013 03:45:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=bq+8LAjxR/FMWwXoJAIzoANLyFlzaThQwNGmOqTjxas=;
+        b=SyA9V4Cj10ef8W6vSvWHU+6c+xLwqZ9CxfnedtXFqZ61OUSjCYuf6im2r2ywJxECP5
+         KRKvKel2Bdt/g1EyRUdrGvSNQW7pkjf4HUcMQngS/ZI3gU6cP0l7obxhYsy5LO/HRWEx
+         EQOboQtl9QScuGv/+ScyweLkxuzvxWPWXERLBUWFDgFVY9QY8bibKmr1xW3pgl+6NZxh
+         6hhiHcZWvFZ/ijSENk4Af83dAxy+ml1+7p2k115+p+0xo2IOhZ88jPQNo5kV7hwooXcs
+         OfKkmxDMFS5/K2DfFdZs8lh9Myop86vUdQaxjgfORNbLq/CGq8ajPpMnv50uKXMnIKB1
+         hcWw==
+X-Received: by 10.67.22.69 with SMTP id hq5mr32284839pad.174.1374835545986;
+        Fri, 26 Jul 2013 03:45:45 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.210.116])
+        by mx.google.com with ESMTPSA id nv6sm59477444pbc.6.2013.07.26.03.45.43
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 26 Jul 2013 03:45:45 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.3.820.ge3d4493.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231178>
 
-'Twas brillig, and Matthieu Moy at 05/07/13 12:31 did gyre and gimble:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
-> 
->> John Keeping wrote:
->>> I don't think this is really "fix", it's more plastering over the
->>> problem.
->>
->> It defaulted to SSL_VERIFY_NONE before Net::SMTP::SSL was updated, and
->> the behavior hasn't changed now.  The new version simply asks us to be
->> explicit about SSL_VERIFY_NONE, so we are aware about it.
-> 
-> "We" as "the Git developers", yes. But your change makes sure users are
-> _not_ aware about it. There's a long history of software ignoring SSL
-> certificates by default, I don't think we should cast in stone that we
-> don't want SSL certificate verification.
+The --global section of git-config(1) currently reads like:
 
-For what it's worth, after upgrading here, I got this error at the
-server side:
+  For writing options: write to global /.gitconfig file rather than the
+                                       ^
+				       start tilde
 
-Jul 26 10:15:41 foo.example.com postfix/smtpd[7736]: warning: TLS
-library problem: 7736:error:14094418:SSL routines:SSL3_READ_BYTES:tlsv1
-alert unknown ca:s3_pkt.c:1256:SSL alert number 48:
+  repository .git/config, write to $XDG_CONFIG_HOME/git/config file if
+  this file exists and the/.gitconfig file doesn=E2=80=99t.
+                          ^
+			  end tilde
 
+Instead of tilde (~) being interpreted literally, asciidoc subscripts
+the text between the two tildes.  To fix this problem, use backticks (`=
+)
+to quote all the paths in the file uniformly, just like config.txt does=
+=2E
 
-This is because my postfix doesn't have a ca bundle configured but all
-other mail clients have been fine before.
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ Candidate for maint?
 
-With the original patch here I could continue.
+ Documentation/git-config.txt | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-I'd really love to see an option to set this to none in the .gitconfig,
-but agree with the principle that it should be one by default and the
-setting should over ride that.
-
-All the best
-
-Col
-
-PS I'm mainly posting this such that people searching the intertubes for
-the postfix error above and git-send-email will match at least this
-message and find the fix/workaround :)
-
--- 
-
-Colin Guthrie
-gmane(at)colin.guthr.ie
-http://colin.guthr.ie/
-
-Day Job:
-  Tribalogic Limited http://www.tribalogic.net/
-Open Source:
-  Mageia Contributor http://www.mageia.org/
-  PulseAudio Hacker http://www.pulseaudio.org/
-  Trac Hacker http://trac.edgewall.org/
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.tx=
+t
+index 34b0894..2dbe486 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -96,29 +96,31 @@ OPTIONS
+ 	names are not.
+=20
+ --global::
+-	For writing options: write to global ~/.gitconfig file rather than
+-	the repository .git/config, write to $XDG_CONFIG_HOME/git/config file
+-	if this file exists and the ~/.gitconfig file doesn't.
++	For writing options: write to global `~/.gitconfig` file
++	rather than the repository `.git/config`, write to
++	`$XDG_CONFIG_HOME/git/config` file if this file exists and the
++	`~/.gitconfig` file doesn't.
+ +
+-For reading options: read only from global ~/.gitconfig and from
+-$XDG_CONFIG_HOME/git/config rather than from all available files.
++For reading options: read only from global `~/.gitconfig` and from
++`$XDG_CONFIG_HOME/git/config` rather than from all available files.
+ +
+ See also <<FILES>>.
+=20
+ --system::
+-	For writing options: write to system-wide $(prefix)/etc/gitconfig
+-	rather than the repository .git/config.
++	For writing options: write to system-wide
++	`$(prefix)/etc/gitconfig` rather than the repository
++	`.git/config`.
+ +
+-For reading options: read only from system-wide $(prefix)/etc/gitconfi=
+g
++For reading options: read only from system-wide `$(prefix)/etc/gitconf=
+ig`
+ rather than from all available files.
+ +
+ See also <<FILES>>.
+=20
+ --local::
+-	For writing options: write to the repository .git/config file.
++	For writing options: write to the repository `.git/config` file.
+ 	This is	the default behavior.
+ +
+-For reading options: read only from the repository .git/config rather =
+than
++For reading options: read only from the repository `.git/config` rathe=
+r than
+ from all available files.
+ +
+ See also <<FILES>>.
+@@ -218,9 +220,9 @@ $(prefix)/etc/gitconfig::
+=20
+ $XDG_CONFIG_HOME/git/config::
+ 	Second user-specific configuration file. If $XDG_CONFIG_HOME is not s=
+et
+-	or empty, $HOME/.config/git/config will be used. Any single-valued
++	or empty, `$HOME/.config/git/config` will be used. Any single-valued
+ 	variable set in this file will be overwritten by whatever is in
+-	~/.gitconfig.  It is a good idea not to create this file if
++	`~/.gitconfig`.  It is a good idea not to create this file if
+ 	you sometimes use older versions of Git, as support for this
+ 	file was added fairly recently.
+=20
+--=20
+1.8.3.3.820.ge3d4493.dirty
