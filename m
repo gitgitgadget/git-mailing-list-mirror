@@ -1,83 +1,115 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Fwd: Kick off for Git 1.8.4 l10n round 1
-Date: Fri, 26 Jul 2013 15:19:12 +0800
-Message-ID: <CANYiYbFokr5WJ_UdNAay0=KnAp4_8Hp89WUw5pEb+Qdi4FdwXA@mail.gmail.com>
-References: <CANYiYbHM-VirTvCZp20z2GD7gyGUdJbPGzngKD+Lf7KVbXk95A@mail.gmail.com>
+From: =?koi8-r?B?y9PP18nSwc4=?= <xowirun@yandex.ru>
+Subject: Re: git and cyrillic branches
+Date: Fri, 26 Jul 2013 11:35:01 +0400
+Message-ID: <1094181374824101@web4h.yandex.ru>
+References: <922031374754788@web29h.yandex.ru> <51F1D5F7.5060101@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=GB2312
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 26 09:19:20 2013
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Konstantin Khomoutov <kostix+git@007spb.ru>,
+	martin.langhoff@gmail.com
+To: =?utf-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Jul 26 09:41:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2cJ5-0003ah-7U
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 09:19:19 +0200
+	id 1V2ceJ-0000Jm-Uh
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 09:41:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756177Ab3GZHTO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 03:19:14 -0400
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:37315 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753534Ab3GZHTO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Jul 2013 03:19:14 -0400
-Received: by mail-wg0-f52.google.com with SMTP id b13so2477767wgh.19
-        for <git@vger.kernel.org>; Fri, 26 Jul 2013 00:19:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=nW1pIILKPXkSIGp7kb5vygZzcXW7LybPiNLdEMVRO6o=;
-        b=u5y8e+r9zZoWH3PqW4cXdfuIK8+voIPGaCpNDOCUKOU2NpIzfoYfB/RMEBD+5CRm5+
-         pTnqUqEpxPx9v6qIv4yXYOAa4VM8tRUg6z0zFBFOAksC6aPACP7q+0Ce29BfHNS81hlV
-         mGYa5GR4dZKsNYk018k5xCeGveFX+gD/1+sgVmdZdf2f3NqntCZdzHLi80eBA8XoZmVf
-         xuJ7WEtWaRrZqx0VIgmtos91/4ysWYUigETjJRQsig6F+kgA5/qAPHAY5GciIfBhiSYJ
-         TdcflUpaTlCn5golQj2mFdV7ouY1NxEM4ii+rWNF91Z8a6tbmjM3Y8Mevdex34pnMpUg
-         lvpQ==
-X-Received: by 10.194.24.227 with SMTP id x3mr12594771wjf.7.1374823152435;
- Fri, 26 Jul 2013 00:19:12 -0700 (PDT)
-Received: by 10.194.176.129 with HTTP; Fri, 26 Jul 2013 00:19:12 -0700 (PDT)
-In-Reply-To: <CANYiYbHM-VirTvCZp20z2GD7gyGUdJbPGzngKD+Lf7KVbXk95A@mail.gmail.com>
+	id S1753454Ab3GZHlM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 03:41:12 -0400
+Received: from forward1h.mail.yandex.net ([84.201.187.146]:46630 "EHLO
+	forward1h.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752595Ab3GZHlL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 03:41:11 -0400
+X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Jul 2013 03:41:11 EDT
+Received: from web4h.yandex.ru (web4h.yandex.ru [84.201.186.33])
+	by forward1h.mail.yandex.net (Yandex) with ESMTP id BD2EF9E0690;
+	Fri, 26 Jul 2013 11:35:02 +0400 (MSK)
+Received: from 127.0.0.1 (localhost.localdomain [127.0.0.1])
+	by web4h.yandex.ru (Yandex) with ESMTP id 87EF3D5801A;
+	Fri, 26 Jul 2013 11:35:01 +0400 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1374824102; bh=PoaW7Gg5OsCYzxAzJOrzE8lrfhXXup0wKgC2NB4PjbQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=Bsbt/K8rc7MMeZv4t3CQIzjKwFFfjOCXaEuF8AcyiHfJcB+uWwMXC4GqIzYFbhDEo
+	 +b25CgI9m/uCzskqd76aKSfzF8Beq+RWDHbQrDwUDMZrddUmx1pGx+xAJADNO5il0c
+	 XwQNkJF6WytTubGFzfn7Bh7otqhhPdHqaL+LKc8Y=
+Received: from client.yota.ru (client.yota.ru [188.162.36.99]) by web4h.yandex.ru with HTTP;
+	Fri, 26 Jul 2013 11:35:01 +0400
+In-Reply-To: <51F1D5F7.5060101@web.de>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231171>
-
----------- Forwarded message ----------
-Hi,
-
-Since Git v1.8.4-rc0 had already been released, it's time to start new =
-round
-of git l10n. This time there are 99 new messages need to be translated.
-
-The new "git.pot" is generated in commit v1.8.4-rc0-1-g28b3cff:
-
-    l10n: git.pot: v1.8.4 round 1 (99 new, 46 removed)
-
-    Generate po/git.pot from v1.8.4-rc0 for git v1.8.4 l10n round 1.
-
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-
-You can get it from the usual place:
-
-    https://github.com/git-l10n/git-po/
-
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in =A1=B0po/README" file.
-
---
-Jiang Xin
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231172>
 
 
---=20
-=BD=AF=F6=CE
 
-=B1=B1=BE=A9=C8=BA=D3=A2=BB=E3=D0=C5=CF=A2=BC=BC=CA=F5=D3=D0=CF=DE=B9=AB=
-=CB=BE
-=D3=CA=BC=FE: worldhello.net@gmail.com
-=CD=F8=D6=B7: http://www.ossxp.com/
-=B2=A9=BF=CD: http://www.worldhello.net/
-=CE=A2=B2=A9: http://weibo.com/gotgit/
-=B5=E7=BB=B0: 18601196889
+26.07.2013, 05:50, "Torsten B=C3=B6gershausen" <tboegi@web.de>:
+> On 2013-07-25 14.19, =D0=B8=D0=B2=D0=B0=D0=BD=D0=BE=D0=B2 =D0=B8=D0=B2=
+=D0=B0=D0=BD wrote:
+>
+>> =C2=A0hello! there is problem vith git and cyrillic (utf-8) names of=
+ branches. branch creates perfectly, but when i clone this remote branc=
+h to local host, there are 2 bugs:
+>> =C2=A01) "git branch" doesnt show checked branch with asterisk (whil=
+e on remote server it does)
+>> =C2=A02) "git push" gives 2 errors: "fatal: BRANCH_NAME cannot be re=
+solved to branch." and "fatal: The remote end hung up unexpectedly"
+>> =C2=A0thanks.
+>
+> It could be helpful if you could provide more information.
+> The best could be a step-by-step instruction using a some "mini repo"=
+,
+> so that we we can reproduce the problem.
+> I have done an illustrating example using UTF-8,
+> (not cyrillic, I don't have these letters on my keyboard ;-)
+>
+> tb@linux:~$ mkdir cyrill
+> tb@linux:~$ cd cyrill/
+> tb@linux:~/cyrill$ git init
+> Initialized empty Git repository in /home/tb/cyrill/.git/
+> tb@linux:~/cyrill$ echo File>File
+> tb@linux:~/cyrill$ git checkout -b br=C3=A4nch
+> Switched to a new branch 'br=C3=A4nch'
+> tb@linux:~/cyrill$ git add File
+> tb@linux:~/cyrill$ git commit -m "Add File"
+> [br=C3=A4nch (root-commit) e39d84e] Add File
+> =C2=A01 file changed, 1 insertion(+)
+> =C2=A0create mode 100644 "File"
+> tb@linux:~/cyrill$ git branch
+> * br=C3=A4nch
+> tb@linux:~/cyrill$
+>
+> tb@macos:~> git clone tb@linux:~/cyrill
+> Cloning into 'cyrill'...
+> tb@linux's password:
+> remote: Counting objects: 3, done.
+> Receiving objects: 100% (3/3), done.
+> remote: Total 3 (delta 0), reused 0 (delta 0)
+> tb@macos:~> cd cyrill/
+> tb@macos:~/cyrill> git branch
+> * br=C3=A4nch
+> tb@macos:~/cyrill> ls -l
+> total 8
+> -rw-r--r-- =C2=A01 tb =C2=A0staff =C2=A06 Jul 26 03:39 File
+> tb@macos:~/cyrill>
+>
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> Other question:
+> what does (on Mac OS)
+> git config core.precomposeunicode
+> give you?
+> /Torsten
+
+okay, i've changed core.precomposeunicode to true and seems it solved t=
+he problem, branches are listed just fine and git push goes good as wel=
+l. i didn't look that way at first time, thought that is case for filen=
+ames only, not branches.
+thank you all for responces, i guess this time problem is really solved=
+ now. :)
