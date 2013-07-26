@@ -1,84 +1,97 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH] branch: make sure the upstream remote is configured
-Date: Sat, 27 Jul 2013 00:29:47 +0200
-Message-ID: <1374877787.2670.6.camel@centaur.cmartin.tk>
-References: <1374860377-17652-1-git-send-email-cmn@elego.de>
-	 <20130726184311.GA29799@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] commit: correct advice about aborting a cherry-pick
+Date: Fri, 26 Jul 2013 18:43:59 -0400
+Message-ID: <20130726224359.GA3928@sigill.intra.peff.net>
+References: <1374862320-22637-1-git-send-email-artagnon@gmail.com>
+ <20130726191631.GD29799@sigill.intra.peff.net>
+ <CALkWK0=qYF=r+Ocb1Z1E=Oteau=AAXR7wnKakt-8Cejwz6Usrg@mail.gmail.com>
+ <20130726212438.GA1388@sigill.intra.peff.net>
+ <20130726213705.GJ14690@google.com>
+ <20130726214036.GB1388@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jul 27 00:39:24 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 27 00:44:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2qfT-0003s8-UY
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 00:39:24 +0200
+	id 1V2qk4-0007YY-Ga
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 00:44:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757515Ab3GZWjU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 18:39:20 -0400
-Received: from mx0.elegosoft.com ([78.47.87.163]:37283 "EHLO mx0.elegosoft.com"
+	id S1758265Ab3GZWoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jul 2013 18:44:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33082 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756108Ab3GZWjT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jul 2013 18:39:19 -0400
-X-Greylist: delayed 568 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Jul 2013 18:39:19 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 3EC09DF4DB;
-	Sat, 27 Jul 2013 00:29:50 +0200 (CEST)
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6ZLyClLp8Djf; Sat, 27 Jul 2013 00:29:50 +0200 (CEST)
-Received: from [192.168.1.4] (p57A97817.dip0.t-ipconnect.de [87.169.120.23])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 0D804DF4D9;
-	Sat, 27 Jul 2013 00:29:50 +0200 (CEST)
-In-Reply-To: <20130726184311.GA29799@sigill.intra.peff.net>
-X-Mailer: Evolution 3.6.3-1 
+	id S1757778Ab3GZWoB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 18:44:01 -0400
+Received: (qmail 13041 invoked by uid 102); 26 Jul 2013 22:44:02 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 26 Jul 2013 17:44:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jul 2013 18:43:59 -0400
+Content-Disposition: inline
+In-Reply-To: <20130726214036.GB1388@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231212>
 
-On Fri, 2013-07-26 at 14:43 -0400, Jeff King wrote:
-> On Fri, Jul 26, 2013 at 07:39:37PM +0200, Carlos Mart=C3=ADn Nieto wr=
-ote:
->=20
-> > A command of e.g.
-> >=20
-> >     git push --set-upstream /tmp/t master
-> >=20
-> > will call install_branch_config() with a remote name of "/tmp/t". T=
-his
-> > function will set the 'branch.master.remote' key to, which is
-> > nonsensical as there is no remote by that name.
->=20
-> Is it nonsensical? It does not make sense for the @{upstream} magic
-> token, because we will not have a branch in tracking branch refs/remo=
-tes
+On Fri, Jul 26, 2013 at 05:40:36PM -0400, Jeff King wrote:
 
-This was the main point, yes; the only time I've seen it used is by
-mistake/misunderstanding, and thinking that you wouldn't want to do
-something like what's below.
+> > Jeff King wrote:
+> > 
+> > > Your patch is just swapping out "git reset" for "cherry-pick --abort",
+> > > so I think that is a good improvement in the meantime.
+> > 
+> > Um, wasn't the idea of the original message that you can run "git
+> > reset" and then "git cherry-pick --continue"?
+> 
+> Maybe. :)
+> 
+> I missed that subtlety. Of my "three things you would want to do", that
+> means it was _trying_ say number 2, how to skip, rather than 3, how to
+> abort. If that is the case, then it should probably explain the sequence
+> of steps as "reset and then --continue" to make it more clear.
+> 
+> I.e., a patch is needed, but Ram's is going in the opposite direction.
 
-You are also unable to do this kind of thing through git-branch, and as
-it seemed to be an oversight, I wanted to tighten it up.
+I played around a bit with the test cases that Ram showed. It seems like
+the advice needed is different depending on whether you are in a single
+or multi-commit cherry-pick.
 
-> to point to. But the configuration would still affect how "git pull"
-> chooses a branch to fetch and merge.
->=20
-> I.e., you can currently do:
->=20
->   git push --set-upstream /tmp/t master
->   git pull ;# pulls from /tmp/t master
+So if we hit an empty commit and you want to:
 
-Interestingly, this actually fetches the right branch from the remote. =
-I
-wasn't expecting something like this to work at all.
+  1. Make an empty commit, then always run "git commit --allow-empty".
 
-Somewhat doubtful that this usage is something you'd really want to do,
-I see that it does behave properly.
+  2. Skip this commit, then if:
 
-   cmn
+     a. this is a single commit cherry-pick, you run "git reset" (and
+        nothing more, the cherry pick is finished; running "cherry-pick
+        --continue" will yield an error).
+
+     b. this is a multi-commit cherry-pick, you run "git reset",
+        followed by "git cherry-pick --continue"
+
+  3. Abort the commit, run "git cherry-pick --abort"
+
+Let's assume that the instructions we want to give the user are how to
+do options 1 and 2. I do not mind omitting 3, as it should be reasonably
+obvious that "cherry-pick --abort" is always good way to abort.
+
+So we give good instructions for the single-commit case, but bad
+instructions for the multi-commit case. Ram's patch suggests --abort
+instead of reset, which is the same for the single-commit case, but
+suggests 3 instead of 2 for the multi-patch.
+
+I think instead we would want to leave the single-commit case alone, and
+for the multi-commit case add "...and then cherry-pick --continue". That
+message is generated from within git-commit, though; I guess it would
+need to learn about the difference between single/multi cherry-picks.
+
+-Peff
