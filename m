@@ -1,104 +1,95 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] commit: correct advice about aborting a cherry-pick
-Date: Fri, 26 Jul 2013 16:08:57 -0700
-Message-ID: <20130726230857.GK14690@google.com>
-References: <1374862320-22637-1-git-send-email-artagnon@gmail.com>
- <20130726191631.GD29799@sigill.intra.peff.net>
- <CALkWK0=qYF=r+Ocb1Z1E=Oteau=AAXR7wnKakt-8Cejwz6Usrg@mail.gmail.com>
- <20130726212438.GA1388@sigill.intra.peff.net>
- <20130726213705.GJ14690@google.com>
- <20130726214036.GB1388@sigill.intra.peff.net>
- <20130726224359.GA3928@sigill.intra.peff.net>
- <20130726230527.GA12968@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] branch: make sure the upstream remote is configured
+Date: Fri, 26 Jul 2013 19:12:11 -0400
+Message-ID: <20130726231211.GB12968@sigill.intra.peff.net>
+References: <1374860377-17652-1-git-send-email-cmn@elego.de>
+ <20130726184311.GA29799@sigill.intra.peff.net>
+ <1374877787.2670.6.camel@centaur.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jul 27 01:09:19 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Sat Jul 27 01:12:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2r8Q-0001Bo-HY
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 01:09:18 +0200
+	id 1V2rBJ-0003Q2-Ci
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 01:12:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760147Ab3GZXJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jul 2013 19:09:07 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:43780 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758339Ab3GZXJB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jul 2013 19:09:01 -0400
-Received: by mail-pa0-f49.google.com with SMTP id bi5so3777516pad.22
-        for <git@vger.kernel.org>; Fri, 26 Jul 2013 16:09:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=HMINtYtTQPocoSwgqRoQs6wu3/UQ5eHNl265J13EK+s=;
-        b=wjQwmYjslTojMBaa0rIoMshkBjv2HkF1Ko85FuXsxIca36Ntjr5Gyz016mizM4oSRT
-         Fcl9zCG9RHmPJnQrlCUfTxBQEpIMaaII5TeOaqcfSipDsKKjD0qTags1wGkvzi0fMsoQ
-         gpeTg5OuNITLjN/U+s3INM5A6F4uWCeIxYhUQe4jBaGlu+aPY10e1NXGXe917F6lqFWz
-         0002KDnVNn5z/Vatj87/lsDawW/Qe2h0GIox8S2Yn0z6j8HLEktF3EYYA8b3sTtRZusx
-         DbW0IZVcq8gKENf5DcxS4QPrgTw54MZc3xNX0Y2/QBnTd3qsVj4dnLb/ZFLx/IJQ3iJe
-         5Cfw==
-X-Received: by 10.66.253.4 with SMTP id zw4mr42607474pac.119.1374880141068;
-        Fri, 26 Jul 2013 16:09:01 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id y6sm62334119pbl.23.2013.07.26.16.08.58
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 26 Jul 2013 16:08:59 -0700 (PDT)
+	id S1758349Ab3GZXMN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 19:12:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33274 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757607Ab3GZXMN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 19:12:13 -0400
+Received: (qmail 14354 invoked by uid 102); 26 Jul 2013 23:12:13 -0000
+Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 26 Jul 2013 18:12:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jul 2013 19:12:11 -0400
 Content-Disposition: inline
-In-Reply-To: <20130726230527.GA12968@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <1374877787.2670.6.camel@centaur.cmartin.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231216>
 
-Jeff King wrote:
+On Sat, Jul 27, 2013 at 12:29:47AM +0200, Carlos Mart=C3=ADn Nieto wrot=
+e:
 
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -63,8 +63,14 @@ N_("The previous cherry-pick is now empty, possibly due to conflict resolution.\
->  "If you wish to commit it anyway, use:\n"
->  "\n"
->  "    git commit --allow-empty\n"
-> +"\n");
-> +static const char empty_cherry_pick_advice_skip_single[] =
-> +N_("Otherwise, please use 'git reset'\n");
-> +static const char empty_cherry_pick_advice_skip_multi[] =
-> +N_("If you wish to skip this commit, use:\n"
->  "\n"
-> -"Otherwise, please use 'git reset'\n");
-> +"    git reset && git cherry-pick --continue\n"
-> +"\n");
+> > Is it nonsensical? It does not make sense for the @{upstream} magic
+> > token, because we will not have a branch in tracking branch refs/re=
+motes
+>=20
+> This was the main point, yes; the only time I've seen it used is by
+> mistake/misunderstanding, and thinking that you wouldn't want to do
+> something like what's below.
 
-Hmm, wouldn't it be more consistent to either say
+If that is what you want to prevent, I do not think checking for a name=
+d
+remote is sufficient. You can also be pushing to a branch on a named
+remote that is not part of your fetch refspec, in which case you do not
+have a tracking branch. I.e.:
 
-	If you wish to commit it anyway, use
+  git clone $URL repo.git
+  cd repo.git
+  git push --set-upstream HEAD:refs/foo/whatever
 
-		git commit --allow-empty && git cherry-pick --continue
+=46or that matter, I wonder what "--set-upstream" would do if used with
+"refs/tags/foo". You would not do that in general, but what about:
 
-	If you wish to skip this commit, use
+  git push --set-upstream master:master master:v1.0
 
-		git reset && git cherry-pick --continue
+I didn't test.
 
-Or
+> > to point to. But the configuration would still affect how "git pull=
+"
+> > chooses a branch to fetch and merge.
+> >=20
+> > I.e., you can currently do:
+> >=20
+> >   git push --set-upstream /tmp/t master
+> >   git pull ;# pulls from /tmp/t master
+>=20
+> Interestingly, this actually fetches the right branch from the remote=
+=2E I
+> wasn't expecting something like this to work at all.
+>=20
+> Somewhat doubtful that this usage is something you'd really want to d=
+o,
+> I see that it does behave properly.
 
-	If you wish to commit it anyway, use
+I do not claim to have used it myself. Tightening the "--set-upstream"
+behavior would not hurt people who want to configure such a thing
+manually, and it might catch errors from people doing it accidentally.
 
-		git commit --allow-empty
-	
-	If you wish to skip this commit, use
+So even though the config it generates is not nonsensical, there is a
+reasonable chance it was an error, and tightening may make sense. But I
+think you would not want the condition to be "this is a named remote",
+but rather "the generated configuration actually has an @{upstream}".
 
-		git reset
-
-	Then "git cherry-pick --continue" will resume cherry-picking
-	the remaining commits.
-
-?
+-Peff
