@@ -1,60 +1,75 @@
-From: Gulshan Singh <gsingh2011@gmail.com>
-Subject: Why can't I push from a shallow clone?
-Date: Thu, 25 Jul 2013 19:33:16 -0700
-Message-ID: <CANEZYrdsCgH+3NnZnnmsn_znt=+01aNn02u4mWyb3td9XypUog@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: redundant message in builtin/rm.c
+Date: Fri, 26 Jul 2013 10:37:56 +0800
+Message-ID: <CANYiYbGQj6mCDraxiBHXEL+qd7OwnFCaMpB3Wb4_Pg=-p+KJAg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 26 04:33:35 2013
+Cc: Jorge Juan Garcia Garcia 
+	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	"'Git List" <git@vger.kernel.org>
+To: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jul 26 04:38:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2XqZ-0000DV-65
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 04:33:35 +0200
+	id 1V2Xus-0007WJ-Dg
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 04:38:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757810Ab3GZCdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jul 2013 22:33:17 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:45665 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756859Ab3GZCdQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jul 2013 22:33:16 -0400
-Received: by mail-oa0-f50.google.com with SMTP id k7so6391674oag.9
-        for <git@vger.kernel.org>; Thu, 25 Jul 2013 19:33:16 -0700 (PDT)
+	id S1757043Ab3GZCh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jul 2013 22:37:58 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:38446 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756264Ab3GZCh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jul 2013 22:37:58 -0400
+Received: by mail-wi0-f182.google.com with SMTP id m6so294523wiv.3
+        for <git@vger.kernel.org>; Thu, 25 Jul 2013 19:37:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=tjwE2QTdvBcOUHGBXQQNWI3yYo07qWsh/qUwkv8Yk2w=;
-        b=bgF76KKEURJ01a6seh8T4H9OEmmYfI7Vc5K2bOKS4fqbOWL9UFaDJmhxtUEzhXQscW
-         e1s5kWYkv9x4FeBCkaTbuJC44+Fb1WlahveKV4eyH3TQgL9SKz/6yhiG4v7+bNf5u6wF
-         86mSe799AJNUIMG1mrd2FjztwQW2JjBKssbcIbcDZwfi3apsCM8pD3EBWLLW5dUxRt17
-         bNhNhz2xwMcOEjPkxUFbofvf/2TmMpylf7zvnSuzkUzo1RuSkawJRPLJ6Z2JsbM0dm/U
-         hvVe1ywmH2GldP2dSLNRA0SQlaBD6Q4a6lTwEBMRPK78nxG07unEhsVBEC8IeP3xDvZp
-         jqEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=tjwE2QTdvBcOUHGBXQQNWI3yYo07qWsh/qUwkv8Yk2w=;
-        b=dzrc12DlDGpilu+b+2xj/r7EG1zRylMmuzCSMt2P/e+6NgSKiJKo8p72JQOL6cs2qo
-         e+smZY6qFG10fr+pZ1nHTv27PE2h82MRBJd2Bv/rWmRdmpn/HW1cwsoczTlq4qVvp1a1
-         stIHXeFS2omj2/wbQQtiV/Q/h7rHmd3BqmFLcWqSCls7T7XZUbktJiQeZrMujdoeaTNT
-         CUbulSMVG+/0tsdtuQgW9wGHFUZCGzu2hCUZ2nYoEJdEiirgZIpQO398Ry6KWYhjL8dr
-         yH//TLgCepaqXQQkMCWFLR41kCGSYQKb/HCuaFCJctbRsXUgy5MIqk+F5pzSLV5pyEDN
-         JBwg==
-X-Received: by 10.50.22.105 with SMTP id c9mr731650igf.36.1374805996177; Thu,
- 25 Jul 2013 19:33:16 -0700 (PDT)
-Received: by 10.64.41.67 with HTTP; Thu, 25 Jul 2013 19:33:16 -0700 (PDT)
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=kb1r0PA5nQfDIqXNZn4vv6N9XU5bc07Th5vEe1eyokc=;
+        b=XdwZctPISHdTlRx5egxPOzDLxQmsP19SBLYyQy+TAGIc1hf0YCo2Ss3QyFDxZE8ab6
+         SJjxeyUz2XOhSQstRZpdTHi1ejMtJjlGyF96VYpcXc0Gr3pQ5lQRk1v7NtHp8jy63miz
+         p2VGcBPzdLOLsL48bymggFcQ2ilqtYw+8l4pakdDjS9g3+muuF1+fXGOKiy+tfsS91la
+         M1XTfftuet2y4djV3DkvqBqur7iE3OAzj7GyVcKu6/exMZjOssH7YxV4JD8Cf5F1Bhg8
+         snSfTNpAuqu1logcxrwEfcM8U4JCbNl7UA1vYCmJmwPCzlwpi1f/DycweImMptibejEe
+         5+oQ==
+X-Received: by 10.194.249.129 with SMTP id yu1mr33297708wjc.10.1374806276820;
+ Thu, 25 Jul 2013 19:37:56 -0700 (PDT)
+Received: by 10.194.176.129 with HTTP; Thu, 25 Jul 2013 19:37:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231160>
 
-I've been trying to figure out why I can't push from a shallow clone
-(using --depth) to a repository. I've made simple examples where it
-works, but I've read that in doesn't work in every case. However, I
-can't come up with a case where it doesn't work. Googling gives this
-answer: http://stackoverflow.com/questions/6900103/why-cant-i-push-from-a-shallow-clone,
-but I don't completely understand the explanation, so I was hoping
-someone could explain it.
+Hi,
+
+Commit v1.8.3-1-g914dc02 (rm: better error message on failure for
+multiple files)
+introduced many messages need to be translated. I found two similar messages
+each has a slight typo, and the differences cause redundant works for
+l10n translators.
+
+        # builtin/rm.c, line: 90
+
+                          Q_("the following submodule (or one of its nested "
+                             "submodules)\n uses a .git directory:",
+                             "the following submodules (or one of its nested "
+                             "submodules)\n use a .git directory:",
+
+                         ( no space before "use(s) a .git directory" ?)
+
+        # builtin/rm.c, line: 240
+
+                          Q_("the following submodule (or one of its nested "
+                             "submodule)\nuses a .git directory:",
+                             "the following submodules (or one of its nested "
+                             "submodule)\nuse a .git directory:",
+
+                         ( "nested submodule" should be "nested submodules" ?)
+
+-- 
+Jiang Xin
