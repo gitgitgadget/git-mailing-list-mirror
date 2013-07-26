@@ -1,95 +1,64 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] builtins: search builtin commands via binary search.
-Date: Fri, 26 Jul 2013 13:57:37 -0700
-Message-ID: <20130726205737.GI14690@google.com>
-References: <1374871850-24323-1-git-send-email-stefanbeller@googlemail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH] git-tag man: when to use lightweight or annotated tags
+Date: Fri, 26 Jul 2013 17:13:23 -0400
+Message-ID: <51F2E673.5020401@xiplink.com>
+References: <51EFA9A9.4010103@gmail.com> <7vtxjj66kn.fsf@alter.siamese.dyndns.org> <51F12BE6.80606@gmail.com> <51F13A8F.9040400@xiplink.com> <51F23706.5040009@gmail.com> <51F2375E.1080003@gmail.com> <51F28D08.8050507@xiplink.com> <51F2AFBA.4020602@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 26 22:58:14 2013
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Daniele Segato <daniele.segato@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 26 23:13:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2p5Y-00029q-Mz
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 22:58:13 +0200
+	id 1V2pKB-0005hK-Rr
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 23:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760036Ab3GZU5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jul 2013 16:57:44 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:64733 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756993Ab3GZU5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jul 2013 16:57:40 -0400
-Received: by mail-pa0-f44.google.com with SMTP id jh10so3690297pab.17
-        for <git@vger.kernel.org>; Fri, 26 Jul 2013 13:57:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=xbmV2Li37V86g4vHkU5FyuWNhDbiCKPdfdnaAXtA9Ms=;
-        b=gGMpB0qRULz7XVgDUoo8D9iNcJC3ehu6HLfBNYeCrdME8xsZH2v2dPwXptYelTUzCL
-         g4erKplsB8psjPEWnPM6WbBbUyQ90iQCE2Yk4wmv+panXSKCOpB4gWOVAbi+6vZiiksR
-         SQYHChTeufOnghMvyoCZcxk1iLIgauyopbwPQhCAlWnufzfWGjwohmD8xgpspYEdnduG
-         AmsX6h13fQTmpnruLd0K523xNua1I/4XMKUWZBe4BpfHVyZS+9EcqKM6LVMwXK+bwiBY
-         jl2joiOQK97p2WZX/94nl8lexp2LLIhThOtWiMo/OrYi2Y0SDTgMEGISJA7qNSOevbbs
-         ztMg==
-X-Received: by 10.68.137.170 with SMTP id qj10mr7936447pbb.31.1374872260214;
-        Fri, 26 Jul 2013 13:57:40 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id we2sm5557299pab.0.2013.07.26.13.57.38
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 26 Jul 2013 13:57:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1374871850-24323-1-git-send-email-stefanbeller@googlemail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933025Ab3GZVNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jul 2013 17:13:15 -0400
+Received: from smtp82.ord1c.emailsrvr.com ([108.166.43.82]:50666 "EHLO
+	smtp82.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933010Ab3GZVNN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Jul 2013 17:13:13 -0400
+X-Greylist: delayed 22890 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Jul 2013 17:13:13 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp3.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 63221501FE;
+	Fri, 26 Jul 2013 17:13:12 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp3.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 0B0EF5036E;
+	Fri, 26 Jul 2013 17:13:11 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <51F2AFBA.4020602@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231202>
 
-Hi,
+On 13-07-26 01:19 PM, Daniele Segato wrote:
+> 
+> By the way which is your role in the community?
+> Don't want to be rude, I just don't know who I'm talking about :) the
+> documentation maintainer?
 
-Stefan Beller wrote:
+I'm just a git user and (very) occasional contributor.
 
-> --- a/git.c
-> +++ b/git.c
-> @@ -309,9 +309,18 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
->  	return 0;
->  }
->  
-> +static int compare_internal_command(const void *a, const void *b) {
-> +	/* The first parameter is of type char* describing the name,
-> +	   the second is a struct cmd_struct */
+There's not much structure to the git community.  Anyone who wants git to
+change can post a patch (or patch series) to this list.  The patch can touch
+any area of the code, and it's considered good manners to CC whoever last
+touched the part(s) of the code being patched.
 
-Style:
+The patch is discussed and revised as needed, and eventually the patch
+thread's participants arrive at a consensus as to whether or not the patch
+should become a part of git.  If the patch is accepted the git maintainer
+(Junio C. Hamano) shepherds the patch through git's release process.  See
+this note:
+	http://git-blame.blogspot.ca/p/a-note-from-maintainer.html
+for more about that and other aspects of the git development community.
 
-	/*
-	 * Multi-line comments in git look like this, with an initial
-	 * "/*" line, a leading "*" on each line with text, and a line
-	 * with '*' '/' at the end.
-	 */
-
-[...]
-> @@ -447,12 +456,12 @@ static void handle_internal_command(int argc, const char **argv)
->  		argv[0] = cmd = "help";
->  	}
->  
-> -	for (i = 0; i < ARRAY_SIZE(commands); i++) {
-> -		struct cmd_struct *p = commands+i;
-> -		if (strcmp(p->cmd, cmd))
-> -			continue;
-> +	struct cmd_struct *p = (struct cmd_struct *)bsearch(cmd, commands,
-> +				ARRAY_SIZE(commands), sizeof(struct cmd_struct),
-> +				compare_internal_command);
-
-No need to cast --- this is C.
-
-Fun.  Does this result in a measurable speedup, or is it just for more
-pleasant reading?
-
-Thanks and hope that helps,
-Jonathan
+		M.
