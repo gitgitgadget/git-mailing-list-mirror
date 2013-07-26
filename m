@@ -1,81 +1,83 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: Why can't I push from a shallow clone?
-Date: Fri, 26 Jul 2013 08:55:28 +0200
-Message-ID: <20130726065528.GA4940@paksenarrion.iveqy.com>
-References: <CANEZYrdsCgH+3NnZnnmsn_znt=+01aNn02u4mWyb3td9XypUog@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Fwd: Kick off for Git 1.8.4 l10n round 1
+Date: Fri, 26 Jul 2013 15:19:12 +0800
+Message-ID: <CANYiYbFokr5WJ_UdNAay0=KnAp4_8Hp89WUw5pEb+Qdi4FdwXA@mail.gmail.com>
+References: <CANYiYbHM-VirTvCZp20z2GD7gyGUdJbPGzngKD+Lf7KVbXk95A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=GB2312
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Gulshan Singh <gsingh2011@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 26 08:53:24 2013
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 26 09:19:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2btz-00012G-0Z
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 08:53:23 +0200
+	id 1V2cJ5-0003ah-7U
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 09:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752458Ab3GZGxT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 02:53:19 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:58593 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752149Ab3GZGxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jul 2013 02:53:18 -0400
-Received: by mail-lb0-f171.google.com with SMTP id 13so2196140lba.2
-        for <git@vger.kernel.org>; Thu, 25 Jul 2013 23:53:16 -0700 (PDT)
+	id S1756177Ab3GZHTO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 03:19:14 -0400
+Received: from mail-wg0-f52.google.com ([74.125.82.52]:37315 "EHLO
+	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753534Ab3GZHTO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Jul 2013 03:19:14 -0400
+Received: by mail-wg0-f52.google.com with SMTP id b13so2477767wgh.19
+        for <git@vger.kernel.org>; Fri, 26 Jul 2013 00:19:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=M1r5vkItVCOZSjEVaz4xjdB1zHtzSG+wn8Qop/A2KzA=;
-        b=X8Bz7C5DRB/OXLcYBKwQ5jrZfEtejdFi0l+RybRLAUxcsbGK2vymijNJWtZ8dvJ7BG
-         dnwRajNLwex5UWAOnMlxEetxWODR9ncXrye1Y6Q7DNh1tOG9xWfADiL6H3R84gJccbE3
-         R5ZuL9CUgYXWWJrFOaFWx8UxPb7kGRLSLlRZOhFIICPFbOw7Ebiq1RjwvMCArQPQa7s1
-         GwFeVHmp5/tDXJjjuv7l63BhrgRuzyPrhzn0rYMVJSLYVLrNgBmVJFS8zWibyfLeol5I
-         FVNA3O4yimvjzuVng0XZtJ+4gSYFsbfLRKXIOihV6l0NT2sEf9CPZ02rVlvGE4Pqeg4b
-         T8Lg==
-X-Received: by 10.152.3.74 with SMTP id a10mr20847527laa.74.1374821596524;
-        Thu, 25 Jul 2013 23:53:16 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id p20sm395906lbb.17.2013.07.25.23.53.15
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Jul 2013 23:53:15 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1V2bw0-0006cB-Bd; Fri, 26 Jul 2013 08:55:28 +0200
-Content-Disposition: inline
-In-Reply-To: <CANEZYrdsCgH+3NnZnnmsn_znt=+01aNn02u4mWyb3td9XypUog@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=nW1pIILKPXkSIGp7kb5vygZzcXW7LybPiNLdEMVRO6o=;
+        b=u5y8e+r9zZoWH3PqW4cXdfuIK8+voIPGaCpNDOCUKOU2NpIzfoYfB/RMEBD+5CRm5+
+         pTnqUqEpxPx9v6qIv4yXYOAa4VM8tRUg6z0zFBFOAksC6aPACP7q+0Ce29BfHNS81hlV
+         mGYa5GR4dZKsNYk018k5xCeGveFX+gD/1+sgVmdZdf2f3NqntCZdzHLi80eBA8XoZmVf
+         xuJ7WEtWaRrZqx0VIgmtos91/4ysWYUigETjJRQsig6F+kgA5/qAPHAY5GciIfBhiSYJ
+         TdcflUpaTlCn5golQj2mFdV7ouY1NxEM4ii+rWNF91Z8a6tbmjM3Y8Mevdex34pnMpUg
+         lvpQ==
+X-Received: by 10.194.24.227 with SMTP id x3mr12594771wjf.7.1374823152435;
+ Fri, 26 Jul 2013 00:19:12 -0700 (PDT)
+Received: by 10.194.176.129 with HTTP; Fri, 26 Jul 2013 00:19:12 -0700 (PDT)
+In-Reply-To: <CANYiYbHM-VirTvCZp20z2GD7gyGUdJbPGzngKD+Lf7KVbXk95A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231171>
 
-On Thu, Jul 25, 2013 at 07:33:16PM -0700, Gulshan Singh wrote:
-> I've been trying to figure out why I can't push from a shallow clone
-> (using --depth) to a repository. I've made simple examples where it
-> works, but I've read that in doesn't work in every case. However, I
-> can't come up with a case where it doesn't work. Googling gives this
-> answer: http://stackoverflow.com/questions/6900103/why-cant-i-push-fr=
-om-a-shallow-clone,
-> but I don't completely understand the explanation, so I was hoping
-> someone could explain it.
+---------- Forwarded message ----------
+Hi,
 
-I can't explain it better than what Junio did in the link you just
-provide. However there's ongoing work to allow shallow clones to be abl=
-e
-to push. You can read about it here:
-http://thread.gmane.org/gmane.comp.version-control.git/230612/focus=3D2=
-30878
+Since Git v1.8.4-rc0 had already been released, it's time to start new =
+round
+of git l10n. This time there are 99 new messages need to be translated.
+
+The new "git.pot" is generated in commit v1.8.4-rc0-1-g28b3cff:
+
+    l10n: git.pot: v1.8.4 round 1 (99 new, 46 removed)
+
+    Generate po/git.pot from v1.8.4-rc0 for git v1.8.4 l10n round 1.
+
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+
+You can get it from the usual place:
+
+    https://github.com/git-l10n/git-po/
+
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in =A1=B0po/README" file.
+
+--
+Jiang Xin
+
 
 --=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
+=BD=AF=F6=CE
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+=B1=B1=BE=A9=C8=BA=D3=A2=BB=E3=D0=C5=CF=A2=BC=BC=CA=F5=D3=D0=CF=DE=B9=AB=
+=CB=BE
+=D3=CA=BC=FE: worldhello.net@gmail.com
+=CD=F8=D6=B7: http://www.ossxp.com/
+=B2=A9=BF=CD: http://www.worldhello.net/
+=CE=A2=B2=A9: http://weibo.com/gotgit/
+=B5=E7=BB=B0: 18601196889
