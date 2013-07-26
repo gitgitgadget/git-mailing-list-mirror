@@ -1,7 +1,7 @@
-From: Jeff King <peff@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] commit: correct advice about aborting a cherry-pick
-Date: Fri, 26 Jul 2013 19:05:27 -0400
-Message-ID: <20130726230527.GA12968@sigill.intra.peff.net>
+Date: Fri, 26 Jul 2013 16:08:57 -0700
+Message-ID: <20130726230857.GK14690@google.com>
 References: <1374862320-22637-1-git-send-email-artagnon@gmail.com>
  <20130726191631.GD29799@sigill.intra.peff.net>
  <CALkWK0=qYF=r+Ocb1Z1E=Oteau=AAXR7wnKakt-8Cejwz6Usrg@mail.gmail.com>
@@ -9,133 +9,96 @@ References: <1374862320-22637-1-git-send-email-artagnon@gmail.com>
  <20130726213705.GJ14690@google.com>
  <20130726214036.GB1388@sigill.intra.peff.net>
  <20130726224359.GA3928@sigill.intra.peff.net>
+ <20130726230527.GA12968@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Git List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 27 01:05:34 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jul 27 01:09:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2r4o-0006oo-DQ
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 01:05:34 +0200
+	id 1V2r8Q-0001Bo-HY
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 01:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759924Ab3GZXFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jul 2013 19:05:30 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33223 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758327Ab3GZXF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jul 2013 19:05:29 -0400
-Received: (qmail 14034 invoked by uid 102); 26 Jul 2013 23:05:30 -0000
-Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 26 Jul 2013 18:05:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jul 2013 19:05:27 -0400
+	id S1760147Ab3GZXJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jul 2013 19:09:07 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:43780 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758339Ab3GZXJB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 19:09:01 -0400
+Received: by mail-pa0-f49.google.com with SMTP id bi5so3777516pad.22
+        for <git@vger.kernel.org>; Fri, 26 Jul 2013 16:09:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=HMINtYtTQPocoSwgqRoQs6wu3/UQ5eHNl265J13EK+s=;
+        b=wjQwmYjslTojMBaa0rIoMshkBjv2HkF1Ko85FuXsxIca36Ntjr5Gyz016mizM4oSRT
+         Fcl9zCG9RHmPJnQrlCUfTxBQEpIMaaII5TeOaqcfSipDsKKjD0qTags1wGkvzi0fMsoQ
+         gpeTg5OuNITLjN/U+s3INM5A6F4uWCeIxYhUQe4jBaGlu+aPY10e1NXGXe917F6lqFWz
+         0002KDnVNn5z/Vatj87/lsDawW/Qe2h0GIox8S2Yn0z6j8HLEktF3EYYA8b3sTtRZusx
+         DbW0IZVcq8gKENf5DcxS4QPrgTw54MZc3xNX0Y2/QBnTd3qsVj4dnLb/ZFLx/IJQ3iJe
+         5Cfw==
+X-Received: by 10.66.253.4 with SMTP id zw4mr42607474pac.119.1374880141068;
+        Fri, 26 Jul 2013 16:09:01 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id y6sm62334119pbl.23.2013.07.26.16.08.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 26 Jul 2013 16:08:59 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20130726224359.GA3928@sigill.intra.peff.net>
+In-Reply-To: <20130726230527.GA12968@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231215>
 
-On Fri, Jul 26, 2013 at 06:43:59PM -0400, Jeff King wrote:
+Jeff King wrote:
 
-> I think instead we would want to leave the single-commit case alone, and
-> for the multi-commit case add "...and then cherry-pick --continue". That
-> message is generated from within git-commit, though; I guess it would
-> need to learn about the difference between single/multi cherry-picks.
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -63,8 +63,14 @@ N_("The previous cherry-pick is now empty, possibly due to conflict resolution.\
+>  "If you wish to commit it anyway, use:\n"
+>  "\n"
+>  "    git commit --allow-empty\n"
+> +"\n");
+> +static const char empty_cherry_pick_advice_skip_single[] =
+> +N_("Otherwise, please use 'git reset'\n");
+> +static const char empty_cherry_pick_advice_skip_multi[] =
+> +N_("If you wish to skip this commit, use:\n"
+>  "\n"
+> -"Otherwise, please use 'git reset'\n");
+> +"    git reset && git cherry-pick --continue\n"
+> +"\n");
 
-Like this?
+Hmm, wouldn't it be more consistent to either say
 
--- >8 --
-Subject: [PATCH] commit: tweak empty cherry pick advice for sequencer
+	If you wish to commit it anyway, use
 
-When we refuse to make an empty commit, we check whether we
-are in a cherry-pick in order to give better advice on how
-to proceed. We instruct the user to repeat the commit with
-"--allow-empty" to force the commit, or to use "git reset"
-to skip it and abort the cherry-pick.
+		git commit --allow-empty && git cherry-pick --continue
 
-This works fine when we are cherry-picking a single commit.
-When we are using the sequencer to cherry-pick multiple
-items, though, using "git reset" is not good advice. It does
-not skip the commit (you must run "cherry-pick --continue"
-to keep going), but nor does it abort the cherry-pick (the
-.sequencer directory still exists).
+	If you wish to skip this commit, use
 
-Let's teach commit to tell when the sequencer is in use, and
-to mention "cherry-pick --continue" in that case.
+		git reset && git cherry-pick --continue
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-The advice in the multi case could eventually change to "cherry-pick
---skip" if and when it exists.
+Or
 
- builtin/commit.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+	If you wish to commit it anyway, use
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index e47f100..45a98d7 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -63,8 +63,14 @@ N_("The previous cherry-pick is now empty, possibly due to conflict resolution.\
- "If you wish to commit it anyway, use:\n"
- "\n"
- "    git commit --allow-empty\n"
-+"\n");
-+static const char empty_cherry_pick_advice_skip_single[] =
-+N_("Otherwise, please use 'git reset'\n");
-+static const char empty_cherry_pick_advice_skip_multi[] =
-+N_("If you wish to skip this commit, use:\n"
- "\n"
--"Otherwise, please use 'git reset'\n");
-+"    git reset && git cherry-pick --continue\n"
-+"\n");
- 
- static const char *use_message_buffer;
- static const char commit_editmsg[] = "COMMIT_EDITMSG";
-@@ -107,6 +113,7 @@ static enum commit_whence whence;
- static const char *cleanup_arg;
- 
- static enum commit_whence whence;
-+static int sequencer_in_use;
- static int use_editor = 1, include_status = 1;
- static int show_ignored_in_status, have_option_m;
- static const char *only_include_assumed;
-@@ -141,8 +148,11 @@ static void determine_whence(struct wt_status *s)
- {
- 	if (file_exists(git_path("MERGE_HEAD")))
- 		whence = FROM_MERGE;
--	else if (file_exists(git_path("CHERRY_PICK_HEAD")))
-+	else if (file_exists(git_path("CHERRY_PICK_HEAD"))) {
- 		whence = FROM_CHERRY_PICK;
-+		if (file_exists(git_path("sequencer")))
-+			sequencer_in_use = 1;
-+	}
- 	else
- 		whence = FROM_COMMIT;
- 	if (s)
-@@ -808,8 +818,15 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		run_status(stdout, index_file, prefix, 0, s);
- 		if (amend)
- 			fputs(_(empty_amend_advice), stderr);
--		else if (whence == FROM_CHERRY_PICK)
-+		else if (whence == FROM_CHERRY_PICK) {
- 			fputs(_(empty_cherry_pick_advice), stderr);
-+			if (!sequencer_in_use)
-+				fputs(_(empty_cherry_pick_advice_skip_single),
-+				      stderr);
-+			else
-+				fputs(_(empty_cherry_pick_advice_skip_multi),
-+				      stderr);
-+		}
- 		return 0;
- 	}
- 
--- 
-1.8.3.rc1.30.gff0fb75
+		git commit --allow-empty
+	
+	If you wish to skip this commit, use
+
+		git reset
+
+	Then "git cherry-pick --continue" will resume cherry-picking
+	the remaining commits.
+
+?
