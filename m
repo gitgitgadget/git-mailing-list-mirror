@@ -1,88 +1,125 @@
-From: Daniele Segato <daniele.segato@gmail.com>
-Subject: Re: [PATCHv3] git-tag man: when to use lightweight or annotated tags
-Date: Fri, 26 Jul 2013 19:33:01 +0200
-Message-ID: <51F2B2CD.1030004@gmail.com>
-References: <51EFA9A9.4010103@gmail.com> <7vtxjj66kn.fsf@alter.siamese.dyndns.org> <51F12BE6.80606@gmail.com> <51F13A8F.9040400@xiplink.com> <51F23706.5040009@gmail.com> <51F2375E.1080003@gmail.com> <51F28D08.8050507@xiplink.com> <51F2AFBA.4020602@gmail.com>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH] branch: make sure the upstream remote is configured
+Date: Fri, 26 Jul 2013 19:39:37 +0200
+Message-ID: <1374860377-17652-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 26 19:33:16 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 26 19:47:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2ltA-0001T9-Nr
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 19:33:13 +0200
+	id 1V2m6s-0005Mo-72
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 19:47:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757083Ab3GZRdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jul 2013 13:33:09 -0400
-Received: from mail-bk0-f41.google.com ([209.85.214.41]:61760 "EHLO
-	mail-bk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752229Ab3GZRdG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jul 2013 13:33:06 -0400
-Received: by mail-bk0-f41.google.com with SMTP id jc3so1237321bkc.0
-        for <git@vger.kernel.org>; Fri, 26 Jul 2013 10:33:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=rrX3XI6P6Y7P9sT80hN9ccZw2XRpbdvT7kXb+rDANpU=;
-        b=sbdJp85Z19eRJxV1PzV6JAQAgXLNzT4q7ry7LfM4xBqbOd9sAHBuEwcFkxaIJEpkvb
-         YhtaWfq1ZQAZPdrZY9iP5tTbrCofOS5oqK5MvPUDyKw4X9V+0OAaaUj05WFCWskL5s18
-         pSQzuoFIfpriehydLZgbS/V9JUudER/aSJlnz1AXDiqGpyyRxE4BZR41owFCC0ihe7Z+
-         bkbXj+Jy5XYIDdMKfPcrgDRZaT/0azOErBZ3kiMU2vhO74+TPNWp+j3Y6aFb2zI92Hhd
-         yoNGFF/WxpFS0LHHEb0BcADQTpGwNEIbJthoUE209A9PmKGnBEMEOwuAuTngtnL9D2N8
-         yNgQ==
-X-Received: by 10.205.118.201 with SMTP id fr9mr7348953bkc.84.1374859984918;
-        Fri, 26 Jul 2013 10:33:04 -0700 (PDT)
-Received: from [192.168.1.16] (host22-75-dynamic.4-87-r.retail.telecomitalia.it. [87.4.75.22])
-        by mx.google.com with ESMTPSA id fc7sm12731200bkc.3.2013.07.26.10.33.02
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 26 Jul 2013 10:33:04 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <51F2AFBA.4020602@gmail.com>
+	id S1751120Ab3GZRq7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 13:46:59 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:45632 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1750754Ab3GZRq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 13:46:58 -0400
+X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Jul 2013 13:46:58 EDT
+Received: from cmartin.tk (unknown [IPv6:2001:6f8:900:8cd0:922b:34ff:fe1c:e3e4])
+	by hessy.dwim.me (Postfix) with ESMTPA id 2B6A78001B
+	for <git@vger.kernel.org>; Fri, 26 Jul 2013 19:39:38 +0200 (CEST)
+Received: (nullmailer pid 17689 invoked by uid 1000);
+	Fri, 26 Jul 2013 17:39:37 -0000
+X-Mailer: git-send-email 1.8.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231192>
 
-stress the difference between the two with suggestion on when the user
-should use one in place of the other.
+A command of e.g.
 
-Signed-off-by: Daniele Segato <daniele.segato@gmail.com>
+    git push --set-upstream /tmp/t master
+
+will call install_branch_config() with a remote name of "/tmp/t". This
+function will set the 'branch.master.remote' key to, which is
+nonsensical as there is no remote by that name.
+
+Instead, make sure that the remote given does exist when writing the
+configuration and warn if it does not. In order to distinguish named
+remotes, introduce REMOTE_NONE as the default origin for remotes,
+which the functions reading from the different sources will
+overwrite. Thus, an origin of REMOTE_NONE means it has been created at
+run-time in order to push to it.
+
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
 ---
-  Documentation/git-tag.txt |    9 +++++++++
-  1 file changed, 9 insertions(+)
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 22894cb..495eb71 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -42,6 +42,15 @@ committer identity for the current user is used to 
-find the
-  GnuPG key for signing. 	The configuration variable `gpg.program`
-  is used to specify custom GnuPG binary.
+It's somewhat surprising that there didn't seem to be a way to
+distinguish named remotes from those created from a command-line path,
+but I guess nobody needed to.
 
-+The tag objects (created with `-a`, `s`, or `-u`) are called 
-'annotated' tags,
-+they contains a creation date, the tagger name and e-mail, a tagging 
-message
-+and, eventually, the GNUPG signing and verification data. While a
-+'lightweight' tag is simply a name for an object (usually a commit object).
+ branch.c                 | 11 +++++++++++
+ remote.h                 |  1 +
+ t/t5523-push-upstream.sh |  5 +++++
+ 3 files changed, 17 insertions(+)
+
+diff --git a/branch.c b/branch.c
+index c5c6984..cefb8f6 100644
+--- a/branch.c
++++ b/branch.c
+@@ -53,6 +53,7 @@ void install_branch_config(int flag, const char *loca=
+l, const char *origin, cons
+ 	int remote_is_branch =3D !prefixcmp(remote, "refs/heads/");
+ 	struct strbuf key =3D STRBUF_INIT;
+ 	int rebasing =3D should_setup_rebase(origin);
++	struct remote *r =3D remote_get(origin);
+=20
+ 	if (remote_is_branch
+ 	    && !strcmp(local, shortname)
+@@ -62,6 +63,16 @@ void install_branch_config(int flag, const char *loc=
+al, const char *origin, cons
+ 		return;
+ 	}
+=20
++	/*
++	 * Make sure that the remote passed is a configured remote, or
++	 * we end up setting 'branch.foo.remote =3D /tmp/t' which is
++	 * nonsensical.
++	 */
++	if (origin && strcmp(origin, ".") && r->origin =3D=3D REMOTE_NONE) {
++		warning(_("there is no remote named '%s', no upstream configuration =
+will be set."), origin);
++		return;
++	}
 +
-+'Annotated' tag are meant for release while 'lightweight' tags are meant
-+for private or temporary object labels, thus most git commands ignore
-+lightweight tags by default.
+ 	strbuf_addf(&key, "branch.%s.remote", local);
+ 	git_config_set(key.buf, origin ? origin : ".");
+=20
+diff --git a/remote.h b/remote.h
+index cf56724..92f6e33 100644
+--- a/remote.h
++++ b/remote.h
+@@ -2,6 +2,7 @@
+ #define REMOTE_H
+=20
+ enum {
++	REMOTE_NONE,
+ 	REMOTE_CONFIG,
+ 	REMOTE_REMOTES,
+ 	REMOTE_BRANCHES
+diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
+index 3683df1..e84c2f8 100755
+--- a/t/t5523-push-upstream.sh
++++ b/t/t5523-push-upstream.sh
+@@ -71,6 +71,11 @@ test_expect_success 'push -u HEAD' '
+ 	check_config headbranch upstream refs/heads/headbranch
+ '
+=20
++test_expect_success 'push -u <url>' '
++        git push -u parent HEAD 2>err &&
++        grep "no upstream configuration will be set" err
++'
 +
-
-  OPTIONS
-  -------
--- 
-1.7.10.4
+ test_expect_success TTY 'progress messages go to tty' '
+ 	ensure_fresh_upstream &&
+=20
+--=20
+1.8.3
