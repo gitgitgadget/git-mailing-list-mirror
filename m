@@ -1,104 +1,95 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCHv3] git-tag man: when to use lightweight or annotated tags
-Date: Fri, 26 Jul 2013 17:13:26 -0400
-Message-ID: <51F2E676.6080404@xiplink.com>
-References: <51EFA9A9.4010103@gmail.com> <7vtxjj66kn.fsf@alter.siamese.dyndns.org> <51F12BE6.80606@gmail.com> <51F13A8F.9040400@xiplink.com> <51F23706.5040009@gmail.com> <51F2375E.1080003@gmail.com> <51F28D08.8050507@xiplink.com> <51F2AFBA.4020602@gmail.com> <51F2B2CD.1030004@gmail.com> <20130726190602.GC29799@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] commit: correct advice about aborting a cherry-pick
+Date: Sat, 27 Jul 2013 02:47:47 +0530
+Message-ID: <CALkWK0=qYF=r+Ocb1Z1E=Oteau=AAXR7wnKakt-8Cejwz6Usrg@mail.gmail.com>
+References: <1374862320-22637-1-git-send-email-artagnon@gmail.com> <20130726191631.GD29799@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Daniele Segato <daniele.segato@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 26 23:13:25 2013
+X-From: git-owner@vger.kernel.org Fri Jul 26 23:18:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2pKC-0005hK-CP
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 23:13:20 +0200
+	id 1V2pPR-0001gU-FS
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Jul 2013 23:18:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933281Ab3GZVNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jul 2013 17:13:16 -0400
-Received: from smtp98.ord1c.emailsrvr.com ([108.166.43.98]:33607 "EHLO
-	smtp98.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933142Ab3GZVNP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Jul 2013 17:13:15 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp5.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id DDF151B013E;
-	Fri, 26 Jul 2013 17:13:14 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp5.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 9427F1B00F8;
-	Fri, 26 Jul 2013 17:13:14 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <20130726190602.GC29799@sigill.intra.peff.net>
+	id S1760419Ab3GZVSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jul 2013 17:18:31 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:49444 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760487Ab3GZVS2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 17:18:28 -0400
+Received: by mail-ob0-f178.google.com with SMTP id fb19so5252218obc.23
+        for <git@vger.kernel.org>; Fri, 26 Jul 2013 14:18:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=175/Yxi8o3c/h3dt+FDL6Lm0w+rZmpjh+Utx5OllFJs=;
+        b=kMpaZx0WR59LTPy2BoOKlMGfk7DjM4M/f4n4oNKNvIFXkmiCTKm/yrcc5Ogcj8GmuY
+         9B5uZfvL5GTCoNfuPvOpVP7geoGrPvEfluJrAV/PV1oc565Bs4hVnBGFwBnbdf5sr38W
+         AShjJ7zkToj7L7fxjjYx0v3KEW8KstvJXmNgDlvZQSzTw0t2sw2FWXLqxyiHjb9ZxBlG
+         /IpHYIl9kvxGxG4K/Pj4njT9akLOp2yngaKNCv+aljSUMkLMKYPs1t91Xguyr5ONfNN5
+         0op0cqcJtBXzAvXu1M15crhEiGSyYda90/q71DF/vp7n7GF++sbOVRzIKbkul5qetrAX
+         dKVQ==
+X-Received: by 10.43.15.68 with SMTP id pt4mr20855236icb.35.1374873507896;
+ Fri, 26 Jul 2013 14:18:27 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Fri, 26 Jul 2013 14:17:47 -0700 (PDT)
+In-Reply-To: <20130726191631.GD29799@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231204>
 
-On 13-07-26 03:06 PM, Jeff King wrote:
-> On Fri, Jul 26, 2013 at 07:33:01PM +0200, Daniele Segato wrote:
-> 
->> stress the difference between the two with suggestion on when the user
->> should use one in place of the other.
->>
->> Signed-off-by: Daniele Segato <daniele.segato@gmail.com>
-> 
-> The intent of your patch seems reasonable to me. There are a few minor
-> language and typographical mistakes, and the patch itself is
-> whitespace-damaged.
-> 
-> I also do not know that it is accurate to say "most git commands ignore
-> lightweight tags". It is really only "naming" ones like "git describe".
-> 
-> Here is a re-send of your patch with the fixups I would recommend.
+Jeff King wrote:
+> Hmm. I don't think I've run across this message myself, so perhaps I do
+> not understand the situation.
 
-I'm happy with Peff's version.
+It's very simple.
 
-Reviewed-by: Marc Branchaud <marcnarc@xiplink.com>
+  # on branch master
+  $ git checkout -b test
+  $ git cherry-pick master
+  $ ls .git/sequencer
+  # missing
 
-(Daniele, don't feel put off because Jonathan & I are accepting Peff's text.
- If you think it still needs improving please speak up!)
+In the pseudo multi-pick case (I say "pseudo" because there's really
+just one commit to pick):
 
-		M.
+  # on branch master
+  $ git checkout -b test
+  $ git cherry-pick master~..
+  $ ls .git/sequencer
 
-> -- >8 --
-> From: Daniele Segato <daniele.segato@gmail.com>
-> Subject: [PATCH] docs/git-tag: explain lightweight versus annotated tags
-> 
-> Stress the difference between the two with a suggestion on
-> when the user should use one in place of the other.
-> 
-> Signed-off-by: Daniele Segato <daniele.segato@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  Documentation/git-tag.txt | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-> index 22894cb..c418c44 100644
-> --- a/Documentation/git-tag.txt
-> +++ b/Documentation/git-tag.txt
-> @@ -42,6 +42,17 @@ is used to specify custom GnuPG binary.
->  GnuPG key for signing. 	The configuration variable `gpg.program`
->  is used to specify custom GnuPG binary.
->  
-> +Tag objects (created with `-a`, `s`, or `-u`) are called "annotated"
-> +tags; they contain a creation date, the tagger name and e-mail, a
-> +tagging message, and an optional GnuPG signature. Whereas a
-> +"lightweight" tag is simply a name for an object (usually a commit
-> +object).
-> +
-> +Annotated tags are meant for release while lightweight tags are meant
-> +for private or temporary object labels. For this reason, some git
-> +commands for naming objects (like `git describe`) will ignore
-> +lightweight tags by default.
-> +
->  
->  OPTIONS
->  -------
-> 
+cat .git/sequencer/todo if you like.
+
+>   2. Skip this commit and continue the rest of the cherry-pick sequence.
+
+Nope, this is unsupported afaik.
+
+> Those are the options presented when rebase runs into an empty commit,
+> where (2) is presented as "rebase --skip". I'm not sure how to do that
+> here; is it just "cherry-pick --continue"?
+
+No, --continue will just print the same message over and over again.
+
+Yes, the whole ranged cherry-pick thing can use a lot more polish.
+
+>   1. What happened (the cherry-pick is empty).
+>
+>   2. How to proceed from here (allow-empty, abort, etc).
+>
+> You still want to say (1), but (2) is useless to old-timers.  Probably
+> something like advice.cherryPickInstructions would be a good name for an
+> option to squelch (2), and it should apply wherever we tell the user how
+> to proceed. Potentially it should even be advice.sequenceInstructions,
+> and apply to rebase and am as well.
+
+Good suggestion.  I'll pick advice.cherryPickInstructions when I
+decide to polish sequencer.c a bit.
+
+Thanks.
