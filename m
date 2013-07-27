@@ -1,91 +1,98 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH/RFC] core.precomposeunicode is true by default
-Date: Sun, 28 Jul 2013 00:53:01 +0200
-Message-ID: <51F44F4D.7030106@web.de>
-References: <201307270321.32398.tboegi@web.de> <CACsJy8AT--3Lus-3F4-8EHL_3--a-98RkJxaMMALaSjgV+D3WQ@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [BUG] git_path() returns relative paths
+Date: Sun, 28 Jul 2013 07:25:43 +0800
+Message-ID: <CANYiYbEiE+S3J3MR=YyK8Tn48zfmhzJjBjnuPtxzd6WtBU8duA@mail.gmail.com>
+References: <CALkWK0m-4wtpTAcePPWFLT7iwXdcpp+nOy9oG2iFHLsp9XdKZQ@mail.gmail.com>
+	<CALkWK0k-23rTohYvNWP_XbuUCSGUE+G_e_7cBbPP5C9OzsJ4XQ@mail.gmail.com>
+	<CALkWK0kBesC2=kyygMCt61Fm5GGqX+yF6sbkCRcGYZ=ovgtTAQ@mail.gmail.com>
+	<CACsJy8C5Du8zcqVeN7EGuyUxgSZaRq-X8y_hQvqQedYWfP8p+A@mail.gmail.com>
+	<CALkWK0kWnge7fVtTXRgTiK1NbyN8X=bmqfPTc+Mp=BCssPc1og@mail.gmail.com>
+	<CACsJy8CDg2ORKrpwiph=WdW5GPUYEwT1CSCttQ4fagQoMP4QGA@mail.gmail.com>
+	<CALkWK0=xuNGM54=Kodfi9L8_yUOaXrWvqiMHbx2SRTH1CmZxLA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 28 00:53:34 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 28 01:25:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V3DMh-0000dZ-AL
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Jul 2013 00:53:31 +0200
+	id 1V3Drx-00081K-Iu
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Jul 2013 01:25:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752812Ab3G0WxG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Jul 2013 18:53:06 -0400
-Received: from mout.web.de ([212.227.15.4]:57815 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752805Ab3G0WxF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jul 2013 18:53:05 -0400
-Received: from [10.11.191.224] ([65.118.153.130]) by smtp.web.de (mrweb102)
- with ESMTPA (Nemesis) id 0MbyIM-1UkzRw3rV8-00JK9W for <git@vger.kernel.org>;
- Sun, 28 Jul 2013 00:53:03 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <CACsJy8AT--3Lus-3F4-8EHL_3--a-98RkJxaMMALaSjgV+D3WQ@mail.gmail.com>
-X-Provags-ID: V03:K0:gO0kx2frTht5gyLBvTtiNTo/du6eFPIhDbrBqexi6DPIhurjtrj
- BtSAcBp5stR8DmOIQCCjHHFeaBIWQ0wM0XbbxsJ9u8rV3JPdNIhkKRAcAkQUWXWR6tkVGY/
- DaS4agcL9tembaUfZb/nU8lxw63+Yt2gOrW4OPq38jTVI4G+pJrZ4pw2fy1wJWbCzli5/dz
- ZZz56Kvh9nS9TC6K/Tr3g==
+	id S1752732Ab3G0XZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Jul 2013 19:25:45 -0400
+Received: from mail-we0-f179.google.com ([74.125.82.179]:59548 "EHLO
+	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751630Ab3G0XZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jul 2013 19:25:45 -0400
+Received: by mail-we0-f179.google.com with SMTP id t57so2904898wes.38
+        for <git@vger.kernel.org>; Sat, 27 Jul 2013 16:25:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=1ZFveX9VdTExUXxJujWPUZlXCDj5yrselIXxGPoqLfo=;
+        b=TeTbUaL0i/PKELB5SEpirwjE1T3sf9VHkHincTpbT2ydZp43NFYAxbaS5h8Bm/4mhi
+         HL/X5s5g7iaKJUmmTah5Su2S+s8OCdpRppBzKhrddaZrmON8Q+6NEK2J84qovwscZelu
+         91R3XFls9jta9bXkh0aNWiIHbNkgosYLeszusLNzWg8PSN5WUJb2v82OWzt0EvS1osAI
+         RkDadB9gr0yUk2790px9LE6N57umYEfETzVTxLjSPEEfcnLPRoKzc3dU1fDsTOgUPIr2
+         4l+zTgi3JFKsJ6ec4PnSO0eYb830VK75WAXDoBLkfiC8rMUzfKI/lcivJYumHsrG/1ns
+         hpRA==
+X-Received: by 10.194.133.106 with SMTP id pb10mr38354943wjb.62.1374967543394;
+ Sat, 27 Jul 2013 16:25:43 -0700 (PDT)
+Received: by 10.194.176.129 with HTTP; Sat, 27 Jul 2013 16:25:43 -0700 (PDT)
+In-Reply-To: <CALkWK0=xuNGM54=Kodfi9L8_yUOaXrWvqiMHbx2SRTH1CmZxLA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231255>
 
-On 2013-07-27 17.23, Duy Nguyen wrote:
-> On Sat, Jul 27, 2013 at 8:21 AM, Torsten B=C3=B6gershausen <tboegi@we=
-b.de> wrote:
->> When core.precomposeunicode was introduced, it was set to false
->> by default, to be compatible with older versions of Git.
->>
->> Whenever UTF-8 file names are used in a mixed environment,
->> the Mac OS users need to find out that this configuration exist
->> and set it to true manually.
->>
->> There is no measurable performance impact between false and true.
->> A smoother workflow can be achieved for new Git users,
->> so change the default to true:
->>
->> - Remove the auto-sensing
->> - Rename the internal variable into precompose_unicode,
->>   and set it to 1 meaning true.
->> - Adjust and clean up test cases
->>
->> The configuration core.precomposeunicode is still supported.
->=20
-> Does this have any effects on non-utf8 users? I'm on utf-8, so this i=
-s
-> not really my concern, that is unless it changes something on LANG=3D=
-C..
->=20
-Not sure if I fully understand the question.
+2013/7/28 Ramkumar Ramachandra <artagnon@gmail.com>:
+> Duy Nguyen wrote:
+>> I was involved with this code (the gitdir setup code, not submodule)
+>> and am interested to know what's going on too. Could you produce a
+>> small script to reproduce it?
+>
+> Here's your reduced testcase. Just point mygit to a HEAD build.
+>
+>   #!/bin/sh
+>
+>   mygit=~/src/git/git
+>   cd /tmp
+>   $mygit clone https://github.com/artagnon/clayoven
+>   cd clayoven
+>   $mygit submodule add https://github.com/lewang/flx .elisp/flx
+>   $mygit commit -a -m "Added submodule"
+>   cd /tmp
+>   ln -s clayoven/.elisp
+>   cd .elisp/flx
+>   EDITOR="emacs -Q" git commit --amend
 
-Mac OS will always use UTF-8, and we can choose between
-precomposesd and decomposed.
+The keypoint is that you set GIT_EDITOR to "emacs -Q". Last night
+I can not reproduce the bug, because I use vim as the editor.
+Vim as a editor may call realpath before open file.
 
-Windows ("Git for Windows" =3D=3D msysgit) uses UTF-8 (precomposed)
-Git under cygwin 1.7 uses UTF-8, precomposed.
-Git under cygwin 1.5 or git compiled under mingw does not use
-UTF-8, but a Windows code page"
+I change the EDITOR(GIT_EDITOR) environment in your test script
+as follows:
 
-Linux may use UTF-8 or ISO-8859 or whatever you configure.
+    GIT_EDITOR="echo PWD: $(pwd); echo REALPATH: $(pwd -P); echo" \
+    git commit --amend
 
-This change affects only Mac OS,=20
-(should this be stated better in the commit MSG?)
+And the result is :
 
-And if somebody wants to change a repo between Linux, Windows
-and/or Mac OS, everybody should use UTF-8 (precomposed) for filenames,
-directories and branches.
-(or stick to ASCII)
-Does this answer the question?
-/Torsten
+    PWD: /tmp/.elisp/flx
+    REALPATH: /private/tmp/clayoven/.elisp/flx
+    ../../.git/modules/.elisp/flx/COMMIT_EDITMSG
+    [master 248e49e] add usage information
+     Author: Le Wang <le.wang@agworld.com.au>
+     1 file changed, 27 insertions(+)
 
+How to fix this bug, I have no idea now.
 
-=20
+-- 
+Jiang Xin
