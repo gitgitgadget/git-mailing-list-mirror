@@ -1,127 +1,95 @@
-From: Daniele Segato <daniele.segato@gmail.com>
-Subject: Re: [PATCHv3] git-tag man: when to use lightweight or annotated tags
-Date: Sat, 27 Jul 2013 12:39:20 +0200
-Message-ID: <51F3A358.5000807@gmail.com>
-References: <51EFA9A9.4010103@gmail.com> <7vtxjj66kn.fsf@alter.siamese.dyndns.org> <51F12BE6.80606@gmail.com> <51F13A8F.9040400@xiplink.com> <51F23706.5040009@gmail.com> <51F2375E.1080003@gmail.com> <51F28D08.8050507@xiplink.com> <51F2AFBA.4020602@gmail.com> <51F2B2CD.1030004@gmail.com> <20130726190602.GC29799@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [BUG] git_path() returns relative paths
+Date: Sat, 27 Jul 2013 16:40:12 +0530
+Message-ID: <CALkWK0m-4wtpTAcePPWFLT7iwXdcpp+nOy9oG2iFHLsp9XdKZQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jul 27 12:39:32 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 27 13:11:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V31uN-0007DY-IA
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 12:39:31 +0200
+	id 1V32P4-0004GZ-Rh
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 13:11:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751342Ab3G0Kj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Jul 2013 06:39:27 -0400
-Received: from mail-wg0-f53.google.com ([74.125.82.53]:63115 "EHLO
-	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751235Ab3G0Kj0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jul 2013 06:39:26 -0400
-Received: by mail-wg0-f53.google.com with SMTP id c11so3602515wgh.20
-        for <git@vger.kernel.org>; Sat, 27 Jul 2013 03:39:25 -0700 (PDT)
+	id S1751446Ab3G0LKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Jul 2013 07:10:55 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:49714 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751394Ab3G0LKy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jul 2013 07:10:54 -0400
+Received: by mail-ob0-f173.google.com with SMTP id er7so6264488obc.32
+        for <git@vger.kernel.org>; Sat, 27 Jul 2013 04:10:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=MAqvXHIiPRF1JL+rex8gAnQP4k07dmAx4JIeMRo0V74=;
-        b=LuZsA40m8foDXZ7WwIDy+pHXMGVt1R89BF5guFyS6hwAespMRw81PoJ136EHJDaRf4
-         xZ9AAnTpEne7+l9XlL3qkn23Mk6Hq1RRPU+wScBBvOumUkUHgKohFvtD2Mo5kUVx8Td8
-         KkxG1r8mLEMlUKexjI7mSQUww249GZInkH+8peoBgDMZosGkbapN87AtGse/2NFVYFYn
-         IThPjzRu5Z1UWXTEXR7dF5K9XE4iknPt8NcXT8WTe92ojczIg3KJ627Pl43JNEDKCjBZ
-         /gNfgXeXnBVmYupAsLolVT5DqqwNnehGMWpkt4SK0r/0ibLFAvkq2rGKfZxRBXiIGyfj
-         ikVA==
-X-Received: by 10.180.105.129 with SMTP id gm1mr1707167wib.20.1374921564943;
-        Sat, 27 Jul 2013 03:39:24 -0700 (PDT)
-Received: from [192.168.1.16] (host22-75-dynamic.4-87-r.retail.telecomitalia.it. [87.4.75.22])
-        by mx.google.com with ESMTPSA id s19sm9874642wik.11.2013.07.27.03.39.22
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 27 Jul 2013 03:39:23 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <20130726190602.GC29799@sigill.intra.peff.net>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=TTp8m4L8B+zCROvrk86Ihvld/3pxEpuEfjoealVML/k=;
+        b=bXFBnSyDZhXSUbdX7Wv5yGXh1gbptiGSQNZLpDelQvRE37+D0pMba2NoW8Qc9f6JyT
+         VoniX/6B3KTQgQInSyoo6XySfMTsdq1n4Znq/8ySczuZ0ms2Mx43QI0DhiqB/4a4oUjd
+         d48N9fdBEejCa+85MBJEJGDg0YKh4+75rBvdC2jRphwU4LdAqytZay3N3NWex9zh7HTA
+         AhOJCvA1VY1RXoEcygryBtUkovpp/xqZmylS3W1huFKUhu1tOr+k8bzaaYO4P7DnL5wG
+         I3nSXJUVUiIVbtr4BfMZweUZlgCHt6/v370AHu4wA3KlXIdY6678DDX1SV/TRpeJm12I
+         iYdw==
+X-Received: by 10.50.72.73 with SMTP id b9mr239041igv.50.1374923453486; Sat,
+ 27 Jul 2013 04:10:53 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Sat, 27 Jul 2013 04:10:12 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231235>
 
-On 07/26/2013 09:06 PM, Jeff King wrote:
-> On Fri, Jul 26, 2013 at 07:33:01PM +0200, Daniele Segato wrote:
->
->> stress the difference between the two with suggestion on when the user
->> should use one in place of the other.
->>
->> Signed-off-by: Daniele Segato <daniele.segato@gmail.com>
->
-> The intent of your patch seems reasonable to me. There are a few minor
-> language and typographical mistakes, and the patch itself is
-> whitespace-damaged.
+Hi,
 
-Hi Jeff,
+I noticed a regression in the latest master, and I've been trying to
+debug it for 30 minutes now.  I'm still clueless about the root cause,
+but I'll list whatever I found so far:
 
-thanks for the feedback, very appreciated.
+I suddenly noticed that I wasn't able to commit to a certain
+repository with submodules anymore.  This was because git commit was
+opening a COMMIT_EDITMSG in the wrong path.  To reproduce the problem,
+you need a setup like mine:
 
-But I don't understand what's wrong with the whitespaces.
+  ~/dotfiles is a repository containing submodules
+  ~/.elisp is a symbolic link to ~/dotfiles/.elisp, a normal directory
+  ~/.elisp/flx is the submodule repository to which I'm trying to commit
 
-Can you explain to me what's wrong and how I can avoid the issue?
+The buffer-file-name of COMMIT_EDITMSG comes out as
+/home/artagnon/.git/modules/flx/.git/COMMIT_EDITMSG, which is
+completely wrong because ~ does not even contain a .git.
 
-I use thunderbird in text mode to send emails, should I use something 
-else? what?
+So, I started debugging the issue with this patch:
 
->
-> I also do not know that it is accurate to say "most git commands ignore
-> lightweight tags". It is really only "naming" ones like "git describe".
->
-> Here is a re-send of your patch with the fixups I would recommend.
->
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 003bd7d..38a7c77 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -678,6 +678,9 @@ static int prepare_to_commit(const char
+                hook_arg2 = "";
+        }
 
-Thanks, it's obviously better.
++       char *buf = get_current_dir_name();
++       die("DBG: %s | %s", buf, git_path(commit_editmsg));
++
+        s->fp = fopen(git_path(commit_editmsg), "w");
+        if (s->fp == NULL)
+                die_errno(_("could not open '%s'"), git_path(commit_editmsg));
 
-I'll send this new version as soon as you or someone else explain me how 
-to fix the whitespace damage.
+On master, commit returns:
 
-> -- >8 --
-> From: Daniele Segato <daniele.segato@gmail.com>
-> Subject: [PATCH] docs/git-tag: explain lightweight versus annotated tags
->
-> Stress the difference between the two with a suggestion on
-> when the user should use one in place of the other.
->
-> Signed-off-by: Daniele Segato <daniele.segato@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->   Documentation/git-tag.txt | 11 +++++++++++
->   1 file changed, 11 insertions(+)
->
-> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-> index 22894cb..c418c44 100644
-> --- a/Documentation/git-tag.txt
-> +++ b/Documentation/git-tag.txt
-> @@ -42,6 +42,17 @@ is used to specify custom GnuPG binary.
->   GnuPG key for signing. 	The configuration variable `gpg.program`
->   is used to specify custom GnuPG binary.
->
-> +Tag objects (created with `-a`, `s`, or `-u`) are called "annotated"
-> +tags; they contain a creation date, the tagger name and e-mail, a
-> +tagging message, and an optional GnuPG signature. Whereas a
-> +"lightweight" tag is simply a name for an object (usually a commit
-> +object).
-> +
-> +Annotated tags are meant for release while lightweight tags are meant
-> +for private or temporary object labels. For this reason, some git
-> +commands for naming objects (like `git describe`) will ignore
-> +lightweight tags by default.
-> +
->
->   OPTIONS
->   -------
->
+  fatal: DBG: /home/artagnon/.elisp/flx |
+../../.git/modules/.elisp/flx/COMMIT_EDITMSG
+
+When backported to v1.8.3.3, commit returns:
+
+  fatal: DBG: /home/artagnon/.elisp/flx |
+/home/artagnon/dotfiles/.git/modules/.elisp/flx/COMMIT_EDITMSG
+
+I tried looking through the logs to see what has changed in
+path.c/environment.c, but have come up with nothing so far.  I think
+I'll have to resort to using a hammer like bisect now.
+
+*scratches head*
