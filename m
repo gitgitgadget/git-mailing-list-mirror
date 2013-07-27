@@ -1,281 +1,114 @@
-From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH/RFC] core.precomposeunicode is true by default
-Date: Sat, 27 Jul 2013 03:21:31 +0200
-Message-ID: <201307270321.32398.tboegi@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, tboegi@web.de
-X-From: git-owner@vger.kernel.org Sat Jul 27 03:22:16 2013
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [REQUEST 1/1] docs: update http.<url>.* options documentation
+Date: Fri, 26 Jul 2013 19:15:07 -0700
+Message-ID: <251106F7-56FA-4503-A4C9-267A5EF04A2C@gmail.com>
+References: <4b44f95a1b574b5d92a15254e4e8523@f74d39fa044aa309eaea14b9f57fe79> <ec5ecd4fe44af87e83778ce8e297afe@f74d39fa044aa309eaea14b9f57fe79> <20130726043748.GA20286@sigill.intra.peff.net> <0A68F4A5-22B0-4629-8693-73258566E218@gmail.com> <20130726222732.GA3444@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jul 27 04:15:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2tD5-0003S0-1S
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 03:22:15 +0200
+	id 1V2u2m-0008Bu-6M
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 04:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757963Ab3G0BVx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jul 2013 21:21:53 -0400
-Received: from mout.web.de ([212.227.17.11]:53021 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756230Ab3G0BVv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Jul 2013 21:21:51 -0400
-Received: from appes.localnet ([195.67.191.23]) by smtp.web.de (mrweb102)
- with ESMTPA (Nemesis) id 0MRUBA-1UejZN3ZGK-00ScVU for <git@vger.kernel.org>;
- Sat, 27 Jul 2013 03:21:50 +0200
-X-Provags-ID: V03:K0:VMJ4+bo83oi6InwBCaomIv2wkcyzODhFQMpqaaaqFPq5vdepoe+
- TRIhgpAyc26tRNH9NiLScBfORGdH6i0fXH4Kc6n1Eox/olINfvOqWRYl2G2PNKNIt+eSR1t
- q4HFf6e2cSoANF3AShnX+26CLeVCA93Zik4WqhsucrWvKD+FjlS1gq/al4v2a+prPsVLvYG
- cWjV95PAo+UQeg6WiXm1Q==
+	id S1756230Ab3G0CPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jul 2013 22:15:12 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:58717 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753145Ab3G0CPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 22:15:11 -0400
+Received: by mail-pb0-f42.google.com with SMTP id un1so2654142pbc.15
+        for <git@vger.kernel.org>; Fri, 26 Jul 2013 19:15:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc:x-mauler;
+        bh=hUP3sX4KG8/dfpSTM6V/ztb28vj10m06zvGRr/Nm7Jg=;
+        b=HkQPHWXCgRAQ1ZSOOm7dzdRFQ06cBcMisaeez6/K98l/1CM/awajcCRNzrVxfCGdck
+         ER8nuRZw5UNSG58VVLv38m/hMA7pfEKZrA9i2UYfRw/vIAnPe4hh+Ui1v7ApnV9RLFpk
+         m630IVcgw+wo/XWzdxJtd7ScIMwvG8jkjYF57ohTr0gsLLZa1c2eY/i0+ZU9Bxv8DKxX
+         O7qreOqaHcMtJWMbyY7RmzZdf0ASsz0najbwVBWhC5J1ko9/6VBe3Cv6vLAOkC82nEjW
+         ZVf+UgFVClNrD/QmCbQTapWC9MrryBhYyXMsX6F35LiKJylEwKM3UnlWE6Zm1XdkcRJm
+         bdtQ==
+X-Received: by 10.66.189.225 with SMTP id gl1mr58119578pac.22.1374891310778;
+        Fri, 26 Jul 2013 19:15:10 -0700 (PDT)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id wf7sm6510197pac.20.2013.07.26.19.15.08
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 26 Jul 2013 19:15:09 -0700 (PDT)
+In-Reply-To: <20130726222732.GA3444@sigill.intra.peff.net>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231222>
 
-When core.precomposeunicode was introduced, it was set to false
-by default, to be compatible with older versions of Git.
+On Jul 26, 2013, at 15:27, Jeff King wrote:
 
-Whenever UTF-8 file names are used in a mixed environment,
-the Mac OS users need to find out that this configuration exist
-and set it to true manually.
+> On Thu, Jul 25, 2013 at 11:23:23PM -0700, Kyle J. McKay wrote:
+>
+>>> IMHO, this would be more clear as a single item, like:
+>>>
+>>> . User name (e.g., `user` in `https://user@example.com/repo.git`).  
+>>> If
+>>>  the config key has a user name it must match the user name in the
+>>>  URL exactly. If the config key does not have a user name, that
+>>>  config key will match a URL with any user name (including none).
+>>
+>> The only problem I have with a single item is what's the precedence?
+>> Does an exact user match have the same precedence as an any-user
+>> match?  That would seem to be implied by having them as the same item
+>> number.  Separating them would appear to make it clearer that an
+>> exact user match wins over an any user match, but if you have some
+>> alternate text as a suggestion for the single item that clears that
+>> up...  :)
+>
+> Ah, I see your thinking now. You want to say "no username has less
+> precedence than some username, which has less precedence than a path",
+> so they are all elements of a single list.  My thinking was "username
+> has precedence less than path, and like a shorter path has less
+> precedence than a longer path, an empty username has less precedence
+> than a non-empty username".
+>
+> I agree my suggested wording would need to mention that explicitly.
+> Like:
+>
+>  . User name (e.g., `user` in `https://user@example.com/repo.git`). If
+>    the config key has a user name it must match the user name in the
+>    URL exactly. If the config key does not have a user name, that
+>    config key will match a URL with any user name (including none),  
+> but
+>    at lower precedence than a config key with a user name.
+>
+> I can live with it either way, though. They are just two ways of
+> considering the same thing.
+>
+>> I am considering this text to address that:
+>>
+>>> All URLs are normalized (%-encodings are standardized, case- 
+>>> insensitive
+>>> parts are lowercased, `./` and `../` path components are resolved)
+>>> before
+>>> attempting any matching (the password part, if embedded in the URL,
+>>
+>> but I'm not sure the extra verbiage makes it better.  I think it may
+>> just complicate the explanation unnecessarily?
+>
+> Yeah, I think I agree. Let's leave it out.
 
-There is no measurable performance impact between false and true.
-A smoother workflow can be achieved for new Git users,
-so change the default to true:
+So there's a version of this in next as cea9928 and I think that  
+version is fine.  If the documentation gets updated in the future, or  
+perhaps moved to a separate urls-matching.txt for some reason at some  
+point (git config --url, git config --url-parse), I'll make a point of  
+inserting the ", but at lower precedence than a config key with a user  
+name" text.
 
-- Remove the auto-sensing
-- Rename the internal variable into precompose_unicode,
-  and set it to 1 meaning true.
-- Adjust and clean up test cases
-
-The configuration core.precomposeunicode is still supported.
-
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- Documentation/config.txt     |  2 +-
- builtin/init-db.c            |  1 -
- cache.h                      |  2 +-
- compat/precompose_utf8.c     | 28 ++--------------------------
- compat/precompose_utf8.h     |  1 -
- config.c                     |  2 +-
- environment.c                |  2 +-
- git-compat-util.h            |  1 -
- t/t0050-filesystem.sh        |  1 +
- t/t3910-mac-os-precompose.sh | 14 --------------
- t/t7400-submodule-basic.sh   |  1 -
- 11 files changed, 7 insertions(+), 48 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e0b923f..abe4cfa 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -240,7 +240,7 @@ core.precomposeunicode::
- 	This option is only used by Mac OS implementation of Git.
- 	When core.precomposeunicode=3Dtrue, Git reverts the unicode decomposi=
-tion
- 	of filenames done by Mac OS. This is useful when sharing a repository
--	between Mac OS and Linux or Windows.
-+	between Mac OS and Linux or Windows. True by default.
- 	(Git for Windows 1.7.10 or higher is needed, or Git under cygwin 1.7)=
-=2E
- 	When false, file names are handled fully transparent by Git,
- 	which is backward compatible with older versions of Git.
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 78aa387..08854d5 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -290,7 +290,6 @@ static int create_default_files(const char *templat=
-e_path)
- 		strcpy(path + len, "CoNfIg");
- 		if (!access(path, F_OK))
- 			git_config_set("core.ignorecase", "true");
--		probe_utf8_pathname_composition(path, len);
- 	}
-=20
- 	return reinit;
-diff --git a/cache.h b/cache.h
-index 4c606ce..abb2cad 100644
---- a/cache.h
-+++ b/cache.h
-@@ -593,7 +593,7 @@ extern int read_replace_refs;
- extern int fsync_object_files;
- extern int core_preload_index;
- extern int core_apply_sparse_checkout;
--extern int precomposed_unicode;
-+extern int precompose_unicode;
-=20
- /*
-  * The character that begins a commented line in user-editable file
-diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
-index 7980abd..5396b91 100644
---- a/compat/precompose_utf8.c
-+++ b/compat/precompose_utf8.c
-@@ -36,30 +36,6 @@ static size_t has_non_ascii(const char *s, size_t ma=
-xlen, size_t *strlen_c)
- }
-=20
-=20
--void probe_utf8_pathname_composition(char *path, int len)
--{
--	static const char *auml_nfc =3D "\xc3\xa4";
--	static const char *auml_nfd =3D "\x61\xcc\x88";
--	int output_fd;
--	if (precomposed_unicode !=3D -1)
--		return; /* We found it defined in the global config, respect it */
--	strcpy(path + len, auml_nfc);
--	output_fd =3D open(path, O_CREAT|O_EXCL|O_RDWR, 0600);
--	if (output_fd >=3D 0) {
--		close(output_fd);
--		strcpy(path + len, auml_nfd);
--		/* Indicate to the user, that we can configure it to true */
--		if (!access(path, R_OK))
--			git_config_set("core.precomposeunicode", "false");
--		/* To be backward compatible, set precomposed_unicode to 0 */
--		precomposed_unicode =3D 0;
--		strcpy(path + len, auml_nfc);
--		if (unlink(path))
--			die_errno(_("failed to unlink '%s'"), path);
--	}
--}
--
--
- void precompose_argv(int argc, const char **argv)
- {
- 	int i =3D 0;
-@@ -67,7 +43,7 @@ void precompose_argv(int argc, const char **argv)
- 	char *newarg;
- 	iconv_t ic_precompose;
-=20
--	if (precomposed_unicode !=3D 1)
-+	if (!precompose_unicode)
- 		return;
-=20
- 	ic_precompose =3D iconv_open(repo_encoding, path_encoding);
-@@ -130,7 +106,7 @@ struct dirent_prec_psx *precompose_utf8_readdir(PRE=
-C_DIR *prec_dir)
- 		prec_dir->dirent_nfc->d_ino  =3D res->d_ino;
- 		prec_dir->dirent_nfc->d_type =3D res->d_type;
-=20
--		if ((precomposed_unicode =3D=3D 1) && has_non_ascii(res->d_name, (si=
-ze_t)-1, NULL)) {
-+		if (precompose_unicode && has_non_ascii(res->d_name, (size_t)-1, NUL=
-L)) {
- 			if (prec_dir->ic_precompose =3D=3D (iconv_t)-1) {
- 				die("iconv_open(%s,%s) failed, but needed:\n"
- 						"    precomposed unicode is not supported.\n"
-diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
-index 3b73585..488f81d 100644
---- a/compat/precompose_utf8.h
-+++ b/compat/precompose_utf8.h
-@@ -27,7 +27,6 @@ typedef struct {
- } PREC_DIR;
-=20
- void precompose_argv(int argc, const char **argv);
--void probe_utf8_pathname_composition(char *, int);
-=20
- PREC_DIR *precompose_utf8_opendir(const char *dirname);
- struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *dirp);
-diff --git a/config.c b/config.c
-index e13a7b6..c181767 100644
---- a/config.c
-+++ b/config.c
-@@ -827,7 +827,7 @@ static int git_default_core_config(const char *var,=
- const char *value)
- 	}
-=20
- 	if (!strcmp(var, "core.precomposeunicode")) {
--		precomposed_unicode =3D git_config_bool(var, value);
-+		precompose_unicode =3D git_config_bool(var, value);
- 		return 0;
- 	}
-=20
-diff --git a/environment.c b/environment.c
-index 0cb67b2..b98f14b 100644
---- a/environment.c
-+++ b/environment.c
-@@ -58,7 +58,7 @@ char *notes_ref_name;
- int grafts_replace_parents =3D 1;
- int core_apply_sparse_checkout;
- int merge_log_config =3D -1;
--int precomposed_unicode =3D -1; /* see probe_utf8_pathname_composition=
-() */
-+int precompose_unicode =3D 1; /* default: true */
- struct startup_info *startup_info;
- unsigned long pack_size_limit_cfg;
-=20
-diff --git a/git-compat-util.h b/git-compat-util.h
-index cc4ba4d..3f6f27c 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -185,7 +185,6 @@ typedef unsigned long uintptr_t;
- #else
- #define precompose_str(in,i_nfd2nfc)
- #define precompose_argv(c,v)
--#define probe_utf8_pathname_composition(a,b)
- #endif
-=20
- #ifdef NEEDS_CLIPPED_WRITE
-diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-index 05d78d2..6b3cedc 100755
---- a/t/t0050-filesystem.sh
-+++ b/t/t0050-filesystem.sh
-@@ -91,6 +91,7 @@ test_expect_failure CASE_INSENSITIVE_FS 'add (with di=
-fferent case)' '
- test_expect_success "setup unicode normalization tests" '
- 	test_create_repo unicode &&
- 	cd unicode &&
-+	git config core.precomposeunicode false &&
- 	touch "$aumlcdiar" &&
- 	git add "$aumlcdiar" &&
- 	git commit -m initial &&
-diff --git a/t/t3910-mac-os-precompose.sh b/t/t3910-mac-os-precompose.s=
-h
-index 5fe57c5..b853d6a 100755
---- a/t/t3910-mac-os-precompose.sh
-+++ b/t/t3910-mac-os-precompose.sh
-@@ -34,11 +34,6 @@ Alongc=3D$Alongc$Alongc$Alongc$Alongc$Alongc        =
-   #50 Byte
- Alongc=3D$Alongc$Alongc$Alongc$Alongc$Alongc           #250 Byte
- Alongc=3D$Alongc$AEligatu$AEligatu                     #254 Byte
-=20
--test_expect_success "detect if nfd needed" '
--	precomposeunicode=3D`git config core.precomposeunicode` &&
--	test "$precomposeunicode" =3D false &&
--	git config core.precomposeunicode true
--'
- test_expect_success "setup" '
- 	>x &&
- 	git add x &&
-@@ -140,14 +135,5 @@ test_expect_success "Add long precomposed filename=
-" '
- 	git add * &&
- 	git commit -m "Long filename"
- '
--# Test if the global core.precomposeunicode stops autosensing
--# Must be the last test case
--test_expect_success "respect git config --global core.precomposeunicod=
-e" '
--	git config --global core.precomposeunicode true &&
--	rm -rf .git &&
--	git init &&
--	precomposeunicode=3D`git config core.precomposeunicode` &&
--	test "$precomposeunicode" =3D "true"
--'
-=20
- test_done
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 5ee97b0..f0f8cde 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -958,7 +958,6 @@ test_expect_success 'submodule with UTF-8 name' '
- 		git add sub &&
- 		git commit -m "init sub"
- 	) &&
--	test_config core.precomposeunicode true &&
- 	git submodule add ./"$svname" &&
- 	git submodule >&2 &&
- 	test -n "$(git submodule | grep "$svname")"
---=20
-1.8.3
+Kyle
