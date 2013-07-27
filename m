@@ -1,96 +1,89 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: repo consistency under crashes and power failures?
-Date: Fri, 26 Jul 2013 23:10:17 -0400
-Message-ID: <20130727031017.GA20207@sigill.intra.peff.net>
-References: <rmiy597iujc.fsf@fnord.ir.bbn.com>
+Subject: Re: limit memory usage on large repositories
+Date: Fri, 26 Jul 2013 23:48:43 -0400
+Message-ID: <20130727034843.GA20846@sigill.intra.peff.net>
+References: <CAJj9RsTjp7j7Ew2pSttKRAZfZ6fLt9jL+Q_vmHQCi16FBBbK=w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Greg Troxel <gdt@ir.bbn.com>
-X-From: git-owner@vger.kernel.org Sat Jul 27 05:10:25 2013
+To: Matt Schoen <mtschoen@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 27 05:48:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V2utk-0005mN-TD
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 05:10:25 +0200
+	id 1V2vUw-000757-AF
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Jul 2013 05:48:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758348Ab3G0DKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jul 2013 23:10:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:34804 "EHLO peff.net"
+	id S1758422Ab3G0Dsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jul 2013 23:48:46 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35048 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752993Ab3G0DKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jul 2013 23:10:19 -0400
-Received: (qmail 937 invoked by uid 102); 27 Jul 2013 03:10:19 -0000
+	id S1757543Ab3G0Dsp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jul 2013 23:48:45 -0400
+Received: (qmail 3314 invoked by uid 102); 27 Jul 2013 03:48:45 -0000
 Received: from c-98-244-76-202.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (98.244.76.202)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 26 Jul 2013 22:10:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jul 2013 23:10:17 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 26 Jul 2013 22:48:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jul 2013 23:48:43 -0400
 Content-Disposition: inline
-In-Reply-To: <rmiy597iujc.fsf@fnord.ir.bbn.com>
+In-Reply-To: <CAJj9RsTjp7j7Ew2pSttKRAZfZ6fLt9jL+Q_vmHQCi16FBBbK=w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231226>
 
-On Mon, Jul 15, 2013 at 01:48:23PM -0400, Greg Troxel wrote:
+On Wed, Jul 10, 2013 at 05:27:57PM -0500, Matt Schoen wrote:
 
-> I am curious if anyone has actual experiences to share, either
+> I've been using git for some time now, and host my remote bare
+> repositories on my shared hosting account at Dreamhost.com.  As a
+> protective feature on their shared host setup, they enact a policy
+> that kills processes that consume too much memory.  This happens to
+> git sometimes.
 > 
->   a report of corruption after a crash (where corruption means that
->   either 1) git fsck reports worse than dangling objects or 2) some ref
->   did not either point to the old place or the new place)
-> 
->   experiments intended to provoke corruption, like dropping power during
->   pushes, or forced panics in the kernel due to timers, etc.
+> By "sometimes" I mean on large repos (>~500MB), when performing
+> operations like git gc and git fsck and, most annoyingly, when doing a
+> clone.  It seems to happen in the pack phase, but I can't be sure
+> exactly.
 
-I have quite a bit of experience with this, as I investigate all repo
-corruption that we see on github.com, and have run experiments to try to
-reproduce such corruption.
+Do you know how they measure the memory? One of the problems we've had
+at GitHub in measuring git's memory usage is that git will mmap the
+fairly large packfiles. This can bloat the RSS of the git process. At
+the same time, not counting the map is not quite right, either; it is
+memory the process is using, but it could stand to give up some of it if
+other processes needed it (and that giving up is managed by the kernel,
+not by git). So you end up in a situation where you may have a large RSS
+precisely _because_ there is no memory pressure on the system, which
+leaves the kernel free to leave the mmap'd pages in RAM.
 
-Our backend git systems are ext3 with journaling and data=ordered. We
-run that on top of drbd, with two redundant machines sharing the block
-device. If one dies, we fail over to the spare. Writes to the block
-device are not considered committed until they are written to both
-machines.
+You can reduce the amount of memory you map at once with
+core.packedGitWindowSize.
 
-Git's scheme is to write objects (both loose and when receiving packs
-over the wire) via tempfile, with an atomic link-into-place after close.
-We do not fsync object files by default, but we do fsync packs. However,
-it shouldn't matter as long as your filesystem orders data and metadata
-writes (if it doesn't, you probably want to turn on object fsyncing).
-So for our data=ordered filesystems, that's fine.
+> I've messed around with the config options like pack.threads and
+> pack.sizeLimit, and basically anything on the git config manpage that
+> mentions memory.  I limit all of these things to 1 or 0 or 1m when
+> applicable, just to be sure. To be honest, I really don't know what
+> I'm doing ;)
 
-Ref writes have a similar fsync situation to loose object files. We
-write the new ref to a tempfile, close, and then rename into place. If
-the data and metadata writes are out of order, one could have problems
-(but again, not a problem with data=ordered).
+I assume you did pack.deltaCacheSize, which can take a fair bit of
+memory during packing (or cloning).
 
-Most of the corruption we have seen at GitHub has been one of:
+Packing itself takes up a lot, as I think we keep the whole window's
+worth of objects in memory at one time (so 10 by default). If you have
+large objects, that can spike your memory usage for a moment as we keep
+several versions of the large object in memory at once.
 
-  1. Buggy non-core-git implementations that do not properly use
-     tempfiles to create objects (Grit used to have this problem, but it
-     is now fixed).
+If you have such large objects that don't delta well, you can use the
+"nodelta" gitattribute so that git doesn't even try them.
 
-  2. Race conditions in examining ref state that can cause refs to be
-     missed when determining reachability (thus you might prune objects
-     that should be left). The worst of these is fixed in the current
-     "master" and will be part of git v1.8.4. There are still ways that
-     we can prune too much, but they are reasonably unlikely unless you
-     are pruning constantly.
+> Oddly enough, I'm having trouble reproducing my issue with anything
+> but git fsck.  Clones were failing in the past, but after a successful
+> git gc, everything seems to be ok(?)
 
-We did once experience some lost objects after a server failover.  After
-much experimentation, we finally found out that the machine in question
-had a RAID card with bad memory which would drop some writes which it
-claimed to have committed after a power failure (so even fsync did not
-help).
-
-So for ordered data and metadata writes, in my experience git is quite
-solid against power failures and crashes. For systems without that
-guarantee, you should turn on core.fsyncobjectfiles, but I suspect you
-could also see some ref corruption (and possibly index corruption, too,
-as it does not fsync either).
+Memory usage for clone should improve after a gc, as we will mostly be
+reusing deltas from disk instead of trying to find new ones between
+packs.
 
 -Peff
