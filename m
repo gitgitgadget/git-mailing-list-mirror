@@ -1,62 +1,233 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [BUG] git_path() returns relative paths
-Date: Sun, 28 Jul 2013 14:54:49 +0530
-Message-ID: <CALkWK0n-a8XB_ZRmQBTxq2DQ79VfPYyuvPBsi=Zrf_ThzUsoyw@mail.gmail.com>
-References: <CALkWK0m-4wtpTAcePPWFLT7iwXdcpp+nOy9oG2iFHLsp9XdKZQ@mail.gmail.com>
- <CALkWK0k-23rTohYvNWP_XbuUCSGUE+G_e_7cBbPP5C9OzsJ4XQ@mail.gmail.com>
- <CALkWK0kBesC2=kyygMCt61Fm5GGqX+yF6sbkCRcGYZ=ovgtTAQ@mail.gmail.com>
- <CACsJy8C5Du8zcqVeN7EGuyUxgSZaRq-X8y_hQvqQedYWfP8p+A@mail.gmail.com>
- <CALkWK0kWnge7fVtTXRgTiK1NbyN8X=bmqfPTc+Mp=BCssPc1og@mail.gmail.com>
- <CACsJy8CDg2ORKrpwiph=WdW5GPUYEwT1CSCttQ4fagQoMP4QGA@mail.gmail.com>
- <CALkWK0=xuNGM54=Kodfi9L8_yUOaXrWvqiMHbx2SRTH1CmZxLA@mail.gmail.com> <20130728050009.GA10844@lanh>
+From: Andreas Amann <a.amann@ucc.ie>
+Subject: [PATCH v3] gitk: Add a "Save file as" menu item
+Date: Sun, 28 Jul 2013 16:30:05 +0100
+Message-ID: <87li4qem82.fsf@msstf091.ucc.ie>
+References: <87ppuculyi.fsf@msstf091.ucc.ie> <alpine.DEB.2.00.1307211910250.9615@ds9.cixit.se> <87wqojhemb.fsf@msstf091.ucc.ie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Xin Jiang <worldhello.net@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 28 11:25:45 2013
+Content-Type: text/plain
+Cc: Paul Mackerras <paulus@samba.org>,
+	Peter Krefting <peter@softwolves.pp.se>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jul 28 17:31:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V3NEW-0001JD-6y
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Jul 2013 11:25:44 +0200
+	id 1V3SwP-0001LM-Jq
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Jul 2013 17:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753161Ab3G1JZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jul 2013 05:25:30 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:55753 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753021Ab3G1JZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jul 2013 05:25:29 -0400
-Received: by mail-ob0-f173.google.com with SMTP id er7so7240475obc.4
-        for <git@vger.kernel.org>; Sun, 28 Jul 2013 02:25:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=kFAwdv4A/0Kf1+dGwRFBXtXgPyNMxtiYHdqXNAujFzo=;
-        b=FIFvgd2weSqMmKMJYbca84Qvwtj3CGIsdaePX4pSbk50DeLX4r1gDKfuAXL7+CuNPL
-         CiPCbwA+04xQon8YQOqRVnM+loBFnTvb+BxdhbVloa51CqwJ3gcudQH2Nk25PLKhW1k+
-         /gXBOTA29j6YMo6JXnagURFUfAVTkOUOqOSxXHo2wbrsCjjLbuoLuWG/X5eD9/3oHwaI
-         3rwLJJFta34pvVTm+QCHOAjIkDlBZQVsoSFBNfH0UOP65HbDTLB/qkrQ2/QJ5ET/N+ft
-         ObSp7OyHX9cjyVZDu5yUJhC1w2dDPAUCxbOpMIfHpp+YdbXvXBjp/6VEbSU7j7ta7lpp
-         mCKg==
-X-Received: by 10.50.6.16 with SMTP id w16mr566307igw.29.1375003529295; Sun,
- 28 Jul 2013 02:25:29 -0700 (PDT)
-Received: by 10.64.37.130 with HTTP; Sun, 28 Jul 2013 02:24:49 -0700 (PDT)
-In-Reply-To: <20130728050009.GA10844@lanh>
+	id S1753857Ab3G1Pa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jul 2013 11:30:57 -0400
+Received: from [213.199.154.188] ([213.199.154.188]:13100 "EHLO
+	db8outboundpool.messaging.microsoft.com" rhost-flags-FAIL-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753786Ab3G1Pam (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Jul 2013 11:30:42 -0400
+Received: from mail75-db8-R.bigfish.com (10.174.8.252) by
+ DB8EHSOBE002.bigfish.com (10.174.4.65) with Microsoft SMTP Server id
+ 14.1.225.22; Sun, 28 Jul 2013 15:30:10 +0000
+Received: from mail75-db8 (localhost [127.0.0.1])	by mail75-db8-R.bigfish.com
+ (Postfix) with ESMTP id 14A0BB400DC;	Sun, 28 Jul 2013 15:30:10 +0000 (UTC)
+X-Forefront-Antispam-Report: CIP:143.239.1.24;KIP:(null);UIP:(null);IPV:NLI;H:mail4.ucc.ie;RD:mail4.ucc.ie;EFVD:NLI
+X-SpamScore: -1
+X-BigFish: VPS-1(zz1432Izz1f42h208ch1ee6h1de0h1d18h1fdah2073h1202h1e76h1d1ah1d2ah1fc6hzz1de098h1de097hz2fh2a8h668h839hd24he5bhf0ahfa3h107ah11b5h121eh1288h12a5h12a9h12bdh12e5h137ah13b6h1441h14afh1504h1537h153bh162dh1631h1758h18e1h1946h19b5h1b0ah1d0ch1d2eh1d3fh1dfeh1dffh1e1dh1155h)
+Received-SPF: pass (mail75-db8: domain of ucc.ie designates 143.239.1.24 as permitted sender) client-ip=143.239.1.24; envelope-from=a.amann@ucc.ie; helo=mail4.ucc.ie ;mail4.ucc.ie ;
+Received: from mail75-db8 (localhost.localdomain [127.0.0.1]) by mail75-db8
+ (MessageSwitch) id 1375025406893955_26476; Sun, 28 Jul 2013 15:30:06 +0000
+ (UTC)
+Received: from DB8EHSMHS020.bigfish.com (unknown [10.174.8.239])	by
+ mail75-db8.bigfish.com (Postfix) with ESMTP id CAD7C4C0031;	Sun, 28 Jul 2013
+ 15:30:06 +0000 (UTC)
+Received: from mail4.ucc.ie (143.239.1.24) by DB8EHSMHS020.bigfish.com
+ (10.174.4.30) with Microsoft SMTP Server (TLS) id 14.16.227.3; Sun, 28 Jul
+ 2013 15:30:06 +0000
+Received: from msstf091.ucc.ie (msstf091.ucc.ie [143.239.76.91])	by
+ mail4.ucc.ie (8.14.4/8.14.4) with ESMTP id r6SFU5wU010200;	Sun, 28 Jul 2013
+ 16:30:05 +0100
+Received: by msstf091.ucc.ie (Postfix, from userid 1000)	id A6395A2BD2; Sun,
+ 28 Jul 2013 16:30:05 +0100 (IST)
+In-Reply-To: <87wqojhemb.fsf@msstf091.ucc.ie>
+User-Agent: Notmuch/0.15.2 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+X-OriginatorOrg: ucc.ie
+X-FOPE-CONNECTOR: Id%0$Dn%*$RO%0$TLS%0$FQDN%$TlsDn%
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231267>
 
-Duy Nguyen wrote:
-> How about something like this as a workaround for emacs?
+Previously, there was no easy way to save a particular file from the
+currently selected revision.
 
-Even if we do manage to patch Emacs now, we still need to support
-older versions: so yeah, this is an urgent candidate for maint.  I'm
-waiting for the word from Emacs-Devel before writing out a commit
-message.
+This patch adds a menu item "Save file as" to the file list popup
+menu, which opens a file selection dialog to determine the name under
+which a file should be saved.  The default filename is of the form
+"[shortid] basename".  If the current revision is the index, the
+default pattern is of the form "[index] basename".  This works for
+both, the "Patch" and "Tree" view.  The menu item is disabled for the
+"local uncommitted changes" fake revision.
+
+Signed-off-by: Andreas Amann <andreas.amann@web.de>
+---
+ gitk | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+
+The previous version V2 of the patch did not work, when gitk was started
+in a subdirectory of the repo and a file was saved from tree view.  This
+is now fixed. 
+
+diff --git a/gitk b/gitk
+index 5cd00d8..6b66f18 100755
+--- a/gitk
++++ b/gitk
+@@ -2595,6 +2595,7 @@ proc makewindow {} {
+ 	{mc "Highlight this too" command {flist_hl 0}}
+ 	{mc "Highlight this only" command {flist_hl 1}}
+ 	{mc "External diff" command {external_diff}}
++	{mc "Save file as" command {save_file_as}}
+ 	{mc "Blame parent commit" command {external_blame 1}}
+     }
+     $flist_menu configure -tearoff 0
+@@ -3378,6 +3379,7 @@ proc sel_flist {w x y} {
+ proc pop_flist_menu {w X Y x y} {
+     global ctext cflist cmitmode flist_menu flist_menu_file
+     global treediffs diffids
++    global nullid
+ 
+     stopfinding
+     set l [lindex [split [$w index "@$x,$y"] "."] 0]
+@@ -3395,6 +3397,12 @@ proc pop_flist_menu {w X Y x y} {
+     }
+     # Disable "External diff" item in tree mode
+     $flist_menu entryconf 2 -state $xdiffstate
++    set savefilestate "normal"
++    if {[lindex $diffids 0] eq $nullid} {
++	set savefilestate "disabled"
++    }
++    # Disable "Save file as" item "local uncommited changes" revision
++    $flist_menu entryconf 3 -state $savefilestate
+     tk_popup $flist_menu $X $Y
+ }
+ 
+@@ -3496,6 +3504,34 @@ proc external_diff_get_one_file {diffid filename diffdir} {
+ 	       "revision $diffid"]
+ }
+ 
++proc save_file_as {} {
++    global nullid nullid2
++    global flist_menu_file cmitmode
++    global diffids
++
++    set diffid [lindex $diffids 0]
++    if {$diffid == $nullid} {
++	return
++    } elseif {$diffid == $nullid2} {
++	set diffidtext [mc "index"]
++	set diffid ""
++	set whattext $diffidtext
++    } else {
++	set diffidtext [shortids $diffid]
++	set whattext "[mc "revision"] $diffidtext"
++    }
++    set diffid $diffid:
++    if {$cmitmode eq "tree"} {
++	set diffid $diffid./
++    }
++    set difffile "\[$diffidtext\] [file tail $flist_menu_file]"
++    set difffile [tk_getSaveFile -initialfile $difffile -title [mc "Save file as"] -parent .]
++    if {$difffile eq {}} {
++	return
++    }
++    save_file_from_commit $diffid$flist_menu_file $difffile $whattext
++}
++
+ proc external_diff {} {
+     global nullid nullid2
+     global flist_menu_file
+-- 
+1.8.3.3
+
+
+Andreas Amann <a.amann@ucc.ie> writes:
+> Previously, there was no easy way to save a particular file from the
+> currently selected revision.
+>
+> This patch adds a menu item "Save file as" to the file list popup
+> menu, which opens a file selection dialog to determine the name under
+> which a file should be saved.  The default filename is of the form
+> "[shortid] basename".  If the current revision is the index, the
+> default pattern is of the form "[index] basename".  This works for
+> both, the "Patch" and "Tree" view.  The menu item is disabled for the
+> "local uncommitted changes" fake revision.
+>
+> Signed-off-by: Andreas Amann <andreas.amann@web.de>
+> ---
+>  gitk | 32 ++++++++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+>
+> diff --git a/gitk b/gitk
+> index 5cd00d8..b5a70b5 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -2595,6 +2595,7 @@ proc makewindow {} {
+>  	{mc "Highlight this too" command {flist_hl 0}}
+>  	{mc "Highlight this only" command {flist_hl 1}}
+>  	{mc "External diff" command {external_diff}}
+> +	{mc "Save file as" command {save_file_as}}
+>  	{mc "Blame parent commit" command {external_blame 1}}
+>      }
+>      $flist_menu configure -tearoff 0
+> @@ -3378,6 +3379,7 @@ proc sel_flist {w x y} {
+>  proc pop_flist_menu {w X Y x y} {
+>      global ctext cflist cmitmode flist_menu flist_menu_file
+>      global treediffs diffids
+> +    global nullid
+>  
+>      stopfinding
+>      set l [lindex [split [$w index "@$x,$y"] "."] 0]
+> @@ -3395,6 +3397,12 @@ proc pop_flist_menu {w X Y x y} {
+>      }
+>      # Disable "External diff" item in tree mode
+>      $flist_menu entryconf 2 -state $xdiffstate
+> +    set savefilestate "normal"
+> +    if {[lindex $diffids 0] eq $nullid} {
+> +	set savefilestate "disabled"
+> +    }
+> +    # Disable "Save file as" item "local uncommited changes" revision
+> +    $flist_menu entryconf 3 -state $savefilestate
+>      tk_popup $flist_menu $X $Y
+>  }
+>  
+> @@ -3496,6 +3504,30 @@ proc external_diff_get_one_file {diffid filename diffdir} {
+>  	       "revision $diffid"]
+>  }
+>  
+> +proc save_file_as {} {
+> +    global nullid nullid2
+> +    global flist_menu_file
+> +    global diffids
+> +
+> +    set diffid [lindex $diffids 0]
+> +    if {$diffid == $nullid} {
+> +	return
+> +    } elseif {$diffid == $nullid2} {
+> +	set diffidtext [mc "index"]
+> +	set diffid ""
+> +	set whattext $diffidtext
+> +    } else {
+> +	set diffidtext [shortids $diffid]
+> +	set whattext "[mc "revision"] $diffidtext"
+> +    }
+> +    set difffile "\[$diffidtext\] [file tail $flist_menu_file]"
+> +    set difffile [tk_getSaveFile -initialfile $difffile -title [mc "Save file as"] -parent .]
+> +    if {$difffile eq {}} {
+> +	return
+> +    }
+> +    save_file_from_commit $diffid:$flist_menu_file $difffile $whattext
+> +}
+> +
+>  proc external_diff {} {
+>      global nullid nullid2
+>      global flist_menu_file
+> -- 
+> 1.8.3.3
