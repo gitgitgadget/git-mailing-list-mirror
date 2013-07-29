@@ -1,94 +1,121 @@
-From: Daniele Segato <daniele.segato@gmail.com>
-Subject: Re: [PATCHv3] git-tag man: when to use lightweight or annotated tags
-Date: Mon, 29 Jul 2013 20:16:03 +0200
-Message-ID: <51F6B163.8000605@gmail.com>
-References: <51EFA9A9.4010103@gmail.com> <7vtxjj66kn.fsf@alter.siamese.dyndns.org> <51F12BE6.80606@gmail.com> <51F13A8F.9040400@xiplink.com> <51F23706.5040009@gmail.com> <51F2375E.1080003@gmail.com> <51F28D08.8050507@xiplink.com> <51F2AFBA.4020602@gmail.com> <51F2B2CD.1030004@gmail.com> <20130726190602.GC29799@sigill.intra.peff.net> <51F3A358.5000807@gmail.com> <720060083F5C476A905C09146E7CD711@PhilipOakley> <51F3B2D1.2040402@googlemail.com>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH] Remove deprecated OPTION_BOOLEAN
+Date: Mon, 29 Jul 2013 20:18:51 +0200
+Message-ID: <51F6B20B.1010709@googlemail.com>
+References: <1375112281-3935-1-git-send-email-stefanbeller@googlemail.com> <1375112281-3935-2-git-send-email-stefanbeller@googlemail.com> <7v4nbd1bjj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Stefan Beller <stefanbeller@googlemail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 29 20:16:15 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigD4552B56E0250D855F08BBC5"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 29 20:18:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V3rzT-0007yJ-43
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 20:16:15 +0200
+	id 1V3s1q-0000jq-44
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 20:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754241Ab3G2SQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jul 2013 14:16:11 -0400
-Received: from mail-ea0-f178.google.com ([209.85.215.178]:63925 "EHLO
-	mail-ea0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752755Ab3G2SQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jul 2013 14:16:10 -0400
-Received: by mail-ea0-f178.google.com with SMTP id a15so401357eae.37
-        for <git@vger.kernel.org>; Mon, 29 Jul 2013 11:16:09 -0700 (PDT)
+	id S1756430Ab3G2SSi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jul 2013 14:18:38 -0400
+Received: from mail-we0-f169.google.com ([74.125.82.169]:38836 "EHLO
+	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754553Ab3G2SSh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jul 2013 14:18:37 -0400
+Received: by mail-we0-f169.google.com with SMTP id n5so3567395wev.0
+        for <git@vger.kernel.org>; Mon, 29 Jul 2013 11:18:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=googlemail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=7xXfPQE+1882rFlffAj8liN03Cj2EpwI+P03TEXl3vg=;
-        b=qpruXQUxgANPu3hN0b1ZVbwz0AM1lyReDvlsoYmPo68w8d3ptkf8E+YX3BmS02EKML
-         Lt0wLRFdX2AcPvO4zxY0gzR7BnY2am8PCl5bGrkGnHqNl4VAJUpCiEDKrX+ANEqMVCuB
-         CYTIU1CPGQN01jd66VODGNEqTr1NqnfU9RYvzH4aXQofTA3zowkeL8JuiG35HrC6xL+i
-         fotzViQTZeQjt7NPpRqS2TUpLljpFrz/9MWju/oOrpiiCXFBXxUANz6Q3ssQMqn0mgzA
-         yDHF/3s5X/26MMLtbYP6IAKAAfgd7U/38SEwhsAsZXXdh2SZHInrr3ZDQkVNTfM/G5OA
-         aWEg==
-X-Received: by 10.15.36.133 with SMTP id i5mr61365491eev.52.1375121769200;
-        Mon, 29 Jul 2013 11:16:09 -0700 (PDT)
-Received: from [192.168.1.16] (host253-69-dynamic.4-87-r.retail.telecomitalia.it. [87.4.69.253])
-        by mx.google.com with ESMTPSA id ci50sm103784520eeb.12.2013.07.29.11.16.06
+         :references:in-reply-to:x-enigmail-version:content-type;
+        bh=Te7fW5qbgV+rq8PfFK43G6c8qyecaIblqTLaX1547bM=;
+        b=qaceFzPUpgt2xQ18RZGaIBi1Wvwza4qbs/q8n65bmahMvo1oqF7NJDdWhBawCXe61H
+         FEMo0fO6c6fs5Nl6vXYURFSPpUMxkAnZE4zFbIU5Vhkuv+iDemZe1pTt59dibGJwzf6W
+         LcMPlkH/4/JcEO42DNxe1bYVdkIB2o/x+C0pT3lc00Pl0glXriSzkrQvF9D1lUFFB44h
+         X9zfukbV0yYVXe+Z6NQ5uCxsN96K6glgTBcaClLvPmwMmE1r3PxaCTOhD2LZfmwKn5Kq
+         ZjIcPJZv6XnPL0siUU3ymC7WqD2zWyJ5RFjitKHOkBqlfdVaT1HnXhoivdxtOQ2kTNYo
+         VPNw==
+X-Received: by 10.194.2.13 with SMTP id 13mr44800132wjq.74.1375121916728;
+        Mon, 29 Jul 2013 11:18:36 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id w4sm24222536wia.9.2013.07.29.11.18.35
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 29 Jul 2013 11:16:08 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <51F3B2D1.2040402@googlemail.com>
+        Mon, 29 Jul 2013 11:18:36 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <7v4nbd1bjj.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231315>
 
-On 07/27/2013 01:45 PM, Stefan Beller wrote:
-> On 07/27/2013 01:26 PM, Philip Oakley wrote:
->
->> Try 'git format-patch' and 'git send-email'. The format-patch man page
->> even has a note about Thunderbird corruptions.
->>
->> Philip
->>
->
-> Well I use Thunderbird as well for regular communication except for
-> sending patches.
-> The kernel documentation has also some words about Thunderbird
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/email-clients.txt
->
-> Given so many steps, I also configured git send-email, which makes
-> sure that patches are uncorrupted.
-> For gmail add these lines to your ~/.gitconfig
->
-> [sendemail]
-[snip]
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigD4552B56E0250D855F08BBC5
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
->
-> Then you'd need to have msmtp installed and have the following
-> in the file ~/.msmtprc
-[snip]
->
-> I think it would also work without having git relying on msmtp by now,
-> but I'd be too lazy to change my existing working setup.
->
+On 07/29/2013 08:11 PM, Junio C Hamano wrote:
+> Stefan Beller <stefanbeller@googlemail.com> writes:
+>=20
+>> As of b04ba2bb4 OPTION_BOOLEAN was deprecated.
+>=20
+> The primary purpose of b04ba2bb (parse-options: deprecate
+> OPT_BOOLEAN, 2011-09-27) is to deprecate OPT_BOOLEAN(), which was
+> hard to use correctly.
+>=20
+> OPT_BOOLEAN() is not touched at all with this patch, it seems.  Do
+> they want count-up semantics?
+>=20
 
-Hi Paolo, Philip, Stefan,
+I'm working on the OPT_BOOLEAN replacement as well, but the=20
+OPTION_BOOLEAN seemed as an easier start (way less until completion)
 
-thank you, you've been very kind.
-I think I've set it up, I'll try with the next patch, if any!
+> At first glance, it looked to me that OPT_HIDDEN_BOOL was a good
+> addition, given how often we have PARSE_OPT_HIDDEN.  While I think
+> some of the hidden ones are justified, I am not sure if the hiding
+> of many options are.  If we stop hiding many of them, HIDDEN_BOOL
+> may become not so useful.  I dunno.
 
-Regards,
-Daniele Segato
+There should be no change in semantics.
+All those which now use the OPT_HIDDEN_BOOL have had=20
+{OPTION_BOOLEAN,..., PARSE_OPT_HIDDEN}
+before.
+
+But your concern sounds more like you'd dislike the
+appearance of OPT_HIDDEN_BOOL because you'd want to remove the
+hidden options. The options being hidden there sound to me as if
+those were hidden due to their historical nature and there is always
+a non-hidden equivalent being better worded.
+
+Stefan
+
+
+--------------enigD4552B56E0250D855F08BBC5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJR9rILAAoJEJQCPTzLflhq18YQAMjx5pksKeBq9pkJxR/vPp9i
+tc/1UQ27lzFCelcRwbRFFbGpmnnY8sdsBUpWckj1+JbqpZu7FrFvHd1FX3rjEJJB
+UaYTCcg9lhZp/2wVaqUX9Mc6pe57/g1UV+Kb5hridWVcjw46QJvptMEfmiOsuDiE
+w/CLDojpKTkA4/k7WedFPF/5NfN6wIC34//Ho9gcQTo0In4iO5NlhoTFPK3fYXGj
+QxJvWF5HfDI3xg6z2mzf47p4bfvdh6O7xdn/Nk7df0DBMxkyIRV7OsLayCwQr7Km
+CEaXhrty2JnrNmCH1lrW29w8iEPxmWl7It5nmIScy9HvtsYGqqgJ/TRlFSc+pYTx
+Ag8RvsJoQWanpwkuVypE9BEteZiqllUiWCs42NyUk2cE7yLxLyOInzrn66TKMIfJ
+HHIJqblsTo7eqZ6COVA1U9xML3yaAPSk4MF8X796CJ7cgw/+njlWbMoCnpzQml2c
+S4HW6iAW5b/BJMwa4zLIF7ed9hOvwp99kZuEdQ/6nG8N8L5qa1p476ADj1rQhpSv
+szxxvnrM11hk5JDcqCl4EeTfpd3AmtfC4ZYl4j5Ihl9zyXJ2zygWSq7K9LUPxxTJ
+vhKdbXLTYgCPzyMwga+rldBsHSVozcGLx0HVsZzTelXGfiD+1yRQYkq/YlJcQZpH
+EhWp0txjbDFmOALrejDK
+=m25q
+-----END PGP SIGNATURE-----
+
+--------------enigD4552B56E0250D855F08BBC5--
