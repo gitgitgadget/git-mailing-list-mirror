@@ -1,96 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] editor: use canonicalized absolute path
-Date: Mon, 29 Jul 2013 12:40:04 -0700
-Message-ID: <7vr4ehyx2j.fsf@alter.siamese.dyndns.org>
-References: <1375030782-13339-1-git-send-email-artagnon@gmail.com>
-	<7v8v0p2z45.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=dGmMkgvaNV27E3Pb3+SWSZ2pNMOr-wsEcUR_wgLjMFA@mail.gmail.com>
-	<7vwqo91dgw.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=ZekB9uVtzM_z4wbfZ0JWawaob_PspM9UHbVJKyFGBfw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?utf-8?B?4buNYw==?= 
-	<pclouds@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 29 21:40:17 2013
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: [PATCH 0/4] Removing deprecated parsing macros
+Date: Mon, 29 Jul 2013 21:49:54 +0200
+Message-ID: <1375127398-31904-1-git-send-email-stefanbeller@googlemail.com>
+Cc: Stefan Beller <stefanbeller@googlemail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 29 21:49:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V3tIm-0004Hh-AZ
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 21:40:16 +0200
+	id 1V3tS2-00010T-Q8
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 21:49:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753069Ab3G2TkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jul 2013 15:40:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42261 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751410Ab3G2TkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jul 2013 15:40:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AED5F3473B;
-	Mon, 29 Jul 2013 19:40:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KGB4XDIqL7Y0b+LPQFrTNc32HoA=; b=b/ACCV
-	NZ7bOogfWuXHHAhGnaWekcuMwteitVs98gsFoWYAIwgTiAQXXA8xiMiQ/5ViVXoB
-	n4qCHLZ1E4TiqBL7XyHXjXoE2kD3k2coSPlHVXvKdGM3kj2NvYOaBUQEEZUsADwy
-	DXh+h6LJXmPdGYJ11NNqEgDtdhD6v8/gHEZ4k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qXp49wU5vnOpI5KZ69ptW6IdxjSmar10
-	q3b+IggKzQuFgikNcByZ87TKIfvcWNkXHEXpgYJHCBeP0TYXve/LDxdLsWkh2HTA
-	XPVNkQoG18Cq/I4Goup/uO20bUtmFQkEp5Er6xzxN7x96KsmZDg/UeUzCv7kNOj4
-	fABzQbId+VM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BB063473A;
-	Mon, 29 Jul 2013 19:40:07 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 402F234737;
-	Mon, 29 Jul 2013 19:40:06 +0000 (UTC)
-In-Reply-To: <CALkWK0=ZekB9uVtzM_z4wbfZ0JWawaob_PspM9UHbVJKyFGBfw@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Mon, 29 Jul 2013 23:18:01 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AB9872B8-F886-11E2-A547-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753959Ab3G2Ttr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jul 2013 15:49:47 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:33027 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752636Ab3G2Ttq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jul 2013 15:49:46 -0400
+Received: by mail-wi0-f178.google.com with SMTP id j17so2951397wiw.5
+        for <git@vger.kernel.org>; Mon, 29 Jul 2013 12:49:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=NL7JAB18rd4pISd0oXTQzGe21RIVi9GEydtHPmc1aJc=;
+        b=Hu0zofI+P0jCd47MvuxN0ydds7E+JEynprpzSYFtipEdCMt3LIwYWjUWc4IRE9uvMU
+         Izkbnung6L6NMmPrvyFEVtdY/qsXMMh38W7Dg8KgN58Pmj/mAEAAapCfR8fOpyeh4Lvz
+         XrXTWfR69l1AgzFh2EC3PzqfRsLpvEZBYXKbzJPTxMLmf+cnS4wZjAgBiSUYqazraspJ
+         0oAo43PuUQSWxtG13iDD7zyI7BVYOVrzKfIYZhcf2Vz+e01J+2mUyIpDZzamIlDkMQbu
+         7Cm8jeC/jAPgFacRF2mNXBALznOWOAGolkCXhmpS1FOAMFYGHB9SPrVMXfrPvEJuD6yk
+         V0Yg==
+X-Received: by 10.194.60.5 with SMTP id d5mr31325270wjr.26.1375127384966;
+        Mon, 29 Jul 2013 12:49:44 -0700 (PDT)
+Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id w4sm24743411wia.9.2013.07.29.12.49.43
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 29 Jul 2013 12:49:44 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc0.1.g8f6a3e5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231323>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+The first patch of this series is a start on replacing
+the deprecated OPT_BOOLEAN macro by OPT_BOOL.
+All occurences have been reviewed so far, only 140 occurences to go.
 
-> Junio C Hamano wrote:
->> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->>> Junio C Hamano wrote:
->>>> That's a bit strange---the patch text looks like the "how about
->>>> this" patch Duy posted earlier.  Shouldn't it be From: Duy with
->>>> S-o-b: by two of you instead?
->>>
->>> Feel free to amend as you see fit, as always.
->>
->> I was asking what is "correct", without which I cannot "feel free"
->> to do anything, and your answer is not helping.
->
-> I don't have a strong opinion either way.
+The 3 patches after the first are things I noticed during the
+review for the macro replacement. These should ease readability.
 
-There is no opinion involved.  Maybe the word "correct" had a wrong
-connotation, but what I needed to find out was a true provenance of
-the change, as that is what the S-o-b chain records.  I did not
-know, and I needed to find out, if the patch in question was what
-you came up independently without looking at Duy's patch (which is
-very understandable as you two were going back and forth digging the
-issue on the list), or you submitted his patch after tidying it up.
+I'll continue replaceing macros the next days, this series is
+for review only.
 
-It appears from your description below that it was an independent
-work, so that is what I'll queue.
+Stefan Beller (4):
+  Replace deprecated OPT_BOOLEAN by OPT_BOOL
+  log, format-patch: also accept short parameter 'q' to be quiet
+  checkout: remove superfluous local variable
+  name-rev: ease up condition
 
-Thanks.
+ builtin/check-attr.c |  8 ++++----
+ builtin/checkout.c   | 22 ++++++++++------------
+ builtin/clone.c      | 16 ++++++++--------
+ builtin/fsck.c       | 16 ++++++++--------
+ builtin/grep.c       | 36 ++++++++++++++++++------------------
+ builtin/log.c        | 14 +++++++-------
+ builtin/ls-tree.c    |  6 +++---
+ builtin/merge-file.c |  2 +-
+ builtin/merge.c      | 12 ++++++------
+ builtin/mv.c         |  2 +-
+ builtin/name-rev.c   | 14 +++++++-------
+ builtin/notes.c      |  4 ++--
+ builtin/replace.c    |  6 +++---
+ builtin/reset.c      |  2 +-
+ builtin/rev-parse.c  |  4 ++--
+ 15 files changed, 81 insertions(+), 83 deletions(-)
 
-> Fwiw, I posted the original
-> with me as the author because I discovered it, dug through the emacs
-> sources for hours to find the exact bug, and contacted emacs-devel
-> about it.
+-- 
+1.8.4.rc0.1.g8f6a3e5
