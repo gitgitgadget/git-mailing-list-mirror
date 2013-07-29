@@ -1,177 +1,121 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] More typofixes.
-Date: Mon, 29 Jul 2013 10:55:41 -0400
-Message-ID: <51F6826D.2010606@xiplink.com>
-References: <20130729081821.GA6758@domone.kolej.mff.cuni.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] editor: use canonicalized absolute path
+Date: Mon, 29 Jul 2013 07:56:58 -0700
+Message-ID: <7v8v0p2z45.fsf@alter.siamese.dyndns.org>
+References: <1375030782-13339-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
-X-From: git-owner@vger.kernel.org Mon Jul 29 16:55:28 2013
+Cc: Git List <git@vger.kernel.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?utf-8?B?4buNYw==?= Duy 
+	<pclouds@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 29 16:57:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V3or9-0007pB-M6
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 16:55:28 +0200
+	id 1V3oso-0000Qg-10
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 16:57:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757000Ab3G2OzX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Jul 2013 10:55:23 -0400
-Received: from smtp114.ord1c.emailsrvr.com ([108.166.43.114]:35773 "EHLO
-	smtp114.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753755Ab3G2OzW (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Jul 2013 10:55:22 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp7.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 29ECC1B8131;
-	Mon, 29 Jul 2013 10:55:22 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp7.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id C39A01B8194;
-	Mon, 29 Jul 2013 10:55:21 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <20130729081821.GA6758@domone.kolej.mff.cuni.cz>
+	id S1755571Ab3G2O5F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Jul 2013 10:57:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34410 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752755Ab3G2O5D convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Jul 2013 10:57:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 348CD34222;
+	Mon, 29 Jul 2013 14:57:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=1zZ1MEcBMh0h
+	8qG+elYhZgQ8T1Q=; b=HwHXGr6qrJ3qbAzwsLkkzJkVrwuVa3wQucRWfX4KBY0L
+	gjQzJKF2r4AitMZApk+oT8HJRuUQsQjyqi7wXYkB9a6HscFyEQb93me1ERnv17QH
+	jIyk4LLwAF9ozcVyJV6HET4QJGxeeggra0HinULIK+VXFt6nZCNaXqxzmdPJgvw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=YMRcif
+	n8SGBCAqVx1zDXn/ND8BlavWboTQ/VB3slMqDZWzkNweXpKCqQ8Q41cz0d6bFMMc
+	ntdhu/ZURhaHhzDtB7d29yOVtu+1Y8la/U73vLCuOlUraaDvKgRIGKD0P093BK/3
+	niU1jSXnc2vDxAu/jmPR/SKZrq8r41F7BRJl0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B97034221;
+	Mon, 29 Jul 2013 14:57:02 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77B9D3421F;
+	Mon, 29 Jul 2013 14:57:00 +0000 (UTC)
+In-Reply-To: <1375030782-13339-1-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Sun, 28 Jul 2013 22:29:42 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1F48B740-F85F-11E2-B6AE-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231285>
 
-On 13-07-29 04:18 AM, Ond=C5=99ej B=C3=ADlka wrote:
-> Hi,
->=20
-> I improved my tool and it catched following additional typos.
->=20
-> As with any big project best way to catch errors is to have automated
-> checks that catch them ( Other possibility would be to read everythin=
-g ten
-> times to get error rate down but nobody wants to do it).
->=20
-> If you want you could add a pre-commit hook=20
-> stylepp-spellcheck --hook
-> that checks comments for likely typos (misspells by aspell and not
-> occurring in code). It uses aspell to identify them so you need to=20
-> teach aspell which words are valid.=20
->=20
-> I would like make possible to share dictionaries so teaching phase ca=
-n
-> be done only once instead for each person but I did not found suitabl=
-e
-> workflow yet.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Unfortunately no automated system is perfect (see some of my comments b=
-elow).
- I'm all for an automated system that identifies potential misspellings=
-, but
-I'm wary of anything that attempts to automatically correct perceived e=
-rrors,
-or that can't be overruled.  In the end a human must make the final dec=
-ision.
-
-> Signed-off-by: Ond=C5=99ej B=C3=ADlka <neleai@seznam.cz>
->=20
-> diff --git a/pathspec.c b/pathspec.c
-> index 6ea0867..27ffe77 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -40,7 +40,7 @@ void add_pathspec_matches_against_index(const char =
-**pathspec,
->  /*
->   * Finds which of the given pathspecs match items in the index.
->   *
-> - * This is a one-shot wrapper around add_pathspec_matches_against_in=
-dex()
-> + * This is an one-shot wrapper around add_pathspec_matches_against_i=
-ndex()
-
-As many others have already said, this is not a typo.
-
-The use of "a" or "an" depends on whether or not the O's sound is hard =
-or
-soft.  So although we say "an orange" we also say "a one-in-a-million c=
-hance".
-
->=20
->  [ ... snip ... ]
->=20
-
-> diff --git a/Documentation/RelNotes/1.7.9.1.txt b/Documentation/RelNo=
-tes/1.7.9.1.txt
-> index 6957183..e8fddb8 100644
-> --- a/Documentation/RelNotes/1.7.9.1.txt
-> +++ b/Documentation/RelNotes/1.7.9.1.txt
-> @@ -20,7 +20,7 @@ Fixes since v1.7.9
->     submodule that only has uncommitted local changes in the patch
->     prepared by for the user to edit.
-> =20
-> - * Typo in "git branch --edit-description my-tpoic" was not diagnose=
-d.
-> + * Typo in "git branch --edit-description my-topic" was not diagnose=
-d.
-
-Here "tpoic" is illustrating the typo that was being misdiagnosed.
-
->=20
->  [ ... snip ... ]
->=20
-
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index e0b923f..8420aff 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -434,11 +434,11 @@ core.repositoryFormatVersion::
->  	version.
-> =20
->  core.sharedRepository::
-> -	When 'group' (or 'true'), the repository is made shareable between
-> +	When 'group' (or 'true'), the repository is made sharable between
->  	several users in a group (making sure all the files and objects are
->  	group-writable). When 'all' (or 'world' or 'everybody'), the
->  	repository will be readable by all users, additionally to being
-> -	group-shareable. When 'umask' (or 'false'), Git will use permission=
-s
-> +	group-sharable. When 'umask' (or 'false'), Git will use permissions
-
-"Sharable" is the North American spelling.  AFAIK git doesn't specify w=
-hat
-kind of English the documentation source files should use.  Perhaps one=
- day
-there'll be en_UK and en_US translations, and all the sources will be w=
-ritten
-in Klingon...
-
-Until that day, or until the git project starts to care a lot more abou=
+> By improving the relative_path() algorithm, e02ca72 (path.c: refactor
+> relative_path(), not only strip prefix, 2013-06-25) uncovered a laten=
 t
-English style, I think patches that translate spellings between English
-variants are a bit of a waste of time.
+> bug.  While most editor applications like cat and vim handle
+> non-canonicalized relative paths fine, emacs does not.  This is due t=
+o a
+> long-standing bug in emacs, where it refuses to resolve symlinks in t=
+he
+> supplied path:
+>
+>   #!/bin/sh
+>   mkdir z z/a z/b
+>   echo moodle >z/a/file
+>   ln -s z/b
+>   cd b
+>   emacs ../a/file # fail: opens /tmp/a/file
 
->=20
->  [ ... snip ... ]
->=20
+Somewhat puzzling.  Perhaps you want to add "cd /tmp" at the very
+beginning of the script to clarify, and s/opens/attempts to open/
+to avoid confusing a little panda brain.
 
-> diff --git a/Documentation/user-manual.txt b/Documentation/user-manua=
-l.txt
-> index fe723e4..1491d69 100644
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -3116,7 +3116,7 @@ Trust
->  If you receive the SHA-1 name of a blob from one source, and its con=
-tents
->  from another (possibly untrusted) source, you can still trust that t=
-hose
->  contents are correct as long as the SHA-1 name agrees.  This is beca=
-use
-> -the SHA-1 is designed so that it is infeasible to find different con=
-tents
-> +the SHA-1 is designed so that it is unfeasible to find different con=
-tents
->  that produce the same hash.
+>
+> Even if emacs were to be patched to fix this bug now, we still need t=
+o
+> support users running older versions.
+>
+> Co-authored-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+
+That's a bit strange---the patch text looks like the "how about
+this" patch Duy posted earlier.  Shouldn't it be From: Duy with
+S-o-b: by two of you instead?
+
+> diff --git a/editor.c b/editor.c
+> index 27bdecd..0abbd8d 100644
+> --- a/editor.c
+> +++ b/editor.c
+> @@ -37,7 +37,7 @@ int launch_editor(const char *path, struct strbuf *=
+buffer, const char *const *en
+>  		return error("Terminal is dumb, but EDITOR unset");
 > =20
->  Similarly, you need only trust the SHA-1 name of a top-level tree ob=
-ject
+>  	if (strcmp(editor, ":")) {
+> -		const char *args[] =3D { editor, path, NULL };
+> +		const char *args[] =3D { editor, real_path(path), NULL };
 
-Both "infeasible" and "unfeasible" are in common usage.  If you want to=
- avoid
-future patches going back and forth on this, try "not feasible".
+While I am not fundamentally opposed to add a workaround for bugs in
+a popular tool many people use, I am a bit uneasy about this change.
 
-		M.
+=46or editors that are not broken, this could be an annoying
+regression, isn't it?  When the user asks "What is the path of the
+file I am editing?" to the editor (i.e. an equivalent of \C-x\C-b),
+the updated code will start spewing a long full-path from the root
+directory, while we used to give a relative path that is short,
+sweet and more in line with the context of user's work.
+
+Compared to not being able to edit, it may be a small price to pay
+for those who do need to suffer the broken editor, but the patch
+makes those who do not need this workaround to pay the price.
