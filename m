@@ -1,92 +1,107 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] More typofixes.
-Date: Mon, 29 Jul 2013 02:40:57 -0700
-Message-ID: <CAJDDKr4M-QjbiF6Yu=JKYvGP1QVm4MwkU0q8d0gDXtys3VAiog@mail.gmail.com>
-References: <20130729081821.GA6758@domone.kolej.mff.cuni.cz>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] editor: use canonicalized absolute path
+Date: Mon, 29 Jul 2013 17:03:49 +0700
+Message-ID: <CACsJy8CQiESBsZvRB-Gs17Jg4Lvu-gJLUckV0njeTj+EwnTrig@mail.gmail.com>
+References: <1375030782-13339-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
-X-From: git-owner@vger.kernel.org Mon Jul 29 11:41:07 2013
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 29 12:04:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V3jws-0004Up-Oq
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 11:41:03 +0200
+	id 1V3kJU-0003fd-2W
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 12:04:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752186Ab3G2Jk6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Jul 2013 05:40:58 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:44631 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751183Ab3G2Jk6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Jul 2013 05:40:58 -0400
-Received: by mail-pa0-f49.google.com with SMTP id bi5so5604461pad.8
-        for <git@vger.kernel.org>; Mon, 29 Jul 2013 02:40:57 -0700 (PDT)
+	id S1752865Ab3G2KEU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Jul 2013 06:04:20 -0400
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:34386 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752663Ab3G2KET convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Jul 2013 06:04:19 -0400
+Received: by mail-oa0-f44.google.com with SMTP id l20so9175393oag.3
+        for <git@vger.kernel.org>; Mon, 29 Jul 2013 03:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=eRsjGgGALKojOdzZ74OcIJJsCDLXSY3Qq2kYcQ0byrc=;
-        b=ezpzYlrdhhfHwKBBaJ1MF5oRjk3dyewEaf6aPuqKlbbQWgcP3B1hwXWYgK6A7iTq4H
-         ndIGhF+phWGxV9b3Z0VUUveDD+yz8W0Q5kCP8APRzTng/R2IvbYutIQ9OmR9GpFRiIEa
-         BM9Yb28X2SGwQc7Na4MBfogNNppN/fWT7QOdPb6mjOxknUsO9/2an7tXAsfkDe4n9PnR
-         oPN/srDg0j/4bdCGoXb9yFCgMwlS+hbcxfrj7IjXCct/cFSu/1H2gP3YXdYlFLFRtJ3+
-         utgswhm4CzmN1skPHnJvD0zEutIktgWLddQYZ46AKpYiBUyXmyvvQTXik2acunhcPD3g
-         JN0Q==
-X-Received: by 10.66.155.102 with SMTP id vv6mr32495599pab.89.1375090857625;
- Mon, 29 Jul 2013 02:40:57 -0700 (PDT)
-Received: by 10.70.47.1 with HTTP; Mon, 29 Jul 2013 02:40:57 -0700 (PDT)
-In-Reply-To: <20130729081821.GA6758@domone.kolej.mff.cuni.cz>
+        bh=fxrKH53141ptb/+uqVTMi+b9kGefwDlyboKLNTeqlio=;
+        b=o0oDcZEk1tC4Mi+SJRA9vOR0VbGodXg+g9fTCdqdK9cwYnIylhhk5xYjU6VZqGEKm5
+         Zi4DXiAA2eStXZsiyfiUjZ8wx2q8QteAqlgvd8GVlWhxABKpdKrkkxFRiNmwVDYZSYjd
+         a3QLjawNhVp9tc/7n7FPKdLL9rc/evCrbmtgRPgMoxe9DM3y16UDveGBS9SPkbu6hZ7g
+         B2T5j4hx7vsr4q4OrzEPLKpNlibj++d53ACifIzkmBMFy/BHtEnmYy7S4XAQyy30hrPg
+         FzWUh8j/uz94dsQjVYvqD0AvSUKNBxqOEaohRNgZxtcktBdqKrelbbIaSZ6zt1A9G2CF
+         igSg==
+X-Received: by 10.182.165.133 with SMTP id yy5mr52103644obb.89.1375092259063;
+ Mon, 29 Jul 2013 03:04:19 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Mon, 29 Jul 2013 03:03:49 -0700 (PDT)
+In-Reply-To: <1375030782-13339-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231280>
 
-On Mon, Jul 29, 2013 at 1:18 AM, Ond=C5=99ej B=C3=ADlka <neleai@seznam.=
-cz> wrote:
-> Hi,
+On Sun, Jul 28, 2013 at 11:59 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> By improving the relative_path() algorithm, e02ca72 (path.c: refactor
+> relative_path(), not only strip prefix, 2013-06-25) uncovered a laten=
+t
+> bug.  While most editor applications like cat and vim handle
+> non-canonicalized relative paths fine, emacs does not.  This is due t=
+o a
+> long-standing bug in emacs, where it refuses to resolve symlinks in t=
+he
+> supplied path:
 >
-> I improved my tool and it catched following additional typos.
+>   #!/bin/sh
+>   mkdir z z/a z/b
+>   echo moodle >z/a/file
+>   ln -s z/b
+>   cd b
+>   emacs ../a/file # fail: opens /tmp/a/file
 >
-> As with any big project best way to catch errors is to have automated
-> checks that catch them ( Other possibility would be to read everythin=
-g ten
-> times to get error rate down but nobody wants to do it).
->
-> If you want you could add a pre-commit hook
-> stylepp-spellcheck --hook
-> that checks comments for likely typos (misspells by aspell and not
-> occurring in code). It uses aspell to identify them so you need to
-> teach aspell which words are valid.
->
-> I would like make possible to share dictionaries so teaching phase ca=
-n
-> be done only once instead for each person but I did not found suitabl=
-e
-> workflow yet.
->
->
-> Signed-off-by: Ond=C5=99ej B=C3=ADlka <neleai@seznam.cz>
->
-> diff --git a/pathspec.c b/pathspec.c
-> index 6ea0867..27ffe77 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -40,7 +40,7 @@ void add_pathspec_matches_against_index(const char =
-**pathspec,
->  /*
->   * Finds which of the given pathspecs match items in the index.
->   *
-> - * This is a one-shot wrapper around add_pathspec_matches_against_in=
-dex()
-> + * This is an one-shot wrapper around add_pathspec_matches_against_i=
-ndex()
+> Even if emacs were to be patched to fix this bug now, we still need t=
+o
+> support users running older versions.
 
-"one" is pronounced like "wun" so we use "a" instead of "an" here.
-These should stay as-is.
+We used to have workaround for external programs, e.g. 35ce862 (pager:
+Work around window resizing bug in 'less' - 2007-01-24), so I don't
+think this is a problem.
+
+> Co-authored-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  Urgent candidate for maint.  I wrote to emacs-devel, but nobody seem=
+s
+>  to be interested; the sources are horrendously unmaintainable, and
+>  the project should die soon.
+
+Hey, I don't want to throw away years of training my fingers to use
+emacs. It can't die until there is a viable fork :)
+
+> diff --git a/editor.c b/editor.c
+> index 27bdecd..0abbd8d 100644
+> --- a/editor.c
+> +++ b/editor.c
+> @@ -37,7 +37,7 @@ int launch_editor(const char *path, struct strbuf *=
+buffer, const char *const *en
+>                 return error("Terminal is dumb, but EDITOR unset");
+>
+>         if (strcmp(editor, ":")) {
+> -               const char *args[] =3D { editor, path, NULL };
+> +               const char *args[] =3D { editor, real_path(path), NUL=
+L };
+>                 struct child_process p;
+>                 int ret, sig;
+
+real_path() returns a static buffer, which could be overwritten by the
+next real_path() call. I checked and I think that won't happen. So the
+patch looks good.
 --=20
-David
+Duy
