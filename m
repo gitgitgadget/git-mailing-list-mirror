@@ -1,220 +1,139 @@
-From: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
-Subject: Re: [PATCH] More typofixes.
-Date: Mon, 29 Jul 2013 17:38:49 +0200
-Message-ID: <20130729153849.GA8111@domone.kolej.mff.cuni.cz>
-References: <20130729081821.GA6758@domone.kolej.mff.cuni.cz>
- <51F6826D.2010606@xiplink.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] commit-slab.h: Fix memory allocation and addressing
+Date: Mon, 29 Jul 2013 08:42:55 -0700
+Message-ID: <7vppu11if4.fsf@alter.siamese.dyndns.org>
+References: <51F418B7.30507@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Mon Jul 29 17:39:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Mon Jul 29 17:43:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V3pXH-0007gM-Le
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 17:39:00 +0200
+	id 1V3pbD-0001gH-FV
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 17:43:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755001Ab3G2Piz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Jul 2013 11:38:55 -0400
-Received: from popelka.ms.mff.cuni.cz ([195.113.20.131]:36393 "EHLO
-	popelka.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752847Ab3G2Piy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jul 2013 11:38:54 -0400
-Received: from domone.kolej.mff.cuni.cz (popelka.ms.mff.cuni.cz [195.113.20.131])
-	by popelka.ms.mff.cuni.cz (Postfix) with ESMTPS id 3617C438AD;
-	Mon, 29 Jul 2013 17:38:50 +0200 (CEST)
-Received: by domone.kolej.mff.cuni.cz (Postfix, from userid 1000)
-	id F1DF860135; Mon, 29 Jul 2013 17:38:49 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <51F6826D.2010606@xiplink.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.97.6 at popelka.ms.mff.cuni.cz
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-1.8 required=5.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	UNPARSEABLE_RELAY autolearn=ham version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	popelka.ms.mff.cuni.cz
+	id S1756241Ab3G2Pm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jul 2013 11:42:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61838 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752944Ab3G2Pm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jul 2013 11:42:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CA6B33DA1;
+	Mon, 29 Jul 2013 15:42:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zXc8mv8CL4nX0nd0advc4EAxi10=; b=pjNnsT
+	q3+OXaYYYB5TLuO2UCvlBi6UpzNCQzOHA2cbmvYonCJ5mk8hIGEo5SW3DFZxAb1U
+	jRQj+RFo7YYFrftuF864lkqYJp6G+RnrHWSeqhRun68EzkowHmSq6kjXKI+esPJg
+	uwU3BbASQ2Fm505CdwER6k5qOldCnU1L9fu3g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YfHYi6HS0dsVJDukpIznod0w+yHeQ1Oz
+	dWATShUKOqSn9p5Je5k4+yWrzaDkCsLEMsxlePLX5hxyMPVif/OXP1sGktMrPL9Y
+	s/QSqpkjipX9xPz0ZtRIUl+F+Mg64LtL6lEIaGm9w0JzB2AfZ90AHP1aTRx8UWNk
+	kSdTr7skI9g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90EF633DA0;
+	Mon, 29 Jul 2013 15:42:57 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B95CD33D9D;
+	Mon, 29 Jul 2013 15:42:56 +0000 (UTC)
+In-Reply-To: <51F418B7.30507@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Sat, 27 Jul 2013 20:00:07 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8A264572-F865-11E2-ADF7-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231293>
 
-On Mon, Jul 29, 2013 at 10:55:41AM -0400, Marc Branchaud wrote:
-> On 13-07-29 04:18 AM, Ond=C5=99ej B=C3=ADlka wrote:
-> > Hi,
-> >=20
-> > I improved my tool and it catched following additional typos.
-> >=20
-> > As with any big project best way to catch errors is to have automat=
-ed
-> > checks that catch them ( Other possibility would be to read everyth=
-ing ten
-> > times to get error rate down but nobody wants to do it).
-> >=20
-> > If you want you could add a pre-commit hook=20
-> > stylepp-spellcheck --hook
-> > that checks comments for likely typos (misspells by aspell and not
-> > occurring in code). It uses aspell to identify them so you need to=20
-> > teach aspell which words are valid.=20
-> >=20
-> > I would like make possible to share dictionaries so teaching phase =
-can
-> > be done only once instead for each person but I did not found suita=
-ble
-> > workflow yet.
->=20
-> Unfortunately no automated system is perfect (see some of my comments=
- below).
->  I'm all for an automated system that identifies potential misspellin=
-gs, but
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-> > that checks comments for likely typos (misspells by aspell and not
-> > occurring in code)
+> I was convinced, just by reading the code in the header, that when
+> used with stride > 1, the memory allocated to a slab would not be
+> sufficient. (ie it would be too small by:
+>     s->slab_size * (sizeof(**s->slab) * (stride - 1))
+> ). So, I had expected t3202-show-branch-octopus.sh to provoke memory
+> error reports when run under valgrind.
+>
+> Hmm, it didn't ... so much for that theory! :-D
+>
+> So, I'm a little puzzled; I must be missing something obvious, which
+> is why this is marked RFC.
+>
+> What am I missing?
 
-It just prints likely typos, nothing more.=20
+Because sizeof(struct reachabe_cslab) is much larger than
+sizeof(unsigned char), and the test does not use that many commits
+to cause us to spill to more than one slab?
 
-> I'm wary of anything that attempts to automatically correct perceived=
- errors,
-> or that can't be overruled.  In the end a human must make the final d=
-ecision.
->=20
-Its more about minimizing time human must spend to review.
-It is faster to read sentences with corrections and check if they make
-sense and fix few that do not than switching between find typo,=20
-read sentence, look up alternatives, decide which one makes sense.
+Your fix of elem_size in your first hunk is correct; for stride N,
+we want to allocate N*sizeof(elemtype) consecutive bytes in a single
+slab (we do not want to split the array of N elements across two
+slabs).  So "elem_size" is the size of the array for a single commit
+(when stride==1, we are storing an array with a single element).
 
-It is natural that there will be errors in generated corrections; I lac=
-k
-neccessary domain knowledge for start.
+And we can fit arrays for s->slab_size = (COMMIT_SLAB_SIZE /
+elem_size) commits in a single slab.  c->index / s->slab_size gives
+us which slab the array for the commit goes, and modulus gives us
+which slot in that slab the array sits.  So the second hunk looks
+correct, too.
 
-> > Signed-off-by: Ond=C5=99ej B=C3=ADlka <neleai@seznam.cz>
-> >=20
-> > diff --git a/pathspec.c b/pathspec.c
-> > index 6ea0867..27ffe77 100644
-> > --- a/pathspec.c
-> > +++ b/pathspec.c
-> > @@ -40,7 +40,7 @@ void add_pathspec_matches_against_index(const cha=
-r **pathspec,
-> >  /*
-> >   * Finds which of the given pathspecs match items in the index.
-> >   *
-> > - * This is a one-shot wrapper around add_pathspec_matches_against_=
-index()
-> > + * This is an one-shot wrapper around add_pathspec_matches_against=
-_index()
->=20
-> As many others have already said, this is not a typo.
->=20
-> The use of "a" or "an" depends on whether or not the O's sound is har=
-d or
-> soft.  So although we say "an orange" we also say "a one-in-a-million=
- chance".
->=20
-Well it slipped through my filter and review. Ideally a script could
-just look up pronunciation in dictionary but I did not find downloadabl=
-e
-one yet.
+And of course, the slab must be allocated as an array with
+s->slab_size elements, each of which holds s->stride elements of
+elem_type that is sizeof(**s->slab) bytes long.
 
-> >=20
-> >  [ ... snip ... ]
-> >=20
->=20
-> > diff --git a/Documentation/RelNotes/1.7.9.1.txt b/Documentation/Rel=
-Notes/1.7.9.1.txt
-> > index 6957183..e8fddb8 100644
-> > --- a/Documentation/RelNotes/1.7.9.1.txt
-> > +++ b/Documentation/RelNotes/1.7.9.1.txt
-> > @@ -20,7 +20,7 @@ Fixes since v1.7.9
-> >     submodule that only has uncommitted local changes in the patch
-> >     prepared by for the user to edit.
-> > =20
-> > - * Typo in "git branch --edit-description my-tpoic" was not diagno=
-sed.
-> > + * Typo in "git branch --edit-description my-topic" was not diagno=
-sed.
->=20
-> Here "tpoic" is illustrating the typo that was being misdiagnosed.
->=20
-yes, domain knowledge.
-> >=20
-> >  [ ... snip ... ]
-> >=20
->=20
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index e0b923f..8420aff 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -434,11 +434,11 @@ core.repositoryFormatVersion::
-> >  	version.
-> > =20
-> >  core.sharedRepository::
-> > -	When 'group' (or 'true'), the repository is made shareable betwee=
-n
-> > +	When 'group' (or 'true'), the repository is made sharable between
-> >  	several users in a group (making sure all the files and objects a=
-re
-> >  	group-writable). When 'all' (or 'world' or 'everybody'), the
-> >  	repository will be readable by all users, additionally to being
-> > -	group-shareable. When 'umask' (or 'false'), Git will use permissi=
-ons
-> > +	group-sharable. When 'umask' (or 'false'), Git will use permissio=
-ns
->=20
-> "Sharable" is the North American spelling.  AFAIK git doesn't specify=
- what
-> kind of English the documentation source files should use.  Perhaps o=
-ne day
-> there'll be en_UK and en_US translations, and all the sources will be=
- written
-> in Klingon...
->=20
-> Until that day, or until the git project starts to care a lot more ab=
-out
-> English style, I think patches that translate spellings between Engli=
-sh
-> variants are a bit of a waste of time.
->=20
-I need better dictionary that aspell currently has.
+Thanks; the patch looks correct to me.
 
-My replacements were mostly generated from commit histories of several =
-projects
-where I looked when wrong word changes to correct one and letters stay
-mostly same.=20
+It is somewhat embarrassing that nobody caught it X-<.
 
-This caused false positives like this.
-
-> >=20
-> >  [ ... snip ... ]
-> >=20
->=20
-> > diff --git a/Documentation/user-manual.txt b/Documentation/user-man=
-ual.txt
-> > index fe723e4..1491d69 100644
-> > --- a/Documentation/user-manual.txt
-> > +++ b/Documentation/user-manual.txt
-> > @@ -3116,7 +3116,7 @@ Trust
-> >  If you receive the SHA-1 name of a blob from one source, and its c=
-ontents
-> >  from another (possibly untrusted) source, you can still trust that=
- those
-> >  contents are correct as long as the SHA-1 name agrees.  This is be=
-cause
-> > -the SHA-1 is designed so that it is infeasible to find different c=
-ontents
-> > +the SHA-1 is designed so that it is unfeasible to find different c=
-ontents
-> >  that produce the same hash.
-> > =20
-> >  Similarly, you need only trust the SHA-1 name of a top-level tree =
-object
->=20
-> Both "infeasible" and "unfeasible" are in common usage.  If you want =
-to avoid
-> future patches going back and forth on this, try "not feasible".
->=20
-> 		M.
+>  commit-slab.h | 13 ++++++-------
+>  1 file changed, 6 insertions(+), 7 deletions(-)
+>
+> diff --git a/commit-slab.h b/commit-slab.h
+> index 7d48163..d4c8286 100644
+> --- a/commit-slab.h
+> +++ b/commit-slab.h
+> @@ -48,7 +48,7 @@ static void init_ ##slabname## _with_stride(struct slabname *s,		\
+>  	if (!stride)							\
+>  		stride = 1;						\
+>  	s->stride = stride;						\
+> -	elem_size = sizeof(struct slabname) * stride;			\
+> +	elem_size = sizeof(elemtype) * stride;				\
+>  	s->slab_size = COMMIT_SLAB_SIZE / elem_size;			\
+>  	s->slab_count = 0;						\
+>  	s->slab = NULL;							\
+> @@ -72,11 +72,10 @@ static void clear_ ##slabname(struct slabname *s)			\
+>  static elemtype *slabname## _at(struct slabname *s,			\
+>  				const struct commit *c)			\
+>  {									\
+> -	int nth_slab, nth_slot, ix;					\
+> +	int nth_slab, nth_slot;						\
+>  									\
+> -	ix = c->index * s->stride;					\
+> -	nth_slab = ix / s->slab_size;					\
+> -	nth_slot = ix % s->slab_size;					\
+> +	nth_slab = c->index / s->slab_size;				\
+> +	nth_slot = c->index % s->slab_size;				\
+>  									\
+>  	if (s->slab_count <= nth_slab) {				\
+>  		int i;							\
+> @@ -89,8 +88,8 @@ static elemtype *slabname## _at(struct slabname *s,			\
+>  	}								\
+>  	if (!s->slab[nth_slab])						\
+>  		s->slab[nth_slab] = xcalloc(s->slab_size,		\
+> -					    sizeof(**s->slab));		\
+> -	return &s->slab[nth_slab][nth_slot];				\
+> +					    sizeof(**s->slab) * s->stride);		\
+> +	return &s->slab[nth_slab][nth_slot * s->stride];				\
+>  }									\
+>  									\
+>  static int stat_ ##slabname## realloc
