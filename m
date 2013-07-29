@@ -1,72 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] editor: use canonicalized absolute path
-Date: Mon, 29 Jul 2013 10:29:51 -0700
-Message-ID: <7vwqo91dgw.fsf@alter.siamese.dyndns.org>
-References: <1375030782-13339-1-git-send-email-artagnon@gmail.com>
-	<7v8v0p2z45.fsf@alter.siamese.dyndns.org>
-	<CALkWK0=dGmMkgvaNV27E3Pb3+SWSZ2pNMOr-wsEcUR_wgLjMFA@mail.gmail.com>
+Subject: Re: [PATCH] git-rebase: fix typo
+Date: Mon, 29 Jul 2013 10:32:15 -0700
+Message-ID: <7vsiyx1dcw.fsf@alter.siamese.dyndns.org>
+References: <1375071883-3017-1-git-send-email-ralf.thielow@gmail.com>
+	<CALkWK0=8Ue7-a0nz0NafB6-a6J=3Waw4oy0rr5Q-Cj8ypA0FdQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?utf-8?B?4buNYw==?= 
-	<pclouds@gmail.com>
+Cc: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 29 19:29:59 2013
+X-From: git-owner@vger.kernel.org Mon Jul 29 19:32:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V3rGh-0001dR-5r
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 19:29:59 +0200
+	id 1V3rJF-0002yq-HA
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Jul 2013 19:32:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753905Ab3G2R3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jul 2013 13:29:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35350 "EHLO
+	id S1758360Ab3G2RcW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jul 2013 13:32:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35209 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752055Ab3G2R3y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jul 2013 13:29:54 -0400
+	id S1758355Ab3G2RcT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jul 2013 13:32:19 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 86AAE34A48;
-	Mon, 29 Jul 2013 17:29:53 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 343A534BD2;
+	Mon, 29 Jul 2013 17:32:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7qHkGG1YJo7FqtL1HvEoe90MdfE=; b=fnmY0X
-	ALLykeLnhsaemPSMNUvYGWBMmo68wt+Knff/fRzVij4jQjAmxsTSpSK9yisacEmI
-	6vwJ4GJlC3NrhYmrgdgWWUN1Jw7BXwtIfLuj8jofAmM2jMbKWpCD5gyFHiDEJxNI
-	KPyQlxB0BNoESzaJKF01ZondAxnaUouKL8yTw=
+	:content-type; s=sasl; bh=S71MEYLDE0i6fg241n/F5RZB1Jk=; b=DVvvFM
+	uOILF+TuPJ/mU37C31wQboMODmCnK9FZnh0T1pjHBxX6xC2UNwPmsgtw4LxoS1+2
+	mZcfj6onTbgvRxWCceCcaMXK+AfxMxjiopeBIApbsKT5t9MRufvBnL5ffr32rvf7
+	nH7uI0OH3e8lpimZG/f+wYpqmMsLzTAVeuWpI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AXNxjzag3zMpkV2B4AJVJXoDO16ZDtV7
-	6YPpCtkufhK/uG78DBOVHLaSLxNalKy/kFzdSz0jphd4NXx76OkIp3u8RRIogv/x
-	xPv1+ePXAZLbtYVDX0+LTKh8RZMFeK1pds2JZtfOoXVxvZnan47FhvrXH9r0KIXz
-	5COG1wtCAZw=
+	:content-type; q=dns; s=sasl; b=rPxQTlL+LGwe/KFacP6W44SxjwgOafXs
+	nbHeheT6jpg9gXDwfch5YkObkZZA1Tz4i8KpzoCpFb9W7uuDjuxZlzRuZBAzM4O7
+	2//wFUmm5aPEAy18stlNfRiTBRTS+dXte7WbkwCsWZkkAYclSb+L4vA/lbeIWUAX
+	O0KCdukRRgk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AABA34A47;
-	Mon, 29 Jul 2013 17:29:53 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2795334BD1;
+	Mon, 29 Jul 2013 17:32:19 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D686134A46;
-	Mon, 29 Jul 2013 17:29:52 +0000 (UTC)
-In-Reply-To: <CALkWK0=dGmMkgvaNV27E3Pb3+SWSZ2pNMOr-wsEcUR_wgLjMFA@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Mon, 29 Jul 2013 21:37:15 +0530")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FC2B34BCE;
+	Mon, 29 Jul 2013 17:32:18 +0000 (UTC)
+In-Reply-To: <CALkWK0=8Ue7-a0nz0NafB6-a6J=3Waw4oy0rr5Q-Cj8ypA0FdQ@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 29 Jul 2013 15:58:16 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7A7451A0-F874-11E2-9B9D-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D1128644-F874-11E2-B889-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231304>
 
 Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> Junio C Hamano wrote:
->> That's a bit strange---the patch text looks like the "how about
->> this" patch Duy posted earlier.  Shouldn't it be From: Duy with
->> S-o-b: by two of you instead?
+> Ralf Thielow wrote:
+>> diff --git a/git-rebase.sh b/git-rebase.sh
+>> index 0039ecf..8d7659a 100755
+>> --- a/git-rebase.sh
+>> +++ b/git-rebase.sh
+>> @@ -159,7 +159,7 @@ finish_rebase () {
+>>                         die "$(eval_gettext "Cannot store \$stash_sha1")"
+>>                         gettext 'Applying autostash resulted in conflicts.
+>>  Your changes are safe in the stash.
+>> -You can run "git stash pop" or "git stash drop" it at any time.
+>> +You can run "git stash pop" or "git stash drop" at any time.
 >
-> Feel free to amend as you see fit, as always.
+> Good eyes, thanks.
 
-I was asking what is "correct", without which I cannot "feel free"
-to do anything, and your answer is not helping.
+Thanks.
