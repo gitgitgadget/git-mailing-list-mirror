@@ -1,139 +1,143 @@
 From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH 3/3] config: --get-urlmatch
-Date: Tue, 30 Jul 2013 12:14:03 -0700
-Message-ID: <C34D29B7-055D-4D82-B9FE-27150E51FF79@gmail.com>
-References: <7vli4v66b3.fsf@alter.siamese.dyndns.org> <1375138150-19520-1-git-send-email-gitster@pobox.com> <1375138150-19520-4-git-send-email-gitster@pobox.com>
+Subject: Re: [PATCH 5/3] revert most of the http_options() change
+Date: Tue, 30 Jul 2013 12:14:24 -0700
+Message-ID: <CC3A0EB0-79FE-40C2-B1AC-E3B9683A3ED6@gmail.com>
+References: <7vli4v66b3.fsf@alter.siamese.dyndns.org> <1375138150-19520-1-git-send-email-gitster@pobox.com> <7v7gg8ztvk.fsf_-_@alter.siamese.dyndns.org> <7v1u6gztf1.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0 (Apple Message framework v936)
 Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 30 21:14:27 2013
+X-From: git-owner@vger.kernel.org Tue Jul 30 21:14:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4FNJ-0004Ru-HC
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 21:14:25 +0200
+	id 1V4FNQ-0004Vi-7S
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 21:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756140Ab3G3TOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jul 2013 15:14:19 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:52826 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754613Ab3G3TOH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jul 2013 15:14:07 -0400
-Received: by mail-pa0-f41.google.com with SMTP id bj1so5959505pad.28
-        for <git@vger.kernel.org>; Tue, 30 Jul 2013 12:14:07 -0700 (PDT)
+	id S1756639Ab3G3TO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jul 2013 15:14:28 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:52322 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754613Ab3G3TO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jul 2013 15:14:27 -0400
+Received: by mail-pa0-f49.google.com with SMTP id bi5so7468230pad.8
+        for <git@vger.kernel.org>; Tue, 30 Jul 2013 12:14:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:in-reply-to:subject:references:message-id:content-type
          :content-transfer-encoding:mime-version:date:cc:x-mauler;
-        bh=1f4fmR7xiMs4Xs1uyWYCnWdqQGmKHrR99H6SBNZ/uDY=;
-        b=RstTLZzZ6JDnQOGhLqZkC1lEpuYBafXmgA3bbVS17Ltgtz5XzVglTo7ef1BtxE+/Sy
-         vYoELdi9xIO983gT6gUxOLqJun3A6F51nN14HmWR3EOZgdS6VQwVBgvngsEGspwsNAqa
-         1+MwFC5iBdT3cycev203AQAsFdbSUyPHfgOXLlcaHrzWGSEh/x1ZPySuuQyzYoB3h9eV
-         ZW73Xojtq88BpdI3y4+1iD7a109mDo7Ox2NvmYMlqXPNFby42Fw1k8Mi52r3gTQMH0hu
-         jpV2yydHNw/vEobpVhcDwdjy+65k16UN4eDKxPQu7SNVdtKo9mb29yNKqEToLP5CRMgS
-         7IhA==
-X-Received: by 10.66.171.204 with SMTP id aw12mr46016517pac.7.1375211647002;
-        Tue, 30 Jul 2013 12:14:07 -0700 (PDT)
+        bh=GcZ6tS0/yeylAs+gi7gcj5PZG6d9Wi2zg/v9TfA1MPk=;
+        b=jjW57fS83P4ME3d+pH/7SqtlWoOwmmwmoPYfI8gqX3mDYZe3aWDt6guuMI6itqU5jo
+         AcaLeY90HyvtS+tBjf+m+QRVeol02mVD11kR6vCx1JU9cgYaBSYiwSuZCvB0ys6rS0hG
+         X9Do7lGVR1i40+bD0F1kHUWhOWk93Tntk7QYIaE+6IgerAM18QMwB9DKFUO6EyG27CTj
+         xIVaWYh2vH6PdrCbVV96++FoP29rZQMq+sCi+dlcjHKEoZQ6ce9iKpcFUQyHHo7BZ5tk
+         gHJlnbCMP+MSi1CGDtABhixG2z9PLq5Pd6Iy/LnZcZO4B3NW+jtyB6C2hPoZTQ4wWF2i
+         VKJA==
+X-Received: by 10.66.21.37 with SMTP id s5mr77555089pae.103.1375211666587;
+        Tue, 30 Jul 2013 12:14:26 -0700 (PDT)
 Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id ib9sm84515889pbc.43.2013.07.30.12.14.05
+        by mx.google.com with ESMTPSA id ib9sm84515889pbc.43.2013.07.30.12.14.25
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Jul 2013 12:14:06 -0700 (PDT)
-In-Reply-To: <1375138150-19520-4-git-send-email-gitster@pobox.com>
+        Tue, 30 Jul 2013 12:14:25 -0700 (PDT)
+In-Reply-To: <7v1u6gztf1.fsf_-_@alter.siamese.dyndns.org>
 X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231378>
 
-On Jul 29, 2013, at 15:49, Junio C Hamano wrote:
+On Jul 29, 2013, at 19:13, Junio C Hamano wrote:
 
-> "git config --get-urlmatch $section[.$variable] $url" is a way to
-> learn what the configured value for $section.$variable is for the
-> given URL, using the logic introduced by the http.<url>.config
-> topic.  In addition to $section.$variable, entries in the
-> configuration file(s) that match $section.<urlpattern>.$variable are
-> looked up and the one with <urlpattern> that matches the given $url
-> the best is used to answer the query.
+> With the previous preparation step, the earlier 1bb00006 (config:
+> add support for http.<url>.* settings, 2013-07-21) that introduced
+> many repeated changes:
 >
-> This can still be further refactored to remove code from  
-> http_options()
-> in http.c, I think.
+>        -if (!strcmp("http.key", var)) {
+>        +if (!strcmp("key", key)) {
+>        +       if (match_is_shorter(..., OPT_KEY_NAME))
+>        +               return 0;
+>                ... original processing for KEY_NAME ...
+>         }
 >
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> builtin/config.c | 141 ++++++++++++++++++++++++++++++++++++++++++++++ 
-> +++++++++
-> 1 file changed, 141 insertions(+)
+> can be reverted.
 >
-> diff --git a/builtin/config.c b/builtin/config.c
-> index 12c5073..c1d32ae 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
+> This allows us to also get rid of the "repeating yourself to the
+> death" enum http_option_type, and new code (like db/http-savecookies
+> patch) that wants to add a new configuration to the http.* subsystem
+> does not have to conflict with http.<urlpattern>.variable series at
+> all.
+>
+> This is more-or-less how I want the endgame to look like. Not even
+> compile tested, but it is getting late so I'll show it to the list
+> in case people may want to play with it and polish it while I am
+> away for the night ;-).
+>
+> If people can agree that this is going in the right direction,
+> perhaps we should rebuild Kyle's series without detouring of adding
+> and then yanking what 1bb00006 (config: add support for http.<url>.*
+> settings, 2013-07-21) did in the next cycle.
+>
+> http.c               | 181 ++++++++ 
+> +------------------------------------------
+> test-url-normalize.c |   9 ++-
+> 2 files changed, 39 insertions(+), 151 deletions(-)
+>
+> diff --git a/http.c b/http.c
+> index a91a00b..c7f513b 100644
+> --- a/http.c
+> +++ b/http.c
 [...]
-> +static int get_urlmatch(const char *var, const char *url)
-> +{
-> +	const char *section_tail;
-> +	struct string_list_item *item;
-> +	struct urlmatch_collect collect = { STRING_LIST_INIT_DUP };
+> @@ -469,15 +342,23 @@ void http_init(struct remote *remote, const  
+> char *url, int proactive_auth)
+> {
+> 	char *low_speed_limit;
+> 	char *low_speed_time;
+> -	struct url_info info;
+> +	char *normalized_url;
+> +	struct urlmatch_config config = { STRING_LIST_INIT_DUP };
 > +
-> +	if (!url_normalize(url, &collect.url))
-> +		die(collect.url.err);
+> +	config.fn = http_options;
+> +	config.cascade_fn = git_default_config;
+> +	config.item_alloc = NULL;
+> +	config.item_clear = NULL;
+> +	config.cb = NULL;
 
-The value now stored in collect.url.url is never freed.
+Missing this:
++	config.section = "http";
 
-> +
-> +	section_tail = strchr(var, '.');
-> +	if (section_tail) {
-> +		collect.section = xmemdupz(var, section_tail - var);
-> +		collect.key = strrchr(var, '.') + 1;
-> +		show_keys = 0;
-> +	} else {
-> +		collect.section = var;
-> +		collect.key = NULL;
-> +		show_keys = 1;
-> +	}
-> +
-> +	git_config_with_options(urlmatch_collect, &collect,
-> +				given_config_file, respect_includes);
-> +
-> +	for_each_string_list_item(item, &collect.vars) {
-> +		struct urlmatch_item *matched = item->util;
-> +		struct strbuf key = STRBUF_INIT;
-> +		struct strbuf buf = STRBUF_INIT;
-> +
-> +		strbuf_addstr(&key, collect.section);
-> +		strbuf_addch(&key, '.');
-> +		strbuf_addstr(&key, item->string);
-> +		format_config(&buf, key.buf,
-> +			      matched->value_is_null ? NULL : matched->value.buf);
-> +		fwrite(buf.buf, 1, buf.len, stdout);
-> +		strbuf_release(&key);
-> +		strbuf_release(&buf);
-> +
-> +		strbuf_release(&matched->value);
-> +	}
-> +	string_list_clear(&collect.vars, 1);
 
-Needs something like this here:
+[...]
+> diff --git a/test-url-normalize.c b/test-url-normalize.c
+> index 0b809eb..fab94e5 100644
+> --- a/test-url-normalize.c
+> +++ b/test-url-normalize.c
+> @@ -15,8 +15,15 @@ static int run_http_options(const char *file,
+> {
+> 	struct strbuf opt_lc;
+> 	size_t i, len;
+> +	struct urlmatch_config config = { STRING_LIST_INIT_DUP };
+>
+> -	if (git_config_with_options(http_options, (void *)info, file, 0))
+> +	config.fn = http_options;
+> +	config.cascade_fn = git_default_config;
+> +	config.item_alloc = NULL;
+> +	config.item_clear = NULL;
+> +	config.cb = NULL;
 
-+	free(collect.url.url);
 
-> +
-> +	/*
-> +	 * section name may have been copied to replace the dot, in which
-> +	 * case it needs to be freed.  key name is either NULL (e.g. 'http'
-> +	 * alone) or points into var (e.g. 'http.savecookies'), and we do
-> +	 * not own the storage.
-> +	 */
-> +	if (collect.section != var)
-> +		free((void *)collect.section);
-> +	return 0;
-> +}
+Missing this:
++	config.section = "http";
 
-Still needed after 4/3 except it's now config.url.url instead.
+Without these it segfaults running the tests.
+
+However, now the tests that actually check the results using config  
+files are failing:
+
+> # failed 1 among 11 test(s)
+
+I'm looking at it now to see if I can fix the problem.
