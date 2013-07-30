@@ -1,181 +1,76 @@
-From: Brandon Casey <bcasey@nvidia.com>
-Subject: [PATCH] sha1_file: introduce close_one_pack() to close packs on fd pressure
-Date: Mon, 29 Jul 2013 21:05:13 -0700
-Message-ID: <1375157113-608-1-git-send-email-bcasey@nvidia.com>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Flatten history
+Date: Mon, 29 Jul 2013 21:05:15 -0700
+Message-ID: <CAE1pOi0LKy8hsjAEsFPPN+9mJRDoEE0a3sMv7gpnW8V95_W9sA@mail.gmail.com>
+References: <CAE1pOi0CQ1k3h3ie=s3qvkQog9foYBOnJ++uuum-Br7vzQHRSQ@mail.gmail.com>
+ <CAMP44s2pXSN2HbpGLW9jrgJAypbLM3JtgD+nyK7LkNdvH4nsfQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <gitster@pobox.com>, <spearce@spearce.org>,
-	Brandon Casey <drafnel@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 30 06:05:25 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 30 06:05:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V41Bc-0004i1-Lo
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 06:05:25 +0200
+	id 1V41Bs-0004qI-Qz
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 06:05:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750964Ab3G3EFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jul 2013 00:05:20 -0400
-Received: from hqemgate14.nvidia.com ([216.228.121.143]:2286 "EHLO
-	hqemgate14.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750745Ab3G3EFS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jul 2013 00:05:18 -0400
-Received: from hqnvupgp08.nvidia.com (Not Verified[216.228.121.13]) by hqemgate14.nvidia.com
-	id <B51f73b7c0000>; Mon, 29 Jul 2013 21:05:16 -0700
-Received: from hqemhub01.nvidia.com ([172.20.12.94])
-  by hqnvupgp08.nvidia.com (PGP Universal service);
-  Mon, 29 Jul 2013 21:03:55 -0700
-X-PGP-Universal: processed;
-	by hqnvupgp08.nvidia.com on Mon, 29 Jul 2013 21:03:55 -0700
-Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub01.nvidia.com
- (172.20.150.30) with Microsoft SMTP Server id 8.3.298.1; Mon, 29 Jul 2013
- 21:05:17 -0700
-X-Mailer: git-send-email 1.8.3.1.440.gc2bf105
+	id S1751783Ab3G3EFh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jul 2013 00:05:37 -0400
+Received: from mail-vc0-f182.google.com ([209.85.220.182]:62130 "EHLO
+	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751418Ab3G3EFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jul 2013 00:05:36 -0400
+Received: by mail-vc0-f182.google.com with SMTP id hf12so2719946vcb.13
+        for <git@vger.kernel.org>; Mon, 29 Jul 2013 21:05:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=VzpmkDBGotYdChc8ecniEPMZ1IWCJdvBz1GHknEdTSE=;
+        b=IDXVdRHiDWGWTnDsNUyOW5jFhhT3WpNtGdz2fkIckmtDKdPzluFk+7lDZKVKYqIbXo
+         fhKwEZ2lS8H2b66A4d6UaDOR+7GIbODPOGf+nF9WlKkAXvNvbUmWBQ5uoEsdMBNU4+DD
+         GX+LPTA75GcwVluEmAAoxeIV1bBnlR5mt8nH1wtCVRat1fEcUPITyHqrbzNKPaU0gHTV
+         FpiId+1gIFvM2upfaWMG6h6hBqxPkW//BRjVSMilun9YpxTc2G6o+DuJH4fDkCWkOwKY
+         s2JDbzfGh+M+6hOcPRZFW354dWOLV54BrzNmFck5FmBQgJejs3XaDfLroCFqrHjnQ0IC
+         U1Yw==
+X-Received: by 10.58.49.130 with SMTP id u2mr27035256ven.7.1375157135863; Mon,
+ 29 Jul 2013 21:05:35 -0700 (PDT)
+Received: by 10.58.229.106 with HTTP; Mon, 29 Jul 2013 21:05:15 -0700 (PDT)
+In-Reply-To: <CAMP44s2pXSN2HbpGLW9jrgJAypbLM3JtgD+nyK7LkNdvH4nsfQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231348>
 
-From: Brandon Casey <drafnel@gmail.com>
+On 29 July 2013 20:50, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> On Mon, Jul 29, 2013 at 8:42 PM, Hilco Wijbenga
+> <hilco.wijbenga@gmail.com> wrote:
+>> Hi all,
+>>
+>> I have a (public) "feature" branch that has been kept up-to-date with
+>> "master" by regularly merging master back into it. I would now like to
+>> get all the changes from feature but not any of the commits.
+>> Basically, I want to replay all of feature's commits without creating
+>> those commits.
+>>
+>> I thought something like
+>>
+>> git cherry-pick -n abcd^..feature
+>>
+>> should do the trick (while on master, where abcd is the SHA-1 of the
+>> commit where feature was created) but I get conflicts.
+>>
+>> First, why the conflicts? I have done all the merges so cherry-pick
+>> should simply be able to replay them? Second, what is the correct way
+>> of doing this?
+>
+> Perhaps
+>
+> % git cherry-pick -n --no-merges --right-only --topo-order
+> --cherry-pick abcd^..feature
 
-When the number of open packs exceeds pack_max_fds, unuse_one_window()
-is called repeatedly to attempt to release the least-recently-used
-pack windows, which, as a side-effect, will also close a pack file
-after closing its last open window.  If a pack file has been opened,
-but no windows have been allocated into it, it will never be selected
-by unuse_one_window() and hence its file descriptor will not be
-closed.  When this happens, git may exceed the number of file
-descriptors permitted by the system.
-
-This latter situation can occur in show-ref or receive-pack during ref
-advertisement.  During ref advertisement, receive-pack will iterate
-over every ref in the repository and advertise it to the client after
-ensuring that the ref exists in the local repository.  If the ref is
-located inside a pack, then the pack is opened to ensure that it
-exists, but since the object is not actually read from the pack, no
-mmap windows are allocated.  When the number of open packs exceeds
-pack_max_fds, unuse_one_window() will not able to find any windows to
-free and will not be able to close any packs.  Once the per-process
-file descriptor limit is exceeded, receive-pack will produce a warning,
-not an error, for each pack it cannot open, and will then most likely
-fail with an error to spawn rev-list or index-pack like:
-
-   error: cannot create standard input pipe for rev-list: Too many open files
-   error: Could not run 'git rev-list'
-
-This is not likely to occur during upload-pack since upload-pack
-reads each object from the pack so that it can peel tags and
-advertise the exposed object.  So during upload-pack, mmap windows
-will be allocated for each pack that is opened and unuse_one_window()
-will eventually be able to close unused packs after freeing all of
-their windows.
-
-When we have file descriptor pressure, in contrast to memory pressure,
-we need to free all windows and close the pack file descriptor so that
-a new pack can be opened.  Let's introduce a new function
-close_one_pack() designed specifically for this purpose to search
-for and close the least-recently-used pack, where LRU is defined as
-
-   * pack with oldest mtime and no allocated mmap windows or
-   * pack with the least-recently-used windows, i.e. the pack
-     with the oldest most-recently-used window
-
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
- sha1_file.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 62 insertions(+), 1 deletion(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 8e27db1..7731ab1 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -682,6 +682,67 @@ void close_pack_windows(struct packed_git *p)
- 	}
- }
- 
-+/*
-+ * The LRU pack is the one with the oldest MRU window or the oldest mtime
-+ * if it has no windows allocated.
-+ */
-+static void find_lru_pack(struct packed_git *p, struct packed_git **lru_p, struct pack_window **mru_w)
-+{
-+	struct pack_window *w, *this_mru_w;
-+
-+	/*
-+	 * Reject this pack if it has windows and the previously selected
-+	 * one does not.  If this pack does not have windows, reject
-+	 * it if the pack file is newer than the previously selected one.
-+	 */
-+	if (*lru_p && !*mru_w && (p->windows || p->mtime > (*lru_p)->mtime))
-+		return;
-+
-+	for (w = this_mru_w = p->windows; w; w = w->next) {
-+		/* Reject this pack if any of its windows are in use */
-+		if (w->inuse_cnt)
-+			return;
-+		/*
-+		 * Reject this pack if it has windows that have been
-+		 * used more recently than the previously selected pack.
-+		 */
-+		if (*mru_w && w->last_used > (*mru_w)->last_used)
-+			return;
-+		if (w->last_used > this_mru_w->last_used)
-+			this_mru_w = w;
-+	}
-+
-+	/*
-+	 * Select this pack.
-+	 */
-+	*mru_w = this_mru_w;
-+	*lru_p = p;
-+}
-+
-+static int close_one_pack(void)
-+{
-+	struct packed_git *p, *lru_p = NULL;
-+	struct pack_window *mru_w = NULL;
-+
-+	for (p = packed_git; p; p = p->next) {
-+		if (p->pack_fd == -1)
-+			continue;
-+		find_lru_pack(p, &lru_p, &mru_w);
-+	}
-+
-+	if (lru_p) {
-+		close_pack_windows(lru_p);
-+		close(lru_p->pack_fd);
-+		pack_open_fds--;
-+		lru_p->pack_fd = -1;
-+		if (lru_p == last_found_pack)
-+			last_found_pack = NULL;
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
- void unuse_pack(struct pack_window **w_cursor)
- {
- 	struct pack_window *w = *w_cursor;
-@@ -777,7 +838,7 @@ static int open_packed_git_1(struct packed_git *p)
- 			pack_max_fds = 1;
- 	}
- 
--	while (pack_max_fds <= pack_open_fds && unuse_one_window(NULL, -1))
-+	while (pack_max_fds <= pack_open_fds && close_one_pack())
- 		; /* nothing */
- 
- 	p->pack_fd = git_open_noatime(p->pack_name);
--- 
-1.8.3.1.440.gc2bf105
-
-
------------------------------------------------------------------------------------
-This email message is for the sole use of the intended recipient(s) and may contain
-confidential information.  Any unauthorized review, use, disclosure or distribution
-is prohibited.  If you are not the intended recipient, please contact the sender by
-reply email and destroy all copies of the original message.
------------------------------------------------------------------------------------
+Thank you for the suggestion but this still gives me conflicts.
