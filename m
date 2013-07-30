@@ -1,143 +1,251 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH 5/3] revert most of the http_options() change
-Date: Tue, 30 Jul 2013 12:14:24 -0700
-Message-ID: <CC3A0EB0-79FE-40C2-B1AC-E3B9683A3ED6@gmail.com>
-References: <7vli4v66b3.fsf@alter.siamese.dyndns.org> <1375138150-19520-1-git-send-email-gitster@pobox.com> <7v7gg8ztvk.fsf_-_@alter.siamese.dyndns.org> <7v1u6gztf1.fsf_-_@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2] imap-send: use Apple's Security framework for base64 encoding
+Date: Tue, 30 Jul 2013 12:21:49 -0700
+Message-ID: <CAJDDKr5EFt+X91L6YqKz4HED+52z2TDGrre_LdKCeRK+yvUT_w@mail.gmail.com>
+References: <1375147710-71226-1-git-send-email-davvid@gmail.com>
+	<7vtxjcvy9s.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeremy Huddleston <jeremyhu@apple.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 30 21:14:34 2013
+X-From: git-owner@vger.kernel.org Tue Jul 30 21:21:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4FNQ-0004Vi-7S
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 21:14:32 +0200
+	id 1V4FUZ-0000FS-2r
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 21:21:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756639Ab3G3TO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jul 2013 15:14:28 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:52322 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754613Ab3G3TO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jul 2013 15:14:27 -0400
-Received: by mail-pa0-f49.google.com with SMTP id bi5so7468230pad.8
-        for <git@vger.kernel.org>; Tue, 30 Jul 2013 12:14:26 -0700 (PDT)
+	id S1754889Ab3G3TVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jul 2013 15:21:51 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:36955 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750957Ab3G3TVu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jul 2013 15:21:50 -0400
+Received: by mail-pa0-f47.google.com with SMTP id kl13so7454839pab.20
+        for <git@vger.kernel.org>; Tue, 30 Jul 2013 12:21:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc:x-mauler;
-        bh=GcZ6tS0/yeylAs+gi7gcj5PZG6d9Wi2zg/v9TfA1MPk=;
-        b=jjW57fS83P4ME3d+pH/7SqtlWoOwmmwmoPYfI8gqX3mDYZe3aWDt6guuMI6itqU5jo
-         AcaLeY90HyvtS+tBjf+m+QRVeol02mVD11kR6vCx1JU9cgYaBSYiwSuZCvB0ys6rS0hG
-         X9Do7lGVR1i40+bD0F1kHUWhOWk93Tntk7QYIaE+6IgerAM18QMwB9DKFUO6EyG27CTj
-         xIVaWYh2vH6PdrCbVV96++FoP29rZQMq+sCi+dlcjHKEoZQ6ce9iKpcFUQyHHo7BZ5tk
-         gHJlnbCMP+MSi1CGDtABhixG2z9PLq5Pd6Iy/LnZcZO4B3NW+jtyB6C2hPoZTQ4wWF2i
-         VKJA==
-X-Received: by 10.66.21.37 with SMTP id s5mr77555089pae.103.1375211666587;
-        Tue, 30 Jul 2013 12:14:26 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id ib9sm84515889pbc.43.2013.07.30.12.14.25
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Jul 2013 12:14:25 -0700 (PDT)
-In-Reply-To: <7v1u6gztf1.fsf_-_@alter.siamese.dyndns.org>
-X-Mauler: Craptastic (2.936)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8ZGY20iPnB8eAXffw3SfHLsLEFIrRmrNFnvihPUu4ho=;
+        b=He6UDKG+opL3Z3KtgsKoLuLdR1BjDJkcPsLkeJ5tcyccQQ8tInARS+fLNNlOR3YV25
+         CSiZEK7cw6BLXxOGNCu2uqodqWSWNgxm0V1DTz1M0ixacNXFlNqVO+FUDXRfVpWf6Oet
+         P4vUpEeLQsvXSLt/JM6Wi/D7GJFgOFnml4JvjaMaNrKIFspSnx5Gzeo7SuZxX8x6l1jX
+         AHlLYuuhYhQza1pYFEBCvZS/BghraGkgTu57YPqyvrMZS8UF16WpAfyuDQeIonnrmIgM
+         tH0kxalaqIOYHlPn7qaM5Wu/C2Ba1eHMIMHLr4g+NZH2/P0hkRpxWQjvN8eX9L2cDD55
+         uCKg==
+X-Received: by 10.68.12.97 with SMTP id x1mr7846208pbb.150.1375212109729; Tue,
+ 30 Jul 2013 12:21:49 -0700 (PDT)
+Received: by 10.70.47.1 with HTTP; Tue, 30 Jul 2013 12:21:49 -0700 (PDT)
+In-Reply-To: <7vtxjcvy9s.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231379>
 
-On Jul 29, 2013, at 19:13, Junio C Hamano wrote:
+On Tue, Jul 30, 2013 at 8:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> David Aguilar <davvid@gmail.com> writes:
+>
+>> From: Jeremy Huddleston <jeremyhu@apple.com>
+>>
+>> Use Apple's supported functions for base64 encoding instead
+>> of the deprecated OpenSSL functions.
+>>
+>> Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
+>> Signed-off-by: David Aguilar <davvid@gmail.com>
+>> ---
+>> This version moves the tricky #ifdefs into git-compat-util.h
+>
+> Nice.  I however wonder if we can kick the inlines that are
+> irrelevant to most people out further.  For example, would the
+> following be an improvement?
 
-> With the previous preparation step, the earlier 1bb00006 (config:
-> add support for http.<url>.* settings, 2013-07-21) that introduced
-> many repeated changes:
+Yes, IMO that is nicer.  It keeps all of the Apple specifics neatly tucked away.
+Thanks
+
 >
->        -if (!strcmp("http.key", var)) {
->        +if (!strcmp("key", key)) {
->        +       if (match_is_shorter(..., OPT_KEY_NAME))
->        +               return 0;
->                ... original processing for KEY_NAME ...
->         }
+> -- >8 --
+> From: Jeremy Huddleston <jeremyhu@apple.com>
+> Date: Mon, 29 Jul 2013 18:28:30 -0700
+> Subject: [PATCH] imap-send: use Apple's Security framework for base64 encoding
 >
-> can be reverted.
+> Use Apple's supported functions for base64 encoding instead
+> of the deprecated OpenSSL functions.
 >
-> This allows us to also get rid of the "repeating yourself to the
-> death" enum http_option_type, and new code (like db/http-savecookies
-> patch) that wants to add a new configuration to the http.* subsystem
-> does not have to conflict with http.<urlpattern>.variable series at
-> all.
+> Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Makefile                     |  1 +
+>  compat/apple-common-crypto.h | 86 ++++++++++++++++++++++++++++++++++++++++++++
+>  git-compat-util.h            | 11 ++++++
+>  imap-send.c                  | 14 --------
+>  4 files changed, 98 insertions(+), 14 deletions(-)
+>  create mode 100644 compat/apple-common-crypto.h
 >
-> This is more-or-less how I want the endgame to look like. Not even
-> compile tested, but it is getting late so I'll show it to the list
-> in case people may want to play with it and polish it while I am
-> away for the night ;-).
->
-> If people can agree that this is going in the right direction,
-> perhaps we should rebuild Kyle's series without detouring of adding
-> and then yanking what 1bb00006 (config: add support for http.<url>.*
-> settings, 2013-07-21) did in the next cycle.
->
-> http.c               | 181 ++++++++ 
-> +------------------------------------------
-> test-url-normalize.c |   9 ++-
-> 2 files changed, 39 insertions(+), 151 deletions(-)
->
-> diff --git a/http.c b/http.c
-> index a91a00b..c7f513b 100644
-> --- a/http.c
-> +++ b/http.c
-[...]
-> @@ -469,15 +342,23 @@ void http_init(struct remote *remote, const  
-> char *url, int proactive_auth)
-> {
-> 	char *low_speed_limit;
-> 	char *low_speed_time;
-> -	struct url_info info;
-> +	char *normalized_url;
-> +	struct urlmatch_config config = { STRING_LIST_INIT_DUP };
+> diff --git a/Makefile b/Makefile
+> index 5e7cadf..dddf49b 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1398,6 +1398,7 @@ ifdef PPC_SHA1
+>         LIB_H += ppc/sha1.h
+>  else
+>  ifdef APPLE_COMMON_CRYPTO
+> +       LIB_4_CRYPTO += -framework Security -framework CoreFoundation
+>         COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
+>         SHA1_HEADER = <CommonCrypto/CommonDigest.h>
+>  else
+> diff --git a/compat/apple-common-crypto.h b/compat/apple-common-crypto.h
+> new file mode 100644
+> index 0000000..c8b9b0e
+> --- /dev/null
+> +++ b/compat/apple-common-crypto.h
+> @@ -0,0 +1,86 @@
+> +/* suppress inclusion of conflicting openssl functions */
+> +#define OPENSSL_NO_MD5
+> +#define HEADER_HMAC_H
+> +#define HEADER_SHA_H
+> +#include <CommonCrypto/CommonHMAC.h>
+> +#define HMAC_CTX CCHmacContext
+> +#define HMAC_Init(hmac, key, len, algo) CCHmacInit(hmac, algo, key, len)
+> +#define HMAC_Update CCHmacUpdate
+> +#define HMAC_Final(hmac, hash, ptr) CCHmacFinal(hmac, hash)
+> +#define HMAC_CTX_cleanup(ignore)
+> +#define EVP_md5(...) kCCHmacAlgMD5
+> +#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070
+> +#define APPLE_LION_OR_NEWER
+> +#include <Security/Security.h>
+> +/* Apple's TYPE_BOOL conflicts with config.c */
+> +#undef TYPE_BOOL
+> +#endif
 > +
-> +	config.fn = http_options;
-> +	config.cascade_fn = git_default_config;
-> +	config.item_alloc = NULL;
-> +	config.item_clear = NULL;
-> +	config.cb = NULL;
-
-Missing this:
-+	config.section = "http";
-
-
-[...]
-> diff --git a/test-url-normalize.c b/test-url-normalize.c
-> index 0b809eb..fab94e5 100644
-> --- a/test-url-normalize.c
-> +++ b/test-url-normalize.c
-> @@ -15,8 +15,15 @@ static int run_http_options(const char *file,
-> {
-> 	struct strbuf opt_lc;
-> 	size_t i, len;
-> +	struct urlmatch_config config = { STRING_LIST_INIT_DUP };
+> +#ifdef APPLE_LION_OR_NEWER
+> +#define git_CC_error_check(pattern, err) \
+> +       do { \
+> +               if (err) { \
+> +                       die(pattern, (long)CFErrorGetCode(err)); \
+> +               } \
+> +       } while(0)
+> +
+> +#define EVP_EncodeBlock git_CC_EVP_EncodeBlock
+> +static inline int git_CC_EVP_EncodeBlock(unsigned char *out,
+> +               const unsigned char *in, int inlen)
+> +{
+> +       CFErrorRef err;
+> +       SecTransformRef encoder;
+> +       CFDataRef input, output;
+> +       CFIndex length;
+> +
+> +       encoder = SecEncodeTransformCreate(kSecBase64Encoding, &err);
+> +       git_CC_error_check("SecEncodeTransformCreate failed: %ld", err);
+> +
+> +       input = CFDataCreate(kCFAllocatorDefault, in, inlen);
+> +       SecTransformSetAttribute(encoder, kSecTransformInputAttributeName,
+> +                       input, &err);
+> +       git_CC_error_check("SecTransformSetAttribute failed: %ld", err);
+> +
+> +       output = SecTransformExecute(encoder, &err);
+> +       git_CC_error_check("SecTransformExecute failed: %ld", err);
+> +
+> +       length = CFDataGetLength(output);
+> +       CFDataGetBytes(output, CFRangeMake(0, length), out);
+> +
+> +       CFRelease(output);
+> +       CFRelease(input);
+> +       CFRelease(encoder);
+> +
+> +       return (int)strlen((const char *)out);
+> +}
+> +
+> +#define EVP_DecodeBlock git_CC_EVP_DecodeBlock
+> +static int inline git_CC_EVP_DecodeBlock(unsigned char *out,
+> +               const unsigned char *in, int inlen)
+> +{
+> +       CFErrorRef err;
+> +       SecTransformRef decoder;
+> +       CFDataRef input, output;
+> +       CFIndex length;
+> +
+> +       decoder = SecDecodeTransformCreate(kSecBase64Encoding, &err);
+> +       git_CC_error_check("SecEncodeTransformCreate failed: %ld", err);
+> +
+> +       input = CFDataCreate(kCFAllocatorDefault, in, inlen);
+> +       SecTransformSetAttribute(decoder, kSecTransformInputAttributeName,
+> +                       input, &err);
+> +       git_CC_error_check("SecTransformSetAttribute failed: %ld", err);
+> +
+> +       output = SecTransformExecute(decoder, &err);
+> +       git_CC_error_check("SecTransformExecute failed: %ld", err);
+> +
+> +       length = CFDataGetLength(output);
+> +       CFDataGetBytes(output, CFRangeMake(0, length), out);
+> +
+> +       CFRelease(output);
+> +       CFRelease(input);
+> +       CFRelease(decoder);
+> +
+> +       return (int)strlen((const char *)out);
+> +}
+> +#endif /* APPLE_LION_OR_NEWER */
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index e955bb5..6ebb029 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -127,6 +127,17 @@
+>  #else
+>  #include <poll.h>
+>  #endif
+> +
+> +#ifndef NO_OPENSSL
+> +#ifdef APPLE_COMMON_CRYPTO
+> +#include "compat/apple-common-crypto.h"
+> +#else
+> +#include <openssl/evp.h>
+> +#include <openssl/hmac.h>
+> +#endif /* APPLE_COMMON_CRYPTO */
+> +#include <openssl/x509v3.h>
+> +#endif /* NO_OPENSSL */
+> +
+>  #if defined(__MINGW32__)
+>  /* pull in Windows compatibility stuff */
+>  #include "compat/mingw.h"
+> diff --git a/imap-send.c b/imap-send.c
+> index d6b65e2..6f5cc4f 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -28,20 +28,6 @@
+>  #include "prompt.h"
+>  #ifdef NO_OPENSSL
+>  typedef void *SSL;
+> -#else
+> -#ifdef APPLE_COMMON_CRYPTO
+> -#include <CommonCrypto/CommonHMAC.h>
+> -#define HMAC_CTX CCHmacContext
+> -#define HMAC_Init(hmac, key, len, algo) CCHmacInit(hmac, algo, key, len)
+> -#define HMAC_Update CCHmacUpdate
+> -#define HMAC_Final(hmac, hash, ptr) CCHmacFinal(hmac, hash)
+> -#define HMAC_CTX_cleanup(ignore)
+> -#define EVP_md5() kCCHmacAlgMD5
+> -#else
+> -#include <openssl/evp.h>
+> -#include <openssl/hmac.h>
+> -#endif
+> -#include <openssl/x509v3.h>
+>  #endif
 >
-> -	if (git_config_with_options(http_options, (void *)info, file, 0))
-> +	config.fn = http_options;
-> +	config.cascade_fn = git_default_config;
-> +	config.item_alloc = NULL;
-> +	config.item_clear = NULL;
-> +	config.cb = NULL;
+>  static const char imap_send_usage[] = "git imap-send < <mbox>";
+> --
+> 1.8.4-rc0-137-g17832d4
+>
+>
+>
 
 
-Missing this:
-+	config.section = "http";
 
-Without these it segfaults running the tests.
-
-However, now the tests that actually check the results using config  
-files are failing:
-
-> # failed 1 among 11 test(s)
-
-I'm looking at it now to see if I can fix the problem.
+-- 
+David
