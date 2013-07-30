@@ -1,110 +1,139 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH] tag: Use OPT_BOOL instead of OPT_BOOLEAN to allow one action multiple times
-Date: Tue, 30 Jul 2013 20:00:51 +0200
-Message-ID: <1375207251-4998-1-git-send-email-stefanbeller@googlemail.com>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 30 20:00:47 2013
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH 3/3] config: --get-urlmatch
+Date: Tue, 30 Jul 2013 12:14:03 -0700
+Message-ID: <C34D29B7-055D-4D82-B9FE-27150E51FF79@gmail.com>
+References: <7vli4v66b3.fsf@alter.siamese.dyndns.org> <1375138150-19520-1-git-send-email-gitster@pobox.com> <1375138150-19520-4-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 30 21:14:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4EE1-0005Sn-8O
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 20:00:45 +0200
+	id 1V4FNJ-0004Ru-HC
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 21:14:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755965Ab3G3SAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jul 2013 14:00:41 -0400
-Received: from mail-wg0-f54.google.com ([74.125.82.54]:48058 "EHLO
-	mail-wg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751714Ab3G3SAk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jul 2013 14:00:40 -0400
-Received: by mail-wg0-f54.google.com with SMTP id n11so3159309wgh.21
-        for <git@vger.kernel.org>; Tue, 30 Jul 2013 11:00:39 -0700 (PDT)
+	id S1756140Ab3G3TOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jul 2013 15:14:19 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:52826 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754613Ab3G3TOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jul 2013 15:14:07 -0400
+Received: by mail-pa0-f41.google.com with SMTP id bj1so5959505pad.28
+        for <git@vger.kernel.org>; Tue, 30 Jul 2013 12:14:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=m6aY1VN9Xk8XQn0M1uwiyjVoD1MIp80vJX57hKy5dks=;
-        b=k2fjybSJEkSNYCVeExN04jK5ggghAK9sDuuhg0qGM+qbpotnLyD++qwbPupy3a11df
-         3fIhhdP5f/A9QcYidhduHEHVenn4LJayLotifJ9VZLB8u9HydZNBoRA6wfNzyStRCmWU
-         jXpd2zXxAbwyHB7E3d8rjS8CHwmVJqrvA6HO4Fkv6Y9IZUHH/tLNYR0RbfrAxbjz4cgX
-         5AXLmvUis4zImm3EVJb29X3mLEJc0fHss/kOX8PgEnuZ4/xY7ws8FeFyr9TOLuJ7mA5y
-         2b9DcDx7A7/fvYJOEBKcDc74Qy0pRjAfUTnU3YQNVXFkPOPyhkcM0rCCx+wvzfow4kwm
-         DfBA==
-X-Received: by 10.194.87.9 with SMTP id t9mr49462543wjz.39.1375207239724;
-        Tue, 30 Jul 2013 11:00:39 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id hb2sm30096105wib.0.2013.07.30.11.00.38
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc:x-mauler;
+        bh=1f4fmR7xiMs4Xs1uyWYCnWdqQGmKHrR99H6SBNZ/uDY=;
+        b=RstTLZzZ6JDnQOGhLqZkC1lEpuYBafXmgA3bbVS17Ltgtz5XzVglTo7ef1BtxE+/Sy
+         vYoELdi9xIO983gT6gUxOLqJun3A6F51nN14HmWR3EOZgdS6VQwVBgvngsEGspwsNAqa
+         1+MwFC5iBdT3cycev203AQAsFdbSUyPHfgOXLlcaHrzWGSEh/x1ZPySuuQyzYoB3h9eV
+         ZW73Xojtq88BpdI3y4+1iD7a109mDo7Ox2NvmYMlqXPNFby42Fw1k8Mi52r3gTQMH0hu
+         jpV2yydHNw/vEobpVhcDwdjy+65k16UN4eDKxPQu7SNVdtKo9mb29yNKqEToLP5CRMgS
+         7IhA==
+X-Received: by 10.66.171.204 with SMTP id aw12mr46016517pac.7.1375211647002;
+        Tue, 30 Jul 2013 12:14:07 -0700 (PDT)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id ib9sm84515889pbc.43.2013.07.30.12.14.05
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Jul 2013 11:00:38 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc0.1.g8f6a3e5
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 30 Jul 2013 12:14:06 -0700 (PDT)
+In-Reply-To: <1375138150-19520-4-git-send-email-gitster@pobox.com>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231377>
 
-As of b04ba2bb (parse-options: deprecate OPT_BOOLEAN, 2011-09-27),
-the OPT_BOOLEAN was deprecated.
-While I am going to replace the OPT_BOOLEAN by the proposed OPT_BOOL or
-the OPT_COUNTUP to keep existing behavior, this commit is actually a
-bug fix!
+On Jul 29, 2013, at 15:49, Junio C Hamano wrote:
 
-In line 499 we have:
-	if (list + delete + verify > 1)
-		usage_with_options(git_tag_usage, options);
-Now if we give one of the options twice, we'll get the usage information.
-(i.e. 'git tag --verify --verify <tagname>' and
-'git --delete --delete <tagname>' yield usage information and do not
-do the intended command.)
+> "git config --get-urlmatch $section[.$variable] $url" is a way to
+> learn what the configured value for $section.$variable is for the
+> given URL, using the logic introduced by the http.<url>.config
+> topic.  In addition to $section.$variable, entries in the
+> configuration file(s) that match $section.<urlpattern>.$variable are
+> looked up and the one with <urlpattern> that matches the given $url
+> the best is used to answer the query.
+>
+> This can still be further refactored to remove code from  
+> http_options()
+> in http.c, I think.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> builtin/config.c | 141 ++++++++++++++++++++++++++++++++++++++++++++++ 
+> +++++++++
+> 1 file changed, 141 insertions(+)
+>
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 12c5073..c1d32ae 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+[...]
+> +static int get_urlmatch(const char *var, const char *url)
+> +{
+> +	const char *section_tail;
+> +	struct string_list_item *item;
+> +	struct urlmatch_collect collect = { STRING_LIST_INIT_DUP };
+> +
+> +	if (!url_normalize(url, &collect.url))
+> +		die(collect.url.err);
 
-This could have been fixed by rewriting the line to
-	if (!!list + !!delete + !!verify > 1)
-		usage_with_options(git_tag_usage, options);
-or as it happened in this patch by having the parameters not
-counting up for each occurrence, but the OPT_BOOL just setting the
-variables to either 0 if the option is not given or 1 if the option is
-given multiple times.
+The value now stored in collect.url.url is never freed.
 
-However we could discuss if the negated options do make sense here, or if
-we don't want to allow them here, as this seems valid (before and after
-this patch):
-	git tag --no-verify --delete <tagname>
+> +
+> +	section_tail = strchr(var, '.');
+> +	if (section_tail) {
+> +		collect.section = xmemdupz(var, section_tail - var);
+> +		collect.key = strrchr(var, '.') + 1;
+> +		show_keys = 0;
+> +	} else {
+> +		collect.section = var;
+> +		collect.key = NULL;
+> +		show_keys = 1;
+> +	}
+> +
+> +	git_config_with_options(urlmatch_collect, &collect,
+> +				given_config_file, respect_includes);
+> +
+> +	for_each_string_list_item(item, &collect.vars) {
+> +		struct urlmatch_item *matched = item->util;
+> +		struct strbuf key = STRBUF_INIT;
+> +		struct strbuf buf = STRBUF_INIT;
+> +
+> +		strbuf_addstr(&key, collect.section);
+> +		strbuf_addch(&key, '.');
+> +		strbuf_addstr(&key, item->string);
+> +		format_config(&buf, key.buf,
+> +			      matched->value_is_null ? NULL : matched->value.buf);
+> +		fwrite(buf.buf, 1, buf.len, stdout);
+> +		strbuf_release(&key);
+> +		strbuf_release(&buf);
+> +
+> +		strbuf_release(&matched->value);
+> +	}
+> +	string_list_clear(&collect.vars, 1);
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
----
- builtin/tag.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Needs something like this here:
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index b3942e4..d155c9d 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -442,12 +442,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct msg_arg msg = { 0, STRBUF_INIT };
- 	struct commit_list *with_commit = NULL;
- 	struct option options[] = {
--		OPT_BOOLEAN('l', "list", &list, N_("list tag names")),
-+		OPT_BOOL('l', "list", &list, N_("list tag names")),
- 		{ OPTION_INTEGER, 'n', NULL, &lines, N_("n"),
- 				N_("print <n> lines of each tag message"),
- 				PARSE_OPT_OPTARG, NULL, 1 },
--		OPT_BOOLEAN('d', "delete", &delete, N_("delete tags")),
--		OPT_BOOLEAN('v', "verify", &verify, N_("verify tags")),
-+		OPT_BOOL('d', "delete", &delete, N_("delete tags")),
-+		OPT_BOOL('v', "verify", &verify, N_("verify tags")),
- 
- 		OPT_GROUP(N_("Tag creation options")),
- 		OPT_BOOL('a', "annotate", &annotate,
-@@ -455,7 +455,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK('m', "message", &msg, N_("message"),
- 			     N_("tag message"), parse_msg_arg),
- 		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
--		OPT_BOOLEAN('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
-+		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
- 		OPT_STRING(0, "cleanup", &cleanup_arg, N_("mode"),
- 			N_("how to strip spaces and #comments from message")),
- 		OPT_STRING('u', "local-user", &keyid, N_("key id"),
--- 
-1.8.4.rc0.1.g8f6a3e5
++	free(collect.url.url);
+
+> +
+> +	/*
+> +	 * section name may have been copied to replace the dot, in which
+> +	 * case it needs to be freed.  key name is either NULL (e.g. 'http'
+> +	 * alone) or points into var (e.g. 'http.savecookies'), and we do
+> +	 * not own the storage.
+> +	 */
+> +	if (collect.section != var)
+> +		free((void *)collect.section);
+> +	return 0;
+> +}
+
+Still needed after 4/3 except it's now config.url.url instead.
