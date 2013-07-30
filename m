@@ -1,62 +1,56 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v3 3/5] submodule.c: add .gitmodules staging helper functions
-Date: Wed, 31 Jul 2013 01:13:05 +0200
-Message-ID: <51F84881.9040204@web.de>
-References: <51F8187F.7040603@web.de> <51F8190A.3030002@web.de> <7vsiyvvidl.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 0/3] Remove sq_quote_print() in favor of *_buf
+Date: Wed, 31 Jul 2013 04:50:35 +0530
+Message-ID: <CALkWK0mQx+5J_tGka6psemckvnqzp+jQF9+csN4HWBuwY=eoQA@mail.gmail.com>
+References: <1375173087-2164-1-git-send-email-artagnon@gmail.com>
+ <7viozsxfcd.fsf@alter.siamese.dyndns.org> <7va9l4xe3k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 31 01:13:16 2013
+X-From: git-owner@vger.kernel.org Wed Jul 31 01:21:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4J6R-0007NU-Tj
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 01:13:16 +0200
+	id 1V4JEG-00036E-V2
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 01:21:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758261Ab3G3XNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jul 2013 19:13:12 -0400
-Received: from mout.web.de ([212.227.15.4]:50420 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758216Ab3G3XNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jul 2013 19:13:11 -0400
-Received: from [192.168.178.41] ([79.193.94.161]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0LbroC-1UNaMr22dw-00jG88 for <git@vger.kernel.org>;
- Wed, 31 Jul 2013 01:13:09 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <7vsiyvvidl.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.5.2
-X-Provags-ID: V03:K0:56UB2r89syOd0eWCfQ62xXRStC+gFrV7Bg6+8uhzJQTP50cyGLf
- hjx21IvZAd2gJ5RpZHuZbcnsF2y1f1Bhh0i+4+nowkhV+H6LsvLjszoFX30RhHD62lFDBbp
- RM8Xg/HBSjRFQfkzOMfwGHNkk2hAcCnhXg83jyM2WtDwtEvCYxZfG4Unr0vFIleWsyQ4vT9
- m28UMte3j9ikFP9OzeOCQ==
+	id S1758239Ab3G3XVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jul 2013 19:21:17 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:62787 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754588Ab3G3XVQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jul 2013 19:21:16 -0400
+Received: by mail-oa0-f52.google.com with SMTP id n12so49953oag.25
+        for <git@vger.kernel.org>; Tue, 30 Jul 2013 16:21:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=p56FqJgfLBy09ZnJxaBFlo0wh8bUUcaCNin+8Q1SFoE=;
+        b=U/LB1XqmsIppXEoHs+s0TkeuLlFwsxl57N417HY8EW/rxaF/b/P5OE6K/p5bRdkECZ
+         qfWRMQjA3oxaFkRH3p0GWBQXOg6X+TwJg/0vmKMDo3owKGdKQsQaW1af7CUlK5gdt43z
+         hLPnUrKjVMv+APmHQ99Ej9G/MFkOEPIq3og4+WOrxSXLts6jebpYPfVkFtrEtRFHdfD6
+         mznovQ1mqUuGTASaOnrHmuo77YUxJTLJqnhkn5HJfO30uOvIyWUW1eOYxagBBrTcV1nL
+         6a4bTF/cjQGTDrssFI5A+IYTSBSsp7VkhCJ3p5xWw+7y2HKzWevTBXsRgcufh3cjJibM
+         OAiQ==
+X-Received: by 10.50.47.12 with SMTP id z12mr395425igm.50.1375226475970; Tue,
+ 30 Jul 2013 16:21:15 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Tue, 30 Jul 2013 16:20:35 -0700 (PDT)
+In-Reply-To: <7va9l4xe3k.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231399>
 
-Am 30.07.2013 23:37, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> +int is_staging_gitmodules_ok()
-> 
-> Will tweak this to:
-> 
-> 	int is_staging_gitmodules_ok(void)
-> 
-> and fix this as well:
-> 
->> +int is_staging_gitmodules_ok();
->> +void stage_updated_gitmodules(void);
-> 
-> 
-> before queuing.
+Junio C Hamano wrote:
+> Having said all that, the patch texts all look OK, so I'll queue
+> them with updated log messages.  It was the usual me reacting to
+> unjustified value judgement made in log messages and cover letters.
 
-Thanks. As Frederik already noticed, this series is missing at least
-one strbuf_release(). Will fix both in v4.
+Thanks.  I'll look at how the log messages are different in the queued
+version, and adapt accordingly next time.
