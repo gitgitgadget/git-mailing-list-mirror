@@ -1,151 +1,110 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: ANNOUNCE: git-integration -- Easily manage integration branches
-Date: Tue, 30 Jul 2013 18:57:11 +0100
-Message-ID: <20130730175710.GO2337@serenity.lan>
-References: <20130730154620.GN2337@serenity.lan>
- <7vli4ovvwi.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 30 19:57:31 2013
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: [PATCH] tag: Use OPT_BOOL instead of OPT_BOOLEAN to allow one action multiple times
+Date: Tue, 30 Jul 2013 20:00:51 +0200
+Message-ID: <1375207251-4998-1-git-send-email-stefanbeller@googlemail.com>
+Cc: Stefan Beller <stefanbeller@googlemail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jul 30 20:00:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4EAm-0003Yu-RQ
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 19:57:25 +0200
+	id 1V4EE1-0005Sn-8O
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 20:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754658Ab3G3R5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jul 2013 13:57:21 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:49407 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751714Ab3G3R5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jul 2013 13:57:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 803A0CDA5C3;
-	Tue, 30 Jul 2013 18:57:19 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -12.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zqsgSWEuv5hG; Tue, 30 Jul 2013 18:57:18 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id AD964CDA587;
-	Tue, 30 Jul 2013 18:57:18 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 85CF6161E036;
-	Tue, 30 Jul 2013 18:57:18 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Uwrg0nUL3t89; Tue, 30 Jul 2013 18:57:16 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 52DD0161E24A;
-	Tue, 30 Jul 2013 18:57:12 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <7vli4ovvwi.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755965Ab3G3SAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jul 2013 14:00:41 -0400
+Received: from mail-wg0-f54.google.com ([74.125.82.54]:48058 "EHLO
+	mail-wg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751714Ab3G3SAk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jul 2013 14:00:40 -0400
+Received: by mail-wg0-f54.google.com with SMTP id n11so3159309wgh.21
+        for <git@vger.kernel.org>; Tue, 30 Jul 2013 11:00:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=m6aY1VN9Xk8XQn0M1uwiyjVoD1MIp80vJX57hKy5dks=;
+        b=k2fjybSJEkSNYCVeExN04jK5ggghAK9sDuuhg0qGM+qbpotnLyD++qwbPupy3a11df
+         3fIhhdP5f/A9QcYidhduHEHVenn4LJayLotifJ9VZLB8u9HydZNBoRA6wfNzyStRCmWU
+         jXpd2zXxAbwyHB7E3d8rjS8CHwmVJqrvA6HO4Fkv6Y9IZUHH/tLNYR0RbfrAxbjz4cgX
+         5AXLmvUis4zImm3EVJb29X3mLEJc0fHss/kOX8PgEnuZ4/xY7ws8FeFyr9TOLuJ7mA5y
+         2b9DcDx7A7/fvYJOEBKcDc74Qy0pRjAfUTnU3YQNVXFkPOPyhkcM0rCCx+wvzfow4kwm
+         DfBA==
+X-Received: by 10.194.87.9 with SMTP id t9mr49462543wjz.39.1375207239724;
+        Tue, 30 Jul 2013 11:00:39 -0700 (PDT)
+Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id hb2sm30096105wib.0.2013.07.30.11.00.38
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 30 Jul 2013 11:00:38 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc0.1.g8f6a3e5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231376>
 
-On Tue, Jul 30, 2013 at 09:45:49AM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > I wrote this script a few months ago and have been using it pretty much
-> > daily since then, so I figure it's time to see if anyone else finds it
-> > useful...
-> >
-> > git-integration [1] is a script to help manage integration branches in
-> > Git.  By defining a base point and a set of branches to be merged to
-> > form the integration branch, git-integration lets you easily rebuild an
-> > integration branch when anything in it changes, as well as showing you
-> > the status of all of the branches in the integration branch.
-> >
-> > For example, the instruction sheet for git-integration's "pu" branch
-> > recently looked like this:
-> >
-> > 	base master
-> >
-> > 	merge make-clean
-> >
-> > 	  Add a "clean" target to the makefile.
-> >
-> > 	merge version
-> >
-> > 	  Support for "--version" option.
-> >
-> > 	  N.B. this builds on "make-clean".
-> >
-> > 	merge skip-option
-> >
-> > 	  Needs more work to be able to handle "branch not found".
-> >
-> > This tells git-integration to base the "pu" branch on "master" and merge
-> > the "make-clean", "version" and "skip-option" branches in.  The comments
-> > following the "merge" instructions are added to the commit message for
-> > the corresponding merge commit.  When I want to rebuild the "pu" branch
-> > I simply do:
-> >
-> > 	$ git integration --rebuild pu
-> >
-> > To change the contents of the branch, I either edit the instruction
-> > sheet manually:
-> >
-> > 	$ git integration --edit pu
-> >
-> > or quickly add a new branch from the command line:
-> >
-> > 	$ git integration --add my-new-branch pu
-> >
-> > In fact, I can combine these to get the benefit of bash-completion on
-> > the branch name and the ability to edit the instruction sheet - when
-> > multiple commands are specified, git-integration performs each of them
-> > in a sensible order, described in the manpage [2].
-> >
-> >
-> > [1] http://johnkeeping.github.io/git-integration/
-> > [2] http://johnkeeping.github.io/git-integration/git-integration.html
-> 
-> Interesting.
-> 
-> Would it help me to replay "evil merges" I previously made and avoid
-> necessity to write merge log messages repeatedly?
+As of b04ba2bb (parse-options: deprecate OPT_BOOLEAN, 2011-09-27),
+the OPT_BOOLEAN was deprecated.
+While I am going to replace the OPT_BOOLEAN by the proposed OPT_BOOL or
+the OPT_COUNTUP to keep existing behavior, this commit is actually a
+bug fix!
 
-Currently it does nothing beyond having the ability to continue
-automatically if rerere manages to resolve all conflicts (disabled by
-default).  There is no equivalent of your refs/merge-fix/ feature,
-although I think I might add one soon ;-).
+In line 499 we have:
+	if (list + delete + verify > 1)
+		usage_with_options(git_tag_usage, options);
+Now if we give one of the options twice, we'll get the usage information.
+(i.e. 'git tag --verify --verify <tagname>' and
+'git --delete --delete <tagname>' yield usage information and do not
+do the intended command.)
 
-Since the commit messages for the merge commits come from the
-instruction sheet, it does avoid the need to write them repeatedly - if
-you want to change the merge message you can simply update the
-instruction sheet and rebuild.
+This could have been fixed by rewriting the line to
+	if (!!list + !!delete + !!verify > 1)
+		usage_with_options(git_tag_usage, options);
+or as it happened in this patch by having the parameters not
+counting up for each occurrence, but the OPT_BOOL just setting the
+variables to either 0 if the option is not given or 1 if the option is
+given multiple times.
 
-> In short, can I replace my Meta/Reintegrate and Meta/cook with this
-> (see Documentation/howto/maintain-git.txt)?
+However we could discuss if the negated options do make sense here, or if
+we don't want to allow them here, as this seems valid (before and after
+this patch):
+	git tag --no-verify --delete <tagname>
 
-It performs the same basic function as those scripts, but it's quite a
-lot simpler and hasn't been designed for the git.git workflow, so I
-don't think it's suitable for replacing your existing scripts.
+Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+---
+ builtin/tag.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-If I were starting from scratch and attempting to implement the git.git
-workflow on top of git-integration, I think I would make
-whats-cooking.txt a build artifact generated from the instruction sheet
-for pu.  This would require some new commands to be added to
-git-integration's instruction sheet to let it assign sections to
-branches, but ought to be possible.  I expect there would be some
-subtleties though - certainly git-integration's "--status" output does
-not handle all of the cases the Meta/cook does, not least because it
-only compares against a single base branch.
+diff --git a/builtin/tag.c b/builtin/tag.c
+index b3942e4..d155c9d 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -442,12 +442,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	struct msg_arg msg = { 0, STRBUF_INIT };
+ 	struct commit_list *with_commit = NULL;
+ 	struct option options[] = {
+-		OPT_BOOLEAN('l', "list", &list, N_("list tag names")),
++		OPT_BOOL('l', "list", &list, N_("list tag names")),
+ 		{ OPTION_INTEGER, 'n', NULL, &lines, N_("n"),
+ 				N_("print <n> lines of each tag message"),
+ 				PARSE_OPT_OPTARG, NULL, 1 },
+-		OPT_BOOLEAN('d', "delete", &delete, N_("delete tags")),
+-		OPT_BOOLEAN('v', "verify", &verify, N_("verify tags")),
++		OPT_BOOL('d', "delete", &delete, N_("delete tags")),
++		OPT_BOOL('v', "verify", &verify, N_("verify tags")),
+ 
+ 		OPT_GROUP(N_("Tag creation options")),
+ 		OPT_BOOL('a', "annotate", &annotate,
+@@ -455,7 +455,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK('m', "message", &msg, N_("message"),
+ 			     N_("tag message"), parse_msg_arg),
+ 		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
+-		OPT_BOOLEAN('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
++		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
+ 		OPT_STRING(0, "cleanup", &cleanup_arg, N_("mode"),
+ 			N_("how to strip spaces and #comments from message")),
+ 		OPT_STRING('u', "local-user", &keyid, N_("key id"),
+-- 
+1.8.4.rc0.1.g8f6a3e5
