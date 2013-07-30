@@ -1,141 +1,95 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH] sha1_file: introduce close_one_pack() to close packs on
- fd pressure
-Date: Tue, 30 Jul 2013 15:59:54 -0700
-Message-ID: <CA+sFfMe1GTDqtgGs3NXoB0OBYTtyHxLDYgy0TmOe+3r=tMXS0A@mail.gmail.com>
-References: <1375157113-608-1-git-send-email-bcasey@nvidia.com>
-	<7v61vsxdiz.fsf@alter.siamese.dyndns.org>
-	<20130730195257.GA16247@sigill.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v3 5/5] rm: delete .gitmodules entry of submodules removed
+ from the work tree
+Date: Wed, 31 Jul 2013 01:06:34 +0200
+Message-ID: <51F846FA.8030808@web.de>
+References: <51F8187F.7040603@web.de> <51F81957.1000709@web.de> <20130730201511.GC19369@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <bcasey@nvidia.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Shawn Pearce <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 31 01:00:02 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Wed Jul 31 01:06:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4Itc-0000HC-Ro
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 01:00:01 +0200
+	id 1V4J09-0003uO-NE
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 01:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756596Ab3G3W75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jul 2013 18:59:57 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:44812 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753487Ab3G3W74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jul 2013 18:59:56 -0400
-Received: by mail-wi0-f182.google.com with SMTP id hi8so4470wib.15
-        for <git@vger.kernel.org>; Tue, 30 Jul 2013 15:59:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=waXYPdz1J5RgfnkV+GDqbJGpybXgGpRULAgjEL3sDqM=;
-        b=TN4kK/DqcklLJMkhZlhRse5oy0shofdmWNm2dg2cFddSGU6GAvB9u/V09ef8G55BSK
-         bV+CFecpQhJLN8NOGClprlS84vGyK4VpgVYuFG4C/P8W1yz9UNvYbNN06pjBnxhPr96N
-         mfZPf8h0zswnS8QLhro/uMPWFvFEhOABaMqxMB5XQMGXSy1vtqMrJyWggEZ1NEwrCQBf
-         ab2r2xbi5+BDJoD5ueiSb/paQhEOaEp4WLritrvYkoVs5iLb4hAYfANmcMutoR4wnddP
-         kYCn1Onss/o+Yg9SxKRoKAJjDapdRQ23eIKEl7NYlUXlR19UQfr3F5GCobIEN4qS2hYN
-         inhg==
-X-Received: by 10.194.234.100 with SMTP id ud4mr47907329wjc.44.1375225194758;
- Tue, 30 Jul 2013 15:59:54 -0700 (PDT)
-Received: by 10.194.81.102 with HTTP; Tue, 30 Jul 2013 15:59:54 -0700 (PDT)
-In-Reply-To: <20130730195257.GA16247@sigill.intra.peff.net>
+	id S1757979Ab3G3XGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jul 2013 19:06:41 -0400
+Received: from mout.web.de ([212.227.15.3]:55049 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753487Ab3G3XGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jul 2013 19:06:41 -0400
+Received: from [192.168.178.41] ([79.193.94.161]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0M24rL-1UCD2a0FR5-00u5Ry for <git@vger.kernel.org>;
+ Wed, 31 Jul 2013 01:06:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <20130730201511.GC19369@paksenarrion.iveqy.com>
+X-Enigmail-Version: 1.5.2
+X-Provags-ID: V03:K0:yD5AGj0vSl48emnC+cUYhD/M5mDiKuREHGcYM7FqCF4TR70z9ZF
+ bebpEDnTpztc2HK3skEu87j2PC1GR0plPG5j1Tx1BNFs2elZk3aEAtiFOQ06yAi/6KC6ii8
+ Jersz7Y5lD4kyXqlcP4Y1GRdrAXsG/fKe/nIQOh/B60nLOLnOZ+SZzlyu4PDyE+2zXXTroK
+ 2GktUAOqHmr0F2We1s/Aw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231397>
 
-On Tue, Jul 30, 2013 at 12:52 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jul 30, 2013 at 08:39:48AM -0700, Junio C Hamano wrote:
->
->> Brandon Casey <bcasey@nvidia.com> writes:
->>
->> > From: Brandon Casey <drafnel@gmail.com>
->> >
->> > When the number of open packs exceeds pack_max_fds, unuse_one_window()
->> > is called repeatedly to attempt to release the least-recently-used
->> > pack windows, which, as a side-effect, will also close a pack file
->> > after closing its last open window.  If a pack file has been opened,
->> > but no windows have been allocated into it, it will never be selected
->> > by unuse_one_window() and hence its file descriptor will not be
->> > closed.  When this happens, git may exceed the number of file
->> > descriptors permitted by the system.
->>
->> An interesting find.  The patch from a cursory look reads OK.
->
-> Yeah. I wonder if unuse_one_window() should actually leave the pack fd
-> open now in general.
->
-> If you close packfile descriptors, you can run into racy situations
-> where somebody else is repacking and deleting packs, and they go away
-> while you are trying to access them. If you keep a descriptor open,
-> you're fine; they last to the end of the process. If you don't, then
-> they disappear from under you.
->
-> For normal object access, this isn't that big a deal; we just rescan the
-> packs and retry. But if you are packing yourself (e.g., because you are
-> a pack-objects started by upload-pack for a clone or fetch), it's much
-> harder to recover (and we print some warnings).
->
-> We had our core.packedGitWindowSize lowered on GitHub for a while, and
-> we ran into this warning on busy repositories when we were running "git
-> gc" on the server. We solved it by bumping the window size so we never
-> release memory.
->
-> But just not closing the descriptor wouldn't work until Brandon's patch,
-> because we used the same function to release memory and descriptor
-> pressure. Now we could do them separately (and progressively if we need
-> to).
+Am 30.07.2013 22:15, schrieb Fredrik Gustafsson:
+> On Tue, Jul 30, 2013 at 09:51:51PM +0200, Jens Lehmann wrote:
+>> +/*
+>> + * Try to remove the "submodule.<name>" section from .gitmodules where the given
+>> + * path is configured. Return 0 only if a .gitmodules file was found, a section
+>> + * with the correct path=<path> setting was found and we could remove it.
+>> + */
+>> +int remove_path_from_gitmodules(const char *path)
+>> +{
+>> +	struct strbuf sect = STRBUF_INIT;
+>> +	struct string_list_item *path_option;
+>> +
+>> +	if (!file_exists(".gitmodules")) /* Do nothing without .gitmodules */
+>> +		return -1;
+>> +
+>> +	if (gitmodules_is_unmerged)
+>> +		die(_("Cannot change unmerged .gitmodules, resolve merge conflicts first"));
+>> +
+>> +	path_option = unsorted_string_list_lookup(&config_name_for_path, path);
+>> +	if (!path_option) {
+>> +		warning(_("Could not find section in .gitmodules where path=%s"), path);
+>> +		return -1;
+>> +	}
+>> +	strbuf_addstr(&sect, "submodule.");
+>> +	strbuf_addstr(&sect, path_option->util);
+>> +	if (git_config_rename_section_in_file(".gitmodules", sect.buf, NULL) < 0) {
+>> +		/* Maybe the user already did that, don't error out here */
+>> +		warning(_("Could not remove .gitmodules entry for %s"), path);
+>> +		return -1;
+>> +	}
+>> +	strbuf_release(&sect);
+>> +	return 0;
+>> +}
+> 
+> This question applies for this function and a few more functions in this
+> patch that has the same characteristics.
+> 
+> If we're in a state when we need to return non-zero, we don't do any
+> cleaning (that is strbuf_release()). Since this file is in the part
+> called libgit AFAIK, shouldn't we always clean after us?
 
-I had thought about whether to stop closing the pack file in
-unuse_one_window(), but didn't have a reason to do so.  I think the
-scenario you described provides a justification.  If we're not under
-file descriptor pressure and we can possibly avoid rescanning the pack
-directory, it sounds like a net win.
+Right you are, thanks for bringing that up. The last return needs a
+strbuf_release(), will fix that in v4.
 
->> > This is not likely to occur during upload-pack since upload-pack
->> > reads each object from the pack so that it can peel tags and
->> > advertise the exposed object.
->>
->> Another interesting find.  Perhaps there is a room for improvements,
->> as packed-refs file knows what objects the tags peel to?  I vaguely
->> recall Peff was actively reducing the object access during ref
->> enumeration in not so distant past...
->
-> Yeah, we should be reading almost no objects these days due to the
-> packed-refs peel lines. I just did a double-check on what "git
-> upload-pack . </dev/null >/dev/null" reads on my git.git repo, and it is
-> only three objects: the v1.8.3.3, v1.8.3.4, and v1.8.4-rc0 tag objects.
-> In other words, the tags I got since the last time I ran "git gc". So I
-> think all is working as designed.
+> Would it make sense to have different return values for different
+> errors?
 
-Ok, looks like this has been the case since your 435c8332 which taught
-upload-pack to use peel_ref().  So looks like we do avoid reaching
-into the pack for any ref that was read from a (modern) packed-refs
-file.  The repository I was testing with had mostly loose refs.
-Indeed, after packing refs, upload-pack encounters the same problem as
-receive-pack and runs out of file descriptors.
-
-So my comment about upload-pack is not completely accurate.
-Upload-pack _can_ run into this problem, but the refs must be packed,
-as well as there being enough of them that exist in enough different
-pack files to exceed the processes fd limit.
-
-> We could give receive-pack the same treatment; I've spent less time
-> micro-optimizing it because because we (and most sites, I would think)
-> get an order of magnitude more fetches than pushes.
-
-I don't think it would need the 435c8332 treatment since receive-pack
-doesn't peel refs when it advertises them to the client and hence does
-not need to load the ref object from the pack file during ref
-advertisement, but possibly some of the other stuff you did would be
-applicable.  But like you said, the number of fetches far exceed the
-number of pushes.
-
--Brandon
+I don't think so. The caller only wants to know if the modification
+of the .gitmodules file happened or not, so he can decide if that
+needs to be staged.
