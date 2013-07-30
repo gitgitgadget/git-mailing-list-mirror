@@ -1,123 +1,122 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [PATCH v3 5/5] rm: delete .gitmodules entry of submodules
- removed from the work tree
-Date: Tue, 30 Jul 2013 22:15:11 +0200
-Message-ID: <20130730201511.GC19369@paksenarrion.iveqy.com>
-References: <51F8187F.7040603@web.de>
- <51F81957.1000709@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/3] revert most of the http_options() change
+Date: Tue, 30 Jul 2013 14:09:37 -0700
+Message-ID: <7vy58nvjou.fsf@alter.siamese.dyndns.org>
+References: <7vli4v66b3.fsf@alter.siamese.dyndns.org>
+	<1375138150-19520-1-git-send-email-gitster@pobox.com>
+	<7v7gg8ztvk.fsf_-_@alter.siamese.dyndns.org>
+	<7v1u6gztf1.fsf_-_@alter.siamese.dyndns.org>
+	<CC3A0EB0-79FE-40C2-B1AC-E3B9683A3ED6@gmail.com>
+	<3C93D9D6-8FC3-4D94-AE6E-37150202314A@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Jul 30 22:12:41 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing-list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 30 23:09:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4GHh-0002mR-Cm
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 22:12:41 +0200
+	id 1V4HAy-0000dc-U8
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 23:09:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757010Ab3G3UMh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Jul 2013 16:12:37 -0400
-Received: from mail-la0-f47.google.com ([209.85.215.47]:42224 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756852Ab3G3UMg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jul 2013 16:12:36 -0400
-Received: by mail-la0-f47.google.com with SMTP id eo20so3753914lab.34
-        for <git@vger.kernel.org>; Tue, 30 Jul 2013 13:12:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=1+qjfyxHpA6Wzf4kCQfBkvU0PEHERCt9WDJGjkisw2U=;
-        b=uM2Yr4JuanV2Ue+uNdO69vnPi3GJBnGw2T1rZyocxdhQShNvLS9pxLp2T1POkoHQ3v
-         gDkXkVW/Nl2sU3faTqdbWPtShY5INXECMAnAZqeIH1xNYYluFM9Y6twaVhCXTCymd9Mg
-         VfbjD0xdaids3a2pCDYGg4cAsaoenY8kLrfOkg1VEpmeInIp9M/coXkmogIBmcNn2u6+
-         LrYxX686zYEYe5jL3n5ej83ToIamlTnJSs0mIgiZXYcb1VEk5UnCgt5k5umQzu3MzRMq
-         uaBZ9hk/ggiETrwl9ENK6aWWdA4aMYDv0fOhCO/058hohq2kOqu/tN0UWkj2S4josI9u
-         y+iA==
-X-Received: by 10.152.22.232 with SMTP id h8mr29363076laf.37.1375215155335;
-        Tue, 30 Jul 2013 13:12:35 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id js17sm9092069lab.5.2013.07.30.13.12.34
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Jul 2013 13:12:34 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1V4GK7-0003Pg-Nt; Tue, 30 Jul 2013 22:15:11 +0200
-Content-Disposition: inline
-In-Reply-To: <51F81957.1000709@web.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1758027Ab3G3VJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jul 2013 17:09:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53329 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757852Ab3G3VJm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jul 2013 17:09:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 708F735E2E;
+	Tue, 30 Jul 2013 21:09:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yyHtfCerL5C3rUavQD3MYv4i5w4=; b=KPjg78
+	3WEHH6wtZoi5oPKImbmxorxZq8t/sNiYkFxn+/6hiCDHbpUE/kFmK+JwjDlifEU4
+	V//LTPREDKAKBT6jJtdbPhVl9mY+91PJibc6U1O2/jqrlI1B/msr2+ZUHHq3krtT
+	jTW6rfnBxp1uMYD/z6kAmVsudFluJZnXme9iU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=j+TFDXINPe016OWejDq5LsmLM7MjvpYs
+	l1tUIF8WoZiwQkt34rQ72lSxtgbhjJv+VG/EuqFYlyhAZ0ROv9RHP/sFKNWoTIrZ
+	69X3kuyKPUevCYx8ltbQDknUKpQ3p3tqKbh21X5Z4LneqZRoTAGSXOEmpdtAb9rM
+	U0CBVziRG4E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36D5435E2D;
+	Tue, 30 Jul 2013 21:09:41 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5243935E27;
+	Tue, 30 Jul 2013 21:09:39 +0000 (UTC)
+In-Reply-To: <3C93D9D6-8FC3-4D94-AE6E-37150202314A@gmail.com> (Kyle J. McKay's
+	message of "Tue, 30 Jul 2013 12:41:37 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 58AED4F8-F95C-11E2-A750-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231390>
 
-On Tue, Jul 30, 2013 at 09:51:51PM +0200, Jens Lehmann wrote:
-> +/*
-> + * Try to remove the "submodule.<name>" section from .gitmodules whe=
-re the given
-> + * path is configured. Return 0 only if a .gitmodules file was found=
-, a section
-> + * with the correct path=3D<path> setting was found and we could rem=
-ove it.
-> + */
-> +int remove_path_from_gitmodules(const char *path)
-> +{
-> +	struct strbuf sect =3D STRBUF_INIT;
-> +	struct string_list_item *path_option;
-> +
-> +	if (!file_exists(".gitmodules")) /* Do nothing without .gitmodules =
-*/
-> +		return -1;
-> +
-> +	if (gitmodules_is_unmerged)
-> +		die(_("Cannot change unmerged .gitmodules, resolve merge conflicts=
- first"));
-> +
-> +	path_option =3D unsorted_string_list_lookup(&config_name_for_path, =
-path);
-> +	if (!path_option) {
-> +		warning(_("Could not find section in .gitmodules where path=3D%s")=
-, path);
-> +		return -1;
-> +	}
-> +	strbuf_addstr(&sect, "submodule.");
-> +	strbuf_addstr(&sect, path_option->util);
-> +	if (git_config_rename_section_in_file(".gitmodules", sect.buf, NULL=
-) < 0) {
-> +		/* Maybe the user already did that, don't error out here */
-> +		warning(_("Could not remove .gitmodules entry for %s"), path);
-> +		return -1;
-> +	}
-> +	strbuf_release(&sect);
-> +	return 0;
-> +}
+"Kyle J. McKay" <mackyle@gmail.com> writes:
 
-This question applies for this function and a few more functions in thi=
-s
-patch that has the same characteristics.
+> And now all the t5200-url-normalize tests pass again.
+>
+> FYI, I couldn't get the patches to apply against next or pu without
+> some minor tweaks that were just conflict resolutions having to do
+> with git_config_with_options changing its signature.
 
-If we're in a state when we need to return non-zero, we don't do any
-cleaning (that is strbuf_release()). Since this file is in the part
-called libgit AFAIK, shouldn't we always clean after us?
+Thanks.
 
-Would it make sense to have different return values for different
-errors?
+I built these five patches directly on top of your series, i.e. on
+top of cea9928d (docs: update http.<url>.* options documentation,
+2013-07-25).
 
-I do like the comments above the function, more functions (at least
-non-static ones) should follow this good style IMHO.
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
+I'll rebuild the series with your fixes and I may even queue it to
+'pu', but with some random thoughts:
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+ * "url-match.[ch]" are ugly names.  I'd be happier with
+   "urlmatch.[ch]".
+
+ * In the end result, http_options() looks mostly identical to that
+   of the 'master', but it got an extra "void *matched", only to
+   support "git config --get-urlmatch".  I however do not have to,
+   if I do a few things:
+
+   - Instead of implementing urlmatch_config_item that extends
+     urlmatch_item, have a separate string_list, keyed by the
+     variable names, and point the string_list with the generic cb
+     pointer I already have in urlmatch_config.  The fn() on the
+     "git config" side has to index this second string_list with the
+     variable and keep track of the value from the best candidate we
+     have seen so far.
+
+   - The above allows us to lose item_alloc and item_clear callback
+     functions from urlmatch_config, as we will not be doing the
+     structure inheritance to extend urlmatch_item.
+
+   - We still need cascade_fn callback, though.
+
+ * With the above, http_options() does not have to change in the
+   series.  We could restructure the series perhaps this way:
+
+   - http.sslCertPasswordProtected parsing fix.
+
+   - Add urlmatch.[ch], which would be your "config: improve support
+     for http.<url>.* settings" and yesterday's "url-match: split
+     out URL matching logic out of http.c", and a half of
+     "url-match: generalize configuration collection logic".
+
+   - Update http.c to use urlmatch.[ch] to make http.c match the
+     result of the endgame patch [5/3], and add necessary end user
+     documentation to Documentation/config.txt.
+
+   - Add test-url-normalize and t/t5200
+
+   - Update builtin/config.c for "--get-urlmatch", to make
+     builtin/config.c match the result of the endgame patch [5/3],
+     add end user documentation to Documentation/git-config.txt.
+
+   - Add some tests for "git config --get-urlmatch".
