@@ -1,213 +1,98 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2] imap-send: use Apple's Security framework for base64 encoding
-Date: Mon, 29 Jul 2013 18:28:30 -0700
-Message-ID: <1375147710-71226-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jeremy Huddleston <jeremyhu@apple.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 30 03:28:39 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] config: --get-urlmatch
+Date: Mon, 29 Jul 2013 18:33:43 -0700
+Message-ID: <7vbo5kzv9k.fsf@alter.siamese.dyndns.org>
+References: <7vli4v66b3.fsf@alter.siamese.dyndns.org>
+	<1375138150-19520-1-git-send-email-gitster@pobox.com>
+	<1375138150-19520-4-git-send-email-gitster@pobox.com>
+	<20130730003716.GA13114@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Kyle J. McKay" <mackyle@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 30 03:33:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V3yju-00061C-UT
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 03:28:39 +0200
+	id 1V3yox-0008SL-4q
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 03:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756633Ab3G3B2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jul 2013 21:28:34 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:59800 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756624Ab3G3B2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jul 2013 21:28:33 -0400
-Received: by mail-pb0-f41.google.com with SMTP id rp16so5365417pbb.14
-        for <git@vger.kernel.org>; Mon, 29 Jul 2013 18:28:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=VamoNAD71KSWyjHOUeZsWrE/h74tHlenRglKfSoWAWA=;
-        b=DvHnKUfUD2pmqKbhbUsWjDdu/XRcR/y22lQUbIEGgrmq19l5Rgs0NE6aM1bSCu2Kcf
-         +jtKpMn2/FCHORf72xS+g/mfPZppvuh7/V1d/e7QPG3vkf7+6go1HNejvxXAXprvA2/5
-         tk3YJzANJs66za+Jy3GjPSaiocWz1XwuORzBBf1LVyzlx2ntjN+Sd1CKbw+Zn9T4E9PP
-         i4WGtyd5CCqO9FNvRomOT1A7nAHGrNFcJTbJZB4GJdI0a41V/h3d3bM92oQA+uX8lqEW
-         zQf53TGtUkSeG2g6/Q9ctAODRrKDLwF2/jJfAuOHR3dddMlgAhW9xvDsDg3h8qsXX2/D
-         0fzA==
-X-Received: by 10.66.154.162 with SMTP id vp2mr46620484pab.34.1375147713199;
-        Mon, 29 Jul 2013 18:28:33 -0700 (PDT)
-Received: from lustrous.local.fas.fa.disney.com (w.disneyanimation.com. [198.187.190.241])
-        by mx.google.com with ESMTPSA id is3sm73448296pbc.25.2013.07.29.18.28.32
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 29 Jul 2013 18:28:32 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc0.2.g416d4cd
+	id S1754220Ab3G3Bdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jul 2013 21:33:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64330 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752664Ab3G3Bdq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jul 2013 21:33:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 616B126AC4;
+	Tue, 30 Jul 2013 01:33:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TWah5CZbXg3Wc9WwJerlkq6qWJg=; b=Wm0Byw
+	xt3wXbPZU3ErYb4PiAZsm41YW6alzAfXVhHfYsaZeQ9pVBXjliGYmxCQP28hcvBW
+	8ZX7uRh/5hhRfzlLQJTdly+10YVfzYl/5cC0bktXydnxDEfbi8uB+y4PaAi3Wbgo
+	uwS+MlxVHo+fRvQasqqwKzNSirGLJIhH86GBw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OQxq9X0fRDQv492+d3gbLxo3p3Q2lzuU
+	ZdWj+i299LQzFQoDCczsBVruXeG5+iDLa6CAFwWQY9kEL3NtnjlQkRreOtAhq/zk
+	bHqktMas8ujIblqobjPpR3Pn6WrRuhcD9N7V4mDmeH+qiAvZ0//li6qgoKttZ3kJ
+	IFFyMmRSA/0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55A7226AC1;
+	Tue, 30 Jul 2013 01:33:45 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 935C926ABF;
+	Tue, 30 Jul 2013 01:33:44 +0000 (UTC)
+In-Reply-To: <20130730003716.GA13114@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 29 Jul 2013 17:37:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 12B61E9C-F8B8-11E2-B41C-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231341>
 
-From: Jeremy Huddleston <jeremyhu@apple.com>
+Jeff King <peff@peff.net> writes:
 
-Use Apple's supported functions for base64 encoding instead
-of the deprecated OpenSSL functions.
+>> +struct urlmatch_item {
+>> +	size_t max_matched_len;
+>> +	char user_matched;
+>> +	char value_is_null;
+>> +	struct strbuf value;
+>> +};
+>
+> I think you ultimately want such a string_list for matching arbitrary
+> numbers of keys, but do you need it for the git-config case?
 
-Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-This version moves the tricky #ifdefs into git-compat-util.h
+"git config" does not know the semantics of each key, nor available
+set of keys, no?  The string-list is only to support
 
- Makefile          |  1 +
- git-compat-util.h | 95 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- imap-send.c       | 14 --------
- 3 files changed, 96 insertions(+), 14 deletions(-)
+    git config --get-urlmatch http http://www.google.com/
 
-diff --git a/Makefile b/Makefile
-index ef442eb..2b1e936 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1414,6 +1414,7 @@ ifdef PPC_SHA1
- 	LIB_H += ppc/sha1.h
- else
- ifdef APPLE_COMMON_CRYPTO
-+	LIB_4_CRYPTO += -framework Security -framework CoreFoundation
- 	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
- 	SHA1_HEADER = <CommonCrypto/CommonDigest.h>
- else
-diff --git a/git-compat-util.h b/git-compat-util.h
-index cc4ba4d..1ba89f8 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -129,6 +129,32 @@
- #include <poll.h>
- #endif
- 
-+#ifndef NO_OPENSSL
-+#ifdef APPLE_COMMON_CRYPTO
-+/* suppress inclusion of conflicting openssl functions */
-+#define OPENSSL_NO_MD5
-+#define HEADER_HMAC_H
-+#define HEADER_SHA_H
-+#include <CommonCrypto/CommonHMAC.h>
-+#define HMAC_CTX CCHmacContext
-+#define HMAC_Init(hmac, key, len, algo) CCHmacInit(hmac, algo, key, len)
-+#define HMAC_Update CCHmacUpdate
-+#define HMAC_Final(hmac, hash, ptr) CCHmacFinal(hmac, hash)
-+#define HMAC_CTX_cleanup(ignore)
-+#define EVP_md5(...) kCCHmacAlgMD5
-+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1070
-+#define APPLE_LION_OR_NEWER
-+#include <Security/Security.h>
-+/* Apple's TYPE_BOOL conflicts with config.c */
-+#undef TYPE_BOOL
-+#endif
-+#else
-+#include <openssl/evp.h>
-+#include <openssl/hmac.h>
-+#endif /* APPLE_COMMON_CRYPTO */
-+#include <openssl/x509v3.h>
-+#endif /* NO_OPENSSL */
-+
- extern int get_st_mode_bits(const char *path, int *mode);
- 
- #if defined(__MINGW32__)
-@@ -717,4 +743,73 @@ void warn_on_inaccessible(const char *path);
- /* Get the passwd entry for the UID of the current process. */
- struct passwd *xgetpwuid_self(void);
- 
-+#ifdef APPLE_LION_OR_NEWER
-+#define git_CC_error_check(pattern, err) \
-+	do { \
-+		if (err) { \
-+			die(pattern, (long)CFErrorGetCode(err)); \
-+		} \
-+	} while(0)
-+
-+#define EVP_EncodeBlock git_CC_EVP_EncodeBlock
-+static inline int git_CC_EVP_EncodeBlock(unsigned char *out,
-+		const unsigned char *in, int inlen)
-+{
-+	CFErrorRef err;
-+	SecTransformRef encoder;
-+	CFDataRef input, output;
-+	CFIndex length;
-+
-+	encoder = SecEncodeTransformCreate(kSecBase64Encoding, &err);
-+	git_CC_error_check("SecEncodeTransformCreate failed: %ld", err);
-+
-+	input = CFDataCreate(kCFAllocatorDefault, in, inlen);
-+	SecTransformSetAttribute(encoder, kSecTransformInputAttributeName,
-+			input, &err);
-+	git_CC_error_check("SecTransformSetAttribute failed: %ld", err);
-+
-+	output = SecTransformExecute(encoder, &err);
-+	git_CC_error_check("SecTransformExecute failed: %ld", err);
-+
-+	length = CFDataGetLength(output);
-+	CFDataGetBytes(output, CFRangeMake(0, length), out);
-+
-+	CFRelease(output);
-+	CFRelease(input);
-+	CFRelease(encoder);
-+
-+	return (int)strlen((const char *)out);
-+}
-+
-+#define EVP_DecodeBlock git_CC_EVP_DecodeBlock
-+static int inline git_CC_EVP_DecodeBlock(unsigned char *out,
-+		const unsigned char *in, int inlen)
-+{
-+	CFErrorRef err;
-+	SecTransformRef decoder;
-+	CFDataRef input, output;
-+	CFIndex length;
-+
-+	decoder = SecDecodeTransformCreate(kSecBase64Encoding, &err);
-+	git_CC_error_check("SecEncodeTransformCreate failed: %ld", err);
-+
-+	input = CFDataCreate(kCFAllocatorDefault, in, inlen);
-+	SecTransformSetAttribute(decoder, kSecTransformInputAttributeName,
-+			input, &err);
-+	git_CC_error_check("SecTransformSetAttribute failed: %ld", err);
-+
-+	output = SecTransformExecute(decoder, &err);
-+	git_CC_error_check("SecTransformExecute failed: %ld", err);
-+
-+	length = CFDataGetLength(output);
-+	CFDataGetBytes(output, CFRangeMake(0, length), out);
-+
-+	CFRelease(output);
-+	CFRelease(input);
-+	CFRelease(decoder);
-+
-+	return (int)strlen((const char *)out);
-+}
-+#endif /* APPLE_LION_OR_NEWER */
-+
- #endif
-diff --git a/imap-send.c b/imap-send.c
-index d6b65e2..6f5cc4f 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -28,20 +28,6 @@
- #include "prompt.h"
- #ifdef NO_OPENSSL
- typedef void *SSL;
--#else
--#ifdef APPLE_COMMON_CRYPTO
--#include <CommonCrypto/CommonHMAC.h>
--#define HMAC_CTX CCHmacContext
--#define HMAC_Init(hmac, key, len, algo) CCHmacInit(hmac, algo, key, len)
--#define HMAC_Update CCHmacUpdate
--#define HMAC_Final(hmac, hash, ptr) CCHmacFinal(hmac, hash)
--#define HMAC_CTX_cleanup(ignore)
--#define EVP_md5() kCCHmacAlgMD5
--#else
--#include <openssl/evp.h>
--#include <openssl/hmac.h>
--#endif
--#include <openssl/x509v3.h>
- #endif
- 
- static const char imap_send_usage[] = "git imap-send < <mbox>";
--- 
-1.8.4.rc0.2.g416d4cd
+i.e. "list everything under http.* hierarchy".
+
+And unlike http_option() which can incrementally always call back
+the setter (and let it override older value), the command has to
+read everything through and then give us the final value, so I do
+not think we can get away without one.
+
+> You will always be matching collect->key, so you will only ever insert a
+> single item into the collect->vars list. IOW, this could be:
+>
+>   struct urlmatch_collect {
+>     struct url_info url;
+>     const char *section;
+>     const char *key;
+>     struct urlmatch_item match;
+>   };
+>
+> I don't mind if it is more complicated than this single-case needs to be
+> if the code is also being used to http.c, but I haven't seen that yet
+
+That is in the works, of course ;-)
