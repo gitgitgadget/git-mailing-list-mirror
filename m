@@ -1,68 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] config: --get-urlmatch
-Date: Tue, 30 Jul 2013 01:14:13 -0700
-Message-ID: <20130730081413.GC16693@sigill.intra.peff.net>
-References: <7vli4v66b3.fsf@alter.siamese.dyndns.org>
- <1375138150-19520-1-git-send-email-gitster@pobox.com>
- <1375138150-19520-4-git-send-email-gitster@pobox.com>
- <20130730003716.GA13114@sigill.intra.peff.net>
- <7vbo5kzv9k.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, "Kyle J. McKay" <mackyle@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 30 10:14:26 2013
+From: Michal Sojka <sojkam1@fel.cvut.cz>
+Subject: [PATCH] contrib/subtree: Fix make install target
+Date: Tue, 30 Jul 2013 10:16:09 +0200
+Message-ID: <1375172169-26582-1-git-send-email-sojkam1@fel.cvut.cz>
+Cc: gitster@pobox.com, Michal Sojka <sojkam1@fel.cvut.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 30 10:16:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V454c-0007qm-90
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 10:14:26 +0200
+	id 1V456v-0000sN-K4
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Jul 2013 10:16:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758017Ab3G3IOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jul 2013 04:14:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36210 "EHLO peff.net"
+	id S1758088Ab3G3IQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jul 2013 04:16:44 -0400
+Received: from max.feld.cvut.cz ([147.32.192.36]:36501 "EHLO max.feld.cvut.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754450Ab3G3IOR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jul 2013 04:14:17 -0400
-Received: (qmail 18758 invoked by uid 102); 30 Jul 2013 08:14:16 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (12.144.179.211)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 30 Jul 2013 03:14:16 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Jul 2013 01:14:13 -0700
-Content-Disposition: inline
-In-Reply-To: <7vbo5kzv9k.fsf@alter.siamese.dyndns.org>
+	id S1758079Ab3G3IQg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jul 2013 04:16:36 -0400
+Received: from localhost (unknown [192.168.200.7])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 11FE63CFEAB;
+	Tue, 30 Jul 2013 10:16:33 +0200 (CEST)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Received: from max.feld.cvut.cz ([192.168.200.1])
+	by localhost (styx.feld.cvut.cz [192.168.200.7]) (amavisd-new, port 10044)
+	with ESMTP id LfTLjnA9BlAq; Tue, 30 Jul 2013 10:16:28 +0200 (CEST)
+Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
+	by max.feld.cvut.cz (Postfix) with ESMTP id E29B83CFE87;
+	Tue, 30 Jul 2013 10:16:27 +0200 (CEST)
+Received: from wsh by steelpick.2x.cz with local (Exim 4.80)
+	(envelope-from <sojkam1@fel.cvut.cz>)
+	id 1V456V-0006vK-24; Tue, 30 Jul 2013 10:16:23 +0200
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231352>
 
-On Mon, Jul 29, 2013 at 06:33:43PM -0700, Junio C Hamano wrote:
+If the libexec directory doesn't exist, git-subtree gets installed as
+$prefix/share/libexec/git-core file. This patch creates the directory
+before installing git-subtree file into it.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> +struct urlmatch_item {
-> >> +	size_t max_matched_len;
-> >> +	char user_matched;
-> >> +	char value_is_null;
-> >> +	struct strbuf value;
-> >> +};
-> >
-> > I think you ultimately want such a string_list for matching arbitrary
-> > numbers of keys, but do you need it for the git-config case?
-> 
-> "git config" does not know the semantics of each key, nor available
-> set of keys, no?  The string-list is only to support
-> 
->     git config --get-urlmatch http http://www.google.com/
-> 
-> i.e. "list everything under http.* hierarchy".
+Signed-off-by: Michal Sojka <sojkam1@fel.cvut.cz>
+---
+ contrib/subtree/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-Ah, I missed that you could leave "key" empty. I had expected
-collect->key to be filled in, at which point you only ever have one such
-key (and you do not need to know the semantics, only which one is the
-"winner").
-
--Peff
+diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
+index b507505..435b2de 100644
+--- a/contrib/subtree/Makefile
++++ b/contrib/subtree/Makefile
+@@ -30,6 +30,7 @@ $(GIT_SUBTREE): $(GIT_SUBTREE_SH)
+ doc: $(GIT_SUBTREE_DOC)
+ 
+ install: $(GIT_SUBTREE)
++	$(INSTALL) -d -m 755 $(DESTDIR)$(libexecdir)
+ 	$(INSTALL) -m 755 $(GIT_SUBTREE) $(DESTDIR)$(libexecdir)
+ 
+ install-doc: install-man
+-- 
+1.8.3.2
