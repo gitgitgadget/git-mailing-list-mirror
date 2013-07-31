@@ -1,188 +1,138 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v6 3/6] config: add generic callback wrapper to parse section.<url>.key
-Date: Wed, 31 Jul 2013 12:26:05 -0700
-Message-ID: <1375298768-7740-4-git-send-email-gitster@pobox.com>
+Subject: [PATCH v6 5/6] builtin/config: refactor collect_config()
+Date: Wed, 31 Jul 2013 12:26:07 -0700
+Message-ID: <1375298768-7740-6-git-send-email-gitster@pobox.com>
 References: <1375298768-7740-1-git-send-email-gitster@pobox.com>
 Cc: "Kyle J. McKay" <mackyle@gmail.com>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 31 21:26:39 2013
+X-From: git-owner@vger.kernel.org Wed Jul 31 21:26:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4c2Z-0006Sv-UK
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 21:26:32 +0200
+	id 1V4c2l-0006eE-IO
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 21:26:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760510Ab3GaT0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 15:26:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63908 "EHLO
+	id S1760592Ab3GaT0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 15:26:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46452 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760436Ab3GaT0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 15:26:23 -0400
+	id S1760518Ab3GaT0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 15:26:33 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1D40357B0;
-	Wed, 31 Jul 2013 19:26:22 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA2EE357CB;
+	Wed, 31 Jul 2013 19:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=iu1M
-	YgIJFhFHXe+xllYwcQd7vi8=; b=LT4krvXO780TUz0rFMk684clDMDBblzXgrxr
-	5ALnLNVISvitDWCk0zYbBhK6IDVYqcJpxMYJKTvXKnTRZVkWBiYc9lkWyw6+0fHy
-	zGgoggu6m45wGblAcOHuPoglUOvmXOlWxC29ZCYYhfNDI8YtRuZ81FxrBSI3zBGP
-	dQIalRA=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=HT9l
+	TM7wuEQZbB+by4y7Zf+y1ns=; b=jGDXBvl0gAU4o6nXoclvJiKGTsEjY3rePm88
+	J+xSENQhhoY9u9iy5KRmCCmOkj6auGlNzANRLrmBI3XbrPjg/SndtSB+jS4e4VhP
+	3neR0aILtTfYSllqVNm2c6puzh5sOpAQzhzNLvD8ZWA8ptJhwDQiOMJM/POo00Bj
+	PrF6oHo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	OQElOmTiQarzP3Bv1IS9/LmBvM5U/mwrfx7ixZDzfi5/GyHc9AVVEBuFhlFkfle2
-	XN3YxAZlwTITE1l6p2oM2pNOn7yuYmtxwWa+Dvrfd6D1YE/k7o3EOqGLJWZFN60r
-	jqiQXAKCv43SASVxrPdocD09ZthGV+mdChdpZyoJffE=
+	vcw+ARrPMBaKlB0CiCwF1+4lSlj5TbYJXBDunQSNsuhXoshGaZbMo5Bwgkj7DezE
+	cExsh1zH4x6iQCvDAKCWWE7zUAvmCUTVyocCs+Hp+mo+L/3k5TEdzRzJQ37f711O
+	dm9mMn7ku+EX2QEbuFutWeemE52tKmwSWqYUIr87Q2U=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E086357AE;
-	Wed, 31 Jul 2013 19:26:22 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 706EF357C9;
+	Wed, 31 Jul 2013 19:26:31 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 18A8B357A8;
-	Wed, 31 Jul 2013 19:26:20 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 80A5E357C0;
+	Wed, 31 Jul 2013 19:26:28 +0000 (UTC)
 X-Mailer: git-send-email 1.8.4-rc0-153-g9820077
 In-Reply-To: <1375298768-7740-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 14517A20-FA17-11E2-B17B-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 19163884-FA17-11E2-9F2C-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231448>
 
-Existing configuration parsing functions (e.g. http_options() in
-http.c) know how to parse two-level configuration variable names.
-We would like to exploit them and parse something like this:
-
-	[http]
-		sslVerify = true
-	[http "https://weak.example.com"]
-		sslVerify = false
-
-and pretend as if http.sslVerify were set to false when talking to
-"https://weak.example.com/path".
-
-Introduce `urlmatch_config_entry()` wrapper that:
-
- - is called with the target URL (e.g. "https://weak.example.com/path"),
-   and the two-level variable parser (e.g. `http_options`);
-
- - uses `url_normalize()` and `match_urls()` to see if configuration
-   data matches the target URL; and
-
- - calls the traditional two-level configuration variable parser
-   only for the configuration data whose <url> part matches the
-   target URL (and if there are multiple matches, only do so if the
-   current match is a better match than the ones previously seen).
+In order to reuse the logic to format the configuration value while
+honouring the requested type, split this function into two.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- urlmatch.c | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- urlmatch.h | 18 +++++++++++++++++
- 2 files changed, 85 insertions(+)
+ builtin/config.c | 42 +++++++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/urlmatch.c b/urlmatch.c
-index e1b03ee..073fdd3 100644
---- a/urlmatch.c
-+++ b/urlmatch.c
-@@ -466,3 +466,70 @@ int match_urls(const struct url_info *url,
- 		*exactusermatch = usermatched;
- 	return pathmatchlen;
+diff --git a/builtin/config.c b/builtin/config.c
+index 33c9bf9..12c5073 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -100,25 +100,13 @@ struct strbuf_list {
+ 	int alloc;
+ };
+ 
+-static int collect_config(const char *key_, const char *value_, void *cb)
++static int format_config(struct strbuf *buf, const char *key_, const char *value_)
+ {
+-	struct strbuf_list *values = cb;
+-	struct strbuf *buf;
+-	char value[256];
+-	const char *vptr = value;
+ 	int must_free_vptr = 0;
+ 	int must_print_delim = 0;
++	char value[256];
++	const char *vptr = value;
+ 
+-	if (!use_key_regexp && strcmp(key_, key))
+-		return 0;
+-	if (use_key_regexp && regexec(key_regexp, key_, 0, NULL, 0))
+-		return 0;
+-	if (regexp != NULL &&
+-	    (do_not_match ^ !!regexec(regexp, (value_?value_:""), 0, NULL, 0)))
+-		return 0;
+-
+-	ALLOC_GROW(values->items, values->nr + 1, values->alloc);
+-	buf = &values->items[values->nr++];
+ 	strbuf_init(buf, 0);
+ 
+ 	if (show_keys) {
+@@ -126,7 +114,7 @@ static int collect_config(const char *key_, const char *value_, void *cb)
+ 		must_print_delim = 1;
+ 	}
+ 	if (types == TYPE_INT)
+-		sprintf(value, "%d", git_config_int(key_, value_?value_:""));
++		sprintf(value, "%d", git_config_int(key_, value_ ? value_ : ""));
+ 	else if (types == TYPE_BOOL)
+ 		vptr = git_config_bool(key_, value_) ? "true" : "false";
+ 	else if (types == TYPE_BOOL_OR_INT) {
+@@ -154,15 +142,27 @@ static int collect_config(const char *key_, const char *value_, void *cb)
+ 	strbuf_addch(buf, term);
+ 
+ 	if (must_free_vptr)
+-		/* If vptr must be freed, it's a pointer to a
+-		 * dynamically allocated buffer, it's safe to cast to
+-		 * const.
+-		*/
+ 		free((char *)vptr);
+-
+ 	return 0;
  }
-+
-+int urlmatch_config_entry(const char *var, const char *value, void *cb)
+ 
++static int collect_config(const char *key_, const char *value_, void *cb)
 +{
-+	struct string_list_item *item;
-+	struct urlmatch_config *collect = cb;
-+	struct urlmatch_item *matched;
-+	struct url_info *url = &collect->url;
-+	const char *key, *dot;
-+	struct strbuf synthkey = STRBUF_INIT;
-+	size_t matched_len = 0;
-+	int user_matched = 0;
-+	int retval;
++	struct strbuf_list *values = cb;
 +
-+	key = skip_prefix(var, collect->section);
-+	if (!key || *(key++) != '.') {
-+		if (collect->cascade_fn)
-+			return collect->cascade_fn(var, value, cb);
-+		return 0; /* not interested */
-+	}
-+	dot = strrchr(key, '.');
-+	if (dot) {
-+		char *config_url, *norm_url;
-+		struct url_info norm_info;
-+
-+		config_url = xmemdupz(key, dot - key);
-+		norm_url = url_normalize(config_url, &norm_info);
-+		free(config_url);
-+		if (!norm_url)
-+			return 0;
-+		matched_len = match_urls(url, &norm_info, &user_matched);
-+		free(norm_url);
-+		if (!matched_len)
-+			return 0;
-+		key = dot + 1;
-+	}
-+
-+	if (collect->key && strcmp(key, collect->key))
++	if (!use_key_regexp && strcmp(key_, key))
++		return 0;
++	if (use_key_regexp && regexec(key_regexp, key_, 0, NULL, 0))
++		return 0;
++	if (regexp != NULL &&
++	    (do_not_match ^ !!regexec(regexp, (value_?value_:""), 0, NULL, 0)))
 +		return 0;
 +
-+	item = string_list_insert(&collect->vars, key);
-+	if (!item->util) {
-+		matched = xcalloc(1, sizeof(*matched));
-+		item->util = matched;
-+	} else {
-+		matched = item->util;
-+		/*
-+		 * Is our match shorter?  Is our match the same
-+		 * length, and without user while the current
-+		 * candidate is with user?  Then we cannot use it.
-+		 */
-+		if (matched_len < matched->matched_len ||
-+		    ((matched_len == matched->matched_len) &&
-+		     (!user_matched && matched->user_matched)))
-+			return 0;
-+		/* Otherwise, replace it with this one. */
-+	}
++	ALLOC_GROW(values->items, values->nr + 1, values->alloc);
 +
-+	matched->matched_len = matched_len;
-+	matched->user_matched = user_matched;
-+	strbuf_addstr(&synthkey, collect->section);
-+	strbuf_addch(&synthkey, '.');
-+	strbuf_addstr(&synthkey, key);
-+	retval = collect->collect_fn(synthkey.buf, value, collect->cb);
-+
-+	strbuf_release(&synthkey);
-+	return retval;
++	return format_config(&values->items[values->nr++], key_, value_);
 +}
-diff --git a/urlmatch.h b/urlmatch.h
-index b67f57f..b461dfd 100644
---- a/urlmatch.h
-+++ b/urlmatch.h
-@@ -33,4 +33,22 @@ struct url_info {
- extern char *url_normalize(const char *, struct url_info *);
- extern int match_urls(const struct url_info *url, const struct url_info *url_prefix, int *exactusermatch);
- 
-+struct urlmatch_item {
-+	size_t matched_len;
-+	char user_matched;
-+};
 +
-+struct urlmatch_config {
-+	struct string_list vars;
-+	struct url_info url;
-+	const char *section;
-+	const char *key;
-+
-+	void *cb;
-+	int (*collect_fn)(const char *var, const char *value, void *cb);
-+	int (*cascade_fn)(const char *var, const char *value, void *cb);
-+};
-+
-+extern int urlmatch_config_entry(const char *var, const char *value, void *cb);
-+
- #endif /* URL_MATCH_H */
+ static int get_value(const char *key_, const char *regex_)
+ {
+ 	int ret = CONFIG_GENERIC_ERROR;
 -- 
 1.8.4-rc0-153-g9820077
