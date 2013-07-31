@@ -1,82 +1,116 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH 2/2] Don't close pack fd when free'ing pack windows
-Date: Wed, 31 Jul 2013 14:31:34 -0700
-Message-ID: <CA+sFfMfzHh5kbyv673e6V=Md14DZBqDaLFwspfcZNBGomZBV9g@mail.gmail.com>
-References: <CA+sFfMe1GTDqtgGs3NXoB0OBYTtyHxLDYgy0TmOe+3r=tMXS0A@mail.gmail.com>
-	<1375300297-6744-1-git-send-email-bcasey@nvidia.com>
-	<1375300297-6744-2-git-send-email-bcasey@nvidia.com>
-	<CALWbr2wR2cN8dcOtW2bV3p7FC3ymdXgfp61A4pNKvOWhP6WU_Q@mail.gmail.com>
-	<20130731212114.GG19369@paksenarrion.iveqy.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Antoine Pelisse <apelisse@gmail.com>,
-	Brandon Casey <bcasey@nvidia.com>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Wed Jul 31 23:31:41 2013
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: Making a patch:  "git format-patch" does not produce the documented format
+Date: Wed, 31 Jul 2013 17:31:47 -0400
+Message-ID: <201307312131.r6VLVliK028321@hobgoblin.ariadne.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 31 23:39:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4dzg-0000Gb-Ja
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 23:31:40 +0200
+	id 1V4e6m-0004tQ-Gy
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 23:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757482Ab3GaVbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 17:31:36 -0400
-Received: from mail-we0-f178.google.com ([74.125.82.178]:61263 "EHLO
-	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752830Ab3GaVbg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 17:31:36 -0400
-Received: by mail-we0-f178.google.com with SMTP id u57so1069924wes.37
-        for <git@vger.kernel.org>; Wed, 31 Jul 2013 14:31:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nOr3EMBSDtVtWpdtFdzRKy0Jg4hVKClKkNDMrRWgHlw=;
-        b=uFBeSG1w75KU1q1ghWuoRbX2W79WU1xf1VnyCTuSFGVyKUuBJwKv+T7VPVM9MuGgat
-         2lJTyohonRboIkv63wqBjbwZzJ3lVc+RIsZF/PRfwLNQaLfYEDQY/5CIFY6klZJ3tnRO
-         3iZKUHo66wO1ZS6T8rs3AyIvN3g9PBc212UEIOs8PxjGBj6n81Z7hkXU+wfAzWEVLYdi
-         S43nYd2Ov1yXMAHGAIbmpb67XG/57ea6n4zTz77xj29cJ5bt7wNeGP11ZTtgLVUaQDBK
-         YDXMmSbrGioTTlS/iO93rJv9kEJBLAYf25MsjjO/tbpzatQxHlxbG846yJwLd2UhBq4r
-         qerA==
-X-Received: by 10.194.60.5 with SMTP id d5mr38428782wjr.26.1375306294974; Wed,
- 31 Jul 2013 14:31:34 -0700 (PDT)
-Received: by 10.194.81.102 with HTTP; Wed, 31 Jul 2013 14:31:34 -0700 (PDT)
-In-Reply-To: <20130731212114.GG19369@paksenarrion.iveqy.com>
+	id S1756634Ab3GaVi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 17:38:56 -0400
+Received: from qmta12.westchester.pa.mail.comcast.net ([76.96.59.227]:39457
+	"EHLO qmta12.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760634Ab3GaViz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Jul 2013 17:38:55 -0400
+X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Wed, 31 Jul 2013 17:38:55 EDT
+Received: from omta17.westchester.pa.mail.comcast.net ([76.96.62.89])
+	by qmta12.westchester.pa.mail.comcast.net with comcast
+	id 726y1m0041vXlb85C9Xo27; Wed, 31 Jul 2013 21:31:48 +0000
+Received: from hobgoblin.ariadne.com ([24.34.72.61])
+	by omta17.westchester.pa.mail.comcast.net with comcast
+	id 79Xo1m00Z1KKtkw3d9XoQA; Wed, 31 Jul 2013 21:31:48 +0000
+Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
+	by hobgoblin.ariadne.com (8.14.5/8.14.5) with ESMTP id r6VLVlN8028322;
+	Wed, 31 Jul 2013 17:31:47 -0400
+Received: (from worley@localhost)
+	by hobgoblin.ariadne.com (8.14.5/8.14.5/Submit) id r6VLVliK028321;
+	Wed, 31 Jul 2013 17:31:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1375306308;
+	bh=M32CGvx0rNKbrLL64u866rJyS9TFQh4+DVwQRY2wMPY=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=WhVkJABZ7MBV3hljNBjDlOsFtlDpJtgh7sgYyk9qbJsbmF9jHB9YjW1eo+gmbt5kK
+	 ujdgTSXx/2AjbMb0gLh+myn5aFmgXIVzdwbYoc5lGNByX1w82Qm4qOEvs33WFQ+ALv
+	 of5DvlW4y8jyT2s2sUJJEhZVI7a8Em9AC9KY1Os1J2Eu1Q7hQ0ezcID5KcmMgX0QqM
+	 NZa+HIZ1/HlA+zPk2+qP/NqvY8/eEZ4pvGncDopECmmEE22JHHYjbnIfuPVjeHrNCK
+	 yUdxcK4k6PF6QfWHlOJ4ML0WveQ7tmlNm87uXF/5wHtqeggyKHc5Jl8GTN08tilAEs
+	 Ltlvijc4W7Rtw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231467>
 
-On Wed, Jul 31, 2013 at 2:21 PM, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
-> On Wed, Jul 31, 2013 at 11:08:21PM +0200, Antoine Pelisse wrote:
->> On Wed, Jul 31, 2013 at 9:51 PM, Brandon Casey <bcasey@nvidia.com> wrote:
->> > -----------------------------------------------------------------------------------
->> > This email message is for the sole use of the intended recipient(s) and may contain
->> > confidential information.  Any unauthorized review, use, disclosure or distribution
->> > is prohibited.  If you are not the intended recipient, please contact the sender by
->> > reply email and destroy all copies of the original message.
->> > -----------------------------------------------------------------------------------
->>
->> I'm certainly not a lawyer, and I'm sorry for not reviewing the
->> content of the patch instead, but is that not a problem from a legal
->> point of view ?
->
-> Talking about legal, is it a problem if a commit isn't signed-off by
-> it's committer or author e-mail? Like in this case where the sign-off is
-> from gmail.com and the committer from nvidia.com?
+I'm working on writing a patch, but I'm running into a problem.  The
+patch itself is from this commit:
 
-It never has been.  My commits should have the author and committer
-set to my gmail address actually.
+    $ git log -1
+    commit 07a25537909dd277426818a39d9bc4235e755383
+    Author: Dale Worley <worley@ariadne.com>
+    Date:   Thu Jul 18 18:43:12 2013 -0400
 
-Others have sometimes used the two fields to distinguish between a
-corporate identity (i.e. me@somecompany.com) that represents the
-funder of the work and a canonical identity (me@personalemail.com)
-that identifies the person that performed the work.
+	open() returns -1 on failure, and indeed 0 is a possible success value
+	if the user closed stdin in our process.  Fix the test.
+    $ 
 
--Brandon
+But the output of "git format-patch" is:
+
+    From 07a25537909dd277426818a39d9bc4235e755383 Mon Sep 17 00:00:00 2001
+    From: Dale Worley <worley@ariadne.com>
+    Date: Thu, 18 Jul 2013 18:43:12 -0400
+    Subject: [PATCH] open() returns -1 on failure, and indeed 0 is a possible
+     success value if the user closed stdin in our process.  Fix
+     the test.
+
+    ---
+     t/t0070-fundamental.sh |    7 +++++++
+     wrapper.c              |    2 +-
+     2 files changed, 8 insertions(+), 1 deletions(-)
+
+    diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
+    index 986b2a8..d427f3a 100755
+    --- a/t/t0070-fundamental.sh
+    +++ b/t/t0070-fundamental.sh
+    @@ -25,6 +25,13 @@ test_expect_success POSIXPERM,SANITY 'mktemp to unwritable directory prints file
+	    grep "cannotwrite/test" err
+    [...]
+
+Notice that the whole commit message has been formatted as if it is
+part of the Subject line, and the line breaks in the commit message
+have been refilled.
+
+The file Documentation/SubmittingPatches says that "git format-patch"
+produces patches in the best format, but the manual page shows an
+example more like this:
+
+    From 8f72bad1baf19a53459661343e21d6491c3908d3 Mon Sep 17 00:00:00 2001
+    From: Tony Luck <tony.luck@intel.com>
+    Date: Tue, 13 Jul 2010 11:42:54 -0700
+    Subject: [PATCH] Put ia64 config files on the
+    MIME-Version: 1.0
+    Content-Type: text/plain; charset=UTF-8
+    Content-Transfer-Encoding: 8bit
+
+    arch/arm config files were slimmed down using a python script
+    (See commit c2330e286f68f1c408b4aa6515ba49d57f05beae comment)
+    [...]
+
+That is, the first line of the commit message is in the Subject and
+the remaining lines are in the message body.  As far as I can tell,
+that's what SubmittingPatches prescribes.  And that is what I see in
+the Git mailing list on vger.
+
+(This is with git 1.8.3.3.)
+
+Exactly how should the commit message be inserted into the patch
+e-mail?  What needs to be updated so the code is consistent with the
+documentation?
+
+Dale
