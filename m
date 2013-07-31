@@ -1,180 +1,158 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v6 6/6] config: "git config --get-urlmatch" parses
- section.<url>.key
-Date: Wed, 31 Jul 2013 16:44:48 -0700
-Message-ID: <20130731234448.GA8764@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 6/6] config: "git config --get-urlmatch" parses section.<url>.key
+Date: Wed, 31 Jul 2013 16:47:08 -0700
+Message-ID: <7vzjt2s35v.fsf@alter.siamese.dyndns.org>
 References: <1375298768-7740-1-git-send-email-gitster@pobox.com>
- <1375298768-7740-7-git-send-email-gitster@pobox.com>
- <20130731224511.GA25882@sigill.intra.peff.net>
- <62E17EDB-B24D-4F37-95F8-E2E26118E5E9@gmail.com>
+	<1375298768-7740-7-git-send-email-gitster@pobox.com>
+	<20130731224511.GA25882@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 01 01:44:59 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Kyle J. McKay" <mackyle@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 01 01:47:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4g4h-0001JA-76
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 01:44:59 +0200
+	id 1V4g76-0002ef-0d
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 01:47:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218Ab3GaXoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 19:44:55 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51591 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750856Ab3GaXoy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 19:44:54 -0400
-Received: (qmail 1973 invoked by uid 102); 31 Jul 2013 23:44:54 -0000
-Received: from host-199-115-243-177.moscone.com (HELO sigill.intra.peff.net) (199.115.243.177)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 31 Jul 2013 18:44:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Jul 2013 16:44:48 -0700
-Content-Disposition: inline
-In-Reply-To: <62E17EDB-B24D-4F37-95F8-E2E26118E5E9@gmail.com>
+	id S1750890Ab3GaXrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 19:47:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58343 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750808Ab3GaXrX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 19:47:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1CDF357D6;
+	Wed, 31 Jul 2013 23:47:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=srNkBJ2kAh3KtghgDJYNPjNLm7U=; b=nlfIEd
+	q7GHfEVVWYzvS/SCNUOvQH05Hc+W6IA+YwQKirhDeSw4kqyaPfQ7Pfu2UkiiFyEL
+	DIEnFEn5mx1R233Z62yy+Z0j25E+yUB24+WTcWwOu1bydGKaB0morUesJhpbZE+A
+	0KvmWqPTkkxUJPt8PdqCzxpE5DV00czs9s7OQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qMShycm0LOdquN0wNUJB6frEaStHAv7G
+	NvFgqba6lDFXyEgBSlAWP65AH9CeVjIUo3D9NVSCJfjeu7sYjS1NTp8z5NgRgAxp
+	rXJdj2THgJ5cYTmp4tXeZxF1Y7KPlIZ6KD5KdT6bHD3vrO10nrxNWrc8U8nEHtij
+	5Xh1FM9Qj1Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4852357D5;
+	Wed, 31 Jul 2013 23:47:21 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 331F6357D0;
+	Wed, 31 Jul 2013 23:47:20 +0000 (UTC)
+In-Reply-To: <20130731224511.GA25882@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 31 Jul 2013 15:45:13 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8A3E50B8-FA3B-11E2-926E-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231481>
 
-On Wed, Jul 31, 2013 at 04:03:01PM -0700, Kyle J. McKay wrote:
+Jeff King <peff@peff.net> writes:
 
-> > 1. Git-config expects pre-canonicalized variable names (so
-> >http.noepsv
-> >    instead of "http.noEPSV"). I think the "git config --get" code
-> >path
-> >    does this for the caller, so we should probably do the same for
-> >    "--get-urlmatch". And it is even easier here, because we know that
-> >    "http.noEPSV" does not contain a case-sensitive middle part. :)
-> 
-> The test was testing that too, which I think is a good thing.  Your
-> replacement does not test that.  With a fix for --get-urlmatch as you
-> mention above, the tests can check that again.
+>   1. Git-config expects pre-canonicalized variable names (so http.noepsv
+>      instead of "http.noEPSV"). I think the "git config --get" code path
+>      does this for the caller, so we should probably do the same for
+>      "--get-urlmatch". And it is even easier here, because we know that
+>      "http.noEPSV" does not contain a case-sensitive middle part. :)
 
-I do not think the existing tests were checking anything interesting in
-that respect. The url-matching code does not do the canonicalization,
-and nor should it (the internal callbacks for all variables should use
-the canonical lowercase version). So we were only testing that
-test-url-normalize lowercased them, which is not something we actually
-care about (nobody but the test script should ever call it).
+I'll squash these in later, but here is from my working copy.
+Thanks for spotting.
 
-That being said, git-config _should_ be lowercasing to match the normal
---get code path. I think the fix (squashable on top of 6/6 + my earlier
-patch) is just:
+ builtin/config.c       | 32 +++++++++++++++++++-------------
+ t/t1300-repo-config.sh |  4 ++--
+ 2 files changed, 21 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index c35c5be..9328a90 100644
+index c35c5be..c046f54 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -589,7 +589,9 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	}
- 	else if (actions == ACTION_GET_URLMATCH) {
- 		check_argc(argc, 2, 2);
--		return get_urlmatch(argv[0], argv[1]);
-+		if (git_config_parse_key(argv[0], &key, NULL))
-+			return CONFIG_INVALID_KEY;
-+		return get_urlmatch(key, argv[1]);
- 	}
- 	else if (actions == ACTION_UNSET) {
- 		check_argc(argc, 1, 2);
-diff --git a/t/t5200-url-normalize.sh b/t/t5200-url-normalize.sh
-index a5190f7..7284dc6 100755
---- a/t/t5200-url-normalize.sh
-+++ b/t/t5200-url-normalize.sh
-@@ -190,14 +190,14 @@ check_url_config "$tc-2" example-agent http.useragent HTTPS://example.COM/p%61th
+@@ -379,9 +379,22 @@ static int urlmatch_collect_fn(const char *var, const char *value, void *cb)
+ 	return 0;
+ }
  
- check_url_config "$tc-1" other-agent http.useragent https://other.example.com/
- check_url_config "$tc-1" example-agent http.useragent https://example.com/
--check_url_config "$tc-1" false --bool http.sslverify https://example.com/
-+check_url_config "$tc-1" false --bool http.sslVerify https://example.com/
- check_url_config "$tc-1" path-agent http.useragent https://example.com/path/sub
--check_url_config "$tc-1" false --bool http.sslverify https://example.com/path/sub
--check_url_config "$tc-1" true --bool http.noepsv https://elsewhere.com/
--check_url_config "$tc-1" true --bool http.noepsv https://example.com
--check_url_config "$tc-1" true --bool http.noepsv https://example.com/path
-+check_url_config "$tc-1" false --bool http.sslVerify https://example.com/path/sub
-+check_url_config "$tc-1" true --bool http.noEPSV https://elsewhere.com/
-+check_url_config "$tc-1" true --bool http.noEPSV https://example.com
-+check_url_config "$tc-1" true --bool http.noEPSV https://example.com/path
- check_url_config "$tc-2" example-agent http.useragent HTTPS://example.COM/p%61th
--check_url_config "$tc-2" false --bool http.sslverify HTTPS://example.COM/p%61th
-+check_url_config "$tc-2" false --bool http.sslVerify HTTPS://example.COM/p%61th
- check_url_config "$tc-3" file-1 http.sslcainfo https://user@example.com/path/name/here
++static char *dup_downcase(const char *string)
++{
++	char *result;
++	size_t len, i;
++
++	len = strlen(string);
++	result = xmalloc(len + 1);
++	for (i = 0; i < len; i++)
++		result[i] = tolower(string[i]);
++	result[i] = '\0';
++	return result;
++}
++
+ static int get_urlmatch(const char *var, const char *url)
+ {
+-	const char *section_tail;
++	char *section_tail;
+ 	struct string_list_item *item;
+ 	struct urlmatch_config config = { STRING_LIST_INIT_DUP };
+ 	struct string_list values = STRING_LIST_INIT_DUP;
+@@ -393,13 +406,13 @@ static int get_urlmatch(const char *var, const char *url)
+ 	if (!url_normalize(url, &config.url))
+ 		die(config.url.err);
  
- test_done
-
-> >    The wrapper is a little ugly. I do wonder if we actually need all
-> >    of these tests (i.e., it is not clear to me what different things
-> >    each is testing, and if it is not simply trying to exercise the
-> >    different variable names, which now all follow the same code path,
-> >    because git-config does not care about the particular names).
-> 
-> Each one tests a different item from the "$tc-n" config file to make
-> sure that everything that's in each config file actually behaves as
-> expected.
-
-I guess I don't understand why we have so many items in each file. That
-is, we have:
-
-	"$tc-1" "useragent" "https://other.example.com/" = "other-agent"
-	"$tc-1" "useragent" "https://example.com/" = "example-agent"
-
-The first checks that we do not apply within a sub-domain (but fall back
-to http.useragent), and the second checks that we do properly apply the
-full domain.
-
-	"$tc-1" "sslVerify" "https://example.com/" = "false"
-
-This check seems redundant with the second one above.
-
-	"$tc-1" "useragent" "https://example.com/path/sub" = "path-agent"
-	"$tc-1" "sslVerify" "https://example.com/path/sub" = "false"
-
-Here we make sure paths are preferred over non-paths (the first one),
-but that config keys with non-paths are still used (the second).
-
-	"$tc-1" "noEPSV" "https://elsewhere.com/" = "true"
-
-This seems redundant with the first test (check that we do not match and
-fallback to http.noepsv).
-
-	"$tc-1" "noEPSV" "https://example.com" = "true"
-
-Not sure what we are testing here; there is no variable besides the
-one in http.noepsv. Somewhat redundant with the first test.
-
-	"$tc-1" "noEPSV" "https://example.com/path" = "true"
-
-Ditto.
-
-	"$tc-2" "useragent" "HTTPS://example.COM/p%61th" = "example-agent"
-	"$tc-2" "sslVerify" "HTTPS://example.COM/p%61th" = "false"
-
-Testing normalization, though they seem redundant with each other.
-
-	"$tc-3" "sslcainfo" "https://user@example.com/path/name/here" = "file-1"
-
-Testing specific pathnames preferred to usernames, which is useful.
-
-I don't mean to nitpick. It was just hard as a reader to figure out what
-specifically each one was interested in checking, which means it may be
-similarly hard if one of the tests is later broken for the investigator
-to figure out what was happening. I don't know if it is worth putting
-each in its own test and annotating what each is looking for (it may
-also help show gaps; e.g., we check that longer pathnames trump
-usernames, but we do not check that the same pathname prefers the
-version with the username).
-
-> If we do this (and I don't really have any objection except for the
-> point noted above), then the tests really need to move out from t5200
-> [...]
-> But the best choice does not immediately jump out at me.  However,
-> looking at the other tests that are there, I think perhaps
-> 1307-config-url might be a reasonable choice.
-
-Yes, that makes sense to me; all of the other config is in the t1300
-series.
-
--Peff
+-	section_tail = strchr(var, '.');
++	config.section = dup_downcase(var);
++	section_tail = strchr(config.section, '.');
+ 	if (section_tail) {
+-		config.section = xmemdupz(var, section_tail - var);
+-		config.key = strrchr(var, '.') + 1;
++		*section_tail = '\0';
++		config.key = section_tail + 1;
+ 		show_keys = 0;
+ 	} else {
+-		config.section = var;
+ 		config.key = NULL;
+ 		show_keys = 1;
+ 	}
+@@ -425,14 +438,7 @@ static int get_urlmatch(const char *var, const char *url)
+ 	string_list_clear(&values, 1);
+ 	free(config.url.url);
+ 
+-	/*
+-	 * section name may have been copied to replace the dot, in which
+-	 * case it needs to be freed.  key name is either NULL (e.g. 'http'
+-	 * alone) or points into var (e.g. 'http.savecookies'), and we do
+-	 * not own the storage.
+-	 */
+-	if (config.section != var)
+-		free((void *)config.section);
++	free((void *)config.section);
+ 	return 0;
+ }
+ 
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 323e880..c23f478 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1097,7 +1097,7 @@ test_expect_success 'urlmatch' '
+ 	EOF
+ 
+ 	echo true >expect &&
+-	git config --bool --get-urlmatch http.sslverify https://good.example.com >actual &&
++	git config --bool --get-urlmatch http.SSLverify https://good.example.com >actual &&
+ 	test_cmp expect actual &&
+ 
+ 	echo false >expect &&
+@@ -1108,7 +1108,7 @@ test_expect_success 'urlmatch' '
+ 		echo http.cookiefile /tmp/cookie.txt &&
+ 		echo http.sslverify false
+ 	} >expect &&
+-	git config --get-urlmatch http https://weak.example.com >actual &&
++	git config --get-urlmatch HTTP https://weak.example.com >actual &&
+ 	test_cmp expect actual
+ '
+ 
