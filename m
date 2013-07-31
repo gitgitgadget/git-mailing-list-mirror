@@ -1,7 +1,7 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 03/11] t8001/t8002: blame: add empty file & partial-line tests
-Date: Wed, 31 Jul 2013 04:15:37 -0400
-Message-ID: <1375258545-42240-4-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH 09/11] blame: reject empty ranges -LX,+0 and -LX,-0
+Date: Wed, 31 Jul 2013 04:15:43 -0400
+Message-ID: <1375258545-42240-10-git-send-email-sunshine@sunshineco.com>
 References: <1375258545-42240-1-git-send-email-sunshine@sunshineco.com>
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -9,144 +9,93 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Bo Yang <struggleyb.nku@gmail.com>,
 	Johannes Sixt <j.sixt@viscovery.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 31 10:16:54 2013
+X-From: git-owner@vger.kernel.org Wed Jul 31 10:17:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4RaQ-0005zM-Pd
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 10:16:47 +0200
+	id 1V4Raq-0006FE-8D
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 10:17:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758951Ab3GaIQh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 04:16:37 -0400
-Received: from mail-yh0-f51.google.com ([209.85.213.51]:43475 "EHLO
-	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754708Ab3GaIQf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 04:16:35 -0400
-Received: by mail-yh0-f51.google.com with SMTP id 29so226003yhl.10
-        for <git@vger.kernel.org>; Wed, 31 Jul 2013 01:16:34 -0700 (PDT)
+	id S1759206Ab3GaIQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 04:16:52 -0400
+Received: from mail-ye0-f178.google.com ([209.85.213.178]:58918 "EHLO
+	mail-ye0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759063Ab3GaIQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 04:16:47 -0400
+Received: by mail-ye0-f178.google.com with SMTP id r9so171314yen.23
+        for <git@vger.kernel.org>; Wed, 31 Jul 2013 01:16:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=7tm2dBXD6cKb3yeHpz2C8ZulLKqoMNuLJ50kP/KIw1c=;
-        b=WeYGUvEzp8Y/0sEk4vLBHL4kkkSJXBVc85lbZWCIMkEhOPI4MPjHbbBsHoQUlOvBws
-         4SLjOSQDFc8yNqBoBwxEgC7Ksjvq+KL0LPIiBek+2I43BcO66eNL4S7ZoV9mGLxDhCGu
-         zgBMLJpATf1CcJhugqVTQmSR8VXBXdiC/uAuI9mbSZbhFo6Hv7IyQuQOjD0iVMnZoL2+
-         6/7uTyjzQfAC9edQnOOKYgh11Uqv76FFEVCX4Wzz9atE70A5OPCxI5XKc8QawnijtOPD
-         0RGo/MdJJPLq+cqBNu3Y9GpkUvYGbJIXO8HycpW1FdAIjaTuBbVY8lSGOl2Wqe8y/2rr
-         a3PA==
-X-Received: by 10.236.192.225 with SMTP id i61mr32170770yhn.13.1375258594694;
-        Wed, 31 Jul 2013 01:16:34 -0700 (PDT)
+        bh=XHIaYMncQCI1siVcbmI+15drwdneeNeUryX/1XfY+GI=;
+        b=tpWTOPmql41fdbdsflCx699e3HetOcMPRZLB/moTWP6cMm0BT9wplD75gL9Ega4JG+
+         GCZ+uBexuIONjP8zuuFTBmZH4s13gyR8JsjKiSxYv+OACqeYZ2dYYmh6Re2tFngZ/uk9
+         SlWTrY2xWSe328LJaRnexNNycbyDhxKgxG15y0DvZhYfFQ55rJNcH+p+CXSIqVUEekAB
+         qcgL3B9fgr29II9ozAFhY0u3j1f/y9OMS4asj/dBCGRpj2i42h8jmPViXraUcHk9pUN0
+         DNUnawpt6KiZUGrYVCPYTOrnQX1+9tzeYOSIsZMDPJQLAF10R8v74HQ6kTiqHrUazxc1
+         aYEw==
+X-Received: by 10.236.167.1 with SMTP id h1mr8181494yhl.136.1375258606582;
+        Wed, 31 Jul 2013 01:16:46 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
-        by mx.google.com with ESMTPSA id i4sm636759yhg.16.2013.07.31.01.16.32
+        by mx.google.com with ESMTPSA id i4sm636759yhg.16.2013.07.31.01.16.44
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 31 Jul 2013 01:16:33 -0700 (PDT)
+        Wed, 31 Jul 2013 01:16:45 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.4.1120.gc240c48
 In-Reply-To: <1375258545-42240-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231405>
 
-Add boundary case tests, with and without -L, for empty file; file with
-one partial line; file with one full line.
-
-The empty file test without -L is of particular interest. Historically,
-this case has been supported (empty blame output) and this test protects
-against regression by a subsequent patch fixing an off-by-one bug which
-incorrectly accepts -LX where X is one past end-of-file.
+Empty ranges -LX,+0 and -LX,-0 are nonsensical in the context of blame
+yet they are accepted (in fact, both are interpreted as -LX,+2).  Report
+them as invalid.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/annotate-tests.sh | 72 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
+ line-range.c        | 2 ++
+ t/annotate-tests.sh | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/line-range.c b/line-range.c
+index 3942475..a816951 100644
+--- a/line-range.c
++++ b/line-range.c
+@@ -26,6 +26,8 @@ static const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
+ 		if (term != spec + 1) {
+ 			if (!ret)
+ 				return term;
++			if (num == 0)
++				die("-L invalid empty range");
+ 			if (spec[0] == '-')
+ 				num = 0 - num;
+ 			if (0 < num)
 diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index 02fbbf1..f67332c 100644
+index 0f80cba..01d50c5 100644
 --- a/t/annotate-tests.sh
 +++ b/t/annotate-tests.sh
-@@ -297,6 +297,78 @@ test_expect_success 'blame -L :nomatch' '
- 	test_must_fail $PROG -L:nomatch hello.c
+@@ -185,7 +185,7 @@ test_expect_success 'blame -L Y,X (undocumented)' '
+ 	check_count -L6,3 B 1 B1 1 B2 1 D 1
  '
  
-+test_expect_success 'setup incremental' '
-+	(
-+	GIT_AUTHOR_NAME=I &&
-+	export GIT_AUTHOR_NAME &&
-+	GIT_AUTHOR_EMAIL=I@test.git &&
-+	export GIT_AUTHOR_EMAIL &&
-+	>incremental &&
-+	git add incremental &&
-+	git commit -m "step 0" &&
-+	printf "partial" >>incremental &&
-+	git commit -a -m "step 0.5" &&
-+	echo >>incremental &&
-+	git commit -a -m "step 1"
-+	)
-+'
-+
-+test_expect_success 'blame empty' '
-+	check_count -h HEAD^^ -f incremental
-+'
-+
-+test_expect_success 'blame -L 0 empty (undocumented)' '
-+	check_count -h HEAD^^ -f incremental -L0
-+'
-+
-+test_expect_failure 'blame -L 1 empty' '
-+	test_must_fail $PROG -L1 incremental HEAD^^
-+'
-+
-+test_expect_success 'blame -L 2 empty' '
-+	test_must_fail $PROG -L2 incremental HEAD^^
-+'
-+
-+test_expect_success 'blame half' '
-+	check_count -h HEAD^ -f incremental I 1
-+'
-+
-+test_expect_success 'blame -L 0 half (undocumented)' '
-+	check_count -h HEAD^ -f incremental -L0 I 1
-+'
-+
-+test_expect_success 'blame -L 1 half' '
-+	check_count -h HEAD^ -f incremental -L1 I 1
-+'
-+
-+test_expect_failure 'blame -L 2 half' '
-+	test_must_fail $PROG -L2 incremental HEAD^
-+'
-+
-+test_expect_success 'blame -L 3 half' '
-+	test_must_fail $PROG -L3 incremental HEAD^
-+'
-+
-+test_expect_success 'blame full' '
-+	check_count -f incremental I 1
-+'
-+
-+test_expect_success 'blame -L 0 full (undocumented)' '
-+	check_count -f incremental -L0 I 1
-+'
-+
-+test_expect_success 'blame -L 1 full' '
-+	check_count -f incremental -L1 I 1
-+'
-+
-+test_expect_failure 'blame -L 2 full' '
-+	test_must_fail $PROG -L2 incremental
-+'
-+
-+test_expect_success 'blame -L 3 full' '
-+	test_must_fail $PROG -L3 incremental
-+'
-+
- test_expect_success 'blame -L' '
- 	test_must_fail $PROG -L file
+-test_expect_failure 'blame -L X,+0' '
++test_expect_success 'blame -L X,+0' '
+ 	test_must_fail $PROG -L1,+0 file
  '
+ 
+@@ -197,7 +197,7 @@ test_expect_success 'blame -L X,+N' '
+ 	check_count -L3,+4 B 1 B1 1 B2 1 D 1
+ '
+ 
+-test_expect_failure 'blame -L X,-0' '
++test_expect_success 'blame -L X,-0' '
+ 	test_must_fail $PROG -L1,-0 file
+ '
+ 
 -- 
 1.8.3.4.1120.gc240c48
