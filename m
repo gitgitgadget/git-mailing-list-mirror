@@ -1,109 +1,91 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 05/11] t4211: log: demonstrate -L bounds checking bug
-Date: Wed, 31 Jul 2013 04:15:39 -0400
-Message-ID: <1375258545-42240-6-git-send-email-sunshine@sunshineco.com>
-References: <1375258545-42240-1-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH 00/11] blame/log -L: additional tests and bug fixes
+Date: Wed, 31 Jul 2013 04:15:34 -0400
+Message-ID: <1375258545-42240-1-git-send-email-sunshine@sunshineco.com>
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@inf.ethz.ch>,
 	Bo Yang <struggleyb.nku@gmail.com>,
 	Johannes Sixt <j.sixt@viscovery.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 31 10:21:19 2013
+X-From: git-owner@vger.kernel.org Wed Jul 31 10:21:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4Rel-0000Tb-O5
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 10:21:16 +0200
+	id 1V4Rew-0000bv-V5
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 10:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759252Ab3GaIVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 04:21:11 -0400
-Received: from mail-yh0-f53.google.com ([209.85.213.53]:50623 "EHLO
-	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759091Ab3GaIQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 04:16:38 -0400
-Received: by mail-yh0-f53.google.com with SMTP id v1so217849yhn.40
-        for <git@vger.kernel.org>; Wed, 31 Jul 2013 01:16:38 -0700 (PDT)
+	id S1755394Ab3GaIQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 04:16:32 -0400
+Received: from mail-ye0-f178.google.com ([209.85.213.178]:54158 "EHLO
+	mail-ye0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754708Ab3GaIQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 04:16:29 -0400
+Received: by mail-ye0-f178.google.com with SMTP id r9so174352yen.37
+        for <git@vger.kernel.org>; Wed, 31 Jul 2013 01:16:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=m9dl+VBd3dpUlnlPpDfeys9uGLeZs7x3qdPYGzjbGHU=;
-        b=hKkE5I3V0vccMzFKqUrd0Nk/TzogKOYszLDf7G4iwuLy0SArrFG0hzaOv3Anbker+I
-         Ltp1cgUqvwciI5oP+4TH4AwgHN9fgqZi8hioDeofkKFqR+FYNVlpRqciky210CMkWeI1
-         G/4a71WOupyiBNfR+U/AQkHEPxo9Kq/XBZ404mIaYsNiYfSdnk+spMnoZ+4seuVa+oNA
-         wrJ0mxoxAjT5j6M2T/BZT3kd4BLQpFlULDggFXI14pDb/xq0V3yIqUwGPIY+EHF9arOd
-         7oZo6xYUtDhJIuZPjT6iBLw7FQ69ju4IQZ6oERAZRtUpuL3Cy+HKWvCHJykcd+A/+aeR
-         6B2A==
-X-Received: by 10.236.90.143 with SMTP id e15mr21457489yhf.185.1375258598325;
-        Wed, 31 Jul 2013 01:16:38 -0700 (PDT)
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=UfUv9zaDyGlX88o9nbs46QdwTuaHGGKFn53vTW6QC8c=;
+        b=giO9QZuNy7agvt/NBt4yOafKhxmqWlC/2ulpo3Qpgb9e2i4PRDQ7hjN5RcN43ctyAG
+         7di2ltcZSdUciqFf3uSnJYUb5QcQi6tczNqcf6ewCKeVY82SsB/L2KmG8wE/2r8sErmF
+         Pdg49679gvDZHhNToyXo6RY2j+kjzg/pH/SaWmcAtbuaP6wly7Z+luSwQ84sgwGqBiZP
+         tiZqJtKPtzp3DQ3BdwKP3HckMooKxNR1HeSTVBWjLUo9dKFkbgbO/1f9LLTnb6dNUkDB
+         odcOaaCr7JTs+cZxRrjZqHqS337akJAK+5uJ5LwPDxitbuJY5AM09+LpdIasF0egtC2y
+         w6yA==
+X-Received: by 10.236.207.2 with SMTP id m2mr31527497yho.214.1375258588788;
+        Wed, 31 Jul 2013 01:16:28 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
-        by mx.google.com with ESMTPSA id i4sm636759yhg.16.2013.07.31.01.16.36
+        by mx.google.com with ESMTPSA id i4sm636759yhg.16.2013.07.31.01.16.26
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 31 Jul 2013 01:16:37 -0700 (PDT)
+        Wed, 31 Jul 2013 01:16:27 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.4.1120.gc240c48
-In-Reply-To: <1375258545-42240-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231412>
 
-A bounds checking bug allows the X in -LX to extend one line past the
-end of file. For example, given a file with 5 lines, -L6 is accepted as
-valid. Demonstrate this problem.
+While working on multiple -L support for git-blame, I encountered more
+issues with the existing -L facility in git-blame and git-log. This
+series fixes these problems and adds a slew of new tests.
 
-While here, also add tests to check that the remaining cases of X and Y
-in -LX,Y are handled correctly at and in the vicinity of end-of-file.
+Patch 6/11 (t4211: retire soon-to-be unimplementable tests) may be
+controversial. Removal of these tests was effectively a decision made in
+isolation since my request for input [1] regarding the issue generated
+only a single response (from j6t).
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- t/t4211-line-log.sh | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+This series complements (does not replace) earlier -L-related fixes [2],
+[3], [4], [5].
 
-diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
-index 7665d67..f98275c 100755
---- a/t/t4211-line-log.sh
-+++ b/t/t4211-line-log.sh
-@@ -64,6 +64,36 @@ test_bad_opts "-L 1,1000:b.c" "has only.*lines"
- test_bad_opts "-L :b.c" "argument.*not of the form"
- test_bad_opts "-L :foo:b.c" "no match"
- 
-+test_expect_success '-L X (X == nlines)' '
-+	n=$(wc -l <b.c) &&
-+	git log -L $n:b.c
-+'
-+
-+test_expect_failure '-L X (X == nlines + 1)' '
-+	n=$(expr $(wc -l <b.c) + 1) &&
-+	test_must_fail git log -L $n:b.c
-+'
-+
-+test_expect_success '-L X (X == nlines + 2)' '
-+	n=$(expr $(wc -l <b.c) + 2) &&
-+	test_must_fail git log -L $n:b.c
-+'
-+
-+test_expect_success '-L ,Y (Y == nlines)' '
-+	n=$(printf "%d" $(wc -l <b.c)) &&
-+	git log -L ,$n:b.c
-+'
-+
-+test_expect_success '-L ,Y (Y == nlines + 1)' '
-+	n=$(expr $(wc -l <b.c) + 1) &&
-+	test_must_fail git log -L ,$n:b.c
-+'
-+
-+test_expect_success '-L ,Y (Y == nlines + 2)' '
-+	n=$(expr $(wc -l <b.c) + 2) &&
-+	test_must_fail git log -L ,$n:b.c
-+'
-+
- # There is a separate bug when an empty -L range is the first -L encountered,
- # thus to demonstrate this particular bug, the empty -L range must follow a
- # non-empty -L range.
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/231035/focus=231126
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/229917
+[3]: http://thread.gmane.org/gmane.comp.version-control.git/230532
+[4]: http://git.661346.n2.nabble.com/PATCH-0-6-fix-blame-L-regression-add-tests-tp7592174.html
+[5]: http://thread.gmane.org/gmane.comp.version-control.git/231035
+
+Eric Sunshine (11):
+  t8001/t8002: blame: decompose overly-large test
+  t8001/t8002: blame: demonstrate -L bounds checking bug
+  t8001/t8002: blame: add empty file & partial-line tests
+  blame: fix -L bounds checking bug
+  t4211: log: demonstrate -L bounds checking bug
+  t4211: retire soon-to-be unimplementable tests
+  log: fix -L bounds checking bug
+  t8001/t8002: blame: demonstrate acceptance of bogus -LX,+0 and -LX,-0
+  blame: reject empty ranges -LX,+0 and -LX,-0
+  t8001/t8002: blame: demonstrate acceptance of bogus -L,+0 and -L,-0
+  blame: reject empty ranges -L,+0 and -L,-0
+
+ builtin/blame.c     |   4 +-
+ line-log.c          |   4 +-
+ line-range.c        |   4 +-
+ t/annotate-tests.sh | 142 +++++++++++++++++++++++++++++++++++++++++++++++++---
+ t/t4211-line-log.sh |  31 +++++++++---
+ 5 files changed, 166 insertions(+), 19 deletions(-)
+
 -- 
 1.8.3.4.1120.gc240c48
