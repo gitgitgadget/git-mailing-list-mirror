@@ -1,126 +1,118 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH v6 6/6] config: "git config --get-urlmatch" parses section.<url>.key
-Date: Wed, 31 Jul 2013 16:03:01 -0700
-Message-ID: <62E17EDB-B24D-4F37-95F8-E2E26118E5E9@gmail.com>
-References: <1375298768-7740-1-git-send-email-gitster@pobox.com> <1375298768-7740-7-git-send-email-gitster@pobox.com> <20130731224511.GA25882@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Aug 01 01:03:13 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tag: Use OPT_BOOL instead of OPT_BOOLEAN to allow one action multiple times
+Date: Wed, 31 Jul 2013 16:10:22 -0700
+Message-ID: <7vbo5itjfl.fsf@alter.siamese.dyndns.org>
+References: <1375207251-4998-1-git-send-email-stefanbeller@googlemail.com>
+	<7va9l3x34f.fsf@alter.siamese.dyndns.org>
+	<51F83010.2060804@googlemail.com>
+	<7vfvuvvg0r.fsf@alter.siamese.dyndns.org>
+	<51F8E81E.6000705@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 01 01:10:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4fQG-0003Jp-4c
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 01:03:12 +0200
+	id 1V4fXL-0007Ov-AF
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 01:10:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754804Ab3GaXDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 19:03:07 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:50982 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754202Ab3GaXDG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 19:03:06 -0400
-Received: by mail-pd0-f179.google.com with SMTP id v10so1308541pde.10
-        for <git@vger.kernel.org>; Wed, 31 Jul 2013 16:03:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc:x-mauler;
-        bh=H6Bugr/bXpC/sxQXUpZ0efHE0yp6hRjoShcqrL0Hh04=;
-        b=E5o75MFxKg4NaUYPf53SX2CPOX0yULdsmARc/LoJg07PJgQ2jB2VTCvIcpKYTvcbJd
-         ifx6rkUkFJYbnq9z4r9qUUxxX6/8DIaMJjYpeq0kKGXWWiw47blGo4NhSzSp5AeTnMBL
-         VDt4iJt+C7kXYegoswOLp982py8J5lRBj61eccZ2Dh1Ai5EsyzXVJE7WTpSL2kHZGlWY
-         BV/+OkMQpUDL72TsbxgJRUQznbLyOPLP6h0sFVbPoznnj0LBGo5lbZRTi4tK4vj1fcE1
-         UijlTV4qOG3ZWuexxO7Igayb4EvRP+37UXBfpz6lzA+SDc6qriTGaGkmI5Evw03dAZIH
-         dQGA==
-X-Received: by 10.69.4.5 with SMTP id ca5mr83078534pbd.109.1375311785052;
-        Wed, 31 Jul 2013 16:03:05 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id w8sm161644paj.4.2013.07.31.16.03.03
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 31 Jul 2013 16:03:04 -0700 (PDT)
-In-Reply-To: <20130731224511.GA25882@sigill.intra.peff.net>
-X-Mauler: Craptastic (2.936)
+	id S1750877Ab3GaXK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 19:10:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42949 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750888Ab3GaXK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 19:10:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB45B35564;
+	Wed, 31 Jul 2013 23:10:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oaHj/mgOgufSRLhc+DGV93GU3f8=; b=llzYPG
+	rmNE3n2sJJy3dVYt3dUSkfo2U35nOZVQ8oyl9cGMF7KUcgBczC/azLhDRFF+VaWl
+	jvAH7euo/VIUEYNkgBHIfg2rAPd16L6vULIuoyC5EmYtl1MvefNq/iNBc4weNDyu
+	pKcWBQj3NHmr1of8Ga0kG/BHOVU8MH5KN4IUU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m8Vd35nTUOLkQwfOpFneGYYFlCyNrSVk
+	izRj5OPejnd54AyES8Lga7adwfzjHIYxhufhvj3a6Rzoa6ZGqQ6qaJTG/E2ap0po
+	AL8u3awhjiOFwoA43o9yCl8t8O3oCGZYkxhpznqjoDcse5OjHa2v75KD1Pda33mX
+	2E1CBug/gvA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 498E635563;
+	Wed, 31 Jul 2013 23:10:25 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A58373555C;
+	Wed, 31 Jul 2013 23:10:23 +0000 (UTC)
+In-Reply-To: <51F8E81E.6000705@googlemail.com> (Stefan Beller's message of
+	"Wed, 31 Jul 2013 12:34:06 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 60FCBB22-FA36-11E2-9904-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231478>
 
-On Jul 31, 2013, at 15:45, Jeff King wrote:
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-> On Wed, Jul 31, 2013 at 12:26:08PM -0700, Junio C Hamano wrote:
+> On 07/31/13 00:28, Junio C Hamano wrote:
+>> 
+>> we could just do
+>> 
+>> #define OPT_CMDMODE(s, l, v, h) \
+>>     { OPTION_CMDMODE, (s), (l), (v), NULL, \
+>>       (h), PARSE_OPT_NOARG|PARSE_OPT_NONEG, NULL, (s) }
+>> 
 >
->> Using the same urlmatch_config_entry() infrastructure, add a new
->> mode "--get-urlmatch" to the "git config" command, to learn values
->> for the "virtual" two-level variables customized for the specific
->> URL.
->>
->>    git config [--<type>] --get-urlmatch <section>[.<key>] <url>
->
-> Do we want something like this on top, to convert the third form of
-> test-url-normalize into git-config calls?
->
-> It would be nicer squashed in, but we the tests are added earlier in  
-> the
-> series than "--get-urlmatch", so we would have to rip the tests out of
-> the earlier patches and have a "[PATCH 7/6] add tests for url
-> normalizing".
->
-> Two things to note about my test conversion:
->
->  1. Git-config expects pre-canonicalized variable names (so  
-> http.noepsv
->     instead of "http.noEPSV"). I think the "git config --get" code  
-> path
->     does this for the caller, so we should probably do the same for
->     "--get-urlmatch". And it is even easier here, because we know that
->     "http.noEPSV" does not contain a case-sensitive middle part. :)
+> I agree that's a better proposal than mine.
 
-The test was testing that too, which I think is a good thing.  Your  
-replacement does not test that.  With a fix for --get-urlmatch as you  
-mention above, the tests can check that again.
+By the way, I haven't convinced myself that it is a good idea in
+general to encourage more use of command mode options, so I am a bit
+reluctant to add this before knowing which direction in the longer
+term we are going.
 
->  2. I turned the many 'test "$(git foo)" = "bar"' invocations into a
->     wrapper function that uses test_cmp. This helped immensely with
->     debugging (1).
->
->     The wrapper is a little ugly. I do wonder if we actually need all
->     of these tests (i.e., it is not clear to me what different things
->     each is testing, and if it is not simply trying to exercise the
->     different variable names, which now all follow the same code path,
->     because git-config does not care about the particular names).
+ - Some large-ish Git subcommands, like "git submodule", use the
+   mode word (e.g. "git submodule status") to specify the operation
+   mode (youe could consider "status" a subsubcommand that
+   "submodule" subcommand takes).  These commands typically began
+   their life from day one with the mode words.
 
-Each one tests a different item from the "$tc-n" config file to make  
-sure that everything that's in each config file actually behaves as  
-expected.
+ - On the other hand, many Git subcommands, like "git tag", have
+   "the primary operation mode" (e.g. "create a new one" is the
+   primary operation mode for "git tag"), and use command mode
+   options to specify other operation modes (e.g. "--delete").
+   These commands started as single purpose commands (i.e. to
+   perform their "primary operation") but have organically grown
+   over time and acquired command mode options to invoke their
+   secondary operations.
 
-If we do this (and I don't really have any objection except for the  
-point noted above), then the tests really need to move out from t5200  
-as they're not tied to the http operations anymore.  Also the Makefile  
-rule for test-url-normalize.c needs to be simplified since it won't  
-need the extra options to make it link since it's no longer including  
-http.c.
+As an end user, you need to learn which style each command takes,
+which is an unnecessary burden at the UI level.  In the longer term,
+we may want to consider picking a single style, and migrating
+everybody to it.  If I have to vote today, I would say we should
+teach "git submodule" to also take command mode options (e.g. "git
+submodule --status" will be understood the same way as "git
+submodule status"), make them issue warnings when mode words are
+used and encourage users to use command mode options instead, and
+optionally remove the support of mode words at a large version bump
+like 3.0.
 
-The README has this:
-
-> First digit tells the family:
->
->         0 - the absolute basics and global stuff
->         1 - the basic commands concerning database
->         2 - the basic commands concerning the working tree
->         3 - the other basic commands (e.g. ls-files)
->         4 - the diff commands
->         5 - the pull and exporting commands
->         6 - the revision tree commands (even e.g. merge-base)
->         7 - the porcelainish commands concerning the working tree
->         8 - the porcelainish commands concerning forensics
->         9 - the git tools
-
-But the best choice does not immediately jump out at me.  However,  
-looking at the other tests that are there, I think perhaps 1307-config- 
-url might be a reasonable choice.
+One clear advantage mode words have over command mode options is
+that there is no room for end user confusion.  The first word after
+"git subcmd" is the mode word, and you will not even dream of asking
+"what would 'git submodule add del foo' do?" as it is nonsensical.
+The command mode options, on the other hand, gives too much useless
+flexibility to ask for nonsense, e.g. "git tag --delete --verify",
+"git tag --no-delete --delete", etc., and extra code needs to detect
+and reject combinations.  But commands that took mode options cannot
+be easily migrated to take mode words without hurting existing users
+and scripts (e.g. "git tag delete master" can never be a request to
+delete the tag 'master', as it is a request to create a tag whose
+name is 'delete' that points at the same object as 'master' points
+at).
