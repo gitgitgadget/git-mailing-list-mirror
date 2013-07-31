@@ -1,57 +1,51 @@
-From: Brandon Casey <drafnel@gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
 Subject: Re: [PATCH 2/2] Don't close pack fd when free'ing pack windows
-Date: Wed, 31 Jul 2013 14:23:43 -0700
-Message-ID: <CA+sFfMe935imbvt=XvaU2jZhf=KSf0xZdnrBDgYfUop0CtyWrA@mail.gmail.com>
+Date: Wed, 31 Jul 2013 23:28:08 +0200
+Message-ID: <87r4eee7x3.fsf@hexa.v.cablecom.net>
 References: <CA+sFfMe1GTDqtgGs3NXoB0OBYTtyHxLDYgy0TmOe+3r=tMXS0A@mail.gmail.com>
 	<1375300297-6744-1-git-send-email-bcasey@nvidia.com>
 	<1375300297-6744-2-git-send-email-bcasey@nvidia.com>
 	<CALWbr2wR2cN8dcOtW2bV3p7FC3ymdXgfp61A4pNKvOWhP6WU_Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Brandon Casey <bcasey@nvidia.com>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
+	"Junio C Hamano" <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	<spearce@spearce.org>, Eric Sunshine <sunshine@sunshineco.com>,
+	Brandon Casey <drafnel@gmail.com>
 To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 31 23:23:55 2013
+X-From: git-owner@vger.kernel.org Wed Jul 31 23:28:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4ds6-0003yL-7v
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 23:23:50 +0200
+	id 1V4dwP-0006di-PU
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 23:28:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753126Ab3GaVXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 17:23:46 -0400
-Received: from mail-we0-f173.google.com ([74.125.82.173]:39384 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751418Ab3GaVXp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 17:23:45 -0400
-Received: by mail-we0-f173.google.com with SMTP id x55so1063817wes.4
-        for <git@vger.kernel.org>; Wed, 31 Jul 2013 14:23:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Nm9CTtxCnODRmplQKqPrtM9CzUi9ocvT0Hq8EJRF+14=;
-        b=xg+fMQDJ/+Kyf5c1mh2HXBLBX0X7+tsTNzkzAU5RlU4vFQmMKpdRFjRIeH3hz1OaLk
-         +mtbAE7arHQbZ6OW9g26Izsrrc/yy4YRngnMJCJEzDjMLl2IwoOIvs0I6vktphX/PaJa
-         dgxbSuQHxVwZenzvZ/JR9Ft9orXqX4K+1+0QfrVzLdA/SlbX8L1c56mjegpFKeHBm8ut
-         kjJyXoDUxQif2vjrorGt4q23Muz4AxUjDGP0JRSU+sB7PIykkbz/5waTR/5yxGRtct1D
-         KL00TrkJji/WprfMmyLl2XQVmglL2g9mbJrHxcwfTIYCiIdyteo7EeMFu2WdvB3rumUu
-         4Nkw==
-X-Received: by 10.180.92.1 with SMTP id ci1mr5626624wib.14.1375305823866; Wed,
- 31 Jul 2013 14:23:43 -0700 (PDT)
-Received: by 10.194.81.102 with HTTP; Wed, 31 Jul 2013 14:23:43 -0700 (PDT)
+	id S1760655Ab3GaV2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 17:28:13 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:17050 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752830Ab3GaV2K (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 17:28:10 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 31 Jul
+ 2013 23:28:03 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 31 Jul
+ 2013 23:28:08 +0200
 In-Reply-To: <CALWbr2wR2cN8dcOtW2bV3p7FC3ymdXgfp61A4pNKvOWhP6WU_Q@mail.gmail.com>
+	(Antoine Pelisse's message of "Wed, 31 Jul 2013 23:08:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231465>
 
-On Wed, Jul 31, 2013 at 2:08 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
+Antoine Pelisse <apelisse@gmail.com> writes:
+
 > On Wed, Jul 31, 2013 at 9:51 PM, Brandon Casey <bcasey@nvidia.com> wrote:
 >> -----------------------------------------------------------------------------------
 >> This email message is for the sole use of the intended recipient(s) and may contain
@@ -66,17 +60,12 @@ On Wed, Jul 31, 2013 at 2:08 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
 > I remember a video of Greg Kroah-Hartman where he talked about that
 > (the video was posted by Junio on G+).
 
-Me either thank God.  Are those footers even enforceable?  I mean,
-really, if someone mistakenly sends me their corporate financial
-numbers am I supposed to be under some legal obligation not to share
-it?  I always assumed it was a scare tactic that lawyers like to use.
+It's this video:
 
-To address the text of the footer, I'd say the "intended recipient(s)"
-are those on the "to" line which includes git@vger.kernel.org and the
-implicit use is for inclusion and distribution in the git source code.
+  http://www.youtube.com/watch?v=fMeH7wqOwXA
 
-Anyway, I doubt I would have any influence on getting the footer
-removed.  If Junio would rather me not submit patches with that
-footer, then I'd try to find a workaround.
+The comment starts at 13:55.
 
--Brandon
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
