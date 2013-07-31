@@ -1,168 +1,65 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] l10n: de.po: translate 99 new messages
-Date: Wed, 31 Jul 2013 22:53:32 +0200
-Message-ID: <87wqo6e9ir.fsf@hexa.v.cablecom.net>
-References: <1375072018-3266-1-git-send-email-ralf.thielow@gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH 2/2] Don't close pack fd when free'ing pack windows
+Date: Wed, 31 Jul 2013 23:08:21 +0200
+Message-ID: <CALWbr2wR2cN8dcOtW2bV3p7FC3ymdXgfp61A4pNKvOWhP6WU_Q@mail.gmail.com>
+References: <CA+sFfMe1GTDqtgGs3NXoB0OBYTtyHxLDYgy0TmOe+3r=tMXS0A@mail.gmail.com>
+	<1375300297-6744-1-git-send-email-bcasey@nvidia.com>
+	<1375300297-6744-2-git-send-email-bcasey@nvidia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <jk@jk.gs>, <stimming@tuhh.de>, <git@vger.kernel.org>
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 31 22:53:40 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, spearce@spearce.org,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <bcasey@nvidia.com>
+X-From: git-owner@vger.kernel.org Wed Jul 31 23:08:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4dOt-0002YM-KY
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 22:53:39 +0200
+	id 1V4ddQ-00039x-BQ
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 23:08:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760787Ab3GaUxg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Jul 2013 16:53:36 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:46171 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752209Ab3GaUxf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 Jul 2013 16:53:35 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 31 Jul
- 2013 22:53:30 +0200
-Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 31 Jul
- 2013 22:53:32 +0200
-In-Reply-To: <1375072018-3266-1-git-send-email-ralf.thielow@gmail.com> (Ralf
-	Thielow's message of "Mon, 29 Jul 2013 06:26:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S1760858Ab3GaVIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 17:08:31 -0400
+Received: from mail-qc0-f180.google.com ([209.85.216.180]:44558 "EHLO
+	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760851Ab3GaVI3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 17:08:29 -0400
+Received: by mail-qc0-f180.google.com with SMTP id j10so669317qcx.11
+        for <git@vger.kernel.org>; Wed, 31 Jul 2013 14:08:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=/WPtH3k7phzwYUgmg2hQDULHlfIYSN57Lzrw3wgal+Q=;
+        b=iN15pAWlHtC03BHd+e4Ou9H957cmVxHY57aGR4/a0P+AC0aEk5VfSwv5EkXtoR4vOZ
+         SVusVnYUY2M+R9pxUDbVRzVDI3LrmbcUCFipcCwlatw5dtCnAIzm1pHvR3NAgJaoGxjT
+         /ENKwwyW50qPM1rasWzG+dntkgqbdqYPECfb60aCAKq9JzmCX+WCA9gm1Cmp+b6rsduk
+         io7ZJqq3RDKMMtnZCCVg//VTDsIlZHCQ5MyCWD3GLG4ITbs85qR8sKILBrzUHRkX8v8v
+         xlOPRJp3ZctYHf6ZV2fmnj2Rpe4KOymchd4YHPB0vqXGcBkocg9yiXscTOYOthZpCMe9
+         ArNA==
+X-Received: by 10.224.54.210 with SMTP id r18mr25522qag.62.1375304901825; Wed,
+ 31 Jul 2013 14:08:21 -0700 (PDT)
+Received: by 10.49.64.67 with HTTP; Wed, 31 Jul 2013 14:08:21 -0700 (PDT)
+In-Reply-To: <1375300297-6744-2-git-send-email-bcasey@nvidia.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231462>
 
-Hi Ralf
+On Wed, Jul 31, 2013 at 9:51 PM, Brandon Casey <bcasey@nvidia.com> wrote:
+> -----------------------------------------------------------------------------------
+> This email message is for the sole use of the intended recipient(s) and may contain
+> confidential information.  Any unauthorized review, use, disclosure or distribution
+> is prohibited.  If you are not the intended recipient, please contact the sender by
+> reply email and destroy all copies of the original message.
+> -----------------------------------------------------------------------------------
 
-I made a feeble attempt to work directly on de.po so that I could send =
-a
-patch instead, but your patch was again linewrapping damaged at the las=
-t
-line here at least:
-
-  -"Arbeitsverzeichnis von Submodul in '$sm_path' enth=C3=A4lt lokale =C3=
-=84nderungen; "
-  -"verwenden Sie '-f' um diese zu verwerfen"
-  +msgstr "Arbeitsverzeichnis von Submodul in '$displaypath' enth=C3=A4=
-lt
-  lokale =C3=84nderungen; verwenden Sie '-f' um diese zu verwerfen"
-=20
-Was it intended for application?  If so, can you fix your tooling to
-send correct patches?
-
-
-Ralf Thielow <ralf.thielow@gmail.com> writes:
-
-> -#, fuzzy, c-format
-> +#, c-format
->  msgid "%s: %s - %s"
-> -msgstr "%s: %s"
-> +msgstr "%s: %s - %s"
-
-Heh.  Curious that this is even translatable.
-
-[...]
-> @@ -1221,10 +1221,22 @@ msgid ""
->  "\n"
->  "where \"$br\" is somehow empty and a 40-hex ref is created. Please\=
-n"
->  "examine these refs and maybe delete them. Turn this message off by\=
-n"
->  "running \"git config advice.object_name_warning false\""
->  msgstr ""
-> +"Git erzeugt normalerweise keine Referenzen die mit\n"
-> +"40 Hex-Zeichen enden, da diese ignoriert werden wenn\n"
-> +"Sie diese angeben. Diese Referenzen k=C3=B6nnten ausversehen\n"
-
-aus Versehen?
-
-[...]
-> @@ -3529,10 +3525,14 @@ msgid ""
->  "Prompt help:\n"
->  "1          - select a numbered item\n"
->  "foo        - select item based on unique prefix\n"
->  "           - (empty) select nothing"
->  msgstr ""
-> +"Eingabehilfe:\n"
-> +"1          - numeriertes Element ausw=C3=A4hlen\n"
-
-Isn't it "nummeriert" under the new spelling rules?
-
-[...]
->  #: builtin/clean.c:634
->  #, c-format
->  msgid "Input ignore patterns>> "
-> -msgstr ""
-> +msgstr "Eingabe Ignorier-Muster>> "
-
-"Input" here is an imperative, so it should be
-
-  Ignorier-Muster eingeben>>
-
-[...]
->  msgid "set From address to <ident> (or committer ident if absent)"
->  msgstr ""
-> +"setzt \"From\"-Adresse zu <Identifikation> (oder Identifikation\n"
-> +"des Commit-Erstellers, wenn fehlend)"
-
-  setzt \"From\"-Adresse auf <Identifikation>
-                         ^^^
-
-or is that my Swiss German again?
-
-In addition, I think <ident> would sound smoother as Identit=C3=A4t (in=
- any
-case that's what I think it expands to in English).  There are other
-occurrences of "ident" that you would need to change to match.
-
-[...]
->  msgid_plural ""
->  "the following submodules (or one of its nested submodules)\n"
->  "use a .git directory:"
->  msgstr[0] ""
-> +"das folgende Submodul (oder ein geschachteltes Submodul hiervon)\n"
-> +"benutzt ein .git-Verzeichnis:"
->  msgstr[1] ""
-> +"die folgenden Submodule (oder ein geschachteltes Submodul hiervon)\=
-n"
-> +"benutzt ein .git-Verzeichnis:"
-
-The sentence is not fully in plural; it should probably be
-
-"die folgenden Submodule (oder geschachtelte Submodule hiervon)\n"
-"benutzen ein .git-Verzeichnis:"
-
-
-[...]
->  #: git-rebase.sh:160
->  msgid ""
->  "Applying autostash resulted in conflicts.\n"
->  "Your changes are safe in the stash.\n"
->  "You can run \"git stash pop\" or \"git stash drop\" it at any time.=
-\n"
->  msgstr ""
-> +"Anwendung von \"autostash\" resultierte in Konflikten.\n"
-> +"Ihre =C3=84nderungen sind sicher im Stash.\n"
-
-There would be no ambiguity in the intended meaning of "sicher" if you
-instead said
-
-  Ihre =C3=84nderungen sind im Stash sicher.
-
-(Note that the ambiguity does not exist in English: the other meaning
-would be "surely".)
-
-> +"Sie k=C3=B6nnen jederzeit \"git stash pop\" oder \"git stash drop\"=
- ausf=C3=BChren.\n"
-[...]
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+I'm certainly not a lawyer, and I'm sorry for not reviewing the
+content of the patch instead, but is that not a problem from a legal
+point of view ?
+I remember a video of Greg Kroah-Hartman where he talked about that
+(the video was posted by Junio on G+).
