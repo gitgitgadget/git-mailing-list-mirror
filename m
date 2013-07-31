@@ -1,123 +1,104 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [PATCH 2/2] Don't close pack fd when free'ing pack windows
-Date: Wed, 31 Jul 2013 23:44:00 +0200
-Message-ID: <20130731214400.GH19369@paksenarrion.iveqy.com>
-References: <CA+sFfMe1GTDqtgGs3NXoB0OBYTtyHxLDYgy0TmOe+3r=tMXS0A@mail.gmail.com>
- <1375300297-6744-1-git-send-email-bcasey@nvidia.com>
- <1375300297-6744-2-git-send-email-bcasey@nvidia.com>
- <CALWbr2wR2cN8dcOtW2bV3p7FC3ymdXgfp61A4pNKvOWhP6WU_Q@mail.gmail.com>
- <20130731212114.GG19369@paksenarrion.iveqy.com>
- <CA+sFfMfzHh5kbyv673e6V=Md14DZBqDaLFwspfcZNBGomZBV9g@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Making a patch:  "git format-patch" does not produce the
+ documented format
+Date: Wed, 31 Jul 2013 22:48:19 +0100
+Message-ID: <20130731214818.GP2337@serenity.lan>
+References: <201307312131.r6VLVliK028321@hobgoblin.ariadne.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Brandon Casey <bcasey@nvidia.com>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 31 23:41:26 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Dale R. Worley" <worley@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jul 31 23:48:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4e97-0006J3-L5
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 23:41:25 +0200
+	id 1V4eFy-0001w6-VT
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 23:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760634Ab3GaVlV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Jul 2013 17:41:21 -0400
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:52105 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753737Ab3GaVlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 17:41:20 -0400
-Received: by mail-lb0-f181.google.com with SMTP id o10so974354lbi.40
-        for <git@vger.kernel.org>; Wed, 31 Jul 2013 14:41:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=d3zWXtzR8r9dXn45viX2dOvlGcyXcmVp88PcvQxnH2k=;
-        b=kc41JO2EVsed04OE/Ae116TGCoiNfDzI8VmqxZHVa9rDauECvK33x5+DdM4J/TEaQa
-         fEoHFMjzk592M6046OQlfk1+3rYOFV+lOtR9cuaBhAunn8je0fntmOMc2KkrcDAsFGnc
-         hHU6ycnN4/n244mogVxB6urER8IweqvZWVwjtM8UReGNdaKb7WG9rUun2wy+1CNIRihn
-         x4ODsCO7jGSxWu7X6Am6D04eFy7mRZGwRtV+o+aWJGtjP39TQcgGyRID9uDlAzy3HH76
-         p48XB1FhAjK3H+8i2A6WKOVMWG4z63m0niD8P/fy06VWCvJdgUKp8RLicSbreb023QLQ
-         mgZQ==
-X-Received: by 10.112.63.2 with SMTP id c2mr156515lbs.6.1375306878809;
-        Wed, 31 Jul 2013 14:41:18 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id l10sm30980lbh.13.2013.07.31.14.41.17
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 31 Jul 2013 14:41:18 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1V4eBc-00059B-MP; Wed, 31 Jul 2013 23:44:00 +0200
+	id S1756926Ab3GaVs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 17:48:27 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:48156 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751835Ab3GaVs0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 17:48:26 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 16474CDA57E;
+	Wed, 31 Jul 2013 22:48:26 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id WqHAg6R8txUY; Wed, 31 Jul 2013 22:48:25 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id E231ACDA3EC;
+	Wed, 31 Jul 2013 22:48:24 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id CA216161E49E;
+	Wed, 31 Jul 2013 22:48:24 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3DsqtpFNvr8F; Wed, 31 Jul 2013 22:48:24 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 503F3161E3BA;
+	Wed, 31 Jul 2013 22:48:20 +0100 (BST)
 Content-Disposition: inline
-In-Reply-To: <CA+sFfMfzHh5kbyv673e6V=Md14DZBqDaLFwspfcZNBGomZBV9g@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <201307312131.r6VLVliK028321@hobgoblin.ariadne.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231469>
 
-On Wed, Jul 31, 2013 at 02:31:34PM -0700, Brandon Casey wrote:
-> On Wed, Jul 31, 2013 at 2:21 PM, Fredrik Gustafsson <iveqy@iveqy.com>=
- wrote:
-> > On Wed, Jul 31, 2013 at 11:08:21PM +0200, Antoine Pelisse wrote:
-> >> On Wed, Jul 31, 2013 at 9:51 PM, Brandon Casey <bcasey@nvidia.com>=
- wrote:
-> >> > ----------------------------------------------------------------=
--------------------
-> >> > This email message is for the sole use of the intended recipient=
-(s) and may contain
-> >> > confidential information.  Any unauthorized review, use, disclos=
-ure or distribution
-> >> > is prohibited.  If you are not the intended recipient, please co=
-ntact the sender by
-> >> > reply email and destroy all copies of the original message.
-> >> > ----------------------------------------------------------------=
--------------------
-> >>
-> >> I'm certainly not a lawyer, and I'm sorry for not reviewing the
-> >> content of the patch instead, but is that not a problem from a leg=
-al
-> >> point of view ?
-> >
-> > Talking about legal, is it a problem if a commit isn't signed-off b=
-y
-> > it's committer or author e-mail? Like in this case where the sign-o=
-ff is
-> > from gmail.com and the committer from nvidia.com?
->=20
-> It never has been.  My commits should have the author and committer
-> set to my gmail address actually.
+On Wed, Jul 31, 2013 at 05:31:47PM -0400, Dale R. Worley wrote:
+> Notice that the whole commit message has been formatted as if it is
+> part of the Subject line, and the line breaks in the commit message
+> have been refilled.
+> 
+> The file Documentation/SubmittingPatches says that "git format-patch"
+> produces patches in the best format, but the manual page shows an
+> example more like this:
+> 
+>     From 8f72bad1baf19a53459661343e21d6491c3908d3 Mon Sep 17 00:00:00 2001
+>     From: Tony Luck <tony.luck@intel.com>
+>     Date: Tue, 13 Jul 2010 11:42:54 -0700
+>     Subject: [PATCH] Put ia64 config files on the
+>     MIME-Version: 1.0
+>     Content-Type: text/plain; charset=UTF-8
+>     Content-Transfer-Encoding: 8bit
+> 
+>     arch/arm config files were slimmed down using a python script
+>     (See commit c2330e286f68f1c408b4aa6515ba49d57f05beae comment)
+>     [...]
+> 
+> That is, the first line of the commit message is in the Subject and
+> the remaining lines are in the message body.  As far as I can tell,
+> that's what SubmittingPatches prescribes.  And that is what I see in
+> the Git mailing list on vger.
+> 
+> (This is with git 1.8.3.3.)
+> 
+> Exactly how should the commit message be inserted into the patch
+> e-mail?  What needs to be updated so the code is consistent with the
+> documentation?
 
-Oh, that's why the extra "From: " - field below the header is for.
+git-format-patch(1) says:
 
->=20
-> Others have sometimes used the two fields to distinguish between a
-> corporate identity (i.e. me@somecompany.com) that represents the
-> funder of the work and a canonical identity (me@personalemail.com)
-> that identifies the person that performed the work.
->=20
+        By default, the subject of a single patch is "[PATCH] " followed
+        by the concatenation of lines from the commit message up to the
+        first blank line (see the DISCUSSION section of git-commit(1)).
 
-In some contries your work when you're employed does not belong
-to you but to your employer and when you're acting for your employer
-you're representing the corporate legal person. Therefore two different
-e-mails can be seen as two different (legal not physical) persons.
-
-At least that's how I understand those "legal tips for developers" I've
-got.
-
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
-
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+I think that accurately describes what you're seeing.  The referenced
+DISCUSSION section describes how to write a commit message that is
+formatted in a suitable way, with a short first subject line and then a
+blank line before the body of the message.
