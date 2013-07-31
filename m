@@ -1,90 +1,193 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] "git config --get-urlmatch $section.$key $url"
-Date: Wed, 31 Jul 2013 12:31:55 -0700
-Message-ID: <7vzjt2ttjo.fsf@alter.siamese.dyndns.org>
-References: <7vli4v66b3.fsf@alter.siamese.dyndns.org>
-	<1375138150-19520-1-git-send-email-gitster@pobox.com>
-	<51F9509F.60402@ramsay1.demon.co.uk>
+From: Brandon Casey <bcasey@nvidia.com>
+Subject: [PATCH v2 1/2] sha1_file: introduce close_one_pack() to close packs on fd pressure
+Date: Wed, 31 Jul 2013 12:51:36 -0700
+Message-ID: <1375300297-6744-1-git-send-email-bcasey@nvidia.com>
+References: <CA+sFfMe1GTDqtgGs3NXoB0OBYTtyHxLDYgy0TmOe+3r=tMXS0A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Kyle J. McKay" <mackyle@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Wed Jul 31 21:32:06 2013
+Content-Type: text/plain
+Cc: <gitster@pobox.com>, <peff@peff.net>, <spearce@spearce.org>,
+	<sunshine@sunshineco.com>, Brandon Casey <drafnel@gmail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 31 21:51:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4c7y-0001aA-8E
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 21:32:06 +0200
+	id 1V4cRA-0005kq-AU
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 21:51:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757401Ab3GaTcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 15:32:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57981 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754297Ab3GaTcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 15:32:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6950635B3F;
-	Wed, 31 Jul 2013 19:31:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OXmyoRi1ZoEtbOsQhZXdro91gy0=; b=oNXmKc
-	Rmt92AMyaY3vEIxX4Fv10M8CIFYPeCwxyXBHcgtdvlr6KexApBRP7C2xxs5+cN7S
-	pXxarNsF6UfYlVqJiV8IJz3nFRhJoB4Dxfs5RVo9U6vuGNPEMlNuqzuAgLj/4Q4+
-	enijgENIsctZR/aWJ8HAmnGMoR1kSLQf1B9Ko=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TFIIQfPYBkeHL/kkX90oYpH2UhP2TOmt
-	SB2Ex4YcRP8j5mgdfH1+Lyq4Mg25QaoeFKvrT6W6RR8Tnju14qd9krGwMBguCE9S
-	MbJL1pyYOaa8TGh0Aq2QJYjo86uvmHZFdS5g193RluB7l2PUSikqt7QbC8RSOEyk
-	6BLzwaCDBpw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CEBA35B3D;
-	Wed, 31 Jul 2013 19:31:59 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0458635B38;
-	Wed, 31 Jul 2013 19:31:56 +0000 (UTC)
-In-Reply-To: <51F9509F.60402@ramsay1.demon.co.uk> (Ramsay Jones's message of
-	"Wed, 31 Jul 2013 18:59:59 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DCD8205C-FA17-11E2-BB0C-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754168Ab3GaTvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 15:51:52 -0400
+Received: from hqemgate16.nvidia.com ([216.228.121.65]:17243 "EHLO
+	hqemgate16.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753245Ab3GaTvv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 15:51:51 -0400
+Received: from hqnvupgp08.nvidia.com (Not Verified[216.228.121.13]) by hqemgate16.nvidia.com
+	id <B51f96acd0000>; Wed, 31 Jul 2013 12:51:41 -0700
+Received: from hqemhub02.nvidia.com ([172.20.12.94])
+  by hqnvupgp08.nvidia.com (PGP Universal service);
+  Wed, 31 Jul 2013 12:50:25 -0700
+X-PGP-Universal: processed;
+	by hqnvupgp08.nvidia.com on Wed, 31 Jul 2013 12:50:25 -0700
+Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub02.nvidia.com
+ (172.20.150.31) with Microsoft SMTP Server id 8.3.298.1; Wed, 31 Jul 2013
+ 12:51:50 -0700
+X-Mailer: git-send-email 1.8.4.rc0.2.g6cf5c31
+In-Reply-To: <CA+sFfMe1GTDqtgGs3NXoB0OBYTtyHxLDYgy0TmOe+3r=tMXS0A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231451>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+From: Brandon Casey <drafnel@gmail.com>
 
-> Junio C Hamano wrote:
->> So here is a bit of refactoring to extract the logic to find the
->> entry $section.<urlpattern>.$key from the configuration that best
->> matches the given $url to answer "what value $section.$key should be
->> for $url?" out of http.c (primarily because we never want to link
->> "git cofnig" with the cURL library), and use it from "git config" to
->> implement Peff's idea to extend "git config".
->> 
->> The first step is a pure code movement, plus some renaming of the
->> functions.
->> 
->> The second step is to factor out the code to handle --bool, --int, etc.
->> as a helper so that the new codepath can use it.
->> 
->> The last step currently duplicates the logic in http_options(), but
->> we might want to refactor it further so that the two functions can
->> share more code.  We hopefully can get rid of test-url-normalize and
->> instead use "git config --get-urlmatch" in the tests that protect
->> the http.<url>.config topic.
->
-> I haven't been following this topic too closely and I don't have any
-> feel for how long it will take to get to the end-game. However, unless
-> the removal of test-url-normalize is coming soon, could I request that
-> you apply my patch (or squash it into this series)? At present, I have
-> to apply the patch before building the next and pu branches; OK it's not
-> too onerous, but still ... :-P
+When the number of open packs exceeds pack_max_fds, unuse_one_window()
+is called repeatedly to attempt to release the least-recently-used
+pack windows, which, as a side-effect, will also close a pack file
+after closing its last open window.  If a pack file has been opened,
+but no windows have been allocated into it, it will never be selected
+by unuse_one_window() and hence its file descriptor will not be
+closed.  When this happens, git may exceed the number of file
+descriptors permitted by the system.
 
-Will squash in.  Thanks for a reminder.
+This latter situation can occur in show-ref or receive-pack during ref
+advertisement.  During ref advertisement, receive-pack will iterate
+over every ref in the repository and advertise it to the client after
+ensuring that the ref exists in the local repository.  If the ref is
+located inside a pack, then the pack is opened to ensure that it
+exists, but since the object is not actually read from the pack, no
+mmap windows are allocated.  When the number of open packs exceeds
+pack_max_fds, unuse_one_window() will not be able to find any windows to
+free and will not be able to close any packs.  Once the per-process
+file descriptor limit is exceeded, receive-pack will produce a warning,
+not an error, for each pack it cannot open, and will then most likely
+fail with an error to spawn rev-list or index-pack like:
+
+   error: cannot create standard input pipe for rev-list: Too many open files
+   error: Could not run 'git rev-list'
+
+This may also occur during upload-pack when refs are packed (in the
+packed-refs file) and the number of packs that must be opened to
+verify that these packed refs exist exceeds the file descriptor limit.
+If the refs are loose, then upload-pack will read each ref from the
+pack (allocating one or more mmap windows) so it can peel tags and
+advertise the underlying object.  If the refs are packed and peeled,
+then upload-pack will use the peeled sha1 in the packed-refs file and
+will not need to read from the pack files, so no mmap windows will be
+allocated and just like with receive-pack, unuse_one_window() will
+never select these opened packs to close.
+
+When we have file descriptor pressure, in contrast to memory pressure,
+we need to free all windows and close the pack file descriptor so that
+a new pack can be opened.  Let's introduce a new function
+close_one_pack() designed specifically for this purpose to search
+for and close the least-recently-used pack, where LRU is defined as
+
+   * pack with oldest mtime and no allocated mmap windows or
+   * pack with the least-recently-used windows, i.e. the pack
+     with the oldest most-recently-used window
+
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
+
+The commit message was updated to fix the grammatical error that Eric
+Sunshine pointed out, and to correct the paragraph about upload-pack.
+
+-Brandon
+
+ sha1_file.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 62 insertions(+), 1 deletion(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 8e27db1..7731ab1 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -682,6 +682,67 @@ void close_pack_windows(struct packed_git *p)
+ 	}
+ }
+ 
++/*
++ * The LRU pack is the one with the oldest MRU window or the oldest mtime
++ * if it has no windows allocated.
++ */
++static void find_lru_pack(struct packed_git *p, struct packed_git **lru_p, struct pack_window **mru_w)
++{
++	struct pack_window *w, *this_mru_w;
++
++	/*
++	 * Reject this pack if it has windows and the previously selected
++	 * one does not.  If this pack does not have windows, reject
++	 * it if the pack file is newer than the previously selected one.
++	 */
++	if (*lru_p && !*mru_w && (p->windows || p->mtime > (*lru_p)->mtime))
++		return;
++
++	for (w = this_mru_w = p->windows; w; w = w->next) {
++		/* Reject this pack if any of its windows are in use */
++		if (w->inuse_cnt)
++			return;
++		/*
++		 * Reject this pack if it has windows that have been
++		 * used more recently than the previously selected pack.
++		 */
++		if (*mru_w && w->last_used > (*mru_w)->last_used)
++			return;
++		if (w->last_used > this_mru_w->last_used)
++			this_mru_w = w;
++	}
++
++	/*
++	 * Select this pack.
++	 */
++	*mru_w = this_mru_w;
++	*lru_p = p;
++}
++
++static int close_one_pack(void)
++{
++	struct packed_git *p, *lru_p = NULL;
++	struct pack_window *mru_w = NULL;
++
++	for (p = packed_git; p; p = p->next) {
++		if (p->pack_fd == -1)
++			continue;
++		find_lru_pack(p, &lru_p, &mru_w);
++	}
++
++	if (lru_p) {
++		close_pack_windows(lru_p);
++		close(lru_p->pack_fd);
++		pack_open_fds--;
++		lru_p->pack_fd = -1;
++		if (lru_p == last_found_pack)
++			last_found_pack = NULL;
++		return 1;
++	}
++
++	return 0;
++}
++
+ void unuse_pack(struct pack_window **w_cursor)
+ {
+ 	struct pack_window *w = *w_cursor;
+@@ -777,7 +838,7 @@ static int open_packed_git_1(struct packed_git *p)
+ 			pack_max_fds = 1;
+ 	}
+ 
+-	while (pack_max_fds <= pack_open_fds && unuse_one_window(NULL, -1))
++	while (pack_max_fds <= pack_open_fds && close_one_pack())
+ 		; /* nothing */
+ 
+ 	p->pack_fd = git_open_noatime(p->pack_name);
+-- 
+1.8.4.rc0.2.g6cf5c31
+
+
+-----------------------------------------------------------------------------------
+This email message is for the sole use of the intended recipient(s) and may contain
+confidential information.  Any unauthorized review, use, disclosure or distribution
+is prohibited.  If you are not the intended recipient, please contact the sender by
+reply email and destroy all copies of the original message.
+-----------------------------------------------------------------------------------
