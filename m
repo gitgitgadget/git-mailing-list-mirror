@@ -1,79 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] howto: Eliminate all tabs
-Date: Wed, 31 Jul 2013 10:03:15 -0700
-Message-ID: <7v8v0mvezw.fsf@alter.siamese.dyndns.org>
-References: <20130716180158.GA7524@bottich>
-	<cover.1375288760.git.halsmit@t-online.de>
-	<4d37bfa3326469ab5b7cdbf0018f7aa671c2d74a.1375288760.git.halsmit@t-online.de>
-	<20130731165425.GC11219@bottich>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv2 3/9] log, format-patch: parsing uses OPT__QUIET
+Date: Wed, 31 Jul 2013 13:08:48 -0400
+Message-ID: <CAPig+cSazYJDP40zqkr47iuJ925bH-eFEjp2kzb_D3efgqggNw@mail.gmail.com>
+References: <1375288117-1576-1-git-send-email-stefanbeller@googlemail.com>
+	<1375288117-1576-4-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, junio@vger.kernel.org,
-	Thomas Ackermann <th.acker@arcor.de>
-To: Dirk Wallenstein <halsmit@t-online.de>
-X-From: git-owner@vger.kernel.org Wed Jul 31 19:03:27 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 31 19:09:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4Zo3-0004hb-Rk
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 19:03:24 +0200
+	id 1V4ZtT-0008G4-8c
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 19:08:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760554Ab3GaRDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 13:03:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39705 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756993Ab3GaRDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 13:03:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52F6D33BA4;
-	Wed, 31 Jul 2013 17:03:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/81zYcHXrYktUwpGpUCQZ4oeM+o=; b=t1sWqc
-	gR9FZvp4MqVZ7Ihs6iXZt4qpUPxTSbhxg9AA8O6ANk1xKFKDE+NSKoRc3wjSqHed
-	taSQDkLKXEfXIJA+TwVRiv5rs9bOB/uETAXiXACyBdQjFojfY0954c5DldYrOBlo
-	BPTDTXjxg+FWOeiEtbZIwkeDTY1T2lJtphRrs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F1SpfkTqtdRffi5Kshaw0bT/pQ6nv7sD
-	1h4ooqiORhXde0oGYjCB25TiCxZLNW5XadeP31ThyLZy3Jcj2+g9MSMMl+gNV43m
-	bcudrucWbzwiWn7XBJr3NBr6gVO73g90/0rW1v1h3N+NaX5EgsHGo1dvaH3D2Tws
-	nzkgS7MJSuQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4767733BA3;
-	Wed, 31 Jul 2013 17:03:18 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A23E333B9E;
-	Wed, 31 Jul 2013 17:03:17 +0000 (UTC)
-In-Reply-To: <20130731165425.GC11219@bottich> (Dirk Wallenstein's message of
-	"Wed, 31 Jul 2013 18:54:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1875B684-FA03-11E2-9BB1-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757075Ab3GaRIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 13:08:51 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:56386 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756634Ab3GaRIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 13:08:50 -0400
+Received: by mail-la0-f50.google.com with SMTP id fn20so684848lab.23
+        for <git@vger.kernel.org>; Wed, 31 Jul 2013 10:08:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=8MTZvZIek1Lw2EDfJU2qMBsW5xcjnYulNMQxG5UVnzk=;
+        b=Ae/BbfSRQeMFryieKhrYBnfQK2Okpr6HctaKhIx5aegufFKSdcG7X2R10nhouiu/3P
+         +S7HRpKMYxgpUEh/SXzw07QlNsrojUO3FyaDnYq2yc9S9a0i99X7Rzkl+64KffStRn4m
+         RV2CcpPjYAH6cqu10Y14nlTunD3/lzZzlIh5Oq64mbzkAtBqZartpx5MQWic4sELsk1R
+         A+dajMJg/E6AWGfxQbktAMDiTyxCNHDxndJS0v+85P3mo6qT7OTgbX9PV/7JuLFWs6Ez
+         JLhq/GKDq2g30K/YJI03e+y/xiCtktcfMHw7FIsyhgPcCgfksgAhD7lOG8ukKnmylA0H
+         Fp/A==
+X-Received: by 10.152.116.109 with SMTP id jv13mr17830683lab.24.1375290529061;
+ Wed, 31 Jul 2013 10:08:49 -0700 (PDT)
+Received: by 10.114.187.78 with HTTP; Wed, 31 Jul 2013 10:08:48 -0700 (PDT)
+In-Reply-To: <1375288117-1576-4-git-send-email-stefanbeller@googlemail.com>
+X-Google-Sender-Auth: XI1WoTw87dUf3UkQKslil2zvPHc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231435>
 
-Dirk Wallenstein <halsmit@t-online.de> writes:
+On Wed, Jul 31, 2013 at 12:28 PM, Stefan Beller
+<stefanbeller@googlemail.com> wrote:
+> This patch allows users to use the short form -q on
+> log and format-patch, which was non possible before.
 
-> diff --git a/Documentation/howto/rebase-from-internal-branch.txt b/Documentation/howto/rebase-from-internal-branch.txt
-> index 19ab604..aefe5b1 100644
-> --- a/Documentation/howto/rebase-from-internal-branch.txt
-> +++ b/Documentation/howto/rebase-from-internal-branch.txt
-> @@ -1,8 +1,8 @@
-> -From:	Junio C Hamano <gitster@pobox.com>
-> -To:	git@vger.kernel.org
-> -Cc:	Petr Baudis <pasky@suse.cz>, Linus Torvalds <torvalds@osdl.org>
-> +From:Junio C Hamano <gitster@pobox.com>
+It would make sense for documentation updates to accompany these changes.
 
-Why does this patch have to break the e-mail headers like this?
-
-These are copies of old e-mails; keep them as close to the original
-as they were.
-
-Besides, the tab width of our source is 8, period.  Get over it.
+> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+> ---
+>  builtin/log.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 1dafbd0..ed4dec4 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -121,7 +121,7 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
+>         static struct line_opt_callback_data line_cb = {NULL, NULL, STRING_LIST_INIT_DUP};
+>
+>         const struct option builtin_log_options[] = {
+> -               OPT_BOOL(0, "quiet", &quiet, N_("suppress diff output")),
+> +               OPT__QUIET(&quiet, N_("suppress diff output")),
+>                 OPT_BOOL(0, "source", &source, N_("show source")),
+>                 OPT_BOOL(0, "use-mailmap", &mailmap, N_("Use mail map file")),
+>                 { OPTION_CALLBACK, 0, "decorate", NULL, NULL, N_("decorate options"),
+> @@ -1210,8 +1210,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>                             PARSE_OPT_OPTARG, thread_callback },
+>                 OPT_STRING(0, "signature", &signature, N_("signature"),
+>                             N_("add a signature")),
+> -               OPT_BOOLEAN(0, "quiet", &quiet,
+> -                           N_("don't print the patch filenames")),
+> +               OPT__QUIET(&quiet, N_("don't print the patch filenames")),
+>                 OPT_END()
+>         };
+>
+> --
+> 1.8.4.rc0.1.g8f6a3e5
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
