@@ -1,67 +1,98 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Unexpected merge results in git-svn repo
-Date: Wed, 31 Jul 2013 20:14:57 +1000
-Message-ID: <CAH3AnrqmFJxuy7PyJZS83VEwzrQB+mA5Frttd5fzKBhpZGP4Eg@mail.gmail.com>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH] tag: Use OPT_BOOL instead of OPT_BOOLEAN to allow one
+ action multiple times
+Date: Wed, 31 Jul 2013 12:34:06 +0200
+Message-ID: <51F8E81E.6000705@googlemail.com>
+References: <1375207251-4998-1-git-send-email-stefanbeller@googlemail.com> <7va9l3x34f.fsf@alter.siamese.dyndns.org> <51F83010.2060804@googlemail.com> <7vfvuvvg0r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 31 12:15:08 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigB46113DE6BBBDB3E3E0D3A9C"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 31 12:33:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4TQv-00044j-ME
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 12:15:06 +0200
+	id 1V4Tj9-00075S-2I
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 12:33:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756103Ab3GaKPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 06:15:00 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:63938 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754181Ab3GaKO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 06:14:59 -0400
-Received: by mail-la0-f45.google.com with SMTP id fj20so355256lab.32
-        for <git@vger.kernel.org>; Wed, 31 Jul 2013 03:14:57 -0700 (PDT)
+	id S1759545Ab3GaKdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 06:33:51 -0400
+Received: from mail-bk0-f45.google.com ([209.85.214.45]:33765 "EHLO
+	mail-bk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755572Ab3GaKdu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 06:33:50 -0400
+Received: by mail-bk0-f45.google.com with SMTP id je2so178418bkc.32
+        for <git@vger.kernel.org>; Wed, 31 Jul 2013 03:33:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=g6s2MwNk8HmnubiAJrOOnO9NBntlTc391yLJW/9UdTY=;
-        b=nULYorDFyEeT8C6uZV4DjW+K58dQJLxun4xMDh7Q112tx+KsRakWBo4+khFzHHjOdZ
-         4fFBKGbuGxh3+x3qMbfocEUWhhOmZwOdiFqt+fEC+1A8D9T66ZpVvQw3kYcE3ZRIMLXo
-         zld92q/CncC+2ODL8dii4lVCuZVY+4s2+wTtiMPcerll13msH9u21c7EllXmrW/iNJ6X
-         yCq09lgGiS7iS2kA9UYg+55d95leQvbGIp/+vNZBl2iFGTGAyCJNp4rhQ3sqSaI76XS8
-         qziEC//EaVWvZisPA/Sdq2bkR8fB44JMrM7SOYlUApg23E8g5d4fToxFeGYUzsvdkL1l
-         xYbA==
-X-Received: by 10.152.87.81 with SMTP id v17mr30467382laz.1.1375265697392;
- Wed, 31 Jul 2013 03:14:57 -0700 (PDT)
-Received: by 10.114.4.99 with HTTP; Wed, 31 Jul 2013 03:14:57 -0700 (PDT)
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type;
+        bh=HB8Xcc5HHmf2wF2uHS6h0WmC3Z33xifh72h89FlUiZ8=;
+        b=Pxl/IJC40YQ2RYbqfN4CHyLxeG2EEWkohiRE3qxc5LHFZWGHrZbZE5BqWVuh8zDcup
+         veh4A9OInHAl+YAUGDCbfJkWAMtmWzOUJ6fYWHKTIk6xeQfLIlRJOJDbn1Ag6dsd6mCD
+         u0Rn24CvwBNKaIcv5eInI1Oubkd6Z9vDptTUH5mbmauOqVhktZocmIlLHWFQpafI/NVd
+         +Cdri2IwsRUsmVUFMcpP1AWjj+DUu4linpcOJODBPUJn/5CTE76ZK5N4zBsxdcky3xif
+         yvzQP16Kl9lUgBlplbp4uBZej0qKsrHlWiOIPGKZy2dU6Nu+StzVlJYvulubILWF9lvI
+         TlaA==
+X-Received: by 10.204.70.141 with SMTP id d13mr9861482bkj.10.1375266829051;
+        Wed, 31 Jul 2013 03:33:49 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id od6sm296107bkb.11.2013.07.31.03.33.47
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 31 Jul 2013 03:33:48 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <7vfvuvvg0r.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231415>
 
-I am getting some unexpected results from a merge and I'd like to
-understand why.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigB46113DE6BBBDB3E3E0D3A9C
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-I have two commits X and Y that I want to merge.
+On 07/31/13 00:28, Junio C Hamano wrote:
+>=20
+> we could just do
+>=20
+> #define OPT_CMDMODE(s, l, v, h) \
+>     { OPTION_CMDMODE, (s), (l), (v), NULL, \
+>       (h), PARSE_OPT_NOARG|PARSE_OPT_NONEG, NULL, (s) }
+>=20
 
-git merge-base X Y # yields B
-git diff B X -- F  # is empty
-git diff B Y -- F  # contains the change I want merged
-git rev-list X ^B -- F # is empty
-git rev-list Y ^B -- F # contains one commit
+I agree that's a better proposal than mine.
 
-git checkout X
-git merge Y
 
-fails with fixable merge conflicts on other files, but uses X's copy
-of F instead of Y's.
+--------------enigB46113DE6BBBDB3E3E0D3A9C
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-I was expecting it to use Y's copy of F, since only Y has modified F since B.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-What could cause this?
+iQIcBAEBAgAGBQJR+OgeAAoJEJQCPTzLflhqzkAQAIsPft8NkRXcKkH21KDC8eW/
+1kXTI8sjssybReO0zhp/q02dp1n0l0iOnUKDnxLlZxjAz/WAc3XvIVFdmT1f7Iop
+nY8U3IsxFfXkLVGm6dSqWFGjKrHcVFo3wZtkOieohEVPjMQNKManF39RS+vuHB7t
+5kJMqYHVnh3ceqARmQoEPV+RbJGFwm9yYrzBM46sqYSIdsUx3dhVb7cCoN2GVKf4
+NYMwmHLaZeogjZdax+RN7CJVNySkEmjfSnFd+GsGVN7257A/9jBZtCQq+Rsy1kDf
+4OhSKyzkclkWy6ZV4sbtmog5w+iHFirCT3bnBjNwuB8EYxP4pz6jlwBo0ZnYcS+3
+mLmZB2L5aONoFnsGzQu4A84Kg5urPkcI/7nTngQF6ymQn6IVQ5V6DA4KS14tYde9
+RDtQFPFLVS5Rs0GjkDb1ZJRkMVDUMquuERqI8O4LtJabJ1cLkoYekbzXLZjZI4B6
+4F7THHCJLfce1v/ybUhvsNkrztFtAuL0tfJeqTOyvTlf/SuoO+Ks0yTH8URK8z/O
+nReaxQNGHm6YDW3qQHXsy74kxudygevI62U/O/EfZ34X/4C3QxDLRSNKo3jt2kI0
+1YcwBqchp4TKH1xk4DmB5jZ2YZ5TjKV8x0gJwYMhsddnePMKU40mIZ7dLbzp4vxd
+llCQR5c8LrsjQ8u4fDq3
+=zJMn
+-----END PGP SIGNATURE-----
 
-BTW: I am using a git-svn repo that does have some 4+ parent merges in it.
-
-jon.
+--------------enigB46113DE6BBBDB3E3E0D3A9C--
