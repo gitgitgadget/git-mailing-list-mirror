@@ -1,165 +1,82 @@
 From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCHv2 9/9] revert: use the OPT_CMDMODE for parsing, reducing code
-Date: Wed, 31 Jul 2013 18:28:37 +0200
-Message-ID: <1375288117-1576-10-git-send-email-stefanbeller@googlemail.com>
+Subject: [PATCHv2 3/9] log, format-patch: parsing uses OPT__QUIET
+Date: Wed, 31 Jul 2013 18:28:31 +0200
+Message-ID: <1375288117-1576-4-git-send-email-stefanbeller@googlemail.com>
 References: <1375288117-1576-1-git-send-email-stefanbeller@googlemail.com>
 Cc: Stefan Beller <stefanbeller@googlemail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 31 18:29:08 2013
+X-From: git-owner@vger.kernel.org Wed Jul 31 18:29:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4ZGq-00084w-W5
+	id 1V4ZGr-00084w-GV
 	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 18:29:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231Ab3GaQ2p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 12:28:45 -0400
-Received: from mail-ea0-f181.google.com ([209.85.215.181]:35743 "EHLO
-	mail-ea0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932225Ab3GaQ2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 12:28:43 -0400
-Received: by mail-ea0-f181.google.com with SMTP id d10so467224eaj.26
-        for <git@vger.kernel.org>; Wed, 31 Jul 2013 09:28:41 -0700 (PDT)
+	id S932251Ab3GaQ2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 12:28:54 -0400
+Received: from mail-ea0-f172.google.com ([209.85.215.172]:51745 "EHLO
+	mail-ea0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756850Ab3GaQ2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 12:28:30 -0400
+Received: by mail-ea0-f172.google.com with SMTP id r16so463858ead.17
+        for <git@vger.kernel.org>; Wed, 31 Jul 2013 09:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=x/8fVYbKeoSXxgjH5GY03tsIJIkxY21RKvgyPILcPlw=;
-        b=WwklHt7/FgR4DW+t8Dt8Coh92BnFWW5qk8uJGbbM7CY/WGx0vILBVjLURAZWzJzRtr
-         TROP4YO08KwH5hNsEftuJe/HITV1a4w/f5WDJEz/lzh32dpxitbB31wngMvJ8W55de1W
-         Y8OkU78hrp0J1pSCqWmXoUoude+IndAP9ZiZrJRJ2eFhifqVUsnqnrtDJGlHRxUE63cc
-         kMcOOVe8KKnEO9l0HKbkEstOTbGQo+L2FxDUDTdVTDRLYdK/shqIrqMm6inxtXEt+oQI
-         6NuwGnWbixw2FaUrJcD1BDDR5g0rlTFA//DjH90MKX/8cljhQ88FyiYSURez6vtzCGrD
-         yMiA==
-X-Received: by 10.15.53.4 with SMTP id q4mr70234319eew.134.1375288121781;
-        Wed, 31 Jul 2013 09:28:41 -0700 (PDT)
+        bh=dnIAE0BMVJ0eIdmgsNI1CMlCfYXWTaNTbZx6B5+ak0c=;
+        b=wXrq7K0GBmlpImOoiKmnDPctBdk7z/pQhroSJ+YNLXNOE5hghaeOwBZoMHu1/p7Zzt
+         +V2RFkjYT+6h1/KDIvR9DlU2tXwsGicP311GbBMYDCLJ2ro/zV7ECEShxzNksIceRphm
+         AEaWwvi2z3DfvAZi2l4E7hvoGCG1zBoK0HJ7LS2w17PoF8oAro5dQJLL0XDlX7jC3flG
+         4LFSKHvsj/egkglIsCGpUKUA1nPGZuxSFOvnhJl4kRTuIfx+M2P3KHA4TFOIhX26URay
+         oHSaQ1zvSwyOLX1zn+rKuRu10SD2b0ezKlv3lTx+nyf/xibm/uI+xrsly/eJNdP8gF+g
+         vWqA==
+X-Received: by 10.15.94.11 with SMTP id ba11mr70304323eeb.101.1375288108951;
+        Wed, 31 Jul 2013 09:28:28 -0700 (PDT)
 Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id k3sm3695120een.16.2013.07.31.09.28.40
+        by mx.google.com with ESMTPSA id cg12sm3735796eeb.7.2013.07.31.09.28.27
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 31 Jul 2013 09:28:41 -0700 (PDT)
+        Wed, 31 Jul 2013 09:28:28 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4.rc0.1.g8f6a3e5
 In-Reply-To: <1375288117-1576-1-git-send-email-stefanbeller@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231428>
 
-The revert command comes with their own implementation of checking
-for exclusiveness of parameters.
-Now that the OPT_CMDMODE is in place, we can also rely on that macro
-instead of cooking that solution for each command itself.
-
-This commit also replaces OPT_BOOLEAN, which was deprecated by b04ba2bb
-(parse-options: deprecate OPT_BOOLEAN, 2011-09-27). Instead OPT_BOOL is
-used.
+This patch allows users to use the short form -q on
+log and format-patch, which was non possible before.
 
 Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
 ---
- builtin/revert.c | 62 ++++++++++++++------------------------------------------
- 1 file changed, 15 insertions(+), 47 deletions(-)
+ builtin/log.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 1d2648b..8e87acd 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -71,44 +71,19 @@ static void verify_opt_compatible(const char *me, const char *base_opt, ...)
- 		die(_("%s: %s cannot be used with %s"), me, this_opt, base_opt);
- }
+diff --git a/builtin/log.c b/builtin/log.c
+index 1dafbd0..ed4dec4 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -121,7 +121,7 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
+ 	static struct line_opt_callback_data line_cb = {NULL, NULL, STRING_LIST_INIT_DUP};
  
--LAST_ARG_MUST_BE_NULL
--static void verify_opt_mutually_compatible(const char *me, ...)
--{
--	const char *opt1, *opt2 = NULL;
--	va_list ap;
--
--	va_start(ap, me);
--	while ((opt1 = va_arg(ap, const char *))) {
--		if (va_arg(ap, int))
--			break;
--	}
--	if (opt1) {
--		while ((opt2 = va_arg(ap, const char *))) {
--			if (va_arg(ap, int))
--				break;
--		}
--	}
--	va_end(ap);
--
--	if (opt1 && opt2)
--		die(_("%s: %s cannot be used with %s"),	me, opt1, opt2);
--}
--
- static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- {
- 	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
- 	const char *me = action_name(opts);
--	int remove_state = 0;
--	int contin = 0;
--	int rollback = 0;
-+	int cmd = 0;
- 	struct option options[] = {
--		OPT_BOOLEAN(0, "quit", &remove_state, N_("end revert or cherry-pick sequence")),
--		OPT_BOOLEAN(0, "continue", &contin, N_("resume revert or cherry-pick sequence")),
--		OPT_BOOLEAN(0, "abort", &rollback, N_("cancel revert or cherry-pick sequence")),
--		OPT_BOOLEAN('n', "no-commit", &opts->no_commit, N_("don't automatically commit")),
--		OPT_BOOLEAN('e', "edit", &opts->edit, N_("edit the commit message")),
-+		OPT_CMDMODE(0, "quit", &cmd, N_("end revert or cherry-pick sequence"), 'q'),
-+		OPT_CMDMODE(0, "continue", &cmd, N_("resume revert or cherry-pick sequence"), 'c'),
-+		OPT_CMDMODE(0, "abort", &cmd, N_("cancel revert or cherry-pick sequence"), 'a'),
-+		OPT_BOOL('n', "no-commit", &opts->no_commit, N_("don't automatically commit")),
-+		OPT_BOOL('e', "edit", &opts->edit, N_("edit the commit message")),
- 		OPT_NOOP_NOARG('r', NULL),
--		OPT_BOOLEAN('s', "signoff", &opts->signoff, N_("add Signed-off-by:")),
-+		OPT_BOOL('s', "signoff", &opts->signoff, N_("add Signed-off-by:")),
- 		OPT_INTEGER('m', "mainline", &opts->mainline, N_("parent number")),
- 		OPT_RERERE_AUTOUPDATE(&opts->allow_rerere_auto),
- 		OPT_STRING(0, "strategy", &opts->strategy, N_("strategy"), N_("merge strategy")),
-@@ -124,11 +99,11 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 	const struct option builtin_log_options[] = {
+-		OPT_BOOL(0, "quiet", &quiet, N_("suppress diff output")),
++		OPT__QUIET(&quiet, N_("suppress diff output")),
+ 		OPT_BOOL(0, "source", &source, N_("show source")),
+ 		OPT_BOOL(0, "use-mailmap", &mailmap, N_("Use mail map file")),
+ 		{ OPTION_CALLBACK, 0, "decorate", NULL, NULL, N_("decorate options"),
+@@ -1210,8 +1210,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			    PARSE_OPT_OPTARG, thread_callback },
+ 		OPT_STRING(0, "signature", &signature, N_("signature"),
+ 			    N_("add a signature")),
+-		OPT_BOOLEAN(0, "quiet", &quiet,
+-			    N_("don't print the patch filenames")),
++		OPT__QUIET(&quiet, N_("don't print the patch filenames")),
+ 		OPT_END()
+ 	};
  
- 	if (opts->action == REPLAY_PICK) {
- 		struct option cp_extra[] = {
--			OPT_BOOLEAN('x', NULL, &opts->record_origin, N_("append commit name")),
--			OPT_BOOLEAN(0, "ff", &opts->allow_ff, N_("allow fast-forward")),
--			OPT_BOOLEAN(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
--			OPT_BOOLEAN(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
--			OPT_BOOLEAN(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
-+			OPT_BOOL('x', NULL, &opts->record_origin, N_("append commit name")),
-+			OPT_BOOL(0, "ff", &opts->allow_ff, N_("allow fast-forward")),
-+			OPT_BOOL(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
-+			OPT_BOOL(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
-+			OPT_BOOL(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
- 			OPT_END(),
- 		};
- 		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
-@@ -139,23 +114,16 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 			PARSE_OPT_KEEP_ARGV0 |
- 			PARSE_OPT_KEEP_UNKNOWN);
- 
--	/* Check for incompatible subcommands */
--	verify_opt_mutually_compatible(me,
--				"--quit", remove_state,
--				"--continue", contin,
--				"--abort", rollback,
--				NULL);
--
- 	/* implies allow_empty */
- 	if (opts->keep_redundant_commits)
- 		opts->allow_empty = 1;
- 
- 	/* Set the subcommand */
--	if (remove_state)
-+	if (cmd == 'q')
- 		opts->subcommand = REPLAY_REMOVE_STATE;
--	else if (contin)
-+	else if (cmd == 'c')
- 		opts->subcommand = REPLAY_CONTINUE;
--	else if (rollback)
-+	else if (cmd == 'a')
- 		opts->subcommand = REPLAY_ROLLBACK;
- 	else
- 		opts->subcommand = REPLAY_NONE;
 -- 
 1.8.4.rc0.1.g8f6a3e5
