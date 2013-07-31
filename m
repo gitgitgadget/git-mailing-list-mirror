@@ -1,101 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Rename advice.object_name_warning to objectNameWarning
-Date: Wed, 31 Jul 2013 15:19:43 -0700
-Message-ID: <7vmwp2tls0.fsf@alter.siamese.dyndns.org>
-References: <bc52a7d4a5f1010e6813ddf503a0b84976dc55e4.1375301985.git.trast@inf.ethz.ch>
+From: =?UTF-8?B?SmVucyBNw7xsbGVy?= <blog@tessarakt.de>
+Subject: How to hierarchically merge from the root to the leaf of a branch
+ tree? (Patch stack management)
+Date: Thu, 01 Aug 2013 00:25:32 +0200
+Message-ID: <ktc2sl$d4f$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	<git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Aug 01 00:19:55 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 01 00:30:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4ekJ-0003eV-Lw
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 00:19:52 +0200
+	id 1V4euK-0001Ft-Go
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 00:30:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757679Ab3GaWTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 18:19:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48907 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757226Ab3GaWTr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 18:19:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B068635BAA;
-	Wed, 31 Jul 2013 22:19:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QS7XVbjm21ZHzFJDD0jFqsqs5r8=; b=eEYySF
-	YUesJJxgoh24d8/1RMNRw4ebEYGSbqU1nZiYNq5kWVFfePTH/P7xtqTvhkHea04H
-	5Evt9tKkYEjDgkrG6TCtmSpPnd2wowwsutrAb8Nq639z6zStljAqi2y8D1BY9otV
-	HTRSiFVB0j9S1mi9md6w/abrm+V2xcn2H2aRc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h0x5G3hAfY/ge82SsoauuxsXJbRUUaJO
-	N9IjDRDIJjTseLFQIhz2Ud1rZ7S1YtTpMryuEKmzKlHFGk+TkwfZ6B3CQ2OHCW6s
-	EvCs/UILH+nYPZPMS5rr73yPgETh49m7ii4ZXU7lOZc/rbhlkHSOGzg/5U9+bMev
-	kFhp7nYFdHU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A578235BA9;
-	Wed, 31 Jul 2013 22:19:46 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA51935BA5;
-	Wed, 31 Jul 2013 22:19:45 +0000 (UTC)
-In-Reply-To: <bc52a7d4a5f1010e6813ddf503a0b84976dc55e4.1375301985.git.trast@inf.ethz.ch>
-	(Thomas Rast's message of "Wed, 31 Jul 2013 22:23:31 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4E5D85FC-FA2F-11E2-81CD-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757783Ab3GaWaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 18:30:05 -0400
+Received: from plane.gmane.org ([80.91.229.3]:42849 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753079Ab3GaWaE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 18:30:04 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1V4euA-00019T-VG
+	for git@vger.kernel.org; Thu, 01 Aug 2013 00:30:02 +0200
+Received: from p5dc8fa44.dip0.t-ipconnect.de ([93.200.250.68])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Aug 2013 00:30:02 +0200
+Received: from blog by p5dc8fa44.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Aug 2013 00:30:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p5dc8fa44.dip0.t-ipconnect.de
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0a2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231472>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Hi all!
 
-> We spell config variables in camelCase instead of with_underscores.
->
-> Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
-> ---
->
-> I figure since we don't have the variable in any release yet *and* the
-> worst possible outcome is that someone sees the advice message again,
-> the consistency is worth the change.
+I mainly use Git for version control, but have also tried out Mercurial.
+While I don't really like Mercurial in general, the idea of maintaining
+clearly separated patches with Mercurial Queues (MQ) is quite appealing.
+Therefore, I am looking for something similar (but easier to use, more
+"gitty" and maybe even more powerful) in Git.
 
-Thanks, I agree.
->
->  advice.c    | 2 +-
->  sha1_name.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/advice.c b/advice.c
-> index 2a52098..3eca9f5 100644
-> --- a/advice.c
-> +++ b/advice.c
-> @@ -35,7 +35,7 @@
->  	{ "implicitidentity", &advice_implicit_identity },
->  	{ "detachedhead", &advice_detached_head },
->  	{ "setupstreamfailure", &advice_set_upstream_failure },
-> -	{ "object_name_warning", &advice_object_name_warning },
-> +	{ "objectnamewarning", &advice_object_name_warning },
->  	{ "rmhints", &advice_rm_hints },
->  
->  	/* make this an alias for backward compatibility */
-> diff --git a/sha1_name.c b/sha1_name.c
-> index 1d210e3..852dd95 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -445,7 +445,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->  	"\n"
->  	"where \"$br\" is somehow empty and a 40-hex ref is created. Please\n"
->  	"examine these refs and maybe delete them. Turn this message off by\n"
-> -	"running \"git config advice.object_name_warning false\"");
-> +	"running \"git config advice.objectNameWarning false\"");
->  	unsigned char tmp_sha1[20];
->  	char *real_ref = NULL;
->  	int refs_found = 0;
+So I will first explain what I have in mind:
+
+As an example, let's say I am doing test-driven development. My master
+branch follows the main repository of the software. Branched out from
+that, I have a branch called "feature-test", and branched out from that,
+"feature-implementation":
+
+    master
+    |_ feature-test
+       |_ feature-implementation
+
+For each branch, I remember the parent branch.
+
+Implementation would then work like this: I checkout feature-test and
+write some test. Then I checkout feature-implementation, rebase it to
+the current status of feature-test and write the implemenation. And so on.
+
+At some point, I update master, and then rebase both feature-test and
+feature-implementation.
+
+As a side note: Instead of rebasing the branches, an alternative would
+be to merge the changes from the parent branch. This makes conflict
+resolution easier. The cascading merge through the chain of branches is
+like a rebase, anyway.
+
+Of course, the process described above contains a lot of tedious manual
+work. So I am looking for tooling for tasks like the following:
+
+ * While on a branch, pull master from a remote branch it tracks and
+merge the changes down the chain of branches. When a conflict is
+encountered, switch to the branch where it occured, allow the user to
+resolve the conflict, and then continue the cascading merge (similar to
+what git rebase does when it encounters a conflict).
+ * When checking out a branch, cascadingly merge from the ancestor
+branches automatically. Conflict handling should work as in the previous
+point.
+
+The cascading merge should not check out master and the branches below
+it (unless necessary to resolve conflicts), in order to avoid rebuilds
+due to touched but unchanged files.
+
+Do these requirements make sense? Is there some existing tool with a
+similar workflow?
+
+BR - Jens
