@@ -1,186 +1,172 @@
 From: Brandon Casey <bcasey@nvidia.com>
-Subject: [PATCH v2 1/2] sha1_file: introduce close_one_pack() to close packs on fd pressure
-Date: Wed, 31 Jul 2013 12:51:36 -0700
-Message-ID: <1375300297-6744-1-git-send-email-bcasey@nvidia.com>
+Subject: [PATCH 2/2] Don't close pack fd when free'ing pack windows
+Date: Wed, 31 Jul 2013 12:51:37 -0700
+Message-ID: <1375300297-6744-2-git-send-email-bcasey@nvidia.com>
 References: <CA+sFfMe1GTDqtgGs3NXoB0OBYTtyHxLDYgy0TmOe+3r=tMXS0A@mail.gmail.com>
+ <1375300297-6744-1-git-send-email-bcasey@nvidia.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: <gitster@pobox.com>, <peff@peff.net>, <spearce@spearce.org>,
 	<sunshine@sunshineco.com>, Brandon Casey <drafnel@gmail.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 31 21:51:57 2013
+X-From: git-owner@vger.kernel.org Wed Jul 31 21:52:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4cRA-0005kq-AU
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 21:51:56 +0200
+	id 1V4cRF-0005oS-Uc
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Jul 2013 21:52:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754168Ab3GaTvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Jul 2013 15:51:52 -0400
-Received: from hqemgate16.nvidia.com ([216.228.121.65]:17243 "EHLO
-	hqemgate16.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753245Ab3GaTvv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jul 2013 15:51:51 -0400
-Received: from hqnvupgp08.nvidia.com (Not Verified[216.228.121.13]) by hqemgate16.nvidia.com
-	id <B51f96acd0000>; Wed, 31 Jul 2013 12:51:41 -0700
+	id S1757236Ab3GaTv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Jul 2013 15:51:56 -0400
+Received: from hqemgate15.nvidia.com ([216.228.121.64]:14388 "EHLO
+	hqemgate15.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753245Ab3GaTvz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jul 2013 15:51:55 -0400
+Received: from hqnvupgp07.nvidia.com (Not Verified[216.228.121.13]) by hqemgate15.nvidia.com
+	id <B51f96ad90000>; Wed, 31 Jul 2013 12:51:53 -0700
 Received: from hqemhub02.nvidia.com ([172.20.12.94])
-  by hqnvupgp08.nvidia.com (PGP Universal service);
-  Wed, 31 Jul 2013 12:50:25 -0700
+  by hqnvupgp07.nvidia.com (PGP Universal service);
+  Wed, 31 Jul 2013 12:51:54 -0700
 X-PGP-Universal: processed;
-	by hqnvupgp08.nvidia.com on Wed, 31 Jul 2013 12:50:25 -0700
+	by hqnvupgp07.nvidia.com on Wed, 31 Jul 2013 12:51:54 -0700
 Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub02.nvidia.com
  (172.20.150.31) with Microsoft SMTP Server id 8.3.298.1; Wed, 31 Jul 2013
- 12:51:50 -0700
+ 12:51:54 -0700
 X-Mailer: git-send-email 1.8.4.rc0.2.g6cf5c31
-In-Reply-To: <CA+sFfMe1GTDqtgGs3NXoB0OBYTtyHxLDYgy0TmOe+3r=tMXS0A@mail.gmail.com>
+In-Reply-To: <1375300297-6744-1-git-send-email-bcasey@nvidia.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231452>
 
 From: Brandon Casey <drafnel@gmail.com>
 
-When the number of open packs exceeds pack_max_fds, unuse_one_window()
-is called repeatedly to attempt to release the least-recently-used
-pack windows, which, as a side-effect, will also close a pack file
-after closing its last open window.  If a pack file has been opened,
-but no windows have been allocated into it, it will never be selected
-by unuse_one_window() and hence its file descriptor will not be
-closed.  When this happens, git may exceed the number of file
-descriptors permitted by the system.
+Now that close_one_pack() has been introduced to handle file
+descriptor pressure, it is not strictly necessary to close the
+pack file descriptor in unuse_one_window() when we're under memory
+pressure.
 
-This latter situation can occur in show-ref or receive-pack during ref
-advertisement.  During ref advertisement, receive-pack will iterate
-over every ref in the repository and advertise it to the client after
-ensuring that the ref exists in the local repository.  If the ref is
-located inside a pack, then the pack is opened to ensure that it
-exists, but since the object is not actually read from the pack, no
-mmap windows are allocated.  When the number of open packs exceeds
-pack_max_fds, unuse_one_window() will not be able to find any windows to
-free and will not be able to close any packs.  Once the per-process
-file descriptor limit is exceeded, receive-pack will produce a warning,
-not an error, for each pack it cannot open, and will then most likely
-fail with an error to spawn rev-list or index-pack like:
+Jeff King provided a justification for leaving the pack file open:
 
-   error: cannot create standard input pipe for rev-list: Too many open files
-   error: Could not run 'git rev-list'
+   If you close packfile descriptors, you can run into racy situations
+   where somebody else is repacking and deleting packs, and they go away
+   while you are trying to access them. If you keep a descriptor open,
+   you're fine; they last to the end of the process. If you don't, then
+   they disappear from under you.
 
-This may also occur during upload-pack when refs are packed (in the
-packed-refs file) and the number of packs that must be opened to
-verify that these packed refs exist exceeds the file descriptor limit.
-If the refs are loose, then upload-pack will read each ref from the
-pack (allocating one or more mmap windows) so it can peel tags and
-advertise the underlying object.  If the refs are packed and peeled,
-then upload-pack will use the peeled sha1 in the packed-refs file and
-will not need to read from the pack files, so no mmap windows will be
-allocated and just like with receive-pack, unuse_one_window() will
-never select these opened packs to close.
+   For normal object access, this isn't that big a deal; we just rescan
+   the packs and retry. But if you are packing yourself (e.g., because
+   you are a pack-objects started by upload-pack for a clone or fetch),
+   it's much harder to recover (and we print some warnings).
 
-When we have file descriptor pressure, in contrast to memory pressure,
-we need to free all windows and close the pack file descriptor so that
-a new pack can be opened.  Let's introduce a new function
-close_one_pack() designed specifically for this purpose to search
-for and close the least-recently-used pack, where LRU is defined as
-
-   * pack with oldest mtime and no allocated mmap windows or
-   * pack with the least-recently-used windows, i.e. the pack
-     with the oldest most-recently-used window
+Let's do so (or uh, not do so).
 
 Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
+ builtin/pack-objects.c |  2 +-
+ git-compat-util.h      |  2 +-
+ sha1_file.c            | 21 +++++++--------------
+ 3 files changed, 9 insertions(+), 16 deletions(-)
 
-The commit message was updated to fix the grammatical error that Eric
-Sunshine pointed out, and to correct the paragraph about upload-pack.
-
--Brandon
-
- sha1_file.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 62 insertions(+), 1 deletion(-)
-
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index f069462..4eb0521 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1809,7 +1809,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+ static void try_to_free_from_threads(size_t size)
+ {
+ 	read_lock();
+-	release_pack_memory(size, -1);
++	release_pack_memory(size);
+ 	read_unlock();
+ }
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index cc4ba4d..29b1ee3 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -517,7 +517,7 @@ int inet_pton(int af, const char *src, void *dst);
+ const char *inet_ntop(int af, const void *src, char *dst, size_t size);
+ #endif
+ 
+-extern void release_pack_memory(size_t, int);
++extern void release_pack_memory(size_t);
+ 
+ typedef void (*try_to_free_t)(size_t);
+ extern try_to_free_t set_try_to_free_routine(try_to_free_t);
 diff --git a/sha1_file.c b/sha1_file.c
-index 8e27db1..7731ab1 100644
+index 7731ab1..d26121a 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -682,6 +682,67 @@ void close_pack_windows(struct packed_git *p)
+@@ -614,7 +614,7 @@ static void scan_windows(struct packed_git *p,
  	}
  }
  
-+/*
-+ * The LRU pack is the one with the oldest MRU window or the oldest mtime
-+ * if it has no windows allocated.
-+ */
-+static void find_lru_pack(struct packed_git *p, struct packed_git **lru_p, struct pack_window **mru_w)
-+{
-+	struct pack_window *w, *this_mru_w;
-+
-+	/*
-+	 * Reject this pack if it has windows and the previously selected
-+	 * one does not.  If this pack does not have windows, reject
-+	 * it if the pack file is newer than the previously selected one.
-+	 */
-+	if (*lru_p && !*mru_w && (p->windows || p->mtime > (*lru_p)->mtime))
-+		return;
-+
-+	for (w = this_mru_w = p->windows; w; w = w->next) {
-+		/* Reject this pack if any of its windows are in use */
-+		if (w->inuse_cnt)
-+			return;
-+		/*
-+		 * Reject this pack if it has windows that have been
-+		 * used more recently than the previously selected pack.
-+		 */
-+		if (*mru_w && w->last_used > (*mru_w)->last_used)
-+			return;
-+		if (w->last_used > this_mru_w->last_used)
-+			this_mru_w = w;
-+	}
-+
-+	/*
-+	 * Select this pack.
-+	 */
-+	*mru_w = this_mru_w;
-+	*lru_p = p;
-+}
-+
-+static int close_one_pack(void)
-+{
-+	struct packed_git *p, *lru_p = NULL;
-+	struct pack_window *mru_w = NULL;
-+
-+	for (p = packed_git; p; p = p->next) {
-+		if (p->pack_fd == -1)
-+			continue;
-+		find_lru_pack(p, &lru_p, &mru_w);
-+	}
-+
-+	if (lru_p) {
-+		close_pack_windows(lru_p);
-+		close(lru_p->pack_fd);
-+		pack_open_fds--;
-+		lru_p->pack_fd = -1;
-+		if (lru_p == last_found_pack)
-+			last_found_pack = NULL;
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
- void unuse_pack(struct pack_window **w_cursor)
+-static int unuse_one_window(struct packed_git *current, int keep_fd)
++static int unuse_one_window(struct packed_git *current)
  {
- 	struct pack_window *w = *w_cursor;
-@@ -777,7 +838,7 @@ static int open_packed_git_1(struct packed_git *p)
- 			pack_max_fds = 1;
- 	}
+ 	struct packed_git *p, *lru_p = NULL;
+ 	struct pack_window *lru_w = NULL, *lru_l = NULL;
+@@ -628,15 +628,8 @@ static int unuse_one_window(struct packed_git *current, int keep_fd)
+ 		pack_mapped -= lru_w->len;
+ 		if (lru_l)
+ 			lru_l->next = lru_w->next;
+-		else {
++		else
+ 			lru_p->windows = lru_w->next;
+-			if (!lru_p->windows && lru_p->pack_fd != -1
+-				&& lru_p->pack_fd != keep_fd) {
+-				close(lru_p->pack_fd);
+-				pack_open_fds--;
+-				lru_p->pack_fd = -1;
+-			}
+-		}
+ 		free(lru_w);
+ 		pack_open_windows--;
+ 		return 1;
+@@ -644,10 +637,10 @@ static int unuse_one_window(struct packed_git *current, int keep_fd)
+ 	return 0;
+ }
  
--	while (pack_max_fds <= pack_open_fds && unuse_one_window(NULL, -1))
-+	while (pack_max_fds <= pack_open_fds && close_one_pack())
+-void release_pack_memory(size_t need, int fd)
++void release_pack_memory(size_t need)
+ {
+ 	size_t cur = pack_mapped;
+-	while (need >= (cur - pack_mapped) && unuse_one_window(NULL, fd))
++	while (need >= (cur - pack_mapped) && unuse_one_window(NULL))
  		; /* nothing */
+ }
  
- 	p->pack_fd = git_open_noatime(p->pack_name);
+@@ -658,7 +651,7 @@ void *xmmap(void *start, size_t length,
+ 	if (ret == MAP_FAILED) {
+ 		if (!length)
+ 			return NULL;
+-		release_pack_memory(length, fd);
++		release_pack_memory(length);
+ 		ret = mmap(start, length, prot, flags, fd, offset);
+ 		if (ret == MAP_FAILED)
+ 			die_errno("Out of memory? mmap failed");
+@@ -954,7 +947,7 @@ unsigned char *use_pack(struct packed_git *p,
+ 			win->len = (size_t)len;
+ 			pack_mapped += win->len;
+ 			while (packed_git_limit < pack_mapped
+-				&& unuse_one_window(p, p->pack_fd))
++				&& unuse_one_window(p))
+ 				; /* nothing */
+ 			win->base = xmmap(NULL, win->len,
+ 				PROT_READ, MAP_PRIVATE,
+@@ -1000,7 +993,7 @@ static struct packed_git *alloc_packed_git(int extra)
+ 
+ static void try_to_free_pack_memory(size_t size)
+ {
+-	release_pack_memory(size, -1);
++	release_pack_memory(size);
+ }
+ 
+ struct packed_git *add_packed_git(const char *path, int path_len, int local)
 -- 
 1.8.4.rc0.2.g6cf5c31
 
