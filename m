@@ -1,105 +1,70 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH v2 1/2] sha1_file: introduce close_one_pack() to close
- packs on fd pressure
-Date: Thu, 1 Aug 2013 13:37:31 -0700
-Message-ID: <CA+sFfMdJgQaEBx_FsYPz1rC3--jknnb4Zwr+FOaL+9gNe4xwyw@mail.gmail.com>
-References: <CA+sFfMe1GTDqtgGs3NXoB0OBYTtyHxLDYgy0TmOe+3r=tMXS0A@mail.gmail.com>
-	<1375300297-6744-1-git-send-email-bcasey@nvidia.com>
-	<7vsiyts5bb.fsf@alter.siamese.dyndns.org>
-	<CA+sFfMdp9j4LL4eocbsJu5DCEfhoE=uEN_wJ3o8VBW+hUVFVLQ@mail.gmail.com>
-	<7v4nb9s1az.fsf@alter.siamese.dyndns.org>
-	<CA+sFfMer+5bhqxF=_zAQhZ+8sQD6EAYb8HBtYpuhQY_0uj-m9A@mail.gmail.com>
-	<7vy58lqiwd.fsf@alter.siamese.dyndns.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: What's cooking in git.git (Jul 2013, #09; Mon, 29)
+Date: Thu, 01 Aug 2013 21:51:51 +0100
+Message-ID: <51FACA67.8090207@ramsay1.demon.co.uk>
+References: <7vk3k9yol3.fsf@alter.siamese.dyndns.org> <51F94DFD.5020101@ramsay1.demon.co.uk> <7v4nbav9ys.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Brandon Casey <bcasey@nvidia.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, tboegi@web.de, mhagger@alum.mit.edu,
+	mlevedahl@gmail.com, Jeff King <peff@peff.net>,
+	Johannes Sixt <j6t@kdbg.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 01 22:37:40 2013
+X-From: git-owner@vger.kernel.org Thu Aug 01 22:53:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4zcx-0008TI-JH
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 22:37:39 +0200
+	id 1V4zsV-0000BV-Ff
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 22:53:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756225Ab3HAUhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Aug 2013 16:37:34 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:46348 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752788Ab3HAUhd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Aug 2013 16:37:33 -0400
-Received: by mail-wi0-f174.google.com with SMTP id j17so17220wiw.13
-        for <git@vger.kernel.org>; Thu, 01 Aug 2013 13:37:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Vb6tTyF38eI36WHm06CLdM69zDkBVQMmMHOeYl4ktb4=;
-        b=PYXSp8FDF3tFTzk+1ukPfwMlOmuRW0N1Ff/30c89yJr1yvEGWfKgzX99HDdwNvAPXm
-         ZDO9h0kZbFF/XESY0he+4eao+cINR+q1dhY3VhXiVuM1hqX9PIH9oa7p1rsD0zmE6sNS
-         gyUff+FZqMg6KWXJCNeXUBwEdjj6hgG7Iunc/wmxrZIrvUM7MGb71QFB/ybTYjzyjDbN
-         wTHo/N9aY7iXqdP4V063MvE+Q+IP3MV1H2u4wJt/cdOklT+mYoC8oBc21l1O8R/30/og
-         nr5UBKf5mP/ObnuBVECw5MBoL8RAVyob7PAhVKk9Mf/imkfrAYgNf9lTyB3SA5UMxnnF
-         sgcw==
-X-Received: by 10.194.60.5 with SMTP id d5mr2711150wjr.26.1375389451729; Thu,
- 01 Aug 2013 13:37:31 -0700 (PDT)
-Received: by 10.194.81.102 with HTTP; Thu, 1 Aug 2013 13:37:31 -0700 (PDT)
-In-Reply-To: <7vy58lqiwd.fsf@alter.siamese.dyndns.org>
+	id S1753996Ab3HAUxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Aug 2013 16:53:39 -0400
+Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:38315 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751877Ab3HAUxi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Aug 2013 16:53:38 -0400
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 1DF0CA64D24;
+	Thu,  1 Aug 2013 21:53:37 +0100 (BST)
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 75A57A64CB2;
+	Thu,  1 Aug 2013 21:53:36 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
+	Thu,  1 Aug 2013 21:53:31 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <7v4nbav9ys.fsf@alter.siamese.dyndns.org>
+X-MDF-HostID: 8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231505>
 
-On Thu, Aug 1, 2013 at 1:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Brandon Casey <drafnel@gmail.com> writes:
->
->> On Thu, Aug 1, 2013 at 11:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> That makes me feel somewhat uneasy.  Yes, you can open/mmap/close
->>> and hold onto the contents of a file still mapped in-core, and it
->>> may not count as "open filedescriptor", but do OSes allow infinite
->>> such mmapped regions to us?  We do keep track of number of open
->>> windows, but is there a way for us to learn how close we are to the
->>> limit?
+Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+> 
+>>>  I am personally in favor of this simpler solution.  Comments?
 >>
->> Not that I know of, but xmmap() does already try to unmap existing
->> windows when mmap() fails, and then retries the mmap.  It calls
->> release_pack_memory() which calls unuse_one_window().  mmap returns
->> ENOMEM when either there is no available memory or if the limit of
->> mmap mappings has been exceeded.
->
-> OK, so if there were such an OS limit, the unuse_one_window() will
-> hopefully reduce the number of open windows and as a side effect we
-> may go below that limit.
->
-> What I was worried about was if there was a limit on the number of
-> files we have windows into (i.e. having one window each in N files,
-> with fds all closed, somehow costs more than having N window in one
-> file with the fd closed).
+>> I had expected this to me marked for 'master'.
+>>
+>> Has this simply been overlooked, or do you have reservations about
+>> applying this patch?
+> 
+> I am just being careful and do want to keep it cooking in 'next'
+> during the feature freeze.  The more users work with 'next' (not
+> "work *on* 'next'"), the more confidence we would be with, and
+> hopefully this can be one of the topis that graduate early after
+> the 1.8.4 release.
 
-Ah, yeah, I've never heard of that type of limit and I do not know if
-there is one.
+Hmm, this patch is a bug-fix for a bug that (currently) will be
+_introduced_ by v1.8.4.
 
-If there is such a limit, like you said unuse_one_window() will
-_hopefully_ release enough windows to reduce the number of packs we
-have windows into, but it is certainly not guaranteed.
+Do you want me to try and find a different bug-fix for v1.8.4?
+(Although that would most likely be more risky than simply taking
+this patch! ;-) ).
 
-> We currently have knobs for total number
-> of windows and number of open fds consumed for packs, and the latter
-> indirectly controls the number of active packfiles we have windows
-> into. Your proposed change will essentially make the number of
-> active packfiles unlimited by any of our knobs, and that was where
-> my uneasiness was coming from.
-
-Yes and no.  The limit on the number of open fds used for packs only
-indirectly controls the number of active packfiles we have windows
-into for the packs that are larger than packedGitWindowSize.  For pack
-files smaller than packedGitWindowSize, the number was unlimited too
-since we close the file descriptor if the whole pack fits within one
-window.
-
--Brandon
+ATB,
+Ramsay Jones
