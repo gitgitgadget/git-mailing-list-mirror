@@ -1,79 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] sha1_file: introduce close_one_pack() to close packs on fd pressure
-Date: Thu, 01 Aug 2013 11:39:32 -0700
-Message-ID: <7v4nb9s1az.fsf@alter.siamese.dyndns.org>
-References: <CA+sFfMe1GTDqtgGs3NXoB0OBYTtyHxLDYgy0TmOe+3r=tMXS0A@mail.gmail.com>
-	<1375300297-6744-1-git-send-email-bcasey@nvidia.com>
-	<7vsiyts5bb.fsf@alter.siamese.dyndns.org>
-	<CA+sFfMdp9j4LL4eocbsJu5DCEfhoE=uEN_wJ3o8VBW+hUVFVLQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <bcasey@nvidia.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 01 20:39:53 2013
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: [PATCH v3] Provide some linguistic guidance for the documentation.
+Date: Thu,  1 Aug 2013 14:49:54 -0400
+Message-ID: <1375382994-30010-1-git-send-email-marcnarc@xiplink.com>
+References: <7vfvuts25p.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Fredrik Gustafsson <iveqy@iveqy.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 01 20:49:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4xmy-00060y-Ng
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 20:39:53 +0200
+	id 1V4xwc-0006uK-AL
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 20:49:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756732Ab3HASjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Aug 2013 14:39:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35016 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754478Ab3HASjk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Aug 2013 14:39:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D66335C15;
-	Thu,  1 Aug 2013 18:39:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dUWPkcCB+Qgou5y4zv7WMzwmQ3A=; b=ZzJv98
-	ZOafX59HjTyTKinX8h/RjtKt9VFLA0Z6+UCDfh5xy1Va3rJZ6KjnybfjBbVatAO7
-	tZdyhgBb7CqflH7bJAnOk0FwXwo5gMkgmv5Du72IKEEaTRJhaIaepIOhLGOuCkHa
-	RZu7IzLMSwpxNCwKD9THGHCSL1x3sf4wrrks0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VsUq47BjApkDLPgqdyBHvCDdCcALIbCF
-	IGjDrwR9NIn1C0aSRnZOomUOATZejz6OM31lu7V6RuVg8eeZrc3n6JaMPwTOIzoh
-	9UDFardcq6rbaNGbXr/d5/hzGDJL11lxqtSbyUNbXE+A2QJa4i4uTTjzQZfzUtNj
-	CxHGL8023eM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 09E6835C14;
-	Thu,  1 Aug 2013 18:39:39 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 672C535BF7;
-	Thu,  1 Aug 2013 18:39:34 +0000 (UTC)
-In-Reply-To: <CA+sFfMdp9j4LL4eocbsJu5DCEfhoE=uEN_wJ3o8VBW+hUVFVLQ@mail.gmail.com>
-	(Brandon Casey's message of "Thu, 1 Aug 2013 11:01:52 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B6228A0C-FAD9-11E2-BD9F-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755705Ab3HAStq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Aug 2013 14:49:46 -0400
+Received: from 175-249-254-64.static.cogecodata.net ([64.254.249.175]:17288
+	"EHLO cubert.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753812Ab3HAStq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Aug 2013 14:49:46 -0400
+Received: from xiplink.com (rincewind.xiplink.com [10.10.1.32])
+	by cubert.xiplink.com (Postfix) with ESMTP id 7A65460051;
+	Thu,  1 Aug 2013 14:49:44 -0400 (EDT)
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <7vfvuts25p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231499>
 
-Brandon Casey <drafnel@gmail.com> writes:
+This will hopefully avoid questions over which spelling and grammar should
+be used.  Translators are of course free to create localizations for
+specific English dialects.
 
-> I've been looking closer at uses of p->windows everywhere, and it
-> seems that we always open_packed_git() before we try to create new
-> windows.  There doesn't seem to be any reason that we can't continue
-> to use the existing open windows even after closing the pack file.
-> ...
-> If we don't need to close_pack_windows(), find_lru_pack() doesn't
-> strictly need to reject packs that have windows in use.
+Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
+---
 
-That makes me feel somewhat uneasy.  Yes, you can open/mmap/close
-and hold onto the contents of a file still mapped in-core, and it
-may not count as "open filedescriptor", but do OSes allow infinite
-such mmapped regions to us?  We do keep track of number of open
-windows, but is there a way for us to learn how close we are to the
-limit?
+On 13-08-01 02:21 PM, Junio C Hamano wrote:
+> Marc Branchaud <marcnarc@xiplink.com> writes:
+> 
+>> + The documentation generally follows US English (en_US) norms for spelling
+>> + and grammar, although most spelling variations are tolerated.  Just avoid
+>> + mixing styles when updating existing text.  If you wish to correct the
+>> + English of some of the existing documentation, please see the documentation-
+>> + related advice in the Documentation/SubmittingPatches file.
+> 
+> Is that accurate?  My impression has been:
+> 
+>     The documentation liberally mixes US and UK English (en_US/UK)
+>     norms for spelling and grammar, which is somewhat unfortunate.
+>     In an ideal world, it would have been better if it consistently
+>     used only one and not the other, and we would have picked en_US.
+> 
+>     A huge patch that touches the files all over the place only to
+>     correct the inconsistency is not welcome, though.  Potential
+>     clashes with other changes that can result from such a patch is
+>     simply not worth it.  What we would want is to gradually convert
+>     them, with small and easily digestable patches, as a side effect
+>     of doing some other _real_ work in the vicinity (e.g. rewriting
+>     a paragraph to clarify, while turning en_UK spelling to en_US).
+
+I was focused more on just describing what the documentation should be rather than what it is.  I don't feel strongly about it & I think your phrasing is fine.  I do think the topic needs to be in both CodingGuidelines and SubmittingPatches.  How about this?
+
+(The SubmittingPatches change also switches "I am " to "we are" in the following paragraph, because I found the jump a bit too jarring.)
+
+		M.
+
+
+ Documentation/CodingGuidelines  |  8 ++++++++
+ Documentation/SubmittingPatches | 14 +++++++++++++-
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 559d5f9..8acf557 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -242,6 +242,14 @@ Writing Documentation:
+  processed into HTML and manpages (e.g. git.html and git.1 in the
+  same directory).
+ 
++ The documentation liberally mixes US and UK English (en_US/UK)
++ norms for spelling and grammar, which is somewhat unfortunate.
++ In an ideal world, it would have been better if it consistently
++ used only one and not the other, and we would have picked en_US.
++ (If you wish to correct the English of some of the existing
++ documentation, please see the documentation-related advice in the
++ Documentation/SubmittingPatches file.)
++
+  Every user-visible change should be reflected in the documentation.
+  The same general rule as for code applies -- imitate the existing
+  conventions.  A few commented examples follow to provide reference
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index d0a4733..b3477ba 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -65,7 +65,19 @@ feature does not trigger when it shouldn't.  Also make sure that the
+ test suite passes after your commit.  Do not forget to update the
+ documentation to describe the updated behaviour.
+ 
+-Oh, another thing.  I am picky about whitespaces.  Make sure your
++Speaking of the documentation, it is currently a liberal mixture of US
++and UK English norms for spelling and grammar.  A huge patch that
++touches the files all over the place only to correct the inconsistency
++is not welcome, though.  Potential clashes with other changes that can
++result from such a patch are simply not worth it.  We prefer to
++gradually reconcile the inconsistencies (in favor of US English), with
++small and easily digestible patches, as a side effect of doing some
++other real work in the vicinity (e.g. rewriting a paragraph for clarity,
++while turning en_UK spelling to en_US).  Obvious typographical fixes are
++also welcome ("teh -> "the"), preferably submitted as independent patches
++separate from other documentation changes.
++
++Oh, another thing.  We are picky about whitespaces.  Make sure your
+ changes do not trigger errors with the sample pre-commit hook shipped
+ in templates/hooks--pre-commit.  To help ensure this does not happen,
+ run git diff --check on your changes before you commit.
+-- 
+1.8.3.1
