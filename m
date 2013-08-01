@@ -1,104 +1,87 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Re: Difficulty adding a symbolic link, part 3
-Date: Thu, 1 Aug 2013 11:00:03 -0400
-Message-ID: <201308011500.r71F03HJ008579@freeze.ariadne.com>
-References: <201307312029.r6VKT4vC023100@hobgoblin.ariadne.com> <CACsJy8DZ11zFEgL_vZ-kG2tuwodU=vBJZqZxUPWtYh9u8o-_Tg@mail.gmail.com>
-Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 01 17:00:48 2013
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: [PATCH v2] Provide some linguistic guidance for the documentation.
+Date: Thu,  1 Aug 2013 11:10:25 -0400
+Message-ID: <1375369825-28636-1-git-send-email-marcnarc@xiplink.com>
+References: <1375197114-10742-1-git-send-email-marcnarc@xiplink.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Fredrik Gustafsson <iveqy@iveqy.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 01 17:10:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V4uMQ-0003l6-MC
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 17:00:15 +0200
+	id 1V4uWF-0003fw-EE
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Aug 2013 17:10:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756811Ab3HAPAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Aug 2013 11:00:07 -0400
-Received: from qmta01.westchester.pa.mail.comcast.net ([76.96.62.16]:46150
-	"EHLO qmta01.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755727Ab3HAPAF (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Aug 2013 11:00:05 -0400
-Received: from omta13.westchester.pa.mail.comcast.net ([76.96.62.52])
-	by qmta01.westchester.pa.mail.comcast.net with comcast
-	id 7Sa01m00617dt5G51T0490; Thu, 01 Aug 2013 15:00:04 +0000
-Received: from freeze.ariadne.com ([24.34.72.61])
-	by omta13.westchester.pa.mail.comcast.net with comcast
-	id 7T041m0021KKtkw3ZT04us; Thu, 01 Aug 2013 15:00:04 +0000
-Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
-	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r71F03Bt008580;
-	Thu, 1 Aug 2013 11:00:03 -0400
-Received: (from worley@localhost)
-	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r71F03HJ008579;
-	Thu, 1 Aug 2013 11:00:03 -0400
-In-reply-to: <CACsJy8DZ11zFEgL_vZ-kG2tuwodU=vBJZqZxUPWtYh9u8o-_Tg@mail.gmail.com>
-	(pclouds@gmail.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1375369204;
-	bh=6bKY/RyczIV+FSjasfIk8tvLKHEJpQmJNDXRKJgQtag=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=lNI/0UMXFNeryRSaieutpi4U2Z29b+T2nVM2ABfFz2zAgyGIDZCZCC8Cr9+6z44FB
-	 NqJvDzNlQrWBxdSlS0mf7JXKxJq84KdC6l1TxznbDZQb5bO/3qPxr8K+pIyf7HCM0O
-	 L+HTyRcfC8njAUDJIRtSEmn/FVWTIuGJXrUjEIb94HPLW602LGZzrV9ODh4CPHZlNp
-	 PKFf1psseyOQL32TBVI1NSMlmnh+DwbFSjZRqfdYYDHU3fOKYRnY7npRN6WSHWriz+
-	 sZum1Njipt7krFLn57jG2/kcQRbLiuVT1ucJdmx42emV7vuT05/VydgYKXY1YJR7a6
-	 pgKBiM+Ip0OqA==
+	id S1755405Ab3HAPKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Aug 2013 11:10:18 -0400
+Received: from 175-249-254-64.static.cogecodata.net ([64.254.249.175]:33217
+	"EHLO cubert.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754889Ab3HAPKR (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Aug 2013 11:10:17 -0400
+Received: from xiplink.com (rincewind.xiplink.com [10.10.1.32])
+	by cubert.xiplink.com (Postfix) with ESMTP id E7FCB60051;
+	Thu,  1 Aug 2013 11:10:14 -0400 (EDT)
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1375197114-10742-1-git-send-email-marcnarc@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231488>
 
-> From: Duy Nguyen <pclouds@gmail.com>
+This will hopefully avoid questions over which spelling and grammar should
+be used.  Translators are of course free to create localizations for other
+specific English dialects.
 
-> > Can someone give me advice on what this code *should* do?
-> 
-> It does as the function name says: given cwd, a prefix (i.e. a
-> relative path with no ".." components) and a path relative to
-> cwd+prefix, convert 'path' to something relative to cwd. In the
-> simplest case, prepending the prefix to 'path' is enough. cwd is also
-> get_git_work_tree().
-> 
-> I agree with you that this code should not resolve anything in the
-> components after 'cwd', after rebasing the path to 'cwd' (not just the
-> final component). Not sure how to do it correctly though because we do
-> need to resolve symlinks before cwd. Maybe a new variant of real_path
-> that stops at 'cwd'?
-> 
-> We may also have problems with resolve symlinks before cwd when 'path'
-> is relative, as normalize_path_copy() does not resolve symlinks. We
-> just found out emacs has this bug [1] but did not realize we also have
-> one :-P.
+Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
+---
 
-Thanks for the detailed information.  It seems to me that the minimum
-needed change is that the handling of relative and absolute paths
-should be made consistent.
+A little less stringent now.
 
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/231268
+ Documentation/CodingGuidelines  |  6 ++++++
+ Documentation/SubmittingPatches | 10 ++++++++++
+ 2 files changed, 16 insertions(+)
 
-That problem isn't so much a matter of not resolving symlinks but
-rather the question of what ".." means.  In the case shown in that
-message, the current directory *is* {topdir}/z/b, but it was entered
-with "cd {topdir}/b" -- and the shell records the latter as the value
-of $PWD.  (Actually, the bash shell can handle symbolic-linked
-directories *either* way, depending on whether it is given the "-P"
-option.)
-
-When Emacs is given the file name "../a/file", does the ".." mean to
-go up one directory *textually* in the pathspec based on $PWD
-
-"{topdir}/b/../a/file" -> "{topdir}/a/file" (which does not exist)
-
-or according to the directory linkage on the disk (where the ".."
-entry in the current directory goes to the directory named {topdir}/z,
-which does contain a file a/file.  It looks like Emacs uses the first
-method.
-
-The decision of which implementation to use depends on the semantics
-you *want*.  As I noted, bash allows the user to choose *either*
-interpretation, which shows that both semantics are considered valid
-(by some people).
-
-Dale
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 559d5f9..fc397f3 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -242,6 +242,12 @@ Writing Documentation:
+  processed into HTML and manpages (e.g. git.html and git.1 in the
+  same directory).
+ 
++ The documentation generally follows US English (en_US) norms for spelling
++ and grammar, although most spelling variations are tolerated.  Just avoid
++ mixing styles when updating existing text.  If you wish to correct the
++ English of some of the existing documentation, please see the documentation-
++ related advice in the Documentation/SubmittingPatches file.
++
+  Every user-visible change should be reflected in the documentation.
+  The same general rule as for code applies -- imitate the existing
+  conventions.  A few commented examples follow to provide reference
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index d0a4733..998e407 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -65,6 +65,16 @@ feature does not trigger when it shouldn't.  Also make sure that the
+ test suite passes after your commit.  Do not forget to update the
+ documentation to describe the updated behaviour.
+ 
++Speaking of the documentation, if you are attempting to correct typographical
++or grammatical errors use one patch for indisputably correct changes (e.g.
++"teh" -> "the") and put subjective/stylistic changes in a separate patch.
++This helps to streamline reviews of your patches.  Also, although the
++documentation is mainly written in US English, most non-US spelling variants
++are acceptable.  Patches that change one common spelling to another (such as
++changing "behaviour" to "behavior") are generally not helpful, as
++oftentimes a few months later some generous soul will want to change the
++spelling the other way.
++
+ Oh, another thing.  I am picky about whitespaces.  Make sure your
+ changes do not trigger errors with the sample pre-commit hook shipped
+ in templates/hooks--pre-commit.  To help ensure this does not happen,
+-- 
+1.8.3.1
