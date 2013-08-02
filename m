@@ -1,90 +1,95 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH v2] Provide some linguistic guidance for the documentation.
-Date: Fri, 02 Aug 2013 10:16:34 -0400
-Message-ID: <51FBBF42.5040102@xiplink.com>
-References: <1375197114-10742-1-git-send-email-marcnarc@xiplink.com> <1375369825-28636-1-git-send-email-marcnarc@xiplink.com> <7vfvuts25p.fsf@alter.siamese.dyndns.org> <20130802062511.GA3013@elie.Belkin>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: [regression] Re: git-cat-file --batch reversion; cannot query
+ filenames with spaces
+Date: Fri, 2 Aug 2013 11:27:13 -0400
+Message-ID: <20130802152713.GA23548@gnu.kitenet.net>
+References: <20130801201842.GA16809@kitenet.net>
+ <20130802064003.GB3013@elie.Belkin>
+ <20130802105402.GA25697@sigill.intra.peff.net>
+ <20130802115906.GA9183@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Fredrik Gustafsson <iveqy@iveqy.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 02 16:16:47 2013
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="bg08WKrSYDhXBjb5"
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 02 17:35:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5G9t-0003SZ-Aj
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Aug 2013 16:16:45 +0200
+	id 1V5HOS-0007aS-8u
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Aug 2013 17:35:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753413Ab3HBOQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Aug 2013 10:16:41 -0400
-Received: from smtp138.ord.emailsrvr.com ([173.203.6.138]:57299 "EHLO
-	smtp138.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750948Ab3HBOQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Aug 2013 10:16:41 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp10.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 5A93D3701C7;
-	Fri,  2 Aug 2013 10:16:40 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp10.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id DCE9D370186;
-	Fri,  2 Aug 2013 10:16:39 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <20130802062511.GA3013@elie.Belkin>
+	id S1753806Ab3HBPfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Aug 2013 11:35:48 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:60265 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751829Ab3HBPfr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Aug 2013 11:35:47 -0400
+X-Greylist: delayed 510 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Aug 2013 11:35:47 EDT
+Received: from gnu.kitenet.net (cl-539.chi-02.us.sixxs.net [IPv6:2001:4978:f:21a::2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(Client CN "Joey Hess", Issuer "Joey Hess" (not verified))
+	by kitenet.net (Postfix) with ESMTPS id F21CA11958D;
+	Fri,  2 Aug 2013 11:27:15 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id C2A404827C; Sat,  3 Aug 2013 01:27:13 +1000 (EST)
+Content-Disposition: inline
+In-Reply-To: <20130802115906.GA9183@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231526>
 
-On 13-08-02 02:25 AM, Jonathan Nieder wrote:
-> Junio C Hamano wrote:
->
->> Is that accurate?  My impression has been:
->>
->>      The documentation liberally mixes US and UK English (en_US/UK)
->>      norms for spelling and grammar, which is somewhat unfortunate.
->>      In an ideal world, it would have been better if it consistently
->>      used only one and not the other, and we would have picked en_US.
->
-> I'm not convinced that would be better, even in an ideal world.
->
-> It's certainly useful to have a consistent spelling of each term to
-> make searching with "grep" easier.  But searches with "grep" do not
-> work well with line breaks anyway, and search engines for larger
-> collections of documents seem to know about the usual spelling
-> variants (along with knowing about stemming, etc).  Unless we are
-> planning to provide a separate en_GB translation, it seems unfortunate
-> to consistently have everything spelled in the natural way for one
-> group of people and in an unnatural way for another, just in the name
-> of having a convention.
 
-Personally I find it distracting when the norms are mixed.  I don't 
-think the current mishmash pleases anyone (as evidenced by the steady 
-stream of patches that change spellings).
+--bg08WKrSYDhXBjb5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I am not sure it makes sense for the documentation to say "A huge
-> disruptive patch of such-and-such specific kind of no immediate
-> benefit is unwelcome".  Isn't there some more general principle that
-> implies that?  Or the CodingGuidelines could simply say
->
-> 	The documentation uses a mixture of U.S. and British English.
+Jeff King wrote:
+> By the way, Joey, I am not sure how safe "git cat-file --batch-check" is
+> for arbitrary filenames. In particular, I don't know how it would react
+> to a filename with an embedded newline (and I do not think it will undo
+> quoting). Certainly that does not excuse this regression; even if what
+> you are doing is not 100% reliable, it is good enough in sane situations
+> and we should not be breaking it. But you may want to double-check the
+> behavior of your scripts in such a case, and we may need to add a "-z"
+> to support it reliably.
 
-I'm hoping this patch will help the list avoid seeing patches that 
-merely flip between alternate spellings.  (Perhaps the commit message 
-should state this?)  I think it's important to be clear about the kind 
-of work the git community wants to see.  So I don't think that single 
-sentence by itself would be helpful.
+Yes, I would prefer to have a -z mode. I think my code otherwise handles
+newlines.
 
-In the case of alternate spellings in the documentation, I think there's 
-a temptation to create a blanket patch that "fixes" lots of perceived 
-misspellings since such changes are mere typographic tweaks.  It's a bit 
-easy to overlook the disruptive nature of such a patch, so IMO it bears 
-repeating here.
+Thanks for the quick fix. I agree that only enabling the behavior with
+%{rest} makes sense.
 
-Are you suggesting maybe that there should be no "official" dialect? 
-That the guidance should simply say that we don't want to see patches 
-that merely flip between alternate spellings (because we don't really care)?
+--=20
+see shy jo
 
-		M.
+--bg08WKrSYDhXBjb5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIVAwUBUfvPzskQ2SIlEuPHAQgqxQ/9ELzVISADWa1CL99jgm9yhdI2k4z9o0JR
+4ls3PAYVPTgOfIltpV9+JDWy32Wx8PMN/trLFhp5QgzC3YJ7SxgKpZKTVN7MnafE
+ANgBKhk879d+vLMk3C8Fg7oEzbJhkzUy+2FQisn+7i6dwG7akgK44hj8QInskA3/
+F9pXaZMGLJ9/hsJDjSTUZe1RFhW5qkmHO/CDYVzraG+vr5XDTI0yRk9LUAEjhEwi
+PHa/lYkt2x6D4XO706XYKg56Br++cQFNgjG8bXsN+acpXAUAfDQMJxGXFeO7hszY
+n56hGIUYTL0YwYfd88wEh9+smpjtHdQq9lgHvVgYbzTGE+BcIpakbG1rzO1I6t3o
+V737DslV75s4//fPBcsoFmE3U9QS8SNDPNsUOfZbxgoU53bG4cnrmBP4KK6CCxmG
+XAUtd2sYsZcM9O0SkYJIYeclCkDfOZfbafkBbb9lMTdwUqV3Xn14Dlxz/TUEBJvh
+v0tBhT6+LMMm9ZAwZx0P9QL5yEeM6VzD0EjmloKs6v5Hc4h3FYdb4qC9HGxuLCXr
+ungVML2sl0PDXym3/dfCWnT5mKN5jjDolg2QDC3zjoFCc/8LzmFAdLuVNAt5gzjN
+3Cf2ihK8aNLjn2Egnx354lXscLU1fxXdPrz/Icw/UpdSdydqoh7HS0LG9ROScOMY
+Jr2h60xJShQ=
+=vIwY
+-----END PGP SIGNATURE-----
+
+--bg08WKrSYDhXBjb5--
