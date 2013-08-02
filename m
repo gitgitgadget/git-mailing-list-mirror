@@ -1,112 +1,89 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] git-p4: use "p4 fstat" to interpret View setting
-Date: Fri, 2 Aug 2013 17:53:59 -0400
-Message-ID: <20130802215359.GB9142@padd.com>
-References: <CACGba4yGZDnr-1R-6k-sZoh4P=fu9M0bsmH3uoqj3tXUPsZRYw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: Re: Making a patch:  "git format-patch" does not produce the
+ documented format
+Date: Fri, 2 Aug 2013 18:11:29 -0400
+Message-ID: <201308022211.r72MBT9G020153@freeze.ariadne.com>
+References: <201307312131.r6VLVliK028321@hobgoblin.ariadne.com> <20130731214818.GP2337@serenity.lan>
 Cc: git@vger.kernel.org
-To: kazuki saitoh <ksaitoh560@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 02 23:54:09 2013
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sat Aug 03 00:12:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5NIW-0001q1-TW
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Aug 2013 23:54:09 +0200
+	id 1V5NZm-0004RO-Gq
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 00:11:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753896Ab3HBVyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Aug 2013 17:54:04 -0400
-Received: from honk.padd.com ([74.3.171.149]:53441 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752994Ab3HBVyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Aug 2013 17:54:03 -0400
-Received: from arf.padd.com (unknown [50.105.10.190])
-	by honk.padd.com (Postfix) with ESMTPSA id 06F9A2B8F;
-	Fri,  2 Aug 2013 14:54:02 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 8F0C827321; Fri,  2 Aug 2013 17:53:59 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CACGba4yGZDnr-1R-6k-sZoh4P=fu9M0bsmH3uoqj3tXUPsZRYw@mail.gmail.com>
+	id S1754203Ab3HBWLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Aug 2013 18:11:42 -0400
+Received: from qmta15.westchester.pa.mail.comcast.net ([76.96.59.228]:45308
+	"EHLO qmta15.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754122Ab3HBWLc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Aug 2013 18:11:32 -0400
+Received: from omta14.westchester.pa.mail.comcast.net ([76.96.62.60])
+	by qmta15.westchester.pa.mail.comcast.net with comcast
+	id 7t8l1m0031HzFnQ5FyBY3v; Fri, 02 Aug 2013 22:11:32 +0000
+Received: from freeze.ariadne.com ([24.34.72.61])
+	by omta14.westchester.pa.mail.comcast.net with comcast
+	id 7yBX1m00R1KKtkw3ayBXth; Fri, 02 Aug 2013 22:11:31 +0000
+Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
+	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r72MBUfU020154;
+	Fri, 2 Aug 2013 18:11:30 -0400
+Received: (from worley@localhost)
+	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r72MBT9G020153;
+	Fri, 2 Aug 2013 18:11:29 -0400
+In-reply-to: <20130731214818.GP2337@serenity.lan> (john@keeping.me.uk)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1375481492;
+	bh=JpqTf2mTVYwiRYRXG19w5qqyLrRPNGp2udIQIdbItSY=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=HyaXR9+WoX9UTtry4ZiSzaZjXte9IBIqKkYbBOeIdHhbKwANmZPzciYTM3Ek0OUV9
+	 9JaylnB31Ek+twlsBingvzGB18/cD2YsnuQfqL17L8qY44v/OuIaW2YChwFPRBfe6/
+	 yAGdj2khrHGTxnyOU9f07a7TYKVWhGwo5Vd0fP02nBYVszwa9s5DBKwGpXTAu9SvLj
+	 C9WNWOftB+7cTKQinmIFGz4jRQAQV4AtzwDMKNmwrMqDTGcmy0F2WNvRiPPM3sSBmP
+	 HuUupqnGlUKoJJg2MV0YqhH/6AmRVKz4keXGIC8pwDyTgmHD7WgsJESS2DJz2davA0
+	 b90a9Rjk55x6w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231539>
 
-ksaitoh560@gmail.com wrote on Fri, 02 Aug 2013 17:02 +0900:
-> I trying clone Perforce project and I found git-p4. It's a great tool!
+> From: John Keeping <john@keeping.me.uk>
 > 
-> And I don't know how to exclude special extension file in a directory?
-> (Practically, I want to exclude Excel files at git p4 clone/sync.)
+> git-format-patch(1) says:
 > 
-> In Perforce, View setting of p4 client can describe
->   -//depot/project/files/*.xls //client/project/files/*.xls
-> to exclude Excel files.
-> But "git p4 --use-client-spec" cannot support '*'.
+>         By default, the subject of a single patch is "[PATCH] " followed
+>         by the concatenation of lines from the commit message up to the
+>         first blank line (see the DISCUSSION section of git-commit(1)).
 > 
-> In git-p4.py, "map_in_client" method analyzes View setting and return
-> client file path.
-> So I modify the method to just use p4 command, "p4 fstat -T clientFile".
-> 
-> I'd like to know your opinions about that and what you think about the
-> suggestion.
+> I think that accurately describes what you're seeing.  The referenced
+> DISCUSSION section describes how to write a commit message that is
+> formatted in a suitable way, with a short first subject line and then a
+> blank line before the body of the message.
 
-This is either incredibly brilliant or fundamentally broken.  I'm
-hoping for the former.  :)
+Thanks for the confirmation.  I've figured out what is going wrong:
+Documentation/SubmittingPatches says:
 
-Your theory is:  there is a client spec, and p4 knows how to
-interpret these things, so instead of figuring out and
-implementing the algorithms for %% and * and ... in git-p4, just
-ask p4 directly.
+    The first line of the commit message should be a short description (50
+    characters is the soft limit, see DISCUSSION in git-commit(1)), and
+    should skip the full stop.
 
-Let me play with this for a bit.  I wonder about the performance
-aspects of doing a "p4 fstat" for every file.  Would it be
-possible to do one or a few batch queries higher up somewhere?
+What it *doesn't* say is that the second line of the commit message
+should be empty -- precisely so that git format-patch turns the first
+line into the Subject: but does not merge the remainder of the commit
+message (the "body") into the Subject: line.  Now that I know to look
+for this, I can see that the commit messages in the Git repository
+show this pattern.
 
-A few nit-picky questions below, just on the test bits, while I
-play with your code.
+I'm preparing some clarifications of SubmittingPatches to explain
+things that a new person (e.g., me) would not know.  To fix this
+issue, I am inserting:
 
-> diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
-> index 2098b9b..fbda1ad 100644
-> --- a/t/lib-git-p4.sh
-> +++ b/t/lib-git-p4.sh
-> @@ -48,6 +48,9 @@ P4DPORT=$((10669 + ($testid - $git_p4_test_start)))
->  P4PORT=localhost:$P4DPORT
->  P4CLIENT=client
->  P4EDITOR=:
-> +P4USER=""
-> +P4PASS=""
-> +P4CHARSET=""
+    This first line should be a separate paragraph, that is, it should be
+    followed by an empty line, which is then followed by the body of the
+    commit message.
 
-Why do you need these?
-
-> diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
-> index 2bf142d..b97bdda 100755
-> --- a/t/t9801-git-p4-branch.sh
-> +++ b/t/t9801-git-p4-branch.sh
-> @@ -480,6 +480,7 @@ test_expect_success 'use-client-spec detect-branches
-> skips branches setup' '
->  test_expect_success 'use-client-spec detect-branches skips branches' '
->   client_view "//depot/usecs/... //client/..." \
->      "-//depot/usecs/b3/... //client/b3/..." &&
-> +    ( p4 sync ) &&
->   test_when_finished cleanup_git &&
-
-How does the p4 sync help here?
-
-> +test_expect_success 'view wildcard *' '
-> + client_view "//depot/... //client/..." \
-> + "-//depot/dir1/*.junk //client/dir1/*.junk" \
-> + "-//depot/dir2/*.junk //client/dir2/*.junk" &&
-> + (p4 sync ) &&
-> + files="dir1/file11 dir1/file12 dir2/file21 dir2/file22" &&
-> + client_verify $files &&
-> + git p4 clone --use-client-spec --dest="$git" //depot &&
-> + git_verify $files
-> +'
-
-It works!  Cool.
-
-		-- Pete
+Dale
