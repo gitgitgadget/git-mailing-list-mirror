@@ -1,89 +1,96 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Re: Making a patch:  "git format-patch" does not produce the
- documented format
-Date: Fri, 2 Aug 2013 18:11:29 -0400
-Message-ID: <201308022211.r72MBT9G020153@freeze.ariadne.com>
-References: <201307312131.r6VLVliK028321@hobgoblin.ariadne.com> <20130731214818.GP2337@serenity.lan>
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sat Aug 03 00:12:00 2013
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] log doc: the argument to --encoding is not optional
+Date: Fri, 2 Aug 2013 15:16:40 -0700
+Message-ID: <20130802221640.GA7478@elie.Belkin>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 03 00:16:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5NZm-0004RO-Gq
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 00:11:58 +0200
+	id 1V5NeY-00089d-2i
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 00:16:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754203Ab3HBWLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Aug 2013 18:11:42 -0400
-Received: from qmta15.westchester.pa.mail.comcast.net ([76.96.59.228]:45308
-	"EHLO qmta15.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754122Ab3HBWLc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Aug 2013 18:11:32 -0400
-Received: from omta14.westchester.pa.mail.comcast.net ([76.96.62.60])
-	by qmta15.westchester.pa.mail.comcast.net with comcast
-	id 7t8l1m0031HzFnQ5FyBY3v; Fri, 02 Aug 2013 22:11:32 +0000
-Received: from freeze.ariadne.com ([24.34.72.61])
-	by omta14.westchester.pa.mail.comcast.net with comcast
-	id 7yBX1m00R1KKtkw3ayBXth; Fri, 02 Aug 2013 22:11:31 +0000
-Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
-	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r72MBUfU020154;
-	Fri, 2 Aug 2013 18:11:30 -0400
-Received: (from worley@localhost)
-	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r72MBT9G020153;
-	Fri, 2 Aug 2013 18:11:29 -0400
-In-reply-to: <20130731214818.GP2337@serenity.lan> (john@keeping.me.uk)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1375481492;
-	bh=JpqTf2mTVYwiRYRXG19w5qqyLrRPNGp2udIQIdbItSY=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=HyaXR9+WoX9UTtry4ZiSzaZjXte9IBIqKkYbBOeIdHhbKwANmZPzciYTM3Ek0OUV9
-	 9JaylnB31Ek+twlsBingvzGB18/cD2YsnuQfqL17L8qY44v/OuIaW2YChwFPRBfe6/
-	 yAGdj2khrHGTxnyOU9f07a7TYKVWhGwo5Vd0fP02nBYVszwa9s5DBKwGpXTAu9SvLj
-	 C9WNWOftB+7cTKQinmIFGz4jRQAQV4AtzwDMKNmwrMqDTGcmy0F2WNvRiPPM3sSBmP
-	 HuUupqnGlUKoJJg2MV0YqhH/6AmRVKz4keXGIC8pwDyTgmHD7WgsJESS2DJz2davA0
-	 b90a9Rjk55x6w==
+	id S1754570Ab3HBWQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Aug 2013 18:16:49 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:49512 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754423Ab3HBWQs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Aug 2013 18:16:48 -0400
+Received: by mail-pa0-f52.google.com with SMTP id kq13so1123588pab.39
+        for <git@vger.kernel.org>; Fri, 02 Aug 2013 15:16:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=gfN3wq9xsm/6R1e3PEOpDVqHDhZdWh+zC85+b+HOpgk=;
+        b=LNbTAfkqG2jX4fKiJFAA9zqKw0H2LKTrS/kiYRHaJu/tdPEhfY5F2uO/0204xZALQa
+         WyxkwU0z0BK1VCa0rQuOxZ99yzRh8kBj4qBuw/rJgTnY2lhuULayBrWggaLxyEmYjhk5
+         LXtj7fJbOCzH1R2+ABlOLe+ujJL/OyFyVYUv4P0ORxDzNBHsjRm0T/u3JYQVR0NTmnQR
+         raETBhv0muMfyfESvaJwy9RbxPYij66YZDkncXPQy2MiUMvGdP2dl7dl/gWX23v17I0y
+         C9D28hSWCLpH4+FVGmFT3zTEE1rJjiL/jldiqsePUI69F+ZjlNS44BrL+KmZZeARFxd6
+         b8ng==
+X-Received: by 10.67.21.229 with SMTP id hn5mr12764335pad.135.1375481807960;
+        Fri, 02 Aug 2013 15:16:47 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id qh10sm12390147pbb.33.2013.08.02.15.16.46
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 02 Aug 2013 15:16:47 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231540>
 
-> From: John Keeping <john@keeping.me.uk>
-> 
-> git-format-patch(1) says:
-> 
->         By default, the subject of a single patch is "[PATCH] " followed
->         by the concatenation of lines from the commit message up to the
->         first blank line (see the DISCUSSION section of git-commit(1)).
-> 
-> I think that accurately describes what you're seeing.  The referenced
-> DISCUSSION section describes how to write a commit message that is
-> formatted in a suitable way, with a short first subject line and then a
-> blank line before the body of the message.
+ $ git log --encoding
+ fatal: Option '--encoding' requires a value
+ $ git rev-list --encoding
+ fatal: Option '--encoding' requires a value
 
-Thanks for the confirmation.  I've figured out what is going wrong:
-Documentation/SubmittingPatches says:
+The argument to --encoding has always been mandatory.  Unfortunately
+manpages like git-rev-list(1), git-log(1), and git-show(1) have
+described the option's syntax as "--encoding[=<encoding>]" since it
+was first documented.  Clarify by removing the extra brackets.
 
-    The first line of the commit message should be a short description (50
-    characters is the soft limit, see DISCUSSION in git-commit(1)), and
-    should skip the full stop.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Documentation/git-rev-list.txt   | 2 +-
+ Documentation/pretty-options.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-What it *doesn't* say is that the second line of the commit message
-should be empty -- precisely so that git format-patch turns the first
-line into the Subject: but does not merge the remainder of the commit
-message (the "body") into the Subject: line.  Now that I know to look
-for this, I can see that the commit messages in the Git repository
-show this pattern.
-
-I'm preparing some clarifications of SubmittingPatches to explain
-things that a new person (e.g., me) would not know.  To fix this
-issue, I am inserting:
-
-    This first line should be a separate paragraph, that is, it should be
-    followed by an empty line, which is then followed by the body of the
-    commit message.
-
-Dale
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index 65ac27e0..045b37b8 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -40,7 +40,7 @@ SYNOPSIS
+ 	     [ \--right-only ]
+ 	     [ \--cherry-mark ]
+ 	     [ \--cherry-pick ]
+-	     [ \--encoding[=<encoding>] ]
++	     [ \--encoding=<encoding> ]
+ 	     [ \--(author|committer|grep)=<pattern> ]
+ 	     [ \--regexp-ignore-case | -i ]
+ 	     [ \--extended-regexp | -E ]
+diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+index 5e499421..eea0e306 100644
+--- a/Documentation/pretty-options.txt
++++ b/Documentation/pretty-options.txt
+@@ -28,7 +28,7 @@ people using 80-column terminals.
+ 	This is a shorthand for "--pretty=oneline --abbrev-commit"
+ 	used together.
+ 
+---encoding[=<encoding>]::
++--encoding=<encoding>::
+ 	The commit objects record the encoding used for the log message
+ 	in their encoding header; this option can be used to tell the
+ 	command to re-code the commit log message in the encoding
+-- 
+1.8.4.rc1
