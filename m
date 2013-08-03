@@ -1,72 +1,82 @@
-From: Daniel Convissor <danielc@analysisandsolutions.com>
-Subject: Re: change remote to track new branch
-Date: Sat, 3 Aug 2013 12:28:21 -0400
-Message-ID: <20130803162821.GA945@analysisandsolutions.com>
-References: <20130803024032.GA28666@analysisandsolutions.com>
- <m2d2pvp7nw.fsf@linux-m68k.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sat Aug 03 18:28:27 2013
+From: =?windows-1252?Q?J=F6rn_Hees?= <dev@joernhees.de>
+Subject: [bug] remotes-hg: timezones are transformed
+Date: Sat, 3 Aug 2013 18:36:23 +0200
+Message-ID: <EDA1C92E-6872-40D5-8C25-89C3FFF62F7A@joernhees.de>
+Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 03 18:36:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5egs-0004Xu-Kh
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 18:28:27 +0200
+	id 1V5ep7-0000qU-HQ
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 18:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278Ab3HCQ2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Aug 2013 12:28:23 -0400
-Received: from analysisandsolutions.com ([50.116.58.177]:60823 "EHLO
-	analysisandsolutions.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752208Ab3HCQ2W (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Aug 2013 12:28:22 -0400
-Received: by analysisandsolutions.com (Postfix, from userid 1001)
-	id BDE4218973; Sat,  3 Aug 2013 12:28:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-	d=analysisandsolutions.com; s=default; t=1375547301;
-	bh=Xjg7tHvbIahWbk8fnzx58I66+DGFEPuWgi+dQ2ET1gM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HNLNkCoeWVhUUDseOXnGFg4UlGXZcU4B6wfp6t3b7sXvHHyMVJE0Ixb2OJmFxf5r9
-	 7kWaqt59bAl90LMFRVyt/1imjxYQBn7EA29fgSMcMnNB5NxEOzsP4DUOH6XRUgXusf
-	 wT58wVlx0zevGm8emqwpB66EaznCJVEODIm9kUi8=
-Content-Disposition: inline
-In-Reply-To: <m2d2pvp7nw.fsf@linux-m68k.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752430Ab3HCQgj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Aug 2013 12:36:39 -0400
+Received: from srv1.joernhees.de ([81.20.133.80]:36799 "EHLO mail.joernhees.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752208Ab3HCQgi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Aug 2013 12:36:38 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.joernhees.de (Postfix) with ESMTP id 293A5E810CE;
+	Sat,  3 Aug 2013 18:36:34 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at joernhees.de
+Received: from mail.joernhees.de ([127.0.0.1])
+	by localhost (srv1.joernhees.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id oTYWHc35TbNV; Sat,  3 Aug 2013 18:36:23 +0200 (CEST)
+Received: from [192.168.2.12] (xdsl-78-34-213-232.netcologne.de [78.34.213.232])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mail.joernhees.de (Postfix) with ESMTPSA id B7031E810CD;
+	Sat,  3 Aug 2013 18:36:23 +0200 (CEST)
+X-Mailer: Apple Mail (2.1508)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231601>
 
-Hi Andreas:
+Hi,
 
-On Sat, Aug 03, 2013 at 09:14:59AM +0200, Andreas Schwab wrote:
-> Daniel Convissor <danielc@analysisandsolutions.com> writes:
-> 
-> > Long ago I added a remote to my repo.  It is set to track what was then
-> > WordPress' main release branch (3.4-branch) and created a local branch
-> > to use it.  Well, time marches on.  I want to update my remote and
-> > branch to track the new main release branch (3.6-branch).
-> >
-> > Here's how I set things up at the time:
-> >
-> > git remote add -t 3.4-branch -f wp https://github.com/WordPress/WordPress
-> > git checkout -b wp wp/3.4-branch
-> 
-> Use "git remote set-branches" to change the tracked branches of a
-> remote.  Use "git branch --set-upstream-to" to change the upstream of a
-> branch (or create a new branch from the new upstream).
+it seems that if you use the 1.8.3.4 remote-helpers/git-remote-hg to cl=
+one a mercurial repo the timezone information of commits gets transform=
+ed into your current timezone.
+(command: git clone hg::=85)
 
-Thanks.  Those commands were introduced in 1.8.  Is there a way to do it
-in 1.7, please?
+I noticed this when a colleague in another timezone used Kiln to also e=
+xport the same mercurial repo that i had cloned from git before.
+=46etching from his git repo gives me a "second root tree" with all com=
+mits duplicated.
+A git show of two equivalent commit reveals that the Date: line of the =
+commits changed.
+Tracking this back into the original mercurial repo reveals that _his_ =
+times are correct.
 
---Dan
+This will also make two or more clones from different timezones all usi=
+ng the same hg remote repo incompatible!
 
--- 
- T H E   A N A L Y S I S   A N D   S O L U T I O N S   C O M P A N Y
-            data intensive web and database programming
-                http://www.AnalysisAndSolutions.com/
-        4015 7th Ave #4, Brooklyn NY 11232  v: 718-854-0335
+
+Example:
+Original mercurial commit (timezone: -7200 =3D -4h)
+https://bitbucket.org/lipis/gae-init/commits/a43078f90e727a13767cf14c74=
+0157763fb423b5/raw/
+
+Lipis git export via Kiln: (-4h)
+https://github.com/lipis/gae-init/commit/36b7cabf03fbba784cc41b63430433=
+e9fc79ca8c
+
+My export via git clone hg::ssh://hg@bitbucket.org/lipis/gae-init (+2h)
+https://github.com/joernhees/git-hg-remote-bug_gae-init/commit/8341bf10=
+f1f0a7a924717a8a2c1770f61acd51ae
+
+Expected would be that the hashes of both git exports are the same. His=
+ are correct as far as i can tell.
+
+
+Cheers,
+J=F6rn
