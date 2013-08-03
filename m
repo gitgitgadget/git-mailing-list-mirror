@@ -1,103 +1,73 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] cherry-pick: allow "-" as abbreviation of '@{-1}'
-Date: Sat, 3 Aug 2013 12:51:28 +0200
-Message-ID: <87wqo33v4f.fsf@hexa.v.cablecom.net>
-References: <1375506913-3390-1-git-send-email-hiroshige88@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2013, #01; Thu, 1)
+Date: Sat, 3 Aug 2013 12:55:15 +0200
+Message-ID: <87a9kz3uy4.fsf@hexa.v.cablecom.net>
+References: <7vbo5hqe6r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: Hiroshige Umino <hiroshige88@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 03 12:51:54 2013
+Cc: <git@vger.kernel.org>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 03 12:55:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5ZRB-0003sm-Ut
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 12:51:54 +0200
+	id 1V5ZUY-0004SV-GE
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 12:55:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454Ab3HCKvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Aug 2013 06:51:31 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:2283 "EHLO edge10.ethz.ch"
+	id S1751467Ab3HCKzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Aug 2013 06:55:19 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:57198 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751395Ab3HCKvb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Aug 2013 06:51:31 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
- 2013 12:51:24 +0200
-Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
- 2013 12:51:28 +0200
-In-Reply-To: <1375506913-3390-1-git-send-email-hiroshige88@gmail.com>
-	(Hiroshige Umino's message of "Sat, 3 Aug 2013 14:15:13 +0900")
+	id S1751401Ab3HCKzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Aug 2013 06:55:18 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
+ 2013 12:55:06 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
+ 2013 12:55:16 +0200
+In-Reply-To: <7vbo5hqe6r.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 01 Aug 2013 14:44:12 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231580>
 
-Hiroshige Umino <hiroshige88@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> As "git cherry-pick -" or "git merge -" is convenient to
-> switch back to or merge the previous branch,
-> "git cherry-pick -" is abbreviation of "git cherry-pick @{-1}"
-> to pick up a commit from the previous branch conveniently.
+> * tr/log-full-diff-keep-true-parents (2013-08-01) 1 commit
+>  - log: use true parents for diff even when rewriting
+>
+>  Output from "git log --full-diff -- <pathspec>" looked strange,
+>  because comparison was done with the previous ancestor that touched
+>  the specified <pathspec>, causing the patches for paths outside the
+>  pathspec to show more than the single commit has changed.
+>
+>  I am not sure if that is necessarily a problem, though.  Output
+>  from "git log --full-diff -2 -- <pathspec>" without this change
+>  will be applicable to some codebase, but after this change that
+>  will no longer be true (you will get only tiny parts of the change
+>  that were made by the two commits in question, while missing all
+>  the other changes).
 
-The first line is confusing.  Did you mean to invoke the existing 'git
-*checkout* -' and 'git merge -' functionality as a reason why 'git
-cherry-pick -' should exist?
+Hmm.  Uwe's original complaint was that --stat -- as in "what other
+things are touched when we modify foo" -- is nonsensical.
 
-What other commands could reasonably use the '-' shorthand?
+In addition, applying what you describe above would be a very strange
+form of rebase: one that squashes everything into the commits that
+affect the given files.  When would it ever make sense to do such
+squashing?  After all, you'd lose all the commit splits&messages in
+between.
 
-[...]
-> diff --git a/t/t3512-cherry-pick-last.sh b/t/t3512-cherry-pick-last.sh
-
-Do you have to use a new test file for this?
-
-[...]
-> +test_expect_success 'setup' '
-> + echo hello >world &&
-> + git add world &&
-(*)
-> + git commit -m initial &&
-> + git branch other &&
-> + echo "hello again" >>world &&
-> + git add world &&
-(*)
-> + git commit -m second
-> +'
-
-Our style is to indent the test snippets with a hard tab, not a single
-(or eight, for that matter) space.
-
-[...]
-> +test_expect_success 'cherry-pick the commit in the previous branch' '
-> + prev=$(git rev-parse HEAD) &&
-> + git checkout other &&
-(*)
-> + git cherry-pick - &&
-> + test "z$(git rev-parse HEAD)" = "z$prev"
-> +'
-
-If you insert 'test_tick' in the places marked with (*), the test fails.
-
-The tests run under a fake clock to ensure that everything, including
-the SHA1s produced, are deterministic.  You never advance the clock, so
-all commits generated in this script share the same timestamp.
-
-This means that the cherry-pick of 'second' has the same SHA1 as the
-original: its tree, parents, author, timestamp etc. all agree.  If you
-advance the clock at the last (*), this fails.  You should find some
-other way of checking what was picked, e.g., by looking at the file
-contents.
-
-That said, please use test_commit in the 'setup' snippet instead of
-manually rolling the commits.  It will lead to shorter code, and it
-handles test_tick for you.  It is documented in t/README and in a
-comment in t/test-lib-functions.sh.  (You still need test_tick
-immediately before the cherry-pick!)
+If you care about it, I can introduce a new flag that lets the user
+pick; it's pretty trivial.  But it seems very strange to me.
 
 -- 
 Thomas Rast
