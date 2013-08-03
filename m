@@ -1,73 +1,54 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: What's cooking in git.git (Aug 2013, #01; Thu, 1)
-Date: Sat, 3 Aug 2013 12:55:15 +0200
-Message-ID: <87a9kz3uy4.fsf@hexa.v.cablecom.net>
-References: <7vbo5hqe6r.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v2] l10n: de.po: translate 99 new messages
+Date: Sat, 3 Aug 2013 12:59:00 +0200
+Message-ID: <87txj72g7f.fsf@hexa.v.cablecom.net>
+References: <87wqo6e9ir.fsf@hexa.v.cablecom.net>
+	<1375333725-5843-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: <git@vger.kernel.org>,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 03 12:55:23 2013
+Cc: <jk@jk.gs>, <stimming@tuhh.de>, <git@vger.kernel.org>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 03 12:59:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5ZUY-0004SV-GE
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 12:55:22 +0200
+	id 1V5ZYC-0005r6-3e
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 12:59:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751467Ab3HCKzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Aug 2013 06:55:19 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:57198 "EHLO edge20.ethz.ch"
+	id S1751487Ab3HCK7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Aug 2013 06:59:03 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:2481 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751401Ab3HCKzS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Aug 2013 06:55:18 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
- 2013 12:55:06 +0200
-Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
- 2013 12:55:16 +0200
-In-Reply-To: <7vbo5hqe6r.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 01 Aug 2013 14:44:12 -0700")
+	id S1751461Ab3HCK7C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Aug 2013 06:59:02 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
+ 2013 12:58:57 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
+ 2013 12:59:00 +0200
+In-Reply-To: <1375333725-5843-1-git-send-email-ralf.thielow@gmail.com> (Ralf
+	Thielow's message of "Thu, 1 Aug 2013 07:08:45 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231581>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-> * tr/log-full-diff-keep-true-parents (2013-08-01) 1 commit
->  - log: use true parents for diff even when rewriting
+> Translate 99 new messages came from git.pot update in
+> 28b3cff (l10n: git.pot: v1.8.4 round 1 (99 new, 46 removed)).
 >
->  Output from "git log --full-diff -- <pathspec>" looked strange,
->  because comparison was done with the previous ancestor that touched
->  the specified <pathspec>, causing the patches for paths outside the
->  pathspec to show more than the single commit has changed.
->
->  I am not sure if that is necessarily a problem, though.  Output
->  from "git log --full-diff -2 -- <pathspec>" without this change
->  will be applicable to some codebase, but after this change that
->  will no longer be true (you will get only tiny parts of the change
->  that were made by the two commits in question, while missing all
->  the other changes).
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
 
-Hmm.  Uwe's original complaint was that --stat -- as in "what other
-things are touched when we modify foo" -- is nonsensical.
+Acked-by: Thomas Rast <trast@inf.ethz.ch>
 
-In addition, applying what you describe above would be a very strange
-form of rebase: one that squashes everything into the commits that
-affect the given files.  When would it ever make sense to do such
-squashing?  After all, you'd lose all the commit splits&messages in
-between.
-
-If you care about it, I can introduce a new flag that lets the user
-pick; it's pretty trivial.  But it seems very strange to me.
+Thanks for your work!
 
 -- 
 Thomas Rast
