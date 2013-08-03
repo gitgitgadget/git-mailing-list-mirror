@@ -1,74 +1,65 @@
-From: Daniel Convissor <danielc@analysisandsolutions.com>
-Subject: Re: Bug: Pulling remotes into an empty repo deletes the index
-Date: Sat, 3 Aug 2013 12:39:15 -0400
-Message-ID: <20130803163915.GB945@analysisandsolutions.com>
-References: <CAJOTJ-AVamimToPo4oQ=O_Pg+mJHQhardO+NfU8b1dvRxg1KMA@mail.gmail.com>
- <CAJOTJ-Cgdg4CQs-3t1CsBkq_feVEpkoASzQSTATiVugjs+LL7w@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: change remote to track new branch
+Date: Sat, 03 Aug 2013 18:41:46 +0200
+Message-ID: <87iozmhgl1.fsf@igel.home>
+References: <20130803024032.GA28666@analysisandsolutions.com>
+	<m2d2pvp7nw.fsf@linux-m68k.org>
+	<20130803162821.GA945@analysisandsolutions.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Adam A <hitsthings@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 03 18:39:21 2013
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Daniel Convissor <danielc@analysisandsolutions.com>
+X-From: git-owner@vger.kernel.org Sat Aug 03 18:41:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5erQ-0006on-N7
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 18:39:21 +0200
+	id 1V5etw-00055X-2q
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 18:41:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751242Ab3HCQjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Aug 2013 12:39:17 -0400
-Received: from analysisandsolutions.com ([50.116.58.177]:60839 "EHLO
-	analysisandsolutions.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751022Ab3HCQjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Aug 2013 12:39:16 -0400
-Received: by analysisandsolutions.com (Postfix, from userid 1001)
-	id F176D18973; Sat,  3 Aug 2013 12:39:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-	d=analysisandsolutions.com; s=default; t=1375547955;
-	bh=ck4CZ2G6Mj8I0QqrG2HuEGE3qY9AC2TcNoYT/lOsDIA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uhFse/E/sB0VpwdHy4MzZBZfq0Nhv7jzSdDLnNYdRdBv+1F/RBf62uIxXfwD42ZpY
-	 rxIkOPy2qNlWUWvdFvled5nhGKb3V+OBOjCzYmDciOlchQQ8IkUrP8GJKCYrwOMQ6h
-	 Mjr3xF3udfSbZXR8j0GzSb1t4uPxHEh10myFwUFI=
-Content-Disposition: inline
-In-Reply-To: <CAJOTJ-Cgdg4CQs-3t1CsBkq_feVEpkoASzQSTATiVugjs+LL7w@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751558Ab3HCQlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Aug 2013 12:41:52 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:59980 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751044Ab3HCQlv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Aug 2013 12:41:51 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3c6rcF0Gfsz3hhYD;
+	Sat,  3 Aug 2013 18:41:48 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3c6rcD4JttzbbgW;
+	Sat,  3 Aug 2013 18:41:48 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id d88cIkmggrpk; Sat,  3 Aug 2013 18:41:46 +0200 (CEST)
+X-Auth-Info: rBRrC9ZzDUsvHHUbL3s+ZyWRsyjuX8S8RgmIbY4hfes=
+Received: from igel.home (ppp-93-104-143-60.dynamic.mnet-online.de [93.104.143.60])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Sat,  3 Aug 2013 18:41:46 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 9B20F2C13A4; Sat,  3 Aug 2013 18:41:46 +0200 (CEST)
+X-Yow: I guess it was all a DREAM..  or an episode of HAWAII FIVE-O...
+In-Reply-To: <20130803162821.GA945@analysisandsolutions.com> (Daniel
+	Convissor's message of "Sat, 3 Aug 2013 12:28:21 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231603>
 
-Hi Adam:
+Daniel Convissor <danielc@analysisandsolutions.com> writes:
 
-On Sat, Aug 03, 2013 at 10:01:30PM +1000, Adam A wrote:
-> - create a remote repository at URL with commit(s) in it
->   - e.g., a new github repo with README and LICENSE files auto-added
-> - write some files in a local directory
-> - git init
-> - git add .
->   - the contents of the directory are now in the index
-> - git remote add origin URL
-> - git pull origin master
-> 
-> The local files added to the index are now completely wiped out and
-> replaced with the remote content. I lose all my previous work. :/
+> Thanks.  Those commands were introduced in 1.8.  Is there a way to do it
+> in 1.7, please?
 
-All is not lost.  Your local files should be stored in the repository's
-reflog.  Examine the output of "git reflog".  You can then reset your
-working directory to obtain those files by doing something _like_
-"git reset --hard HEAD@{1}".
+Use git config.
 
-All hail reflog.
-
-Good luck,
-
---Dan
+Andreas.
 
 -- 
- T H E   A N A L Y S I S   A N D   S O L U T I O N S   C O M P A N Y
-            data intensive web and database programming
-                http://www.AnalysisAndSolutions.com/
-        4015 7th Ave #4, Brooklyn NY 11232  v: 718-854-0335
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
