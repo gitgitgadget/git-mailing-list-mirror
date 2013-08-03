@@ -1,103 +1,105 @@
 From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCHv3 5/9] branch, commit, name-rev: ease up boolean conditions
-Date: Sat,  3 Aug 2013 13:51:22 +0200
-Message-ID: <1375530686-2309-6-git-send-email-stefanbeller@googlemail.com>
+Subject: [PATCHv3 8/9] checkout-index: Fix negations of even numbers of -n
+Date: Sat,  3 Aug 2013 13:51:25 +0200
+Message-ID: <1375530686-2309-9-git-send-email-stefanbeller@googlemail.com>
 References: <1375530686-2309-1-git-send-email-stefanbeller@googlemail.com>
 Cc: Stefan Beller <stefanbeller@googlemail.com>
 To: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Sat Aug 03 13:51:43 2013
+X-From: git-owner@vger.kernel.org Sat Aug 03 13:51:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5aN3-0005cc-JP
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 13:51:41 +0200
+	id 1V5aN5-0005cc-7m
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 13:51:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752588Ab3HCLvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Aug 2013 07:51:16 -0400
-Received: from mail-ee0-f54.google.com ([74.125.83.54]:60244 "EHLO
-	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752502Ab3HCLvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Aug 2013 07:51:14 -0400
-Received: by mail-ee0-f54.google.com with SMTP id e53so761597eek.41
-        for <git@vger.kernel.org>; Sat, 03 Aug 2013 04:51:13 -0700 (PDT)
+	id S1752612Ab3HCLvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Aug 2013 07:51:25 -0400
+Received: from mail-ea0-f174.google.com ([209.85.215.174]:58938 "EHLO
+	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752502Ab3HCLvX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Aug 2013 07:51:23 -0400
+Received: by mail-ea0-f174.google.com with SMTP id z15so749935ead.19
+        for <git@vger.kernel.org>; Sat, 03 Aug 2013 04:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=8+rlhikCzTZQ7YHSCmcT9symFXeEP/EL+YzlNJRcO6w=;
-        b=Zv+GZYU40TwJElplJoYQACAyW/0EacYztVYFyihkrEIcr1QF+7BMU8VDiMe1RPhWXb
-         ErO/mm6iIibqFCSOT91T4BOzShMM7CzIo0EBqAsDlE9vfiQor9Ad0oreGk+OjsCzsaYk
-         CkoQ8bjalK9D/MF489qWsouW65JmGfozUtXHuqjNgnKBrBpWG0BbqFbHJBWvN1YbeMSi
-         aMEUWQjPR2x8oC3vjHrNUqB0ZwfmN+ax1+tYlbnYnBOawDwK/Dpz7dnSbVYmvcm/fhCV
-         u446zFrEbaIUa3Z+2FgrP2OYcB48vWmNIYTnV7gjX6y4/4O72BOcgkcFDbm0xEaLxNt+
-         3ivQ==
-X-Received: by 10.15.26.66 with SMTP id m42mr9312429eeu.73.1375530673076;
-        Sat, 03 Aug 2013 04:51:13 -0700 (PDT)
+        bh=OJ/mJbzz5fVI1SZJVZNraC8gqDfAPKOAj4+Oh0MeUIc=;
+        b=Ib6us17LuBtAP3WiNaDSsvJW7tli2sc4eeS6BO4igju2nIDEzNIVnl91dVeNCUwp4o
+         DIxJaHKpW4spfiRAUho3z5jV+DR2GbIFwrQzrunfy8uuZoU1OIDfqID1n7qTaorRGm6D
+         E1neevu8P3dwhD/5gMhCGVD5RJwO5rmELliypvIK4UtIJsqQL0LtnqtJabRwMvURsg8k
+         1tO6VZGX0FcQy7D9gB+jBtLtAvYnY8/jDrYJkYJQU7hYcE2/oPJn92281YLKeeKrbvPA
+         cmLIUuEbZvl6cnSOVP1TcDwee8DOomR1AD4eWohNYOI5psjlfLoIKSzkpXYiM5DrMHzt
+         jtHA==
+X-Received: by 10.14.176.8 with SMTP id a8mr9433132eem.12.1375530681228;
+        Sat, 03 Aug 2013 04:51:21 -0700 (PDT)
 Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id x3sm3741629eew.4.2013.08.03.04.51.11
+        by mx.google.com with ESMTPSA id l42sm18869902eeo.14.2013.08.03.04.51.20
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 03 Aug 2013 04:51:12 -0700 (PDT)
+        Sat, 03 Aug 2013 04:51:20 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4.rc0.16.g7fca822.dirty
 In-Reply-To: <1375530686-2309-1-git-send-email-stefanbeller@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231586>
 
-Now that the variables are readin by OPT_BOOL, which makes sure
-to have the values being 0 or 1 after reading, we do not need
-the double negation to map any other value to 1 for integer
-variables.
+The --no-create was parsed with OPT_BOOLEAN, which has a counting up
+logic implemented. Since b04ba2bb (parse-options: deprecate OPT_BOOLEAN,
+2011-09-27) the OPT_BOOLEAN is deprecated and is only a define:
+	/* Deprecated synonym */
+	#define OPTION_BOOLEAN OPTION_COUNTUP
+
+However the variable not_new, which can be counted up by giving
+--no-create multiple times, is used to set a bit in the struct checkout
+bitfield (defined in cache.h:969, declared at builtin/checkout-index.c:19):
+
+	state.not_new = not_new;
+
+When assigning a value other than 0 or 1 to a bit, all leading digits but
+the last are ignored and only the last bit is used for setting the bit
+variable.
+
+Hence the following:
+	# in git.git:
+	$ git status
+	# working directory clean
+	rm COPYING
+	$ git status
+	# deleted:    COPYING
+	$ git checkout-index -a -n
+	$ git status
+	# deleted:    COPYING
+	# which is expected as we're telling git to not restore or create
+	# files, however:
+	$ git checkout-index -a -n -n
+	$ git status
+	# working directory clean, COPYING is restored again!
+	# That's the bug, we're fixing here.
+
+By restraining the variable not_new to a value being definitely 0 or 1
+by the macro OPT_BOOL the bug is fixed.
 
 Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
 ---
- builtin/branch.c   | 3 ++-
- builtin/commit.c   | 2 +-
- builtin/name-rev.c | 2 +-
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ builtin/checkout-index.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 4daed0b..33ba1fb 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -872,7 +872,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (with_commit || merge_filter != NO_FILTER)
- 		list = 1;
- 
--	if (!!delete + !!rename + !!force_create + !!list + !!new_upstream + !!unset_upstream > 1)
-+	if (delete + rename + force_create + list + unset_upstream +
-+	    !!new_upstream > 1)
- 		usage_with_options(builtin_branch_usage, options);
- 
- 	if (abbrev == -1)
-diff --git a/builtin/commit.c b/builtin/commit.c
-index c20426b..b0f86c8 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1072,7 +1072,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	if (patch_interactive)
- 		interactive = 1;
- 
--	if (!!also + !!only + !!all + !!interactive > 1)
-+	if (also + only + all + interactive > 1)
- 		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
- 	if (argc == 0 && (also || (only && !amend)))
- 		die(_("No paths with --include/--only does not make sense."));
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index a908a34..20fcf8c 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -331,7 +331,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_default_config, NULL);
- 	argc = parse_options(argc, argv, prefix, opts, name_rev_usage, 0);
--	if (!!all + !!transform_stdin + !!argc > 1) {
-+	if (all + transform_stdin + !!argc > 1) {
- 		error("Specify either a list, or --all, not both!");
- 		usage_with_options(name_rev_usage, opts);
- 	}
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index aa922ed..69e167b 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -188,7 +188,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 		OPT__FORCE(&force, N_("force overwrite of existing files")),
+ 		OPT__QUIET(&quiet,
+ 			N_("no warning for existing files and files not in index")),
+-		OPT_BOOLEAN('n', "no-create", &not_new,
++		OPT_BOOL('n', "no-create", &not_new,
+ 			N_("don't checkout new files")),
+ 		{ OPTION_CALLBACK, 'u', "index", &newfd, NULL,
+ 			N_("update stat information in the index file"),
 -- 
 1.8.4.rc0.16.g7fca822.dirty
