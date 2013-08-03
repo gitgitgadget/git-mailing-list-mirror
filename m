@@ -1,64 +1,90 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: [PATCH 2/2] howto: Eliminate all tabs
-Date: Sat, 03 Aug 2013 22:20:20 +0200
-Message-ID: <91d7a6c4-f7c3-4688-a7e3-a36ca3cf6cb4@email.android.com>
-References: <20130716180158.GA7524@bottich> <cover.1375288760.git.halsmit@t-online.de> <4d37bfa3326469ab5b7cdbf0018f7aa671c2d74a.1375288760.git.halsmit@t-online.de> <20130731165425.GC11219@bottich> <7v8v0mvezw.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH 4/4] gitweb: make search help link less ugly
+Date: Sat, 3 Aug 2013 23:37:39 +0200
+Message-ID: <CANQwDwdcCUNBZH=YbSjwTZx6vau_cs89EH9FV8OUQcdNzDE5DQ@mail.gmail.com>
+References: <20130714234915.GB19057@google.com> <E1Uyeth-0003TF-Kx@hermes-2.csi.cam.ac.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, junio@vger.kernel.org,
-	Thomas Ackermann <th.acker@arcor.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	Dirk Wallenstein <halsmit@t-online.de>
-X-From: git-owner@vger.kernel.org Sat Aug 03 22:20:56 2013
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Tony Finch <dot@dotat.at>
+X-From: git-owner@vger.kernel.org Sat Aug 03 23:38:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5iJr-0006ok-0e
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 22:20:55 +0200
+	id 1V5jWY-0003mJ-AG
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 23:38:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753130Ab3HCUUv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Aug 2013 16:20:51 -0400
-Received: from mail-bk0-f42.google.com ([209.85.214.42]:55007 "EHLO
-	mail-bk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753016Ab3HCUUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Aug 2013 16:20:50 -0400
-Received: by mail-bk0-f42.google.com with SMTP id jk14so569774bkc.15
-        for <multiple recipients>; Sat, 03 Aug 2013 13:20:48 -0700 (PDT)
+	id S1752649Ab3HCViB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Aug 2013 17:38:01 -0400
+Received: from mail-qa0-f48.google.com ([209.85.216.48]:57796 "EHLO
+	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751970Ab3HCViA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Aug 2013 17:38:00 -0400
+Received: by mail-qa0-f48.google.com with SMTP id o19so311967qap.0
+        for <git@vger.kernel.org>; Sat, 03 Aug 2013 14:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=o3byOidy6zojejMl3kjL7gu7AWMAv+ZLD6aXPVO9EXE=;
-        b=FZdsZzHocaLhkLhV6hmtJ86JDx0EiyrF/fTliOso8CLTkHndRfgUZe93Cj96yycmot
-         0lu7vWPR0ACPhY//l7GxzoCHYAPPtdocsIEcLHZGevEst78Dsa0vIbaYvQGVrzcxHLbm
-         hS40pAjtv989KDMWxidOxufmA7twDP/9lFqyIBMCbWD+jqsqwOtgtF2AXK2tXUijb65r
-         E7wGjQagGFOBZ/pQvPdHeeywt2U4Pi4or0ZukKYyuQAGeMGNpzTwsWHO2gdijpLeEu5D
-         mFbTs17wSPvQ9smou3Lsg7hmprxUYiyrDcWuRV6jjyOFyHXyMNJZWVUnBfBZLy6el8yE
-         /ZKw==
-X-Received: by 10.205.4.197 with SMTP id od5mr1909551bkb.1.1375561248894;
-        Sat, 03 Aug 2013 13:20:48 -0700 (PDT)
-Received: from [100.106.128.40] ([46.77.124.110])
-        by mx.google.com with ESMTPSA id ct12sm3205011bkb.12.2013.08.03.13.20.36
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 03 Aug 2013 13:20:48 -0700 (PDT)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <7v8v0mvezw.fsf@alter.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qjIqVEqkTNdTiBPmymQADI0Ak9KRqs/83/Zf8q7DpdA=;
+        b=yJU0q86QV0DaZtECbMJh9bTuSaOuQyHipKueFNf4jDhMtmKYN7xeE2Xvm2BBw33kXR
+         Or/aFgtiLokmafkTmQUh33Y7RcOIQFMXRBXSyu94hCKQQBAJ9Ke8dKIWZ/Bfu6VJr7nv
+         f16lW74Azn5o8QND11QlMgTzk58hByYp5CGV2IenV31sUqkVjJZXubifUEggZfOCFZGk
+         ecoqI493QGREDWcvZoIAju3tE5q/hFss3coKZg1imibYD/4bJ89XwQHnKpKj++F56skM
+         IDubH7WcQiF+G4jpCjl03AlLSPmXOFy1LdI5ADtw/emcboHhoqQvmjh1e4mHp9nF7ttD
+         gtqg==
+X-Received: by 10.224.24.134 with SMTP id v6mr19232889qab.58.1375565879574;
+ Sat, 03 Aug 2013 14:37:59 -0700 (PDT)
+Received: by 10.49.75.169 with HTTP; Sat, 3 Aug 2013 14:37:39 -0700 (PDT)
+In-Reply-To: <E1Uyeth-0003TF-Kx@hermes-2.csi.cam.ac.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231616>
 
-Junio C Hamano <gitster@pobox.com> napisa=C5=82:
->Besides, the tab width of our source is 8, period.  Get over it.
+On Tue, Jul 9, 2013 at 7:15 PM, Tony Finch <dot@dotat.at> wrote:
 
-Isn't the howto documentation intended (mainly/also) for the users of g=
-it, not the developers?
+> The search help link was a superscript question mark right next to
+> a drop-down menu, which looks misaligned
 
+I think the idea was to simulate footnote explaining search terms
+(I think, I am not the author of this feature)...
 
---=20
-Piotr Krukowiecki=20
+>                                                                and is a cramped and
+> awkward click target. Remove the superscript tags and add some
+> spacing to fix these nits. Add a title attribute to provide an
+> explanatory mouseover.
+
+... but I agree that it makes for poor UI.
+
+>
+> Signed-off-by: Tony Finch <dot@dotat.at>
+> ---
+>  gitweb/gitweb.perl | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index c029b98..874c948 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -4029,9 +4029,9 @@ sub print_search_form {
+>               $cgi->input({-name=>"a", -value=>"search", -type=>"hidden"}) . "\n" .
+>               $cgi->input({-name=>"h", -value=>$search_hash, -type=>"hidden"}) . "\n" .
+>               $cgi->popup_menu(-name => 'st', -default => 'commit',
+> -                              -values => ['commit', 'grep', 'author', 'committer', 'pickaxe']) .
+> -             $cgi->sup($cgi->a({-href => href(action=>"search_help")}, "?")) .
+> -             " search:\n",
+> +                              -values => ['commit', 'grep', 'author', 'committer', 'pickaxe']) .
+
+Nb. what changed here (in line above)?
+
+> +             " " . $cgi->a({-href => href(action=>"search_help"),
+> +                            -title => "search help" }, "?") . " search:\n",
+>               $cgi->textfield(-name => "s", -value => $searchtext, -override => 1) . "\n" .
+>               "<span title=\"Extended regular expression\">" .
+>               $cgi->checkbox(-name => 'sr', -value => 1, -label => 're',
+> --
+> 1.8.3.1.605.g85318f5
