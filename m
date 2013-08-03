@@ -1,88 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [regression] Re: git-cat-file --batch reversion; cannot query
- filenames with spaces
-Date: Sat, 3 Aug 2013 00:18:42 -0700
-Message-ID: <20130803071842.GB26894@sigill.intra.peff.net>
-References: <20130801201842.GA16809@kitenet.net>
- <20130802064003.GB3013@elie.Belkin>
- <20130802105402.GA25697@sigill.intra.peff.net>
- <20130802115906.GA9183@sigill.intra.peff.net>
- <7vtxj8oxin.fsf@alter.siamese.dyndns.org>
- <20130802172804.GB11329@sigill.intra.peff.net>
- <7vmwp0osic.fsf@alter.siamese.dyndns.org>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: Please pull l10n updates for 1.8.4 round 1
+Date: Sat, 3 Aug 2013 15:27:16 +0800
+Message-ID: <CANYiYbH-y6X0XD6fCtC2k=cmtigZTLSzoWF1Q_rAeg7g=KWFog@mail.gmail.com>
+References: <CANYiYbHb7VLuf4PG+CW3aKyt2nyMPuf4AgaZmmc40nX2ggRK8g@mail.gmail.com>
+	<51FCA8D9.1080804@gmail.com>
+	<CANYiYbFLOTk24SJFb9dmR6wT+xG_7+PXU3B928PM0tfy4ua6dA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Joey Hess <joeyh@debian.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 03 09:18:54 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 03 09:27:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5W70-0003cm-T4
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 09:18:51 +0200
+	id 1V5WFG-0007p1-LG
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 09:27:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072Ab3HCHSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Aug 2013 03:18:47 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44869 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750742Ab3HCHSq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Aug 2013 03:18:46 -0400
-Received: (qmail 23526 invoked by uid 102); 3 Aug 2013 07:18:46 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (12.144.179.211)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 03 Aug 2013 02:18:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Aug 2013 00:18:42 -0700
-Content-Disposition: inline
-In-Reply-To: <7vmwp0osic.fsf@alter.siamese.dyndns.org>
+	id S1751254Ab3HCH1T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Aug 2013 03:27:19 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:63943 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751228Ab3HCH1S convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Aug 2013 03:27:18 -0400
+Received: by mail-wi0-f182.google.com with SMTP id hi8so124325wib.15
+        for <git@vger.kernel.org>; Sat, 03 Aug 2013 00:27:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ONnczqlnMPEjyUQtRrDIFmcYPljpeAwySuz9CtRo8z4=;
+        b=adZrlouoCUV9ksjTC226HeYoYXLxiwRc51y3C8c2mrN/WNOc/74GLhcdNqq0IQN6uy
+         M+Uc33xiRDgftTlUJc8ccrBi3gcmp2BAOdY0BkI+pPE9b0M/9GTXyB2g6DDTypCIfT5z
+         BGX/k1SCuCC/Pd1gshZ3GXYfBgs2msfsEBWTmL00W3RqmfUR245sxFbx/v3go3iAW2r1
+         INN7p/+gKgv0vd4oJpFM9SHAhJIhqsH3QsJ0cAU5KbvaMmtA+s79n8OLQt6k2XknV95q
+         HkHp3bA7PfW+kJBZ/nlktLWAD6fq2jh6LoEAzwlim1WGZFvMQEdh5ggn7O8+ybZtnZdw
+         dj7g==
+X-Received: by 10.194.133.106 with SMTP id pb10mr7149901wjb.62.1375514836622;
+ Sat, 03 Aug 2013 00:27:16 -0700 (PDT)
+Received: by 10.194.176.129 with HTTP; Sat, 3 Aug 2013 00:27:16 -0700 (PDT)
+In-Reply-To: <CANYiYbFLOTk24SJFb9dmR6wT+xG_7+PXU3B928PM0tfy4ua6dA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231570>
 
-On Fri, Aug 02, 2013 at 11:30:03AM -0700, Junio C Hamano wrote:
+2013/8/3 Jiang Xin <worldhello.net@gmail.com>:
+>>> are available in the git repository at:
+>>>
+>>>    git://github.com/gotgit/git-po
+>>
+>>
+>> git://github.com/git-l10n/git-po
+>>
+>
+> Thanks Tr=E1=BA=A7n. Should be git-l10n/got-po, and gotgit/git-po doe=
+s not exist.
+>
 
-> > I didn't see the result of your wrangling in pu, but I will keep an eye
-> > out to double-check it (unless you did not finish, in which case I am
-> > happy to do the wrangling myself).
-> 
-> Here is what is on top of the revert that has been pushed out on
-> 'pu'.
+In order to prevent this, next time when I generate this pull request t=
+ext,
+I will use the following command:
 
-Thanks, that looks good to me.
+    $ git request-pull kernel/master origin
 
-We may want to also squash in the patch below, which puts the pointer
-variable in the most-local block and re-wraps the newly indented comment
-for line length. Neither introduced by your adaptation, but they became
-more obvious to me when seen on top of the revert.
+"kernel" is a remote points to git://git.kernel.org/pub/scm/git/git.git=
+,
+while "origin" should have two urls, one for fetch and one for push.
 
--Peff
+    $ git config --get-regexp remote.origin..*url
+    remote.origin.url git://github.com/git-l10n/git-po
+    remote.origin.pushurl jiangxin.github.com:git-l10n/git-po  # ssh pr=
+otocol
 
----
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 07b4818..41afaa5 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -286,15 +286,15 @@ static int batch_objects(struct batch_options *opt)
- 	warn_on_object_refname_ambiguity = 0;
- 
- 	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
--		char *p;
- 		int error;
- 
- 		if (data.split_on_whitespace) {
- 			/*
--			 * Split at first whitespace, tying off the beginning of the
--			 * string and saving the remainder (or NULL) in data.rest.
-+			 * Split at first whitespace, tying off the beginning
-+			 * of the string and saving the remainder (or NULL) in
-+			 * data.rest.
- 			 */
--			p = strpbrk(buf.buf, " \t");
-+			char *p = strpbrk(buf.buf, " \t");
- 			if (p) {
- 				while (*p && strchr(" \t", *p))
- 					*p++ = '\0';
+The url for fetch will be used when generate pull request.
+
+--
+Jiang Xin
