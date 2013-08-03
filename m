@@ -1,80 +1,104 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2] gc: reject if another gc is running, unless --force
- is given
-Date: Sat, 03 Aug 2013 12:40:37 +0200
-Message-ID: <51FCDE25.9080805@kdbg.org>
-References: <1375503605-32480-1-git-send-email-pclouds@gmail.com> <1375510890-4728-1-git-send-email-pclouds@gmail.com> <51FCD20E.8070406@kdbg.org> <20130803100113.GA8239@lanh>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] cherry-pick: allow "-" as abbreviation of '@{-1}'
+Date: Sat, 3 Aug 2013 12:51:28 +0200
+Message-ID: <87wqo33v4f.fsf@hexa.v.cablecom.net>
+References: <1375506913-3390-1-git-send-email-hiroshige88@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 03 12:40:44 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>
+To: Hiroshige Umino <hiroshige88@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 03 12:51:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5ZGN-0008JF-BD
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 12:40:43 +0200
+	id 1V5ZRB-0003sm-Ut
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 12:51:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751469Ab3HCKkj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Aug 2013 06:40:39 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:36376 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751344Ab3HCKkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Aug 2013 06:40:39 -0400
-X-Greylist: delayed 3092 seconds by postgrey-1.27 at vger.kernel.org; Sat, 03 Aug 2013 06:40:39 EDT
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id DE4D0CDF89;
-	Sat,  3 Aug 2013 12:40:37 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 46C1319F5DD;
-	Sat,  3 Aug 2013 12:40:37 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <20130803100113.GA8239@lanh>
+	id S1751454Ab3HCKvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Aug 2013 06:51:31 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:2283 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751395Ab3HCKvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Aug 2013 06:51:31 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
+ 2013 12:51:24 +0200
+Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
+ 2013 12:51:28 +0200
+In-Reply-To: <1375506913-3390-1-git-send-email-hiroshige88@gmail.com>
+	(Hiroshige Umino's message of "Sat, 3 Aug 2013 14:15:13 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231579>
 
-Am 03.08.2013 12:01, schrieb Duy Nguyen:
-> On Sat, Aug 03, 2013 at 11:49:02AM +0200, Johannes Sixt wrote:
->> Am 03.08.2013 08:21, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy:
->>>  I changed mingw.h to add a stub uname() because I don't think MinG=
-W
->>>  port has that function, but that's totally untested.
->>
->> Thanks, but we don't have kill(pid, 0), either :-(
->=20
-> Yeah, I should have checked. Will this work?
->=20
-> -- 8< --
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index bb92c43..14d92df 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -1086,6 +1086,12 @@ int mingw_kill(pid_t pid, int sig)
->  		errno =3D err_win_to_posix(GetLastError());
->  		CloseHandle(h);
->  		return -1;
-> +	} else if (pid > 0 && sig =3D=3D 0) {
-> +		HANDLE h =3D OpenProcess(PROCESS_TERMINATE, FALSE, pid);
-> +		if (h) {
-> +			CloseHandle(h);
-> +			return 0;
-> +		}
->  	}
-> =20
->  	errno =3D EINVAL;
-> -- 8< --
->=20
+Hiroshige Umino <hiroshige88@gmail.com> writes:
 
-Looks reasonable. PROCESS_QUERY_INFORMATION instead of PROCESS_TERMINAT=
-E
-should be sufficient, and errno =3D ESRCH; return -1; is missing.
+> As "git cherry-pick -" or "git merge -" is convenient to
+> switch back to or merge the previous branch,
+> "git cherry-pick -" is abbreviation of "git cherry-pick @{-1}"
+> to pick up a commit from the previous branch conveniently.
 
--- Hannes
+The first line is confusing.  Did you mean to invoke the existing 'git
+*checkout* -' and 'git merge -' functionality as a reason why 'git
+cherry-pick -' should exist?
+
+What other commands could reasonably use the '-' shorthand?
+
+[...]
+> diff --git a/t/t3512-cherry-pick-last.sh b/t/t3512-cherry-pick-last.sh
+
+Do you have to use a new test file for this?
+
+[...]
+> +test_expect_success 'setup' '
+> + echo hello >world &&
+> + git add world &&
+(*)
+> + git commit -m initial &&
+> + git branch other &&
+> + echo "hello again" >>world &&
+> + git add world &&
+(*)
+> + git commit -m second
+> +'
+
+Our style is to indent the test snippets with a hard tab, not a single
+(or eight, for that matter) space.
+
+[...]
+> +test_expect_success 'cherry-pick the commit in the previous branch' '
+> + prev=$(git rev-parse HEAD) &&
+> + git checkout other &&
+(*)
+> + git cherry-pick - &&
+> + test "z$(git rev-parse HEAD)" = "z$prev"
+> +'
+
+If you insert 'test_tick' in the places marked with (*), the test fails.
+
+The tests run under a fake clock to ensure that everything, including
+the SHA1s produced, are deterministic.  You never advance the clock, so
+all commits generated in this script share the same timestamp.
+
+This means that the cherry-pick of 'second' has the same SHA1 as the
+original: its tree, parents, author, timestamp etc. all agree.  If you
+advance the clock at the last (*), this fails.  You should find some
+other way of checking what was picked, e.g., by looking at the file
+contents.
+
+That said, please use test_commit in the 'setup' snippet instead of
+manually rolling the commits.  It will lead to shorter code, and it
+handles test_tick for you.  It is documented in t/README and in a
+comment in t/test-lib-functions.sh.  (You still need test_tick
+immediately before the cherry-pick!)
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
