@@ -1,82 +1,74 @@
-From: =?windows-1252?Q?J=F6rn_Hees?= <dev@joernhees.de>
-Subject: [bug] remotes-hg: timezones are transformed
-Date: Sat, 3 Aug 2013 18:36:23 +0200
-Message-ID: <EDA1C92E-6872-40D5-8C25-89C3FFF62F7A@joernhees.de>
-Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 03 18:36:58 2013
+From: Daniel Convissor <danielc@analysisandsolutions.com>
+Subject: Re: Bug: Pulling remotes into an empty repo deletes the index
+Date: Sat, 3 Aug 2013 12:39:15 -0400
+Message-ID: <20130803163915.GB945@analysisandsolutions.com>
+References: <CAJOTJ-AVamimToPo4oQ=O_Pg+mJHQhardO+NfU8b1dvRxg1KMA@mail.gmail.com>
+ <CAJOTJ-Cgdg4CQs-3t1CsBkq_feVEpkoASzQSTATiVugjs+LL7w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Adam A <hitsthings@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 03 18:39:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5ep7-0000qU-HQ
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 18:36:57 +0200
+	id 1V5erQ-0006on-N7
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 18:39:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752430Ab3HCQgj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Aug 2013 12:36:39 -0400
-Received: from srv1.joernhees.de ([81.20.133.80]:36799 "EHLO mail.joernhees.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752208Ab3HCQgi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Aug 2013 12:36:38 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.joernhees.de (Postfix) with ESMTP id 293A5E810CE;
-	Sat,  3 Aug 2013 18:36:34 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at joernhees.de
-Received: from mail.joernhees.de ([127.0.0.1])
-	by localhost (srv1.joernhees.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oTYWHc35TbNV; Sat,  3 Aug 2013 18:36:23 +0200 (CEST)
-Received: from [192.168.2.12] (xdsl-78-34-213-232.netcologne.de [78.34.213.232])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mail.joernhees.de (Postfix) with ESMTPSA id B7031E810CD;
-	Sat,  3 Aug 2013 18:36:23 +0200 (CEST)
-X-Mailer: Apple Mail (2.1508)
+	id S1751242Ab3HCQjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Aug 2013 12:39:17 -0400
+Received: from analysisandsolutions.com ([50.116.58.177]:60839 "EHLO
+	analysisandsolutions.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751022Ab3HCQjQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Aug 2013 12:39:16 -0400
+Received: by analysisandsolutions.com (Postfix, from userid 1001)
+	id F176D18973; Sat,  3 Aug 2013 12:39:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+	d=analysisandsolutions.com; s=default; t=1375547955;
+	bh=ck4CZ2G6Mj8I0QqrG2HuEGE3qY9AC2TcNoYT/lOsDIA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uhFse/E/sB0VpwdHy4MzZBZfq0Nhv7jzSdDLnNYdRdBv+1F/RBf62uIxXfwD42ZpY
+	 rxIkOPy2qNlWUWvdFvled5nhGKb3V+OBOjCzYmDciOlchQQ8IkUrP8GJKCYrwOMQ6h
+	 Mjr3xF3udfSbZXR8j0GzSb1t4uPxHEh10myFwUFI=
+Content-Disposition: inline
+In-Reply-To: <CAJOTJ-Cgdg4CQs-3t1CsBkq_feVEpkoASzQSTATiVugjs+LL7w@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231602>
 
-Hi,
+Hi Adam:
 
-it seems that if you use the 1.8.3.4 remote-helpers/git-remote-hg to cl=
-one a mercurial repo the timezone information of commits gets transform=
-ed into your current timezone.
-(command: git clone hg::=85)
+On Sat, Aug 03, 2013 at 10:01:30PM +1000, Adam A wrote:
+> - create a remote repository at URL with commit(s) in it
+>   - e.g., a new github repo with README and LICENSE files auto-added
+> - write some files in a local directory
+> - git init
+> - git add .
+>   - the contents of the directory are now in the index
+> - git remote add origin URL
+> - git pull origin master
+> 
+> The local files added to the index are now completely wiped out and
+> replaced with the remote content. I lose all my previous work. :/
 
-I noticed this when a colleague in another timezone used Kiln to also e=
-xport the same mercurial repo that i had cloned from git before.
-=46etching from his git repo gives me a "second root tree" with all com=
-mits duplicated.
-A git show of two equivalent commit reveals that the Date: line of the =
-commits changed.
-Tracking this back into the original mercurial repo reveals that _his_ =
-times are correct.
+All is not lost.  Your local files should be stored in the repository's
+reflog.  Examine the output of "git reflog".  You can then reset your
+working directory to obtain those files by doing something _like_
+"git reset --hard HEAD@{1}".
 
-This will also make two or more clones from different timezones all usi=
-ng the same hg remote repo incompatible!
+All hail reflog.
 
+Good luck,
 
-Example:
-Original mercurial commit (timezone: -7200 =3D -4h)
-https://bitbucket.org/lipis/gae-init/commits/a43078f90e727a13767cf14c74=
-0157763fb423b5/raw/
+--Dan
 
-Lipis git export via Kiln: (-4h)
-https://github.com/lipis/gae-init/commit/36b7cabf03fbba784cc41b63430433=
-e9fc79ca8c
-
-My export via git clone hg::ssh://hg@bitbucket.org/lipis/gae-init (+2h)
-https://github.com/joernhees/git-hg-remote-bug_gae-init/commit/8341bf10=
-f1f0a7a924717a8a2c1770f61acd51ae
-
-Expected would be that the hashes of both git exports are the same. His=
- are correct as far as i can tell.
-
-
-Cheers,
-J=F6rn
+-- 
+ T H E   A N A L Y S I S   A N D   S O L U T I O N S   C O M P A N Y
+            data intensive web and database programming
+                http://www.AnalysisAndSolutions.com/
+        4015 7th Ave #4, Brooklyn NY 11232  v: 718-854-0335
