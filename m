@@ -1,82 +1,83 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: Please pull l10n updates for 1.8.4 round 1
-Date: Sat, 3 Aug 2013 15:27:16 +0800
-Message-ID: <CANYiYbH-y6X0XD6fCtC2k=cmtigZTLSzoWF1Q_rAeg7g=KWFog@mail.gmail.com>
-References: <CANYiYbHb7VLuf4PG+CW3aKyt2nyMPuf4AgaZmmc40nX2ggRK8g@mail.gmail.com>
-	<51FCA8D9.1080804@gmail.com>
-	<CANYiYbFLOTk24SJFb9dmR6wT+xG_7+PXU3B928PM0tfy4ua6dA@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v2] gc: reject if another gc is running, unless --force is given
+Date: Sat, 3 Aug 2013 13:22:25 +0530
+Message-ID: <CALkWK0k1vf_WE=pV5XTMAM6Ax6rL3sXu4qx_eyYwvWGsZjXgmA@mail.gmail.com>
+References: <1375503605-32480-1-git-send-email-pclouds@gmail.com> <1375510890-4728-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 03 09:27:23 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 03 09:53:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5WFG-0007p1-LG
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 09:27:23 +0200
+	id 1V5WeZ-0005pj-9O
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 09:53:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751254Ab3HCH1T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Aug 2013 03:27:19 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:63943 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751228Ab3HCH1S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Aug 2013 03:27:18 -0400
-Received: by mail-wi0-f182.google.com with SMTP id hi8so124325wib.15
-        for <git@vger.kernel.org>; Sat, 03 Aug 2013 00:27:16 -0700 (PDT)
+	id S1751288Ab3HCHxJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Aug 2013 03:53:09 -0400
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:43864 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751257Ab3HCHxH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Aug 2013 03:53:07 -0400
+Received: by mail-oa0-f45.google.com with SMTP id m1so3045968oag.32
+        for <git@vger.kernel.org>; Sat, 03 Aug 2013 00:53:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=ONnczqlnMPEjyUQtRrDIFmcYPljpeAwySuz9CtRo8z4=;
-        b=adZrlouoCUV9ksjTC226HeYoYXLxiwRc51y3C8c2mrN/WNOc/74GLhcdNqq0IQN6uy
-         M+Uc33xiRDgftTlUJc8ccrBi3gcmp2BAOdY0BkI+pPE9b0M/9GTXyB2g6DDTypCIfT5z
-         BGX/k1SCuCC/Pd1gshZ3GXYfBgs2msfsEBWTmL00W3RqmfUR245sxFbx/v3go3iAW2r1
-         INN7p/+gKgv0vd4oJpFM9SHAhJIhqsH3QsJ0cAU5KbvaMmtA+s79n8OLQt6k2XknV95q
-         HkHp3bA7PfW+kJBZ/nlktLWAD6fq2jh6LoEAzwlim1WGZFvMQEdh5ggn7O8+ybZtnZdw
-         dj7g==
-X-Received: by 10.194.133.106 with SMTP id pb10mr7149901wjb.62.1375514836622;
- Sat, 03 Aug 2013 00:27:16 -0700 (PDT)
-Received: by 10.194.176.129 with HTTP; Sat, 3 Aug 2013 00:27:16 -0700 (PDT)
-In-Reply-To: <CANYiYbFLOTk24SJFb9dmR6wT+xG_7+PXU3B928PM0tfy4ua6dA@mail.gmail.com>
+        bh=EFVbsEhCY5pLEwaQIw2Ly6cLXVsPPuDE6NTdUGlCDcI=;
+        b=0EeBackETjQL3YHEmGcMA4CgfppFQHlMcag9NBC5/CzzOQClCz1U7YU++S6D0zdgwo
+         ewWlZ/GBCHqi2uAhajFqKkuZIAjDIIb0OhtXwtgYNsDX2QpxI7rAqx9UuLAfZhoyuSLm
+         8V+JEaZLs5khHnIfNwjEigNJOIVVhZT+OrT0+/lKx618WA9sYHwRfx4qHLwuTUOfG6vQ
+         UdaS9LQ5JW7Mzfo1LBURMh/DxWiFaUIXAjoOd5rt6k17q7or6eryOzcSdtu7LPXKgQ9B
+         RQmuBx7IV+XbTBJ5rq1vUFMCCxYstzQSP4VFBbY18OIyPRBCkOuYXf+qBGd99AgQlLCf
+         1JbA==
+X-Received: by 10.50.73.74 with SMTP id j10mr244059igv.50.1375516386174; Sat,
+ 03 Aug 2013 00:53:06 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Sat, 3 Aug 2013 00:52:25 -0700 (PDT)
+In-Reply-To: <1375510890-4728-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231571>
 
-2013/8/3 Jiang Xin <worldhello.net@gmail.com>:
->>> are available in the git repository at:
->>>
->>>    git://github.com/gotgit/git-po
->>
->>
->> git://github.com/git-l10n/git-po
->>
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> This may happen when `git gc --auto` is run automatically, then the
+> user, to avoid wait time, switches to a new terminal, keeps working
+> and `git gc --auto` is started again because the first gc instance ha=
+s
+> not clean up the repository.
 >
-> Thanks Tr=E1=BA=A7n. Should be git-l10n/got-po, and gotgit/git-po doe=
-s not exist.
->
+> This patch tries to avoid multiple gc running, especially in --auto
+> mode. In the worst case, gc may be delayed 12 hours if a daemon reuse=
+s
+> the pid stored in gc-%s.pid.
 
-In order to prevent this, next time when I generate this pull request t=
-ext,
-I will use the following command:
+Definitely looks like a good solution. Thanks for this.
 
-    $ git request-pull kernel/master origin
+I'm currently on vacation, so can't apply and test: sorry.
 
-"kernel" is a remote points to git://git.kernel.org/pub/scm/git/git.git=
-,
-while "origin" should have two urls, one for fetch and one for push.
+> +       if (!force &&
+> +           (fp =3D fopen(git_path("gc-%s.pid", utsname.nodename), "r=
+")) !=3D NULL &&
+> +           !fstat(fileno(fp), &st) &&
 
-    $ git config --get-regexp remote.origin..*url
-    remote.origin.url git://github.com/git-l10n/git-po
-    remote.origin.pushurl jiangxin.github.com:git-l10n/git-po  # ssh pr=
-otocol
+It's open for a very short period of time, so lockfile (which we'd
+normally use) would probably be an overkill.
 
-The url for fetch will be used when generate pull request.
+> +           time(NULL) - st.st_mtime <=3D 12 * 3600) {
 
---
-Jiang Xin
+Quick question: is this kind of file-lifetime used anywhere else in git=
+=2Egit?
+
+> +                       if (auto_gc)
+> +                               return 0; /* be quiet on --auto */
+> +                       die(_("gc is already running"));
+
+Nice.
