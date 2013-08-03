@@ -1,72 +1,85 @@
 From: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
-Subject: [TIG][PATCH 0/3] Refactoring of the log view
-Date: Fri, 02 Aug 2013 20:23:16 -0400
-Message-ID: <1375489399-11618-1-git-send-email-a.kumar@alumni.iitm.ac.in>
+Subject: [[TIG][PATCH] 3/3] Revert "Scroll diff with arrow keys in log view"
+Date: Fri, 02 Aug 2013 20:23:19 -0400
+Message-ID: <1375489399-11618-4-git-send-email-a.kumar@alumni.iitm.ac.in>
+References: <1375489399-11618-1-git-send-email-a.kumar@alumni.iitm.ac.in>
 Content-Transfer-Encoding: 7BIT
 Cc: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
 To: git@vger.kernel.org, fonseca@diku.dk
-X-From: git-owner@vger.kernel.org Sat Aug 03 02:23:31 2013
+X-From: git-owner@vger.kernel.org Sat Aug 03 02:23:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5Pd2-0000kI-BS
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 02:23:28 +0200
+	id 1V5PdC-0001Ci-A6
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 02:23:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755067Ab3HCAXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755199Ab3HCAXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Aug 2013 20:23:25 -0400
+Received: from mta2.srv.hcvlny.cv.net ([167.206.4.197]:56555 "EHLO
+	mta2.srv.hcvlny.cv.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755118Ab3HCAXX (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 2 Aug 2013 20:23:23 -0400
-Received: from mta1.srv.hcvlny.cv.net ([167.206.4.196]:34220 "EHLO
-	mta1.srv.hcvlny.cv.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752178Ab3HCAXW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Aug 2013 20:23:22 -0400
 Received: from odessa (ool-18bb429a.dyn.optonline.net [24.187.66.154])
- by mta1.srv.hcvlny.cv.net
+ by mta2.srv.hcvlny.cv.net
  (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPA id <0MQX0028JIEX8XL0@mta1.srv.hcvlny.cv.net> for
+ with ESMTPA id <0MQX00I0YIEXPCD0@mta2.srv.hcvlny.cv.net> for
  git@vger.kernel.org; Fri, 02 Aug 2013 20:23:22 -0400 (EDT)
 Received: from kumar by odessa with local (Exim 4.80)
-	(envelope-from <a.kumar@alumni.iitm.ac.in>)	id 1V5Pcu-00035r-Q0; Fri,
- 02 Aug 2013 20:23:20 -0400
+	(envelope-from <a.kumar@alumni.iitm.ac.in>)	id 1V5Pcv-000364-9K; Fri,
+ 02 Aug 2013 20:23:21 -0400
+In-reply-to: <1375489399-11618-1-git-send-email-a.kumar@alumni.iitm.ac.in>
 X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231551>
 
-Hi.
+This reverts commit 888611dd5d407775245d574a3dc5c01b5963a5ba. This is
+because, in the re-engineered log view, scrolling the log with the
+arrows now updates the diff in the diff view when the screen is
+split. This resembles the earlier behaviour, and is also what users of
+software like Mutt (which uses the pager view concept) would expect.
 
-These set of patches refactor the log view to provide a behaviour that
-is quite similar to, say, e-mail with Mutt. The key improvements are:
+Signed-Off-By: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
 
-- The current commit is inferred based on the context. For example, if
-  you focus on the commit message of a particular commit, the correct
-  commit is inferred automagically.
+Conflicts:
+	tig.c
+---
+ tig.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-- Scrolling the log view when the diff is open shows the correct
-  commit on the screen, rather than have to scroll up and cross the
-  commit line to display the screen.
-
-I have decided to revert 888611dd5d407775245d574a3dc5c01b5963a5ba,
-since the behaviour with the updated scrolling pattern is much more
-consistent.
-
-As always, I will gladly alter the patch based on comments on coding
-style and all other aspects.
-
-Thanks!
-
-Kumar
-
-Kumar Appaiah (3):
-  Add log_select function to find commit from context in log view
-  Display correct diff the context in split log view
-  Revert "Scroll diff with arrow keys in log view"
-
- NEWS  |  1 +
- tig.c | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 63 insertions(+), 5 deletions(-)
-
+diff --git a/tig.c b/tig.c
+index 53947b7..65c91a0 100644
+--- a/tig.c
++++ b/tig.c
+@@ -1901,7 +1901,6 @@ enum view_flag {
+ 	VIEW_STDIN		= 1 << 8,
+ 	VIEW_SEND_CHILD_ENTER	= 1 << 9,
+ 	VIEW_FILE_FILTER	= 1 << 10,
+-	VIEW_NO_PARENT_NAV	= 1 << 11,
+ };
+ 
+ #define view_has_flags(view, flag)	((view)->ops->flags & (flag))
+@@ -3774,7 +3773,7 @@ view_driver(struct view *view, enum request request)
+ 
+ 	case REQ_NEXT:
+ 	case REQ_PREVIOUS:
+-		if (view->parent && !view_has_flags(view->parent, VIEW_NO_PARENT_NAV)) {
++		if (view->parent) {
+ 			int line;
+ 
+ 			view = view->parent;
+@@ -4498,7 +4497,7 @@ log_request(struct view *view, enum request request, struct line *line)
+ static struct view_ops log_ops = {
+ 	"line",
+ 	{ "log" },
+-	VIEW_ADD_PAGER_REFS | VIEW_OPEN_DIFF | VIEW_SEND_CHILD_ENTER | VIEW_NO_PARENT_NAV,
++	VIEW_ADD_PAGER_REFS | VIEW_OPEN_DIFF | VIEW_SEND_CHILD_ENTER,
+ 	sizeof(struct log_state),
+ 	log_open,
+ 	pager_read,
 -- 
 1.8.3.2
