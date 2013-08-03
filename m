@@ -1,68 +1,65 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH 00/11] blame/log -L: additional tests and bug fixes
-Date: Sat, 3 Aug 2013 16:41:19 +0200
-Message-ID: <87ob9e25ww.fsf@hexa.v.cablecom.net>
-References: <1375258545-42240-1-git-send-email-sunshine@sunshineco.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: git replace: should it check for object type, and can it replace merges?
+Date: Sat, 3 Aug 2013 16:13:46 +0100
+Organization: OPDS
+Message-ID: <24928554D0C34B4696DAD74F569E2E17@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Bo Yang <struggleyb.nku@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sat Aug 03 16:46:45 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 03 17:14:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5d1K-0005mD-3p
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 16:41:26 +0200
+	id 1V5dWc-0001A7-9O
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 17:13:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007Ab3HCOlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Aug 2013 10:41:22 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:9034 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751829Ab3HCOlV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Aug 2013 10:41:21 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
- 2013 16:41:15 +0200
-Received: from hexa.v.cablecom.net.ethz.ch (46.126.8.85) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sat, 3 Aug
- 2013 16:41:19 +0200
-In-Reply-To: <1375258545-42240-1-git-send-email-sunshine@sunshineco.com> (Eric
-	Sunshine's message of "Wed, 31 Jul 2013 04:15:34 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S1751989Ab3HCPNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Aug 2013 11:13:42 -0400
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:63252 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751936Ab3HCPNl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Aug 2013 11:13:41 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AsUNAI0d/VFOl3PZ/2dsb2JhbABagwYBNIkerzGHCwEDAQOBHRd0gh8UAQEuHgEBLAIIAgEkOQEEGgYHHRsCAQIDAYgDCJdChnyZBI5+hDt0A4hyhg6KCpAlgTaBYjs
+X-IPAS-Result: AsUNAI0d/VFOl3PZ/2dsb2JhbABagwYBNIkerzGHCwEDAQOBHRd0gh8UAQEuHgEBLAIIAgEkOQEEGgYHHRsCAQIDAYgDCJdChnyZBI5+hDt0A4hyhg6KCpAlgTaBYjs
+X-IronPort-AV: E=Sophos;i="4.89,807,1367967600"; 
+   d="scan'208";a="427600126"
+Received: from host-78-151-115-217.as13285.net (HELO PhilipOakley) ([78.151.115.217])
+  by out1.ip05ir2.opaltelecom.net with SMTP; 03 Aug 2013 16:13:40 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231598>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+A recent comment http://stackoverflow.com/a/18027030/717355 on a 
+question I asked two years ago about 'grafts' and 'replace' indicates 
+that users think that 'git replace' can't replace a merge commit. The 
+documentation doesn't have any examples and gives the naive impression 
+that one should only replace a simple commit with another simple commit.
 
-> While working on multiple -L support for git-blame, I encountered more
-> issues with the existing -L facility in git-blame and git-log. This
-> series fixes these problems and adds a slew of new tests.
->
-> Patch 6/11 (t4211: retire soon-to-be unimplementable tests) may be
-> controversial. Removal of these tests was effectively a decision made in
-> isolation since my request for input [1] regarding the issue generated
-> only a single response (from j6t).
+Having looked at the code, I realised that anything can be replaced with 
+anything, which is perhaps not what was intended. A simple thought is 
+that the replace should be like-for-like with regard to object type, 
+though that would not include replacing a sub-module for a tree (and 
+vice versa).
 
-I agree with that decision.  It's better to not leave any user-facing
-quirks just for internal's sake.
+Should 'git replace' check the object types to ensure they are sensible?
 
-The right thing would be to either expose enough of the range_set api
-through a test-range-set command, or just write all the tests in C.
-Both seem a bit excessive since the API doesn't have any users outside
-of log -L, which probably approaches "reasonable quality" now that you
-shaked it down quite a bit.
+Would it be reasonable to add examples to indicate the range of 
+replacements, and how to prepare alternative merge commits, or is that a 
+hostage to fortune?
 
-As for the series, my tuits don't go further than a cursory read today,
-but from that it seems good.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Philip Oakley
