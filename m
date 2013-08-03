@@ -1,72 +1,88 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: change remote to track new branch
-Date: Sat, 03 Aug 2013 09:14:59 +0200
-Message-ID: <m2d2pvp7nw.fsf@linux-m68k.org>
-References: <20130803024032.GA28666@analysisandsolutions.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [regression] Re: git-cat-file --batch reversion; cannot query
+ filenames with spaces
+Date: Sat, 3 Aug 2013 00:18:42 -0700
+Message-ID: <20130803071842.GB26894@sigill.intra.peff.net>
+References: <20130801201842.GA16809@kitenet.net>
+ <20130802064003.GB3013@elie.Belkin>
+ <20130802105402.GA25697@sigill.intra.peff.net>
+ <20130802115906.GA9183@sigill.intra.peff.net>
+ <7vtxj8oxin.fsf@alter.siamese.dyndns.org>
+ <20130802172804.GB11329@sigill.intra.peff.net>
+ <7vmwp0osic.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniel Convissor <danielc@analysisandsolutions.com>
-X-From: git-owner@vger.kernel.org Sat Aug 03 09:15:17 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Joey Hess <joeyh@debian.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 03 09:18:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5W3X-0002v1-Mv
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 09:15:16 +0200
+	id 1V5W70-0003cm-T4
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Aug 2013 09:18:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211Ab3HCHPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Aug 2013 03:15:10 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:49070 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751138Ab3HCHPJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Aug 2013 03:15:09 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3c6c2H26c3z3hhYD;
-	Sat,  3 Aug 2013 09:15:02 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3c6c2G5n0rzbbng;
-	Sat,  3 Aug 2013 09:15:02 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id YOEStc58MREW; Sat,  3 Aug 2013 09:15:01 +0200 (CEST)
-X-Auth-Info: vbv/tZ6r1J+rhKRg5sOA9ItrLmUn22zedlJBPjcNguQ=
-Received: from linux.local (ppp-93-104-143-60.dynamic.mnet-online.de [93.104.143.60])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sat,  3 Aug 2013 09:15:01 +0200 (CEST)
-Received: by linux.local (Postfix, from userid 501)
-	id 1DD021E57D5; Sat,  3 Aug 2013 09:15:00 +0200 (CEST)
-X-Yow: TAILFINS!!  ...click...
-In-Reply-To: <20130803024032.GA28666@analysisandsolutions.com> (Daniel
-	Convissor's message of "Fri, 2 Aug 2013 22:40:32 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751072Ab3HCHSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Aug 2013 03:18:47 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44869 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750742Ab3HCHSq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Aug 2013 03:18:46 -0400
+Received: (qmail 23526 invoked by uid 102); 3 Aug 2013 07:18:46 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (12.144.179.211)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 03 Aug 2013 02:18:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Aug 2013 00:18:42 -0700
+Content-Disposition: inline
+In-Reply-To: <7vmwp0osic.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231569>
 
-Daniel Convissor <danielc@analysisandsolutions.com> writes:
+On Fri, Aug 02, 2013 at 11:30:03AM -0700, Junio C Hamano wrote:
 
-> Long ago I added a remote to my repo.  It is set to track what was then
-> WordPress' main release branch (3.4-branch) and created a local branch
-> to use it.  Well, time marches on.  I want to update my remote and
-> branch to track the new main release branch (3.6-branch).
->
-> Here's how I set things up at the time:
->
-> git remote add -t 3.4-branch -f wp https://github.com/WordPress/WordPress
-> git checkout -b wp wp/3.4-branch
+> > I didn't see the result of your wrangling in pu, but I will keep an eye
+> > out to double-check it (unless you did not finish, in which case I am
+> > happy to do the wrangling myself).
+> 
+> Here is what is on top of the revert that has been pushed out on
+> 'pu'.
 
-Use "git remote set-branches" to change the tracked branches of a
-remote.  Use "git branch --set-upstream-to" to change the upstream of a
-branch (or create a new branch from the new upstream).
+Thanks, that looks good to me.
 
-Andreas.
+We may want to also squash in the patch below, which puts the pointer
+variable in the most-local block and re-wraps the newly indented comment
+for line length. Neither introduced by your adaptation, but they became
+more obvious to me when seen on top of the revert.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+-Peff
+
+---
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 07b4818..41afaa5 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -286,15 +286,15 @@ static int batch_objects(struct batch_options *opt)
+ 	warn_on_object_refname_ambiguity = 0;
+ 
+ 	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
+-		char *p;
+ 		int error;
+ 
+ 		if (data.split_on_whitespace) {
+ 			/*
+-			 * Split at first whitespace, tying off the beginning of the
+-			 * string and saving the remainder (or NULL) in data.rest.
++			 * Split at first whitespace, tying off the beginning
++			 * of the string and saving the remainder (or NULL) in
++			 * data.rest.
+ 			 */
+-			p = strpbrk(buf.buf, " \t");
++			char *p = strpbrk(buf.buf, " \t");
+ 			if (p) {
+ 				while (*p && strchr(" \t", *p))
+ 					*p++ = '\0';
