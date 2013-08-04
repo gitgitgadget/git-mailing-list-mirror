@@ -1,100 +1,142 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/3] hooks/post-receive-email: force log messages in UTF-8
-Date: Sun, 4 Aug 2013 11:14:40 -0700
-Message-ID: <20130804181440.GA2894@elie.Belkin>
-References: <20130802232118.GB2963@elie.Belkin>
- <20130802232338.GD2963@elie.Belkin>
- <20130804145448.GA15097@dell-note>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 2/2] submodule: don't print status output with ignore=all
+Date: Sun, 04 Aug 2013 20:24:09 +0200
+Message-ID: <51FE9C49.4020902@web.de>
+References: <1375550060-5406-1-git-send-email-sandals@crustytoothpaste.net> <1375550060-5406-3-git-send-email-sandals@crustytoothpaste.net> <20130803182420.GG2893@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Alexander Gerasiov <gq@debian.org>
-To: Alexey Shumkin <alex.crezoff@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 04 20:15:19 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, judge.packham@gmail.com, iveqy@iveqy.com,
+	Jorge-Juan.Garcia-Garcia@ensimag.imag.fr, gitster@pobox.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 04 20:24:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V62pp-0000Cc-VB
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Aug 2013 20:15:18 +0200
+	id 1V62yW-0006DS-1I
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Aug 2013 20:24:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752786Ab3HDSOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Aug 2013 14:14:49 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:49016 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752483Ab3HDSOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Aug 2013 14:14:49 -0400
-Received: by mail-pa0-f45.google.com with SMTP id bg4so2463526pad.32
-        for <git@vger.kernel.org>; Sun, 04 Aug 2013 11:14:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=KgDZY9MnTCZ4KpFo2nTEgRTL9aSMXOxpCQLkwuL4gG0=;
-        b=LCrfUNKmkiI/qrIkv8d/iKVCs/lV1uKUBt10hXC73LqduQvjSmjEB597SPtXVvLw16
-         BcUTw7MnjhCCQzNfsstyaNdE84CN5gpQa09BZtODOYwVz44jsYyNazkAl8a6QCvucYOZ
-         onaL5HaL4bZkFOvHeL8xaS7DB3HafNwuDyHGmEe5tHR3ud65fubapIvlsA7JtfQH19re
-         gShK9kKhi1MzBQf80FqC/JWNUkG8RV6gupxMdjp5xD5o0s9IEMT5/y3yvZhaH00eJzSo
-         Ce3GvAzm/yyR3s89iitNX1YceODrw8S3jc6DxIaw6A22ZmdBtudRRHQ4lT17VYgbuzBp
-         1I8w==
-X-Received: by 10.68.179.194 with SMTP id di2mr18402218pbc.203.1375640088591;
-        Sun, 04 Aug 2013 11:14:48 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPSA id w8sm23244821pab.12.2013.08.04.11.14.46
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 04 Aug 2013 11:14:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20130804145448.GA15097@dell-note>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1752718Ab3HDSYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Aug 2013 14:24:12 -0400
+Received: from mout.web.de ([212.227.15.3]:49659 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751825Ab3HDSYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Aug 2013 14:24:11 -0400
+Received: from [192.168.178.41] ([91.3.181.161]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0M41Bm-1UEdND3IVG-00raw3 for <git@vger.kernel.org>;
+ Sun, 04 Aug 2013 20:24:10 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <20130803182420.GG2893@elie.Belkin>
+X-Enigmail-Version: 1.5.2
+X-Provags-ID: V03:K0:x1P6dnb5sJXUbQO/kFFMXZmPfDSe6iFa5H18yxq4E8SVz5Czg/7
+ LRFpxKUKlpsmEEZVx8xytBBU33y9JRAKGt9FZIUiRWRQvzdi2KlsomcDyhbgjVU4E6ebIWA
+ me8eHnznjzi5ekgxkF6LqlMG5anY9YPAhdLJyNbKc7g3XpmozJfXWNsyTson53rNUHiI30n
+ 4XHgMC4YSMFAEBXZQIkAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231637>
 
-Alexey Shumkin wrote:
-> On Fri, Aug 02, 2013 at 04:23:38PM -0700, Jonathan Nieder wrote:
+Am 03.08.2013 20:24, schrieb Jonathan Nieder:
+> brian m. carlson wrote:
+> 
+>> git status prints information for submodules, but it should ignore the status of
+>> those which have submodule.<name>.ignore set to all.  Fix it so that it does
+>> properly ignore those which have that setting either in .git/config or in
+>> .gitmodules.
 
->>  1. Log messages use the configured log output encoding, which is
->>     meant to be whatever encoding works best with local terminals
->>     (and does not have much to do with what encoding should be used
->>     for email)
->>
->>  2. Filenames are left as is: on Linux, usually UTF-8, and in the Mingw
->>     port (which uses Unicode filesystem APIs), always UTF-8
+I'm a bit confused. The commit message talks about "git status", but the code
+you changed handles "git submodule summary". Looks like you are trying to fix
+the output of status when the status.submodulesummary option is set, right?
+That's a good thing to do.
+
+But your patch also changes the default behavior of "git submodule summary",
+which is a change in behavior as that is currently not configurable via the
+ignore option (and I believe it should stay that way for backward compatibility
+reasons unless actual users provide sound reasons to change that). So a NACK
+on this patch from me (and a note to self that tests are missing that should
+have failed due to this change).
+
+As a short term solution you could honor the submodule.<name>.ignore setting
+only if --for-status is used, as that is explicitly given by "git status" when
+it forks the "git submodule summary" script (to make it prepend "# " to each
+line, which it could do easily itself nowadays using recently added code ;-).
+
+If you want to fix that issue and make git status perform a lot better, you
+should make the status.submodulesummary use what we already have in the diff
+machinery instead of forking the submodule script (which it does for hysterical
+raisins). Basically you'd need to run just what "git diff-files" and "git
+diff-index HEAD" run when they are given the --submodule option, prepend "# "
+to the output and limit it to the amount of lines configured via the
+status.submodulesummary option. Then we could get rid of the --for-status
+option of submodule summary and move some more functionality from that script
+into core git.
+
+I'll be glad to help you fixing this problem either way.
+
+>> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+>> ---
+>>  git-submodule.sh  | 2 ++
+>>  t/t7508-status.sh | 4 ++--
+>>  2 files changed, 4 insertions(+), 2 deletions(-)
+> 
+> Thanks.  Cc-ing Jens, who wrote that test and knows this code much
+> better than I do. :)
 >
-> I cannot say exactly if it makes sense for THIS patch, but I'd like to
-> remind about Cygwin port, which definitely does not use UTF-8 encoding
-> (in my case it is Windows-1251) for filenames.
->
->> 
->>  3. The "This is an automated email" preface uses a project description
->>     from .git/description, which is typically in UTF-8 to support
->>     gitweb.
-
-Thanks for clarifying.  So in the context you describe, (1) is
-configurable, (2) is Windows-1251, (3) is unconfigurably UTF-8, and
-there is no way with current git facilities to force the email to use
-a single encoding unless (3) happens to contain no special characters.
-
-What is the value of the "[i18n] commitEncoding" setting in your
-project?  What encoding do the raw commit messages (shown with
-"git log --format=raw") use for their text, and what do they declare
-with an in-commit 'encoding' header, if any?
-
-Does everyone on this project use Cygwin?  That should be fine, but
-I'd expect there to be problems as soon as someone wants to try the
-Mingw port ("Git for Windows").
-
-I wonder if there should be an "[i18n] repositoryPathEncoding"
-configuration item to support this kind of repository.  Then git could
-be aware of the intended encoding of paths, could recode them for
-display to a terminal, and at least on Linux and Mingw could recode
-them for use in filenames on disk.  "repositoryPathEncoding = none"
-would mean the current behavior of treating paths as raw sequences of
-bytes.
-
-What do you think?
-Jonathan
+> [...]
+>> --- a/git-submodule.sh
+>> +++ b/git-submodule.sh
+>> @@ -1034,6 +1034,8 @@ cmd_summary() {
+>>  		sane_egrep '^:([0-7]* )?160000' |
+>>  		while read mod_src mod_dst sha1_src sha1_dst status path
+>>  		do
+>> +			name=$(module_name "$path")
+>> +			test $(get_submodule_config "$name" ignore none) = all && continue
+>>  			# Always show modules deleted or type-changed (blob<->module)
+>>  			test $status = D -o $status = T && echo "$path" && continue
+> 
+> I'm not sure what the exact semantics should be here, though that's
+> mostly because of my unfamiliarity with submodules in general.
+> 
+> If I have '[submodule "favorite"] ignore = all' and I then replace
+> that submodule with a blob, should "git submodule status" not mention
+> that path?
+> 
+> If I just renamed a submodule, will 'module_name "$path"' do the right
+> thing with the old path?
+> 
+> (rest of the patch kept unsnipped for reference)
+>>  			# Also show added or modified modules which are checked out
+>> diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+>> index ac3d0fe..fb89fb9 100755
+>> --- a/t/t7508-status.sh
+>> +++ b/t/t7508-status.sh
+>> @@ -1316,7 +1316,7 @@ test_expect_success "--ignore-submodules=all suppresses submodule summary" '
+>>  	test_i18ncmp expect output
+>>  '
+>>  
+>> -test_expect_failure '.gitmodules ignore=all suppresses submodule summary' '
+>> +test_expect_success '.gitmodules ignore=all suppresses submodule summary' '
+>>  	git config --add -f .gitmodules submodule.subname.ignore all &&
+>>  	git config --add -f .gitmodules submodule.subname.path sm &&
+>>  	git status > output &&
+>> @@ -1324,7 +1324,7 @@ test_expect_failure '.gitmodules ignore=all suppresses submodule summary' '
+>>  	git config -f .gitmodules  --remove-section submodule.subname
+>>  '
+>>  
+>> -test_expect_failure '.git/config ignore=all suppresses submodule summary' '
+>> +test_expect_success '.git/config ignore=all suppresses submodule summary' '
+>>  	git config --add -f .gitmodules submodule.subname.ignore none &&
+>>  	git config --add -f .gitmodules submodule.subname.path sm &&
+>>  	git config --add submodule.subname.ignore all &&
+>> -- 
+>> 1.8.4.rc1
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
