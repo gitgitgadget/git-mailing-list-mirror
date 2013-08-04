@@ -1,90 +1,63 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] Add missing test file for UTF-16.
-Date: Sun, 4 Aug 2013 16:06:17 +0000
-Message-ID: <20130804160617.GA4560@vauxhall.crustytoothpaste.net>
-References: <1375550791-5823-1-git-send-email-sandals@crustytoothpaste.net>
- <CACsJy8CT3uxp99n9VUXDbL30WEDcuRreeJBaqBcx9Ujici67VA@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 1/2] submodule: fix confusing variable name
+Date: Sun, 04 Aug 2013 19:34:48 +0200
+Message-ID: <51FE90B8.8030203@web.de>
+References: <1375550060-5406-1-git-send-email-sandals@crustytoothpaste.net> <1375550060-5406-2-git-send-email-sandals@crustytoothpaste.net> <20130803181415.GF2893@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Stefano Lattarini <stefano.lattarini@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 04 18:06:29 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, judge.packham@gmail.com, iveqy@iveqy.com,
+	Jorge-Juan.Garcia-Garcia@ensimag.imag.fr, gitster@pobox.com,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 04 19:35:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V60pA-0000Bg-DR
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Aug 2013 18:06:28 +0200
+	id 1V62Cr-00024S-4R
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Aug 2013 19:35:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753522Ab3HDQGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Aug 2013 12:06:24 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:45684 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753496Ab3HDQGX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Aug 2013 12:06:23 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 65F3528073;
-	Sun,  4 Aug 2013 16:06:21 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CT3uxp99n9VUXDbL30WEDcuRreeJBaqBcx9Ujici67VA@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.10-1-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753519Ab3HDRe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Aug 2013 13:34:57 -0400
+Received: from mout.web.de ([212.227.15.4]:55116 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752700Ab3HDRe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Aug 2013 13:34:56 -0400
+Received: from [192.168.178.41] ([91.3.181.161]) by smtp.web.de (mrweb004)
+ with ESMTPA (Nemesis) id 0LyftH-1U0cSg1i9X-0169th for <git@vger.kernel.org>;
+ Sun, 04 Aug 2013 19:34:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <20130803181415.GF2893@elie.Belkin>
+X-Enigmail-Version: 1.5.2
+X-Provags-ID: V03:K0:Hijw6gec3Ues7kzw7RWxCh+T834BAUeqCtsA+kIYN6xHN7/OTCq
+ fQsAK0WPJHg5LrnKOTT+kGsQkdu37XTpiaPpNnRzSWxK+fULTOKL66o8+oVSOeZcSi+2FWC
+ YSuWnAsK7U7ky+nn79Z9O40BeBA29WDhcJOOYhoxe8ugx1yjxS4D1DkvKQvp4d/Kar27xj/
+ uX8F+EP9Al7HSAZ/phAig==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231634>
 
+Am 03.08.2013 20:14, schrieb Jonathan Nieder:
+> brian m. carlson wrote:
+> 
+>> cmd_summary reads the output of git diff, but reads in the submodule
+>> path into a variable called name.  Since this variable does not
+>> contain the name of the submodule, but the path, rename it to be
+>> clearer what data it actually holds.
+> 
+> Nice.
 
---sdtB3X0nJg68CQEu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I totally agree. Paths and names of submodules are often confused
+(especially as they are identical for a submodule that was never
+moved), so cleaning up our sources so they use the correct term is
+The Right Thing.
 
-On Sun, Aug 04, 2013 at 09:31:01AM +0700, Duy Nguyen wrote:
-> Tested-by: Duy Nguyen <pclouds@gmai.com>
-
-I think you're missing an "l" in the domain name there.
-
-> and sorry, my bad. I think we need your sign-off in this patch.
-
-I just ran across it because I'm going through all the TODO tests and
-seeing which ones I can fix, and I generally just CC the last three or
-four people who touched the files in question.
-
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---sdtB3X0nJg68CQEu
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBCgAGBQJR/nv5AAoJEL9TXYEfUvaLneEP/Ru5c1aCsjDpo79wcSdeDwY0
-951V8AdhGreGKe6R1BTsltv0rISFSpM6GkCeyy0EUAeBbC6EYfxZ/PHBNv6zkt3/
-rugRnCl6my/XdLR24VXuIgmNmu533AnQceEl8bu182eRNgKriDlGKosI8CEG4GzN
-TOVEmro6HRyGHNYmXqomADbeAsbubwVhC8dEKbuAC73z1yJNgBniix4+G8i2+J1y
-/splXXxHP0xAvLpNSsfT/1deiEja8F/ToiYjEGeGm5p5GeosJyEamv1M57AU/Ofz
-wO9Gc14Ft6XgXUETJLn48Yo+9Fe605nKOuWa62P6hPsuYk0KoqmPDgvbFCa537pV
-JkGkcwBFjtrc1DD/2abXTh/yF4xnDKXxojhXC/bSn78Q29Z6FMIUnoBhiddfOBqG
-gSks0W5ppmB5vPUvSpeksOjMXQllzXiKrEaKN+wKpMWzy904ZEHEBl1ELcnLbW+w
-kerHA2zUv1+FAnjKKKJtktuxrnNpLDc+3MvJTvF4kgs/qYAr3YZUORV79Zf5Q0q5
-+tvJ/UnoHHbMMI6qHcCRByZSzM0eJccZedeDN/DYQgMnAthUOacOk8H6QycCNpHb
-ryFfgGifHcFRf44F1x4w2Pw8EB698ygH4bL8ppMThkIUUZAqa5sO1NmQVpS2menT
-bvrNKbOgeHLAKXf3Dm8T
-=LAIf
------END PGP SIGNATURE-----
-
---sdtB3X0nJg68CQEu--
+But we'll have to use sm_path here (like everywhere else in the
+submodule script), because we'll run into problems under Windows
+otherwise (see 64394e3ae9 for details). Apart from that the patch
+is fine.
