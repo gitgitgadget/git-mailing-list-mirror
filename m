@@ -1,137 +1,90 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: Re: [PATCH 2/3] hooks/post-receive-email: force log messages in UTF-8
-Date: Sun, 4 Aug 2013 18:54:48 +0400
-Message-ID: <20130804145448.GA15097@dell-note>
-References: <20130802232118.GB2963@elie.Belkin>
- <20130802232338.GD2963@elie.Belkin>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] Add missing test file for UTF-16.
+Date: Sun, 4 Aug 2013 16:06:17 +0000
+Message-ID: <20130804160617.GA4560@vauxhall.crustytoothpaste.net>
+References: <1375550791-5823-1-git-send-email-sandals@crustytoothpaste.net>
+ <CACsJy8CT3uxp99n9VUXDbL30WEDcuRreeJBaqBcx9Ujici67VA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Alexander Gerasiov <gq@debian.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 04 16:54:58 2013
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Stefano Lattarini <stefano.lattarini@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 04 18:06:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V5zhx-0001iZ-7S
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Aug 2013 16:54:57 +0200
+	id 1V60pA-0000Bg-DR
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Aug 2013 18:06:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753249Ab3HDOyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Aug 2013 10:54:53 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:35911 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753105Ab3HDOyw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Aug 2013 10:54:52 -0400
-Received: by mail-lb0-f172.google.com with SMTP id o7so1506500lbv.31
-        for <git@vger.kernel.org>; Sun, 04 Aug 2013 07:54:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=K5LBC4IPM+FmBYHt+jOydsJTbrKh+hVKu1OOMn0e6h8=;
-        b=kTGLi3b62au7hai0teVhEt9beo6B/gRJ1x6DAXxo24Xqoy6qhW9ayg4RVriCXjPoPi
-         x1HgD6/AMss+/yn8CLviIR7cqqvGGVRcl7ZEw65GCLmKDgw/YFNGPnox4uDu/8cPX/1l
-         BBBMkusqFMb0uyzwz2hwTVHIqDBBtrMTzChFISZ0/V5wlRRajuMPPshtJs3e4Wcb3XOU
-         C8h0bFuOS/UOjPbTOP5mdB6Ct4wvdooq7H0wWojVGvg3pMZMAmZZKchN5d0HlkYb8sa0
-         vwKrkssouPKzzEEWE1ixVxue8iCbgu1WODn5AD7RKNeE8JvBGW+Hh+DbzrDnjTyRsyZ2
-         Fs4A==
-X-Received: by 10.152.21.34 with SMTP id s2mr6797695lae.55.1375628090865;
-        Sun, 04 Aug 2013 07:54:50 -0700 (PDT)
-Received: from localhost (ppp91-77-30-85.pppoe.mtu-net.ru. [91.77.30.85])
-        by mx.google.com with ESMTPSA id 8sm7163650lbq.4.2013.08.04.07.54.49
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 04 Aug 2013 07:54:50 -0700 (PDT)
+	id S1753522Ab3HDQGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Aug 2013 12:06:24 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:45684 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753496Ab3HDQGX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Aug 2013 12:06:23 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 65F3528073;
+	Sun,  4 Aug 2013 16:06:21 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20130802232338.GD2963@elie.Belkin>
+In-Reply-To: <CACsJy8CT3uxp99n9VUXDbL30WEDcuRreeJBaqBcx9Ujici67VA@mail.gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.10-1-amd64)
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231633>
 
-On Fri, Aug 02, 2013 at 04:23:38PM -0700, Jonathan Nieder wrote:
-> Git commands write commit messages in UTF-8 by default, but that
-> default can be overridden by the [i18n] commitEncoding and
-> logOutputEncoding settings.  With such a setting, the emails written
-> by the post-receive-email hook use a mixture of encodings:
-> 
->  1. Log messages use the configured log output encoding, which is
->     meant to be whatever encoding works best with local terminals
->     (and does not have much to do with what encoding should be used
->     for email)
-> 
->  2. Filenames are left as is: on Linux, usually UTF-8, and in the Mingw
->     port (which uses Unicode filesystem APIs), always UTF-8
-I cannot say exactly if it makes sense for THIS patch, but I'd like to
-remind about Cygwin port, which definitely does not use UTF-8 encoding
-(in my case it is Windows-1251) for filenames.
-> 
->  3. The "This is an automated email" preface uses a project description
->     from .git/description, which is typically in UTF-8 to support
->     gitweb.
-> 
-> So (1) is configurable, and (2) and (3) are unconfigurable and
-> typically UTF-8.  Override the log output encoding to always use UTF-8
-> when writing the email to get the best chance of a comprehensible
-> single-encoding email.
-I cannot agree to receive e-mails in UTF-8 only for Windows projects
-which have non-UTF-8 encoding. I want to see and read correctly formed
-e-mail without any corrupted symbols instead of filenames (that is the
-main problem here as far as filenames are not converted unlike log
-messages)
-> 
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
->  contrib/hooks/post-receive-email | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-> index 72084511..ba93a0d8 100755
-> --- a/contrib/hooks/post-receive-email
-> +++ b/contrib/hooks/post-receive-email
-> @@ -471,7 +471,7 @@ generate_delete_branch_email()
->  	echo "       was  $oldrev"
->  	echo ""
->  	echo $LOGBEGIN
-> -	git diff-tree -s --always --pretty=oneline $oldrev
-> +	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
->  	echo $LOGEND
->  }
->  
-> @@ -571,7 +571,7 @@ generate_delete_atag_email()
->  	echo "       was  $oldrev"
->  	echo ""
->  	echo $LOGBEGIN
-> -	git diff-tree -s --always --pretty=oneline $oldrev
-> +	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
->  	echo $LOGEND
->  }
->  
-> @@ -617,7 +617,7 @@ generate_general_email()
->  	echo ""
->  	if [ "$newrev_type" = "commit" ]; then
->  		echo $LOGBEGIN
-> -		git diff-tree -s --always --pretty=medium $newrev
-> +		git diff-tree -s --always --encoding=UTF-8 --pretty=medium $newrev
->  		echo $LOGEND
->  	else
->  		# What can we do here?  The tag marks an object that is not
-> @@ -636,7 +636,7 @@ generate_delete_general_email()
->  	echo "       was  $oldrev"
->  	echo ""
->  	echo $LOGBEGIN
-> -	git diff-tree -s --always --pretty=oneline $oldrev
-> +	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
->  	echo $LOGEND
->  }
->  
-> -- 
-> 1.8.4.rc1
-> 
 
--- 
-Alexey Shumkin
+--sdtB3X0nJg68CQEu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Aug 04, 2013 at 09:31:01AM +0700, Duy Nguyen wrote:
+> Tested-by: Duy Nguyen <pclouds@gmai.com>
+
+I think you're missing an "l" in the domain name there.
+
+> and sorry, my bad. I think we need your sign-off in this patch.
+
+I just ran across it because I'm going through all the TODO tests and
+seeing which ones I can fix, and I generally just CC the last three or
+four people who touched the files in question.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--sdtB3X0nJg68CQEu
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBCgAGBQJR/nv5AAoJEL9TXYEfUvaLneEP/Ru5c1aCsjDpo79wcSdeDwY0
+951V8AdhGreGKe6R1BTsltv0rISFSpM6GkCeyy0EUAeBbC6EYfxZ/PHBNv6zkt3/
+rugRnCl6my/XdLR24VXuIgmNmu533AnQceEl8bu182eRNgKriDlGKosI8CEG4GzN
+TOVEmro6HRyGHNYmXqomADbeAsbubwVhC8dEKbuAC73z1yJNgBniix4+G8i2+J1y
+/splXXxHP0xAvLpNSsfT/1deiEja8F/ToiYjEGeGm5p5GeosJyEamv1M57AU/Ofz
+wO9Gc14Ft6XgXUETJLn48Yo+9Fe605nKOuWa62P6hPsuYk0KoqmPDgvbFCa537pV
+JkGkcwBFjtrc1DD/2abXTh/yF4xnDKXxojhXC/bSn78Q29Z6FMIUnoBhiddfOBqG
+gSks0W5ppmB5vPUvSpeksOjMXQllzXiKrEaKN+wKpMWzy904ZEHEBl1ELcnLbW+w
+kerHA2zUv1+FAnjKKKJtktuxrnNpLDc+3MvJTvF4kgs/qYAr3YZUORV79Zf5Q0q5
++tvJ/UnoHHbMMI6qHcCRByZSzM0eJccZedeDN/DYQgMnAthUOacOk8H6QycCNpHb
+ryFfgGifHcFRf44F1x4w2Pw8EB698ygH4bL8ppMThkIUUZAqa5sO1NmQVpS2menT
+bvrNKbOgeHLAKXf3Dm8T
+=LAIf
+-----END PGP SIGNATURE-----
+
+--sdtB3X0nJg68CQEu--
