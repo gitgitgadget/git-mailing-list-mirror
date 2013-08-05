@@ -1,68 +1,68 @@
 From: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-Subject: Re: [PATCH 2/3] OS X: Fix redeclaration of die warning
-Date: Mon, 05 Aug 2013 09:17:03 -0700
-Message-ID: <64E52D7E-518B-47B4-A048-22BF326ACEF7@apple.com>
+Subject: Re: [PATCH 1/3] Makefile: Fix APPLE_COMMON_CRYPTO with BLK_SHA1
+Date: Mon, 05 Aug 2013 09:16:43 -0700
+Message-ID: <43C3B9F4-9E43-4BE0-B683-8AF6E2E46EC6@apple.com>
 References: <1375718364-13824-1-git-send-email-brian@gernhardtsoftware.com>
- <1375718364-13824-3-git-send-email-brian@gernhardtsoftware.com>
+ <1375718364-13824-2-git-send-email-brian@gernhardtsoftware.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed;
- boundary="Apple-Mail=_1A81AA6D-633D-443D-9648-9F3CD427B08E";
+ boundary="Apple-Mail=_2C8C8111-AA11-4562-BB90-F06B9CCF1866";
  protocol="application/pkcs7-signature"; micalg=sha1
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Mon Aug 05 18:17:38 2013
+X-From: git-owner@vger.kernel.org Mon Aug 05 18:17:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6NTT-0001If-IL
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 18:17:36 +0200
+	id 1V6NTo-0001VK-C5
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 18:17:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754667Ab3HEQR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 12:17:28 -0400
-Received: from crispin.apple.com ([17.151.62.50]:34447 "EHLO
+	id S1753577Ab3HEQQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 12:16:59 -0400
+Received: from mail-out.apple.com ([17.151.62.51]:62333 "EHLO
 	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753253Ab3HEQRZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 12:17:25 -0400
-Received: from relay4.apple.com ([17.128.113.87])
+	with ESMTP id S1753271Ab3HEQQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 12:16:57 -0400
+Received: from relay2.apple.com ([17.128.113.67])
  by mail-out.apple.com (Oracle Communications Messaging Server 7u4-23.01
  (7.0.4.23.0) 64bit (built Aug 10 2011))
- with ESMTP id <0MR200IDQFVDAKN0@mail-out.apple.com> for git@vger.kernel.org;
- Mon, 05 Aug 2013 09:17:04 -0700 (PDT)
-X-AuditID: 11807157-b7f1a6d000003e11-6e-51ffd00052bf
+ with ESMTP id <0MR2003TPFVH0V20@mail-out.apple.com> for git@vger.kernel.org;
+ Mon, 05 Aug 2013 09:16:45 -0700 (PDT)
+X-AuditID: 11807143-b7fb46d00000227e-97-51ffcfec7019
 Received: from koseret (koseret.apple.com [17.151.62.39])
 	(using TLS with cipher RC4-MD5 (128/128 bits))
-	(Client did not present a certificate)	by relay4.apple.com (Apple SCV relay)
- with SMTP id EC.62.15889.000DFF15; Mon, 05 Aug 2013 09:17:04 -0700 (PDT)
+	(Client did not present a certificate)	by relay2.apple.com (Apple SCV relay)
+ with SMTP id 47.40.08830.CEFCFF15; Mon, 05 Aug 2013 09:16:44 -0700 (PDT)
 Received: from [10.0.20.112]
  (99-51-79-55.lightspeed.snjsca.sbcglobal.net [99.51.79.55])
  by koseret.apple.com
  (Oracle Communications Messaging Server 7u4-24.01(7.0.4.24.0) 64bit (built Nov
  17 2011)) with ESMTPSA id <0MR200GL2FVVOG70@koseret.apple.com> for
- git@vger.kernel.org; Mon, 05 Aug 2013 09:17:04 -0700 (PDT)
-In-reply-to: <1375718364-13824-3-git-send-email-brian@gernhardtsoftware.com>
+ git@vger.kernel.org; Mon, 05 Aug 2013 09:16:44 -0700 (PDT)
+In-reply-to: <1375718364-13824-2-git-send-email-brian@gernhardtsoftware.com>
 X-Mailer: Apple Mail (2.1793.4)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMLMWRmVeSWpSXmKPExsUiON1OXZfhwv9Ag73b1C26rnQzOTB6fN4k
-	F8AYxWWTkpqTWZZapG+XwJXxaPpexoITDhWTNqk1MPbbdDFyckgImEgs2baEBcIWk7hwbz1b
-	FyMXh5BAC5PEsnv3oJwjTBIHH3xkB3GYBaYwSjz8sx/I4eDgFTCQ+NzgA2IKC9hLnJ7LATKI
-	DWjorT+nwYZyCvhIHOtewApiswioSjy/tQAszizgJtF/Yx9YnFfARqJ3+kxGiF29jBKXe+6B
-	FYkIGErMffmbEeI6eYm23z/ZJjDyz0J2xiyEM2aBzdWWWLbwNTNImFlAR2LyQkaIsKnEk7fb
-	2SBsa4mfcx5BxRUlpnQ/ZF/AyL6KUaAoNSex0kQvsaAgJ1UvOT93EyMoeBsKw3cw/ltmdYhR
-	gINRiYdXgf1/oBBrYllxZe4hRhWgEY82rL7AKMWSl5+XqiTCO38LUJo3JbGyKrUoP76oNCe1
-	+BCjNAeLkjivZejvQCGB9MSS1OzU1ILUIpgsEwenVAMj/1KHHeer2l0r3upfKps62aE59Gjx
-	nAdz7fLPz29L41JNMuXe57H3ikW2646U2W6qBd/T9vzbNNfWVvxjf8Dj5a3n+EWyP+2b2HJ2
-	ufPBPTI6z3pUl749Z6gaf6dkKqdn/dxNrS+mfEleqcEn83VOWLTm5fOXk1K2+JtIbpsgvufc
-	11CzC7oKSizFGYmGWsxFxYkACBfBOmYCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrKLMWRmVeSWpSXmKPExsUiON1OXffN+f+BBos7LSy6rnQzOTB6fN4k
+	F8AYxWWTkpqTWZZapG+XwJWxecE9toLPFhWzzm9gbGC8a9rFyMkhIWAiMXHlPEYIW0ziwr31
+	bF2MXBxCAi1MEpMfP2WGcI4wSex7spYJxGEWmMIo8fzhSaAMBwevgIHE5wYfkG5hAQ+J/zMX
+	gE1iA5p6689pFhCbU8BH4saapWwgNouAqkTnjzXMIDazgJtE/419rCA2r4CNxN81P6GW9TJK
+	LN83hR0kISJgKDH35W+o8+Ql2n7/ZJvAyD8L2R2zEO6YBTZXXmL72zlgYWYBHYnJCxkhwqYS
+	T95uZ4OwrSV+znkEFVeUmNL9kH0BI/sqRoGi1JzESiO9xIKCnFS95PzcTYygAG4odN7BeGyZ
+	1SFGAQ5GJR5eBfb/gUKsiWXFlbmHGFWARjzasPoCoxRLXn5eqpII7/wtQGnelMTKqtSi/Pii
+	0pzU4kOM0hwsSuK8FqG/A4UE0hNLUrNTUwtSi2CyTBycUg2MvZtUmDlmVy9++Gf2zMJffm33
+	846buP5ud84wO1I9W3DxXZNVzXqMXXyfpfpeN+jPspVvubJxzrcfMz+3zy1bcvH8i8fXW66I
+	HBIXFHfiYO04OvXGX8ndV9JYRILezVzl/+D0O5GZ5dxWkzImLG5Xkrl1V3D6vmO/db/f/PHj
+	4IYU1f3+fz9YeCmxFGckGmoxFxUnAgDq/6zdaAIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231670>
 
 
---Apple-Mail=_1A81AA6D-633D-443D-9648-9F3CD427B08E
-Content-Transfer-Encoding: quoted-printable
+--Apple-Mail=_2C8C8111-AA11-4562-BB90-F06B9CCF1866
+Content-Transfer-Encoding: 7bit
 Content-Type: text/plain;
 	charset=us-ascii
 
@@ -70,77 +70,45 @@ Thanks Brian,
 
 Reviewed-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
 
-On Aug 5, 2013, at 8:59, Brian Gernhardt <brian@gernhardtsoftware.com> =
-wrote:
+On Aug 5, 2013, at 8:59, Brian Gernhardt <brian@gernhardtsoftware.com> wrote:
 
-> compat/apple-common-crypto.h uses die() in one of its macros, but was
-> included in git-compat-util.h before the definition of die.
->=20
-> Fix by simply moving the relevant block after the die/error/warning
-> declarations.
->=20
+> It used to be that APPLE_COMMON_CRYPTO did nothing when BLK_SHA1 was
+> set.  But APPLE_COMMON_CRYPTO is now used for more than just SHA1 (see
+> 3ef2bca) so make sure that the appropriate libraries are always set.
+> 
 > Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
 > ---
->=20
-> Not sure if this is the best place to move it to, but it's the =
-earliest it can
-> be in the file without causing errors.  (Namely that clang has to =
-guess what
-> die() means in apple-common-crypto.h and guesses differently than the =
-actual
-> definition.)
->=20
-> git-compat-util.h | 20 ++++++++++----------
-> 1 file changed, 10 insertions(+), 10 deletions(-)
->=20
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index af5f6bb..d60e28d 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -129,16 +129,6 @@
-> #include <poll.h>
-> #endif
->=20
-> -#ifndef NO_OPENSSL
-> -#ifdef APPLE_COMMON_CRYPTO
-> -#include "compat/apple-common-crypto.h"
-> -#else
-> -#include <openssl/evp.h>
-> -#include <openssl/hmac.h>
-> -#endif /* APPLE_COMMON_CRYPTO */
-> -#include <openssl/x509v3.h>
-> -#endif /* NO_OPENSSL */
-> -
-> #if defined(__MINGW32__)
-> /* pull in Windows compatibility stuff */
-> #include "compat/mingw.h"
-> @@ -340,6 +330,16 @@ extern NORETURN void die_errno(const char *err, =
-...) __attribute__((format (prin
-> extern int error(const char *err, ...) __attribute__((format (printf, =
-1, 2)));
-> extern void warning(const char *err, ...) __attribute__((format =
-(printf, 1, 2)));
->=20
-> +#ifndef NO_OPENSSL
-> +#ifdef APPLE_COMMON_CRYPTO
-> +#include "compat/apple-common-crypto.h"
-> +#else
-> +#include <openssl/evp.h>
-> +#include <openssl/hmac.h>
-> +#endif /* APPLE_COMMON_CRYPTO */
-> +#include <openssl/x509v3.h>
-> +#endif /* NO_OPENSSL */
-> +
-> /*
->  * Let callers be aware of the constant return value; this can help
->  * gcc with -Wuninitialized analysis. We restrict this trick to gcc, =
-though,
-> --=20
+> Makefile | 4 +++-
+> 1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 82f2e22..7051956 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1182,6 +1182,9 @@ ifdef NEEDS_SSL_WITH_CRYPTO
+> else
+> 	LIB_4_CRYPTO = $(OPENSSL_LINK) -lcrypto
+> endif
+> +ifdef APPLE_COMMON_CRYPTO
+> +	LIB_4_CRYPTO += -framework Security -framework CoreFoundation
+> +endif
+> endif
+> ifdef NEEDS_LIBICONV
+> 	ifdef ICONVDIR
+> @@ -1413,7 +1416,6 @@ ifdef PPC_SHA1
+> 	LIB_H += ppc/sha1.h
+> else
+> ifdef APPLE_COMMON_CRYPTO
+> -	LIB_4_CRYPTO += -framework Security -framework CoreFoundation
+> 	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
+> 	SHA1_HEADER = <CommonCrypto/CommonDigest.h>
+> else
+> -- 
 > 1.8.4.rc1.384.g0976a17.dirty
->=20
+> 
 
 
---Apple-Mail=_1A81AA6D-633D-443D-9648-9F3CD427B08E
+--Apple-Mail=_2C8C8111-AA11-4562-BB90-F06B9CCF1866
 Content-Disposition: attachment;
 	filename=smime.p7s
 Content-Type: application/pkcs7-signature;
@@ -207,18 +175,18 @@ o/R0Nz3rN2CjWZVVrcH/M+AUsFX7xA0XNo1s6rxNeC9ncu8McbpI56AUJJJUtjbRIgdbyEKnnjGC
 A28wggNrAgEBMIGUMIGMMQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRDb20gTHRkLjErMCkG
 A1UECxMiU2VjdXJlIERpZ2l0YWwgQ2VydGlmaWNhdGUgU2lnbmluZzE4MDYGA1UEAxMvU3RhcnRD
 b20gQ2xhc3MgMSBQcmltYXJ5IEludGVybWVkaWF0ZSBDbGllbnQgQ0ECAwX0CTAJBgUrDgMCGgUA
-oIIBrzAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xMzA4MDUxNjE3
-MDRaMCMGCSqGSIb3DQEJBDEWBBRju/ZDMwiaG6q3jW5f4V685A+CcTCBpQYJKwYBBAGCNxAEMYGX
+oIIBrzAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xMzA4MDUxNjE2
+NDNaMCMGCSqGSIb3DQEJBDEWBBTHga9xHiSjS7BX49kMLnH/QLuG6TCBpQYJKwYBBAGCNxAEMYGX
 MIGUMIGMMQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRDb20gTHRkLjErMCkGA1UECxMiU2Vj
 dXJlIERpZ2l0YWwgQ2VydGlmaWNhdGUgU2lnbmluZzE4MDYGA1UEAxMvU3RhcnRDb20gQ2xhc3Mg
 MSBQcmltYXJ5IEludGVybWVkaWF0ZSBDbGllbnQgQ0ECAwX0CTCBpwYLKoZIhvcNAQkQAgsxgZeg
 gZQwgYwxCzAJBgNVBAYTAklMMRYwFAYDVQQKEw1TdGFydENvbSBMdGQuMSswKQYDVQQLEyJTZWN1
 cmUgRGlnaXRhbCBDZXJ0aWZpY2F0ZSBTaWduaW5nMTgwNgYDVQQDEy9TdGFydENvbSBDbGFzcyAx
-IFByaW1hcnkgSW50ZXJtZWRpYXRlIENsaWVudCBDQQIDBfQJMA0GCSqGSIb3DQEBAQUABIIBAMXZ
-1bycSTZeGP6QfMl1ZqtmmCVLVrBv9EBSGlbpe+ld1gKNZ4DwLcGgifX1cd9hG6vqTiyRdQtKm6Vg
-aESS7E1ESTdHlNmg8P26jAsv9pMKeEXyjkNcnslitFj+nR9dLYICMqwXQerseqN7sFoFSd7HEPmB
-x6Xt5jF5jpOD01cW4fMHKCIHoSO6hIOwZ/Rb9BGoKk8MmpZNNHZy7CJaqlKeLPnt0oTym6QDGqFf
-+uLswRJs1DURsYiebnZabLoqEpMO0DOSll0MgeFTmrZlCpY//+pQYLIQ81Pl1UGUEU1YNHKRkGAn
-HG2zHNb8oPWx0Ghltao/NP34iJxyMB/gqWoAAAAAAAA=
+IFByaW1hcnkgSW50ZXJtZWRpYXRlIENsaWVudCBDQQIDBfQJMA0GCSqGSIb3DQEBAQUABIIBADno
+D0rZPNo6nEvBwMBOJx99meQdGwo0Eb66ceEBEb4MS9dRawq+pPX1KxRkk0ZCTdEwCHPuKnyEmoro
+74MBpDgXvoLp9wt8lNrkyCtQ/zzs2t8PjuxXvBJ2njH0zFLWKPU9y7JGQ2P7N5YwQaHSCY1Jc3Ya
+99KaQ2gNPNAw6o4i837XUfTYSXU/JAVPk9okW717J0oGGe2k7KJ5wtm0aCSzOGMVvA5SiQJduAqk
+6TLqlv/OJkFEYcKHmkgibAe+UhypvItQ/0QNZjhaY18KXUgZrRNx5szyAb+z/dV0d6ZP2MjU78gy
+wRMS5UVYEKSoVyt+Qzpc6sYGXbw43jYeLlQAAAAAAAA=
 
---Apple-Mail=_1A81AA6D-633D-443D-9648-9F3CD427B08E--
+--Apple-Mail=_2C8C8111-AA11-4562-BB90-F06B9CCF1866--
