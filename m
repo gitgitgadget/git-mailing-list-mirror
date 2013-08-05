@@ -1,96 +1,144 @@
-From: Semyon Vadishev <semen.vadishev@tmatesoft.com>
-Subject: [ANN] SubGit 2.0 Released
-Date: Mon, 05 Aug 2013 20:06:35 +0200
-Message-ID: <51FFE9AB.9050708@tmatesoft.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] gc: reject if another gc is running, unless --force is given
+Date: Mon, 05 Aug 2013 11:17:37 -0700
+Message-ID: <7vsiyoj932.fsf@alter.siamese.dyndns.org>
+References: <1375510890-4728-1-git-send-email-pclouds@gmail.com>
+	<1375712354-13171-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: JGit developer discussion <jgit-dev@eclipse.org>,
-	EGit developer discussion <egit-dev@eclipse.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 05 20:06:45 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 05 20:17:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6PB6-0007HT-Vu
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 20:06:45 +0200
+	id 1V6PLl-0004ha-AR
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 20:17:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754490Ab3HESGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 14:06:41 -0400
-Received: from mail-ea0-f180.google.com ([209.85.215.180]:56749 "EHLO
-	mail-ea0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754387Ab3HESGj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 14:06:39 -0400
-Received: by mail-ea0-f180.google.com with SMTP id h10so1773652eaj.39
-        for <git@vger.kernel.org>; Mon, 05 Aug 2013 11:06:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=XE+JloMvnID056ZVdjUTvz/2xEjmVEXudXhSSPVsaeY=;
-        b=Q9MaqS7JKtMtfHUReX+IxTL6vptt+s86Wr2bZm1UPCzehys+M9+ehZRWJYI3DFjKQg
-         /loj1yYl4Rf3t29+w7PVMkrrUuSft/Tm+QLfKDRivfkizDhUVJ8NpQKfmjLMwr8OkJLW
-         gmiOAjbUAzxdmoPe+0bIufqtY9hRdMvW+8YGgrnxiuPLBloZ35qUfTvZ7ijm+9GeLOGU
-         gVz2vCBQkaOqn4ZDmnIGU/xxgfdDAL65d7DCh/YJM6IYo1ht6CQM2CwbaWFKwwL4tfnp
-         PD4kSuZnP9/eBlbAJxEQTubS9yLawjvWLR4zVQsNZmojH0g4+bwYy167NrjZSaa/eOgH
-         E3sw==
-X-Received: by 10.15.49.72 with SMTP id i48mr17845611eew.37.1375725997729;
-        Mon, 05 Aug 2013 11:06:37 -0700 (PDT)
-Received: from vs.local (46.226.broadband11.iol.cz. [90.178.226.46])
-        by mx.google.com with ESMTPSA id v41sm449182eep.10.2013.08.05.11.06.36
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 05 Aug 2013 11:06:36 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+	id S1754073Ab3HESRl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Aug 2013 14:17:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55924 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753844Ab3HESRk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Aug 2013 14:17:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDF4136CD2;
+	Mon,  5 Aug 2013 18:17:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=iCV+aIPbL4y4
+	ppxsns4mub+gZlw=; b=hNju97h/fmMQpzAGSFN4d3tQYt4x/4t3qW4TYBUOrD6f
+	coQFUMXzwCnLIfIVguuznaY/wY9E12KT37l9owio3zrEa7YAy1yWPUTZ3huFnV4O
+	v0jG7CRj7kWukfF+8oiSe+OiGl496ehiHvsaZQ8qY0fa2w0Zb5nKv4beRjBHLlw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ILdHUp
+	jqddNYqE9anqaX+6/RyGoQx9Fh+UnhSlgekapTY9AHAhsyScr43diy333sky3FGT
+	j2rasufkIOHIQBGzm0erqWjC8mc/DO2dWuuuRtaXDdDGsZH58IujiPM7V/QLDAES
+	Tl7cxqkCQOyc4DaDrxhF2BcyJhC7h+J+WPQnE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C0C5436CD1;
+	Mon,  5 Aug 2013 18:17:39 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E0FD836CD0;
+	Mon,  5 Aug 2013 18:17:38 +0000 (UTC)
+In-Reply-To: <1375712354-13171-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 5 Aug
+ 2013 21:19:14 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4FA43AB2-FDFB-11E2-965F-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231686>
 
-Hello all,
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Our team is proud to announce SubGit 2.0.0 release! New version is
-available for download at SubGit web site at http://subgit.com/
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 6be6c8d..1f33908 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -167,11 +167,66 @@ static int need_to_gc(void)
+>  	return 1;
+>  }
+> =20
+> +static int gc_running(int force)
 
-SubGit lets one to set up a bi-directional Git-SVN mirror, and thus it
-allows users to choose freely between Subversion and Git version control
-systems. SubGit is a perfect tool for those who's going to migrate from
-Subversion to Git as well as from Git to SVN.
+Sounds like a bool asking "Is a GC running?  Yes, or no?".  Since
+there is no room for "force" to enter in order to answer that
+question, I have to guess that this function is somewhat misnamed.
 
-New version introduces the following major features:
+> +{
+> +	static struct lock_file lock;
+> +	struct utsname utsname;
+> +	struct stat st;
+> +	uintmax_t pid;
+> +	FILE *fp;
+> +	int fd, should_exit;
+> +
+> +	if (uname(&utsname))
+> +		strcpy(utsname.nodename, "unknown");
+> +
+> +	fd =3D hold_lock_file_for_update(&lock,
+> +			git_path("gc-%s.pid", utsname.nodename), 0);
+> +	if (!force) {
+> +		if (fd < 0)
+> +			return 1;
+> +
+> +		fp =3D fopen(git_path("gc-%s.pid", utsname.nodename), "r");
 
-1. Support for remote Subversion repositories;
-2. One-shot import from Subversion to Git;
-3. Flexible branches and tags layout;
-4. Significant performance improvements.
+I would have imagined that you would use a lockfile gc.pid and write
+nodename and pid to it (and if nodename matches, you know pid may
+have a chance to actually match another instance of "gc", while
+there will not way it matches if nodename is different, and do
+something intelligent about it).  By letting GC that is running on
+another node to be completely unnoticed, this change is closing the
+door to "do something intelligent about it", like giving it the same
+12 hour limit.
 
-SubGit is a closed source Java application, which is free for use in
-Open Source and Academic projects, as well as in any teams with up to 10
-committers. Besides, there are no limitations on the time you may
-evaluate SubGit in commercial or closed source projects.
+> +		should_exit =3D
+> +			fp !=3D NULL &&
+> +			!fstat(fileno(fp), &st) &&
+> +			/*
+> +			 * 12 hour limit is very generous as gc should
+> +			 * never take that long. On the other hand we
+> +			 * don't really need a strict limit here,
+> +			 * running gc --auto one day late is not a big
+> +			 * problem. --force can be used in manual gc
+> +			 * after the user verifies that no gc is
+> +			 * running.
+> +			 */
+> +			time(NULL) - st.st_mtime <=3D 12 * 3600 &&
+> +			fscanf(fp, "%"PRIuMAX, &pid) =3D=3D 1 &&
+> +			!kill(pid, 0);
+> +		if (fp !=3D NULL)
+> +			fclose(fp);
+> +		if (should_exit) {
+> +			if (fd >=3D 0)
+> +				rollback_lock_file(&lock);
+> +			return 1;
+> +		}
+> +	}
+> +
+> +	if (fd >=3D 0) {
+> +		struct strbuf sb =3D STRBUF_INIT;
+> +		strbuf_addf(&sb, "%"PRIuMAX"\n", (uintmax_t) getpid());
+> +		write_in_full(fd, sb.buf, sb.len);
+> +		strbuf_release(&sb);
+> +		commit_lock_file(&lock);
+> +	}
+> +
+> +	return 0;
+> +}
 
-Atlassian Stash users can install SVN Mirror Add-on which is based on
-SubGit 2.0, so they can manage their Git-SVN mirrors right from Stash
-UI:
-https://marketplace.atlassian.com/plugins/org.tmatesoft.subgit.stash-svn-importer
-
-For the detailed release notes please refer to
-http://subgit.com/documentation/release-notes.html
-Documentation on remote Git-SVN mirror mode: http://subgit.com/book-remote/
-Documentation on local Git-SVN mirror mode: http://subgit.com/book/
-Documentation on one-shot Git-SVN import:
-http://subgit.com/book-remote/#import
-SubGit Issues Tracker: http://issues.tmatesoft.com/issues/SGT
-Follow us at https://twitter.com/subgit and
-https://plus.google.com/114128677298030695536
-
-With Best Regards,
-Semyon Vadishev on behalf of SubGit Team,
-TMate Software,
-http://subgit.com/ - Git-SVN Mirror!
-http://svnkit.com/ - Java [Sub]Versioning Library!
-http://hg4j.com/ - Java Mercurial Library!
-http://sqljet.com/ - Java SQLite Library!
+After reading what the whole function does, I think the purpose of
+this function is to take gc-lock (with optionally force).  Perhaps a
+name along the lines of "lock_gc", "gc_lock", "lock_repo_for_gc",
+would be more appropriate.
