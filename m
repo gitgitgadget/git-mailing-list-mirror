@@ -1,97 +1,141 @@
-From: kazuki saitoh <ksaitoh560@gmail.com>
-Subject: Re: [PATCH] git-p4: use "p4 fstat" to interpret View setting
-Date: Mon, 5 Aug 2013 13:49:51 +0900
-Message-ID: <CACGba4wiVarQhtqMqaSU+qjp0=5V0w_UUKZt1QZ4MYf=MJn7=Q@mail.gmail.com>
-References: <CACGba4yGZDnr-1R-6k-sZoh4P=fu9M0bsmH3uoqj3tXUPsZRYw@mail.gmail.com>
-	<20130802215359.GB9142@padd.com>
+From: Alexey Shumkin <alex.crezoff@gmail.com>
+Subject: Re: [PATCH 2/3] hooks/post-receive-email: force log messages in UTF-8
+Date: Mon, 5 Aug 2013 12:45:43 +0400
+Message-ID: <20130805084543.GA11270@ashu.dyn1.rarus.ru>
+References: <20130802232118.GB2963@elie.Belkin>
+ <20130802232338.GD2963@elie.Belkin>
+ <20130804145448.GA15097@dell-note>
+ <20130804181440.GA2894@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Mon Aug 05 06:49:58 2013
+Content-Type: text/plain; charset=windows-1251
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Alexander Gerasiov <gq@debian.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 05 10:45:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6Ck1-0002gB-Vz
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 06:49:58 +0200
+	id 1V6GQL-0000bc-BR
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 10:45:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752288Ab3HEEty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 00:49:54 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:50762 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751592Ab3HEEtx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 00:49:53 -0400
-Received: by mail-la0-f51.google.com with SMTP id fp13so1723857lab.10
-        for <git@vger.kernel.org>; Sun, 04 Aug 2013 21:49:52 -0700 (PDT)
+	id S1754813Ab3HEIpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 04:45:49 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:48081 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754714Ab3HEIps (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 04:45:48 -0400
+Received: by mail-la0-f42.google.com with SMTP id mf11so1827252lab.29
+        for <git@vger.kernel.org>; Mon, 05 Aug 2013 01:45:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=7Tjj7xenuae5BqbRFvteXJOqXeHw4lNnjePXwRI27/I=;
-        b=mqvuHe/xJPHQ+BT8gWT9z334QzUZlcVA24NycPPlkfKoC25e7Di0NqNxaYj1Yt96Cs
-         oYkWLucy+3SDO8lHI5zgUc+Go8ybK1DU7eQRxgVrVkVWFlHEz47qefYC0Hqh7/tHocow
-         cXNDSQOXRn/Cg7D2S1pnSNbnYT9bINIA7SpTN9VD+MiKLjcIh82RD1OhItQ3wE5dqhhI
-         xgmooqA8OSl+1VnySobxJw87ez/i/wRcqd42dopvnOIHsHmWq73vbVfkWy6HLSLvd5BP
-         L1f7pbeQwb1LRneWuzFLQzvKMk5YAFGA5EKOMjcL1eCewswetshZ93orH/8bRC6p8xfN
-         rQIQ==
-X-Received: by 10.152.121.73 with SMTP id li9mr7808910lab.42.1375678192090;
- Sun, 04 Aug 2013 21:49:52 -0700 (PDT)
-Received: by 10.114.176.232 with HTTP; Sun, 4 Aug 2013 21:49:51 -0700 (PDT)
-In-Reply-To: <20130802215359.GB9142@padd.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=j5cwWoOEGDzfpa/QfzpB12cGufR30SgTp56Fe8Y4hVQ=;
+        b=O/Ozs/VFZLv9OzqzdTtd32qjErp06xX/CZOcK0nCSH/s5Wg6VgpH65hBHQHJV+PVlz
+         HRh7qpzvhL080xPfA3owzs8qpIZK9DuCQZC4kFoI1jxTyHGrnssIOqHRHuEI3hUywSdN
+         sOpYLABxAkVzpl/5O0FVcUd3Imru9NYQ/p2zP2vNlNDG+Xx3nU/ynctBXneasnq9xzVH
+         mt5SZLgFtY2XBMSVW5PH0v0hhn2c72hDbIm5yZOxDxSfXvwRpb8IfdDEltSQ0Sqecc6h
+         efsZKCS62duJ9hzTUhp9itGV9UFJBkW1vdPyB/Eaw02kJ7QK3hp7bJbIycYTqhtzPV99
+         6ZvQ==
+X-Received: by 10.152.29.103 with SMTP id j7mr8023485lah.7.1375692346461;
+        Mon, 05 Aug 2013 01:45:46 -0700 (PDT)
+Received: from localhost ([85.21.218.130])
+        by mx.google.com with ESMTPSA id f8sm6487303lbf.5.2013.08.05.01.45.45
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 05 Aug 2013 01:45:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130804181440.GA2894@elie.Belkin>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231640>
 
-Hi, Pete
-Thank you reply.
+On Sun, Aug 04, 2013 at 11:14:40AM -0700, Jonathan Nieder wrote:
+> Alexey Shumkin wrote:
+> > On Fri, Aug 02, 2013 at 04:23:38PM -0700, Jonathan Nieder wrote:
+> 
+> >>  1. Log messages use the configured log output encoding, which is
+> >>     meant to be whatever encoding works best with local terminals
+> >>     (and does not have much to do with what encoding should be used
+> >>     for email)
+> >>
+> >>  2. Filenames are left as is: on Linux, usually UTF-8, and in the Mingw
+> >>     port (which uses Unicode filesystem APIs), always UTF-8
+> >
+> > I cannot say exactly if it makes sense for THIS patch, but I'd like to
+> > remind about Cygwin port, which definitely does not use UTF-8 encoding
+> > (in my case it is Windows-1251) for filenames.
+> >
+> >> 
+> >>  3. The "This is an automated email" preface uses a project description
+> >>     from .git/description, which is typically in UTF-8 to support
+> >>     gitweb.
+> 
+> Thanks for clarifying.  So in the context you describe, (1) is
+> configurable, (2) is Windows-1251, (3) is unconfigurably UTF-8, and
+> there is no way with current git facilities to force the email to use
+> a single encoding unless (3) happens to contain no special characters.
+> 
+> What is the value of the "[i18n] commitEncoding" setting in your
+> project?
+commitEncoding is equal to filenames' encoding, Windows-1251, of course.
 
-> Your theory is:  there is a client spec, and p4 knows how to
-> interpret these things, so instead of figuring out and
-> implementing the algorithms for %% and * and ... in git-p4, just
-> ask p4 directly.
-That's right.
-It is simple way to get my purpose unless break existing function
-And passed all existing test.
+> What encoding do the raw commit messages (shown with
+> "git log --format=raw") use for their text, and what do they declare
+> with an in-commit 'encoding' header, if any?
+Well, despite `git log --help` 
+--8<--
+raw
+           The raw format shows the entire commit exactly as stored in
+           the commit object"
+--8<--
+on a Linux box (UTF-8) I can see "readable" commit messages nevertheless
+they are stored in 'Windows-1251' (so they are converted to UTF-8). To
+be sure I've checked actual content of them with `git cat-file commit`
+Actually, to be honest, I usually use modified version of Git (see
+ecaee8050cec23eb4cf082512e907e3e52c20b57) in 'next' branch, that could
+affect the results, so I've checked `git log --format=raw` with
+unmodified v1.8.3.3 of Git.
 
-> Let me play with this for a bit.  I wonder about the performance
-> aspects of doing a "p4 fstat" for every file.  Would it be
-> possible to do one or a few batch queries higher up somewhere?
-Oh yes, thank you advice.
-My patch is quick hack to get file info absolutely, but now, I found
-directory unit query (e.g.   p4 fstat -T clientFile
-//depot/project/... )
-Better way is that use directory unit query  then caching.
-I will try it.
+But let's go back to the answer to your question. Commit encoding stored
+as a header in a raw commit messages is 'Windows-1251'.
+> 
+> Does everyone on this project use Cygwin?i
+This is a "closed" (commercial) project and every developer uses Cygwin,
+except me. I use a Linux box as a desktop (mail, IM, web-browsing; but
+development goes on Cygwin). And sometimes I run utility scripts
+included to that project on my desktop (as far as Linux works with files
+much faster than Cygwin does ;))
+Also, a Git server is a coLinux box (http://www.colinux.org/) on a
+Windows Server 2003, but I guess, it does not much matter here.
+>  That should be fine, but
+> I'd expect there to be problems as soon as someone wants to try the
+> Mingw port ("Git for Windows").
+Yep, one of our developers tried to use modern version of TortoiseGit
+with MinGW port of Git. That was a failure. As far as since v1.7.9 MinGW
+port transcodes filenames to store them internally in UTF-8. This
+problem could be solved with converting once that non-ASCII filenames to
+UTF-8, but I do not want to use MinGW port. I like Cygwin
+"infrastructure" that is more Linux-like than MinGW.
+> 
+> I wonder if there should be an "[i18n] repositoryPathEncoding"
+> configuration item to support this kind of repository.  Then git could
+> be aware of the intended encoding of paths, could recode them for
+> display to a terminal, and at least on Linux and Mingw could recode
+> them for use in filenames on disk.  "repositoryPathEncoding = none"
+> would mean the current behavior of treating paths as raw sequences of
+> bytes.
+I'd be happy if such a setting exists. That could solve many problems
+with cross-platform projects with non-ASCII filenames.
+Indeed, MinGW port does resolve that problem somehow!
+> 
+> What do you think?
+> Jonathan
 
-
-> > +P4USER=""
-> > +P4PASS=""
-> > +P4CHARSET=""
->
-> Why do you need these?
-My environment set P4CHARSET=utf8, but "start_p4d" is failed.
-So I undefined P4CHARSET and then passed.
-I don't understand source cause clearly, perhaps only Japanese
-environment problem.
-How about other environment?
-
-P4USER, P4PASS description is no need, just it make sure. I will remove, sorry.
-
-
-> > +    ( p4 sync ) &&
-> >   test_when_finished cleanup_git &&
->
-> How does the p4 sync help here?
-If remove this line, some test is failed.
-Because sometime "p4 fstat" return wrong result after modified p4
-client View setting.
-
-I don't understand Perforce behavior clearly.
-Maybe after modify View, something commend is need to sync server side
-and client side.
-
-This is week point of my suggestion, but I think this situation is rare.
+-- 
+Alexey Shumkin
