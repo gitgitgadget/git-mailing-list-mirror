@@ -1,112 +1,112 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: [BUG?] gc and impatience
-Date: Mon, 5 Aug 2013 12:45:07 -0600
-Organization: CAF
-Message-ID: <201308051245.07995.mfick@codeaurora.org>
-References: <1rpxs5pa827iefbyduyodlc7.1375495435629@email.android.com> <CALkWK0=djXdPMOvk8359nOs=rGLbBepxyXnpELfWs+wjjN7YZw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 6/9] hash-object: Replace stdin parsing OPT_BOOLEAN by OPT_COUNTUP
+Date: Mon, 05 Aug 2013 11:50:35 -0700
+Message-ID: <7vob9cj7k4.fsf@alter.siamese.dyndns.org>
+References: <1375530686-2309-1-git-send-email-stefanbeller@googlemail.com>
+	<1375530686-2309-7-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Martin Fick <mfick@codeauror.org>, Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 05 20:45:21 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 05 20:50:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6PmQ-0001Yc-L2
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 20:45:18 +0200
+	id 1V6Prf-0004WO-VR
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 20:50:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753893Ab3HESpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 14:45:12 -0400
-Received: from smtp.codeaurora.org ([198.145.11.231]:57132 "EHLO
-	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753825Ab3HESpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 14:45:11 -0400
-Received: from smtp.codeaurora.org (localhost [127.0.0.1])
-	by smtp.codeaurora.org (Postfix) with ESMTP id 977AD13EEDF;
-	Mon,  5 Aug 2013 18:45:10 +0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 486)
-	id 8AF7E13EFA7; Mon,  5 Aug 2013 18:45:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	pdx-caf-smtp.dmz.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.1
-Received: from mfick-lnx.localnet (mfick-lnx.qualcomm.com [129.46.10.58])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1754172Ab3HESuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 14:50:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63157 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753738Ab3HESuj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 14:50:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C28D36D75;
+	Mon,  5 Aug 2013 18:50:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2YfASubdvwzBwHtTW6b8/PgcPcI=; b=c28h9U
+	z6ajzLGO+UWFGE308WMZAKMpp9UrU6LwBXJOZIdBg7lZc9+o5ob+13iSjMALE8q+
+	FIJq59v37qehtCasrGgTjNvSMLBm3rrf26Asfk0MKxs1TtUsmOqv59zY3ZeufFGN
+	27uRJA7Z9USTX56BbJbLOmS8hnvE4zqpGBMns=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tzGwvagel/Kk4g+S2T9G7lSQyuq3QAZM
+	RMp0PrZMus7t2v2t9uqeSuplhE+uVrTmf/gwaj/24ojSeARUvtnE/UnAOv6AaO+H
+	NXeF/AGCrxfFcZ0ub0FjoXDS62zeafiytlzQxOrLyfBpVItoVMTbMCGVSkcEZxDg
+	3Lp4vf0SpDs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E9A136D74;
+	Mon,  5 Aug 2013 18:50:38 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	(Authenticated sender: mfick@smtp.codeaurora.org)
-	by smtp.codeaurora.org (Postfix) with ESMTPSA id 33A6613EEDF;
-	Mon,  5 Aug 2013 18:45:10 +0000 (UTC)
-User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <CALkWK0=djXdPMOvk8359nOs=rGLbBepxyXnpELfWs+wjjN7YZw@mail.gmail.com>
-X-Virus-Scanned: ClamAV using ClamSMTP
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B98EE36D6F;
+	Mon,  5 Aug 2013 18:50:36 +0000 (UTC)
+In-Reply-To: <1375530686-2309-7-git-send-email-stefanbeller@googlemail.com>
+	(Stefan Beller's message of "Sat, 3 Aug 2013 13:51:23 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EA99AA3A-FDFF-11E2-9B73-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231689>
 
-On Monday, August 05, 2013 11:34:24 am Ramkumar Ramachandra 
-wrote:
-> Martin Fick wrote:
-> > https://gerrit-review.googlesource.com/#/c/35215/
-> 
-> Very cool. Of what I understood:
-> 
-> So, the problem is that my .git/objects/pack is polluted
-> with little packs everytime I fetch (or push, if you're
-> the server), and this is problematic from the
-> perspective of a overtly (naively) aggressive gc that
-> hammers out all fragmentation.  So, on the first run,
-> the little packfiles I have are all "consolidated" into
-> big packfiles; you also write .keep files to say that
-> "don't gc these big packs we just generated".  In
-> subsequent runs, the little packfiles from the fetch are
-> absorbed into a pack that is immune to gc.  You're also
-> using a size heuristic, to consolidate similarly sized
-> packfiles.  You also have a --ratio to tweak the ratio
-> of sizes.
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-Yes, pretty much.  
+> This task emerged from b04ba2bb (parse-options: deprecate OPT_BOOLEAN,
+> 2011-09-27). hash-object is a plumbing layer command, so better
+> not change the input/output behavior for now.
+>
+> Unfortunately we have these lines relying on the count up mechanism of
+> OPT_BOOLEAN:
+>
+> 	if (hashstdin > 1)
+> 		errstr = "Multiple --stdin arguments are not supported";
+>
+> Maybe later, when the plumbing is refined (git 2.0?), we can drop that
+> error message and replace the OPT_COUNTUP by OPT_BOOL.
 
-I suspect that a smarter implementation would do a "less 
-good job of packing" to save time also.  I think this can be 
-done by further limiting much of the lookups to the packs 
-being packed (or some limited set of the greater packfiles).  
-I admit I don't really understand how much the packing does 
-today, but I believe it still looks at the larger packs with 
-keeps to potentially deltafy against them, or to determine 
-which objects are duplicated and thus should not be put into 
-the new smaller packfiles?  I say this because the time 
-savings of this script is not as significant as I would have 
-expected it to be (but the IO is).  I think that it is 
-possible to design a git gc using this rolling approach that 
-would actually greatly reduce the time spent packing also.  
-However, I don't think that can easily be done in a script 
-like mine which just wraps itself around git gc.  I hope 
-that someone more familiar with git gc than me might take 
-this on some day. :)
+I am of two minds about that as a future direction.
 
+The original motivation of this is that it was too easy to see
 
-> I've checked it in and started using it; so yeah: I'll
-> chew on it for a few weeks.
+	git hash-object Makefile COPYING
 
-The script also does some nasty timestamp manipulations that 
-I am not proud of.  They had significant time impacts for 
-us, and likely could have been achieved some other way.  
-They shouldn't be relevant to the packing algo though.  I 
-hope it doesn't interfere with the evaluation of the 
-approach.
+to work as expected, and extend that knowledge to expect this
 
-Thanks for taking an interest in it,
+	git hash-objects --stdin --stdin
 
--Martin
+to somehow work without thinking things through.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
- 
+So it is not about refining plumbing, but is about educating users.
+Because a popular system will always have influx of users yet to be
+educated, I do not think it makes sense to drop this safety.
+
+The patch itself, and others so far except 1 and 2 which are too big
+for me to carefully review right now, seem to make sense.
+
+Thanks.
+
+> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+> ---
+>  builtin/hash-object.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/hash-object.c b/builtin/hash-object.c
+> index 4aea5bb..d7fcf4c 100644
+> --- a/builtin/hash-object.c
+> +++ b/builtin/hash-object.c
+> @@ -71,7 +71,7 @@ static const char *vpath;
+>  static const struct option hash_object_options[] = {
+>  	OPT_STRING('t', NULL, &type, N_("type"), N_("object type")),
+>  	OPT_BOOL('w', NULL, &write_object, N_("write the object into the object database")),
+> -	OPT_BOOLEAN( 0 , "stdin", &hashstdin, N_("read the object from stdin")),
+> +	OPT_COUNTUP( 0 , "stdin", &hashstdin, N_("read the object from stdin")),
+>  	OPT_BOOL( 0 , "stdin-paths", &stdin_paths, N_("read file names from stdin")),
+>  	OPT_BOOL( 0 , "no-filters", &no_filters, N_("store file as is without filters")),
+>  	OPT_STRING( 0 , "path", &vpath, N_("file"), N_("process file as it were from this path")),
