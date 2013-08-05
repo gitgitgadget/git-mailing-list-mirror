@@ -1,73 +1,61 @@
-From: Tony Finch <dot@dotat.at>
-Subject: Re: [PATCH 3/4] gitweb: omit the repository owner when it is unset
-Date: Mon, 5 Aug 2013 12:36:54 +0100
-Message-ID: <alpine.LSU.2.00.1308051220170.6019@hermes-2.csi.cam.ac.uk>
-References: <20130714234915.GB19057@google.com> <E1Uyete-0003Sv-OI@hermes-2.csi.cam.ac.uk> <CANQwDwdA5VnywJmoNpCX7s=hH7tmUDUmRuak12W7BXOQtqRoQw@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH] commit: reject non-characters
+Date: Mon, 5 Aug 2013 13:48:28 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1308051346530.3657@ds9.cixit.se>
+References: <cover.1372957719.git.sandals@crustytoothpaste.net> <20130704171943.GA267700@vauxhall.crustytoothpaste.net> <alpine.DEB.2.00.1307051345260.11814@ds9.cixit.se> <7vfvvozvx4.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.2.00.1307091213090.2313@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1870870024-408836588-1375702614=:6019"
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 05 13:37:01 2013
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 05 14:50:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6J5w-0002kH-9f
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 13:37:00 +0200
+	id 1V6KDQ-0005hI-65
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 14:48:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752926Ab3HELg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 07:36:56 -0400
-Received: from ppsw-mx-f.csi.cam.ac.uk ([131.111.8.149]:54437 "EHLO
-	ppsw-42.csi.cam.ac.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752392Ab3HELg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 07:36:56 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:39500)
-	by ppsw-42.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.159]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1V6J5q-0002Bx-7S (Exim 4.80_167-5a66dd3)
-	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 05 Aug 2013 12:36:54 +0100
-Received: from fanf2 by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local id 1V6J5q-0005yb-8B (Exim 4.72)
-	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 05 Aug 2013 12:36:54 +0100
-X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
-In-Reply-To: <CANQwDwdA5VnywJmoNpCX7s=hH7tmUDUmRuak12W7BXOQtqRoQw@mail.gmail.com>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1752671Ab3HEMso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 08:48:44 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:48501 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752205Ab3HEMsn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 08:48:43 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id r75CmUAN008815
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 5 Aug 2013 14:48:30 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id r75CmSrG008811;
+	Mon, 5 Aug 2013 14:48:29 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <alpine.DEB.2.00.1307091213090.2313@ds9.cixit.se>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Mon, 05 Aug 2013 14:48:30 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231649>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Peter Krefting:
 
---1870870024-408836588-1375702614=:6019
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> -		/* U+FFFE and U+FFFF are guaranteed non-characters. */
+> -		if ((codepoint & 0x1ffffe) == 0xfffe)
+> +		/* U+xxFFFE and U+xxFFFF are guaranteed non-characters. */
+> +		if ((codepoint & 0xffffe) == 0xfffe)
+> +			return bad_offset;
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
-> On Tue, Jul 2, 2013 at 6:24 PM, Tony Finch <dot@dotat.at> wrote:
->
-> > On the repository summary page, leave the whole owner line out if
-> > the repo does not have an owner, rather than displaying a labelled
-> > empty field..
->
-> Note that if $omit_owner is true, whole _column_ is skipped.
+Drats, there is an F too many in the bitmask, it should be:
 
-There are two places where the owner is displayed: on the list of
-projects, and on each project's summary page. This change affects the
-summary page (where it removes a row, not a column) and it leaves the
-projects list alone. I'll make that clearer in the commit message (and fix
-the extraneous dot).
+  +		if ((codepoint & 0xfffe) == 0xfffe)
 
-Tony.
---=20
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-Forties, Cromarty: East, veering southeast, 4 or 5, occasionally 6 at first=
-=2E
-Rough, becoming slight or moderate. Showers, rain at first. Moderate or goo=
-d,
-occasionally poor at first.
---1870870024-408836588-1375702614=:6019--
+-- 
+\\// Peter - http://www.softwolves.pp.se/
