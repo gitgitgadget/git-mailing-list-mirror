@@ -1,85 +1,97 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [PATCH 1/2] submodule: fix confusing variable name
-Date: Sun, 4 Aug 2013 23:29:38 +0200
-Message-ID: <20130804212938.GL19369@paksenarrion.iveqy.com>
-References: <1375550060-5406-1-git-send-email-sandals@crustytoothpaste.net>
- <1375550060-5406-2-git-send-email-sandals@crustytoothpaste.net>
- <20130803181415.GF2893@elie.Belkin>
- <51FE90B8.8030203@web.de>
+From: kazuki saitoh <ksaitoh560@gmail.com>
+Subject: Re: [PATCH] git-p4: use "p4 fstat" to interpret View setting
+Date: Mon, 5 Aug 2013 13:49:51 +0900
+Message-ID: <CACGba4wiVarQhtqMqaSU+qjp0=5V0w_UUKZt1QZ4MYf=MJn7=Q@mail.gmail.com>
+References: <CACGba4yGZDnr-1R-6k-sZoh4P=fu9M0bsmH3uoqj3tXUPsZRYw@mail.gmail.com>
+	<20130802215359.GB9142@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, judge.packham@gmail.com, iveqy@iveqy.com,
-	Jorge-Juan.Garcia-Garcia@ensimag.imag.fr, gitster@pobox.com,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Aug 04 23:26:46 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Mon Aug 05 06:49:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V65p7-0007iK-9Y
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Aug 2013 23:26:45 +0200
+	id 1V6Ck1-0002gB-Vz
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 06:49:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753904Ab3HDV0i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Aug 2013 17:26:38 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:44032 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753890Ab3HDV0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Aug 2013 17:26:38 -0400
-Received: by mail-lb0-f172.google.com with SMTP id o7so1598535lbv.3
-        for <git@vger.kernel.org>; Sun, 04 Aug 2013 14:26:36 -0700 (PDT)
+	id S1752288Ab3HEEty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 00:49:54 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:50762 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751592Ab3HEEtx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 00:49:53 -0400
+Received: by mail-la0-f51.google.com with SMTP id fp13so1723857lab.10
+        for <git@vger.kernel.org>; Sun, 04 Aug 2013 21:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=TszXkq7wlhfr7P4acp7gi37b3i//POdupukmrsKQA2g=;
-        b=QuQKLicGEDT3fO2qErTPXqnYmYXamWkcrXlF6JwwOuzJQe1KPXbo9QCA0xDe5e2+0c
-         XmIbFxlt1mCJBv0SvDjDvRO2A77vm9YY5HDNwMvI+jKQWeMuuMZUh+Zq0GtQy+/4TuPM
-         2aPZQPS/ic/eGgMtIKOor5DMgh9WGWb8gKx7XVYnpKQy22srY0hGMjG6aIB3pPcMSl4O
-         y+9KicJ3Y4Y0RSmLOMlWaFFpy8zcBTxb67oGC/nBeUudlevT65L7yq91K2Otba9mqwj/
-         5xPplxyRtlGZKsV4U2vh4+6pDVKTWf3fMUVga4AkIMOk+BrT0S4Q4LLhsQ+2R8dEYHBE
-         uaAw==
-X-Received: by 10.112.27.243 with SMTP id w19mr7749245lbg.2.1375651596484;
-        Sun, 04 Aug 2013 14:26:36 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id k6sm8015343lae.9.2013.08.04.14.26.34
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 04 Aug 2013 14:26:35 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1V65ru-0008U1-LA; Sun, 04 Aug 2013 23:29:38 +0200
-Content-Disposition: inline
-In-Reply-To: <51FE90B8.8030203@web.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=7Tjj7xenuae5BqbRFvteXJOqXeHw4lNnjePXwRI27/I=;
+        b=mqvuHe/xJPHQ+BT8gWT9z334QzUZlcVA24NycPPlkfKoC25e7Di0NqNxaYj1Yt96Cs
+         oYkWLucy+3SDO8lHI5zgUc+Go8ybK1DU7eQRxgVrVkVWFlHEz47qefYC0Hqh7/tHocow
+         cXNDSQOXRn/Cg7D2S1pnSNbnYT9bINIA7SpTN9VD+MiKLjcIh82RD1OhItQ3wE5dqhhI
+         xgmooqA8OSl+1VnySobxJw87ez/i/wRcqd42dopvnOIHsHmWq73vbVfkWy6HLSLvd5BP
+         L1f7pbeQwb1LRneWuzFLQzvKMk5YAFGA5EKOMjcL1eCewswetshZ93orH/8bRC6p8xfN
+         rQIQ==
+X-Received: by 10.152.121.73 with SMTP id li9mr7808910lab.42.1375678192090;
+ Sun, 04 Aug 2013 21:49:52 -0700 (PDT)
+Received: by 10.114.176.232 with HTTP; Sun, 4 Aug 2013 21:49:51 -0700 (PDT)
+In-Reply-To: <20130802215359.GB9142@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231639>
 
-On Sun, Aug 04, 2013 at 07:34:48PM +0200, Jens Lehmann wrote:
-> But we'll have to use sm_path here (like everywhere else in the
-> submodule script), because we'll run into problems under Windows
-> otherwise (see 64394e3ae9 for details). Apart from that the patch
-> is fine.
+Hi, Pete
+Thank you reply.
 
-We're still using path=3D in the foreach-script. Or rather, we're setti=
-ng
-it. From what I can see and from the commit message 64394e3ae9 it could
-possible be a problem.
+> Your theory is:  there is a client spec, and p4 knows how to
+> interpret these things, so instead of figuring out and
+> implementing the algorithms for %% and * and ... in git-p4, just
+> ask p4 directly.
+That's right.
+It is simple way to get my purpose unless break existing function
+And passed all existing test.
 
-Not sure how to solve it though... Just a simple correction would break
-all script depending on that.
+> Let me play with this for a bit.  I wonder about the performance
+> aspects of doing a "p4 fstat" for every file.  Would it be
+> possible to do one or a few batch queries higher up somewhere?
+Oh yes, thank you advice.
+My patch is quick hack to get file info absolutely, but now, I found
+directory unit query (e.g.   p4 fstat -T clientFile
+//depot/project/... )
+Better way is that use directory unit query  then caching.
+I will try it.
 
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+> > +P4USER=""
+> > +P4PASS=""
+> > +P4CHARSET=""
+>
+> Why do you need these?
+My environment set P4CHARSET=utf8, but "start_p4d" is failed.
+So I undefined P4CHARSET and then passed.
+I don't understand source cause clearly, perhaps only Japanese
+environment problem.
+How about other environment?
+
+P4USER, P4PASS description is no need, just it make sure. I will remove, sorry.
+
+
+> > +    ( p4 sync ) &&
+> >   test_when_finished cleanup_git &&
+>
+> How does the p4 sync help here?
+If remove this line, some test is failed.
+Because sometime "p4 fstat" return wrong result after modified p4
+client View setting.
+
+I don't understand Perforce behavior clearly.
+Maybe after modify View, something commend is need to sync server side
+and client side.
+
+This is week point of my suggestion, but I think this situation is rare.
