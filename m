@@ -1,108 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git_mkstemps: improve test suite test
-Date: Mon, 05 Aug 2013 10:32:19 -0700
-Message-ID: <7vfvuokpr0.fsf@alter.siamese.dyndns.org>
-References: <201308030027.r730RNWS022924@freeze.ariadne.com>
-	<7vr4e8m7ky.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [BUG?] gc and impatience
+Date: Mon, 5 Aug 2013 23:04:24 +0530
+Message-ID: <CALkWK0=djXdPMOvk8359nOs=rGLbBepxyXnpELfWs+wjjN7YZw@mail.gmail.com>
+References: <1rpxs5pa827iefbyduyodlc7.1375495435629@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: worley@alum.mit.edu (Dale R. Worley)
-X-From: git-owner@vger.kernel.org Mon Aug 05 19:32:40 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Martin Fick <mfick@codeauror.org>
+X-From: git-owner@vger.kernel.org Mon Aug 05 19:35:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6Oe8-0005wV-AN
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 19:32:40 +0200
+	id 1V6Ogc-0007HW-Rq
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 19:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869Ab3HERcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 13:32:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35738 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751569Ab3HERce (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 13:32:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D52D1368AA;
-	Mon,  5 Aug 2013 17:32:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=L0RlvhSFWN4mnwjMYJ7myxsptjo=; b=LhwLms
-	fgSLA8V+kUEKubtMYD/3rCUCwsCMA3CTRm+A82TnTFyOeTN7KYboC5MIAPbEjIe+
-	gdD5ZCNvnBiW8PqNwRqUhLCV2hyG0MwkRqlf3C/24OE9aalqH1lqK1iGS9+rYbH7
-	9L9UxamHOHXOaoHqUWgQxspofu6n8wbzP0GTw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C4rXdnIxUkHR48Qh6PDRXx3a4TXR85X0
-	Pw5Dxetv5NpPfaGaP5klS5H9KcJ7Kd11/PBt72yzm0nfa329rkZXL1trZSh6csr+
-	/vlN0UiqV3yqM8sWVRxYLoqVYcoRJ2mxwOOGxqTG0TPI7j6qWhX1ljbIn33ci2lS
-	fbvAiCfBUc0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C92A8368A9;
-	Mon,  5 Aug 2013 17:32:24 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3B87D368A6;
-	Mon,  5 Aug 2013 17:32:22 +0000 (UTC)
-In-Reply-To: <7vr4e8m7ky.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 05 Aug 2013 09:21:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FC602F6A-FDF4-11E2-A2AB-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753031Ab3HERfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 13:35:07 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:39408 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752156Ab3HERfF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 13:35:05 -0400
+Received: by mail-ob0-f174.google.com with SMTP id wd6so6194437obb.33
+        for <git@vger.kernel.org>; Mon, 05 Aug 2013 10:35:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qWDl/GXMZmgO+jcRXCm+JHyiF5scYs8rSf4BM+IpC1k=;
+        b=u82KhGBWu0M4F5RA4V4NORaQP1xmM87iebDJg0TTh5o8bMpjdsWpOIdFCk5UT8OTL1
+         Vbm/k6VHaT2LqDH5yvGFuPgj9gS+yclnDNVc2skMjd8Anq919+e178/tdL1K4y3iGkkJ
+         vAfYg/YRh8urp8HxvaspDHBhiWTuWnth1E8CqTsW+NsrbEPfDWDJ2qlYimglOAyZZx0r
+         gGQvP6qz9p8YiZ3dqvVUJXqTsYOKy1Yq/K79uGzA0EMf7+LS4ODo/snmXdBPpXp5CrgU
+         GLQ6QGaKzIEAo3k47vsRKD7otq9GOIYU+gG9Kyb3Kvh5B8IVasLoFhfUzxjGdQhCpeEV
+         bzaQ==
+X-Received: by 10.50.131.137 with SMTP id om9mr688716igb.55.1375724104224;
+ Mon, 05 Aug 2013 10:35:04 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Mon, 5 Aug 2013 10:34:24 -0700 (PDT)
+In-Reply-To: <1rpxs5pa827iefbyduyodlc7.1375495435629@email.android.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231681>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Martin Fick wrote:
+> https://gerrit-review.googlesource.com/#/c/35215/
 
-> worley@alum.mit.edu (Dale R. Worley) writes:
->
->> Commit 52749 fixes a bug regarding testing the return of an open()
->> call for success/failure.  Improve the testsuite test for that fix by
->> removing the helper program 'test-close-fd-0' and replacing it with
->> the shell redirection '<&-'.  (The redirection is Posix, so it should
->> be portable.)
->>
->> Signed-off-by: Dale Worley <worley@ariadne.com>
->> ---
->
-> Sorry, but I have no idea what commit you are talking about, and as
-> far as I can see there is no such file test-close-fd-0.c in my tree.
->
-> Puzzled...
+Very cool. Of what I understood:
 
-OK, let's do this on top of a77f106c (run-command: dup_devnull():
-guard against syscalls failing, 2013-07-12) which is at the tip of
-tr/fd-gotcha-fixes that contains the earlier fix.
+So, the problem is that my .git/objects/pack is polluted with little
+packs everytime I fetch (or push, if you're the server), and this is
+problematic from the perspective of a overtly (naively) aggressive gc
+that hammers out all fragmentation.  So, on the first run, the little
+packfiles I have are all "consolidated" into big packfiles; you also
+write .keep files to say that "don't gc these big packs we just
+generated".  In subsequent runs, the little packfiles from the fetch
+are absorbed into a pack that is immune to gc.  You're also using a
+size heuristic, to consolidate similarly sized packfiles.  You also
+have a --ratio to tweak the ratio of sizes.
 
--- >8 --
-From: "Dale R. Worley" <worley@alum.mit.edu>
-Date: Fri, 2 Aug 2013 20:27:23 -0400
-Subject: [PATCH] t0070: test that git_mkstemps correctly checks return value of open()
+I've checked it in and started using it; so yeah: I'll chew on it for
+a few weeks.
 
-Signed-off-by: Dale R. Worley <worley@alum.mit.edu>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t0070-fundamental.sh | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
-index da2c504..ff3776f 100755
---- a/t/t0070-fundamental.sh
-+++ b/t/t0070-fundamental.sh
-@@ -25,6 +25,10 @@ test_expect_success POSIXPERM 'mktemp to unwritable directory prints filename' '
- 	grep "cannotwrite/test" err
- '
- 
-+test_expect_success 'git_mkstemps_mode does not fail if fd 0 is not open' '
-+	git commit --allow-empty -m message <&-
-+'
-+
- test_expect_success 'check for a bug in the regex routines' '
- 	# if this test fails, re-build git with NO_REGEX=1
- 	test-regex
--- 
-1.8.4-rc1-129-g1f3472b
+Thanks.
