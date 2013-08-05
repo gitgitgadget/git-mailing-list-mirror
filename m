@@ -1,108 +1,78 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] t8001, t8002: fix "blame -L :literal" test on NetBSD
-Date: Mon, 05 Aug 2013 17:21:17 +0200
-Message-ID: <51FFC2ED.3080906@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG?] gc and impatience
+Date: Mon, 05 Aug 2013 08:24:21 -0700
+Message-ID: <7vk3k0not6.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0k2B5OW9zMrw0jBDDWpufojYDJybXa7jCBdzftNUc7mxA@mail.gmail.com>
+	<CACsJy8DRo9Akoydwn9-EPOSyJiPhqAf1=HncYjHvXZwS4S_d7A@mail.gmail.com>
+	<CAPc5daXi_ZG6GcK6pWafffyOY4MEZHUMkZxTxiRiU4BaFybqqg@mail.gmail.com>
+	<CACsJy8DO4VyCK_xDJDGVx6JLTqjKAf24AUOW3=kZEMEVjAUSVw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git discussion list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Aug 05 17:21:37 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 05 17:24:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6MbI-0006fy-1h
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 17:21:36 +0200
+	id 1V6Me5-000869-0E
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 17:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026Ab3HEPVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 11:21:32 -0400
-Received: from mout.web.de ([212.227.17.12]:63898 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752225Ab3HEPVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 11:21:31 -0400
-Received: from [192.168.2.102] ([79.253.164.97]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0LlneG-1UX1mS0pe4-00ZQQU for <git@vger.kernel.org>;
- Mon, 05 Aug 2013 17:21:28 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-X-Provags-ID: V03:K0:CcrZVxOt9Sk47mqJ10lVeHOZJgT4rCfSSYFX0LzFXfloltpZIiu
- VI/u1C4AkT/wcRHOTWW0VsFOyu4g4UFdvZJvUFcawzRZMSchx09/feH7s9V9kZHjZ0vI+S+
- LoE/yRxXJJ4qicc8a603cgegiwBX0EEIY9VNWYDYM+bZwWSXkaI1Bip5IKuivzZikXcgF45
- kHcN4egvrOjEV58D0zUDA==
+	id S1753167Ab3HEPYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 11:24:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57537 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752789Ab3HEPYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 11:24:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 442F436A19;
+	Mon,  5 Aug 2013 15:24:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HOT2woDd6wvvm4IsR7JnShmBlzM=; b=uxvKDK
+	nNjoHNM9hnPOBSGXU3rmpTmAgSdgjjxZjcSaEqvmx63rWEWLfHI5iZH98emuIU7n
+	jqrmuFwpov7ZCvuiBhkha4KfxUAkPkWxWE7K4bVPywWq+veAI2qz4Dizn6rdz1oF
+	KjI54ZwZ89ELiQbaDbqoPsby3ZY19U4CUhmfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DLh3S+ZptF2ZnIZ88COrxRtMJ3ygovnw
+	ihlrO/dXXg6vnh21CaD/CqUeaEwiXx3JWogaaGmmGosVBcmCCuJVvd79iUzrpQRu
+	pg8W8dS8q3nZ1sJdzpvegsINXI+LoZc1ZUxphvNixW9wsbx8b/69AK3EwiCe4YXP
+	NdmnFCXuZj4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39A5B36A18;
+	Mon,  5 Aug 2013 15:24:24 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9910136A11;
+	Mon,  5 Aug 2013 15:24:22 +0000 (UTC)
+In-Reply-To: <CACsJy8DO4VyCK_xDJDGVx6JLTqjKAf24AUOW3=kZEMEVjAUSVw@mail.gmail.com>
+	(Duy Nguyen's message of "Sat, 3 Aug 2013 12:25:11 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1AF74542-FDE3-11E2-9DDD-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231655>
 
-Sub-test 42 of t8001 and t8002 ("blame -L :literal") fails on NetBSD
-with the following verbose output:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-	git annotate  -L:main hello.c
-	Author F (expected 4, attributed 3) bad
-	Author G (expected 1, attributed 1) good
+> I worry less about this. It's not the right model to have two machines
+> modify the same shared repository (gc --auto is only triggered when we
+> think there are new objects) even though I think we support it.
 
-This is not caused by different behaviour of git blame or annotate on
-that platform, but by different test input, in turn caused by a sed
-command that forgets to add a newline on NetBSD.  Here's the diff of the
-commit that adds "goodbye" to hello.c, for Linux:
+I am a bit hesitant to dismiss with "It's not the right model", as
+the original of accessing the repository from two terminals while
+one clearly is being accessed busily by gc falls into the same
+category.
 
-	@@ -1,4 +1,5 @@
-	 int main(int argc, const char *argv[])
-	 {
-		puts("hello");
-	+		puts("goodbye");
-	 }
+> If
+> it's two _scripts_ modifying the same repo, I don't care as this is
+> more about user interaction.
 
-We see that it adds an extra TAB, but that's not a problem.  Here's the
-same on NetBSD:
-
-	@@ -1,4 +1,4 @@
-	 int main(int argc, const char *argv[])
-	 {
-		puts("hello");
-	-}
-	+		puts("goodbye");}
-
-It also adds an extra TAB, but it is missing the newline character
-after the semicolon.
-
-The following patch gets rid of the extra TAB at the beginning, but
-more importantly adds the missing newline at the end in a (hopefully)
-portable way, mentioned in http://sed.sourceforge.net/sedfaq4.html.
-The diff becomes this, on both Linux and NetBSD:
-
-	@@ -1,4 +1,5 @@
-	 int main(int argc, const char *argv[])
-	 {
-		puts("hello");
-	+	puts("goodbye");
-	 }
-
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-This regression was introduced by 5a9830cb ("t8001/t8002 (blame):
-add blame -L :funcname tests").
-
- t/annotate-tests.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index 0bfee00..d4e7f47 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -245,8 +245,8 @@ test_expect_success 'setup -L :regex' '
- 	git commit -m "hello" &&
- 
- 	mv hello.c hello.orig &&
--	sed -e "/}/i\\
--	Qputs(\"goodbye\");" <hello.orig | tr Q "\\t" >hello.c &&
-+	sed -e "/}/ {x; s/$/Qputs(\"goodbye\");/; G;}" <hello.orig |
-+	tr Q "\\t" >hello.c &&
- 	GIT_AUTHOR_NAME="G" GIT_AUTHOR_EMAIL="G@test.git" \
- 	git commit -a -m "goodbye" &&
- 
--- 
-1.8.1.5
+It can very well be two terminals, one on one machine each, both
+with the same human end-user interaction.
