@@ -1,131 +1,93 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] t8001, t8002: fix "blame -L :literal" test on NetBSD
-Date: Mon, 5 Aug 2013 11:33:54 -0400
-Message-ID: <CAPig+cS4vzA9Kb=YKMYmFkckYwsRmg1AeY9hjAnGSS9MwzXkbQ@mail.gmail.com>
-References: <51FFC2ED.3080906@web.de>
+From: Tony Finch <dot@dotat.at>
+Subject: git-http-backend vs gitweb pathinfo mode
+Date: Mon, 5 Aug 2013 16:34:49 +0100
+Message-ID: <alpine.LSU.2.00.1308051624570.16837@hermes-2.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git discussion list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Mon Aug 05 17:34:02 2013
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Tony Finch <dot@dotat.at>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 05 17:34:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6MnJ-0003wM-KZ
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 17:34:01 +0200
+	id 1V6MoA-0004Hq-OP
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 17:34:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754014Ab3HEPd6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Aug 2013 11:33:58 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:46755 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753994Ab3HEPd5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Aug 2013 11:33:57 -0400
-Received: by mail-la0-f48.google.com with SMTP id hi8so2138190lab.7
-        for <git@vger.kernel.org>; Mon, 05 Aug 2013 08:33:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=DjB28OmP4Irik926F71/6RCpBu9PW1o4J2d75/1Gi8Q=;
-        b=noEBjEP8Y3qA7ljLAKBvSAwe5nsR9qAcU9i7J5NrmyhdzfwzU1UEQb1lytdr7M7mLd
-         8D2Wroenqk3NLCU0UfYNjoXUAY0u/Q2kAXrAdclBcDeAOJBD1F1IiOiOnzRZ0flAje+v
-         AugS3iU6ZgJBd8kBKBHpKwTdOE72dfxrYRm23I45QDdWxNES49mEFiFQL3jsrwtjzZe0
-         AWQUKoKihrF+b5j88P5FHhcgK/YoE+BRuOSrpoaEmHvZBxUIbyqxRZiICMfrPi2LA/RM
-         SVijHO9Vb/Ej79YFiD2J5MKNfQH8uyFAqm45DESNQUlp5QlurbUrr/jV6ZT9C/ZDLh4K
-         AhnA==
-X-Received: by 10.152.3.201 with SMTP id e9mr2681568lae.24.1375716834496; Mon,
- 05 Aug 2013 08:33:54 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Mon, 5 Aug 2013 08:33:54 -0700 (PDT)
-In-Reply-To: <51FFC2ED.3080906@web.de>
-X-Google-Sender-Auth: XyA53Q1xky0dZXl4U3GGH-SgNQE
+	id S1754027Ab3HEPev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 11:34:51 -0400
+Received: from ppsw-33.csi.cam.ac.uk ([131.111.8.133]:52721 "EHLO
+	ppsw-33.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753785Ab3HEPeu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 11:34:50 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:43013)
+	by ppsw-33.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.157]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1V6Mo5-0001bW-hE (Exim 4.80_167-5a66dd3)
+	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 05 Aug 2013 16:34:49 +0100
+Received: from fanf2 by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local id 1V6Mo5-0005Sc-BV (Exim 4.72)
+	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 05 Aug 2013 16:34:49 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231658>
 
-On Mon, Aug 5, 2013 at 11:21 AM, Ren=E9 Scharfe <l.s.r@web.de> wrote:
-> Sub-test 42 of t8001 and t8002 ("blame -L :literal") fails on NetBSD
-> with the following verbose output:
->
->         git annotate  -L:main hello.c
->         Author F (expected 4, attributed 3) bad
->         Author G (expected 1, attributed 1) good
->
-> This is not caused by different behaviour of git blame or annotate on
-> that platform, but by different test input, in turn caused by a sed
-> command that forgets to add a newline on NetBSD.  Here's the diff of =
-the
-> commit that adds "goodbye" to hello.c, for Linux:
->
->         @@ -1,4 +1,5 @@
->          int main(int argc, const char *argv[])
->          {
->                 puts("hello");
->         +               puts("goodbye");
->          }
->
-> We see that it adds an extra TAB,
+Background:
 
-Curious. On Mac OS X, there is only a single tab.
+You cam make the same URL work for gitwe and git clone as described in
+git-http-backend(1). It says:
 
-> but that's not a problem.  Here's the
-> same on NetBSD:
->
->         @@ -1,4 +1,4 @@
->          int main(int argc, const char *argv[])
->          {
->                 puts("hello");
->         -}
->         +               puts("goodbye");}
->
-> It also adds an extra TAB, but it is missing the newline character
-> after the semicolon.
->
-> The following patch gets rid of the extra TAB at the beginning, but
-> more importantly adds the missing newline at the end in a (hopefully)
-> portable way, mentioned in http://sed.sourceforge.net/sedfaq4.html.
+   To serve gitweb at the same url, use a ScriptAliasMatch to only
+   those URLs that git http-backend can handle, and forward the rest
+   to gitweb:
 
-Tested on Mac OS X. Works correctly.
+       ScriptAliasMatch \
+               "(?x)^/git/(.*/(HEAD | \
+                               info/refs | \
+                               objects/(info/[^/]+ | \
+                                        [0-9a-f]{2}/[0-9a-f]{38} | \
+                                        pack/pack-[0-9a-f]{40}\.(pack|idx)) | \
+                               git-(upload|receive)-pack))$" \
+               /usr/libexec/git-core/git-http-backend/$1
 
-> The diff becomes this, on both Linux and NetBSD:
->
->         @@ -1,4 +1,5 @@
->          int main(int argc, const char *argv[])
->          {
->                 puts("hello");
->         +       puts("goodbye");
->          }
->
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
-> This regression was introduced by 5a9830cb ("t8001/t8002 (blame):
-> add blame -L :funcname tests").
->
->  t/annotate-tests.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-> index 0bfee00..d4e7f47 100644
-> --- a/t/annotate-tests.sh
-> +++ b/t/annotate-tests.sh
-> @@ -245,8 +245,8 @@ test_expect_success 'setup -L :regex' '
->         git commit -m "hello" &&
->
->         mv hello.c hello.orig &&
-> -       sed -e "/}/i\\
-> -       Qputs(\"goodbye\");" <hello.orig | tr Q "\\t" >hello.c &&
-> +       sed -e "/}/ {x; s/$/Qputs(\"goodbye\");/; G;}" <hello.orig |
-> +       tr Q "\\t" >hello.c &&
+       ScriptAlias /git/ /var/www/cgi-bin/gitweb.cgi/
 
-Thanks.
+Gitweb has a friendly URL mode that uses pathinfo instead of query
+parameters.
 
-Acked-by: Eric Sunshine <sunshine@sunshineco.com>
+Problem:
 
->         GIT_AUTHOR_NAME=3D"G" GIT_AUTHOR_EMAIL=3D"G@test.git" \
->         git commit -a -m "goodbye" &&
+In pathinfo mode, gitweb sometimes produces URLs ending in /HEAD which
+match the git-http-backend regex and therefore get passed to the wrong
+CGI.
+
+For example, go to https://git.csx.cam.ac.uk/i/ucs/git/git.git/tree
+and click on the gitweb subdirectory which takes you to
+https://git.csx.cam.ac.uk/i/ucs/git/git.git/tree/HEAD:/gitweb
+then click on [git/git.git] to go back, which takes you to
+https://git.csx.cam.ac.uk/i/ucs/git/git.git/tree/HEAD
+
+Half-arsed solution:
+
+I have amended the regex to start like
+
+               "(?x)^/git/(.*/((?<=[.]git/)HEAD | \
+
+which solves the problem for me since all my repos have names ending in
+.git and this doesn't clash with any gitweb action names. I don't think
+this is a general solution because some people like bare extensionless
+repo names. On the other hand I don't think the regex should list all the
+dozens of gitweb action names. So I'm not sure what the best fix is.
+
+Tony.
+-- 
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+Forties, Cromarty: East, veering southeast, 4 or 5, occasionally 6 at first.
+Rough, becoming slight or moderate. Showers, rain at first. Moderate or good,
+occasionally poor at first.
