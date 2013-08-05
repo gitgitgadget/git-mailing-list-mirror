@@ -1,104 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] log doc: the argument to --encoding is not optional
-Date: Mon, 05 Aug 2013 08:20:00 -0700
-Message-ID: <7vob9cnp0f.fsf@alter.siamese.dyndns.org>
-References: <20130802221640.GA7478@elie.Belkin>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] t8001, t8002: fix "blame -L :literal" test on NetBSD
+Date: Mon, 05 Aug 2013 17:21:17 +0200
+Message-ID: <51FFC2ED.3080906@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 05 17:20:14 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Aug 05 17:21:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6MZw-0005w3-7P
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 17:20:12 +0200
+	id 1V6MbI-0006fy-1h
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 17:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752776Ab3HEPUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 11:20:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51398 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752178Ab3HEPUD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 11:20:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CDFC36884;
-	Mon,  5 Aug 2013 15:20:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=j/hwQLJv9N71lynu76tL/cB+uzQ=; b=Kr7pdo
-	7VEg1eRJzaM6eCVh+Grzr/T71Y7iNYHKaHm695JKQ/ZqF3vPd6KjtH0UYvsR9zIh
-	xj8N3HdobDEl5G4S9VXVPr5e7LL22GSgRZ1sMdVgDcPJp9oOKAl5UcOQ4Fwidj5K
-	TVCcxzyP2cJ/z2c0njhxBUWMMR8j0D8H6yi5I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mx4V4YJBjTZBR710qK8ATlw/aIk9QjSV
-	uGAM36z76cGdTg6xgcsDqCxrBI+tFJmvEcIC0okCTm6pFXDm7UFbTJ5OM1mYGp3a
-	u8s+UXExR8Ci3MJrNOfqkxU/gI56Z0IYoREijYBEX0XeeI4szc+qlvFzftdxby1d
-	yHI1ikriUp4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3003E36883;
-	Mon,  5 Aug 2013 15:20:03 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 06F0D3687F;
-	Mon,  5 Aug 2013 15:20:01 +0000 (UTC)
-In-Reply-To: <20130802221640.GA7478@elie.Belkin> (Jonathan Nieder's message of
-	"Fri, 2 Aug 2013 15:16:40 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7FA34122-FDE2-11E2-9ECC-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753026Ab3HEPVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 11:21:32 -0400
+Received: from mout.web.de ([212.227.17.12]:63898 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752225Ab3HEPVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 11:21:31 -0400
+Received: from [192.168.2.102] ([79.253.164.97]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0LlneG-1UX1mS0pe4-00ZQQU for <git@vger.kernel.org>;
+ Mon, 05 Aug 2013 17:21:28 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+X-Provags-ID: V03:K0:CcrZVxOt9Sk47mqJ10lVeHOZJgT4rCfSSYFX0LzFXfloltpZIiu
+ VI/u1C4AkT/wcRHOTWW0VsFOyu4g4UFdvZJvUFcawzRZMSchx09/feH7s9V9kZHjZ0vI+S+
+ LoE/yRxXJJ4qicc8a603cgegiwBX0EEIY9VNWYDYM+bZwWSXkaI1Bip5IKuivzZikXcgF45
+ kHcN4egvrOjEV58D0zUDA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231654>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Sub-test 42 of t8001 and t8002 ("blame -L :literal") fails on NetBSD
+with the following verbose output:
 
->  $ git log --encoding
->  fatal: Option '--encoding' requires a value
->  $ git rev-list --encoding
->  fatal: Option '--encoding' requires a value
->
-> The argument to --encoding has always been mandatory.  Unfortunately
-> manpages like git-rev-list(1), git-log(1), and git-show(1) have
-> described the option's syntax as "--encoding[=<encoding>]" since it
-> was first documented.  Clarify by removing the extra brackets.
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
+	git annotate  -L:main hello.c
+	Author F (expected 4, attributed 3) bad
+	Author G (expected 1, attributed 1) good
 
-Thanks.
+This is not caused by different behaviour of git blame or annotate on
+that platform, but by different test input, in turn caused by a sed
+command that forgets to add a newline on NetBSD.  Here's the diff of the
+commit that adds "goodbye" to hello.c, for Linux:
 
->  Documentation/git-rev-list.txt   | 2 +-
->  Documentation/pretty-options.txt | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-> index 65ac27e0..045b37b8 100644
-> --- a/Documentation/git-rev-list.txt
-> +++ b/Documentation/git-rev-list.txt
-> @@ -40,7 +40,7 @@ SYNOPSIS
->  	     [ \--right-only ]
->  	     [ \--cherry-mark ]
->  	     [ \--cherry-pick ]
-> -	     [ \--encoding[=<encoding>] ]
-> +	     [ \--encoding=<encoding> ]
->  	     [ \--(author|committer|grep)=<pattern> ]
->  	     [ \--regexp-ignore-case | -i ]
->  	     [ \--extended-regexp | -E ]
-> diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-> index 5e499421..eea0e306 100644
-> --- a/Documentation/pretty-options.txt
-> +++ b/Documentation/pretty-options.txt
-> @@ -28,7 +28,7 @@ people using 80-column terminals.
->  	This is a shorthand for "--pretty=oneline --abbrev-commit"
->  	used together.
->  
-> ---encoding[=<encoding>]::
-> +--encoding=<encoding>::
->  	The commit objects record the encoding used for the log message
->  	in their encoding header; this option can be used to tell the
->  	command to re-code the commit log message in the encoding
+	@@ -1,4 +1,5 @@
+	 int main(int argc, const char *argv[])
+	 {
+		puts("hello");
+	+		puts("goodbye");
+	 }
+
+We see that it adds an extra TAB, but that's not a problem.  Here's the
+same on NetBSD:
+
+	@@ -1,4 +1,4 @@
+	 int main(int argc, const char *argv[])
+	 {
+		puts("hello");
+	-}
+	+		puts("goodbye");}
+
+It also adds an extra TAB, but it is missing the newline character
+after the semicolon.
+
+The following patch gets rid of the extra TAB at the beginning, but
+more importantly adds the missing newline at the end in a (hopefully)
+portable way, mentioned in http://sed.sourceforge.net/sedfaq4.html.
+The diff becomes this, on both Linux and NetBSD:
+
+	@@ -1,4 +1,5 @@
+	 int main(int argc, const char *argv[])
+	 {
+		puts("hello");
+	+	puts("goodbye");
+	 }
+
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+This regression was introduced by 5a9830cb ("t8001/t8002 (blame):
+add blame -L :funcname tests").
+
+ t/annotate-tests.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index 0bfee00..d4e7f47 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -245,8 +245,8 @@ test_expect_success 'setup -L :regex' '
+ 	git commit -m "hello" &&
+ 
+ 	mv hello.c hello.orig &&
+-	sed -e "/}/i\\
+-	Qputs(\"goodbye\");" <hello.orig | tr Q "\\t" >hello.c &&
++	sed -e "/}/ {x; s/$/Qputs(\"goodbye\");/; G;}" <hello.orig |
++	tr Q "\\t" >hello.c &&
+ 	GIT_AUTHOR_NAME="G" GIT_AUTHOR_EMAIL="G@test.git" \
+ 	git commit -a -m "goodbye" &&
+ 
+-- 
+1.8.1.5
