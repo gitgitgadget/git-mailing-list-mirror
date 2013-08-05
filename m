@@ -1,100 +1,68 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH] remote-hg: add shared repo upgrade
-Date: Mon,  5 Aug 2013 21:29:43 +0200
-Message-ID: <1375730983-6620-1-git-send-email-apelisse@gmail.com>
-Cc: Joern Hees <dev@joernhees.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 05 21:30:14 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] remote-hg: add shared repo upgrade
+Date: Mon, 5 Aug 2013 14:31:18 -0500
+Message-ID: <CAMP44s0Wsnqs_t5kJb0Le13MrzN9WNRTrtNEuXHrDU6D7AKjLg@mail.gmail.com>
+References: <1375730567-3240-1-git-send-email-apelisse@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Joern Hees <dev@joernhees.de>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 05 21:31:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6QTu-0007kn-3R
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 21:30:14 +0200
+	id 1V6QV2-0008Lz-RO
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 21:31:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754613Ab3HETaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 15:30:08 -0400
-Received: from mail-we0-f172.google.com ([74.125.82.172]:46143 "EHLO
-	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754595Ab3HETaH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 15:30:07 -0400
-Received: by mail-we0-f172.google.com with SMTP id t61so2889577wes.31
-        for <git@vger.kernel.org>; Mon, 05 Aug 2013 12:30:06 -0700 (PDT)
+	id S1754690Ab3HETbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 15:31:21 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:42864 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754590Ab3HETbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 15:31:20 -0400
+Received: by mail-la0-f44.google.com with SMTP id fo12so2411937lab.31
+        for <git@vger.kernel.org>; Mon, 05 Aug 2013 12:31:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=t/E+ZdzVLvgwsnM2meMdt0Nsz+oANmy36JmV911PGtg=;
-        b=0ZpEI0UKqpQaD62EJ1Kr3T1Tz2M3YzY9NHDzwmdjuTZmgoKg222Ypa+2QZyqKhuwhC
-         cLvdeMfml0RN6RrkzX0E/68hWH6re++D9WQM7Dt/B2k4vSic+JVjowjqlr/G8I2I76WU
-         HaZgmvFvuftbAxeC2HsVvcHef6DIbHeVQTSREfJErZa2xCJFBFex+0dVPf5O8592B3/j
-         R9FZ5jZ6L2cH18mHhCPckjbqFCuuirMasUcx0D8fs5GhxnM73AWfDHT9dLGEgTyYB53y
-         TvU61l8GY3zHrKjZUNQM8A8oGlF7uyCZAK/xt1K0MliOPp7WZtiWecgFuvY1RcE/3xKO
-         RfnA==
-X-Received: by 10.180.126.2 with SMTP id mu2mr7723609wib.63.1375731006001;
-        Mon, 05 Aug 2013 12:30:06 -0700 (PDT)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPSA id gg10sm915579wib.1.2013.08.05.12.30.04
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 05 Aug 2013 12:30:05 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.5
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=/gBM2XdwA/63JLzIetSK6ww04RHtMSWC1Dm33Nj7fcM=;
+        b=Tp8pBBMo38ZC4np9kBIJZXalUQZquZkUp9RzU53TQVhU7LEbQoKC4zlMlrMqWQzwSA
+         tHPU4qa4aPDqV5XHtW2mJrYHAJRP/Imn/r/88hnsgJAKLRPuMVGRNzYtErSSQF2yTtXL
+         dj2gW7OBFODncDvIFhsM9KmRZHjYQZQwzZ43+lfaqYl6LDOh+J89PCzCLVAzXQ6i/L0X
+         GhgU6HteMabRbAhmtU3YeyrgqbQdHH3NqwStkEt7H/GT7c9qLAQ6vujxnMeMMUGEp4+N
+         T+OVkYYBByx9jeVGq7MxkmbXFLjFfAzxz9MMTlifVq4//B4aNa7OewA03gtQHWZpBxr4
+         ytZg==
+X-Received: by 10.152.9.194 with SMTP id c2mr9411674lab.83.1375731078527; Mon,
+ 05 Aug 2013 12:31:18 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Mon, 5 Aug 2013 12:31:18 -0700 (PDT)
+In-Reply-To: <1375730567-3240-1-git-send-email-apelisse@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231695>
 
-From: Felipe Contreras <felipe.contreras@gmail.com>
+On Mon, Aug 5, 2013 at 2:22 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
+> From: Felipe Contreras <felipe.contreras@gmail.com>
+>
+> 6796d49 (remote-hg: use a shared repository store) introduced a bug by
+> making the shared repository '.git/hg', which is already used before
+> that patch, so clones that happened before that patch, fail after that
+> patch, because there's no shared Mercurial repo.
+>
+> It's trivial to upgrade to the new organization by copying the Mercurial
+> repo from one of the remotes (e.g. 'origin'), so let's do so.
 
-6796d49 (remote-hg: use a shared repository store) introduced a bug by
-making the shared repository '.git/hg', which is already used before
-that patch, so clones that happened before that patch, fail after that
-patch, because there's no shared Mercurial repo.
+In addition to that, simplify the shared repo initialization; if the
+repository is shared, the pull on the child will use the parent's
+storage, so there's no need for the initial clone.
 
-It's trivial to upgrade to the new organization by copying the Mercurial
-repo from one of the remotes (e.g. 'origin'), so let's do so.
+And make sure the shared repository is always present.
 
-Reported-by: Joern Hees <dev@joernhees.de>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
- contrib/remote-helpers/git-remote-hg |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+It seems pretty clear to me that we are talking about multiple patches here.
 
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index 0194c67..02404dc 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -391,11 +391,22 @@ def get_repo(url, alias):
-             os.makedirs(dirname)
-     else:
-         shared_path = os.path.join(gitdir, 'hg')
--        if not os.path.exists(shared_path):
--            try:
--                hg.clone(myui, {}, url, shared_path, update=False, pull=True)
--            except:
--                die('Repository error')
-+
-+        # check and upgrade old organization
-+        hg_path = os.path.join(shared_path, '.hg')
-+        if os.path.exists(shared_path) and not os.path.exists(hg_path):
-+            repos = os.listdir(shared_path)
-+            for x in repos:
-+                local_hg = os.path.join(shared_path, x, 'clone', '.hg')
-+                if not os.path.exists(local_hg):
-+                    continue
-+                shutil.copytree(local_hg, hg_path)
-+
-+        # setup shared repo (if not there)
-+        try:
-+            hg.peer(myui, {}, shared_path, create=True)
-+        except error.RepoError:
-+            pass
- 
-         if not os.path.exists(dirname):
-             os.makedirs(dirname)
 -- 
-1.7.9.5
+Felipe Contreras
