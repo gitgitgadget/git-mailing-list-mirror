@@ -1,114 +1,174 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] log doc: explain --encoding=none and default output encoding
-Date: Mon, 05 Aug 2013 09:02:54 -0700
-Message-ID: <7vvc3km8gh.fsf@alter.siamese.dyndns.org>
-References: <20130802223924.GA7634@elie.Belkin>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: git replace: should it check for object type, and can it replace merges?
+Date: Mon, 5 Aug 2013 17:07:37 +0100
+Organization: OPDS
+Message-ID: <2A84813A5DBF494391F94A840C228278@PhilipOakley>
+References: <24928554D0C34B4696DAD74F569E2E17@PhilipOakley> <CAP8UFD3yHMKfBdjHc6CxeAXSdQ=ua1MddAb5rRXV3TU0ZW7g6w@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 05 18:03:03 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Christian Couder" <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 05 18:07:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6NFN-0002Ta-Ru
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 18:03:02 +0200
+	id 1V6NJf-0004T3-1C
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 18:07:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754081Ab3HEQC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 12:02:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60322 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752834Ab3HEQC5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 12:02:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A411736BE7;
-	Mon,  5 Aug 2013 16:02:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=F7XZ0VTLi6aSHwehPFDcuif3nao=; b=xHWSlz
-	u9oKCbbW8/mroF3EKkf+hr9EfH3KpOGdL7h8lhmy/gyu1Z82m1JlmgthvK6U0Bis
-	DhmILbTcSR8a5P15LC8csfUoFf1OYz0iK/5zPlSTqcndWil9RNpJFG1op03A2Bge
-	iZHZsiqvXRB9RcQLMQqmFpvyTREgVpnBgRg1Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vzctwvaO/RoWGY+Gdm7tlEjHsRYP+U9n
-	G2B+EMQazpuH5zpqKRu6qw3QIzeIducNKZDTR2pc3gqK0krW7Tzix93bCN41bqGP
-	DMje48pD0IieiIHDZmzMnea+rQ3dLTCv0M8jRLf/iSPnvKbxgzt9gC8uXgpRTfuU
-	JA31WUN2kcw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96E0F36BE6;
-	Mon,  5 Aug 2013 16:02:56 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2C7036BE4;
-	Mon,  5 Aug 2013 16:02:55 +0000 (UTC)
-In-Reply-To: <20130802223924.GA7634@elie.Belkin> (Jonathan Nieder's message of
-	"Fri, 2 Aug 2013 15:39:24 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7DD7461C-FDE8-11E2-8664-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754125Ab3HEQHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 12:07:19 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:29164 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753699Ab3HEQHQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Aug 2013 12:07:16 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AlQLAMPM/1FOl3kA/2dsb2JhbABbgwY1gneGJ7YeBAEDAYEhFnSCHwUBAQQBCAEBHREfASEFBgIDBQIBAw0HAQMJJRQBBAgSDRcGEwgCAQIDAYdtAwkKCKxBDYhejSeBVQIDGQh3gyB0A4hyhg6GdgGDE4UehWCFJ4MYOw
+X-IPAS-Result: AlQLAMPM/1FOl3kA/2dsb2JhbABbgwY1gneGJ7YeBAEDAYEhFnSCHwUBAQQBCAEBHREfASEFBgIDBQIBAw0HAQMJJRQBBAgSDRcGEwgCAQIDAYdtAwkKCKxBDYhejSeBVQIDGQh3gyB0A4hyhg6GdgGDE4UehWCFJ4MYOw
+X-IronPort-AV: E=Sophos;i="4.89,819,1367967600"; 
+   d="scan'208";a="433070879"
+Received: from unknown (HELO PhilipOakley) ([78.151.121.0])
+  by out1.ip03ir2.opaltelecom.net with SMTP; 05 Aug 2013 17:07:14 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231668>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+From: "Christian Couder" <christian.couder@gmail.com>
+> Hi,
+> On Sat, Aug 3, 2013 at 5:13 PM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
+>> A recent comment http://stackoverflow.com/a/18027030/717355 on a 
+>> question I
+>> asked two years ago about 'grafts' and 'replace' indicates that users 
+>> think
+>> that 'git replace' can't replace a merge commit. The documentation 
+>> doesn't
+>> have any examples and gives the naive impression that one should only
+>> replace a simple commit with another simple commit.
+>
+> I am sorry if the documentation gives this impression.
+> I'd like to fix it, but I am not sure what should be changed.
+> Should adding an example be enough? Or do you want it to state that 
+> explicitely?
+>
+I did a quick markup which is shown below (an export of the commit from 
+the gitk viewer)
 
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> I'm not thrilled with the wording.  This can probably be explained
-> more simply.  Ideas?
+>> Having looked at the code, I realised that anything can be replaced 
+>> with
+>> anything, which is perhaps not what was intended.
+>
+> The documentation says in the "BUGS" section:
+>
+> "And of course things may break if an object of one type is replaced
+> by an object of another type (for example a blob replaced by a
+> commit)."
 
-Some random thoughts on text, both before and after this patch.
-
- - The first stentence in this paragraph up to the semicolon is
-   irrelevant (it is an implementation detail that allows us to
-   re-encode in the first place, and the user does not care).
-
- - The use of word "default" is fuzzy.  With this description, we
-   want to tell the user to what encoding we reencode to by default,
-   but it is easy to miss that the reencoding always happen for
-   output with or without --encoding=<anything> option (which is not
-   clear from the text, especially the original) and incorrectly
-   assume that without --encoding=<anything> the recorded text is
-   spit out without mangling.
-
-So perhaps along this line?
-
-        --encoding=<encoding>::
-
-                The encoding used to output the log messages in commit
-                objects.  When this option is not given, non-plumbing
-                commands output messages in the commit log encoding
-                (`i18n.commitEncoding`, or UTF-8 if the configuration
-                variable is not set).  `--encoding=none` lets you view the
-                raw log message without any reencoding.
+I hadn't seen that part, being 'hidden' at the end of the paragraph 
+(that is, it's easy to miss;-). If my update was acceptable then that 
+sentence could probably be deleted (though it may require the checks to 
+actually be in the code, and not just a "must" imperative in my 
+documentation update).
 
 >
->  Documentation/pretty-options.txt | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
+> So yes it is a know bug.
 >
-> diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-> index 5e499421..e31fd494 100644
-> --- a/Documentation/pretty-options.txt
-> +++ b/Documentation/pretty-options.txt
-> @@ -32,8 +32,14 @@ people using 80-column terminals.
->  	The commit objects record the encoding used for the log message
->  	in their encoding header; this option can be used to tell the
->  	command to re-code the commit log message in the encoding
-> -	preferred by the user.  For non plumbing commands this
-> -	defaults to UTF-8.
-> +	preferred by the user.  "--encoding=none" means to use the
-> +	raw log message without paying attention to its encoding header.
-> ++
-> +For non plumbing commands, the output encoding defaults to the commit
-> +encoding (as set using the `i18n.commitEncoding` variable, or UTF-8
-> +by default).  This default can be overridden using the
-> +`i18n.logOutputEncoding` configuration item. See linkgit:git-config[1]
-> +for details.
->  
->  --notes[=<ref>]::
->  	Show the notes (see linkgit:git-notes[1]) that annotate the
+>> A simple thought is that
+>> the replace should be like-for-like with regard to object type, 
+>> though that
+>> would not include replacing a sub-module for a tree (and vice versa).
+>>
+>> Should 'git replace' check the object types to ensure they are 
+>> sensible?
+>
+> It would probably be a good idea to do that, yeah.
+> But I don't know much about submodules, so I can't say if replacing a
+> sub-module for a tree (and vice versa) should be allowed.
+> Or if there should be a --force-different-objects option for these
+> kinds of special cases.
+
+An extra bit of thought made me realise that while a sub-module is 
+represented as a special symbolic commit, it is still just an element of 
+a tree object, so would still be a tree <-> tree replacement, so doesn't 
+break the rule.
+
+>
+>> Would it be reasonable to add examples to indicate the range of
+>> replacements, and how to prepare alternative merge commits, or is 
+>> that a
+>> hostage to fortune?
+>
+> Yeah, adding examples would be a good idea. I don't understand what do
+> you mean with "range of replacements", though.
+
+There were in two parts: 1) creating a replacement merge commit, and 2) 
+creating a replacement tree,  possibly with a sub-module in it.
+
+>
+> I am not sure preparing alternative commits or merge commits should be
+> an important part of the examples.
+>
+> There are many cases that could be interesting to different users:
+>
+> - replacing a non merge commit with a merge commit (if someone forgot
+> to use --no-ff when merging for example)
+> - replacing a merge commit with a non merge commit (if a rebase should
+> have been done)
+> - and of course replacing a non merge commit with a non merge commit,
+> or a merge commit with a merge commit
+>
+> So I think explaining how another commit can be created from existing
+> commits belongs to some other parts of the git documentation.
+
+Yes, I just haven't looked yet. I think there are some examples in the 
+plumbing command man pages. They'd just need referencing.
+
+> Perhaps there could be such examples in the git hash-object and git
+> filter-branch documentation and we could just point to them.
+>
+> Best,
+> Christian.
+> --
+
+My quick markup, based on a local branch.
+---8<---
+commit c12c03462f8c65a593e702896b461f1c63d67ec5
+Author: Philip Oakley <philipoakley@iee.org>
+Date:   Sat Aug 3 20:20:05 2013 +0100
+
+    Doc: 'replace' the same object type, and mention merge commits
+
+    Signed-off-by: Philip Oakley <philipoakley@iee.org>
+
+diff --git a/Documentation/git-replace.txt 
+b/Documentation/git-replace.txt
+index e0b4057..2ab451c 100644
+--- a/Documentation/git-replace.txt
++++ b/Documentation/git-replace.txt
+@@ -20,6 +20,10 @@ The name of the 'replace' reference is the SHA-1 of 
+the object that is
+ replaced. The content of the 'replace' reference is the SHA-1 of the
+ replacement object.
+
++The type of the replacement object must be the same as that of the
++object it replaces. Merge commits can be replaced by non-merge commits
++and vice versa.
++
+ Unless `-f` is given, the 'replace' reference must not yet exist.
+
+ Replacement references will be used by default by all Git commands
+--->8---
+
+Philip 
