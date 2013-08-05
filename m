@@ -1,98 +1,122 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH] remote-hg: add shared repo upgrade
-Date: Mon,  5 Aug 2013 21:22:47 +0200
-Message-ID: <1375730567-3240-1-git-send-email-apelisse@gmail.com>
-Cc: Joern Hees <dev@joernhees.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 05 21:23:23 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 02/11] t8001/t8002: blame: demonstrate -L bounds checking bug
+Date: Mon, 05 Aug 2013 12:29:45 -0700
+Message-ID: <7v4nb4j5qu.fsf@alter.siamese.dyndns.org>
+References: <1375258545-42240-1-git-send-email-sunshine@sunshineco.com>
+	<1375258545-42240-3-git-send-email-sunshine@sunshineco.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Thomas Rast <trast@inf.ethz.ch>,
+	Bo Yang <struggleyb.nku@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Aug 05 21:29:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6QNF-0004Px-EO
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 21:23:21 +0200
+	id 1V6QTa-0007aw-3Y
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 21:29:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754406Ab3HETXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 15:23:16 -0400
-Received: from mail-we0-f177.google.com ([74.125.82.177]:47934 "EHLO
-	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693Ab3HETXP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 15:23:15 -0400
-Received: by mail-we0-f177.google.com with SMTP id m46so2731626wev.8
-        for <git@vger.kernel.org>; Mon, 05 Aug 2013 12:23:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=NJko1kMeIfHe5zKzJutOwSfTPphtn7BK7jJN30Y73ng=;
-        b=orOJLEPjrQWWNm/+cz3iGFOcLqnAnVYLevK8/hbg3CPoLj9jLYdbDG0V0fGWIvLS1K
-         ip+1Zj6EMSgpASbSbfe79pU0bQw+AXX39hOFS0NAlSV63XJUSfQsoIht81cjmQamC5UA
-         vNq6j+V7PcY3362RxflPecBzQeK4uQXKh2sR0VhovQfctGtew4y54IDfuBl2A1Gyb0Yl
-         NtdXvhuSncmAdY+tU+C6z+GtCamRHsXaHnXwigg5DvhADbdWypp9tlMg6ImiwhUteND8
-         AVdJeq9egtzFZyhS+nmldmWNO0VUhJKfRATjMRn1Um02DsAtiE3c+bH+Y5Jmn5tnt/LA
-         NccA==
-X-Received: by 10.180.187.41 with SMTP id fp9mr3804101wic.33.1375730593923;
-        Mon, 05 Aug 2013 12:23:13 -0700 (PDT)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPSA id jf9sm871235wic.5.2013.08.05.12.23.12
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 05 Aug 2013 12:23:13 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.5
+	id S1754591Ab3HET3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 15:29:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49071 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754595Ab3HET3t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 15:29:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BAB236061;
+	Mon,  5 Aug 2013 19:29:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Olvb4sYLFquE4zEJwg8n7IA1TO8=; b=lgjFCD
+	OTHbvSSjthNXd6m3UCBDHtRhzVM+5t/TCAmXNrE73ck6nQq1smFkk0+oanrOUjRP
+	yYBINYH3UqHe55jP2lVsRIII0uW3v+gR1L7zP0GI32tx6QVuMnoiqQJjaORglTrI
+	edvnncP9mQWBODp7Yc5BMOPY1VpO1eD8dJWn0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bzpttJHByb6P1VgqsQxgbfH8V0LN84PW
+	5OhRAx782mHtA5K9u+HSqwCTQiwdBzud7Lh2Kt5Oqp+ARN4pEnq4Pd69sPgLWeKa
+	dgLdHbGOoLW3gs3dI0QOs8HLhgJQt1Cmdg5jsROYh1lMSoklR94R5RpTVLaB2jNx
+	+jnP/OMB1Xw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CE0F36060;
+	Mon,  5 Aug 2013 19:29:48 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50AEB3605E;
+	Mon,  5 Aug 2013 19:29:47 +0000 (UTC)
+In-Reply-To: <1375258545-42240-3-git-send-email-sunshine@sunshineco.com> (Eric
+	Sunshine's message of "Wed, 31 Jul 2013 04:15:36 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 63934FD6-FE05-11E2-B825-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231693>
 
-From: Felipe Contreras <felipe.contreras@gmail.com>
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-6796d49 (remote-hg: use a shared repository store) introduced a bug by
-making the shared repository '.git/hg', which is already used before
-that patch, so clones that happened before that patch, fail after that
-patch, because there's no shared Mercurial repo.
+> A bounds checking bug allows the X in -LX to extend one line past the
+> end of file. For example, given a file with 5 lines, -L6 is accepted as
+> valid. Demonstrate this problem.
+>
+> While here, also add tests to check that the remaining cases of X and Y
+> in -LX,Y are handled correctly at and in the vicinity of end-of-file.
+>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>  t/annotate-tests.sh | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+>
+> diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+> index 3524eaf..02fbbf1 100644
+> --- a/t/annotate-tests.sh
+> +++ b/t/annotate-tests.sh
+> @@ -225,10 +225,32 @@ test_expect_success 'blame -L /RE/,-N' '
+>  	check_count -L/99/,-3 B 1 B2 1 D 1
+>  '
+>  
+> +# 'file' ends with an incomplete line, so 'wc' reports one fewer lines than
+> +# git-blame sees, hence the last line is actually $(wc...)+1.
+> +test_expect_success 'blame -L X (X == nlines)' '
+> +	n=$(expr $(wc -l <file) + 1) &&
+> +	check_count -L$n C 1
+> +'
+> +
+> +test_expect_failure 'blame -L X (X == nlines + 1)' '
+> +	n=$(expr $(wc -l <file) + 2) &&
+> +	test_must_fail $PROG -L$n file
+> +'
+> +
+>  test_expect_success 'blame -L X (X > nlines)' '
+>  	test_must_fail $PROG -L12345 file
+>  '
+> +test_expect_success 'blame -L ,Y (Y == nlines)' '
+> +	n=$(expr $(wc -l <file) + 1) &&
+> +	check_count -L,$n A 1 B 1 B1 1 B2 1 "A U Thor" 1 C 1 D 1 E 1
+> +'
+> +
+> +test_expect_success 'blame -L ,Y (Y == nlines + 1)' '
+> +	n=$(expr $(wc -l <file) + 2) &&
+> +	test_must_fail $PROG -L,$n file
+> +'
+> +
 
-It's trivial to upgrade to the new organization by copying the Mercurial
-repo from one of the remotes (e.g. 'origin'), so let's do so.
+This is somewhat curious.
 
-Reported-by: Joern Hees <dev@joernhees.de>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-hg |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+Does the problem triggers only on a file that ends with an
+incomplete line, or the test was inserted at this location only
+because it was convenient and the problem exists with or without the
+incomplete final line?
 
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index 0194c67..02404dc 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -391,11 +391,22 @@ def get_repo(url, alias):
-             os.makedirs(dirname)
-     else:
-         shared_path = os.path.join(gitdir, 'hg')
--        if not os.path.exists(shared_path):
--            try:
--                hg.clone(myui, {}, url, shared_path, update=False, pull=True)
--            except:
--                die('Repository error')
-+
-+        # check and upgrade old organization
-+        hg_path = os.path.join(shared_path, '.hg')
-+        if os.path.exists(shared_path) and not os.path.exists(hg_path):
-+            repos = os.listdir(shared_path)
-+            for x in repos:
-+                local_hg = os.path.join(shared_path, x, 'clone', '.hg')
-+                if not os.path.exists(local_hg):
-+                    continue
-+                shutil.copytree(local_hg, hg_path)
-+
-+        # setup shared repo (if not there)
-+        try:
-+            hg.peer(myui, {}, shared_path, create=True)
-+        except error.RepoError:
-+            pass
- 
-         if not os.path.exists(dirname):
-             os.makedirs(dirname)
--- 
-1.7.9.5
+I am guessing that it is the latter.
+
+Thanks.
+
+>  test_expect_success 'blame -L ,Y (Y > nlines)' '
+>  	test_must_fail $PROG -L,12345 file
+>  '
