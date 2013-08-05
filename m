@@ -1,96 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] log: use true parents for diff when walking reflogs
-Date: Mon, 05 Aug 2013 12:16:01 -0700
-Message-ID: <7vd2psj6dq.fsf@alter.siamese.dyndns.org>
-References: <d6dadc4ab54d81490ca46bcfbd44a61be24f6eb7.1375524982.git.trast@inf.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, <git@vger.kernel.org>,
-	Uwe =?utf-8?Q?Klei?= =?utf-8?Q?ne-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>,
-	"Ramsay Jones" <ramsay@ramsay1.demon.co.uk>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Aug 05 21:16:24 2013
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: [PATCH] remote-hg: add shared repo upgrade
+Date: Mon,  5 Aug 2013 21:22:47 +0200
+Message-ID: <1375730567-3240-1-git-send-email-apelisse@gmail.com>
+Cc: Joern Hees <dev@joernhees.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 05 21:23:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6QGR-0000yN-IP
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 21:16:19 +0200
+	id 1V6QNF-0004Px-EO
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Aug 2013 21:23:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754579Ab3HETQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 15:16:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33393 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754343Ab3HETQO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 15:16:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 32E98369A6;
-	Mon,  5 Aug 2013 19:16:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=WtDCaNlYMlvmFbRJ5eUYUsja04E=; b=V/j4JT+mzoCDLH2xY9/w
-	vi0VkyjADAWbEowVbgpayb36J9q9i00uu+WIODt+787TP28U1J1YC47C+r7+//mh
-	/th/JkfsuqF75pOK/VwquhjTJBBgS/GmJy4Gtd9jNsPJDJDAHNYKwW7L6L2ENj2/
-	qqBdiaX0eok2SmiX9JQhaXs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=WU2GD4MHLr+tap/xdpFeEtrL73jzS6ha4QmrLgVR0LAXwS
-	Pkr40VqNoXqvK4yIscZ1ESSLFZc01rZa1op43x9fKQRY4pvsJhIP6KhGPSw3GSKs
-	WjvbRuo6h4WfpT40nYossRd7vJz2nuV1OOs5GpiSxiyOyP+UwLk/kHWSq3kQM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26B14369A4;
-	Mon,  5 Aug 2013 19:16:14 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8ACE73699F;
-	Mon,  5 Aug 2013 19:16:12 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7E12BCA4-FE03-11E2-A28B-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754406Ab3HETXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 15:23:16 -0400
+Received: from mail-we0-f177.google.com ([74.125.82.177]:47934 "EHLO
+	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752693Ab3HETXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 15:23:15 -0400
+Received: by mail-we0-f177.google.com with SMTP id m46so2731626wev.8
+        for <git@vger.kernel.org>; Mon, 05 Aug 2013 12:23:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=NJko1kMeIfHe5zKzJutOwSfTPphtn7BK7jJN30Y73ng=;
+        b=orOJLEPjrQWWNm/+cz3iGFOcLqnAnVYLevK8/hbg3CPoLj9jLYdbDG0V0fGWIvLS1K
+         ip+1Zj6EMSgpASbSbfe79pU0bQw+AXX39hOFS0NAlSV63XJUSfQsoIht81cjmQamC5UA
+         vNq6j+V7PcY3362RxflPecBzQeK4uQXKh2sR0VhovQfctGtew4y54IDfuBl2A1Gyb0Yl
+         NtdXvhuSncmAdY+tU+C6z+GtCamRHsXaHnXwigg5DvhADbdWypp9tlMg6ImiwhUteND8
+         AVdJeq9egtzFZyhS+nmldmWNO0VUhJKfRATjMRn1Um02DsAtiE3c+bH+Y5Jmn5tnt/LA
+         NccA==
+X-Received: by 10.180.187.41 with SMTP id fp9mr3804101wic.33.1375730593923;
+        Mon, 05 Aug 2013 12:23:13 -0700 (PDT)
+Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
+        by mx.google.com with ESMTPSA id jf9sm871235wic.5.2013.08.05.12.23.12
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 05 Aug 2013 12:23:13 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231692>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+From: Felipe Contreras <felipe.contreras@gmail.com>
 
-> The reflog walking logic (git log -g) replaces the true parent list
-> with the preceding commit in the reflog.  This results in bogus commit
-> diffs when combined with options such as -p; the diff is against the
-> reflog predecessor, not the parent of the commit.
->
-> Save the true parents on the side, extending the functions from the
-> previous commit.  The diff logic picks them up and uses them to show
-> the correct diffs.
->
-> We do have to be somewhat careful about repeated calling of
-> save_parents(), since the reflog may list a commit more than once.  We
-> now store (commit_list*)-1 to distinguish the "not saved yet" and
-> "root commit" cases.  This lets us preserve an empty parent list even
-> if save_parents() is repeatedly called.
->
-> Suggested-by: Jeff King <peff@peff.net>
-> Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
-> ---
->
-> Jeff King <peff@peff.net> wrote:
->> 
->> Your description (and solution) make a lot of sense to me. Another code
->> path that has a similar problem is the "-g" reflog walker. It rewrites
->> the parents based on the reflog, and the diffs it produces are mostly
->> useless (e.g., try "git stash list -p").
->> 
->> Should we be applying the same technique there?
->
-> Good point.  This is how.  It applies on top of the other patch.
+6796d49 (remote-hg: use a shared repository store) introduced a bug by
+making the shared repository '.git/hg', which is already used before
+that patch, so clones that happened before that patch, fail after that
+patch, because there's no shared Mercurial repo.
 
-Thanks.
+It's trivial to upgrade to the new organization by copying the Mercurial
+repo from one of the remotes (e.g. 'origin'), so let's do so.
 
-> It doesn't really help for 'git stash list -p', though, because
-> stashes are merge commits.  Now they just don't show anything.
-> could try 'git stash list -p -m', though.
+Reported-by: Joern Hees <dev@joernhees.de>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/remote-helpers/git-remote-hg |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-Using --first-parent may be more convenient and useful.
+diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+index 0194c67..02404dc 100755
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -391,11 +391,22 @@ def get_repo(url, alias):
+             os.makedirs(dirname)
+     else:
+         shared_path = os.path.join(gitdir, 'hg')
+-        if not os.path.exists(shared_path):
+-            try:
+-                hg.clone(myui, {}, url, shared_path, update=False, pull=True)
+-            except:
+-                die('Repository error')
++
++        # check and upgrade old organization
++        hg_path = os.path.join(shared_path, '.hg')
++        if os.path.exists(shared_path) and not os.path.exists(hg_path):
++            repos = os.listdir(shared_path)
++            for x in repos:
++                local_hg = os.path.join(shared_path, x, 'clone', '.hg')
++                if not os.path.exists(local_hg):
++                    continue
++                shutil.copytree(local_hg, hg_path)
++
++        # setup shared repo (if not there)
++        try:
++            hg.peer(myui, {}, shared_path, create=True)
++        except error.RepoError:
++            pass
+ 
+         if not os.path.exists(dirname):
+             os.makedirs(dirname)
+-- 
+1.7.9.5
