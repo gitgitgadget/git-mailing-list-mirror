@@ -1,79 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git rebase -i error message interprets \t in commit message
-Date: Tue, 06 Aug 2013 18:05:53 +0200
-Message-ID: <vpqli4ekdni.fsf@anie.imag.fr>
-References: <87k3jy6cyc.fsf@fencepost.gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] fetch: opportunistically update tracking refs
+Date: Tue, 06 Aug 2013 09:28:28 -0700
+Message-ID: <7vsiymhjgz.fsf@alter.siamese.dyndns.org>
+References: <20130511161320.GA14990@sigill.intra.peff.net>
+	<20130511161652.GD3270@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Aug 06 18:06:18 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 06 18:28:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6jm5-0002kA-DZ
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 18:06:17 +0200
+	id 1V6k7m-00010n-OA
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 18:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756078Ab3HFQGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 12:06:09 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47781 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755893Ab3HFQF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 12:05:59 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r76G5pYi022468
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 6 Aug 2013 18:05:51 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1V6jlh-00084J-B5; Tue, 06 Aug 2013 18:05:53 +0200
-In-Reply-To: <87k3jy6cyc.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Tue, 06 Aug 2013 17:44:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 06 Aug 2013 18:05:51 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r76G5pYi022468
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1376409954.06936@zTp8zoqVnrV3bA4WLDiJ8g
+	id S1755540Ab3HFQ2i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Aug 2013 12:28:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38837 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755062Ab3HFQ2h convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Aug 2013 12:28:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4086636F6A;
+	Tue,  6 Aug 2013 16:28:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=b8UXRYiEufOI
+	fwwNre6lQA//OK4=; b=w2pH4uBdWUHGzHoydWEIGlgZYfoaJha0TfPi1V8x/zeT
+	lthRIk4RcPHGJuN0aSVwOnEyLqGIK75UR6Rx/Cdfds/EREC7hfCU5MX83fEu2gtw
+	hasGUFLkeLCn8oZxo+KCRxv9d+WjxpxCOp/rIeUH66zGkNS4t+baxVRteGpOOp0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iFK/lb
+	DJGUvW0lv8pyZPWjKZli7vQrStL3K9cQ57TpoStWbcY1hso6ZUoecr9Wb2kFjj4F
+	ga5SKlk8WYBfF0e1jtKvzFcKRQtVKAYLn0ihpjGgAcuANP2eHPeT9QPYMb2fkg2X
+	jDHdOqS4+YwwBflY0vIJ6qtVwbWO0t2FtDLog=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D1E336F69;
+	Tue,  6 Aug 2013 16:28:31 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6853536F68;
+	Tue,  6 Aug 2013 16:28:30 +0000 (UTC)
+In-Reply-To: <20130511161652.GD3270@sigill.intra.peff.net> (Jeff King's
+	message of "Sat, 11 May 2013 18:16:52 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3AD934C4-FEB5-11E2-8EC8-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231759>
 
-David Kastrup <dak@gnu.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Could not apply 16de9d2... Make tempo range 	empo 20~30 be input as 	empo 20-30 instead
+> @@ -170,6 +172,20 @@ static struct ref *get_ref_map(struct transport =
+*transport,
+>  			rm->fetch_head_status =3D FETCH_HEAD_MERGE;
+>  		if (tags =3D=3D TAGS_SET)
+>  			get_fetch_map(remote_refs, tag_refspec, &tail, 0);
+> +
+> +		/*
+> +		 * For any refs that we happen to be fetching via command-line
+> +		 * arguments, take the opportunity to update their configured
+> +		 * counterparts. However, we do not want to mention these
+> +		 * entries in FETCH_HEAD at all, as they would simply be
+> +		 * duplicates of existing entries.
+> +		 */
+> +		old_tail =3D tail;
+> +		for (i =3D 0; i < transport->remote->fetch_refspec_nr; i++)
+> +			get_fetch_map(ref_map, &transport->remote->fetch[i],
+> +				      &tail, 0);
+> +		for (rm =3D *old_tail; rm; rm =3D rm->next)
+> +			rm->fetch_head_status =3D FETCH_HEAD_IGNORE;
 
-Indeed. The source of the problem is that our "die" shell function
-interprets \t (because it uses "echo").
+Was there a reason why this change was done by appending new ref at
+the tail of the ref_map list?  I would have expected that a na=C3=AFve
+and obvious implementation would be to iterate existing refs over
+ref_map to find refs with an empty RHS whose LHS is configured to
+usually store the fetched result to somewhere and to update their
+RHS in place.
 
-A simple fix would be this:
-
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 7a964ad..97258d5 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -53,7 +53,7 @@ die () {
- die_with_status () {
-        status=$1
-        shift
--       echo >&2 "$*"
-+       printf >&2 "%s\n" "$*"
-        exit "$status"
- }
- 
-It does not sound crazy as the shell function "say" right below uses the
-same printf "%s\n" "$*", but I'm wondering whether this could have other
-bad implications (e.g. if there are escape sequences in the commit
-message, aren't we going to screw up the terminal?).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Being curious.
