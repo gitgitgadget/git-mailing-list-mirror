@@ -1,104 +1,103 @@
 From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: [PATCH] branch, commit, name-rev: ease up boolean conditions
-Date: Tue, 06 Aug 2013 22:18:31 +0200
-Message-ID: <52015A17.6040204@googlemail.com>
-References: <5200F3D6.5040004@googlemail.com> <1375794434-12257-1-git-send-email-stefanbeller@googlemail.com> <CAPig+cR05=vfutGJ1pB7JbOV9-rrtwwEeondWCBDs6Av94tTkQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigE195207FFC9A09645B0D48BE"
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Aug 06 22:18:38 2013
+Subject: [PATCH] branch, commit, name-rev: ease up boolean conditions
+Date: Tue,  6 Aug 2013 22:18:52 +0200
+Message-ID: <1375820332-30816-1-git-send-email-stefanbeller@googlemail.com>
+References: <52015A17.6040204@googlemail.com>
+Cc: Stefan Beller <stefanbeller@googlemail.com>
+To: sunshine@sunshineco.com, git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Aug 06 22:19:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6niG-0004ms-QE
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 22:18:37 +0200
+	id 1V6nib-00050k-36
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 22:18:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756353Ab3HFUSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 16:18:33 -0400
-Received: from mail-ea0-f176.google.com ([209.85.215.176]:42008 "EHLO
-	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756312Ab3HFUSc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 16:18:32 -0400
-Received: by mail-ea0-f176.google.com with SMTP id q16so435370ead.35
-        for <git@vger.kernel.org>; Tue, 06 Aug 2013 13:18:31 -0700 (PDT)
+	id S1756407Ab3HFUSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 16:18:53 -0400
+Received: from mail-ee0-f42.google.com ([74.125.83.42]:42989 "EHLO
+	mail-ee0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756366Ab3HFUSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 16:18:52 -0400
+Received: by mail-ee0-f42.google.com with SMTP id b45so432032eek.15
+        for <git@vger.kernel.org>; Tue, 06 Aug 2013 13:18:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type;
-        bh=cKVWmIPX5xQIs9BVmauG9a1yQqepMVhZPyUo4pzH0lk=;
-        b=bD08Y/rSdPjey8FwZJ5c7ETPk6PVGWEO6trlVAWNZ4RG07lL65hNXL/GBESv7RILdf
-         FroOpy2kOufFqxy944uwuUkJVgYXmD/8kNDvEFKHsBnxVXDGDbH1SOrCznZbiPRmzYyQ
-         j8NCwiRoqdqta3FergZ4vE60PgEInArBPQzd5hiY+MlkLkuMqx7yEWVnOB7ZYx6+y8/7
-         +4oWgnOGa6wdrvFnac8HNCdt0F58ckZ6WeBjoBlTYGiVmh1EfkmwUOWJhp/2jPUH4o33
-         g2Q1wtu3CqFI+GODB0LB3XMNyhNt1f9sAGIyqxQJNprSXoZBhuHnmNRLBh2nNHMTpUmq
-         o17A==
-X-Received: by 10.15.86.65 with SMTP id h41mr2539704eez.147.1375820311166;
-        Tue, 06 Aug 2013 13:18:31 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id bp43sm4500478eeb.4.2013.08.06.13.18.29
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=4iNwYL+8oE0UkIbqLhmJqBI5pgMnbmQjG02j5/m/MZA=;
+        b=DI421Kaxu6FLExGYjkG89g3oLJG5+fKq+lgVWgN2SG2Q1nNfXEOKC7exJD1IDdzfz4
+         1gn/dgN8E+/QZDyVawj4VjdPz4uokB0kb1OrDxA46RK4BwMc8xOA2IlFkkdDTypf2Ewj
+         bfKo936eaSpw2mqfqgORfWxtrBpl94mMJlfawXT+B0yzqOvQ0xmI4Z4a7YzOOboTTvyJ
+         wADd4h7/6VuSNYGz5hhu2OpMVw/t29idSlhIRT9bZwG4TeU4495/FT1BfUIb2iO0GNQi
+         OJ2WyCGrusu2IQ46ci/7F+cDkWKQLrFqqtN8bZzWJlvBCOdwQ7GcJMshFHax22aCajlM
+         EdyQ==
+X-Received: by 10.15.75.73 with SMTP id k49mr2698035eey.36.1375820331649;
+        Tue, 06 Aug 2013 13:18:51 -0700 (PDT)
+Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id a1sm4521390eem.1.2013.08.06.13.18.50
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 06 Aug 2013 13:18:30 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <CAPig+cR05=vfutGJ1pB7JbOV9-rrtwwEeondWCBDs6Av94tTkQ@mail.gmail.com>
-X-Enigmail-Version: 1.4.6
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 06 Aug 2013 13:18:51 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc0.16.g7fca822.dirty
+In-Reply-To: <52015A17.6040204@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231784>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigE195207FFC9A09645B0D48BE
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Now that the variables are set by OPT_BOOL, which makes sure
+to have the values being 0 or 1 after parsing, we do not need
+the double negation to map any other value to 1 for integer
+variables.
 
-On 08/06/2013 08:46 PM, Eric Sunshine wrote:
-> On Tue, Aug 6, 2013 at 9:07 AM, Stefan Beller
-> <stefanbeller@googlemail.com> wrote:
->> Now that the variables are readin by OPT_BOOL, which makes sure
->=20
-> Do you mean s/readin/read in/ ?
->=20
-> Or should it be s/readin/set/ ?
->=20
->> to have the values being 0 or 1 after reading, we do not need
->> the double negation to map any other value to 1 for integer
->> variables.
->>
->> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+---
+ builtin/branch.c   | 3 ++-
+ builtin/commit.c   | 2 +-
+ builtin/name-rev.c | 2 +-
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
-I think s/readin/set/ is best.
-Also s/after reading/after parsing/
-
-
---------------enigE195207FFC9A09645B0D48BE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJSAVoXAAoJEJQCPTzLflhqBacP+wVokj4qZEED/dESZZctDFEV
-XXLOOA37yZS3r+ajfNDMspeda8GXH4qDUxFozyeS1Ap91ta7rnKrK3tek0UFlY5u
-qtiADD4CNCGRBbJ5nDesPyy7JJO+qJ0FQbMHe5ydgvQPSX4FxxXv8H77lQpduwrm
-Yu4sN4Lail/fl2blR9A+tyNTdur35xVe5YD0M9pGk8r/qSk25MKgT3vLxhY/195O
-VbqoE3DrEB8oUvHcb/rF1GC+tROZRUbbAhetp20tfIfIfnwQD6PfEDiSRQqRfKrK
-bzRIJJOLjXN5wUowT8qKneX8EKsAXqJbk3rgPzSWL+2jR9mF72R0CGbsuMBoyrz6
-5ir9lKVaNU7I9Z2X32JLM93i+ExHP5f8hVhaLhcU5ptwTzKryqd1ax4fxX+URynK
-NCm0SmSpSdfYSHnpqcHyGyjWcBbIPUKhQDn6tK4Uqbs0fCEZeODHH+tXz+NNx5DV
-JK+S6w2rHxtlRfYPQ2/WjYlsI5QLP9l4yuDYkW+ny7uHpTpP87qt16H3ZPhvNtYE
-C1GNWv17hkO67HB+vIamhGIwmseM6lFnsezsd7ibsdJ+mnp9vwmAl+ozFCkDxq4O
-1JuU+GaBOVMAE41h876B32G9bQlByGFRhHxwiomyVdV+2JejO3WNKUIqR+fkPL8B
-33hTU7GpU2HzUayK8Qvr
-=Exs8
------END PGP SIGNATURE-----
-
---------------enigE195207FFC9A09645B0D48BE--
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 4daed0b..0dca694 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -872,7 +872,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	if (with_commit || merge_filter != NO_FILTER)
+ 		list = 1;
+ 
+-	if (!!delete + !!rename + !!force_create + !!list + !!new_upstream + !!unset_upstream > 1)
++	if (force_create + list + unset_upstream +
++	    !!delete + !!rename + !!new_upstream > 1)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
+ 	if (abbrev == -1)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index c20426b..b0f86c8 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1072,7 +1072,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 	if (patch_interactive)
+ 		interactive = 1;
+ 
+-	if (!!also + !!only + !!all + !!interactive > 1)
++	if (also + only + all + interactive > 1)
+ 		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
+ 	if (argc == 0 && (also || (only && !amend)))
+ 		die(_("No paths with --include/--only does not make sense."));
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index a908a34..20fcf8c 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -331,7 +331,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 
+ 	git_config(git_default_config, NULL);
+ 	argc = parse_options(argc, argv, prefix, opts, name_rev_usage, 0);
+-	if (!!all + !!transform_stdin + !!argc > 1) {
++	if (all + transform_stdin + !!argc > 1) {
+ 		error("Specify either a list, or --all, not both!");
+ 		usage_with_options(name_rev_usage, opts);
+ 	}
+-- 
+1.8.4.rc0.16.g7fca822.dirty
