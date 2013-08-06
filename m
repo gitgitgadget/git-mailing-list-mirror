@@ -1,152 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git rebase -i error message interprets \t in commit message
-Date: Tue, 06 Aug 2013 12:35:11 -0700
-Message-ID: <7vhaf2fw9c.fsf@alter.siamese.dyndns.org>
-References: <87k3jy6cyc.fsf@fencepost.gnu.org> <vpqli4ekdni.fsf@anie.imag.fr>
-	<87fvum694z.fsf@fencepost.gnu.org> <vpqd2pqka9e.fsf@anie.imag.fr>
-	<87bo5a62te.fsf@fencepost.gnu.org>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH] branch, commit, name-rev: ease up boolean conditions
+Date: Tue, 06 Aug 2013 22:18:31 +0200
+Message-ID: <52015A17.6040204@googlemail.com>
+References: <5200F3D6.5040004@googlemail.com> <1375794434-12257-1-git-send-email-stefanbeller@googlemail.com> <CAPig+cR05=vfutGJ1pB7JbOV9-rrtwwEeondWCBDs6Av94tTkQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Aug 06 21:35:22 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigE195207FFC9A09645B0D48BE"
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Aug 06 22:18:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6n2P-0002pC-PD
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 21:35:22 +0200
+	id 1V6niG-0004ms-QE
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 22:18:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756056Ab3HFTfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 15:35:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37400 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755509Ab3HFTfO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 15:35:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6732636F4E;
-	Tue,  6 Aug 2013 19:35:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=auYLh4eISfXxppF7JKsPnWAIEc0=; b=wpxp4l
-	06NKwMMWt+wb0USqhAbQiJw36dIoy3CSUz9swd591P1iGTWRHvQwJRxppH5kXlrV
-	cFcdMBQcfoO/fiTV55ivlvhF0aWXgSc+YBJqK5//5svUskQ3Hji7z2hM5oIHXLJn
-	UZn5PT84EMEe3lNnpn7hhkpi/Tl2/WFRUknE0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jLzjF07RDGCDff3i5pf7zfK9tPBcSqxE
-	OQkJIWsv6mU0JgwH8NpcVL8aH2/AD6ITOXYC1BmggRgpEAr+rwEKr2Dd57BLaEEw
-	Rdli7QwVM/WGE46+oU2kLn/yz/6cxhtfKiJwLQfEdSG7cmlQOimLOaf+CFc+PJkg
-	3p0tVMBC82I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B2B936F4D;
-	Tue,  6 Aug 2013 19:35:13 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D78B36F4A;
-	Tue,  6 Aug 2013 19:35:12 +0000 (UTC)
-In-Reply-To: <87bo5a62te.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Tue, 06 Aug 2013 21:23:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4FCFDD32-FECF-11E2-8732-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756353Ab3HFUSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 16:18:33 -0400
+Received: from mail-ea0-f176.google.com ([209.85.215.176]:42008 "EHLO
+	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756312Ab3HFUSc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 16:18:32 -0400
+Received: by mail-ea0-f176.google.com with SMTP id q16so435370ead.35
+        for <git@vger.kernel.org>; Tue, 06 Aug 2013 13:18:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type;
+        bh=cKVWmIPX5xQIs9BVmauG9a1yQqepMVhZPyUo4pzH0lk=;
+        b=bD08Y/rSdPjey8FwZJ5c7ETPk6PVGWEO6trlVAWNZ4RG07lL65hNXL/GBESv7RILdf
+         FroOpy2kOufFqxy944uwuUkJVgYXmD/8kNDvEFKHsBnxVXDGDbH1SOrCznZbiPRmzYyQ
+         j8NCwiRoqdqta3FergZ4vE60PgEInArBPQzd5hiY+MlkLkuMqx7yEWVnOB7ZYx6+y8/7
+         +4oWgnOGa6wdrvFnac8HNCdt0F58ckZ6WeBjoBlTYGiVmh1EfkmwUOWJhp/2jPUH4o33
+         g2Q1wtu3CqFI+GODB0LB3XMNyhNt1f9sAGIyqxQJNprSXoZBhuHnmNRLBh2nNHMTpUmq
+         o17A==
+X-Received: by 10.15.86.65 with SMTP id h41mr2539704eez.147.1375820311166;
+        Tue, 06 Aug 2013 13:18:31 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id bp43sm4500478eeb.4.2013.08.06.13.18.29
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 06 Aug 2013 13:18:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+In-Reply-To: <CAPig+cR05=vfutGJ1pB7JbOV9-rrtwwEeondWCBDs6Av94tTkQ@mail.gmail.com>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231783>
 
-David Kastrup <dak@gnu.org> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigE195207FFC9A09645B0D48BE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->>>From 7962ac8d8f2cbc556f669fd97487f9d70edc4ea1 Mon Sep 17 00:00:00 2001
->> From: Matthieu Moy <Matthieu.Moy@imag.fr>
->> Date: Tue, 6 Aug 2013 19:13:03 +0200
->> Subject: [PATCH] die_with_status: use "printf '%s\n'", not "echo"
+On 08/06/2013 08:46 PM, Eric Sunshine wrote:
+> On Tue, Aug 6, 2013 at 9:07 AM, Stefan Beller
+> <stefanbeller@googlemail.com> wrote:
+>> Now that the variables are readin by OPT_BOOL, which makes sure
+>=20
+> Do you mean s/readin/read in/ ?
+>=20
+> Or should it be s/readin/set/ ?
+>=20
+>> to have the values being 0 or 1 after reading, we do not need
+>> the double negation to map any other value to 1 for integer
+>> variables.
 >>
->> At least GNU echo interprets backslashes in its arguments.
->
-> I think that's incorrect in several respects.  For one thing, echo is
-> never called for most Bourne shells since echo is a builtin (might have
-> been different for UNIX version 7 or so).  For another, GNU echo would
-> behave like Bash:
->
-> And GNU Bash does not interpret escapes unless you do echo -e.  Escape
-> sequence interpretation, however, happens for Dash:
->
-> dak@lola:/usr/local/tmp/lilypond$ dash -c 'echo "x\tx"'
-> x	x
-> dak@lola:/usr/local/tmp/lilypond$ bash -c 'echo "x\tx"'
-> x\tx
-> dak@lola:/usr/local/tmp/lilypond$ /bin/echo "x\tx"
-> x\tx
->
-> So replace "GNU echo" in your commit message with "Dash's echo builtin"
-> and you get closer.
+>> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
 
-I'll queue the attached.
+I think s/readin/set/ is best.
+Also s/after reading/after parsing/
 
-POSIX makes it an implementation defined behaviour when the first
-argument is "-n", or any argument contains a backslas (X/Open System
-Interfaces wants to treat "-n" as literal and always interpret the
-backslash sequence), so it is definitely safer to avoid running
-'echo' on any random string.
 
-Thanks.
+--------------enigE195207FFC9A09645B0D48BE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Author: Matthieu Moy <Matthieu.Moy@imag.fr>
-Date:   Tue Aug 6 20:26:44 2013 +0200
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-    die_with_status: use "printf '%s\n'", not "echo"
-    
-    Some implementations of 'echo' (e.g. dash's built-in) interpret
-    backslash sequences in their arguments.
-    
-    This triggered at least one bug: the error message of "rebase -i" was
-    turning \t in commit messages into actual tabulations. There may be
-    others.
-    
-    Using "printf '%s\n'" instead avoids this bad behavior, and is the form
-    used by the "say" function.
-    
-    Noticed-by: David Kastrup <dak@gnu.org>
-    Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+iQIcBAEBAgAGBQJSAVoXAAoJEJQCPTzLflhqBacP+wVokj4qZEED/dESZZctDFEV
+XXLOOA37yZS3r+ajfNDMspeda8GXH4qDUxFozyeS1Ap91ta7rnKrK3tek0UFlY5u
+qtiADD4CNCGRBbJ5nDesPyy7JJO+qJ0FQbMHe5ydgvQPSX4FxxXv8H77lQpduwrm
+Yu4sN4Lail/fl2blR9A+tyNTdur35xVe5YD0M9pGk8r/qSk25MKgT3vLxhY/195O
+VbqoE3DrEB8oUvHcb/rF1GC+tROZRUbbAhetp20tfIfIfnwQD6PfEDiSRQqRfKrK
+bzRIJJOLjXN5wUowT8qKneX8EKsAXqJbk3rgPzSWL+2jR9mF72R0CGbsuMBoyrz6
+5ir9lKVaNU7I9Z2X32JLM93i+ExHP5f8hVhaLhcU5ptwTzKryqd1ax4fxX+URynK
+NCm0SmSpSdfYSHnpqcHyGyjWcBbIPUKhQDn6tK4Uqbs0fCEZeODHH+tXz+NNx5DV
+JK+S6w2rHxtlRfYPQ2/WjYlsI5QLP9l4yuDYkW+ny7uHpTpP87qt16H3ZPhvNtYE
+C1GNWv17hkO67HB+vIamhGIwmseM6lFnsezsd7ibsdJ+mnp9vwmAl+ozFCkDxq4O
+1JuU+GaBOVMAE41h876B32G9bQlByGFRhHxwiomyVdV+2JejO3WNKUIqR+fkPL8B
+33hTU7GpU2HzUayK8Qvr
+=Exs8
+-----END PGP SIGNATURE-----
 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 7a964ad..e15be51 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -53,7 +53,7 @@ die () {
- die_with_status () {
- 	status=$1
- 	shift
--	echo >&2 "$*"
-+	printf >&2 '%s\n' "$*"
- 	exit "$status"
- }
- 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 49ccb38..074deb1 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -976,4 +976,17 @@ test_expect_success 'rebase -i with --strategy and -X' '
- 	test $(cat file1) = Z
- '
- 
-+test_expect_success 'rebase -i error on commits with \ in message' '
-+	current_head=$(git rev-parse HEAD)
-+	test_when_finished "git rebase --abort; git reset --hard $current_head; rm -f error" &&
-+	test_commit TO-REMOVE will-conflict old-content &&
-+	test_commit "\temp" will-conflict new-content dummy &&
-+	(
-+	EDITOR=true &&
-+	export EDITOR &&
-+	test_must_fail git rebase -i HEAD^ --onto HEAD^^ 2>error
-+	) &&
-+	grep -v "	" error
-+'
-+
- test_done
+--------------enigE195207FFC9A09645B0D48BE--
