@@ -1,102 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add missing test file for UTF-16.
-Date: Tue, 06 Aug 2013 10:24:20 -0700
-Message-ID: <7veha6hgvv.fsf@alter.siamese.dyndns.org>
-References: <1375550791-5823-1-git-send-email-sandals@crustytoothpaste.net>
-	<CACsJy8CT3uxp99n9VUXDbL30WEDcuRreeJBaqBcx9Ujici67VA@mail.gmail.com>
-	<7vtxj4kry1.fsf@alter.siamese.dyndns.org>
-	<CACsJy8ACqB5qRLFCerACEQrK8QXH+n=tAxdutAGT6JeijDvJUQ@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 1/2] submodule: fix confusing variable name
+Date: Tue, 06 Aug 2013 19:33:16 +0200
+Message-ID: <5201335C.5040001@web.de>
+References: <1375550060-5406-1-git-send-email-sandals@crustytoothpaste.net> <1375550060-5406-2-git-send-email-sandals@crustytoothpaste.net> <20130803181415.GF2893@elie.Belkin> <51FE90B8.8030203@web.de> <20130804212938.GL19369@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Stefano Lattarini <stefano.lattarini@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 06 19:25:58 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, judge.packham@gmail.com,
+	Jorge-Juan.Garcia-Garcia@ensimag.imag.fr, gitster@pobox.com,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Tue Aug 06 19:33:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6l1B-00049j-8C
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 19:25:57 +0200
+	id 1V6l8U-0000XL-Dp
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 19:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756560Ab3HFRYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 13:24:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42247 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756551Ab3HFRY0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 13:24:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED7B536301;
-	Tue,  6 Aug 2013 17:24:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Tc7slX4JcqQbkoY5YoDv8hRT5g4=; b=X2qcNr
-	HOMg+QH2J6FiNXmdT/q9LND1/n+gjpcGrfByutI9VIcohslySTk74+qzzhUsHGss
-	rE960bOFk8B0GUPgX2BXfUABXU9XDm5+JpyGC9Quk0hZRZq2xyfHlLG163u6EEZe
-	VmLNHf/VwS/4wN+AR+PybTWs4dI7hIJKDPIts=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=R+jBl1md7fAflVBO7TUe017wpQ/mHe3y
-	jLPj2iJ2rPQDaZwfDKMmGWGYN73IqnA9Kd9lxN/mTBslaxR+6ZkSrhTiceXj/VcQ
-	ffJo0EptDbYEKHXloTptfzWod8zYCRXJBHpaxNX9IQz497/vmSfvEvsgCuLdgG4i
-	u8YTjdz0ncY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E06DA36300;
-	Tue,  6 Aug 2013 17:24:25 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D1FE9362FD;
-	Tue,  6 Aug 2013 17:24:22 +0000 (UTC)
-In-Reply-To: <CACsJy8ACqB5qRLFCerACEQrK8QXH+n=tAxdutAGT6JeijDvJUQ@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 6 Aug 2013 18:59:10 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 096636FA-FEBD-11E2-A3F1-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756390Ab3HFRd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 13:33:26 -0400
+Received: from mout.web.de ([212.227.15.14]:60490 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756339Ab3HFRdZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 13:33:25 -0400
+Received: from [192.168.178.41] ([91.3.171.84]) by smtp.web.de (mrweb004)
+ with ESMTPA (Nemesis) id 0M7n5k-1W29341tvk-00vSFx for <git@vger.kernel.org>;
+ Tue, 06 Aug 2013 19:33:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <20130804212938.GL19369@paksenarrion.iveqy.com>
+X-Enigmail-Version: 1.5.2
+X-Provags-ID: V03:K0:ubIwBkrRjNAgnVEovm8Bfb4LXHwQJbf7MLdRlv+LW8/d2Qtx7d3
+ qeFE0wGrI+BbeP12Bm+1NHWPCJF/mW0rQdwsHwae3K6DlijJIkqrE8RubkWbNBG5Z+gx1sV
+ cDfnvl4nj/tef+lEOIavIgyzEooEzW/eboJZ2lDe8lrxEeIec1hdVjLyt9l9AxC2u8ZYohk
+ IunOQka6veNg3U2icJHKQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231766>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Am 04.08.2013 23:29, schrieb Fredrik Gustafsson:
+> On Sun, Aug 04, 2013 at 07:34:48PM +0200, Jens Lehmann wrote:
+>> But we'll have to use sm_path here (like everywhere else in the
+>> submodule script), because we'll run into problems under Windows
+>> otherwise (see 64394e3ae9 for details). Apart from that the patch
+>> is fine.
+> 
+> We're still using path= in the foreach-script. Or rather, we're setting
+> it. From what I can see and from the commit message 64394e3ae9 it could
+> possible be a problem.
 
-> The intention was "UTF-16 is not supported yet but we want to". But I
-> don't think we (at least I) will put any effort on that front to allow
-> NUL in commit message, so the patch, as in "we do not support UTF-16",
-> is fine.
+The commit message of 64394e3ae9 explicitly talks about that one:
 
-Agreed.  Here is what I queued.
+  We note that the foreach subcommand provides $path to user scripts
+  (ie it is part of the API), so we can't simply rename it to $sm_path.
 
--- >8 --
-Subject: [PATCH] t3900: test rejecting log message with NULs correctly
+> Not sure how to solve it though... Just a simple correction would break
+> all script depending on that.
 
-It is not like that our longer term desire is to someday start
-accepting log messages with NULs in them, so it is wrong to mark a test
-that demonstrates "git commit" that correctly fails given such an
-input as "expect-failure".  "git commit" should fail today, and it
-should fail the same way in the future given a message with NUL in it.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t3900-i18n-commit.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-index d48a7c0..a9e5662 100755
---- a/t/t3900-i18n-commit.sh
-+++ b/t/t3900-i18n-commit.sh
-@@ -34,9 +34,9 @@ test_expect_success 'no encoding header for base case' '
- 	test z = "z$E"
- '
- 
--test_expect_failure 'UTF-16 refused because of NULs' '
-+test_expect_success 'UTF-16 refused because of NULs' '
- 	echo UTF-16 >F &&
--	git commit -a -F "$TEST_DIRECTORY"/t3900/UTF-16.txt
-+	test_must_fail git commit -a -F "$TEST_DIRECTORY"/t3900/UTF-16.txt
- '
- 
- 
+That's exactly why that one is still there. We could deprecate it in
+favor of $sm_path and remove it some time later, but I'm not convinced
+it is an urgent issue. But me thinks the documentation of foreach should
+be updated, as it still talks about $path.
