@@ -1,85 +1,76 @@
-From: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
-Subject: [[TIG][PATCH v2] 3/3] Revert "Scroll diff with arrow keys in log view"
-Date: Tue, 06 Aug 2013 00:58:21 -0400
-Message-ID: <1375765101-31461-4-git-send-email-a.kumar@alumni.iitm.ac.in>
-References: <1375765101-31461-1-git-send-email-a.kumar@alumni.iitm.ac.in>
-Content-Transfer-Encoding: 7BIT
-Cc: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
-To: fonseca@diku.dk, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 06 06:58:41 2013
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] remote-hg: add shared repo upgrade
+Date: Tue, 6 Aug 2013 08:22:19 +0200
+Message-ID: <CALWbr2wynb-K-r0sehuBUtmkbgp9Ev5iYK_v2ZFxsjcewTCmfQ@mail.gmail.com>
+References: <1375730567-3240-1-git-send-email-apelisse@gmail.com>
+	<7vwqnzj1gp.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Joern Hees <dev@joernhees.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 06 08:22:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6ZLy-0005xw-F3
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 06:58:38 +0200
+	id 1V6af2-00014k-J7
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 08:22:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751779Ab3HFE6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 00:58:25 -0400
-Received: from mta6.srv.hcvlny.cv.net ([167.206.4.212]:37332 "EHLO
-	mta6.srv.hcvlny.cv.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751396Ab3HFE6Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 00:58:24 -0400
-Received: from odessa (ool-18bb429a.dyn.optonline.net [24.187.66.154])
- by mta6.srv.hcvlny.cv.net
- (Sun Java System Messaging Server 6.2-9.20 (built Jul 15 2010))
- with ESMTPA id <0MR3002WGF5BFJR0@mta6.srv.hcvlny.cv.net> for
- git@vger.kernel.org; Tue, 06 Aug 2013 00:58:24 -0400 (EDT)
-Received: from kumar by odessa with local (Exim 4.80)
-	(envelope-from <a.kumar@alumni.iitm.ac.in>)	id 1V6ZLj-0008Eo-3S; Tue,
- 06 Aug 2013 00:58:23 -0400
-In-reply-to: <1375765101-31461-1-git-send-email-a.kumar@alumni.iitm.ac.in>
-X-Mailer: git-send-email 1.8.3.2
+	id S1754950Ab3HFGWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 02:22:20 -0400
+Received: from mail-qc0-f170.google.com ([209.85.216.170]:57601 "EHLO
+	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754792Ab3HFGWU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 02:22:20 -0400
+Received: by mail-qc0-f170.google.com with SMTP id d10so2217669qcz.1
+        for <git@vger.kernel.org>; Mon, 05 Aug 2013 23:22:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=FuZZUhEV1m3imgs6i3Jl0D171CYfPQwGkSibNKYFkYM=;
+        b=v6NZwp2m9v86RWvA8/9GhghFTx1PSlbANhXb/lXS9/TJQJJxrmQuNqHQKEjpvdy56U
+         uEVXkxIpcOCzheYA/HIWOamfsX8NL7hUsDxjg3dT2Ll1wonjwNRBiRGhpx+oXp2P4nmv
+         BlinQVY0TnVyqMypATN58SLIhukccaWvpGW4ghkZ+8Xy0SEWEMQzrfAZxcSK7fq8yvRF
+         4o8z+xJM/Xy3oZctmWHU59M0hSt2oMUbPUCrjIsRJP7nUDGBr4S+8lJMTVI7cqZU80P5
+         8J39OqsUuBmdniNZaK90HDOQjgdHI0lzLeawd5PmA9tcA+qtMw+tKMWiUWHfXpYOdX50
+         G5Tw==
+X-Received: by 10.229.12.68 with SMTP id w4mr3305264qcw.39.1375770139499; Mon,
+ 05 Aug 2013 23:22:19 -0700 (PDT)
+Received: by 10.49.64.67 with HTTP; Mon, 5 Aug 2013 23:22:19 -0700 (PDT)
+In-Reply-To: <7vwqnzj1gp.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231722>
 
-This reverts commit 888611dd5d407775245d574a3dc5c01b5963a5ba. This is
-because, in the re-engineered log view, scrolling the log with the
-arrows now updates the diff in the diff view when the screen is
-split. This resembles the earlier behaviour, and is also what users of
-software like Mutt (which uses the pager view concept) would expect.
+On Mon, Aug 5, 2013 at 11:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Antoine Pelisse <apelisse@gmail.com> writes:
+> Is the untold
+> and obvious-to-those-who-are-familiar-with-this-codepath assumption
+> that it is guaranteed that there is at most one "*/clone/.hg" under
+> shared_path?
 
-Signed-Off-By: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
+No, there is no such assumption.
+That is why we create a repository just below if it doesn't exist (no
+copy was found).
+That's also why I don't see how we could split the patch.
 
-Conflicts:
-	tig.c
----
- tig.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+We could improve that part of the commit message:
 
-diff --git a/tig.c b/tig.c
-index 256b589..5f564a5 100644
---- a/tig.c
-+++ b/tig.c
-@@ -1905,7 +1905,6 @@ enum view_flag {
- 	VIEW_STDIN		= 1 << 8,
- 	VIEW_SEND_CHILD_ENTER	= 1 << 9,
- 	VIEW_FILE_FILTER	= 1 << 10,
--	VIEW_NO_PARENT_NAV	= 1 << 11,
- };
- 
- #define view_has_flags(view, flag)	((view)->ops->flags & (flag))
-@@ -3773,7 +3772,7 @@ view_driver(struct view *view, enum request request)
- 
- 	case REQ_NEXT:
- 	case REQ_PREVIOUS:
--		if (view->parent && !view_has_flags(view->parent, VIEW_NO_PARENT_NAV)) {
-+		if (view->parent) {
- 			int line;
- 
- 			view = view->parent;
-@@ -4490,7 +4489,7 @@ log_request(struct view *view, enum request request, struct line *line)
- static struct view_ops log_ops = {
- 	"line",
- 	{ "log" },
--	VIEW_ADD_PAGER_REFS | VIEW_OPEN_DIFF | VIEW_SEND_CHILD_ENTER | VIEW_NO_PARENT_NAV,
-+	VIEW_ADD_PAGER_REFS | VIEW_OPEN_DIFF | VIEW_SEND_CHILD_ENTER,
- 	sizeof(struct log_state),
- 	log_open,
- 	pager_read,
--- 
-1.8.3.2
+    It's trivial to upgrade to the new organization by copying the Mercurial
+    repo from one of the remotes (e.g. 'origin'), so let's do so. If
+we can't find
+    any existing repo, we create an empty one.
+
+>> +        # setup shared repo (if not there)
+>> +        try:
+>> +            hg.peer(myui, {}, shared_path, create=True)
+>> +        except error.RepoError:
+>> +            pass
+>>
+>>          if not os.path.exists(dirname):
+>>              os.makedirs(dirname)
