@@ -1,99 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH revised] git_mkstemps: add test suite test
-Date: Tue, 06 Aug 2013 11:17:42 -0700
-Message-ID: <7vsiymfzuh.fsf@alter.siamese.dyndns.org>
-References: <201308061805.r76I51If026086@freeze.ariadne.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: worley@alum.mit.edu (Dale R. Worley)
-X-From: git-owner@vger.kernel.org Tue Aug 06 20:18:07 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] die_with_status: use "printf '%s\n'", not "echo"
+Date: Tue,  6 Aug 2013 20:26:44 +0200
+Message-ID: <1375813604-10565-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <7vwqnyg10v.fsf@alter.siamese.dyndns.org>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Aug 06 20:28:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6lpe-0003u4-Ic
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 20:18:06 +0200
+	id 1V6lzd-0002L1-3t
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 20:28:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756745Ab3HFSRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 14:17:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45756 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756139Ab3HFSRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 14:17:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 274E836756;
-	Tue,  6 Aug 2013 18:17:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=I8gqvlSAtWMoFNqgGNMCqEDEAWs=; b=gggk8U
-	gju4yOgQZc7B/kJrws6CTtz0AfBy5/jDSLageAfZde5qkgT5Q33Ci+oUNdUP8s72
-	e/HAVrxUKTAjrzWpZ6oAI3Etm7TZkid0oECZWkf42w5WlsK8QfSUHRloLKl5K27u
-	NI00sbkuKNJo95Cvsw7hJbkoS5l3AtkmekE7w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WQYaFaEJlp8/CGp31v4+iIJzsW0zs/qN
-	mqZ7XWuB8xqL0GB+m+18Q3uvaQUEDsc4Xev/Xpt6dJyF8RNYmF2dL0OTlhoiThZq
-	I+z8sgM3JqLd+dmQ5kTOqlWvPYPFe8UDHix6ciI2zsm2LC8NSAg/YQDsHWVj3RFu
-	y4CfH6gIZZI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17D5436755;
-	Tue,  6 Aug 2013 18:17:47 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 317B63674D;
-	Tue,  6 Aug 2013 18:17:44 +0000 (UTC)
-In-Reply-To: <201308061805.r76I51If026086@freeze.ariadne.com> (Dale
-	R. Worley's message of "Tue, 6 Aug 2013 14:05:01 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7DB61B72-FEC4-11E2-85C9-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756677Ab3HFS2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 14:28:06 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:51384 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756339Ab3HFS2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 14:28:04 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r76IQiJ0021343
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 6 Aug 2013 20:26:44 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1V6ly2-0000YW-Q3; Tue, 06 Aug 2013 20:26:46 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1V6ly2-0002l4-EF; Tue, 06 Aug 2013 20:26:46 +0200
+X-Mailer: git-send-email 1.8.3.3.797.gb72c616
+In-Reply-To: <7vwqnyg10v.fsf@alter.siamese.dyndns.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 06 Aug 2013 20:26:44 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r76IQiJ0021343
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1376418404.9873@kKxVLYi6WVuWX49V/Fixuw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231772>
 
-worley@alum.mit.edu (Dale R. Worley) writes:
+At least GNU echo interprets backslashes in its arguments.
 
-> Commit a2cb86 ("git_mkstemps: correctly test return value of open()",
-> 12 Jul 2013) fixes a bug regarding testing the return of an open()
-> call for success/failure.  Add a testsuite test for that fix.  The
-> test exercises a situation where that open() is known to return 0.
->
-> Signed-off-by: Dale Worley <worley@ariadne.com>
-> ---
-> This version of the patch cleans up a number of errors in my previous
-> version (which were ultimately due to my faulty updating of my master
-> branch).  The commit that added the open() test is now correctly
-> described.  Since the test was not present in the test suite at all,
-> the patch is described as adding the test rather than improving it.
->
-> a2cb86 is on branch tr/fd-gotcha-fixes, but that has been merged into
-> master now.
+This triggered at least one bug: the error message of "rebase -i" was
+turning \t in commit messages into actual tabulations. There may be
+others.
 
-Thanks. I thought I've already queued 
+Using "printf '%s\n'" instead avoids this bad behavior, and is the form
+used by the "say" function.
 
-Message-ID: <7vfvuokpr0.fsf@alter.siamese.dyndns.org>
-aka 
-http://article.gmane.org/gmane.comp.version-control.git/231680
+Noticed-by: David Kastrup <dak@gnu.org>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ git-sh-setup.sh               |  2 +-
+ t/t3404-rebase-interactive.sh | 13 +++++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-which tests
-
-    git commit --allow-empty -m message <&-
-
-> +test_expect_success 'git_mkstemps_mode does not fail if fd 0 is not open' '
-> +	git init &&
-
-This does not do anything useful; you are in the test playpen aka
-"trash" which is an already initialized git repository.
-
-> +	echo Test. >test-file &&
-> +	git add test-file &&
-
-You do not have to have extra contents...
-
-> +	git commit -m Message. <&-
-
-...you can do with just "--allow-empty" instead.
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 7a964ad..e15be51 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -53,7 +53,7 @@ die () {
+ die_with_status () {
+ 	status=$1
+ 	shift
+-	echo >&2 "$*"
++	printf >&2 '%s\n' "$*"
+ 	exit "$status"
+ }
+ 
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 49ccb38..074deb1 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -976,4 +976,17 @@ test_expect_success 'rebase -i with --strategy and -X' '
+ 	test $(cat file1) = Z
+ '
+ 
++test_expect_success 'rebase -i error on commits with \ in message' '
++	current_head=$(git rev-parse HEAD)
++	test_when_finished "git rebase --abort; git reset --hard $current_head; rm -f error" &&
++	test_commit TO-REMOVE will-conflict old-content &&
++	test_commit "\temp" will-conflict new-content dummy &&
++	(
++	EDITOR=true &&
++	export EDITOR &&
++	test_must_fail git rebase -i HEAD^ --onto HEAD^^ 2>error
++	) &&
++	grep -v "	" error
++'
++
+ test_done
+-- 
+1.8.3.3.797.gb72c616
