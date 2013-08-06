@@ -1,86 +1,124 @@
-From: David Kastrup <dak@gnu.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: git rebase -i error message interprets \t in commit message
-Date: Tue, 06 Aug 2013 19:07:08 +0200
-Message-ID: <87fvum694z.fsf@fencepost.gnu.org>
+Date: Tue, 06 Aug 2013 19:19:09 +0200
+Message-ID: <vpqd2pqka9e.fsf@anie.imag.fr>
 References: <87k3jy6cyc.fsf@fencepost.gnu.org> <vpqli4ekdni.fsf@anie.imag.fr>
+	<87fvum694z.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Aug 06 19:07:29 2013
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Aug 06 19:19:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6kjI-0000i1-Gd
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 19:07:28 +0200
+	id 1V6kun-0008B5-7X
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 19:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756210Ab3HFRHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 13:07:24 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:52466 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756131Ab3HFRHY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 13:07:24 -0400
-Received: from localhost ([127.0.0.1]:51508 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1V6kjC-00024B-JG; Tue, 06 Aug 2013 13:07:22 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 1625BEAC27; Tue,  6 Aug 2013 19:07:08 +0200 (CEST)
-In-Reply-To: <vpqli4ekdni.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
-	06 Aug 2013 18:05:53 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1756223Ab3HFRTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 13:19:17 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:52504 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756067Ab3HFRTQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 13:19:16 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r76HJ7uK015872
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 6 Aug 2013 19:19:07 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1V6kub-0000AR-BG; Tue, 06 Aug 2013 19:19:09 +0200
+In-Reply-To: <87fvum694z.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Tue, 06 Aug 2013 19:07:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 06 Aug 2013 19:19:08 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r76HJ7uK015872
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1376414350.29072@uIXuuwxAEB7RWelQoCgfNw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231762>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+David Kastrup <dak@gnu.org> writes:
 
-> David Kastrup <dak@gnu.org> writes:
+>> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+>> index 7a964ad..97258d5 100644
+>> --- a/git-sh-setup.sh
+>> +++ b/git-sh-setup.sh
+>> @@ -53,7 +53,7 @@ die () {
+>>  die_with_status () {
+>>         status=$1
+>>         shift
+>> -       echo >&2 "$*"
+>> +       printf >&2 "%s\n" "$*"
+>>         exit "$status"
+>>  }
+>>  
+>> It does not sound crazy as the shell function "say" right below uses the
+>> same printf "%s\n" "$*",
 >
->> Could not apply 16de9d2... Make tempo range empo 20~30 be input as
->> empo 20-30 instead
->
-> Indeed. The source of the problem is that our "die" shell function
-> interprets \t (because it uses "echo").
->
-> A simple fix would be this:
->
-> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-> index 7a964ad..97258d5 100644
-> --- a/git-sh-setup.sh
-> +++ b/git-sh-setup.sh
-> @@ -53,7 +53,7 @@ die () {
->  die_with_status () {
->         status=$1
->         shift
-> -       echo >&2 "$*"
-> +       printf >&2 "%s\n" "$*"
->         exit "$status"
->  }
->  
-> It does not sound crazy as the shell function "say" right below uses the
-> same printf "%s\n" "$*",
+> Sounds reasonable, though I don't know off-hand (not having the source
+> here) whether using "say" inside of die_with_status 
 
-Sounds reasonable, though I don't know off-hand (not having the source
-here) whether using "say" inside of die_with_status (and thus not having
-two different places to maintain) might not be feasible instead.  It's
-not like die_with_status is going to be called often enough to become a
-performance hog.
+The definition of say is:
 
-> but I'm wondering whether this could have other bad implications
-> (e.g. if there are escape sequences in the commit message, aren't we
-> going to screw up the terminal?).
+say () {
+	if test -z "$GIT_QUIET"
+	then
+		printf '%s\n' "$*"
+	fi
+}
 
-One person's escape sequences are another's multibyte characters.  Less
-cheesy, it would seem that the above change is a strict improvement and
-requires little thought to implement.
+I don't think we want to disable die's output even when the caller
+requested to be quiet. Currently, my patch is:
 
-Not interpreting escape sequences is orthogonal from output
-sanitization.
+>From 7962ac8d8f2cbc556f669fd97487f9d70edc4ea1 Mon Sep 17 00:00:00 2001
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Date: Tue, 6 Aug 2013 19:13:03 +0200
+Subject: [PATCH] die_with_status: use "printf '%s\n'", not "echo"
+
+At least GNU echo interprets backslashes in its arguments.
+
+This triggered at least one bug: the error message of "rebase -i" was
+turning \t in commit messages into actual tabulations. There may be
+others.
+
+Using "printf '%s\n'" instead avoids this bad behavior, and is the form
+used by the "say" function.
+
+Noticed-by: David Kastrup <dak@gnu.org>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ git-sh-setup.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 7a964ad..e15be51 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -53,7 +53,7 @@ die () {
+ die_with_status () {
+        status=$1
+        shift
+-       echo >&2 "$*"
++       printf >&2 '%s\n' "$*"
+        exit "$status"
+ }
+ 
+-- 
+1.8.3.3.797.gb72c616
+
+I'll resend properly for inclusion if no one objects.
 
 -- 
-David Kastrup
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
