@@ -1,61 +1,83 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: About close() in commit_lock_file()
-Date: Tue, 06 Aug 2013 08:41:20 +0200
-Message-ID: <52009A90.7050701@viscovery.net>
-References: <CACsJy8By1cpPZ5QyVd6VhKSkd-y_E6pTYdDimK9P0wXia-uMqg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] gc: reject if another gc is running, unless --force is given
+Date: Mon, 05 Aug 2013 23:43:29 -0700
+Message-ID: <7vwqnzgvzi.fsf@alter.siamese.dyndns.org>
+References: <1375510890-4728-1-git-send-email-pclouds@gmail.com>
+	<1375712354-13171-1-git-send-email-pclouds@gmail.com>
+	<7vsiyoj932.fsf@alter.siamese.dyndns.org>
+	<CALkWK0kZ=5TguAh9krAzFNuF0_sTRxcQKuZMnuQG7FQU0dJe=g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 06 08:41:31 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 06 08:43:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6axW-0001os-6F
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 08:41:30 +0200
+	id 1V6azt-00031I-8h
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 08:43:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754295Ab3HFGl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 02:41:26 -0400
-Received: from so.liwest.at ([212.33.55.14]:7182 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753917Ab3HFGl0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 02:41:26 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1V6axN-00027C-9j; Tue, 06 Aug 2013 08:41:21 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 0C4351660F;
-	Tue,  6 Aug 2013 08:41:20 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <CACsJy8By1cpPZ5QyVd6VhKSkd-y_E6pTYdDimK9P0wXia-uMqg@mail.gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1755431Ab3HFGnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 02:43:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62346 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755127Ab3HFGnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 02:43:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5248A3244B;
+	Tue,  6 Aug 2013 06:43:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PJxb6cBu1glHGZvboZHdNIZKk2s=; b=Ql5qJx
+	Zlprn9xIK5lUqlbyc2YKMPee2m9APxnjIxmp7GtTrUzB9KBZxOoKDC00ANDEc6rG
+	ZnUYR+uQwRvqVHEQiCfd1sWb2HmBaJLxLWrIyNlpup+jy6/OD7IATLa7Ua9IJI7B
+	aR/yYJg9v5S/9k4ufhyHGGJ4yXocNmxwehAQ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JmRgLRg63cJBt72nhhLXhyHLq3qRJ0QN
+	S1nYUWceZ4eroSxLosbCs5CtMW+GxOJGAapGxAeU8M3cnxu3+Xl0wGn1BSrExCf7
+	P0lG7koWUN20lq7wlrknS/BeYb/340MOcizsq9el9+GfEx1uokTP0buwdreSg2hG
+	IuGeLut8iSs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48A733244A;
+	Tue,  6 Aug 2013 06:43:32 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3CA5D32441;
+	Tue,  6 Aug 2013 06:43:31 +0000 (UTC)
+In-Reply-To: <CALkWK0kZ=5TguAh9krAzFNuF0_sTRxcQKuZMnuQG7FQU0dJe=g@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 6 Aug 2013 00:07:43 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 821B5D64-FE63-11E2-91C0-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231726>
 
-Am 8/5/2013 16:23, schrieb Duy Nguyen:
-> close() is added in commit_lock_file(), before rename(), by 4723ee9
-> (Close files opened by lock_file() before unlinking. - 2007-11-13),
-> which is needed by Windows. But doesn't that create a gap between
-> close() and rename() on other platforms where another process can
-> replace .lock file with something else before rename() is executed?
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-First, files manipulated by commit_lock_file() are to be opened only using
-lock_file() by definition. Opening such a file in with open() or fopen()
-or renaming it via rename() without using the lockfile.[ch] API is
-possible regardless of whether commit_lock_file() has closed the file or
-not. Such manipulation is already undefined behavior (from Git's point of
-view), and there is nothing we can do about "misbehaving" processes.
+> Junio C Hamano wrote:
+>> [...]
+>
+> The other comments mostly make sense.
+>
+>> After reading what the whole function does, I think the purpose of
+>> this function is to take gc-lock (with optionally force).  Perhaps a
+>> name along the lines of "lock_gc", "gc_lock", "lock_repo_for_gc",
+>> would be more appropriate.
+>
+> The whole point of this exercise is to _not_ lock up the repo during
+> gc,...
 
-Second, lock_file() uses O_CREAT|O_EXCL, which fails when the file exists,
-regardless of whether it is open or not.
+I do not think it is a misnomer to call the entity that locks other
+instances of gc's "a lock on the repository for gc".  Nothing in
+Duy's code suggests any other commands paying attention to this
+mechanism and stalling, and I think my comments were clear enough
+that I was not suggesting such a change.
 
-Conclusion: There is no problem.
-
--- Hannes
+So I am not sure what you are complaining.
