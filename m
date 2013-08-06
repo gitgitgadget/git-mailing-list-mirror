@@ -1,7 +1,7 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 16/16] line-range: reject -L line numbers less than 1
-Date: Tue,  6 Aug 2013 09:59:49 -0400
-Message-ID: <1375797589-65308-17-git-send-email-sunshine@sunshineco.com>
+Subject: [PATCH v2 06/16] t8001/t8002: blame: add tests of multiple -L options
+Date: Tue,  6 Aug 2013 09:59:39 -0400
+Message-ID: <1375797589-65308-7-git-send-email-sunshine@sunshineco.com>
 References: <1375797589-65308-1-git-send-email-sunshine@sunshineco.com>
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -9,131 +9,95 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 06 16:01:08 2013
+X-From: git-owner@vger.kernel.org Tue Aug 06 16:01:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6hov-0003fH-0j
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 16:01:05 +0200
+	id 1V6hpA-0003t2-VP
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 16:01:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755240Ab3HFOBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 10:01:01 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:62983 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755130Ab3HFOBA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 10:01:00 -0400
-Received: by mail-oa0-f50.google.com with SMTP id i4so771018oah.9
-        for <git@vger.kernel.org>; Tue, 06 Aug 2013 07:00:59 -0700 (PDT)
+	id S1755034Ab3HFOAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 10:00:39 -0400
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:38794 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754309Ab3HFOAh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 10:00:37 -0400
+Received: by mail-ob0-f181.google.com with SMTP id dn14so919295obc.12
+        for <git@vger.kernel.org>; Tue, 06 Aug 2013 07:00:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UBRNZySOBe1WKZ6Q0097OLILpkWy/CzZlRHzuixS6Yg=;
-        b=JjkL5xWYHEonwgWaVv6pyWlgWwCeNYBVVpzQV1mQaZVJcoup3GQhKQBLCTop2RCqBG
-         Sa2afjnOXvbSCcMS8PuIjPhO5Bu+jbSbzISNRj61R0YcyE9QZMiQ+xf0n2SQZchx1wEU
-         6Zadn0bhllXuDJpfgSobqMxlyVFcs9Bt32nwMKvtuPP82t8O1pqGYnjrL3hDpQ0DsayV
-         JbkKBHpLyiO5ipms9T4LVZ22n7ErsuiCv9p/QqRZvY7gDbsxGuUfg9jjWU4o9xAkyOdf
-         lkt0XOmo+QJju/DGNarmO9vs/tFiXPoanOV2ZqdLRvVvnMUaVTufVdXaUh40jP+GKpdv
-         lv/g==
-X-Received: by 10.60.38.164 with SMTP id h4mr1163001oek.22.1375797659705;
-        Tue, 06 Aug 2013 07:00:59 -0700 (PDT)
+        bh=+aA+oBlmqYWltF2odXfx0StVc1ldHl/efni/MxamLRI=;
+        b=WmLsY6JmSzILE8K195HOZG9c+NqqzoVC923wfOCAWyMNCsPUpc8JavJzXf7fB6d5yC
+         wNSuwZQ2ZvRmsfWmeXmH0c55IszBdVOw8Mvvt98oaBMInakkG8JRTecqqL2mrDjRgref
+         27csdbUoopc/5pM/usCDG1qB7f7JpfrvbmWgwF6zF8qDTR9io0ANFuapscYGn3+k7bZ9
+         70d/6NOHYt3ygAQVvcEfloMx0vd1DoaLvetBf/jqSoF4GtyFyIiemPu1bdgAdgYjo+kU
+         ZygpUnWKpP48525hH9nL9/fDvQ74rDb4+0yhn9+H4VSzQG6Fd9Wi8YPvmg5njUt/iqPq
+         lM6g==
+X-Received: by 10.60.144.8 with SMTP id si8mr1037958oeb.97.1375797637154;
+        Tue, 06 Aug 2013 07:00:37 -0700 (PDT)
 Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
-        by mx.google.com with ESMTPSA id z2sm1380175obi.3.2013.08.06.07.00.57
+        by mx.google.com with ESMTPSA id z2sm1380175obi.3.2013.08.06.07.00.34
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 06 Aug 2013 07:00:58 -0700 (PDT)
+        Tue, 06 Aug 2013 07:00:36 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4.rc1.409.gbd48715
 In-Reply-To: <1375797589-65308-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231751>
-
-Since inception, git-blame -L has been documented as accepting 1-based
-line numbers. When handed a line number less than 1, -L's behavior is
-undocumented and undefined; it's also nonsensical and should be
-diagnosed as an error. Do so.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231752>
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- line-range.c        |  5 ++++-
- t/annotate-tests.sh | 18 +++++++++---------
- 2 files changed, 13 insertions(+), 10 deletions(-)
+ t/annotate-tests.sh | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/line-range.c b/line-range.c
-index ede0c6c..de4e32f 100644
---- a/line-range.c
-+++ b/line-range.c
-@@ -54,8 +54,11 @@ static const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
- 	}
- 	num = strtol(spec, &term, 10);
- 	if (term != spec) {
--		if (ret)
-+		if (ret) {
-+			if (num <= 0)
-+				die("-L invalid line number: %ld", num);
- 			*ret = num;
-+		}
- 		return term;
- 	}
- 
 diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index 376b042..99caa42 100644
+index ce5b8ed..77083d9 100644
 --- a/t/annotate-tests.sh
 +++ b/t/annotate-tests.sh
-@@ -185,15 +185,15 @@ test_expect_success 'blame -L Y,X (undocumented)' '
- 	check_count -L6,3 B 1 B1 1 B2 1 D 1
+@@ -271,6 +271,38 @@ test_expect_success 'blame -L ,Y (Y > nlines)' '
+ 	test_must_fail $PROG -L,12345 file
  '
  
--test_expect_failure 'blame -L -X' '
-+test_expect_success 'blame -L -X' '
- 	test_must_fail $PROG -L-1 file
- '
- 
--test_expect_failure 'blame -L 0' '
-+test_expect_success 'blame -L 0' '
- 	test_must_fail $PROG -L0 file
- '
- 
--test_expect_failure 'blame -L ,0' '
-+test_expect_success 'blame -L ,0' '
- 	test_must_fail $PROG -L,0 file
- '
- 
-@@ -447,8 +447,8 @@ test_expect_success 'blame empty' '
- 	check_count -h HEAD^^ -f incremental
- '
- 
--test_expect_success 'blame -L 0 empty (undocumented)' '
--	check_count -h HEAD^^ -f incremental -L0
-+test_expect_success 'blame -L 0 empty' '
-+	test_must_fail $PROG -L0 incremental HEAD^^
- '
- 
- test_expect_success 'blame -L 1 empty' '
-@@ -463,8 +463,8 @@ test_expect_success 'blame half' '
- 	check_count -h HEAD^ -f incremental I 1
- '
- 
--test_expect_success 'blame -L 0 half (undocumented)' '
--	check_count -h HEAD^ -f incremental -L0 I 1
-+test_expect_success 'blame -L 0 half' '
-+	test_must_fail $PROG -L0 incremental HEAD^
- '
- 
- test_expect_success 'blame -L 1 half' '
-@@ -483,8 +483,8 @@ test_expect_success 'blame full' '
- 	check_count -f incremental I 1
- '
- 
--test_expect_success 'blame -L 0 full (undocumented)' '
--	check_count -f incremental -L0 I 1
-+test_expect_success 'blame -L 0 full' '
-+	test_must_fail $PROG -L0 incremental
- '
- 
- test_expect_success 'blame -L 1 full' '
++test_expect_success 'blame -L multiple (disjoint)' '
++	check_count -L2,3 -L6,7 A 1 B1 1 B2 1 "A U Thor" 1
++'
++
++test_expect_success 'blame -L multiple (disjoint: unordered)' '
++	check_count -L6,7 -L2,3 A 1 B1 1 B2 1 "A U Thor" 1
++'
++
++test_expect_success 'blame -L multiple (adjacent)' '
++	check_count -L2,3 -L4,5 A 1 B 1 B2 1 D 1
++'
++
++test_expect_success 'blame -L multiple (adjacent: unordered)' '
++	check_count -L4,5 -L2,3 A 1 B 1 B2 1 D 1
++'
++
++test_expect_success 'blame -L multiple (overlapping)' '
++	check_count -L2,4 -L3,5 A 1 B 1 B2 1 D 1
++'
++
++test_expect_success 'blame -L multiple (overlapping: unordered)' '
++	check_count -L3,5 -L2,4 A 1 B 1 B2 1 D 1
++'
++
++test_expect_success 'blame -L multiple (superset/subset)' '
++	check_count -L2,8 -L3,5 A 1 B 1 B1 1 B2 1 C 1 D 1 "A U Thor" 1
++'
++
++test_expect_success 'blame -L multiple (superset/subset: unordered)' '
++	check_count -L3,5 -L2,8 A 1 B 1 B1 1 B2 1 C 1 D 1 "A U Thor" 1
++'
++
+ test_expect_success 'setup -L :regex' '
+ 	tr Q "\\t" >hello.c <<-\EOF &&
+ 	int main(int argc, const char *argv[])
 -- 
 1.8.4.rc1.409.gbd48715
