@@ -1,463 +1,177 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v4 5/5] rm: delete .gitmodules entry of submodules removed
- from the work tree
-Date: Tue, 06 Aug 2013 21:15:25 +0200
-Message-ID: <52014B4D.3090602@web.de>
-References: <51F8187F.7040603@web.de> <51F81957.1000709@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] SubmittingPatches: clarify some details of the patch format
+Date: Tue, 06 Aug 2013 12:22:35 -0700
+Message-ID: <7vmwoufwuc.fsf@alter.siamese.dyndns.org>
+References: <201308061833.r76IXr6R026692@freeze.ariadne.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Fredrik Gustafsson <iveqy@iveqy.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 06 21:15:39 2013
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: git@vger.kernel.org
+To: worley@alum.mit.edu (Dale R. Worley)
+X-From: git-owner@vger.kernel.org Tue Aug 06 21:22:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6mjI-00077Q-QZ
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 21:15:37 +0200
+	id 1V6mqC-00036q-6J
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 21:22:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755608Ab3HFTP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 15:15:29 -0400
-Received: from mout.web.de ([212.227.15.4]:53039 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755578Ab3HFTP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 15:15:28 -0400
-Received: from [192.168.178.41] ([91.3.171.84]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0MFLB2-1VL8kD2mZA-00EL3w for <git@vger.kernel.org>;
- Tue, 06 Aug 2013 21:15:26 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <51F81957.1000709@web.de>
-X-Enigmail-Version: 1.5.2
-X-Provags-ID: V03:K0:uv0U7uEW2EutnB9PohR3bdqQ/SwgNIQUtk5ppd5PRoMl6EF2e2j
- hyEKcyHHm2dzL65js4xG7bvVdvgHMgxiFvnsECyPvlCODPs/mQYmHgTutnbCpZB5SfFXElo
- RP68ibL4tIv0P9o7EYXnkwJJVwPDB+xyoNNuLNQ9IfOBbFUEn5cHx6cfRS96+hFkR7mfIv4
- wdB63969767vTvUNgctgw==
+	id S1755536Ab3HFTWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 15:22:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44684 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753254Ab3HFTWj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 15:22:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19FBD36721;
+	Tue,  6 Aug 2013 19:22:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=izV/bdDlDL7FXT4bGGR7wL5ufP8=; b=nL4nGx
+	+mLjxZj2q/sEuaC/8jOhILiAJ0WHh4psSP8irUyxbvJsoEAe+T42F6cEwcMA4/tk
+	yREiFF67GYCD+sVCT+7wFheHeFZYq2OPeS+/Oqpt5Gi5O8L04Xjgq8xqPkUSpqOM
+	vpEUdVblbdiUgIpgrRgHgVSwC0L42KY+cJTmI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MIYS8/cgrr8KIs4BvfCGNXAahSkLMnpg
+	rpTycphkjsWmEQFhKKWeCxQuD6lUnz8TMXJNdTHHRzNNRPG9LJj9Fgf84YMo97Y2
+	IsJcDTlyLanLDPVKL9uKgNTMEmK8z9Do7D2KFVpQRAsbUZosVp1dLMHgbLHRdLtp
+	RpEpo+oDwTw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D6B63671F;
+	Tue,  6 Aug 2013 19:22:38 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 09A023671B;
+	Tue,  6 Aug 2013 19:22:36 +0000 (UTC)
+In-Reply-To: <201308061833.r76IXr6R026692@freeze.ariadne.com> (Dale
+	R. Worley's message of "Tue, 6 Aug 2013 14:20:28 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8D8378DE-FECD-11E2-8EA5-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231780>
 
-Currently using "git rm" on a submodule removes the submodule's work tree
-from that of the superproject and the gitlink from the index. But the
-submodule's section in .gitmodules is left untouched, which is a leftover
-of the now removed submodule and might irritate users (as opposed to the
-setting in .git/config, this must stay as a reminder that the user showed
-interest in this submodule so it will be repopulated later when an older
-commit is checked out).
+worley@alum.mit.edu (Dale R. Worley) writes:
 
-Let "git rm" help the user by not only removing the submodule from the
-work tree but by also removing the "submodule.<submodule name>" section
-from the .gitmodules file and stage both. This doesn't happen when the
-"--cached" option is used, as it would modify the work tree. This also
-silently does nothing when no .gitmodules file is found and only issues a
-warning when it doesn't have a section for this submodule. This is because
-the user might just use plain gitlinks without the .gitmodules file or has
-already removed the section by hand before issuing the "git rm" command
-(in which case the warning reminds him that rm would have done that for
-him). Only when .gitmodules is found and contains merge conflicts the rm
-command will fail and tell the user to resolve the conflict before trying
-again.
+> ---
+> This is a first draft of a patch that clarifies a number of points
+> about how patches should be formatted that have tripped me up.  I have
+> re-filled a few of the paragraphs, which makes it hard to see from the
+> diff what I've changed.  This listing shows the changed words between
+> { ... }:
+>
+>      { This first line should be a separate paragraph, that is, it should be
+>     followed by an empty line, which is then followed by the body of the
+>     commit message } .
 
-Also extend the man page to inform the user about this new feature. While
-at it promote the submodule sub-section to a chapter as it made not much
-sense under "REMOVING FILES THAT HAVE DISAPPEARED FROM THE FILESYSTEM".
+Correct; I tend to prefer phrasing that avoid "that is", though.
 
-In t7610 three uses of "git rm submod" had to be replaced with "git rm
---cached submod" because that test expects .gitmodules and the work tree
-to stay untouched. Also in t7400 the tests for the remaining settings in
-the .gitmodules file had to be changed to assert that these settings are
-missing.
+	the first line should be followed by an empty line to form a
+	separate paragraph on its own and give a summary of the change.
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+>      { At the end of the commit message should be a Signed-off-by line giving
+>     your name.  This can be added to the commit message automatically by
+>     giving "git commit" the "--signoff" option.  This line has legal
+>     implications, see "Sign your work" below } .
 
-This version fixes the missing strbuf_release() noticed by Frederik.
+OK.
 
+>     People on the Git mailing list need to be able to read and comment on
+>     the changes you are submitting.  It is important for a developer to be
+>     able to "quote" your changes, using standard e-mail tools, so that
+>     they may comment on specific portions of your code.  For this reason,
+>     all patches should be submitted "inline" { rather than as message
+>     attachments } .  If your log message (including your name on the
+>     Signed-off-by line) is not writable in ASCII, make sure that you send
+>     off { the } message in the correct encoding.
 
- Documentation/git-rm.txt   |  8 ++--
- builtin/rm.c               | 19 +++++++--
- submodule.c                | 33 ++++++++++++++++
- submodule.h                |  1 +
- t/t3600-rm.sh              | 98 +++++++++++++++++++++++++++++++++++++++++++---
- t/t7400-submodule-basic.sh | 14 ++-----
- t/t7610-mergetool.sh       |  6 +--
- 7 files changed, 154 insertions(+), 25 deletions(-)
+OK.
 
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index 1d876c2..9d731b4 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -134,14 +134,16 @@ use the following command:
- git diff --name-only --diff-filter=D -z | xargs -0 git rm --cached
- ----------------
+>     "git format-patch" command follows the best current practice to
+>     format the { patch for transmission as an e-mail message.  The files
+>     that it outputs are sample e-mail messages in "mh" format.  The
 
--Submodules
--~~~~~~~~~~
-+SUBMODULES
-+----------
- Only submodules using a gitfile (which means they were cloned
- with a Git version 1.7.8 or newer) will be removed from the work
- tree, as their repository lives inside the .git directory of the
- superproject. If a submodule (or one of those nested inside it)
- still uses a .git directory, `git rm` will fail - no matter if forced
--or not - to protect the submodule's history.
-+or not - to protect the submodule's history. If it exists the
-+submodule.<name> section in the linkgit:gitmodules[5] file will also
-+be removed and that file will be staged (unless --cached or -n are used).
+Not "mh", but "mbox".
 
- A submodule is considered up-to-date when the HEAD is the same as
- recorded in the index, no tracked files are modified and no untracked
-diff --git a/builtin/rm.c b/builtin/rm.c
-index df85f98..a9d45dd 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -283,6 +283,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	struct pathspec pathspec;
- 	char *seen;
+>     initial lines are sample From, To, Date, and Subject headers, which
+>     you will likely have to remove or revise, depending on how your MUA
+>     operates } .
 
-+	gitmodules_config();
- 	git_config(git_default_config, NULL);
+Correct.  They are designed to be "moved" to your MUA header fields
+(so they will disappear from the body but you do not have to type
+them to your MUA).
+>
+>     At the beginning of the patch should come your commit message ( { the
+>     first line in the Subject header, the remainder in the body of the
+>     message } ), ending with the Signed-off-by: lines, and a line that
+>     consists of three dashes, followed by the diffstat information and the
+>     patch itself.  If you are forwarding a patch from somebody else,
+>     optionally, at the beginning of the e-mail message just before the
+>     commit message starts, you can put a "From: " line to name that
+>     person.
 
- 	argc = parse_options(argc, argv, prefix, builtin_rm_options,
-@@ -324,7 +325,10 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 			continue;
- 		ALLOC_GROW(list.entry, list.nr + 1, list.alloc);
- 		list.entry[list.nr].name = ce->name;
--		list.entry[list.nr++].is_submodule = S_ISGITLINK(ce->ce_mode);
-+		list.entry[list.nr].is_submodule = S_ISGITLINK(ce->ce_mode);
-+		if (list.entry[list.nr++].is_submodule &&
-+		    !is_staging_gitmodules_ok())
-+			die (_("Please, stage your changes to .gitmodules or stash them to proceed"));
- 	}
+... followed by an empty line?
 
- 	if (pathspec.nr) {
-@@ -396,13 +400,15 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	 * in the middle)
- 	 */
- 	if (!index_only) {
--		int removed = 0;
-+		int removed = 0, gitmodules_modified = 0;
- 		for (i = 0; i < list.nr; i++) {
- 			const char *path = list.entry[i].name;
- 			if (list.entry[i].is_submodule) {
- 				if (is_empty_dir(path)) {
- 					if (!rmdir(path)) {
- 						removed = 1;
-+						if (!remove_path_from_gitmodules(path))
-+							gitmodules_modified = 1;
- 						continue;
- 					}
- 				} else {
-@@ -410,9 +416,14 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 					strbuf_addstr(&buf, path);
- 					if (!remove_dir_recursively(&buf, 0)) {
- 						removed = 1;
-+						if (!remove_path_from_gitmodules(path))
-+							gitmodules_modified = 1;
- 						strbuf_release(&buf);
- 						continue;
--					}
-+					} else if (!file_exists(path))
-+						/* Submodule was removed by user */
-+						if (!remove_path_from_gitmodules(path))
-+							gitmodules_modified = 1;
- 					strbuf_release(&buf);
- 					/* Fallthrough and let remove_path() fail. */
- 				}
-@@ -424,6 +435,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 			if (!removed)
- 				die_errno("git rm: '%s'", path);
- 		}
-+		if (gitmodules_modified)
-+			stage_updated_gitmodules();
- 	}
+>     You often want to add additional explanation about the patch,
+>     other than the commit message itself.  Place such "cover letter"
+>     material between the three-dash { line } and the diffstat. Git-notes
+>     can also be inserted using the `--notes` option.
 
- 	if (active_cache_changed) {
-diff --git a/submodule.c b/submodule.c
-index 1c2714f..35c745e 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -81,6 +81,39 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
- 	return 0;
- }
+OK.
 
-+/*
-+ * Try to remove the "submodule.<name>" section from .gitmodules where the given
-+ * path is configured. Return 0 only if a .gitmodules file was found, a section
-+ * with the correct path=<path> setting was found and we could remove it.
-+ */
-+int remove_path_from_gitmodules(const char *path)
-+{
-+	struct strbuf sect = STRBUF_INIT;
-+	struct string_list_item *path_option;
-+
-+	if (!file_exists(".gitmodules")) /* Do nothing without .gitmodules */
-+		return -1;
-+
-+	if (gitmodules_is_unmerged)
-+		die(_("Cannot change unmerged .gitmodules, resolve merge conflicts first"));
-+
-+	path_option = unsorted_string_list_lookup(&config_name_for_path, path);
-+	if (!path_option) {
-+		warning(_("Could not find section in .gitmodules where path=%s"), path);
-+		return -1;
-+	}
-+	strbuf_addstr(&sect, "submodule.");
-+	strbuf_addstr(&sect, path_option->util);
-+	if (git_config_rename_section_in_file(".gitmodules", sect.buf, NULL) < 0) {
-+		/* Maybe the user already did that, don't error out here */
-+		warning(_("Could not remove .gitmodules entry for %s"), path);
-+		strbuf_release(&sect);
-+		return -1;
-+	}
-+	strbuf_release(&sect);
-+	return 0;
-+}
-+
- void stage_updated_gitmodules(void)
- {
- 	struct strbuf buf = STRBUF_INIT;
-diff --git a/submodule.h b/submodule.h
-index e339891..7beec48 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -13,6 +13,7 @@ enum {
+>> From: Junio C Hamano <gitster@pobox.com>
+>> 
+>> I am not sure if SubmittingPatches is a good place, though.
+>> The document is a guidance for people who contribute to _this_
+>> project.
+>> 
+>> But the specialness of the first paragraph applies to any project
+>> that uses Git, so people other than those who contribute to this
+>> project should be aware of it.
+>
+> All of that is true.  But what can we do to ensure that someone who
+> submits a patch does so with the right format?  The special treatment
+> of the first line is not a requirement.  See, e.g., the git-commit
+> manual page:
+>
+>        Though not required, it’s a good idea to begin the commit message with
+>        a single short (less than 50 character) line summarizing the change,
+>        followed by a blank line and then a more thorough description. Tools
+>        that turn commits into email, for example, use the first line on the
+>        Subject: line and the rest of the commit in the body.
 
- int is_staging_gitmodules_ok(void);
- int update_path_in_gitmodules(const char *oldpath, const char *newpath);
-+int remove_path_from_gitmodules(const char *path);
- void stage_updated_gitmodules(void);
- void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- 		const char *path);
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 5c87b55..639cb70 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -263,6 +263,7 @@ test_expect_success 'rm removes subdirectories recursively' '
- '
+This is one of the thing I explained in the "Originally we literally
+used" background story in the previous message.  The paragraph's
+"use the first line" is no longer correct, afaik.
 
- cat >expect <<EOF
-+M  .gitmodules
- D  submod
- EOF
+We take the first paragraph and make it a logical single line if/as
+necessary, using RFC2822 header "folding" to put it on the "Subject:"
+line.
 
-@@ -270,6 +271,15 @@ cat >expect.modified <<EOF
-  M submod
- EOF
+This project requires you to have a short single-line paragraph as
+the first paragraph of the log message, and stating it in SubP
+document is good.
 
-+cat >expect.cached <<EOF
-+D  submod
-+EOF
-+
-+cat >expect.both_deleted<<EOF
-+D  .gitmodules
-+D  submod
-+EOF
-+
- test_expect_success 'rm removes empty submodules from work tree' '
- 	mkdir submod &&
- 	git update-index --add --cacheinfo 160000 $(git rev-parse HEAD) submod &&
-@@ -281,16 +291,20 @@ test_expect_success 'rm removes empty submodules from work tree' '
- 	git rm submod &&
- 	test ! -e submod &&
- 	git status -s -uno --ignore-submodules=none > actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	test_must_fail git config -f .gitmodules submodule.sub.url &&
-+	test_must_fail git config -f .gitmodules submodule.sub.path
- '
+> -People on the Git mailing list need to be able to read and
+> -comment on the changes you are submitting.  It is important for
+> -a developer to be able to "quote" your changes, using standard
+> -e-mail tools, so that they may comment on specific portions of
+> -your code.  For this reason, all patches should be submitted
+> -"inline".  If your log message (including your name on the
+> -Signed-off-by line) is not writable in ASCII, make sure that
+> -you send off a message in the correct encoding.
+> +People on the Git mailing list need to be able to read and comment on
+> +the changes you are submitting.  It is important for a developer to be
+> +able to "quote" your changes, using standard e-mail tools, so that
+> +they may comment on specific portions of your code.  For this reason,
+> +all patches should be submitted "inline" rather than as message
+> +attachments.  If your log message (including your name on the
+> +Signed-off-by line) is not writable in ASCII, make sure that you send
+> +off the message in the correct encoding.
 
--test_expect_success 'rm removes removed submodule from index' '
-+test_expect_success 'rm removes removed submodule from index and .gitmodules' '
- 	git reset --hard &&
- 	git submodule update &&
- 	rm -rf submod &&
- 	git rm submod &&
- 	git status -s -uno --ignore-submodules=none > actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	test_must_fail git config -f .gitmodules submodule.sub.url &&
-+	test_must_fail git config -f .gitmodules submodule.sub.path
- '
-
- test_expect_success 'rm removes work tree of unmodified submodules' '
-@@ -299,7 +313,9 @@ test_expect_success 'rm removes work tree of unmodified submodules' '
- 	git rm submod &&
- 	test ! -d submod &&
- 	git status -s -uno --ignore-submodules=none > actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	test_must_fail git config -f .gitmodules submodule.sub.url &&
-+	test_must_fail git config -f .gitmodules submodule.sub.path
- '
-
- test_expect_success 'rm removes a submodule with a trailing /' '
-@@ -333,6 +349,72 @@ test_expect_success 'rm of a populated submodule with different HEAD fails unles
- 	git rm -f submod &&
- 	test ! -d submod &&
- 	git status -s -uno --ignore-submodules=none > actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git config -f .gitmodules submodule.sub.url &&
-+	test_must_fail git config -f .gitmodules submodule.sub.path
-+'
-+
-+test_expect_success 'rm --cached leaves work tree of populated submodules and .gitmodules alone' '
-+	git reset --hard &&
-+	git submodule update &&
-+	git rm --cached submod &&
-+	test -d submod &&
-+	test -f submod/.git &&
-+	git status -s -uno >actual &&
-+	test_cmp expect.cached actual &&
-+	git config -f .gitmodules submodule.sub.url &&
-+	git config -f .gitmodules submodule.sub.path
-+'
-+
-+test_expect_success 'rm --dry-run does not touch the submodule or .gitmodules' '
-+	git reset --hard &&
-+	git submodule update &&
-+	git rm -n submod &&
-+	test -f submod/.git &&
-+	git diff-index --exit-code HEAD
-+'
-+
-+test_expect_success 'rm does not complain when no .gitmodules file is found' '
-+	git reset --hard &&
-+	git submodule update &&
-+	git rm .gitmodules &&
-+	git rm submod >actual 2>actual.err &&
-+	! test -s actual.err &&
-+	! test -d submod &&
-+	! test -f submod/.git &&
-+	git status -s -uno >actual &&
-+	test_cmp expect.both_deleted actual
-+'
-+
-+test_expect_success 'rm will error out on a modified .gitmodules file unless staged' '
-+	git reset --hard &&
-+	git submodule update &&
-+	git config -f .gitmodules foo.bar true &&
-+	test_must_fail git rm submod >actual 2>actual.err &&
-+	test -s actual.err &&
-+	test -d submod &&
-+	test -f submod/.git &&
-+	git diff-files --quiet -- submod &&
-+	git add .gitmodules &&
-+	git rm submod >actual 2>actual.err &&
-+	! test -s actual.err &&
-+	! test -d submod &&
-+	! test -f submod/.git &&
-+	git status -s -uno >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'rm issues a warning when section is not found in .gitmodules' '
-+	git reset --hard &&
-+	git submodule update &&
-+	git config -f .gitmodules --remove-section submodule.sub &&
-+	git add .gitmodules &&
-+	echo "warning: Could not find section in .gitmodules where path=submod" >expect.err &&
-+	git rm submod >actual 2>actual.err &&
-+	test_i18ncmp expect.err actual.err &&
-+	! test -d submod &&
-+	! test -f submod/.git &&
-+	git status -s -uno >actual &&
- 	test_cmp expect actual
- '
-
-@@ -427,7 +509,9 @@ test_expect_success 'rm of a conflicted populated submodule with different HEAD
- 	git rm -f submod &&
- 	test ! -d submod &&
- 	git status -s -uno --ignore-submodules=none > actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	test_must_fail git config -f .gitmodules submodule.sub.url &&
-+	test_must_fail git config -f .gitmodules submodule.sub.path
- '
-
- test_expect_success 'rm of a conflicted populated submodule with modifications fails unless forced' '
-@@ -446,7 +530,9 @@ test_expect_success 'rm of a conflicted populated submodule with modifications f
- 	git rm -f submod &&
- 	test ! -d submod &&
- 	git status -s -uno --ignore-submodules=none > actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	test_must_fail git config -f .gitmodules submodule.sub.url &&
-+	test_must_fail git config -f .gitmodules submodule.sub.path
- '
-
- test_expect_success 'rm of a conflicted populated submodule with untracked files fails unless forced' '
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 5ee97b0..88293e6 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -773,13 +773,11 @@ test_expect_success 'submodule add --name allows to replace a submodule with ano
- 			test_cmp expect .git
- 		) &&
- 		echo "repo" >expect &&
--		git config -f .gitmodules submodule.repo.path >actual &&
--		test_cmp expect actual &&
-+		test_must_fail git config -f .gitmodules submodule.repo.path &&
- 		git config -f .gitmodules submodule.repo_new.path >actual &&
- 		test_cmp expect actual&&
- 		echo "$submodurl/repo" >expect &&
--		git config -f .gitmodules submodule.repo.url >actual &&
--		test_cmp expect actual &&
-+		test_must_fail git config -f .gitmodules submodule.repo.url &&
- 		echo "$submodurl/bare.git" >expect &&
- 		git config -f .gitmodules submodule.repo_new.url >actual &&
- 		test_cmp expect actual &&
-@@ -799,12 +797,8 @@ test_expect_success 'submodule add with an existing name fails unless forced' '
- 		git rm repo &&
- 		test_must_fail git submodule add -q --name repo_new "$submodurl/repo.git" repo &&
- 		test ! -d repo &&
--		echo "repo" >expect &&
--		git config -f .gitmodules submodule.repo_new.path >actual &&
--		test_cmp expect actual&&
--		echo "$submodurl/bare.git" >expect &&
--		git config -f .gitmodules submodule.repo_new.url >actual &&
--		test_cmp expect actual &&
-+		test_must_fail git config -f .gitmodules submodule.repo_new.path &&
-+		test_must_fail git config -f .gitmodules submodule.repo_new.url &&
- 		echo "$submodurl/bare.git" >expect &&
- 		git config submodule.repo_new.url >actual &&
- 		test_cmp expect actual &&
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index d526b1d..05d9db0 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -253,7 +253,7 @@ test_expect_success 'deleted vs modified submodule' '
-     git checkout -b test6 branch1 &&
-     git submodule update -N &&
-     mv submod submod-movedaside &&
--    git rm submod &&
-+    git rm --cached submod &&
-     git commit -m "Submodule deleted from branch" &&
-     git checkout -b test6.a test6 &&
-     test_must_fail git merge master &&
-@@ -322,7 +322,7 @@ test_expect_success 'file vs modified submodule' '
-     git checkout -b test7 branch1 &&
-     git submodule update -N &&
-     mv submod submod-movedaside &&
--    git rm submod &&
-+    git rm --cached submod &&
-     echo not a submodule >submod &&
-     git add submod &&
-     git commit -m "Submodule path becomes file" &&
-@@ -453,7 +453,7 @@ test_expect_success 'submodule in subdirectory' '
- test_expect_success 'directory vs modified submodule' '
-     git checkout -b test11 branch1 &&
-     mv submod submod-movedaside &&
--    git rm submod &&
-+    git rm --cached submod &&
-     mkdir submod &&
-     echo not a submodule >submod/file16 &&
-     git add submod/file16 &&
--- 
-1.8.4.rc0.199.g3f237fc
+Rewrapping the existing text was unwarranted burden to reviewers.
+Please learn to avoid it in your future submissions.
