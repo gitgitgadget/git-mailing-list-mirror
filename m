@@ -1,103 +1,77 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH] branch, commit, name-rev: ease up boolean conditions
-Date: Tue,  6 Aug 2013 22:18:52 +0200
-Message-ID: <1375820332-30816-1-git-send-email-stefanbeller@googlemail.com>
-References: <52015A17.6040204@googlemail.com>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: sunshine@sunshineco.com, git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Aug 06 22:19:00 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH revised] git_mkstemps: add test suite test
+Date: Tue, 06 Aug 2013 13:50:11 -0700
+Message-ID: <7vd2pqfssc.fsf@alter.siamese.dyndns.org>
+References: <201308061805.r76I51If026086@freeze.ariadne.com>
+	<7vsiymfzuh.fsf@alter.siamese.dyndns.org>
+	<201308061902.r76J2W33027399@freeze.ariadne.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Thomas Rast <trast@inf.ethz.ch>
+To: worley@alum.mit.edu (Dale R. Worley)
+X-From: git-owner@vger.kernel.org Tue Aug 06 22:50:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6nib-00050k-36
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 22:18:57 +0200
+	id 1V6oD0-0007YM-Fv
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 22:50:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756407Ab3HFUSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 16:18:53 -0400
-Received: from mail-ee0-f42.google.com ([74.125.83.42]:42989 "EHLO
-	mail-ee0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756366Ab3HFUSw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 16:18:52 -0400
-Received: by mail-ee0-f42.google.com with SMTP id b45so432032eek.15
-        for <git@vger.kernel.org>; Tue, 06 Aug 2013 13:18:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4iNwYL+8oE0UkIbqLhmJqBI5pgMnbmQjG02j5/m/MZA=;
-        b=DI421Kaxu6FLExGYjkG89g3oLJG5+fKq+lgVWgN2SG2Q1nNfXEOKC7exJD1IDdzfz4
-         1gn/dgN8E+/QZDyVawj4VjdPz4uokB0kb1OrDxA46RK4BwMc8xOA2IlFkkdDTypf2Ewj
-         bfKo936eaSpw2mqfqgORfWxtrBpl94mMJlfawXT+B0yzqOvQ0xmI4Z4a7YzOOboTTvyJ
-         wADd4h7/6VuSNYGz5hhu2OpMVw/t29idSlhIRT9bZwG4TeU4495/FT1BfUIb2iO0GNQi
-         OJ2WyCGrusu2IQ46ci/7F+cDkWKQLrFqqtN8bZzWJlvBCOdwQ7GcJMshFHax22aCajlM
-         EdyQ==
-X-Received: by 10.15.75.73 with SMTP id k49mr2698035eey.36.1375820331649;
-        Tue, 06 Aug 2013 13:18:51 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id a1sm4521390eem.1.2013.08.06.13.18.50
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 06 Aug 2013 13:18:51 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc0.16.g7fca822.dirty
-In-Reply-To: <52015A17.6040204@googlemail.com>
+	id S1755955Ab3HFUuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 16:50:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55552 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754720Ab3HFUuQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 16:50:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CAFA36D2E;
+	Tue,  6 Aug 2013 20:50:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7z12OG1/Eg3dWHJ8wMbVBlnNV08=; b=McwgRo
+	k9QW3jEks0TsQ4kMowSiyOlLfpQAOfG9z1x+2SU+85+sHju5fsdN0WK9y2/GxWvp
+	kq5mZ3Lh+buZQiK8oGQTdTXKTLw892moMcwug3lFuaoaqy8SQAWb2OBQtk0MVvsI
+	EmO4Msdb7DOfc5Puwe0t1829rl/BZIzsFuOY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ff3jK02g1vwWBx5ziKSp3MCdqmIg6yQh
+	J9UWWyfm3ZoNvGw/1y7bS0S6GAwy1GVMyeMaLK4TezXmDVvuSXx0k8XoCiwlvt7a
+	WC4968t5L4aipCazH69gMxtxLraxDLFUdh1lDb+aC0Y4bYGRu9IoVerX3hy3bqTH
+	0cul111KjHo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80F7136D2C;
+	Tue,  6 Aug 2013 20:50:13 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD68936D2B;
+	Tue,  6 Aug 2013 20:50:12 +0000 (UTC)
+In-Reply-To: <201308061902.r76J2W33027399@freeze.ariadne.com> (Dale
+	R. Worley's message of "Tue, 6 Aug 2013 15:02:32 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CA41376E-FED9-11E2-8F13-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231785>
 
-Now that the variables are set by OPT_BOOL, which makes sure
-to have the values being 0 or 1 after parsing, we do not need
-the double negation to map any other value to 1 for integer
-variables.
+worley@alum.mit.edu (Dale R. Worley) writes:
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
----
- builtin/branch.c   | 3 ++-
- builtin/commit.c   | 2 +-
- builtin/name-rev.c | 2 +-
- 3 files changed, 4 insertions(+), 3 deletions(-)
+>>     git commit --allow-empty -m message <&-
+>
+> Though as of [fb56570] "Sync with maint to grab trivial doc fixes",
+> that test doesn't fail for me if I revert to
+>
+> 		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, mode);
+> 		if (fd > 0)
+> 			return fd;
+>
+> I haven't been watching the code changes carefully; has there been a
+> fix that is expected to cause that?
+>
+> Dale
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 4daed0b..0dca694 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -872,7 +872,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (with_commit || merge_filter != NO_FILTER)
- 		list = 1;
- 
--	if (!!delete + !!rename + !!force_create + !!list + !!new_upstream + !!unset_upstream > 1)
-+	if (force_create + list + unset_upstream +
-+	    !!delete + !!rename + !!new_upstream > 1)
- 		usage_with_options(builtin_branch_usage, options);
- 
- 	if (abbrev == -1)
-diff --git a/builtin/commit.c b/builtin/commit.c
-index c20426b..b0f86c8 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1072,7 +1072,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	if (patch_interactive)
- 		interactive = 1;
- 
--	if (!!also + !!only + !!all + !!interactive > 1)
-+	if (also + only + all + interactive > 1)
- 		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
- 	if (argc == 0 && (also || (only && !amend)))
- 		die(_("No paths with --include/--only does not make sense."));
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index a908a34..20fcf8c 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -331,7 +331,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_default_config, NULL);
- 	argc = parse_options(argc, argv, prefix, opts, name_rev_usage, 0);
--	if (!!all + !!transform_stdin + !!argc > 1) {
-+	if (all + transform_stdin + !!argc > 1) {
- 		error("Specify either a list, or --all, not both!");
- 		usage_with_options(name_rev_usage, opts);
- 	}
--- 
-1.8.4.rc0.16.g7fca822.dirty
+That is because a11c3964 (git: ensure 0/1/2 are open in main(),
+2013-07-16) happened in the meantime, I think.
