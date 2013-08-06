@@ -1,83 +1,262 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] gc: reject if another gc is running, unless --force is given
-Date: Mon, 05 Aug 2013 23:43:29 -0700
-Message-ID: <7vwqnzgvzi.fsf@alter.siamese.dyndns.org>
-References: <1375510890-4728-1-git-send-email-pclouds@gmail.com>
-	<1375712354-13171-1-git-send-email-pclouds@gmail.com>
-	<7vsiyoj932.fsf@alter.siamese.dyndns.org>
-	<CALkWK0kZ=5TguAh9krAzFNuF0_sTRxcQKuZMnuQG7FQU0dJe=g@mail.gmail.com>
+From: kazuki saitoh <ksaitoh560@gmail.com>
+Subject: [PATCH v2] git-p4: Ask "p4" to interpret View setting
+Date: Tue, 6 Aug 2013 15:45:29 +0900
+Message-ID: <CACGba4zdA=3tBE9UR=i9P9kNAL1HUc3UwSHbYeq4s9fwaN4=Mw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 06 08:43:57 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 06 08:45:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6azt-00031I-8h
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 08:43:57 +0200
+	id 1V6b1V-0003tr-38
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 08:45:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755431Ab3HFGnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 02:43:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62346 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755127Ab3HFGnd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 02:43:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5248A3244B;
-	Tue,  6 Aug 2013 06:43:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PJxb6cBu1glHGZvboZHdNIZKk2s=; b=Ql5qJx
-	Zlprn9xIK5lUqlbyc2YKMPee2m9APxnjIxmp7GtTrUzB9KBZxOoKDC00ANDEc6rG
-	ZnUYR+uQwRvqVHEQiCfd1sWb2HmBaJLxLWrIyNlpup+jy6/OD7IATLa7Ua9IJI7B
-	aR/yYJg9v5S/9k4ufhyHGGJ4yXocNmxwehAQ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JmRgLRg63cJBt72nhhLXhyHLq3qRJ0QN
-	S1nYUWceZ4eroSxLosbCs5CtMW+GxOJGAapGxAeU8M3cnxu3+Xl0wGn1BSrExCf7
-	P0lG7koWUN20lq7wlrknS/BeYb/340MOcizsq9el9+GfEx1uokTP0buwdreSg2hG
-	IuGeLut8iSs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48A733244A;
-	Tue,  6 Aug 2013 06:43:32 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3CA5D32441;
-	Tue,  6 Aug 2013 06:43:31 +0000 (UTC)
-In-Reply-To: <CALkWK0kZ=5TguAh9krAzFNuF0_sTRxcQKuZMnuQG7FQU0dJe=g@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Tue, 6 Aug 2013 00:07:43 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 821B5D64-FE63-11E2-91C0-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753940Ab3HFGpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 02:45:33 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:48649 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752057Ab3HFGpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 02:45:32 -0400
+Received: by mail-lb0-f181.google.com with SMTP id o10so187327lbi.26
+        for <git@vger.kernel.org>; Mon, 05 Aug 2013 23:45:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=O5p6Ats73yDCkQcKCeGZTRcL6vb4JroeWJhoOlgI5/M=;
+        b=rIp9qvYn9W6fuDpj2wZ0mPALBPErl0Gv+6h6QgdFiNf3BjeoVmuQodDPaR21rZDoeq
+         CjRNt7OYSqrd3oTCFJSAs7VS6atdi7G/kaRb6Sph1UmQek+mZJt1Pfrs0CNO+QNaBH3U
+         6g6nEsND860za5uczSPAUC86NAsSHlOqXKrt12AjP6ECJ2dPfwzTQc8Y1MwrYfrVwWQn
+         6lDKErWzImZe1mE/SBnz8KUpzC1dhpcH7Sa8DKmthtSuywn8JzgSvg3UYbCGhY6OYXgz
+         ChArarPqyc+wD7sCnRAujpYMD3GDPXqxEXAuatTtXVm/FQhJfkBWDszc56tgARa/VRv8
+         ovIg==
+X-Received: by 10.112.136.37 with SMTP id px5mr553313lbb.16.1375771530066;
+ Mon, 05 Aug 2013 23:45:30 -0700 (PDT)
+Received: by 10.114.176.232 with HTTP; Mon, 5 Aug 2013 23:45:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231727>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+In Perforce, View setting of p4 client can describe
+  -//depot/project/files/*.xls //client/project/files/*.xls
+to exclude Excel files.
+But "git p4 --use-client-spec" cannot support '*'.
 
-> Junio C Hamano wrote:
->> [...]
->
-> The other comments mostly make sense.
->
->> After reading what the whole function does, I think the purpose of
->> this function is to take gc-lock (with optionally force).  Perhaps a
->> name along the lines of "lock_gc", "gc_lock", "lock_repo_for_gc",
->> would be more appropriate.
->
-> The whole point of this exercise is to _not_ lock up the repo during
-> gc,...
+In git-p4.py, "map_in_client" method analyzes View setting and return
+client file path.
+So I modify the method to just ask p4.
 
-I do not think it is a misnomer to call the entity that locks other
-instances of gc's "a lock on the repository for gc".  Nothing in
-Duy's code suggests any other commands paying attention to this
-mechanism and stalling, and I think my comments were clear enough
-that I was not suggesting such a change.
 
-So I am not sure what you are complaining.
+> Let me play with this for a bit.  I wonder about the performance
+> aspects of doing a "p4 fstat" for every file.  Would it be
+> possible to do one or a few batch queries higher up somewhere?
+To reduce p4 access, it cache result of asking "client path".
+And addition, "fstat" depends on sync status, so modify to use "p4
+where" instead of "fstat".
+
+
+
+Signed-off-by: KazukiSaitoh <ksaitoh560@gmail.com>
+---
+ git-p4.py                     | 53 ++++++-----------------------------
+ t/lib-git-p4.sh               |  1 +
+ t/t9807-git-p4-submit.sh      |  2 +-
+ t/t9809-git-p4-client-view.sh | 65 +++++++++++++++++++++++++++++++++++--------
+ 4 files changed, 64 insertions(+), 57 deletions(-)
+
+diff --git a/git-p4.py b/git-p4.py
+index 31e71ff..8ec8eb4 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1819,15 +1819,6 @@ class View(object):
+                variables."""
+
+             self.ends_triple_dot = False
+-            # There are three wildcards allowed in p4 views
+-            # (see "p4 help views").  This code knows how to
+-            # handle "..." (only at the end), but cannot deal with
+-            # "%%n" or "*".  Only check the depot_side, as p4 should
+-            # validate that the client_side matches too.
+-            if re.search(r'%%[1-9]', self.path):
+-                die("Can't handle %%n wildcards in view: %s" % self.path)
+-            if self.path.find("*") >= 0:
+-                die("Can't handle * wildcards in view: %s" % self.path)
+             triple_dot_index = self.path.find("...")
+             if triple_dot_index >= 0:
+                 if triple_dot_index != len(self.path) - 3:
+@@ -1903,6 +1894,7 @@ class View(object):
+     #
+     def __init__(self):
+         self.mappings = []
++        self.client_spec_path_cache = {}  # Caching result of p4
+query, use for "--use-client-spec".
+
+     def append(self, view_line):
+         """Parse a view line, splitting it into depot and client
+@@ -1965,44 +1957,17 @@ class View(object):
+            depot file should live.  Returns "" if the file should
+            not be mapped in the client."""
+
+-        paths_filled = []
+-        client_path = ""
+-
+-        # look at later entries first
+-        for m in self.mappings[::-1]:
+-
+-            # see where will this path end up in the client
+-            p = m.map_depot_to_client(depot_path)
+-
+-            if p == "":
+-                # Depot path does not belong in client.  Must remember
+-                # this, as previous items should not cause files to
+-                # exist in this path either.  Remember that the list is
+-                # being walked from the end, which has higher precedence.
+-                # Overlap mappings do not exclude previous mappings.
+-                if not m.overlay:
+-                    paths_filled.append(m.client_side)
++        if self.client_spec_path_cache.has_key(depot_path):
++            return self.client_spec_path_cache[depot_path]
+
+-            else:
+-                # This mapping matched; no need to search any further.
+-                # But, the mapping could be rejected if the client path
+-                # has already been claimed by an earlier mapping (i.e.
+-                # one later in the list, which we are walking backwards).
+-                already_mapped_in_client = False
+-                for f in paths_filled:
+-                    # this is View.Path.match
+-                    if f.match(p):
+-                        already_mapped_in_client = True
+-                        break
+-                if not already_mapped_in_client:
+-                    # Include this file, unless it is from a line that
+-                    # explicitly said to exclude it.
+-                    if not m.exclude:
+-                        client_path = p
+-
+-                # a match, even if rejected, always stops the search
++        client_path = ""
++        where_result = p4CmdList(['where', depot_path])
++        for res in where_result:
++            if res["code"] != "error" and not res.has_key("unmap"):
++                client_path = res["path"].replace(getClientRoot()+"/", "")
+                 break
+
++        self.client_spec_path_cache[depot_path] = client_path
+         return client_path
+
+ class P4Sync(Command, P4UserMap):
+diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+index 2098b9b..0d631dc 100644
+--- a/t/lib-git-p4.sh
++++ b/t/lib-git-p4.sh
+@@ -48,6 +48,7 @@ P4DPORT=$((10669 + ($testid - $git_p4_test_start)))
+ P4PORT=localhost:$P4DPORT
+ P4CLIENT=client
+ P4EDITOR=:
++P4CHARSET=""
+ export P4PORT P4CLIENT P4EDITOR
+
+ db="$TRASH_DIRECTORY/db"
+diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
+index 1fb7bc7..4caf36e 100755
+--- a/t/t9807-git-p4-submit.sh
++++ b/t/t9807-git-p4-submit.sh
+@@ -17,7 +17,7 @@ test_expect_success 'init depot' '
+  )
+ '
+
+-test_expect_failure 'is_cli_file_writeable function' '
++test_expect_success 'is_cli_file_writeable function' '
+  (
+  cd "$cli" &&
+  echo a >a &&
+diff --git a/t/t9809-git-p4-client-view.sh b/t/t9809-git-p4-client-view.sh
+index 77f6349..160fd9a 100755
+--- a/t/t9809-git-p4-client-view.sh
++++ b/t/t9809-git-p4-client-view.sh
+@@ -75,18 +75,6 @@ test_expect_success 'init depot' '
+  )
+ '
+
+-# double % for printf
+-test_expect_success 'unsupported view wildcard %%n' '
+- client_view "//depot/%%%%1/sub/... //client/sub/%%%%1/..." &&
+- test_when_finished cleanup_git &&
+- test_must_fail git p4 clone --use-client-spec --dest="$git" //depot
+-'
+-
+-test_expect_success 'unsupported view wildcard *' '
+- client_view "//depot/*/bar/... //client/*/bar/..." &&
+- test_when_finished cleanup_git &&
+- test_must_fail git p4 clone --use-client-spec --dest="$git" //depot
+-'
+
+ test_expect_success 'wildcard ... only supported at end of spec 1' '
+  client_view "//depot/.../file11 //client/.../file11" &&
+@@ -836,6 +824,59 @@ test_expect_success 'quotes on both sides' '
+  git_verify "cdir 1/file11" "cdir 1/file12"
+ '
+
++#
++# //depot
++#   - dir1
++#     - file11
++#     - file12
++#     - noneed_file11.junk
++#     - noneed_file12.junk
++#   - dir2
++#     - file21
++#     - file22
++#     - noneed_file21.junk
++#     - noneed_file22.junk
++#
++test_expect_success 'wildcard * setup' '
++ client_view "//depot/... //client/..." &&
++ (
++ p4 sync &&
++ cd "$cli" &&
++ rm files &&
++ p4 delete "//depot/..." &&
++ p4 submit -d "delete all files" &&
++ init_depot &&
++
++ cd "$cli" &&
++ p4 sync &&
++
++ echo dir1/noneed_file11.junk >dir1/noneed_file11.junk &&
++ p4 add dir1/noneed_file11.junk &&
++ p4 submit -d "dir1/noneed_file11.junk" &&
++
++ echo dir1/noneed_file12.junk >dir1/noneed_file12.junk &&
++ p4 add dir1/noneed_file12.junk &&
++ p4 submit -d "dir1/noneed_file12.junk" &&
++
++ echo dir2/noneed_file21.junk >dir2/noneed_file21.junk &&
++ p4 add dir2/noneed_file21.junk &&
++ p4 submit -d "dir2/noneed_file21.junk" &&
++
++ echo dir2/noneed_file22.junk >dir2/noneed_file22.junk &&
++ p4 add dir2/noneed_file22.junk &&
++ p4 submit -d "dir2/noneed_file22.junk"
++ )
++'
++test_expect_success 'view wildcard *' '
++ client_view "//depot/... //client/..." \
++ "-//depot/dir1/*.junk //client/dir1/*.junk" \
++ "-//depot/dir2/*.junk //client/dir2/*.junk" &&
++ files="dir1/file11 dir1/file12 dir2/file21 dir2/file22" &&
++ client_verify $files &&
++ git p4 clone --use-client-spec --dest="$git" //depot &&
++ git_verify $files
++'
++
+ test_expect_success 'kill p4d' '
+  kill_p4d
+ '
+-- 
+1.8.4-rc1
