@@ -1,111 +1,81 @@
-From: Dave Borowitz <dborowitz@google.com>
-Subject: Re: [PATCH 3/3] t5551: Remove header from curl cookie file
-Date: Mon, 5 Aug 2013 17:29:03 -0700
-Message-ID: <CAD0k6qS7_W6iG5zCOLiEtxdMV3ujAApgDykM_fnL0qiROoUv0A@mail.gmail.com>
-References: <1375718364-13824-1-git-send-email-brian@gernhardtsoftware.com> <1375718364-13824-4-git-send-email-brian@gernhardtsoftware.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [BUG?] gc and impatience
+Date: Tue, 6 Aug 2013 07:44:00 +0530
+Message-ID: <CALkWK0nj+NS-OzT6faaNpgA6iQgLaCSX1=fohAnzEWt9BGzFYw@mail.gmail.com>
+References: <CALkWK0k2B5OW9zMrw0jBDDWpufojYDJybXa7jCBdzftNUc7mxA@mail.gmail.com>
+ <CACsJy8DRo9Akoydwn9-EPOSyJiPhqAf1=HncYjHvXZwS4S_d7A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Tue Aug 06 02:29:47 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 06 04:14:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6V9m-0001kq-LP
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 02:29:47 +0200
+	id 1V6WnO-0001aW-AL
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Aug 2013 04:14:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755835Ab3HFA30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Aug 2013 20:29:26 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:65524 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755337Ab3HFA3Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Aug 2013 20:29:25 -0400
-Received: by mail-la0-f52.google.com with SMTP id fq13so2560145lab.11
-        for <git@vger.kernel.org>; Mon, 05 Aug 2013 17:29:24 -0700 (PDT)
+	id S1752728Ab3HFCOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Aug 2013 22:14:42 -0400
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:33538 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752382Ab3HFCOl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Aug 2013 22:14:41 -0400
+Received: by mail-oa0-f44.google.com with SMTP id l20so8102814oag.3
+        for <git@vger.kernel.org>; Mon, 05 Aug 2013 19:14:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=yqQuyZ30QQz9hY9cf+BNkDo69AODRGuBKD0t90FCQR0=;
-        b=L0XdrnXhBtgUhsgHCxsRbkdZ+ZuSPNjFyGGahfMHhDa/oPl72Y55u0DXh4vCIn1Qwc
-         MV81Fvw/p2HDbN4W+DfJoFeL/IFTR/e6Tx1FOTHW7QrIA0jKL9Ow2x2RxP95vHfcnowj
-         fbQJelYq4n4i5sxCclOnvyzH85gZDncSCNWsUBxNZwlUTK1tdIjt41g5G7o3W/dGBlI4
-         WOHjQfjNGxdYpk+/z4fKYcSt+Xu/UoFZDDOzAgrYLbYGwlKyPCnB0v9iCdXO5DF4Q8ko
-         Ow/iyXEt+DOXUhSwcNQyh2AeQqfKzbsbF4FssVUxjWBi6cFGuaZQqnDlQBjopoTLiXAd
-         ZiYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=yqQuyZ30QQz9hY9cf+BNkDo69AODRGuBKD0t90FCQR0=;
-        b=jfhzriq8uhhBG1gfmwCJEQUOoIwNZKMX3Jq+VCLGLdGBzfzpCGf7netS2+y1hVA3QM
-         N9blCEHrhD1aGawpKlEgtqGzlFtH1TzCCnEVLnHXbPjY1LArV8dEepI2iyU1teDRmHdb
-         Km/5651TJ8LOq06YipzrRgG/IR7/ODqyeW5Il8hIMAIvOCgOldzfgZlbkT22MQIwCINQ
-         8qIsYJVWaVfxdskgsO9FSetclAxkhexVTdXg1JPa+N5IiiiqPvZwAGlrE567Wmid15Sl
-         ibTpbwA2P9X6P2bD1CxuUhi9W01/b38W6QWiV7Ya/soZEqYRVdhJp31WPQXzoP56anev
-         yuuw==
-X-Gm-Message-State: ALoCoQl8Q8v47vOMKG1IWTu5iIAQ2d/fu6QVTgfxt23XR5wVHzXLwDU8IIOLYNZBhveaGGiGuI4xcEa1aUU9ROJv5VzyH2G2mw4rCxS8uUq6PWSmvsZxB5IRLrkHgX83yMvBUDM4hq8HhEyNhZBdcSmFg84mECJJwcBEt+NoXxNPV2J5VJuZtfmyI9KlMDBYBmtUxfU2NhtR
-X-Received: by 10.112.6.98 with SMTP id z2mr84533lbz.2.1375748963736; Mon, 05
- Aug 2013 17:29:23 -0700 (PDT)
-Received: by 10.112.211.199 with HTTP; Mon, 5 Aug 2013 17:29:03 -0700 (PDT)
-In-Reply-To: <1375718364-13824-4-git-send-email-brian@gernhardtsoftware.com>
+        bh=INJpXopfQlYgVz/GwEgp9HtT2TMH/8v6BB0z33RaWmc=;
+        b=E8elHf+UgrdhoZk5Ny5X2HCIcF8+NYDws+l14EhkjFdd1bd6q9zjoWbieuIjLf3NvK
+         4M5C6d/xlW0g3bV9jOpV36nNttYTTrZCX2RE+cbP/TnH3WCmkfVBDe0YNuvzP2kJmjjj
+         rxTURS+8LAyoKszAa2RCNBLYY7WCPm/IqYwVKkr6b04oXrMVukvOHur3Hy32aeV185Zz
+         iHB7n090a5vc/cLxPFxD5c09FK7K4Su3b27UPmApx8nu0FJVCzQG4N1D8HCGobiH8PHV
+         aJ6psWw5fZftbvjEBC8vv0hwC40S4lS+M1sNiZ6J65dMN9z/Wudz7luXrc1yydrJ2soq
+         6Jig==
+X-Received: by 10.50.134.162 with SMTP id pl2mr47260igb.55.1375755280867; Mon,
+ 05 Aug 2013 19:14:40 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Mon, 5 Aug 2013 19:14:00 -0700 (PDT)
+In-Reply-To: <CACsJy8DRo9Akoydwn9-EPOSyJiPhqAf1=HncYjHvXZwS4S_d7A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231710>
 
-On Mon, Aug 5, 2013 at 8:59 AM, Brian Gernhardt
-<brian@gernhardtsoftware.com> wrote:
->
-> The URL included in the header appears to vary from curl version to
-> curl version.  Since we only care about the final few lines, only test
-> them.  However, make sure the blank line after the header is still
-> included to make sure there are no extra cookie lines.
->
-> Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
-> ---
->
->  I suppose a sed invocation to strip out the URL or comments might be better,
->  but this seemed simpler.
->
->  t/t5551-http-fetch.sh | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
->
-> diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
-> index 287d22b..8196af1 100755
-> --- a/t/t5551-http-fetch.sh
-> +++ b/t/t5551-http-fetch.sh
-> @@ -191,9 +191,6 @@ cat >cookies.txt <<EOF
->  127.0.0.1      FALSE   /smart_cookies/ FALSE   0       othername       othervalue
->  EOF
->  cat >expect_cookies.txt <<EOF
-> -# Netscape HTTP Cookie File
-> -# http://curl.haxx.se/docs/http-cookies.html
-> -# This file was generated by libcurl! Edit at your own risk.
->
->  127.0.0.1      FALSE   /smart_cookies/ FALSE   0       othername       othervalue
->  127.0.0.1      FALSE   /smart_cookies/repo.git/info/   FALSE   0       name    value
-> @@ -202,7 +199,8 @@ test_expect_success 'cookies stored in http.cookiefile when http.savecookies set
->         git config http.cookiefile cookies.txt &&
->         git config http.savecookies true &&
->         git ls-remote $HTTPD_URL/smart_cookies/repo.git master &&
-> -       test_cmp expect_cookies.txt cookies.txt
-> +       tail -3 cookies.txt > cookies_tail.txt
+Duy Nguyen wrote:
+> Good point. I think that is because gc does not check if gc is already
+> running. Adding such a check should not be too hard. I think gc could
+> save its pid in $GIT_DIR/auto-gc.pid. The next auto-gc checks this, if
+> the pid is valid, skip auto-gc.
 
-Would it make more sense to ignore comments entirely? I.e. instead of
-taking the tail, pipe through sed 's/#.*//'.
+Check.  I also talked about gc not catching SIGINT properly: I'm
+looking the issue.
 
-Thanks for catching this by the way; you can probably guess that I
-only checked with a single curl version.
+> Or you could just make a cron job to gc all repos every week and the
+> problem goes away ;-)
 
->
-> +       test_cmp expect_cookies.txt cookies_tail.txt
->  '
->
->  test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
-> --
-> 1.8.4.rc1.384.g0976a17.dirty
->
+Fundamentally, we need to fix these problems:
+
+1. Don't make the repo unusable when a gc is running: I don't expect
+anything more than minor annoyances after your patch is checked in.
+
+2. Improve the IO profile, so gc doesn't aggressively hammer out tiny
+fragmentations. For this, git-exproll.sh is definitely a step in the
+right direction.
+
+3. Improve how gc fundamentally works, so we can minimize rebuilds and
+CPU time. jc's git merge-pack is interesting, but I'm not very hopeful
+about a naive incremental-packing. We need to keep the major
+undeltified objects near the top of the file, and build an idx sorted
+by SHA-1; mangling the offsets in the header after a packfile has been
+written is both complicated and dangerous (we might introduce subtle
+bugs corrupting the packfile), I think. I haven't thought about it
+hard enough though.
+
+We'll tackle these problems bit by bit in future patches.
+
+Thanks.
