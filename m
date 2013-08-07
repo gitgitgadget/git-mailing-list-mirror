@@ -1,84 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] l10n: de.po: translate 5 messages
-Date: Wed, 7 Aug 2013 05:22:20 -0400
-Message-ID: <20130807092220.GA4563@sigill.intra.peff.net>
-References: <1375813794-4578-1-git-send-email-ralf.thielow@gmail.com>
- <87r4e5vp0r.fsf@linux-k42r.v.cablecom.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] die_with_status: use "printf '%s\n'", not "echo"
+Date: Wed, 07 Aug 2013 11:23:37 +0200
+Message-ID: <vpqy58dj1ly.fsf@anie.imag.fr>
+References: <7vwqnyg10v.fsf@alter.siamese.dyndns.org>
+	<1375813604-10565-1-git-send-email-Matthieu.Moy@imag.fr>
+	<871u65yj0v.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ralf Thielow <ralf.thielow@gmail.com>, jk@jk.gs, stimming@tuhh.de,
-	git@vger.kernel.org
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, <gitster@pobox.com>
 To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Aug 07 11:22:31 2013
+X-From: git-owner@vger.kernel.org Wed Aug 07 11:23:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6zwr-0000MS-OK
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 11:22:30 +0200
+	id 1V6zyJ-0001Wq-2c
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 11:23:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757364Ab3HGJW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Aug 2013 05:22:26 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55074 "EHLO peff.net"
+	id S1757375Ab3HGJXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Aug 2013 05:23:55 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:42633 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757360Ab3HGJWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Aug 2013 05:22:25 -0400
-Received: (qmail 14216 invoked by uid 102); 7 Aug 2013 09:22:25 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 07 Aug 2013 04:22:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Aug 2013 05:22:20 -0400
-Content-Disposition: inline
-In-Reply-To: <87r4e5vp0r.fsf@linux-k42r.v.cablecom.net>
+	id S1757362Ab3HGJXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Aug 2013 05:23:54 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r779NaKA008512
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 7 Aug 2013 11:23:38 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1V6zxx-00053i-Jq; Wed, 07 Aug 2013 11:23:37 +0200
+In-Reply-To: <871u65yj0v.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
+	of "Wed, 7 Aug 2013 10:58:24 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 07 Aug 2013 11:23:39 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r779NaKA008512
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1376472221.09731@Ea7mc/mXRBcJsPXiBwZEEA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231815>
 
-On Wed, Aug 07, 2013 at 11:17:08AM +0200, Thomas Rast wrote:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> This results from Peff's c17592a (commit: tweak empty cherry pick advice
-> for sequencer, 2013-07-26):
-> 
->   diff --git a/builtin/commit.c b/builtin/commit.c
->   index a17a5df..39717d5 100644
->   --- a/builtin/commit.c
->   +++ b/builtin/commit.c
->   @@ -62,8 +62,18 @@
->    "If you wish to commit it anyway, use:\n"
->    "\n"
->    "    git commit --allow-empty\n"
->   +"\n");
->   +
->   +static const char empty_cherry_pick_advice_single[] =
->   +N_("Otherwise, please use 'git reset'\n");
->   +
->   +static const char empty_cherry_pick_advice_multi[] =
->   +N_("If you wish to skip this commit, use:\n"
->    "\n"
->   -"Otherwise, please use 'git reset'\n");
->   +"    git reset\n"
->   +"\n"
->   +"Then \"git cherry-pick --continue\" will resume cherry-picking\n"
->   +"the remaining commits.\n");
->    
->    static const char *use_message_buffer;
->    static const char commit_editmsg[] = "COMMIT_EDITMSG";
+>> +	grep -v "	" error
 >
-> [...]
+> Umm, doesn't that only test that _some_ line in the error does not
+> contain a tab?
+
+Indeed. It does work as the error message is just a one-liner, but let's
+be robust anyway.
+
+> Whereas you need to test that _no_ line contains <TAB>emp, or some
+> such.  Perhaps as
 >
-> So it seems that concatenating sentences indeed falls into a gray area
-> between "avoid sentence lego" and "split at paragraphs".  And Peff's
-> style of splitting it saves the translators work because the first part
-> of the message is shared among two code paths.
+>   ! grep -v "	emp" error
 
-Yeah, I was mainly trying to avoid repeating myself, since the first
-part of the message would be the same (and I did not want them to fall
-out of sync).
+Err, then the -v should be remove. Also, I'll use test_expect_code 1
+instead of ! to catch other grep failures, just in case.
 
-However, I do not mind changing it if translators would prefer to see
-the whole message as a single string. I agree it's a gray area.
+Thanks, new patch comming.
 
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
