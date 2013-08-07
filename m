@@ -1,74 +1,108 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] die_with_status: use "printf '%s\n'", not "echo"
-Date: Wed, 07 Aug 2013 11:23:37 +0200
-Message-ID: <vpqy58dj1ly.fsf@anie.imag.fr>
-References: <7vwqnyg10v.fsf@alter.siamese.dyndns.org>
-	<1375813604-10565-1-git-send-email-Matthieu.Moy@imag.fr>
-	<871u65yj0v.fsf@linux-k42r.v.cablecom.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, <gitster@pobox.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Aug 07 11:23:59 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2] die_with_status: use "printf '%s\n'", not "echo"
+Date: Wed,  7 Aug 2013 11:26:05 +0200
+Message-ID: <1375867565-21127-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqy58dj1ly.fsf@anie.imag.fr>
+Cc: Thomas Rast <trast@inf.ethz.ch>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Aug 07 11:26:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6zyJ-0001Wq-2c
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 11:23:59 +0200
+	id 1V700e-0003Oe-EH
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 11:26:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757375Ab3HGJXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Aug 2013 05:23:55 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:42633 "EHLO shiva.imag.fr"
+	id S1757377Ab3HGJ0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Aug 2013 05:26:20 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:42685 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757362Ab3HGJXy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Aug 2013 05:23:54 -0400
+	id S1757362Ab3HGJ0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Aug 2013 05:26:19 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r779NaKA008512
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r779Q6sD009239
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 7 Aug 2013 11:23:38 +0200
+	Wed, 7 Aug 2013 11:26:06 +0200
 Received: from anie.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1V6zxx-00053i-Jq; Wed, 07 Aug 2013 11:23:37 +0200
-In-Reply-To: <871u65yj0v.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
-	of "Wed, 7 Aug 2013 10:58:24 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 07 Aug 2013 11:23:39 +0200 (CEST)
+	(envelope-from <moy@imag.fr>)
+	id 1V700N-00054c-4I; Wed, 07 Aug 2013 11:26:07 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1V700M-0005Vf-PU; Wed, 07 Aug 2013 11:26:06 +0200
+X-Mailer: git-send-email 1.8.3.3.797.gb72c616
+In-Reply-To: <vpqy58dj1ly.fsf@anie.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 07 Aug 2013 11:26:06 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r779NaKA008512
+X-MailScanner-ID: r779Q6sD009239
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1376472221.09731@Ea7mc/mXRBcJsPXiBwZEEA
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1376472367.34369@KH4nZe9lxZYFQH4R2CS4hg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231816>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Some implementations of 'echo' (e.g. dash's built-in) interpret
+backslash sequences in their arguments.
 
->> +	grep -v "	" error
->
-> Umm, doesn't that only test that _some_ line in the error does not
-> contain a tab?
+This triggered at least one bug: the error message of "rebase -i" was
+turning \t in commit messages into actual tabulations. There may be
+others.
 
-Indeed. It does work as the error message is just a one-liner, but let's
-be robust anyway.
+Using "printf '%s\n'" instead avoids this bad behavior, and is the form
+used by the "say" function.
 
-> Whereas you need to test that _no_ line contains <TAB>emp, or some
-> such.  Perhaps as
->
->   ! grep -v "	emp" error
+Noticed-by: David Kastrup <dak@gnu.org>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+Changed the "grep" function to be more accurate. The test still
+catches the old failure and pass after the fix.
 
-Err, then the -v should be remove. Also, I'll use test_expect_code 1
-instead of ! to catch other grep failures, just in case.
+ git-sh-setup.sh               |  2 +-
+ t/t3404-rebase-interactive.sh | 13 +++++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-Thanks, new patch comming.
-
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 7a964ad..e15be51 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -53,7 +53,7 @@ die () {
+ die_with_status () {
+ 	status=$1
+ 	shift
+-	echo >&2 "$*"
++	printf >&2 '%s\n' "$*"
+ 	exit "$status"
+ }
+ 
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 49ccb38..4dbeddb 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -976,4 +976,17 @@ test_expect_success 'rebase -i with --strategy and -X' '
+ 	test $(cat file1) = Z
+ '
+ 
++test_expect_success 'rebase -i error on commits with \ in message' '
++	current_head=$(git rev-parse HEAD)
++	test_when_finished "git rebase --abort; git reset --hard $current_head; rm -f error" &&
++	test_commit TO-REMOVE will-conflict old-content &&
++	test_commit "\temp" will-conflict new-content dummy &&
++	(
++	EDITOR=true &&
++	export EDITOR &&
++	test_must_fail git rebase -i HEAD^ --onto HEAD^^ 2>error
++	) &&
++	test_expect_code 1 grep  "	emp" error
++'
++
+ test_done
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.8.3.3.797.gb72c616
