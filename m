@@ -1,79 +1,77 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: change remote to track new branch
-Date: Tue, 6 Aug 2013 19:40:32 -0700
-Message-ID: <CAJDDKr5d=ifToosL2w5mJMyhiWwYK_eeuxEQTrDssVBe4P6JLA@mail.gmail.com>
-References: <20130803024032.GA28666@analysisandsolutions.com>
-	<m2d2pvp7nw.fsf@linux-m68k.org>
-	<20130803162821.GA945@analysisandsolutions.com>
-	<87iozmhgl1.fsf@igel.home>
-	<20130803165215.GC945@analysisandsolutions.com>
-	<20130807003053.GA7145@analysisandsolutions.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] git exproll: steps to tackle gc aggression
+Date: Wed, 7 Aug 2013 10:06:38 +0530
+Message-ID: <CALkWK0=41FNXQk1cAKdgAd3t3Bzh1KEc3bksu0M1LjdSgfmr3Q@mail.gmail.com>
+References: <1375756727-1275-1-git-send-email-artagnon@gmail.com> <201308061825.28579.mfick@codeaurora.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniel Convissor <danielc@analysisandsolutions.com>
-X-From: git-owner@vger.kernel.org Wed Aug 07 04:40:57 2013
+Cc: Git List <git@vger.kernel.org>
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Wed Aug 07 06:37:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6tgG-0006hN-8l
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 04:40:56 +0200
+	id 1V6vUy-0003v7-Vn
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 06:37:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756862Ab3HGCke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 22:40:34 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:36785 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756833Ab3HGCkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 22:40:33 -0400
-Received: by mail-pd0-f175.google.com with SMTP id 5so894213pdd.6
-        for <git@vger.kernel.org>; Tue, 06 Aug 2013 19:40:32 -0700 (PDT)
+	id S1752841Ab3HGEhU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Aug 2013 00:37:20 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:34479 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752467Ab3HGEhT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Aug 2013 00:37:19 -0400
+Received: by mail-ob0-f172.google.com with SMTP id er7so2884706obc.3
+        for <git@vger.kernel.org>; Tue, 06 Aug 2013 21:37:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=kr4bJlbV5gc7ji3aEBrNnZIGJBsHadgJWss/TM7bDg8=;
-        b=o5pceWz4Dmuc766lgKG3/UUiStIHIgnXKH2IotRRCNghox0C17FZsgTOsK4oQuKwSI
-         +ZXpZAXMKdIKEdAPAlWDLm57702NBA/x5edjbCYogFhN74szknDFkZ6VUzqj6jscDIZ2
-         Es8ussNylt6d1C5K/dS3YVf6l+FYRGqeCRdmHc50K/HvhqUqBLUlaNfLqKYnDC1GVf76
-         MQAsVR/v1UjcDQ5HBEe0VIgw36ki3NUE8cCNyRA7nteQZL+3i28uGg1au/G+uTjiqXmN
-         Iw4BfNglu8uegFtC2Hh5IIZEGP8ly+BU0G7+FpYPLlQmxbU/UIbLeWbjE/XjeYDB/71Z
-         9eHQ==
-X-Received: by 10.68.36.38 with SMTP id n6mr1258820pbj.15.1375843232728; Tue,
- 06 Aug 2013 19:40:32 -0700 (PDT)
-Received: by 10.70.95.230 with HTTP; Tue, 6 Aug 2013 19:40:32 -0700 (PDT)
-In-Reply-To: <20130807003053.GA7145@analysisandsolutions.com>
+        bh=BQvOKjrLSMaQPnX8CgpX4SFCKzf5HoJGOkZf25oVO1k=;
+        b=0ufCiDuk6AtUDPNsrXkqEhZqM6iPs8gpujGq69nEzm0jpEKeXoejsIJ3Xjzsmyi9mU
+         lxlPuX4sAhCd57ITyHF8w+0xsdkdP17GTQNpHHNvNX6qsY/JRCpE0fGuqv65uUsgtx/z
+         CT4ozoeLoJt0jGGyGAn6bVxVznf3TMvhV+i7VPoK5Bjm3+A0I+ti8mWXiLHdrtn0NL7o
+         ZZtOhnURWFPKOQfmgJywGnuQ6caq78XzbVTPX38MwrjKDfQDWvjXOO688roQVjFagDE+
+         BjS5SZVxYHzSiRsBzBPBwlL2adaNiwDVG5104ook2HaA6w/Z/Yjdfo/6L7jo4DsuIqQg
+         SkJQ==
+X-Received: by 10.50.131.137 with SMTP id om9mr110291igb.55.1375850238260;
+ Tue, 06 Aug 2013 21:37:18 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Tue, 6 Aug 2013 21:36:38 -0700 (PDT)
+In-Reply-To: <201308061825.28579.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231804>
 
-On Tue, Aug 6, 2013 at 5:30 PM, Daniel Convissor
-<danielc@analysisandsolutions.com> wrote:
-> Hi Folks:
->
-> On Sat, Aug 03, 2013 at 12:52:15PM -0400, Daniel Convissor wrote:
->>
->> Yeah.  I had contemplated using the following commands:
->>
->>     git config remote.wp.fetch \
->>         "+refs/heads/3.6-branch:refs/remotes/wp/3.6-branch"
->>     git config branch.wp.merge "refs/heads/3.6-branch"
->>
->> So is "git remote set-branches" and "git branch --set-upstream-to" just
->> another syntax for making those same changes to git config?  Or do the
->> new commands do some additional work on the repository (to better keep
->> track of things, or whatever)?
->
-> Sorry to be a pest, but I'm curious what the answer is, please.
+Martin Fick wrote:
+> So, it has me wondering if there isn't a more accurate way
+> to estimate the new packfile without wasting a ton of time?
 
-There's really nothing more to it.
+I'm not sure there is. Adding the sizes of individual packs can be off
+by a lot, because your deltification will be more effective if you
+have more data to slide windows over and compress. For the purposes of
+illustration, take a simple example:
 
-There is one other setting -- "branch.wp.remote" should be set to "wp".
+packfile-1 has a 30M Makefile and several tiny deltas. Total = 40M.
+packfile-2 has a 31M Makefile.um and several tiny deltas. Total = 40M.
 
-If you edit your .git/config by hand you'll see what's really going
-on.  It's quite simple under the hood.
--- 
-David
+Now, what is the size of packfile-3 which contains the contents of
+both packfile-1 and packfile-2? 80M is a bad estimate, because you can
+store deltas against just one Makefile.
+
+So, unless you do an in-depth analysis of the objects in the packfiles
+(which can be terribly expensive), I don't see how you can arrive at a
+better estimate.
+
+> If not, one approach which might be worth experimenting with
+> is to just assume that new packfiles have size 0!  Then just
+> consolidate them with any other packfile which is ready for
+> consolidation, or if none are ready, with the smallest
+> packfile.  I would not be surprised to see this work on
+> average better than the current summation,
+
+That is assuming that all fetches (or pushes) are small, which is
+probably a good rule; you might like to have a "smallness threshold",
+although I haven't thought hard about the problem.
