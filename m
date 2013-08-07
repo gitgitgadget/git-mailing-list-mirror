@@ -1,83 +1,76 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] replace: forbid replacing an object with one of a different
- type
-Date: Wed, 07 Aug 2013 06:42:47 +0200
-Message-ID: <20130807044248.17464.35806.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
-	Thomas Rast <trast@inf.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 07 07:02:21 2013
+From: shawn wilson <ag4ve.us@gmail.com>
+Subject: Repo with only one file
+Date: Wed, 7 Aug 2013 02:24:40 -0400
+Message-ID: <CAH_OBid8SO3ydpjhRHa68s+54CScLh=jactxTQhwQPo-jcnAvA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 07 08:25:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6vt5-0000pl-E9
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 07:02:19 +0200
+	id 1V6xBF-0001CN-DF
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 08:25:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753279Ab3HGFCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Aug 2013 01:02:14 -0400
-Received: from delay-2y.bbox.fr ([194.158.98.17]:61686 "EHLO delay-2y.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753134Ab3HGFCO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Aug 2013 01:02:14 -0400
-X-Greylist: delayed 743 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Aug 2013 01:02:13 EDT
-Received: from mail-1y.bbox.fr (bt8sssom.cs.dolmen.bouyguestelecom.fr [172.24.208.144])
-	by delay-2y.bbox.fr (Postfix) with ESMTP id 71BAC2670D7
-	for <git@vger.kernel.org>; Wed,  7 Aug 2013 06:52:50 +0200 (CEST)
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 5613F48;
-	Wed,  7 Aug 2013 06:49:46 +0200 (CEST)
-X-git-sha1: 132b1a0384f651756ed7f783b8bb6879c232ce03 
-X-Mailer: git-mail-commits v0.5.2
+	id S1754367Ab3HGGZD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Aug 2013 02:25:03 -0400
+Received: from mail-ve0-f176.google.com ([209.85.128.176]:48755 "EHLO
+	mail-ve0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753901Ab3HGGZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Aug 2013 02:25:01 -0400
+Received: by mail-ve0-f176.google.com with SMTP id b10so1358003vea.7
+        for <git@vger.kernel.org>; Tue, 06 Aug 2013 23:25:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=AylRGwcXMdsYyez8NE/K/yPU/f9J7LC2hZKEG7vsZrQ=;
+        b=U7CU8a/+cf/rJF89ssQ11Nu6KZjbBkkDCb3Vy1WV4Hhtw65bCc41USx/3diMUagRIv
+         QCKzw9jP37kLLdktVsGesum28uIE0hwuRqgLCMU45dlnN1M6wDXUIu6x+PXIAkNl9Rgb
+         7wx4QWVp3/dueQQmPGR/CjyHxvvA59t9mna8Pd/vHs7aC3ST4InGCdyEY9tEpx1a87lg
+         mh+6ibjWy2p131Ph8JFiUYDRcOipUGUi4CNwE3XU86AQ2pLUGNWHunajnNdTzSWtnMnn
+         1WydneD04hFq9GxYnTpkVuH/gFRpAa/ENQnD28EK7WKDvNyM8gVParR7r/1pdjfCyH13
+         PtuA==
+X-Received: by 10.58.29.111 with SMTP id j15mr513810veh.76.1375856700490; Tue,
+ 06 Aug 2013 23:25:00 -0700 (PDT)
+Received: by 10.52.116.72 with HTTP; Tue, 6 Aug 2013 23:24:40 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231807>
 
-Users replacing an object with one of a different type were not
-prevented to do so, even if it was obvious, and stated in the doc,
-that bad things would result from doing that.
+I started writing this script in a repo I have called misc-scripts
+where I just keep one off projects and the like (notes, throw away
+scripts, etc). Well, my boss asked me to create a repo for one of
+these scripts and I'd like to keep the commit history.
 
-To avoid mistakes, it is better to just forbid that though.
+Ok, so:
+% find -type f ! -iname "webban.pl" | while read f; do git
+filter-branch -f --index-filter "git rm --cached --ignore-unmatch $f"
+HEAD ; done
 
-The doc will be updated in a later patch.
+Which basically did it. But, I've got this one commit that seems to be
+orphaned - it doesn't change any files. That is, it shows up in a git
+log but not a git whatchanged. When I try to rebase -p --onto, I get
+tons of conflicts, git adding blah in every other line of the file and
+after I totally mess up the repo, that commit is still there. If I do
+a git checkout and try to amend the message, I get:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
-If this patch is considered useful, I will update the doc and
-maybe add tests.
+# Not currently on any branch.
+#
+# Initial commit
+#
+# No changes
+You asked to amend the most recent commit, but doing so would make
+it empty. You can repeat your command with --allow-empty, or you can
+remove the commit entirely with "git reset HEAD^".
 
- builtin/replace.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+iWhen I do --allow-empty, I can no longer see any other commits.
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 59d3115..0246ab3 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -85,6 +85,7 @@ static int replace_object(const char *object_ref, const char *replace_ref,
- 			  int force)
- {
- 	unsigned char object[20], prev[20], repl[20];
-+	enum object_type obj_type, repl_type;
- 	char ref[PATH_MAX];
- 	struct ref_lock *lock;
- 
-@@ -100,6 +101,14 @@ static int replace_object(const char *object_ref, const char *replace_ref,
- 	if (check_refname_format(ref, 0))
- 		die("'%s' is not a valid ref name.", ref);
- 
-+	obj_type = sha1_object_info(object, NULL);
-+	repl_type = sha1_object_info(repl, NULL);
-+	if (obj_type != repl_type)
-+		die("Object ref '%s' is of type '%s'\n"
-+		    "while replace ref '%s' is of type '%s'.",
-+		    object_ref, typename(obj_type),
-+		    replace_ref, typename(repl_type));
-+
- 	if (read_ref(ref, prev))
- 		hashclr(prev);
- 	else if (!force)
--- 
-1.8.4.rc1.22.g132b1a0
+So, how do I remove this commit or what is the proper way to get this
+one file into a repo with nothing else?
+
+Also, I sign my commits and would like to keep each commit signed if
+at all possible.
