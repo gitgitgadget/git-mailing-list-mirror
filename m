@@ -1,57 +1,111 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Repo with only one file
-Date: Wed, 07 Aug 2013 12:43:44 +0200
-Message-ID: <520224E0.5060206@viscovery.net>
-References: <CAH_OBid8SO3ydpjhRHa68s+54CScLh=jactxTQhwQPo-jcnAvA@mail.gmail.com>
+From: Daniele Segato <daniele.segato@gmail.com>
+Subject: Re: [PATCHv3] git-tag man: when to use lightweight or annotated tags
+Date: Wed, 07 Aug 2013 14:32:55 +0200
+Message-ID: <52023E77.4080909@gmail.com>
+References: <51EFA9A9.4010103@gmail.com> <7vtxjj66kn.fsf@alter.siamese.dyndns.org> <51F12BE6.80606@gmail.com> <51F13A8F.9040400@xiplink.com> <51F23706.5040009@gmail.com> <51F2375E.1080003@gmail.com> <51F28D08.8050507@xiplink.com> <51F2AFBA.4020602@gmail.com> <51F2B2CD.1030004@gmail.com> <20130726190602.GC29799@sigill.intra.peff.net> <20130726193643.GH14690@google.com> <51F6AE1F.7080607@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: shawn wilson <ag4ve.us@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 07 12:43:52 2013
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 07 14:33:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V71Dc-0001T0-2E
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 12:43:52 +0200
+	id 1V72vN-0004ln-BE
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 14:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932367Ab3HGKns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Aug 2013 06:43:48 -0400
-Received: from so.liwest.at ([212.33.55.14]:60432 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932212Ab3HGKnr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Aug 2013 06:43:47 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1V71DU-0004bw-9D; Wed, 07 Aug 2013 12:43:44 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 11DEF1660F;
-	Wed,  7 Aug 2013 12:43:44 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <CAH_OBid8SO3ydpjhRHa68s+54CScLh=jactxTQhwQPo-jcnAvA@mail.gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S932804Ab3HGMdE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Aug 2013 08:33:04 -0400
+Received: from mail-ea0-f170.google.com ([209.85.215.170]:40633 "EHLO
+	mail-ea0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932699Ab3HGMdD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Aug 2013 08:33:03 -0400
+Received: by mail-ea0-f170.google.com with SMTP id h14so810369eak.15
+        for <git@vger.kernel.org>; Wed, 07 Aug 2013 05:33:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Xaj1W/MzTX0BaSKGhyaMFed+uAljGRUXPjPgeps7XwU=;
+        b=Z9gKSBXfL01UlVMVDw7sQIpMWxLqW9K4vDPcwOr0Xt/KAMA04mkaxeMfViNTl/iEKT
+         iNSq3UR9roFy1H4NlDUXin3nqSrwQ6HB0VrecM8UxM+M/dmF9SMGW4ZgHxfLNl9ChiZr
+         QDoym5IqbgNaJQDo34FvuV2/HWnVvGO/7RIfyISosW4Ja0VkAClLIsxpobmcQ5im3Wy+
+         rrSu9mfQROBgJA+/fbwjLfGNbAqJElS2CvkXINR9DejHMFO56lz89hk/8pJwVvwOwYY4
+         UDixixjC4E5Xrbo6vOlyZYYlPQ1PyBmOhYGz1z1P+OUnAEFll+U9xN88pJopIlVepf0Z
+         tWRw==
+X-Received: by 10.15.23.129 with SMTP id h1mr2866023eeu.127.1375878781461;
+        Wed, 07 Aug 2013 05:33:01 -0700 (PDT)
+Received: from [192.168.1.16] (host40-69-dynamic.1-79-r.retail.telecomitalia.it. [79.1.69.40])
+        by mx.google.com with ESMTPSA id bq1sm9285794eeb.9.2013.08.07.05.32.59
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 07 Aug 2013 05:33:00 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <51F6AE1F.7080607@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231820>
 
-Am 8/7/2013 8:24, schrieb shawn wilson:> ... create a repo for one of
-> these scripts and I'd like to keep the commit history.
+On 07/29/2013 08:02 PM, Daniele Segato wrote:
+> On 07/26/2013 09:36 PM, Jonathan Nieder wrote:
+>> Eventually the description section should probably be tweaked to start
+>> by explaining what the command is actually for. ;-)
 >
-> Ok, so:
-> % find -type f ! -iname "webban.pl" | while read f; do git
-> filter-branch -f --index-filter "git rm --cached --ignore-unmatch $f"
-> HEAD ; done
+> Elaborating from this suggestion you gave me I tried to
+> rewrite/rearrange the description moving things around a little.
 >
-> Which basically did it. But, I've got this one commit that seems to be
-> orphaned - it doesn't change any files.
+> Here's what I've come out with, what do you think about it?
+>
+>
+>
+> DESCRIPTION
+> -----------
+>
+> A tag is a non-mutable reference name (in `refs/tags/`) to an object
+> (usually a commit).
+>
+> If one of `-d/-l/-v` options is given the command will delete, list or
+> verify tags.
+>
+> If one of `-a`, `-s`, or `-u <key-id>` is passed, the command
+> creates both the reference and a 'tag' object containing a creation
+> date, the tagger name and e-mail, a tag message and an optional GnuPG
+> signature.  Unless
+> `-m <msg>` or `-F <file>` is given, an editor is started for the user to
+> type in the tag message.
+>
+> Otherwise just a tag reference for the SHA-1 object name of the commit
+> object is created (i.e. a lightweight tag).
+>
+> Unless `-f` is given, the named tag must not yet exist.
+>
+> If `-m <msg>` or `-F <file>` is given and `-a`, `-s`, and `-u <key-id>`
+> are absent, `-a` is implied.
+>
+> A GnuPG signed tag object will be created when `-s` or `-u
+> <key-id>` is used.  When `-u <key-id>` is not used, the
+> committer identity for the current user is used to find the
+> GnuPG key for signing.  The configuration variable `gpg.program`
+> is used to specify custom GnuPG binary.
+>
+> Tag objects (created with `-a`, `s`, or `-u`) are called "annotated"
+> tags; whereas a "lightweight" tag is simply a name for an object
+> (usually a commit object).
+>
+> Annotated tags are meant for release while lightweight tags are meant
+> for private or temporary object labels. For this reason, some git
+> commands for naming objects (like `git describe`) will ignore
+> lightweight tags by default.
 
-Try this:
+I suppose there's no interest in this anymore
 
-  git filter-branch HEAD -- webban.pl
-
--- Hannes
+thanks anyway,
+Regards,
+Daniele Segato
