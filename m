@@ -1,198 +1,99 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [RFC] status: show tracking branch even no difference
-Date: Wed,  7 Aug 2013 23:42:01 +0800
-Message-ID: <46fb1948a57990b0ea737401f2d60f654da4bb4f.1375890091.git.worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 07 17:43:37 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] Build in git-repack
+Date: Wed, 07 Aug 2013 08:48:39 -0700
+Message-ID: <7v38qlec2w.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8A-xo97MC-vBmqCrvvSDMWKd_MxnRrTBSeSqcQ1HifzJA@mail.gmail.com>
+	<1375884049-14961-1-git-send-email-stefanbeller@googlemail.com>
+	<1375884049-14961-2-git-send-email-stefanbeller@googlemail.com>
+	<vpqzjsth8wt.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stefan Beller <stefanbeller@googlemail.com>, pclouds@gmail.com,
+	iveqy@iveqy.com, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 07 17:48:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V75th-000773-34
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 17:43:37 +0200
+	id 1V75yl-0002ds-Mv
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 17:48:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756839Ab3HGPnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Aug 2013 11:43:32 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:59766 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755215Ab3HGPnb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Aug 2013 11:43:31 -0400
-Received: by mail-pb0-f52.google.com with SMTP id wz12so2035255pbc.11
-        for <git@vger.kernel.org>; Wed, 07 Aug 2013 08:43:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=ReOHkczl1rcvV3NA24dqkK0isbuLgHizPyNLYrxaE00=;
-        b=QSjp0Glcx2a4yyC8FBfLrJ0JbUlJpQCpM6mI1en/u2sgglIxja5SoBhS9fXYNZXN6Q
-         gpdFdxNgE8+DTYf0YHOWn1XDxVlyRsH4FeFsxcLYrxZeGt0yvgjltKbQ58P5fL3t8ojk
-         Rrwb2JJDlrHCm5Jhexkp3Rjsp0T+L1tshnHWYhB0/PrgsSID5NV9WHc6Uzm7AXDQbwXx
-         hTPvRiHYsApWtdfWzRZ0dKfB3JmYPJw90+i7mDLccPmtcXKP09T2oQK3gSmlYnln/IPW
-         i9RxJG5MZpFvEpO0uGBBSCPNzgpEj9OaWzhuFbf83GNT3131I9mY6C0Jm1pCCV6/XF1k
-         89Ng==
-X-Received: by 10.66.159.132 with SMTP id xc4mr1400437pab.27.1375890211242;
-        Wed, 07 Aug 2013 08:43:31 -0700 (PDT)
-Received: from localhost.localdomain ([114.246.125.252])
-        by mx.google.com with ESMTPSA id bt1sm8928697pbb.2.2013.08.07.08.43.28
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 07 Aug 2013 08:43:30 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc1.429.g46fb194
+	id S1753177Ab3HGPsr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Aug 2013 11:48:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40836 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751992Ab3HGPsq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Aug 2013 11:48:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CD99369FF;
+	Wed,  7 Aug 2013 15:48:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=HEUwR6GogNx2
+	WAyK1pbqQNQnNDI=; b=FStuSuhIDsTmsvoOO7+1Z0EV97x6MPWsgvFzSzZhOTAo
+	RGKn31htRty/ZmeJdcBPWqam/HB8BU4wZUAXfJCt98A/J7N0WUQXbubjYixsJB3A
+	Wo7o7exZJEvFwYL/oJgooTb+MxxC7TuOO+7TA65rQanUi40/GK0lMJzvx+fOlfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KcZ8dG
+	jIAtxsqVVlrZo6qro9u58mo9HFLyTvEM+I0ux9GftAdS46gY2/YcEJgta2Cr5HCb
+	0R9ueLjZ0Kbbm/+uWzwWdsQmC8RBXUGWtS5iOKxaQdQoJkooQqLh650O14aLg5RZ
+	XtSCfp2HyQQ6AjomAMa8q8A6GuqxVWUBnamGs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C702369F6;
+	Wed,  7 Aug 2013 15:48:43 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12E7D369ED;
+	Wed,  7 Aug 2013 15:48:41 +0000 (UTC)
+In-Reply-To: <vpqzjsth8wt.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
+	07 Aug 2013 16:28:50 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D5B24F9E-FF78-11E2-8D00-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231831>
 
-If the current branch has an upstream branch, and there are differences
-between the current branch and its upstream, some commands (such as
-"git status", "git status -bs", and "git checkout") will report their
-relationship. E.g.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-    $ git status
-    # On branch master
-    # Your branch is ahead of 'origin/master' by 1 commit.
-    #   (use "git push" to publish your local commits)
-    #
-    ...
+> [ It's cool you're working on this, I'd really like a git-repack in C=
+=2E
+>   That would fix this
+>   http://thread.gmane.org/gmane.comp.version-control.git/226458 ]
+>
+> Stefan Beller <stefanbeller@googlemail.com> writes:
+>
+>> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+>>
+>> pack-objects learns a few more options to take over what's been done
+>> by git-repack.sh. cmd_repack() becomes a wrapper around
+>> cmd_pack_objects().
+>
+> I think the patch would read easier if these were split into two
+> patches: one doing the real stuff in pack-objects, and then getting r=
+id
+> of git-repack.sh to replace it with a trivial built-in.
+>
+> Actually, I'm wondering why pack-objects requires so much changes.
+> git-repack.sh was already a relatively small wrapper around
+> pack-objects, and did not need the new options you add, so why are th=
+ey
+> needed? In particular adding the new --update-info option that just d=
+oes
+>
+>> +	if (repack_flags & REPACK_UPDATE_INFO)
+>> +		update_server_info(0);
+>
+> seems overkill to me: why don't you just let cmd_repack call
+> update_server_info(0)?
 
-    $ git status -bs
-    ## master...origin/master [ahead 1]
-    ...
-
-    $ git checkout master
-    Already on 'master'
-    Your branch is ahead of 'origin/master' by 1 commit.
-      (use "git push" to publish your local commits)
-
-But if there is no difference between the current branch and its
-upstream, the relationship will not be reported, and it's hard to
-tell whether the current branch has a tracking branch or not. And
-what's worse, when the 'push.default' config variable is set to
-`matching`, it's hard to tell whether current branch is pushed out
-or not [1].
-
-With this patch, "git status" will report relationship between current
-branch and its upstream counterpart even if there is no difference.
-
-    $ git status
-    # On branch master
-    # Your branch is identical to its tracking branch: 'origin/master'.
-    #
-    ...
-
-    $ git status -bs
-    ## master...origin/master
-    ...
-
-    $ git checkout master
-    Already on 'master'
-    Your branch is identical to its tracking branch: 'origin/master'.
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/198703
-
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
- remote.c    | 22 ++++++++++++++++------
- wt-status.c | 13 ++++++++++---
- 2 files changed, 26 insertions(+), 9 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index 2433467..8d6f278 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1740,6 +1740,10 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
- 	const char *rev_argv[10], *base;
- 	int rev_argc;
- 
-+	/* Set both num_theirs and num_ours as undetermined. */
-+	*num_theirs = -1;
-+	*num_ours = -1;
-+
- 	/*
- 	 * Nothing to report unless we are marked to build on top of
- 	 * somebody else.
-@@ -1758,14 +1762,16 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
- 	theirs = lookup_commit_reference(sha1);
- 	if (!theirs)
- 		return 0;
-+	*num_theirs = 0;
- 
- 	if (read_ref(branch->refname, sha1))
- 		return 0;
- 	ours = lookup_commit_reference(sha1);
- 	if (!ours)
- 		return 0;
-+	*num_ours = 0;
- 
--	/* are we the same? */
-+	/* are we the same? both num_theirs and num_ours are set to 0. */
- 	if (theirs == ours)
- 		return 0;
- 
-@@ -1786,8 +1792,6 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
- 	prepare_revision_walk(&revs);
- 
- 	/* ... and count the commits on each side. */
--	*num_ours = 0;
--	*num_theirs = 0;
- 	while (1) {
- 		struct commit *c = get_revision(&revs);
- 		if (!c)
-@@ -1812,12 +1816,18 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 	int num_ours, num_theirs;
- 	const char *base;
- 
--	if (!stat_tracking_info(branch, &num_ours, &num_theirs))
--		return 0;
-+	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
-+		if (num_ours || num_theirs)
-+			return 0;
-+	}
- 
- 	base = branch->merge[0]->dst;
- 	base = shorten_unambiguous_ref(base, 0);
--	if (!num_theirs) {
-+	if (!num_ours && !num_theirs) {
-+		strbuf_addf(sb,
-+			_("Your branch is identical to its tracking branch: '%s'.\n"),
-+			base);
-+	} else if (!num_theirs) {
- 		strbuf_addf(sb,
- 			Q_("Your branch is ahead of '%s' by %d commit.\n",
- 			   "Your branch is ahead of '%s' by %d commits.\n",
-diff --git a/wt-status.c b/wt-status.c
-index ff4b324..56f3c19 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1381,9 +1381,11 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 	if (s->is_initial)
- 		color_fprintf(s->fp, header_color, _("Initial commit on "));
- 	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
--		color_fprintf(s->fp, branch_color_local, "%s", branch_name);
--		fputc(s->null_termination ? '\0' : '\n', s->fp);
--		return;
-+		if (num_ours || num_theirs) {
-+			color_fprintf(s->fp, branch_color_local, "%s", branch_name);
-+			fputc(s->null_termination ? '\0' : '\n', s->fp);
-+			return;
-+		}
- 	}
- 
- 	base = branch->merge[0]->dst;
-@@ -1392,6 +1394,11 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 	color_fprintf(s->fp, header_color, "...");
- 	color_fprintf(s->fp, branch_color_remote, "%s", base);
- 
-+	if (!num_ours && !num_theirs) {
-+		fputc(s->null_termination ? '\0' : '\n', s->fp);
-+		return;
-+	}
-+
- 	color_fprintf(s->fp, header_color, " [");
- 	if (!num_ours) {
- 		color_fprintf(s->fp, header_color, _("behind "));
--- 
-1.8.4.rc1.429.g46fb194
+My feeling exactly.  I would rather see a patch that does not touch
+pack-objects at all, and use run_command() interface to spawn it.
+Once we do have to pack, the necessary processing cycle will dwarf
+the fork/exec latency anyway, no?
