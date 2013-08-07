@@ -1,95 +1,81 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] replace: forbid replacing an object with one of a different type
-Date: Wed, 7 Aug 2013 10:46:37 +0200
-Message-ID: <87iozhyjki.fsf@linux-k42r.v.cablecom.net>
-References: <20130807044248.17464.35806.chriscool@tuxfamily.org>
+Subject: Re: [PATCH] die_with_status: use "printf '%s\n'", not "echo"
+Date: Wed, 7 Aug 2013 10:58:24 +0200
+Message-ID: <871u65yj0v.fsf@linux-k42r.v.cablecom.net>
+References: <7vwqnyg10v.fsf@alter.siamese.dyndns.org>
+	<1375813604-10565-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
-	Philip Oakley <philipoakley@iee.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Wed Aug 07 10:46:53 2013
+Cc: <git@vger.kernel.org>, <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 07 10:58:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6zOM-0007AB-IX
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 10:46:50 +0200
+	id 1V6zZe-0007Pn-Su
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 10:58:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757157Ab3HGIqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Aug 2013 04:46:43 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:3761 "EHLO edge10.ethz.ch"
+	id S932151Ab3HGI60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Aug 2013 04:58:26 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:4660 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756924Ab3HGIqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Aug 2013 04:46:39 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+	id S1757220Ab3HGI6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Aug 2013 04:58:25 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
  (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 7 Aug
- 2013 10:46:35 +0200
+ 2013 10:58:22 +0200
 Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.253) by
- CAS21.d.ethz.ch (172.31.51.111) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Wed, 7 Aug 2013 10:46:36 +0200
-In-Reply-To: <20130807044248.17464.35806.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Wed, 7 Aug 2013 06:42:47 +0200")
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Wed, 7 Aug 2013 10:58:24 +0200
+In-Reply-To: <1375813604-10565-1-git-send-email-Matthieu.Moy@imag.fr>
+	(Matthieu Moy's message of "Tue, 6 Aug 2013 20:26:44 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 X-Originating-IP: [129.132.153.253]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231812>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> Users replacing an object with one of a different type were not
-> prevented to do so, even if it was obvious, and stated in the doc,
-> that bad things would result from doing that.
+> At least GNU echo interprets backslashes in its arguments.
 >
-> To avoid mistakes, it is better to just forbid that though.
+> This triggered at least one bug: the error message of "rebase -i" was
+> turning \t in commit messages into actual tabulations. There may be
+> others.
 >
-> The doc will be updated in a later patch.
+> Using "printf '%s\n'" instead avoids this bad behavior, and is the form
+> used by the "say" function.
 >
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> Noticed-by: David Kastrup <dak@gnu.org>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+[...]
+> +test_expect_success 'rebase -i error on commits with \ in message' '
+> +	current_head=$(git rev-parse HEAD)
+> +	test_when_finished "git rebase --abort; git reset --hard $current_head; rm -f error" &&
+> +	test_commit TO-REMOVE will-conflict old-content &&
+> +	test_commit "\temp" will-conflict new-content dummy &&
+> +	(
+> +	EDITOR=true &&
+> +	export EDITOR &&
+> +	test_must_fail git rebase -i HEAD^ --onto HEAD^^ 2>error
+> +	) &&
+> +	grep -v "	" error
 
-Feel free to steal some of my other email for the commit message, to
-write down for posterity that reverting would not really be a useful
-step.
+Umm, doesn't that only test that _some_ line in the error does not
+contain a tab?
 
-The patch looks good to me.
+Whereas you need to test that _no_ line contains <TAB>emp, or some
+such.  Perhaps as
 
-> If this patch is considered useful, I will update the doc and
-> maybe add tests.
->
->  builtin/replace.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/builtin/replace.c b/builtin/replace.c
-> index 59d3115..0246ab3 100644
-> --- a/builtin/replace.c
-> +++ b/builtin/replace.c
-> @@ -85,6 +85,7 @@ static int replace_object(const char *object_ref, const char *replace_ref,
->  			  int force)
->  {
->  	unsigned char object[20], prev[20], repl[20];
-> +	enum object_type obj_type, repl_type;
->  	char ref[PATH_MAX];
->  	struct ref_lock *lock;
->  
-> @@ -100,6 +101,14 @@ static int replace_object(const char *object_ref, const char *replace_ref,
->  	if (check_refname_format(ref, 0))
->  		die("'%s' is not a valid ref name.", ref);
->  
-> +	obj_type = sha1_object_info(object, NULL);
-> +	repl_type = sha1_object_info(repl, NULL);
-> +	if (obj_type != repl_type)
-> +		die("Object ref '%s' is of type '%s'\n"
-> +		    "while replace ref '%s' is of type '%s'.",
-> +		    object_ref, typename(obj_type),
-> +		    replace_ref, typename(repl_type));
+  ! grep -v "	emp" error
+
+> +'
 > +
->  	if (read_ref(ref, prev))
->  		hashclr(prev);
->  	else if (!force)
+>  test_done
 
 -- 
 Thomas Rast
