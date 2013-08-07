@@ -1,82 +1,130 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] die_with_status: use "printf '%s\n'", not "echo"
-Date: Wed, 7 Aug 2013 10:58:24 +0200
-Message-ID: <871u65yj0v.fsf@linux-k42r.v.cablecom.net>
-References: <7vwqnyg10v.fsf@alter.siamese.dyndns.org>
-	<1375813604-10565-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] l10n: de.po: translate 5 messages
+Date: Wed, 7 Aug 2013 11:17:08 +0200
+Message-ID: <87r4e5vp0r.fsf@linux-k42r.v.cablecom.net>
+References: <1375813794-4578-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 07 10:58:31 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <jk@jk.gs>, <stimming@tuhh.de>, <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 07 11:17:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6zZe-0007Pn-Su
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 10:58:31 +0200
+	id 1V6zrn-0004t3-LG
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 11:17:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932151Ab3HGI60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Aug 2013 04:58:26 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:4660 "EHLO edge10.ethz.ch"
+	id S1757300Ab3HGJRM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Aug 2013 05:17:12 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:12907 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757220Ab3HGI6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Aug 2013 04:58:25 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 7 Aug
- 2013 10:58:22 +0200
+	id S1756495Ab3HGJRK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Aug 2013 05:17:10 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 7 Aug
+ 2013 11:17:04 +0200
 Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.253) by
- CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Wed, 7 Aug 2013 10:58:24 +0200
-In-Reply-To: <1375813604-10565-1-git-send-email-Matthieu.Moy@imag.fr>
-	(Matthieu Moy's message of "Tue, 6 Aug 2013 20:26:44 +0200")
+ CAS12.d.ethz.ch (172.31.38.212) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Wed, 7 Aug 2013 11:17:08 +0200
+In-Reply-To: <1375813794-4578-1-git-send-email-ralf.thielow@gmail.com> (Ralf
+	Thielow's message of "Tue, 6 Aug 2013 20:29:54 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 X-Originating-IP: [129.132.153.253]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231813>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Ralf Thielow <ralf.thielow@gmail.com> writes:
+>=20
 
-> At least GNU echo interprets backslashes in its arguments.
->
-> This triggered at least one bug: the error message of "rebase -i" was
-> turning \t in commit messages into actual tabulations. There may be
-> others.
->
-> Using "printf '%s\n'" instead avoids this bad behavior, and is the form
-> used by the "say" function.
->
-> Noticed-by: David Kastrup <dak@gnu.org>
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+The changes look good to me.  The following is purely about the origina=
+l
+English messages.
+
+>  #: builtin/commit.c:62
+> -#, fuzzy
+>  msgid ""
+>  "The previous cherry-pick is now empty, possibly due to conflict res=
+olution.\n"
+>  "If you wish to commit it anyway, use:\n"
+>  "\n"
+>  "    git commit --allow-empty\n"
+> @@ -4014,25 +4012,30 @@ msgstr ""
+>  "Konfliktaufl=C3=B6sung.\n"
+>  "Wenn Sie dies trotzdem committen wollen, benutzen Sie:\n"
+>  "\n"
+>  "    git commit --allow-empty\n"
+>  "\n"
+> -"Andernfalls benutzen Sie bitte 'git reset'\n"
+> =20
+>  #: builtin/commit.c:69
+>  msgid "Otherwise, please use 'git reset'\n"
+> -msgstr ""
+> +msgstr "Andernfalls benutzen Sie bitte 'git reset'\n"
+
+This results from Peff's c17592a (commit: tweak empty cherry pick advic=
+e
+for sequencer, 2013-07-26):
+
+  diff --git a/builtin/commit.c b/builtin/commit.c
+  index a17a5df..39717d5 100644
+  --- a/builtin/commit.c
+  +++ b/builtin/commit.c
+  @@ -62,8 +62,18 @@
+   "If you wish to commit it anyway, use:\n"
+   "\n"
+   "    git commit --allow-empty\n"
+  +"\n");
+  +
+  +static const char empty_cherry_pick_advice_single[] =3D
+  +N_("Otherwise, please use 'git reset'\n");
+  +
+  +static const char empty_cherry_pick_advice_multi[] =3D
+  +N_("If you wish to skip this commit, use:\n"
+   "\n"
+  -"Otherwise, please use 'git reset'\n");
+  +"    git reset\n"
+  +"\n"
+  +"Then \"git cherry-pick --continue\" will resume cherry-picking\n"
+  +"the remaining commits.\n");
+  =20
+   static const char *use_message_buffer;
+   static const char commit_editmsg[] =3D "COMMIT_EDITMSG";
+
+
+I was wondering for a while if this was a smart move, based on the usua=
+l
+observation that it is better to translate things in one chunk because
+many languages have more interdependencies than English does.  The
+gettext manual says:
+
+     puts ("Apollo 13 scenario: Stack overflow handling failed.");
+     puts ("On the next stack overflow we will crash!!!");
+
+  Should these two statements merged into a single one? I would recomme=
+nd
+  to merge them if the two sentences are related to each other, because
+  then it makes it easier for the translator to understand and translat=
+e
+  both.  On the other hand, if one of the two messages is a stereotypic
+  one, occurring in other places as well, you will do a favour to the
+  translator by not merging the two.
 [...]
-> +test_expect_success 'rebase -i error on commits with \ in message' '
-> +	current_head=$(git rev-parse HEAD)
-> +	test_when_finished "git rebase --abort; git reset --hard $current_head; rm -f error" &&
-> +	test_commit TO-REMOVE will-conflict old-content &&
-> +	test_commit "\temp" will-conflict new-content dummy &&
-> +	(
-> +	EDITOR=true &&
-> +	export EDITOR &&
-> +	test_must_fail git rebase -i HEAD^ --onto HEAD^^ 2>error
-> +	) &&
-> +	grep -v "	" error
+     Translatable strings should be limited to one paragraph; don't let=
+ a
+  single message be longer than ten lines.
 
-Umm, doesn't that only test that _some_ line in the error does not
-contain a tab?
+So it seems that concatenating sentences indeed falls into a gray area
+between "avoid sentence lego" and "split at paragraphs".  And Peff's
+style of splitting it saves the translators work because the first part
+of the message is shared among two code paths.
 
-Whereas you need to test that _no_ line contains <TAB>emp, or some
-such.  Perhaps as
-
-  ! grep -v "	emp" error
-
-> +'
-> +
->  test_done
-
--- 
+--=20
 Thomas Rast
 trast@{inf,student}.ethz.ch
