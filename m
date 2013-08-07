@@ -1,99 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] Build in git-repack
-Date: Wed, 07 Aug 2013 08:48:39 -0700
-Message-ID: <7v38qlec2w.fsf@alter.siamese.dyndns.org>
-References: <CACsJy8A-xo97MC-vBmqCrvvSDMWKd_MxnRrTBSeSqcQ1HifzJA@mail.gmail.com>
-	<1375884049-14961-1-git-send-email-stefanbeller@googlemail.com>
-	<1375884049-14961-2-git-send-email-stefanbeller@googlemail.com>
-	<vpqzjsth8wt.fsf@anie.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] status: show tracking branch even no difference
+Date: Wed, 07 Aug 2013 17:50:08 +0200
+Message-ID: <vpqr4e5h55b.fsf@anie.imag.fr>
+References: <46fb1948a57990b0ea737401f2d60f654da4bb4f.1375890091.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stefan Beller <stefanbeller@googlemail.com>, pclouds@gmail.com,
-	iveqy@iveqy.com, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 07 17:48:52 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 07 17:50:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V75yl-0002ds-Mv
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 17:48:52 +0200
+	id 1V760N-0003uk-4L
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 17:50:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753177Ab3HGPsr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Aug 2013 11:48:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40836 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751992Ab3HGPsq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Aug 2013 11:48:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CD99369FF;
-	Wed,  7 Aug 2013 15:48:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=HEUwR6GogNx2
-	WAyK1pbqQNQnNDI=; b=FStuSuhIDsTmsvoOO7+1Z0EV97x6MPWsgvFzSzZhOTAo
-	RGKn31htRty/ZmeJdcBPWqam/HB8BU4wZUAXfJCt98A/J7N0WUQXbubjYixsJB3A
-	Wo7o7exZJEvFwYL/oJgooTb+MxxC7TuOO+7TA65rQanUi40/GK0lMJzvx+fOlfE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KcZ8dG
-	jIAtxsqVVlrZo6qro9u58mo9HFLyTvEM+I0ux9GftAdS46gY2/YcEJgta2Cr5HCb
-	0R9ueLjZ0Kbbm/+uWzwWdsQmC8RBXUGWtS5iOKxaQdQoJkooQqLh650O14aLg5RZ
-	XtSCfp2HyQQ6AjomAMa8q8A6GuqxVWUBnamGs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C702369F6;
-	Wed,  7 Aug 2013 15:48:43 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12E7D369ED;
-	Wed,  7 Aug 2013 15:48:41 +0000 (UTC)
-In-Reply-To: <vpqzjsth8wt.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	07 Aug 2013 16:28:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D5B24F9E-FF78-11E2-8D00-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754880Ab3HGPu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Aug 2013 11:50:27 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51789 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753797Ab3HGPu0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Aug 2013 11:50:26 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r77Fo6FQ028709
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 7 Aug 2013 17:50:06 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1V7600-0007TJ-DC; Wed, 07 Aug 2013 17:50:08 +0200
+In-Reply-To: <46fb1948a57990b0ea737401f2d60f654da4bb4f.1375890091.git.worldhello.net@gmail.com>
+	(Jiang Xin's message of "Wed, 7 Aug 2013 23:42:01 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 07 Aug 2013 17:50:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r77Fo6FQ028709
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1376495409.28319@FtUez02epS270dSn5LQ6ig
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231832>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> [ It's cool you're working on this, I'd really like a git-repack in C=
-=2E
->   That would fix this
->   http://thread.gmane.org/gmane.comp.version-control.git/226458 ]
+> With this patch, "git status" will report relationship between current
+> branch and its upstream counterpart even if there is no difference.
 >
-> Stefan Beller <stefanbeller@googlemail.com> writes:
->
->> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
->>
->> pack-objects learns a few more options to take over what's been done
->> by git-repack.sh. cmd_repack() becomes a wrapper around
->> cmd_pack_objects().
->
-> I think the patch would read easier if these were split into two
-> patches: one doing the real stuff in pack-objects, and then getting r=
-id
-> of git-repack.sh to replace it with a trivial built-in.
->
-> Actually, I'm wondering why pack-objects requires so much changes.
-> git-repack.sh was already a relatively small wrapper around
-> pack-objects, and did not need the new options you add, so why are th=
-ey
-> needed? In particular adding the new --update-info option that just d=
-oes
->
->> +	if (repack_flags & REPACK_UPDATE_INFO)
->> +		update_server_info(0);
->
-> seems overkill to me: why don't you just let cmd_repack call
-> update_server_info(0)?
+>     $ git status
+>     # On branch master
+>     # Your branch is identical to its tracking branch: 'origin/master'.
 
-My feeling exactly.  I would rather see a patch that does not touch
-pack-objects at all, and use run_command() interface to spawn it.
-Once we do have to pack, the necessary processing cycle will dwarf
-the fork/exec latency anyway, no?
+Why not, but we try to say "remote-tracking branch" instead of just
+"tracking". Adding "remote-" in your wording may make the line a bit
+long, but it may be sufficient to say
+
+# Your branch is identical to 'origin/master'
+
+That's consistant with other messages like
+
+# Your branch is ahead of '%s' by %d commits
+
+(And this would deserve a test)
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
