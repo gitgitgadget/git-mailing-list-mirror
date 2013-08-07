@@ -1,107 +1,71 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: [PATCH] git exproll: steps to tackle gc aggression
-Date: Tue, 6 Aug 2013 18:25:28 -0600
-Organization: CAF
-Message-ID: <201308061825.28579.mfick@codeaurora.org>
-References: <1375756727-1275-1-git-send-email-artagnon@gmail.com>
+From: Daniel Convissor <danielc@analysisandsolutions.com>
+Subject: Re: change remote to track new branch
+Date: Tue, 6 Aug 2013 20:30:53 -0400
+Message-ID: <20130807003053.GA7145@analysisandsolutions.com>
+References: <20130803024032.GA28666@analysisandsolutions.com>
+ <m2d2pvp7nw.fsf@linux-m68k.org>
+ <20130803162821.GA945@analysisandsolutions.com>
+ <87iozmhgl1.fsf@igel.home>
+ <20130803165215.GC945@analysisandsolutions.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 07 02:25:37 2013
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 07 02:31:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V6rZI-00083U-9H
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 02:25:36 +0200
+	id 1V6reU-0002dE-Op
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Aug 2013 02:30:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756365Ab3HGAZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Aug 2013 20:25:32 -0400
-Received: from smtp.codeaurora.org ([198.145.11.231]:48379 "EHLO
-	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756326Ab3HGAZb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Aug 2013 20:25:31 -0400
-Received: from smtp.codeaurora.org (localhost [127.0.0.1])
-	by smtp.codeaurora.org (Postfix) with ESMTP id E48C513F10E;
-	Wed,  7 Aug 2013 00:25:30 +0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 486)
-	id D8D3113F342; Wed,  7 Aug 2013 00:25:30 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	pdx-caf-smtp.dmz.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.1
-Received: from mfick-lnx.localnet (mfick-lnx.qualcomm.com [129.46.10.58])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: mfick@smtp.codeaurora.org)
-	by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B60713F10E;
-	Wed,  7 Aug 2013 00:25:30 +0000 (UTC)
-User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <1375756727-1275-1-git-send-email-artagnon@gmail.com>
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1756567Ab3HGAay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Aug 2013 20:30:54 -0400
+Received: from analysisandsolutions.com ([50.116.58.177]:35206 "EHLO
+	analysisandsolutions.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756355Ab3HGAax (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Aug 2013 20:30:53 -0400
+Received: by analysisandsolutions.com (Postfix, from userid 1001)
+	id 4D2CC18973; Tue,  6 Aug 2013 20:30:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+	d=analysisandsolutions.com; s=default; t=1375835453;
+	bh=qgs7zFglEXLe8r64RLmZ/rXhsFRhowN/Ojuir6aBUx0=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=a8Iy19ZLPT7bC9SuTHQAkpI9VoiGBkt/Muvgh2C6dquv0KH5L7dJw1P2Hjt6eBm/s
+	 gYPfllUS2H+6f9k23VhkuQMAorLjTvG4Bv3HvxeuYwoPYPmaz9av/Id8ueT/xbir3o
+	 1Rpk5Hi2RcY5X0Wl1NIrg+jOrlmYOL09psFpEWnk=
+Content-Disposition: inline
+In-Reply-To: <20130803165215.GC945@analysisandsolutions.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231802>
 
-On Monday, August 05, 2013 08:38:47 pm Ramkumar Ramachandra 
-wrote:
-> This is the rough explanation I wrote down after reading
-> it:
+Hi Folks:
+
+On Sat, Aug 03, 2013 at 12:52:15PM -0400, Daniel Convissor wrote:
 > 
-> So, the problem is that my .git/objects/pack is polluted
-> with little packs everytime I fetch (or push, if you're
-> the server), and this is problematic from the
-> perspective of a overtly (naively) aggressive gc that
-> hammers out all fragmentation.  So, on the first run,
-> the little packfiles I have are all "consolidated" into
-> big packfiles; you also write .keep files to say that
-> "don't gc these big packs we just generated".  In
-> subsequent runs, the little packfiles from the fetch are
-> absorbed into a pack that is immune to gc.  You're also
-> using a size heuristic, to consolidate similarly sized
-> packfiles.  You also have a --ratio to tweak the ratio
-> of sizes.
+> Yeah.  I had contemplated using the following commands:
 > 
-> From: Martin Fick<mfick@codeaurora.org>
-> See: https://gerrit-review.googlesource.com/#/c/35215/
-> Thread:
-> http://thread.gmane.org/gmane.comp.version-control.git/2
-> 31555 (Martin's emails are missing from the archive)
-> ---
+>     git config remote.wp.fetch \
+>         "+refs/heads/3.6-branch:refs/remotes/wp/3.6-branch"
+>     git config branch.wp.merge "refs/heads/3.6-branch"
+> 
+> So is "git remote set-branches" and "git branch --set-upstream-to" just
+> another syntax for making those same changes to git config?  Or do the
+> new commands do some additional work on the repository (to better keep
+> track of things, or whatever)?
 
-After analyzing today's data, I recognize that in some 
-circumstances the size estimation after consolidation can be 
-off by huge amounts.  The script naively just adds the 
-current sizes together.  This gives a very rough estimate, 
-of the new packfile size, but sometimes it can be off by 
-over 2 orders of magnitude. :(  While many new packfiles are 
-tiny (several K only), it seems like the larger new 
-packfiles have a terrible tendency to throw the estimate way 
-off (I suspect they simply have many duplicate objects).  
-But despite this poor estimate, the script still offers 
-drastic improvements over plain git gc.
+Sorry to be a pest, but I'm curious what the answer is, please.
 
-So, it has me wondering if there isn't a more accurate way 
-to estimate the new packfile without wasting a ton of time?
+Thank you,
 
-If not, one approach which might be worth experimenting with 
-is to just assume that new packfiles have size 0!  Then just 
-consolidate them with any other packfile which is ready for 
-consolidation, or if none are ready, with the smallest 
-packfile.  I would not be surprised to see this work on 
-average better than the current summation,
-
--Martin
-
+--Dan
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
- 
+ T H E   A N A L Y S I S   A N D   S O L U T I O N S   C O M P A N Y
+            data intensive web and database programming
+                http://www.AnalysisAndSolutions.com/
+        4015 7th Ave #4, Brooklyn NY 11232  v: 718-854-0335
