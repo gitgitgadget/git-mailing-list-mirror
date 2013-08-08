@@ -1,52 +1,66 @@
-From: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] pull: Allow pull to preserve merges when rebasing.
-Date: Thu, 8 Aug 2013 22:56:45 +0100
-Organization: OPDS
-Message-ID: <7571F7ED549C4BC68F3DE176FBF81F0F@PhilipOakley>
-References: <1375983492-32282-1-git-send-email-stephen@exigencecorp.com><1375983492-32282-2-git-send-email-stephen@exigencecorp.com><alpine.DEB.1.00.1308082314320.24252@s15462909.onlinehome-server.info> <20130808163539.0b59b20a@sh9>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Date: Thu, 08 Aug 2013 14:57:08 -0700
+Message-ID: <7vd2pn977v.fsf@alter.siamese.dyndns.org>
+References: <1375983492-32282-1-git-send-email-stephen@exigencecorp.com>
+	<1375983492-32282-2-git-send-email-stephen@exigencecorp.com>
+	<alpine.DEB.1.00.1308082314320.24252@s15462909.onlinehome-server.info>
+	<20130808163539.0b59b20a@sh9>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, <avarab@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Stephen Haberman" <stephen@exigencecorp.com>
-X-From: git-owner@vger.kernel.org Thu Aug 08 23:56:36 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, avarab@gmail.com
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Thu Aug 08 23:57:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7YCB-0001tM-Le
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 23:56:36 +0200
+	id 1V7YCr-0002S9-U9
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 23:57:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758112Ab3HHV4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 17:56:31 -0400
-Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:24165 "EHLO
-	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758094Ab3HHV4b (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Aug 2013 17:56:31 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AlgMAMATBFJOl3GZ/2dsb2JhbABbgwY1iSK1cgQEAYEZF3SCHwUBAQUIAQEuHgEBIQsCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGIAwi4UASQG4MhdAOIc4YOmi+BNoFjOw
-X-IPAS-Result: AlgMAMATBFJOl3GZ/2dsb2JhbABbgwY1iSK1cgQEAYEZF3SCHwUBAQUIAQEuHgEBIQsCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGIAwi4UASQG4MhdAOIc4YOmi+BNoFjOw
-X-IronPort-AV: E=Sophos;i="4.89,842,1367967600"; 
-   d="scan'208";a="81541061"
-Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
-  by out1.ip07ir2.opaltelecom.net with SMTP; 08 Aug 2013 22:56:21 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1758153Ab3HHV5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 17:57:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35590 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752940Ab3HHV5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 17:57:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 342E037D04;
+	Thu,  8 Aug 2013 21:57:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BhTNuIcS7X7lNi+H7ObdRs7zhX8=; b=HOevU5
+	mjlTX6az+w57soVBHxt/dNDioQGWVpfn6RcRwG1fEZc82potYGGEC/P+6gxhC961
+	MrcgT4uVCdpxxIRcOijXk21wWRRM39lSJ0MXBM7as+n0vRaHMJ4ZEWfLTOEtQDl3
+	71l6p/LUgQEpyM+u5cutiyV5Rd88L1E6n6xSA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nfrSTXS9e/4BPpf1NLGT7NwvccH8sSiJ
+	L+XYp9IPkpwSYOKA7XfBs5UV+nlNaUfcsAGsNsFfOOkQ9asWQvfngH+dhsZyLNDF
+	41BUcEjihfuEUV4M/HhmqT9tdpYxQyRIDxfkUxoGbMzv1xmmhBK8S9ApIy1STCIu
+	Zhd62lYiia8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27E2E37D03;
+	Thu,  8 Aug 2013 21:57:13 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38DC337D00;
+	Thu,  8 Aug 2013 21:57:10 +0000 (UTC)
+In-Reply-To: <20130808163539.0b59b20a@sh9> (Stephen Haberman's message of
+	"Thu, 8 Aug 2013 16:35:39 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 79982064-0075-11E3-8524-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231942>
 
-From: "Stephen Haberman" <stephen@exigencecorp.com>
+Stephen Haberman <stephen@exigencecorp.com> writes:
+
 > Hi Johannes,
 >
 >> This should probably be added to config.txt and
@@ -54,32 +68,28 @@ From: "Stephen Haberman" <stephen@exigencecorp.com>
 >
 > Yep, I meant to note that I'd do that after getting an initial
 > confirmation that the pull.preserve-merges was the preferred approach.
->
+
+If you were to go that route, no dashes in the last component of
+configuration variable names, please.
+
 > (I was being lazy and didn't want to write up docs only to switch to
 > overloading pull.rebase or what not.)
->
-> But I'll go ahead and do that.
->
->> https://github.com/msysgit/git/commit/b733454b
->
-> Interesting!
->
->> Feel free to play with it if you want!
->
-> I'll poke around out of curiosity, but no promises, as, yes, this is a
-> tricky bit of functionality that can quickly lead to a lot of lost
-> sleep. :-)
->
-> - Stephen
->
->
-Johannes also kindly explained his merging-rebase script to me on the 
-msysgit list a few days ago 
-https://groups.google.com/forum/?hl=en_US?hl%3Den#!topic/msysgit/LiPa2T_K4C4 
-which shows how msysgit and git both keep parallel lines of development 
-with fast forwarding and rebasing at the same time.
 
-The technique should also help those case for keeping 
-private/independent lines of development that are discussed often.
+I think we have a recent update that allows you to say
 
-Philip
+	[pull]
+        	rebase = false
+
+to mean "I want 'git pull' to use merge".  Currently the other
+choice is:
+
+	[pull]
+		rebase = true
+
+to say "I want to run 'git pull --rebase'".  I do not think it is
+unreasonable to extend it further so that
+
+	[pull]
+		rebase = preserve
+
+is understood.
