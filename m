@@ -1,87 +1,117 @@
-From: Justin Collum <jcollum@gmail.com>
-Subject: git status resets permissions on index file -- Ubuntu 12.04 64b
-Date: Thu, 8 Aug 2013 13:27:33 -0700
-Message-ID: <CACO0oR7a1-fUASQ+SJVbH1CU8d=NbHrK0MuMu+9Pr4_=7q85Vw@mail.gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [Bug] git stash generates a different diff then other commands
+ (diff, add, etc) resulting in merge conflicts!
+Date: Thu, 8 Aug 2013 16:54:59 -0400
+Message-ID: <CABURp0oATJ58POmgYLjSmy-y84LTjkP0PTh4=3M-vc04_AoMdg@mail.gmail.com>
+References: <CAP+CFTZWzoAg=ni6t1aif-85y6W4-2JUT4wooapTvD0oGH+HRw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 08 22:27:40 2013
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Luke San Antonio <lukesanantonio@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 08 22:55:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7Wo6-0004ZK-8L
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 22:27:38 +0200
+	id 1V7XF1-0001t2-9r
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 22:55:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966323Ab3HHU1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 16:27:34 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:63660 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753130Ab3HHU1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 16:27:33 -0400
-Received: by mail-ie0-f174.google.com with SMTP id w15so2662585iea.5
-        for <git@vger.kernel.org>; Thu, 08 Aug 2013 13:27:33 -0700 (PDT)
+	id S966555Ab3HHUzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 16:55:22 -0400
+Received: from mail-vb0-f49.google.com ([209.85.212.49]:60191 "EHLO
+	mail-vb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966547Ab3HHUzU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 16:55:20 -0400
+Received: by mail-vb0-f49.google.com with SMTP id w16so3545974vbb.22
+        for <git@vger.kernel.org>; Thu, 08 Aug 2013 13:55:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=6pZJQ0ciullxqAUEW0NQVVUmonBDWtl20qnYvCj2+WQ=;
-        b=B8kupybSTl4lXzyQKL8d+9/6Yb1o9GbJuF9aYezq+GW7WQY1RC62DYKnf0Uvji+pQv
-         yXLL0FU6z73GwTIyquBl0LOZ26MYm7Jat+EYKN8FlovpXpZdt5wzbxTVuOp4yPuuBlEL
-         /+FTFv7R8Egk2Nz2lxfw5rGcRmFXCp5Rsbuzgf+zIdWLnVqrX0VTrqWFegJ+0YQUAz6X
-         F2AG1OBTNk2UPZokpToBF1ssbh/xRhftEZLapbCfYQKYivWm9ErJKdNy/vP3THQYPmwx
-         eJgPh0J7byBqCuuit0DhqXqtMlhUujPQ871vaR/v5CMY/A152o00ExRAy8OggWuTyVjT
-         trng==
-X-Received: by 10.43.77.137 with SMTP id zi9mr2885331icb.106.1375993653497;
- Thu, 08 Aug 2013 13:27:33 -0700 (PDT)
-Received: by 10.43.146.70 with HTTP; Thu, 8 Aug 2013 13:27:33 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0D/Ccw02quaUG8FQrsUaS6KG2aGLlMQPcZkwioRFCyg=;
+        b=CNr6szAvhVXm5vWnrUOP3+1IFl7qM//pb78NuvNR8USzK+YOC1J962osNcQt0gfEFl
+         tkUqiQCgBb3b29oyerEAU4RR+XuzfQA2rmbugP8VLbpMGKL1ztKYaMgSHwvc2yOjm0wT
+         mJxUGICGSPFL2OVZt3eL5M8FJ5ia2RJmIH7YApAKUH5fXaaLMLO9PbxTwQzrFX2hHaae
+         15V8+hXOBCQ6LYWvBw/+jh7oY4k4QkkY0XCREwXKnOPWCLRD+S4A1x8VrSuVNDKMUU/w
+         Y6KnnEYr3ZNqiWB64ghesF85I8ztNAKbaQlvuLmZOAKNfyDVM3LWsK3uM33zPeXZLvRY
+         mO4A==
+X-Received: by 10.220.82.9 with SMTP id z9mr5155218vck.0.1375995319555; Thu,
+ 08 Aug 2013 13:55:19 -0700 (PDT)
+Received: by 10.58.220.72 with HTTP; Thu, 8 Aug 2013 13:54:59 -0700 (PDT)
+In-Reply-To: <CAP+CFTZWzoAg=ni6t1aif-85y6W4-2JUT4wooapTvD0oGH+HRw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231929>
 
-I've run into a strange situation with git lately. It seems that
-anything I do involving git will alter the permissions on my index
-file to the point that I can't do anything until I re-add the
-permissions on the file.
+On Thu, Aug 8, 2013 at 3:07 AM, Luke San Antonio
+<lukesanantonio@gmail.com> wrote:
+>
+> Hi, my name's Luke!
+>
+> Today, I had a problem merging a stash after immediately creating it.
+> This is exactly what I did!
+>
+> git stash save --keep-index
+> git stash pop
+>
+> And BAM! Merge conflict! This was especially weird because my file had
+> this in it (taken directly from my code!)
+>
 
-Looks like a bug to me, is it? It does seem like this has started
-happening since I moved over to 64b Ubuntu.
+Luke,
 
-$ ll .git
-total 156K
-...
-drwxrwxrwx   2 dev dev 4.0K Jul 23 09:30 hooks
--rwxrwxrwx   1 dev dev  17K Aug  8 13:12 index
-drwxrwxrwx   2 dev dev 4.0K Jul 19 09:31 info
-...
+I think the issue is that your working directory receives your cached
+file when you say 'git stash --keep-index'.  When you restore the
+stash, your previous working directory now conflicts with your new
+working directory, but neither is the same as HEAD.
 
-$ gs
-# On branch build-0.3
-# Your branch is ahead of 'staging/build-0.3' by 5 commits.
-#   (use "git push" to publish your local commits)
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-# scripts/loadMongo.coffee
-nothing added to commit but untracked files present (use "git add" to track)
+Here's a test script to demonstrate the issue, I think.  Did I get
+this right, Luke?
 
-$ ll .git
-total 156K
-...
-drwxrwxrwx   2 dev dev 4.0K Jul 23 09:30 hooks
--rw-rw-r--   1 dev dev  17K Aug  8 13:16 index   # <---------------
-this line  <-------------------------------
-drwxrwxrwx   2 dev dev 4.0K Jul 19 09:31 info
-...
+ # cd /tmp && rm -rf foo
+ git init foo && cd foo
+ echo "foo" > bar &&  git add bar && git commit -mfoo
+ echo "bar" > bar &&  git add bar
+ echo "baz" > bar
+ echo "Before stash  bar: $(cat bar)"
+ git stash --keep-index
+ echo "After stash  bar: $(cat bar)"
+ git stash apply
 
-$ git --version
-git version 1.8.3.4
 
-Ubuntu:
-Distributor ID: Ubuntu
-Description: Ubuntu 12.04.2 LTS
-Release: 12.04
-Codename: precise
+The output looks like this:
+
+$  git init foo && cd foo
+Initialized empty Git repository in /tmp/foo/.git/
+$ git commit --allow-empty -mInitialCommit
+[master (root-commit) b5ecc7e] InitialCommit
+$ echo "Bar" > bar &&  git add bar && git commit -mBar
+[master 16d708b] Bar
+ 1 file changed, 1 insertion(+)
+ create mode 100644 bar
+$ echo "bar" > bar &&  git add bar
+$  echo "baz" > bar
+$  echo "Before stash  bar: $(cat bar)"
+Before stash  bar: baz
+$  git stash --keep-index
+Saved working directory and index state WIP on master: 16d708b Bar
+HEAD is now at 16d708b Bar
+$  echo "After stash  bar: $(cat bar)"
+After stash  bar: bar
+$  git stash apply
+Auto-merging bar
+CONFLICT (content): Merge conflict in bar
+Recorded preimage for 'bar'
+$ cat bar
+<<<<<<< Updated upstream
+bar
+=======
+baz
+>>>>>>> Stashed changes
+
+
+
+Phil
