@@ -1,82 +1,63 @@
-From: Alexandru Juncu <alexj@rosedu.org>
-Subject: [PATCH] git-p4: Fix occasional truncation of symlink contents.
-Date: Thu,  8 Aug 2013 16:17:38 +0300
-Message-ID: <1375967858-10615-1-git-send-email-ajuncu@ixiacom.com>
-Cc: Alexandru Juncu <ajuncu@ixiacom.com>,
-	Alex Badea <abadea@ixiacom.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 08 15:18:13 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Reproducible, corrupt packfile after fresh git-svn checkout message 3 of 20)
+Date: Thu, 08 Aug 2013 15:18:53 +0200
+Message-ID: <vpqli4cfhhe.fsf@anie.imag.fr>
+References: <52037F47.5010302@exxcellent.de> <52037F84.9060006@exxcellent.de>
+	<f1d8f80d6fa3678ac043bfdb19bebf6bf4261273@localhost>
+	<877gfw4byx.fsf@linux-k42r.v.cablecom.net>
+	<262a9f8309a3812970f47ac9f4e4b49bb972ca49@localhost>
+	<87fvuk2wl0.fsf@linux-k42r.v.cablecom.net>
+	<9aa1672d5c04994f416dccd84b5983c960c0fdf9@localhost>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: gitml.jexpert@recursor.net
+X-From: git-owner@vger.kernel.org Thu Aug 08 15:19:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7Q6W-0007Nk-PF
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 15:18:13 +0200
+	id 1V7Q7R-0008Bo-8C
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 15:19:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757831Ab3HHNSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 09:18:08 -0400
-Received: from mail-qc0-f181.google.com ([209.85.216.181]:47389 "EHLO
-	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757795Ab3HHNSG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 09:18:06 -0400
-Received: by mail-qc0-f181.google.com with SMTP id k15so1534051qcv.12
-        for <git@vger.kernel.org>; Thu, 08 Aug 2013 06:18:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=KFk9fjDgVsmxp6xfgN794wSUOtGe9UInLZaRMhGj8J8=;
-        b=GYgP4LzU477YjqsCKvHtb/bUSFvQ3yzLWjcCTg9LrXdGckAC+rRDTlck0IkXeOzI+z
-         LI8sPNHVenblvLoRayczk/RfkH68K/LxbmDdo8pJP0/dKY638OuCjAQIjVn6Mamy+naF
-         9HOJHSrSMbPOXhldkOW4ra8kYoytzK1ZRHAxMHPc1JeUQC6+RTRWIKixisClTUlcqmFd
-         W4g94A6LLO2JyXk/0S7tgVRtM9RA0gNUJ+NG44AD2JN9ZsxgbGAlOf/EEm0bJxzmcMRq
-         1fJTrNnZKb9sfuboecGX2BWFRopmWG1r57Dg9kiLahJBu4DqePTtFas0NS7jB2YsX9fG
-         oefA==
-X-Gm-Message-State: ALoCoQnfFFYlWfH3OtP9siAeL7Sbq7Rfy+B5pte13uW1R5z9iU3cyV2v+bat7qbHnig3/goLNX2T
-X-Received: by 10.229.159.75 with SMTP id i11mr1367615qcx.59.1375967885406;
-        Thu, 08 Aug 2013 06:18:05 -0700 (PDT)
-Received: from ixro-alexj.ixiacom.com ([205.168.23.154])
-        by mx.google.com with ESMTPSA id y1sm17258562qaj.2.2013.08.08.06.18.03
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 08 Aug 2013 06:18:04 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc0.1.g8f6a3e5
+	id S934237Ab3HHNTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 09:19:04 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:47856 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934221Ab3HHNTD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 09:19:03 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r78DIqoU020143
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 8 Aug 2013 15:18:52 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1V7Q7B-0006AB-Gh; Thu, 08 Aug 2013 15:18:53 +0200
+In-Reply-To: <9aa1672d5c04994f416dccd84b5983c960c0fdf9@localhost> (gitml
+	jexpert's message of "Thu, 08 Aug 2013 15:12:34 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 08 Aug 2013 15:18:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r78DIqoU020143
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1376572736.57039@g5qQi8vPDq3IDdsnJIznIQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231882>
 
-Symlink contents in p4 print sometimes have a trailing
-new line character, but sometimes it doesn't. git-p4
-should only remove the last character if that character
-is '\n'.
+gitml.jexpert@recursor.net writes:
 
-Signed-off-by: Alex Juncu <ajuncu@ixiacom.com>
-Signed-off-by: Alex Badea <abadea@ixiacom.com>
----
- git-p4.py | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+> So - now the puzzling thing: With valgrind it seems to work! 
 
-diff --git a/git-p4.py b/git-p4.py
-index 31e71ff..a53a6dc 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2180,9 +2180,13 @@ class P4Sync(Command, P4UserMap):
-             git_mode = "100755"
-         if type_base == "symlink":
-             git_mode = "120000"
--            # p4 print on a symlink contains "target\n"; remove the newline
-+            # p4 print on a symlink sometimes contains "target\n";
-+            # if it does, remove the newline
-             data = ''.join(contents)
--            contents = [data[:-1]]
-+            if data[-1] == '\n':
-+                contents = [data[:-1]]
-+            else:
-+                contents = [data]
- 
-         if type_base == "utf16":
-             # p4 delivers different text in the python output to -G
+Weird, indeed. What about GDB ?
+
 -- 
-1.8.4.rc0.1.g8f6a3e5
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
