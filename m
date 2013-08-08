@@ -1,178 +1,124 @@
 From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: [PATCH] diff: remove another ternary expression always evaluating
- to true
-Date: Thu, 08 Aug 2013 23:22:32 +0200
-Message-ID: <52040C18.4030306@googlemail.com>
-References: <1375988103-29947-1-git-send-email-stefanbeller@googlemail.com> <alpine.DEB.1.00.1308082257580.24252@s15462909.onlinehome-server.info>
+Subject: Re: git status resets permissions on index file -- Ubuntu 12.04 64b
+Date: Thu, 08 Aug 2013 23:35:35 +0200
+Message-ID: <52040F27.4050908@googlemail.com>
+References: <CACO0oR7a1-fUASQ+SJVbH1CU8d=NbHrK0MuMu+9Pr4_=7q85Vw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
  protocol="application/pgp-signature";
- boundary="------------enig8A34DFE03A62B26FBED90979"
-Cc: Jens.Lehmann@web.de, gitster@pobox.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 08 23:22:38 2013
+ boundary="------------enig88E58AD41438F2DCAF1211A8"
+Cc: git@vger.kernel.org
+To: Justin Collum <jcollum@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 08 23:35:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7XfH-0007FV-TA
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 23:22:36 +0200
+	id 1V7Xru-0001Ej-9D
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 23:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966712Ab3HHVWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 17:22:32 -0400
-Received: from mail-ee0-f42.google.com ([74.125.83.42]:35404 "EHLO
-	mail-ee0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966701Ab3HHVWb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 17:22:31 -0400
-Received: by mail-ee0-f42.google.com with SMTP id b45so1755562eek.15
-        for <git@vger.kernel.org>; Thu, 08 Aug 2013 14:22:29 -0700 (PDT)
+	id S966733Ab3HHVfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 17:35:34 -0400
+Received: from mail-ee0-f54.google.com ([74.125.83.54]:62539 "EHLO
+	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966702Ab3HHVfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 17:35:33 -0400
+Received: by mail-ee0-f54.google.com with SMTP id e53so1368951eek.13
+        for <git@vger.kernel.org>; Thu, 08 Aug 2013 14:35:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type;
-        bh=aGq7RihzY/NyfplFugSW4KwKytVsqRtJ4hp5+Ol4uec=;
-        b=eAUtIpjFaGw3px63u3kPilp5m2HzrRH2NK4280ZMHxBu0Ufqz0PdaEekhbflm1Efg5
-         DzMJsDlU4tGWclhPsLrhjlGHY7vYhnRanA5cf3CMnq2slnnHMUjeyqmZND2na/befeEW
-         wgxNwdv7KEFxaQ70p1557hk+UKCqKmooE3hCsyj35M2vps5Ye0hqpQZ+EA8AlfRYTXP5
-         +PWFf2j5yDGRejeDsXY+CozTNa8sVtjv+ykwz+3XPynnK4/8bOH6DnA30Na7/RlTrf+Q
-         0pKjZfpy7LqIaCExhK9exYQ8nmMhZh9fF1/V0LL5aVprbTanZLrYPnFaCSq8C+BIMYSg
-         IhQg==
-X-Received: by 10.14.69.206 with SMTP id n54mr10016573eed.118.1375996949780;
-        Thu, 08 Aug 2013 14:22:29 -0700 (PDT)
+        bh=vSuMutRS9g7Adx2HvZESKr1lsDrs/INvibyf6UqSoxM=;
+        b=IL9GLghro6xo6+NarQT1OVEuCFLjztGXlaSoFmhtI2g/lHY3U+QQcsOSDEfcrZyyzB
+         2AmpQRbq5T0Gsr/52sLePKIRbR6iIO7rV58uECJCDtB1A/W0lnW9pQMZ/MdY+ajJ3viB
+         lsUXAO3+abOyaCOZwR3QoTz4vi/Zm5L3K5zc0k5pgESd26OjYOiXOooKz7f/eRpKHMke
+         2eUFKT/9Vx8R7SZuaZricMgvOft4CmFVz340EHhqajiHexXbUAJLcrlKVnETH1rxiQVJ
+         hiXb2wc4Nne/tp7aiW0mLnd67Ygi4NT4iDLcZyGy77qXVuiG40vZUhImN4oa5eEbGVSz
+         +DnQ==
+X-Received: by 10.15.81.129 with SMTP id x1mr10191829eey.82.1375997732660;
+        Thu, 08 Aug 2013 14:35:32 -0700 (PDT)
 Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id n42sm22702297eeh.15.2013.08.08.14.22.28
+        by mx.google.com with ESMTPSA id k3sm22806678een.16.2013.08.08.14.35.31
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 08 Aug 2013 14:22:29 -0700 (PDT)
+        Thu, 08 Aug 2013 14:35:31 -0700 (PDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
-In-Reply-To: <alpine.DEB.1.00.1308082257580.24252@s15462909.onlinehome-server.info>
+In-Reply-To: <CACO0oR7a1-fUASQ+SJVbH1CU8d=NbHrK0MuMu+9Pr4_=7q85Vw@mail.gmail.com>
 X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231936>
 
 This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig8A34DFE03A62B26FBED90979
+--------------enig88E58AD41438F2DCAF1211A8
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: quoted-printable
 
-On 08/08/2013 11:01 PM, Johannes Schindelin wrote:
-> Hi Stefan,
+On 08/08/2013 10:27 PM, Justin Collum wrote:
+> I've run into a strange situation with git lately. It seems that
+> anything I do involving git will alter the permissions on my index
+> file to the point that I can't do anything until I re-add the
+> permissions on the file.
 >=20
-> On Thu, 8 Aug 2013, Stefan Beller wrote:
+> Looks like a bug to me, is it? It does seem like this has started
+> happening since I moved over to 64b Ubuntu.
 >=20
->> The condition before the changed line dereferences 'one' to query the =
-mode,
->> so if the condition evaluates to true, the variable one must not be nu=
-ll.
+> $ ll .git
+> total 156K
+> ...
+> drwxrwxrwx   2 dev dev 4.0K Jul 23 09:30 hooks
+> -rwxrwxrwx   1 dev dev  17K Aug  8 13:12 index
+> drwxrwxrwx   2 dev dev 4.0K Jul 19 09:31 info
+> ...
 >=20
-> To show this better, please use -U10 (or some other appropriate context=
+> $ gs
+> # On branch build-0.3
+> # Your branch is ahead of 'staging/build-0.3' by 5 commits.
+> #   (use "git push" to publish your local commits)
+> #
+> # Untracked files:
+> #   (use "git add <file>..." to include in what will be committed)
+> #
+> # scripts/loadMongo.coffee
+> nothing added to commit but untracked files present (use "git add" to t=
+rack)
+>=20
+> $ ll .git
+> total 156K
+> ...
+> drwxrwxrwx   2 dev dev 4.0K Jul 23 09:30 hooks
+> -rw-rw-r--   1 dev dev  17K Aug  8 13:16 index   # <---------------
+> this line  <-------------------------------
+> drwxrwxrwx   2 dev dev 4.0K Jul 19 09:31 info
+> ...
+>=20
+> $ git --version
+> git version 1.8.3.4
+>=20
+> Ubuntu:
+> Distributor ID: Ubuntu
+> Description: Ubuntu 12.04.2 LTS
+> Release: 12.04
+> Codename: precise
 
-> option) in the future.
->=20
->> Therefore we do not need the ternary operator depending on one, giving=
+The permissions are set to reading for all and writing for you(r user)
+and your group. This should be no problem with standard git commands.
+Before you had the index file executable, why would you need that?
 
->> either one->path or two->path. This always evaluates to one->path, so =
-we
->> can remove the ternary operator.
->>
->> The condition and the usage of the ternary operator have been introduc=
-ed
->> by the same commit (752c0c24, 2009-10-19, Add the --submodule option t=
-o
->> the diff option family). As that commit message refers to a GitTogethe=
-r
->> I'd assume that patch was crafted in a hurry, so maybe overlooking the=
+What kind of filesystem do you have? (The output of 'mount' would be=20
+interesting)=20
 
->> need for a ternary operator there.
->=20
-> If this is my code, I do not need a GitTogether to excuse my sloppiness=
-=2E
-> In this particular case, I imagine the appropriate fix is to test for
-> one->path instead of removing the conditional, though.
->=20
-> Ciao,
-> Johannes
->=20
-
-Ok, here is a resend with -U10
-I forgot about the -U10 as gitk shows a different number of lines=20
-of context around. Is there a way to configure gitk to show less lines
-of code or a default -U10 for send-email/format-patch?
-
-So you rather propose to have=20
--		show_submodule_summary(o->file, one ? one->path : two->path,
-+		show_submodule_summary(o->file, one->path ? one->path : two->path,
-
-instead of the patch below?
-(The test suite run without any problem using that patch)
+Also what exactly breaks? ("can't do anything")=20
+What commands do not behave as you'd expect?=20
 
 Stefan
 
---8<--
-=46rom 3a580c51f0bf70745f26eb5045d646dfead2afd3 Mon Sep 17 00:00:00 2001
-From: Stefan Beller <stefanbeller@googlemail.com>
-Date: Thu, 8 Aug 2013 20:54:24 +0200
-Subject: [PATCH] diff: remove another ternary expression always evaluatin=
-g to
- true
 
-The condition before the changed line dereferences 'one' to query the mod=
-e,
-so if the condition evaluates to true, the variable one must not be null.=
-
-Therefore we do not need the ternary operator depending on one, giving
-either one->path or two->path. This always evaluates to one->path, so
-we can remove the ternary operator.
-
-The condition and the usage of the ternary operator have been introduced
-by the same commit (752c0c24, 2009-10-19, Add the --submodule option to
-the diff option family). As that commit message refers to a GitTogether
-I'd assume that patch was crafted in a hurry, so maybe overlooking the
-need for a ternary operator there.
-
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
----
- diff.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 80f8439..f30b7e4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2245,22 +2245,21 @@ static void builtin_diff(const char *name_a,
- 	struct userdiff_driver *textconv_one =3D NULL;
- 	struct userdiff_driver *textconv_two =3D NULL;
- 	struct strbuf header =3D STRBUF_INIT;
- 	const char *line_prefix =3D diff_line_prefix(o);
-=20
- 	if (DIFF_OPT_TST(o, SUBMODULE_LOG) &&
- 			(!one->mode || S_ISGITLINK(one->mode)) &&
- 			(!two->mode || S_ISGITLINK(two->mode))) {
- 		const char *del =3D diff_get_color_opt(o, DIFF_FILE_OLD);
- 		const char *add =3D diff_get_color_opt(o, DIFF_FILE_NEW);
--		show_submodule_summary(o->file, one ? one->path : two->path,
--				line_prefix,
-+		show_submodule_summary(o->file, one->path, line_prefix,
- 				one->sha1, two->sha1, two->dirty_submodule,
- 				meta, del, add, reset);
- 		return;
- 	}
-=20
- 	if (DIFF_OPT_TST(o, ALLOW_TEXTCONV)) {
- 		textconv_one =3D get_textconv(one);
- 		textconv_two =3D get_textconv(two);
- 	}
-=20
---=20
-1.8.4.rc1.25.gd121ba2
-
-
-
---------------enig8A34DFE03A62B26FBED90979
+--------------enig88E58AD41438F2DCAF1211A8
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
@@ -181,19 +127,19 @@ Content-Disposition: attachment; filename="signature.asc"
 Version: GnuPG v1.4.12 (GNU/Linux)
 Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJSBAwYAAoJEJQCPTzLflhqPa4QAPAJxRIHU8JbwUQYbvPJpOyx
-CNq9riVXL4ttSJl8WxSKU436I6teD0yskH5kJAc6qPZWjiTS1p9I25kMoZwPWzuu
-xzI3/Mg9fXXOgCbnWj0tZpRqqqnwzjt8rAT64fdY16l7gcsEx7cgWDPCEEpurghY
-aO2iNi1Ve+WiOHdOOmBEq+Te11wzXbUJj31nydLCRwIYvf+Pb3nVFsNZKDkjLWLW
-qMLSkGaDE4QjsePs9g6tC6g2JDUyCkLUacIUwM0RwTYYKLZhVxrnmLbTfzI02QBR
-b7Wh0HllXHfIyC2lOBIhu43rID/sZISJwT8F0XoCB4jUBoMGez3n5TGvKT2tBdsX
-/XNBs8fefl0LXHYUrK1rQBtTjhXL9ZjyKkkr+PmnGKbs8HObwjYKt3f3YTptGskh
-psLQ+Xb7jeCm7m+KV1g/V2LPQlgBBajRqsw9S/2RiHdFcYme5Q+WPbTg7hdd0Ebt
-ytn3cnCtTD2X5c0PmYCi9l462VMZFhQ1ijy6j+vwrfuV7Ni1mbXPbFN7fTM1fTqH
-z5ZCDRdAKia7SEx4XcUr9EB+D3ATlFXEWrGe4+DJ8UdG7BuWdZfFC4R34xeGL2JC
-qLwJ9ihq1cL6quhob+Gms0iLzKU1KWBwuZTeHAQwlxiMy49YQD/Psnf7m34/7jkq
-61PCMQFRZy8k1bduQxwQ
-=uH7d
+iQIcBAEBAgAGBQJSBA8nAAoJEJQCPTzLflhqUm4QAN2qrJtAMp/Ct5Ijzd0MqNta
+GxkSFxajBxTLZ4TdX0wCjC/tGXPlSDGLvIKI0Oq4wMya1eAhr4zvll1bsBz3qwJu
+cRM1Nwb73S6kgkCHAlOWxHfGNTQIyfEaMBbBLU0X6k+HM2vr5ZfqGuROQVrD/hGq
+y9KuxnfgN37k1J4zXrE5cjKaNGBqoSoMakQ+DHmCTwN6NnoBoISh1XcOTCrVTfW0
+UEk9SafLV9QZvJBvlJCVcuq45qXzR94hQGN7BKbhyAVHCzgxudrgXX7KECfR3AVK
+qA7WDJ4FtjIIV06KTd3iH1h3QWmGbVnz1Sxvp//Ssjd6facckyn2x0xvuYocL3gM
+peNC+gZRUNYdlkB4GIP39jeWmyI6M3S5/4tjEvCUrIRnaElC0RGyJCoSckDOqzi1
++/U1CqTN0L/yvAAOz4AWY34io7JvFWAvEBW/KEWEFzOarCs8rZGGzlzniYwm4rvi
+5P3IgazHopv1j7eCwzqzFWuFLcKm+ZsLm9k2K0qMYeupXPoNYuaSAa10wwlVbUgR
+9BDifxgAmtgh0bT0shYMJmdVmPaLq488Rajzhe0Ic+6qjpAgp9HL7cJtNSDatRDt
+xFpZ0C7CrMKuchqMkEc81iwQL1+2Tb+Katpd0b6Mo8NS165e/ryz2+br5n5CraL4
+UL34KPLI8GPg0ag4EOua
+=WU4L
 -----END PGP SIGNATURE-----
 
---------------enig8A34DFE03A62B26FBED90979--
+--------------enig88E58AD41438F2DCAF1211A8--
