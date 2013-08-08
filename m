@@ -1,76 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Remove old forgotten command: whatchanged
-Date: Thu, 08 Aug 2013 17:24:18 +0200
-Message-ID: <vpqvc3gcijh.fsf@anie.imag.fr>
-References: <CALkWK0=zZKTwn7cdrJXsVXH-rF=xWMeD_z2XAOCnuaf2bK_h8Q@mail.gmail.com>
-	<52027B17.7040602@googlemail.com>
-	<7vtxj1crv6.fsf@alter.siamese.dyndns.org>
-	<CALkWK0kTfQYZG8R1EMuV37pdJ-aj9btXmfJ1Fb4QoMeZ1QucAw@mail.gmail.com>
-	<vpqfvukdy39.fsf@anie.imag.fr>
-	<CALkWK0kD=adWKVf+zb+Pnjz-HBkhks8ZvmQ3eYSpdXvahr=e4g@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: Reproducible, corrupt packfile after fresh git-svn checkout message (gitml: message 5 of 20) (gitml: message 6 of 20)
+Date: Thu, 8 Aug 2013 17:28:27 +0200
+Message-ID: <87txj0i4mc.fsf@inf.ethz.ch>
+References: <52037F47.5010302@exxcellent.de> <52037F84.9060006@exxcellent.de>
+	<f1d8f80d6fa3678ac043bfdb19bebf6bf4261273@localhost>
+	<877gfw4byx.fsf@linux-k42r.v.cablecom.net>
+	<262a9f8309a3812970f47ac9f4e4b49bb972ca49@localhost>
+	<87fvuk2wl0.fsf@linux-k42r.v.cablecom.net>
+	<9aa1672d5c04994f416dccd84b5983c960c0fdf9@localhost>
+	<vpqli4cfhhe.fsf@anie.imag.fr>
+	<813506281f7a4d3a8af650c5f8ee33dd7224f193@localhost>
+	<vpqfvukfgr5.fsf@anie.imag.fr>
+	<edc9f41b4ffca9ce36dc50e749de7a86e4618a0e@localhost>
+	<87fvuk1cyl.fsf@linux-k42r.v.cablecom.net> <5203B100.30008@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <stefanbeller@googlemail.com>,
-	Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 08 17:26:36 2013
+Cc: <git@vger.kernel.org>, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	"Stefan Beller" <stefanbeller@googlemail.com>
+To: Ben Tebulin <tebulin@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 08 17:28:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7S6k-00059L-Pb
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 17:26:35 +0200
+	id 1V7S8k-0006sq-V9
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 17:28:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757898Ab3HHP0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 11:26:31 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47197 "EHLO rominette.imag.fr"
+	id S965835Ab3HHP2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 11:28:35 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:31286 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965894Ab3HHPZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 11:25:09 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r78FOHDU032407
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 8 Aug 2013 17:24:17 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1V7S4Z-00073y-8N; Thu, 08 Aug 2013 17:24:19 +0200
-In-Reply-To: <CALkWK0kD=adWKVf+zb+Pnjz-HBkhks8ZvmQ3eYSpdXvahr=e4g@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Thu, 8 Aug 2013 20:43:53 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 08 Aug 2013 17:24:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r78FOHDU032407
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1376580258.92422@4PqkINULTazM2W6W9Ch8EQ
+	id S965297Ab3HHP2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 11:28:34 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 8 Aug
+ 2013 17:28:24 +0200
+Received: from hexa.ethz.ch (46.126.8.85) by CAS21.d.ethz.ch (172.31.51.111)
+ with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 8 Aug 2013 17:28:31
+ +0200
+In-Reply-To: <5203B100.30008@gmail.com> (Ben Tebulin's message of "Thu, 08 Aug
+	2013 16:53:52 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231897>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Ben Tebulin <tebulin@googlemail.com> writes:
 
-> Matthieu Moy wrote:
->> ... but I do agree that the doc is really confusing. It would be much
->> better if the doc could be reduced to:
->>
->> "This is a synonym for linkgit:git-log[1] --raw --some --other ---options.
->> Please refer to the documentation of that command."
+> Am 08.08.2013 16:20, schrieb Thomas Rast - trast@inf.ethz.ch:
+>> Can you try to reproduce with a version older than v1.8.3?
+>> E.g. v1.8.2.3.
+>> I'm asking because the above points at packed_object_info(), which I
+>> recently rewrote to be nonrecursive.
 >
-> I don't think there's an exact correspondence with any combination of
-> command-line options. Perhaps we can describe it in words, and ask
-> people to use log instead?
+> It seems to run 'much better' 
+>   v1.8.2.3 : 3/10 runs do fail
+>   fb56570  : 9/10 runs do fail
 
-I'd say either this, or add the missing features to "git log" to make my
-suggestion possible (after all, if some people like "git whatchanged",
-then maybe the feature would be of interest to "git log" users ?).
+The good news is that this shifts the blame away from my commit ;-) as
+the problem clearly existed even before that.
+
+The bad news, of course, is that this is another hunch that turned out
+to be wrong.  I'm running out of ideas.
+
+> They always fail on a big blob (39MB) as I wrote in my first e-mail:
+>
+> ben@n179 /tmp/project.git $ ~/projects/git.git/git-show 49cdd0b21a351f3366008615d2cf8d03ca943978 | wc -c
+> error: sha1 mismatch 49cdd0b21a351f3366008615d2cf8d03ca943978
+> fatal: bad object 49cdd0b21a351f3366008615d2cf8d03ca943978
+> 0
+> ben@n179 /tmp/project.git $ ~/projects/git.git/git-show 49cdd0b21a351f3366008615d2cf8d03ca943978 | wc -c
+> 39517156
+
+Hrmm.  I wonder about the significance of those 39MB.  What is your
+core.packedGitWindowSize?  (Judging from the pastes you seem to be on
+64bit, so the default would be 1GB.)
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thomas Rast
+trast@{inf,student}.ethz.ch
