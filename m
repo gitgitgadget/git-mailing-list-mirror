@@ -1,79 +1,89 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: [PATCH] pull: Allow pull to preserve merges when rebasing.
-Date: Thu, 8 Aug 2013 14:08:39 -0500
-Organization: Exigence
-Message-ID: <20130808140839.56c8343f@sh9>
-References: <1375983492-32282-1-git-send-email-stephen@exigencecorp.com>
-	<1375983492-32282-2-git-send-email-stephen@exigencecorp.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Remove old forgotten command: whatchanged
+Date: Thu, 8 Aug 2013 20:09:08 +0100
+Message-ID: <20130808190908.GF2337@serenity.lan>
+References: <CALkWK0=zZKTwn7cdrJXsVXH-rF=xWMeD_z2XAOCnuaf2bK_h8Q@mail.gmail.com>
+ <vpqfvukdy39.fsf@anie.imag.fr>
+ <ku0lqj$qvs$1@ger.gmane.org>
+ <vpqk3jwcb1q.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Johannes.Schindelin@gmx.de, avarab@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 08 21:08:49 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Damien Robert <damien.olivier.robert+gmane@gmail.com>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Aug 08 21:09:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7VZo-0006Md-0U
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 21:08:48 +0200
+	id 1V7VaN-0006rN-8Y
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 21:09:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966188Ab3HHTIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 15:08:43 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:62604 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966186Ab3HHTIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 15:08:42 -0400
-Received: by mail-oa0-f54.google.com with SMTP id o6so5821983oag.41
-        for <git@vger.kernel.org>; Thu, 08 Aug 2013 12:08:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=exigencecorp.com; s=google;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :organization:mime-version:content-type:content-transfer-encoding;
-        bh=V8lH051VAuhq5Yljc9IZpYLYp/yIO6zCHsHJY1Xh7ss=;
-        b=VjkebPet9VNdskuhbi7aFLmnvS5aB+fcFAedtn0EZXjl7LvaKdivANtcbCta7et8Jo
-         QnJ9VFF1uOfjW8ZWkA9/sn3T224PKvx0E8HjRKM4paR8Bx88PgGXAlTnyDDlb0DWCVCl
-         RwSUR20iiqUfZLdzEojqIrBow04D1glrxR9Pc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:organization:mime-version:content-type
-         :content-transfer-encoding;
-        bh=V8lH051VAuhq5Yljc9IZpYLYp/yIO6zCHsHJY1Xh7ss=;
-        b=hWEmnxsyOeBfnCLZAtQgu2jIpKZeIvla9PbxxY5N3726cnDdqnEN0hjYIiXAlIj3Fl
-         k1S/OIfbattTLpMZEE0kKamcJQe2IIryk0xn2xBKh/9VL8vu0h3gi9OTgnB4EjlnwwgT
-         867zyiPoKj+Le1bntxObbJ9keswa8RBj8F9cSZLcYb0XAUkhsUxh9Prhv+ufZpGlX8Uz
-         9W/QvxY2B4crXT2fY/wg7kuJxNX5sbRPJBlFYfLHAmhN2/4gJRs7a1SDqoPUmpcqrjdw
-         19eO9yn+eiM9ti//Kpjv2DE5Lk6L69xDR8eVH8xwlopLk7dXfypFsae5xElBksocO1Sr
-         94xw==
-X-Gm-Message-State: ALoCoQmQp1WkUGEOF/jUfKhSkYbC9UFdnx2V9z35AM54yQPe/6VkACWP0hEL5CT2yt9b4eO4AMzf
-X-Received: by 10.60.133.133 with SMTP id pc5mr5391072oeb.63.1375988921225;
-        Thu, 08 Aug 2013 12:08:41 -0700 (PDT)
-Received: from sh9 (wsip-184-187-11-226.om.om.cox.net. [184.187.11.226])
-        by mx.google.com with ESMTPSA id jz7sm14965126obb.4.2013.08.08.12.08.40
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Thu, 08 Aug 2013 12:08:40 -0700 (PDT)
-In-Reply-To: <1375983492-32282-2-git-send-email-stephen@exigencecorp.com>
-X-Mailer: Claws Mail 3.9.1 (GTK+ 2.24.17; x86_64-pc-linux-gnu)
+	id S966204Ab3HHTJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 15:09:18 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:55565 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966146Ab3HHTJR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 15:09:17 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 46ED4CDA5B5;
+	Thu,  8 Aug 2013 20:09:16 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -12.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-12.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, ALUMINATI_LOCAL_TESTS=-10, BAYES_00=-1.9]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id rBcPGyT9SkVz; Thu,  8 Aug 2013 20:09:15 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 9B65BCDA5AE;
+	Thu,  8 Aug 2013 20:09:10 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <vpqk3jwcb1q.fsf@anie.imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231922>
+
+On Thu, Aug 08, 2013 at 08:06:09PM +0200, Matthieu Moy wrote:
+> --- a/Documentation/gitcore-tutorial.txt
+> +++ b/Documentation/gitcore-tutorial.txt
+> @@ -532,12 +532,7 @@ commit, and you can tell it to show a whole series of diffs.
+>  Alternatively, you can tell it to be "silent", and not show the diffs at
+>  all, but just show the actual commit message.
+>  
+> -In fact, together with the 'git rev-list' program (which generates a
+> -list of revisions), 'git diff-tree' ends up being a veritable fount of
+> -changes. A trivial (but very useful) script called 'git whatchanged' is
+> -included with Git which does exactly this, and shows a log of recent
+> -activities.
+> -
+> +'git log' can also be used to display changes introduced by some commits.
+>  To see the whole history of our pitiful little git-tutorial project, you
+>  can do
+>  
+> @@ -550,7 +545,7 @@ with the associated patches use the more complex (and much more
+>  powerful)
+
+Isn't this paragraph slightly misleading now?  We're not using a
+different command any more so this could say:
+
+    which shows just the log messages, or if we want to see the log together
+    with the associated patches use the `--patch` option
 
 
-> This is because "git pull" currently does not know about rebase's
-> preserve merges flag, which would this behavior, and instead replay
-> on the merge commit of the feature branch onto the new master, and
-> not the entire feature branch itself.
+>  ----------------
+> -$ git whatchanged -p
+> +$ git log --raw -p
+>  ----------------
 
-Ack, sorry, I was doing this too late last night--should say:
-
-This is because "git pull" currently does not know about rebase's
-preserve merges flag, which would avoid this behavior by replaying the
-merge commit of the feature branch onto the new master, and not
-replaying each individual commit in the feature branch.
-
-- Stephen
+Then this can be "git log --patch", since it seems that the surrounding
+text doesn't actually care that whatchanged prints the raw diffstat.
