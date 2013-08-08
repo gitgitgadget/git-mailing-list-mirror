@@ -1,311 +1,137 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v2] status: always show tracking branch even no change
-Date: Thu,  8 Aug 2013 13:40:20 +0800
-Message-ID: <1481cfff6c22568f2a73613668cee0b99ceb4629.1375940354.git.worldhello.net@gmail.com>
-References: <vpqr4e5h55b.fsf@anie.imag.fr>
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Aug 08 07:43:09 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Remove old forgotten command: whatchanged
+Date: Wed, 07 Aug 2013 23:39:17 -0700
+Message-ID: <7vpptobsa2.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0=zZKTwn7cdrJXsVXH-rF=xWMeD_z2XAOCnuaf2bK_h8Q@mail.gmail.com>
+	<52027B17.7040602@googlemail.com>
+	<7vtxj1crv6.fsf@alter.siamese.dyndns.org>
+	<5202C109.6040209@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 08 08:39:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7J05-0001MA-KO
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 07:43:06 +0200
+	id 1V7Jsc-0006yq-Ik
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 08:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752219Ab3HHFnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 01:43:00 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:60560 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751355Ab3HHFm7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 01:42:59 -0400
-Received: by mail-pa0-f44.google.com with SMTP id fz6so190933pac.17
-        for <git@vger.kernel.org>; Wed, 07 Aug 2013 22:42:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8y0GyDMiaFgNBPFMQpvOsNJR28lOn6XspejUvmGj3Pg=;
-        b=UpjLNrmf+hlcdnTZIRcriKvEqheu3+be8CyyneQ6bFjh0TrsrvhBLZO5wgsrJpXV5X
-         vsndq17nIHBmpHFHy5PoBZOm79qExSQWBzNDGSaG18IKuklGaMZvIEHbsyChazW/MtTK
-         MJwOyIsANrvmySCb98acJszmg3+6uNkhWiBCjVbiQq9DT7AMN4epJJkLKRoYlUImNN3A
-         yxt8cHIuV9f3NlJuRvYpj7N71GvJ+ADNKPG0id3Ft+NUVNhfHX6fyYgg4A6JnVglbCS9
-         WjDya6Jktjy+2QOVsWTdR3ryHTgZqLoO9JlnMONbkpymkxpGx1rXQIgAqBHe9Ku8VQQF
-         dyUQ==
-X-Received: by 10.68.106.36 with SMTP id gr4mr4385107pbb.0.1375940579024;
-        Wed, 07 Aug 2013 22:42:59 -0700 (PDT)
-Received: from localhost.localdomain ([114.246.125.252])
-        by mx.google.com with ESMTPSA id eq5sm12002409pbc.15.2013.08.07.22.42.55
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 07 Aug 2013 22:42:57 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc1.429.geed1a03
-In-Reply-To: <vpqr4e5h55b.fsf@anie.imag.fr>
+	id S932900Ab3HHGjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 02:39:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38705 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753420Ab3HHGjU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 02:39:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFB1332728;
+	Thu,  8 Aug 2013 06:39:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JyuitqRWnQ0awkuOenSCf0ZzmR4=; b=JdbQPS
+	RLg/Wh2/9Mr/QkgPEZv1Sz5ykMG0AM3dokulo2C3o3/ZmqoJ0kSspHocyDCbqy7I
+	dL9o6fYwbxoJbQTDjqMj9cfg1dJ6wkZve1lzLWLgbK90O7abxHP1Yq8Y2yDZMIze
+	0EnXfYh5jjmxYk+UD8mAMns1hsQUcKB3r6LvU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MUAyDlKgnVwFlWgexIS3eqGOOkW75ee2
+	R7jVjC1+yMxqcj/HWyOnkI47zdLjzYo2BVM1dbnRvwqZuuTYjQSsWD9o9VoX6v/T
+	JKkMmCvwRzoXisDjsFZ8mtQe4gqCMshalx197+2k2eoEDKpcAuZ6Et2AJDR7KnjW
+	P/M5Mmy4T38=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFDE832725;
+	Thu,  8 Aug 2013 06:39:19 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F359E32723;
+	Thu,  8 Aug 2013 06:39:18 +0000 (UTC)
+In-Reply-To: <5202C109.6040209@googlemail.com> (Stefan Beller's message of
+	"Wed, 07 Aug 2013 23:50:01 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4094556A-FFF5-11E2-B33D-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231863>
 
-If the current branch has an upstream branch, and there are changes
-between the current branch and its upstream, some commands (such as
-"git status", "git status -bs", and "git checkout") will report their
-relationship. E.g.
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-    $ git status
-    # On branch master
-    # Your branch is ahead of 'origin/master' by 1 commit.
-    #   (use "git push" to publish your local commits)
-    #
-    ...
+> Well if we make sure the whatchanged command can easily be reproduced
+> with the log command, we could add the missing parameters to it, hence
+> no change for the user. (git whatchanged == git log --raw --no-merges or
+> git log --wc [to be done yet]).
+>
+> So I did not mean to introduce a change for users!
 
-    $ git status -bs
-    ## master...origin/master [ahead 1]
-    ...
+I certainly did *not* read that from between the lines of what you
+wrote:
 
-    $ git checkout master
-    Already on 'master'
-    Your branch is ahead of 'origin/master' by 1 commit.
-      (use "git push" to publish your local commits)
++ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
++ {
++ 	return cmd_log(argc, argv, prefix)
++ }
 
-But if there is no difference between the current branch and its
-upstream, the relationship will not be reported, and it's hard to
-tell whether the current branch has a tracking branch or not. And
-what's worse, when the 'push.default' config variable is set to
-`matching`, it's hard to tell whether the current branch has already
-been pushed out or not at all [1].
+In principle, I agree that it is a good idea to try to share enough
+code, while keeping the flexiblity and clarity of the code for
+maintainability.
 
-With this patch, "git status" will report relationship between the
-current branch and its upstream counterpart even if there is no
-difference.
+In the extreme, you could rewrite these two functions like so:
 
-    $ git status
-    # On branch master
-    # Your branch is identical to 'origin/master'.
-    #
-    ...
+	static int cmd_lw_helper(
+		int argc, const char **argv,
+        	const char *prefix,
+                int whoami)	
+        {
+		struct rev_info rev;
+		struct setup_revision_opt opt;
+        
+		init_grep_defaults();
+                git_config(git_log_config, NULL);
+                init_revisions(&rev, prefix);
+		if (whoami == 'l') { /* log */
+	                rev.always_show_header = always_show_header;
+		} else { /* whatchanged */
+	                rev.diff = diff;
+	                rev.simplify_history = simplify_history;
+		}
+                memset(opt, 0, sizeof(opt));
+                opt.def = "HEAD";
+                opt.revarg_opt = REVARG_COMMITTISH;
+                cmd_log_init(argc, argv, prefix, &rev, &opt);
+		if (whoami == 'w') {
+			if (!rev.diffopt.output_format)
+				rev.diffopt.output_format = DIFF_FORMAT_RAW;
+		}
+                return cmd_log_walk(&rev);
+	}
 
-    $ git status -bs
-    ## master...origin/master
-    ...
+        int cmd_log(int argc, const char **argv, const char *prefix)
+	{
+        	return cmd_lw_helper(argc, argv, prefix, 'l');
+	}
 
-    $ git checkout master
-    Already on 'master'
-    Your branch is identical to 'origin/master'.
+        int cmd_whatchanged(int argc, const char **argv, const char *prefix)
+	{
+        	return cmd_lw_helper(argc, argv, prefix, 'w');
+	}
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/198703
+but at that point, the cost you have to pay when you need to update
+one of them but not the other becomes higher.
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
- remote.c                 | 22 ++++++++++++++------
- t/t6040-tracking-info.sh | 54 ++++++++++++++++++++++++++++++++++++++++++++----
- wt-status.c              | 13 +++++++++---
- 3 files changed, 76 insertions(+), 13 deletions(-)
+As whatchanged is kept primarily for people who learned Git by word
+of mouth reading the kernel mailing list and are used to that
+command.  Its external interface and what it does is not likely to
+drastically change.  On the other hand, "log" is a primary Porcelain
+and we would expect constant improvements.
 
-diff --git a/remote.c b/remote.c
-index 2433467..825f278 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1740,6 +1740,10 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
- 	const char *rev_argv[10], *base;
- 	int rev_argc;
- 
-+	/* Set both num_theirs and num_ours as undetermined. */
-+	*num_theirs = -1;
-+	*num_ours = -1;
-+
- 	/*
- 	 * Nothing to report unless we are marked to build on top of
- 	 * somebody else.
-@@ -1758,14 +1762,16 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
- 	theirs = lookup_commit_reference(sha1);
- 	if (!theirs)
- 		return 0;
-+	*num_theirs = 0;
- 
- 	if (read_ref(branch->refname, sha1))
- 		return 0;
- 	ours = lookup_commit_reference(sha1);
- 	if (!ours)
- 		return 0;
-+	*num_ours = 0;
- 
--	/* are we the same? */
-+	/* are we the same? both num_theirs and num_ours have been set to 0. */
- 	if (theirs == ours)
- 		return 0;
- 
-@@ -1786,8 +1792,6 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
- 	prepare_revision_walk(&revs);
- 
- 	/* ... and count the commits on each side. */
--	*num_ours = 0;
--	*num_theirs = 0;
- 	while (1) {
- 		struct commit *c = get_revision(&revs);
- 		if (!c)
-@@ -1812,12 +1816,18 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 	int num_ours, num_theirs;
- 	const char *base;
- 
--	if (!stat_tracking_info(branch, &num_ours, &num_theirs))
--		return 0;
-+	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
-+		if (num_ours || num_theirs)
-+			return 0;
-+	}
- 
- 	base = branch->merge[0]->dst;
- 	base = shorten_unambiguous_ref(base, 0);
--	if (!num_theirs) {
-+	if (!num_ours && !num_theirs) {
-+		strbuf_addf(sb,
-+			_("Your branch is identical to '%s'.\n"),
-+			base);
-+	} else if (!num_theirs) {
- 		strbuf_addf(sb,
- 			Q_("Your branch is ahead of '%s' by %d commit.\n",
- 			   "Your branch is ahead of '%s' by %d commits.\n",
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index ec2b516..eafce7d 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -28,18 +28,20 @@ test_expect_success setup '
- 		git reset --hard HEAD^ &&
- 		git checkout -b b4 origin &&
- 		advance e &&
--		advance f
-+		advance f &&
-+		git checkout -b b5 origin
- 	) &&
- 	git checkout -b follower --track master &&
- 	advance g
- '
- 
--script='s/^..\(b.\)[	 0-9a-f]*\[\([^]]*\)\].*/\1 \2/p'
-+script='s/^..\(b.\)[	 0-9a-f]*\(\[\([^]]*\)\]\)\{0,1\}.*/\1 \3/p'
- cat >expect <<\EOF
- b1 ahead 1, behind 1
- b2 ahead 1, behind 1
- b3 behind 1
- b4 ahead 2
-+b5 
- EOF
- 
- test_expect_success 'branch -v' '
-@@ -56,6 +58,7 @@ b1 origin/master: ahead 1, behind 1
- b2 origin/master: ahead 1, behind 1
- b3 origin/master: behind 1
- b4 origin/master: ahead 2
-+b5 origin/master
- EOF
- 
- test_expect_success 'branch -vv' '
-@@ -67,20 +70,27 @@ test_expect_success 'branch -vv' '
- 	test_i18ncmp expect actual
- '
- 
--test_expect_success 'checkout' '
-+test_expect_success 'checkout (diverged from upstream)' '
- 	(
- 		cd test && git checkout b1
- 	) >actual &&
- 	test_i18ngrep "have 1 and 1 different" actual
- '
- 
-+test_expect_success 'checkout (identical to upstream)' '
-+	(
-+		cd test && git checkout b5
-+	) >actual &&
-+	test_i18ngrep "Your branch is identical to .origin/master" actual
-+'
-+
- test_expect_success 'checkout with local tracked branch' '
- 	git checkout master &&
- 	git checkout follower >actual &&
- 	test_i18ngrep "is ahead of" actual
- '
- 
--test_expect_success 'status' '
-+test_expect_success 'status (diverged from upstream)' '
- 	(
- 		cd test &&
- 		git checkout b1 >/dev/null &&
-@@ -90,6 +100,42 @@ test_expect_success 'status' '
- 	test_i18ngrep "have 1 and 1 different" actual
- '
- 
-+test_expect_success 'status (identical to upstream)' '
-+	(
-+		cd test &&
-+		git checkout b5 >/dev/null &&
-+		# reports nothing to commit
-+		test_must_fail git commit --dry-run
-+	) >actual &&
-+	test_i18ngrep "Your branch is identical to .origin/master" actual
-+'
-+
-+cat >expect <<\EOF
-+## b1...origin/master [ahead 1, behind 1]
-+EOF
-+
-+test_expect_success 'status -s -b (diverged from upstream)' '
-+	(
-+		cd test &&
-+		git checkout b1 >/dev/null &&
-+		git status -s -b | head -1
-+	) >actual &&
-+	test_i18ncmp expect actual
-+'
-+
-+cat >expect <<\EOF
-+## b5...origin/master
-+EOF
-+
-+test_expect_success 'status -s -b (identical to upstream)' '
-+	(
-+		cd test &&
-+		git checkout b5 >/dev/null &&
-+		git status -s -b | head -1
-+	) >actual &&
-+	test_i18ncmp expect actual
-+'
-+
- test_expect_success 'fail to track lightweight tags' '
- 	git checkout master &&
- 	git tag light &&
-diff --git a/wt-status.c b/wt-status.c
-index ff4b324..56f3c19 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1381,9 +1381,11 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 	if (s->is_initial)
- 		color_fprintf(s->fp, header_color, _("Initial commit on "));
- 	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
--		color_fprintf(s->fp, branch_color_local, "%s", branch_name);
--		fputc(s->null_termination ? '\0' : '\n', s->fp);
--		return;
-+		if (num_ours || num_theirs) {
-+			color_fprintf(s->fp, branch_color_local, "%s", branch_name);
-+			fputc(s->null_termination ? '\0' : '\n', s->fp);
-+			return;
-+		}
- 	}
- 
- 	base = branch->merge[0]->dst;
-@@ -1392,6 +1394,11 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 	color_fprintf(s->fp, header_color, "...");
- 	color_fprintf(s->fp, branch_color_remote, "%s", base);
- 
-+	if (!num_ours && !num_theirs) {
-+		fputc(s->null_termination ? '\0' : '\n', s->fp);
-+		return;
-+	}
-+
- 	color_fprintf(s->fp, header_color, " [");
- 	if (!num_ours) {
- 		color_fprintf(s->fp, header_color, _("behind "));
--- 
-1.8.4.rc1.429.geed1a03
+Between the "share more code for reuse" and "keep the flexibility
+and clarity for maintainability", it is a subtle balancing act.
+Personally I think the current code strikes a good balance by not
+going to the extreme, given that "change one (i.e. log) but not the
+other" is a very likely pattern for the evolution of these two
+commands.
