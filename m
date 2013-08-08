@@ -1,120 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Reproducible, corrupt packfile after fresh git-svn checkout message (gitml: message 5 of 20) (gitml: message 6 of 20)
-Date: Thu, 08 Aug 2013 10:38:53 -0700
-Message-ID: <7vsiyk9j6a.fsf@alter.siamese.dyndns.org>
-References: <52037F47.5010302@exxcellent.de> <52037F84.9060006@exxcellent.de>
-	<f1d8f80d6fa3678ac043bfdb19bebf6bf4261273@localhost>
-	<877gfw4byx.fsf@linux-k42r.v.cablecom.net>
-	<262a9f8309a3812970f47ac9f4e4b49bb972ca49@localhost>
-	<87fvuk2wl0.fsf@linux-k42r.v.cablecom.net>
-	<9aa1672d5c04994f416dccd84b5983c960c0fdf9@localhost>
-	<vpqli4cfhhe.fsf@anie.imag.fr>
-	<813506281f7a4d3a8af650c5f8ee33dd7224f193@localhost>
-	<vpqfvukfgr5.fsf@anie.imag.fr>
-	<edc9f41b4ffca9ce36dc50e749de7a86e4618a0e@localhost>
-	<87fvuk1cyl.fsf@linux-k42r.v.cablecom.net> <5203B100.30008@gmail.com>
-	<87txj0i4mc.fsf@inf.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>, <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	"Stefan Beller" <stefanbeller@googlemail.com>
-To: Ben Tebulin <tebulin@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 08 19:39:09 2013
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: [RFC] allow git pull to preserve merges
+Date: Thu,  8 Aug 2013 12:38:11 -0500
+Message-ID: <1375983492-32282-1-git-send-email-stephen@exigencecorp.com>
+Cc: Johannes.Schindelin@gmx.de, avarab@gmail.com
+To: stephen@exigencecorp.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 08 19:39:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7UB2-0006t1-S9
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 19:39:09 +0200
+	id 1V7UBI-00076G-HE
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 19:39:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966017Ab3HHRjC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 13:39:02 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51932 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965827Ab3HHRi7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 13:38:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 70F3037EE0;
-	Thu,  8 Aug 2013 17:38:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=h++bBDXTIDDrWNsaQ79mitJiKkg=; b=w2JzkL
-	ud4thszKZT1zO/pA0FLKjWKOEwBmEaMv5N2xqGefeTz1Mj5v2b+DqgyCp8MYV49a
-	SusqcKpD1qbP/jMmp2nyit8DM2d/HCaWomwadeTu9IpqX3Ui5TUB5N9CCLj0fB8m
-	3cmPwkdhdRd5d/Px/H0ZkgmziQKqnMhCjDPZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oM9qriHXNrReJuMVsIy+2KpDVS2+PuAz
-	Gb4SBgZCYcu2BuUSpKH8JZdR+S5kx10u0iZoPwvbnK9/RNfFTPy/vCGYqmt2wHhm
-	DkRpQ6DZxULUbnI3PiUw60CNeEXuWcMO4Z2v/3Fc/7IS3oCV/0Zw9YQt5B6HCMw0
-	iGQ8qCC3Xbc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 105E537EDD;
-	Thu,  8 Aug 2013 17:38:57 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7678C37ED4;
-	Thu,  8 Aug 2013 17:38:55 +0000 (UTC)
-In-Reply-To: <87txj0i4mc.fsf@inf.ethz.ch> (Thomas Rast's message of "Thu, 8
-	Aug 2013 17:28:27 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 662741F0-0051-11E3-941E-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S966051Ab3HHRjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 13:39:08 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:58370 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966050Ab3HHRjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 13:39:05 -0400
+Received: by mail-pa0-f51.google.com with SMTP id lf1so960812pab.38
+        for <git@vger.kernel.org>; Thu, 08 Aug 2013 10:39:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=exigencecorp.com; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=4yhJ6PC6XFl+fA541B6qhUvJCCTja/wbJQKqLmgW+jo=;
+        b=XGY3RQS+6+2C8uKQJwOvmp5wsFT8HHB55XSU7OTujmAybjEEyQ4M4azipN3Z34toxA
+         0cChQEYxyXBQFvWUAWJxX8n9cmq8nIXRK4Nf218YTvxpvOb+emGUqIt+dYlzlsuKy7/u
+         RihOSssWcRgLnDOii/L6netTfQlSaXRLwV+6M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=4yhJ6PC6XFl+fA541B6qhUvJCCTja/wbJQKqLmgW+jo=;
+        b=JWkji2nJmBOkuS2+tAFXiQJ/F0Z1ttYsdY4s58h/FNCvYK1B0v3Y6yqv7IRqz9vAly
+         KP8UAHam7DrdEcqCq++84bBY0gvR66S3LEMdClwl0/T/vHOQtyuY5yNs35X481GkW5En
+         IDrIYjh73qFvfjVYfyUrKX5IB+Niww8H3Jn0YukUkrAIFHrSq7EU0XNnU5VvSYaSc2HI
+         twrdZEKwJ6Mlu/zi+n6qDCCod5uGN9yFLIlbDW9MtkF2c/afV2ve2Yf6/lZfoTV6dLhG
+         qP7fNKGWB898pf2hvxWD316KiOzyJPpPSkRsYmqZnTtSJtaMbgGncVswQ1t4YYeQXCaX
+         TqKw==
+X-Gm-Message-State: ALoCoQk6RxWMGzXD2aVGWEqxnxbw0mJmhCXQ0AGFBz5UFjQzZ0YEY+nitsrTMghmQsxMf2KsdFx8
+X-Received: by 10.66.252.129 with SMTP id zs1mr7148243pac.113.1375983544640;
+        Thu, 08 Aug 2013 10:39:04 -0700 (PDT)
+Received: from localhost.localdomain (wsip-184-187-11-226.om.om.cox.net. [184.187.11.226])
+        by mx.google.com with ESMTPSA id ts6sm15408024pbc.12.2013.08.08.10.39.02
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 08 Aug 2013 10:39:03 -0700 (PDT)
+X-Mailer: git-send-email 1.8.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231909>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Hey,
 
-> Ben Tebulin <tebulin@googlemail.com> writes:
->
->> Am 08.08.2013 16:20, schrieb Thomas Rast - trast@inf.ethz.ch:
->>> Can you try to reproduce with a version older than v1.8.3?
->>> E.g. v1.8.2.3.
->>> I'm asking because the above points at packed_object_info(), which I
->>> recently rewrote to be nonrecursive.
->>
->> It seems to run 'much better' 
->>   v1.8.2.3 : 3/10 runs do fail
->>   fb56570  : 9/10 runs do fail
->
-> The good news is that this shifts the blame away from my commit ;-) as
-> the problem clearly existed even before that.
->
-> The bad news, of course, is that this is another hunch that turned out
-> to be wrong.  I'm running out of ideas.
->
->> They always fail on a big blob (39MB) as I wrote in my first e-mail:
->>
->> ben@n179 /tmp/project.git $ ~/projects/git.git/git-show 49cdd0b21a351f3366008615d2cf8d03ca943978 | wc -c
->> error: sha1 mismatch 49cdd0b21a351f3366008615d2cf8d03ca943978
->> fatal: bad object 49cdd0b21a351f3366008615d2cf8d03ca943978
->> 0
->> ben@n179 /tmp/project.git $ ~/projects/git.git/git-show 49cdd0b21a351f3366008615d2cf8d03ca943978 | wc -c
->> 39517156
+Following up on an old thread (2008):
 
-Hmm, from this, and a later one ...
+http://git.661346.n2.nabble.com/pull-preserve-merges-td1471688.html
 
-> Ben Tebulin <tebulin@googlemail.com> writes:
->
-> I was unable to reproduce the error with the same repo and same Git
-> version on a different machine (Debian Squeeze x64 on a AMD Phenom x6
-> 1045T).
+I'd like to finally add a config parameter/setting to allow git pull to preserve
+merges when it's rebasing. This addresses a somewhat common boundary case of a
+locally merged feature branch getting flattened into master, as described here:
 
-... I am reading that (1) the packfile and repository is basically
-OK, (2) reading that object sometimes fails, and (3) the symptom is
-not limited to fsck but anything that reads the object with
-parse_object().  And that symptom exists only on that single machine
-(I am assuming that the repository was bit-for-bit copied, not
-"cloned", for the purpose of testing it on the other machine).  That
-makes me suspect something outside the control of Git (e.g. faulty
-memory or disk controller cable).
+http://notes.envato.com/developers/rebasing-merge-commits-in-git/
 
-Are there other big blobs in the repository, and would "show | wc" fail
-if you attempt to read it on that machine?
+This current patch adds a new `pull.preserve-merges` boolean config setting, but
+we could also change the existing `pull.rebase` to be tri-state (so
+`pull.rebase` can be true, false, or preserve-merges), or add a more generic
+`pull.rebaseoptions` that is just a string of flags to pass to rebase.
 
-Thanks all for helping to track this, by the way.
+Any of these would be fine with me--what would be preferred?
+
+This patch doesn't update the docs, but I wanted to get an initial sanity check
+on the preferred config setting before doing that.
+
+Thanks!
+
+- Stephen
+
+
+Stephen Haberman (1):
+  pull: Allow pull to preserve merges when rebasing.
+
+ git-pull.sh     | 11 +++++++++--
+ t/t5520-pull.sh | 15 +++++++++++++++
+ 2 files changed, 24 insertions(+), 2 deletions(-)
+
+-- 
+1.8.1.2
