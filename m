@@ -1,124 +1,311 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC PATCH] During a shallow fetch, prevent sending over unneeded objects
-Date: Thu, 8 Aug 2013 11:50:55 +0700
-Message-ID: <CACsJy8CP6pGRwEn6H=cbKxTMuOjzAF3=Qh8qsLbJaw6feK3NMw@mail.gmail.com>
-References: <20130711220127.GK10217@login.drsnuggles.stderr.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 08 06:51:34 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v2] status: always show tracking branch even no change
+Date: Thu,  8 Aug 2013 13:40:20 +0800
+Message-ID: <1481cfff6c22568f2a73613668cee0b99ceb4629.1375940354.git.worldhello.net@gmail.com>
+References: <vpqr4e5h55b.fsf@anie.imag.fr>
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Aug 08 07:43:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7ICB-0001R5-5Y
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 06:51:31 +0200
+	id 1V7J05-0001MA-KO
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 07:43:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754542Ab3HHEv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 00:51:27 -0400
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:53902 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754271Ab3HHEv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 00:51:26 -0400
-Received: by mail-pb0-f54.google.com with SMTP id ro12so2702071pbb.13
-        for <git@vger.kernel.org>; Wed, 07 Aug 2013 21:51:26 -0700 (PDT)
+	id S1752219Ab3HHFnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 01:43:00 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:60560 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355Ab3HHFm7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 01:42:59 -0400
+Received: by mail-pa0-f44.google.com with SMTP id fz6so190933pac.17
+        for <git@vger.kernel.org>; Wed, 07 Aug 2013 22:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=vm23/YAXnTcMMzHRkufgblqx4XN8wh3IgksGwpCXQcc=;
-        b=HCJLJe8SrpZgw++zW035J5XK470cBdjLWEhV65EBkOsofiWAkxmCQPqEi4WTvFHxfq
-         4WqyTT/3woIqLPSomYomokX9lKu0mWOZf/RsxHR58mbq9mgIrEwo4LBCIq8G8QL0EUCY
-         1zZ6aO4sceqpwN3+4KS51uvthR4lwsCMShpYKgM+qRcqQbMI0TUy2mE/qVfsoDJncI27
-         5Ov2RoPgU7fGud8uumk/dR8HWATCvftutJfuEQoFBht9jT/W5rOAY43eBzHKVZzE87BA
-         QzpUoYAgZSVHlEDAxuBpPpryWz3X+3oVxZnug88sjLIwrIpcJVINta0s4I3/Y9Jguy8z
-         1TNA==
-X-Received: by 10.66.26.112 with SMTP id k16mr4058009pag.65.1375937485929;
- Wed, 07 Aug 2013 21:51:25 -0700 (PDT)
-Received: by 10.70.102.163 with HTTP; Wed, 7 Aug 2013 21:50:55 -0700 (PDT)
-In-Reply-To: <20130711220127.GK10217@login.drsnuggles.stderr.nl>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=8y0GyDMiaFgNBPFMQpvOsNJR28lOn6XspejUvmGj3Pg=;
+        b=UpjLNrmf+hlcdnTZIRcriKvEqheu3+be8CyyneQ6bFjh0TrsrvhBLZO5wgsrJpXV5X
+         vsndq17nIHBmpHFHy5PoBZOm79qExSQWBzNDGSaG18IKuklGaMZvIEHbsyChazW/MtTK
+         MJwOyIsANrvmySCb98acJszmg3+6uNkhWiBCjVbiQq9DT7AMN4epJJkLKRoYlUImNN3A
+         yxt8cHIuV9f3NlJuRvYpj7N71GvJ+ADNKPG0id3Ft+NUVNhfHX6fyYgg4A6JnVglbCS9
+         WjDya6Jktjy+2QOVsWTdR3ryHTgZqLoO9JlnMONbkpymkxpGx1rXQIgAqBHe9Ku8VQQF
+         dyUQ==
+X-Received: by 10.68.106.36 with SMTP id gr4mr4385107pbb.0.1375940579024;
+        Wed, 07 Aug 2013 22:42:59 -0700 (PDT)
+Received: from localhost.localdomain ([114.246.125.252])
+        by mx.google.com with ESMTPSA id eq5sm12002409pbc.15.2013.08.07.22.42.55
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 07 Aug 2013 22:42:57 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc1.429.geed1a03
+In-Reply-To: <vpqr4e5h55b.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231862>
 
-On Fri, Jul 12, 2013 at 5:01 AM, Matthijs Kooijman <matthijs@stdin.nl> wrote:
-> Hi folks,
->
-> while playing with shallow fetches, I've found that in some
-> circumstances running git fetch with --depth can return too many objects
-> (in particular, _all_ the objects for the requested revisions are
-> returned, even when some of those objects are already known to the
-> client).
->
-> This happens when a client issues a fetch with a depth bigger or equal
-> to the number of commits the server is ahead of the client. In this
-> case, the revisions to be sent over will be completely detached from any
-> revisions the client already has (history-wise), causing the server to
-> effectively ignore all objects the client has (as advertised using its
-> have lines) and just send over _all_ objects (needed for the revisions
-> it is sending over).
->
-> I've traced this down to the way do_rev_list in upload-pack.c works. If
-> I've poured over the code enough to understand it, this is what happens:
->  - The new shallow roots are made into graft points without parents.
->  - The "want" commits are added to the pending list (revs->pending)
->  - The "have" commits are marked uninteresting and added to the pending list
->  - prepare_revision_walk is called, which adds everything from the
->    pending list into the commmit list (revs->commits)
->  - limit_list is called, which traverses the history of each interesting
->    commit in the commit list (i.e., all want revisions), up to excluding
->    the first uninteresting commit (i.e. a have revision). The result of
->    this is the new commit list.
->
->    This means the commit list now contains all commits that the client
->    wants, up to (excluding) any commits he already has or up to
->    (including) any (new) shallow roots.
->  - mark_edges_uninteresting is called, which marks the tree of every
->    parent of each edge in the commit list as uninteresting (in practice,
->    this marks the tree of each uninteresting parent, since those are by
->    definition the only kinds of revisions that can be beyond the edge).
->  - All trees and blobs that are referenced by trees in the commit list
->    but are not marked as uninteresting, are passed to git-pack-objects
->    to put into the pack.
->
-> Normally, the list of commits to send over is connected to the
-> client's existing commits (which are marked as uninteresting). This
-> means that only the trees of those uninteresting ("have") commits that
-> are actually (direct) predecessors of the commits to send over are
-> marked as uninteresting. This is probably useful, since it prevents
-> having to go over all trees the client has (for other branches, for
-> example) and instead limits to the trees that are the most likely to
-> contain duplicate (or similar, for delta-ing) objects.
->
-> However, in the "detached shallow fetch" case, this assumption is no
-> longer valid. There will be no uninteresting commits as parents for
-> the commit list, since all edge commits will be shallow roots (hence
-> have no parents).  Ideally, one would find out which of the "detached"
-> "have" revisions are the closest to the new shallow roots, but with the
-> current code these shallow roots have their parents cut off long before
-> this code even runs, so this is probably not feasible.
+If the current branch has an upstream branch, and there are changes
+between the current branch and its upstream, some commands (such as
+"git status", "git status -bs", and "git checkout") will report their
+relationship. E.g.
 
-I think this applies to general case as well, not just shallow.
-Imagine I have a disconnected commit that points to the latest tree
-(i.e. it contains most of latest changes). Because it's disconnected,
-it'll be ignored by the server side. But if the servide side does
-mark_tree_interesting on this commit, a bunch of blobs might be
-excluded from sending. I used to (ab)use git and store a bunch of tags
-point to trees. These trees share a lot. Still, fetching a new tag
-means pulling all objects of the new tree even though it only needs a
-few new blobs and trees. So perhaps we could go over have_obj list
-again, if it's not processed and is
+    $ git status
+    # On branch master
+    # Your branch is ahead of 'origin/master' by 1 commit.
+    #   (use "git push" to publish your local commits)
+    #
+    ...
 
- - a tree-ish, mark_tree_uninteresting
- - a blob, just mark unintesting
+    $ git status -bs
+    ## master...origin/master [ahead 1]
+    ...
 
-and this does regardless of shallow state or edges. The only downside
-is mark_tree_uninteresting is recursive so in unpacks lots of trees if
-have_obj is long, or the worktree is really big. Commit bitmap should
-help reduce the cost if have_obj is a committish, at least.
+    $ git checkout master
+    Already on 'master'
+    Your branch is ahead of 'origin/master' by 1 commit.
+      (use "git push" to publish your local commits)
+
+But if there is no difference between the current branch and its
+upstream, the relationship will not be reported, and it's hard to
+tell whether the current branch has a tracking branch or not. And
+what's worse, when the 'push.default' config variable is set to
+`matching`, it's hard to tell whether the current branch has already
+been pushed out or not at all [1].
+
+With this patch, "git status" will report relationship between the
+current branch and its upstream counterpart even if there is no
+difference.
+
+    $ git status
+    # On branch master
+    # Your branch is identical to 'origin/master'.
+    #
+    ...
+
+    $ git status -bs
+    ## master...origin/master
+    ...
+
+    $ git checkout master
+    Already on 'master'
+    Your branch is identical to 'origin/master'.
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/198703
+
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ remote.c                 | 22 ++++++++++++++------
+ t/t6040-tracking-info.sh | 54 ++++++++++++++++++++++++++++++++++++++++++++----
+ wt-status.c              | 13 +++++++++---
+ 3 files changed, 76 insertions(+), 13 deletions(-)
+
+diff --git a/remote.c b/remote.c
+index 2433467..825f278 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1740,6 +1740,10 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ 	const char *rev_argv[10], *base;
+ 	int rev_argc;
+ 
++	/* Set both num_theirs and num_ours as undetermined. */
++	*num_theirs = -1;
++	*num_ours = -1;
++
+ 	/*
+ 	 * Nothing to report unless we are marked to build on top of
+ 	 * somebody else.
+@@ -1758,14 +1762,16 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ 	theirs = lookup_commit_reference(sha1);
+ 	if (!theirs)
+ 		return 0;
++	*num_theirs = 0;
+ 
+ 	if (read_ref(branch->refname, sha1))
+ 		return 0;
+ 	ours = lookup_commit_reference(sha1);
+ 	if (!ours)
+ 		return 0;
++	*num_ours = 0;
+ 
+-	/* are we the same? */
++	/* are we the same? both num_theirs and num_ours have been set to 0. */
+ 	if (theirs == ours)
+ 		return 0;
+ 
+@@ -1786,8 +1792,6 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ 	prepare_revision_walk(&revs);
+ 
+ 	/* ... and count the commits on each side. */
+-	*num_ours = 0;
+-	*num_theirs = 0;
+ 	while (1) {
+ 		struct commit *c = get_revision(&revs);
+ 		if (!c)
+@@ -1812,12 +1816,18 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 	int num_ours, num_theirs;
+ 	const char *base;
+ 
+-	if (!stat_tracking_info(branch, &num_ours, &num_theirs))
+-		return 0;
++	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
++		if (num_ours || num_theirs)
++			return 0;
++	}
+ 
+ 	base = branch->merge[0]->dst;
+ 	base = shorten_unambiguous_ref(base, 0);
+-	if (!num_theirs) {
++	if (!num_ours && !num_theirs) {
++		strbuf_addf(sb,
++			_("Your branch is identical to '%s'.\n"),
++			base);
++	} else if (!num_theirs) {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch is ahead of '%s' by %d commit.\n",
+ 			   "Your branch is ahead of '%s' by %d commits.\n",
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index ec2b516..eafce7d 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -28,18 +28,20 @@ test_expect_success setup '
+ 		git reset --hard HEAD^ &&
+ 		git checkout -b b4 origin &&
+ 		advance e &&
+-		advance f
++		advance f &&
++		git checkout -b b5 origin
+ 	) &&
+ 	git checkout -b follower --track master &&
+ 	advance g
+ '
+ 
+-script='s/^..\(b.\)[	 0-9a-f]*\[\([^]]*\)\].*/\1 \2/p'
++script='s/^..\(b.\)[	 0-9a-f]*\(\[\([^]]*\)\]\)\{0,1\}.*/\1 \3/p'
+ cat >expect <<\EOF
+ b1 ahead 1, behind 1
+ b2 ahead 1, behind 1
+ b3 behind 1
+ b4 ahead 2
++b5 
+ EOF
+ 
+ test_expect_success 'branch -v' '
+@@ -56,6 +58,7 @@ b1 origin/master: ahead 1, behind 1
+ b2 origin/master: ahead 1, behind 1
+ b3 origin/master: behind 1
+ b4 origin/master: ahead 2
++b5 origin/master
+ EOF
+ 
+ test_expect_success 'branch -vv' '
+@@ -67,20 +70,27 @@ test_expect_success 'branch -vv' '
+ 	test_i18ncmp expect actual
+ '
+ 
+-test_expect_success 'checkout' '
++test_expect_success 'checkout (diverged from upstream)' '
+ 	(
+ 		cd test && git checkout b1
+ 	) >actual &&
+ 	test_i18ngrep "have 1 and 1 different" actual
+ '
+ 
++test_expect_success 'checkout (identical to upstream)' '
++	(
++		cd test && git checkout b5
++	) >actual &&
++	test_i18ngrep "Your branch is identical to .origin/master" actual
++'
++
+ test_expect_success 'checkout with local tracked branch' '
+ 	git checkout master &&
+ 	git checkout follower >actual &&
+ 	test_i18ngrep "is ahead of" actual
+ '
+ 
+-test_expect_success 'status' '
++test_expect_success 'status (diverged from upstream)' '
+ 	(
+ 		cd test &&
+ 		git checkout b1 >/dev/null &&
+@@ -90,6 +100,42 @@ test_expect_success 'status' '
+ 	test_i18ngrep "have 1 and 1 different" actual
+ '
+ 
++test_expect_success 'status (identical to upstream)' '
++	(
++		cd test &&
++		git checkout b5 >/dev/null &&
++		# reports nothing to commit
++		test_must_fail git commit --dry-run
++	) >actual &&
++	test_i18ngrep "Your branch is identical to .origin/master" actual
++'
++
++cat >expect <<\EOF
++## b1...origin/master [ahead 1, behind 1]
++EOF
++
++test_expect_success 'status -s -b (diverged from upstream)' '
++	(
++		cd test &&
++		git checkout b1 >/dev/null &&
++		git status -s -b | head -1
++	) >actual &&
++	test_i18ncmp expect actual
++'
++
++cat >expect <<\EOF
++## b5...origin/master
++EOF
++
++test_expect_success 'status -s -b (identical to upstream)' '
++	(
++		cd test &&
++		git checkout b5 >/dev/null &&
++		git status -s -b | head -1
++	) >actual &&
++	test_i18ncmp expect actual
++'
++
+ test_expect_success 'fail to track lightweight tags' '
+ 	git checkout master &&
+ 	git tag light &&
+diff --git a/wt-status.c b/wt-status.c
+index ff4b324..56f3c19 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1381,9 +1381,11 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	if (s->is_initial)
+ 		color_fprintf(s->fp, header_color, _("Initial commit on "));
+ 	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
+-		color_fprintf(s->fp, branch_color_local, "%s", branch_name);
+-		fputc(s->null_termination ? '\0' : '\n', s->fp);
+-		return;
++		if (num_ours || num_theirs) {
++			color_fprintf(s->fp, branch_color_local, "%s", branch_name);
++			fputc(s->null_termination ? '\0' : '\n', s->fp);
++			return;
++		}
+ 	}
+ 
+ 	base = branch->merge[0]->dst;
+@@ -1392,6 +1394,11 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	color_fprintf(s->fp, header_color, "...");
+ 	color_fprintf(s->fp, branch_color_remote, "%s", base);
+ 
++	if (!num_ours && !num_theirs) {
++		fputc(s->null_termination ? '\0' : '\n', s->fp);
++		return;
++	}
++
+ 	color_fprintf(s->fp, header_color, " [");
+ 	if (!num_ours) {
+ 		color_fprintf(s->fp, header_color, _("behind "));
 -- 
-Duy
+1.8.4.rc1.429.geed1a03
