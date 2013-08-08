@@ -1,65 +1,61 @@
-From: Morgan McClure <mcclure.morgan@gmail.com>
-Subject: Feature Request: Support logic or shell execution to control values
- in .gitconfig
-Date: Thu, 8 Aug 2013 08:09:22 -0700
-Message-ID: <CANY-LFJZazieg-7gLq1=pv=nkED81Gck4=95ffgZ6tGVgX5ffg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Remove old forgotten command: whatchanged
+Date: Thu, 8 Aug 2013 20:43:53 +0530
+Message-ID: <CALkWK0kD=adWKVf+zb+Pnjz-HBkhks8ZvmQ3eYSpdXvahr=e4g@mail.gmail.com>
+References: <CALkWK0=zZKTwn7cdrJXsVXH-rF=xWMeD_z2XAOCnuaf2bK_h8Q@mail.gmail.com>
+ <52027B17.7040602@googlemail.com> <7vtxj1crv6.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kTfQYZG8R1EMuV37pdJ-aj9btXmfJ1Fb4QoMeZ1QucAw@mail.gmail.com> <vpqfvukdy39.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 08 17:09:27 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <stefanbeller@googlemail.com>,
+	Git List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Aug 08 17:14:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7RqB-0007Bj-Ci
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 17:09:27 +0200
+	id 1V7RvD-0003Ix-Ha
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 17:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965752Ab3HHPJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 11:09:23 -0400
-Received: from mail-vb0-f52.google.com ([209.85.212.52]:55469 "EHLO
-	mail-vb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965742Ab3HHPJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 11:09:22 -0400
-Received: by mail-vb0-f52.google.com with SMTP id f12so3268389vbg.39
-        for <git@vger.kernel.org>; Thu, 08 Aug 2013 08:09:22 -0700 (PDT)
+	id S965784Ab3HHPOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 11:14:35 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:33567 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965745Ab3HHPOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 11:14:34 -0400
+Received: by mail-ie0-f181.google.com with SMTP id x14so2024648ief.40
+        for <git@vger.kernel.org>; Thu, 08 Aug 2013 08:14:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=mNz/BcBmzPEX4N9V044Mfu+NzgHyimsXuDH4cxWN7iQ=;
-        b=HylEL61NgA7NQ+Vw/EnPEroVWPM+dPOmzXG1HHgEId3fec/QB/Yz7FUnNlWPpcMx1/
-         WC3Nx0Fl6BlZC7WoB4G69FwEq2sg0NSVJU2vm5ZZSV0t6NSUiNmlSlFwjnX83uHWg9Vb
-         S4pv/BCFVJuvCiZsEzaxZk5730YGyQm+S+P3Z0d0G9I+AYTBbZkxy8E2FJ4A6NZycuV5
-         mJ4CHFOJfBJPnidVk4BoJ7wYLymYn35YdInKZXIBwVo7zUDdEXLRcv18sq04fqreUqJY
-         sRfkQ1+3Q1wLIxyVFtRZY/f++PVdngWvPEKVdzXbazyZAUOg5Sdon/gAvl5UmMjBvy5v
-         9tcw==
-X-Received: by 10.58.135.167 with SMTP id pt7mr3331059veb.75.1375974562273;
- Thu, 08 Aug 2013 08:09:22 -0700 (PDT)
-Received: by 10.58.94.14 with HTTP; Thu, 8 Aug 2013 08:09:22 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=C8PY8jjZ/qgH6hL49CcN4SXJ11Zk2ut/X79pmoPrAyU=;
+        b=ceWDj1cFtCH7EVN8qXh90AMRywKzhyBnINYlNHtroAMTTHzoPaLGgwi/N/HuZ/PAnF
+         AJXA7ZfSVjYIVklbKfsfh2osaknTI4pWcwqq9xkl6kvfCUf/PNtcjKrXfznfS+vx840D
+         WrwhKtCFCbf3/tvIGcgANGkMxUlJbreIAPl1GtfRcXiMIsRL3WpENOXNoUaPJz9cLw9H
+         yAIleNki6/E0wZgV8RJx703VqayN86xcfRMnrthtbxRWRl1jY7ylAK7WNcCWRVcdIdMB
+         XFhK/SwazZbruLAteXATmCWDLoQrHTlHxMyCMiHB5Pc1wfcz1z9AoEawqNpaSes8lzzJ
+         RbPA==
+X-Received: by 10.43.88.3 with SMTP id ay3mr2276319icc.61.1375974873954; Thu,
+ 08 Aug 2013 08:14:33 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Thu, 8 Aug 2013 08:13:53 -0700 (PDT)
+In-Reply-To: <vpqfvukdy39.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231894>
 
-I sync all my dot files (including .gitconfig) among several machines
-and it's currently not possible to put conditional logic in many
-fields (any that aren't considered strings to be executed as shell
-commands ie aliases, editor, etc).
+Matthieu Moy wrote:
+> ... but I do agree that the doc is really confusing. It would be much
+> better if the doc could be reduced to:
+>
+> "This is a synonym for linkgit:git-log[1] --raw --some --other ---options.
+> Please refer to the documentation of that command."
 
-My specific use case is the email address. Normally I want my email
-address to read:
-mcclurem@$HOSTNAME  <mcclure.morgan@gmail.com>
-
-I use this to track which machine I'm committing from etc.
-
-I propose using something reminiscent of bash syntax, either:
-value = $(SOMETEXTTOEXECUTE)
-
-or
-
-value = `SOMETEXTTOEXECUTE`
-
-Is this a feature others could get behind?
-
--Morgan McClure
+I don't think there's an exact correspondence with any combination of
+command-line options. Perhaps we can describe it in words, and ask
+people to use log instead?
