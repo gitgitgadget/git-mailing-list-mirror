@@ -1,81 +1,61 @@
-From: Andrew Ruder <andy@aeruder.net>
+From: Justin Collum <jcollum@gmail.com>
 Subject: Re: git status resets permissions on index file -- Ubuntu 12.04 64b
-Date: Thu, 8 Aug 2013 17:18:07 -0500
-Message-ID: <20130808221807.GA8518@gmail.com>
+Date: Thu, 8 Aug 2013 15:33:32 -0700
+Message-ID: <CACO0oR7M90iyDCo-mwoHn21jKRGuMsRWEeWkFXC-MCSUBscC9w@mail.gmail.com>
 References: <CACO0oR7a1-fUASQ+SJVbH1CU8d=NbHrK0MuMu+9Pr4_=7q85Vw@mail.gmail.com>
- <52040F27.4050908@googlemail.com>
+	<52040F27.4050908@googlemail.com>
+	<20130808221807.GA8518@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Justin Collum <jcollum@gmail.com>, git@vger.kernel.org
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 09 00:20:27 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: Stefan Beller <stefanbeller@googlemail.com>,
+	Justin Collum <jcollum@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 09 00:33:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7YZG-0003tG-Lx
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 00:20:27 +0200
+	id 1V7Ym1-0005uz-Bc
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 00:33:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966379Ab3HHWUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 18:20:22 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:52029 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966217Ab3HHWUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 18:20:21 -0400
-Received: by mail-ie0-f173.google.com with SMTP id k5so2927411iea.18
-        for <git@vger.kernel.org>; Thu, 08 Aug 2013 15:20:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=rOKLhLGkioaSrhxMSnsJGzCdlLSTcPWv12f8zn/riZg=;
-        b=f6MBinGws/lbxy2AtQCBBckiBTd2qwM0uumexFM93TpDLiLJKBvS8yq64V+FJtUtr1
-         NTustsBAn9TKDgylsnpqawkaPQMpq/+ttzIz7wpot18p9rP/GaUTFHkmRPywnoqF6NT8
-         w61dcaGhzLIgAcvoiQL+LYR9yx+aA9m8RsYk/HtcEM9YeAPnDJEeQxLaqdP0z4pvp1/k
-         xvBWuXTQ0SMobNU7VSyZbkhM6iV2dmMdSsYGeQfTtFtKnmfm6g/BX685Uah86b75jxJ4
-         jLwv8OGaPh3MBctbr2rDMxMG4g9yLqpzOWx0QyQyveon8afbq95q58Z64Ne8HAqpfPd3
-         3iyA==
-X-Gm-Message-State: ALoCoQmcX3EGrbDbtj6TxyBtxf5wveY2a8FQ9BEA+2/oLjwAAQD7YZ/AFLaio4z+2p/Xx9Wg+oZ9
-X-Received: by 10.50.153.49 with SMTP id vd17mr667763igb.22.1376000420553;
-        Thu, 08 Aug 2013 15:20:20 -0700 (PDT)
-Received: from gmail.com (64-198-156-98.ip.mcleodusa.net. [64.198.156.98])
-        by mx.google.com with ESMTPSA id o14sm9457476igw.2.2013.08.08.15.20.19
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 08 Aug 2013 15:20:19 -0700 (PDT)
-Mail-Followup-To: Stefan Beller <stefanbeller@googlemail.com>,
-	Justin Collum <jcollum@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <52040F27.4050908@googlemail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S966781Ab3HHWdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 18:33:33 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:33918 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965419Ab3HHWdd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 18:33:33 -0400
+Received: by mail-ie0-f170.google.com with SMTP id e14so3046955iej.29
+        for <git@vger.kernel.org>; Thu, 08 Aug 2013 15:33:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=W/WFhlB1qlmFIBD28lbAqh3SuQU+zE1ZVrbh24tQd6U=;
+        b=OS4W+JBXfNclqXLKDQfP2Cufi1yjbj2QYZhmoggg8nKi4IO02Cxa8ECUQD/Ou5VP61
+         HOvjDV3dVSsX6Grw6xZHW22Rhm6yX9w6qAblo5Sbe0JQyAxF2TWh70qPGva9Wo1HdT9U
+         UqA+wa7G491+aHbe8kzodTVJ4B/d6fmU5U2l2URhJTk6+CX7AiX4l4LVJ7l3O9HDjw4A
+         x6ovWOvXT2sbX+4O630GiO8FHWR+TaYfkXcl192guSJCZvqFdQvjxWiiIrUdsbwUtrF0
+         O+L8HN4w1xbF2rBFeIe0W3mszHFpUSh7lPWwk0DXcVGTHO+Zyu+X+woZD75yWbaARlV7
+         /QOA==
+X-Received: by 10.43.9.4 with SMTP id ou4mr3245967icb.53.1376001212521; Thu,
+ 08 Aug 2013 15:33:32 -0700 (PDT)
+Received: by 10.43.146.70 with HTTP; Thu, 8 Aug 2013 15:33:32 -0700 (PDT)
+In-Reply-To: <20130808221807.GA8518@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231947>
 
-On Thu, Aug 08, 2013 at 11:35:35PM +0200, Stefan Beller wrote:
-> On 08/08/2013 10:27 PM, Justin Collum wrote:
-> > [...]
-> > -rwxrwxrwx   1 dev dev  17K Aug  8 13:12 index
-> > [...]
-> > -rw-rw-r--   1 dev dev  17K Aug  8 13:16 index   # <---------------
-> 
-> The permissions are set to reading for all and writing for you(r user)
-> and your group. This should be no problem with standard git commands.
-> Before you had the index file executable, why would you need that?
+On Thu, Aug 8, 2013 at 3:18 PM, Andrew Ruder <andy@aeruder.net> wrote:
+> he is neither the user dev or the group dev
 
-I'm about 90% sure the issue he's having is that the write bit for
-other/world goes away and he is neither the user dev or the group dev
-and the reason for all the executable bits is that he is regularly
-running
+I am both. There's only one user on this machine and he is me.
 
-    chmod -R 777 .
+> he is regularly running  chmod -R 777
 
-Justin, if this is true, I will tell you that git respects your umask
-but I just can't bring myself to really suggest someone type umask 000
-ever. :(
-
-- Andy
+Yes, true. I have a program that I use to edit some of these files
+(not the git files) that likes to screw up permissions. It's a long
+story. Anyway, I've been running that chmod regularly since well
+before this git issue started. I'll start using 644 for the chmod and
+see if that helps.
