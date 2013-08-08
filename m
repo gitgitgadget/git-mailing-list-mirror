@@ -1,81 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git exproll: steps to tackle gc aggression
-Date: Thu, 08 Aug 2013 11:52:29 -0700
-Message-ID: <7va9ks9frm.fsf@alter.siamese.dyndns.org>
-References: <1375756727-1275-1-git-send-email-artagnon@gmail.com>
-	<CALkWK0mxd35OGDG2fMaRsfycvBPPxDHWrPX8og5y2+4y1dfOpw@mail.gmail.com>
-	<7v61vgazp5.fsf@alter.siamese.dyndns.org>
-	<201308081134.35735.mfick@codeaurora.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Thu Aug 08 20:52:39 2013
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: [PATCH] diff: remove another ternary expression always evaluating to true
+Date: Thu,  8 Aug 2013 20:55:03 +0200
+Message-ID: <1375988103-29947-1-git-send-email-stefanbeller@googlemail.com>
+Cc: Stefan Beller <stefanbeller@googlemail.com>
+To: Jens.Lehmann@web.de, johannes.schindelin@gmx.de, gitster@pobox.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 08 20:55:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7VKA-0001MV-UH
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 20:52:39 +0200
+	id 1V7VMd-0003UB-HA
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 20:55:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966155Ab3HHSwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 14:52:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61484 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966099Ab3HHSwd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 14:52:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 32C0837326;
-	Thu,  8 Aug 2013 18:52:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qFV5tNGRy2hAjceHN7sfScDAR3w=; b=GCTxIk
-	CBU9adz8sWFiU6Lx0ygtZmA5sZU+Og0pabXvamoNicxAAHJ5g9NRleuxuIKPAxHt
-	ks8W0vgVPHh4cGIg7cLC3yHSWJSYIJ8mcBlAB6fOXIDek0rRPpkeydCEpb4knOBF
-	bl92HD1I1bcGiABIwS7DX3TBu6NiIgD5EHb9E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GkNpkprOOBV1Mja9wFUl1gupC1l4h1Qf
-	xNYTGZb34dhhGkdKQrp4FmQ6iOdR49+jX+A9a7ifNxzTNIUcfwr/ZtCUbolB9Ev6
-	rs4FYdO3yV0PbaT9HZ4sbhYaGKWRo57Hu2gp+bwGju2gyr8tsfmmvmNWNmV8ZLn2
-	QaSPCoSV+c0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C34BB37325;
-	Thu,  8 Aug 2013 18:52:32 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6C32E3731E;
-	Thu,  8 Aug 2013 18:52:31 +0000 (UTC)
-In-Reply-To: <201308081134.35735.mfick@codeaurora.org> (Martin Fick's message
-	of "Thu, 8 Aug 2013 11:34:35 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AE255CDA-005B-11E3-97DC-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S966146Ab3HHSzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 14:55:05 -0400
+Received: from mail-ea0-f173.google.com ([209.85.215.173]:37383 "EHLO
+	mail-ea0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966099Ab3HHSzE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 14:55:04 -0400
+Received: by mail-ea0-f173.google.com with SMTP id g10so1621845eak.32
+        for <git@vger.kernel.org>; Thu, 08 Aug 2013 11:55:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=4Zm9ZImpvwI39nExUxyHXA+mGen9vdwvZZxO6RkxkwA=;
+        b=rOXOlbklVgBlqF0hpAVCHo8mX9HDhaPFEcj1Fd902NU5VKL4fzBs2HPQ8LzlyEW6nM
+         evVWt1SKDfUQq2zPrp1nMKV6ewdnEuIKfUAgBaMKIumsrxktNYHPybwgOcTm3j86M9oz
+         Auqfo+p6T3u0QP/UIo4bjcjqAcEm0qqjO529snbZ6yOki5IjvLO/28bkiE5fqihVL7S3
+         3hedJ47MYMsyXNZYoGy87vJ9j9vnjrSGYdh2s/g9uWslUFFiItSY53WU+YME1FgEpigN
+         HvUFF3haOwrm/ewO4hjV1w3eDAYB12jozod78hk9xc6C9Jd8GmMtn+5nv0ab2E0GrZHH
+         c/FA==
+X-Received: by 10.14.100.141 with SMTP id z13mr9644957eef.81.1375988102535;
+        Thu, 08 Aug 2013 11:55:02 -0700 (PDT)
+Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id k3sm21574694een.16.2013.08.08.11.55.01
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 08 Aug 2013 11:55:01 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc1.25.gd121ba2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231920>
 
-Martin Fick <mfick@codeaurora.org> writes:
+The condition before the changed line dereferences 'one' to query the mode,
+so if the condition evaluates to true, the variable one must not be null.
+Therefore we do not need the ternary operator depending on one, giving
+either one->path or two->path. This always evaluates to one->path, so
+we can remove the ternary operator.
 
-> Assuming I understand what you are suggesting, would these 
-> "young object" likely still get "deduped" in an efficient 
-> way without doing history traversal (it sounds like they 
-> would)?
+The condition and the usage of the ternary operator have been introduced
+by the same commit (752c0c24, 2009-10-19, Add the --submodule option to
+the diff option family). As that commit message refers to a GitTogether
+I'd assume that patch was crafted in a hurry, so maybe overlooking the
+need for a ternary operator there.
 
-Yes.
+Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+---
+ diff.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-The very first thing pack-object machinery does is to get the list
-of object names and sort them in a certain order to help producing
-good deltas, and this initial input preprocessing will dedup them.
-
-> If so, then yeah this might be nice, especially if the history
-> traversal is what would speed this up.
-
-That was the assumption behind the "it might help" suggestion.  If
-that helps or not is not known yet, and since Ram started this
-subthread telling me not to talk about performance improvements, my
-time on this thread is _not_ spent on that (yet).
+diff --git a/diff.c b/diff.c
+index 80f8439..f30b7e4 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2252,8 +2252,7 @@ static void builtin_diff(const char *name_a,
+ 			(!two->mode || S_ISGITLINK(two->mode))) {
+ 		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
+ 		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
+-		show_submodule_summary(o->file, one ? one->path : two->path,
+-				line_prefix,
++		show_submodule_summary(o->file, one->path, line_prefix,
+ 				one->sha1, two->sha1, two->dirty_submodule,
+ 				meta, del, add, reset);
+ 		return;
+-- 
+1.8.4.rc1.25.gd121ba2
