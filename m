@@ -1,67 +1,113 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] diff: remove another ternary expression always evaluating
- to true
-Date: Thu, 8 Aug 2013 23:01:03 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1308082257580.24252@s15462909.onlinehome-server.info>
-References: <1375988103-29947-1-git-send-email-stefanbeller@googlemail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] replace: forbid replacing an object with one of a different type
+Date: Thu, 8 Aug 2013 22:09:31 +0100
+Organization: OPDS
+Message-ID: <A88E12BCC58A401DBDD2EB300C1AAA2D@PhilipOakley>
+References: <20130807044248.17464.35806.chriscool@tuxfamily.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jens.Lehmann@web.de, gitster@pobox.com, git@vger.kernel.org
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 08 23:01:13 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>, "Thomas Rast" <trast@inf.ethz.ch>
+To: "Christian Couder" <chriscool@tuxfamily.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 08 23:09:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7XKZ-0006YS-C3
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 23:01:11 +0200
+	id 1V7XSP-0004qx-9o
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 23:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966588Ab3HHVBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 17:01:07 -0400
-Received: from mout.gmx.net ([212.227.15.19]:51686 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966550Ab3HHVBF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 17:01:05 -0400
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0Lzsf1-1WCc3g3Thj-0150gS
- for <git@vger.kernel.org>; Thu, 08 Aug 2013 23:01:03 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <1375988103-29947-1-git-send-email-stefanbeller@googlemail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:4H5a6Bt9YLh5qanZHmiYOgSju6wMLtjKvnaXqFhoPsVyzHNzUZT
- JmdizzKimw4qU+h3zQ94HfHyMfdnA6CmxJNLHIErTQI5240xFKjWkXWbkXjHnhRTn1L5li3
- mk+U3DOv/MVFdhpRd+N22m6ql5Q8ME5LRpenUtP3rNhmdFB4LSh1u1cgOrmiivEgs+Ia/k3
- jPfSBUs2OuaZh6l/dtj/w==
+	id S966702Ab3HHVJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 17:09:13 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:55896 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S966650Ab3HHVJL (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Aug 2013 17:09:11 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AlYMALoIBFJOl3GZ/2dsb2JhbABbgwaJV7VyBAQBgRkXdIIfBQEBBAEIAQEuHgEBIQsCAwUCAQMOBwELJRQBBBoGBxcGARIIAgECAwGHeQq4XpAbgyF0A4hzhg6aL4MZOw
+X-IPAS-Result: AlYMALoIBFJOl3GZ/2dsb2JhbABbgwaJV7VyBAQBgRkXdIIfBQEBBAEIAQEuHgEBIQsCAwUCAQMOBwELJRQBBBoGBxcGARIIAgECAwGHeQq4XpAbgyF0A4hzhg6aL4MZOw
+X-IronPort-AV: E=Sophos;i="4.89,841,1367967600"; 
+   d="scan'208";a="438383089"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 08 Aug 2013 22:09:09 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231931>
 
-Hi Stefan,
+From: "Christian Couder" <chriscool@tuxfamily.org>
+Sent: Wednesday, August 07, 2013 5:42 AM
+> Users replacing an object with one of a different type were not
+> prevented to do so, even if it was obvious, and stated in the doc,
+> that bad things would result from doing that.
+>
+> To avoid mistakes, it is better to just forbid that though.
+>
+> The doc will be updated in a later patch.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> If this patch is considered useful, I will update the doc and
+> maybe add tests.
 
-On Thu, 8 Aug 2013, Stefan Beller wrote:
+Acked-by: Philip Oakley <philipoakley@iee.org>
+Improved documentation would always be useful.
 
-> The condition before the changed line dereferences 'one' to query the mode,
-> so if the condition evaluates to true, the variable one must not be null.
+>
+> builtin/replace.c | 9 +++++++++
+> 1 file changed, 9 insertions(+)
+>
+> diff --git a/builtin/replace.c b/builtin/replace.c
+> index 59d3115..0246ab3 100644
+> --- a/builtin/replace.c
+> +++ b/builtin/replace.c
+> @@ -85,6 +85,7 @@ static int replace_object(const char *object_ref,
+> const char *replace_ref,
+>    int force)
+> {
+>  unsigned char object[20], prev[20], repl[20];
+> + enum object_type obj_type, repl_type;
+>  char ref[PATH_MAX];
+>  struct ref_lock *lock;
+>
+> @@ -100,6 +101,14 @@ static int replace_object(const char *object_ref,
+> const char *replace_ref,
+>  if (check_refname_format(ref, 0))
+>  die("'%s' is not a valid ref name.", ref);
+>
+> + obj_type = sha1_object_info(object, NULL);
+> + repl_type = sha1_object_info(repl, NULL);
 
-To show this better, please use -U10 (or some other appropriate context
-option) in the future.
+Do (very) large blobs have any issues here? As I understand it, such
+blobs, as with other smaller objects, need to be expanded to determine
+the type. Is there a heuristic (and is it worth it) to do a 'large
+object == blob' initial check to avoid such an expansion? Small objects
+shouldn't be an overhead.
 
-> Therefore we do not need the ternary operator depending on one, giving
-> either one->path or two->path. This always evaluates to one->path, so we
-> can remove the ternary operator.
-> 
-> The condition and the usage of the ternary operator have been introduced
-> by the same commit (752c0c24, 2009-10-19, Add the --submodule option to
-> the diff option family). As that commit message refers to a GitTogether
-> I'd assume that patch was crafted in a hurry, so maybe overlooking the
-> need for a ternary operator there.
+Just a thought.
 
-If this is my code, I do not need a GitTogether to excuse my sloppiness.
-In this particular case, I imagine the appropriate fix is to test for
-one->path instead of removing the conditional, though.
+> + if (obj_type != repl_type)
+> + die("Object ref '%s' is of type '%s'\n"
+> +     "while replace ref '%s' is of type '%s'.",
+> +     object_ref, typename(obj_type),
+> +     replace_ref, typename(repl_type));
 
-Ciao,
-Johannes
+Perhaps start with "Objects must be of the same type.\n"
+
+> +
+>  if (read_ref(ref, prev))
+>  hashclr(prev);
+>  else if (!force)
+> -- 
+> 1.8.4.rc1.22.g132b1a0
