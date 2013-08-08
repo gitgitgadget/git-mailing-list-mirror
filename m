@@ -1,98 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] During a shallow fetch, prevent sending over unneeded objects
-Date: Wed, 07 Aug 2013 23:51:02 -0700
-Message-ID: <7vfvukbrqh.fsf@alter.siamese.dyndns.org>
-References: <20130711220127.GK10217@login.drsnuggles.stderr.nl>
-	<CACsJy8CP6pGRwEn6H=cbKxTMuOjzAF3=Qh8qsLbJaw6feK3NMw@mail.gmail.com>
+From: Luke San Antonio <lukesanantonio@gmail.com>
+Subject: [Bug] git stash generates a different diff then other commands (diff,
+ add, etc) resulting in merge conflicts!
+Date: Thu, 8 Aug 2013 03:07:23 -0400
+Message-ID: <CAP+CFTZWzoAg=ni6t1aif-85y6W4-2JUT4wooapTvD0oGH+HRw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthijs Kooijman <matthijs@stdin.nl>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 08 08:51:22 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 08 09:07:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7K48-0007Hk-8K
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 08:51:20 +0200
+	id 1V7KJl-0002fx-2y
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 09:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756141Ab3HHGvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 02:51:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50758 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755915Ab3HHGvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 02:51:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 769D732D9B;
-	Thu,  8 Aug 2013 06:51:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gmGNhooo3LsNLVQR2gw40WG3USM=; b=Yth8dN
-	W7wfbSDt0/yvNsnyzw4YEOVnNxd/dDSJtNnPso2WsenWpWyGmVVL/NfX9B1Ibb36
-	uhxZ/dHJzbkFeWinV6IWPpgQ6XiJKq5mg5oP71X7FJG613EpE3PnY9jUX5MdBEV1
-	ywarUAtmtFDKsJpbYZeH2OeahQaHUwljFlqnw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i1UXlldFIieTuFLSEMAbpQlBwzapBz8Q
-	zzKQFg3spj/22MxMxmhEs48FEBoN5sXnVFIfgoIh76c5/9hPlL1QWrBrFtonz1Uu
-	5EABoO+5ef+w+CJxL/s5r8ZyLsC1WXkgNznhtOiB3L1dWmFoH+HKRoOZu5mvV5dB
-	1vOCxxlVg5U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FBB232D9A;
-	Thu,  8 Aug 2013 06:51:14 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8854D32D97;
-	Thu,  8 Aug 2013 06:51:13 +0000 (UTC)
-In-Reply-To: <CACsJy8CP6pGRwEn6H=cbKxTMuOjzAF3=Qh8qsLbJaw6feK3NMw@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 8 Aug 2013 11:50:55 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EA7DC542-FFF6-11E2-9289-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S933831Ab3HHHHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 03:07:25 -0400
+Received: from mail-ob0-f196.google.com ([209.85.214.196]:38715 "EHLO
+	mail-ob0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933594Ab3HHHHY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Aug 2013 03:07:24 -0400
+Received: by mail-ob0-f196.google.com with SMTP id wc20so1054782obb.7
+        for <git@vger.kernel.org>; Thu, 08 Aug 2013 00:07:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=cxJ0l6IDBBkRtbG9jU6PK5IjLTus2VAl4qLowH3pPgI=;
+        b=IBVx/lTOBLSpJuCuZdndpuBUbVx+fempj2DvPntTWN9T65ePWW/aN0BTJ3l2JNb6Xn
+         N/bopx0wtosr/vCHQgK4M1objw4lac/BRgt/9lZYAonSehs2hhis9+OXftIASMpCtbW3
+         7rPgxquziYrbJWywgNnwR1JDyYW/n2bVOXqVKvwqoGY7reXHvrqTN6F+J4esAJckmIag
+         h1IDX7+y8j14UV3CxbyC9a6fB2JrdlR+QPP3k/4IwtRuhReOwGBODytlYeXaKLis0tiL
+         YedacqdR1hxN86YrZMkLLoxPeG4aqjA2xKmV9FbraT0GtaZqvvZsTPH9T2cJ8Zwd6TVA
+         3pUw==
+X-Received: by 10.182.246.39 with SMTP id xt7mr5390612obc.16.1375945643337;
+ Thu, 08 Aug 2013 00:07:23 -0700 (PDT)
+Received: by 10.182.79.162 with HTTP; Thu, 8 Aug 2013 00:07:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231867>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hi, my name's Luke!
 
-> I think this applies to general case as well, not just shallow.
-> Imagine I have a disconnected commit that points to the latest tree
-> (i.e. it contains most of latest changes). Because it's disconnected,
-> it'll be ignored by the server side. But if the servide side does
-> mark_tree_interesting on this commit, a bunch of blobs might be
-> excluded from sending.
+Today, I had a problem merging a stash after immediately creating it.
+This is exactly what I did!
 
-I think you meant mark_tree_UNinteresting.
+git stash save --keep-index
+git stash pop
 
-> ... So perhaps we could go over have_obj list
-> again, if it's not processed and is
->
->  - a tree-ish, mark_tree_uninteresting
->  - a blob, just mark unintesting
->
-> and this does regardless of shallow state or edges.
+And BAM! Merge conflict! This was especially weird because my file had
+this in it (taken directly from my code!)
 
-As a general idea, I agree it may be worth trying out to see if your
-concern that the "have" list may be so big that this approach may be
-more costly than it is worth.
+<<<<<<< Updated upstream
+     *
+     * It should be used and passed along to member objects by GameStates!
+     *
+=======
+     *
+     * It should be used and passed along to member objects by GameStates!
+     *
+>>>>>>> Stashed changes
 
-If the recipient is known to have something, we do not have to send
-it.
+They are exactly the same!
 
-The things that we decide not to send are not necessarily what the
-recipient has, which introduces a twist you need to watch out for if
-we want to go that route.
+Oh, by the way, I should mention that I did not edit any hunks to get
+the index the way I wanted it, I have read that doing that causes
+merge conflicts similar to this!
 
-If the recipient is known to have something, a thin transfer can
-send a delta against it.  You do not want to send the commits before
-the shallow boundary (i.e. the parents of the commits listed in
-.git/shallow) because the recipient does not want them, and that
-means you may have to use a different mark to record that fact.  The
-recipient does not have them, we do not want to send them, and they
-cannot be used as a delta base for what we do send.  Which is quite
-different from the ordinary "uninteresting" objects, those we decide
-not to send because the recipient has them.
+Then I got a hunch! I realized that git will refrain from applying a
+hunk if it finds it already was applied exactly (that's correct
+right?)... So I thought, maybe the patches are similar (represent the
+same changes) but aren't *exactly* the same.
+
+I was right!
+
+After saving the stash I take a look at the diff: (git stash show -p)
+
+     /*!
+-     * \brief The default font renderer, global to all who have a pointer to
+-     * the Game class.
++     * \brief The font renderer implementation, obtained from the config file.
++     *
++     * It should be used and passed along to member objects by GameStates!
+      *
+-     * It need not be used at all!
++     * \note It can be cached, but not between GameStates, meaning it should be
++     * cached again every time a new GameState is constructed!
+      */
+
+After that, I take a look at the diff in my index: (git diff --staged)
+
+     /*!
+-     * \brief The default font renderer, global to all who have a pointer to
+-     * the Game class.
++     * \brief The font renderer implementation, obtained from the config file.
+      *
+-     * It need not be used at all!
++     * It should be used and passed along to member objects by GameStates!
++     *
++     * \note It can be cached, but not between GameStates, meaning it should be
++     * cached again every time a new GameState is constructed!
+      */
+
+Aha! A difference, a difference so tiny it went unnoticed by me, but not by git!
+
+Now the housekeeping:
+
+What I wanted to do:
+
+Apply a stash on top of a 'kept' index.
+
+What I did:
+
+git stash save --keep-index
+git stash pop
+
+What I saw happen:
+
+A merge conflict between the same changes (see above).
+
+What I expected to see:
+
+No merge conflict.
+
+How are these different:
+
+The conflict, which shouldn't happen since the changes introduced were the same!
+
+-------------------------------------------------
+
+It seems to me like the stash command is using a slightly different
+diff algorithm...
+Can anyone explain to me what's going on under the hood so I can
+understand this subtle difference? Does anyone know?
+
+Thanks in advance, I'm sure you all will be very helpful!
+- Luke
