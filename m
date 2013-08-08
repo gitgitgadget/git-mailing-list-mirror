@@ -1,96 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] During a shallow fetch, prevent sending over unneeded objects
-Date: Thu, 08 Aug 2013 10:10:59 -0700
-Message-ID: <7v1u64az18.fsf@alter.siamese.dyndns.org>
-References: <20130711220127.GK10217@login.drsnuggles.stderr.nl>
-	<CACsJy8CP6pGRwEn6H=cbKxTMuOjzAF3=Qh8qsLbJaw6feK3NMw@mail.gmail.com>
-	<7vfvukbrqh.fsf@alter.siamese.dyndns.org>
-	<CACsJy8BahoGcDcLjSaHA-62_KQE2wD-p5oeJOOA4nk8ZRfXrEA@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v4 5/5] rm: delete .gitmodules entry of submodules removed
+ from the work tree
+Date: Thu, 08 Aug 2013 19:11:04 +0200
+Message-ID: <5203D128.7030705@web.de>
+References: <51F8187F.7040603@web.de> <51F81957.1000709@web.de> <52014B4D.3090602@web.de> <7v8v0efrs3.fsf@alter.siamese.dyndns.org> <20130807182809.GA15123@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthijs Kooijman <matthijs@stdin.nl>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 08 19:11:22 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Thu Aug 08 19:11:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7Tk4-0008NX-K8
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 19:11:16 +0200
+	id 1V7Tk5-0008NX-6B
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 19:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758051Ab3HHRLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 13:11:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61636 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758007Ab3HHRLK (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1758032Ab3HHRLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Aug 2013 13:11:11 -0400
+Received: from mout.web.de ([212.227.17.12]:62926 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757993Ab3HHRLK (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 8 Aug 2013 13:11:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5719D36BDB;
-	Thu,  8 Aug 2013 17:11:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xdBqrEJYCvCq+O3q2b8XSYN46DE=; b=AmMOEM
-	GHGmIxpEdCYkJYX3jy7dKbCW+86i6/cQmfmz4z6TDwJKkoXwYzq/WDFgvXEgVOPm
-	ILRWPxMnYmpdP1AKzeJYHHfj1mKmBzPQjThz2T0o9BM51LoXdUVuFPBPDpOGjUNB
-	rEGV3mo9FQpqytJli+Q7fCvxDr/2k5+akGc1U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LKnQW/Z1DrOHmqJPkI8/FWnaFyWMuCi9
-	+ukTq/gCobzb65AWlSQcsBEThg1xDXVomDVPxnNj6LL1wZQ/qjqTSzx9I0Tr9wT1
-	1xyp0O0gNjHO5XzXMXui+L+einPAN0PZbjMsezf5U5BtnkbBe50hCRtBAjdoztoF
-	AygVASIiUTs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A76D36BD7;
-	Thu,  8 Aug 2013 17:11:10 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6601736BCA;
-	Thu,  8 Aug 2013 17:11:09 +0000 (UTC)
-In-Reply-To: <CACsJy8BahoGcDcLjSaHA-62_KQE2wD-p5oeJOOA4nk8ZRfXrEA@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 8 Aug 2013 14:21:33 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 84F3CA12-004D-11E3-93DD-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+Received: from [192.168.178.41] ([91.3.187.57]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0Lba35-1Vql2O3yih-00lDny for <git@vger.kernel.org>;
+ Thu, 08 Aug 2013 19:11:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <20130807182809.GA15123@paksenarrion.iveqy.com>
+X-Enigmail-Version: 1.5.2
+X-Provags-ID: V03:K0:0RZCQVHr18j3cPk0mz1qtaIiHeH/t625eppVxyfQ0NzKPIzM5zD
+ +AiUYFAth1uhAyB7Msv/Q70ZiTAX9eVcK1uZi3p8N0fqqpIuwObNagjPmMx0WvHwNOgIymX
+ dKDeflMWchYj5wr0qHe9F2GF6P6EVeSRbjSPQyWwnsQapN4TgUwq5S1+CxfVAxA6NWjBq7J
+ p989YLdz15DS4j1qkIXiA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231904>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Am 07.08.2013 20:28, schrieb Fredrik Gustafsson:
+> On Tue, Aug 06, 2013 at 02:11:56PM -0700, Junio C Hamano wrote:
+>> Thanks, will replace the top two commits and queue.  Looks like we
+>> are getting ready for 'next'?
+> 
+> I'm a bit curious about if we should move towards a reentrent libgit
+> (which would for example make multithreading easier) or not.
 
-> I fail to see the point here. There are two different things: what we
-> want to send, and what we can make deltas against. Shallow boundary
-> affects the former. What the recipient has affects latter. What is the
-> twist about?
+I'm not aware of such an effort in core Git (I always thought that
+libgit2 is the project doing what you seem to aim for).
 
-do_rev_list() --> mark_edges_uninteresting() --> show_edge() callchain
-that eventually does this:
+> If so, I suggest that this patch only use die() in builtin/. However I
+> know that there's a lot of die() all over libgit today, I'm curious
+> about what direction we're heading.
 
-static void show_edge(struct commit *commit)
-{
-	fprintf(pack_pipe, "-%s\n", sha1_to_hex(commit->object.sha1));
-}
-
-was what I had in mind.
-
-For a non-shallow transfer, feeding "-<boundary commit>" is done for
-commits that we do not send (we do not do so for all of them) and
-those that we know the recipient does have.  Two different things
-used to be the same, but with your suggestion they are not.  Which
-is a good thing but we need to be careful to make sure existing
-codepaths do not conflate them and untangle ones that do if there
-are any, that's all.
-
-> As for considering objects before shallow boundary uninteresting, I
-> have a plan for it: kill upload-pack.c:do_rev_list(). The function is
-> created to make a cut at shallow boundary,...
-
-Hmph, that function is not primarily about shallow boundary but does
-all packing in general.
-
-The edge hinting in there is for thin transfer where the sender
-sends deltas against base objects that are known to be present in
-the receiving repository, without sending the base objects.
+The die() calls are just one part. Global variables are another issue,
+we have memory which is implicitly freed on exit ... so unless we
+commit ourselves to fix all those issues I see no point in moving the
+die() calls into builtin/ in my series.
