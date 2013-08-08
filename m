@@ -1,114 +1,115 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Remove old forgotten command: whatchanged
-Date: Thu, 08 Aug 2013 20:06:09 +0200
-Message-ID: <vpqk3jwcb1q.fsf@anie.imag.fr>
-References: <CALkWK0=zZKTwn7cdrJXsVXH-rF=xWMeD_z2XAOCnuaf2bK_h8Q@mail.gmail.com>
-	<vpqfvukdy39.fsf@anie.imag.fr> <ku0lqj$qvs$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] gc: reject if another gc is running, unless --force is given
+Date: Thu, 08 Aug 2013 11:12:53 -0700
+Message-ID: <7vk3jw9hlm.fsf@alter.siamese.dyndns.org>
+References: <1375712354-13171-1-git-send-email-pclouds@gmail.com>
+	<1375959938-6395-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Damien Robert <damien.olivier.robert+gmane@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 08 20:06:19 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 08 20:13:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7UbJ-00059P-VB
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 20:06:18 +0200
+	id 1V7Uhx-0002Zt-07
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Aug 2013 20:13:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752678Ab3HHSGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Aug 2013 14:06:14 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:50513 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752489Ab3HHSGN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Aug 2013 14:06:13 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r78I67xu009165
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 8 Aug 2013 20:06:07 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1V7UbB-0008AW-Fe; Thu, 08 Aug 2013 20:06:09 +0200
-In-Reply-To: <ku0lqj$qvs$1@ger.gmane.org> (Damien Robert's message of "Thu, 8
-	Aug 2013 17:51:15 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 08 Aug 2013 20:06:07 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r78I67xu009165
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1376589968.64444@OvmVbF8rwfh/6iVzTxDTCQ
+	id S1758051Ab3HHSM6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Aug 2013 14:12:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34326 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757978Ab3HHSM5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Aug 2013 14:12:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51312377F4;
+	Thu,  8 Aug 2013 18:12:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=1LhAI4MnqcYt
+	tZrgeRfs4EbL/IM=; b=V1SNaM/iuV4GOeDgX6CZDCP4lvpEL/vIW0nCcQpGDjOy
+	gNvVKOynfZSvlmmihWKvS/9LkBzuW1H2uCR0xZLq6agQ3IKjUXwy2F9OKnV5Hf56
+	oAUrwWmCT/R3raXrwkmjUpEjKY8dnYZE0pa0Fl4PhnI9wVMJBVPy3qqwaazlRFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rBvm2Y
+	zJ9PGOl/i8Mz2L6A3fcnt4CYrYZ4gickjcgUUnMnOjWhGoUCI4edtOREnfWrZsh9
+	mmU8LNgW9rz0/15KtqrkmCnkrWeHokzthgB7kpdoKCP5ZsDQJ0fD2BEtec74zSz4
+	T1rc8YLzxyErxXUiHPH9EYyvmnk+EDLqtgCA8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46BEE377F3;
+	Thu,  8 Aug 2013 18:12:56 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 73389377F1;
+	Thu,  8 Aug 2013 18:12:55 +0000 (UTC)
+In-Reply-To: <1375959938-6395-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 8 Aug
+ 2013 18:05:38 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 25EEE94E-0056-11E3-94C1-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231915>
 
-Damien Robert <damien.olivier.robert+gmane@gmail.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Matthieu Moy  wrote in message <vpqfvukdy39.fsf@anie.imag.fr>:
->>> that confuses users.
->> 
->> ... but I do agree that the doc is really confusing. It would be much
->> better if the doc could be reduced to:
->> 
->> "This is a synonym for linkgit:git-log[1] --raw --some --other ---options.
->> Please refer to the documentation of that command."
->
-> If I may chime in as a user: what really confused me about git whatchanged
-> is this part of man gitcore-tutorial:
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 6be6c8d..99682f0 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -167,11 +167,69 @@ static int need_to_gc(void)
+> + ...
+> +	fd =3D hold_lock_file_for_update(&lock, git_path("gc.pid"),
+> +				       LOCK_DIE_ON_ERROR);
+> +	if (!force) {
+> +		fp =3D fopen(git_path("gc.pid"), "r");
+> +		memset(locking_host, 0, sizeof(locking_host));
+> +		should_exit =3D
+> +			fp !=3D NULL &&
+> +			!fstat(fileno(fp), &st) &&
+> +			/*
+> +			 * 12 hour limit is very generous as gc should
+> +			 * never take that long. On the other hand we
+> +			 * don't really need a strict limit here,
+> +			 * running gc --auto one day late is not a big
+> +			 * problem. --force can be used in manual gc
+> +			 * after the user verifies that no gc is
+> +			 * running.
+> +			 */
+> +			time(NULL) - st.st_mtime <=3D 12 * 3600 &&
+> +			fscanf(fp, "%"PRIuMAX" %127c", &pid, locking_host) =3D=3D 2 &&
+> +			!strcmp(locking_host, my_host) &&
+> +			!kill(pid, 0);
 
-Indeed.
+If there is a lockfile we can read, and if we can positively
+determine that the process named in the lockfile is still running,
+then we definitely do not want to do another "gc".  That part is
+good.
 
-How about applying this, to reduce the number of references to
-whatchanged in the docs?
+If the lock is very stale, 12-hour test will kick in, and we do not
+read who locked it, nor check if the locker is still alive.  By
+doing so, we avoid misidentifying a new process that is unrelated to
+the locker who died and left the lockfile behind, which is a good
+thing.  The logic to ignore such lockfile as "unknown" applies
+equally to a remote locker on a lockfile that is old.  So the logic
+for an old lockfile is good, too.
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 3bdd56e..486a58b 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -818,7 +818,7 @@ for further details.
- 'GIT_FLUSH'::
-        If this environment variable is set to "1", then commands such
-        as 'git blame' (in incremental mode), 'git rev-list', 'git log',
--       'git check-attr', 'git check-ignore', and 'git whatchanged' will
-+       'git check-attr', and 'git check-ignore' will
-        force a flush of the output stream after each record have been
-        flushed. If this
-        variable is set to "0", the output of these commands will be done
-diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-index f538a87..c6a1677 100644
---- a/Documentation/gitcore-tutorial.txt
-+++ b/Documentation/gitcore-tutorial.txt
-@@ -532,12 +532,7 @@ commit, and you can tell it to show a whole series of diffs.
- Alternatively, you can tell it to be "silent", and not show the diffs at
- all, but just show the actual commit message.
- 
--In fact, together with the 'git rev-list' program (which generates a
--list of revisions), 'git diff-tree' ends up being a veritable fount of
--changes. A trivial (but very useful) script called 'git whatchanged' is
--included with Git which does exactly this, and shows a log of recent
--activities.
--
-+'git log' can also be used to display changes introduced by some commits.
- To see the whole history of our pitiful little git-tutorial project, you
- can do
- 
-@@ -550,7 +545,7 @@ with the associated patches use the more complex (and much more
- powerful)
- 
- ----------------
--$ git whatchanged -p
-+$ git log --raw -p
- ----------------
- 
- and you will see exactly what has changed in the repository over its
+When we see a recent lockfile created by a "gc" running elsewhere,
+we do not set "should_exit".  Is that a good thing?  I am wondering
+if the last two lines should be:
 
+-	!strcmp(locking_host, my_host) &&
+-	!kill(pid, 0);
++	(strcmp(locking_host, my_host) || !kill(pid, 0));
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+instead.
+
+Thanks, looking good.
