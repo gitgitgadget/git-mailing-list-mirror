@@ -1,81 +1,109 @@
-From: Justin Collum <jcollum@gmail.com>
-Subject: Re: git status resets permissions on index file -- Ubuntu 12.04 64b
-Date: Fri, 9 Aug 2013 12:29:54 -0700
-Message-ID: <CACO0oR7Kx0auNV6GRwqr-OdtnrCW21LxiMFrNUDRGRJN+P6ebg@mail.gmail.com>
-References: <CACO0oR7a1-fUASQ+SJVbH1CU8d=NbHrK0MuMu+9Pr4_=7q85Vw@mail.gmail.com>
-	<52040F27.4050908@googlemail.com>
-	<20130808221807.GA8518@gmail.com>
-	<C525FA0D-D22C-4C78-8C97-45819FD58DD7@gmail.com>
-	<CACO0oR7tJNKWA=cynBA8R2kaGr2iKNCiCmXKLur9nub6pnBG0g@mail.gmail.com>
-	<8761vf3uml.fsf@igel.home>
-	<CACO0oR4_+=6iimO4U0rt2JuhfxrX1CkjWR5iMkt=+EuxscmBMg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git should not use a default user.email config value
+Date: Fri, 9 Aug 2013 12:42:14 -0700
+Message-ID: <20130809194214.GV14690@google.com>
+References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "Kyle J. McKay" <mackyle@gmail.com>,
-	Stefan Beller <stefanbeller@googlemail.com>,
-	Andrew Ruder <andy@aeruder.net>, Git List <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Fri Aug 09 21:30:01 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Thorsten Glaser <tg@mirbsd.de>
+X-From: git-owner@vger.kernel.org Fri Aug 09 21:42:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7sNr-0005JU-Jz
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 21:29:59 +0200
+	id 1V7sa9-0006sS-Bc
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 21:42:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030527Ab3HIT3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 15:29:55 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:40677 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030224Ab3HIT3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 15:29:55 -0400
-Received: by mail-ie0-f169.google.com with SMTP id qd12so4818413ieb.14
-        for <git@vger.kernel.org>; Fri, 09 Aug 2013 12:29:54 -0700 (PDT)
+	id S1030842Ab3HITmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 15:42:19 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:52664 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030816Ab3HITmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 15:42:18 -0400
+Received: by mail-pd0-f178.google.com with SMTP id w10so951685pde.37
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 12:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=M86+yX9DZ2zV5K9vYK6oQIiLpYIBmtZeUpF3CxolwUg=;
-        b=OBCpAFnd8DTtNX+NxOR/47Ej4vMkGIu7eHlpp1RMlHF3a8N/Niy/dohhcK9f5CNqZe
-         6lLMIUadxPw9wkcIoDdQoA4sZDtO0l2XWF+OEumdbosJbbqZAJia5tY9wars9bK4buB8
-         XVdivoIEHNUNoCjIjJQc45Do97+3gho0X0+xFYV0+x38mtLyDl7Z0NCR3SRw4Qbz/gfm
-         SU1pVE+g10D0p5Fn+g/H+QRg1KdnDcVY1qWun1n0CJpsuTeayQxcsbb56vzV8S7h8n1G
-         CUkkAmxyrsiZIohgIE8IQDgdjD6olFXprJGJ+EHuIP05RwY7X/cpU3ighQgVa+8HQplg
-         xw+Q==
-X-Received: by 10.43.77.137 with SMTP id zi9mr5026549icb.106.1376076594497;
- Fri, 09 Aug 2013 12:29:54 -0700 (PDT)
-Received: by 10.43.146.70 with HTTP; Fri, 9 Aug 2013 12:29:54 -0700 (PDT)
-In-Reply-To: <CACO0oR4_+=6iimO4U0rt2JuhfxrX1CkjWR5iMkt=+EuxscmBMg@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=XAUeoABIKXSUySIbVb2HMFnrz5y7NyoKln1WQfmutAg=;
+        b=EsXp2gCD8oKhSRs2JLKFBhpwT1+Zu4v7oLmJcRFjz67pj2j3agGiSoUlMX8D0xzBwp
+         5fvSq2T9ngV00wkE9ZiI0k3Feh9GVLMms5hVhNzueaHKa+nfYa6Rc6gTMLf0K8ryDunk
+         j5X/YKLF+nsCpgLbSU+WFX2Xy3NgQg8f35jlF8s/tnA0BDp7yPhf9G9SnY4rQrsGSpkP
+         /NdTifTc9ijLOoQgIuqlnDSI+lZ/7ktWNPuaPZY0FGAihwI+hLnkxIxrjA9u5x1ozHeV
+         MbBcrkV26ux6g2iiywyDbFEUo8rF8ah5sFQ9SzyZd8Z80rGjiIzxNy0VZ56h/uAi7Uob
+         FLAA==
+X-Received: by 10.68.212.229 with SMTP id nn5mr13141115pbc.44.1376077337859;
+        Fri, 09 Aug 2013 12:42:17 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id sx7sm21651021pbc.41.2013.08.09.12.42.16
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 09 Aug 2013 12:42:16 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232015>
 
-I've looked into this a bit and I think this is a bug in Webstorm.
-Webstorm saves files a lot without you actually hitting save, so
-that's why I didn't put 2 and 2 together. It appears that any file
-change in Webstorm is screwing up the permissions on git's index --
-but only in 64b Ubuntu, it wasn't happening in 32b.
+Hi Thorsten,
 
-On Fri, Aug 9, 2013 at 10:00 AM, Justin Collum <jcollum@gmail.com> wrote:
->> That doesn't make sense.  If you are the owner of the file, why do you need sudo???
->
-> I've just never seen a chmod command without sudo. I assumed it was
-> needed. Is this relevant to the bug that I'm seeing?
->
-> On Fri, Aug 9, 2013 at 5:40 AM, Andreas Schwab <schwab@linux-m68k.org> wrote:
->> Justin Collum <jcollum@gmail.com> writes:
->>
->>>      sudo chmod 644 ./.git/index
->>
->> That doesn't make sense.  If you are the owner of the file, why do you
->> need sudo???
->>
->> Andreas.
->>
->> --
->> Andreas Schwab, schwab@linux-m68k.org
->> GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
->> "And now for something completely different."
+Thorsten Glaser wrote[1]:
+
+> git config user.email SHOULD NOT default to $(id -un)@$(hostname -f)
+> because just too many cow-orkers seem to be unable to follow basic
+> instructions
+
+Heh.
+
+Can you say a little more about your setup?  In a university
+environment with sysadmin-managed email and /etc/mailname set up
+correctly it is handy that people can start working without doing
+anything special to configure git's "[user] email" setting.  On the
+other hand it is obnoxious to receive patches with wrong authorship
+information.  So I'm wondering if there's some detail that
+distinguishes between these cases.
+
+Incidentally, it's been a long time since I looked at the "Please
+configure your email address; I've made something up, but you'll want
+to check it" message:
+
+	Your name and email address were configured automatically based
+	on your username and hostname. Please check that they are accurate.
+	You can suppress this message by setting them explicitly:
+
+	    git config --global user.name "Your Name"
+	    git config --global user.email you@example.com
+
+	After doing this, you may fix the identity used for this commit with:
+
+	    git commit --amend --reset-author
+
+I wonder if it's too gentle and long to get the point across.  Would
+something the following (including the guesses in the message for
+easier copy-pasting) help?
+
+	No name and email address configured, so I had to guess.  You
+	can suppress this message by setting your identity explicitly:
+
+		git config --global user.name "Thorsten Glaser"
+		git config --global user.email tg@mirbsd.de
+
+	After doing so, you may fix the identity used for this commit
+	with "git commit --amend --reset-author".
+
+It may also make sense to distinguish between cases where a mailname
+is set and not set.  Git already notices the cases where the guessed
+email address ends with ".(none)" and errors out, and it could make
+sense to be more aggressive.
+
+Hope that helps,
+Jonathan
+
+[1] http://bugs.debian.org/719226
