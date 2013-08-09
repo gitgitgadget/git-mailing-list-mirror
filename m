@@ -1,79 +1,91 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: [PATCH] t/t7407: fix two typos in submodule tests
-Date: Fri,  9 Aug 2013 16:12:54 -0400
-Message-ID: <1376079174-7226-1-git-send-email-hordp@cisco.com>
-Cc: phil.hord@gmail.com, git@vger.kernel.org,
-	Fredrik Gustafsson <iveqy@iveqy.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Phil Hord <hordp@cisco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 09 22:22:48 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/2] remote-hg: add shared repo upgrade
+Date: Fri, 9 Aug 2013 15:24:10 -0500
+Message-ID: <CAMP44s3KkwWnTb7=w-oviGRrsXk+g_L0yL9=xyywSpobmeExOw@mail.gmail.com>
+References: <1376078581-24766-1-git-send-email-felipe.contreras@gmail.com>
+	<1376078581-24766-3-git-send-email-felipe.contreras@gmail.com>
+	<CALWbr2yAitLSNGj2qwz4C8Ugm8wHnGTf4ndZSbPcFToczWaWEA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>,
+	=?UTF-8?Q?J=C3=B6rn_Hees?= <dev@joernhees.de>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 09 22:24:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7tCw-0005QD-NW
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 22:22:47 +0200
+	id 1V7tEO-0006bC-AA
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 22:24:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031030Ab3HIUWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 16:22:43 -0400
-Received: from rcdn-iport-7.cisco.com ([173.37.86.78]:25229 "EHLO
-	rcdn-iport-7.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030994Ab3HIUWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 16:22:42 -0400
-X-Greylist: delayed 580 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Aug 2013 16:22:42 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=1341; q=dns/txt; s=iport;
-  t=1376079762; x=1377289362;
-  h=from:to:cc:subject:date:message-id;
-  bh=zSiULrr/VZiEhSKc/6TNBHHac95YkdP/k975O4Ig2cM=;
-  b=M2x+ljFQZ10kBps3neN5aFTiyU1Uo08YCknGIDp6yBW01ho2CsyQ9EoQ
-   7pBc75qsexN8bSMzUw/wYeTEhyU8eCb+mLmQl11aPYXDTSAfPOIbkEWfR
-   0M/nmkO/PoOZEw7G3aEhTgAJEo/7f9eawKWIPu+1r7JM40LZEPUmviTq1
-   c=;
-X-IronPort-AV: E=Sophos;i="4.89,848,1367971200"; 
-   d="scan'208";a="245603486"
-Received: from rcdn-core2-2.cisco.com ([173.37.113.189])
-  by rcdn-iport-7.cisco.com with ESMTP; 09 Aug 2013 20:13:01 +0000
-Received: from ipsn-lnx-hordp.cisco.com (dhcp-64-100-104-41.cisco.com [64.100.104.41])
-	by rcdn-core2-2.cisco.com (8.14.5/8.14.5) with ESMTP id r79KD1Fh011587;
-	Fri, 9 Aug 2013 20:13:01 GMT
-X-Mailer: git-send-email 1.8.4.rc1.433.g415b943
+	id S1031018Ab3HIUYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 16:24:12 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:62548 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030994Ab3HIUYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 16:24:12 -0400
+Received: by mail-lb0-f171.google.com with SMTP id t13so3447883lbd.2
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 13:24:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=s37lGq/qjBoyBvxo3Jhn5WXJ4FGFt8pk02Pwi6Y1nag=;
+        b=ez53FUz8JOcs3FetEuMiCWdUkknsFQZKv91Z3G5I102aevyydSbV6vD7sC0o4dcyjn
+         YCcq/ANdRfQ28fyTCCePshVI6Gm6elBTiV31POpXrZenn0MeQvKmH4sg8RhhYx/oMINE
+         D2K4LXiUISDGQPI4W1IFNXTUFTKva/Kz523Ujg1cv2/8C7GccN2P+IykZ6mjrzX4tisV
+         W52MCnC7uhMPrShafNycm94gRUxkRNXozGkw2VHsSoGgr3Rwpv+GLMAJgDPPtgJsN4fX
+         gbkha4rHQm6P4G/12sDOCWa3fbO/OkSzCtcAImKi0ZvB7Y/t4DsbMtrwJqZriIJ6wmJ+
+         Pbhg==
+X-Received: by 10.112.63.132 with SMTP id g4mr5260042lbs.25.1376079850382;
+ Fri, 09 Aug 2013 13:24:10 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Fri, 9 Aug 2013 13:24:10 -0700 (PDT)
+In-Reply-To: <CALWbr2yAitLSNGj2qwz4C8Ugm8wHnGTf4ndZSbPcFToczWaWEA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232026>
 
-In t/t7407-submodule-foreach.sh there is a typo in one of the
-path names given for a test step.  The correct path is
-nested1/nested2/.git, but nested1/nested1/nested2/.git is
-given instead.  The typo is hidden because this line also
-accidentally omits the && chain operator.  The omitted chain
-also means the return values of all the previous commands in
-this test are also being ignored.
+On Fri, Aug 9, 2013 at 3:19 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
+> On Fri, Aug 9, 2013 at 10:03 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> 6796d49 (remote-hg: use a shared repository store) introduced a bug by
+>> making the shared repository '.git/hg', which is already used before
+>> that patch, so clones that happened before that patch, fail after that
+>> patch, because there's no shared Mercurial repo.
+>
+> Does that still hold ? You are creating the shared_path repository
+> just below, so it should work without the patch.
+> The real reason for this patch is to avoid having to re-clone from a
+> potential slow source, is it not ?
 
-Fix the path and add the chain operator so the entire test
-sequence can be properly validated.
+Yeah, that's true.
 
-Signed-off-by: Phil Hord <hordp@cisco.com>
----
- t/t7407-submodule-foreach.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>> +        # check and upgrade old organization
+>> +        hg_path = os.path.join(shared_path, '.hg')
+>> +        if os.path.exists(shared_path) and not os.path.exists(hg_path):
+>> +            repos = os.listdir(shared_path)
+>> +            for x in repos:
+>> +                local_hg = os.path.join(shared_path, x, 'clone', '.hg')
+>> +                if not os.path.exists(local_hg):
+>> +                    continue
+>> +                shutil.copytree(local_hg, hg_path)
+>> +                break
+>> +
+>
+> By the way, I liked my version better, that is:
+>
+> if os.path.exists(local_hg):
+>     shutil.copytree(local_hg, hg_path)
+>     break
+>
+> Simplifying the if not condition: continue else: break
 
-diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
-index 91d4fd1..be93f10 100755
---- a/t/t7407-submodule-foreach.sh
-+++ b/t/t7407-submodule-foreach.sh
-@@ -145,7 +145,7 @@ test_expect_success 'use "submodule foreach" to checkout 2nd level submodule' '
- 		git rev-parse --resolve-git-dir nested1/.git &&
- 		test_must_fail git rev-parse --resolve-git-dir nested1/nested2/.git &&
- 		git submodule foreach "git submodule update --init" &&
--		git rev-parse --resolve-git-dir nested1/nested1/nested2/.git
-+		git rev-parse --resolve-git-dir nested1/nested2/.git &&
- 		test_must_fail git rev-parse --resolve-git-dir nested1/nested2/nested3/.git
- 	)
- '
+I prefer my version because if there's any need to add more lines,
+they don't have to be indented. That's why a lot of code ends up
+having unnecessary indentation.
+
 -- 
-1.8.4.rc1.433.g415b943
+Felipe Contreras
