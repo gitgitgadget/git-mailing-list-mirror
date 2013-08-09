@@ -1,94 +1,168 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] remote-hg: fix path when cloning with tilde expansion
-Date: Fri, 9 Aug 2013 22:09:17 +0200
-Message-ID: <CALWbr2w2JjEr_hYX9ighu_-=iTV6etG=78g4AbKko64EsecxFA@mail.gmail.com>
-References: <CAMP44s1Jqao0YvBSh18t1C2LwAF4_u2GaTNx1RwdW+pmCFcxvQ@mail.gmail.com>
-	<1376068387-28510-1-git-send-email-apelisse@gmail.com>
-	<7veha266nq.fsf@alter.siamese.dyndns.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] whatchanged: document its historical nature
+Date: Fri, 9 Aug 2013 21:14:47 +0100
+Message-ID: <20130809201447.GH2337@serenity.lan>
+References: <CALkWK0=zZKTwn7cdrJXsVXH-rF=xWMeD_z2XAOCnuaf2bK_h8Q@mail.gmail.com>
+ <52027B17.7040602@googlemail.com>
+ <7vtxj1crv6.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kTfQYZG8R1EMuV37pdJ-aj9btXmfJ1Fb4QoMeZ1QucAw@mail.gmail.com>
+ <vpqfvukdy39.fsf@anie.imag.fr>
+ <CALkWK0kD=adWKVf+zb+Pnjz-HBkhks8ZvmQ3eYSpdXvahr=e4g@mail.gmail.com>
+ <vpqvc3gcijh.fsf@anie.imag.fr>
+ <7vwqnw9jv6.fsf@alter.siamese.dyndns.org>
+ <7v38qi63bn.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	git <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Stefan Beller <stefanbeller@googlemail.com>,
+	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 09 22:09:25 2013
+X-From: git-owner@vger.kernel.org Fri Aug 09 22:15:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7szz-00035P-1F
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 22:09:23 +0200
+	id 1V7t5S-0007mk-Qy
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 22:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031001Ab3HIUJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 16:09:19 -0400
-Received: from mail-qc0-f179.google.com ([209.85.216.179]:52619 "EHLO
-	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030989Ab3HIUJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 16:09:18 -0400
-Received: by mail-qc0-f179.google.com with SMTP id n10so588598qcx.38
-        for <git@vger.kernel.org>; Fri, 09 Aug 2013 13:09:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=881Gu+zFxqx2LigRuB3Ykm94MRn2ouf9zoKB9EVgkWI=;
-        b=kMCBx1WtyT8M/f4CW6FRBszyaGCnVVfXJi3bxtD5VAVLYBd2NGO16NtpXN5t6kAg+t
-         E9D7kd4yHdcgtTzxnkjpMUcRmVaKGzuJsvpU9FSsQcXdbQh1wNoj0vtn+YSwkMV4hX8N
-         NBQ111oJPoiA508pv2UlwJVCJBGO4swhnOMfZy86EvkyiUuGUOpCSX7tD4nz/VL+G2ue
-         8yqzDsZjAv1Sw2CSjSLbyzEs2f38qpK/pCqe7wf7bfT0r0hFAdzi6GEZ1+8UxIRIttrD
-         Du04k+h8lBqLwNRAD5CuqSEllK3LFY1vFwwEgku/iPFeD3cIeTuvHvri+8SF0ceP8XPx
-         bJmA==
-X-Received: by 10.49.50.198 with SMTP id e6mr12935319qeo.76.1376078957907;
- Fri, 09 Aug 2013 13:09:17 -0700 (PDT)
-Received: by 10.49.104.211 with HTTP; Fri, 9 Aug 2013 13:09:17 -0700 (PDT)
-In-Reply-To: <7veha266nq.fsf@alter.siamese.dyndns.org>
+	id S1031011Ab3HIUO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 16:14:59 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:41253 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030954Ab3HIUO6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 16:14:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 07C04198002;
+	Fri,  9 Aug 2013 21:14:58 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qi4UpNLGBBXk; Fri,  9 Aug 2013 21:14:57 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id F23756064D7;
+	Fri,  9 Aug 2013 21:14:49 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7v38qi63bn.fsf_-_@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232022>
 
-On Fri, Aug 9, 2013 at 8:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Antoine Pelisse <apelisse@gmail.com> writes:
->> On Mon, Aug 5, 2013 at 10:30 PM, Felipe Contreras <felipe.contreras@gmail.com> wrote:
->>> Shouldn't that be the job of the shell? (s/~/$HOME/)
->>
->> I'm not sure what you mean here. Does it mean that I should stop cloning using "~" ?
->
-> I think shells do not expand ~ when it appears in a string (e.g. hg::~/there);
-> you could work it around with
->
->         git clone hg::$(echo ~/there)
->
-> and I suspect that is what Felipe is alluding to.  A tool (like
-> remote-hg bridge with this patch) that expands ~ in the middle of a
-> string also may be surprising to some people, especially to those
-> who know the shell does not.
+On Fri, Aug 09, 2013 at 01:01:48PM -0700, Junio C Hamano wrote:
+> After doing a bit of archaeology, I now know why "whatchanged" with
+> an unwieldy long name persisted in the user's mindset for so long.
+> 
+> My conclusions are:
+> 
+>  - It is better to encourage new users to use `log` very early in
+>    the document;
+> 
+>  - It is not sensible to remove the command at this point yet.
+>    After having used to `log` that does not take diff options for
+>    close to a year, it is understandable why there are many people
+>    who are used to type `whatchanged`.
+> 
+> It could be argued that deprecation and retraining of fingers are
+> doing favors to the long-time users.  But the presense of the
+> command is not hurting anybody, other than the new people who may
+> stumble upon both and wonder what their differences are.  By clearly
+> indicating that these two are essentially the same, we would help
+> the new people without harming anybody.
+> 
+> -- >8 --
+> Subject: [PATCH] whatchanged: document its historical nature
+> 
+> Encourage new users to use 'log' instead.  These days, these
+> commands are unified and just have different defaults.
+> 
+> 'git log' only allowed you to view the log messages and no diffs
+> when it was added in early June 2005.  It was only in early April
+> 2006 that the command learned to take diff options.  Because of
+> this, power users tended to use 'whatchanged' that already existed
+> since mid May 2005 and supported diff options.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> 
+>  Documentation/git-whatchanged.txt | 41 ++++++++-------------------------------
+>  1 file changed, 8 insertions(+), 33 deletions(-)
+> 
+> diff --git a/Documentation/git-whatchanged.txt b/Documentation/git-whatchanged.txt
+> index c600b61..6faa200 100644
+> --- a/Documentation/git-whatchanged.txt
+> +++ b/Documentation/git-whatchanged.txt
+> @@ -13,43 +13,18 @@ SYNOPSIS
+>  
+>  DESCRIPTION
+>  -----------
+> -Shows commit logs and diff output each commit introduces.  The
+> -command internally invokes 'git rev-list' piped to
+> -'git diff-tree', and takes command line options for both of
+> -these commands.
+>  
+> -This manual page describes only the most frequently used options.
+> +Shows commit logs and diff output each commit introduces.
+>  
+> +New users are encouraged to use linkgit:git-log[1] instead.  The
+> +`whatchanged` command is essentially the same as linkgit:git-log[1]
+> +run with different defaults that shows a --raw diff outputat the
 
-It looks like mercurial will expand the tilde (it it starts with it):
+s/outputat/output at/
 
-   hg init \~
+Although I wonder if it would be better to say
 
-will create a $HOME/.hg. (while git init \~ will create ./~).
+    New users are encouraged to use linkgit:git-log[1] instead.  The
+    `whatchanged` command is essentially the same as linkgit:git-log[1]
+    with the `--raw` option specified.
 
-So when we run:
-
-git clone hg::~/my/repo
-
-Git will remove the "hg::" part, and Mercurial will expand tilde and
-clone $HOME/my/repo.
-
-So what should we do ? I think we should stick as close as possible to
-Hg behavior:
-That is consider that a path starting with tilde is absolute, and not
-try to fix it by building /home/user/~/repo/path.
-Of course if we could not depend on "I think Hg works like that", it
-would be better if we could resolve that by asking Mercurial.
-I will dig into it.
-
-> By the way, you earlier sent an updated 1/2; is this supposed to be
-> 2/2 to conclude the two-patch series?
-
-Those two patches don't interact with each other, but you can of
-course join them if it makes it easier for you (and I don't think one
-is going to have to go "faster" than the other anyway).
+> +end.
+>  
+> -OPTIONS
+> --------
+> --p::
+> -	Show textual diffs, instead of the Git internal diff
+> -	output format that is useful only to tell the changed
+> -	paths and their nature of changes.
+> +The command is kept primarily for historical reasons; fingers of
+> +many people who learned Git long before `git log` was invented by
+> +reading Linux kernel mailing list are trained to type it.
+>  
+> --<n>::
+> -	Limit output to <n> commits.
+> -
+> -<since>..<until>::
+> -	Limit output to between the two named commits (bottom
+> -	exclusive, top inclusive).
+> -
+> --r::
+> -	Show Git internal diff output, but for the whole tree,
+> -	not just the top level.
+> -
+> --m::
+> -	By default, differences for merge commits are not shown.
+> -	With this flag, show differences to that commit from all
+> -	of its parents.
+> -+
+> -However, it is not very useful in general, although it
+> -*is* useful on a file-by-file basis.
+> -
+> -include::pretty-options.txt[]
+> -
+> -include::pretty-formats.txt[]
+>  
+>  Examples
+>  --------
+> -- 
+> 1.8.4-rc2-195-gb76a8e9
