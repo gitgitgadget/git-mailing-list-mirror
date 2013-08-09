@@ -1,73 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git exproll: steps to tackle gc aggression
-Date: Fri, 9 Aug 2013 07:00:00 -0400
-Message-ID: <20130809110000.GD18878@sigill.intra.peff.net>
-References: <1375756727-1275-1-git-send-email-artagnon@gmail.com>
- <CACsJy8CGWJ07Uk8EBjfejdyshKB1NKk=_7VUoeyZWZgJFqCSkg@mail.gmail.com>
- <7v61vihg6k.fsf@alter.siamese.dyndns.org>
- <CALkWK0kmx8bi1ZT1CSk+iVnmmQJV4bNu1D7h1AHnRk7_TfhJ3Q@mail.gmail.com>
- <7va9ksbqpl.fsf@alter.siamese.dyndns.org>
- <CALkWK0mxd35OGDG2fMaRsfycvBPPxDHWrPX8og5y2+4y1dfOpw@mail.gmail.com>
- <7v61vgazp5.fsf@alter.siamese.dyndns.org>
- <CALkWK0kqE8azzxp_GkzhPNT41nD8NzeLqXSe1xi0jbVo=7Xz3A@mail.gmail.com>
- <7vwqnw7z47.fsf@alter.siamese.dyndns.org>
- <CALkWK0=nerszb3_YA8P=qXbfAd4Y1rNsHXhfVKzwtj-x80iqkg@mail.gmail.com>
+From: =?UTF-8?B?0JvQtdC20LDQvdC60LjQvSDQmNCy0LDQvQ==?= 
+	<abyss.7@gmail.com>
+Subject: Huge possible memory leak while cherry-picking.
+Date: Fri, 9 Aug 2013 16:13:17 +0400
+Message-ID: <CAJc7LbpRuqug9pLFVVg=XMvJ9u_P0ZVSy2MVBDaCVkjvfKnfJw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Martin Fick <mfick@codeaurora.org>,
-	Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 09 13:00:14 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 09 14:13:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7kQW-0007W4-FY
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 13:00:12 +0200
+	id 1V7lZL-00044O-4v
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 14:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967404Ab3HILAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 07:00:06 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46408 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966958Ab3HILAE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 07:00:04 -0400
-Received: (qmail 29300 invoked by uid 102); 9 Aug 2013 11:00:04 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 Aug 2013 06:00:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Aug 2013 07:00:00 -0400
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=nerszb3_YA8P=qXbfAd4Y1rNsHXhfVKzwtj-x80iqkg@mail.gmail.com>
+	id S967056Ab3HIMNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 08:13:18 -0400
+Received: from mail-vc0-f175.google.com ([209.85.220.175]:62141 "EHLO
+	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966285Ab3HIMNS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 08:13:18 -0400
+Received: by mail-vc0-f175.google.com with SMTP id ia10so944613vcb.6
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 05:13:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Oj07wSqxGML/L6tJpRBhoQupbZ0iBHpz/0RhbB4aMzk=;
+        b=ld/Wa1tJO7ZoZnZjDLMPKesctHsBmPg/cmhPkrncenPLA5y3BGkQPnIyG+7Bq0boey
+         jjFQ2LUu/IC6xXqir3uDUpVjtf+0XwDw6fJQ35IXigMpHiiKMJyxdl83RS9KrrIlSm0G
+         tpDDFah0PbS7vHAle44eLmsYXNrA5Zc4fzNFmYGx2zHFzDQUmg6hYpfNgGheOMFj7Zl3
+         HAU2JnYeQsxVKVtAlYlT/eY+eX2Nt+DZ35HiIsL6lifudXikE9WTN/6pcYETLg0wVqYc
+         w5IbN8lKdl1dHudPV2QGhN/uCzspcVsNjsD+Qq74lWP/EAxYyFK0S1P0pl6h1OMCMnXR
+         7oLA==
+X-Received: by 10.220.84.65 with SMTP id i1mr171000vcl.51.1376050397435; Fri,
+ 09 Aug 2013 05:13:17 -0700 (PDT)
+Received: by 10.58.80.40 with HTTP; Fri, 9 Aug 2013 05:13:17 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231972>
 
-On Fri, Aug 09, 2013 at 01:34:48AM +0530, Ramkumar Ramachandra wrote:
+Hi,
 
-> Certainly. A push will never use an existing pack as-is, as it's very
-> highly unlikely that the server requested exactly what gc --auto
-> packed for us locally.
-> 
-> Sure, undeltified objects in the pack are probably better for push
-> performance, but I'm talking about the majority: deltified objects.
-> Don't you need to apply the deltas (ie. explode the pack), before you
-> can recompute the deltas for the information you're sending across for
-> the push?
+I have tried to cherry-pick a range of ~200 commits from one branch to
+another. And you can't imagine how I was surprised when the git
+process ate 8 Gb of RAM and died - before cherry-picking was complete.
 
-It depends on what each side has it, doesn't it? We generally try to
-reuse on-disk deltas when we can, since they require no computation. If
-I have object A delta'd against B, and I know that the other side wants
-A and has B (or I am also sending B), I can simply send what I have on
-disk. So we do not just blit out the existing pack as-is, but we may
-reuse portions of it as appropriate.
+I downloaded git sources from master and built it with gperftools
+support (-ltcmalloc). After running `git cherry-pick <some hash>` with
+a heap-leak checker enabled I got this:
 
-Of course we may have to reconstruct deltas for trees in order to find
-the correct set of objects (i.e., the history traversal). But that is a
-separate phase from generating the pack's object content, and we do not
-reuse any of the traversal work in later phases.
+> Have memory regions w/o callers: might report false leaks
+> Leak check _main_ detected leaks of 42838782 bytes in 257986 objects
 
--Peff
+These objects are allocated at
+
+> read-cache.c:1340: struct cache_entry *ce = xmalloc(cache_entry_size(len));
+
+After looking in the code, I found a comment in the function `static
+void remove_dir_entry(...)`:
+
+/*
+ * Release reference to the directory entry (and parents if 0).
+ *
+ * Note: we do not remove / free the entry because there's no
+ * hash.[ch]::remove_hash and dir->next may point to other entries
+ * that are still valid, so we must not free the memory.
+ */
+
+So, this objects are never freed - by design?
+Is it a real issue, or do I just misunderstand something?
