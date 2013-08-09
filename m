@@ -1,155 +1,71 @@
-From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT] add FreeBSD support
-Date: Fri, 9 Aug 2013 10:46:42 -0400
-Message-ID: <20130809144641.GK22686@poseidon.cudanet.local>
-References: <1376051548-3126-1-git-send-email-wenqing.lz@taobao.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Repo with only one file
+Date: Fri, 9 Aug 2013 11:00:25 -0400
+Message-ID: <CABURp0p9NGoL=F8-xpicz5J+TmOopYhv-qmxoWagHOcBiKn6=w@mail.gmail.com>
+References: <CAH_OBid8SO3ydpjhRHa68s+54CScLh=jactxTQhwQPo-jcnAvA@mail.gmail.com>
+ <520224E0.5060206@viscovery.net> <CAH_OBicysTTu9YdHsHz0H6x3umU5va68J3nT1qHA9-CJY9+E=A@mail.gmail.com>
+ <CABURp0o_07HdB2o0knPABtAiiuHQ6-fYgemvdCYOsdSghO7v1w@mail.gmail.com>
+ <52048B5B.5060009@viscovery.net> <CAH_OBicF3xn8+MsKH0nTg-HnPg58T-TWHW20r7GqXOm3Nbutfg@mail.gmail.com>
+ <52049121.2080604@viscovery.net> <CAH_OBifYFyVVo_OEfniWJE=0peX+UPLkRznqyQzvO4gGGLu_tQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Zheng Liu <gnehzuil.liu@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 09 16:55:14 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Git List <git@vger.kernel.org>
+To: shawn wilson <ag4ve.us@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 09 17:00:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7o5y-0006w5-4A
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 16:55:14 +0200
+	id 1V7oBO-0003Rn-TH
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 17:00:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757756Ab3HIOzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 10:55:08 -0400
-Received: from josefsipek.net ([64.9.206.49]:1671 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757614Ab3HIOzI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 10:55:08 -0400
-X-Greylist: delayed 503 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Aug 2013 10:55:07 EDT
-Received: from poseidon.cudanet.local (unknown [64.235.151.250])
-	by josefsipek.net (Postfix) with ESMTPSA id 94EE5554D8;
-	Fri,  9 Aug 2013 10:46:43 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1376051548-3126-1-git-send-email-wenqing.lz@taobao.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S934113Ab3HIPAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 11:00:46 -0400
+Received: from mail-vb0-f45.google.com ([209.85.212.45]:57445 "EHLO
+	mail-vb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933949Ab3HIPAq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 11:00:46 -0400
+Received: by mail-vb0-f45.google.com with SMTP id e15so4166856vbg.32
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 08:00:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=TzbUKNAyla6hsMaGeu6YEMJTrFBiRDov+4szVz9QK1M=;
+        b=CnuThCjMl41gEAN87kfLb6gAksUUa867zMFzOfMdB+HIbbyE82000z6qG90iSaOOx8
+         VAUEeNbf/SBOk+KytHG+YhzbiEg9/WnKaIBONaUuFjRQNYL6znHQAVMoXQPxCVJHbW7q
+         CdY6r3GwfzFGarLKDbqe4ZbgnybuA+IzzkUQGjtg2+6q6CT2+2LXLymD5aI9CAmHysSu
+         BnoEuurZBw9cB3FqVQzhHn4jUuYImysd/bKfbxeVATosTcaT3NqpQxtsFSobwPxpe24k
+         Os4Wmq+WFMHmSnej2ZqHDpXQqP8MMpT0bf6uIuA/2nlGucVgGGtBpYldR4VogPppEXOo
+         E95w==
+X-Received: by 10.58.46.196 with SMTP id x4mr598040vem.73.1376060445373; Fri,
+ 09 Aug 2013 08:00:45 -0700 (PDT)
+Received: by 10.58.220.72 with HTTP; Fri, 9 Aug 2013 08:00:25 -0700 (PDT)
+In-Reply-To: <CAH_OBifYFyVVo_OEfniWJE=0peX+UPLkRznqyQzvO4gGGLu_tQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231986>
 
-On Fri, Aug 09, 2013 at 08:32:28PM +0800, Zheng Liu wrote:
-> From: Zheng Liu <gnehzuil.liu@gmail.com>
-> 
-> Currently guilt doesn't support FreeBSD platform.  This commit tries to
-> add this support.  The file called 'os.FreeBSD' is copied from os.Darwin
-> due to these two platforms have almost the same command tools.
+On Fri, Aug 9, 2013 at 6:03 AM, shawn wilson <ag4ve.us@gmail.com> wrote:
+> On Fri, Aug 9, 2013 at 2:50 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>> Let's check: After running your command above to remove other files, does
+>> the command
+>>
+>>    git filter-branch -f HEAD webban.pl
+>>
+>
+> Ahha, no but:
+> git filter-branch -f HEAD -- webban.pl
+> did
+>
+> Thanks.
+>
+> The question still stands though - why is that unassociated commit left there?
 
-Out of curiosity, is it identical?  I eyeballed it, and they do look
-identical.  There's probably a better way to do this whole os-specific
-thing, but this will work well enough for now.
+Maybe you need  --prune-empty.
 
-Jeff.
-
-> Signed-off-by: Zheng Liu <gnehzuil.liu@gmail.com>
-> ---
-> Hi all,
-> 
-> After applied this patch, the regression test 010 and 060 will fail because
-> of the output format.  After fixing these issues, all the regression tests
-> will pass.
-> 
-> P.S. I don't subscribe git@ mailing list.  So please put my email address
-> in Cc list.  Thanks!
-> 
-> Regards,
-> 						- Zheng
-> 
->  os.FreeBSD | 70 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 70 insertions(+)
->  create mode 100644 os.FreeBSD
-> 
-> diff --git a/os.FreeBSD b/os.FreeBSD
-> new file mode 100644
-> index 0000000..3f23121
-> --- /dev/null
-> +++ b/os.FreeBSD
-> @@ -0,0 +1,70 @@
-> +# usage: touch_date <unix ts> <file>
-> +touch_date()
-> +{
-> +	touch -t `date -r $1 +%Y%m%d%H%M.%S` "$2"
-> +}
-> +
-> +# usage: last_modified <file>
-> +last_modified()
-> +{
-> +	stat -f "%m" "$1"
-> +}
-> +
-> +# usage: format_last_modified <file>
-> +format_last_modified()
-> +{
-> +	stat -f "%Sm" -t "%Y-%m-%d %H:%M:%S %z" "$1"
-> +}
-> +
-> +# usage: head_n [count]
-> +head_n()
-> +{
-> +	if [ "$1" -gt 0 ]; then
-> +		head -n "$1"
-> +	fi
-> +}
-> +
-> +# usage: sha1 [file]
-> +sha1()
-> +{
-> +	if [ $# = 1 ]
-> +	then
-> +		openssl dgst -sha1 "$1" | sed "s,SHA1.\(.*\).= \(.*\),\2  \1,"
-> +	else
-> +		openssl dgst -sha1 | sed 's,\(.*= \)*\(.*\),\2  -,'
-> +	fi
-> +}
-> +
-> +# usage: cp_a <src> <dst>
-> +cp_a()
-> +{
-> +	cp -pR "$1" "$2"
-> +}
-> +
-> +# usage: _tac
-> +_tac()
-> +{
-> +	sed -e '1!G;h;$!d'
-> +}
-> +
-> +_seq()
-> +{
-> +	(
-> +		if [ $# -eq 1 ]
-> +		then
-> +			/usr/bin/jot $1
-> +		elif [ $# -eq 2 ]
-> +		then
-> +			n1=$((${2} - ${1} + 1))
-> +			n2=$1
-> +			/usr/bin/jot $n1 $n2
-> +		elif [ $# -eq 3 ]
-> +		then
-> +			num1=$1
-> +			incr=$2
-> +			num2=$3
-> +			/usr/bin/awk -v n1=$num1 -v n2=$num2 -v add=$incr 'BEGIN{ for(i=n1; i<=n2; i+=add) print i;}' | /usr/bin/sed -E '/e/s/^.+e.+$/0/'
-> +		fi
-> +	)
-> +	return 0
-> +}
-> -- 
-> 1.8.3.4
-> 
-
--- 
-Research, n.:
-  Consider Columbus:
-    He didn't know where he was going.
-    When he got there he didn't know where he was.
-    When he got back he didn't know where he had been.
-    And he did it all on someone else's money.
+Phil
