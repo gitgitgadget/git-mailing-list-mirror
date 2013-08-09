@@ -1,136 +1,113 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH 2/2] .mailmap: mark bouncing email addresses
-Date: Fri,  9 Aug 2013 20:18:25 +0200
-Message-ID: <1376072305-15255-3-git-send-email-stefanbeller@googlemail.com>
-References: <1376072305-15255-1-git-send-email-stefanbeller@googlemail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Git for the Windows 1.8.3, GIT Bash icon issue
+Date: Fri, 9 Aug 2013 19:31:16 +0100
+Organization: OPDS
+Message-ID: <FA03039F4A644EEE8CEEA25BCFDA1994@PhilipOakley>
+References: <40631376067651@webcorp2d.yandex-team.ru>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Aug 09 20:18:38 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; format=flowed; charset=ISO-8859-1; reply-type=original
+Cc: <git@vger.kernel.org>
+To: "Dmitry Kuzminov" <dkuzminov@yandex-team.ru>,
+	"Git MsysGit" <msysgit@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBB4XKSSIAKGQEWB4UM5Y@googlegroups.com Fri Aug 09 20:31:15 2013
+Return-path: <msysgit+bncBDSOTWHYX4PBB4XKSSIAKGQEWB4UM5Y@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f60.google.com ([74.125.82.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7rGm-00071X-UI
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 20:18:37 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967938Ab3HISSa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Aug 2013 14:18:30 -0400
-Received: from mail-ea0-f178.google.com ([209.85.215.178]:53000 "EHLO
-	mail-ea0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758623Ab3HISS2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 14:18:28 -0400
-Received: by mail-ea0-f178.google.com with SMTP id a15so2241495eae.9
-        for <git@vger.kernel.org>; Fri, 09 Aug 2013 11:18:26 -0700 (PDT)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBB4XKSSIAKGQEWB4UM5Y@googlegroups.com>)
+	id 1V7rT1-0000U7-Iz
+	for gcvm-msysgit@m.gmane.org; Fri, 09 Aug 2013 20:31:15 +0200
+Received: by mail-wg0-f60.google.com with SMTP id z12sf606111wgg.25
+        for <gcvm-msysgit@m.gmane.org>; Fri, 09 Aug 2013 11:31:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=7frrklSflCs+ahUb8kKzkHhiDMMKZgrPRbVAjrFVN08=;
-        b=q8haIClTIw6OmKNc1UJPg1RuR96/KfL0NuFqqyVBUNwI7YWIeQrHVM607xw86tTXbP
-         tbC9XRK9p5/u16gumiRckkXkufpm4eRbE35M1cXtP2kvo1qxgFBMJn+nuKnQarScsT8Q
-         Wvk+Y25HNxarP99wKkQmEKazdv3T/pk8yu/JdyBs5rQhFSnrGOmPGOXBZv9y7wdW/gaf
-         D/xehYydg69S8oINq5WB0gSFilo8r8Fqf0Yf5VJxyeCxpSyq5S+UTwRODfLPTRtx3nOc
-         bJp265L1u78d00O7hdD7NP/Zo66+ybJ/ZId8LjEEKdh5wWbjcAX76QUc5OpQozjTxA6X
-         J84w==
-X-Received: by 10.15.111.13 with SMTP id ci13mr1827660eeb.136.1376072306840;
-        Fri, 09 Aug 2013 11:18:26 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id j2sm30826709eep.6.2013.08.09.11.18.25
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 09 Aug 2013 11:18:26 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc2
-In-Reply-To: <1376072305-15255-1-git-send-email-stefanbeller@googlemail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232007>
+        d=googlegroups.com; s=20120806;
+        h=message-id:reply-to:from:to:cc:references:subject:date:organization
+         :mime-version:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=fMs1tekWtm6MzPHyeYTBeS7hnV14UbzxAMbEvYGjX/w=;
+        b=PceHg7JwAk/L4ZpAm9HUWFlRvJ/V55XnMyrm8VcjdxiTb1UL9Hik+r7WZdEPDykBGc
+         ZspPrlnjHl/nzrLXKRIocbFz5pRvt2UMjLihQy7gs5CBeH+gGJL1cshPpQGkT5EMfcjr
+         t2WpgKAjX11ZrUuJsD+9vb049mfsexF/eE1ZtBuNdOPKf1OZhbOumcuK6vUfiQLNklgf
+         vOpmcIF0mRQeo3XTIUUE1v9leIP4wOGtIEfKF+lMYfV/kbtfQ60FvxV4xb7OAs7RT9Mw
+         sce0eTISguMLknkkcWkdECyemMXa7oXQzBKAjMKT6MFUYGPTJ1z/tHjUNPtHziAAGpMP
+         2wVw==
+X-Received: by 10.180.149.170 with SMTP id ub10mr274585wib.0.1376073075284;
+        Fri, 09 Aug 2013 11:31:15 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.83.66 with SMTP id o2ls347259wiy.14.gmail; Fri, 09 Aug
+ 2013 11:31:14 -0700 (PDT)
+X-Received: by 10.180.80.227 with SMTP id u3mr1812156wix.5.1376073074460;
+        Fri, 09 Aug 2013 11:31:14 -0700 (PDT)
+Received: from out1.ip01ir2.opaltelecom.net (out1.ip01ir2.opaltelecom.net. [62.24.128.237])
+        by gmr-mx.google.com with ESMTP id ev4si94524wib.0.2013.08.09.11.31.14
+        for <msysgit@googlegroups.com>;
+        Fri, 09 Aug 2013 11:31:14 -0700 (PDT)
+Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.237 as permitted sender) client-ip=62.24.128.237;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AtgLALo0BVJOl3GZ/2dsb2JhbABbgwaJVrV5BAQBgRoXdIIfBQEBBAEIAQEuHgEBIQUGAgMFAgEDDgcMJRQBBBoGBwkBDQYBEggCAQIDAYd5CrkXkDKDIXUDiHOGDpowgxw7
+X-IPAS-Result: AtgLALo0BVJOl3GZ/2dsb2JhbABbgwaJVrV5BAQBgRoXdIIfBQEBBAEIAQEuHgEBIQUGAgMFAgEDDgcMJRQBBBoGBwkBDQYBEggCAQIDAYd5CrkXkDKDIXUDiHOGDpowgxw7
+X-IronPort-AV: E=Sophos;i="4.89,847,1367967600"; 
+   d="scan'208";a="438462546"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 09 Aug 2013 19:31:14 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Original-Sender: philipoakley@iee.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
+ (google.com: domain of transitioning philipoakley@iee.org does not designate
+ 62.24.128.237 as permitted sender) smtp.mail=philipoakley@iee.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232008>
 
-We cannot be sure whether these are the same person,
-hence we will not map their different mail addresses
-to one person. However this commit documents, some
-bouncing mail addresses, so these need not be tried
-again, when somebody continues the .mailmap cleanup.
+From: "Dmitry Kuzminov" <dkuzminov@yandex-team.ru>
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
----
- .mailmap | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Dmitry,
+The Git for Windows development list is at msysgit@googlegroups.com.
 
-diff --git a/.mailmap b/.mailmap
-index 840abf7..3b235b5 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -18,6 +18,10 @@ Alexey Shumkin <alex.crezoff@gmail.com> <Alex.Crezof=
-f@gmail.com>
- Anders Kaseorg <andersk@MIT.EDU> <andersk@ksplice.com>
- Anders Kaseorg <andersk@MIT.EDU> <andersk@mit.edu>
- Aneesh Kumar K.V <aneesh.kumar@gmail.com>
-+# The 2 following authors are probably the same person,
-+# but both emails bounce.
-+Amos Waterland <apw@rossby.metr.ou.edu>
-+Amos Waterland <apw@us.ibm.com>
- Ben Walton <bdwalton@gmail.com> <bwalton@artsci.utoronto.ca>
- Bernt Hansen <bernt@norang.ca> <bernt@alumni.uwaterloo.ca>
- Brandon Casey <drafnel@gmail.com> <casey@nrlssc.navy.mil>
-@@ -34,6 +38,10 @@ Dan Johnson <computerdruid@gmail.com>
- Dana L. How <danahow@gmail.com> <how@deathvalley.cswitch.com>
- Dana L. How <danahow@gmail.com> Dana How
- Daniel Barkalow <barkalow@iabervon.org>
-+# The 2 following authors are probably the same person,
-+# but both emails bounce.
-+Daniel Trstenjak <daniel.trstenjak@online.de>
-+Daniel Trstenjak <trsten@science-computing.de>
- David Brown <git@davidb.org> <davidb@quicinc.com>
- David D. Kilzer <ddkilzer@kilzer.net>
- David K=C3=A5gedal <davidk@lysator.liu.se>
-@@ -68,11 +76,19 @@ J. Bruce Fields <bfields@citi.umich.edu> <bfields@p=
-ig.linuxdev.us.dell.com>
- J. Bruce Fields <bfields@citi.umich.edu> <bfields@puzzle.fieldses.org>
- Jakub Nar=C4=99bski <jnareb@gmail.com>
- James Y Knight <jknight@itasoftware.com> <foom@fuhm.net>
-+# The 2 following authors are probably the same person,
-+# but both emails bounce.
-+Jason McMullan <jason.mcmullan@timesys.com>
-+Jason McMullan <mcmullan@netapp.com>
- Jason Riedy <ejr@eecs.berkeley.edu> <ejr@EECS.Berkeley.EDU>
- Jason Riedy <ejr@eecs.berkeley.edu> <ejr@cs.berkeley.edu>
- Jay Soffian <jaysoffian@gmail.com> <jaysoffian+git@gmail.com>
- Jeff King <peff@peff.net> <peff@github.com>
- Jeff Muizelaar <jmuizelaar@mozilla.com> <jeff@infidigm.net>
-+# The 2 following authors are probably the same person,
-+# but both emails bounce.
-+Jens Axboe <axboe@suse.de>
-+Jens Axboe <jens.axboe@oracle.com>
- Jim Meyering <jim@meyering.net> <meyering@redhat.com>
- Joachim Berdal Haga <cjhaga@fys.uio.no>
- Johannes Schindelin <Johannes.Schindelin@gmx.de> <johannes.schindelin@=
-gmx.de>
-@@ -144,6 +160,8 @@ Michele Ballabio <barra_cuda@katamail.com>
- Miklos Vajna <vmiklos@frugalware.org> <vmiklos@suse.cz>
- Namhyung Kim <namhyung@gmail.com> <namhyung.kim@lge.com>
- Namhyung Kim <namhyung@gmail.com> <namhyung@kernel.org>
-+# The 2 following authors are probably the same person,
-+# but both emails bounce.
- Nanako Shiraishi <nanako3@bluebottle.com>
- Nanako Shiraishi <nanako3@lavabit.com>
- Nelson Elhage <nelhage@mit.edu> <nelhage@MIT.EDU>
-@@ -177,6 +195,10 @@ Robert Fitzsimons <robfitz@273k.net>
- Robert Shearman <robertshearman@gmail.com> <rob@codeweavers.com>
- Robert Zeh <robert.a.zeh@gmail.com>
- Robin Rosenberg <robin.rosenberg@dewire.com> <robin.rosenberg.lists@de=
-wire.com>
-+# The 2 following authors are probably the same person,
-+# but both emails bounce.
-+Rutger Nijlunsing <rutger@nospam.com>
-+Rutger Nijlunsing <git@tux.tmfweb.nl>
- Ryan Anderson <ryan@michonline.com> <rda@google.com>
- Salikh Zakirov <salikh.zakirov@gmail.com> <Salikh.Zakirov@Intel.com>
- Sam Vilain <sam@vilain.net> <sam.vilain@catalyst.net.nz>
---=20
-1.8.4.rc2
+Is this "git for Windows" or one of the other git versions on windows, 
+and their installers?
+
+
+> There is a standard command prompt icon in taskbar for GIT Bash 
+> instead of GIT icon
+>
+> Steps to reproduce:
+> Select Taskbar Properties, Taskbar buttons, set to "Never combine"
+> Run GIT Bash
+>
+> Best regards,
+> Dmitry Kuzminov
+> --
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
