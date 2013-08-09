@@ -1,124 +1,79 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH] builtin/config.c: compilation fix
-Date: Thu, 8 Aug 2013 22:38:26 -0700
-Message-ID: <866829AC-DD63-462B-B12F-BF868D0ED5C0@gmail.com>
-References: <7vli4b79x3.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Repo with only one file
+Date: Fri, 09 Aug 2013 08:25:31 +0200
+Message-ID: <52048B5B.5060009@viscovery.net>
+References: <CAH_OBid8SO3ydpjhRHa68s+54CScLh=jactxTQhwQPo-jcnAvA@mail.gmail.com> <520224E0.5060206@viscovery.net> <CAH_OBicysTTu9YdHsHz0H6x3umU5va68J3nT1qHA9-CJY9+E=A@mail.gmail.com> <CABURp0o_07HdB2o0knPABtAiiuHQ6-fYgemvdCYOsdSghO7v1w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 09 07:38:44 2013
+Cc: shawn wilson <ag4ve.us@gmail.com>, Git List <git@vger.kernel.org>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 09 08:25:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7fPQ-00073i-1w
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 07:38:44 +0200
+	id 1V7g8r-0007hw-Lb
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 08:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934307Ab3HIFia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 01:38:30 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:49166 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933343Ab3HIFia (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 01:38:30 -0400
-Received: by mail-pd0-f174.google.com with SMTP id y13so149728pdi.5
-        for <git@vger.kernel.org>; Thu, 08 Aug 2013 22:38:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=3XWXkvqrWuY28aUvgSbABfnD6ZFjO5Kow8JaiKKdKG0=;
-        b=UdGzwcSV6HYWDxcwJGNpvCoW23tjm8GcPDG8gu26jJfkHgITkiV+7aNsNkq+RKsDEy
-         +srFBFjRRaylUeKmH8UxtKeW/uFIOWfI5PYeU6puZvxArhysF5aVBiIREAXgIVs8rWwa
-         P21Cql3sryREZqEtZ45co5/BVGa6IKZqX0qynb4IItDjgpYt+/WZXJ+mXE7BrccgXNst
-         3VBaluH/MfdCUpU69I0QHgUrMng6e4SfOZ1WKvQMGECmz/WkgCxVS2P81uuPiTCriRWM
-         WQz0OdouS6TZTaOUSiGnpfpDaJ5QZuJfCZE+pBjL1bw76nogu3kOlHbP2EwyhKIQ3cnx
-         zkxw==
-X-Received: by 10.68.195.136 with SMTP id ie8mr9494253pbc.120.1376026709694;
-        Thu, 08 Aug 2013 22:38:29 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id qp10sm20336050pab.13.2013.08.08.22.38.27
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 08 Aug 2013 22:38:28 -0700 (PDT)
-In-Reply-To: <7vli4b79x3.fsf@alter.siamese.dyndns.org>
-X-Mauler: Craptastic (2.936)
+	id S1030292Ab3HIGZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 02:25:37 -0400
+Received: from so.liwest.at ([212.33.55.14]:60319 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030199Ab3HIGZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 02:25:36 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1V7g8h-000547-W1; Fri, 09 Aug 2013 08:25:32 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 9931B1660F;
+	Fri,  9 Aug 2013 08:25:31 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <CABURp0o_07HdB2o0knPABtAiiuHQ6-fYgemvdCYOsdSghO7v1w@mail.gmail.com>
+X-Enigmail-Version: 1.5.2
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231956>
 
-On Aug 8, 2013, at 21:41, Junio C Hamano wrote:
-> Do not feed a random string as the first parameter to die(); use "%s"
-> as the format string instead.
->
-> Do the same for test-urlmatch-normalization.c while saving a single
-> pointer variable by turning a "const char *" constant string into
-> "const char []".
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> builtin/config.c              | 2 +-
-> test-urlmatch-normalization.c | 2 +-
-> 2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/config.c b/builtin/config.c
-> index c046f54..ae199e9 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -404,7 +404,7 @@ static int get_urlmatch(const char *var, const  
-> char *url)
-> 	config.cb = &values;
->
-> 	if (!url_normalize(url, &config.url))
-> -		die(config.url.err);
-> +		die("%s", config.url.err);
->
-> 	config.section = dup_downcase(var);
-> 	section_tail = strchr(config.section, '.');
-> diff --git a/test-urlmatch-normalization.c b/test-urlmatch- 
-> normalization.c
-> index 2603899..78c8b3a 100644
-> --- a/test-urlmatch-normalization.c
-> +++ b/test-urlmatch-normalization.c
-> @@ -3,7 +3,7 @@
->
-> int main(int argc, char **argv)
-> {
-> -	const char *usage = "test-urlmatch-normalization [-p | -l] <url1>  
-> | <url1> <url2>";
-> +	const char usage[] = "test-urlmatch-normalization [-p | -l] <url1>  
-> | <url1> <url2>";
-> 	char *url1, *url2;
-> 	int opt_p = 0, opt_l = 0;
->
-> -- 
-> 1.8.3.3-1049-g890a991
->
+Am 8/8/2013 23:11, schrieb Phil Hord:
+> On Wed, Aug 7, 2013 at 5:07 PM, shawn wilson <ag4ve.us@gmail.com> wrote:
+>> On Wed, Aug 7, 2013 at 6:43 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>>> Am 8/7/2013 8:24, schrieb shawn wilson:> ... create a repo for one of
+>>>> these scripts and I'd like to keep the commit history.
+>>>>
+>>>> Ok, so:
+>>>> % find -type f ! -iname "webban.pl" | while read f; do git
+>>>> filter-branch -f --index-filter "git rm --cached --ignore-unmatch $f"
+>>>> HEAD ; done
+>>>>
+>>>> Which basically did it. But, I've got this one commit that seems to be
+>>>> orphaned - it doesn't change any files.
+>>>
+>>> Try this:
+>>>
+>>>   git filter-branch HEAD -- webban.pl
+>>>
+>>
+>>  % git filter-branch HEAD -- webban.pl
+>> Cannot create a new backup.
+>> A previous backup already exists in refs/original/
+>> Force overwriting the backup with -f
+>>  % git filter-branch -f HEAD -- webban.pl
+>> Rewrite 1e04b18c256c996312f167be808733bcc755f1e3 (9/9)
+>> WARNING: Ref 'refs/heads/master' is unchanged
+> 
+> I think you can ignore the warning.  Maybe you want to create a new
+> branch which only has this file in it now.
+> 
+>    $ git checkout -b webban
 
-Looks good to me except that there seems to be a missing part of the  
-patch.  Did you also mean to include:
+I'm not sure. On second thought, my suggested command is not sufficient.
+It does remove the empty commits, but it does not remove the other files.
+So, Shawn's original filter-branch invocations are still needed.
 
-diff --git a/test-urlmatch-normalization.c b/test-urlmatch- 
-normalization.c
-index 2603899b..39017c20 100644
---- a/test-urlmatch-normalization.c
-+++ b/test-urlmatch-normalization.c
-@@ -42,7 +42,7 @@ int main(int argc, char **argv)
-  	}
-
-  	if (opt_p || opt_l)
--		die(usage);
-+		die("%s", usage);
-
-  	url1 = url_normalize(argv[1], NULL);
-  	url2 = url_normalize(argv[2], NULL);
-
-
-That's not terribly important here since we know the string will never  
-contain any '%' characters, but the comment on the patch led me to  
-believe that test-urlmatch-normalization would also get the die()  
-change.
+-- Hannes
