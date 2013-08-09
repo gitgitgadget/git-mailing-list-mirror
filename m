@@ -1,68 +1,67 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git status resets permissions on index file -- Ubuntu 12.04 64b
-Date: Fri, 09 Aug 2013 14:40:18 +0200
-Message-ID: <8761vf3uml.fsf@igel.home>
-References: <CACO0oR7a1-fUASQ+SJVbH1CU8d=NbHrK0MuMu+9Pr4_=7q85Vw@mail.gmail.com>
-	<52040F27.4050908@googlemail.com> <20130808221807.GA8518@gmail.com>
-	<C525FA0D-D22C-4C78-8C97-45819FD58DD7@gmail.com>
-	<CACO0oR7tJNKWA=cynBA8R2kaGr2iKNCiCmXKLur9nub6pnBG0g@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v4] gc: reject if another gc is running, unless --force is given
+Date: Fri, 9 Aug 2013 19:52:49 +0700
+Message-ID: <CACsJy8DRRLkyZid_OPSvRkvKfnd62TnLBnaueim9GrXUikPGuw@mail.gmail.com>
+References: <1375712354-13171-1-git-send-email-pclouds@gmail.com>
+ <1375959938-6395-1-git-send-email-pclouds@gmail.com> <7vk3jw9hlm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Kyle J. McKay" <mackyle@gmail.com>,
-	Stefan Beller <stefanbeller@googlemail.com>,
-	Andrew Ruder <andy@aeruder.net>, Git List <git@vger.kernel.org>
-To: Justin Collum <jcollum@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 09 14:40:29 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 09 14:53:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7lzW-0001IQ-Qk
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 14:40:27 +0200
+	id 1V7mC4-000411-LM
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 14:53:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756798Ab3HIMkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 08:40:23 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:52814 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754902Ab3HIMkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 08:40:22 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3cBQyr1mg5z4KK3r;
-	Fri,  9 Aug 2013 14:40:19 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3cBQyq6pb4zbbcM;
-	Fri,  9 Aug 2013 14:40:19 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id gW30_GVgyNYK; Fri,  9 Aug 2013 14:40:18 +0200 (CEST)
-X-Auth-Info: sXiBICtSLlVGOv0CLDW3OIYxhIBaAQEpppvyzSBOuDE=
-Received: from igel.home (ppp-93-104-152-252.dynamic.mnet-online.de [93.104.152.252])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Fri,  9 Aug 2013 14:40:18 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 61C392C150B; Fri,  9 Aug 2013 14:40:18 +0200 (CEST)
-X-Yow: I'm having a RELIGIOUS EXPERIENCE..  and I don't take any DRUGS
-In-Reply-To: <CACO0oR7tJNKWA=cynBA8R2kaGr2iKNCiCmXKLur9nub6pnBG0g@mail.gmail.com>
-	(Justin Collum's message of "Thu, 8 Aug 2013 16:58:20 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1757355Ab3HIMxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 08:53:21 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:49004 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755381Ab3HIMxU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 08:53:20 -0400
+Received: by mail-ob0-f179.google.com with SMTP id fb19so6437316obc.10
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 05:53:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=pfo9cS/pJl4BiqgyYEt0y6jjvj7++aJEhN6F4M7jYtY=;
+        b=cZW6jhEQvCF437/twpJQZzK3KGoo+N6mf8snAwsw6/9R1gVpMzmWZNuvMHnrvvslZs
+         qVE4l8myWj4o2ztISzzmFmQB1AR0Mv3DQhskdlvG48NBR+7mtl0CMLSDoI1P7X4pWdof
+         a3tb+fsWLeeSKIlhTcIiZKHw2dh7L92c7Vskt/NiYf46ELcZIKI+Nh6mXPNovUCBxcqq
+         i6GXdwBi97vPpRxQ2BafD7ekM6T1vqxjikSYcJUWz92bDwFHgpE4+cIoPk4cfKePmX54
+         kF/DdxRn+2OnpCJVokhFlTFyqF3HETuyuCTCpXP2nLj9WlA+PN4mCxMWx9bqumElxg8j
+         lx2Q==
+X-Received: by 10.60.34.4 with SMTP id v4mr394013oei.101.1376052799691; Fri,
+ 09 Aug 2013 05:53:19 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Fri, 9 Aug 2013 05:52:49 -0700 (PDT)
+In-Reply-To: <7vk3jw9hlm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231976>
 
-Justin Collum <jcollum@gmail.com> writes:
+On Fri, Aug 9, 2013 at 1:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> When we see a recent lockfile created by a "gc" running elsewhere,
+> we do not set "should_exit".  Is that a good thing?  I am wondering
+> if the last two lines should be:
+>
+> -       !strcmp(locking_host, my_host) &&
+> -       !kill(pid, 0);
+> +       (strcmp(locking_host, my_host) || !kill(pid, 0));
+>
+> instead.
 
->      sudo chmod 644 ./.git/index
-
-That doesn't make sense.  If you are the owner of the file, why do you
-need sudo???
-
-Andreas.
-
+Yes I think it should (we still have the 12-hour check to override
+stale locks anyway). Should I send another patch or you do it yourself
+(seeing that you have this chunk pasted here, you might have it saved
+somewhere already)
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Duy
