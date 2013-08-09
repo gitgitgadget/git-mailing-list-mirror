@@ -1,77 +1,90 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Repo with only one file
-Date: Fri, 09 Aug 2013 08:50:09 +0200
-Message-ID: <52049121.2080604@viscovery.net>
-References: <CAH_OBid8SO3ydpjhRHa68s+54CScLh=jactxTQhwQPo-jcnAvA@mail.gmail.com> <520224E0.5060206@viscovery.net> <CAH_OBicysTTu9YdHsHz0H6x3umU5va68J3nT1qHA9-CJY9+E=A@mail.gmail.com> <CABURp0o_07HdB2o0knPABtAiiuHQ6-fYgemvdCYOsdSghO7v1w@mail.gmail.com> <52048B5B.5060009@viscovery.net> <CAH_OBicF3xn8+MsKH0nTg-HnPg58T-TWHW20r7GqXOm3Nbutfg@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Please pull l10n updates for 1.8.4 round 2
+Date: Fri, 9 Aug 2013 15:39:47 +0800
+Message-ID: <CANYiYbGhtMBwxJPOZNs=o3sxD=uLtF=0obOpZG-OZs63dQECSA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Phil Hord <phil.hord@gmail.com>, Git List <git@vger.kernel.org>
-To: shawn wilson <ag4ve.us@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 09 08:50:22 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ralf Thielow <ralf.thielow@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Tran Ngoc Quan <vnwildman@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 09 09:39:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7gWg-00013C-P0
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 08:50:19 +0200
+	id 1V7hIj-0005cN-4V
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 09:39:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967231Ab3HIGuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 02:50:13 -0400
-Received: from so.liwest.at ([212.33.55.14]:10653 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754549Ab3HIGuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 02:50:12 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1V7gWX-0006d4-Px; Fri, 09 Aug 2013 08:50:10 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 8FD0C1660F;
-	Fri,  9 Aug 2013 08:50:09 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
-In-Reply-To: <CAH_OBicF3xn8+MsKH0nTg-HnPg58T-TWHW20r7GqXOm3Nbutfg@mail.gmail.com>
-X-Enigmail-Version: 1.5.2
-X-Spam-Score: -1.0 (-)
+	id S967662Ab3HIHjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 03:39:51 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:40253 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967652Ab3HIHjs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 03:39:48 -0400
+Received: by mail-wi0-f171.google.com with SMTP id hr7so1363901wib.4
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 00:39:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=Bx68dxa5KJay5WMd4RLyDvmD+wpFKdpDfc7FKCKrwgA=;
+        b=AxHRKk13kq5FenLcUEdLmf4/sKL2AqQ0r52YkIfcvAYMrllAUNkmdkviCJDgCuNGHM
+         hYFsOZlHPfAn9OkpobCgDN/SVqDgXyJrSC/x0XgjU8qYwo2FILx9vuUTNZWhxzrUbHRo
+         ZkbgAM8r74dMTIR0W1Kfb9BaGiNytIN+JPxOIERJmP+BbSYbSLZNrBeLei4CBqvjUrdE
+         CAPZIaywsaGfcdekAraIcw1PWaELpcNDjn9XlzaOoXxzHouHulLj3MkSYHEyj5GbvwQu
+         gT7qRn9SHU3v4kYudfTy6BaQof8LdMCG+MHuNNkBMdbZdKmL6bgLHL4eT9tNVyro/6Hg
+         aW2w==
+X-Received: by 10.180.36.74 with SMTP id o10mr1383698wij.23.1376033987072;
+ Fri, 09 Aug 2013 00:39:47 -0700 (PDT)
+Received: by 10.194.104.201 with HTTP; Fri, 9 Aug 2013 00:39:47 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231961>
 
-Am 8/9/2013 8:33, schrieb shawn wilson:
-> On Fri, Aug 9, 2013 at 2:25 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->> Am 8/8/2013 23:11, schrieb Phil Hord:
->>> On Wed, Aug 7, 2013 at 5:07 PM, shawn wilson <ag4ve.us@gmail.com> wrote:
->>>> On Wed, Aug 7, 2013 at 6:43 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->>>>> Am 8/7/2013 8:24, schrieb shawn wilson:> ... create a repo for one of
->>>>>> these scripts and I'd like to keep the commit history.
->>>>>>
->>>>>> Ok, so:
->>>>>> % find -type f ! -iname "webban.pl" | while read f; do git
->>>>>> filter-branch -f --index-filter "git rm --cached --ignore-unmatch $f"
->>>>>> HEAD ; done
->>>>>>
-> 
->> I'm not sure. On second thought, my suggested command is not sufficient.
->> It does remove the empty commits, but it does not remove the other files.
->> So, Shawn's original filter-branch invocations are still needed.
->>
-> 
-> Yeah, I have tried this and haven't gotten any closer. I can either
-> remove all of the history or that one commit that has nothing to do
-> with my file is there. This is also reproducable in a new repo.
-> 
-> Is this a bug with filter-branch or git? This doesn't seem like a
-> feature (or how things should act).
+Hi, Junio
 
-Let's check: After running your command above to remove other files, does
-the command
+The following changes since commit fb5657082148297b61fbca7e64d51c1e7870309a:
 
-   git filter-branch -f HEAD webban.pl
+  Sync with maint to grab trivial doc fixes (2013-08-05 13:00:20 -0700)
 
-remove the empty commit (if necessary, replace HEAD by the branch name
-that you are interested in)?
+are available in the git repository at:
 
--- Hannes
+
+  git://github.com/git-l10n/git-po master
+
+for you to fetch changes up to 4402f301555feeada2de68c4576aa15acfe40b46:
+
+  l10n: de.po: translate 5 messages (2013-08-09 06:53:44 +0200)
+
+----------------------------------------------------------------
+Jiang Xin (2):
+      l10n: git.pot: v1.8.4 round 2 (5 new, 3 removed)
+      l10n: zh_CN.po: translate 5 messages (2135t0f0u)
+
+Peter Krefting (1):
+      l10n: Update Swedish translation (2135t0f0u)
+
+Ralf Thielow (3):
+      l10n: de.po: switch from pure German to German+English
+      l10n: de.po: translate 99 new messages
+      l10n: de.po: translate 5 messages
+
+Tran Ngoc Quan (1):
+      l10n: vi.po(2135t): v1.8.4 round 2
+
+Wieland Hoffmann (1):
+      l10n: de.po: Fix a typo
+
+ po/de.po    | 5156 ++++++++++++++++++++++++++++++++---------------------------
+ po/git.pot  |  335 ++--
+ po/sv.po    | 3365 ++++++++++++++++++++------------------
+ po/vi.po    |  356 +++--
+ po/zh_CN.po |  346 ++--
+ 5 files changed, 5144 insertions(+), 4414 deletions(-)
+
+--
+Jiang Xin
