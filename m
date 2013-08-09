@@ -1,73 +1,77 @@
-From: shawn wilson <ag4ve.us@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: Repo with only one file
-Date: Fri, 9 Aug 2013 02:33:53 -0400
-Message-ID: <CAH_OBicF3xn8+MsKH0nTg-HnPg58T-TWHW20r7GqXOm3Nbutfg@mail.gmail.com>
-References: <CAH_OBid8SO3ydpjhRHa68s+54CScLh=jactxTQhwQPo-jcnAvA@mail.gmail.com>
- <520224E0.5060206@viscovery.net> <CAH_OBicysTTu9YdHsHz0H6x3umU5va68J3nT1qHA9-CJY9+E=A@mail.gmail.com>
- <CABURp0o_07HdB2o0knPABtAiiuHQ6-fYgemvdCYOsdSghO7v1w@mail.gmail.com> <52048B5B.5060009@viscovery.net>
+Date: Fri, 09 Aug 2013 08:50:09 +0200
+Message-ID: <52049121.2080604@viscovery.net>
+References: <CAH_OBid8SO3ydpjhRHa68s+54CScLh=jactxTQhwQPo-jcnAvA@mail.gmail.com> <520224E0.5060206@viscovery.net> <CAH_OBicysTTu9YdHsHz0H6x3umU5va68J3nT1qHA9-CJY9+E=A@mail.gmail.com> <CABURp0o_07HdB2o0knPABtAiiuHQ6-fYgemvdCYOsdSghO7v1w@mail.gmail.com> <52048B5B.5060009@viscovery.net> <CAH_OBicF3xn8+MsKH0nTg-HnPg58T-TWHW20r7GqXOm3Nbutfg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: Phil Hord <phil.hord@gmail.com>, Git List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Aug 09 08:34:19 2013
+To: shawn wilson <ag4ve.us@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 09 08:50:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7gHD-0005oC-97
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 08:34:19 +0200
+	id 1V7gWg-00013C-P0
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 08:50:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030322Ab3HIGeP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 02:34:15 -0400
-Received: from mail-vb0-f52.google.com ([209.85.212.52]:38040 "EHLO
-	mail-vb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967243Ab3HIGeO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 02:34:14 -0400
-Received: by mail-vb0-f52.google.com with SMTP id f12so3794776vbg.25
-        for <git@vger.kernel.org>; Thu, 08 Aug 2013 23:34:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=oTs4kTIDKQEyXWOGOPeP6MWbO8ghVlC65PdzgNKVuss=;
-        b=IdHbGTmuD5PttVSsraThFbqFYxNN8rtL9fXPPoRmaJ/nT0Rligllc24F7QbrhNTQtE
-         3Tp8NKZAQH1leS52fLdQ7/Npl5TXrlXrccablto0jUeXihI8bHP2w6Th079Y+FmJEcN1
-         yegyFh5WyVviuQyAvoiFMR4+6NsZzNIcT5bc7FAJd2HjrtME2qV13U4mSYwBvV7gcaEC
-         s2kYK8BTWApNjJSZGO6AaAJr5QUp3kTUnz9zW1CJml8rEIlWW9xFIJUm31D6eI3mbQBb
-         uWeiq/0dABMU1Ov99YatD5LiSdOccMYPJAoi+Wfx3p1PcGWB8gpxRNhcwIlcXjT9qYIA
-         TMEw==
-X-Received: by 10.220.238.81 with SMTP id kr17mr4841570vcb.61.1376030053936;
- Thu, 08 Aug 2013 23:34:13 -0700 (PDT)
-Received: by 10.52.186.37 with HTTP; Thu, 8 Aug 2013 23:33:53 -0700 (PDT)
-In-Reply-To: <52048B5B.5060009@viscovery.net>
+	id S967231Ab3HIGuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 02:50:13 -0400
+Received: from so.liwest.at ([212.33.55.14]:10653 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754549Ab3HIGuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 02:50:12 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1V7gWX-0006d4-Px; Fri, 09 Aug 2013 08:50:10 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 8FD0C1660F;
+	Fri,  9 Aug 2013 08:50:09 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130620 Thunderbird/17.0.7
+In-Reply-To: <CAH_OBicF3xn8+MsKH0nTg-HnPg58T-TWHW20r7GqXOm3Nbutfg@mail.gmail.com>
+X-Enigmail-Version: 1.5.2
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231960>
 
-On Fri, Aug 9, 2013 at 2:25 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 8/8/2013 23:11, schrieb Phil Hord:
->> On Wed, Aug 7, 2013 at 5:07 PM, shawn wilson <ag4ve.us@gmail.com> wrote:
->>> On Wed, Aug 7, 2013 at 6:43 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->>>> Am 8/7/2013 8:24, schrieb shawn wilson:> ... create a repo for one of
->>>>> these scripts and I'd like to keep the commit history.
->>>>>
->>>>> Ok, so:
->>>>> % find -type f ! -iname "webban.pl" | while read f; do git
->>>>> filter-branch -f --index-filter "git rm --cached --ignore-unmatch $f"
->>>>> HEAD ; done
->>>>>
+Am 8/9/2013 8:33, schrieb shawn wilson:
+> On Fri, Aug 9, 2013 at 2:25 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>> Am 8/8/2013 23:11, schrieb Phil Hord:
+>>> On Wed, Aug 7, 2013 at 5:07 PM, shawn wilson <ag4ve.us@gmail.com> wrote:
+>>>> On Wed, Aug 7, 2013 at 6:43 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>>>>> Am 8/7/2013 8:24, schrieb shawn wilson:> ... create a repo for one of
+>>>>>> these scripts and I'd like to keep the commit history.
+>>>>>>
+>>>>>> Ok, so:
+>>>>>> % find -type f ! -iname "webban.pl" | while read f; do git
+>>>>>> filter-branch -f --index-filter "git rm --cached --ignore-unmatch $f"
+>>>>>> HEAD ; done
+>>>>>>
+> 
+>> I'm not sure. On second thought, my suggested command is not sufficient.
+>> It does remove the empty commits, but it does not remove the other files.
+>> So, Shawn's original filter-branch invocations are still needed.
+>>
+> 
+> Yeah, I have tried this and haven't gotten any closer. I can either
+> remove all of the history or that one commit that has nothing to do
+> with my file is there. This is also reproducable in a new repo.
+> 
+> Is this a bug with filter-branch or git? This doesn't seem like a
+> feature (or how things should act).
 
-> I'm not sure. On second thought, my suggested command is not sufficient.
-> It does remove the empty commits, but it does not remove the other files.
-> So, Shawn's original filter-branch invocations are still needed.
->
+Let's check: After running your command above to remove other files, does
+the command
 
-Yeah, I have tried this and haven't gotten any closer. I can either
-remove all of the history or that one commit that has nothing to do
-with my file is there. This is also reproducable in a new repo.
+   git filter-branch -f HEAD webban.pl
 
-Is this a bug with filter-branch or git? This doesn't seem like a
-feature (or how things should act).
+remove the empty commit (if necessary, replace HEAD by the branch name
+that you are interested in)?
+
+-- Hannes
