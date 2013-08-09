@@ -1,89 +1,91 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 2/2] remote-hg: add shared repo upgrade
-Date: Fri,  9 Aug 2013 17:38:04 -0500
-Message-ID: <1376087884-32060-3-git-send-email-felipe.contreras@gmail.com>
-References: <1376087884-32060-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Antoine Pelisse <apelisse@gmail.com>,
-	=?UTF-8?q?J=C3=B6rn=20Hees?= <dev@joernhees.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 10 00:42:17 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git should not use a default user.email config value
+Date: Fri, 09 Aug 2013 16:06:16 -0700
+Message-ID: <7v38qi4g7r.fsf@alter.siamese.dyndns.org>
+References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
+	<20130809194214.GV14690@google.com>
+	<20130809223758.GB7160@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Thorsten Glaser <tg@mirbsd.de>, git@vger.kernel.org,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 10 01:06:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7vNv-0001nm-Id
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 00:42:15 +0200
+	id 1V7vlT-00030v-Mx
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 01:06:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031384Ab3HIWmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 18:42:09 -0400
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:37595 "EHLO
-	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031355Ab3HIWmI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 18:42:08 -0400
-Received: by mail-oa0-f41.google.com with SMTP id j6so3474229oag.0
-        for <git@vger.kernel.org>; Fri, 09 Aug 2013 15:42:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ufLxkDCaLGNbT75ekbnW0/SpZ4+LrHZ1nmLJYdd3C8E=;
-        b=GvzUNVH3q+XZLx0S8ZFh9E2yPUnnSDUXHUXZAVB6/ii5m0EMsqiIKhOr63AXqxladJ
-         yWO1NCFBW9r8QoPsayykIe4OQ/L6ykj8B2tCey2iuiLTPsoFSBkL1tnQd/XUuNjrH+9y
-         YxKoy8p0h4j7jDDljsuERQ5tYqGELcLBHYfWOQPfDcL3UUKxRbF5gzqU05YWB9+AvNCp
-         QP4EdSQgvOKnnYlK/lqmzaXaWYzuRNHB8lk61PurE7L6kg8hwxoPDEhApRXCrP7G+v5o
-         yewI5u0xz1L8TfOZ5Y3YiveNNVvKEQBhkqv/ib8D1EqxyTzPPWd8+YRpssjs1VoNdmKn
-         nP8g==
-X-Received: by 10.182.128.6 with SMTP id nk6mr2300498obb.11.1376088127547;
-        Fri, 09 Aug 2013 15:42:07 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id h3sm21428333oeo.2.2013.08.09.15.42.05
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 09 Aug 2013 15:42:06 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.267.gbb4989f
-In-Reply-To: <1376087884-32060-1-git-send-email-felipe.contreras@gmail.com>
+	id S1031528Ab3HIXG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 19:06:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36576 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1031468Ab3HIXGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 19:06:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C125432D3E;
+	Fri,  9 Aug 2013 23:06:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1FlLOhWSFBR97CQlq/bihKZFb1w=; b=dpuBW1
+	ZZWxdGEsUN3E84zL77BAwHrG9QIQimIbuZYX0Q5MvSKeqF0u380JKn8eZ87LqFZd
+	02luHtnl83kWnBLiVeVsrDhXat/WHMsj7rrocQU0s9nqAyBULTJNsdVeDig5gzpl
+	jVuzGirJUGuYMjZCPS3Le3eVo5/7DEe0h+Vyo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VjdOtGym4HFFDvXpdomIN/9W4i/KAmvK
+	nXqpdJq7gVA6uGygFdRfgvop4+QM+Z5me38tysKv/JcyYVY6snEfJvJeMevMoWCU
+	iO5ru0b659PKusp/PhTralTHnb6eTxh4vo/1a490hstyf0q79s5mLGBi9hjHQqBm
+	ppr1i+89V9k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF5BE32D3D;
+	Fri,  9 Aug 2013 23:06:18 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05F9B32D3C;
+	Fri,  9 Aug 2013 23:06:17 +0000 (UTC)
+In-Reply-To: <20130809223758.GB7160@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 9 Aug 2013 18:37:58 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4C48D170-0148-11E3-8993-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232051>
 
-If we have an old organization (v1.8.3), and want to upgrade to a newer
-one (v1.8.4), the user would have to fetch the whole repository, instead
-we can just move the repository, so the user would not notice any
-difference.
+Jeff King <peff@peff.net> writes:
 
-Also, remove other clones, so in time they get set up as shared.
+> Yeah, there are basically three levels of ident:
+>
+>   1. The user told us explicitly (e.g., $EMAIL, user.email). Trust it.
+>
+>   2. We guessed and it looks reasonable (e.g., hostname is FQDN). Warn
+>      but use it.
+>
+>   3. It looks obviously bogus (e.g., we do not have a domain name).
+>      Reject it.
+>
+> We can move some cases from (2) down to (3), like ...
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-hg | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Judging from Thorsten's earlier response, I am afraid no amount of
+autodetection would help the users of that site.  If we were to do
+something, /etc/gitconfig as you outlined below would be the way to
+go, even though it makes me feel dirty.
 
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index cfd4f53..6c82b8d 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -392,6 +392,18 @@ def get_repo(url, alias):
-     else:
-         shared_path = os.path.join(gitdir, 'hg')
- 
-+        # check and upgrade old organization
-+        hg_path = os.path.join(shared_path, '.hg')
-+        if os.path.exists(shared_path) and not os.path.exists(hg_path):
-+            repos = os.listdir(shared_path)
-+            for x in repos:
-+                local_hg = os.path.join(shared_path, x, 'clone', '.hg')
-+                if not os.path.exists(local_hg):
-+                    continue
-+                if not os.path.exists(hg_path):
-+                    shutil.move(local_hg, hg_path)
-+                shutil.rmtree(os.path.join(shared_path, x, 'clone'))
-+
-         # setup shared repo (if not there)
-         try:
-             hg.peer(myui, {}, shared_path, create=True)
--- 
-1.8.3.267.gbb4989f
+> Another option could to add an option to control the strictness. We
+> usually have a chicken-and-egg problem here with individual installs
+> (i.e., any person who could set "user.trustHostname = false" could just
+> as easily have set "user.email"). But in an institutional setting, the
+> admin could set such a config in /etc/gitconfig for everybody. Or for a
+> system like Debian, the packager could include the option, knowing that
+> any reasonably configured system should have /etc/mailname set up (which
+> is not something we can necessarily count on for other operating
+> systems).
+>
+> -Peff
