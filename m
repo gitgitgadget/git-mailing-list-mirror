@@ -1,135 +1,136 @@
 From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH 1/2] .mailmap: fixup entries
-Date: Fri,  9 Aug 2013 20:18:24 +0200
-Message-ID: <1376072305-15255-2-git-send-email-stefanbeller@googlemail.com>
+Subject: [PATCH 2/2] .mailmap: mark bouncing email addresses
+Date: Fri,  9 Aug 2013 20:18:25 +0200
+Message-ID: <1376072305-15255-3-git-send-email-stefanbeller@googlemail.com>
 References: <1376072305-15255-1-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Stefan Beller <stefanbeller@googlemail.com>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Aug 09 20:18:36 2013
+X-From: git-owner@vger.kernel.org Fri Aug 09 20:18:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7rGm-00071X-DJ
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 20:18:36 +0200
+	id 1V7rGm-00071X-UI
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 20:18:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758625Ab3HISS2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Aug 2013 14:18:28 -0400
-Received: from mail-ee0-f53.google.com ([74.125.83.53]:49819 "EHLO
-	mail-ee0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758614Ab3HISS0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 14:18:26 -0400
-Received: by mail-ee0-f53.google.com with SMTP id b15so2299131eek.12
-        for <git@vger.kernel.org>; Fri, 09 Aug 2013 11:18:24 -0700 (PDT)
+	id S967938Ab3HISSa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Aug 2013 14:18:30 -0400
+Received: from mail-ea0-f178.google.com ([209.85.215.178]:53000 "EHLO
+	mail-ea0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758623Ab3HISS2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 14:18:28 -0400
+Received: by mail-ea0-f178.google.com with SMTP id a15so2241495eae.9
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 11:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=uWlZUEUyfoUuXcHzhofHcgHKgAC/9leuNGg46MYTUkQ=;
-        b=IzHhfNCV5uwRwKWUaW5KsdDysFlJC8ZvGxsXwWudWecFVHHkRCaZIua81bUBnyEjmB
-         +dbw1Z7LKq870YayUFmHb52k0AzhYfE2xaZ+bB54HOhZcrPAP5sfDihrAMFV9d6urMZO
-         VOzc2x6xGls7rb0DQcTQCwTJt2/yPcYQNgNrKfR1wW3uf54OPAn8WIiCGIN9/cVtVyF4
-         B8DEhkVQoY8sZ4SEwPA8gSYP1fG5uu2hjOOjPGuqqeBB36THp8jlm/NYoYCaDIMgKPXt
-         DWQke005tR8oXaHBROSDKmHrWMsHVxf14q3P6dGqzj8Wf7gsFusMQubNLpofioIWBzz0
-         iq4g==
-X-Received: by 10.15.98.3 with SMTP id bi3mr14087622eeb.124.1376072304574;
-        Fri, 09 Aug 2013 11:18:24 -0700 (PDT)
+        bh=7frrklSflCs+ahUb8kKzkHhiDMMKZgrPRbVAjrFVN08=;
+        b=q8haIClTIw6OmKNc1UJPg1RuR96/KfL0NuFqqyVBUNwI7YWIeQrHVM607xw86tTXbP
+         tbC9XRK9p5/u16gumiRckkXkufpm4eRbE35M1cXtP2kvo1qxgFBMJn+nuKnQarScsT8Q
+         Wvk+Y25HNxarP99wKkQmEKazdv3T/pk8yu/JdyBs5rQhFSnrGOmPGOXBZv9y7wdW/gaf
+         D/xehYydg69S8oINq5WB0gSFilo8r8Fqf0Yf5VJxyeCxpSyq5S+UTwRODfLPTRtx3nOc
+         bJp265L1u78d00O7hdD7NP/Zo66+ybJ/ZId8LjEEKdh5wWbjcAX76QUc5OpQozjTxA6X
+         J84w==
+X-Received: by 10.15.111.13 with SMTP id ci13mr1827660eeb.136.1376072306840;
+        Fri, 09 Aug 2013 11:18:26 -0700 (PDT)
 Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id j2sm30826727eep.6.2013.08.09.11.18.23
+        by mx.google.com with ESMTPSA id j2sm30826709eep.6.2013.08.09.11.18.25
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 09 Aug 2013 11:18:23 -0700 (PDT)
+        Fri, 09 Aug 2013 11:18:26 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4.rc2
 In-Reply-To: <1376072305-15255-1-git-send-email-stefanbeller@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232007>
 
-This patch adds no new names, but fixes the mistakes I made in the prev=
-ious
-commits. (94b410bba8, f4f49e225, c07a6bc57, 2013-07-12, .mailmap: Map
-email addresses to names).
-
-These mistakes are double white spaces between name and surname,
-different capitalization in email address, or just the email address se=
-t
-as name.
-
-Also I forgot to include James Knight to the mailmap file.
+We cannot be sure whether these are the same person,
+hence we will not map their different mail addresses
+to one person. However this commit documents, some
+bouncing mail addresses, so these need not be tried
+again, when somebody continues the .mailmap cleanup.
 
 Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
 ---
- .mailmap | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ .mailmap | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
 diff --git a/.mailmap b/.mailmap
-index dfa2e65..840abf7 100644
+index 840abf7..3b235b5 100644
 --- a/.mailmap
 +++ b/.mailmap
-@@ -14,6 +14,7 @@ Alex Riesen <raa.lkml@gmail.com> <raa@steel.home>
- Alex Vandiver <alex@chmrr.net> <alexmv@MIT.EDU>
- Alexander Gavrilov <angavrilov@gmail.com>
- Alexey Shumkin <alex.crezoff@gmail.com> <zapped@mail.ru>
-+Alexey Shumkin <alex.crezoff@gmail.com> <Alex.Crezoff@gmail.com>
+@@ -18,6 +18,10 @@ Alexey Shumkin <alex.crezoff@gmail.com> <Alex.Crezof=
+f@gmail.com>
  Anders Kaseorg <andersk@MIT.EDU> <andersk@ksplice.com>
  Anders Kaseorg <andersk@MIT.EDU> <andersk@mit.edu>
  Aneesh Kumar K.V <aneesh.kumar@gmail.com>
-@@ -31,6 +32,7 @@ Christian Stimming <stimming@tuhh.de> <chs@ckiste.goe=
-theallee>
- Csaba Henk <csaba@gluster.com> <csaba@lowlife.hu>
- Dan Johnson <computerdruid@gmail.com>
++# The 2 following authors are probably the same person,
++# but both emails bounce.
++Amos Waterland <apw@rossby.metr.ou.edu>
++Amos Waterland <apw@us.ibm.com>
+ Ben Walton <bdwalton@gmail.com> <bwalton@artsci.utoronto.ca>
+ Bernt Hansen <bernt@norang.ca> <bernt@alumni.uwaterloo.ca>
+ Brandon Casey <drafnel@gmail.com> <casey@nrlssc.navy.mil>
+@@ -34,6 +38,10 @@ Dan Johnson <computerdruid@gmail.com>
  Dana L. How <danahow@gmail.com> <how@deathvalley.cswitch.com>
-+Dana L. How <danahow@gmail.com> Dana How
+ Dana L. How <danahow@gmail.com> Dana How
  Daniel Barkalow <barkalow@iabervon.org>
++# The 2 following authors are probably the same person,
++# but both emails bounce.
++Daniel Trstenjak <daniel.trstenjak@online.de>
++Daniel Trstenjak <trsten@science-computing.de>
  David Brown <git@davidb.org> <davidb@quicinc.com>
  David D. Kilzer <ddkilzer@kilzer.net>
-@@ -65,6 +67,7 @@ J. Bruce Fields <bfields@citi.umich.edu> <bfields@fie=
-ldses.org>
- J. Bruce Fields <bfields@citi.umich.edu> <bfields@pig.linuxdev.us.dell=
-=2Ecom>
+ David K=C3=A5gedal <davidk@lysator.liu.se>
+@@ -68,11 +76,19 @@ J. Bruce Fields <bfields@citi.umich.edu> <bfields@p=
+ig.linuxdev.us.dell.com>
  J. Bruce Fields <bfields@citi.umich.edu> <bfields@puzzle.fieldses.org>
  Jakub Nar=C4=99bski <jnareb@gmail.com>
-+James Y Knight <jknight@itasoftware.com> <foom@fuhm.net>
+ James Y Knight <jknight@itasoftware.com> <foom@fuhm.net>
++# The 2 following authors are probably the same person,
++# but both emails bounce.
++Jason McMullan <jason.mcmullan@timesys.com>
++Jason McMullan <mcmullan@netapp.com>
  Jason Riedy <ejr@eecs.berkeley.edu> <ejr@EECS.Berkeley.EDU>
  Jason Riedy <ejr@eecs.berkeley.edu> <ejr@cs.berkeley.edu>
  Jay Soffian <jaysoffian@gmail.com> <jaysoffian+git@gmail.com>
-@@ -92,8 +95,8 @@ Junio C Hamano <gitster@pobox.com> <junio@pobox.com>
- Junio C Hamano <gitster@pobox.com> <junio@twinsun.com>
- Junio C Hamano <gitster@pobox.com> <junkio@cox.net>
- Junio C Hamano <gitster@pobox.com> <junkio@twinsun.com>
--Karl Wiberg <kha@treskal.com> Karl Hasselstr=C3=B6m <kha@treskal.com>
--Karl Wiberg <kha@treskal.com> Karl Hasselstr=C3=B6m <kha@yoghurt.hemma=
-=2Etreskal.com>
-+Karl Wiberg <kha@treskal.com> Karl  Hasselstr=C3=B6m
-+Karl Wiberg <kha@treskal.com> <kha@yoghurt.hemma.treskal.com>
- Karsten Blees <blees@dcon.de> <karsten.blees@dcon.de>
- Karsten Blees <blees@dcon.de> <karsten.blees@gmail.com>
- Kay Sievers <kay.sievers@vrfy.org> <kay.sievers@suse.de>
-@@ -177,6 +180,7 @@ Robin Rosenberg <robin.rosenberg@dewire.com> <robin=
-=2Erosenberg.lists@dewire.com>
+ Jeff King <peff@peff.net> <peff@github.com>
+ Jeff Muizelaar <jmuizelaar@mozilla.com> <jeff@infidigm.net>
++# The 2 following authors are probably the same person,
++# but both emails bounce.
++Jens Axboe <axboe@suse.de>
++Jens Axboe <jens.axboe@oracle.com>
+ Jim Meyering <jim@meyering.net> <meyering@redhat.com>
+ Joachim Berdal Haga <cjhaga@fys.uio.no>
+ Johannes Schindelin <Johannes.Schindelin@gmx.de> <johannes.schindelin@=
+gmx.de>
+@@ -144,6 +160,8 @@ Michele Ballabio <barra_cuda@katamail.com>
+ Miklos Vajna <vmiklos@frugalware.org> <vmiklos@suse.cz>
+ Namhyung Kim <namhyung@gmail.com> <namhyung.kim@lge.com>
+ Namhyung Kim <namhyung@gmail.com> <namhyung@kernel.org>
++# The 2 following authors are probably the same person,
++# but both emails bounce.
+ Nanako Shiraishi <nanako3@bluebottle.com>
+ Nanako Shiraishi <nanako3@lavabit.com>
+ Nelson Elhage <nelhage@mit.edu> <nelhage@MIT.EDU>
+@@ -177,6 +195,10 @@ Robert Fitzsimons <robfitz@273k.net>
+ Robert Shearman <robertshearman@gmail.com> <rob@codeweavers.com>
+ Robert Zeh <robert.a.zeh@gmail.com>
+ Robin Rosenberg <robin.rosenberg@dewire.com> <robin.rosenberg.lists@de=
+wire.com>
++# The 2 following authors are probably the same person,
++# but both emails bounce.
++Rutger Nijlunsing <rutger@nospam.com>
++Rutger Nijlunsing <git@tux.tmfweb.nl>
  Ryan Anderson <ryan@michonline.com> <rda@google.com>
  Salikh Zakirov <salikh.zakirov@gmail.com> <Salikh.Zakirov@Intel.com>
  Sam Vilain <sam@vilain.net> <sam.vilain@catalyst.net.nz>
-+Sam Vilain <sam@vilain.net> sam@vilain.net
- Santi B=C3=A9jar <santi@agolina.net> <sbejar@gmail.com>
- Sean Estabrooks <seanlkml@sympatico.ca>
- Sebastian Schuberth <sschuberth@gmail.com> <sschuberth@visageimaging.c=
-om>
-@@ -191,6 +195,7 @@ Stefan Sperling <stsp@elego.de> <stsp@stsp.name>
- Stephen Boyd <bebarino@gmail.com> <sboyd@codeaurora.org>
- Steven Drake <sdrake@xnet.co.nz> <sdrake@ihug.co.nz>
- Steven Grimm <koreth@midwinter.com> <sgrimm@sgrimm-mbp.local>
-+Steven Grimm <koreth@midwinter.com> koreth@midwinter.com
- Steven Walter <stevenrwalter@gmail.com> <swalter@lexmark.com>
- Steven Walter <stevenrwalter@gmail.com> <swalter@lpdev.prtdev.lexmark.=
-com>
- Sven Verdoolaege <skimo@kotnet.org> <Sven.Verdoolaege@cs.kuleuven.ac.b=
-e>
 --=20
 1.8.4.rc2
