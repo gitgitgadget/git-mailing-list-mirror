@@ -1,103 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] gc: reject if another gc is running, unless --force is given
-Date: Fri, 09 Aug 2013 10:41:34 -0700
-Message-ID: <7vmwoq69td.fsf@alter.siamese.dyndns.org>
-References: <1375712354-13171-1-git-send-email-pclouds@gmail.com>
-	<1375959938-6395-1-git-send-email-pclouds@gmail.com>
-	<CAPrKj1bO1jBsv73beA6LoeN09S-jWq8FYOP+WQ-AFwb1dn4Wsw@mail.gmail.com>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: [PATCH] configure.ac: move the private git m4 macro to a
+ dedicated directory
+Date: Fri, 9 Aug 2013 19:52:50 +0200
+Message-ID: <CA+EOSBkTfy+u6YGv-1QeG5qnjDquxmr5doDmp2waquUbgjBe3w@mail.gmail.com>
+References: <1376059045-14866-1-git-send-email-gitter.spiros@gmail.com>
+	<7v61ve7qpk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Andres Perera <andres.p@zoho.com>
-X-From: git-owner@vger.kernel.org Fri Aug 09 19:41:46 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Stefano Lattarini <stefano.lattarini@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 09 19:52:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7qh7-00031C-95
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 19:41:45 +0200
+	id 1V7qrw-0003Wa-ET
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 19:52:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758428Ab3HIRll (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 13:41:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47841 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758390Ab3HIRlk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 13:41:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B817A37361;
-	Fri,  9 Aug 2013 17:41:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IPpbYCc+DTAdX+43OPzycfEHoW0=; b=TpqikX
-	XwL6N9t9fZcKgt+9CZrGoSI9iiDt8K/J+ZSEVNUPVeEQfokDVHI1kWRkdEZFeBeW
-	CsXPXHaAdyyU3z+olu3hdoQemzvV3fqyL3YiI9dgeqagJJwpryovJnx1YZV+i47u
-	iP8LdQo/etAh7jXFxacW1sCAAAIFz8Y+CrTkM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OrYz6PUsRp+N2dacu2QzH+2hiP0DfFnJ
-	7VbkqJw6/ljou2bdyDPaOMtxxstH54aVleoRvik22alxZqLU/JcCFqHWTNiOlWqE
-	ElYGRFCjX+npCjPGBCJpqIwTPf5u73ov5op7NptU0+tDLfnB80psLVeMc6Y0AN75
-	vRCDn4i79x4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABC2B37360;
-	Fri,  9 Aug 2013 17:41:39 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF9FE3735C;
-	Fri,  9 Aug 2013 17:41:37 +0000 (UTC)
-In-Reply-To: <CAPrKj1bO1jBsv73beA6LoeN09S-jWq8FYOP+WQ-AFwb1dn4Wsw@mail.gmail.com>
-	(Andres Perera's message of "Fri, 9 Aug 2013 11:59:39 -0430")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F13D2114-011A-11E3-B23F-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758535Ab3HIRww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 13:52:52 -0400
+Received: from mail-ve0-f174.google.com ([209.85.128.174]:60082 "EHLO
+	mail-ve0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758468Ab3HIRwv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 13:52:51 -0400
+Received: by mail-ve0-f174.google.com with SMTP id d10so4141283vea.19
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 10:52:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ubJPR1kmjKtMyLkOWS7pQ5BUnQrmq25jTtLTS0I1uK0=;
+        b=okWCB5r0LkbSf5S4ZnYo5cIttTbcPm4mLZdwF24my4naEPfy722PNiUJYniOBfw75k
+         q9h7Pq81ZYHFegHoBnt2U1U+It3bUXag4quuYjZxmlvn/oeUpIrs4zfkxBQP1ZBO0qs4
+         A96LmWPF/mLt5CRg3k13jqLcVcYTAD4q1q/QjbqfDBCY54LnN97dQ8dQm7zFJOJMbMG6
+         eW7W3PeLM2GMWxRO1H3IinNBSwuXbESESkcunfiWTqGqge8TKIaJwyHGSr8EBQJ76DGj
+         CY90eXiN3djoGeoXLdTXMzoWfjkGut2fo8/1OS1VJOs42mah01QDjcVmxXfCf1JzRR61
+         BrHQ==
+X-Received: by 10.52.66.242 with SMTP id i18mr867973vdt.3.1376070770767; Fri,
+ 09 Aug 2013 10:52:50 -0700 (PDT)
+Received: by 10.52.166.14 with HTTP; Fri, 9 Aug 2013 10:52:50 -0700 (PDT)
+In-Reply-To: <7v61ve7qpk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232003>
 
-Andres Perera <andres.p@zoho.com> writes:
-
->> +/* return NULL on success, else hostname running the gc */
->> +static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
->> +{
->> +       static struct lock_file lock;
->> +       static char locking_host[128];
->> +       char my_host[128];
->> +       struct strbuf sb = STRBUF_INIT;
->> +       struct stat st;
->> +       uintmax_t pid;
+2013/8/9 Junio C Hamano <gitster@pobox.com>:
+> Elia Pinto <gitter.spiros@gmail.com> writes:
 >
-> pid_t is always an signed type, therefore unintmax_t does not make
-> sense as a catch all value
-
-Good eyes.
-
->> +                       !strcmp(locking_host, my_host) &&
->> +                       !kill(pid, 0);
->> +               if (fp != NULL)
->> +                       fclose(fp);
->> +               if (should_exit) {
->> +                       if (fd >= 0)
->> +                               rollback_lock_file(&lock);
->> +                       *ret_pid = pid;
->> +                       return locking_host;
+>> Git use, as many project that use autoconf, private m4 macros.
+>>
+>> When not using automake, and just relying on autoconf, the macro
+>> files are not picked up by default.
+>>
+>> A possibility, as git do today, is to put the private m4 macro
+>> in the configure.ac file, so they will copied over  the final configure
+>> when calling autoreconf(that call also autocon). But this makes configure.ac difficult
+>> to read and maintain, especially if you want to introduce new macros later.
+>>
+>> Starting from version 2.58, autoconf provide the macro AC_CONFIG_MACRO_DIR
+>> to declare where additional macro files are to be put and found.
+>> The argument passed to this macro is commonly m4.
+>>
+>> This macro, for the longest time, has been used only by libtool
+>> starting from version 2.0, to identify where to copy its own macro files
+>> when using libtoolize --copy.
+>>
+>> Starting from version 1.13, automake augments autoconf with a macro
+>> called AC_CONFIG_MACRO_DIRS, that provides a space-separated list
+>> of directories to use for looking up m4 files.
+>> The same macro will be available as part of autoconf 2.70,
+>> actually in development. Anyway also this version permit
+>> to use AC_CONFIG_MACRO_DIR and not need automake.
+>>
+>> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 >
-> why not exponential backoff?
+> That explains why you created a separate directory to for the new
+> file and why you needed to use AC_CONFIG_MACRO_DIR while doing so.
+>
+> But in the above explanation, I fail to see the reason why we would
+> want to create that new file out of the existing file, only to
+> include it in the original file.
+
+Thanks.
+
+For those who use the gnu build tool is good practice to separate the
+private macros, very equilalent to an external library of C, from the
+main configure.ac file. Readability, maintainability are in general
+the reason in the same measure that everyone use external libraries or
+external includes in C to simplify the writing of a program. Just for
+a simple example, if I want to introduce  new test macros for
+understeand in a portable way what are the C flags that a compiler
+understand - for QA, memory checker ecc - is much more readable and
+easy to update a separate file that to update the main configure.ac
+file that is not intended to contain the declaration of m4 macro and
+can grow larger. In fact from my experience it is difficult to find
+many program that not use a separate macro dir and use the gnu build
+tool.
 
 
-If the other guy is doing a GC, and we decide that we should exit,
-it is *not* because we want to wait until the other guy is done.  It
-is because we know we do not have to do the work --- the other guy
-is doing what we were about to do, and it will do it for us anyway.
+Sorry if I was not clear, perhaps it is due to the fact that i have
+the habit of using the gnu build tool always and i think  that
+something is obvious but often it is  not so obvious to everyone.
 
-So I do not think it makes any sense to do exponential backoff if
-"gc --auto" is asking "should we exit" to this logic.
-
-An explicit "gc", on the other hand, may benefit from backoff, but
-then the user can choose to do so himself, and more importantly, the
-user can see "ah, another one is running so enough cruft will be
-cleaned up anyway" and choose not to run it.
+Thanks and best regards
+>
+> Why is it needed?  Why is it a good idea?
+>
