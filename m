@@ -1,107 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git should not use a default user.email config value
-Date: Fri, 9 Aug 2013 18:37:58 -0400
-Message-ID: <20130809223758.GB7160@sigill.intra.peff.net>
-References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
- <20130809194214.GV14690@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thorsten Glaser <tg@mirbsd.de>, git@vger.kernel.org,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 10 00:38:09 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 0/2] remote-hg: shared repo upgrade fix
+Date: Fri,  9 Aug 2013 17:38:02 -0500
+Message-ID: <1376087884-32060-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	=?UTF-8?q?J=C3=B6rn=20Hees?= <dev@joernhees.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 10 00:42:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7vJv-0007B8-DW
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 00:38:07 +0200
+	id 1V7vNn-0001hk-I9
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 00:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031369Ab3HIWiC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 18:38:02 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51013 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031355Ab3HIWiA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 18:38:00 -0400
-Received: (qmail 2957 invoked by uid 102); 9 Aug 2013 22:38:01 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 Aug 2013 17:38:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Aug 2013 18:37:58 -0400
-Content-Disposition: inline
-In-Reply-To: <20130809194214.GV14690@google.com>
+	id S1031374Ab3HIWmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 18:42:01 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:36627 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031355Ab3HIWmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 18:42:00 -0400
+Received: by mail-ob0-f173.google.com with SMTP id ta17so6959829obb.18
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 15:41:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=ApqEi2C7cN4nxdDkuK/bE3rFnNG2BdtbZwZVqFu7XcQ=;
+        b=ejjJc02vKZxvgpfb3bHQ756I2c8clYjYaZgy6DIkQaTY5Z0DCdknPsMBiAwqDbbrNh
+         7tSkvNfqcyxqomk/V64iSm4iFbn3N/anj59/wrpXGsUizgodqosUuTW3GERvQUToxVj+
+         jnjZCvKAFZEteFKMUMh7nP/0EJOBltWz00oUbGh7/tJBsSXmZMwI1+1HNdWMlS0HWswT
+         PDDdkOhgYVQCampoXTxQUAob1Y8Fx8ng0kkqx9dthgoK+AsWPZAD6wXyvM/yCR+B6HaM
+         toY5t08k8ORQQgXgFxt+S5P9SANs4SBm3d9JJw+Mg8iX5+51CYz2jtKveUyUATk4De2/
+         LJ/g==
+X-Received: by 10.182.148.8 with SMTP id to8mr2374604obb.17.1376088118009;
+        Fri, 09 Aug 2013 15:41:58 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id hm1sm21169030obb.9.2013.08.09.15.41.55
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 09 Aug 2013 15:41:57 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.267.gbb4989f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232048>
 
-On Fri, Aug 09, 2013 at 12:42:14PM -0700, Jonathan Nieder wrote:
+Hi,
 
-> I wonder if it's too gentle and long to get the point across.  Would
-> something the following (including the guesses in the message for
-> easier copy-pasting) help?
-> 
-> 	No name and email address configured, so I had to guess.  You
-> 	can suppress this message by setting your identity explicitly:
-> 
-> 		git config --global user.name "Thorsten Glaser"
-> 		git config --global user.email tg@mirbsd.de
-> 
-> 	After doing so, you may fix the identity used for this commit
-> 	with "git commit --amend --reset-author".
+Same as before, except with commit messages updated, and improved the second
+patch:
 
-I don't know if including the name and email helps that much. It should
-already be printed along with that message, like:
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -400,8 +400,9 @@ def get_repo(url, alias):
+                 local_hg = os.path.join(shared_path, x, 'clone', '.hg')
+                 if not os.path.exists(local_hg):
+                     continue
+-                shutil.copytree(local_hg, hg_path)
+-                break
++                if not os.path.exists(hg_path):
++                    shutil.move(local_hg, hg_path)
++                shutil.rmtree(os.path.join(shared_path, x, 'clone'))
+ 
+         # setup shared repo (if not there)
+         try:
 
-  $ git commit --allow-empty -m foo
-  [master ba77f94] foo
-   Committer: Jeff King <peff@sigill.intra.peff.net>
-  Your name and email address were configured automatically based
-  on your username and hostname. Please check that they are accurate.
-  You can suppress this message by setting them explicitly:
+Felipe Contreras (2):
+  remote-hg: ensure shared repo is initialized
+  remote-hg: add shared repo upgrade
 
-      git config --global user.name "Your Name"
-      git config --global user.email you@example.com
+ contrib/remote-helpers/git-remote-hg | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-  After doing this, you may fix the identity used for this commit with:
-
-      git commit --amend --reset-author
-
-> It may also make sense to distinguish between cases where a mailname
-> is set and not set.  Git already notices the cases where the guessed
-> email address ends with ".(none)" and errors out, and it could make
-> sense to be more aggressive.
-
-Yeah, there are basically three levels of ident:
-
-  1. The user told us explicitly (e.g., $EMAIL, user.email). Trust it.
-
-  2. We guessed and it looks reasonable (e.g., hostname is FQDN). Warn
-     but use it.
-
-  3. It looks obviously bogus (e.g., we do not have a domain name).
-     Reject it.
-
-We can move some cases from (2) down to (3), like when we use
-gethostname rather than /etc/mailname.  But we risk breaking people's
-existing setups. I don't think we know how many people rely on the
-implicit hostname selection and would be affected. I don't know if there
-is a good way to find out short of changing it and seeing who screams.
-We can put a deprecation warning in the release notes, but people tend
-to ignore those. Or perhaps now that we have had the long obnoxious
-implicit-ident warning for several versions, everybody has finally set
-user.email and the time is right to change.
-
-Another option could to add an option to control the strictness. We
-usually have a chicken-and-egg problem here with individual installs
-(i.e., any person who could set "user.trustHostname = false" could just
-as easily have set "user.email"). But in an institutional setting, the
-admin could set such a config in /etc/gitconfig for everybody. Or for a
-system like Debian, the packager could include the option, knowing that
-any reasonably configured system should have /etc/mailname set up (which
-is not something we can necessarily count on for other operating
-systems).
-
--Peff
+-- 
+1.8.3.267.gbb4989f
