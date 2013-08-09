@@ -1,103 +1,94 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH 1/2] remote-hg: add shared repo upgrade
-Date: Fri,  9 Aug 2013 18:49:46 +0200
-Message-ID: <1376066986-27950-1-git-send-email-apelisse@gmail.com>
-References: <CALWbr2y+fE1EvGuTQXQiL81yavpDR+RqmrxWjNTUme-fmjY8EQ@mail.gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 09 18:50:24 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] configure.ac: move the private git m4 macro to a dedicated directory
+Date: Fri, 09 Aug 2013 09:51:19 -0700
+Message-ID: <7v61ve7qpk.fsf@alter.siamese.dyndns.org>
+References: <1376059045-14866-1-git-send-email-gitter.spiros@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, stefano.lattarini@gmail.com
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 09 18:51:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7ptO-0003v3-QI
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 18:50:23 +0200
+	id 1V7puZ-0004zW-AY
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 18:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030569Ab3HIQuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 12:50:11 -0400
-Received: from mail-wg0-f48.google.com ([74.125.82.48]:41340 "EHLO
-	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S968212Ab3HIQuJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 12:50:09 -0400
-Received: by mail-wg0-f48.google.com with SMTP id f12so3308446wgh.15
-        for <git@vger.kernel.org>; Fri, 09 Aug 2013 09:50:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WM8WM9tB8fP+PI3Bzz0f4JR3lPpbI4ah8mTJr0PO/B8=;
-        b=lxd+jFJdbkUY2gZDCG7Z6TBqB4Z5kooIvVtZIHTA94xoSJmq1NlpiEnGL+UN3VQiXW
-         Xpr17awju9usatqofZqXiWVj+O/DjmbHYcVCl7UldB58I2GCl878GPmJYeTQQ7X5B7VH
-         UHsJn6o4mOE+ISqkGVPaP54kUAB7A7brdBC9BIWNrU+CaWGHtR4ttazC3kBfgs/3+EJW
-         AXlyDDNCxlltlVTixrSG2WvGLJZvR/bwx37UJvwvw2Wc7yIWRcWs/+qsZBOlW2Is3qCe
-         hq13ILWEErH4DqjKkVesC8jmZxstWcANf9367NSOzLEXcOmyK/383dvipceIiQpQBt7x
-         PSKA==
-X-Received: by 10.194.23.196 with SMTP id o4mr938416wjf.62.1376067007941;
-        Fri, 09 Aug 2013 09:50:07 -0700 (PDT)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPSA id nb12sm3802678wic.3.2013.08.09.09.50.06
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 09 Aug 2013 09:50:07 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <CALWbr2y+fE1EvGuTQXQiL81yavpDR+RqmrxWjNTUme-fmjY8EQ@mail.gmail.com>
+	id S968237Ab3HIQv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 12:51:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52101 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S968232Ab3HIQvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 12:51:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B8A1D37B97;
+	Fri,  9 Aug 2013 16:51:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=D+y67kcmYAfCo0ioUgQNmzaxXAk=; b=BxrP1H
+	bR52OjOjOcvnL+uFmfAeeQg0OE1E7dp8a7mkA13rR7ryLU4QcbAYsexrfsDHzpvn
+	psj8nZLmKwWiHpPBiwCEpKW1zjoeYjiRFJZ6G1L0YQEZJI2dVdY5Yswv4Nw2uFeo
+	JavFvSROuam85IIsdy3V5fz9U0Wr+s+Cm1m9k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=s9Aa18gsDRdz5Bpb5fAPPMsGl8DzK0XW
+	tfOVamHfpWRlrILxawjffuvQHB95Vw9nY+ysBBzmVoIQC7qtcGy+6CDTjV04mZcb
+	/pzoOXDgc7W/6il3HMBaCdFUddwIJtoo40YNEsiqyqkxBfIamFIvIsNk5dH0woYe
+	AaUoKic6Z8w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADACA37B96;
+	Fri,  9 Aug 2013 16:51:21 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 09CA137B95;
+	Fri,  9 Aug 2013 16:51:20 +0000 (UTC)
+In-Reply-To: <1376059045-14866-1-git-send-email-gitter.spiros@gmail.com> (Elia
+	Pinto's message of "Fri, 9 Aug 2013 07:37:25 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EB0936CC-0113-11E3-99A6-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231994>
 
-From: Felipe Contreras <felipe.contreras@gmail.com>
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-6796d49 (remote-hg: use a shared repository store) introduced a bug by
-making the shared repository '.git/hg', which is already used before
-that patch, so clones that happened before that patch, fail after that
-patch, because there's no shared Mercurial repo.
+> Git use, as many project that use autoconf, private m4 macros.
+>
+> When not using automake, and just relying on autoconf, the macro
+> files are not picked up by default.
+>
+> A possibility, as git do today, is to put the private m4 macro
+> in the configure.ac file, so they will copied over  the final configure
+> when calling autoreconf(that call also autocon). But this makes configure.ac difficult
+> to read and maintain, especially if you want to introduce new macros later.
+>
+> Starting from version 2.58, autoconf provide the macro AC_CONFIG_MACRO_DIR
+> to declare where additional macro files are to be put and found.
+> The argument passed to this macro is commonly m4.
+>
+> This macro, for the longest time, has been used only by libtool
+> starting from version 2.0, to identify where to copy its own macro files
+> when using libtoolize --copy.
+>
+> Starting from version 1.13, automake augments autoconf with a macro
+> called AC_CONFIG_MACRO_DIRS, that provides a space-separated list
+> of directories to use for looking up m4 files.
+> The same macro will be available as part of autoconf 2.70,
+> actually in development. Anyway also this version permit
+> to use AC_CONFIG_MACRO_DIR and not need automake.
+>
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 
-It's trivial to upgrade to the new organization by copying the Mercurial
-repo from one of the remotes (e.g. 'origin'), so let's do so. If we
-can't find any existing repo, we create an empty one.
+That explains why you created a separate directory to for the new
+file and why you needed to use AC_CONFIG_MACRO_DIR while doing so.
 
-Reported-by: Joern Hees <dev@joernhees.de>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
- contrib/remote-helpers/git-remote-hg |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+But in the above explanation, I fail to see the reason why we would
+want to create that new file out of the existing file, only to
+include it in the original file.
 
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index 0194c67..1897327 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -391,11 +391,22 @@ def get_repo(url, alias):
-             os.makedirs(dirname)
-     else:
-         shared_path = os.path.join(gitdir, 'hg')
--        if not os.path.exists(shared_path):
--            try:
--                hg.clone(myui, {}, url, shared_path, update=False, pull=True)
--            except:
--                die('Repository error')
-+
-+        # check and upgrade old organization
-+        hg_path = os.path.join(shared_path, '.hg')
-+        if os.path.exists(shared_path) and not os.path.exists(hg_path):
-+            repos = os.listdir(shared_path)
-+            for x in repos:
-+                local_hg = os.path.join(shared_path, x, 'clone', '.hg')
-+                if os.path.exists(local_hg):
-+                    shutil.copytree(local_hg, hg_path)
-+                    break
-+
-+        # setup shared repo (if not there)
-+        try:
-+            hg.peer(myui, {}, shared_path, create=True)
-+        except error.RepoError:
-+            pass
-
-         if not os.path.exists(dirname):
-             os.makedirs(dirname)
---
-1.7.9.5
+Why is it needed?  Why is it a good idea?
