@@ -1,196 +1,96 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH/RFC v2] read-cache: save index entry updates in ILOG index extension
-Date: Fri, 9 Aug 2013 20:32:49 +0700
-Message-ID: <CACsJy8CbS_ZCZOsGY2KoTU=tid1ZH0wDbwcpu2oy9T9RV+N+BQ@mail.gmail.com>
-References: <1375597720-13236-1-git-send-email-pclouds@gmail.com>
- <1375966270-10968-1-git-send-email-pclouds@gmail.com> <7veha49g1x.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] git exproll: steps to tackle gc aggression
+Date: Fri, 9 Aug 2013 19:04:23 +0530
+Message-ID: <CALkWK0nSC-Aty55QO+DrM5Zf2t=DK8iMfbhv_HD44Z_m8d19Pg@mail.gmail.com>
+References: <1375756727-1275-1-git-send-email-artagnon@gmail.com>
+ <CACsJy8CGWJ07Uk8EBjfejdyshKB1NKk=_7VUoeyZWZgJFqCSkg@mail.gmail.com>
+ <7v61vihg6k.fsf@alter.siamese.dyndns.org> <CALkWK0kmx8bi1ZT1CSk+iVnmmQJV4bNu1D7h1AHnRk7_TfhJ3Q@mail.gmail.com>
+ <7va9ksbqpl.fsf@alter.siamese.dyndns.org> <CALkWK0mxd35OGDG2fMaRsfycvBPPxDHWrPX8og5y2+4y1dfOpw@mail.gmail.com>
+ <7v61vgazp5.fsf@alter.siamese.dyndns.org> <CALkWK0kqE8azzxp_GkzhPNT41nD8NzeLqXSe1xi0jbVo=7Xz3A@mail.gmail.com>
+ <7vwqnw7z47.fsf@alter.siamese.dyndns.org> <CALkWK0=nerszb3_YA8P=qXbfAd4Y1rNsHXhfVKzwtj-x80iqkg@mail.gmail.com>
+ <20130809110000.GD18878@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 09 15:33:37 2013
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	Martin Fick <mfick@codeaurora.org>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 09 15:35:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7mon-0005Gi-R4
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 15:33:26 +0200
+	id 1V7mqV-0006oW-Fo
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 15:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967838Ab3HINdV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Aug 2013 09:33:21 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:40026 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967831Ab3HINdU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Aug 2013 09:33:20 -0400
-Received: by mail-ob0-f182.google.com with SMTP id wo10so6495017obc.27
-        for <git@vger.kernel.org>; Fri, 09 Aug 2013 06:33:19 -0700 (PDT)
+	id S967839Ab3HINfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 09:35:05 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:41495 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966148Ab3HINfD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 09:35:03 -0400
+Received: by mail-ie0-f180.google.com with SMTP id aq17so4099860iec.11
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 06:35:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=elgbHKDZ+PZvZOKLRQKDPqqbjbXOwV6yrRrWDisaJDM=;
-        b=e/mHY3ELdB9DUWWqqo0hjkaClWccFx17gUh5n7YAcMqZIEcA6wi68HDCjKLgYmQTiv
-         OmOXXpKv5ln7FLjX56w+aPTSbr1eMScLbhDNjwuoDnmj5Ipha1sPPK5AwVMjDs1cH7hd
-         BL7JiQMhNpY3cM0obAqOndA2tRKnE5zTGqTdmiaSru/h3OrWE+fP2qWPD+O5ILme0kEL
-         sqDlZxKYvcUR7hcOeCkMFTzQAE0WEudZ508IiHHnBpM6YR7wNH01tdR3eGkTmd2UuEi2
-         X7KpAXeaf3sVCx+4aV1aT8poXbGlLBJAhOtK8q1bBF1UN064Ltxnw4v3EOk4/Eg3zVD3
-         6/Xg==
-X-Received: by 10.182.241.101 with SMTP id wh5mr482528obc.49.1376055199853;
- Fri, 09 Aug 2013 06:33:19 -0700 (PDT)
-Received: by 10.182.87.105 with HTTP; Fri, 9 Aug 2013 06:32:49 -0700 (PDT)
-In-Reply-To: <7veha49g1x.fsf@alter.siamese.dyndns.org>
+         :cc:content-type;
+        bh=zEJQn7Q7udjd8CldupQfrbiRQJC+HjgNgT57zmGsxog=;
+        b=jDRhfuDzdTR5ObpaC60b/yNCEU805vJSQ5exfOjVyijgW9fNwL3Xn1wb8hLtEg9BM8
+         5Du9sVFU9fgtN0j46RxI+LXnjOvVLi84OMB5qXgBqeg87Y7l1UoUcaPGX9d+SNJYkxuM
+         9k+hvGtYZG7VhFSNo5llHLDcXKGzoUpY2JQm4z8H2GIF2bJgu0QvUO5OQ8wLxPCu2jAC
+         Ct2mweLrcqKHRUa7XDp4nkzsj4YefDVzskhAeUprCA7vH5Ltq1RbWgPMGoc89y6HO3ni
+         O9TcsIRXpBgP5tANAzwPoq4sfB5T1rFvMIkXXvXQ/ZfFgsvBKYkmgcYxrCfxxEOZzMAV
+         Hg3g==
+X-Received: by 10.50.6.16 with SMTP id w16mr2186353igw.29.1376055303157; Fri,
+ 09 Aug 2013 06:35:03 -0700 (PDT)
+Received: by 10.64.37.130 with HTTP; Fri, 9 Aug 2013 06:34:23 -0700 (PDT)
+In-Reply-To: <20130809110000.GD18878@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231982>
 
-On Fri, Aug 9, 2013 at 1:46 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> Old operation's updates are removed as new ones are added to keep th=
-e
->> size under 1 MB. ILOG keeps minimum 10 operations regardless of its
->> size. These contansts should be configurable later one. ILOG content
->> will be compressed later on so that it leaves minimum
->> footprint.
->
-> List of <sha-1, pathname> tuples would not compress well, I suspect.
+Jeff King wrote:
+> It depends on what each side has it, doesn't it? We generally try to
+> reuse on-disk deltas when we can, since they require no computation. If
+> I have object A delta'd against B, and I know that the other side wants
+> A and has B (or I am also sending B), I can simply send what I have on
+> disk. So we do not just blit out the existing pack as-is, but we may
+> reuse portions of it as appropriate.
 
-I was hoping that it still compresses well the discrete segments of
-pathname. In the worst case we can group sha-1 together, separate from
-pathnames.
+I'll raise some (hopefully interesting) points. Let's take the example
+of a simple push: I start send-pack, which in turn starts receive_pack
+on the server and connects its stdin/stdout to it (using git_connect).
+Now, it reads the (sha1, ref) pairs it receives on stdin and spawns
+pack-objects --stdout with the right arguments as the response, right?
+Overall, nothing special: just pack-objects invoked with specific
+arguments.
 
->> Because it's only needed at index writing time, read-only
->> operations won't pay the cost for decompressing and compressing ILOG=
-=2E
->
-> Another idea is to lazily read existing ILOG by (1) keeping just an
-> offset in the originating index file at read_index() time and (2)
-> reading it on demand when ":-4:Makefile" was asked for.
+How does pack-objects work? ll_find_deltas() spawns some worker
+threads to find_deltas(). This is where this get fuzzy for me: it
+calls try_delta() in a nested loop, trying to find the smallest delta,
+right? I'm not sure whether the interfaces it uses to read objects
+differentiates between packed deltas versus packed undeltified objects
+versus loose objects at all.
 
-We need to go through ILOG extension anyway for index sha-1
-verification, so it's already read in kernel buffer. What we save is a
-just malloc. But I'll try.
+Now, the main problem I see is that a pack has to be self-contained: I
+can't have an object "bar" which is a delta against an object that is
+not present in the pack, right? Therefore no matter what the server
+already has, I have to prepare deltas only against the data that I'm
+sending across.
 
->
->> diff --git a/cache.h b/cache.h
->> index 85b544f..a2156bf 100644
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -168,6 +168,7 @@ struct cache_entry {
->>
->>  /* used to temporarily mark paths matched by pathspecs */
->>  #define CE_MATCHED           (1 << 26)
->> +#define CE_BASE              (1 << 27)
->
-> As this is not about pathspec match, please have its own comment
-> line (or a blank line, if this goes without comment) above this new
-> line.
+> Of course we may have to reconstruct deltas for trees in order to find
+> the correct set of objects (i.e., the history traversal). But that is a
+> separate phase from generating the pack's object content, and we do not
+> reuse any of the traversal work in later phases.
 
-This patch is more about the idea, whether it makes sense. You would
-(and did) find the patch somewhat disgusting later on.
-
->> @@ -277,6 +278,7 @@ struct index_state {
->>                initialized : 1;
->>       struct hash_table name_hash;
->>       struct hash_table dir_hash;
->> +     struct strbuf *index_log;
->>  };
->
-> Sane to have this as a per-index_state variable.
->
->> +extern void log_index_changes(const char *prefix, const char **argv=
-);
->
-> Not sane to name this function _index_anything and not to have index_=
-state
-> as its first parameter, breaking the naming convention.
-
-The reason I can't put index_state there is because this function is
-called early, often before read_cache is is called. And I can't caller
-it later because argv would be ruined by parse_options(). An option is
-to convert argv to a string unconditionally in git.c, then
-log_index_changes can be called much later, and with index_state
-pointer.
-
->> +static void get_updated_entries(struct index_state *istate,
->> +                             struct cache_entry ***cache_out,
->> +                             unsigned int *cache_nr_out)
->> +{
->> +     struct cache_entry **cache;
->> +     unsigned int i, nr, cache_nr =3D 0;
->> +
->> +     *cache_nr_out =3D 0;
->> +     *cache_out =3D NULL;
->> +     for (i =3D 0; i < istate->cache_nr; i++) {
->> +             if (istate->cache[i]->ce_flags & CE_BASE)
->> +                     continue;
->> +             cache_nr++;
->> +     }
->> +     if (!cache_nr)
->> +             return;
->> +     cache =3D xmalloc(cache_nr * sizeof(*istate->cache));
->> +     for (i =3D nr =3D 0; i < istate->cache_nr; i++) {
->> +             struct cache_entry *ce =3D istate->cache[i];
->> +             if (ce->ce_flags & CE_BASE)
->> +                     continue;
->> +             cache[nr++] =3D ce;
->> +     }
->> +     *cache_out =3D cache;
->> +     *cache_nr_out =3D cache_nr;
->> +}
->
-> I can read what the function does, but I do not understand the
-> assumption this code makes.
->
-> Is this assuming that any newly created cache_entry that goes to
-> the_index via add_index_entry() will not have CE_BASE bit set?  Some
-> codepaths try to preserve the flags bit they do not care and/or
-> understand (e.g. rename_index_entry_at() creates a new ce with a new
-> name, and keeps most of the flags bit except for the name-hash state
-> bits), so CE_BASE will be propagated from the original to the new
-> one, I think.
->
-> You seem to be recording the state _after_ the change---that can be
-> read without the extension, can't it?  I thought we care more about
-> the state that was _lost_ by the change.
->
-> Recording the state after the change misses deleted entries, doesn't
-> it?
-
-Right. At the end of the commit message I mentioned about "git add
---undo". After I wrote it, I became more convinced it's the way to go.
-That should be the UI, instead of letting the user hunt the right
-entry through the index log. And then caller has the responsibility to
-track changes and feed it to read-cache (CE_BASE trick is gone). And
-it would record something like raw diff: a pair of old/new sha-1 and a
-path name. This helps differentiate modified, deleted and added
-entries that "git add --undo" may need to undo.
-
->> +static void write_index_log(struct strbuf *sb,
->> +                         const struct strbuf *old_log,
->> +                         const struct strbuf *msg,
->> +                         struct cache_entry **cache,
->> +                         unsigned int cache_nr)
->> +{
->> +     struct strbuf body =3D STRBUF_INIT;
->> +     unsigned int i, size, nr, body_len, hdr_len;
->> +     const char *end, *p;
->> +     strbuf_addf(&body, "%s%c", msg->buf, '\0');
->> +     for (i =3D 0; i < cache_nr; i++)
->> +             strbuf_addf(&body, "%s %s%c", sha1_to_hex(cache[i]->sh=
-a1),
->> +                         cache[i]->name, '\0');
->
-> We do not care about file modes (e.g. "update-index --chmod")?
-
-Not as valuable in my opinion. But if I implement "git add --undo", I
-probably need to pay attention to file modes or some users may get
-upset as it's not a "real undo" otherwise.
---=20
-Duy
+I see. Are we talking about tree-walk.c here? This is not unique to
+packing at all; we need to do this kind of traversal for any git
+operation that digs into older history, no? I recall a discussion
+about using generation numbers to speed up the walk: I tried playing
+with your series (where you use a cache to keep the generation
+numbers), but got nowhere. Does it make sense to think about speeding
+up the walk (how?).
