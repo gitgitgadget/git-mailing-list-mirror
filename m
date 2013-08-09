@@ -1,85 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] .mailmap: mark bouncing email addresses
-Date: Fri, 09 Aug 2013 16:19:20 -0700
-Message-ID: <7vwqnu311j.fsf@alter.siamese.dyndns.org>
-References: <1376072305-15255-1-git-send-email-stefanbeller@googlemail.com>
-	<1376072305-15255-3-git-send-email-stefanbeller@googlemail.com>
-	<20130809200101.GX14690@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git should not use a default user.email config value
+Date: Fri, 9 Aug 2013 16:19:28 -0700
+Message-ID: <20130809231928.GY14690@google.com>
+References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
+ <20130809194214.GV14690@google.com>
+ <20130809223758.GB7160@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <stefanbeller@googlemail.com>, git@vger.kernel.org,
-	<apw@debian.org>, <daniel.trstenjak@gmail.com>, <axboe@kernel.dk>,
-	<rutger.nijlunsing@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 10 01:19:31 2013
+Cc: Thorsten Glaser <tg@mirbsd.de>, git@vger.kernel.org,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 10 01:19:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7vxz-000464-2w
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 01:19:31 +0200
+	id 1V7vy6-0004DH-3J
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 01:19:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031498Ab3HIXT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 19:19:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51409 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031447Ab3HIXT0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 19:19:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADF1F3712C;
-	Fri,  9 Aug 2013 23:19:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=817E09OpCG6L2+/62GAZVhFugWQ=; b=dyfypM
-	NgMZn+qeH2sDw2qWa2pn17MezHo3hSt1X5PoywJ7qQenoMNpQpb2mf+B4YKzX4zn
-	3B0uVQi3zCV2szJKwzno4Qf4875afpoEor0XVcl5jx+SafDLGAYNHRC0KZGiepE5
-	A+YsBiVwdcSGwg5d6Zw5IrsDzIpie51PhrWWU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iYyM05bpoqhYV0/MpbasKNRICaboejBD
-	a1IUngc0mSNH68WcmqUW3ub34+Tg5C9bUJR9GCdjNQgVSRQSkw+XPgDA5gKAUC+e
-	i5E/LEMJx+3oY5YTqyXSURR8MuTFPmBoiU6mEa8/keKMuIoiYsTP6YcZigfM7BDW
-	9Snz4NXG20g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A15823712B;
-	Fri,  9 Aug 2013 23:19:25 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78B5E3712A;
-	Fri,  9 Aug 2013 23:19:24 +0000 (UTC)
-In-Reply-To: <20130809200101.GX14690@google.com> (Jonathan Nieder's message of
-	"Fri, 9 Aug 2013 13:01:01 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 210EB662-014A-11E3-896A-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1031511Ab3HIXTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 19:19:32 -0400
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:36301 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031447Ab3HIXTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 19:19:32 -0400
+Received: by mail-pb0-f51.google.com with SMTP id jt11so4981986pbb.38
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 16:19:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=5/rAoDz6TLRGQf+p0lQqheAAEILU7s8K/A3V+d8VhFY=;
+        b=FPo3aBV4UArxAlykSeKsVecPPLBfDrhvAHBl+9hQOXmvkyoAyOdgQu6zsQKmYR+RbJ
+         o9UefXa77PmNDHcdM34IhrNfqkYtKlIp42HhzKrOZRa8LO18DFwj8uLmqIkO1k50HKGL
+         SX2kTddWZxjMcatwPXEOyh/4I1HB8rHtuR/BtCvNcJQMpCtwL6KyIpCIeJqr2DNHTxJ4
+         5wUitF0KorsM9L2pP/xyg/o0ld9DcrGQ0UF08TrgsAup4pUl2BI7wBTAMtpXw8Ujkstg
+         Hs2OTStwIRNn/z/FzyrVl8qBjWdmD9SSUaM20rwMt14xZFyNkt+8kwETrd0lcHCr5f+B
+         axSA==
+X-Received: by 10.67.23.36 with SMTP id hx4mr13975835pad.54.1376090371457;
+        Fri, 09 Aug 2013 16:19:31 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id bt1sm22368963pbb.2.2013.08.09.16.19.30
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 09 Aug 2013 16:19:30 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130809223758.GB7160@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232053>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jeff King wrote:
 
-> From a quick search for homepages:
+> Yeah, there are basically three levels of ident:
+>
+>   1. The user told us explicitly (e.g., $EMAIL, user.email). Trust it.
+>
+>   2. We guessed and it looks reasonable (e.g., hostname is FQDN). Warn
+>      but use it.
+>
+>   3. It looks obviously bogus (e.g., we do not have a domain name).
+>      Reject it.
+>
+> We can move some cases from (2) down to (3), like when we use
+> gethostname rather than /etc/mailname.  But we risk breaking people's
+> existing setups. I don't think we know how many people rely on the
+> implicit hostname selection and would be affected. I don't know if there
+> is a good way to find out short of changing it and seeing who screams.
 
-Thanks for digging.
+Yes.  The result from a reverse DNS lookup is almost never the right
+mailname.
 
-So I'll discard this patch for now, and instead send this message
-CC'ed to these guessed addresses.
+ * Small installations tend to use a smarthost.
+ * Large installations tend to use more than one machine, and only
+   one machine's name gets the MX record.
+ 
+So except for cases where someone doesn't actually care about the
+recorded author and just has a script making commits (such users
+already suffer from the ".(none)" heuristic), I don't think this would
+hurt anyone.
 
--- >8 --
+> We can put a deprecation warning in the release notes, but people tend
+> to ignore those.
 
-Dear Amos, Daniel, Jason, Jens, and Rutger:
+Not so much a deprecation warning as an "Here is one of the more
+noticeable changes in this release" announcement.
 
-    our record indicates that you contributed to our project (Git --
-    distributed source control system) in the past under more than
-    two e-mail addresses, all of which now seem to be defunct.
+I'm pretty sure a deprecation warning would not help here.  Either
+people are affected and we say "WARNING: You were doing something
+perfectly reasonable, but now we discourage it", or, more likely,
+people are not affected.  Announcing a change too loudly to users not
+affected by it has a very bad side effect of training them not to pay
+much attention to release notes.
 
-    We would want to keep our .mailmap up-to-date, primarily in
-    order to consolidate these multiple entries for each of you into
-    one.  Could you tell us your preferred e-mail address your
-    contributions are listed as?  This message is sent to our best
-    current guess of your address.
+[...]
+> Another option could to add an option to control the strictness.
 
-    Thanks.
+I suspect a new config item for this is a bad idea, given how simple
+it is to choose a good default for everyone.
+
+Thanks,
+Jonathan
