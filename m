@@ -1,115 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Remove old forgotten command: whatchanged
-Date: Fri, 09 Aug 2013 10:29:28 +0200
-Message-ID: <vpqbo57clnb.fsf@anie.imag.fr>
-References: <CALkWK0=zZKTwn7cdrJXsVXH-rF=xWMeD_z2XAOCnuaf2bK_h8Q@mail.gmail.com>
-	<vpqfvukdy39.fsf@anie.imag.fr> <ku0lqj$qvs$1@ger.gmane.org>
-	<vpqk3jwcb1q.fsf@anie.imag.fr>
-	<7v1u649e5m.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Damien Robert <damien.olivier.robert+gmane@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 09 10:29:59 2013
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] parse-options: fix clang opterror() -Wunused-value warning
+Date: Fri,  9 Aug 2013 05:06:17 -0400
+Message-ID: <1376039177-17560-1-git-send-email-sunshine@sunshineco.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 09 11:06:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V7i58-0002Hz-Db
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 10:29:58 +0200
+	id 1V7iek-0005uA-6E
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Aug 2013 11:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030614Ab3HII3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Aug 2013 04:29:53 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:36199 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030522Ab3HII3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Aug 2013 04:29:51 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r798TR4Y025379
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 9 Aug 2013 10:29:28 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1V7i4e-0004e2-T2; Fri, 09 Aug 2013 10:29:28 +0200
-In-Reply-To: <7v1u649e5m.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 08 Aug 2013 12:27:17 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 09 Aug 2013 10:29:31 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r798TR4Y025379
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1376641774.13932@KHwHToMSXj+9uXOoNyqtUw
+	id S965551Ab3HIJGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Aug 2013 05:06:42 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:43344 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965245Ab3HIJGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Aug 2013 05:06:41 -0400
+Received: by mail-ie0-f181.google.com with SMTP id x14so3774437ief.12
+        for <git@vger.kernel.org>; Fri, 09 Aug 2013 02:06:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=APArPYlL9js91Q2wvhcXX/JA+5ZAPlx58+X6fXhuK6Q=;
+        b=Slo/OiaBxG3+ZiMKD1tCzVza7UywDxN43XlTY6z0AqaNN2FRmvdOG+y+0FYKDJ9XRB
+         4/5jZW7JweC3bJxPF//pjGZfTyLj48+1/LN6o3JSKjGFgMAcgX0Ocr6zHv7c2jLNzJng
+         xhWJHfFOedf+OM0H0IMUczN8+lROFqRKVx8aDmFd2NmbSCi9Xo0NMNzQ4I5/fOaBPVcs
+         +vdkQKqD+M+i09qtPSFHpOlp+xaHK5+esstBKswIeTS4VYeeT+h0+bmt86urcDMTkpAS
+         TWXxx03hLdrhKjdUNlV/T++Ho9omMxxyxA9L4kC9WklbtOWmEe6//BisIXr0ThrgK9bo
+         Hh6A==
+X-Received: by 10.42.244.129 with SMTP id lq1mr4059684icb.98.1376039200788;
+        Fri, 09 Aug 2013 02:06:40 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
+        by mx.google.com with ESMTPSA id y2sm2580737igl.10.2013.08.09.02.06.37
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 09 Aug 2013 02:06:39 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc1.428.gcd48621
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/231965>
 
-Junio C Hamano <gitster@pobox.com> writes:
+a469a1019352b8ef (silence some -Wuninitialized false positives;
+2012-12-15) triggered "unused value" warnings when the return value of
+opterror() and several other error-related functions was not used.
+5ded807f7c0be10e (fix clang -Wunused-value warnings for error functions;
+2013-01-16) applied a fix by adding #if !defined(__clang__) in cache.h
+and git-compat-util.h, but misspelled it as #if !defined(clang) in
+parse-options.h. Fix this.
 
-> It is meant to teach them "if you want to do your own 'git log', you
-> can do so with 'rev-list' piped to 'diff-tree --stdin'".  Changing
-> 'whatchanged' to 'log' in the latter statement is an improvement,
-> but dropping 'can be done by combining rev-list and diff-tree' goes
-> against the objective of the whole document.
+This mistake went unnoticed because existing callers of opterror()
+utilize its return value.  1158826394e162c5 (parse-options: add
+OPT_CMDMODE(); 2013-07-30), however, adds a new invocation of opterror()
+which ignores the return value, thus triggering the "unused value"
+warning.
 
-Then, we can keep the "In fact, together with the 'git rev-list'
-program ..." sentence, but drop "A trivial (but very useful)
-script ...", which is both technically incorrect (whatchanged is not a
-script anymore) and misleading because it advertises whatchanged.
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ parse-options.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-That would look like this:
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 3bdd56e..486a58b 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -818,7 +818,7 @@ for further details.
- 'GIT_FLUSH'::
-        If this environment variable is set to "1", then commands such
-        as 'git blame' (in incremental mode), 'git rev-list', 'git log',
--       'git check-attr', 'git check-ignore', and 'git whatchanged' will
-+       'git check-attr', and 'git check-ignore' will
-        force a flush of the output stream after each record have been
-        flushed. If this
-        variable is set to "0", the output of these commands will be done
-diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-index f538a87..8e53560 100644
---- a/Documentation/gitcore-tutorial.txt
-+++ b/Documentation/gitcore-tutorial.txt
-@@ -534,9 +534,8 @@ all, but just show the actual commit message.
+diff --git a/parse-options.h b/parse-options.h
+index aeab9aa..8736006 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -182,7 +182,7 @@ extern NORETURN void usage_msg_opt(const char *msg,
  
- In fact, together with the 'git rev-list' program (which generates a
- list of revisions), 'git diff-tree' ends up being a veritable fount of
--changes. A trivial (but very useful) script called 'git whatchanged' is
--included with Git which does exactly this, and shows a log of recent
--activities.
-+changes. The porcelain command 'git log' can also be used to display
-+changes introduced by some commits.
+ extern int optbug(const struct option *opt, const char *reason);
+ extern int opterror(const struct option *opt, const char *reason, int flags);
+-#if defined(__GNUC__) && ! defined(clang)
++#if defined(__GNUC__) && ! defined(__clang__)
+ #define opterror(o,r,f) (opterror((o),(r),(f)), -1)
+ #endif
  
- To see the whole history of our pitiful little git-tutorial project, you
- can do
-@@ -546,11 +545,10 @@ $ git log
- ----------------
- 
- which shows just the log messages, or if we want to see the log together
--with the associated patches use the more complex (and much more
--powerful)
-+with the associated patches, use the `--patch` option:
- 
- ----------------
--$ git whatchanged -p
-+$ git log -p
- ----------------
- 
- and you will see exactly what has changed in the repository over its
-
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.8.4.rc1.428.gcd48621
