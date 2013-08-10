@@ -1,73 +1,59 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: git stash takes excessively long when many untracked files present
-Date: Sat, 10 Aug 2013 14:44:55 -0700
-Message-ID: <20130810214453.GA5719@jtriplet-mobl1>
+From: Kristian Freed <kristian.freed@gmail.com>
+Subject: How can I automatically create a GIT branch that represents a
+ sequence of tags?
+Date: Sat, 10 Aug 2013 23:29:45 +0100
+Message-ID: <CAFw3YtRLgUGGn9JV5K3P9XtMBcBeO7=VSM7PekSxtW6xCsfZ1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 10 23:45:17 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 11 00:30:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8GyG-0000Fe-Qa
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 23:45:13 +0200
+	id 1V8HgG-0006VZ-8S
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Aug 2013 00:30:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758856Ab3HJVpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Aug 2013 17:45:06 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:58939 "EHLO
-	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758850Ab3HJVpF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Aug 2013 17:45:05 -0400
-Received: from mfilter9-d.gandi.net (mfilter9-d.gandi.net [217.70.178.138])
-	by relay3-d.mail.gandi.net (Postfix) with ESMTP id 3B4BFA80B9;
-	Sat, 10 Aug 2013 23:45:02 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter9-d.gandi.net
-Received: from relay3-d.mail.gandi.net ([217.70.183.195])
-	by mfilter9-d.gandi.net (mfilter9-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id awtzpKi4ew3E; Sat, 10 Aug 2013 23:45:00 +0200 (CEST)
-X-Originating-IP: 50.43.39.152
-Received: from jtriplet-mobl1 (static-50-43-39-152.bvtn.or.frontiernet.net [50.43.39.152])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id E83FBA80C6;
-	Sat, 10 Aug 2013 23:44:57 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758902Ab3HJWaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Aug 2013 18:30:08 -0400
+Received: from mail-we0-f171.google.com ([74.125.82.171]:61625 "EHLO
+	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758881Ab3HJWaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Aug 2013 18:30:07 -0400
+Received: by mail-we0-f171.google.com with SMTP id q55so4543047wes.30
+        for <git@vger.kernel.org>; Sat, 10 Aug 2013 15:30:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=31Pr+2Q6TWEy9qyaMOks+yvGYdLRPnUNFz4CKhz3ZQ4=;
+        b=MBpiNgYIWxbrZlGcAPn0uiBwZn81jPzwKe6BQDA8U0yqalvDPNYLsUBhLK0zeel+DS
+         l2R86Hw5MW6WsaqzxXTlYDtieNpnvEJw9YEp3cIcxr/f7PkVNx2nMKfYKUu29i6jQOxu
+         zuntQVJXR9a+pauqzcdsNGRp/2HoxUQtqpdnFreiB3BYNPM9ep244CIwMBT3RPmWKEIi
+         bdr0CyfRnNELHNegQSsiyQFSQF6cJ30ChcO8qLw9tXnl0EMIPmPqVh1uAx1LioG22cGl
+         jjocKyYGvPExrm+dKJ44CHEtgRmZjsyWJLSKpiA93ROoiBFvSQJD3Djz3K/6ohWpEH59
+         qNDw==
+X-Received: by 10.180.149.239 with SMTP id ud15mr3181209wib.16.1376173805291;
+ Sat, 10 Aug 2013 15:30:05 -0700 (PDT)
+Received: by 10.194.172.101 with HTTP; Sat, 10 Aug 2013 15:29:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232114>
 
-[CCing folks involved in the recent "stash-refuse-to-kill" merge.]
+In our current setup, we have automatic tagging in git of all
+successful release builds. This makes it easy to go back to stable
+points in history and compare functionality, check when bugs were
+introduced etc.
 
-I keep portions of my home directory in git.  I tried to "git stash"
-some local changes, and it ran for several minutes with no progress.  ps
-showed that it was running "git ls-files --killed", which was taking
-100% CPU, and occasionally reading the disk very slowly.
+To help with this process further, it would be useful to be able to
+use git bisect, but as these are just a sequence of tags, not commits
+on a branch, git bisect will not work as is.
 
-strace shows that git ls-files --killed is doing a full recursive
-enumeration of my entire home directory.  That's a Really Bad Idea:
+Is there any tooling for automatically recreating a branch from a
+sequence of tags, where each generated commit is the calculated delta
+between each two neighbouring tags?
 
-~$ find | wc -l
-3248997
-~$ find -type d | wc -l
-350680
-
-Not only that, but it also appears to be attempting to stat and open
-several files in every single directory; for instance:
-
-stat(".ccache/1/3/.git", 0x7fff254bc7a0) = -1 ENOENT (No such file or directory)
-open(".ccache/1/3/.git/HEAD", O_RDONLY) = -1 ENOENT (No such file or directory)
-stat(".ccache/1/3/.git", 0x7fff254bc770) = -1 ENOENT (No such file or directory)
-open(".ccache/1/3/.git/packed-refs", O_RDONLY) = -1 ENOENT (No such file or directory)
-
-(Yes, in that order.)
-
-I see a lot of room for optimization here.  Most importantly, git
-ls-files --killed really doesn't need to look at any directory entry
-unless something in the index would conflict with it.
-
-- Josh Triplett
+Thanks,
+Kristian
