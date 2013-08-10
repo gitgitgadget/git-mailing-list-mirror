@@ -1,73 +1,66 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH v2] git-p4: Ask "p4" to interpret View setting
-Date: Sat, 10 Aug 2013 16:11:23 -0400
-Message-ID: <20130810201123.GA31706@padd.com>
-References: <CACGba4zdA=3tBE9UR=i9P9kNAL1HUc3UwSHbYeq4s9fwaN4=Mw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Subject: [PATCH 1/2] git p4 test: sanitize P4CHARSET
+Date: Sat, 10 Aug 2013 16:15:12 -0400
+Message-ID: <1376165713-26170-1-git-send-email-pw@padd.com>
+References: <20130810201123.GA31706@padd.com>
 Cc: git@vger.kernel.org
 To: kazuki saitoh <ksaitoh560@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 10 22:11:33 2013
+X-From: git-owner@vger.kernel.org Sat Aug 10 22:15:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8FVc-000266-6F
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 22:11:32 +0200
+	id 1V8FZK-0004nc-0w
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 22:15:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758718Ab3HJUL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Aug 2013 16:11:28 -0400
-Received: from honk.padd.com ([74.3.171.149]:49967 "EHLO honk.padd.com"
+	id S1758754Ab3HJUPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Aug 2013 16:15:17 -0400
+Received: from honk.padd.com ([74.3.171.149]:49971 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754567Ab3HJUL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Aug 2013 16:11:27 -0400
+	id S1758703Ab3HJUPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Aug 2013 16:15:17 -0400
 Received: from arf.padd.com (unknown [50.105.10.190])
-	by honk.padd.com (Postfix) with ESMTPSA id B6A372B8F;
-	Sat, 10 Aug 2013 13:11:26 -0700 (PDT)
+	by honk.padd.com (Postfix) with ESMTPSA id 6AF662B8F;
+	Sat, 10 Aug 2013 13:15:16 -0700 (PDT)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id E99B122792; Sat, 10 Aug 2013 16:11:23 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CACGba4zdA=3tBE9UR=i9P9kNAL1HUc3UwSHbYeq4s9fwaN4=Mw@mail.gmail.com>
+	id D164322855; Sat, 10 Aug 2013 16:15:13 -0400 (EDT)
+X-Mailer: git-send-email 1.8.4.rc2.88.ga5463da
+In-Reply-To: <20130810201123.GA31706@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232110>
 
-ksaitoh560@gmail.com wrote on Tue, 06 Aug 2013 15:45 +0900:
-> In Perforce, View setting of p4 client can describe
->   -//depot/project/files/*.xls //client/project/files/*.xls
-> to exclude Excel files.
-> But "git p4 --use-client-spec" cannot support '*'.
-> 
-> In git-p4.py, "map_in_client" method analyzes View setting and return
-> client file path.
-> So I modify the method to just ask p4.
-> 
-> 
-> > Let me play with this for a bit.  I wonder about the performance
-> > aspects of doing a "p4 fstat" for every file.  Would it be
-> > possible to do one or a few batch queries higher up somewhere?
-> To reduce p4 access, it cache result of asking "client path".
-> And addition, "fstat" depends on sync status, so modify to use "p4
-> where" instead of "fstat".
+From: kazuki saitoh <ksaitoh560@gmail.com>
 
-I played around with your patch a bit, ending up with this
-teensy series.
+In the tests, p4d is started without using "internationalized
+mode".  Make sure this environment variable is unset, otherwise
+a mis-matched user setting would break the tests.  The error
+message would be "Unicode clients require a unicode enabled server."
 
-I redid the code to use clientFile, not path, as that
-will work better with AltRoots.  Also I simplified your
-test and added a couple more for the now-supported wildcards.
-And deleted a bunch of newly dead code.
+[pw: use unset, add commit text]
 
-My only concern is in the commit message, about performance.  A
-change that has lots of files in it will cause many roundtrips to
-p4d to do "p4 where" on each.  When the files don't have much
-edited content, this new approach will make the import take twice
-as long, I'll guess.  Do you have a big repository where you
-could test that?
+Signed-off-by: Kazuki Saitoh <ksaitoh560@gmail.com>
+Signed-off-by: Pete Wyckoff <pw@padd.com>
+---
+ t/lib-git-p4.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Tell me what you think.
-
-		-- Pete
+diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+index 2098b9b..ccd918e 100644
+--- a/t/lib-git-p4.sh
++++ b/t/lib-git-p4.sh
+@@ -48,7 +48,8 @@ P4DPORT=$((10669 + ($testid - $git_p4_test_start)))
+ P4PORT=localhost:$P4DPORT
+ P4CLIENT=client
+ P4EDITOR=:
+-export P4PORT P4CLIENT P4EDITOR
++unset P4CHARSET
++export P4PORT P4CLIENT P4EDITOR P4CHARSET
+ 
+ db="$TRASH_DIRECTORY/db"
+ cli="$TRASH_DIRECTORY/cli"
+-- 
+1.8.4.rc2.88.ga5463da
