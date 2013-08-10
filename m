@@ -1,105 +1,81 @@
-From: Thorsten Glaser <tg@mirbsd.de>
-Subject: Re: git should not use a default user.email config value
-Date: Sat, 10 Aug 2013 12:06:08 +0000 (UTC)
-Message-ID: <Pine.BSM.4.64L.1308101202260.28970@herc.mirbsd.org>
-References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
- <20130809194214.GV14690@google.com> <20130809223758.GB7160@sigill.intra.peff.net>
- <20130809231928.GY14690@google.com> <20130810064717.GB30185@sigill.intra.peff.net>
- <52060EF9.2040504@alum.mit.edu> <20130810102834.GA6237@sigill.intra.peff.net>
+From: Diogo de Campos <campos@esss.com.br>
+Subject: Re: git rebase --interactive using short SHA-1's internally
+Date: Sat, 10 Aug 2013 10:17:54 -0300
+Message-ID: <CAMebvcTJ0kRzV2zWLaFzsXY+fBpdwaGiyuBJsx0=hYd350zOpg@mail.gmail.com>
+References: <CAMebvcT7Tb1PXsKmRuSNCqOhJEbkPJAG2tzW6FjWCa6hH-+ffA@mail.gmail.com>
+	<CAMPXz=rdaAZVb8UJJ+KcBZFR2wdnqTWbMKt07snPGEuCDz9q5A@mail.gmail.com>
+	<7v7gfu2jy3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 10 14:51:52 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: David <bouncingcats@gmail.com>, git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 10 15:18:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V88e7-0003x3-SB
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 14:51:52 +0200
+	id 1V893n-0006Oj-Lc
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 15:18:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933264Ab3HJMvr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Aug 2013 08:51:47 -0400
-Received: from eurynome.mirbsd.org ([81.169.181.30]:29483 "EHLO
-	eurynome.mirbsd.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933222Ab3HJMvq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Aug 2013 08:51:46 -0400
-X-Greylist: delayed 2084 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Aug 2013 08:51:46 EDT
-Received: from herc.mirbsd.org (root@herc.mirbsd.org [IPv6:2a01:198:25d:0:202:b3ff:feb7:54e8])
-	by eurynome.mirbsd.org (8.14.5.Beta0/8.14.3) with ESMTP id r7ACGtK9015554
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
-	for <git@vger.kernel.org>; Sat, 10 Aug 2013 12:17:00 GMT
-Received: from herc.mirbsd.org (tg@herc.mirbsd.org [192.168.0.82])
-	by herc.mirbsd.org (8.14.5/8.14.5) with ESMTP id r7AC68Ef012530
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sat, 10 Aug 2013 12:06:12 GMT
-X-X-Sender: tg@herc.mirbsd.org
-In-Reply-To: <20130810102834.GA6237@sigill.intra.peff.net>
-X-Message-Flag: Your mailer is broken. Get an update at http://www.washington.edu/pine/getpine/pcpine.html for free.
+	id S933608Ab3HJNR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Aug 2013 09:17:57 -0400
+Received: from mail-wi0-f169.google.com ([209.85.212.169]:41447 "EHLO
+	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933459Ab3HJNR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Aug 2013 09:17:56 -0400
+Received: by mail-wi0-f169.google.com with SMTP id f14so533705wiw.0
+        for <git@vger.kernel.org>; Sat, 10 Aug 2013 06:17:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=esss.com.br; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=2hxSrCNxBQi5VIYiBTXhVOPq3vlFofvuAgOf4A62C5w=;
+        b=VKNMx76vshTVNCggspxURe758UUrbsIErXi5S4N4T2Jt0uh5nDnSvdFZbzXtXDPqXN
+         L+mNVAJx9hcXvONA2zBVaC82S5Lvp9cr946Ybvf/tMm8P3ghV3m1HeZgvL/pZWoOeXkm
+         7AUNhnz8isZioHtLYpeeC97m3f31iz4i+o0/M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=2hxSrCNxBQi5VIYiBTXhVOPq3vlFofvuAgOf4A62C5w=;
+        b=bctJtoDRKtnJ8/zL6s8DkcDmL1gSvHManx/VIvEmIapzE7VG26Qbr45Samtcds9Mom
+         fjOTtkiB115pr03f2MDw7JVKjSn7eIsFcLuBbck7pAVPgM1BP1McaO0qVBWcKYRy2rNq
+         6Fm178sdbYXfRTrlZAjGG5fm/q+ZbjWhFxVQTz4jdlupdNSHFXIkbxj8K5kA2v9qSdbq
+         C+g8o91GH43GEG2R6hV7y8tDogkPjJ3kkt2T1swfKs6pUSfuxmDMoxnYWA5v8ITtD39M
+         X1AK7oI7LHb5tQ917bDyIftK8cy1s0zT0Smkl4KnjrsoVb39YebaUEX+cE2kzaV8KUS0
+         HZQA==
+X-Gm-Message-State: ALoCoQkqwkpyMYch6aKtphhvX1HpPLXRA5R95chxJ5/RBmsg18pQZB1pKbHYCwbz0cLMx0H5P3r0
+X-Received: by 10.180.210.243 with SMTP id mx19mr2498205wic.35.1376140674619;
+ Sat, 10 Aug 2013 06:17:54 -0700 (PDT)
+Received: by 10.216.159.68 with HTTP; Sat, 10 Aug 2013 06:17:54 -0700 (PDT)
+In-Reply-To: <7v7gfu2jy3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232097>
 
-Jeff King dixit:
+Ooops, that's exactly it =)
 
->It was not clear to me whether his site has /etc/mailname. If it does
-
-Some may, some may not but=E2=80=A6
-
->But from his description, the machine may even have a split-horizon na=
-me
->in /etc/mailname, and we can do nothing at all about that.
-
-=E2=80=A6 that won=E2=80=99t happen. The problem is that they may have
-the correct domain there but the localpart will still
-be wrong because Kolab localparts are not Unix usernames.
-
-
-Jonathan Nieder dixit:
-
->I thought that on other operating systems people typically don't have
->an /etc/mailname.  How does trusting the file when present hurt?
-
-Right, MirBSD doesn=E2=80=99t have it, and I don=E2=80=99t think OpenBS=
-D
-added it since we forked.
-
-
-Jeff King dixit:
-
->On Sat, Aug 10, 2013 at 11:59:21AM +0200, Michael Haggerty wrote:
+On Sat, Aug 10, 2013 at 2:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> David <bouncingcats@gmail.com> writes:
 >
->> I intentionally don't set user.email in my ~/.gitconfig because I us=
-e
->> different identities (on the same machine) depending on what project=
- I
+>> On 10 August 2013 05:22, Diogo de Campos <campos@esss.com.br> wrote:
+>>> Had some problems rebasing a large repository, fatal error because a
+>>> short SHA-1 ref was ambiguous.
+>>
+>> This recent disussion might also interest you:
+>> http://thread.gmane.org/gmane.comp.version-control.git/229091
+>
+> I was wondering why the topic looked familiar ;-)
 
-=46or me that=E2=80=99s also true, but I set a default one at the momen=
-t
-which is still better than having an unroutable one (on my private
-laptop, ${unix_username}@${fqdn} does work, but only as long as my
-laptop is powered on, has got IPv6 Internet, and the sending MTA
-has IPv6 Internet, so=E2=80=A6 it=E2=80=99s mostly unroutable).
 
-While I used a fallback for this scenario (me, privately), I=E2=80=99d
-also benefit from git refusing to accept commits by default.
 
->So if I understand your use case, then you would be even happier if
->rather than giving a warning, git simply barfed and said "please set
->your identity before committing"?
+-- 
+Diogo Campos
 
-Exactly. That=E2=80=99s what I think he said, and what I asked for too.
+Engineering Simulation and Scientific Software
 
-Thanks,
-//mirabilos (working with many OSS projects)
---=20
-I believe no one can invent an algorithm. One just happens to hit upon =
-it
-when God enlightens him. Or only God invents algorithms, we merely copy=
- them.
-If you don't believe in God, just consider God as Nature if you won't d=
-eny
-existence.		-- Coywolf Qi Hunt
+BOS - Business Operation Support
+Software Engineer
