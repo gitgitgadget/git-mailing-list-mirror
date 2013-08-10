@@ -1,75 +1,64 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] git exproll: steps to tackle gc aggression
-Date: Sat, 10 Aug 2013 17:16:00 +0700
-Message-ID: <CACsJy8AnY0pgHSxYDvqLonojGxSyAXUCGwzWwuZWQRVwAVnsFg@mail.gmail.com>
-References: <CALkWK0mxd35OGDG2fMaRsfycvBPPxDHWrPX8og5y2+4y1dfOpw@mail.gmail.com>
- <7v61vgazp5.fsf@alter.siamese.dyndns.org> <CALkWK0kqE8azzxp_GkzhPNT41nD8NzeLqXSe1xi0jbVo=7Xz3A@mail.gmail.com>
- <7vwqnw7z47.fsf@alter.siamese.dyndns.org> <CALkWK0=nerszb3_YA8P=qXbfAd4Y1rNsHXhfVKzwtj-x80iqkg@mail.gmail.com>
- <20130809110000.GD18878@sigill.intra.peff.net> <CALkWK0nSC-Aty55QO+DrM5Zf2t=DK8iMfbhv_HD44Z_m8d19Pg@mail.gmail.com>
- <20130809221615.GA7160@sigill.intra.peff.net> <CALkWK0kpqyxTyai2Lue7=D4z0kvhxuxKdYSWekT22zUhRis0Og@mail.gmail.com>
- <CACsJy8DtiSupsvDgeBXGGnGE06pDxWvYTNrk3bpta9Bwk5MZwg@mail.gmail.com>
- <20130810094339.GB2518@sigill.intra.peff.net> <CACsJy8CPM2jwWu0g+mamnA89UtWR=3B=8Q+j2mu-CMB=TRm7Og@mail.gmail.com>
- <CALkWK0=cZyKO7tjjtgE+tvwkkHGN7xLUy0uKHwXd8zkrM7o2Wg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git should not use a default user.email config value
+Date: Sat, 10 Aug 2013 06:28:35 -0400
+Message-ID: <20130810102834.GA6237@sigill.intra.peff.net>
+References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
+ <20130809194214.GV14690@google.com>
+ <20130809223758.GB7160@sigill.intra.peff.net>
+ <20130809231928.GY14690@google.com>
+ <20130810064717.GB30185@sigill.intra.peff.net>
+ <52060EF9.2040504@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Martin Fick <mfick@codeaurora.org>,
-	Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 10 12:16:56 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Thorsten Glaser <tg@mirbsd.de>, git@vger.kernel.org,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Aug 10 12:28:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V86EA-0003a5-W3
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 12:16:55 +0200
+	id 1V86Pd-0003HA-Lp
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 12:28:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968542Ab3HJKQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Aug 2013 06:16:31 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:42548 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S968537Ab3HJKQb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Aug 2013 06:16:31 -0400
-Received: by mail-ob0-f177.google.com with SMTP id f8so6740827obp.8
-        for <git@vger.kernel.org>; Sat, 10 Aug 2013 03:16:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=JfuY0yfThHwovVxHqqKZt9vBxpZuXkGcLtCpcbTjl1o=;
-        b=dAwmhyy/D+12xPgDtffOLkgANjZSti1x+/wLpv6yNSxvs2HSCQu1FtyR2y4SDvxNrQ
-         ApxnEyKnjw95HxlSchEZbTy5ZXcMlLT3p4ELrG7+gBkmyxtpamIQFzUEgsiHKdm4uku+
-         dhS++VhKDNiLrLsQQkNub4PXderD7Qf3XWQxDi0lS++uZTDvTR9/TI0hqnWZmBCq6SR6
-         tBeRwQzbK4/qt2emo0aooYnphWn+cHOaTDTVfg+IDr9GVK7boNm9DpSQiGX/bAN19yYk
-         THIhFnx1bt7RPRbYnBq1Lp05kn1qVHhvE0ZRrylLhdmSmg6L2AdIo55Qx1HPeQQF5j53
-         z9vQ==
-X-Received: by 10.182.225.134 with SMTP id rk6mr3833623obc.40.1376129790612;
- Sat, 10 Aug 2013 03:16:30 -0700 (PDT)
-Received: by 10.182.87.105 with HTTP; Sat, 10 Aug 2013 03:16:00 -0700 (PDT)
-In-Reply-To: <CALkWK0=cZyKO7tjjtgE+tvwkkHGN7xLUy0uKHwXd8zkrM7o2Wg@mail.gmail.com>
+	id S968560Ab3HJK2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Aug 2013 06:28:40 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55637 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S968558Ab3HJK2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Aug 2013 06:28:40 -0400
+Received: (qmail 5809 invoked by uid 102); 10 Aug 2013 10:28:39 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 10 Aug 2013 05:28:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Aug 2013 06:28:35 -0400
+Content-Disposition: inline
+In-Reply-To: <52060EF9.2040504@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232089>
 
-On Sat, Aug 10, 2013 at 5:05 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Duy Nguyen wrote:
->> Right. transport_get() is also run for push and it sets
->> smart_options->thin = 1 unconditionally.
->
-> So, it looks like smart http implies the thin capability.
+On Sat, Aug 10, 2013 at 11:59:21AM +0200, Michael Haggerty wrote:
 
-"smart_options" is a bit misleading. This applies to both smart
-http://, git:// and ssh://
+> On 08/10/2013 08:47 AM, Jeff King wrote:
+> > But I think MX records and deliverability is beside the point. Even in a
+> > case where we come up with a valid, deliverable address, is that what
+> > the user wants to have in their commit history for all time?
+> 
+> I intentionally don't set user.email in my ~/.gitconfig because I use
+> different identities (on the same machine) depending on what project I
+> am committing to (open-source vs. work).  After I clone a repo, I *rely*
+> on Git reminding me to set user.email on my first commit, because I
+> invariably forget to set it myself.  And for me, *any* universal,
+> heuristically-determined email address would be wrong for me for at
+> least some repos.
 
-> I think
-> sop's patch (6 years ago) was about turning off thin on dumb http
+So if I understand your use case, then you would be even happier if
+rather than giving a warning, git simply barfed and said "please set
+your identity before committing"?
 
-No, dumb http walks through the remote repository object database,
-there's no temporary pack created for transferring data. Dumb http has
-nothing to do with this flag.
--- 
-Duy
+-Peff
