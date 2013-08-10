@@ -1,85 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-hg: fix path when cloning with tilde expansion
-Date: Fri, 09 Aug 2013 23:50:12 -0700
-Message-ID: <7v38qi2g63.fsf@alter.siamese.dyndns.org>
-References: <CAMP44s1Jqao0YvBSh18t1C2LwAF4_u2GaTNx1RwdW+pmCFcxvQ@mail.gmail.com>
-	<1376068387-28510-1-git-send-email-apelisse@gmail.com>
-	<7veha266nq.fsf@alter.siamese.dyndns.org>
-	<CALWbr2w2JjEr_hYX9ighu_-=iTV6etG=78g4AbKko64EsecxFA@mail.gmail.com>
-	<7vy58a4mcy.fsf@alter.siamese.dyndns.org>
-	<CALWbr2y5H_dfHAFW_qN+j8YtF4F9+VcG8G503hr4YN2Qv69CXA@mail.gmail.com>
-	<CAMP44s13y39f-eCP1sBuMEedciU230C1O11+iMb1SHi45RnSNQ@mail.gmail.com>
-	<7v7gfu4ikb.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1Ky2AkEt-XS_nAo=_RrPXSVAL=8cGiMuJabw0=BRU0Dw@mail.gmail.com>
-	<7vmwoq304o.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1Q2x9uz5Ajr=BgVjSjO88XD5UYzVSEqgMeK5_YAYSa5A@mail.gmail.com>
-	<7vioze2kev.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3ULMBg6BJr6m4zkqHyD70rHSwLcuG5ph+ABr6KME8T=w@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git should not use a default user.email config value
+Date: Sat, 10 Aug 2013 00:03:00 -0700
+Message-ID: <20130810070300.GB3165@elie.Belkin>
+References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
+ <20130809194214.GV14690@google.com>
+ <20130809223758.GB7160@sigill.intra.peff.net>
+ <7v38qi4g7r.fsf@alter.siamese.dyndns.org>
+ <20130810061720.GA30185@sigill.intra.peff.net>
+ <20130810064056.GA3165@elie.Belkin>
+ <20130810065252.GC30185@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Antoine Pelisse <apelisse@gmail.com>, git <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 10 08:57:47 2013
+Cc: Junio C Hamano <gitster@pobox.com>, Thorsten Glaser <tg@mirbsd.de>,
+	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 10 09:03:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V837T-0000hh-7u
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 08:57:47 +0200
+	id 1V83Cr-0004Ui-Jc
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 09:03:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030506Ab3HJG5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Aug 2013 02:57:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48559 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031890Ab3HJGuP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Aug 2013 02:50:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 663F12FCDC;
-	Sat, 10 Aug 2013 06:50:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zN0U762mNpGMw9kgyCVqlra4zpk=; b=gGwvML
-	hdvntGMRaAEVj7JrdsL9XMa8wzj07fxiRycjMDTBroICsrEjni64ZMstDeP4HXL0
-	Sa0uQHMXHzwgUbY/tMYCyDX8jJufacOB3Yh+gceCUFXoSWBM7YRlqXaAog3Al77a
-	yGWdCYfLRSOJZl66emsVO27lj1vYfD1grRW38=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=K0to1OMhmdKcBxjV14UCtweA6cdSjVmb
-	7lgbW9tFitCrkc6U+AnBVBTXatD6DiMj3PGsn6Fng6G8FCbcXwiuBEVorpzOcINA
-	nYrqA8D0Q44l1AWuUrCQf036FM3bUIVLnB2o0KrvHWwGy8AHX6lnskwRDIsL2rQo
-	Q5WaPOpsN3I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57EE02FCDA;
-	Sat, 10 Aug 2013 06:50:14 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B868C2FCD8;
-	Sat, 10 Aug 2013 06:50:13 +0000 (UTC)
-In-Reply-To: <CAMP44s3ULMBg6BJr6m4zkqHyD70rHSwLcuG5ph+ABr6KME8T=w@mail.gmail.com>
-	(Felipe Contreras's message of "Sat, 10 Aug 2013 01:39:59 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1BABDE86-0189-11E3-A623-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756725Ab3HJHDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Aug 2013 03:03:14 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:47018 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756237Ab3HJHDN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Aug 2013 03:03:13 -0400
+Received: by mail-pd0-f175.google.com with SMTP id q10so1396999pdj.6
+        for <git@vger.kernel.org>; Sat, 10 Aug 2013 00:03:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=rydJuULlkWFmakAsTzINMgqVEhNOzU1X+W1tdy6rGWA=;
+        b=PzrTCV9zanXKxzu7UAAvU87ji1CfcrpUrDdFu10wKV4TDdprbTu7oigXW/zPL39isp
+         zl8PU+crPY03Pq/LLJxXdioEuny6Omem+/xPyTpp1GRhx2knovpyQs8SyRzB7zsXzl+I
+         2Io2RLynfUmkGpCN0nlf1FdiLHrsHQhXmuZe8oPuGBljzybPEszga8WgVntoAqey5qJX
+         xJRz1WzvLw9tWv0xM4niRzHtFNR4ypuomOZm+XnOdo2Orpg2+lzcOdWEwBu8P82h3g58
+         HCBQncLOmT7e49ICMUx+bp15LyXc+N3/d0bBVWgQBTHSVdOLWtR6KdpTOy7a77EqwFbd
+         Hmvw==
+X-Received: by 10.66.252.98 with SMTP id zr2mr4280036pac.86.1376118192010;
+        Sat, 10 Aug 2013 00:03:12 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id in2sm20956753pbc.37.2013.08.10.00.03.03
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 10 Aug 2013 00:03:10 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130810065252.GC30185@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232071>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Jeff King wrote:
 
-> If I clone ~/git, and then change my username, and move my home
-> directory, doing a 'git fetch' in ~/git wouldn't work anymore, because
-> we have expanded the path and fixed it to my old home, if instead we
-> simply return without fixing, it would still work just fine.
+> Sorry to be unclear. I meant that treating /etc/mailname and gethostname
+> differently might be justified on Debian under the logic "if you have
+> /etc/mailname, that is a trustworthy address, and if you do not, then we
+> cannot guess at a trustworthy address (because putting it in
+> /etc/mailname is the accepted way to do so on Debian)".
+>
+> But such logic would not extend to other operating systems, where
+> /etc/mailname does not have such a status.
 
-Antoine's patch runs expanduser() only to see if the given one gets
-modified to absolute path, and makes fix_path() return without
-calling the extra 'git config', so it is my understanding that the
-above describes exactly what the patch does.  Am I reading the patch
-incorrectly?
+I thought that on other operating systems people typically don't have
+an /etc/mailname.  How does trusting the file when present hurt?
 
-It outsources the determination of "is this a special notation to
-name a home directory?" logic to .isabs(.expanduser()) instead of
-doing a .beginswith('~') ourselves.
+> I am guessing, too, about what people even put in /etc/mailname. If they
+> relay mail from the machine to a smarthost, do they put the individual
+> hostname into /etc/mailname? Or do they put in the domain name that
+> represents a real deliverable address? If the former, then it is no
+> better than gethostname anyway.
+
+Debian policy explains:
+
+	If your package needs to know what hostname to use on (for
+	example) outgoing news and mail messages which are generated
+	locally, you should use the file /etc/mailname. It will contain
+	the portion after the username and @ (at) sign for email
+	addresses of users on the machine (followed by a newline).
+
+	Such a package should check for the existence of this file when
+	it is being configured. If it exists, it should be used without
+	comment, although an MTA's configuration script may wish to
+	prompt the user even if it finds that this file exists. If the
+	file does not exist, the package should prompt the user for the
+	value (preferably using debconf) and store it in /etc/mailname as
+	well as using it in the package's configuration. The prompt
+	should make it clear that the name will not just be used by that
+	package.
+
+So on a properly configured Debian system, /etc/mailname contains
+something appropriate to put after the @ sign in an email address
+and the sysadmin expects it to be used for that.
+
+As far as I can tell, to the extent that other distros support
+/etc/mailname, it is only as a side effect of handling that Debian
+requirement.  I don't think e.g. Fedora or Solaris systems typically
+will have a /etc/mailname file.
+
+I *am* a bit worried about what people might put in /etc/mailname on
+Debian systems when there is no appropriate host to put there (as on
+Thorsten's machine).
+
+Jonathan
