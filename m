@@ -1,93 +1,75 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] push: respect --no-thin
-Date: Sat, 10 Aug 2013 17:10:07 +0700
-Message-ID: <1376129407-30590-1-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] git exproll: steps to tackle gc aggression
+Date: Sat, 10 Aug 2013 17:16:00 +0700
+Message-ID: <CACsJy8AnY0pgHSxYDvqLonojGxSyAXUCGwzWwuZWQRVwAVnsFg@mail.gmail.com>
+References: <CALkWK0mxd35OGDG2fMaRsfycvBPPxDHWrPX8og5y2+4y1dfOpw@mail.gmail.com>
+ <7v61vgazp5.fsf@alter.siamese.dyndns.org> <CALkWK0kqE8azzxp_GkzhPNT41nD8NzeLqXSe1xi0jbVo=7Xz3A@mail.gmail.com>
+ <7vwqnw7z47.fsf@alter.siamese.dyndns.org> <CALkWK0=nerszb3_YA8P=qXbfAd4Y1rNsHXhfVKzwtj-x80iqkg@mail.gmail.com>
+ <20130809110000.GD18878@sigill.intra.peff.net> <CALkWK0nSC-Aty55QO+DrM5Zf2t=DK8iMfbhv_HD44Z_m8d19Pg@mail.gmail.com>
+ <20130809221615.GA7160@sigill.intra.peff.net> <CALkWK0kpqyxTyai2Lue7=D4z0kvhxuxKdYSWekT22zUhRis0Og@mail.gmail.com>
+ <CACsJy8DtiSupsvDgeBXGGnGE06pDxWvYTNrk3bpta9Bwk5MZwg@mail.gmail.com>
+ <20130810094339.GB2518@sigill.intra.peff.net> <CACsJy8CPM2jwWu0g+mamnA89UtWR=3B=8Q+j2mu-CMB=TRm7Og@mail.gmail.com>
+ <CALkWK0=cZyKO7tjjtgE+tvwkkHGN7xLUy0uKHwXd8zkrM7o2Wg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Martin Fick <mfick@codeaurora.org>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 10 12:09:33 2013
+	Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 10 12:16:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8672-0006zb-Of
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 12:09:33 +0200
+	id 1V86EA-0003a5-W3
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 12:16:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968539Ab3HJKJ3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Aug 2013 06:09:29 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:48805 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S968534Ab3HJKJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Aug 2013 06:09:27 -0400
-Received: by mail-ie0-f170.google.com with SMTP id e14so5873633iej.29
-        for <git@vger.kernel.org>; Sat, 10 Aug 2013 03:09:27 -0700 (PDT)
+	id S968542Ab3HJKQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Aug 2013 06:16:31 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:42548 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S968537Ab3HJKQb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Aug 2013 06:16:31 -0400
+Received: by mail-ob0-f177.google.com with SMTP id f8so6740827obp.8
+        for <git@vger.kernel.org>; Sat, 10 Aug 2013 03:16:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=WEu3KZluAw4GaP7+TDaFfbgnxSxzY7rmHJ7uhK1QrQo=;
-        b=NuvMYXnyZenjbXsY9SJBBxRINmJC5Cnq2fKnVpaHe7WSpu2vh7FHYLwLWg9wrW3dQR
-         Hrh1LKO4L+uzYFFFV7qCn9/IXTNVac8pslcmQBiiLGGIcnSs1WnO6RVlESGE7zpa7+bV
-         WWy26tZdCQk920OwnYV2YJs/7e7zTF/1Y4q3Fdiid+jbEw6Cly/wRkp0+c9l7EGY3GqM
-         3F/I4py59jq6aeoesphdt8fdCo23pa2/+EZHMALUqtXA9Z+vpl0EydRQwEucGulNIlbw
-         +XQaQPjuz5OhOgZUUvCirHkN1TAfCthgiuaLGA6wqwPKmbZR+qws23Xml+3vI+MIAvEl
-         98ag==
-X-Received: by 10.50.1.20 with SMTP id 20mr4184779igi.56.1376129367404;
-        Sat, 10 Aug 2013 03:09:27 -0700 (PDT)
-Received: from lanh ([115.73.210.38])
-        by mx.google.com with ESMTPSA id cl4sm10510667igc.1.2013.08.10.03.09.23
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 10 Aug 2013 03:09:26 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 10 Aug 2013 17:10:09 +0700
-X-Mailer: git-send-email 1.8.2.83.gc99314b
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=JfuY0yfThHwovVxHqqKZt9vBxpZuXkGcLtCpcbTjl1o=;
+        b=dAwmhyy/D+12xPgDtffOLkgANjZSti1x+/wLpv6yNSxvs2HSCQu1FtyR2y4SDvxNrQ
+         ApxnEyKnjw95HxlSchEZbTy5ZXcMlLT3p4ELrG7+gBkmyxtpamIQFzUEgsiHKdm4uku+
+         dhS++VhKDNiLrLsQQkNub4PXderD7Qf3XWQxDi0lS++uZTDvTR9/TI0hqnWZmBCq6SR6
+         tBeRwQzbK4/qt2emo0aooYnphWn+cHOaTDTVfg+IDr9GVK7boNm9DpSQiGX/bAN19yYk
+         THIhFnx1bt7RPRbYnBq1Lp05kn1qVHhvE0ZRrylLhdmSmg6L2AdIo55Qx1HPeQQF5j53
+         z9vQ==
+X-Received: by 10.182.225.134 with SMTP id rk6mr3833623obc.40.1376129790612;
+ Sat, 10 Aug 2013 03:16:30 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Sat, 10 Aug 2013 03:16:00 -0700 (PDT)
+In-Reply-To: <CALkWK0=cZyKO7tjjtgE+tvwkkHGN7xLUy0uKHwXd8zkrM7o2Wg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232088>
 
-Over the time the default value for --thin has been switched between
-on and off. As of now it's always on, even if --no-thin is given.
-Correct the code to respect --no-thin.
+On Sat, Aug 10, 2013 at 5:05 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Duy Nguyen wrote:
+>> Right. transport_get() is also run for push and it sets
+>> smart_options->thin = 1 unconditionally.
+>
+> So, it looks like smart http implies the thin capability.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/push.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+"smart_options" is a bit misleading. This applies to both smart
+http://, git:// and ssh://
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 04f0eaf..333a1fb 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -15,7 +15,7 @@ static const char * const push_usage[] =3D {
- 	NULL,
- };
-=20
--static int thin;
-+static int thin =3D 1;
- static int deleterefs;
- static const char *receivepack;
- static int verbosity;
-@@ -313,8 +313,7 @@ static int push_with_options(struct transport *tran=
-sport, int flags)
- 	if (receivepack)
- 		transport_set_option(transport,
- 				     TRANS_OPT_RECEIVEPACK, receivepack);
--	if (thin)
--		transport_set_option(transport, TRANS_OPT_THIN, "yes");
-+	transport_set_option(transport, TRANS_OPT_THIN, thin ? "yes" : NULL);
-=20
- 	if (verbosity > 0)
- 		fprintf(stderr, _("Pushing to %s\n"), transport->url);
---=20
-1.8.2.83.gc99314b
+> I think
+> sop's patch (6 years ago) was about turning off thin on dumb http
+
+No, dumb http walks through the remote repository object database,
+there's no temporary pack created for transferring data. Dumb http has
+nothing to do with this flag.
+-- 
+Duy
