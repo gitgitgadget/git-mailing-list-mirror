@@ -1,88 +1,83 @@
-From: Jeff King <peff@peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [PATCH] git exproll: steps to tackle gc aggression
-Date: Sat, 10 Aug 2013 05:50:00 -0400
-Message-ID: <20130810095000.GC2518@sigill.intra.peff.net>
-References: <7va9ksbqpl.fsf@alter.siamese.dyndns.org>
- <CALkWK0mxd35OGDG2fMaRsfycvBPPxDHWrPX8og5y2+4y1dfOpw@mail.gmail.com>
- <7v61vgazp5.fsf@alter.siamese.dyndns.org>
- <CALkWK0kqE8azzxp_GkzhPNT41nD8NzeLqXSe1xi0jbVo=7Xz3A@mail.gmail.com>
- <7vwqnw7z47.fsf@alter.siamese.dyndns.org>
- <CALkWK0=nerszb3_YA8P=qXbfAd4Y1rNsHXhfVKzwtj-x80iqkg@mail.gmail.com>
- <20130809110000.GD18878@sigill.intra.peff.net>
- <CALkWK0nSC-Aty55QO+DrM5Zf2t=DK8iMfbhv_HD44Z_m8d19Pg@mail.gmail.com>
- <20130809221615.GA7160@sigill.intra.peff.net>
- <CACsJy8BZv0nr92foiYpbscpg86awFZVerpeXcz5CuYWeg3guEA@mail.gmail.com>
+Date: Sat, 10 Aug 2013 16:50:15 +0700
+Message-ID: <CACsJy8CPM2jwWu0g+mamnA89UtWR=3B=8Q+j2mu-CMB=TRm7Og@mail.gmail.com>
+References: <CALkWK0mxd35OGDG2fMaRsfycvBPPxDHWrPX8og5y2+4y1dfOpw@mail.gmail.com>
+ <7v61vgazp5.fsf@alter.siamese.dyndns.org> <CALkWK0kqE8azzxp_GkzhPNT41nD8NzeLqXSe1xi0jbVo=7Xz3A@mail.gmail.com>
+ <7vwqnw7z47.fsf@alter.siamese.dyndns.org> <CALkWK0=nerszb3_YA8P=qXbfAd4Y1rNsHXhfVKzwtj-x80iqkg@mail.gmail.com>
+ <20130809110000.GD18878@sigill.intra.peff.net> <CALkWK0nSC-Aty55QO+DrM5Zf2t=DK8iMfbhv_HD44Z_m8d19Pg@mail.gmail.com>
+ <20130809221615.GA7160@sigill.intra.peff.net> <CALkWK0kpqyxTyai2Lue7=D4z0kvhxuxKdYSWekT22zUhRis0Og@mail.gmail.com>
+ <CACsJy8DtiSupsvDgeBXGGnGE06pDxWvYTNrk3bpta9Bwk5MZwg@mail.gmail.com> <20130810094339.GB2518@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Martin Fick <mfick@codeaurora.org>,
 	Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 10 11:50:39 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 10 11:50:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V85oj-0002vM-T1
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 11:50:38 +0200
+	id 1V85ow-00034W-4g
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Aug 2013 11:50:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968523Ab3HJJuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Aug 2013 05:50:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55378 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S968520Ab3HJJuD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Aug 2013 05:50:03 -0400
-Received: (qmail 3727 invoked by uid 102); 10 Aug 2013 09:50:03 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 10 Aug 2013 04:50:03 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Aug 2013 05:50:00 -0400
-Content-Disposition: inline
-In-Reply-To: <CACsJy8BZv0nr92foiYpbscpg86awFZVerpeXcz5CuYWeg3guEA@mail.gmail.com>
+	id S968526Ab3HJJuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Aug 2013 05:50:46 -0400
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:33452 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S968520Ab3HJJup (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Aug 2013 05:50:45 -0400
+Received: by mail-oa0-f47.google.com with SMTP id g12so7819140oah.6
+        for <git@vger.kernel.org>; Sat, 10 Aug 2013 02:50:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=LSjs4jobHdyTwxSitmd02feH1BQNikCiPCMLOGprQhI=;
+        b=LZDlYUDJMFL23cEm/tqjbj0SokFqX4X9c95+rre25T91reg6Kn+fuBk2jw0hNiciF0
+         ZE0/0ekyOPPnNtWf/6DPnReZA7SCio080Qdi+iAT5u4rd8SOxpCxnNb83TKLt23cXasO
+         XOFZpsoCNZQseZBa5w4H4SX6/ZW3jmjL+LI40w/AHomslr8x8Dyd48Ky+i+d+AH9MQyr
+         fpuzpZ/Av6lLl0p0yq2BN9tgpNapr9ZteosPn49KLLBFBgLVyPQiezy/zGYf4p+NRYqs
+         OLaoHW5EaxPLoIYAy8FcRqSVfjE/Hs8kbgXXr6h0Z6PK+stVkW0X/SchW4IVybJN7rqG
+         Kiag==
+X-Received: by 10.60.143.68 with SMTP id sc4mr11679474oeb.24.1376128245129;
+ Sat, 10 Aug 2013 02:50:45 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Sat, 10 Aug 2013 02:50:15 -0700 (PDT)
+In-Reply-To: <20130810094339.GB2518@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232084>
 
-On Sat, Aug 10, 2013 at 08:24:39AM +0700, Nguyen Thai Ngoc Duy wrote:
+On Sat, Aug 10, 2013 at 4:43 PM, Jeff King <peff@peff.net> wrote:
+>> push has --thin turned off by default favoring server resources over
+>> network traffic, see a4503a1 (Make --no-thin the default in git-push
+>> to save server resources - 2007-09-09)
+>
+> Hmm. I don't think that is the case anymore.
+>
+> If I do:
+>
+>   git init parent &&
+>   (cd parent && seq 1 10000 >file &&
+>    git add file && git commit -m base
+>   ) &&
+>   git clone parent child &&
+>   cd child && seq 1 10001 >file &&
+>   git commit -a -m more &&
+>   GIT_TRACE=1 git push origin HEAD:foo
+>
+> I see:
+>
+>   trace: run_command: 'pack-objects' '--all-progress-implied' '--revs'
+>     '--stdout' '--thin' '--delta-base-offset' '--progress'
+>
 
-> > the other end cannot use). You _might_ be able to get by with a kind of
-> > "two-level" hack: consider your main pack as "group A" and newly pushed
-> > packs as "group B". Allow storing thin deltas on disk from group B
-> > against group A, but never the reverse (nor within group B). That makes
-> > sure you don't have cycles, and it eliminates even more I/O than any
-> > repacking solution (because you never write the extra copy of Y to disk
-> > in the first place). But I can think of two problems:
-> [...]
-> 
-> Some refinements on this idea
-> 
->  - We could keep packs in group B ordered as the packs come in. The
-> new pack can depend on the previous ones.
-
-I think you could dispense with the two-level altogether and simply give
-a definite ordering to packs, whereby newer packs can only depend on
-older packs. Enforcing that with filesystem mtime feels a bit
-error-prone; I think you'd want to explicitly store a counter somewhere.
-
->  - A group index in addition to separate index for each pack would
-> solve linear search object lookup problem.
-
-Yeah. I do not even think it would be that much work. It is a pure
-optimization, so you can ignore issues like "what happens if I search
-for an object, but the pack it is supposed to be in went away?". The
-answer is "you fall back to a linear search through the packs", and
-assume it happens infrequently enough not to care.
-
-I'd wait to see how other proposed optimizations work out before doing a
-global index, though.  The current wisdom is "don't have a ton of packs,
-for both the index issue and other reasons, like wasting space and
-on-the-fly deltas for fetches". If the "other reasons" go away, then a
-global index would make sense to solve the remaining issue. But if the
-solution for the other issues is to make it cheaper to repack so you can
-do it more often, then the index issue just goes away.
-
--Peff
+Right. transport_get() is also run for push and it sets
+smart_options->thin = 1 unconditionally. Thanks for correcting.
+-- 
+Duy
