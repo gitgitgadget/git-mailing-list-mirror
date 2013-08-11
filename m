@@ -1,115 +1,113 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: How can I automatically create a GIT branch that represents a
- sequence of tags?
-Date: Sun, 11 Aug 2013 14:23:08 +0200
-Message-ID: <20130811122308.GH25779@paksenarrion.iveqy.com>
-References: <CAFw3YtRLgUGGn9JV5K3P9XtMBcBeO7=VSM7PekSxtW6xCsfZ1Q@mail.gmail.com>
- <20130810232026.GF25779@paksenarrion.iveqy.com>
- <CAFw3YtSp4QLXHkycRmmQNYkvoR=2_qC9YYV1mFV3PiwfWHspzQ@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: git clone doesn't work in symlink dir roots on Windows
+Date: Sun, 11 Aug 2013 16:05:07 +0200
+Message-ID: <CABPQNSbvC8+skkPmcmh_LBrThO39A4FOdRTzum+uibooZk+stw@mail.gmail.com>
+References: <CABJxLaM9t1HeEVkAiXpOmaOH_V6681w9Q9ZQt37+MpmhX7yN2g@mail.gmail.com>
+ <20130810125140.GD25779@paksenarrion.iveqy.com> <CABJxLaOaUYxyAsy5mpciiAObmoazFpwB0T4C20cu3eHuSpEpAg@mail.gmail.com>
+ <20130810163459.GE25779@paksenarrion.iveqy.com> <CABPQNSaU_69RxNEAAY0=BYdJm0ir_xkOkd2nPaxop7m0aJ9trg@mail.gmail.com>
+ <CABJxLaMtHLGzwaxJgM3H9uFzb9_LMLzQ4_A6q0dcEOyShhb+kw@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git <git@vger.kernel.org>
-To: Kristian Freed <kristian.freed@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 11 14:20:02 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org, msysgit@googlegroups.com
+To: Sedat Kapanoglu <sedat@eksiteknoloji.com>
+X-From: msysgit+bncBDR53PPJ7YHRBPFUT2IAKGQEZHNDA6I@googlegroups.com Sun Aug 11 16:05:51 2013
+Return-path: <msysgit+bncBDR53PPJ7YHRBPFUT2IAKGQEZHNDA6I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pa0-f64.google.com ([209.85.220.64])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8Ucq-00086M-3q
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Aug 2013 14:20:00 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753306Ab3HKMTg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Aug 2013 08:19:36 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:63281 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753257Ab3HKMTf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Aug 2013 08:19:35 -0400
-Received: by mail-la0-f46.google.com with SMTP id eh20so4067788lab.19
-        for <git@vger.kernel.org>; Sun, 11 Aug 2013 05:19:33 -0700 (PDT)
+	(envelope-from <msysgit+bncBDR53PPJ7YHRBPFUT2IAKGQEZHNDA6I@googlegroups.com>)
+	id 1V8WHG-0006Ug-8J
+	for gcvm-msysgit@m.gmane.org; Sun, 11 Aug 2013 16:05:50 +0200
+Received: by mail-pa0-f64.google.com with SMTP id kx10sf399390pab.9
+        for <gcvm-msysgit@m.gmane.org>; Sun, 11 Aug 2013 07:05:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=oR/tA9QrTyXOjYWngIPyL+v5z1+v4QMm/ePWvIA5LI8=;
+        b=WkYlaxSbXP2Y9y8uPmknupeojDDSUGmQcuB1HzKEuSbXtrk5h76TbUUr6RJD4kKWaZ
+         +YM8Aa/DCAzh55ipiFFr821lPtBrvp2APcQ+RXu/835LBSZfJXXQu9UJs9VXkc87ICKL
+         gBZzILeWAmGql8cKs3gJoFwJz22qgEbJ0LsXm2BPBGJ4GlSeCmwIzAagZMNSbSuFM9Wq
+         BqLjyVSNHFpueLYP4X7VCTaHTPTxgsHPJ8+DjkDEAWb0zhPAjAhVhS6P55FHFrJB/1QV
+         /Sp+j8wt4ollxZ+zXbC0jg89B16UHx/aQn5lGIVUzCzJG0DMprF3K9A6ELJ7wcd6COVD
+         Shxg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=80FKpJg5e58gxKXQAsha+ebnFpMTiCOkOQLxhCRuGw4=;
-        b=cJJhsO5RYQ1BIsuYKLOp6oUwi2dRKwqiO6ZidnPqp/q/67CGTiE89RiSeArJs6bOKO
-         4Wz1Oi9WWT1o6I347r3XCQJQ1QNRBToi6UE5OnlVDfuehqh+hqEULkwTIG3LqLXjD2Dq
-         L1MGd2rONYtchK5/Zzu6ij1BrypH4yrzwCEfJqtFxsFxTs6EtKGySfgS2dZIe7wVT2U6
-         EnyvoHYsVH681eQFl45WyuVJloi9r0OyKAu6B6sKP/QDtAjAIX6XDxmbkA8zaWj8JMhQ
-         lgHmDGVlk0RB4wyuQMve7zrOCz77Ctu2FMzH2fKMMtOBCRGJQYv4RosNNN65nfr+z0jP
-         KulA==
-X-Received: by 10.112.34.178 with SMTP id a18mr3485723lbj.67.1376223570571;
-        Sun, 11 Aug 2013 05:19:30 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id w5sm9538173lbw.3.2013.08.11.05.19.28
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 11 Aug 2013 05:19:29 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1V8Ufs-0003oj-Dt; Sun, 11 Aug 2013 14:23:08 +0200
-Content-Disposition: inline
-In-Reply-To: <CAFw3YtSp4QLXHkycRmmQNYkvoR=2_qC9YYV1mFV3PiwfWHspzQ@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232135>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=oR/tA9QrTyXOjYWngIPyL+v5z1+v4QMm/ePWvIA5LI8=;
+        b=BZdKx1OPzgx/R1tuoyq8KiMoaXo3W2xvPFBFiP+qDg7b8Chdc+duUOR6fJOG78OYx0
+         vy3jGAg1Be3Necg4aEj8UvxOfzH1gQ+Dm9t2MfTACPK7LsnsBsex3NKlSHa04VRc5l8T
+         xphkz/H7jLRJ1SXePzgKvCn/vySCbEs2LZ+meNMs4jID+m0sgp8eg+byR0Fr9JyAN3is
+         vnckYaLwzdLOsIQJtGTq0B/iXBAYRdb6Ye1T3Kn6zm0SThADDQ3JLai3pOquNcgGxY3y
+         Ec+/nlt3ZD6gp/DiqBrjWwnGPmKUeghMHPxb4r9oQpd58pqIemCvVM6TZH9oAPv9gzvm
+         mJXw==
+X-Received: by 10.50.13.105 with SMTP id g9mr535654igc.9.1376229948900;
+        Sun, 11 Aug 2013 07:05:48 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.43.168 with SMTP id x8ls1703832igl.15.canary; Sun, 11 Aug
+ 2013 07:05:48 -0700 (PDT)
+X-Received: by 10.42.40.79 with SMTP id k15mr13130066ice.25.1376229948391;
+        Sun, 11 Aug 2013 07:05:48 -0700 (PDT)
+Received: from mail-ob0-x232.google.com (mail-ob0-x232.google.com [2607:f8b0:4003:c01::232])
+        by gmr-mx.google.com with ESMTPS id c7si1359929igm.0.2013.08.11.07.05.48
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 11 Aug 2013 07:05:48 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4003:c01::232 as permitted sender) client-ip=2607:f8b0:4003:c01::232;
+Received: by mail-ob0-f178.google.com with SMTP id ef5so4981924obb.9
+        for <msysgit@googlegroups.com>; Sun, 11 Aug 2013 07:05:48 -0700 (PDT)
+X-Received: by 10.60.54.39 with SMTP id g7mr7352685oep.18.1376229948078; Sun,
+ 11 Aug 2013 07:05:48 -0700 (PDT)
+Received: by 10.76.22.79 with HTTP; Sun, 11 Aug 2013 07:05:07 -0700 (PDT)
+In-Reply-To: <CABJxLaMtHLGzwaxJgM3H9uFzb9_LMLzQ4_A6q0dcEOyShhb+kw@mail.gmail.com>
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4003:c01::232
+ as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) d=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232136>
 
-On Sun, Aug 11, 2013 at 12:13:18PM +0100, Kristian Freed wrote:
-> On Sun, Aug 11, 2013 at 12:20 AM, Fredrik Gustafsson <iveqy@iveqy.com=
-> wrote:
-> > I don't understand, why is it better to find between which tags a e=
-rror
-> > was found and not in what commit. It's much easier to find a bug
-> > introduced in a commit than in a tag/release. It sounds like you're
-> > doing the bug hunting harder. Could you explain this further?
->=20
-> For better or worse, the current state includes a lot of noisy "fixin=
-g
-> tests" type commits which I
-> would like to automatically skip over when hunting bugs. This is not
-> great and is being addressed,
-> but I am trying to make the most of the historical data we have today
-> - which does contain tags
-> for all builds that passed automated testing etc but does not have
-> only good commits on the related
-> branch.
+On Sun, Aug 11, 2013 at 9:28 AM, Sedat Kapanoglu
+<sedat@eksiteknoloji.com> wrote:
+> Thanks folks. So that this won't be fixed, I added a new Q&A to
+> MsysGit FAQ at https://github.com/msysgit/msysgit/wiki/Frequently-Asked-Questions
+> , I appreciate if you can review and correct if needed. I hope it will
+> help avoiding further conversations about this matter.
 
-Thank you, that make sense (even if it's really sad to have such
-history).
+Thanks, that's very helpful!
 
->=20
-> > My suggestion if you want to do this, is to have your buildtool to
-> > checkout a special branch (let's call it tag_branch) do a git reset
-> > to get the worktree from the newly tagged commit and commit on that
-> > branch once for each tag it's creating, when it creates the tag.
->=20
-> I can see how this would work, but only for future builds. I would
-> need something like it but loop
-> over all existing tags as this is a problem with historical data.
-> Could you please be more specific
-> as to the steps required to automatically form a commit that
-> represents the change between
-> two commits (i.e. tags)?
->=20
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Create an orphan branch:
-git checkout --orphan tag_branch
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-Now for every tag, t:
-git checkout t
-git reset --soft tag_branch
-git add .
-git commit -m "t"
-
-
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
-
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
