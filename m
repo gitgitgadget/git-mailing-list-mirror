@@ -1,119 +1,115 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] git-p4: Fix occasional truncation of symlink contents.
-Date: Sun, 11 Aug 2013 07:57:38 -0400
-Message-ID: <20130811115738.GA26658@padd.com>
-References: <1375967858-10615-1-git-send-email-ajuncu@ixiacom.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: How can I automatically create a GIT branch that represents a
+ sequence of tags?
+Date: Sun, 11 Aug 2013 14:23:08 +0200
+Message-ID: <20130811122308.GH25779@paksenarrion.iveqy.com>
+References: <CAFw3YtRLgUGGn9JV5K3P9XtMBcBeO7=VSM7PekSxtW6xCsfZ1Q@mail.gmail.com>
+ <20130810232026.GF25779@paksenarrion.iveqy.com>
+ <CAFw3YtSp4QLXHkycRmmQNYkvoR=2_qC9YYV1mFV3PiwfWHspzQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alexandru Juncu <ajuncu@ixiacom.com>,
-	Alex Badea <abadea@ixiacom.com>
-To: Alexandru Juncu <alexj@rosedu.org>
-X-From: git-owner@vger.kernel.org Sun Aug 11 13:57:55 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git <git@vger.kernel.org>
+To: Kristian Freed <kristian.freed@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 11 14:20:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8UHR-00007H-E1
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Aug 2013 13:57:53 +0200
+	id 1V8Ucq-00086M-3q
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Aug 2013 14:20:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753218Ab3HKL5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Aug 2013 07:57:43 -0400
-Received: from honk.padd.com ([74.3.171.149]:52427 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753198Ab3HKL5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Aug 2013 07:57:42 -0400
-Received: from arf.padd.com (unknown [50.105.10.190])
-	by honk.padd.com (Postfix) with ESMTPSA id 692D42B8F;
-	Sun, 11 Aug 2013 04:57:41 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 833DD22983; Sun, 11 Aug 2013 07:57:38 -0400 (EDT)
+	id S1753306Ab3HKMTg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Aug 2013 08:19:36 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:63281 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753257Ab3HKMTf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Aug 2013 08:19:35 -0400
+Received: by mail-la0-f46.google.com with SMTP id eh20so4067788lab.19
+        for <git@vger.kernel.org>; Sun, 11 Aug 2013 05:19:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=80FKpJg5e58gxKXQAsha+ebnFpMTiCOkOQLxhCRuGw4=;
+        b=cJJhsO5RYQ1BIsuYKLOp6oUwi2dRKwqiO6ZidnPqp/q/67CGTiE89RiSeArJs6bOKO
+         4Wz1Oi9WWT1o6I347r3XCQJQ1QNRBToi6UE5OnlVDfuehqh+hqEULkwTIG3LqLXjD2Dq
+         L1MGd2rONYtchK5/Zzu6ij1BrypH4yrzwCEfJqtFxsFxTs6EtKGySfgS2dZIe7wVT2U6
+         EnyvoHYsVH681eQFl45WyuVJloi9r0OyKAu6B6sKP/QDtAjAIX6XDxmbkA8zaWj8JMhQ
+         lgHmDGVlk0RB4wyuQMve7zrOCz77Ctu2FMzH2fKMMtOBCRGJQYv4RosNNN65nfr+z0jP
+         KulA==
+X-Received: by 10.112.34.178 with SMTP id a18mr3485723lbj.67.1376223570571;
+        Sun, 11 Aug 2013 05:19:30 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
+        by mx.google.com with ESMTPSA id w5sm9538173lbw.3.2013.08.11.05.19.28
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 11 Aug 2013 05:19:29 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1V8Ufs-0003oj-Dt; Sun, 11 Aug 2013 14:23:08 +0200
 Content-Disposition: inline
-In-Reply-To: <1375967858-10615-1-git-send-email-ajuncu@ixiacom.com>
+In-Reply-To: <CAFw3YtSp4QLXHkycRmmQNYkvoR=2_qC9YYV1mFV3PiwfWHspzQ@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232135>
 
-alexj@rosedu.org wrote on Thu, 08 Aug 2013 16:17 +0300:
-> Symlink contents in p4 print sometimes have a trailing
-> new line character, but sometimes it doesn't. git-p4
-> should only remove the last character if that character
-> is '\n'.
+On Sun, Aug 11, 2013 at 12:13:18PM +0100, Kristian Freed wrote:
+> On Sun, Aug 11, 2013 at 12:20 AM, Fredrik Gustafsson <iveqy@iveqy.com=
+> wrote:
+> > I don't understand, why is it better to find between which tags a e=
+rror
+> > was found and not in what commit. It's much easier to find a bug
+> > introduced in a commit than in a tag/release. It sounds like you're
+> > doing the bug hunting harder. Could you explain this further?
+>=20
+> For better or worse, the current state includes a lot of noisy "fixin=
+g
+> tests" type commits which I
+> would like to automatically skip over when hunting bugs. This is not
+> great and is being addressed,
+> but I am trying to make the most of the historical data we have today
+> - which does contain tags
+> for all builds that passed automated testing etc but does not have
+> only good commits on the related
+> branch.
 
-Your patch looks fine, and harmless if symlinks continue
-to have \n on the end.  I'd like to understand a bit why
-this behavior is different for you, though.  Could you do
-this test on a symlink in your depot?
+Thank you, that make sense (even if it's really sad to have such
+history).
 
-Here //depot/symlink points to "symlink-target".  You can
-see the \n in position 0o332 below.  What happens on a
-symlink in your repo?
+>=20
+> > My suggestion if you want to do this, is to have your buildtool to
+> > checkout a special branch (let's call it tag_branch) do a git reset
+> > to get the worktree from the newly tagged commit and commit on that
+> > branch once for each tag it's creating, when it creates the tag.
+>=20
+> I can see how this would work, but only for future builds. I would
+> need something like it but loop
+> over all existing tags as this is a problem with historical data.
+> Could you please be more specific
+> as to the steps required to automatically form a commit that
+> represents the change between
+> two commits (i.e. tags)?
+>=20
 
-    arf-git-test$ p4 fstat //depot/symlink
-    ... depotFile //depot/symlink
-    ... clientFile /dev/shm/trash directory.t9802-git-p4-filetype/cli/symlink
-    ... isMapped 
-    ... headAction add
-    ... headType symlink
-    ... headTime 1376221978
-    ... headRev 1
-    ... headChange 6
-    ... headModTime 1376221978
-    ... haveRev 1
+Create an orphan branch:
+git checkout --orphan tag_branch
 
-    arf-git-test$ p4 -G print //depot/symlink | od -c
-    0000000   {   s 004  \0  \0  \0   c   o   d   e   s 004  \0  \0  \0   s
-    0000020   t   a   t   s  \t  \0  \0  \0   d   e   p   o   t   F   i   l
-    0000040   e   s 017  \0  \0  \0   /   /   d   e   p   o   t   /   s   y
-    0000060   m   l   i   n   k   s 003  \0  \0  \0   r   e   v   s 001  \0
-    0000100  \0  \0   1   s 006  \0  \0  \0   c   h   a   n   g   e   s 001
-    0000120  \0  \0  \0   6   s 006  \0  \0  \0   a   c   t   i   o   n   s
-    0000140 003  \0  \0  \0   a   d   d   s 004  \0  \0  \0   t   y   p   e
-    0000160   s  \a  \0  \0  \0   s   y   m   l   i   n   k   s 004  \0  \0
-    0000200  \0   t   i   m   e   s  \n  \0  \0  \0   1   3   7   6   2   2
-    0000220   1   9   7   8   s  \b  \0  \0  \0   f   i   l   e   S   i   z
-    0000240   e   s 002  \0  \0  \0   1   5   0   {   s 004  \0  \0  \0   c
-    0000260   o   d   e   s 006  \0  \0  \0   b   i   n   a   r   y   s 004
-    0000300  \0  \0  \0   d   a   t   a   s 017  \0  \0  \0   s   y   m   l
-    0000320   i   n   k   -   t   a   r   g   e   t  \n   0   {   s 004  \0
-    0000340  \0  \0   c   o   d   e   s 006  \0  \0  \0   b   i   n   a   r
-    0000360   y   s 004  \0  \0  \0   d   a   t   a   s  \0  \0  \0  \0   0
-    0000400
-
-Also, what version is your server, from "p4 info":
-
-    Server version: P4D/LINUX26X86_64/2013.1/610569 (2013/03/19)
-
-		-- Pete
+Now for every tag, t:
+git checkout t
+git reset --soft tag_branch
+git add .
+git commit -m "t"
 
 
-> Signed-off-by: Alex Juncu <ajuncu@ixiacom.com>
-> Signed-off-by: Alex Badea <abadea@ixiacom.com>
-> ---
->  git-p4.py | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/git-p4.py b/git-p4.py
-> index 31e71ff..a53a6dc 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -2180,9 +2180,13 @@ class P4Sync(Command, P4UserMap):
->              git_mode = "100755"
->          if type_base == "symlink":
->              git_mode = "120000"
-> -            # p4 print on a symlink contains "target\n"; remove the newline
-> +            # p4 print on a symlink sometimes contains "target\n";
-> +            # if it does, remove the newline
->              data = ''.join(contents)
-> -            contents = [data[:-1]]
-> +            if data[-1] == '\n':
-> +                contents = [data[:-1]]
-> +            else:
-> +                contents = [data]
->  
->          if type_base == "utf16":
->              # p4 delivers different text in the python output to -G
-> -- 
-> 1.8.4.rc0.1.g8f6a3e5
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
+
+tel: 0733-608274
+e-post: iveqy@iveqy.com
