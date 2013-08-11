@@ -1,94 +1,112 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
+From: Andres Perera <andres.p@zoho.com>
 Subject: Re: [PATCH] pull: Allow pull to preserve merges when rebasing.
-Date: Sun, 11 Aug 2013 18:09:15 -0500
-Organization: Exigence
-Message-ID: <20130811180915.390d660a@sh9>
+Date: Sun, 11 Aug 2013 19:01:07 -0430
+Message-ID: <CAPrKj1aMURcVoaiJ+WS64ekafUZgSagKrYSknTUk3+TL6tCETQ@mail.gmail.com>
 References: <1376256387-30974-1-git-send-email-stephen@exigencecorp.com>
 	<CAPrKj1b=QTdqVH+JtukJrfEc=EqxWOEYE4YG7oSY7413uqdKfg@mail.gmail.com>
+	<20130811180915.390d660a@sh9>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Andres Perera <andres.p@zoho.com>
-X-From: git-owner@vger.kernel.org Mon Aug 12 01:09:35 2013
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Mon Aug 12 01:31:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8elQ-0005cx-BI
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 01:09:32 +0200
+	id 1V8f6l-0007HJ-S7
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 01:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755049Ab3HKXJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Aug 2013 19:09:19 -0400
-Received: from mail-oa0-f49.google.com ([209.85.219.49]:48037 "EHLO
-	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752910Ab3HKXJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Aug 2013 19:09:18 -0400
-Received: by mail-oa0-f49.google.com with SMTP id n10so3680278oag.36
-        for <git@vger.kernel.org>; Sun, 11 Aug 2013 16:09:18 -0700 (PDT)
+	id S1755147Ab3HKXbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Aug 2013 19:31:10 -0400
+Received: from mail-vb0-f42.google.com ([209.85.212.42]:47776 "EHLO
+	mail-vb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755136Ab3HKXbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Aug 2013 19:31:08 -0400
+Received: by mail-vb0-f42.google.com with SMTP id e12so5343209vbg.29
+        for <git@vger.kernel.org>; Sun, 11 Aug 2013 16:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=exigencecorp.com; s=google;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :organization:mime-version:content-type:content-transfer-encoding;
-        bh=4fMbhNidmMULw2TOP+eGivn4PKATcf6cJP11fu9e1Wk=;
-        b=b9H8meebAptl4Lb36/zXWDOFUJ4QlUMvFvjprGBjRUvZdrwsZSDRd3820Obnd5ZpJ2
-         wpykRHtHyRGBuMQX2T2BpbHD53FkBb2L61pLYKnhbcaieOEOx/unNGSC3mwbDOnf4B36
-         BvCXeJPlikBIIwlyAsHBOgk/dTwDLMySKe2Jw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:organization:mime-version:content-type
-         :content-transfer-encoding;
-        bh=4fMbhNidmMULw2TOP+eGivn4PKATcf6cJP11fu9e1Wk=;
-        b=Rq4WjRuBcPOefJX5S1CyNlCpHdCSYRM83c37l7eFz6POCd/As1sh/s6WGdqH8v3+O1
-         fOy9CsQgmjw9ad1IlCC4lON3KnzJFUMlrii4GprnQiTmGRUu1FoVXOdU4U/G3tAgY5Gd
-         JwVUuu50GTzBzaJiOqSTbEaS/AKXQREo+pQV8nxb7dPTmQv95mqMa202mZxYde+ILxFy
-         u0gk9sufQbpZUTw9tO5H/L10WJfpfiiWsICfDsHL6TDlB5RTSJMzRE2i9iILqsA7afFQ
-         /32XMBB905o2xoKHE0dPRenyvndF1CRADXDIMABBsKmRNZcVg6At6xaDY17ywWJSK3Lv
-         +fZA==
-X-Gm-Message-State: ALoCoQlmjfXrGtzM3kLjUub5oEB5JxumwNp8XcsZsbqbRnb0faiM0pE6GDS/gZR6O1eEaK/xbiqf
-X-Received: by 10.60.42.168 with SMTP id p8mr8558433oel.73.1376262557916;
-        Sun, 11 Aug 2013 16:09:17 -0700 (PDT)
-Received: from sh9 (wsip-184-187-11-226.om.om.cox.net. [184.187.11.226])
-        by mx.google.com with ESMTPSA id cp7sm30551955obb.0.2013.08.11.16.09.16
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Sun, 11 Aug 2013 16:09:17 -0700 (PDT)
-In-Reply-To: <CAPrKj1b=QTdqVH+JtukJrfEc=EqxWOEYE4YG7oSY7413uqdKfg@mail.gmail.com>
-X-Mailer: Claws Mail 3.9.1 (GTK+ 2.24.17; x86_64-pc-linux-gnu)
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=EqBX1rjqb2twWfFfYkS9Q2FVlcIyzgP+1djyoAf/cTk=;
+        b=eFI9HPam+OaZBmMMhtfzIBXoYDZ7cWWThssbJiQ3i3zt3XR4tjFE8poOjepu+cGnt+
+         u+hAmr68sY/CH+mNyWM0RnLTf+ETu3daw90Jf1WvpJm/RVTGhnbd7FWCEa8JIqARzAcA
+         MkguV8+FSvzG9zUirp/DmSiHQ9Io78mJsjvq3J/9sUiPJvocA9axmSfkcoI1xk32ag3I
+         JtUPBzhKe95FVAGj4k63xy2iOIDM5eIkkG8GU4ZOprOW+hYZ1sJvpNWK9pbaJVA/ncB6
+         eC/TeUjudSOf3YnMZVvsQhY0GaK2IUdcj1iKmzyn9ETqj098orDbfCJMNFwE0Mq73lzN
+         pTgw==
+X-Received: by 10.52.175.232 with SMTP id cd8mr8587770vdc.84.1376263867226;
+ Sun, 11 Aug 2013 16:31:07 -0700 (PDT)
+Received: by 10.58.207.110 with HTTP; Sun, 11 Aug 2013 16:31:07 -0700 (PDT)
+In-Reply-To: <20130811180915.390d660a@sh9>
+X-Google-Sender-Auth: i0UGA0JFrWlyZid-Hw-gjH-3ghM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232144>
 
+On Sun, Aug 11, 2013 at 6:39 PM, Stephen Haberman
+<stephen@exigencecorp.com> wrote:
+>
+>> 1. i'm not sure why you are testing $3 == preserve. it looks like a
+>> typo
+>
+> Yes, good catch. I've added a test that fails, and will fix that.
+>
+>> 2. clearer than a string of yoda conditions:
+>>
+>> case $2 in
+>> true|false|preserve)
+>
+> Makes sense, will change.
+>
+>> 1. in the error message you say that rebase should be a trystate of
+>> true, false, or preserve. why then do you allow $rebase == '' ?
+>
+> Because it may be unset, like if the user ran "git pull . copy" and
+> the pull.rebase setting was not set.
+>
+>> 2. clearer than a string of yoda conditions:
+>
+> Will change again.
+>
+> I'll wait to see if I get any more feedback and then will send out
+> another version.
 
-> 1. i'm not sure why you are testing $3 == preserve. it looks like a
-> typo
+i just realized that there are ambiguities:
 
-Yes, good catch. I've added a test that fails, and will fix that.
+pull -r (true|false|preserve) foo
 
-> 2. clearer than a string of yoda conditions:
-> 
-> case $2 in
-> true|false|preserve)
+there are 2 ways to interpret this:
 
-Makes sense, will change.
+pull --rebase=(true|false|preserve) foo # pull from remote named foo
 
-> 1. in the error message you say that rebase should be a trystate of
-> true, false, or preserve. why then do you allow $rebase == '' ?
+pull --rebase (true|false|preserve) foo # pull from remote named
+(true|false|preserve), branch foo
 
-Because it may be unset, like if the user ran "git pull . copy" and
-the pull.rebase setting was not set.
+options with optional operands usually require that the operands be
+concatenated with the option argument, so that
 
-> 2. clearer than a string of yoda conditions:
+pull --rebase[=(true|false|preserve)] | -r[(true|false|preserve)]
 
-Will change again.
+avoids the ambiguity of
 
-I'll wait to see if I get any more feedback and then will send out
-another version.
+pull --rebase [(true|false|preserve)] | -r [(true|false|preserve)]
 
-Thanks!
+1. you can make it a disambiguation by appending ? to the optspec
+(according to man git-rev-parse)
 
-- Stephen
+2. you could also disambiguate by testing if the argument is a
+configured remote and warn the user, but this makes option parsing
+inconsistent, requires additional logic, and is overall inelegant
+
+>
+> Thanks!
+>
+> - Stephen
+>
+>
+>
