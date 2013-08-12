@@ -1,97 +1,112 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: [PATCH] pull: Allow pull to preserve merges when rebasing.
-Date: Mon, 12 Aug 2013 12:04:50 -0500
-Organization: Exigence
-Message-ID: <20130812120450.47f785b2@sh9>
-References: <1376256387-30974-1-git-send-email-stephen@exigencecorp.com>
-	<CAPrKj1b=QTdqVH+JtukJrfEc=EqxWOEYE4YG7oSY7413uqdKfg@mail.gmail.com>
-	<20130811180915.390d660a@sh9>
-	<CAPrKj1aMURcVoaiJ+WS64ekafUZgSagKrYSknTUk3+TL6tCETQ@mail.gmail.com>
-	<7vr4dz1n6c.fsf@alter.siamese.dyndns.org>
-	<7viozbz950.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-p4: Fix occasional truncation of symlink contents.
+Date: Mon, 12 Aug 2013 10:11:51 -0700
+Message-ID: <7v4nau25rc.fsf@alter.siamese.dyndns.org>
+References: <1375967858-10615-1-git-send-email-ajuncu@ixiacom.com>
+	<20130811115738.GA26658@padd.com>
+	<CAPhGq=YBVvejZ2gacwroX3cw0K3nDo02kWmMdP6Uwgd5sfPXKQ@mail.gmail.com>
+	<20130812123850.GA25532@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Andres Perera <andres.p@zoho.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 12 19:05:02 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexandru Juncu <alexj@rosedu.org>, git@vger.kernel.org,
+	Alexandru Juncu <ajuncu@ixiacom.com>,
+	Alex Badea <abadea@ixiacom.com>,
+	Alexander Tomlinson <alex@aivor.com>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Mon Aug 12 19:12:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8vYA-00057a-Sf
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 19:04:59 +0200
+	id 1V8vf1-0002Xe-4T
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 19:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757239Ab3HLREz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Aug 2013 13:04:55 -0400
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:62048 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756898Ab3HLREy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Aug 2013 13:04:54 -0400
-Received: by mail-ob0-f170.google.com with SMTP id eh20so9371802obb.29
-        for <git@vger.kernel.org>; Mon, 12 Aug 2013 10:04:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=exigencecorp.com; s=google;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :organization:mime-version:content-type:content-transfer-encoding;
-        bh=xoYhxUzGFk07/HN8uGB0oGiJKOPxOIv4E+xmZfaThIQ=;
-        b=WvUnABb5jV5yZje6wSjJgw427rsRG8crlLJu5NEmPmcSzZh1J3vGE3pe0By4NXF6fQ
-         hg3SSbFOk35GPADG80Ve++2UHY1NUP+mWD2CqOQBbpAqBa9iCiK3fussjMPOKUs2XitC
-         4gtJCR1TypHJK7+Z0pbPe5G+cGFm8/O2JF+OA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:organization:mime-version:content-type
-         :content-transfer-encoding;
-        bh=xoYhxUzGFk07/HN8uGB0oGiJKOPxOIv4E+xmZfaThIQ=;
-        b=eSKs6Tf/MNuyWtBq/ktzKt8FuPPhRu79e8BRfltg9jwnoKJMKCVn+aNhUiF4XRbRmE
-         JwVV7sFYiROzo9YJig91wBKEAPoF1G8fG/NA2c1OZ7xVHvQngRS8tABxHdV3dsWVx2at
-         bZ6Ncv75SsUlQts5P3NJOfsOWZa5OOeqZun6Le7sdTq+xx7iiZqyq4f2GwQnsx8yYv9q
-         os9tg0P/5Yx238RkZEhw+AQQMXTwwEpjaGBMOs/RcHYInZjHY2b1N/1lUa1p3U+9DdzB
-         j9dN3DdBDYwL6wg7eU6ibi848XTInK3OGrqTK0esuOP0EypozmB6+gbpcQUkUaPVDdoc
-         PE1w==
-X-Gm-Message-State: ALoCoQkFLjG9inD81XQzgqhwEkpVTSzi9NFtiHEeBYtt+xtR9DxXXbgao4tuTKB2KYPuGae8xguQ
-X-Received: by 10.60.155.200 with SMTP id vy8mr44219oeb.72.1376327093005;
-        Mon, 12 Aug 2013 10:04:53 -0700 (PDT)
-Received: from sh9 (wsip-70-184-197-10.om.om.cox.net. [70.184.197.10])
-        by mx.google.com with ESMTPSA id z2sm34284964obi.3.2013.08.12.10.04.51
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Mon, 12 Aug 2013 10:04:52 -0700 (PDT)
-In-Reply-To: <7viozbz950.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.9.1 (GTK+ 2.24.17; x86_64-pc-linux-gnu)
+	id S1757188Ab3HLRL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Aug 2013 13:11:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52315 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756738Ab3HLRL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Aug 2013 13:11:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5F1C385A2;
+	Mon, 12 Aug 2013 17:11:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w8Rsy+W6CK+JoD4uFGUTcb7BDtI=; b=rw3hn6
+	Erx5XyziSeZgmsdnQKtE5wSdOzAlfW42k9H0m4SmgUTiDTibjwVyBqWWgidejlNx
+	X+kvop5hl1MBV7K3XpdjJBYGLDt10E5roBMqRKpF9pODahsKA90ra74/AA117pfq
+	Qe9EwPyV9aJIRDDT3jgaAjWOzxuUUB4XjsblI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ulRVn+ubUrHwNClwhxnaXxL6lNFm77Zw
+	DAg0DqNuV8HEgwtF99sltGryIyfv1zr1rGoBqsghaSeD/yE6d9jvIZdnmJELnbPS
+	WsyupSAPllOMKXhOhoYo/LyUKCRQnKTW1NAWWXhflYbgdMGCL95JXGOzI7j+rfIn
+	qPENbOClImk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6312385A1;
+	Mon, 12 Aug 2013 17:11:56 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F31CF3859C;
+	Mon, 12 Aug 2013 17:11:53 +0000 (UTC)
+In-Reply-To: <20130812123850.GA25532@padd.com> (Pete Wyckoff's message of
+	"Mon, 12 Aug 2013 08:38:50 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4934D994-0372-11E3-A8F6-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232199>
 
+Pete Wyckoff <pw@padd.com> writes:
 
-> How should this interact with 949e0d8e (pull: require choice between
-> rebase/merge on non-fast-forward pull, 2013-06-27)
+> You should send the patch to junio for inclusion in pu/ for the
+> next release, with:
+>
+> Acked-by: Pete Wyckoff <pw@padd.com>
 
-I believe there should not be any conflicts in functionality, other
-than just tweaking the docs to mention --rebase=preserve as an option.
+Thanks; I'll queue this then.
 
-Personally, I would assert that, for people using a rebase workflow with
-"git pull", --prebase=preserve should be the default behavior, otherwise
-they'll be surprised when their feature branches get flattened.
+-- >8 --
+From: Alexandru Juncu <alexj@rosedu.org>
+Date: Thu, 8 Aug 2013 16:17:38 +0300
+Subject: [PATCH] git-p4: Fix occasional truncation of symlink contents.
 
-Unfortunately, we can't change the behavior of the naked "--rebase"
-flag to really mean "--rebase=preserve", but I think that would be
-ideal. I think it's what people mean they do "git pull". If you want a
-more raw rebase, they would likely (I think/assume) be running "git
-rebase" directly.
+Symlink contents in p4 print sometimes have a trailing
+new line character, but sometimes it doesn't. git-p4
+should only remove the last character if that character
+is '\n'.
 
-Nonetheless, thanks for pointing out 949e0d8e, I did not know about it.
+Signed-off-by: Alex Juncu <ajuncu@ixiacom.com>
+Signed-off-by: Alex Badea <abadea@ixiacom.com>
+Acked-by: Pete Wyckoff <pw@padd.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git-p4.py | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Perhaps after that commit graduates to master, I can base this commit
-on it, and tweak the new docs to suggest --rebase=preserve as the
-least-surprising behavior.
-
-(Since I'm offering opinions, I think --rebase=preserve would be a great
-default for "git pull" in 2.0, but please ignore this statement if
-you've already hashed out the future/2.0 behavior of git pull.)
-
-- Stephen
+diff --git a/git-p4.py b/git-p4.py
+index 31e71ff..a53a6dc 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -2180,9 +2180,13 @@ class P4Sync(Command, P4UserMap):
+             git_mode = "100755"
+         if type_base == "symlink":
+             git_mode = "120000"
+-            # p4 print on a symlink contains "target\n"; remove the newline
++            # p4 print on a symlink sometimes contains "target\n";
++            # if it does, remove the newline
+             data = ''.join(contents)
+-            contents = [data[:-1]]
++            if data[-1] == '\n':
++                contents = [data[:-1]]
++            else:
++                contents = [data]
+ 
+         if type_base == "utf16":
+             # p4 delivers different text in the python output to -G
+-- 
+1.8.4-rc2-235-g32b7467
