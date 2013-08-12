@@ -1,89 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: ephemeral-branches instead of detached-head?
-Date: Mon, 12 Aug 2013 10:24:46 -0700
-Message-ID: <7vk3jqzush.fsf@alter.siamese.dyndns.org>
-References: <CA+CP9O6on2NXo6o4_0NoULnT8sgUD3pvvkFZvCTM5xKb38qOeA@mail.gmail.com>
-	<7veh9z1gym.fsf@alter.siamese.dyndns.org>
-	<CA+CP9O5fhyQrn3SboafocWJjaAywJHC0T-bw+AXk_8RX53hJ6Q@mail.gmail.com>
-	<CA+CP9O7--HXQdZXH9MJEh0VqdwpYqb052KYrvZqYhbfajpPG0A@mail.gmail.com>
-	<CACsJy8A-aSjNdSkiBUBSH43G_FBMnShfpkcwQqM9-6d41rfCUA@mail.gmail.com>
+From: Ari Entlich <atrigent@ccs.neu.edu>
+Subject: Help with sparse checkouts
+Date: Mon, 12 Aug 2013 14:27:51 -0400 (EDT)
+Message-ID: <6658365.507831376332071042.JavaMail.root@zimbra>
+References: <7159505.507781376331946615.JavaMail.root@zimbra>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Jeske <davidj@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 12 19:24:59 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 12 21:05:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8vrT-0004uA-AZ
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 19:24:55 +0200
+	id 1V8xQM-0001PX-9H
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 21:05:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757518Ab3HLRYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Aug 2013 13:24:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35832 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756725Ab3HLRYu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Aug 2013 13:24:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E48638C1E;
-	Mon, 12 Aug 2013 17:24:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=voLvRralXs1C0galZmvWzKaM/vI=; b=EFyeNN
-	qyX6FmevKoZ5O70qKYKuqzhQFyILQVvvRHvat29f98mNK7EbzS5lOyWTSUAucDNW
-	C/CU0rpxBORciOctgYRUd+S63XY6y2Cli6p14wln6xp5KPo/bgpaxGtml7h568NM
-	PmrkhqLan/Zv15XKIQ0wOUqALaA98DYMlJXaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tBM2qRss15wtF381A6YlKlrQSf3Xd3LY
-	hwiGRoIxlZx3GW48MHdhaLCYuN05i+hzLcNr+kgnVfs5ZFYcNmLZrNf1mehPtii0
-	xAlvrD8x9bwlJwrDNwDnFbeI1HthOhRMK1WBig+WIjeePFgLa4JxgJYF0Es6fJAX
-	ztofL38TzyU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B32238C1D;
-	Mon, 12 Aug 2013 17:24:49 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F305738C18;
-	Mon, 12 Aug 2013 17:24:47 +0000 (UTC)
-In-Reply-To: <CACsJy8A-aSjNdSkiBUBSH43G_FBMnShfpkcwQqM9-6d41rfCUA@mail.gmail.com>
-	(Duy Nguyen's message of "Mon, 12 Aug 2013 20:23:04 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 168375BC-0374-11E3-A6C4-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751609Ab3HLTE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Aug 2013 15:04:57 -0400
+Received: from amber.ccs.neu.edu ([129.10.116.51]:51821 "EHLO
+	amber.ccs.neu.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750986Ab3HLTE4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Aug 2013 15:04:56 -0400
+X-Greylist: delayed 2211 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Aug 2013 15:04:56 EDT
+Received: from zimbra.ccs.neu.edu ([129.10.116.59])
+	by amber.ccs.neu.edu with esmtp (Exim 4.69)
+	(envelope-from <atrigent@ccs.neu.edu>)
+	id 1V8wqT-0007Nr-CI
+	for git@vger.kernel.org; Mon, 12 Aug 2013 14:28:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.ccs.neu.edu (Postfix) with ESMTP id 4E93DF5C015
+	for <git@vger.kernel.org>; Mon, 12 Aug 2013 14:27:57 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at zimbra.ccs.neu.edu
+Received: from zimbra.ccs.neu.edu ([127.0.0.1])
+	by localhost (zimbra.ccs.neu.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 39QPkRDXcab0 for <git@vger.kernel.org>;
+	Mon, 12 Aug 2013 14:27:51 -0400 (EDT)
+Received: from zimbra.ccs.neu.edu (zimbra.ccs.neu.edu [129.10.116.59])
+	by zimbra.ccs.neu.edu (Postfix) with ESMTP id 2CD39F5C019
+	for <git@vger.kernel.org>; Mon, 12 Aug 2013 14:27:51 -0400 (EDT)
+In-Reply-To: <7159505.507781376331946615.JavaMail.root@zimbra>
+X-Originating-IP: [134.174.110.8]
+X-Mailer: Zimbra 5.0.22_GA_3210.UBUNTU6 (ZimbraWebClient - FF3.0 (Mac)/5.0.22_GA_3210.UBUNTU6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232203>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hello all!
 
-> On Mon, Aug 12, 2013 at 7:14 PM, David Jeske <davidj@gmail.com> wrote:
->> IMO, the current warning during checkout of a detached-head is
->> misplaced. It should be removed, and instead there should only be a
->> warning after detached-head commit, since this is the only time there
->> is a danger of losing something.
->
-> That would annoy me as I often work on top of detached HEAD on purpose
-> and only create a branch when I want to save something. If the warning
-> is to be moved, it should warn at the next checkout.
+At my current workplace, I have a git-svn repository which has an extremely large working directory. I did not use the --stdlayout option in this clone, so I have a number of branches in my working directory which duplicate large amounts of trunk. There is a particularly large subdirectory which has now been copied to branches four times (and hence shows up in my working directory 5 times). This directory and its copies are making up the vast majority of the files and storage space in my working directory. Furthermore, I do not need or want to have access to the data in these particular directories. Hence, I would like to use the sparse checkouts feature to exclude them from my working directory.
 
-Don't we already do that?
+Let's say that these directories are all called "thedir". What I would like to do with the sparse checkouts feature is to simply ignore directories with this name anywhere in the working tree. Intuitively, it seems like I should be able to put:
 
-    Warning: you are leaving N commits behind, not connected to
-    any of your branches:
+!thedir
 
-        ... list of commits to be lost ...
+or possibly
 
+!thedir/
 
-    If you want to keep them by creating a new branch, this may be a
-    good time
-    to do so with:
+in the sparse-checkout file, but these don't seem to work. I've tried a number of other things, but I always seem to either get the "sparse checkout leaves no entry on working directory" error or no effect at all. In the end, I basically just don't really understand how this file is supposed to work, so I'd rather get some expert help here rather than thrashing about randomly. I realize that sparse checkouts is usually used to select a specific directory rather than what I'm trying to do, so I accept that what I want may simply not be possible with the current implementation. I've asked on IRC, but I wanted to ask here also since it seemed that most of the people I talked to weren't that familiar with the sparse checkouts feature.
 
-     git branch new_branch_name xxxxxx
+Note that, while using --stdlayout would mitigate the massive working directory somewhat, I would still probably want to exclude this directory from my worktree. I will probably do a reclone at some point and use --stdlayout, but I will still want to exclude this particular directory even at that point. I had a lot of people on IRC telling me to just use --stdlayout, which was a good suggestion, but didn't fully fulfill my needs.
 
-    Switched to branch 'master'
+Thanks!
+
+Ari
