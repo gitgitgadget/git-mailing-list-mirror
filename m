@@ -1,183 +1,151 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] git-p4: Fix occasional truncation of symlink contents.
-Date: Mon, 12 Aug 2013 08:38:50 -0400
-Message-ID: <20130812123850.GA25532@padd.com>
-References: <1375967858-10615-1-git-send-email-ajuncu@ixiacom.com>
- <20130811115738.GA26658@padd.com>
- <CAPhGq=YBVvejZ2gacwroX3cw0K3nDo02kWmMdP6Uwgd5sfPXKQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git should not use a default user.email config value
+Date: Mon, 12 Aug 2013 08:39:21 -0400
+Message-ID: <20130812123921.GA16088@sigill.intra.peff.net>
+References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
+ <20130809194214.GV14690@google.com>
+ <20130809223758.GB7160@sigill.intra.peff.net>
+ <20130809231928.GY14690@google.com>
+ <20130810064717.GB30185@sigill.intra.peff.net>
+ <52060EF9.2040504@alum.mit.edu>
+ <7vvc3d1o01.fsf@alter.siamese.dyndns.org>
+ <CAH5451nHfOaBzFzkrGvw+TyRj==cVpKF_QdXsTxnn5tTr1c0dw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alexandru Juncu <ajuncu@ixiacom.com>,
-	Alex Badea <abadea@ixiacom.com>,
-	Alexander Tomlinson <alex@aivor.com>
-To: Alexandru Juncu <alexj@rosedu.org>
-X-From: git-owner@vger.kernel.org Mon Aug 12 14:39:03 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thorsten Glaser <tg@mirbsd.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 12 14:39:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8rOl-0001cu-Rl
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 14:39:00 +0200
+	id 1V8rPF-00023B-T9
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 14:39:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755856Ab3HLMiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Aug 2013 08:38:55 -0400
-Received: from honk.padd.com ([74.3.171.149]:43527 "EHLO honk.padd.com"
+	id S1755961Ab3HLMjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Aug 2013 08:39:25 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46855 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751994Ab3HLMiy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Aug 2013 08:38:54 -0400
-Received: from arf.padd.com (unknown [50.105.10.190])
-	by honk.padd.com (Postfix) with ESMTPSA id 6FFEA708E;
-	Mon, 12 Aug 2013 05:38:53 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 78A532257B; Mon, 12 Aug 2013 08:38:50 -0400 (EDT)
+	id S1751994Ab3HLMjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Aug 2013 08:39:24 -0400
+Received: (qmail 13347 invoked by uid 102); 12 Aug 2013 12:39:24 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Aug 2013 07:39:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Aug 2013 08:39:21 -0400
 Content-Disposition: inline
-In-Reply-To: <CAPhGq=YBVvejZ2gacwroX3cw0K3nDo02kWmMdP6Uwgd5sfPXKQ@mail.gmail.com>
+In-Reply-To: <CAH5451nHfOaBzFzkrGvw+TyRj==cVpKF_QdXsTxnn5tTr1c0dw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232187>
 
-alexj@rosedu.org wrote on Mon, 12 Aug 2013 10:46 +0300:
-> On 11 August 2013 14:57, Pete Wyckoff <pw@padd.com> wrote:
-> > alexj@rosedu.org wrote on Thu, 08 Aug 2013 16:17 +0300:
-> >> Symlink contents in p4 print sometimes have a trailing
-> >> new line character, but sometimes it doesn't. git-p4
-> >> should only remove the last character if that character
-> >> is '\n'.
+On Mon, Aug 12, 2013 at 09:52:45PM +1000, Andrew Ardill wrote:
+
+> On 11 August 2013 02:58, Junio C Hamano <gitster@pobox.com> wrote:
+> > Perhaps we need a lighter-weight mechanism
 > >
-> > Your patch looks fine, and harmless if symlinks continue
-> > to have \n on the end.  I'd like to understand a bit why
-> > this behavior is different for you, though.  Could you do
-> > this test on a symlink in your depot?
-> >
-> > Here //depot/symlink points to "symlink-target".  You can
-> > see the \n in position 0o332 below.  What happens on a
-> > symlink in your repo?
-> >
-> >     arf-git-test$ p4 fstat //depot/symlink
-> >     ... depotFile //depot/symlink
-> >     ... clientFile /dev/shm/trash directory.t9802-git-p4-filetype/cli/symlink
-> >     ... isMapped
-> >     ... headAction add
-> >     ... headType symlink
-> >     ... headTime 1376221978
-> >     ... headRev 1
-> >     ... headChange 6
-> >     ... headModTime 1376221978
-> >     ... haveRev 1
-> >
-> >     arf-git-test$ p4 -G print //depot/symlink | od -c
-> >     0000000   {   s 004  \0  \0  \0   c   o   d   e   s 004  \0  \0  \0   s
-> >     0000020   t   a   t   s  \t  \0  \0  \0   d   e   p   o   t   F   i   l
-> >     0000040   e   s 017  \0  \0  \0   /   /   d   e   p   o   t   /   s   y
-> >     0000060   m   l   i   n   k   s 003  \0  \0  \0   r   e   v   s 001  \0
-> >     0000100  \0  \0   1   s 006  \0  \0  \0   c   h   a   n   g   e   s 001
-> >     0000120  \0  \0  \0   6   s 006  \0  \0  \0   a   c   t   i   o   n   s
-> >     0000140 003  \0  \0  \0   a   d   d   s 004  \0  \0  \0   t   y   p   e
-> >     0000160   s  \a  \0  \0  \0   s   y   m   l   i   n   k   s 004  \0  \0
-> >     0000200  \0   t   i   m   e   s  \n  \0  \0  \0   1   3   7   6   2   2
-> >     0000220   1   9   7   8   s  \b  \0  \0  \0   f   i   l   e   S   i   z
-> >     0000240   e   s 002  \0  \0  \0   1   5   0   {   s 004  \0  \0  \0   c
-> >     0000260   o   d   e   s 006  \0  \0  \0   b   i   n   a   r   y   s 004
-> >     0000300  \0  \0  \0   d   a   t   a   s 017  \0  \0  \0   s   y   m   l
-> >     0000320   i   n   k   -   t   a   r   g   e   t  \n   0   {   s 004  \0
-> >     0000340  \0  \0   c   o   d   e   s 006  \0  \0  \0   b   i   n   a   r
-> >     0000360   y   s 004  \0  \0  \0   d   a   t   a   s  \0  \0  \0  \0   0
-> >     0000400
-> >
-> > Also, what version is your server, from "p4 info":
-> >
-> >     Server version: P4D/LINUX26X86_64/2013.1/610569 (2013/03/19)
-> >
-> >                 -- Pete
-> >
+> >         git init --profile=open
+> >         git clone --profile=open git://git.kernel.org/git.git
 > 
-> Hello!
+> This is something I would definitely use.
 > 
-> Let me give you an example. Here are the links as resulted in the git
-> p4 clone (one was correct, one wasn't):
-> 
-> ./lib/update.sh -> ../update.sh
-> ./apps/update.sh -> ../update.s
-> 
-> 
-> alexj@ixro-alexj ~/perforce $ p4 print path/lib/update.sh
-> //path/update.sh#6 - edit change 119890 (symlink)
-> ../update.sh
-> alexj@ixro-alexj ~/perforce $ p4 print path/apps/update.sh
-> //path/apps/update.sh#144 - edit change 116063 (symlink)
-> ../update.shalexj@ixro-alexj ~/perforce/unstable $
-> 
-> Notice the output and the prompt.
-> 
-> (I removed the exact path to the file from the output)
-> 
-> The fstat output is kind of irrelevant, but the hexdump shows the missing \n:
-> 
-> p4 -G print lib/update.sh|od -c
-> 
-> 0000360   t   e   .   s   h  \n   0
-> 
-> p4 -G print apps/update.sh|od -c
-> 0000360   p   d   a   t   e   .   s   h   0
+> All of my work git directories are in a separate folder to my other
+> git directories, and as such it would be extremely convenient if every
+> repository under that folder defaulted to the same profile. That may
+> be asking for too much though!
 
-I had forgotten, in fact, another thread on this very topic:
+We could do something like the patch below, which allows:
 
-http://thread.gmane.org/gmane.comp.version-control.git/221500
+  $ git config --global include./magic/.path .gitconfig-magic
 
-Now with your evidence, I think we can decide that no matter how
-the symlink managed to sneak into p4d, git p4 should be able to
-handle it.
+to read ~/.gitconfig-magic only when we are in a repository with a
+directory component "/magic/".
 
-The only problem is that due to the \n ambiguity, in your setup
-where p4d loses the \n, git p4 will not handle symlinks with a
-target that ends with a newline, e.g.:
+I can see how such a thing might be useful, even though I do not have a
+use for that much flexibility myself. I find myself doing this trick for
+things like editor settings, but not for git config. So do not count
+this necessarily as a vote for doing this; it was a fun exercise for me
+that others might find useful.
 
-    symlink("foo\n", "bar");
+Comparing this against a "profile" type of solution:
 
-But the small chance of someone actually doing that, coupled with
-the fact that for you git p4 is unusable with these symlinks,
-says we should go ahead and make the change.
+  1. This handles only config, not full templates (so no custom hooks;
+     however, we could provide a level of indirection for hooks inside
+     the config).
 
-You should send the patch to junio for inclusion in pu/ for the
-next release, with:
+  2. Unlike a profile that is used during repository init, this is
+     resolved at runtime, so it keeps up to date as you change
+     ~/.gitconfig-magic.
 
-Acked-by: Pete Wyckoff <pw@padd.com>
-
-Thanks for fixing this!
-
-		-- Pete
-
-> Server version: P4D/LINUX26X86_64/2013.1/610569
-> 
-> >> Signed-off-by: Alex Juncu <ajuncu@ixiacom.com>
-> >> Signed-off-by: Alex Badea <abadea@ixiacom.com>
-> >> ---
-> >>  git-p4.py | 8 ++++++--
-> >>  1 file changed, 6 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/git-p4.py b/git-p4.py
-> >> index 31e71ff..a53a6dc 100755
-> >> --- a/git-p4.py
-> >> +++ b/git-p4.py
-> >> @@ -2180,9 +2180,13 @@ class P4Sync(Command, P4UserMap):
-> >>              git_mode = "100755"
-> >>          if type_base == "symlink":
-> >>              git_mode = "120000"
-> >> -            # p4 print on a symlink contains "target\n"; remove the newline
-> >> +            # p4 print on a symlink sometimes contains "target\n";
-> >> +            # if it does, remove the newline
-> >>              data = ''.join(contents)
-> >> -            contents = [data[:-1]]
-> >> +            if data[-1] == '\n':
-> >> +                contents = [data[:-1]]
-> >> +            else:
-> >> +                contents = [data]
-> >>
-> >>          if type_base == "utf16":
-> >>              # p4 delivers different text in the python output to -G
-> >> --
-> >> 1.8.4.rc0.1.g8f6a3e5
-> 
+---
+diff --git a/config.c b/config.c
+index e13a7b6..a31dc85 100644
+--- a/config.c
++++ b/config.c
+@@ -119,10 +119,45 @@ int git_config_include(const char *var, const char *value, void *data)
+ 	return ret;
+ }
+ 
++static NORETURN void die_bad_regex(int err, regex_t *re)
++{
++	char errbuf[1024];
++	regerror(err, re, errbuf, sizeof(errbuf));
++	if (cf && cf->name)
++		die("bad regex (at %s:%d): %s", cf->name, cf->linenr, errbuf);
++	else
++		die("bad regex: %s", errbuf);
++}
++
++static int match_repo_path(const char *re_str)
++{
++	regex_t re;
++	int ret;
++	const char *repo_path;
++
++	ret = regcomp(&re, re_str, REG_EXTENDED);
++	if (ret)
++		die_bad_regex(ret, &re);
++
++	repo_path = absolute_path(get_git_dir());
++	ret = regexec(&re, repo_path, 0, NULL, 0);
++	regfree(&re);
++	return !ret;
++}
++
++static int match_repo_path_mem(const char *re_buf, int len)
++{
++	char *re_str = xmemdupz(re_buf, len);
++	int ret = match_repo_path(re_str);
++	free(re_str);
++	return ret;
++}
++
+ int git_config_include(const char *var, const char *value, void *data)
+ {
+ 	struct config_include_data *inc = data;
+-	const char *type;
++	const char *match, *type;
++	int match_len;
+ 	int ret;
+ 
+ 	/*
+@@ -133,8 +168,9 @@ int git_config_include(const char *var, const char *value, void *data)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	type = skip_prefix(var, "include.");
+-	if (!type)
++	if (parse_config_key(var, "include", &match, &match_len, &type))
++		return ret;
++	if (match && !match_repo_path_mem(match, match_len))
+ 		return ret;
+ 
+ 	if (!strcmp(type, "path"))
