@@ -1,103 +1,77 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
+From: Andrew Ardill <andrew.ardill@gmail.com>
 Subject: Re: git should not use a default user.email config value
-Date: Mon, 12 Aug 2013 14:54:13 +0200
-Message-ID: <5208DAF5.3040006@alum.mit.edu>
-References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de> <20130809194214.GV14690@google.com> <20130809223758.GB7160@sigill.intra.peff.net> <20130809231928.GY14690@google.com> <20130810064717.GB30185@sigill.intra.peff.net> <52060EF9.2040504@alum.mit.edu> <7vvc3d1o01.fsf@alter.siamese.dyndns.org> <CAH5451nHfOaBzFzkrGvw+TyRj==cVpKF_QdXsTxnn5tTr1c0dw@mail.gmail.com> <20130812123921.GA16088@sigill.intra.peff.net>
+Date: Mon, 12 Aug 2013 23:01:03 +1000
+Message-ID: <CAH5451=PK15n4U-3Mb_TLevF3-r+vrpk1PXD15Oo1A2KFc5i_w@mail.gmail.com>
+References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
+ <20130809194214.GV14690@google.com> <20130809223758.GB7160@sigill.intra.peff.net>
+ <20130809231928.GY14690@google.com> <20130810064717.GB30185@sigill.intra.peff.net>
+ <52060EF9.2040504@alum.mit.edu> <7vvc3d1o01.fsf@alter.siamese.dyndns.org>
+ <CAH5451nHfOaBzFzkrGvw+TyRj==cVpKF_QdXsTxnn5tTr1c0dw@mail.gmail.com> <20130812123921.GA16088@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Andrew Ardill <andrew.ardill@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Thorsten Glaser <tg@mirbsd.de>,
 	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 12 14:54:24 2013
+X-From: git-owner@vger.kernel.org Mon Aug 12 15:01:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8rdg-0006hj-GS
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 14:54:24 +0200
+	id 1V8rkw-0004n4-0o
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 15:01:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756298Ab3HLMyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Aug 2013 08:54:20 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:44104 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756202Ab3HLMyT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Aug 2013 08:54:19 -0400
-X-AuditID: 1207440d-b7f006d000000adf-e0-5208dafae780
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 59.29.02783.AFAD8025; Mon, 12 Aug 2013 08:54:18 -0400 (EDT)
-Received: from [192.168.101.152] (mx.berlin.jpk.com [212.222.128.135] (may be forged))
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r7CCsFNX029926
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 12 Aug 2013 08:54:16 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130623 Thunderbird/17.0.7
+	id S1756202Ab3HLNBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Aug 2013 09:01:44 -0400
+Received: from mail-vc0-f171.google.com ([209.85.220.171]:45859 "EHLO
+	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756034Ab3HLNBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Aug 2013 09:01:44 -0400
+Received: by mail-vc0-f171.google.com with SMTP id ij15so2774586vcb.16
+        for <git@vger.kernel.org>; Mon, 12 Aug 2013 06:01:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=wZv8Sd6MX2v9awUYuPhqHwecYmWngUBm2cPQimGY7p0=;
+        b=xow8OWOTeZ/oIJJPMJ+P22hvZqfHwgze2FQpx7pRT8KwKbc3skmOSErx9fQAlxsYLv
+         DBaBNcuCLuVk4cVOohRP3R4dxjZ+NFd47C5Z8pSff85mrsA3POXsW2AmYUCLHqfWVjPn
+         afnd+DijvvOVz//eJ+h0bDu6LVXwlu8RdwSvGmIpqd43zejXIQVYDpi1+71gJZvbcBcT
+         1qAou/5XxSXmdN4vkkPu+WtjRMwdaF3ovqAWDUh57XXNcnoqcByf6Lmtta9lyg4avRLy
+         +uj4WTvIT1l6HLiLEutIVR81ZdSEwQqg5o36ymQnjZyDZsMpUDptgugRSBSkd+DVGFOZ
+         3hag==
+X-Received: by 10.220.6.8 with SMTP id 8mr6284849vcx.82.1376312503346; Mon, 12
+ Aug 2013 06:01:43 -0700 (PDT)
+Received: by 10.220.195.133 with HTTP; Mon, 12 Aug 2013 06:01:03 -0700 (PDT)
 In-Reply-To: <20130812123921.GA16088@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLKsWRmVeSWpSXmKPExsUixO6iqPvrFkeQweVeY4vuM01sFl1Xupks
-	GnqvMFu8vbmE0eL/jgUsFj9aepgtnvX/ZnRg99g56y67x7Fjrcwedxs0PZ717mH0uHhJ2ePz
-	JrkAtihum6TEkrLgzPQ8fbsE7oxJr5ayF0zgrdgzS6KBcTtXFyMnh4SAicS3aY2MELaYxIV7
-	69m6GLk4hAQuM0pcXXKBCcK5xiRx//41dpAqXgFtiTmHtrOC2CwCqhIL2/YzgdhsAroSi3qa
-	gWwODlGBMIkrv1UhygUlTs58wgJiiwjISnw/vJERZCazQDeTROvLTWBzhAUcJb4/ngW1bBWz
-	RPe7O2AJTgFriRl7zrKCDGUWUJdYP08IJMwsIC+x/e0c5gmMArOQ7JiFUDULSdUCRuZVjHKJ
-	OaW5urmJmTnFqcm6xcmJeXmpRbpGermZJXqpKaWbGCHBz7uD8f86mUOMAhyMSjy8Hl/Yg4RY
-	E8uKK3MPMUpyMCmJ8q6/yREkxJeUn1KZkVicEV9UmpNafIhRgoNZSYRXbR5QjjclsbIqtSgf
-	JiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwasPjHIhwaLU9NSKtMycEoQ0EwcnyHAu
-	KZHi1LyU1KLE0pKMeFCcxhcDIxUkxQO01xOknbe4IDEXKArReopRl+Nd07xPjEIsefl5qVLi
-	vA4gRQIgRRmleXArYKnuFaM40MfCvN4gVTzANAk36RXQEiagJUbNYEtKEhFSUg2M8gGMbm0p
-	C4snft6ll7574aWnpy/0Osv/Wfzk5e05U17M73t/7/a9prfq+tK8fap6swVi82/d 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232190>
 
-On 08/12/2013 02:39 PM, Jeff King wrote:
-> On Mon, Aug 12, 2013 at 09:52:45PM +1000, Andrew Ardill wrote:
-> 
->> On 11 August 2013 02:58, Junio C Hamano <gitster@pobox.com> wrote:
->>> Perhaps we need a lighter-weight mechanism
->>>
->>>         git init --profile=open
->>>         git clone --profile=open git://git.kernel.org/git.git
->>
->> This is something I would definitely use.
->>
->> All of my work git directories are in a separate folder to my other
->> git directories, and as such it would be extremely convenient if every
->> repository under that folder defaulted to the same profile. That may
->> be asking for too much though!
-> 
+On 12 August 2013 22:39, Jeff King <peff@peff.net> wrote:
 > We could do something like the patch below, which allows:
-> 
+>
 >   $ git config --global include./magic/.path .gitconfig-magic
-> 
+>
 > to read ~/.gitconfig-magic only when we are in a repository with a
 > directory component "/magic/".
-> 
-> I can see how such a thing might be useful, even though I do not have a
-> use for that much flexibility myself. I find myself doing this trick for
-> things like editor settings, but not for git config. So do not count
-> this necessarily as a vote for doing this; it was a fun exercise for me
-> that others might find useful.
 
-We could satisfy a whole class of wishes by supporting
-user-wide/system-wide git hooks like
+Thanks, this looks great! I'll have a play with it tomorrow.
 
-    ~/.githooks/{pre,post}-clone     /etc/githooks/{pre,post}-clone
-    ~/.githooks/{pre,post}-init      /etc/githooks/{pre,post}-init
+Would locally configured config options override this one? From a
+quick read of the patch there doesn't look like there is a way of
+turning this off for a specific repository, but perhaps that is
+unnecessary. I think after a bit of use the edge cases will be a bit
+clearer.
 
-I suppose similar functionality could be implemented via git aliases,
-but hook scripts are easier to install and share.
+Again thanks, this will scratch an itch I didn't even realise I had.
 
-Michael
+Regards,
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Andrew Ardill
