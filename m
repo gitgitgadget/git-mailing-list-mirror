@@ -1,154 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] .mailmap: mark bouncing email addresses
-Date: Mon, 12 Aug 2013 00:58:11 -0700
-Message-ID: <7vd2pj1gto.fsf@alter.siamese.dyndns.org>
-References: <1376072305-15255-1-git-send-email-stefanbeller@googlemail.com>
-	<1376072305-15255-3-git-send-email-stefanbeller@googlemail.com>
-	<20130809200101.GX14690@google.com>
-	<7vr4e230g8.fsf@alter.siamese.dyndns.org>
+From: Matthijs Kooijman <matthijs@stdin.nl>
+Subject: Re: [RFC PATCH] During a shallow fetch, prevent sending over
+ unneeded objects
+Date: Mon, 12 Aug 2013 10:02:03 +0200
+Message-ID: <20130812080203.GK10217@login.drsnuggles.stderr.nl>
+References: <20130711220127.GK10217@login.drsnuggles.stderr.nl>
+ <CACsJy8CP6pGRwEn6H=cbKxTMuOjzAF3=Qh8qsLbJaw6feK3NMw@mail.gmail.com>
+ <7vfvukbrqh.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BahoGcDcLjSaHA-62_KQE2wD-p5oeJOOA4nk8ZRfXrEA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 12 09:58:30 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 12 10:02:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8n1I-0001OV-P4
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 09:58:29 +0200
+	id 1V8n4x-0004dd-4v
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 10:02:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753095Ab3HLH6Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Aug 2013 03:58:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62378 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752589Ab3HLH6Y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Aug 2013 03:58:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDDA93336D;
-	Mon, 12 Aug 2013 07:58:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=LnTHi/Hlw7Co
-	zEOL+jg4OtY4m0g=; b=cSgxLr5dh3w3t9zkSySc1YUZQ9rDN0k05nleIKH3w7IF
-	Ez9krxN1ptrz+IZmMl7KSnJWwZ4iIfw29BME3AANEV4i98dpPx/Gs/bKen2/z9+E
-	Ntoh7iNJemXRNZEHMIF5/E0anQ+TBBGf12XGbddc71Dt6IsAqux7HLSQ81sfjuM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=IalpG4
-	bvKWNzpkNiCB9HZolqL0DKgTE+I8b2F4zMl80UqqdexZ7jNGzfVPkiHG+tRaKy1f
-	J9bf8dhLKU2L1OrsJ8Q36zsJ2OXl87/FD7ptX1xVm2EeJkxH289rbBHkCUUt5h5U
-	wvGWSaxRd2/jmcXs63lKwVOW93nfoWlrtcsak=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C02013336C;
-	Mon, 12 Aug 2013 07:58:23 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D174033367;
-	Mon, 12 Aug 2013 07:58:22 +0000 (UTC)
-In-Reply-To: <7vr4e230g8.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 09 Aug 2013 16:32:07 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F5CAE5E8-0324-11E3-9AC4-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753335Ab3HLICL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Aug 2013 04:02:11 -0400
+Received: from drsnuggles.stderr.nl ([94.142.244.14]:38909 "EHLO
+	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752731Ab3HLICJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Aug 2013 04:02:09 -0400
+Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
+	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
+	(envelope-from <matthijs@stdin.nl>)
+	id 1V8n4l-0005AK-Gy; Mon, 12 Aug 2013 10:02:04 +0200
+Received: (nullmailer pid 19858 invoked by uid 1000);
+	Mon, 12 Aug 2013 08:02:03 -0000
+Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
+	Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BahoGcDcLjSaHA-62_KQE2wD-p5oeJOOA4nk8ZRfXrEA@mail.gmail.com>
+X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
+X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Spam-Score: -2.6 (--)
+X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
+	pts  rule name              description
+	---- ---------------------- -------------------------------------------
+	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
+	0.0 AWL                    AWL: From: address is in the auto white-list
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232173>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Duy,
 
-> I'd suggest using the lavabit address unless we hear the preferred
-> address from her, as the lavabit address was used in 5bf46841
-> (git-gui: update Japanese translation, 2010-02-02), while the last
-> use of the bluebottle address was in 6762079a (Cloning from a repo
-> without "current branch", 2007-06-16).
+> OK. Mathijs, do you want make a patch for it?
+I'm willing, but:
+ - I don't understand the code and all of your comments well enough yet
+   to start coding right away (though I haven't actually invested enough
+   time in this yet, either).
+ - I'll be on vacation for the next two weeks.
 
-So with the above, and the four responses from long-lost friends,
-here is what I came up with.
+When I get back, I'll re-read this thread properly and reply where I
+don't follow it. Feel free to continue discussing the plan until then,
+of course :-)
 
--- >8 --
-Subject: .mailmap: update long-lost friends with multiple defunct addre=
-sses
+Gr.
 
-A handful of past contributors are recorded with multiple e-mail
-addresses, all of which are undeliberable.  With a lot of help from
-Jonathan, we located all of them except for one.  Update the found
-ones with their currently preferred address, and use the last known
-address to consolidate contributions by the lost person under a
-single entry.
-
-Helped-by: Stefan Beller <stefanbeller@googlemail.com>
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- .mailmap | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/.mailmap b/.mailmap
-index f7cc21e..7a5d0a6 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -18,6 +18,8 @@ Alexey Shumkin <alex.crezoff@gmail.com> <Alex.Crezoff=
-@gmail.com>
- Anders Kaseorg <andersk@MIT.EDU> <andersk@ksplice.com>
- Anders Kaseorg <andersk@MIT.EDU> <andersk@mit.edu>
- Aneesh Kumar K.V <aneesh.kumar@gmail.com>
-+Amos Waterland <apw@debian.org> <apw@rossby.metr.ou.edu>
-+Amos Waterland <apw@debian.org> <apw@us.ibm.com>
- Ben Walton <bdwalton@gmail.com> <bwalton@artsci.utoronto.ca>
- Bernt Hansen <bernt@norang.ca> <bernt@alumni.uwaterloo.ca>
- Brandon Casey <drafnel@gmail.com> <casey@nrlssc.navy.mil>
-@@ -34,6 +36,8 @@ Dan Johnson <computerdruid@gmail.com>
- Dana L. How <danahow@gmail.com> <how@deathvalley.cswitch.com>
- Dana L. How <danahow@gmail.com> Dana How
- Daniel Barkalow <barkalow@iabervon.org>
-+Daniel Trstenjak <daniel.trstenjak@gmail.com> <daniel.trstenjak@online=
-=2Ede>
-+Daniel Trstenjak <daniel.trstenjak@gmail.com> <trsten@science-computin=
-g.de>
- David Brown <git@davidb.org> <davidb@quicinc.com>
- David D. Kilzer <ddkilzer@kilzer.net>
- David K=C3=A5gedal <davidk@lysator.liu.se>
-@@ -68,11 +72,17 @@ J. Bruce Fields <bfields@citi.umich.edu> <bfields@p=
-ig.linuxdev.us.dell.com>
- J. Bruce Fields <bfields@citi.umich.edu> <bfields@puzzle.fieldses.org>
- Jakub Nar=C4=99bski <jnareb@gmail.com>
- James Y Knight <jknight@itasoftware.com> <foom@fuhm.net>
-+# The 2 following authors are probably the same person,
-+# but both emails bounce.
-+Jason McMullan <jason.mcmullan@timesys.com>
-+Jason McMullan <mcmullan@netapp.com>
- Jason Riedy <ejr@eecs.berkeley.edu> <ejr@EECS.Berkeley.EDU>
- Jason Riedy <ejr@eecs.berkeley.edu> <ejr@cs.berkeley.edu>
- Jay Soffian <jaysoffian@gmail.com> <jaysoffian+git@gmail.com>
- Jeff King <peff@peff.net> <peff@github.com>
- Jeff Muizelaar <jmuizelaar@mozilla.com> <jeff@infidigm.net>
-+Jens Axboe <axboe@kernel.dk> <axboe@suse.de>
-+Jens Axboe <axboe@kernel.dk> <jens.axboe@oracle.com>
- Jim Meyering <jim@meyering.net> <meyering@redhat.com>
- Joachim Berdal Haga <cjhaga@fys.uio.no>
- Johannes Schindelin <Johannes.Schindelin@gmx.de> <johannes.schindelin@=
-gmx.de>
-@@ -144,7 +154,7 @@ Michele Ballabio <barra_cuda@katamail.com>
- Miklos Vajna <vmiklos@frugalware.org> <vmiklos@suse.cz>
- Namhyung Kim <namhyung@gmail.com> <namhyung.kim@lge.com>
- Namhyung Kim <namhyung@gmail.com> <namhyung@kernel.org>
--Nanako Shiraishi <nanako3@bluebottle.com>
-+Nanako Shiraishi <nanako3@lavabit.com> <nanako3@bluebottle.com>
- Nanako Shiraishi <nanako3@lavabit.com>
- Nelson Elhage <nelhage@mit.edu> <nelhage@MIT.EDU>
- Nelson Elhage <nelhage@mit.edu> <nelhage@ksplice.com>
-@@ -177,6 +187,8 @@ Robert Fitzsimons <robfitz@273k.net>
- Robert Shearman <robertshearman@gmail.com> <rob@codeweavers.com>
- Robert Zeh <robert.a.zeh@gmail.com>
- Robin Rosenberg <robin.rosenberg@dewire.com> <robin.rosenberg.lists@de=
-wire.com>
-+Rutger Nijlunsing <rutger.nijlunsing@gmail.com> <rutger@nospam.com>
-+Rutger Nijlunsing <rutger.nijlunsing@gmail.com> <git@tux.tmfweb.nl>
- Ryan Anderson <ryan@michonline.com> <rda@google.com>
- Salikh Zakirov <salikh.zakirov@gmail.com> <Salikh.Zakirov@Intel.com>
- Sam Vilain <sam@vilain.net> <sam.vilain@catalyst.net.nz>
+Matthijs
