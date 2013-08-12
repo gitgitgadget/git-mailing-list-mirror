@@ -1,90 +1,83 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: [PATCH] pull: Allow pull to preserve merges when rebasing.
-Date: Sun, 11 Aug 2013 18:38:45 -0500
-Organization: Exigence
-Message-ID: <20130811183845.18381b8c@sh9>
-References: <1376256387-30974-1-git-send-email-stephen@exigencecorp.com>
-	<CAPrKj1b=QTdqVH+JtukJrfEc=EqxWOEYE4YG7oSY7413uqdKfg@mail.gmail.com>
-	<20130811180915.390d660a@sh9>
-	<CAPrKj1aMURcVoaiJ+WS64ekafUZgSagKrYSknTUk3+TL6tCETQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andres Perera <andres.p@zoho.com>
-X-From: git-owner@vger.kernel.org Mon Aug 12 01:39:14 2013
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 0/3] fix interactive rebase short SHA-1 collision bug
+Date: Mon, 12 Aug 2013 00:07:36 -0400
+Message-ID: <1376280459-55188-1-git-send-email-sunshine@sunshineco.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	David <bouncingcats@gmail.com>,
+	Diogo de Campos <campos@esss.com.br>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Yann Dirson <dirson@bertin.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 12 06:08:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8fE9-0005Ld-2p
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 01:39:13 +0200
+	id 1V8jQv-0006Ii-Hw
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 06:08:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755166Ab3HKXis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Aug 2013 19:38:48 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:62613 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755149Ab3HKXis (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Aug 2013 19:38:48 -0400
-Received: by mail-oa0-f54.google.com with SMTP id o6so9051958oag.27
-        for <git@vger.kernel.org>; Sun, 11 Aug 2013 16:38:47 -0700 (PDT)
+	id S1751321Ab3HLEI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Aug 2013 00:08:27 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:54813 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104Ab3HLEI0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Aug 2013 00:08:26 -0400
+Received: by mail-ie0-f178.google.com with SMTP id f4so7305108iea.23
+        for <git@vger.kernel.org>; Sun, 11 Aug 2013 21:08:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=exigencecorp.com; s=google;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :organization:mime-version:content-type:content-transfer-encoding;
-        bh=M2ejuRdAr8YxeqPcMmb8jMeMss3TnhdGMNRcbeBL6nI=;
-        b=XZL2FBKRl/m1Jf1g0ihZX8ULl3Ho/0wyyrb/JbPsQ+YdUx1LcTuPbvJqCURPwrt8m/
-         ZE0SVFxwuHxT1ElDeKITyTaz/Pt8TfhLmP41THxVQQpeFZsrng9mNP+9W6rnXvl+Jywg
-         ueRwnC7TraRRFq+jXWq9+FMab9pjxNa/OpOd8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:organization:mime-version:content-type
-         :content-transfer-encoding;
-        bh=M2ejuRdAr8YxeqPcMmb8jMeMss3TnhdGMNRcbeBL6nI=;
-        b=j7BxNaboouRFAuzzULVV9gxURckjDwQeFZL5kJSjMlLs4WuqiF3ZXz0uIEEMA6TZrD
-         zrvtnm/BiQ/00X8h0smFDrakoPvBLehyno2QZSDHnhto6MgdpQI+HSsdy97f4Tmtvt0G
-         +3cDBSFAMsxyAEP65uT5/Xuzs+cbuUPsFNFR996s8dvYnECe86j+h6+0kgk1q/k5kh55
-         WWZYmB1YpDiyK9g423BKnxYHyivYHZ3eP0aU+MMSYkm+ZaKsjaMP0tipS9nI4LmiVArG
-         ZQ4KkgtVmDnqkRYask8hdW2kavqa1OcEVi3DpcGKo1sb686BOj78UYKGICe1EbUiPQ5U
-         bqWA==
-X-Gm-Message-State: ALoCoQkyv323frY9d1vPiDNFsLVJCs1uiVeAJrI0OFUa+SFRjIJQVk8Nlw8Tn/E6YdW3XibnMPJ6
-X-Received: by 10.182.28.98 with SMTP id a2mr8667250obh.36.1376264327270;
-        Sun, 11 Aug 2013 16:38:47 -0700 (PDT)
-Received: from sh9 (wsip-184-187-11-226.om.om.cox.net. [184.187.11.226])
-        by mx.google.com with ESMTPSA id g1sm31048607oeq.6.2013.08.11.16.38.46
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=GCf1DvKU7SIcsUlQc8swdacfCxNiy7xh2vQvcStx5fg=;
+        b=l+rGdLDItvSjAejcGGy9UDThUJdaWT7dRi1T/G0OoBHUcPUyT5O9I71hF8r1H0yCvL
+         YHXK0nekvo21vVB1K6+Hl6V3a1bVrXX3RjWEXpK8GNt9KRu3PnzagFdb86Ckc7rjWmlO
+         Vrm/V39+LBYECYL+RfMnUwqXm4Riufb75+f+FEh65YNYB9QqOIufNxPyG9bHZgeSGL8u
+         jVUWhw66qiBdP1m7Zk0JqZ6QpY4RQq35GlMumMYl03kFZSDz1JYQjxq8ll+wsD46Z8/m
+         +T1CvDWSggyf5RSziYqXwChZxHRlC5G3oXCi+7KRFHRL2ilTk+XaYCvWB1ojpWNROA1S
+         39Uw==
+X-Received: by 10.43.168.67 with SMTP id nh3mr8619558icc.33.1376280505673;
+        Sun, 11 Aug 2013 21:08:25 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
+        by mx.google.com with ESMTPSA id x2sm11986256igw.0.2013.08.11.21.08.23
         for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Sun, 11 Aug 2013 16:38:46 -0700 (PDT)
-In-Reply-To: <CAPrKj1aMURcVoaiJ+WS64ekafUZgSagKrYSknTUk3+TL6tCETQ@mail.gmail.com>
-X-Mailer: Claws Mail 3.9.1 (GTK+ 2.24.17; x86_64-pc-linux-gnu)
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 11 Aug 2013 21:08:24 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc2.460.ga591f4a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232146>
 
-Hi Andres,
+This series addresses a bug [1][2] which can manifest during interactive
+rebase when the prefix of the new SHA-1 of an edited commit is shared
+with the abbreviated SHA-1 of a subsequent commit in the 'todo' list.
+When rebase attempts to process the subsequent command, it dies with a
+"short SHA1 badbeef is ambiguous" error.
 
-> i just realized that there are ambiguities:
+patch 1: fix a problem in the interactive rebase test suite which can
+    make subsequent tests fail
 
-> pull --rebase (true|false|preserve) foo # pull from remote named
-> (true|false|preserve), branch foo
+patch 2: add a test demonstrating the short SHA-1 collision bug
 
-Yeah.
+patch 3: fix the bug (this patch is from Junio [3] but augmented also to
+    fix up "rebase --edit-todo")
 
-Right now, I did the latter. Around line 125, when parsing "--rebase
-<somearg>", we accept <somearg> only if it's true, false, or preserve,
-and shift it off. Otherwise we leave it alone and assume it's a remote
-name.
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/229091
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/232012
+[3]: http://thread.gmane.org/gmane.comp.version-control.git/229091/focus=229120
 
-Without this logic, t5520 fails because it uses "git pull --rebase .
-copy", which, as you noted, is ambiguous, so "." was showing up as the
-rebase argument.
+Eric Sunshine (2):
+  t3404: restore specialized rebase-editor following commentchar test
+  t3404: rebase: interactive: demonstrate short SHA-1 collision
 
-So, this is technically handled right now, but I'm fine removing the
-ambiguous "--rebase true|false|preserve" option if that is what is
-preferred.
+Junio C Hamano (1):
+  rebase: interactive: fix short SHA-1 collision
 
-- Stephen
+ git-rebase--interactive.sh    | 30 ++++++++++++++++++++++++++++++
+ t/t3404-rebase-interactive.sh | 18 ++++++++++++++++++
+ 2 files changed, 48 insertions(+)
+
+-- 
+1.8.4.rc2.460.ga591f4a
