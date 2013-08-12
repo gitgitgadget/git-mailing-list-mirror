@@ -1,105 +1,116 @@
-From: David Jeske <davidj@gmail.com>
-Subject: Re: ephemeral-branches instead of detached-head?
-Date: Mon, 12 Aug 2013 01:37:33 -0700
-Message-ID: <CA+CP9O5fhyQrn3SboafocWJjaAywJHC0T-bw+AXk_8RX53hJ6Q@mail.gmail.com>
-References: <CA+CP9O6on2NXo6o4_0NoULnT8sgUD3pvvkFZvCTM5xKb38qOeA@mail.gmail.com>
- <7veh9z1gym.fsf@alter.siamese.dyndns.org>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH] diff: remove ternary operator evaluating always to true
+Date: Mon, 12 Aug 2013 10:38:58 +0200
+Message-ID: <52089F22.6010106@googlemail.com>
+References: <1375986704-11441-1-git-send-email-stefanbeller@googlemail.com> <20130810072114.GD30185@sigill.intra.peff.net> <7vli471mxy.fsf@alter.siamese.dyndns.org> <52089D81.5010506@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig3D967807EFD5640F55F2CAAE"
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 12 10:38:19 2013
+X-From: git-owner@vger.kernel.org Mon Aug 12 10:38:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8ndq-0000ye-Ea
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 10:38:18 +0200
+	id 1V8neL-0001Tn-RS
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 10:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755478Ab3HLIiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Aug 2013 04:38:15 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:46368 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754237Ab3HLIiO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Aug 2013 04:38:14 -0400
-Received: by mail-oa0-f50.google.com with SMTP id i4so9282973oah.37
-        for <git@vger.kernel.org>; Mon, 12 Aug 2013 01:38:13 -0700 (PDT)
+	id S1755120Ab3HLIip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Aug 2013 04:38:45 -0400
+Received: from mail-we0-f179.google.com ([74.125.82.179]:44681 "EHLO
+	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755196Ab3HLIio (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Aug 2013 04:38:44 -0400
+Received: by mail-we0-f179.google.com with SMTP id t57so5290307wes.10
+        for <git@vger.kernel.org>; Mon, 12 Aug 2013 01:38:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=9glnPIqndj15135oFFylWPA1u0Q7sKVpq0JOMZd5ubE=;
-        b=ZOqvF69m77whTCTsi3VcSpdFqHG3Hi5Iyloe5+Fy7c1iYFunk8dZ0U8pdJYehT8+Jr
-         5LHo8Rkxky6SejlR5Y12xd46fDpDhOtNb4VtbCozOxrpWh6PIZAFhe4sVvNLUhIEBJu0
-         ASF7qeH4dE1HWInCaiM5Ed86pFEsGk0YrkiZG7/QFnR4/kWF6tCu6CN4dsoE3AwzXKSu
-         v8QynEkaxTL7vrWaRuUaUtsJVzctXQn6n6TavrQT5OCW8LXpIP2Fr4e18ish1IDiIOJS
-         rXZS1buc7A46zNHL3QSvDD1g8Pfs/PbGVQpgbj5Z+ckdywuyA9SP+6sllsvWGWMP4Fx+
-         A/6Q==
-X-Received: by 10.182.28.98 with SMTP id a2mr9852576obh.36.1376296693795; Mon,
- 12 Aug 2013 01:38:13 -0700 (PDT)
-Received: by 10.60.120.65 with HTTP; Mon, 12 Aug 2013 01:37:33 -0700 (PDT)
-In-Reply-To: <7veh9z1gym.fsf@alter.siamese.dyndns.org>
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type;
+        bh=iFTkYRphcVGyS/4czOvhFbLyN1DsWs2L6BOg19iYZQ4=;
+        b=DzwdUeuU/nz5QRhRyxVzh2aangur3mxP42XsXGR6JSfmW552yyDALVqmcv5xVdwggo
+         fKJ2EJ64czYh6GfQGTIxKJJf9AdVy/J9OwvFxzP+Z/xPfwbHzeu5yhRLGu6ZWkrDo60g
+         /WYJdeh3c/lL5D2HfM/eaD65rsWI0VA056sCxOyGLVH4WHuGX7l6P0ifY8b6qgnlq3i8
+         WmWF1nQuSPgaIXl0JkF6Qo513KbU+BCwlsoUd43nKCgQQ0L/ZxHPTx7+sC1FVOA3tQBr
+         VyhEvnKo1RotI02QhJVHe806yRSIYEsipr4XoDYtwiVgkJ2Kw7QzovNLU5pkuvCeOtWL
+         7rTg==
+X-Received: by 10.194.120.225 with SMTP id lf1mr6283601wjb.74.1376296723403;
+        Mon, 12 Aug 2013 01:38:43 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id dt17sm14815144wic.1.2013.08.12.01.38.42
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 12 Aug 2013 01:38:42 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
+In-Reply-To: <52089D81.5010506@googlemail.com>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232179>
 
-> Would the temporary branch created by checking out a random commit be automatically deleted when checking out another branch, or would it be garbage-collected at some
-> point later?
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig3D967807EFD5640F55F2CAAE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+On 08/12/2013 10:32 AM, Stefan Beller wrote:
+>=20
+> diff --git a/diff.c b/diff.c
+> index e53ddad..de21971 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -2254,8 +2254,11 @@ static void builtin_diff(const char *name_a,
+>  			(!two->mode || S_ISGITLINK(two->mode))) {
+>  		const char *del =3D diff_get_color_opt(o, DIFF_FILE_OLD);
+>  		const char *add =3D diff_get_color_opt(o, DIFF_FILE_NEW);
+> -		show_submodule_summary(o->file, one ? one->path : two->path,
+> -				line_prefix,
+> +		struct diff_filespec *spec =3D one && DIFF_FILE_VALID(one) ? one : t=
+wo;
+> +		if (!spec && !DIFF_FILE_VALID(spec))
+> +			die("BUG: two invalid diff_filespec structs in diff");
+> +
+> +		show_submodule_summary(o->file, spec->path, line_prefix,
+>  				one->sha1, two->sha1, two->dirty_submodule,
+>  				meta, del, add, reset);
+>  		return;
+
+This doesn't make sense, as we're definitely dereferencing both=20
+one and two with ->sha1, so we do not need the "one &&" and the=20
+"!spec &&".=20
+I think the originally sent patches are correct, but the commit=20
+message may need rewriting to comply with Jeffs nitpicking.
 
 
-Yes, as I stated in my example, the ephemeral branch created from
-checking out a random commit would be automatically deleted anytime
-there was another downstream name for the ref (and the ref was no
-longer in the working-directory). Another way to think of the proposal
-is to allowed detached-HEADs, but automatically create ephemeral
-branch-names when checking into a detached head.
 
-On Mon, Aug 12, 2013 at 12:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> As Jonathan mentioned, your local branch namespace _is_ ephemeral in
-> the larger picture, and you can and should use your regular branches
-> as such.
 
-This is not the case. To me "ephemeral" means that the branch name
-automatically disappears if nothing gets checked into it. The local
-branch names definitely do not operate this way.
+--------------enig3D967807EFD5640F55F2CAAE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-> (1) is not a problem at all by itself with detached HEAD.  You can
-> commit all you want, and the true problem people perceive that comes
-> from (1) is (2), as they think they would lose commit that way.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
 
-It is not a matter of a commit being destroyed, as I know they are not
-destroyed, it is a matter of "losing" as in it being a
-pain-in-the-a-s-s to find the darn thing.
+iQIcBAEBAgAGBQJSCJ8iAAoJEJQCPTzLflhqiL4QAIytRB8SajT+KnWEF1mwPaDd
+9FOy5cRY9nPvV7LWHaiQrcDq16mwYPI4JlhUn/sz/iKoK3ARa52mm2U8Z9ymDC5V
+NWgrbMUrQ30D+EVQvb5O8/EooMfiUrjH5SJyzWYraBR0bWn6XGFndW1+emcZpuNk
+miBzRGunAZ6jZrtFBIt7dowKMgmHd2QMN/y4Autpz6EiGOtT872d7DBT3MwO1SGD
+ZlX9wjunEE1U3/FnqTIaJAjHkhEvrbf+maa1YjmUmNDrwK+InC+bl0DC2GFcpGb+
+eGDtVEKevn0blqjl4iTGH85BOLwY/R6Cqw7nP1P3u+mWVRf1d10qPBnNX1lY33jC
+dTwskKx/h2XBPiGqDqV7gU76UOLvwGGEydrET07n4BmQm9e7AA54EWToMz7RN+zm
++VQhKXXd+eY/weMfnTafe08Wqh+Gv+P7MdgNzHkTM16IVDfwc3y8wu397ecQuzjk
+YgRzHWKfqRuCjD4CEZk7Maqu6UAgMT0K4+F0fbD8HzQFiXe0i+2YFl4CsG3CsA4s
+9g+u39shK8gV0/91rD+NoKONv6oysXSIAHYY80kugbRXk2yfQlZ6ss0Kia1IGOyK
+eONUwFCq+wBs0FSroBxhY/0ajBhQ4zJpQ9QilUgkR4obCVV29VfSlAHAn08riQ9g
+2IPhRDIdz0PsaYqX0F9w
+=dlK5
+-----END PGP SIGNATURE-----
 
-The reflog is only really useful for a short time. If you don't notice
-until later, it's too late for this to be a reasonable way to find the
-missing commit.. and this assumes you noticed at all.
-
-For as long as I've used git, I simplu don't understand why I should
-be able to commit something, and have it go "missing" in the branch
-namespace without an explicit action on my part.
-
-> A truely ephemeral branch that users do not consciously name would be referred to some random string (your etmp/4324 below) that is just as discoverable as an entry in
-> the reflog of the HEAD, so you didn't solve any problem here.
-
-This is simply not true.
-
-The reflog is filled with every reflog action. Any checkout, push,
-pull, existing commits, etc. The ephemeral space would *only* contain
-dangling refs that were not named, merged, or discarded.
-
-> ...the history leading to the tip commit will not be at the tip of any meaningfully
->
-> named branch.  That is different from a commit getting lost, and I
-> do not see how ephemerally created branches with random names would
-> help people discover these commits better compared to reflog for the
-> HEAD.
-
-Is there currently any way to say "hey, git, show me what commits are
-dangling that might be lost in the reflog?"
-
-I'm not aware of one. This is the difference. It's making the action
-of throwing away a dangling ref more explicit.
+--------------enig3D967807EFD5640F55F2CAAE--
