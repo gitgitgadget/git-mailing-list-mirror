@@ -1,69 +1,96 @@
-From: Ari Entlich <atrigent@ccs.neu.edu>
-Subject: Help with sparse checkouts
-Date: Mon, 12 Aug 2013 14:27:51 -0400 (EDT)
-Message-ID: <6658365.507831376332071042.JavaMail.root@zimbra>
-References: <7159505.507781376331946615.JavaMail.root@zimbra>
+From: David Jeske <davidj@gmail.com>
+Subject: Re: ephemeral-branches instead of detached-head?
+Date: Mon, 12 Aug 2013 12:05:09 -0700
+Message-ID: <CA+CP9O6LG-dfeEKOCs48Qv9kSS4NqW1bKY8HrLeJmx2drqqSdg@mail.gmail.com>
+References: <CA+CP9O6on2NXo6o4_0NoULnT8sgUD3pvvkFZvCTM5xKb38qOeA@mail.gmail.com>
+ <7veh9z1gym.fsf@alter.siamese.dyndns.org> <CA+CP9O5fhyQrn3SboafocWJjaAywJHC0T-bw+AXk_8RX53hJ6Q@mail.gmail.com>
+ <CA+CP9O7--HXQdZXH9MJEh0VqdwpYqb052KYrvZqYhbfajpPG0A@mail.gmail.com> <CACsJy8A-aSjNdSkiBUBSH43G_FBMnShfpkcwQqM9-6d41rfCUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 12 21:05:06 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 12 21:05:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8xQM-0001PX-9H
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 21:05:02 +0200
+	id 1V8xRF-0002AO-AB
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 21:05:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751609Ab3HLTE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Aug 2013 15:04:57 -0400
-Received: from amber.ccs.neu.edu ([129.10.116.51]:51821 "EHLO
-	amber.ccs.neu.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750986Ab3HLTE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Aug 2013 15:04:56 -0400
-X-Greylist: delayed 2211 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Aug 2013 15:04:56 EDT
-Received: from zimbra.ccs.neu.edu ([129.10.116.59])
-	by amber.ccs.neu.edu with esmtp (Exim 4.69)
-	(envelope-from <atrigent@ccs.neu.edu>)
-	id 1V8wqT-0007Nr-CI
-	for git@vger.kernel.org; Mon, 12 Aug 2013 14:28:03 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.ccs.neu.edu (Postfix) with ESMTP id 4E93DF5C015
-	for <git@vger.kernel.org>; Mon, 12 Aug 2013 14:27:57 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at zimbra.ccs.neu.edu
-Received: from zimbra.ccs.neu.edu ([127.0.0.1])
-	by localhost (zimbra.ccs.neu.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 39QPkRDXcab0 for <git@vger.kernel.org>;
-	Mon, 12 Aug 2013 14:27:51 -0400 (EDT)
-Received: from zimbra.ccs.neu.edu (zimbra.ccs.neu.edu [129.10.116.59])
-	by zimbra.ccs.neu.edu (Postfix) with ESMTP id 2CD39F5C019
-	for <git@vger.kernel.org>; Mon, 12 Aug 2013 14:27:51 -0400 (EDT)
-In-Reply-To: <7159505.507781376331946615.JavaMail.root@zimbra>
-X-Originating-IP: [134.174.110.8]
-X-Mailer: Zimbra 5.0.22_GA_3210.UBUNTU6 (ZimbraWebClient - FF3.0 (Mac)/5.0.22_GA_3210.UBUNTU6)
+	id S1751915Ab3HLTFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Aug 2013 15:05:53 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:53081 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751429Ab3HLTFw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Aug 2013 15:05:52 -0400
+Received: by mail-oa0-f49.google.com with SMTP id n10so10112225oag.22
+        for <git@vger.kernel.org>; Mon, 12 Aug 2013 12:05:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=mvbX415QwpEaduyNy0mZmxUg3NQKwr9Pei7vaSPbCKo=;
+        b=Ii30VRXzueES4MNWAo4qqaGmPvnziTNY6LyjrGj7vb61D7T//J5PfqMKwkEWzVkoJs
+         aitW7ZGO3a/yRkMBmcE9tvCOn00Lm1dkCPXjIpUqjbBrm1HL00nc8iMg32zvLTqQdyTf
+         PcL0Xi3IG6+alOI97JNW7cMiErsV6SSMq/DY3We2oIAnpN2/qRPVuOJdIyKiM06q4N29
+         ihOMalVNWZi/siMiY6hcKOnl6iVGti2BEOGqgyufJKr7fLAZbexfCLc/ky+BuOFkVCef
+         V4Gq2ngricn1LGAoXDwkTB3ZJ6wrvCFg1pNMIqZosa9hlMHWMzqcZz5Ac8oVjXBf6SVj
+         AiPQ==
+X-Received: by 10.60.76.72 with SMTP id i8mr474857oew.11.1376334350072; Mon,
+ 12 Aug 2013 12:05:50 -0700 (PDT)
+Received: by 10.60.120.65 with HTTP; Mon, 12 Aug 2013 12:05:09 -0700 (PDT)
+In-Reply-To: <CACsJy8A-aSjNdSkiBUBSH43G_FBMnShfpkcwQqM9-6d41rfCUA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232204>
 
-Hello all!
+On Mon, Aug 12, 2013 at 6:23 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> That would annoy me as I often work on top of detached HEAD on purpose
+> and only create a branch when I want to save something. If the warning
+> is to be moved, it should warn at the next checkout.
 
-At my current workplace, I have a git-svn repository which has an extremely large working directory. I did not use the --stdlayout option in this clone, so I have a number of branches in my working directory which duplicate large amounts of trunk. There is a particularly large subdirectory which has now been copied to branches four times (and hence shows up in my working directory 5 times). This directory and its copies are making up the vast majority of the files and storage space in my working directory. Furthermore, I do not need or want to have access to the data in these particular directories. Hence, I would like to use the sparse checkouts feature to exclude them from my working directory.
+Yes, you're absolutely right ...
 
-Let's say that these directories are all called "thedir". What I would like to do with the sparse checkouts feature is to simply ignore directories with this name anywhere in the working tree. Intuitively, it seems like I should be able to put:
+My point about the current checkout warning is that it's crying wolf,
+and nullifying the value of the warning. Most of the time I checkout a
+ref, I'm not doing anything dangerous because I'm not going to check
+anything in. The warning would be more effective if it warns in as
+narrow a situation as possible. You're correct that the clobber is
+even more narrow than the checkin.
 
-!thedir
+The warning on clobber would be similar to (but shorter than) the one
+which could be removed from checkout..
 
-or possibly
+Clobbered detached HEAD 'cce40d6'!
 
-!thedir/
+   git log cce40d6 ^master      # log detached changes vs master
+   git branch <name> cc340d6    # name the changes with a branch
 
-in the sparse-checkout file, but these don't seem to work. I've tried a number of other things, but I always seem to either get the "sparse checkout leaves no entry on working directory" error or no effect at all. In the end, I basically just don't really understand how this file is supposed to work, so I'd rather get some expert help here rather than thrashing about randomly. I realize that sparse checkouts is usually used to select a specific directory rather than what I'm trying to do, so I accept that what I want may simply not be possible with the current implementation. I've asked on IRC, but I wanted to ask here also since it seemed that most of the people I talked to weren't that familiar with the sparse checkouts feature.
+Personally, I'd prefer for explicit action to discard a detached head.
+It's true that this is an explicit step, but for me it generally takes
+a heck of alot less time to explicitly discard than it did to checkout
+the detached head, make changes (or apply a patch), and then decide to
+throw them away.
 
-Note that, while using --stdlayout would mitigate the massive working directory somewhat, I would still probably want to exclude this directory from my worktree. I will probably do a reclone at some point and use --stdlayout, but I will still want to exclude this particular directory even at that point. I had a lot of people on IRC telling me to just use --stdlayout, which was a good suggestion, but didn't fully fulfill my needs.
+My "ephemeral branch" idea was a way to make this explicit discard as
+passive and lazy as possible. Basically, never stop you from doing
+your work, assume you know what you are doing. If the user
+names-the-branch it disappears. If the user merges or rebases the
+detached head, it disappears. The only time the "ephemeral branch"
+would survive is if the user really clobbered a detached head and then
+didn't do anything about it. Even if they missed the warning (in the
+middle of a script or automated process), eventually they would see
+the ephemeral branch lying around.
 
-Thanks!
+Clobbering a detached head with "ephemeral branches" could show no
+warning at all, or a warning like:
 
-Ari
+Clobbered detached HEAD.
+
+   git log cce40d6 ^master           # log detached changes vs master
+   git branch -D tmp/cce40d6         # Discard these changes
+   git branch tmp/cce40d6 <newname>  # name this branch
