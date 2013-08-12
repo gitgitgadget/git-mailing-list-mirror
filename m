@@ -1,132 +1,154 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/3] t3404: rebase: interactive: demonstrate short SHA-1 collision
-Date: Mon, 12 Aug 2013 03:40:50 -0400
-Message-ID: <CAPig+cTYC-EPWFmqTxBO15PE6AuC3jUYNehtQwYk9oADp1AaZw@mail.gmail.com>
-References: <1376280459-55188-1-git-send-email-sunshine@sunshineco.com>
-	<1376280459-55188-3-git-send-email-sunshine@sunshineco.com>
-	<7vzjsnzagj.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] .mailmap: mark bouncing email addresses
+Date: Mon, 12 Aug 2013 00:44:09 -0700
+Message-ID: <7viozb1hh2.fsf@alter.siamese.dyndns.org>
+References: <1376072305-15255-1-git-send-email-stefanbeller@googlemail.com>
+	<1376072305-15255-3-git-send-email-stefanbeller@googlemail.com>
+	<20130809200101.GX14690@google.com>
+	<7vr4e230g8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, David <bouncingcats@gmail.com>,
-	Diogo de Campos <campos@esss.com.br>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Yann Dirson <dirson@bertin.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 12 09:40:57 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 12 09:44:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V8mkK-0004P0-B2
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 09:40:56 +0200
+	id 1V8mnc-0006tu-B8
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Aug 2013 09:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754527Ab3HLHkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Aug 2013 03:40:52 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:37478 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754453Ab3HLHkw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Aug 2013 03:40:52 -0400
-Received: by mail-la0-f52.google.com with SMTP id fq13so4471104lab.11
-        for <git@vger.kernel.org>; Mon, 12 Aug 2013 00:40:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=UGWb8p1jpMqNtiKC78bMDpQK93kEghvsThkdhQRqwHg=;
-        b=YhDvwHrICvXYFjrxcYuxjfhmf0kEa5s5L6kt81s2qRk6kUSY2nVer3ymYKoiaLiiRL
-         4W25U2U4uiRP5c2XvgB9MTNQl2f/47b+AQrRMYFfTycP+fDZ3sLYlxO+Pz6kGfo5ppSU
-         oXpwZL7XW3Z08MArknEYowKwLzAzhh0g2CzfKkrpRDEN/PyEhGA8M1Pw6df0IGnBcyc1
-         CiCMW6TGfUnbzRw9AiK7WgDOCd9y+3aEcVDFjAn1OAJyTbin0BQtHBhMAYeBM7Phhgaq
-         dmQPLSZy997Wmyp2U/JcL6I2OW8C4BBkcMUlIFAXCazfXLspvQq+fjr5YQkacIRg7A8T
-         j/EQ==
-X-Received: by 10.152.1.169 with SMTP id 9mr10580803lan.90.1376293250796; Mon,
- 12 Aug 2013 00:40:50 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Mon, 12 Aug 2013 00:40:50 -0700 (PDT)
-In-Reply-To: <7vzjsnzagj.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: i3IG9Q2-2DDV_1i_kfCnJq4vQYU
+	id S1754633Ab3HLHoQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Aug 2013 03:44:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34112 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754465Ab3HLHoP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Aug 2013 03:44:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40CDF34D31;
+	Mon, 12 Aug 2013 07:44:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=LnTHi/Hlw7Co
+	zEOL+jg4OtY4m0g=; b=IRbRTtppTOw+v6phzyr25TbINZy4KqLxkmc2uknVsFWG
+	kJ7sh3HKNzNQ8yaqVDtgDmcHLfIplB2o2Q4PR77RRLhqPjxxo3lPzZ4pUkaT2JHP
+	RwbAGli/9qnOBeX6cX4Df/tgtDKWr8MtwcrHf6Td3yWzclHQokJCZULTJzr8JgA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MKQdWQ
+	Z/HPCfImA0Nf7QCSdMRqP/8LB8J/JWo/qtuimkoEkUaOQG2d9IHzuovOZct12GcO
+	dmEPyyvzYQDf2ig3SrZulTbZM4RnXGZXUD9gFO//f1czm1EUtiaFSxrw23Bj7EEH
+	tvxCu1vQLBI1NAkCUiC1ROw1E5g2c3FYLfJ5c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3641934D2E;
+	Mon, 12 Aug 2013 07:44:12 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7CF9834D2A;
+	Mon, 12 Aug 2013 07:44:11 +0000 (UTC)
+In-Reply-To: <7vr4e230g8.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 09 Aug 2013 16:32:07 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FA59BAC8-0322-11E3-AE98-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232168>
 
-On Mon, Aug 12, 2013 at 2:31 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> The 'todo' sheet for interactive rebase shows abbreviated SHA-1's and
->> then performs its operations upon those shortened values. This can lead
->> to an abort if the SHA-1 of a reworded or edited commit is no longer
->> unique within the abbreviated SHA-1 space and a subsequent SHA-1 in the
->> todo list has the same abbreviated value.
->>
->> For example:
->>
->>   edit f00dfad first
->>   pick badbeef second
->>
->> If, after editing, the new SHA-1 of "first" is now
->> badbeef5ba78983324dff5265c80c4490d5a809a, then the subsequent 'pick
->> badbeef second' will fail since badbeef is no longer a unique SHA-1
->> abbreviation:
->>
->>   error: short SHA1 badbeef is ambiguous.
->>   fatal: Needed a single revision
->>   Invalid commit name: badbeef
->>
->> Demonstrate this problem with a couple of specially crafted commits
->> which initially have distinct abbreviated SHA-1's, but for which the
->> abbreviated SHA-1's collide after a simple rewording of the first
->> commit's message.
->>
->> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
->> ---
->>  t/t3404-rebase-interactive.sh | 17 +++++++++++++++++
->>  1 file changed, 17 insertions(+)
->>
->> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
->> index af141be..e5ebec6 100755
->> --- a/t/t3404-rebase-interactive.sh
->> +++ b/t/t3404-rebase-interactive.sh
->> @@ -977,4 +977,21 @@ test_expect_success 'rebase -i with --strategy and -X' '
->>       test $(cat file1) = Z
->>  '
->>
->> +test_expect_success 'short SHA-1 setup' '
->> +     test_when_finished "git checkout master" &&
->> +     git checkout --orphan collide &&
->> +     git rm -rf . &&
->> +     unset test_tick &&
->
-> This will inconvenience tests added later to these two in the
-> future.  Oversight, or deliberate act knowing that these two are the
-> last tests in this script ;-)?
->
-> One bad thing is that "unset" loses information so that such future
-> tests cannot resurrect test_tick and continue on from where the last
-> test-tick left off.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Oversight. The commits were quite deliberately crafted with very
-specific commit times, commit messages, trees, and blobs in order to
-achieve a conflicting short SHA-1 ("badbeef") at rebase time, so it
-was necessary to have test_tick at a known state.
+> I'd suggest using the lavabit address unless we hear the preferred
+> address from her, as the lavabit address was used in 5bf46841
+> (git-gui: update Japanese translation, 2010-02-02), while the last
+> use of the bluebottle address was in 6762079a (Cloning from a repo
+> without "current branch", 2007-06-16).
 
-It shouldn't be too much effort to save its value and restore it at
-the end of the test.
+So with the above, and the four responses from long-lost friends,
+here is what I came up with.
 
->> +     test_commit collide1 collide &&
->> +     test_commit --notick collide2 collide &&
->> +     test_commit --notick "collide3 115158b5" collide collide3 collide3
->> +'
->>
->> +test_expect_failure 'short SHA-1 collide' '
->> +     test_when_finished "reset_rebase && git checkout master" &&
->> +     git checkout collide &&
->> +     FAKE_COMMIT_MESSAGE="collide2 815200e" \
->
-> ;-)
->
->> +     FAKE_LINES="reword 1 2" git rebase -i HEAD~2
->> +'
->> +
->>  test_done
+-- >8 --
+Subject: .mailmap: update long-lost friends with multiple defunct addre=
+sses
+
+A handful of past contributors are recorded with multiple e-mail
+addresses, all of which are undeliberable.  With a lot of help from
+Jonathan, we located all of them except for one.  Update the found
+ones with their currently preferred address, and use the last known
+address to consolidate contributions by the lost person under a
+single entry.
+
+Helped-by: Stefan Beller <stefanbeller@googlemail.com>
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ .mailmap | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/.mailmap b/.mailmap
+index f7cc21e..7a5d0a6 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -18,6 +18,8 @@ Alexey Shumkin <alex.crezoff@gmail.com> <Alex.Crezoff=
+@gmail.com>
+ Anders Kaseorg <andersk@MIT.EDU> <andersk@ksplice.com>
+ Anders Kaseorg <andersk@MIT.EDU> <andersk@mit.edu>
+ Aneesh Kumar K.V <aneesh.kumar@gmail.com>
++Amos Waterland <apw@debian.org> <apw@rossby.metr.ou.edu>
++Amos Waterland <apw@debian.org> <apw@us.ibm.com>
+ Ben Walton <bdwalton@gmail.com> <bwalton@artsci.utoronto.ca>
+ Bernt Hansen <bernt@norang.ca> <bernt@alumni.uwaterloo.ca>
+ Brandon Casey <drafnel@gmail.com> <casey@nrlssc.navy.mil>
+@@ -34,6 +36,8 @@ Dan Johnson <computerdruid@gmail.com>
+ Dana L. How <danahow@gmail.com> <how@deathvalley.cswitch.com>
+ Dana L. How <danahow@gmail.com> Dana How
+ Daniel Barkalow <barkalow@iabervon.org>
++Daniel Trstenjak <daniel.trstenjak@gmail.com> <daniel.trstenjak@online=
+=2Ede>
++Daniel Trstenjak <daniel.trstenjak@gmail.com> <trsten@science-computin=
+g.de>
+ David Brown <git@davidb.org> <davidb@quicinc.com>
+ David D. Kilzer <ddkilzer@kilzer.net>
+ David K=C3=A5gedal <davidk@lysator.liu.se>
+@@ -68,11 +72,17 @@ J. Bruce Fields <bfields@citi.umich.edu> <bfields@p=
+ig.linuxdev.us.dell.com>
+ J. Bruce Fields <bfields@citi.umich.edu> <bfields@puzzle.fieldses.org>
+ Jakub Nar=C4=99bski <jnareb@gmail.com>
+ James Y Knight <jknight@itasoftware.com> <foom@fuhm.net>
++# The 2 following authors are probably the same person,
++# but both emails bounce.
++Jason McMullan <jason.mcmullan@timesys.com>
++Jason McMullan <mcmullan@netapp.com>
+ Jason Riedy <ejr@eecs.berkeley.edu> <ejr@EECS.Berkeley.EDU>
+ Jason Riedy <ejr@eecs.berkeley.edu> <ejr@cs.berkeley.edu>
+ Jay Soffian <jaysoffian@gmail.com> <jaysoffian+git@gmail.com>
+ Jeff King <peff@peff.net> <peff@github.com>
+ Jeff Muizelaar <jmuizelaar@mozilla.com> <jeff@infidigm.net>
++Jens Axboe <axboe@kernel.dk> <axboe@suse.de>
++Jens Axboe <axboe@kernel.dk> <jens.axboe@oracle.com>
+ Jim Meyering <jim@meyering.net> <meyering@redhat.com>
+ Joachim Berdal Haga <cjhaga@fys.uio.no>
+ Johannes Schindelin <Johannes.Schindelin@gmx.de> <johannes.schindelin@=
+gmx.de>
+@@ -144,7 +154,7 @@ Michele Ballabio <barra_cuda@katamail.com>
+ Miklos Vajna <vmiklos@frugalware.org> <vmiklos@suse.cz>
+ Namhyung Kim <namhyung@gmail.com> <namhyung.kim@lge.com>
+ Namhyung Kim <namhyung@gmail.com> <namhyung@kernel.org>
+-Nanako Shiraishi <nanako3@bluebottle.com>
++Nanako Shiraishi <nanako3@lavabit.com> <nanako3@bluebottle.com>
+ Nanako Shiraishi <nanako3@lavabit.com>
+ Nelson Elhage <nelhage@mit.edu> <nelhage@MIT.EDU>
+ Nelson Elhage <nelhage@mit.edu> <nelhage@ksplice.com>
+@@ -177,6 +187,8 @@ Robert Fitzsimons <robfitz@273k.net>
+ Robert Shearman <robertshearman@gmail.com> <rob@codeweavers.com>
+ Robert Zeh <robert.a.zeh@gmail.com>
+ Robin Rosenberg <robin.rosenberg@dewire.com> <robin.rosenberg.lists@de=
+wire.com>
++Rutger Nijlunsing <rutger.nijlunsing@gmail.com> <rutger@nospam.com>
++Rutger Nijlunsing <rutger.nijlunsing@gmail.com> <git@tux.tmfweb.nl>
+ Ryan Anderson <ryan@michonline.com> <rda@google.com>
+ Salikh Zakirov <salikh.zakirov@gmail.com> <Salikh.Zakirov@Intel.com>
+ Sam Vilain <sam@vilain.net> <sam.vilain@catalyst.net.nz>
