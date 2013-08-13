@@ -1,257 +1,225 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v5 2/2] status: always show tracking branch even no change
-Date: Tue, 13 Aug 2013 12:53:49 +0800
-Message-ID: <6b540dd551924a2e4f60c2892ad4872259c2c1d3.1376369554.git.worldhello.net@gmail.com>
-References: <96e0ed4f67eaf058466ead9228cad0dcfe1b5c6a.1376369554.git.worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Aug 13 06:55:37 2013
+From: Luke San Antonio <lukesanantonio@gmail.com>
+Subject: Re: [Bug] git stash generates a different diff then other commands
+ (diff, add, etc) resulting in merge conflicts!
+Date: Tue, 13 Aug 2013 01:31:57 -0400
+Message-ID: <5209C4CD.8040607@gmail.com>
+References: <CAP+CFTZWzoAg=ni6t1aif-85y6W4-2JUT4wooapTvD0oGH+HRw@mail.gmail.com> <CABURp0oATJ58POmgYLjSmy-y84LTjkP0PTh4=3M-vc04_AoMdg@mail.gmail.com> <520872CC.3040507@gmail.com> <CABURp0rWMAs9vT791vp4BEYS-Y9Jmzjmt4bbuB+po8=vkiqUWQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 13 07:32:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V96ds-0007fH-7Z
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 06:55:36 +0200
+	id 1V97DO-00043h-Vi
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 07:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752356Ab3HMEz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Aug 2013 00:55:29 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:56716 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751457Ab3HMEz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Aug 2013 00:55:26 -0400
-Received: by mail-pa0-f54.google.com with SMTP id kx10so2901046pab.41
-        for <git@vger.kernel.org>; Mon, 12 Aug 2013 21:55:26 -0700 (PDT)
+	id S1754506Ab3HMFcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Aug 2013 01:32:00 -0400
+Received: from mail-ve0-f172.google.com ([209.85.128.172]:41737 "EHLO
+	mail-ve0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754465Ab3HMFcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Aug 2013 01:32:00 -0400
+Received: by mail-ve0-f172.google.com with SMTP id oz10so6354030veb.31
+        for <git@vger.kernel.org>; Mon, 12 Aug 2013 22:31:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=VtiBeStmjcM7kujxfIGUZpVppPNV+X1TCCMAZRg4IA0=;
-        b=vR5U0cG7WXsXB8tlAjtLB3fot9DIFpQNoYL8iY6SVs2HC6803/hofdjsX5TlV5TdKP
-         Ragui4UKj+mP9XkRxIEEjiFhMx+S8R2M0NPSLnlQ03Y6wEdKp9GYdF3mc3dIxxShsmzF
-         wTnD0h1n1/PDLl67uSkB4t612pYrhzkl5Wh7o/6DDVWYzgKLIdQC+TEsPjulg8eGfUL6
-         YvvkewEwJPHcDc/qfrfFPZSgwNrsoHIpZ6dzqu4VXoJG5Na9Xw0ownDMqcJFe/oFygew
-         a1NSc9GSPsc84j0+cumtsYK9qv5cgU6UMW4INrbVtuqMV3leJnmBT4mqS7q6f0X0aAnV
-         e+aw==
-X-Received: by 10.68.137.1 with SMTP id qe1mr2607321pbb.25.1376369726295;
-        Mon, 12 Aug 2013 21:55:26 -0700 (PDT)
-Received: from localhost.localdomain ([114.246.129.124])
-        by mx.google.com with ESMTPSA id dg3sm41181259pbc.24.2013.08.12.21.55.22
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=b+qPoN4HdPngH6l3kf+OnFNK+LCaej1Y5ynK2lIWYII=;
+        b=HCkGrtw2zI5vFN6WmtMglYu8iR2vTP9V808Ull0XmlSZawbUrOtjVOsKfX9QCxhTWN
+         HuYpvPoLBpiy96gJdnzEOKH1kbE0SdQAUU2QyAGtr4an5zAZ9kIbUwfqn8X2pK9AyNL0
+         PVkK5qsF/FJZuSqYJmLkrVLNX+fCs4ax5jHMlgrC/YUWY4dp5qSGnMr/CwfHgQK+hPqG
+         CNX48Oo/SRRdM5+Trs48lJWcQImF1dK+V2MiVU64VNZ9D5wJ5TMcal9fgE7DnxmTnzpJ
+         CAJ5B/tDwA7xap5F62woFOpoPmeD21E2LgV+PQZLuUGgRXe7HtysT8+b8HVHBbKA5vzc
+         eBPA==
+X-Received: by 10.52.187.162 with SMTP id ft2mr2163266vdc.10.1376371919150;
+        Mon, 12 Aug 2013 22:31:59 -0700 (PDT)
+Received: from [192.168.1.6] (ool-457405c6.dyn.optonline.net. [69.116.5.198])
+        by mx.google.com with ESMTPSA id jw6sm16595258veb.3.2013.08.12.22.31.58
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 12 Aug 2013 21:55:24 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc1.430.g417e2f3
-In-Reply-To: <96e0ed4f67eaf058466ead9228cad0dcfe1b5c6a.1376369554.git.worldhello.net@gmail.com>
-In-Reply-To: <CANYiYbFGBRV+EP8oV_chKvBsHLAAZeKmt0395_z9QD-bBZtErQ@mail.gmail.com>
-References: <CANYiYbFGBRV+EP8oV_chKvBsHLAAZeKmt0395_z9QD-bBZtErQ@mail.gmail.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 12 Aug 2013 22:31:58 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
+In-Reply-To: <CABURp0rWMAs9vT791vp4BEYS-Y9Jmzjmt4bbuB+po8=vkiqUWQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232211>
 
-In order to see what the current branch is tracking, one way is using
-"git branch -v -v", but branches other than the current are also
-reported. Another way is using "git status", such as:
+On 08/12/2013 12:05 PM, Phil Hord wrote:
+> On Mon, Aug 12, 2013 at 1:29 AM, Luke San Antonio
+> <lukesanantonio@gmail.com> wrote:
+>> On 08/08/20130 04:54 PM, Phil Hord wrote:
+>>> Luke,
+>>>
+>>> I think the issue is that your working directory receives your cached
+>>> file when you say 'git stash --keep-index'.  When you restore the
+>>> stash, your previous working directory now conflicts with your new
+>>> working directory, but neither is the same as HEAD.
+>>>
+>>> Here's a test script to demonstrate the issue, I think.  Did I get
+>>> this right, Luke?
+>>>
+>>>    # cd /tmp && rm -rf foo
+>>>    git init foo && cd foo
+>>>    echo "foo" > bar &&  git add bar && git commit -mfoo
+>>>    echo "bar" > bar &&  git add bar
+>>>    echo "baz" > bar
+>>>    echo "Before stash  bar: $(cat bar)"
+>>>    git stash --keep-index
+>>>    echo "After stash  bar: $(cat bar)"
+>>>    git stash apply
+>> Actually no, in your script, the bar file has a modification in the working
+>> tree which is in the same hunk as a change applied to the index. In my
+>> project the changes that were added to the index are not modified further
+>> in theworking tree.
+>>
+>> --------
+>>
+>> Not only that, but I found out why git was generated different patches!
+>> I realized that when I removed a hunk appearing before the merge conflict
+>> from the working tree and index, the merge conflict disappeared! Turns
+>> out, we can forget about stashing for a minute!
+>> First the hunk in my working tree:
+>>
+>> @@ -56,12 +56,14 @@
+>>       bool running_ = true;
+>>
+>>
+>>       /*!
+>> -     * \brief The default font renderer, global to all who have a pointer
+>> to
+>> -     * the Game class.
+>> +     * \brief The font renderer implementation, obtained from the config
+>> file.
+>>        *
+>> -     * It need not be used at all!
+>> +     * It should be used and passed along to member objects by GameStates!
+>> +     *
+>> +     * \note It can be cached, but not between GameStates, meaning it
+>> should be
+>> +     * cached again every time a new GameState is constructed!
+>>        */
+>> -    std::unique_ptr<FontRenderer> font_renderer_ = nullptr;
+>> +    FontRenderer* font_renderer_ = nullptr;
+>>
+>>       int run(int argc, char* argv[]);
+>>
+>> Most of this is unimportant, but notice the line number spec:@@ -56,12
+>> +56,14 @@
+>> The line number of this hunk doesn't change! Then I addeda few lines *above*
+>> this hunk, (around line 30 I think). Here is the diff again:
+>>
+>> @@ -56,12 +58,14 @@
+>>       bool running_ = true;
+>>
+>>
+>>       /*!
+>> -     * \brief The default font renderer, global to all who have a pointer
+>> to
+>> -     * the Game class.
+>> +     * \brief The font renderer implementation, obtained from the config
+>> file.
+>> +     *
+>> +     * It should be used and passed along to member objects by GameStates!
+>>        *
+>> -     * It need not be used at all!
+>> +     * \note It can be cached, but not between GameStates, meaning it
+>> should be
+>> +     * cached again every time a new GameState is constructed!
+>>        */
+>> -    std::unique_ptr<FontRenderer> font_renderer_ = nullptr;
+>> +    FontRenderer* font_renderer_ = nullptr;
+>>
+>>       int run(int argc, char* argv[]);
+>>
+>> Notice the new line number spec:@@ -56,12 +58,14 @@
+>>
+>> It moves two lines down, because I added those two lines before it, makes
+>> sense!
+>> But also notice that the patches are different, just because of the two
+>> lines
+>> above it!
+>>
+>> I thought I might be able to fix this problem by changing the new
+>> diff.algorithm
+>> config option to 'patience', but it seems to only affect how patches look,
+>> not
+>> how they are stored internally... Same problem!
+>>
+>> Also, I'm wondering why that line was picked up by git if the patches don't
+>> match,
+>> shouldn't git give me a conflict with the whole hunk, or is the system
+>> smarter
+>> than that?
+> Git does not store patches.  Git stores the entire file.  I do not
+> think the diff algorithm you choose will have any effect on the
+> results of the merge.  But I am pretty clueless about the merge
+> engine, so I could be off-base on this last part.
+>
+>> What if merging suppressed the conflict if both possibilities are the same?
+>> Isn't
+>> that reasonable, or is there some 1% where this could cause (silent but
+>> deadly)
+>> data loss.
+> I think that is what Git is meant to do.  But I am confused now about
+> where the failure is occurring for you.  Can you demonstrate the
+> problem by modifying my test script?
+>
+> Is this more like it?
+>
+>    cd /tmp && rm -rf foo
+>    git init foo && cd foo
+>    printf "1\n2 foo\n3\n4\n5\n6\n7\n8 foo\n9\n10\n" > bar &&  git add bar
+>    git commit -mfoo
+>    printf "1\n2 XXX\n3\n4\n5\n6\n7\n8 foo\n9\n10\n" > bar &&  git add bar
+>    printf "1\n2 XXX\n3\n4\n5\n6\n7\n8 XXX\n9\n10\n" > bar
+>    echo "Before stash  bar: $(cat bar)"
+>    git stash --keep-index
+>    echo "After stash  bar: $(cat bar)"
+>    git stash apply
+>
+> Phil
+So I found an isolated case, it's very strange...
 
-    $ git status
-    # On branch master
-    # Your branch is ahead of 'origin/master' by 1 commit.
-    ...
+Here's a script!
 
-But this will not work if there is no change between the current
-branch and its upstream. What if report upstream tracking info
-always even if there is no difference. E.g.
+   cd /tmp && rm -rf foo;
+   git init foo && cd foo;
+   git config --local diff.algorithm myers
+   printf "\n\n-----------------\n\n\n    /*"'!'"\
+\n     * ---------\n     * ^^^^^^^^^\n     *\n     \
+* =========\n     */\n    |-----------|\n" > foo;
+   git add foo && git commit -m "foo";
+   printf "\n-----------------\n\n\n    /*"'!'"\
+\n     * #########\n     *\n     * !!!!!!!!!\n     \
+*\n     * @@@@@@@@@\n     * &&&&&&&&&\n     */\n    \
+|===========|\n" > foo
+   printf "s\nn\ny\ny\ny\n" | git add foo --patch > /dev/null
+   git stash save --keep-index
 
-    $ git status
-    # On branch feature1
-    # Your branch is identical to 'github/feature1'.
-    ...
+Let me start off by apologizing for that! =D
 
-    $ git status -bs
-    ## feature1...github/feature1
-    ...
+... Copy and paste that into a terminal and you should have a recreated 
+version of my repository there! Now that the file is partly stashed and 
+partly in the index, check out the difference in diffs:
 
-    $ git checkout feature1
-    Already on 'feature1'
-    Your branch is identical to 'github/feature1'.
-    ...
+try:
+   git diff --staged
+then try:
+   git stash show -p
 
-Also add some test cases in t6040.
+You see the difference? Then pop the stash and you'll see a very 
+obfuscated and verbose sample of what I am talking about!
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
- remote.c                 | 10 ++++-----
- t/t6040-tracking-info.sh | 54 ++++++++++++++++++++++++++++++++++++++++++++----
- wt-status.c              | 13 +++++-------
- 3 files changed, 60 insertions(+), 17 deletions(-)
+Also, sorry about the typos in my last message, I guess I looked past 
+them...
 
-diff --git a/remote.c b/remote.c
-index c747936..70307f4 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1811,13 +1811,13 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 	if (!stat_tracking_info(branch, &num_ours, &num_theirs))
- 		return 0;
- 
--	/* Nothing to report if neither side has changes. */
--	if (!num_ours && !num_theirs)
--		return 0;
--
- 	base = branch->merge[0]->dst;
- 	base = shorten_unambiguous_ref(base, 0);
--	if (!num_theirs) {
-+	if (!num_ours && !num_theirs) {
-+		strbuf_addf(sb,
-+			_("Your branch is identical to '%s'.\n"),
-+			base);
-+	} else if (!num_theirs) {
- 		strbuf_addf(sb,
- 			Q_("Your branch is ahead of '%s' by %d commit.\n",
- 			   "Your branch is ahead of '%s' by %d commits.\n",
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index ec2b516..eafce7d 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -28,18 +28,20 @@ test_expect_success setup '
- 		git reset --hard HEAD^ &&
- 		git checkout -b b4 origin &&
- 		advance e &&
--		advance f
-+		advance f &&
-+		git checkout -b b5 origin
- 	) &&
- 	git checkout -b follower --track master &&
- 	advance g
- '
- 
--script='s/^..\(b.\)[	 0-9a-f]*\[\([^]]*\)\].*/\1 \2/p'
-+script='s/^..\(b.\)[	 0-9a-f]*\(\[\([^]]*\)\]\)\{0,1\}.*/\1 \3/p'
- cat >expect <<\EOF
- b1 ahead 1, behind 1
- b2 ahead 1, behind 1
- b3 behind 1
- b4 ahead 2
-+b5 
- EOF
- 
- test_expect_success 'branch -v' '
-@@ -56,6 +58,7 @@ b1 origin/master: ahead 1, behind 1
- b2 origin/master: ahead 1, behind 1
- b3 origin/master: behind 1
- b4 origin/master: ahead 2
-+b5 origin/master
- EOF
- 
- test_expect_success 'branch -vv' '
-@@ -67,20 +70,27 @@ test_expect_success 'branch -vv' '
- 	test_i18ncmp expect actual
- '
- 
--test_expect_success 'checkout' '
-+test_expect_success 'checkout (diverged from upstream)' '
- 	(
- 		cd test && git checkout b1
- 	) >actual &&
- 	test_i18ngrep "have 1 and 1 different" actual
- '
- 
-+test_expect_success 'checkout (identical to upstream)' '
-+	(
-+		cd test && git checkout b5
-+	) >actual &&
-+	test_i18ngrep "Your branch is identical to .origin/master" actual
-+'
-+
- test_expect_success 'checkout with local tracked branch' '
- 	git checkout master &&
- 	git checkout follower >actual &&
- 	test_i18ngrep "is ahead of" actual
- '
- 
--test_expect_success 'status' '
-+test_expect_success 'status (diverged from upstream)' '
- 	(
- 		cd test &&
- 		git checkout b1 >/dev/null &&
-@@ -90,6 +100,42 @@ test_expect_success 'status' '
- 	test_i18ngrep "have 1 and 1 different" actual
- '
- 
-+test_expect_success 'status (identical to upstream)' '
-+	(
-+		cd test &&
-+		git checkout b5 >/dev/null &&
-+		# reports nothing to commit
-+		test_must_fail git commit --dry-run
-+	) >actual &&
-+	test_i18ngrep "Your branch is identical to .origin/master" actual
-+'
-+
-+cat >expect <<\EOF
-+## b1...origin/master [ahead 1, behind 1]
-+EOF
-+
-+test_expect_success 'status -s -b (diverged from upstream)' '
-+	(
-+		cd test &&
-+		git checkout b1 >/dev/null &&
-+		git status -s -b | head -1
-+	) >actual &&
-+	test_i18ncmp expect actual
-+'
-+
-+cat >expect <<\EOF
-+## b5...origin/master
-+EOF
-+
-+test_expect_success 'status -s -b (identical to upstream)' '
-+	(
-+		cd test &&
-+		git checkout b5 >/dev/null &&
-+		git status -s -b | head -1
-+	) >actual &&
-+	test_i18ncmp expect actual
-+'
-+
- test_expect_success 'fail to track lightweight tags' '
- 	git checkout master &&
- 	git tag light &&
-diff --git a/wt-status.c b/wt-status.c
-index 0c6a3a5..627b59e 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1383,24 +1383,21 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 
- 	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
- 
--	/*
--	 * Not report tracking info if no tracking branch found
--	 * or no difference found.
--	 */
- 	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
- 		fputc(s->null_termination ? '\0' : '\n', s->fp);
- 		return;
- 	}
--	if (!num_ours && !num_theirs) {
--		fputc(s->null_termination ? '\0' : '\n', s->fp);
--		return;
--	}
- 
- 	base = branch->merge[0]->dst;
- 	base = shorten_unambiguous_ref(base, 0);
- 	color_fprintf(s->fp, header_color, "...");
- 	color_fprintf(s->fp, branch_color_remote, "%s", base);
- 
-+	if (!num_ours && !num_theirs) {
-+		fputc(s->null_termination ? '\0' : '\n', s->fp);
-+		return;
-+	}
-+
- 	color_fprintf(s->fp, header_color, " [");
- 	if (!num_ours) {
- 		color_fprintf(s->fp, header_color, _("behind "));
--- 
-1.8.4.rc1.430.g417e2f3
+Thanks Phil, for you know, helping me out!
+- Luke
