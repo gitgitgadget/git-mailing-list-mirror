@@ -1,106 +1,209 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH v3] status: always show tracking branch even no change
-Date: Tue, 13 Aug 2013 12:49:31 +0800
-Message-ID: <CANYiYbFGBRV+EP8oV_chKvBsHLAAZeKmt0395_z9QD-bBZtErQ@mail.gmail.com>
-References: <7vob964l6v.fsf@alter.siamese.dyndns.org>
-	<8b2e7fa581846aca3209b430ac46950ff9d92924.1376146168.git.worldhello.net@gmail.com>
-	<7vd2pj1lk6.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 13 06:49:40 2013
+Subject: [PATCH v5 1/2] branch: not report invalid tracking branch
+Date: Tue, 13 Aug 2013 12:53:48 +0800
+Message-ID: <96e0ed4f67eaf058466ead9228cad0dcfe1b5c6a.1376369554.git.worldhello.net@gmail.com>
+References: <CANYiYbFGBRV+EP8oV_chKvBsHLAAZeKmt0395_z9QD-bBZtErQ@mail.gmail.com>
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Aug 13 06:55:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V96Y7-0002rF-D5
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 06:49:39 +0200
+	id 1V96dm-0007bC-Ok
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 06:55:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752417Ab3HMEte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Aug 2013 00:49:34 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:60858 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752339Ab3HMEtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Aug 2013 00:49:33 -0400
-Received: by mail-wi0-f178.google.com with SMTP id j17so157286wiw.17
-        for <git@vger.kernel.org>; Mon, 12 Aug 2013 21:49:31 -0700 (PDT)
+	id S1752035Ab3HMEzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Aug 2013 00:55:24 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:59235 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750929Ab3HMEzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Aug 2013 00:55:22 -0400
+Received: by mail-pd0-f179.google.com with SMTP id v10so4388620pde.10
+        for <git@vger.kernel.org>; Mon, 12 Aug 2013 21:55:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SC6+lzwC0aovPnJEPXDlrcVfBty1YwgeK9Lm8JA3oZs=;
-        b=ASxXene+V9YzWTFZHEsSZSvGdMj7Nu6X7flQ41fhSv8Ig744BYaiPtrI6bnrYcaGMn
-         Cp7aAuxzMrAxaMdA/nZg+nA+GMwNIA9CguzHQDOViobzbCZ6m/1vppdB4DtdIIYhixRv
-         ymZRVju151j+5AUk8EesGwaeNXwJ4Qgv7YtJ4k0n4HMsHXh4buU45OqV7svvc8tUhkXT
-         xKpx950DpICQz6vr744uM+2dXsPBguJhf0QdgPPLhk8TKXZY9O5TkY/tdtkp1zZFQR26
-         C+ENzjfjUU8Z2WB8G4NLSw4l7qickUQUAh454x85w0EKtjd2frLQgkO6Xm+HvcDiIzc7
-         3Ipg==
-X-Received: by 10.180.36.74 with SMTP id o10mr695724wij.23.1376369371870; Mon,
- 12 Aug 2013 21:49:31 -0700 (PDT)
-Received: by 10.194.104.201 with HTTP; Mon, 12 Aug 2013 21:49:31 -0700 (PDT)
-In-Reply-To: <7vd2pj1lk6.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=h54WXxUIvlcLFWKchMcVjJUSLI/+gZAY7QhNQUH/+Z8=;
+        b=B+RZM/kxYAYdXufsz1U+k7o8mPlnvi6JKO7gq4/t2BEWV9jtyP8hV7uTK/bh1HaxzM
+         ovNe/jUQku9qdRrtcuKjZwF6CMAkFUFTouo7ks4tVg3zkuQ0eXJZY4GzCRfwc3K9smmU
+         njWXGzmZbm4pvXMltxr/dtl2wnJaAiXul5aEp3pCiR7jOFTZtR/M4fwtQlMSQb5vuxf/
+         W5vnVUADdzT4RgaNZDWlCOYllxE98mwetmnIa6jgekLqrFGe9nsugfOc+368MTySUodv
+         XjfUUBm2Y6zkO1OKkhIEV3VxNxb9PNEnpRu1A1U1GopB1GI1PKMC8+UXqL+marmNTgmH
+         lchQ==
+X-Received: by 10.68.229.2 with SMTP id sm2mr2540416pbc.68.1376369722267;
+        Mon, 12 Aug 2013 21:55:22 -0700 (PDT)
+Received: from localhost.localdomain ([114.246.129.124])
+        by mx.google.com with ESMTPSA id dg3sm41181259pbc.24.2013.08.12.21.55.19
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 12 Aug 2013 21:55:21 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc1.430.g417e2f3
+In-Reply-To: <CANYiYbFGBRV+EP8oV_chKvBsHLAAZeKmt0395_z9QD-bBZtErQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232209>
 
-2013/8/12 Junio C Hamano <gitster@pobox.com>:
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
->> 2013/8/10 Junio C Hamano <gitster@pobox.com>:
->>> Jiang Xin <worldhello.net@gmail.com> writes:
->>>
->>>> So always show the remote tracking branch in the output of "git status"
->>>> and other commands will help users to see where the current branch
->>>> will push to and pull from. E.g.
->>>> ...
->>>
->>> Hmmph.
->>>
->>> I do not know if this will help any case you described above, even
->>> though this might help some other cases.  The added output is to
->>> always show the current branch and its upstream, but the thing is,
->>> the original issue in $gmane/198703 was *not* that the current
->>> branch was pushed and up to date.  It was that there was no current
->>> branch to be pushed.  The same thing would happen if you are on a
->>> local branch that is not set to be pushed to the other side
->>> (e.g. the configuration is set to "matching" and there is no such
->>> branch on the other end).
->>>
->>
->> How about write the commit log like this:
->> ...
->> Then if there is no tracking info reported, the user may need to do
->> something. Maybe the current branch is a new branch that needs to be
->> pushed out, or maybe it's a branch which should add remote tracking
->> settings.
->
-> Would that help anybody, though?
+Command "git branch -vv" will report tracking branches, but invalid
+tracking branches are also reported. This is because the function
+stat_tracking_info() can not distinguish whether the upstream branch
+does not exist, or nothing is changed between one branch and its
+upstream.
 
-I will split the patch into two. The 1st patch resolves a real problem:
+This patch changes the return value of function stat_tracking_info().
+Only returns false when there is no tracking branch or the tracking
+branch is invalid, otherwise true. If the caller does not like to
+report tracking info when nothing changed between the branch and its
+upstream, simply checks if num_theirs and num_ours are both 0.
 
-    branch: not report invalid tracking branch
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ builtin/branch.c | 18 +++++-------------
+ remote.c         | 24 ++++++++++++------------
+ wt-status.c      | 13 +++++++++++--
+ 3 files changed, 28 insertions(+), 27 deletions(-)
 
-    Command "git branch -vv" will report tracking branches, but invalid
-    tracking branches are also reported. This is because the function
-    stat_tracking_info() can not distinguish whether the upstream branch
-    does not exist, or nothing is changed between one branch and its
-    upstream.
-
-    This patch changes the return value of function stat_tracking_info().
-    Only returns false when there is no tracking branch or the tracking
-    branch is invalid, otherwise true. If the caller does not like to
-    report tracking info when nothing changed between the branch and its
-    upstream, simply checks if num_theirs and num_ours are both 0.
-
-And in the 2nd patch, I will not mention "git push" (current not be
-pushed out ...) any more, and only focus on "git status". It's just
-a suggestion, may only fit small group of users' taste.
-
-
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 0836890..359e75d 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -424,19 +424,8 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
+ 	struct branch *branch = branch_get(branch_name);
+ 	struct strbuf fancy = STRBUF_INIT;
+ 
+-	if (!stat_tracking_info(branch, &ours, &theirs)) {
+-		if (branch && branch->merge && branch->merge[0]->dst &&
+-		    show_upstream_ref) {
+-			ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
+-			if (want_color(branch_use_color))
+-				strbuf_addf(stat, "[%s%s%s] ",
+-						branch_get_color(BRANCH_COLOR_UPSTREAM),
+-						ref, branch_get_color(BRANCH_COLOR_RESET));
+-			else
+-				strbuf_addf(stat, "[%s] ", ref);
+-		}
++	if (!stat_tracking_info(branch, &ours, &theirs))
+ 		return;
+-	}
+ 
+ 	if (show_upstream_ref) {
+ 		ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
+@@ -448,7 +437,10 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
+ 			strbuf_addstr(&fancy, ref);
+ 	}
+ 
+-	if (!ours) {
++	if (!ours && !theirs) {
++		if (ref)
++			strbuf_addf(stat, _("[%s]"), fancy.buf);
++	} else if (!ours) {
+ 		if (ref)
+ 			strbuf_addf(stat, _("[%s: behind %d]"), fancy.buf, theirs);
+ 		else
+diff --git a/remote.c b/remote.c
+index 2433467..c747936 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1729,7 +1729,8 @@ int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1)
+ }
+ 
+ /*
+- * Return true if there is anything to report, otherwise false.
++ * Return false if cannot stat a tracking branch (not exist or invalid),
++ * otherwise true.
+  */
+ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ {
+@@ -1740,18 +1741,12 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ 	const char *rev_argv[10], *base;
+ 	int rev_argc;
+ 
+-	/*
+-	 * Nothing to report unless we are marked to build on top of
+-	 * somebody else.
+-	 */
++	/* False unless we are marked to build on top of somebody else. */
+ 	if (!branch ||
+ 	    !branch->merge || !branch->merge[0] || !branch->merge[0]->dst)
+ 		return 0;
+ 
+-	/*
+-	 * If what we used to build on no longer exists, there is
+-	 * nothing to report.
+-	 */
++	/* False if what we used to build on no longer exists */
+ 	base = branch->merge[0]->dst;
+ 	if (read_ref(base, sha1))
+ 		return 0;
+@@ -1765,9 +1760,12 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ 	if (!ours)
+ 		return 0;
+ 
++	*num_theirs = 0;
++	*num_ours = 0;
++
+ 	/* are we the same? */
+ 	if (theirs == ours)
+-		return 0;
++		return 1;
+ 
+ 	/* Run "rev-list --left-right ours...theirs" internally... */
+ 	rev_argc = 0;
+@@ -1786,8 +1784,6 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ 	prepare_revision_walk(&revs);
+ 
+ 	/* ... and count the commits on each side. */
+-	*num_ours = 0;
+-	*num_theirs = 0;
+ 	while (1) {
+ 		struct commit *c = get_revision(&revs);
+ 		if (!c)
+@@ -1815,6 +1811,10 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 	if (!stat_tracking_info(branch, &num_ours, &num_theirs))
+ 		return 0;
+ 
++	/* Nothing to report if neither side has changes. */
++	if (!num_ours && !num_theirs)
++		return 0;
++
+ 	base = branch->merge[0]->dst;
+ 	base = shorten_unambiguous_ref(base, 0);
+ 	if (!num_theirs) {
+diff --git a/wt-status.c b/wt-status.c
+index ff4b324..0c6a3a5 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1380,15 +1380,24 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	branch = branch_get(s->branch + 11);
+ 	if (s->is_initial)
+ 		color_fprintf(s->fp, header_color, _("Initial commit on "));
++
++	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
++
++	/*
++	 * Not report tracking info if no tracking branch found
++	 * or no difference found.
++	 */
+ 	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
+-		color_fprintf(s->fp, branch_color_local, "%s", branch_name);
++		fputc(s->null_termination ? '\0' : '\n', s->fp);
++		return;
++	}
++	if (!num_ours && !num_theirs) {
+ 		fputc(s->null_termination ? '\0' : '\n', s->fp);
+ 		return;
+ 	}
+ 
+ 	base = branch->merge[0]->dst;
+ 	base = shorten_unambiguous_ref(base, 0);
+-	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
+ 	color_fprintf(s->fp, header_color, "...");
+ 	color_fprintf(s->fp, branch_color_remote, "%s", base);
+ 
 -- 
-Jiang Xin
+1.8.4.rc1.430.g417e2f3
