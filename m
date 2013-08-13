@@ -1,87 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] whatchanged: document its historical nature
-Date: Tue, 13 Aug 2013 08:56:24 -0700
-Message-ID: <7v8v05zis7.fsf@alter.siamese.dyndns.org>
-References: <52027B17.7040602@googlemail.com>
-	<7vtxj1crv6.fsf@alter.siamese.dyndns.org>
-	<CALkWK0kTfQYZG8R1EMuV37pdJ-aj9btXmfJ1Fb4QoMeZ1QucAw@mail.gmail.com>
-	<vpqfvukdy39.fsf@anie.imag.fr>
-	<CALkWK0kD=adWKVf+zb+Pnjz-HBkhks8ZvmQ3eYSpdXvahr=e4g@mail.gmail.com>
-	<vpqvc3gcijh.fsf@anie.imag.fr>
-	<7vwqnw9jv6.fsf@alter.siamese.dyndns.org>
-	<7v38qi63bn.fsf_-_@alter.siamese.dyndns.org>
-	<20130809201447.GH2337@serenity.lan>
-	<7vtxiy4m6o.fsf@alter.siamese.dyndns.org>
-	<20130812074959.GJ2337@serenity.lan>
+Subject: Re: Remove old forgotten command: whatchanged
+Date: Tue, 13 Aug 2013 09:00:04 -0700
+Message-ID: <7v4natzim3.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0=zZKTwn7cdrJXsVXH-rF=xWMeD_z2XAOCnuaf2bK_h8Q@mail.gmail.com>
+	<vpqfvukdy39.fsf@anie.imag.fr> <ku0lqj$qvs$1@ger.gmane.org>
+	<vpqk3jwcb1q.fsf@anie.imag.fr>
+	<7v1u649e5m.fsf@alter.siamese.dyndns.org>
+	<vpqbo57clnb.fsf@anie.imag.fr>
+	<7vwqnu6aei.fsf@alter.siamese.dyndns.org>
+	<vpqzjsmhvjg.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Stefan Beller <stefanbeller@googlemail.com>,
-	Git List <git@vger.kernel.org>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Aug 13 17:56:41 2013
+Cc: Damien Robert <damien.olivier.robert+gmane@gmail.com>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Aug 13 18:01:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9GxW-0005jY-US
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 17:56:35 +0200
+	id 1V9H2K-00018l-28
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 18:01:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758313Ab3HMP43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Aug 2013 11:56:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39803 "EHLO
+	id S932106Ab3HMQB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Aug 2013 12:01:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60168 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754339Ab3HMP41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Aug 2013 11:56:27 -0400
+	id S1758765Ab3HMQAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Aug 2013 12:00:11 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D839A3775A;
-	Tue, 13 Aug 2013 15:56:26 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E836437983;
+	Tue, 13 Aug 2013 16:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NI/LcgVK+6J70sZ8/Aw4WL5a+HA=; b=rRjKIQ
-	znB0qQ77Zg0DbF1qsQHgLJNyWvdsNmie8AxXFZar6R/fl7X/ZphpH7cqhBEiwTlK
-	OQd6Bv/MSC+DwYXwRSVv+kdzIeq4E/02awzl7iZAG9FM99JNhxtZAqRyoaQcDJD0
-	EQeVN00SVjNUtLfQzeFcEbuCC8VRCtfIq6LaI=
+	:content-type; s=sasl; bh=+Lti9P1W/afArEpjyC9keYEPzdY=; b=M/naOA
+	L9SSGd8x69QLbPcnYkbF7DEJxitQV4/JKnqkPCuIln6TKOQpsShLROnn4t+/CoFB
+	tb7fEaOkMki9TP2mZm1+CUfRDkmNTOktYa5tKEs0MPt4YMM5ZbOelD8kuCiI0mZI
+	Y51b5hLcARfrQnSdF44rVLOYHTFcPpsis7oS8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZtYqZoxd43Y6vtwrN3y+tTUefrRohSok
-	9skk9ZapJ6sg/vQ0BzQfzYv/lhQvrb++KfcTjKkjq0NtdW8ElvSGR2FDv9iP3tK0
-	m7Bvd9Ox25oCiy1opyeJ7paBdxAoftHOJObvdgtQolltoXFeEPUshHo79ZU4n9uA
-	ttN9QMjfizk=
+	:content-type; q=dns; s=sasl; b=ThPqV/aumZgy2A3IHLXPhWt9ZWXCZe2w
+	XQEqCcUsOkUhAutU3Eg0NtK/kA/k5cQd1Co0prwPUxvnDTQ1WDb2oPrb7ZyU3Crl
+	vb5pNirwwJn3ZG5qSqhYYiG5gT/zAb8TCn+x3rhee0CA5FckRTEaoZqNZSywgYCT
+	6CbF2Wr/MtI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CEA8237759;
-	Tue, 13 Aug 2013 15:56:26 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3A7537982;
+	Tue, 13 Aug 2013 16:00:10 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D62837758;
-	Tue, 13 Aug 2013 15:56:26 +0000 (UTC)
-In-Reply-To: <20130812074959.GJ2337@serenity.lan> (John Keeping's message of
-	"Mon, 12 Aug 2013 08:50:00 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F37E43796F;
+	Tue, 13 Aug 2013 16:00:08 +0000 (UTC)
+In-Reply-To: <vpqzjsmhvjg.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	13 Aug 2013 09:58:11 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8C372E0-0430-11E3-9A37-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6D9BCB20-0431-11E3-9471-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232230>
 
-John Keeping <john@keeping.me.uk> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Hmm, I hadn't realised that specifying "-p" would disable the "--raw".
-> I still find the last sentence of the original patch slightly awkward
-> though.  How about
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->     New users are encouraged to use linkgit:git-log[1] instead.  The
->     `whatchanged` command is essentially the same as linkgit:git-log[1]
->     but defaults to ``raw'' diff output and does not show merge
->     commits.
+>> +changes.  You can emulate `git log` with a trivial script that pipes
 >
-> ?
+> I'd say "You can emulate `git log` and `git log -p`" here, but I'm fine
+> with your version too.
 
-I've pushed out a new version with slight rewording based on your
-version.
+By `git log`, I meant "`git log` with its various options", as it
+felt unnecessary to single `-p` out.  But will reword anyway.
+
+>> -[NOTE]
+>> -Most likely, you are not directly using the core
+>> -Git Plumbing commands, but using Porcelain such as 'git add', `git-rm'
+>> -and `git-commit'.
+>
+> This removal sounds unrelated, but I don't understand what this note was
+> doing here anyway, so it's good to remove it.
+
+Yeah, the removal is part of "...and this document is not where the
+end users learn what `git log` command is about.  Stop at briefly
+mentioning the possibility of combining rev-list with diff-tree to
+build your own log, and leave the end-user documentation of `log` to
+the new tutorial and the user manual".
 
 Thanks.
