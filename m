@@ -1,91 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fwd: ephemeral-branches instead of detached-head?
-Date: Tue, 13 Aug 2013 10:13:01 -0700
-Message-ID: <7v38qdy0o2.fsf@alter.siamese.dyndns.org>
-References: <CA+CP9O6on2NXo6o4_0NoULnT8sgUD3pvvkFZvCTM5xKb38qOeA@mail.gmail.com>
-	<7veh9z1gym.fsf@alter.siamese.dyndns.org>
-	<CA+CP9O5fhyQrn3SboafocWJjaAywJHC0T-bw+AXk_8RX53hJ6Q@mail.gmail.com>
-	<CACsJy8Dke6Pezqsdcjzejc_cWCgOGTGs8LifjM2h2TQJy7N4HA@mail.gmail.com>
-	<CA+CP9O5Ak3YD60--Mj+eLv3qzbZuuwTN-AxY3xb=SciKD=uZoQ@mail.gmail.com>
-	<CA+CP9O5cK_zuRRj6uBdW_H7XO-w=B=vcjQsT1iF70Ce-jc02Ow@mail.gmail.com>
-	<7vbo51y1bi.fsf@alter.siamese.dyndns.org>
+From: Anders Darander <anders.darander@gmail.com>
+Subject: Re: git stash takes excessively long when many untracked files present
+Date: Tue, 13 Aug 2013 19:36:59 +0200
+Message-ID: <1fc732a7-6b63-4d75-960f-0b1c6cf9c70e@email.android.com>
+References: <20130810214453.GA5719@jtriplet-mobl1> <loom.20130813T120243-481@post.gmane.org> <7v7gfpy0wy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>
-To: David Jeske <davidj@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 13 19:13:14 2013
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 13 19:37:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9I9g-00057x-9N
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 19:13:12 +0200
+	id 1V9IWy-0006Lc-6N
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 19:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757405Ab3HMRNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Aug 2013 13:13:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63343 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756163Ab3HMRNH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Aug 2013 13:13:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB6AF38CE9;
-	Tue, 13 Aug 2013 17:13:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=i/wJG//aOdTwh+kYmxZGw+Ki7lM=; b=P8F7eb
-	8D0qoiDlK5p8RSm1TY/vug1MjDaWhfThI+ahPCNfyAyEfqxQ1Oib4dc+KJm6ZssV
-	VgvwVYFSefMrpjy2DX5YY5ZMkRqrxGzBjRjOeIanVudDAB0YVGo8Y2mOaO+NCUat
-	kCblBT6e0jDUP6M5o3xTc/HDWyJ+Hbl8WyeBo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FeNIbkrX9DdF9S9/IrbvMy7xi5t67Kw4
-	8swD0Z+NOiDnhwKJlmLlP4c38Oi43DaZDfAKQIL5jqPFKYzMt2rCG2WqVe/DAeDY
-	qPrthK1k8wH0UMFaPDGeki0DFB3A+RN56cO6Q7/SDZ/V8xKsisIEUzSCUSXhnERw
-	JbsUHMazCNk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85CA538CE8;
-	Tue, 13 Aug 2013 17:13:06 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3639438CDB;
-	Tue, 13 Aug 2013 17:13:04 +0000 (UTC)
-In-Reply-To: <7vbo51y1bi.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 13 Aug 2013 09:58:57 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9D76DF60-043B-11E3-B519-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759068Ab3HMRhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Aug 2013 13:37:08 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:49449 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759005Ab3HMRhH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Aug 2013 13:37:07 -0400
+Received: by mail-la0-f51.google.com with SMTP id fp13so6083221lab.10
+        for <git@vger.kernel.org>; Tue, 13 Aug 2013 10:37:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=user-agent:in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding:subject:from:date:to:cc:message-id;
+        bh=Val9WzMTBzwONzVCyQFPPgEVv63K0utD0GVc83sqM3c=;
+        b=hPN8oJPknOLfA/hZ8XXYr0JOEmAjoeY70V7gXtwE+MenNLH2ZBj2zM2KRzkAP/ASzq
+         yNJzFW7cCNahdVMNJEpuYQuOr3N4bTevBKB6sos7ZpAxreUibZks7ZUbgzlbbcpcgAyQ
+         bb/VVbBjRD/SkYRAy808K/rnzZyfA760H239zhxh1SGYnvVknzZyjlPeydOXNOmng4xL
+         gPcLJs8xUKm/4JiNbrxdS0S8Z+ICTqLKBlghmEJ62KNlHxZuAu94P3Dvj9PpER1Yltvv
+         UkskjTNAdBk+cCjDrxIHukjJWxVJD/CQWBHZl1E5RdqcozYNC079pdt4GTvZZyAt7ho+
+         CPUQ==
+X-Received: by 10.152.30.74 with SMTP id q10mr4766539lah.27.1376415425635;
+        Tue, 13 Aug 2013 10:37:05 -0700 (PDT)
+Received: from [192.168.0.19] (c83-252-253-85.bredband.comhem.se. [83.252.253.85])
+        by mx.google.com with ESMTPSA id i9sm14333671lba.0.2013.08.13.10.37.03
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 13 Aug 2013 10:37:04 -0700 (PDT)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <7v7gfpy0wy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232238>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> David Jeske <davidj@gmail.com> writes:
+
+(I'm resending this as Gmail added some html parts...) 
+
+Junio C Hamano <gitster@pobox.com> wrote:
+>Anders Darander <anders.darander@gmail.com> writes:
 >
->>> When you do "git commit --amend",
->>> the current commit will become dangling (in the sense that it's not
->>> referred by any ref, but the commit exists) and those are just noise
->>> in my opinion.
+>> diff --git a/git-stash.sh b/git-stash.sh
+>> index 85c9e2c..e5a2043 100755
+>> --- a/git-stash.sh
+>> +++ b/git-stash.sh
+>> @@ -263,7 +263,7 @@ save_stash () {
+>>                 exit 0
+>>         fi
+>>         if test -z "$untracked$force" &&
+>> -          test -n "$(git ls-files --killed | head -n 1)"
+>> +          test -n "$(git ls-files --killed --directory | head -n 1)"
+>>         then
+>>                 say "$(gettext "The following untracked files would
+>NOT be 
+>> saved
+>>                 test -n "$GIT_QUIET" || git ls-files --killed | sed 
+>> 's/^/\t/'
+>> -------------------------------------------
 >>
->> This is *exactly* my point.
->>
->> There is no way to distinguish a commit which was accidentally and
->> implicitly dangled due to checkout or submodule update on a detached
->> head, from all those other intentionally dangling refs which were
->> explicitly handled with merge, rebase, amend.
+>> It seems to work in my extremely limited testing. Though, I'm pretty
+>sure 
+>> that there'll be quite a few error cases... (Especially, as I just
+>made
+>> a naive attempt at patching git-stash, so I could go on with a few
+>other 
+>> things).
 >
-> I do not follow.  Just like "commit --amend", checking out another
-> branch to leave a detached HEAD _is_ an explicit way to discard what
-> you started experimenting behind, declaring it useless.  Otherwise
-> you would have saved it to some named branch.
->
-> This of course assumes that, as you said in one of your earlier
-> messages, the user knows what he is doing, though.
+>I am not sure adding "--directory" there is safe.  Aren't there
+>cases where saving a stash and going back to the committed state
+>will involve killing no directories, but some files?  If your local
+>change is to remove a directory and files in it from your working
+>tree and then deposit a newly created file at the path where the
+>directory was in the HEAD, stashing that local change and then going
+>back to the HEAD will involve removing the new file from the working
+>tree, and unless you have "git add"ed the new file, it will be lost.
 
-By the way, by the above I do not mean "checking out a named branch
-should not be protected".  I am saying "treating commits lost by
-running 'commit --amend' differently does not make sense to me".
+Yes, it's more than likely that there are some real issues with adding - -directory here. I just realised that in the specific case I needed to run stash, I could do that by adding either of -u or -f as options. Obviously, 
+
+>> Do anyone have any better idea on how to approach this?
+>
+>Teaching "ls-files" to leave early once it seens even a single
+>output is probably a possibility.
+
+Would that mean that we're able to fail early? That's certainly an improvement, but not a working situation.
+
+In my case, running stash in an OpenEmbedded checkout (including untracked directories for builds and caches), I gave up waiting on stash running ls-files after running at 100% for more than 12 minutes. Git status returned after a couple of seconds.
+
+>>> I see a lot of room for optimization here.  Most importantly, git
+>>> ls-files --killed really doesn't need to look at any directory entry
+>>> unless something in the index would conflict with it.
+>
+>This observation probably is correct, even though I didn't think
+>about it long enough.
+
+I'd think that something like this is needed. As the index should be rather small, compared to e.g. some large untracked directory.
+
+Cheers, 
+Anders 
+
+
+.
