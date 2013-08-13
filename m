@@ -1,69 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [git-po] [fr] first commits for French localization (#62)
-Date: Tue, 13 Aug 2013 10:45:43 -0700
-Message-ID: <7vr4dxwkl4.fsf@alter.siamese.dyndns.org>
-References: <git-l10n/git-po/pull/62@github.com>
-	<CANYiYbFz2kQj512SiOTTc4atdH5Na70grSgRhSBfTNgXdiqgAQ@mail.gmail.com>
-	<CANYiYbHZi0RPmgzvkQh1h1TAr4YT5a6GSdf9m=7oMdJMiKXvFQ@mail.gmail.com>
+From: Tvangeste <i.4m.l33t@yandex.ru>
+Subject: Re: [PATCH master] convert: The native line-ending is \r\n on MinGW
+Date: Tue, 13 Aug 2013 17:44:35 +0000 (UTC)
+Message-ID: <loom.20130813T193141-905@post.gmane.org>
+References: <1275679748-7214-1-git-send-email-eyvind.bernhardsen@gmail.com> <20100904082509.GC10140@burratino> <7vbp8aqtuz.fsf@alter.siamese.dyndns.org> <1353857940941-7571889.post@n2.nabble.com> <loom.20130415T220316-790@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jean-Noel Avila <jn.avila@free.fr>, Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 13 19:45:56 2013
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 13 19:50:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9IfJ-0004XB-0m
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 19:45:53 +0200
+	id 1V9IjT-0007Zf-Gu
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 19:50:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757286Ab3HMRps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Aug 2013 13:45:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64603 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756870Ab3HMRps (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Aug 2013 13:45:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5DC838D1B;
-	Tue, 13 Aug 2013 17:45:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wOUEo2Yr1sfma7mO3baKBFXuKPE=; b=xRtzRB
-	qLF93mZyonwO2K9xc0XhkHfAe12oLpkyexzqj29azH8CQ5qYNaxiPR210TI2yKVF
-	WvY/NYHBPFWwihZtuKgVA7E+izXu0kP/4xN5RdC35G7Mezhm+5VHcW3XqG/mClfh
-	6fZ/McovsDMOhNFpSdXQ/5TxeBNirKvVR0tTg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yPzKeooMT762wtyRNtPIMXhlAqVBuZIf
-	sapa2YVry+eiLltiqZEso2VG1IQvs+EEM3cHq/CAzjgnye3oQmPwp4bRsY660u+w
-	Vh7T/NAmSYT4c6fjXeKdi4z1bS/VebOLZ3mvehjUGAdxGKYihfas6G3l3uB6ES9m
-	4HsU+5m/bvs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8876338D1A;
-	Tue, 13 Aug 2013 17:45:46 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C04C38D14;
-	Tue, 13 Aug 2013 17:45:45 +0000 (UTC)
-In-Reply-To: <CANYiYbHZi0RPmgzvkQh1h1TAr4YT5a6GSdf9m=7oMdJMiKXvFQ@mail.gmail.com>
-	(Jiang Xin's message of "Mon, 12 Aug 2013 15:30:27 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2E40467C-0440-11E3-96E1-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757985Ab3HMRuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Aug 2013 13:50:05 -0400
+Received: from plane.gmane.org ([80.91.229.3]:41013 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757930Ab3HMRuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Aug 2013 13:50:04 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1V9IjL-0007UO-04
+	for git@vger.kernel.org; Tue, 13 Aug 2013 19:50:03 +0200
+Received: from agsb-5d8707d7.pool.mediaWays.net ([93.135.7.215])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 13 Aug 2013 19:50:02 +0200
+Received: from i.4m.l33t by agsb-5d8707d7.pool.mediaWays.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 13 Aug 2013 19:50:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 93.135.7.215 (Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.49 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232240>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Brice Lambson <bricelam <at> live.com> writes:
+> +1, this is a significant issue downstream in Git for Windows:
+> 
+> https://github.com/msysgit/git/issues/57
+> 
+> Effectively this renders .gitattributes useless for the scenario of 
+> enforcing normalized line ending characters.
 
-> Haven't seen new languages support for git l10n for over 1 year.
-> Here comes French translation.
++100
 
-Nice.
+Folks, the problem is still there, with the very latest Git built with MinGW 
+on Windows. Having eol=native in gitattributes means *LF* EOLs on 
+Windows/MinGW.
 
-Pulled, and will be part of -rc3.
+So, essentially, eol=native is completely broken. And this is the most useful 
+option to put into gitattributes and share among those working on the project.
 
-Thanks.
+Currently, I have to put eol=crlf there, and that means that those working on 
+Linux will end up with CRLF files in their working copies.
+
+The link quoted above does contain an additional fix that resolves the 
+problem.
+
+Thanks,
+  --Tvangeste
