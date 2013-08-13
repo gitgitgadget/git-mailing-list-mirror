@@ -1,73 +1,91 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: [PATCH] unpack-trees: plug a memory leak
-Date: Tue, 13 Aug 2013 23:32:46 +0200
-Message-ID: <520AA5FE.1090208@web.de>
-References: <CAJc7LbpRuqug9pLFVVg=XMvJ9u_P0ZVSy2MVBDaCVkjvfKnfJw@mail.gmail.com> <CAMP44s282DD+tQUgVHawdRDJayjTxMjOu_R3robbCVhkbksEtQ@mail.gmail.com> <CAJc7Lbrmsna4u4s+fdCGZ7jn9HzgZkinL3tbjbjcuw40Of5umg@mail.gmail.com> <CAMP44s1CAMPWXDSAc7WHahmrKRrB8aG_H9fnXAMi2LFOGy5EdA@mail.gmail.com> <520A7AAE.6010309@web.de> <7va9klwb03.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git stash takes excessively long when many untracked files present
+Date: Tue, 13 Aug 2013 14:47:37 -0700
+Message-ID: <7v61v9w9dy.fsf@alter.siamese.dyndns.org>
+References: <20130810214453.GA5719@jtriplet-mobl1>
+	<loom.20130813T120243-481@post.gmane.org>
+	<7v7gfpy0wy.fsf@alter.siamese.dyndns.org>
+	<1fc732a7-6b63-4d75-960f-0b1c6cf9c70e@email.android.com>
+	<7vmwolwk94.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-	=?UTF-8?B?0JvQtdC20LDQvdC60LjQvSDQmNCy0LDQvQ==?= 
-	<abyss.7@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 13 23:33:08 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
+	Josh Triplett <josh@joshtriplett.org>
+To: Anders Darander <anders.darander@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 13 23:47:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9MDC-0003FR-Sf
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 23:33:07 +0200
+	id 1V9MRN-0005bB-S6
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 23:47:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759337Ab3HMVdB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Aug 2013 17:33:01 -0400
-Received: from mout.web.de ([212.227.15.4]:60756 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759327Ab3HMVdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Aug 2013 17:33:00 -0400
-Received: from [192.168.2.102] ([79.253.133.173]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MIvPJ-1V7RSs12fR-002aZU for <git@vger.kernel.org>;
- Tue, 13 Aug 2013 23:32:59 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <7va9klwb03.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V03:K0:cG/TUKet+kFm3DDLmLvrRAkg90fwB9g8EHmQ7kEX8b3Wg9LpDBy
- 4zwzvRznRKAeERowGbcLduMwA1NK8wilkBSbrjzV1KB8Dv+lG2cOLBTWgpklZ7+lP9lNtyO
- xfgDos3nBD+lYsHYiTN1j3EYnvdVKT33r4d18rTq3cT3hvxYQyOnkZMy0IcBRlorb739C49
- jC3vsIGWFoZoiNzTrCMKA==
+	id S1757259Ab3HMVrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Aug 2013 17:47:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43604 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755502Ab3HMVrl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Aug 2013 17:47:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F5D038AA8;
+	Tue, 13 Aug 2013 21:47:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KwWJH4DN+pUh9TpF6wOFTMfDipk=; b=P+IeiK
+	mDpkewRYjlQhuY23BpT1pW1LbHZUAN9ZCijmcM2+cHNm+FKTI9KzTFogAESZAXEk
+	O22RcD/KDdhT8xRvlEFvQGY4y625TAKGw1ZfOKaemBSDmDuLXBZ2ZaLfIriyoO5A
+	kfPQmkfPUT3K3wV+2CnRE9+hIMZU6Q7OLMggI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=h9LM+5Twf98idifgibCydccHWRwpf3Lq
+	UaoUIXwknznsoVjFiTUU5YHjficSXKiIPdpO+PcIMp3bAVkjBoEPZSkP9KpaecLi
+	Jfo6+vVCosXUdHA/nP6l1R3ldp6p20l1dEDO+vtU9LiUgWbxZiTNYLg0GUMIW++X
+	NEm8Pp8SL5s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12CE638AA7;
+	Tue, 13 Aug 2013 21:47:40 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A7B238AA6;
+	Tue, 13 Aug 2013 21:47:39 +0000 (UTC)
+In-Reply-To: <7vmwolwk94.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 13 Aug 2013 10:52:55 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F95236C4-0461-11E3-AE00-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232251>
 
-Am 13.08.2013 23:12, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+[administrivia: people on the original thread added back on CC]
+
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Anders Darander <anders.darander@gmail.com> writes:
 >
->> From: Felipe Contreras <felipe.contreras@gmail.com>
+>>>> Do anyone have any better idea on how to approach this?
+>>>
+>>>Teaching "ls-files" to leave early once it seens even a single
+>>>output is probably a possibility.
 >>
->> Before overwriting the destination index, first let's discard its
->> contents.
->>
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> Tested-by: =D0=9B=D0=B5=D0=B6=D0=B0=D0=BD=D0=BA=D0=B8=D0=BD =D0=98=D0=
-=B2=D0=B0=D0=BD <abyss.7@gmail.com> wrote:
->> ---
->> Felipe sent this patch as part of multiple series in June, but it ca=
-n
->> stand on its own.  This version is trivially rebased against master.
->> The leak seems to have been introduced by 34110cd4 (2008-03-06,
->> "Make 'unpack_trees()' have a separate source and destination index"=
-).
+>> Would that mean that we're able to fail early?
 >
-> It was lost in the follow-up discussion and I missed it.
+> Heh, good point.  "Leave once you find one path" does not help the
+> most common "sane" case where you do not kill any path, so it does
+> not help us at all.
 
-I had forgotten about it as well, until Felipe mentioned it again.
+In any case, this is a regression introduced in 'master' since the
+last release, and the attempted fix was for an issue that has long
+been with us, so I'll revert a7365313 (git stash: avoid data loss
+when "git stash save" kills a directory, 2013-06-28) soon.  For
+today's -rc3, I'm already deep into the integration cycle, so it is
+too late to do the revert it and then redo everything.
 
-> I assume that this is signed-off by you as a forwarder?  I'd prefer
-> to even mark it Reviewed-by: you.
+Then we will plan to re-apply the patch once "ls-files --killed"
+gets fixed not to waste too much cycles needlessly, after the coming
+release.
 
-Right, I did review the patch and you can tag it as such.
-
-Thanks,
-Ren=C3=A9
+Thanks for a report and discussion.
