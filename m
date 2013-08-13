@@ -1,74 +1,68 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Remove old forgotten command: whatchanged
-Date: Tue, 13 Aug 2013 09:58:11 +0200
-Message-ID: <vpqzjsmhvjg.fsf@anie.imag.fr>
-References: <CALkWK0=zZKTwn7cdrJXsVXH-rF=xWMeD_z2XAOCnuaf2bK_h8Q@mail.gmail.com>
-	<vpqfvukdy39.fsf@anie.imag.fr> <ku0lqj$qvs$1@ger.gmane.org>
-	<vpqk3jwcb1q.fsf@anie.imag.fr>
-	<7v1u649e5m.fsf@alter.siamese.dyndns.org>
-	<vpqbo57clnb.fsf@anie.imag.fr>
-	<7vwqnu6aei.fsf@alter.siamese.dyndns.org>
+Subject: Re: git should not use a default user.email config value
+Date: Tue, 13 Aug 2013 10:08:56 +0200
+Message-ID: <vpqsiyehv1j.fsf@anie.imag.fr>
+References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
+	<20130809194214.GV14690@google.com>
+	<20130809223758.GB7160@sigill.intra.peff.net>
+	<20130809231928.GY14690@google.com>
+	<20130810064717.GB30185@sigill.intra.peff.net>
+	<52060EF9.2040504@alum.mit.edu>
+	<7vvc3d1o01.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Damien Robert <damien.olivier.robert+gmane@gmail.com>,
-	git@vger.kernel.org
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thorsten Glaser <tg@mirbsd.de>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 13 09:58:32 2013
+X-From: git-owner@vger.kernel.org Tue Aug 13 10:09:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V99Uq-0005Gw-3Q
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 09:58:28 +0200
+	id 1V99fR-0005UW-6j
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 10:09:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753155Ab3HMH6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Aug 2013 03:58:24 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:50839 "EHLO rominette.imag.fr"
+	id S1752902Ab3HMIJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Aug 2013 04:09:19 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51971 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751975Ab3HMH6X (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Aug 2013 03:58:23 -0400
+	id S1752584Ab3HMIJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Aug 2013 04:09:16 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r7D7wBxc019820
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r7D88uK2006381
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 13 Aug 2013 09:58:11 +0200
+	Tue, 13 Aug 2013 10:08:56 +0200
 Received: from anie.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1V99UZ-0007gQ-TR; Tue, 13 Aug 2013 09:58:11 +0200
-In-Reply-To: <7vwqnu6aei.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 09 Aug 2013 10:28:53 -0700")
+	id 1V99ey-0007kk-Og; Tue, 13 Aug 2013 10:08:56 +0200
+In-Reply-To: <7vvc3d1o01.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sat, 10 Aug 2013 09:58:38 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 13 Aug 2013 09:58:13 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 13 Aug 2013 10:08:57 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r7D7wBxc019820
+X-MailScanner-ID: r7D88uK2006381
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1376985495.8002@TbchFKNTZ+YcMjlQ7S9ZEg
+MailScanner-NULL-Check: 1376986137.58049@HrN4PTqqYlkk5yMGGhRj6Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232215>
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> +changes.  You can emulate `git log` with a trivial script that pipes
+>  (2) configure "include.path" to point at "~/.git-profile/open" at
+>      the very end
 
-I'd say "You can emulate `git log` and `git log -p`" here, but I'm fine
-with your version too.
-
-> -[NOTE]
-> -Most likely, you are not directly using the core
-> -Git Plumbing commands, but using Porcelain such as 'git add', `git-rm'
-> -and `git-commit'.
-
-This removal sounds unrelated, but I don't understand what this note was
-doing here anyway, so it's good to remove it.
-
-Thanks,
+I'd rather have it ~/.config/git/profile/ (or
+$XDG_CONFIG_HOME/git/profile if $XDG_CONFIG_HOME is set), but the
+proposal makes sense.
 
 -- 
 Matthieu Moy
