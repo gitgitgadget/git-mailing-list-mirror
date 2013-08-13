@@ -1,158 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git should not use a default user.email config value
-Date: Tue, 13 Aug 2013 11:53:46 -0400
-Message-ID: <20130813155345.GA23391@sigill.intra.peff.net>
-References: <20130810064717.GB30185@sigill.intra.peff.net>
- <52060EF9.2040504@alum.mit.edu>
- <7vvc3d1o01.fsf@alter.siamese.dyndns.org>
- <CAH5451nHfOaBzFzkrGvw+TyRj==cVpKF_QdXsTxnn5tTr1c0dw@mail.gmail.com>
- <20130812123921.GA16088@sigill.intra.peff.net>
- <CAH5451=PK15n4U-3Mb_TLevF3-r+vrpk1PXD15Oo1A2KFc5i_w@mail.gmail.com>
- <20130812154520.GA18215@sigill.intra.peff.net>
- <CAH5451=WKXUNzovXquFii=EdkeQXJEQ96_CRRebgQW6ow_19VA@mail.gmail.com>
- <20130813114635.GA16506@sigill.intra.peff.net>
- <CAH5451nxgpa4Q-BpwhD7yD6V6_LWBP=+oEDR3u0eGErSWNEBbQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] whatchanged: document its historical nature
+Date: Tue, 13 Aug 2013 08:56:24 -0700
+Message-ID: <7v8v05zis7.fsf@alter.siamese.dyndns.org>
+References: <52027B17.7040602@googlemail.com>
+	<7vtxj1crv6.fsf@alter.siamese.dyndns.org>
+	<CALkWK0kTfQYZG8R1EMuV37pdJ-aj9btXmfJ1Fb4QoMeZ1QucAw@mail.gmail.com>
+	<vpqfvukdy39.fsf@anie.imag.fr>
+	<CALkWK0kD=adWKVf+zb+Pnjz-HBkhks8ZvmQ3eYSpdXvahr=e4g@mail.gmail.com>
+	<vpqvc3gcijh.fsf@anie.imag.fr>
+	<7vwqnw9jv6.fsf@alter.siamese.dyndns.org>
+	<7v38qi63bn.fsf_-_@alter.siamese.dyndns.org>
+	<20130809201447.GH2337@serenity.lan>
+	<7vtxiy4m6o.fsf@alter.siamese.dyndns.org>
+	<20130812074959.GJ2337@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thorsten Glaser <tg@mirbsd.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 13 17:53:57 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Stefan Beller <stefanbeller@googlemail.com>,
+	Git List <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Aug 13 17:56:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9Guw-0003eT-2X
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 17:53:54 +0200
+	id 1V9GxW-0005jY-US
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 17:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758471Ab3HMPxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Aug 2013 11:53:49 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57545 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758572Ab3HMPxs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Aug 2013 11:53:48 -0400
-Received: (qmail 24926 invoked by uid 102); 13 Aug 2013 15:53:48 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 13 Aug 2013 10:53:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Aug 2013 11:53:46 -0400
-Content-Disposition: inline
-In-Reply-To: <CAH5451nxgpa4Q-BpwhD7yD6V6_LWBP=+oEDR3u0eGErSWNEBbQ@mail.gmail.com>
+	id S1758313Ab3HMP43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Aug 2013 11:56:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39803 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754339Ab3HMP41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Aug 2013 11:56:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D839A3775A;
+	Tue, 13 Aug 2013 15:56:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NI/LcgVK+6J70sZ8/Aw4WL5a+HA=; b=rRjKIQ
+	znB0qQ77Zg0DbF1qsQHgLJNyWvdsNmie8AxXFZar6R/fl7X/ZphpH7cqhBEiwTlK
+	OQd6Bv/MSC+DwYXwRSVv+kdzIeq4E/02awzl7iZAG9FM99JNhxtZAqRyoaQcDJD0
+	EQeVN00SVjNUtLfQzeFcEbuCC8VRCtfIq6LaI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZtYqZoxd43Y6vtwrN3y+tTUefrRohSok
+	9skk9ZapJ6sg/vQ0BzQfzYv/lhQvrb++KfcTjKkjq0NtdW8ElvSGR2FDv9iP3tK0
+	m7Bvd9Ox25oCiy1opyeJ7paBdxAoftHOJObvdgtQolltoXFeEPUshHo79ZU4n9uA
+	ttN9QMjfizk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CEA8237759;
+	Tue, 13 Aug 2013 15:56:26 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D62837758;
+	Tue, 13 Aug 2013 15:56:26 +0000 (UTC)
+In-Reply-To: <20130812074959.GJ2337@serenity.lan> (John Keeping's message of
+	"Mon, 12 Aug 2013 08:50:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E8C372E0-0430-11E3-9A37-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232229>
 
-On Tue, Aug 13, 2013 at 10:52:34PM +1000, Andrew Ardill wrote:
+John Keeping <john@keeping.me.uk> writes:
 
-> > The only downside I can think of is that we might want to use the
-> > subsection in "include.SUBSECTION.*" for some other limiting conditions
-> > (e.g., "only include this config when running version >= X.Y", or even
-> > "include only when environment variable FOO is true").
-> 
-> It seems as though gitconfig doesn't have a standard way of dealing
-> with 'sub-subsections', which is essentially what this is trying to
-> implement.
-
-Right. Syntactically, the config keys are:
-
-  SECTION.SUBSECTION.KEY
-
-where SUBSECTION is optional. SECTION and KEY cannot contain spaces or
-dots and are case insensitive, but SUBSECTION is handled literally. It
-can contain whatever data is useful to the config parser (for example,
-remote names, branch names, or even URLs), including spaces or dots.
-
-We could introduce the notion of sub-subsections, but that would not
-play well with existing uses of subsection, which assume that they can
-put arbitrary data into it.
-
-> It makes sense that there could be different 'modes' of includes.
-> These could be the ones you mentioned already, such as repo and env,
-> but could also be things like branch where the config changes
-> depending on which branch you are on. Ideally, multiple entries per
-> mode would be allowed.
+> Hmm, I hadn't realised that specifying "-p" would disable the "--raw".
+> I still find the last sentence of the original patch slightly awkward
+> though.  How about
 >
-> Implementing all that initially would be overkill however if this sort
-> of functionality is desirable the ability to easily add new modes
-> would be a great boon down the track.
+>     New users are encouraged to use linkgit:git-log[1] instead.  The
+>     `whatchanged` command is essentially the same as linkgit:git-log[1]
+>     but defaults to ``raw'' diff output and does not show merge
+>     commits.
+>
+> ?
 
-Right. We don't have to decide on all of it now; we just have to leave
-the door open syntactically for future growth.
+I've pushed out a new version with slight rewording based on your
+version.
 
-> The four pieces of information we need to include are that this is an
-> include, the path to the include, the mode, and the mode specific
-> parameter. Your proposal is to allow the sub-subsection by
-> concatenating with a ":" like this
-> 
-> [include "<mode>:<mode-param>]
->   path = <path>
-
-Right. The config parser does not care about the sub-subsection; it is
-up to the interpreter of the key to split the subsection if it chooses.
-I arbitrarily chose ":" as the internal delimiter because I thought it
-looked nice. You could make it dot or space, too.
-
-> Alternatively, we could allow chaining of subsections (couldn't find
-> any previous discussion on this) by adding whitespace between each
-> subsection. Seems like lots of potentially unnecessary work, but maybe
-> this has already been discussed or is the most appropriate way of
-> doing it.
-> 
-> $ git config --global include.repo./magic/.path ~/.gitconfig-magic
-> 
-> [include repo "/magic/"]
->    path = .gitconfig-magic
-
-I don't think it has been discussed before. But as I mentioned above,
-you would not want to apply this everywhere. For existing config
-callbacks, they want to take the section literally. So it is going to be
-up to the callback to parse the section into subsections anyway, at
-which point it does not really matter what syntax you use.
-
-We could teach the config parser to normalize:
-
-  [section with many spaces]
-    key
-
-as "section.with.many.spaces.key" or "section.with many spaces.key" (I
-do not think it is even valid in today's code, but I didn't check). But
-personally I do not find that any easier to read or understand than the
-colon syntax.
-
-> This seems like the easiest and most flexible method, and doesn't
-> require any 'special' considerations for the subsection. It would be
-> harder for a user to configure, and the concept of a mode seems less
-> intuitive.
-> 
-> $ git config --global include.magicrepos.mode repo
-> $ git config --global include.magicrepos.param /magic/
-> $ git config --global include.magicrepos.path ~/.gitconfig-magic
-> 
-> [include "magicrepos"]
->   mode = repo
->   param = "/magic/"
->   path = ~/.gitconfig-magic
-
-Yeah, that is the most flexible. You could introduce multiple conditions
-or other options, as well (e.g., instead of mode and param, have
-include.magic.repo, include.magic.env, etc). But it seems like
-over-engineering. I do not mind making the code a little harder to
-write, but it seems unnecessarily complicated for the user, too.
-
-> Of the three I probably think the subsection chaining is the nicest
-> overall, though your original "repo:" proposal seems to be the easiest
-> to implement.
-
-I think I favor the colon proposal because of its simplicity. And
-because the sub-section chaining cannot be applied consistently across
-config keys, I don't think there is much value in trying to introduce a
-new general config syntax.
-
--Peff
+Thanks.
