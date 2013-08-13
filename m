@@ -1,91 +1,120 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Remove old forgotten command: whatchanged
-Date: Tue, 13 Aug 2013 09:00:04 -0700
-Message-ID: <7v4natzim3.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0=zZKTwn7cdrJXsVXH-rF=xWMeD_z2XAOCnuaf2bK_h8Q@mail.gmail.com>
-	<vpqfvukdy39.fsf@anie.imag.fr> <ku0lqj$qvs$1@ger.gmane.org>
-	<vpqk3jwcb1q.fsf@anie.imag.fr>
-	<7v1u649e5m.fsf@alter.siamese.dyndns.org>
-	<vpqbo57clnb.fsf@anie.imag.fr>
-	<7vwqnu6aei.fsf@alter.siamese.dyndns.org>
-	<vpqzjsmhvjg.fsf@anie.imag.fr>
+Subject: Re: git should not use a default user.email config value
+Date: Tue, 13 Aug 2013 09:31:35 -0700
+Message-ID: <7vwqnpy2l4.fsf@alter.siamese.dyndns.org>
+References: <20130809134236.28143.75775.reportbug@tglase.lan.tarent.de>
+	<20130809194214.GV14690@google.com>
+	<20130809223758.GB7160@sigill.intra.peff.net>
+	<20130809231928.GY14690@google.com>
+	<20130810064717.GB30185@sigill.intra.peff.net>
+	<52060EF9.2040504@alum.mit.edu>
+	<7vvc3d1o01.fsf@alter.siamese.dyndns.org>
+	<CAH5451nHfOaBzFzkrGvw+TyRj==cVpKF_QdXsTxnn5tTr1c0dw@mail.gmail.com>
+	<20130812123921.GA16088@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Damien Robert <damien.olivier.robert+gmane@gmail.com>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Aug 13 18:01:32 2013
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thorsten Glaser <tg@mirbsd.de>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 13 18:32:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9H2K-00018l-28
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 18:01:32 +0200
+	id 1V9HVp-00079q-KE
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Aug 2013 18:32:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932106Ab3HMQB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Aug 2013 12:01:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60168 "EHLO
+	id S1758683Ab3HMQbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Aug 2013 12:31:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56317 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758765Ab3HMQAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Aug 2013 12:00:11 -0400
+	id S1758373Ab3HMQbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Aug 2013 12:31:40 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E836437983;
-	Tue, 13 Aug 2013 16:00:10 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1A3438A1B;
+	Tue, 13 Aug 2013 16:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+Lti9P1W/afArEpjyC9keYEPzdY=; b=M/naOA
-	L9SSGd8x69QLbPcnYkbF7DEJxitQV4/JKnqkPCuIln6TKOQpsShLROnn4t+/CoFB
-	tb7fEaOkMki9TP2mZm1+CUfRDkmNTOktYa5tKEs0MPt4YMM5ZbOelD8kuCiI0mZI
-	Y51b5hLcARfrQnSdF44rVLOYHTFcPpsis7oS8=
+	:content-type; s=sasl; bh=EcHHvpW1HOBAJZfhmdtyMm1/JI0=; b=nJwD++
+	QZ39pHJ0tQFixmO87qRuHvQZ7v3rnJCgAKHHcyMVrTmMy6ZcXjzU+0piH4kR5dkR
+	ZVEWltx+A6o9bcwejBIeSnyMTlR3ge7nnxc7tIJpcrp0Mof7Ro/pgzP6YLOBsVk3
+	IsUpkBoaaOYg36OmTTAShu5Q3pDDhSks51TUo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ThPqV/aumZgy2A3IHLXPhWt9ZWXCZe2w
-	XQEqCcUsOkUhAutU3Eg0NtK/kA/k5cQd1Co0prwPUxvnDTQ1WDb2oPrb7ZyU3Crl
-	vb5pNirwwJn3ZG5qSqhYYiG5gT/zAb8TCn+x3rhee0CA5FckRTEaoZqNZSywgYCT
-	6CbF2Wr/MtI=
+	:content-type; q=dns; s=sasl; b=C9ecStiRdu8i6utbTG39ihtZtoUuwre/
+	n+LycRkNWr3LclLSZeOeIRYpkUpmCVK6EK4jY8wkL31SKL0g1Y7O8GALLHE+McQA
+	aLSOMvl/xMIRcOUouYRfm+aqySOKXH+zbgJU6pPjC5jw1sLOSB/d2G0Le46x/HGi
+	ZicxJ0n7Jp8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3A7537982;
-	Tue, 13 Aug 2013 16:00:10 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 836DC38A1A;
+	Tue, 13 Aug 2013 16:31:39 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F37E43796F;
-	Tue, 13 Aug 2013 16:00:08 +0000 (UTC)
-In-Reply-To: <vpqzjsmhvjg.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
-	13 Aug 2013 09:58:11 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7679F38A10;
+	Tue, 13 Aug 2013 16:31:37 +0000 (UTC)
+In-Reply-To: <20130812123921.GA16088@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 12 Aug 2013 08:39:21 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6D9BCB20-0431-11E3-9471-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D366B812-0435-11E3-8EB2-E84251E3A03C-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232231>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Jeff King <peff@peff.net> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> +changes.  You can emulate `git log` with a trivial script that pipes
->
-> I'd say "You can emulate `git log` and `git log -p`" here, but I'm fine
-> with your version too.
+> diff --git a/config.c b/config.c
+> index e13a7b6..a31dc85 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -119,10 +119,45 @@ int git_config_include(const char *var, const char *value, void *data)
+>  	return ret;
+>  }
+>  
+> +static NORETURN void die_bad_regex(int err, regex_t *re)
+> +{
+> +	char errbuf[1024];
+> +	regerror(err, re, errbuf, sizeof(errbuf));
+> +	if (cf && cf->name)
+> +		die("bad regex (at %s:%d): %s", cf->name, cf->linenr, errbuf);
+> +	else
+> +		die("bad regex: %s", errbuf);
+> +}
+> +
+> +static int match_repo_path(const char *re_str)
+> +{
+> +	regex_t re;
+> +	int ret;
+> +	const char *repo_path;
+> +
+> +	ret = regcomp(&re, re_str, REG_EXTENDED);
+> +	if (ret)
+> +		die_bad_regex(ret, &re);
+> +
+> +	repo_path = absolute_path(get_git_dir());
+> +	ret = regexec(&re, repo_path, 0, NULL, 0);
+> +	regfree(&re);
+> +	return !ret;
 
-By `git log`, I meant "`git log` with its various options", as it
-felt unnecessary to single `-p` out.  But will reword anyway.
+We do this every time during the parsing?
 
->> -[NOTE]
->> -Most likely, you are not directly using the core
->> -Git Plumbing commands, but using Porcelain such as 'git add', `git-rm'
->> -and `git-commit'.
->
-> This removal sounds unrelated, but I don't understand what this note was
-> doing here anyway, so it's good to remove it.
+Hmph, if you had "include.repo:/home/junio/frotz/.path" and
+"include.repo:/srv/project/git.git/.path" in your ~/.gitconfig,
+then a single regexp that is lazily prepared once will not cut it,
+so I guess that you cannot avoid it.
 
-Yeah, the removal is part of "...and this document is not where the
-end users learn what `git log` command is about.  Stop at briefly
-mentioning the possibility of combining rev-list with diff-tree to
-build your own log, and leave the end-user documentation of `log` to
-the new tutorial and the user manual".
-
-Thanks.
+Unlike "git init|clone --profile=foo" that requires you to be
+explicit about your profile upon invocation, this mechanism is much
+easier to use by having include.<magic>.path in some global
+configuration, and the existing precedence rule makes it perfect.
+By starting /etc/gitconfig and/or your $HOME/.gitconfig with series
+of include.<magic>.path, you can have the default definitions
+included from these magic include to take effect before anything
+else, and settings from other configuration files can override it.
