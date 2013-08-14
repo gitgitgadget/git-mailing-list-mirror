@@ -1,148 +1,117 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: About *git clone --depth=n* puzzle
-Date: Wed, 14 Aug 2013 10:51:53 +0200
-Message-ID: <520B4529.9080304@googlemail.com>
-References: <BAY169-W472B90AB796C71E8D0D038B4450@phx.gbl>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: ephemeral-branches instead of detached-head?
+Date: Wed, 14 Aug 2013 14:35:49 +0530
+Message-ID: <520B486D.1040602@gmail.com>
+References: <CA+CP9O6on2NXo6o4_0NoULnT8sgUD3pvvkFZvCTM5xKb38qOeA@mail.gmail.com> <7veh9z1gym.fsf@alter.siamese.dyndns.org> <CA+CP9O5fhyQrn3SboafocWJjaAywJHC0T-bw+AXk_8RX53hJ6Q@mail.gmail.com> <CACsJy8Dke6Pezqsdcjzejc_cWCgOGTGs8LifjM2h2TQJy7N4HA@mail.gmail.com> <7vk3jpy1qt.fsf@alter.siamese.dyndns.org> <520AC9A8.4030104@gmail.com> <7vmwolujvb.fsf@alter.siamese.dyndns.org> <520B2478.3000100@gmail.com> <CAPrKj1ZQL0N7VFfZ3qS14Nhp8O4Kaez9QWK7AvqCXZds1Q=mRw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig1A1F11C086ECDCCF77F1CC67"
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"junchunx.guan@gmail.com" <junchunx.guan@gmail.com>
-To: XinLingchao <douglarek@outlook.com>
-X-From: git-owner@vger.kernel.org Wed Aug 14 10:52:00 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	David Jeske <davidj@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andres Perera <andres.p@zoho.com>
+X-From: git-owner@vger.kernel.org Wed Aug 14 11:06:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9WoB-00049t-5A
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 10:51:59 +0200
+	id 1V9X1p-0005Nm-35
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 11:06:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759540Ab3HNIvy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 04:51:54 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:60253 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759410Ab3HNIvw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 04:51:52 -0400
-Received: by mail-wi0-f172.google.com with SMTP id hj13so1659121wib.17
-        for <git@vger.kernel.org>; Wed, 14 Aug 2013 01:51:51 -0700 (PDT)
+	id S1759552Ab3HNJGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 05:06:00 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:52469 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759501Ab3HNJF5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 05:05:57 -0400
+Received: by mail-pd0-f178.google.com with SMTP id w10so6078975pde.9
+        for <git@vger.kernel.org>; Wed, 14 Aug 2013 02:05:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type;
-        bh=dSHDiz08RAHBnAd9wHViq0ND1V///p4reocNmg4XHU4=;
-        b=YWfHLJA5/TUVAf7IEbwjfF3qvD4EggrqA3G+A26m0C7/HqwDz+2Vdw4jIdIOML4d5/
-         foduLlQC4xv2qORju8jE57U1EfV+TG43T3GoLVzlAMUhBfdU6eJWAGUjIlevHZ0x40KR
-         Ft6LBKC8CxBegnauWSPmPLTka8yli442drZCWuqfD5G9We6K3T0ty8rJ/MAPYa4GUtjT
-         CvycHRgwtz0zLR2PBtBwp8rJJR7M50bkaITniWpMP+eUbR1+Nx1IkcAwAP4hrxRV36rz
-         Uw3QZul1h5a6R6nvlkUnYUNc5dZkoAlxl22cvGXL84sFyLnmxhcc93hxX7NJeJXjoYHy
-         iFeQ==
-X-Received: by 10.194.120.68 with SMTP id la4mr597105wjb.33.1376470311400;
-        Wed, 14 Aug 2013 01:51:51 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id e7sm1500317wiy.4.2013.08.14.01.51.50
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=zelK7Bpadhdyay0d6nqoKyhYyW6xmimMlZhHOHz3opE=;
+        b=t5JriPIHNd/b62DQoy1U/CNxklu0vMJZMBh+oVcE2usi2gzFhZyeZwZ8XApwxPGhtj
+         5IAEta079irVfGlne+FjQ1up2gMVhR8Q+W8RqcLt4CuEaQ5QULbkvxv82/TZ8eZAw+kU
+         91AlHrsMzvGxn5/gcBaypMJG+R+3ldexQohn7GtJWva+EgCneYWF0lzc1MrKukgkTvtt
+         WIqfqv2lLop2DMd05AxeBeMrIUOr18pRUcCSO0h3enfs2Azufxh1DXTelx7KlBBJLaot
+         8qIcFwoEl52sPiGSvWkWO5mEC0k5LJ9W+9Q2EscTH8HO8ZgGXoxn8O3kBQkfm/z5QPdz
+         /qGw==
+X-Received: by 10.66.150.97 with SMTP id uh1mr8880919pab.118.1376471156849;
+        Wed, 14 Aug 2013 02:05:56 -0700 (PDT)
+Received: from sita-lt.atc.tcs.com (atcmail.atc.tcs.com. [203.200.212.145])
+        by mx.google.com with ESMTPSA id tr10sm48954470pbc.22.2013.08.14.02.05.52
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 14 Aug 2013 01:51:50 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
-In-Reply-To: <BAY169-W472B90AB796C71E8D0D038B4450@phx.gbl>
-X-Enigmail-Version: 1.4.6
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 14 Aug 2013 02:05:55 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130805 Thunderbird/17.0.8
+In-Reply-To: <CAPrKj1ZQL0N7VFfZ3qS14Nhp8O4Kaez9QWK7AvqCXZds1Q=mRw@mail.gmail.com>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232274>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig1A1F11C086ECDCCF77F1CC67
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+On 08/14/2013 12:40 PM, Andres Perera wrote:
+> On Wed, Aug 14, 2013 at 2:02 AM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+>> On 08/14/2013 07:14 AM, Junio C Hamano wrote:
+>>> Sitaram Chamarty <sitaramc@gmail.com> writes:
+>>>
+>>>>     # all reflog entries that are not on a branch, tag, or remote
+>>>>     d1 = !gitk --date-order $(git log -g --pretty=%H) --not --branches --tags --remotes
+>>>>     # all dangling commits not on a branch, tag, or remote
+>>>>     d2 = !gitk --date-order $(git fsck | grep "dangling.commit" | cut -f3 -d' ') --not --branches --tags --remotes
+>>>>
+>>>> (Apologies if something like this was already said; I was not following
+>>>> the discussion closely enough to notice)
+>>>
+>>> Yup.
+>>>
+>>> A potential problem is that the output from "log -g --pretty=%H" or
+>>> "fsck | grep dangling" may turn out to be humongous.  Other than
+>>> that, they correctly compute what you want.
+>>
+>> I thought I mentioned that but I can't find my email now so maybe I
+>> didn't.
+>>
+>> In practice though, I find that, bash at least seems happy to take
+>> command lines as long as 7+ million characters long, so with the default
+>> reflog expire times, that should work out to 10,000 commits *per day*.
+>> [Tested with: echo {1000000..1900000}  > junk; echo `cat junk` | wc]
+> 
+> echo is a builtin in bash, as is the case with other shell implementations
+> 
+> builtins may have different limit's than exec()'s ARG_MAX
+> 
+> $ getconf ARG_MAX
+> 262144
+> $ perl -e 'print "A" x (262144 * 2)' | wc -c
+>   524288
+> $ perl -e 'print "A" x (262144 * 2)' | sh -c 'read v; echo "$v"' | wc -c
+>   524289
+> $ perl -e 'print "A" x (262144 * 2)' | sh -c 'read v; /bin/echo "$v"' | wc -c
+> sh: /bin/echo: Argument list too long
+>        0
+> 
+> builtin's argument buffer limit tends to be aligned with the
+> implementation's lexer buffer limit
 
-On 08/14/2013 10:20 AM, XinLingchao wrote:
-> Hi Guys,
->=20
-> I think I have got some trouble when I use `git clone --depth=3Dn` comm=
-and. Take a real repo for example:
->=20
->=20
-> `git clone https://github.com/douglarek/vimrc.git --depth=3D1`
->=20
->=20
-> then I use `git log`:
->  =20
-> ``` =20
->     commit d04ca09ecc723739123fae11ad56784eb0c9b36a
->     Author: Lingchao Xin <douglarek@outlook.com>
->     Date:   Fri Jun 7 09:39:22 2013 +0800
->=20
->         Update vnudle to master branch, add wm shortcut, pylint optimiz=
-ation
->=20
->     commit c66d827dc212f6ae8aab6b5c44631564bcbe2acd
->     Author: icocoa <lingchax@outlook.com>
->     Date:   Tue Mar 12 01:36:34 2013 -0700
->=20
->         Merge pull request #1 from douglarek/master
->=20
->         Add markdown, flake8, pylint plugin
->=20
-> ```
->     but when I clone it with `file://`:
->=20
->     git clone https://github.com/douglarek/vimrc.git
->     git clone file://vimrc.git --depth=3D1 vimrc1
->=20
->     I got this log:
-> ```
->     commit d04ca09ecc723739123fae11ad56784eb0c9b36a
-> Author: Lingchao Xin <douglarek@outlook.com>
-> Date:   Fri Jun 7 09:39:22 2013 +0800
->=20
->     Update vnudle to master branch, add wm shortcut, pylint optimizatio=
-n
-> ```
->=20
-> so the two results are not same, is it a bug? or it should be so?
->=20
-> My os is openSUSE 12.3 and git version 1.8.3.4; and myabe it occured in=
- git 1.8.1.4 +.
->=20
->=20
-> Thanks and Best regards
->=20
-> Lingchao Xin 		 	   		  --
+Aah; good catch -- I did not know this.  Thanks!
 
-There was a similar discussion going on in July this year,
-maybe this is an interesting read with respect to this topic
-http://www.spinics.net/lists/git/msg196138.html
+My systems show 2621440 on CentOS 6 and 2097152 on Fedora 19, so --
+dividing by 8 (abbrev SHA + space) then by 90, that's still 2900 commits
+*per day* to run past this limit though!
 
-Stefan
+(side note: making a single argument that long seems to have a much
+lower limit than having multiple arguments:
 
+    $ /bin/echo `perl -e 'print "A" x (1000000)'` | wc
+    -bash: /bin/echo: Argument list too long
+          0       0       0
+    $ /bin/echo `perl -e 'print "A " x (1000000)'` | wc
+          1 1000000 2000000
 
-
---------------enig1A1F11C086ECDCCF77F1CC67
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJSC0UpAAoJEJQCPTzLflhqIKMP/RVsOPKy5Yd9Oguj5OxjwqFU
-YaBvvjVAKyH6xNqdH8WURY0KnAnWyFMM3POw+VoVWHPANYW9xah4vSIhrQCK5ju6
-uWrNRyIi6DM7EjkUzoEDdkbCd2QTobs/h/x7JEhSADXKc89s7pl/RMGdmrgDMLap
-jkWWYTLt8Tz/yIoVXA3/fv8FOaNZIh2gWT35P7uahqb5SCWKtvzGvE+Ibfu9ou7i
-zUbq6zNfsiMwMU4Goqr1TBEzSj1o0fcEA+TlG1KPMD4EmroxZ9nIIFAjwcnvZiJh
-+PPb4UCaA821DbGZvMjdk+o7pzVHQP884ks0sih9QR6biq13lcNRUCcj2Z0GQRHs
-FtTUuf1Unmj6ZZND65jAy70pv9o5HW4ORQbsWXLps5355/wYDCzSswwtvtKjLkEZ
-lVD9O+4IjTg3Po5CRcfr4sxZ+VkeKhZdugBiRwh9OAi1r8F3ZYj3nJauc90JnUrW
-Wvqs0mnDpJrNCSn+bwAsZgWtvQ1nswiUuMQWxFp7yl9CCSscshoek0YEGElplX9R
-IkK+3ddCPJefdF23Usp7XcyIAYii19zdSQNcocsc2mMEiNJUY0GE22rqn6xo09Z/
-yo6kltm9opux/lwFPzPsaZYCjytkBj+nUu2iLHp0FX9/dT08FOXNOloiiMyyUx1a
-FzMNuZ/pgoQsqmPpU2LI
-=aBqv
------END PGP SIGNATURE-----
-
---------------enig1A1F11C086ECDCCF77F1CC67--
+notice that the second one is twice as long in terms of bytes, but it's
+not a single argument).
