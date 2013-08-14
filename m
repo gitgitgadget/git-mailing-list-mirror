@@ -1,99 +1,69 @@
-From: Andres Perera <andres.p@zoho.com>
-Subject: Re: ephemeral-branches instead of detached-head?
-Date: Wed, 14 Aug 2013 02:40:39 -0430
-Message-ID: <CAPrKj1ZQL0N7VFfZ3qS14Nhp8O4Kaez9QWK7AvqCXZds1Q=mRw@mail.gmail.com>
-References: <CA+CP9O6on2NXo6o4_0NoULnT8sgUD3pvvkFZvCTM5xKb38qOeA@mail.gmail.com>
-	<7veh9z1gym.fsf@alter.siamese.dyndns.org>
-	<CA+CP9O5fhyQrn3SboafocWJjaAywJHC0T-bw+AXk_8RX53hJ6Q@mail.gmail.com>
-	<CACsJy8Dke6Pezqsdcjzejc_cWCgOGTGs8LifjM2h2TQJy7N4HA@mail.gmail.com>
-	<7vk3jpy1qt.fsf@alter.siamese.dyndns.org>
-	<520AC9A8.4030104@gmail.com>
-	<7vmwolujvb.fsf@alter.siamese.dyndns.org>
-	<520B2478.3000100@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Rewriting git-repack in C
+Date: Wed, 14 Aug 2013 09:12:27 +0200
+Message-ID: <vpqbo50oiec.fsf@anie.imag.fr>
+References: <1376421797-26443-1-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	David Jeske <davidj@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 14 09:10:45 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, pclouds@gmail.com, iveqy@iveqy.com,
+	gitster@pobox.com, apelisse@gmail.com
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 14 09:12:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9VEC-0004X6-Mm
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 09:10:45 +0200
+	id 1V9VGC-0005sd-5K
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 09:12:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755426Ab3HNHKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 03:10:41 -0400
-Received: from mail-ve0-f178.google.com ([209.85.128.178]:34309 "EHLO
-	mail-ve0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753388Ab3HNHKk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 03:10:40 -0400
-Received: by mail-ve0-f178.google.com with SMTP id ox1so7415894veb.37
-        for <git@vger.kernel.org>; Wed, 14 Aug 2013 00:10:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ZJfY/hPjlp2KB9Eu6b8GB13jM3lRmdQ+mVINagmyVrM=;
-        b=SdrRuv8ifxgtK2nTJXujcWFQF8KfSiY3OjNV3AixfRUItwUMmxTMl0Gv7NDMf/mCNh
-         5rDC1XuTlXAnED0SnIZxNQZFpWReab8Y5PGd+S0zDQuJ2KkuoES9QIZiOv+nAM9Fv69b
-         rH/UqBPs7jytjBwvIWXj9qxc3Ha3evD9UFOXiBYoAcgt0AYfx4HpUvTkykyoR80dWXlL
-         2YLkiX2477occmHk/AabYLCo5+iJBFQ3me+pMF3fYnRiZLTdUJ68surHescBqX8Mk57Q
-         VkqvdxWhYYcZ0BQFDoG11Y6hNl2Rrt9NVDXti/ah+M26XYmzKFexx9M7Pbx+Ql2jzv7I
-         ddEA==
-X-Received: by 10.220.91.16 with SMTP id k16mr8284708vcm.21.1376464239571;
- Wed, 14 Aug 2013 00:10:39 -0700 (PDT)
-Received: by 10.58.207.110 with HTTP; Wed, 14 Aug 2013 00:10:39 -0700 (PDT)
-In-Reply-To: <520B2478.3000100@gmail.com>
-X-Google-Sender-Auth: vq1jBEnKGPxaULP48IMzDJJkTCE
+	id S1755767Ab3HNHMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 03:12:44 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:47538 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754157Ab3HNHMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 03:12:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r7E7CRs7006521
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 14 Aug 2013 09:12:27 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1V9VFr-0006g3-Uv; Wed, 14 Aug 2013 09:12:28 +0200
+In-Reply-To: <1376421797-26443-1-git-send-email-stefanbeller@googlemail.com>
+	(Stefan Beller's message of "Tue, 13 Aug 2013 21:23:16 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 14 Aug 2013 09:12:27 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r7E7CRs7006521
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1377069150.81751@ke7Jyl1vSKxs9KRuqNaWNQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232266>
 
-On Wed, Aug 14, 2013 at 2:02 AM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
-> On 08/14/2013 07:14 AM, Junio C Hamano wrote:
->> Sitaram Chamarty <sitaramc@gmail.com> writes:
->>
->>>     # all reflog entries that are not on a branch, tag, or remote
->>>     d1 = !gitk --date-order $(git log -g --pretty=%H) --not --branches --tags --remotes
->>>     # all dangling commits not on a branch, tag, or remote
->>>     d2 = !gitk --date-order $(git fsck | grep "dangling.commit" | cut -f3 -d' ') --not --branches --tags --remotes
->>>
->>> (Apologies if something like this was already said; I was not following
->>> the discussion closely enough to notice)
->>
->> Yup.
->>
->> A potential problem is that the output from "log -g --pretty=%H" or
->> "fsck | grep dangling" may turn out to be humongous.  Other than
->> that, they correctly compute what you want.
->
-> I thought I mentioned that but I can't find my email now so maybe I
-> didn't.
->
-> In practice though, I find that, bash at least seems happy to take
-> command lines as long as 7+ million characters long, so with the default
-> reflog expire times, that should work out to 10,000 commits *per day*.
-> [Tested with: echo {1000000..1900000}  > junk; echo `cat junk` | wc]
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-echo is a builtin in bash, as is the case with other shell implementations
+> Also I'd like to propose a small technical change:
+> I found no easy way to get a subset of files in a specific directory,
+> which is very easy in the shell version via * (rm file/in/dir/startswithprefix-*),
+> So maybe instead of just prefixing the temporary files such as:
+> $PACKDIR/.tmp-$PID-pack-*
 
-builtins may have different limit's than exec()'s ARG_MAX
+If it's just a prefix, you can iterate over the full list of files, and
+then use prefixcmp(...) to find the right files. May seem inefficient,
+but AFAIK it's how the shell does wildcard expansion.
 
-$ getconf ARG_MAX
-262144
-$ perl -e 'print "A" x (262144 * 2)' | wc -c
-  524288
-$ perl -e 'print "A" x (262144 * 2)' | sh -c 'read v; echo "$v"' | wc -c
-  524289
-$ perl -e 'print "A" x (262144 * 2)' | sh -c 'read v; /bin/echo "$v"' | wc -c
-sh: /bin/echo: Argument list too long
-       0
+You should be carefull that if the operation is interrupted, the next
+"git gc" must remove all the garbage, so if you change the naming
+convention, you must also change the place where the cleanup is done.
 
-builtin's argument buffer limit tends to be aligned with the
-implementation's lexer buffer limit
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
