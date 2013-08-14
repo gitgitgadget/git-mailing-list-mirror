@@ -1,74 +1,82 @@
-From: XinLingchao <douglarek@outlook.com>
-Subject: RE: About *git clone --depth=n* puzzle
-Date: Wed, 14 Aug 2013 17:19:36 +0800
-Message-ID: <BAY169-W647D5A2BFDC793ADFA5078B4450@phx.gbl>
-References: <BAY169-W472B90AB796C71E8D0D038B4450@phx.gbl>,<520B4529.9080304@googlemail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: re-ignoring a force added file
+Date: Wed, 14 Aug 2013 11:22:42 +0200
+Message-ID: <87ioz8hbj1.fsf@linux-k42r.v.cablecom.net>
+References: <520A7B79.4080306@ebi.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"junchunx.guan@gmail.com" <junchunx.guan@gmail.com>
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 14 11:19:47 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>
+To: Raza Ali <rali@ebi.ac.uk>
+X-From: git-owner@vger.kernel.org Wed Aug 14 11:22:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9XF4-0006du-7A
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 11:19:46 +0200
+	id 1V9XI0-0000LI-Us
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 11:22:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932286Ab3HNJTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 05:19:38 -0400
-Received: from bay0-omc2-s25.bay0.hotmail.com ([65.54.190.100]:15930 "EHLO
-	bay0-omc2-s25.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932279Ab3HNJTg (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Aug 2013 05:19:36 -0400
-Received: from BAY169-W64 ([65.54.190.123]) by bay0-omc2-s25.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Wed, 14 Aug 2013 02:19:36 -0700
-X-TMN: [HD4KU823Q2mHy1j4cAkXntqOu8Z/hCFJ]
-X-Originating-Email: [douglarek@outlook.com]
-Importance: Normal
-In-Reply-To: <520B4529.9080304@googlemail.com>
-X-OriginalArrivalTime: 14 Aug 2013 09:19:36.0902 (UTC) FILETIME=[65826660:01CE98CF]
+	id S1759358Ab3HNJWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 05:22:45 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:46484 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752182Ab3HNJWo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 05:22:44 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 14 Aug
+ 2013 11:22:38 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS21.d.ethz.ch (172.31.51.111) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Wed, 14 Aug 2013 11:22:41 +0200
+In-Reply-To: <520A7B79.4080306@ebi.ac.uk> (Raza Ali's message of "Tue, 13 Aug
+	2013 19:31:21 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232277>
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCj4gRGF0ZTogV2VkLCAxNCBB
-dWcgMjAxMyAxMDo1MTo1MyArMDIwMAo+IEZyb206IHN0ZWZhbmJlbGxlckBnb29nbGVtYWlsLmNv
-bQo+IFRvOiBkb3VnbGFyZWtAb3V0bG9vay5jb20KPiBDQzogZ2l0QHZnZXIua2VybmVsLm9yZzsg
-anVuY2h1bnguZ3VhbkBnbWFpbC5jb20KPiBTdWJqZWN0OiBSZTogQWJvdXQgKmdpdCBjbG9uZSAt
-LWRlcHRoPW4qIHB1enpsZQo+Cj4gT24gMDgvMTQvMjAxMyAxMDoyMCBBTSwgWGluTGluZ2NoYW8g
-d3JvdGU6Cj4+IEhpIEd1eXMsCj4+Cj4+IEkgdGhpbmsgSSBoYXZlIGdvdCBzb21lIHRyb3VibGUg
-d2hlbiBJIHVzZSBgZ2l0IGNsb25lIC0tZGVwdGg9bmAgY29tbWFuZC4gVGFrZSBhIHJlYWwgcmVw
-byBmb3IgZXhhbXBsZToKPj4KPj4KPj4gYGdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vZG91
-Z2xhcmVrL3ZpbXJjLmdpdCAtLWRlcHRoPTFgCj4+Cj4+Cj4+IHRoZW4gSSB1c2UgYGdpdCBsb2dg
-Ogo+Pgo+PiBgYGAKPj4gY29tbWl0IGQwNGNhMDllY2M3MjM3MzkxMjNmYWUxMWFkNTY3ODRlYjBj
-OWIzNmEKPj4gQXV0aG9yOiBMaW5nY2hhbyBYaW4gPGRvdWdsYXJla0BvdXRsb29rLmNvbT4KPj4g
-RGF0ZTogRnJpIEp1biA3IDA5OjM5OjIyIDIwMTMgKzA4MDAKPj4KPj4gVXBkYXRlIHZudWRsZSB0
-byBtYXN0ZXIgYnJhbmNoLCBhZGQgd20gc2hvcnRjdXQsIHB5bGludCBvcHRpbWl6YXRpb24KPj4K
-Pj4gY29tbWl0IGM2NmQ4MjdkYzIxMmY2YWU4YWFiNmI1YzQ0NjMxNTY0YmNiZTJhY2QKPj4gQXV0
-aG9yOiBpY29jb2EgPGxpbmdjaGF4QG91dGxvb2suY29tPgo+PiBEYXRlOiBUdWUgTWFyIDEyIDAx
-OjM2OjM0IDIwMTMgLTA3MDAKPj4KPj4gTWVyZ2UgcHVsbCByZXF1ZXN0ICMxIGZyb20gZG91Z2xh
-cmVrL21hc3Rlcgo+Pgo+PiBBZGQgbWFya2Rvd24sIGZsYWtlOCwgcHlsaW50IHBsdWdpbgo+Pgo+
-PiBgYGAKPj4gYnV0IHdoZW4gSSBjbG9uZSBpdCB3aXRoIGBmaWxlOi8vYDoKPj4KPj4gZ2l0IGNs
-b25lIGh0dHBzOi8vZ2l0aHViLmNvbS9kb3VnbGFyZWsvdmltcmMuZ2l0Cj4+IGdpdCBjbG9uZSBm
-aWxlOi8vdmltcmMuZ2l0IC0tZGVwdGg9MSB2aW1yYzEKPj4KPj4gSSBnb3QgdGhpcyBsb2c6Cj4+
-IGBgYAo+PiBjb21taXQgZDA0Y2EwOWVjYzcyMzczOTEyM2ZhZTExYWQ1Njc4NGViMGM5YjM2YQo+
-PiBBdXRob3I6IExpbmdjaGFvIFhpbiA8ZG91Z2xhcmVrQG91dGxvb2suY29tPgo+PiBEYXRlOiBG
-cmkgSnVuIDcgMDk6Mzk6MjIgMjAxMyArMDgwMAo+Pgo+PiBVcGRhdGUgdm51ZGxlIHRvIG1hc3Rl
-ciBicmFuY2gsIGFkZCB3bSBzaG9ydGN1dCwgcHlsaW50IG9wdGltaXphdGlvbgo+PiBgYGAKPj4K
-Pj4gc28gdGhlIHR3byByZXN1bHRzIGFyZSBub3Qgc2FtZSwgaXMgaXQgYSBidWc/IG9yIGl0IHNo
-b3VsZCBiZSBzbz8KPj4KPj4gTXkgb3MgaXMgb3BlblNVU0UgMTIuMyBhbmQgZ2l0IHZlcnNpb24g
-MS44LjMuNDsgYW5kIG15YWJlIGl0IG9jY3VyZWQgaW4gZ2l0IDEuOC4xLjQgKy4KPj4KPj4KPj4g
-VGhhbmtzIGFuZCBCZXN0IHJlZ2FyZHMKPj4KPj4gTGluZ2NoYW8gWGluIC0tCj4KPiBUaGVyZSB3
-YXMgYSBzaW1pbGFyIGRpc2N1c3Npb24gZ29pbmcgb24gaW4gSnVseSB0aGlzIHllYXIsCj4gbWF5
-YmUgdGhpcyBpcyBhbiBpbnRlcmVzdGluZyByZWFkIHdpdGggcmVzcGVjdCB0byB0aGlzIHRvcGlj
-Cj4gaHR0cDovL3d3dy5zcGluaWNzLm5ldC9saXN0cy9naXQvbXNnMTk2MTM4Lmh0bWwKPgo+IFN0
-ZWZhbgo+Cj4KClN0ZWZhbiwgSSBkbyBOT1QgdGhpbmsgc28sIHRoZSBrZXkgcG9pbnQgaXMgbm90
-IGFib3V0IHRoZSBkZXB0aCBsaW1pdCwgaXQgaXMgYWJvdXQgd2hldGhlciByZW1vdGUgY2xvbmUg
-ZGVwdGggZXF1YWxzIGxvY2FsIGNsb25lIGRlcHRoLgoKY2hlZXJzCgpMaW5nY2hhbyBYaW4gCQkg
-CSAgIAkJICA=
+Raza Ali <rali@ebi.ac.uk> writes:
+
+> I have force added a file we usually like to ignore (but keep in the
+> repository). That was a change a while ago, and cannot be undone
+> without serious pain. I would like to re-ignore the file though, as we
+> dont want to track changes to it. Some of the options I came across
+> are not useful for me. For example
+>
+> git rm --cached FILE // removes the file from the remote repository if
+> I push, not desirable
+> git update-index --assume-unchanged //Will ignore changes to the file
+> locally, but someone else clones and the file is tracked for them.
+>
+> What we would like is to go back to the old state of affairs: the file
+> was in the working directory when someone cloned from the remote
+> repository, but changes to the file werent tracked or committed.
+
+I highly doubt that this description is accurate:
+
+Either the file was actually in the repository (more specifically, in
+the commit that git-clone chose to be checked out).  In this case, it
+appears in the worktree after cloning.  But its presence in the HEAD
+commit of the resulting repo also means that it is tracked.
+
+Or it was not in the repository.  In which case it will not appear in a
+new clone.  And there is no third option here.
+
+So your "old state" in fact did not exist.  And it unfortunately is also
+not attainable in more roundabout ways: any given file can only be
+either tracked or ignored (or untracked-but-not-ignored, but that's
+beside the point).  You cannot use ignore rules to ignore files that are
+tracked.
+
+Please check https://gist.github.com/canton7/1423106 for a list of other
+ways to achieve what you are trying to do (link from the corresponding
+bot quote on #git).  But do note that --assume-unchanged is a rather
+more dangerous beast than you may think, and I cannot recommend actually
+using it.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
