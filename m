@@ -1,83 +1,110 @@
-From: Jeff King <peff@peff.net>
+From: Martin Fick <mfick@codeaurora.org>
 Subject: Re: [RFC PATCH] repack: rewrite the shell script in C.
-Date: Wed, 14 Aug 2013 13:19:56 -0400
-Message-ID: <20130814171956.GA6884@sigill.intra.peff.net>
-References: <520BAF9F.70105@googlemail.com>
- <1376497661-30714-1-git-send-email-stefanbeller@googlemail.com>
- <CALWbr2xuV+V7M354+XoA3HCvLr0Cpx4t3cLVeTCx4xeNmQQX1w@mail.gmail.com>
- <520BB8A5.4010406@googlemail.com>
+Date: Wed, 14 Aug 2013 11:25:59 -0600
+Organization: CAF
+Message-ID: <201308141125.59991.mfick@codeaurora.org>
+References: <520BAF9F.70105@googlemail.com> <1376497661-30714-1-git-send-email-stefanbeller@googlemail.com> <CALWbr2xuV+V7M354+XoA3HCvLr0Cpx4t3cLVeTCx4xeNmQQX1w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Antoine Pelisse <apelisse@gmail.com>, git <git@vger.kernel.org>,
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Stefan Beller <stefanbeller@googlemail.com>,
+	git <git@vger.kernel.org>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	iveqy@iveqy.com, Junio C Hamano <gitster@pobox.com>
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 14 19:20:09 2013
+	=?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>, iveqy@iveqy.com,
+	Junio C Hamano <gitster@pobox.com>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 14 19:26:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9ejv-0003mk-AG
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 19:20:07 +0200
+	id 1V9epk-0008JR-On
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 19:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759921Ab3HNRUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 13:20:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39334 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754038Ab3HNRUA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 13:20:00 -0400
-Received: (qmail 553 invoked by uid 102); 14 Aug 2013 17:20:00 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Aug 2013 12:20:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Aug 2013 13:19:56 -0400
-Content-Disposition: inline
-In-Reply-To: <520BB8A5.4010406@googlemail.com>
+	id S1759996Ab3HNR0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 13:26:04 -0400
+Received: from smtp.codeaurora.org ([198.145.11.231]:54483 "EHLO
+	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759967Ab3HNR0D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 13:26:03 -0400
+Received: from smtp.codeaurora.org (localhost [127.0.0.1])
+	by smtp.codeaurora.org (Postfix) with ESMTP id 2984013EF10;
+	Wed, 14 Aug 2013 17:26:03 +0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 486)
+	id 1983613EF93; Wed, 14 Aug 2013 17:26:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	pdx-caf-smtp.dmz.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.3.1
+Received: from mfick-lnx.localnet (mfick-lnx.qualcomm.com [129.46.10.58])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: mfick@smtp.codeaurora.org)
+	by smtp.codeaurora.org (Postfix) with ESMTPSA id B47D313EF83;
+	Wed, 14 Aug 2013 17:26:02 +0000 (UTC)
+User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <CALWbr2xuV+V7M354+XoA3HCvLr0Cpx4t3cLVeTCx4xeNmQQX1w@mail.gmail.com>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232301>
 
-On Wed, Aug 14, 2013 at 07:04:37PM +0200, Stefan Beller wrote:
-
-> But apart from my blabbering, I think ivegy made a good point:
-> The C parts just don't rely on external things, but only libc and
-> kernel, so it may be nicer than a shell script. Also as it is used
-> serversided, the performance aspect is not negligible.
+On Wednesday, August 14, 2013 10:49:58 am Antoine Pelisse 
+wrote:
+> On Wed, Aug 14, 2013 at 6:27 PM, Stefan Beller
 > 
-> I included Jeff King, who maybe could elaborate on git-repack on the
-> serverside?
+> <stefanbeller@googlemail.com> wrote:
+> >  builtin/repack.c               | 410
+> >  +++++++++++++++++++++++++++++++++++++++++
+> >  contrib/examples/git-repack.sh | 194
+> >  +++++++++++++++++++ git-repack.sh                  |
+> >  194 -------------------
+> 
+> I'm still not sure I understand the trade-off here.
+> 
+> Most of what git-repack does is compute some file paths,
+> (re)move those files and call git-pack-objects, and
+> potentially git-prune-packed and git-update-server-info.
+> Maybe I'm wrong, but I have the feeling that the correct
+> tool for that is Shell, rather than C (and I think the
+> code looks less intuitive in C for that matter).
+> I'm not sure anyone would run that command a thousand
+> times a second, so I'm not sure it would make a
+> real-life performance difference.
 
-I don't think the performance of repack as a C program versus a shell
-script is really relevant to us at GitHub. Sure, we run a fair number of
-repacks, but the cost is totally dominated by the pack-objects process
-itself.
+I have been holding off a bit on expressing this opinion too 
+because I don't want to squash someone's energy to improve 
+things, and because I am not yet a git dev, but since it was 
+brought up anyway...
+ 
+I can say that as a user, having git-repack as a shell 
+script has been very valuable.  For example:  we have 
+modified it for our internal use to no longer ever overwrite
+new packfiles with the same name as the current packfile.  
+This modification was relatively easy to do and see in shell 
+script.  If this were C code I can't imagine having 
+personally: 1) identified that there was an issue with the 
+original git-repack (it temporarily makes objects 
+unavailable) 2) made a simple custom fix to that policy.
 
-You might be able to achieve some speedups if it was not simply a
-shell->C conversion, but an overall gc rewrite that did more in a single
-process, and reused results (for example, you can reuse all or part of
-the history traversal from pack-object's "counting objects" phase to do
-the reachability analysis during prune)[1].
+The script really is mostly a policy script, and with the 
+discussions happening in other threads about how to improve 
+git gc, I think it is helpful to potentially be able to 
+quickly modify the policies in this script, it makes it 
+easier to prototype things.  Shell portability issues aside, 
+this script is not a low level type of tool that I feel will 
+benefit from being in C, I feel it will in fact be worse off 
+in C,
 
-But I'd be very wary of stuffing too many things in a single process.
-There are parts of the code that make assumptions about which objects
-have been seen in the global object hash table (I believe index-pack is
-one of these; see check_objects). And there are parts of the code which
-must run separately (e.g., the connectivity check after transfer runs in
-a separate process, both because it may die(), but also because we want
-a clean slate of which packs are available, with no caching of results
-we may have seen).
+-Martin
 
-None of those problems is unsolvable, but it's very hard to know when
-one is going to pop up and bite you. And because the repacking and
-pruning code is the most likely place for a bug to cause data loss, it
-makes me a bit nervous.
-
--Peff
-
-[1] Another way to reuse the history traversal is to generate the
-    much-discussed pack reachability bitmaps, and then use them in
-    git-prune.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code 
+Aurora Forum, hosted by The Linux Foundation
+ 
