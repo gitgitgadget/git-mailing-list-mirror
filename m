@@ -1,126 +1,86 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: Git bug. "make [all]" does not use USE_LIBPCRE when "configure
- --with-libpcre" was previously run
-Date: Wed, 14 Aug 2013 16:48:49 +0400
-Message-ID: <20130814124849.GA8234@ashu.dyn1.rarus.ru>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git should not use a default user.email config value
+Date: Wed, 14 Aug 2013 07:00:58 -0700
+Message-ID: <CAPc5daWqzTkMFkecrAjMCmxwZZrgUtB-FVKrjsmfvpgwPgF8AA@mail.gmail.com>
+References: <52060EF9.2040504@alum.mit.edu> <7vvc3d1o01.fsf@alter.siamese.dyndns.org>
+ <CAH5451nHfOaBzFzkrGvw+TyRj==cVpKF_QdXsTxnn5tTr1c0dw@mail.gmail.com>
+ <20130812123921.GA16088@sigill.intra.peff.net> <CAH5451=PK15n4U-3Mb_TLevF3-r+vrpk1PXD15Oo1A2KFc5i_w@mail.gmail.com>
+ <20130812154520.GA18215@sigill.intra.peff.net> <CAH5451=WKXUNzovXquFii=EdkeQXJEQ96_CRRebgQW6ow_19VA@mail.gmail.com>
+ <20130813114635.GA16506@sigill.intra.peff.net> <7vsiydy2i1.fsf@alter.siamese.dyndns.org>
+ <vpqsiycn33b.fsf@anie.imag.fr> <20130814074035.GB5095@sigill.intra.peff.net> <vpq38qcmzw1.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Stefano Lattarini <stefano.lattarini@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 14 14:48:58 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Andrew Ardill <andrew.ardill@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thorsten Glaser <tg@mirbsd.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 14 16:01:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9aVV-0005OE-VV
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 14:48:58 +0200
+	id 1V9bdf-0005cG-8Q
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 16:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932320Ab3HNMsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 08:48:54 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:62145 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932164Ab3HNMsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 08:48:53 -0400
-Received: by mail-lb0-f175.google.com with SMTP id 13so6819592lba.34
-        for <git@vger.kernel.org>; Wed, 14 Aug 2013 05:48:51 -0700 (PDT)
+	id S932313Ab3HNOBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 10:01:22 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:37699 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759590Ab3HNOBW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 10:01:22 -0400
+Received: by mail-lb0-f171.google.com with SMTP id t13so6803089lbd.2
+        for <git@vger.kernel.org>; Wed, 14 Aug 2013 07:01:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=QZ9K/1VJJzFLJae3K5fB85ikvEIFwpIrESJEVSYlGuY=;
-        b=BIDFUHiLuJ0HcE4UIma09F3EukHoCjXMVePvgK0Ceku3NFtxCuyWdu4BO81g33GLtf
-         AEkPEGYV6zn/GjkbP3VY4SeNSPpYHwmX6CJ8SEUdQSU2U62mxFwYbDCw27u0RYwIeYAU
-         1d+sIElf/RHc71Xm3+wLVLB22q8sggEeIV8eU/XY3I7U366i731wBiU+fxeTooU17G5J
-         9Ltq7pCpLCzvRVuStULdcQlk98yRKwEFZaUSFsr9sN7r+BGk8v0z686sYuQWSiVxFnuy
-         SQiA+whH0uNocVMY/RPaL1LuLj/OjtgMZ1vIqG5Z2Mv0lb91IkxFAuWqDVTYUGHbuQBE
-         zZtA==
-X-Received: by 10.152.3.42 with SMTP id 10mr8598741laz.22.1376484531600;
-        Wed, 14 Aug 2013 05:48:51 -0700 (PDT)
-Received: from localhost ([85.21.218.130])
-        by mx.google.com with ESMTPSA id v5sm190045lbv.15.2013.08.14.05.48.50
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 14 Aug 2013 05:48:50 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=z5km1ws1pKs90wg7MJr3mTSHN1reWqKQj2x2L35ejIw=;
+        b=lvOw4IWvHPqPy8F2sS81/11KrMZFw+ifgH7wpp8gZgSVlHknuNEVtvi7drkxq5a/BL
+         LnlQLInWNLBuEc9ZcIVCgAcFLH1CYlbw0uxm3UcRf+NDMXBm+FOZ7pqr2mQ/iXE5Cj5v
+         KvdT/q+0Dd1IiP0l55PunS+zlCDBRBDcaO1kKA3rR5qDoiS9Wawvh5N5pSd/QeJfuFtz
+         mmgq9GhpxZdmqFb4bgiZu97Ldj+cx8FomFGSyLK5bfKo8L+lVbAAIChB9uw/MBRSNoIP
+         F2WBg+rvXb3HH0yUqgybHPpjXlCblbx29eQIwdjLfy3aWWcsd0fELXaZlLy4LJeXBlLQ
+         x02A==
+X-Received: by 10.112.181.36 with SMTP id dt4mr1366192lbc.46.1376488879053;
+ Wed, 14 Aug 2013 07:01:19 -0700 (PDT)
+Received: by 10.112.219.200 with HTTP; Wed, 14 Aug 2013 07:00:58 -0700 (PDT)
+In-Reply-To: <vpq38qcmzw1.fsf@anie.imag.fr>
+X-Google-Sender-Auth: AURXJypMhrFix23Sda4nyiceb2Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232284>
 
-Hello, Stefan!
+On Wed, Aug 14, 2013 at 1:37 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+>
+> Jeff King <peff@peff.net> writes:
+>
+> > This whole discussion is basically implementing conditional config.
+> > [...] The problem is that it would be tricky to do in a
+> > backwards-compatible way.
+>
+> That could be done with "conditional comments" like
+>
+> # if <some-condition> then
+> [core]
+>         pager = less
+> # endif
+>
+> That's rather ugly, and the implementation would be even more ugly, but
+> backward-compatible.
 
-I'll begin from afar.
 
->From time to time, I use `git grep -P` to search text in sources using PCRE.
-Today I was suprised when that command gave me the error
-    "fatal: cannot use Perl-compatible regexes when not compiled with
-    USE_LIBPCRE"
-
-As far as I always use
-    ./configure --with-libpcre 
-    make all
-to build my Cygwin version of Git that was a VERY sudden error for me.
-(but this is not a Cygwin-specific error, I've reproduced it on my Linux
-box).
-
-I've found out that `make` "does not know" anymore about USE_LIBPCRE=YesPlease
-even `./configure --with-libpcre` was run before it. But I do remember
-that it worked in some versions before (currently I use latest - v1.8.3.4).
-
-So, I've got armed with the following test script:
-
----8<---
-#!/bin/sh
-
-set -e
-./configure --with-libpcre
-make
-set +e
-./bin-wrappers/git grep -qIP das+
-# if "cannot use Perl-compatible regexes" error occurs
-# then Git exits with an error code 128 (but `git bisect run` fails to
-# expect this exit code).
-if test $? -eq 128
-then
-    exit 1
-fi
----8<---
-
-and `git bisect run` to find out where Git was broken.
-That gave me:
-
----8<---
-40bfbde9da5c6cbc85f49a755f27162dc966fd89 is the first bad commit
-commit 40bfbde9da5c6cbc85f49a755f27162dc966fd89
-Author: Stefano Lattarini <stefano.lattarini@gmail.com>
-Date:   Tue Sep 11 17:45:30 2012 +0200
-
-    build: don't duplicate substitution of make variables
-    
-    Thanks to our 'GIT_CONF_SUBST' layer in configure.ac, a make variable 'VAR'
-    can be defined to a value 'VAL' at ./configure runtime in our build system
-    simply by using "GIT_CONF_SUBST([VAR], [VAL])" in configure.ac, rather than
-    having both to call "AC_SUBST([VAR], [VAL])" in configure.ac and adding the
-    'VAR = @VAR@' definition in config.mak.in.  Less duplication, less margin
-    for error, less possibility of confusion.
-    
-    While at it, fix some formatting issues in configure.ac that unnecessarily
-    obscured the code flow.
-    
-    Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-:100644 100644 802d34223a2859ee1341d94ee722d7939b7276aa 69d48382fe69b8699eb350949fff04975db923f8 M      config.mak.in
-:100644 100644 450bbe7f1020711b4af2ad6ea52d717651c30b0b da1f41f58871b2102a9ed5eaeff7df3c9623f4bd M      configure.ac
-bisect run success
-
----8<---
-
-I'm not a C programmer to fix that, so I ask you to.
-
--- 
-Alexey Shumkin
+I highly doubt that you would want to be "backward compatible" in this
+case, though.
+The section of the configuration you are enclosing the new if/endif
+syntax may be
+understood only by newer Git (e.g. imagine core.pager is still
+bool-only today), and
+older Git that do not understand if/endif syntax will happily read
+that section and
+choke on it, no?
