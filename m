@@ -1,89 +1,84 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] repack: rewrite the shell script in C.
-Date: Wed, 14 Aug 2013 09:26:37 +0200
-Message-ID: <vpqy584n36a.fsf@anie.imag.fr>
-References: <1376421797-26443-1-git-send-email-stefanbeller@googlemail.com>
-	<1376421797-26443-2-git-send-email-stefanbeller@googlemail.com>
+Subject: Re: git should not use a default user.email config value
+Date: Wed, 14 Aug 2013 09:28:24 +0200
+Message-ID: <vpqsiycn33b.fsf@anie.imag.fr>
+References: <20130809223758.GB7160@sigill.intra.peff.net>
+	<20130809231928.GY14690@google.com>
+	<20130810064717.GB30185@sigill.intra.peff.net>
+	<52060EF9.2040504@alum.mit.edu>
+	<7vvc3d1o01.fsf@alter.siamese.dyndns.org>
+	<CAH5451nHfOaBzFzkrGvw+TyRj==cVpKF_QdXsTxnn5tTr1c0dw@mail.gmail.com>
+	<20130812123921.GA16088@sigill.intra.peff.net>
+	<CAH5451=PK15n4U-3Mb_TLevF3-r+vrpk1PXD15Oo1A2KFc5i_w@mail.gmail.com>
+	<20130812154520.GA18215@sigill.intra.peff.net>
+	<CAH5451=WKXUNzovXquFii=EdkeQXJEQ96_CRRebgQW6ow_19VA@mail.gmail.com>
+	<20130813114635.GA16506@sigill.intra.peff.net>
+	<7vsiydy2i1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, pclouds@gmail.com, iveqy@iveqy.com,
-	gitster@pobox.com, apelisse@gmail.com
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 14 09:26:49 2013
+Cc: Jeff King <peff@peff.net>, Andrew Ardill <andrew.ardill@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thorsten Glaser <tg@mirbsd.de>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 14 09:28:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9VTl-0006qT-1E
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 09:26:49 +0200
+	id 1V9VVo-0008Am-Fl
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 09:28:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757886Ab3HNH0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 03:26:45 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47863 "EHLO rominette.imag.fr"
+	id S1759165Ab3HNH2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 03:28:52 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:47918 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754696Ab3HNH0o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 03:26:44 -0400
+	id S1757923Ab3HNH2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 03:28:52 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r7E7QbIu009484
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r7E7SOFJ009800
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 14 Aug 2013 09:26:37 +0200
+	Wed, 14 Aug 2013 09:28:26 +0200
 Received: from anie.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1V9VTa-0006kA-1F; Wed, 14 Aug 2013 09:26:38 +0200
-In-Reply-To: <1376421797-26443-2-git-send-email-stefanbeller@googlemail.com>
-	(Stefan Beller's message of "Tue, 13 Aug 2013 21:23:17 +0200")
+	id 1V9VVI-0006l4-TF; Wed, 14 Aug 2013 09:28:24 +0200
+In-Reply-To: <7vsiydy2i1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 13 Aug 2013 09:33:26 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 14 Aug 2013 09:26:38 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 14 Aug 2013 09:28:28 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r7E7QbIu009484
+X-MailScanner-ID: r7E7SOFJ009800
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1377069998.31825@K0v+Ts82cYhoGwCA8cvrig
+MailScanner-NULL-Check: 1377070108.71482@s7aAwzcwssWrrxuehAJRNw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232268>
 
-Stefan Beller <stefanbeller@googlemail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> This is the beginning of the rewrite of the repacking.
+> Jeff King <peff@peff.net> writes:
+>
+>> I guess we could do something like:
+>>
+>>   [include "repo:...your regex here..."]
+>>     path = .gitconfig-only-for-some-repos
+>>   [include "env:USE_MY_MAGIC_CONFIG"]
+>>     path = .gitconfig-only-when-magic-env-set
+>
+> I am not sure if "env" is very useful, but there certainly are other
+> possibilities (e.g. apply this only on this host, only for members
+> of this UNIX group, etc.)
 
-(please, mark your patch as RFC/PATCH in the subject in this case)
-
-A few quick comments on style below.
-
->  Makefile                       |   2 +-
->  builtin.h                      |   1 +
->  builtin/repack.c               | 313 +++++++++++++++++++++++++++++++++++++++++
->  contrib/examples/git-repack.sh | 194 +++++++++++++++++++++++++
->  git-repack.sh                  | 194 -------------------------
->  git.c                          |   1 +
-
-I suggested that you first enrich the test suite if needed. Did you
-check that the testsuite had good enough coverage for git-repack?
-
-> +static const char * const git_repack_usage[] = {
-
-Style: no space after *.
-
-> +static int delta_base_offset = 1; // enabled by default since 22c79eab (2008-06-25)
-
-No // comments please (they're C99, not portable C90).
-
-> +int cmd_repack(int argc, const char **argv, const char *prefix) {
-
-Brace on the next line.
-
-> +	fname = xmalloc(strlen(packdir) + 47); // 40 chars for the sha1
-
-> +	fname_old = xmalloc(strlen(packdir) + 52); // 40 chars for the sha1
-
-I'd rather have "40 + strlen("whatever")" explicitly.
+I have already wished I had "git version >= XXX" here (but that's tricky
+to implement).
 
 -- 
 Matthieu Moy
