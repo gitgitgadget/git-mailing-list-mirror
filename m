@@ -1,74 +1,100 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [RFC PATCH] repack: rewrite the shell script in C.
-Date: Wed, 14 Aug 2013 18:49:58 +0200
-Message-ID: <CALWbr2xuV+V7M354+XoA3HCvLr0Cpx4t3cLVeTCx4xeNmQQX1w@mail.gmail.com>
-References: <520BAF9F.70105@googlemail.com>
-	<1376497661-30714-1-git-send-email-stefanbeller@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Aug 2013, #03; Tue, 13)
+Date: Wed, 14 Aug 2013 09:56:57 -0700
+Message-ID: <7vpptgtdly.fsf@alter.siamese.dyndns.org>
+References: <7vvc39utxi.fsf@alter.siamese.dyndns.org>
+	<520B27F3.3010508@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, iveqy@iveqy.com,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 14 18:50:06 2013
+X-From: git-owner@vger.kernel.org Wed Aug 14 18:57:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9eGs-0006Xs-5x
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 18:50:06 +0200
+	id 1V9eNj-0003Ct-5Y
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 18:57:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932877Ab3HNQt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 12:49:59 -0400
-Received: from mail-qa0-f47.google.com ([209.85.216.47]:58710 "EHLO
-	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932789Ab3HNQt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 12:49:59 -0400
-Received: by mail-qa0-f47.google.com with SMTP id o19so1136213qap.6
-        for <git@vger.kernel.org>; Wed, 14 Aug 2013 09:49:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1xudSw09olHPaiEp5rgj9wMaGtGU7g8AEAdSRwCnfv0=;
-        b=XsyLo++CF749PWbjU3UKn9Np5kmkYVp7jh1liXnjGlC7KBU4cd7FC9I6XS+ijcbeSL
-         I9V3l/JSMHSgL37pUSuUtgk5UjzPrkDXS9Evbb/LWeAMG/oBq/fVqULEgxKfbbGZtlpY
-         nGB6+trz3s8RisL86VBI/vgpbyupKT0Vj9JYzlUQGtr+8v3sG4zK1hXtEs2NGjXhzuX5
-         kM2JvmSu8g7XyYKnlDOVmUrAbWpq12EJcvASLwfEyEG/eWHPx5BXMXziDrhRprcknsAy
-         nkb5bprh/+0UqiE7Bg5jXW8SCtThXcGvpENI/CugrwLh890xDyZmXN7rUGAFr/ynQAZ9
-         3nBA==
-X-Received: by 10.49.35.241 with SMTP id l17mr10154189qej.56.1376498998091;
- Wed, 14 Aug 2013 09:49:58 -0700 (PDT)
-Received: by 10.49.104.211 with HTTP; Wed, 14 Aug 2013 09:49:58 -0700 (PDT)
-In-Reply-To: <1376497661-30714-1-git-send-email-stefanbeller@googlemail.com>
+	id S932895Ab3HNQ5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 12:57:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40382 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932867Ab3HNQ5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 12:57:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADBB3363C6;
+	Wed, 14 Aug 2013 16:57:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/yS4R+wBhQ48YXnxOMFD+fxvFfU=; b=xV0oVL
+	AehZjs5mLfRGMRMCCxDhzm5e4T0m75AfcuAcGpG4ImdzaKT2rWqSgc+zpVLW17xF
+	/wwRcUghcq4wDjM2KC5gZ15Zp14zJ6M9FlZDM9ruK+IG0MytqwmrRudeHYGdggug
+	XbyZgPW+tXxpNVXRuC1JS+dXauNhMOjFIBNog=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hgC2fw/eUR5izBC5IrT680cJN7Xd+Uvl
+	uCIuWCyBxQd6Sa7SUyULOwLehsjTN4RLCQxjf4JotNvU3elj+bI/TMoxtV/T0/AX
+	oVw0oPoRaxdejwLMCD483lSEwW6g8/0FcIxo618Pu8sPcpikCIca9tT+EilI5PfP
+	iGWuU5MqwuE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B6A0363C5;
+	Wed, 14 Aug 2013 16:57:02 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E83B363B7;
+	Wed, 14 Aug 2013 16:57:00 +0000 (UTC)
+In-Reply-To: <520B27F3.3010508@googlemail.com> (Stefan Beller's message of
+	"Wed, 14 Aug 2013 08:47:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 89428A72-0502-11E3-8CEB-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232296>
 
-On Wed, Aug 14, 2013 at 6:27 PM, Stefan Beller
-<stefanbeller@googlemail.com> wrote:
->  builtin/repack.c               | 410 +++++++++++++++++++++++++++++++++++++++++
->  contrib/examples/git-repack.sh | 194 +++++++++++++++++++
->  git-repack.sh                  | 194 -------------------
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-I'm still not sure I understand the trade-off here.
+> On 08/14/2013 12:06 AM, Junio C Hamano wrote:
+>> * sb/parseopt-boolean-removal (2013-08-07) 9 commits
+>>   (merged to 'next' on 2013-08-08 at b138a2d)
+>>  + revert: use the OPT_CMDMODE for parsing, reducing code
+>>  + checkout-index: fix negations of even numbers of -n
+>>  + config parsing options: allow one flag multiple times
+>>  + hash-object: replace stdin parsing OPT_BOOLEAN by OPT_COUNTUP
+>>  + branch, commit, name-rev: ease up boolean conditions
+>>  + checkout: remove superfluous local variable
+>>  + log, format-patch: parsing uses OPT__QUIET
+>>  + Replace deprecated OPT_BOOLEAN by OPT_BOOL
+>>  + Remove deprecated OPTION_BOOLEAN for parsing arguments
+>>  (this branch uses jc/parseopt-command-modes.)
+>> 
+>>  Convert most uses of OPT_BOOLEAN/OPTION_BOOLEAN that can use
+>>  OPT_BOOL/OPTION_BOOLEAN which have much saner semantics, and turn
+>>  remaining ones into OPT_SET_INT, OPT_COUNTUP, etc. as necessary;
+>>  there seems to be some misconversion that makes many tests fail,
+>>  though.
+>> 
+>>  Will cook in 'next'.
+>
+> Locally here all tests succeed, when testing that branch alone.
+> Which tests fail for you, so I can look into it?
 
-Most of what git-repack does is compute some file paths, (re)move
-those files and call git-pack-objects, and potentially
-git-prune-packed and git-update-server-info.
-Maybe I'm wrong, but I have the feeling that the correct tool for that
-is Shell, rather than C (and I think the code looks less intuitive in
-C for that matter).
-I'm not sure anyone would run that command a thousand times a second,
-so I'm not sure it would make a real-life performance difference.
+It was a stale comment from the previous round.  Thanks for
+noticing.
 
-Last and very less important: I think it's OK to format-patch with -M,
-especially when you move a file.
+>> * sb/fsck-opt-bool (2013-07-29) 1 commit
+>>  (merged to 'next' on 2013-07-30 at 8a9964c)
+>> + fsck: Replace deprecated OPT_BOOLEAN by OPT_BOOL
+>>
+>> Will cook in 'next'.
+>
+> This one is completely included in sb/parseopt-boolean-removal,
+> but doesn't need jc/parseopt-command-modes. So once we're
+> confident with jc/parseopt-command-modes, we could drop this
+> branch as well.
 
-Cheers,
-Antoine
+Thanks again.
