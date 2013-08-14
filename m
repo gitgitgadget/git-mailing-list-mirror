@@ -1,90 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] repack: rewrite the shell script in C.
-Date: Wed, 14 Aug 2013 10:26:31 -0700
-Message-ID: <7vhaestc8o.fsf@alter.siamese.dyndns.org>
-References: <520BAF9F.70105@googlemail.com>
-	<1376497661-30714-1-git-send-email-stefanbeller@googlemail.com>
-	<CALWbr2xuV+V7M354+XoA3HCvLr0Cpx4t3cLVeTCx4xeNmQQX1w@mail.gmail.com>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: New special handing of '@' character broke my use case
+Date: Wed, 14 Aug 2013 18:36:23 +0100
+Message-ID: <520BC017.7050907@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <stefanbeller@googlemail.com>,
-	git <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= Duy 
-	<pclouds@gmail.com>, iveqy@iveqy.com
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 14 19:26:45 2013
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 14 19:36:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9eqI-0000LH-Md
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 19:26:43 +0200
+	id 1V9ezq-0007rP-KD
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 19:36:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760004Ab3HNR0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 13:26:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56779 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759464Ab3HNR0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 13:26:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34EA2373AE;
-	Wed, 14 Aug 2013 17:26:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1sGgoubm6hA2J5q2iF0ycQRd1/Y=; b=lPkwnn
-	PLCD1lkdiZgw+3ga3eP2o05UFzFGn2OS5p9cqvOsnLdDQOQHaDjGuN0zxQNh03Wk
-	dt1H3YmQ9Z7QmOpXhNRW5xDq1Qz4qmG5uDukWgBpNQ+GNkFZDTJ1XTZL4ATp++ZK
-	LkZQwaxv7/oeO3EJczGazAN/zYpA7iLg5gFCw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZIAsy7WaT0GDz0TROwr4dyx8hV9XhpT3
-	OJB/6xAJDsbDEDXPYd79QIN6ufExBh8qQYS/YM1eWmU3OZj51sSL50HXH0chmKDP
-	oAe1SSxq7NDcjUKbR4atSNtUz+fVhTaL5N2H2bZPnv40LIG0a6hzz4rd1gBps4Sd
-	gaAXiTjLOzQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A815C373A9;
-	Wed, 14 Aug 2013 17:26:35 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6FE13739E;
-	Wed, 14 Aug 2013 17:26:33 +0000 (UTC)
-In-Reply-To: <CALWbr2xuV+V7M354+XoA3HCvLr0Cpx4t3cLVeTCx4xeNmQQX1w@mail.gmail.com>
-	(Antoine Pelisse's message of "Wed, 14 Aug 2013 18:49:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AA80D35C-0506-11E3-8657-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760047Ab3HNRg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 13:36:28 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:59004 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760013Ab3HNRg1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 13:36:27 -0400
+Received: by mail-wi0-f178.google.com with SMTP id j17so2257980wiw.17
+        for <git@vger.kernel.org>; Wed, 14 Aug 2013 10:36:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=ayL+nbdz8rKgVaGQuXdQlCexLo5FCPI7Vow8dixIRqc=;
+        b=wMFwy0QLCrHRpdQpqVew2SWhcbIbpMl/Dt1BFP3jiSGucX+YQp47CFG253w3DET3uP
+         ocylF82SaNiAzh8CAXFjxZJGHLNokCUT25H4tezhMehYTxGnhVVRMNdeOGnQLEkndK90
+         g9Za8abM1dgj+10dRUCV85TLBcnDe2pv6qhrxUOLS3d0aS5LumaalXKXfyCtzwBzVCrh
+         CjzCwBpcby5iOdnLJ3sTBImS49j9R//jx6FkqujWC4vlRP29ILzJd6l7bOY38ejSrYmi
+         Eg5bHEGqU//8EiWK06eKK4zTZRCwG+NTLevnuC2UePXYR/VvgJsSjVkpRwfjEjR6hd/p
+         b+5w==
+X-Received: by 10.180.75.239 with SMTP id f15mr2824450wiw.42.1376501786060;
+        Wed, 14 Aug 2013 10:36:26 -0700 (PDT)
+Received: from marcovaldo.dub.corp.google.com ([2620:0:1040:205:8a51:fbff:fe5c:1cad])
+        by mx.google.com with ESMTPSA id e7sm4332912wiy.4.2013.08.14.10.36.24
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 14 Aug 2013 10:36:24 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130804 Thunderbird/17.0.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232303>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+Hello list.
 
-> On Wed, Aug 14, 2013 at 6:27 PM, Stefan Beller
-> <stefanbeller@googlemail.com> wrote:
->>  builtin/repack.c               | 410 +++++++++++++++++++++++++++++++++++++++++
->>  contrib/examples/git-repack.sh | 194 +++++++++++++++++++
->>  git-repack.sh                  | 194 -------------------
->
-> I'm still not sure I understand the trade-off here.
->
-> Most of what git-repack does is compute some file paths, (re)move
-> those files and call git-pack-objects, and potentially
-> git-prune-packed and git-update-server-info.
-> Maybe I'm wrong, but I have the feeling that the correct tool for that
-> is Shell, rather than C (and I think the code looks less intuitive in
-> C for that matter).
-> I'm not sure anyone would run that command a thousand times a second,
-> so I'm not sure it would make a real-life performance difference.
+In the last year or so, I developed a personal idiom of using a
+naming scheme of "@/BRANCH-NAME/<NUM>"to "save" the older versions
+of branches I'm going to rebase (interactively or not).  Here is an
+idealized example of my use case:
 
-I do not think the motivation of this patch is about performance in
-the first place, though.
+   $ git co --help
+   `git co' is aliased to `checkout'
+   $ git co -b topic
+   $ ... hack hack hack ...
+   $ git co master && git pull # Let's say this brings in 100 commits
+   $ git co topic # I want to rebase this to avoid merge conflicts later
+   $ git branch @/topic/1 # So I save "original version" of the branch
+   $ git rebase master # Do the rebase, solve conflicts etc.
+   $ ... hack hack hack (20 commits) ...
+   # Here I notice botched commits messages and badly-ordered
+   # commits in the last 10 commits or so.  I want to fix that.
+   $ git branch @/topic/2 # Save "latest version" of the branch
+   $ git rebase -i HEAD~12 # Fix issues
 
-> Last and very less important: I think it's OK to format-patch with -M,
-> especially when you move a file.
->
-> Cheers,
-> Antoine
+My problems is that some new automagical interpretation of the bare '@' 
+character (introduced after 1.8.3) has destroyed my use case:
+
+   $ /usr/bin/git --version
+   git version 1.8.3
+   $ git --version
+   git version 1.8.4.rc2
+   $ git co master
+   $ /usr/bin/git branch @/foo    # Old git
+   $ git branch
+     @/foo   # <-- good
+   * master
+   $ git branch                   # New git.
+     @/foo    # <-- good
+     HEAD/bar # <-- BAD!
+   * master
+
+I don't want to ask you to revert this new behaviour, but I'd like to
+at least have an option to disable it.  Even better if such an option is 
+already present -- in which case, could you just point me at it?
+
+Failing that, I can re-train myself to use another character (like '='
+or '+') to take the same role '@' has hold for me until today, no big
+deal.  But in that case, I'd like some assurance that such a character 
+is not going to be turned into a magical character some time in the 
+future ;-)
+
+Thanks,
+   Stefano
