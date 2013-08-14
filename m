@@ -1,82 +1,85 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: re-ignoring a force added file
-Date: Wed, 14 Aug 2013 11:22:42 +0200
-Message-ID: <87ioz8hbj1.fsf@linux-k42r.v.cablecom.net>
-References: <520A7B79.4080306@ebi.ac.uk>
+From: Ben Tebulin <tebulin@googlemail.com>
+Subject: Reproducible, corrupt packfile after fresh git-svn checkouts - IDENTIFIED
+Date: Wed, 14 Aug 2013 11:29:22 +0200
+Message-ID: <520B4DF2.207@gmail.com>
+References: <52037F47.5010302@exxcellent.de> <52037F84.9060006@exxcellent.de> <f1d8f80d6fa3678ac043bfdb19bebf6bf4261273@localhost> <877gfw4byx.fsf@linux-k42r.v.cablecom.net> <262a9f8309a3812970f47ac9f4e4b49bb972ca49@localhost> <87fvuk2wl0.fsf@linux-k42r.v.cablecom.net> <9aa1672d5c04994f416dccd84b5983c960c0fdf9@localhost> <vpqli4cfhhe.fsf@anie.imag.fr> <813506281f7a4d3a8af650c5f8ee33dd7224f193@localhost> <vpqfvukfgr5.fsf@anie.imag.fr> <edc9f41b4ffca9ce36dc50e749de7a86e4618a0e@localhost> <87fvuk1cyl.fsf@linux-k42r.v.cablecom.net> <5203B100.30008@gmail.com> <87txj0i4mc.fsf@inf.ethz.ch> <7vsiyk9j6a.fsf@alter.siamese.dyndns.org> <5204E018.4000808@gmail.com> <5204E67D.9090106@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: Raza Ali <rali@ebi.ac.uk>
-X-From: git-owner@vger.kernel.org Wed Aug 14 11:22:51 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Ben Tebulin <tebulin@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 14 11:29:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9XI0-0000LI-Us
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 11:22:49 +0200
+	id 1V9XOd-0005E8-At
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 11:29:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759358Ab3HNJWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 05:22:45 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:46484 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752182Ab3HNJWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 05:22:44 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 14 Aug
- 2013 11:22:38 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS21.d.ethz.ch (172.31.51.111) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Wed, 14 Aug 2013 11:22:41 +0200
-In-Reply-To: <520A7B79.4080306@ebi.ac.uk> (Raza Ali's message of "Tue, 13 Aug
-	2013 19:31:21 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1752089Ab3HNJ3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 05:29:31 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:35810 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751430Ab3HNJ31 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 05:29:27 -0400
+Received: by mail-wi0-f181.google.com with SMTP id en1so1688332wid.2
+        for <git@vger.kernel.org>; Wed, 14 Aug 2013 02:29:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=FQisIaiBAt1DXpe8cSv6AElMG6fhuKcVCo+9uxc6tgM=;
+        b=HHNtu3bjd+8buhSx+WshyyMrn4FXpBRBhfygg7idOTbCdxni7iMQFm6+fq3sWpzwcW
+         a7DYrxmmSsLlCfntF3PkwJcQiX++meTBx17knYGTSvf6MAxK6Rn5BJ9mN+gkgtF7UaGi
+         YJTuxieaLL4SBRWkSnz3YRqGbukzEn3p41aHv8KPnIKkWgtVffhzMpaAmLmho9s61kRN
+         wcW8WF79rrv/uLWdobHxQc+mgjUO0njqp9nq6tECBC79XajmY6sFvLn7AY9TAwoHznnQ
+         2r5cccpF+pvZs0gWxrLwSVTuH5HsEGENq6KCn8sbgKa/HAPUkn8rBVmdxlH1Ku/CS253
+         X9ug==
+X-Received: by 10.180.75.239 with SMTP id f15mr5571599wiw.43.1376472566053;
+        Wed, 14 Aug 2013 02:29:26 -0700 (PDT)
+Received: from [127.0.0.1] (ulmg-5d845cdb.pool.mediaWays.net. [93.132.92.219])
+        by mx.google.com with ESMTPSA id jc18sm200220wic.5.2013.08.14.02.29.23
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 14 Aug 2013 02:29:25 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
+In-Reply-To: <5204E67D.9090106@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232278>
 
-Raza Ali <rali@ebi.ac.uk> writes:
+Hello everybody!
 
-> I have force added a file we usually like to ignore (but keep in the
-> repository). That was a change a while ago, and cannot be undone
-> without serious pain. I would like to re-ignore the file though, as we
-> dont want to track changes to it. Some of the options I came across
-> are not useful for me. For example
->
-> git rm --cached FILE // removes the file from the remote repository if
-> I push, not desirable
-> git update-index --assume-unchanged //Will ignore changes to the file
-> locally, but someone else clones and the file is tracked for them.
->
-> What we would like is to go back to the old state of affairs: the file
-> was in the working directory when someone cloned from the remote
-> repository, but changes to the file werent tracked or committed.
+I'm the guy having the issue, that in a particular Git repository the
+reads of an object fail the SHA1 reproducible on *two independent
+machines* .
 
-I highly doubt that this description is accurate:
+The issue occurs on a very specific repository starting with Linux
+Kernel 3.7.2. Unfortunately my E-Mail to the kernel list dit get no
+response.
 
-Either the file was actually in the repository (more specifically, in
-the commit that git-clone chose to be checked out).  In this case, it
-appears in the worktree after cloning.  But its presence in the HEAD
-commit of the resulting repo also means that it is tracked.
+After a long session of rebooting and bisecting the Linux kernel
+(fortunately I had a SSD and ccache!) I was able to pinpoint this to the
+following patch related to _memory management_ causing my data
+corruption with git:
 
-Or it was not in the repository.  In which case it will not appear in a
-new clone.  And there is no third option here.
+*"mm: limit mmu_gather batching to fix soft lockups on !CONFIG_PREEMPT"*
+  787f7301074ccd07a3e82236ca41eefd245f4e07 linux stable [1]
+  53a59fc67f97374758e63a9c785891ec62324c81 upstream commit [2]
 
-So your "old state" in fact did not exist.  And it unfortunately is also
-not attainable in more roundabout ways: any given file can only be
-either tracked or ignored (or untracked-but-not-ignored, but that's
-beside the point).  You cannot use ignore rules to ignore files that are
-tracked.
+The patch speaks about "batching [memory] pages to be freed" so I'm a
+bit unsure: Is this a Git or a Linux kernel issue?
 
-Please check https://gist.github.com/canton7/1423106 for a list of other
-ways to achieve what you are trying to do (link from the corresponding
-bot quote on #git).  But do note that --assume-unchanged is a rather
-more dangerous beast than you may think, and I cannot recommend actually
-using it.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Thanks
+- Ben
+
+
+[1] https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/commit/?id=787f7301074ccd07a3e82236ca41eefd245f4e07
+[2] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=53a59fc67f97374758e63a9c785891ec62324c81
