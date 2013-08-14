@@ -1,83 +1,126 @@
-From: XinLingchao <douglarek@outlook.com>
-Subject: RE: About *git clone --depth=n* puzzle
-Date: Wed, 14 Aug 2013 20:45:46 +0800
-Message-ID: <BAY169-W3481BBD06C4449E7C5D6F5B4450@phx.gbl>
-References: <BAY169-W472B90AB796C71E8D0D038B4450@phx.gbl>,<520B4529.9080304@googlemail.com>,<BAY169-W647D5A2BFDC793ADFA5078B4450@phx.gbl>,<20130814115956.GA29295@sigill.intra.peff.net>
+From: Alexey Shumkin <alex.crezoff@gmail.com>
+Subject: Git bug. "make [all]" does not use USE_LIBPCRE when "configure
+ --with-libpcre" was previously run
+Date: Wed, 14 Aug 2013 16:48:49 +0400
+Message-ID: <20130814124849.GA8234@ashu.dyn1.rarus.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stefan Beller <stefanbeller@googlemail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"junchunx.guan@gmail.com" <junchunx.guan@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 14 14:46:01 2013
+Content-Type: text/plain; charset=windows-1251
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>
+To: Stefano Lattarini <stefano.lattarini@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 14 14:48:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9aSc-0003Pd-CZ
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 14:45:58 +0200
+	id 1V9aVV-0005OE-VV
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Aug 2013 14:48:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932555Ab3HNMps convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Aug 2013 08:45:48 -0400
-Received: from bay0-omc1-s27.bay0.hotmail.com ([65.54.190.38]:38707 "EHLO
-	bay0-omc1-s27.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932495Ab3HNMpr convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 08:45:47 -0400
-Received: from BAY169-W34 ([65.54.190.59]) by bay0-omc1-s27.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Wed, 14 Aug 2013 05:45:46 -0700
-X-TMN: [NGvSnwPx/WXvCoDBkQ6cuy28S2FUFecn]
-X-Originating-Email: [douglarek@outlook.com]
-Importance: Normal
-In-Reply-To: <20130814115956.GA29295@sigill.intra.peff.net>
-X-OriginalArrivalTime: 14 Aug 2013 12:45:46.0426 (UTC) FILETIME=[3251F9A0:01CE98EC]
+	id S932320Ab3HNMsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 08:48:54 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:62145 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932164Ab3HNMsx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 08:48:53 -0400
+Received: by mail-lb0-f175.google.com with SMTP id 13so6819592lba.34
+        for <git@vger.kernel.org>; Wed, 14 Aug 2013 05:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=QZ9K/1VJJzFLJae3K5fB85ikvEIFwpIrESJEVSYlGuY=;
+        b=BIDFUHiLuJ0HcE4UIma09F3EukHoCjXMVePvgK0Ceku3NFtxCuyWdu4BO81g33GLtf
+         AEkPEGYV6zn/GjkbP3VY4SeNSPpYHwmX6CJ8SEUdQSU2U62mxFwYbDCw27u0RYwIeYAU
+         1d+sIElf/RHc71Xm3+wLVLB22q8sggEeIV8eU/XY3I7U366i731wBiU+fxeTooU17G5J
+         9Ltq7pCpLCzvRVuStULdcQlk98yRKwEFZaUSFsr9sN7r+BGk8v0z686sYuQWSiVxFnuy
+         SQiA+whH0uNocVMY/RPaL1LuLj/OjtgMZ1vIqG5Z2Mv0lb91IkxFAuWqDVTYUGHbuQBE
+         zZtA==
+X-Received: by 10.152.3.42 with SMTP id 10mr8598741laz.22.1376484531600;
+        Wed, 14 Aug 2013 05:48:51 -0700 (PDT)
+Received: from localhost ([85.21.218.130])
+        by mx.google.com with ESMTPSA id v5sm190045lbv.15.2013.08.14.05.48.50
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 14 Aug 2013 05:48:50 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232283>
 
-Peff, thanks for your detial explain,=A0 and I think I have got the poi=
-nt :P
+Hello, Stefan!
 
--Lingchao Xin
+I'll begin from afar.
 
-----------------------------------------
-> Date: Wed, 14 Aug 2013 07:59:56 -0400
-> From: peff@peff.net
-> To: douglarek@outlook.com
-> CC: stefanbeller@googlemail.com; git@vger.kernel.org; junchunx.guan@g=
-mail.com
-> Subject: Re: About *git clone --depth=3Dn* puzzle
->
-> On Wed, Aug 14, 2013 at 05:19:36PM +0800, XinLingchao wrote:
->
->>> There was a similar discussion going on in July this year,
->>> maybe this is an interesting read with respect to this topic
->>> http://www.spinics.net/lists/git/msg196138.html
->>>
->> Stefan, I do NOT think so, the key point is not about the depth limi=
-t,
->> it is about whether remote clone depth equals local clone depth.
->
-> I do not think it is about local vs remote, but rather about which
-> version of git the remote side is running. Prior to 682c7d2
-> (upload-pack: fix off-by-one depth calculation in shallow clone,
-> 2013-01-11), a shallow clone always returned one extra commit. That f=
-ix
-> went into v1.8.2.
->
-> So if you have a post-v1.8.2 git client, a local clone will use the s=
-ame
-> git version as the "remote" side of the connection. But if you are
-> contacting a remote server, the results you get will depend on what
-> version of git is running on the remote server.
->
-> And as the example you showed uses github.com as the remote, and as I
-> happen to know that GitHub's servers do not currently have 682c7d2, y=
-ou
-> would see the old behavior.
->
-> -Peff 		 	   		  
+>From time to time, I use `git grep -P` to search text in sources using PCRE.
+Today I was suprised when that command gave me the error
+    "fatal: cannot use Perl-compatible regexes when not compiled with
+    USE_LIBPCRE"
+
+As far as I always use
+    ./configure --with-libpcre 
+    make all
+to build my Cygwin version of Git that was a VERY sudden error for me.
+(but this is not a Cygwin-specific error, I've reproduced it on my Linux
+box).
+
+I've found out that `make` "does not know" anymore about USE_LIBPCRE=YesPlease
+even `./configure --with-libpcre` was run before it. But I do remember
+that it worked in some versions before (currently I use latest - v1.8.3.4).
+
+So, I've got armed with the following test script:
+
+---8<---
+#!/bin/sh
+
+set -e
+./configure --with-libpcre
+make
+set +e
+./bin-wrappers/git grep -qIP das+
+# if "cannot use Perl-compatible regexes" error occurs
+# then Git exits with an error code 128 (but `git bisect run` fails to
+# expect this exit code).
+if test $? -eq 128
+then
+    exit 1
+fi
+---8<---
+
+and `git bisect run` to find out where Git was broken.
+That gave me:
+
+---8<---
+40bfbde9da5c6cbc85f49a755f27162dc966fd89 is the first bad commit
+commit 40bfbde9da5c6cbc85f49a755f27162dc966fd89
+Author: Stefano Lattarini <stefano.lattarini@gmail.com>
+Date:   Tue Sep 11 17:45:30 2012 +0200
+
+    build: don't duplicate substitution of make variables
+    
+    Thanks to our 'GIT_CONF_SUBST' layer in configure.ac, a make variable 'VAR'
+    can be defined to a value 'VAL' at ./configure runtime in our build system
+    simply by using "GIT_CONF_SUBST([VAR], [VAL])" in configure.ac, rather than
+    having both to call "AC_SUBST([VAR], [VAL])" in configure.ac and adding the
+    'VAR = @VAR@' definition in config.mak.in.  Less duplication, less margin
+    for error, less possibility of confusion.
+    
+    While at it, fix some formatting issues in configure.ac that unnecessarily
+    obscured the code flow.
+    
+    Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+:100644 100644 802d34223a2859ee1341d94ee722d7939b7276aa 69d48382fe69b8699eb350949fff04975db923f8 M      config.mak.in
+:100644 100644 450bbe7f1020711b4af2ad6ea52d717651c30b0b da1f41f58871b2102a9ed5eaeff7df3c9623f4bd M      configure.ac
+bisect run success
+
+---8<---
+
+I'm not a C programmer to fix that, so I ask you to.
+
+-- 
+Alexey Shumkin
