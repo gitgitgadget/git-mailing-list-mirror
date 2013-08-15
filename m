@@ -1,82 +1,105 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH] create_delta_index: simplify condition always evaluating to true
-Date: Thu, 15 Aug 2013 21:37:40 +0200
-Message-ID: <1376595460-6546-1-git-send-email-stefanbeller@googlemail.com>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 15 21:37:40 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git stash takes excessively long when many untracked files present
+Date: Thu, 15 Aug 2013 12:47:03 -0700
+Message-ID: <7v8v02rb2g.fsf@alter.siamese.dyndns.org>
+References: <20130810214453.GA5719@jtriplet-mobl1>
+	<loom.20130813T120243-481@post.gmane.org>
+	<7v7gfpy0wy.fsf@alter.siamese.dyndns.org>
+	<1fc732a7-6b63-4d75-960f-0b1c6cf9c70e@email.android.com>
+	<7vmwolwk94.fsf@alter.siamese.dyndns.org>
+	<7v61v9w9dy.fsf@alter.siamese.dyndns.org>
+	<7vr4durgd4.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Anders Darander <anders.darander@gmail.com>,
+	Petr Baudis <pasky@ucw.cz>,
+	Josh Triplett <josh@joshtriplett.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 15 21:47:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VA3MZ-0004Vt-EJ
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 21:37:39 +0200
+	id 1VA3Vp-0004fi-KC
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 21:47:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759133Ab3HOThf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Aug 2013 15:37:35 -0400
-Received: from mail-ea0-f173.google.com ([209.85.215.173]:44411 "EHLO
-	mail-ea0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758226Ab3HOThe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Aug 2013 15:37:34 -0400
-Received: by mail-ea0-f173.google.com with SMTP id g10so569665eak.32
-        for <git@vger.kernel.org>; Thu, 15 Aug 2013 12:37:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=LkRSnaSlYzkgYF/pourA0Ml/Dtr0JwzKVkYjkQoHxMA=;
-        b=muQqL9dYl6qtXq0XoP8UGhMFi2xY8clUCtXGWvFywlJGBFikScE19s7WAI3eQNLhwH
-         VcDMVkUCP3Gt1JPAygBBaso20Gu4iy+pYiOtXogqcNQsx0csR3FZr3xdE1dh6+nmUP41
-         gkAUMPAkEAqBy9CuEofJgvZWIBBDZhhihSfqgUoxL42fcoZlbAGJ+aE10HvDw/NdtIS9
-         a0k76wO+VgvE+k0+VUCLL2KmzvN7sbFPiVBaXwny6h+KEhYB5IkMwDtWTTt1GNBGN+ny
-         L3RUX+DDrRasZZho/IcdheFmIg2Bybf8OjjC3Yuj8nDDg72HmuC4f7nKedzH1ITMeGbq
-         I8Gw==
-X-Received: by 10.14.9.72 with SMTP id 48mr24350532ees.42.1376595453715;
-        Thu, 15 Aug 2013 12:37:33 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id n48sm1064257eeg.17.2013.08.15.12.37.32
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 15 Aug 2013 12:37:33 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc3.498.g5af1768
+	id S1758804Ab3HOTrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Aug 2013 15:47:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45831 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756785Ab3HOTrH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Aug 2013 15:47:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE0AC399C6;
+	Thu, 15 Aug 2013 19:47:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Dnm8KZV6xHrcJeAAcif6Ref93/o=; b=rVVniT
+	kOk8PtpL27hR9mhw/ChSfyTMy5ilxGJymeQHbUxpPDnEU4zgGUL2PJn5SxQ4ZYoH
+	acFX6+9zTNZvfP54x/n2ejA5/q55xj2AOzGG5scsnERUU48+w6g434LslJDMvMvZ
+	b/N9DBCUJD/KRdQVUd/qJn8/jWQ3Fm+N8zGC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HyXYTdszc/rdP67Q7i46A3+bn9/rKhoT
+	tuWxoCx22UFdPyHR1bId98u4RquPCcQhNC7hIT83y6RjbcDXkxpCh87y2AoN7bLk
+	BdpNHuQ6EmRo3PHZcvNbnV80NWD1m5xkxAqZ5pqpibEx1NXy6SQC+nAOb17EABRf
+	a9OO1+WNz/g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D21AC399C5;
+	Thu, 15 Aug 2013 19:47:05 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 25002399C2;
+	Thu, 15 Aug 2013 19:47:05 +0000 (UTC)
+In-Reply-To: <7vr4durgd4.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 15 Aug 2013 10:52:39 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 764B72DA-05E3-11E3-833F-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232366>
 
-When checking the previous lines in that function, we can deduct that
-hsize must always be smaller than (1u<<31), since 506049c7df2c6
-(fix >4GiB source delta assertion failure), because the entries is
-capped at an upper bound of 0xfffffffeU, so hsize contains a maximum
-value of 0x3fffffff, which is smaller than (1u<<31), so i will never
-be larger than 31.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
----
- diff-delta.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+> diff --git a/dir.c b/dir.c
+> index 910bfcd..02939e2 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1183,6 +1183,15 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
+>  	    cache_name_exists(path->buf, path->len, ignore_case))
+>  		return path_none;
+>  
+> +	/*
+> +	 * A directory can only contain killed files if the index
+> +	 * has a path that wants it to be a non-directory.
+> +	 */
+> +	if ((dir->flags & DIR_COLLECT_KILLED_ONLY) &&
+> +	    (dtype == DT_DIR) &&
+> +	    !cache_name_exists(path->buf, path->len, ignore_case))
+> +		return path_none;
+> +
 
-diff --git a/diff-delta.c b/diff-delta.c
-index 93385e1..54da95b 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -154,8 +154,15 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 		 */
- 		entries = 0xfffffffeU / RABIN_WINDOW;
- 	}
-+
-+	/*
-+	 * Do not check i < 31 in the loop, because the assignement
-+	 * previous to the loop makes sure, hsize is definitely
-+	 * smaller than 1<<31, hence the loop will always stop
-+	 * before i exceeds 31 resulting in an infinite loop.
-+	 */
- 	hsize = entries / 4;
--	for (i = 4; (1u << i) < hsize && i < 31; i++);
-+	for (i = 4; (1u << i) < hsize; i++);
- 	hsize = 1 << i;
- 	hmask = hsize - 1;
- 
--- 
-1.8.4.rc3.498.g5af1768
+I think this is wrong.
+
+When we are looking at a directory P in the working tree, there are
+three cases:
+
+ (1) P exists in the index.  Everything inside the directory P in
+     the working tree needs to go when P is checked out from the
+     index.
+
+ (2) P does not exist in the index, but there is P/Q in the index.
+     We know P will stay a directory when we check out the contents
+     of the index, but we do not know yet if there is a directory
+     P/Q in the working tree to be killed, so we need to recurse.
+
+ (3) P does not exist in the index, and there is no P/Q in the index
+     to require P to be a directory, either.  Only in this case, we
+     know that everything inside P will not be killed without
+     recursing.
+
+The patch will break with the second case, I think.
