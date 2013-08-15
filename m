@@ -1,152 +1,125 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH v5 1/2] branch: not report invalid tracking branch
-Date: Thu, 15 Aug 2013 10:14:40 +0800
-Message-ID: <CANYiYbHC1oXjMy9tb7vRJmq2LMzk0yXwjm_kMoM-U7cqvrjiZA@mail.gmail.com>
-References: <CANYiYbFGBRV+EP8oV_chKvBsHLAAZeKmt0395_z9QD-bBZtErQ@mail.gmail.com>
-	<96e0ed4f67eaf058466ead9228cad0dcfe1b5c6a.1376369554.git.worldhello.net@gmail.com>
-	<7vfvucuwm7.fsf@alter.siamese.dyndns.org>
+From: Christopher Durkin <cjdurkin@gmail.com>
+Subject: [PATCH 1/2] gitweb: add filename search function
+Date: Wed, 14 Aug 2013 23:02:38 -0400
+Message-ID: <CANzJMBWDgtjbNwPLjoKniwy5xCGKyz0yBFiMBfdGJMi5Q=W4+Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 15 04:14:48 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 15 05:03:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9n5K-0007Oj-LK
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 04:14:47 +0200
+	id 1V9nq4-0001M4-Ip
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 05:03:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759105Ab3HOCOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 22:14:42 -0400
-Received: from mail-we0-f172.google.com ([74.125.82.172]:52938 "EHLO
-	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754447Ab3HOCOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 22:14:42 -0400
-Received: by mail-we0-f172.google.com with SMTP id t61so159520wes.3
-        for <git@vger.kernel.org>; Wed, 14 Aug 2013 19:14:40 -0700 (PDT)
+	id S1759997Ab3HODCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 23:02:40 -0400
+Received: from mail-vb0-f45.google.com ([209.85.212.45]:62748 "EHLO
+	mail-vb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758610Ab3HODCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 23:02:39 -0400
+Received: by mail-vb0-f45.google.com with SMTP id e15so196679vbg.4
+        for <git@vger.kernel.org>; Wed, 14 Aug 2013 20:02:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=bizm+uFrFpJeFodJLkU9TifEuR9JsblJpixckHNYf3w=;
-        b=aVDjDe8HP9KOfLQmZ+7pSTOhNVB17H4wbZ7LIjR2mXuG3wXfQJ4UTzul2ToqRh6oyO
-         SzGS/L+jqJ7Oj5XuzSxuQcE5xkyMKNEGDJ62Cbfx+6YA4nv8NXk0LfvY1oADi2cwzpoL
-         kkV3fzv5hr+G5aM7ch04ypybDklUiA9jJd0XBSxZYDjt0tfJqC8TWNHgOPdgtpQ86/hD
-         3BiKSB3gtk7TrxP6cO/13TaaHwKDl4VlQsGodWMQrl7UQvn8O+Y9/KsDul1Uvuub58ro
-         oEAmH6LtxcJtVcXSDry+lonVoPBJdG4TmfwVxzMg/xcDCu52xKHvUIm8BU25pmUAfYsE
-         iVjQ==
-X-Received: by 10.194.11.38 with SMTP id n6mr6811443wjb.25.1376532880492; Wed,
- 14 Aug 2013 19:14:40 -0700 (PDT)
-Received: by 10.194.104.201 with HTTP; Wed, 14 Aug 2013 19:14:40 -0700 (PDT)
-In-Reply-To: <7vfvucuwm7.fsf@alter.siamese.dyndns.org>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=V2THTT87xQCef+VIkPMosX7LHqUVNCTCDOU0H3rQWBc=;
+        b=qLM/zEai3ZR1CgEPVVytg4sbu04IQrSNGxSZJQdLAw20QyRpQc2KdKaNJf3aDEg48q
+         tGwzz/TgFZc5C6Bn0BTUVU3NnxBSIpCs79UDhfLuyytRfhi/GR5hVKX3gfdHNJX+BJAh
+         XfJMv0FlQnHKM6P2NelaLPUBMH85Zpp/SY4vAFn3hNVxmmFJjgLb2K9zU1eh/DzeVZe/
+         TIZhwGaqDQ5Xue2nlEOWboeEH2irmnTOujd/gfxuHVnKiBOewIX0g9+/f3SwIn17PhGI
+         z0gyi/R1fZySkLD8klaP1HXjgDEh04jLeqJ4MhyxmTF/YG86DeKrlV5aO3+kiZAPMrET
+         3MKQ==
+X-Received: by 10.220.169.203 with SMTP id a11mr4020526vcz.26.1376535758827;
+ Wed, 14 Aug 2013 20:02:38 -0700 (PDT)
+Received: by 10.58.231.70 with HTTP; Wed, 14 Aug 2013 20:02:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232327>
 
-2013/8/14 Junio C Hamano <gitster@pobox.com>
-> >  /*
-> > - * Return true if there is anything to report, otherwise false.
-> > + * Return false if cannot stat a tracking branch (not exist or invalid),
-> > + * otherwise true.
-> >   */
-> >  int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
-> >  {
-> > @@ -1740,18 +1741,12 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
-> >       const char *rev_argv[10], *base;
-> >       int rev_argc;
-> >
-> > -     /*
-> > -      * Nothing to report unless we are marked to build on top of
-> > -      * somebody else.
-> > -      */
-> > +     /* False unless we are marked to build on top of somebody else. */
->
-> Aren't these saying the same thing?  I'd rather see the comment say
-> "nothing/something to report", instead of "false/true".  The latter
-> can be read from the value returned in the code, and writing that in
-> the comment is redundant.  The former tells the reader what that
-> "false" _means_, which is the whole point of adding a comment.
+Add another item to the search drop-down (author/committer/etc)
+to search for file names instead of file content. Output is similar
+to the grep contents output, with each entry linking to the file.
+---
+ gitweb/gitweb.perl | 59 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-Maybe "Cannot stat unless ..." is better than "Nothing to report unless ...",
-because this patch change the meaning of returns of stat_tracking_info().
-And I have already updated the comments for this function.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index f429f75..4a7b0a5 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -6360,6 +6360,65 @@ sub git_search_grep_body {
+  print "</table>\n";
+ }
 
->
-> > +     *num_theirs = 0;
-> > +     *num_ours = 0;
-> > +
-> >       /* are we the same? */
-> >       if (theirs == ours)
-> > -             return 0;
-> > +             return 1;
->
-> Shouldn't these zero assignments belong to this condition?  I.e.
->
->         if (theirs == ours) {
->                 *num_theirs = *num_ours = 0;
->                 return 1;
->         }
-
-I will refactor like this,
-
-> > @@ -1786,8 +1784,6 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
-> >       prepare_revision_walk(&revs);
-> >
-> >       /* ... and count the commits on each side. */
-> > -     *num_ours = 0;
-> > -     *num_theirs = 0;
-> >       while (1) {
-> >               struct commit *c = get_revision(&revs);
-> >               if (!c)
-
-and these two variables(*num_ours and *num_theirs) have to be
-initialized here again.
-
-> > @@ -1815,6 +1811,10 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
-> >       if (!stat_tracking_info(branch, &num_ours, &num_theirs))
-> >               return 0;
-> >
-> > +     /* Nothing to report if neither side has changes. */
-> > +     if (!num_ours && !num_theirs)
-> > +             return 0;
->
-> As far as I can tell, all callers of stat_tracking_info() pass
-> non-NULL pointers to these two parameters, with or without your
-> patch.  Can this ever trigger?
->
-> The changes you made to builtin/branch.c seems to expect that
-> returned *num_ours and *num_theirs could both be 0, so it does not
-> look like the above is a typo of
->
->         if (!*num_ours && !*num_theirs)
->                 return 0;
->
-
-It's really easy to make people puzzled, since these two hunks in this patch
-both have two similar variables: num_ours and num_theirs. But they are
-different.
-
-In previous hunk, num_ours and num_theres are from stat_tracking_info(),
-and they are pointers.
-
-    int stat_tracking_info(struct branch *branch,
-                           int *num_ours,
-                           int *num_theirs)
-
-But in this hunk, num_ours and num_theres are defined as integers in
-funciton  format_tracking_info().
-
-    int format_tracking_info(struct branch *branch, struct strbuf *sb)
-    {
-        int num_ours, num_theirs;
-
-To make it clear, I should change the variables name to ours and theirs
-just like function fill_tracking_info() in builtin/branch.c.
-
++sub git_search_filenames {
++    my %co = @_;
++    local $/ = "\n";
++    my $match_limit = 1000;
++
++    open my $fd, "-|", git_cmd(), 'ls-tree', '--name-only',
+'--full-name', '-r',
++      $co{'tree'} or die_error(500, "Open git-ls-tree failed");
++
++    git_header_html();
++
++    git_print_page_nav('','', $hash,$co{'tree'},$hash);
++    git_print_header_div('commit', esc_html($co{'title'}), $hash);
++
++    print "<table class=\"filename_search\">\n";
++    my $matches = 0;
++    my $alternate = 1;
++    my $file_href;
++
++    while (my $filename = <$fd>) {
++        chomp $filename;
++
++        if ($matches > $match_limit) {
++            print "<div class=\"diff nodifferences\">Too many
+matches, listing trimmed</div>\n";
++            last;
++        }
++
++        if ($search_use_regexp) {
++            next unless ($filename =~ /$searchtext/);
++        } else {
++            next unless index($filename,$searchtext) >= 0;
++        }
++
++        $matches++;
++        $file_href = href(action=>"blob", hash_base=>$co{'id'},
++                          file_name=>$filename);
++
++ if ($alternate) {
++    print "<tr class=\"dark\">\n";
++ } else {
++    print "<tr class=\"light\">\n";
++ }
++ $alternate ^= 1;
++
++        print "<td class=\"list\">".
++            $cgi->a({-href => $file_href, -class => "list"},
+esc_path($filename));
++ print "</td>\n";
++ print "</tr>\n";
++    }
++
++    if ($matches == 0) {
++        print "<div class=\"diff nodifferences\">No matches found</div>\n";
++    }
++    close $fd;
++
++    print "</table>\n";
++
++    git_footer_html();
++}
++
+ ## ======================================================================
+ ## ======================================================================
+ ## actions
 -- 
-Jiang Xin
+1.8.3.msysgit.0
