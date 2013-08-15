@@ -1,175 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] ls-files -k: a directory only can be killed if the index has a non-directory
-Date: Thu, 15 Aug 2013 14:28:09 -0700
-Message-ID: <1376602090-19142-3-git-send-email-gitster@pobox.com>
-References: <7v8v02rb2g.fsf@alter.siamese.dyndns.org>
- <1376602090-19142-1-git-send-email-gitster@pobox.com>
-Cc: Petr Baudis <pasky@ucw.cz>, Josh Triplett <josh@joshtriplett.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 15 23:28:29 2013
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: [PATCH] create_delta_index: simplify condition always evaluating to true
+Date: Thu, 15 Aug 2013 23:34:22 +0200
+Message-ID: <1376602462-32339-1-git-send-email-stefanbeller@googlemail.com>
+References: <CAPig+cQmdPo4mo69DsDmUURcw+HbxkAoNEqY08qiuJs8S+=bvQ@mail.gmail.com>
+Cc: Stefan Beller <stefanbeller@googlemail.com>
+To: sunshine@sunshineco.com, git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Aug 15 23:34:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VA55n-0000iF-V2
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 23:28:28 +0200
+	id 1VA5BV-0005kl-IY
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 23:34:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463Ab3HOV2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Aug 2013 17:28:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34811 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751134Ab3HOV2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Aug 2013 17:28:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30C29397DB;
-	Thu, 15 Aug 2013 21:28:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=oEda
-	NV64qDeIf/AW4byI1rZRJS8=; b=KQNrjko3tLwqhw9HoA/GzDJhHosDcLy9hDft
-	pcIFyx1hR9aF/9B7u64hkSYXxWMbSrRi/u1aNYSKJyHa2W70ErVOne4cXXppjtEN
-	+Xiii+IbObVwN1//KW0XK2MMe3Xk34xKvDwGgPcejcYEt073A7Tlq03BqQuUXsbx
-	vAU1dq4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	RWPJ7dtUPNpjY5d6B9D9XoeTB4bQCroegX3cTzCtHttj2KFw6eCCfTJc1liup0WR
-	oNihLZY3Qf21vtXuBogYgs7yapQkVG2gjWMDXqU39g77+XfUH68CNCseVG5VVWQb
-	FD8qTkhFFw3VzrnkiMZH1XUQwz1Id7a0fxcQRvfF/vo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23F71397DA;
-	Thu, 15 Aug 2013 21:28:17 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 48CC6397D9;
-	Thu, 15 Aug 2013 21:28:16 +0000 (UTC)
-X-Mailer: git-send-email 1.8.4-rc3-232-ga8053f8
-In-Reply-To: <1376602090-19142-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 98FAD27C-05F1-11E3-9481-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751372Ab3HOVeR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Aug 2013 17:34:17 -0400
+Received: from mail-ee0-f43.google.com ([74.125.83.43]:34520 "EHLO
+	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750950Ab3HOVeR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Aug 2013 17:34:17 -0400
+Received: by mail-ee0-f43.google.com with SMTP id e52so608152eek.2
+        for <git@vger.kernel.org>; Thu, 15 Aug 2013 14:34:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vxycgOJtNuTXrBKNm5NlxZYcuKZ+LhQLvrqf+tbXEws=;
+        b=pkpZ/65jVZJwR47Ld+J+FrrJ2UoK34RaUhgXtHvCaavKV2qC/gB1dM2uoh0dC7V0nd
+         bbGklN/N6uzmm3GTFda7Pa5H7ElZDd1NTSJWpEU/4hyy9/jz8QEndunWLbV3FHoiJ79T
+         36aRa8C0i4MzLoUWk7bFQMZO89tJeHYNNntn7Fg96Eik+8LMpEryWaFV0eDsggYmjJGK
+         81ReqMqSD2hajQcK9gMDoerOnmEXW4qazvYdnnve2oVbt+xiO4u5oST4Q+BKCe3SPfJo
+         vl08svqCcmddcXQoGJOPvefzUYZHGoKsjpOOJKZqiqlzmvQKSuOMfV1sOR32KaZW0hqb
+         qMCg==
+X-Received: by 10.15.56.8 with SMTP id x8mr172580eew.83.1376602455839;
+        Thu, 15 Aug 2013 14:34:15 -0700 (PDT)
+Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id a6sm1958170eei.10.2013.08.15.14.34.14
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 15 Aug 2013 14:34:15 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc3.1.gc1ebd90
+In-Reply-To: <CAPig+cQmdPo4mo69DsDmUURcw+HbxkAoNEqY08qiuJs8S+=bvQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232374>
 
-"ls-files -o" and "ls-files -k" both traverse the working tree down
-to find either all untracked paths or those that will be "killed"
-(removed from the working tree to make room) when the paths recorded
-in the index are checked out.  It is necessary to traverse the
-working tree fully when enumerating all the "other" paths, but when
-we are only interested in "killed" paths, we can take advantage of
-the fact that paths that do not overlap with entries in the index
-can never be killed.
+When checking the previous lines in that function, we can deduce that
+hsize must always be smaller than (1u<<31), since 506049c7df2c6
+(fix >4GiB source delta assertion failure), because entries is
+capped at an upper bound of 0xfffffffeU, so hsize contains a maximum
+value of 0x3fffffff, which is smaller than (1u<<31), so the value of
+'i' will never be larger than 31.
 
-The treat_one_path() helper function, which is called during the
-recursive traversal, is the ideal place to implement an
-optimization.
-
-When we are looking at a directory P in the working tree, there are
-three cases:
-
- (1) P exists in the index.  Everything inside the directory P in
-     the working tree needs to go when P is checked out from the
-     index.
-
- (2) P does not exist in the index, but there is P/Q in the index.
-     We know P will stay a directory when we check out the contents
-     of the index, but we do not know yet if there is a directory
-     P/Q in the working tree to be killed, so we need to recurse.
-
- (3) P does not exist in the index, and there is no P/Q in the index
-     to require P to be a directory, either.  Only in this case, we
-     know that everything inside P will not be killed without
-     recursing.
-
-Note that this helper is called by treat_leading_path() that decides
-if we need to traverse only subdirectories of a single common
-leading directory, which is essential for this optimization to be
-correct.  This caller checks each level of the leading path
-component from shallower directory to deeper ones, and that is what
-allows us to only check if the path appears in the index.  If the
-call to treat_one_path() weren't there, given a path P/Q/R, the real
-traversal may start from directory P/Q/R, even when the index
-records P as a regular file, and we would end up having to check if
-any leading subpath in P/Q/R, e.g. P, appears in the index.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
 ---
- builtin/ls-files.c |  2 ++
- dir.c              | 29 +++++++++++++++++++++++++++--
- dir.h              |  3 ++-
- 3 files changed, 31 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 2202072..c7eb6f4 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -213,6 +213,8 @@ static void show_files(struct dir_struct *dir)
+Eric, thanks for reviewing my patch.
+
+I applied the first 2 proposals (deduce, entries), but I disagree on
+the third, so I reformulated the sentence, as I really meant the variable
+i and not it as a pronoun.
+
+Do I understand right, you're suggesting to remove the 
+source code comment? I did this now, but I have a bad feeling with it.
+
+The change of this patch surely removes dead code as of now and makes it
+more readable. But also it could become alive again, once somebody
+changes things nearby and forgets about the assumption, hsize not
+exceeding a certain size. That's why I put a comment in there, so 
+the future changes nearby may be more careful.
+
+Thanks,
+Stefan
+
+
+ diff-delta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/diff-delta.c b/diff-delta.c
+index 93385e1..3797ce6 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -155,7 +155,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 		entries = 0xfffffffeU / RABIN_WINDOW;
+ 	}
+ 	hsize = entries / 4;
+-	for (i = 4; (1u << i) < hsize && i < 31; i++);
++	for (i = 4; (1u << i) < hsize; i++);
+ 	hsize = 1 << i;
+ 	hmask = hsize - 1;
  
- 	/* For cached/deleted files we don't need to even do the readdir */
- 	if (show_others || show_killed) {
-+		if (!show_others)
-+			dir->flags |= DIR_COLLECT_KILLED_ONLY;
- 		fill_directory(dir, pathspec);
- 		if (show_others)
- 			show_other_files(dir);
-diff --git a/dir.c b/dir.c
-index 2f82cd1..ff768f3 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1173,12 +1173,37 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
- 					  int dtype, struct dirent *de)
- {
- 	int exclude;
-+	int has_path_in_index = !!cache_name_exists(path->buf, path->len, ignore_case);
-+
- 	if (dtype == DT_UNKNOWN)
- 		dtype = get_dtype(de, path->buf, path->len);
- 
- 	/* Always exclude indexed files */
--	if (dtype != DT_DIR &&
--	    cache_name_exists(path->buf, path->len, ignore_case))
-+	if (dtype != DT_DIR && has_path_in_index)
-+		return path_none;
-+
-+	/*
-+	 * When we are looking at a directory P in the working tree,
-+	 * there are three cases:
-+	 *
-+	 * (1) P exists in the index.  Everything inside the directory P in
-+	 * the working tree needs to go when P is checked out from the
-+	 * index.
-+	 *
-+	 * (2) P does not exist in the index, but there is P/Q in the index.
-+	 * We know P will stay a directory when we check out the contents
-+	 * of the index, but we do not know yet if there is a directory
-+	 * P/Q in the working tree to be killed, so we need to recurse.
-+	 *
-+	 * (3) P does not exist in the index, and there is no P/Q in the index
-+	 * to require P to be a directory, either.  Only in this case, we
-+	 * know that everything inside P will not be killed without
-+	 * recursing.
-+	 */
-+	if ((dir->flags & DIR_COLLECT_KILLED_ONLY) &&
-+	    (dtype == DT_DIR) &&
-+	    !has_path_in_index &&
-+	    (directory_exists_in_index(path->buf, path->len) == index_nonexistent))
- 		return path_none;
- 
- 	exclude = is_excluded(dir, path->buf, &dtype);
-diff --git a/dir.h b/dir.h
-index 3d6b80c..4677b86 100644
---- a/dir.h
-+++ b/dir.h
-@@ -80,7 +80,8 @@ struct dir_struct {
- 		DIR_HIDE_EMPTY_DIRECTORIES = 1<<2,
- 		DIR_NO_GITLINKS = 1<<3,
- 		DIR_COLLECT_IGNORED = 1<<4,
--		DIR_SHOW_IGNORED_TOO = 1<<5
-+		DIR_SHOW_IGNORED_TOO = 1<<5,
-+		DIR_COLLECT_KILLED_ONLY = 1<<6
- 	} flags;
- 	struct dir_entry **entries;
- 	struct dir_entry **ignored;
 -- 
-1.8.4-rc3-232-ga8053f8
+1.8.4.rc3.1.gc1ebd90
