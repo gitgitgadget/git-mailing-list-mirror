@@ -1,93 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] create_delta_index: simplify condition always evaluating to true
-Date: Thu, 15 Aug 2013 14:43:35 -0700
-Message-ID: <7vzjsipr3s.fsf@alter.siamese.dyndns.org>
-References: <1376595460-6546-1-git-send-email-stefanbeller@googlemail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] create_delta_index: simplify condition always evaluating
+ to true
+Date: Thu, 15 Aug 2013 17:46:54 -0400
+Message-ID: <CAPig+cQ5Y9irLk=9Bhz09c=5yzZEcyMKn2kbhcrO_zDpgmkhGw@mail.gmail.com>
+References: <CAPig+cQmdPo4mo69DsDmUURcw+HbxkAoNEqY08qiuJs8S+=bvQ@mail.gmail.com>
+	<1376602462-32339-1-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stefan Beller <stefanbeller@googlemail.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Aug 15 23:43:48 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 15 23:46:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VA5Kc-0005Nf-Ed
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 23:43:46 +0200
+	id 1VA5Nj-00086K-D4
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 23:46:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752574Ab3HOVnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Aug 2013 17:43:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47208 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752524Ab3HOVni (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Aug 2013 17:43:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF46739EA3;
-	Thu, 15 Aug 2013 21:43:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ddc9KaNSiaVGC8OVgu63xvhyIJc=; b=GuX9KP
-	0GpmTlRH4rb1OVE4CufSEvGIGC1RoBwfUPxQbHFdaMQodJIYAAN8TXFUlXgkhGZL
-	KEIWveWk0E7hTVkyoZIQce+wA9a+PPVBOjKQKgek6uieVfv9Dg9JL8LA2XGATSbq
-	NHm/FMxRAaoyiB7qoifhyKWW3U7BuBnBnhshQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MYeSvLBdKPPQrgvZEnqejSujFhOQyANI
-	v3SMcovL7E+Da2h01l9pDwfUgqL95BXjEhtN/NGzhCLrvsGgxUTUVIeRVOt+ZSy+
-	QOJ1gVzqeZwHsPesj8Nj1w+raZv/31s5sw/g+AnrXly3pAKDdjyIhaTYwFp3HDr+
-	uS3FOa/FTg0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B62A239EA2;
-	Thu, 15 Aug 2013 21:43:37 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0909539E9D;
-	Thu, 15 Aug 2013 21:43:36 +0000 (UTC)
-In-Reply-To: <1376595460-6546-1-git-send-email-stefanbeller@googlemail.com>
-	(Stefan Beller's message of "Thu, 15 Aug 2013 21:37:40 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BDC884D0-05F3-11E3-9058-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752216Ab3HOVqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Aug 2013 17:46:55 -0400
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:50972 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751568Ab3HOVqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Aug 2013 17:46:55 -0400
+Received: by mail-oa0-f47.google.com with SMTP id g12so1520491oah.34
+        for <git@vger.kernel.org>; Thu, 15 Aug 2013 14:46:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=1v0o/SkTHk3Z0wFEKQwrCXjYWwhXdm9hAtiReW070dQ=;
+        b=IdsCI/TEEHP7Z9dT6Lxyx2ui78k+DHLh2pfxVOR6J1WPhvRrlKj/MpSvOi21FXk1rK
+         yYOR+axt6spaEp4/4FLI+HiiN1aZ2JTFzvf9qbdysG22P24uUZSG6mx1oXepiuAhcUaI
+         7+TFmmTbBF3YkzyqODNojZm0Il0S5ia1qlIwPmgjXvPaFEzALLd90KydvuMj5oyh+ABm
+         DGQxSF2y6IklS5Qk3oaWjn1u61/eqezJKuffohdTBFfbZZNnDIDFnezSJYEzq9+TvGt+
+         TZCILp5NSKZMo+qhQPjm6rx1MTCFo8og7nATgTIKQ/wJgBFSOHRP90ZKKRA4gdjSuzCK
+         e1NA==
+X-Received: by 10.60.132.40 with SMTP id or8mr2016278oeb.65.1376603214487;
+ Thu, 15 Aug 2013 14:46:54 -0700 (PDT)
+Received: by 10.182.131.234 with HTTP; Thu, 15 Aug 2013 14:46:54 -0700 (PDT)
+In-Reply-To: <1376602462-32339-1-git-send-email-stefanbeller@googlemail.com>
+X-Google-Sender-Auth: r86HhlWGCq4ZwoAv7t034ZKg-Dc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232376>
 
-Forwarding to the area expert...
-
-Stefan Beller <stefanbeller@googlemail.com> writes:
-
-> When checking the previous lines in that function, we can deduct that
+On Thu, Aug 15, 2013 at 5:34 PM, Stefan Beller
+<stefanbeller@googlemail.com> wrote:
+> When checking the previous lines in that function, we can deduce that
 > hsize must always be smaller than (1u<<31), since 506049c7df2c6
-> (fix >4GiB source delta assertion failure), because the entries is
+> (fix >4GiB source delta assertion failure), because entries is
 > capped at an upper bound of 0xfffffffeU, so hsize contains a maximum
-> value of 0x3fffffff, which is smaller than (1u<<31), so i will never
-> be larger than 31.
+> value of 0x3fffffff, which is smaller than (1u<<31), so the value of
+> 'i' will never be larger than 31.
 >
 > Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
 > ---
->  diff-delta.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
+>
+> Eric, thanks for reviewing my patch.
+>
+> I applied the first 2 proposals (deduce, entries), but I disagree on
+> the third, so I reformulated the sentence, as I really meant the variable
+> i and not it as a pronoun.
+
+Thanks. Adding the quotes around 'i' makes your meaning clear. Without
+the quotes, apparently it was ambiguous, and my brain read it as a
+misspelling of 'it'.
+
+> Do I understand right, you're suggesting to remove the
+> source code comment? I did this now, but I have a bad feeling with it.
+>
+> The change of this patch surely removes dead code as of now and makes it
+> more readable. But also it could become alive again, once somebody
+> changes things nearby and forgets about the assumption, hsize not
+> exceeding a certain size. That's why I put a comment in there, so
+> the future changes nearby may be more careful.
+
+Indeed, I feel uncomfortable with the patch in general for the very
+reason that you state: it might become live again. Without the patch,
+the code remains safe without any extra effort. With this patch, even
+with the in-code comment, someone making changes needs to take special
+care. Sometimes it makes sense to leave safeties in place, even if
+they can't be triggered _today_; and safeties (such as i < 31) also
+serve as documentation.
+
+>
+> Thanks,
+> Stefan
+>
+>
+>  diff-delta.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/diff-delta.c b/diff-delta.c
-> index 93385e1..54da95b 100644
+> index 93385e1..3797ce6 100644
 > --- a/diff-delta.c
 > +++ b/diff-delta.c
-> @@ -154,8 +154,15 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
->  		 */
->  		entries = 0xfffffffeU / RABIN_WINDOW;
->  	}
-> +
-> +	/*
-> +	 * Do not check i < 31 in the loop, because the assignement
-> +	 * previous to the loop makes sure, hsize is definitely
-> +	 * smaller than 1<<31, hence the loop will always stop
-> +	 * before i exceeds 31 resulting in an infinite loop.
-> +	 */
->  	hsize = entries / 4;
-> -	for (i = 4; (1u << i) < hsize && i < 31; i++);
-> +	for (i = 4; (1u << i) < hsize; i++);
->  	hsize = 1 << i;
->  	hmask = hsize - 1;
+> @@ -155,7 +155,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+>                 entries = 0xfffffffeU / RABIN_WINDOW;
+>         }
+>         hsize = entries / 4;
+> -       for (i = 4; (1u << i) < hsize && i < 31; i++);
+> +       for (i = 4; (1u << i) < hsize; i++);
+>         hsize = 1 << i;
+>         hmask = hsize - 1;
+>
+> --
+> 1.8.4.rc3.1.gc1ebd90
+>
