@@ -1,129 +1,99 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: [RFC PATCH] repack: rewrite the shell script in C.
-Date: Wed, 14 Aug 2013 18:26:44 -0600
-Organization: CAF
-Message-ID: <201308141826.44898.mfick@codeaurora.org>
-References: <520BAF9F.70105@googlemail.com> <vpq7gfnj38d.fsf@anie.imag.fr> <201308141725.43127.mfick@codeaurora.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: About *git clone --depth=n* puzzle
+Date: Thu, 15 Aug 2013 09:08:38 +0700
+Message-ID: <CACsJy8DDf64M1qruUNH7M=eB=1cJpYuYXLEkpPUPfrREeSLEew@mail.gmail.com>
+References: <BAY169-W472B90AB796C71E8D0D038B4450@phx.gbl>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Antoine Pelisse <apelisse@gmail.com>,
-	Stefan Beller <stefanbeller@googlemail.com>,
-	git <git@vger.kernel.org>,
-	=?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>, iveqy@iveqy.com,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Aug 15 02:26:51 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"junchunx.guan@gmail.com" <junchunx.guan@gmail.com>
+To: XinLingchao <douglarek@outlook.com>
+X-From: git-owner@vger.kernel.org Thu Aug 15 04:09:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9lOt-0003Rn-Bv
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 02:26:51 +0200
+	id 1V9mzz-0001l0-F6
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 04:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758739Ab3HOA0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 20:26:47 -0400
-Received: from smtp.codeaurora.org ([198.145.11.231]:60174 "EHLO
-	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758345Ab3HOA0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 20:26:46 -0400
-Received: from smtp.codeaurora.org (localhost [127.0.0.1])
-	by smtp.codeaurora.org (Postfix) with ESMTP id 7D01513F434;
-	Thu, 15 Aug 2013 00:26:46 +0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 486)
-	id 6F97213F437; Thu, 15 Aug 2013 00:26:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	pdx-caf-smtp.dmz.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.1
-Received: from mfick-lnx.localnet (mfick-lnx.qualcomm.com [129.46.10.58])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: mfick@smtp.codeaurora.org)
-	by smtp.codeaurora.org (Postfix) with ESMTPSA id 0DD9E13F434;
-	Thu, 15 Aug 2013 00:26:46 +0000 (UTC)
-User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <201308141725.43127.mfick@codeaurora.org>
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1760069Ab3HOCJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Aug 2013 22:09:10 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:48809 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759979Ab3HOCJJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Aug 2013 22:09:09 -0400
+Received: by mail-ob0-f175.google.com with SMTP id xn12so240531obc.34
+        for <git@vger.kernel.org>; Wed, 14 Aug 2013 19:09:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=vjeM1PbqamvFzbek9kOA5YG25PeqiT2eeIrzUnfMqbE=;
+        b=fMYS6HxikVin2MTM8J339qOHYsd3rL93klkPyI1qE+Y6KzIKpZ8d9DY2g0Rw1734Un
+         rgqDEsrY6CQBQx3jixIMKMaiYVJ5DXVlR23XTHEwzzWi1D8CNxNmwf4LoPo5Apnpne0w
+         WdHbNdUA9+JK3CV1atSyli8+aQ/2ZdH1agILDQVmJEn2fBsQw+l8eS+AZ0xZWyPGr/0X
+         18eTwaPuKzuRLSe9iULbEaHBPqyFcq3ngoBQQ49dEuu3GweyC3pB2qSL5smu6kF75wKd
+         NLbO9UBT3f5JiI9iR0F9BvqDkMamAq2dNyPKAepI/mLWWldMQyOhAg6+fel4PkGYcsQ9
+         PFvA==
+X-Received: by 10.60.93.67 with SMTP id cs3mr12113166oeb.12.1376532548720;
+ Wed, 14 Aug 2013 19:09:08 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Wed, 14 Aug 2013 19:08:38 -0700 (PDT)
+In-Reply-To: <BAY169-W472B90AB796C71E8D0D038B4450@phx.gbl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232325>
 
-On Wednesday, August 14, 2013 05:25:42 pm Martin Fick wrote:
-> On Wednesday, August 14, 2013 04:51:14 pm Matthieu Moy
-> 
-> wrote:
-> > Antoine Pelisse <apelisse@gmail.com> writes:
-> > > On Wed, Aug 14, 2013 at 6:27 PM, Stefan Beller
-> > > 
-> > > <stefanbeller@googlemail.com> wrote:
-> > >>  builtin/repack.c               | 410
-> > >>  +++++++++++++++++++++++++++++++++++++++++
-> > >>  contrib/examples/git-repack.sh | 194
-> > >>  +++++++++++++++++++ git-repack.sh                 
-> > >>  | 194 -------------------
-> > > 
-> > > I'm still not sure I understand the trade-off here.
-> > > 
-> > > Most of what git-repack does is compute some file
-> > > paths, (re)move those files and call
-> > > git-pack-objects, and potentially git-prune-packed
-> > > and
-> > > git-update-server-info.
-> > > Maybe I'm wrong, but I have the feeling that the
-> > > correct tool for that is Shell, rather than C (and I
-> > > think the code looks less intuitive in C for that
-> > > matter).
-> > 
-> > There's a real problem with git-repack being shell (I
-> > already mentionned it in the previous thread about the
-> > rewrite): it creates dependencies on a few external
-> > binaries, and a restricted server may not have them. I
-> > have this issue on a fusionforge server where Git repos
-> > are accessed in a chroot with very few commands
-> > available: everything went OK until the first project
-> > grew enough to require a "git gc --auto", and then it
-> > stopped accepting pushes for that project.
-> > 
-> > I tracked down the origin of the problem and the
-> > sysadmins disabled auto-gc, but that's not a very
-> > satisfactory solution.
-> > 
-> > C is rather painfull to write, but as a sysadmin, drop
-> > the binary on your server and it just works. That's
-> > really important. AFAIK, git-repack is the only
-> > remaining shell part on the server, and it's rather
-> > small. I'd really love to see it disapear.
-> 
-> I didn't review the proposed C version, but how was it
-> planning on removing the dependencies on these binaries?
-> Was it planning to reimplement mv, cp, find?  Were there
-> other binaries that were problematic that you were
-> thinking of?  From what I can tell it also uses test,
-> mkdir, sed, chmod and naturally sh, that is 8
-> dependencies.  If those can't be depended upon for
-> existing, perhaps git should just consider bundling
-> busy-box or some other limited shell utils, or yikes!,
-> even its own reimplementation of these instead of
-> implementing these independently inside other git
-> programs?
+On Wed, Aug 14, 2013 at 3:20 PM, XinLingchao <douglarek@outlook.com> wrote:
+> Hi Guys,
+>
+> I think I have got some trouble when I use `git clone --depth=n` command. Take a real repo for example:
+>
+>
+> `git clone https://github.com/douglarek/vimrc.git --depth=1`
+>
+>
+> then I use `git log`:
+>
+> ```
+>     commit d04ca09ecc723739123fae11ad56784eb0c9b36a
+>     Author: Lingchao Xin <douglarek@outlook.com>
+>     Date:   Fri Jun 7 09:39:22 2013 +0800
+>
+>         Update vnudle to master branch, add wm shortcut, pylint optimization
+>
+>     commit c66d827dc212f6ae8aab6b5c44631564bcbe2acd
+>     Author: icocoa <lingchax@outlook.com>
+>     Date:   Tue Mar 12 01:36:34 2013 -0700
+>
+>         Merge pull request #1 from douglarek/master
+>
+>         Add markdown, flake8, pylint plugin
+>
+> ```
+>     but when I clone it with `file://`:
+>
+>     git clone https://github.com/douglarek/vimrc.git
+>     git clone file://vimrc.git --depth=1 vimrc1
+>
+>     I got this log:
+> ```
+>     commit d04ca09ecc723739123fae11ad56784eb0c9b36a
+> Author: Lingchao Xin <douglarek@outlook.com>
+> Date:   Fri Jun 7 09:39:22 2013 +0800
+>
+>     Update vnudle to master branch, add wm shortcut, pylint optimization
+> ```
+>
+> so the two results are not same, is it a bug? or it should be so?
+>
+> My os is openSUSE 12.3 and git version 1.8.3.4; and myabe it occured in git 1.8.1.4 +.
 
-Sorry I didn't comprehend your email fully when I first read 
-it.  I guess that wouldn't really solve your problem unless 
-someone had a way of bundling an sh program and whatever it 
-calls inside a single executable? :(
-
-I can see why you would want what you want,
-
--Martin
-
+The fix is at the server side. >=1.8.2 corrects --depth, which is what
+you use for file://. github is still on 1.8.1.6, which does not have
+that fix. Oh and the commit is 682c7d2 (upload-pack: fix off-by-one
+depth calculation in shallow clone - 2013-01-11)
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
- 
+Duy
