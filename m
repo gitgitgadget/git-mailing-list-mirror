@@ -1,135 +1,280 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: Re: git stash takes excessively long when many untracked files
- present
-Date: Thu, 15 Aug 2013 11:07:36 -0700
-Message-ID: <20130815180736.GA4093@jtriplet-mobl1>
-References: <20130810214453.GA5719@jtriplet-mobl1>
- <loom.20130813T120243-481@post.gmane.org>
- <7v7gfpy0wy.fsf@alter.siamese.dyndns.org>
- <1fc732a7-6b63-4d75-960f-0b1c6cf9c70e@email.android.com>
- <7vmwolwk94.fsf@alter.siamese.dyndns.org>
- <7v61v9w9dy.fsf@alter.siamese.dyndns.org>
- <7vr4durgd4.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Anders Darander <anders.darander@gmail.com>,
-	Petr Baudis <pasky@ucw.cz>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 15 20:07:52 2013
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v6 1/3] branch: not report invalid tracking branch
+Date: Fri, 16 Aug 2013 02:11:21 +0800
+Message-ID: <6bc0643a5fa0fae03be6fdb59f63075be1e4d983.1376590264.git.worldhello.net@gmail.com>
+References: <7vbo50uvty.fsf@alter.siamese.dyndns.org>
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Aug 15 20:13:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VA1xg-0007Ue-Bp
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 20:07:52 +0200
+	id 1VA22c-0003mQ-8M
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 20:12:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759113Ab3HOSHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Aug 2013 14:07:48 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:44609 "EHLO
-	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758276Ab3HOSHr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Aug 2013 14:07:47 -0400
-Received: from mfilter14-d.gandi.net (mfilter14-d.gandi.net [217.70.178.142])
-	by relay3-d.mail.gandi.net (Postfix) with ESMTP id B2CEFA80BF;
-	Thu, 15 Aug 2013 20:07:43 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter14-d.gandi.net
-Received: from relay3-d.mail.gandi.net ([217.70.183.195])
-	by mfilter14-d.gandi.net (mfilter14-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id w7MUedB6CmlG; Thu, 15 Aug 2013 20:07:42 +0200 (CEST)
-X-Originating-IP: 173.246.103.110
-Received: from jtriplet-mobl1 (joshtriplett.org [173.246.103.110])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id AEABCA80C4;
-	Thu, 15 Aug 2013 20:07:38 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vr4durgd4.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759296Ab3HOSMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Aug 2013 14:12:53 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:38189 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758242Ab3HOSMv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Aug 2013 14:12:51 -0400
+Received: by mail-pd0-f181.google.com with SMTP id g10so1100007pdj.40
+        for <git@vger.kernel.org>; Thu, 15 Aug 2013 11:12:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=KGQeSQZk0ak20Edn+tOJsEUoAtxeQJCsu/F0ox1q8Xk=;
+        b=xbM1JnjMpnCmspWstRhgKIca6Kam8u74BsCOTEszLXI6Thk3LEybce1Xo3R/bfx01O
+         68vrnJiADtUzIYhy2WB+MLvmpeqfiQ3cIQLp3vhIz4l1vgE4RxLai+liFJ1U3Pm3zA1w
+         4gyRyKfWDHHSXVVGc0IpDF25BKs+YsKFQ3ip6XvsQ4l63R22zgT0bBlYID6NJWQTExDi
+         NKDLno/fuIRlFl4NnPvkha6j5Mw6GsZYfjSccSapnJFhPcc5nVDRJ44B+gF0JS2IC9S1
+         gxW4BQG6qmmWXrH7bUchpEzFIqxTwcLbAcL6yCdcIDCTlBecWvpyWXCo9duVShf+Aa1O
+         +K/g==
+X-Received: by 10.66.147.9 with SMTP id tg9mr17065094pab.5.1376590371257;
+        Thu, 15 Aug 2013 11:12:51 -0700 (PDT)
+Received: from localhost.localdomain ([114.246.129.124])
+        by mx.google.com with ESMTPSA id bt1sm1346733pbb.2.2013.08.15.11.12.48
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 15 Aug 2013 11:12:50 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc2.478.g12f0bfd.dirty
+In-Reply-To: <7vbo50uvty.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232358>
 
-On Thu, Aug 15, 2013 at 10:52:39AM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > In any case, this is a regression introduced in 'master' since the
-> > last release, and the attempted fix was for an issue that has long
-> > been with us, so I'll revert a7365313 (git stash: avoid data loss
-> > when "git stash save" kills a directory, 2013-06-28) soon.  For
-> > today's -rc3, I'm already deep into the integration cycle, so it is
-> > too late to do the revert it and then redo everything.
-> >
-> > Then we will plan to re-apply the patch once "ls-files --killed"
-> > gets fixed not to waste too much cycles needlessly, after the coming
-> > release.
-> 
-> I've already reverted the problematic patch to "git stash" and it
-> will not be part of the upcoming release.
+Command "git branch -vv" will report tracking branches, but invalid
+tracking branches are also reported. This is because the function
+stat_tracking_info() can not distinguish whether the upstream branch
+does not exist, or nothing is changed between one branch and its
+upstream.
 
-Thanks!
+This patch changes the return value of function stat_tracking_info().
+Only returns false when there is no tracking branch or the tracking
+branch is invalid, otherwise true. If the caller does not like to
+report tracking info when nothing changed between the branch and its
+upstream, simply checks if num_theirs and num_ours are both 0.
 
-> Here is a quick attempt to see if we can do better in "ls-files -k".
-> 
-> We have an existing test t3010.3 that tries all the combinations of
-> directory turning into a regular file, symlink, etc. and vice versa,
-> and it seems to pass.  The test has a directory path6 in the working
-> tree without any paths in it in the index, and the added bypass code
-> seems to correctly trigger and prevents us from digging into that
-> directory, so this patch may be sufficient to improve "ls-files -k".
-> 
-> By the way, regarding the reverted commit, I do not think it is
-> enough to ask "ls-files -k" to see if the state recorded in the
-> current index is sufficient.  Imagine your HEAD records "path" as a
-> file and then you did this:
-> 
->     $ git reset --hard ;# "path" is now a regular file
->     $ mv path path.bak
->     $ mkdir path
->     $ mv path.bak path/file
->     $ git add -A ;# "path/file" in the index and in the working tree
->     $ >path/cruft ;# "path/cruft" in the working tree
-> 
-> Then call "save_stash" without saving untracked.  The resulting
-> stash will save the contents of "path/file" but "path/cruft" is not
-> recorded anywhere, and then we would need to bring the state in the
-> working tree and the index back to the state recorded in HEAD, hence
-> "path" needs to be turned back to a directory.
-> 
-> But "ls-files -k" is asked to check with the index, which has the
-> path as a directory, so this case is missed.
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ builtin/branch.c         | 24 ++++++++----------------
+ remote.c                 | 43 ++++++++++++++++++++++---------------------
+ t/t6040-tracking-info.sh |  8 ++++++--
+ wt-status.c              | 13 +++++++++++--
+ 4 files changed, 47 insertions(+), 41 deletions(-)
 
-Since git stash resets to the state in HEAD, whatever --killed check it
-does needs to check against HEAD, yes.  It still doesn't need to check
-any path that doesn't exist in HEAD, though; it makes more sense to
-drive this from the list of files in HEAD rather than from the list of
-files in the working directory, even with a filter applied to the latter
-to prune bits not in HEAD.
-
-> So instead of
-> 
-> 	test -n "$(git ls-files --killed | head -n 1)"
-> 
-> in Pasky's patch, which probably is a right thing to do if you are
-> running "git stash save --keep-index", you would need something like
-> this if you are not running with "--keep-index":
-> 
-> 	test -n "$(
->         	GIT_INDEX_FILE=tmp_index
->                 export GIT_INDEX_FILE
->                 git read-tree HEAD
->                 git ls-files -k
-> 	)"
-> 
-> in order to make sure that the result of going back to the state in
-> the HEAD will not clobber leftover "path/cruft".
-
-Sure, that works.  However, wouldn't it make sense to just directly let
-git ls-files output to the screen, then test its return value (after
-adding some ls-files option to set the return value)?  Since ls-files
---killed will have no output if git stash can proceed, and since git
-stash should show the list of files that'd be killed before it fails,
-using the output directly makes sense.
-
-- Josh Triplett
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 0903763..3e016a6 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -424,19 +424,8 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
+ 	struct branch *branch = branch_get(branch_name);
+ 	struct strbuf fancy = STRBUF_INIT;
+ 
+-	if (!stat_tracking_info(branch, &ours, &theirs)) {
+-		if (branch && branch->merge && branch->merge[0]->dst &&
+-		    show_upstream_ref) {
+-			ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
+-			if (want_color(branch_use_color))
+-				strbuf_addf(stat, "[%s%s%s] ",
+-						branch_get_color(BRANCH_COLOR_UPSTREAM),
+-						ref, branch_get_color(BRANCH_COLOR_RESET));
+-			else
+-				strbuf_addf(stat, "[%s] ", ref);
+-		}
++	if (!stat_tracking_info(branch, &ours, &theirs))
+ 		return;
+-	}
+ 
+ 	if (show_upstream_ref) {
+ 		ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
+@@ -448,19 +437,22 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
+ 			strbuf_addstr(&fancy, ref);
+ 	}
+ 
+-	if (!ours) {
+-		if (ref)
++	if (!ours && !theirs) {
++		if (show_upstream_ref)
++			strbuf_addf(stat, _("[%s]"), fancy.buf);
++	} else if (!ours) {
++		if (show_upstream_ref)
+ 			strbuf_addf(stat, _("[%s: behind %d]"), fancy.buf, theirs);
+ 		else
+ 			strbuf_addf(stat, _("[behind %d]"), theirs);
+ 
+ 	} else if (!theirs) {
+-		if (ref)
++		if (show_upstream_ref)
+ 			strbuf_addf(stat, _("[%s: ahead %d]"), fancy.buf, ours);
+ 		else
+ 			strbuf_addf(stat, _("[ahead %d]"), ours);
+ 	} else {
+-		if (ref)
++		if (show_upstream_ref)
+ 			strbuf_addf(stat, _("[%s: ahead %d, behind %d]"),
+ 				    fancy.buf, ours, theirs);
+ 		else
+diff --git a/remote.c b/remote.c
+index 2433467..26bd543 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1729,7 +1729,8 @@ int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1)
+ }
+ 
+ /*
+- * Return true if there is anything to report, otherwise false.
++ * Return false if cannot stat a tracking branch (not exist or invalid),
++ * otherwise true.
+  */
+ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ {
+@@ -1740,18 +1741,12 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ 	const char *rev_argv[10], *base;
+ 	int rev_argc;
+ 
+-	/*
+-	 * Nothing to report unless we are marked to build on top of
+-	 * somebody else.
+-	 */
++	/* Cannot stat unless we are marked to build on top of somebody else. */
+ 	if (!branch ||
+ 	    !branch->merge || !branch->merge[0] || !branch->merge[0]->dst)
+ 		return 0;
+ 
+-	/*
+-	 * If what we used to build on no longer exists, there is
+-	 * nothing to report.
+-	 */
++	/* Cannot stat if what we used to build on no longer exists */
+ 	base = branch->merge[0]->dst;
+ 	if (read_ref(base, sha1))
+ 		return 0;
+@@ -1766,8 +1761,10 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ 		return 0;
+ 
+ 	/* are we the same? */
+-	if (theirs == ours)
+-		return 0;
++	if (theirs == ours) {
++		*num_theirs = *num_ours = 0;
++		return 1;
++	}
+ 
+ 	/* Run "rev-list --left-right ours...theirs" internally... */
+ 	rev_argc = 0;
+@@ -1809,31 +1806,35 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+  */
+ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ {
+-	int num_ours, num_theirs;
++	int ours, theirs;
+ 	const char *base;
+ 
+-	if (!stat_tracking_info(branch, &num_ours, &num_theirs))
++	if (!stat_tracking_info(branch, &ours, &theirs))
++		return 0;
++
++	/* Nothing to report if neither side has changes. */
++	if (!ours && !theirs)
+ 		return 0;
+ 
+ 	base = branch->merge[0]->dst;
+ 	base = shorten_unambiguous_ref(base, 0);
+-	if (!num_theirs) {
++	if (!theirs) {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch is ahead of '%s' by %d commit.\n",
+ 			   "Your branch is ahead of '%s' by %d commits.\n",
+-			   num_ours),
+-			base, num_ours);
++			   ours),
++			base, ours);
+ 		if (advice_status_hints)
+ 			strbuf_addf(sb,
+ 				_("  (use \"git push\" to publish your local commits)\n"));
+-	} else if (!num_ours) {
++	} else if (!ours) {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch is behind '%s' by %d commit, "
+ 			       "and can be fast-forwarded.\n",
+ 			   "Your branch is behind '%s' by %d commits, "
+ 			       "and can be fast-forwarded.\n",
+-			   num_theirs),
+-			base, num_theirs);
++			   theirs),
++			base, theirs);
+ 		if (advice_status_hints)
+ 			strbuf_addf(sb,
+ 				_("  (use \"git pull\" to update your local branch)\n"));
+@@ -1845,8 +1846,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 			   "Your branch and '%s' have diverged,\n"
+ 			       "and have %d and %d different commits each, "
+ 			       "respectively.\n",
+-			   num_theirs),
+-			base, num_ours, num_theirs);
++			   theirs),
++			base, ours, theirs);
+ 		if (advice_status_hints)
+ 			strbuf_addf(sb,
+ 				_("  (use \"git pull\" to merge the remote branch into yours)\n"));
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index ec2b516..471dd64 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -28,10 +28,14 @@ test_expect_success setup '
+ 		git reset --hard HEAD^ &&
+ 		git checkout -b b4 origin &&
+ 		advance e &&
+-		advance f
++		advance f &&
++		git checkout -b brokenbase origin &&
++		git checkout -b b5 --track brokenbase &&
++		advance g &&
++		git branch -d brokenbase
+ 	) &&
+ 	git checkout -b follower --track master &&
+-	advance g
++	advance h
+ '
+ 
+ script='s/^..\(b.\)[	 0-9a-f]*\[\([^]]*\)\].*/\1 \2/p'
+diff --git a/wt-status.c b/wt-status.c
+index ff4b324..0c6a3a5 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1380,15 +1380,24 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	branch = branch_get(s->branch + 11);
+ 	if (s->is_initial)
+ 		color_fprintf(s->fp, header_color, _("Initial commit on "));
++
++	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
++
++	/*
++	 * Not report tracking info if no tracking branch found
++	 * or no difference found.
++	 */
+ 	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
+-		color_fprintf(s->fp, branch_color_local, "%s", branch_name);
++		fputc(s->null_termination ? '\0' : '\n', s->fp);
++		return;
++	}
++	if (!num_ours && !num_theirs) {
+ 		fputc(s->null_termination ? '\0' : '\n', s->fp);
+ 		return;
+ 	}
+ 
+ 	base = branch->merge[0]->dst;
+ 	base = shorten_unambiguous_ref(base, 0);
+-	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
+ 	color_fprintf(s->fp, header_color, "...");
+ 	color_fprintf(s->fp, branch_color_remote, "%s", base);
+ 
+-- 
+1.8.4.rc2.478.g12f0bfd.dirty
