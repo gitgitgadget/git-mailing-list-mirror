@@ -1,109 +1,70 @@
-From: Christopher Durkin <cjdurkin@gmail.com>
-Subject: [PATCH 2/2] gitweb: add plumbing for filename search
-Date: Wed, 14 Aug 2013 23:02:39 -0400
-Message-ID: <CANzJMBU1JjztDGns+ZCg-K+q6_HO9GNJy5nKC4ODEdGm_eJwPg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC PATCH] repack: rewrite the shell script in C.
+Date: Thu, 15 Aug 2013 11:15:06 +0700
+Message-ID: <CACsJy8AZ+xLURszWni1wdZw7e6ZvE0je9_ELcj6gCzaEyNNLmQ@mail.gmail.com>
+References: <520BAF9F.70105@googlemail.com> <1376497661-30714-1-git-send-email-stefanbeller@googlemail.com>
+ <CALWbr2xuV+V7M354+XoA3HCvLr0Cpx4t3cLVeTCx4xeNmQQX1w@mail.gmail.com> <201308141125.59991.mfick@codeaurora.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 15 05:03:05 2013
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	Stefan Beller <stefanbeller@googlemail.com>,
+	git <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Fredrik Gustafsson <iveqy@iveqy.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Thu Aug 15 06:16:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1V9nq5-0001M4-7W
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 05:03:05 +0200
+	id 1V9oyg-0000jo-BC
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 06:16:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760027Ab3HODCq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Aug 2013 23:02:46 -0400
-Received: from mail-vb0-f42.google.com ([209.85.212.42]:35640 "EHLO
-	mail-vb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759979Ab3HODCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Aug 2013 23:02:40 -0400
-Received: by mail-vb0-f42.google.com with SMTP id e12so198736vbg.29
-        for <git@vger.kernel.org>; Wed, 14 Aug 2013 20:02:39 -0700 (PDT)
+	id S1751091Ab3HOEPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Aug 2013 00:15:37 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:49041 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750899Ab3HOEPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Aug 2013 00:15:36 -0400
+Received: by mail-ob0-f173.google.com with SMTP id ta17so326319obb.4
+        for <git@vger.kernel.org>; Wed, 14 Aug 2013 21:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=dMzZu+usUwR8pvFx5QxWdgiNKWVBuY3BaYwz+WiJpq0=;
-        b=Xk9nZ88D1lOslOAU36radVxoApo2MZRpK0z96Mwk6PVc7uSnrOcJlRu0rOgxqy7MuZ
-         C4PUnWBYUwBTspuagmFH56ewg0nihJtrCFvu8evJML59Rb2wLDIPgETkJ4zNMH85PvkO
-         f7572FTkl9w/5TbIQXJEuqoUXsRg/jZX+kiwTYIIIe0nhd08g5jVJFRJZ+aPEVBydLCR
-         mzPV2JBKaIshlXcQyb+HoI6HyybMeDhCF639QBbT3r11vXxKzCYMwTeGB0gAQAaU//h1
-         yyKwi/puSZWyf+QnyhaPFylnbEp7BBtbyKJPXaDNq0zNs9tx35Ye+2vKlpZK0kAAngO5
-         xHFA==
-X-Received: by 10.220.74.69 with SMTP id t5mr12365764vcj.18.1376535759730;
- Wed, 14 Aug 2013 20:02:39 -0700 (PDT)
-Received: by 10.58.231.70 with HTTP; Wed, 14 Aug 2013 20:02:39 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=eAeRwm+CfkDv8ggpUMyia1GbdvNYJOAIXRHHuNSy3YM=;
+        b=cZy0E0Yw93o08LoTyGKKuGNOBKp3+MiMCafGKt3j24uTOsGD80Ep/0roSFdCKY/ue8
+         A5stbo3vp5f69YT1t6gNAtlLqwhIlWfbk+a+QzRNLZEJG+3FL+0E8wcXtv2SlgKoYpxo
+         NuFYjMV5cRSCI2s/k/pvitYuWjcR60HDpLCJdN20Jrfp5Pf/1rKL5I44ureLgGoNp/pA
+         NIzXeXyX7P+pmcaVoAJwTUv1i1lPxJwvPDkSI5Um64f5Sm9EVIdlXC9mr6Jpj24lOj7l
+         qPzxus5LHAZiRpT4SgXizImW8HXH2Rk7R0uFD13/VaexRO24/n4yqUXIw3WTu8v0Si0R
+         lXCw==
+X-Received: by 10.182.186.102 with SMTP id fj6mr1375303obc.19.1376540136468;
+ Wed, 14 Aug 2013 21:15:36 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Wed, 14 Aug 2013 21:15:06 -0700 (PDT)
+In-Reply-To: <201308141125.59991.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232329>
 
-Add filename search config option and add it to the drop-down.
----
- gitweb/gitweb.perl | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+On Thu, Aug 15, 2013 at 12:25 AM, Martin Fick <mfick@codeaurora.org> wrote:
+> The script really is mostly a policy script, and with the
+> discussions happening in other threads about how to improve
+> git gc, I think it is helpful to potentially be able to
+> quickly modify the policies in this script, it makes it
+> easier to prototype things.  Shell portability issues aside,
+> this script is not a low level type of tool that I feel will
+> benefit from being in C, I feel it will in fact be worse off
+> in C,
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 4a7b0a5..087b4cb 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -374,6 +374,20 @@ our %feature = (
-  'override' => 0,
-  'default' => [1]},
-
-+ # Enable the filename search, which will list the files whose
-+ # names contain the given string. Enabled by default. Note
-+ # that you need to have 'search' feature enabled too.
-+
-+ # To enable system wide have in $GITWEB_CONFIG
-+ # $feature{'filename'}{'default'} = [1];
-+ # To have project specific config enable override in $GITWEB_CONFIG
-+ # $feature{'filename'}{'override'} = 1;
-+ # and in project config gitweb.pickaxe = 0|1;
-+ 'filename' => {
-+ 'sub' => sub { feature_bool('filename', @_) },
-+ 'override' => 0,
-+ 'default' => [1]},
-+
-  # Enable showing size of blobs in a 'tree' view, in a separate
-  # column, similar to what 'ls -l' does.  This cost a bit of IO.
-
-@@ -4034,7 +4048,7 @@ sub print_search_form {
-       $cgi->input({-name=>"a", -value=>"search", -type=>"hidden"}) . "\n" .
-       $cgi->input({-name=>"h", -value=>$search_hash, -type=>"hidden"}) . "\n" .
-       $cgi->popup_menu(-name => 'st', -default => 'commit',
--                       -values => ['commit', 'grep', 'author',
-'committer', 'pickaxe']) .
-+                       -values => ['commit', 'grep', 'author',
-'committer', 'pickaxe', 'filename']) .
-       $cgi->sup($cgi->a({-href => href(action=>"search_help")}, "?")) .
-       " search:\n",
-       $cgi->textfield(-name => "s", -value => $searchtext, -override
-=> 1) . "\n" .
-@@ -7996,6 +8010,12 @@ sub git_search {
-  or die_error(403, "Grep search is disabled");
-  }
-
-+ if ($searchtype eq 'filename') {
-+                # uses grep on output of git ls-tree, maybe CPU-intensive
-+ gitweb_check_feature('filename')
-+ or die_error(403, "Filename search is disabled");
-+ }
-+
-  if (!defined $searchtext) {
-  die_error(400, "Text field is empty");
-  }
-@@ -8018,6 +8038,8 @@ sub git_search {
-  git_search_changes(%co);
-  } elsif ($searchtype eq 'grep') {
-  git_search_files(%co);
-+ } elsif ($searchtype eq 'filename') {
-+        git_search_filenames(%co);
-  } else {
-  die_error(400, "Unknown search type");
-  }
+I think C is better for the modification you made in git-exproll.sh,
+if it gets merged to git-repack.sh. Such calculations are not a strong
+point of shell scripting. git-repack.sh is still around for
+experimenting, although I think perl, ruby or python is better than
+shell for prototyping.
 -- 
-1.8.3.msysgit.0
+Duy
