@@ -1,70 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Understanding Git Under The Hood: Trees
-Date: Thu, 15 Aug 2013 10:31:47 -0700
-Message-ID: <7vwqnmrhbw.fsf@alter.siamese.dyndns.org>
-References: <CAB46HOnsOdYyt3sEe=iv3AJu_BDpTqCLKUpTBFQSnVGMZc8r8A@mail.gmail.com>
-	<520CCC53.4090308@op5.se>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug: commit -p breaks with -m
+Date: Thu, 15 Aug 2013 13:31:58 -0400
+Message-ID: <20130815173158.GA27866@sigill.intra.peff.net>
+References: <6EC98F2F-98FC-439B-BD9C-B1D0DB1F5E10@gmail.com>
+ <20130815121635.GB22102@sigill.intra.peff.net>
+ <7v1u5usw27.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Erik Bernoth <erik.bernoth@gmail.com>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Aug 15 19:31:58 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Matan Nassau <matan.nassau@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 15 19:32:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VA1Ov-0007AX-MF
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 19:31:58 +0200
+	id 1VA1P7-0007LR-MP
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 19:32:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758246Ab3HORbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Aug 2013 13:31:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35317 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756829Ab3HORbw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Aug 2013 13:31:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2C5F39EA7;
-	Thu, 15 Aug 2013 17:31:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OUgVuDYKa5AknhZdWimO71TvC/c=; b=MGhCtq
-	a1OjiFfIwfhkx7KpfGaFI1k2uOZuypfavDJ9QQImJRn71gVP3r5G4c8+oCHq0/7N
-	4Y2Ak02b/UM/mUgmDEGachMKRZr0Ik+zUUVW2awYTRhNQ3IIc/in6ZZfIha70zrk
-	DukIZjM0IljsrvaAosfk4KQcCJ6vL9t5Q5ePo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kPfKI2DYUE6QL9cvkL+gEhDtV8PUhsec
-	t4LgLXki3KvUHIzXObwYCGxTlaaK/JpabLLrDAE9mv6CdONuXdZG00HHoWlho42r
-	UnQ802MFsZuk65IDaHEhoy9XpQhdT1xCAD/cMx5HCXhjRi6pZtfQ9576h/sIBqSX
-	+ssE5+p19oU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB68039EA6;
-	Thu, 15 Aug 2013 17:31:51 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4881339EA2;
-	Thu, 15 Aug 2013 17:31:49 +0000 (UTC)
-In-Reply-To: <520CCC53.4090308@op5.se> (Andreas Ericsson's message of "Thu, 15
-	Aug 2013 14:40:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 90FC96EE-05D0-11E3-BFB2-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759016Ab3HORcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Aug 2013 13:32:04 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48753 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758398Ab3HORcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Aug 2013 13:32:03 -0400
+Received: (qmail 3329 invoked by uid 102); 15 Aug 2013 17:32:03 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Aug 2013 12:32:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Aug 2013 13:31:58 -0400
+Content-Disposition: inline
+In-Reply-To: <7v1u5usw27.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232355>
 
-Andreas Ericsson <ae@op5.se> writes:
+On Thu, Aug 15, 2013 at 10:28:16AM -0700, Junio C Hamano wrote:
 
-> You seem to believe that the in-memory representation of trees have to
-> be the same as the on-disk one. That's simply not true. Git cheats
-> outrageously with internal formats for pretty much everything in order
-> to squeeze out more performance.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Unfortunately, I think that will require some refactoring of the
+> > run_hook interface, which does not allow arbitrary environment
+> > parameters to be set.
+> 
+> Heh, I said that long time ago, e.g. $gmane/212284 ;-)
+> 
+> This might turn out to be a good starting point, even though I
+> didn't read it again before sending this message.
+> 
+>     http://thread.gmane.org/gmane.comp.version-control.git/192669/focus=192806
 
-While the last statement applies to other parts of the system, it is
-not true for the in-core index design.  We always had a flat index,
-and it is not cheating at all.  The original "tree" was also a flat
-representation of everything under the sun, and hierarchical tree
-objects came much later.
+Looking at both of those messages, I agree completely. I even started
+to sketch out the refactoring when I sent the previous message, and it
+looked a lot like the patch you sent.
+
+-Peff
