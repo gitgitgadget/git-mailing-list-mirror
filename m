@@ -1,63 +1,68 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] send-email uses contacts to propose recipients
-Date: Thu, 15 Aug 2013 18:28:22 -0400
-Message-ID: <CAPig+cSZFU4oBuJCSXC+0Mgjegh4MzWCsDqdRYPLtwazwhy--Q@mail.gmail.com>
+Date: Thu, 15 Aug 2013 15:29:58 -0700
+Message-ID: <7vhaeqpoyh.fsf@alter.siamese.dyndns.org>
 References: <1376605069-525-1-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: mst@kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-	bebarino@gmail.com, Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: mst@kernel.org, felipe.contreras@gmail.com, bebarino@gmail.com,
+	git@vger.kernel.org
 To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 16 00:28:29 2013
+X-From: git-owner@vger.kernel.org Fri Aug 16 00:30:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VA61s-0000a3-93
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Aug 2013 00:28:28 +0200
+	id 1VA63W-00023t-5y
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Aug 2013 00:30:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752260Ab3HOW2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Aug 2013 18:28:24 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:59946 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751889Ab3HOW2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Aug 2013 18:28:24 -0400
-Received: by mail-la0-f41.google.com with SMTP id ec20so977450lab.0
-        for <git@vger.kernel.org>; Thu, 15 Aug 2013 15:28:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=KQ0IDROG47Sytv0jKbSNwgiKMxmUnZg3gVY4Oeo1vvQ=;
-        b=e2nAep8X2v+JzqY0xEJbsEvwGf23FniaV4/C/CM+6L/FypHAJ1nSoe9S12N5o3I8PD
-         Hn1WnrMQK4rsBnuRlFzsiE//AexcfhRjKgKesvFu4oqweky3I9wN3GdlTGqTyNuvJ27s
-         onjBUevVvVozMoA3ZzbSL770C5GzwCpsmpn7VoZ9iDBusosSTBCSARsfC5ANzGGQxno5
-         i3YP1bCads4XDVbB8xvx4L3HtVOpiVA9vDzRpvH/9Ao7cNweTDV/ZxqlxxH6JPYvje18
-         JIQY4aJDLnjDQwUA45qJZi2LnqYidE2nq24Rm1A41AJ/lJ5hcQzDZjrQFNMzLc3/ual9
-         mBRA==
-X-Received: by 10.112.9.195 with SMTP id c3mr3514976lbb.33.1376605702691; Thu,
- 15 Aug 2013 15:28:22 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Thu, 15 Aug 2013 15:28:22 -0700 (PDT)
+	id S1752010Ab3HOWaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Aug 2013 18:30:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48740 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751406Ab3HOWaD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Aug 2013 18:30:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AB903944A;
+	Thu, 15 Aug 2013 22:30:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aUiUW9dorA9NNhFC5Vvh6ZAdTiM=; b=TAzel5
+	6pPW4bLlk4azTiHe/leWetqf67mxRFB66Zmfz7r8Rfl5fGEYo8zGicCW/h0mVIwW
+	WhEixjQGRND4Im/9GZ79aZghILFiayeMduyovy2P8sAbzIfMmvLW2ZplEe/Wr4II
+	box+4EeCPIB85T63EosjotiHMnzkNcyLrOEgE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lh1Do0APD2ePKwzuCDUVn5+XvsAuCwDz
+	TGxCFZSkJjx/TKttstPV2M1L6dhzTY+4ein7uSOrdQDs1RbNYPLCvyo0u45v8hpf
+	QQELJfbV0eyU3FE3e9LmfKXAi4RhdpVpQMlhUJQSq1at6q7OqkvrJIL3b694iEiX
+	5u4XFO8r2hE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B4BF39448;
+	Thu, 15 Aug 2013 22:30:01 +0000 (UTC)
+Received: from pobox.com (unknown [50.161.4.97])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B9FD39443;
+	Thu, 15 Aug 2013 22:29:59 +0000 (UTC)
 In-Reply-To: <1376605069-525-1-git-send-email-stefanbeller@googlemail.com>
-X-Google-Sender-Auth: ePBGMlKprk4wwywwYqRS6HtX8Hw
+	(Stefan Beller's message of "Fri, 16 Aug 2013 00:17:49 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 389F6C4A-05FA-11E3-ABB4-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232381>
 
-On Thu, Aug 15, 2013 at 6:17 PM, Stefan Beller
-<stefanbeller@googlemail.com> wrote:
+Stefan Beller <stefanbeller@googlemail.com> writes:
+
 > I have got an idea regarding the send-email. If there are no recipients
 > given, it could propose recipients using the new 'git contacts'
 > This would help people new to projects to not forget people, who may have
 > the most knowledge reviewing that specific patch.
-
-You can already do this with git-send-email's --cc-cmd option or
-sendmail.cccmd configuration variable.
-
+>
 > Unfortunately I cannot read/write perl, so I cannot solve it
 > myself in the near future, but I'd put it on my todo list for later.
 > ---
@@ -69,26 +74,30 @@ sendmail.cccmd configuration variable.
 > --- a/git-send-email.perl
 > +++ b/git-send-email.perl
 > @@ -757,6 +757,12 @@ $sender = sanitize_address($sender);
->
+>  
 >  my $prompting = 0;
 >  if (!@initial_to && !defined $to_cmd) {
-> +       if (git contacts is available) {
-
-git-contacts is very slow, so at the very least you would want to
-prompt before invoking it.
-
-> +               proposed senders = git contacts on the same range or set of patches
-> +               print "Suggesting these receivers:\n"
-> +               print proposed senders
-> +       }
+> +	if (git contacts is available) {
+> +		proposed senders = git contacts on the same range or set of patches
+> +		print "Suggesting these receivers:\n"
+> +		print proposed senders
+> +	}
 > +
->         my $to = ask("Who should the emails be sent to (if any)? ",
->                      default => "",
->                      valid_re => qr/\@.*\./, confirm_only => 1);
-> --
-> 1.8.4.rc3.1.gc1ebd90
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>  	my $to = ask("Who should the emails be sent to (if any)? ",
+>  		     default => "",
+>  		     valid_re => qr/\@.*\./, confirm_only => 1);
+
+Cute.
+
+It is OK while "contacts" is in contrib/, because people who has
+"git contact" are those who opted into the heuristics of implemented
+by that script. But if we are to eventually move the script out of
+the contrib/ area, we may have to restrict "is available" a bit
+tighter.  Not everybody has to agree with its heuristics before the
+script moves out of the contrib/ area, so there will be users who
+are annoyed by the suggestion the script makes, which may not suit
+their needs at all.
+
+For contributors of _this_ list, the above will not kick in at all,
+as they should always have sendemail.to set to the list, and
+@initial_to will not be empty for them.
