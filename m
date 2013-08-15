@@ -1,91 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 2/3] branch: report invalid tracking branch as broken
-Date: Thu, 15 Aug 2013 11:38:53 -0700
-Message-ID: <7vmwoire82.fsf@alter.siamese.dyndns.org>
-References: <6bc0643a5fa0fae03be6fdb59f63075be1e4d983.1376590264.git.worldhello.net@gmail.com>
-	<7vbo50uvty.fsf@alter.siamese.dyndns.org>
-	<8db143908bc969bbe1d720479fb6214729f7b1ae.1376590264.git.worldhello.net@gmail.com>
+Subject: Re: git stash takes excessively long when many untracked files present
+Date: Thu, 15 Aug 2013 11:58:33 -0700
+Message-ID: <7vioz6rdba.fsf@alter.siamese.dyndns.org>
+References: <20130810214453.GA5719@jtriplet-mobl1>
+	<loom.20130813T120243-481@post.gmane.org>
+	<7v7gfpy0wy.fsf@alter.siamese.dyndns.org>
+	<1fc732a7-6b63-4d75-960f-0b1c6cf9c70e@email.android.com>
+	<7vmwolwk94.fsf@alter.siamese.dyndns.org>
+	<7v61v9w9dy.fsf@alter.siamese.dyndns.org>
+	<7vr4durgd4.fsf@alter.siamese.dyndns.org>
+	<20130815180736.GA4093@jtriplet-mobl1>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 15 20:39:06 2013
+Cc: git@vger.kernel.org, Anders Darander <anders.darander@gmail.com>,
+	Petr Baudis <pasky@ucw.cz>
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Thu Aug 15 20:58:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VA2Rr-0002Uf-VO
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 20:39:04 +0200
+	id 1VA2kr-0003cd-H2
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Aug 2013 20:58:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754765Ab3HOSi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Aug 2013 14:38:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44404 "EHLO
+	id S1755722Ab3HOS6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Aug 2013 14:58:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53269 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751903Ab3HOSi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Aug 2013 14:38:57 -0400
+	id S1752276Ab3HOS6g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Aug 2013 14:58:36 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8736C39BC0;
-	Thu, 15 Aug 2013 18:38:56 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1977B393B7;
+	Thu, 15 Aug 2013 18:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Od6JGepUB7YuUkBvNwvJB5oacZY=; b=laJ5uP
-	8ZUyGUNkmb/KLcGOctBmMi4iaqcNKtnmRD9J/k+gkHFL3VWjJIx209AbMbEB8WcS
-	+MsEYxkadCvhRqffyCS9NcSk2sbWFvQekVU9AJO5NY4xPy/xm1xePm3/wfF84/Qg
-	h3RqvjgXsgs97kyZMGbeGCM66ZsTpwD1OiQjU=
+	:content-type; s=sasl; bh=YW7XYd6nRpdabhwoTLwIVXIgqXI=; b=rDxCFv
+	gkdz+x3Q6p4m6AUopDgfTwZHq5s3F0Q8aqogjrmTNCFBT2E9SyxQUOrW+tR9yNqC
+	vCrl+PYCO4vA7xjvdsDv8uxvd8PvScUxk4I78oh3q5WOcz/Uw4T0xGIoZG2ZqN/7
+	o/4h8DqPcRfYoWI+yiiKc3yN+NF67tJ9sCnaw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fUVzcui+1JYjwA67Ou2agG4ZwEGhjyQp
-	99uDKsU/0Yfr2y9JgYekKl1AzKjaYqak2rHkmpinvU1NOFb2cWYxZwQXwZCRdLPu
-	LffzRZKuOatTe1f5RNGwZX3AUomkLEpTA8s/3zH2M3mB4q5j1KdD5BJcME1kEWlJ
-	ZmbQtnf5B0E=
+	:content-type; q=dns; s=sasl; b=POOqXWzdzRyrbCF4QJjzQsqGQEUZ9/An
+	qy4TArNVDOAoMDneJObpCSYjx7mjWIQwdHSCr2TCT5Wqy8DcAcyhLBzn39dwQRyJ
+	yKLa9vhUvxPORZK62NHMJO4caOQYfXw9+EPxm8KkbgK5p+fZjgi2b+EviqS8dewG
+	kSY3S18ohrg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BA8D39BBF;
-	Thu, 15 Aug 2013 18:38:56 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D559A393B6;
+	Thu, 15 Aug 2013 18:58:35 +0000 (UTC)
 Received: from pobox.com (unknown [50.161.4.97])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E990539BBA;
-	Thu, 15 Aug 2013 18:38:54 +0000 (UTC)
-In-Reply-To: <8db143908bc969bbe1d720479fb6214729f7b1ae.1376590264.git.worldhello.net@gmail.com>
-	(Jiang Xin's message of "Fri, 16 Aug 2013 02:11:22 +0800")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3E28393B4;
+	Thu, 15 Aug 2013 18:58:34 +0000 (UTC)
+In-Reply-To: <20130815180736.GA4093@jtriplet-mobl1> (Josh Triplett's message
+	of "Thu, 15 Aug 2013 11:07:36 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F05932A6-05D9-11E3-AAB8-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AFAB6A3C-05DC-11E3-9FF3-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232362>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Josh Triplett <josh@joshtriplett.org> writes:
 
-> If a branch has been set to track a upstream, but the upstream branch
-> is missing or invalid, the tracking info is silently ignored in the
-> output of some commands such as "git branch -vv" and "git status",
-> as if there were no such tracking settings.
+>> I've already reverted the problematic patch to "git stash" and it
+>> will not be part of the upcoming release.
 >
-> Junio suggested broken upstream should be reported [1]. E.g.
+> Thanks!
 >
->     $ git branch -v -v
->       master    e67ac84 initial
->     * topic     3fc0f2a [topicbase: broken] topic
+>> Here is a quick attempt to see if we can do better in "ls-files -k".
 
-I'd assume this is s/broken/gone/ to match what the rest of the log
-message says?
+Having said that, I am curious if the result of applying the patch
+you are responding to, without reverting the "git stash" patch, is
+now usable in the working tree you earlier had trouble with.
 
->     $ git status
->     # On branch topic
->     # Your branch is based on a broken ref 'topicbase'.
->     #   (use "git branch --unset-upstream" to fixup)
->     ...
->
->     $ git status -b -s
->     ## topic...topicbase [broken]
->     ...
->
-> In order to do like that, we need to distinguish these three cases
-> (i.e. no tracking, with configured but no longer valid tracking, and
-> with tracking) in function stat_tracking_info(). So the refactored
-> function stat_tracking_info() has three return values: -1 (with "gone"
-> base), 0 (no base), and 1 (with base).
+> Sure, that works.  However, wouldn't it make sense to just directly let
+> git ls-files output to the screen, then test its return value (after
+> adding some ls-files option to set the return value)?
+
+Not really.
+
+We may want to add "exit early if we see even a single killed file"
+option to the command so that we can simplify the "are we going to
+abort" logic, but the error codepath that is executed after that
+decision is made is not performance critical, and may need more
+flexibility than always spewing everything that will be killed,
+which could be thousands of crufts.  So I think using two separate
+invocations to "ls-files --killed" is a necessity anyway.
