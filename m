@@ -1,7 +1,7 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v7 2/3] branch: mark missing tracking branch as gone
-Date: Fri, 16 Aug 2013 10:29:33 +0800
-Message-ID: <a4b446b4ff63f56f8203df0723eeb319b2ba58dc.1376620130.git.worldhello.net@gmail.com>
+Subject: [PATCH v7 1/3] branch: not report invalid tracking branch
+Date: Fri, 16 Aug 2013 10:29:32 +0800
+Message-ID: <6bc0643a5fa0fae03be6fdb59f63075be1e4d983.1376620130.git.worldhello.net@gmail.com>
 References: <cover.1376618877.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
@@ -13,35 +13,35 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VA9pC-0007Xa-As
+	id 1VA9pB-0007Xa-I8
 	for gcvg-git-2@plane.gmane.org; Fri, 16 Aug 2013 04:31:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753570Ab3HPCbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Aug 2013 22:31:34 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:55167 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752995Ab3HPCbb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Aug 2013 22:31:31 -0400
-Received: by mail-pd0-f169.google.com with SMTP id r10so1607123pdi.0
-        for <git@vger.kernel.org>; Thu, 15 Aug 2013 19:31:30 -0700 (PDT)
+	id S1753621Ab3HPCba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Aug 2013 22:31:30 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:39360 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752995Ab3HPCb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Aug 2013 22:31:28 -0400
+Received: by mail-pd0-f179.google.com with SMTP id v10so1588292pde.38
+        for <git@vger.kernel.org>; Thu, 15 Aug 2013 19:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=U4ZD0vCoyh518xdeoVRe6ldIzosfQwyfjqIPs8LcrD0=;
-        b=CmwOSOr8fFbTz87M9uavJMYhj57NA9UcKJ/9JJl4+VCe6W5C0v2h9pY2Ndvk/w0HFD
-         Yfp1jJ8QPAo8rOxN1R/h1Nf2Zt4pNt8ohVzQNnAyfuwYV3VL81d8pLP00GOYJL6v+wgy
-         EUoZRrApvj7oEPWcmXNIfo//HWeGUXzHb0IJ7A8GIoLm6t2HgmmlQVu3tOTM98cE4IkJ
-         V4uu8NnoG+Qq0O5wOpYM7TIU25PVVpF1xPMwIcSJ5pF6m4KHCE4JGH7Lipw7bzvEHffx
-         poo+BXGqoTiRIibPzrsdd4tXOy8x91wZbReJbqlwEOPSautgDhzmHPOdszs/YaCq9hoS
-         ugow==
-X-Received: by 10.66.164.136 with SMTP id yq8mr640906pab.67.1376620290650;
-        Thu, 15 Aug 2013 19:31:30 -0700 (PDT)
+        bh=gC61ENdhf2oK+jPputNQXdOdcPCcdY6dmK3XYVfOU+E=;
+        b=p5SOp/AoMBc1tss4SBIDDVJyzK7EcFxgUn6Z73F5hgoxAiznPk3QNrnLPQqPoYQ1b0
+         n1VKLQvN1HGZPTE7qSMs80Wqi8pblPr34TLyaXqZNJZ/LJwwXTDwOVhpZnF3xbZZtgvN
+         V4CVBv4c2V+fmqqmonlYn5xmN1w9fHe+7c2vz0YUu2VKepzrVEbOTgxSm+Y4WIJRb+sH
+         2fMp59a0+h3bApW4X8ceHqX6UyJfRX6s9NY8hC4rLMBYoGmCzJX0GKK0WFdeJ/oCntES
+         2XvZj8mHJZqCjO9ooMePuVJh+5sQrhpxrir7wL6EF8Dv7RMgrjz8VSAlgDOe7dbyA1zt
+         jkyw==
+X-Received: by 10.66.228.234 with SMTP id sl10mr574175pac.149.1376620287419;
+        Thu, 15 Aug 2013 19:31:27 -0700 (PDT)
 Received: from localhost.localdomain ([114.246.129.124])
-        by mx.google.com with ESMTPSA id pw9sm2698975pbb.20.2013.08.15.19.31.27
+        by mx.google.com with ESMTPSA id pw9sm2698975pbb.20.2013.08.15.19.31.24
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 15 Aug 2013 19:31:29 -0700 (PDT)
+        Thu, 15 Aug 2013 19:31:26 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4.rc2.479.g44abce8
 In-Reply-To: <cover.1376618877.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1376620130.git.worldhello.net@gmail.com>
@@ -50,299 +50,234 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232394>
 
-If a branch has been set to track a upstream, but the upstream branch
-is missing, the tracking info is silently ignored in the output of
-some commands such as "git branch -vv" and "git status", as if there
-were no such tracking settings.
+Command "git branch -vv" will report tracking branches, but invalid
+tracking branches are also reported. This is because the function
+stat_tracking_info() can not distinguish whether the upstream branch
+does not exist, or nothing is changed between one branch and its
+upstream.
 
-Junio suggested missing upstream should be reported [1], such as:
+This patch changes the return value of function stat_tracking_info().
+Only returns false when there is no tracking branch or the tracking
+branch is invalid, otherwise true. If the caller does not like to
+report tracking info when nothing changed between the branch and its
+upstream, simply checks if num_theirs and num_ours are both 0.
 
-    $ git branch -v -v
-      master    e67ac84 initial
-    * topic     3fc0f2a [topicbase: gone] topic
-
-    $ git status
-    # On branch topic
-    # Your branch is based on 'topicbase', but the upstream is gone.
-    #   (use "git branch --unset-upstream" to fixup)
-    ...
-
-    $ git status -b -s
-    ## topic...topicbase [gone]
-    ...
-
-In order to do like that, we need to distinguish these three cases
-(i.e. no tracking, with configured but no longer valid tracking, and
-with tracking) in function stat_tracking_info(). So the refactored
-function stat_tracking_info() has three return values: -1 (with "gone"
-base), 0 (no base), and 1 (with base).
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/231830/focus=232288
-
-Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 ---
- builtin/branch.c         | 18 ++++++++++++++++--
- remote.c                 | 44 +++++++++++++++++++++++++++++++------------
- t/t6040-tracking-info.sh | 49 ++++++++++++++++++++++++++++++++++++++++++++++--
- wt-status.c              | 28 +++++++++++++++++----------
- 4 files changed, 113 insertions(+), 26 deletions(-)
+ builtin/branch.c         | 24 ++++++++----------------
+ remote.c                 | 43 ++++++++++++++++++++++---------------------
+ t/t6040-tracking-info.sh |  8 ++++++--
+ wt-status.c              | 13 +++++++++++--
+ 4 files changed, 47 insertions(+), 41 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 3e016a6..ad0f86d 100644
+index 0903763..3e016a6 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -423,9 +423,20 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
- 	char *ref = NULL;
+@@ -424,19 +424,8 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
  	struct branch *branch = branch_get(branch_name);
  	struct strbuf fancy = STRBUF_INIT;
-+	int upstream_is_gone = 0;
  
--	if (!stat_tracking_info(branch, &ours, &theirs))
-+	switch (stat_tracking_info(branch, &ours, &theirs)) {
-+	case 0:
-+		/* no base */
+-	if (!stat_tracking_info(branch, &ours, &theirs)) {
+-		if (branch && branch->merge && branch->merge[0]->dst &&
+-		    show_upstream_ref) {
+-			ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
+-			if (want_color(branch_use_color))
+-				strbuf_addf(stat, "[%s%s%s] ",
+-						branch_get_color(BRANCH_COLOR_UPSTREAM),
+-						ref, branch_get_color(BRANCH_COLOR_RESET));
+-			else
+-				strbuf_addf(stat, "[%s] ", ref);
+-		}
++	if (!stat_tracking_info(branch, &ours, &theirs))
  		return;
-+	case -1:
-+		/* with "gone" base */
-+		upstream_is_gone = 1;
-+		break;
-+	default:
-+		/* with base */
-+		break;
-+	}
+-	}
  
  	if (show_upstream_ref) {
  		ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
-@@ -437,7 +448,10 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
+@@ -448,19 +437,22 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
  			strbuf_addstr(&fancy, ref);
  	}
  
--	if (!ours && !theirs) {
-+	if (upstream_is_gone) {
+-	if (!ours) {
+-		if (ref)
++	if (!ours && !theirs) {
 +		if (show_upstream_ref)
-+			strbuf_addf(stat, _("[%s: gone]"), fancy.buf);
-+	} else if (!ours && !theirs) {
- 		if (show_upstream_ref)
- 			strbuf_addf(stat, _("[%s]"), fancy.buf);
- 	} else if (!ours) {
++			strbuf_addf(stat, _("[%s]"), fancy.buf);
++	} else if (!ours) {
++		if (show_upstream_ref)
+ 			strbuf_addf(stat, _("[%s: behind %d]"), fancy.buf, theirs);
+ 		else
+ 			strbuf_addf(stat, _("[behind %d]"), theirs);
+ 
+ 	} else if (!theirs) {
+-		if (ref)
++		if (show_upstream_ref)
+ 			strbuf_addf(stat, _("[%s: ahead %d]"), fancy.buf, ours);
+ 		else
+ 			strbuf_addf(stat, _("[ahead %d]"), ours);
+ 	} else {
+-		if (ref)
++		if (show_upstream_ref)
+ 			strbuf_addf(stat, _("[%s: ahead %d, behind %d]"),
+ 				    fancy.buf, ours, theirs);
+ 		else
 diff --git a/remote.c b/remote.c
-index 26bd543..4caccb5 100644
+index 2433467..26bd543 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -1729,8 +1729,11 @@ int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1)
+@@ -1729,7 +1729,8 @@ int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1)
  }
  
  /*
-- * Return false if cannot stat a tracking branch (not exist or invalid),
-- * otherwise true.
-+ * Compare a branch with its upstream, and save their differences (number
-+ * of commits) in *num_ours and *num_theirs.
-+ *
-+ * Return 0 if branch has no upstream (no base), -1 if upstream is missing
-+ * (with "gone" base), otherwise 1 (with base).
+- * Return true if there is anything to report, otherwise false.
++ * Return false if cannot stat a tracking branch (not exist or invalid),
++ * otherwise true.
   */
  int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
  {
-@@ -1749,16 +1752,16 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
- 	/* Cannot stat if what we used to build on no longer exists */
+@@ -1740,18 +1741,12 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ 	const char *rev_argv[10], *base;
+ 	int rev_argc;
+ 
+-	/*
+-	 * Nothing to report unless we are marked to build on top of
+-	 * somebody else.
+-	 */
++	/* Cannot stat unless we are marked to build on top of somebody else. */
+ 	if (!branch ||
+ 	    !branch->merge || !branch->merge[0] || !branch->merge[0]->dst)
+ 		return 0;
+ 
+-	/*
+-	 * If what we used to build on no longer exists, there is
+-	 * nothing to report.
+-	 */
++	/* Cannot stat if what we used to build on no longer exists */
  	base = branch->merge[0]->dst;
  	if (read_ref(base, sha1))
--		return 0;
-+		return -1;
- 	theirs = lookup_commit_reference(sha1);
- 	if (!theirs)
--		return 0;
-+		return -1;
- 
- 	if (read_ref(branch->refname, sha1))
--		return 0;
-+		return -1;
- 	ours = lookup_commit_reference(sha1);
- 	if (!ours)
--		return 0;
-+		return -1;
+ 		return 0;
+@@ -1766,8 +1761,10 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ 		return 0;
  
  	/* are we the same? */
- 	if (theirs == ours) {
-@@ -1808,17 +1811,34 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- {
- 	int ours, theirs;
- 	const char *base;
-+	int upstream_is_gone = 0;
- 
--	if (!stat_tracking_info(branch, &ours, &theirs))
+-	if (theirs == ours)
 -		return 0;
--
--	/* Nothing to report if neither side has changes. */
--	if (!ours && !theirs)
-+	switch (stat_tracking_info(branch, &ours, &theirs)) {
-+	case 0:
-+		/* no base */
- 		return 0;
-+	case -1:
-+		/* with "gone" base */
-+		upstream_is_gone = 1;
-+		break;
-+	default:
-+		/* Nothing to report if neither side has changes. */
-+		if (!ours && !theirs)
-+			return 0;
-+		/* with base */
-+		break;
++	if (theirs == ours) {
++		*num_theirs = *num_ours = 0;
++		return 1;
 +	}
+ 
+ 	/* Run "rev-list --left-right ours...theirs" internally... */
+ 	rev_argc = 0;
+@@ -1809,31 +1806,35 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+  */
+ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ {
+-	int num_ours, num_theirs;
++	int ours, theirs;
+ 	const char *base;
+ 
+-	if (!stat_tracking_info(branch, &num_ours, &num_theirs))
++	if (!stat_tracking_info(branch, &ours, &theirs))
++		return 0;
++
++	/* Nothing to report if neither side has changes. */
++	if (!ours && !theirs)
+ 		return 0;
  
  	base = branch->merge[0]->dst;
  	base = shorten_unambiguous_ref(base, 0);
--	if (!theirs) {
-+	if (upstream_is_gone) {
-+		strbuf_addf(sb,
-+			_("Your branch is based on '%s', but the upstream is gone.\n"),
-+			base);
-+		if (advice_status_hints)
-+			strbuf_addf(sb,
-+				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
-+	} else if (!theirs) {
+-	if (!num_theirs) {
++	if (!theirs) {
  		strbuf_addf(sb,
  			Q_("Your branch is ahead of '%s' by %d commit.\n",
  			   "Your branch is ahead of '%s' by %d commits.\n",
+-			   num_ours),
+-			base, num_ours);
++			   ours),
++			base, ours);
+ 		if (advice_status_hints)
+ 			strbuf_addf(sb,
+ 				_("  (use \"git push\" to publish your local commits)\n"));
+-	} else if (!num_ours) {
++	} else if (!ours) {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch is behind '%s' by %d commit, "
+ 			       "and can be fast-forwarded.\n",
+ 			   "Your branch is behind '%s' by %d commits, "
+ 			       "and can be fast-forwarded.\n",
+-			   num_theirs),
+-			base, num_theirs);
++			   theirs),
++			base, theirs);
+ 		if (advice_status_hints)
+ 			strbuf_addf(sb,
+ 				_("  (use \"git pull\" to update your local branch)\n"));
+@@ -1845,8 +1846,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 			   "Your branch and '%s' have diverged,\n"
+ 			       "and have %d and %d different commits each, "
+ 			       "respectively.\n",
+-			   num_theirs),
+-			base, num_ours, num_theirs);
++			   theirs),
++			base, ours, theirs);
+ 		if (advice_status_hints)
+ 			strbuf_addf(sb,
+ 				_("  (use \"git pull\" to merge the remote branch into yours)\n"));
 diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 471dd64..6f678a4 100755
+index ec2b516..471dd64 100755
 --- a/t/t6040-tracking-info.sh
 +++ b/t/t6040-tracking-info.sh
-@@ -60,6 +60,7 @@ b1 origin/master: ahead 1, behind 1
- b2 origin/master: ahead 1, behind 1
- b3 origin/master: behind 1
- b4 origin/master: ahead 2
-+b5 brokenbase: gone
- EOF
- 
- test_expect_success 'branch -vv' '
-@@ -71,7 +72,7 @@ test_expect_success 'branch -vv' '
- 	test_i18ncmp expect actual
+@@ -28,10 +28,14 @@ test_expect_success setup '
+ 		git reset --hard HEAD^ &&
+ 		git checkout -b b4 origin &&
+ 		advance e &&
+-		advance f
++		advance f &&
++		git checkout -b brokenbase origin &&
++		git checkout -b b5 --track brokenbase &&
++		advance g &&
++		git branch -d brokenbase
+ 	) &&
+ 	git checkout -b follower --track master &&
+-	advance g
++	advance h
  '
  
--test_expect_success 'checkout' '
-+test_expect_success 'checkout (diverged from upstream)' '
- 	(
- 		cd test && git checkout b1
- 	) >actual &&
-@@ -84,7 +85,15 @@ test_expect_success 'checkout with local tracked branch' '
- 	test_i18ngrep "is ahead of" actual
- '
- 
--test_expect_success 'status' '
-+test_expect_success 'checkout (upstream is gone)' '
-+	(
-+		cd test &&
-+		git checkout b5
-+	) >actual &&
-+	test_i18ngrep "is based on .*, but the upstream is gone." actual
-+'
-+
-+test_expect_success 'status (diverged from upstream)' '
- 	(
- 		cd test &&
- 		git checkout b1 >/dev/null &&
-@@ -94,6 +103,42 @@ test_expect_success 'status' '
- 	test_i18ngrep "have 1 and 1 different" actual
- '
- 
-+test_expect_success 'status (upstream is gone)' '
-+	(
-+		cd test &&
-+		git checkout b5 >/dev/null &&
-+		# reports nothing to commit
-+		test_must_fail git commit --dry-run
-+	) >actual &&
-+	test_i18ngrep "is based on .*, but the upstream is gone." actual
-+'
-+
-+cat >expect <<\EOF
-+## b1...origin/master [ahead 1, behind 1]
-+EOF
-+
-+test_expect_success 'status -s -b (diverged from upstream)' '
-+	(
-+		cd test &&
-+		git checkout b1 >/dev/null &&
-+		git status -s -b | head -1
-+	) >actual &&
-+	test_i18ncmp expect actual
-+'
-+
-+cat >expect <<\EOF
-+## b5...brokenbase [gone]
-+EOF
-+
-+test_expect_success 'status -s -b (upstream is gone)' '
-+	(
-+		cd test &&
-+		git checkout b5 >/dev/null &&
-+		git status -s -b | head -1
-+	) >actual &&
-+	test_i18ncmp expect actual
-+'
-+
- test_expect_success 'fail to track lightweight tags' '
- 	git checkout master &&
- 	git tag light &&
+ script='s/^..\(b.\)[	 0-9a-f]*\[\([^]]*\)\].*/\1 \2/p'
 diff --git a/wt-status.c b/wt-status.c
-index 0c6a3a5..46d181a 100644
+index ff4b324..0c6a3a5 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -1363,6 +1363,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 	const char *base;
- 	const char *branch_name;
- 	int num_ours, num_theirs;
-+	int upstream_is_gone = 0;
- 
- 	color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "## ");
- 
-@@ -1383,17 +1384,22 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 
- 	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
- 
--	/*
--	 * Not report tracking info if no tracking branch found
--	 * or no difference found.
--	 */
--	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
--		fputc(s->null_termination ? '\0' : '\n', s->fp);
--		return;
--	}
--	if (!num_ours && !num_theirs) {
-+	switch (stat_tracking_info(branch, &num_ours, &num_theirs)) {
-+	case 0:
-+		/* no base */
+@@ -1380,15 +1380,24 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	branch = branch_get(s->branch + 11);
+ 	if (s->is_initial)
+ 		color_fprintf(s->fp, header_color, _("Initial commit on "));
++
++	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
++
++	/*
++	 * Not report tracking info if no tracking branch found
++	 * or no difference found.
++	 */
+ 	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
+-		color_fprintf(s->fp, branch_color_local, "%s", branch_name);
++		fputc(s->null_termination ? '\0' : '\n', s->fp);
++		return;
++	}
++	if (!num_ours && !num_theirs) {
  		fputc(s->null_termination ? '\0' : '\n', s->fp);
  		return;
-+	case -1:
-+		/* with "gone" base */
-+		upstream_is_gone = 1;
-+		break;
-+	default:
-+		/* with base */
-+		if (!num_ours && !num_theirs) {
-+			fputc(s->null_termination ? '\0' : '\n', s->fp);
-+			return;
-+		}
-+		break;
  	}
  
  	base = branch->merge[0]->dst;
-@@ -1402,7 +1408,9 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	base = shorten_unambiguous_ref(base, 0);
+-	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
+ 	color_fprintf(s->fp, header_color, "...");
  	color_fprintf(s->fp, branch_color_remote, "%s", base);
  
- 	color_fprintf(s->fp, header_color, " [");
--	if (!num_ours) {
-+	if (upstream_is_gone) {
-+		color_fprintf(s->fp, header_color, _("gone"));
-+	} else if (!num_ours) {
- 		color_fprintf(s->fp, header_color, _("behind "));
- 		color_fprintf(s->fp, branch_color_remote, "%d", num_theirs);
- 	} else if (!num_theirs) {
 -- 
 1.8.4.rc2.479.g44abce8
