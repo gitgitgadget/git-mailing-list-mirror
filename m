@@ -1,69 +1,99 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] rebase -i: fix cases ignoring core.commentchar
-Date: Fri, 16 Aug 2013 17:55:33 -0400
-Message-ID: <CAPig+cTRc1-W7vJX52gb5S0ge4kZgKMBkHJjqWFRDgpuzTfM2g@mail.gmail.com>
-References: <1376689447-78807-1-git-send-email-sunshine@sunshineco.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 17 00:23:44 2013
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: [PATCH] create_delta_index: simplify condition always evaluating to true
+Date: Fri, 16 Aug 2013 23:22:37 +0200
+Message-ID: <1376688157-8374-1-git-send-email-stefanbeller@googlemail.com>
+References: <EE5B338564E14F89B349550B37741AFF@PhilipOakley>
+Cc: Stefan Beller <stefanbeller@googlemail.com>
+To: git@vger.kernel.org, gitster@pobox.com, nico@fluxnic.net,
+	sunshine@sunshineco.com, philipoakley@iee.org
+X-From: git-owner@vger.kernel.org Sat Aug 17 00:25:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VASQo-0006l0-6W
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 00:23:42 +0200
+	id 1VASSe-00087A-9t
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 00:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754107Ab3HPWXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Aug 2013 18:23:38 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:52903 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751960Ab3HPWXh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Aug 2013 18:23:37 -0400
-Received: by mail-la0-f51.google.com with SMTP id es20so1972147lab.10
-        for <git@vger.kernel.org>; Fri, 16 Aug 2013 15:23:36 -0700 (PDT)
+	id S1755213Ab3HPWZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Aug 2013 18:25:30 -0400
+Received: from mail-ea0-f175.google.com ([209.85.215.175]:59086 "EHLO
+	mail-ea0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755157Ab3HPWZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Aug 2013 18:25:29 -0400
+Received: by mail-ea0-f175.google.com with SMTP id m14so1241939eaj.20
+        for <git@vger.kernel.org>; Fri, 16 Aug 2013 15:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=GwVX+laJ1IcxaPE013cByeqaQaTtA6Qcu5F0JDDEjV4=;
-        b=OQqK94pfidY6p2xrN48hrHNb3jGYKQ4lAX8fi4hehepxMZxCWjAAb8uiz4o1k+7COq
-         /CBFTBXZOLhea398t9aR4M59tP3L9XF1Yvb9KMQN5u99UkiTo+29wrq+fLyeQr0E61mf
-         6Tb4r2Hy5iP4eYm44MBCeDp6SR9DxC1bz4xDKibkkn/FvdJVlGI1eHh3AOs3OBrtB4u0
-         aYjBirGNexkfml68kRPx2Iqa8r5Dz5gzujijaJpGoF+mJV/e6Mch06yi4jhjR5y8wN2z
-         NpWuLozQFODW3lcdqp30RMOdHzHM81XvdFF/v4XPJ1Sz+ddiFzlWR3sR35MVJYylcxc7
-         Lqkw==
-X-Received: by 10.112.72.229 with SMTP id g5mr3972073lbv.10.1376690133795;
- Fri, 16 Aug 2013 14:55:33 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Fri, 16 Aug 2013 14:55:33 -0700 (PDT)
-In-Reply-To: <1376689447-78807-1-git-send-email-sunshine@sunshineco.com>
-X-Google-Sender-Auth: EcOTeV1heZkTMzwJVBfBqoXqTxo
+        d=googlemail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=C3K1DbsQfux7ufg4kVqlEAdk+YGvUo5lMK8JbBLQBEQ=;
+        b=vnRqz6pAxjVuHaS3AYmdK8VgR0VlkYhrNc7BcNwXvJLwq+VSGHyzA5eFxx1yl3xCIO
+         v7UPoyLvZecbh2gwQqLt84OmsvB3PrA6E1WnBkLkO4ejjaYMKamX+EA/LGJzkJXRgABb
+         fQHg/EFOvMz8aEeMv3MNKmLEj+LEuQ0Ho1pw9j4WgO0fZR7H0TV85GFInCsSKW70kJO0
+         Q8iOaoan0dv8NLoURvNYNovPvihInh1ZqEVfm4KDk96ZkgOg+rALoA3QuWjxZ6FoSOpt
+         PYXnruDhyQn8kIrzHV/jSK88yOIjMilVZMZFrG8w6FqnElOt69NZkjr3Ej+Jq2BsLUSC
+         a+bg==
+X-Received: by 10.14.4.1 with SMTP id 1mr4918107eei.21.1376688158032;
+        Fri, 16 Aug 2013 14:22:38 -0700 (PDT)
+Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id h52sm5453687eez.3.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 16 Aug 2013 14:22:37 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc3.2.g2c2b664
+In-Reply-To: <EE5B338564E14F89B349550B37741AFF@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232442>
 
-On Fri, Aug 16, 2013 at 5:44 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> eff80a9fd990de36 (Allow custom "comment char", 2013-01-16) added general
-> core.commentchar support but forgot to update git-rebase--interactive to
-> respect it.  180bad3d10fe3a7f (rebase -i: respect core.commentchar,
-> 2013-02-11) addressed this oversight but missed one instance of
-> hard-coded '#' comment character in skip_unnecessary_picks(). Fix this.
->
-> 9a46c25bdbf79744 (rebase: interactive: fix short SHA-1 collision,
-> 2013-08-12) added another instance of hard-coded '#' comment character
-> in transform_todo_ids().  Fix this, as well.
->
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+The code sequence  ' (1u << i) < hsize && i < 31 ' is a multi step
+process, whose first step requires that 'i' is already less that 31,
+otherwise the result (1u << i)  is undefined (and  'undef_val < hsize'
+can therefore be assumed to be 'false'), and so the later test  i < 31
+can always be optimized away as dead code ('i' is already less than 31,
+or the short circuit 'and' applies).
 
-I forgot to mention that I wanted to add tests to t3404 for these bugs
-but couldn't figure out how to do it using the external behavior of
-rebase -i. I was able to verify the before and after behavior by
-adding temporary echo's to the code in order to observe the "internal"
-functioning.
+So we need to get rid of that code. One way would be to exchange the 
+order of the conditions, so the expression 'i < 31 && (1u << i) < hsize' 
+would remove that optimized unstable code already.
+
+However when checking the previous lines in that function, we can deduce
+that 'hsize' must always be smaller than (1u<<31), since 506049c7df2c6
+(fix >4GiB source delta assertion failure), because 'entries' is
+capped at an upper bound of 0xfffffffeU, so 'hsize' contains a maximum
+value of 0x3fffffff, which is smaller than (1u<<31), so the value of
+'i' will never be larger than 31 and we can remove that condition 
+entirely.
+
+Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+Acked-by: Nicolas Pitre <nico@fluxnic.net>
+---
+
+Philip, 
+thanks for the wording of your mail. I get quickly derailed from the
+warnings of the STACK tool and write the other commit messages than
+I ought to write. I think the wording of your mail nails it pretty
+good, so I put it in the commit message as well.
+
+Stefan
+
+
+ diff-delta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/diff-delta.c b/diff-delta.c
+index 93385e1..3797ce6 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -155,7 +155,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 		entries = 0xfffffffeU / RABIN_WINDOW;
+ 	}
+ 	hsize = entries / 4;
+-	for (i = 4; (1u << i) < hsize && i < 31; i++);
++	for (i = 4; (1u << i) < hsize; i++);
+ 	hsize = 1 << i;
+ 	hmask = hsize - 1;
+ 
+-- 
+1.8.4.rc3.2.g2c2b664
