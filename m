@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 5/6] list-objects: reduce one argument in mark_edges_uninteresting
-Date: Fri, 16 Aug 2013 16:52:06 +0700
-Message-ID: <1376646727-22318-5-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 6/6] list-objects: mark more commits as edges in mark_edges_uninteresting
+Date: Fri, 16 Aug 2013 16:52:07 +0700
+Message-ID: <1376646727-22318-6-git-send-email-pclouds@gmail.com>
 References: <CACsJy8CDGgKftp0iBB8MYjMawKhxZ1JQ+xAYb0itpaCOjFHWxg@mail.gmail.com>
  <1376646727-22318-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,158 +13,147 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 16 11:52:46 2013
+X-From: git-owner@vger.kernel.org Fri Aug 16 11:52:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VAGi6-00085Q-Eq
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Aug 2013 11:52:46 +0200
+	id 1VAGiG-0008Eq-QR
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Aug 2013 11:52:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755384Ab3HPJwl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Aug 2013 05:52:41 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:35560 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755364Ab3HPJwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Aug 2013 05:52:40 -0400
-Received: by mail-pd0-f172.google.com with SMTP id z10so2053902pdj.3
-        for <git@vger.kernel.org>; Fri, 16 Aug 2013 02:52:39 -0700 (PDT)
+	id S1755453Ab3HPJwu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Aug 2013 05:52:50 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:33587 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755446Ab3HPJwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Aug 2013 05:52:46 -0400
+Received: by mail-pd0-f179.google.com with SMTP id v10so2035687pde.38
+        for <git@vger.kernel.org>; Fri, 16 Aug 2013 02:52:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=Xelur6P3KCFW0LED4Tqr6lCfiAy+q/pq+EZmzVUL9sw=;
-        b=ABTHzX8afvKnJbNbU0TtsGkXtt93PB6BH4jdpI+3OQDNMDgbOKWJqUWcEBOn1GD5h8
-         kFWTFmet4iOAbz0zhfL/clSOt+lubPZ6wXPLoLbCDgbScj1dL0pdxCn4p1fPfzEQGam6
-         ddtRhBUEsU9R0OrEXCQBtKKhn6dSERNh6vKXK52xQsFmVOONJW+BW54qmxj9MqmunTaj
-         Hi6YBwUqAi3z0tfvkBZaky6fa5rJmSiMNpYLqOLh0qEtVkaPgD+mwcSjsclBgvc+FsPY
-         0kialbLowNWiUV/nkj7kpBke3yONWEBojRdFijWW3CD7xxuRTLKtGlYog3HS4aEOCs3M
-         TYUw==
-X-Received: by 10.66.50.104 with SMTP id b8mr2254651pao.39.1376646759920;
-        Fri, 16 Aug 2013 02:52:39 -0700 (PDT)
+        bh=DYNIqDAAesCvLZ7ToELKPWJ32NBjUAEUU0OcM31sy1c=;
+        b=wqcRq2r+MHwZsHYjxW17flNnmoiGA57CXAmqG9KTvhGJKnFiomjvUCZSv/h73ZswuA
+         q72kxF54YP3UjbN07Mef9nt6t3rXvHyHpC3I6UrqXLoHnTs7SpiMD5UVHodG7zCRWMm5
+         o023gcGfZyc6AGEAg28HkiaBbwHMLwTOnc3oSL5/1O+vpHIpgjlerw3/afGo9fTacGBy
+         xEN39HdVMqbAQ/9GHo2QGr/Am/MIzu260CHvYUv/QRzcbD0hg64Us96Pm63//MjSKjNJ
+         0tg3P6FebH+GY4W4xVumCp81eTCDhJl6ldBecJMf33u4KXpLd77KHOeQkMpKNJ8zbgK6
+         3Lbw==
+X-Received: by 10.66.234.232 with SMTP id uh8mr2115761pac.155.1376646766356;
+        Fri, 16 Aug 2013 02:52:46 -0700 (PDT)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPSA id ss8sm2369141pab.6.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id sz6sm2373050pab.5.1969.12.31.16.00.00
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 16 Aug 2013 02:52:39 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 16 Aug 2013 16:52:33 +0700
+        Fri, 16 Aug 2013 02:52:45 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 16 Aug 2013 16:52:40 +0700
 X-Mailer: git-send-email 1.8.2.82.gc24b958
 In-Reply-To: <1376646727-22318-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232413>
 
-mark_edges_uninteresting() is always called with this form
+The purpose of edge commits is to let pack-objects know what objects
+it can use as base, but does not need to include in the thin pack
+because the other side is supposed to already have them. So far we
+mark uninteresting parents of interesting commits as edges. But even
+an unrelated uninteresting commit (that the other side has) may become
+a good base for pack-objects and help produce more efficient packs.
 
-  mark_edges_uninteresting(revs->commits, revs, ...);
+This is especially true for shallow clone, when the client issues a
+fetch with a depth smaller or equal to the number of commits the
+server is ahead of the client. For example, in this commit history the
+client has up to "A" and the server has up to "B":
 
-Remove the first argument and let mark_edges_uninteresting figure that
-out by itself. It helps answer the question "are this commit list and
-revs related in any way?" when looking at mark_edges_uninteresting
-implementation.
+    -------A---B
+     have--^   ^
+              /
+       want--+
 
+If depth 1 is requested, the commit list to send to the client
+includes only B. The way m_e_u is working, it checks if parent commits
+of B are uninteresting, if so mark them as edges. Due to shallow
+effect, commit B is grafted to have no parents and the revision walker
+never sees A as the parent of B. In fact it marks no edges at all in
+this simple case and sends everything B has to the client even if it
+could have excluded what A and also the client already have. In a
+slightly different case where A is not a direct parent of B (iow there
+are commits in between A and B), marking A as an edge can still save
+some because B may still have stuff from the far ancestor A.
+
+There is another case from the previous patch, when we deepen a ref
+from C->E to A->E:
+
+    ---A---B   C---D---E
+     want--^   ^       ^
+       shallow-+      /
+          have-------+
+
+In this case we need to send A and B to the client, and C (i.e. the
+current shallow point that the client informs the server) is a very
+good base because it's closet to A and B. Normal m_e_u won't recognize
+C as an edge because it only looks back to parents (i.e. A<-B) not the
+opposite way B->C even if C is already marked as uninteresting commit
+by the previous patch.
+
+This patch includes all uninteresting commits from command line as
+edges and lets pack-objects decide what's best to do. The upside is we
+have better chance of producing better packs in certain cases. The
+downside is we may need to process some extra objects on the server
+side.
+
+=46or the shallow case on git.git, when the client is 5 commits behind
+and does "fetch --depth=3D3", the result pack is 99.26 KiB instead of
+4.92 MiB.
+
+Reported-and-analyzed-by: Matthijs Kooijman <matthijs@stdin.nl>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- bisect.c               | 2 +-
- builtin/pack-objects.c | 2 +-
- builtin/rev-list.c     | 2 +-
- http-push.c            | 2 +-
- list-objects.c         | 7 +++----
- list-objects.h         | 2 +-
- 6 files changed, 8 insertions(+), 9 deletions(-)
+ list-objects.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/bisect.c b/bisect.c
-index 71c1958..1e46a4f 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -624,7 +624,7 @@ static void bisect_common(struct rev_info *revs)
- 	if (prepare_revision_walk(revs))
- 		die("revision walk setup failed");
- 	if (revs->tree_objects)
--		mark_edges_uninteresting(revs->commits, revs, NULL);
-+		mark_edges_uninteresting(revs, NULL);
- }
-=20
- static void exit_if_skipped_commits(struct commit_list *tried,
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index f069462..dd117b3 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2378,7 +2378,7 @@ static void get_object_list(int ac, const char **=
-av)
-=20
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
--	mark_edges_uninteresting(revs.commits, &revs, show_edge);
-+	mark_edges_uninteresting(&revs, show_edge);
- 	traverse_commit_list(&revs, show_commit, show_object, NULL);
-=20
- 	if (keep_unreachable)
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index a5ec30d..4fc1616 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -336,7 +336,7 @@ int cmd_rev_list(int argc, const char **argv, const=
- char *prefix)
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
- 	if (revs.tree_objects)
--		mark_edges_uninteresting(revs.commits, &revs, show_edge);
-+		mark_edges_uninteresting(&revs, show_edge);
-=20
- 	if (bisect_list) {
- 		int reaches =3D reaches, all =3D all;
-diff --git a/http-push.c b/http-push.c
-index 6dad188..cde6416 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1976,7 +1976,7 @@ int main(int argc, char **argv)
- 		pushing =3D 0;
- 		if (prepare_revision_walk(&revs))
- 			die("revision walk setup failed");
--		mark_edges_uninteresting(revs.commits, &revs, NULL);
-+		mark_edges_uninteresting(&revs, NULL);
- 		objects_to_send =3D get_delta(&revs, ref_lock);
- 		finish_all_active_slots();
-=20
 diff --git a/list-objects.c b/list-objects.c
-index 3dd4a96..db8ee4f 100644
+index db8ee4f..05c8c5c 100644
 --- a/list-objects.c
 +++ b/list-objects.c
-@@ -145,11 +145,10 @@ static void mark_edge_parents_uninteresting(struc=
+@@ -148,15 +148,32 @@ static void mark_edge_parents_uninteresting(struc=
 t commit *commit,
- 	}
- }
-=20
--void mark_edges_uninteresting(struct commit_list *list,
--			      struct rev_info *revs,
--			      show_edge_fn show_edge)
-+void mark_edges_uninteresting(struct rev_info *revs, show_edge_fn show=
+ void mark_edges_uninteresting(struct rev_info *revs, show_edge_fn show=
 _edge)
  {
--	for ( ; list; list =3D list->next) {
-+	struct commit_list *list;
-+	for (list =3D revs->commits; list; list =3D list->next) {
+ 	struct commit_list *list;
++	int i;
++
+ 	for (list =3D revs->commits; list; list =3D list->next) {
  		struct commit *commit =3D list->item;
 =20
  		if (commit->object.flags & UNINTERESTING) {
-diff --git a/list-objects.h b/list-objects.h
-index 3db7bb6..136a1da 100644
---- a/list-objects.h
-+++ b/list-objects.h
-@@ -6,6 +6,6 @@ typedef void (*show_object_fn)(struct object *, const s=
-truct name_path *, const
- void traverse_commit_list(struct rev_info *, show_commit_fn, show_obje=
-ct_fn, void *);
+ 			mark_tree_uninteresting(commit->tree);
++			if (revs->edge_hint && !(commit->object.flags & SHOWN)) {
++				commit->object.flags |=3D SHOWN;
++				show_edge(commit);
++			}
+ 			continue;
+ 		}
+ 		mark_edge_parents_uninteresting(commit, revs, show_edge);
+ 	}
++	for (i =3D 0; i < revs->cmdline.nr; i++) {
++		struct object *obj =3D revs->cmdline.rev[i].item;
++		struct commit *commit =3D (struct commit *)obj;
++		if (obj->type !=3D OBJ_COMMIT || !(obj->flags & UNINTERESTING))
++			continue;
++		mark_tree_uninteresting(commit->tree);
++		if (revs->edge_hint && !(obj->flags & SHOWN)) {
++			obj->flags |=3D SHOWN;
++			show_edge(commit);
++		}
++	}
+ }
 =20
- typedef void (*show_edge_fn)(struct commit *);
--void mark_edges_uninteresting(struct commit_list *, struct rev_info *,=
- show_edge_fn);
-+void mark_edges_uninteresting(struct rev_info *, show_edge_fn);
-=20
- #endif
+ static void add_pending_tree(struct rev_info *revs, struct tree *tree)
 --=20
 1.8.2.82.gc24b958
