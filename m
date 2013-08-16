@@ -1,77 +1,69 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: git undo # last command
-Date: Fri, 16 Aug 2013 22:29:04 +0200
-Message-ID: <20130816202904.GA21779@paksenarrion.iveqy.com>
-References: <CAAUyY9ADW2iHVWhTGcTF8j0hrdumpBcLv_mLo0y8VDAyBpftJQ@mail.gmail.com>
- <20130816132612.GF20138@sigill.intra.peff.net>
- <CAAUyY9DqCrpMJPKKmzLGWVkoJRPfA5URLQz0uyTLZCPe6QKe5w@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] rebase -i: fix cases ignoring core.commentchar
+Date: Fri, 16 Aug 2013 17:55:33 -0400
+Message-ID: <CAPig+cTRc1-W7vJX52gb5S0ge4kZgKMBkHJjqWFRDgpuzTfM2g@mail.gmail.com>
+References: <1376689447-78807-1-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: =?utf-8?B?U2HFoWEgVG9tacSH?= <tomic80@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 17 00:20:24 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 17 00:23:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VASNb-0004P7-TR
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 00:20:24 +0200
+	id 1VASQo-0006l0-6W
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 00:23:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752947Ab3HPWUQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Aug 2013 18:20:16 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:41773 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753389Ab3HPWUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Aug 2013 18:20:15 -0400
-Received: by mail-la0-f48.google.com with SMTP id er20so1943259lab.35
-        for <git@vger.kernel.org>; Fri, 16 Aug 2013 15:20:14 -0700 (PDT)
+	id S1754107Ab3HPWXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Aug 2013 18:23:38 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:52903 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751960Ab3HPWXh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Aug 2013 18:23:37 -0400
+Received: by mail-la0-f51.google.com with SMTP id es20so1972147lab.10
+        for <git@vger.kernel.org>; Fri, 16 Aug 2013 15:23:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ZZmghHsQsd5zR5jyhZmjZPb+Ph1S6yG0m0LE96zDuME=;
-        b=AWYpekPef0DFr2RJX8tbz15d6EFg2aOlWWQSjOBo5Mxt++mJO4f/s2yhzG7dSNzZqn
-         882lL3C3KIqzuoqafoSBb3IBkvH/C6QPwCGqGQoFL7NEPtmP7YbpLqL3It818ADiGcw5
-         HC40ErEVaXaBiuaMFwNsUMoRc54rKAwRtSGhP5LjjqehPiilYFiySTzG52PWJRirj557
-         c+h6l3Od+Rmn+FO4VEBJFk4gpLm3rtxcciQpNVCXLJAidm0IgHuV9ODvD7BhqUMNnq8z
-         aFSptpBKIykAUfwzpFw33XtmaEIkBiKA3SoHAdywbDj188WJOjQ30scXFu/sxXx/eNoB
-         j6zw==
-X-Received: by 10.112.130.134 with SMTP id oe6mr3566151lbb.30.1376684698243;
-        Fri, 16 Aug 2013 13:24:58 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-233-181.bredband.comhem.se. [83.250.233.181])
-        by mx.google.com with ESMTPSA id v5sm1602451lbv.15.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 16 Aug 2013 13:24:57 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1VAQds-0005gi-Jl; Fri, 16 Aug 2013 22:29:04 +0200
-Content-Disposition: inline
-In-Reply-To: <CAAUyY9DqCrpMJPKKmzLGWVkoJRPfA5URLQz0uyTLZCPe6QKe5w@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=GwVX+laJ1IcxaPE013cByeqaQaTtA6Qcu5F0JDDEjV4=;
+        b=OQqK94pfidY6p2xrN48hrHNb3jGYKQ4lAX8fi4hehepxMZxCWjAAb8uiz4o1k+7COq
+         /CBFTBXZOLhea398t9aR4M59tP3L9XF1Yvb9KMQN5u99UkiTo+29wrq+fLyeQr0E61mf
+         6Tb4r2Hy5iP4eYm44MBCeDp6SR9DxC1bz4xDKibkkn/FvdJVlGI1eHh3AOs3OBrtB4u0
+         aYjBirGNexkfml68kRPx2Iqa8r5Dz5gzujijaJpGoF+mJV/e6Mch06yi4jhjR5y8wN2z
+         NpWuLozQFODW3lcdqp30RMOdHzHM81XvdFF/v4XPJ1Sz+ddiFzlWR3sR35MVJYylcxc7
+         Lqkw==
+X-Received: by 10.112.72.229 with SMTP id g5mr3972073lbv.10.1376690133795;
+ Fri, 16 Aug 2013 14:55:33 -0700 (PDT)
+Received: by 10.114.182.236 with HTTP; Fri, 16 Aug 2013 14:55:33 -0700 (PDT)
+In-Reply-To: <1376689447-78807-1-git-send-email-sunshine@sunshineco.com>
+X-Google-Sender-Auth: EcOTeV1heZkTMzwJVBfBqoXqTxo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232441>
 
-On Fri, Aug 16, 2013 at 04:21:59PM +0200, Sa=C5=A1a Tomi=C4=87 wrote:
-> git commit =3D=3D> git reset --soft HEAD^
-The commit does still exists, you can find it in the reflog. This is
-important if you for example commits a huge file and wants to remove it=
-=2E
-That commit needs to be gc:ed too, and this is dangerous...
+On Fri, Aug 16, 2013 at 5:44 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> eff80a9fd990de36 (Allow custom "comment char", 2013-01-16) added general
+> core.commentchar support but forgot to update git-rebase--interactive to
+> respect it.  180bad3d10fe3a7f (rebase -i: respect core.commentchar,
+> 2013-02-11) addressed this oversight but missed one instance of
+> hard-coded '#' comment character in skip_unnecessary_picks(). Fix this.
+>
+> 9a46c25bdbf79744 (rebase: interactive: fix short SHA-1 collision,
+> 2013-08-12) added another instance of hard-coded '#' comment character
+> in transform_todo_ids().  Fix this, as well.
+>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 
-It's a not common, but often asked, question on #git@freenode . And for
-many it's hard to understand why a git rm doesn't shrink their repo.
-
-Also consider that many git commands relies on eachother. For example
-the submodule scripts uses git checkout, clone, etc.
---=20
-Med v=C3=A4nliga h=C3=A4lsningar
-=46redrik Gustafsson
-
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+I forgot to mention that I wanted to add tests to t3404 for these bugs
+but couldn't figure out how to do it using the external behavior of
+rebase -i. I was able to verify the before and after behavior by
+adding temporary echo's to the code in order to observe the "internal"
+functioning.
