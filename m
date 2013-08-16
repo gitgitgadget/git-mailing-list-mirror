@@ -1,140 +1,89 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] create_delta_index: simplify condition always evaluating to true
-Date: Fri, 16 Aug 2013 17:47:15 +0100
-Organization: OPDS
-Message-ID: <EE5B338564E14F89B349550B37741AFF@PhilipOakley>
-References: <CAPig+cQmdPo4mo69DsDmUURcw+HbxkAoNEqY08qiuJs8S+=bvQ@mail.gmail.com><1376602462-32339-1-git-send-email-stefanbeller@googlemail.com> <CAPig+cQ5Y9irLk=9Bhz09c=5yzZEcyMKn2kbhcrO_zDpgmkhGw@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Nicolas Pitre" <nico@fluxnic.net>
-To: "Eric Sunshine" <sunshine@sunshineco.com>,
-	"Stefan Beller" <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 16 18:47:19 2013
+From: Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Subject: [PATCH] git-send-email: kill $prompting variable
+Date: Fri, 16 Aug 2013 17:34:04 +0000
+Message-ID: <1376674444-29599-1-git-send-email-rv@rasmusvillemoes.dk>
+Cc: git@vger.kernel.org, Rasmus Villemoes <rv@rasmusvillemoes.dk>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Aug 16 19:34:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VANBG-00067K-D4
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Aug 2013 18:47:18 +0200
+	id 1VANuw-0001dy-31
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Aug 2013 19:34:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754171Ab3HPQrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Aug 2013 12:47:10 -0400
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:41710 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753082Ab3HPQrH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Aug 2013 12:47:07 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AssLAC1WDlJOl3GZ/2dsb2JhbABbgwY1iSm2PgQEAYEqF3SCHwUBAQQBCAEBLh4BASEFBgIDBQIBAxUDCSUUAQQaBgcXBgESCAIBAgMBh20DCQqxJQ2IXo1VgSyBT4MidwOIdYYOkwmCCIUlgTeBZjuBLA
-X-IPAS-Result: AssLAC1WDlJOl3GZ/2dsb2JhbABbgwY1iSm2PgQEAYEqF3SCHwUBAQQBCAEBLh4BASEFBgIDBQIBAxUDCSUUAQQaBgcXBgESCAIBAgMBh20DCQqxJQ2IXo1VgSyBT4MidwOIdYYOkwmCCIUlgTeBZjuBLA
-X-IronPort-AV: E=Sophos;i="4.89,895,1367967600"; 
-   d="scan'208";a="438507770"
-Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 16 Aug 2013 17:47:05 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753077Ab3HPReZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Aug 2013 13:34:25 -0400
+Received: from mail-ee0-f50.google.com ([74.125.83.50]:60830 "EHLO
+	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752633Ab3HPReY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Aug 2013 13:34:24 -0400
+Received: by mail-ee0-f50.google.com with SMTP id d51so1025610eek.23
+        for <git@vger.kernel.org>; Fri, 16 Aug 2013 10:34:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=n+mduZfC1TYLeirvD6kvKQbe0A73kYYufJOWWD+TozU=;
+        b=jdYs/dnYlNEXUGMgNPa7a0db7SQMP3YxfWAmRwrA+fGPMACx52YLJW/SFJnb+0p6uM
+         fcIBlIbVU9ZUmuQdJY2xkrun3nDlS16nJAY7mRMfob6zTLgWEOb4fHjrPxTO9W9vtZW+
+         tvsdF1pSk3+2IuYyMrebdQT3AHydEIZFq/Kqp/oC2z+qmOkYNkK/Vo+iAe/v4hf2sYl4
+         Wq0Z4r5pugZtUAs46lYrQmMJ13gy/WxeEzNq4BWCYkgRKWMI/sjupP5DQUpPPk97ia0H
+         tqPT0pj00dLUvOibk4/weILaXxfN8YnWRijPuYCYhIETdgsUCyyQXVHUbGNwYMk8DW9z
+         eI6w==
+X-Gm-Message-State: ALoCoQk4I1LpuzD2nEURbxQJk1h7ADZp7Q0cdK2Qmjo4uNvtXJg2VBnnPZbpFMlAbCR6A9xB1o84
+X-Received: by 10.15.41.205 with SMTP id s53mr16439eev.63.1376674462999;
+        Fri, 16 Aug 2013 10:34:22 -0700 (PDT)
+Received: from villemoes-sl500.decode.is (wildmoose.dk. [83.169.18.19])
+        by mx.google.com with ESMTPSA id a4sm4176670eez.0.1969.12.31.16.00.00
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 16 Aug 2013 10:34:22 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc3.1.g30eccb6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232436>
 
-From: "Eric Sunshine" <sunshine@sunshineco.com>
-> On Thu, Aug 15, 2013 at 5:34 PM, Stefan Beller
-> <stefanbeller@googlemail.com> wrote:
->> When checking the previous lines in that function, we can deduce that
->> hsize must always be smaller than (1u<<31), since 506049c7df2c6
->> (fix >4GiB source delta assertion failure), because entries is
->> capped at an upper bound of 0xfffffffeU, so hsize contains a maximum
->> value of 0x3fffffff, which is smaller than (1u<<31), so the value of
->> 'i' will never be larger than 31.
->>
->> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
->> ---
->>
->> Eric, thanks for reviewing my patch.
->>
->> I applied the first 2 proposals (deduce, entries), but I disagree on
->> the third, so I reformulated the sentence, as I really meant the 
->> variable
->> i and not it as a pronoun.
->
-> Thanks. Adding the quotes around 'i' makes your meaning clear. Without
-> the quotes, apparently it was ambiguous, and my brain read it as a
-> misspelling of 'it'.
->
->> Do I understand right, you're suggesting to remove the
->> source code comment? I did this now, but I have a bad feeling with 
->> it.
->>
->> The change of this patch surely removes dead code as of now and makes 
->> it
->> more readable. But also it could become alive again, once somebody
->> changes things nearby and forgets about the assumption, hsize not
->> exceeding a certain size. That's why I put a comment in there, so
->> the future changes nearby may be more careful.
->
-> Indeed, I feel uncomfortable with the patch in general for the very
-> reason that you state: it might become live again. Without the patch,
-> the code remains safe without any extra effort.
+The variable $prompting is weird. It is only read in one place (when
+deciding whether to prompt for a Message-ID to use in In-Reply-To),
+and it will be false unless we've taken the completely unrelated
+branch filling in @initial_to.
 
-The problem is that without the patch (or some change) the code was 
-already unsafe.
+Prompting should be done if the info is needed, not if some unrelated
+item had to be prompted for. So kill $prompting.
 
-The code sequence  ' (1u << i) < hsize && i < 31 ' is a multi step 
-process, whose first step requires that 'i' is already less that 31, 
-otherwise the result (1u << i)  is undefined (and  'undef_val < hsize' 
-can therefore be assumed to be 'false'), and so the later test  i < 31 
-can always be optimised away as dead code ('i' is already less than 31, 
-or the short circuit 'and' applies).
+Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
+---
+ git-send-email.perl | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-Simply swapping around the code such that the i < 31 test is performed 
-first would also solve the (latent optimisation) problem.
-
-Section 2.2 of the "Undefined behavior: What happened to my code?" paper 
-on http://css.csail.mit.edu/stack/ discusses this issue with an example 
-from the Linux kernel.
-
-> With this patch, even
-> with the in-code comment, someone making changes needs to take special
-> care. Sometimes it makes sense to leave safeties in place, even if
-> they can't be triggered _today_; and safeties (such as i < 31) also
-> serve as documentation.
->
->>
->> Thanks,
->> Stefan
->>
->>
->>  diff-delta.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/diff-delta.c b/diff-delta.c
->> index 93385e1..3797ce6 100644
->> --- a/diff-delta.c
->> +++ b/diff-delta.c
->> @@ -155,7 +155,7 @@ struct delta_index * create_delta_index(const 
->> void *buf, unsigned long bufsize)
->>                 entries = 0xfffffffeU / RABIN_WINDOW;
->>         }
->>         hsize = entries / 4;
->> -       for (i = 4; (1u << i) < hsize && i < 31; i++);
->> +       for (i = 4; (1u << i) < hsize; i++);
->>         hsize = 1 << i;
->>         hmask = hsize - 1;
->>
->> --
->> 1.8.4.rc3.1.gc1ebd90
->>
-> --
-
-Philip 
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 2162478..f608d9b 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -755,13 +755,11 @@ if (!defined $sender) {
+ # But it's a no-op to run sanitize_address on an already sanitized address.
+ $sender = sanitize_address($sender);
+ 
+-my $prompting = 0;
+ if (!@initial_to && !defined $to_cmd) {
+ 	my $to = ask("Who should the emails be sent to (if any)? ",
+ 		     default => "",
+ 		     valid_re => qr/\@.*\./, confirm_only => 1);
+ 	push @initial_to, parse_address_line($to) if defined $to; # sanitized/validated later
+-	$prompting++;
+ }
+ 
+ sub expand_aliases {
+@@ -785,7 +783,7 @@ sub expand_one_alias {
+ @bcclist = expand_aliases(@bcclist);
+ @bcclist = validate_address_list(sanitize_address_list(@bcclist));
+ 
+-if ($thread && !defined $initial_reply_to && $prompting) {
++if ($thread && !defined $initial_reply_to) {
+ 	$initial_reply_to = ask(
+ 		"Message-ID to be used as In-Reply-To for the first email (if any)? ",
+ 		default => "",
+-- 
+1.8.4.rc3.1.g30eccb6
