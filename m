@@ -1,87 +1,153 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Git segmentation faults if submodule path is empty.
-Date: Fri, 16 Aug 2013 09:14:06 -0400
-Message-ID: <20130816131406.GC20138@sigill.intra.peff.net>
-References: <277BEB82-D618-48D9-A276-4B0E76A11A38@eyesopen.com>
- <520DCB4B.6090309@web.de>
- <20130816130957.GB20138@sigill.intra.peff.net>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: [cygwin] Re: Lack of case-sensitive filename handling with git 1.7.9-1 for Cygwin 64-bit
+Date: Fri, 16 Aug 2013 07:54:57 -0400
+Organization: PD Inc
+Message-ID: <4D206B626EE941D28F6CB93E38293863@black>
+References: <CAGZiy71u1Ci_2Uw6jgAw3-9gCgwVrS1ae2Bpz9HCbnj2+EZexA@mail.gmail.com> <20130816081743.GC2562@calimero.vinschen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jharrod LaFon <jlafon@eyesopen.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Aug 16 15:14:19 2013
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "'Git List'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 16 15:14:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VAJr8-000179-Jd
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Aug 2013 15:14:18 +0200
+	id 1VAJrL-0001IJ-2E
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Aug 2013 15:14:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369Ab3HPNOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Aug 2013 09:14:10 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56471 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752791Ab3HPNOJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Aug 2013 09:14:09 -0400
-Received: (qmail 27401 invoked by uid 102); 16 Aug 2013 13:14:09 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Aug 2013 08:14:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Aug 2013 09:14:06 -0400
-Content-Disposition: inline
-In-Reply-To: <20130816130957.GB20138@sigill.intra.peff.net>
+	id S1752019Ab3HPNOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Aug 2013 09:14:23 -0400
+Received: from projects.pdinc.us ([67.90.184.26]:46987 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751942Ab3HPNOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Aug 2013 09:14:21 -0400
+X-Greylist: delayed 4762 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Aug 2013 09:14:21 EDT
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id r7GBsgcl001135
+	for <git@vger.kernel.org>; Fri, 16 Aug 2013 07:54:42 -0400
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <20130816081743.GC2562@calimero.vinschen.de>
+Thread-Index: Ac6aWWW9C34IxQwHTBWgB7DtkmYsLwAHcrFA
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232426>
 
-On Fri, Aug 16, 2013 at 09:09:58AM -0400, Jeff King wrote:
+I just saw this on the cygwin list.
 
-> > > -	if (parse_config_key(var, "submodule", &name, &namelen, &key) < 0 || !name)
-> > > +	if (parse_config_key(var, "submodule", &name, &namelen, &key) < 0 || !name || !value)
-> > >  		return 0;
+> -----Original Message-----
+> From: Corinna Vinschen
+> Sent: Friday, August 16, 2013 4:18
+> To: cygwin@cygwin.com
+> Subject: [cygwin] Re: Lack of case-sensitive filename 
+> handling with git 1.7.9-1 for Cygwin 64-bit
 > 
-> I think this is also the wrong place to make the check, anyway. It is
-> saying that all values of submodule.X.Y must be non-NULL. But that is
-> not true. The submodule.X.fetchRecurseSubmodules option can be a
-> boolean, and:
+> On Aug 16 10:32, Kal Sze wrote:
+> > I have been using Cygwin 32-bit on Windows 7 Profession 
+> 64-bit. I had 
+> > the HKLM\SYSTEM\CurrentControlSet\Control\Session
+> > Manager\kernel\ObCaseInsensitive registry key set to DWORD 
+> 0x00000000 
+> > and case-sensitive filename handling has been fully working 
+> in Cygwin 
+> > 32-bit (as far as I can tell from my usage anyway).
+> > 
+> > Now that Cygwin 64-bit has been released, I want to try it. 
+> I notice 
+> > that git in Cygwin 64-bit does not seem to correctly handle 
+> filesname 
+> > that differ only by case.
+> > 
+> > To reproduce, create a repository in Cygwin 32-bit *with the 
+> > aforementioned registry key set*:
+> > 
+> >     $ git init case_sensitivity_test; cd case_sensitivity_test
+> > 
+> > Create two files of different content with similar filenames that 
+> > differ only by case:
+> > 
+> >     $ echo 'FOO' > FOO.TXT; echo 'foo' > foo.txt
+> > 
+> > Commit them into the repository:
+> > 
+> >     $ git add .; git commit -m 'Initial commit'
+> >     [master (root-commit) 16d1b59] Initial commit
+> >      2 files changed, 2 insertions(+), 0 deletions(-)
+> >      create mode 100644 FOO.TXT
+> >      create mode 100644 foo.txt
+> > 
+> > In Cygwin 32-bit, this looks all green:
+> > 
+> >     $ git status
+> >     # On branch master
+> >     nothing to commit (working directory clean)
+> >     $ ls
+> >     FOO.TXT  foo.txt
+> > 
+> > Now, fire up the Cygwin64 terminal and browse to the 
+> repository, then:
+> > 
+> >     $ ls
+> >     FOO.TXT  foo.txt
+> >     $ cat FOO.TXT
+> >     FOO
+> >     $ cat foo.txt
+> >     foo
+> > 
+> > So `ls` and `cat` both recognize the two different files. However:
+> > 
+> >     $ git status
+> >     # On branch master
+> >     # Changes not staged for commit:
+> >     #   (use "git add <file>..." to update what will be committed)
+> >     #   (use "git checkout -- <file>..." to discard changes 
+> in working
+> > directory)
+> >     #
+> >     #       modified:   foo.txt
+> >     #
+> >     no changes added to commit (use "git add" and/or "git 
+> commit -a")
+> > 
+> > "Oops."
 > 
->   [submodule "foo"]
->     fetchRecurseSubmodules
+> The interesting thing here is, if you try this the other way 
+> around, you'll see the exact same effect.  If you created the 
+> above git repo with 64 bit git, everything works exactly as 
+> in the 32 bit version and the two files are correctly recognized.
 > 
-> is perfectly valid (and is broken by this patch).
+> I assume the format of the git database files depends on the 
+> architecture.  Therefore it's probably not advisable to use a 
+> git repo created under 32 bit git with a 64 bit git and vice versa.
 
-IOW, I think this is the right fix:
+Is this the best explanation for this?
 
-diff --git a/submodule.c b/submodule.c
-index 3f0a3f9..c0f93c2 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -134,6 +134,9 @@ int parse_submodule_config_option(const char *var, const char *value)
- 		return 0;
+> 
+> 
+> Corinna
+> 
+> -- 
+> Corinna Vinschen                  Please, send mails 
+> regarding Cygwin to
+> Cygwin Maintainer                 cygwin AT cygwin DOT com
+> Red Hat
+> 
+
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
+
  
- 	if (!strcmp(key, "path")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+
- 		config = unsorted_string_list_lookup(&config_name_for_path, value);
- 		if (config)
- 			free(config->util);
-@@ -151,6 +154,9 @@ int parse_submodule_config_option(const char *var, const char *value)
- 	} else if (!strcmp(key, "ignore")) {
- 		char *name_cstr;
- 
-+		if (!value)
-+			return config_error_nonbool(var);
-+
- 		if (strcmp(value, "untracked") && strcmp(value, "dirty") &&
- 		    strcmp(value, "all") && strcmp(value, "none")) {
- 			warning("Invalid parameter \"%s\" for config option \"submodule.%s.ignore\"", value, var);
-
-And new options, as they are added, must decide whether they are boolean
-or not (and check !value as appropriate).
-
--Peff
