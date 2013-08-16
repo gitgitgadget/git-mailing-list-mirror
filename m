@@ -1,66 +1,113 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/6] shallow: add setup_temporary_shallow()
-Date: Fri, 16 Aug 2013 19:52:04 -0400
-Message-ID: <CAPig+cQxq2B-zJeFP8p=8yb8Po7LX4_ZWsAZy=jJdHF7f5PN8A@mail.gmail.com>
-References: <CACsJy8CDGgKftp0iBB8MYjMawKhxZ1JQ+xAYb0itpaCOjFHWxg@mail.gmail.com>
-	<1376646727-22318-1-git-send-email-pclouds@gmail.com>
-	<1376646727-22318-3-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Git segmentation faults if submodule path is empty.
+Date: Fri, 16 Aug 2013 16:52:47 -0400
+Message-ID: <20130816205246.GA6487@sigill.intra.peff.net>
+References: <277BEB82-D618-48D9-A276-4B0E76A11A38@eyesopen.com>
+ <520DCB4B.6090309@web.de>
+ <20130816130957.GB20138@sigill.intra.peff.net>
+ <20130816131406.GC20138@sigill.intra.peff.net>
+ <AFCBD71A-21CB-45CC-8386-C65173B6D173@eyesopen.com>
+ <0C422E09-EE33-4C3F-91D3-F6007F743A38@eyesopen.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Matthijs Kooijman <matthijs@stdin.nl>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 17 01:59:47 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jharrod LaFon <jlafon@eyesopen.com>
+X-From: git-owner@vger.kernel.org Sat Aug 17 02:11:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VATvm-0006Rc-FB
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 01:59:46 +0200
+	id 1VAU7N-0006E5-1d
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 02:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753717Ab3HPX7e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Aug 2013 19:59:34 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:53060 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753690Ab3HPX7c convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Aug 2013 19:59:32 -0400
-Received: by mail-la0-f46.google.com with SMTP id eh20so1970662lab.19
-        for <git@vger.kernel.org>; Fri, 16 Aug 2013 16:59:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=HzwAmU07N6ebziZeX3fsl3JhbRLzlqeIdT8eVEHdPEs=;
-        b=s/bf/N/F1oLxs0fbd/ygRVE+tbNC6PFSzIizlW/6Ac28+uujDrn9gw3ljlzhD2ewAd
-         VpWKTPkH+6mIHLhUoo49yOydXRknxfSPJBmv6VC3m8jb8vhmFOxTTwog4CwF5tSwFr9G
-         YxbZoVvv3spV6NCE4Ouw8uUKUcvpcBY6GPwXa/9K6ScHJL/+Uj1m6K8PB9hNwkNs27Vm
-         UgJYDZq42VrtH8GSXpwRlocRmCD1MLTJZyhBvYR9+89l70CX3TxWUoFSrVLUy/Cf3osX
-         SNtqPJbDgq5cyrfXzDTwTDd6ZfioKNVnIfzG9zMGXirZxcqs5aqgtjf6dzdxnRKN6pT6
-         XKwQ==
-X-Received: by 10.112.26.106 with SMTP id k10mr164122lbg.27.1376697124512;
- Fri, 16 Aug 2013 16:52:04 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Fri, 16 Aug 2013 16:52:04 -0700 (PDT)
-In-Reply-To: <1376646727-22318-3-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: wm4btltHJhBRcUVJT2kBwse0jjw
+	id S1757024Ab3HQALA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Aug 2013 20:11:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60203 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756612Ab3HPWjc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Aug 2013 18:39:32 -0400
+Received: (qmail 16835 invoked by uid 102); 16 Aug 2013 20:52:51 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Aug 2013 15:52:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Aug 2013 16:52:47 -0400
+Content-Disposition: inline
+In-Reply-To: <0C422E09-EE33-4C3F-91D3-F6007F743A38@eyesopen.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232447>
 
-On Fri, Aug 16, 2013 at 5:52 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> This function is like setup_alternate_shallow() except that it does
-> not lock $GIT_DIR/shallow. It's supposed to be used when a program
-> generates temporary shallow for for use by another program, then thro=
-w
+On Fri, Aug 16, 2013 at 10:59:35AM -0700, Jharrod LaFon wrote:
 
-s/for for/for/
+> Here is an updated patch with a test.
 
-> the shallow file away.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+Bits like this that should not be part of the commit message should
+either go after the "---" lines near the diffstat, or should come before
+a scissors line, like:
+
+  Here is my new patch.
+
+  -- >8 --
+  Git segmentation faults etc...
+
+That way git-am can do the right thing, and the maintainer does not have
+to fix up your patch by hand.
+
+> diff --git a/submodule.c b/submodule.c
+> index 1821a5b..1e4acfd 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -134,6 +134,9 @@ int parse_submodule_config_option(const char *var, const char *value)
+>  		return 0;
+>  
+>  	if (!strcmp(key, "path")) {
+> +        if (!value)
+> +            return config_error_nonbool(var);
+
+Your indentation looks like two spaces here, which does not match the
+rest of the block. It should be one tab.
+
+> @@ -151,6 +154,9 @@ int parse_submodule_config_option(const char *var, const char *value)
+>  	} else if (!strcmp(key, "ignore")) {
+>  		char *name_cstr;
+>  
+> +        if (!value)
+> +            return config_error_nonbool(var);
+> +
+
+Ditto here.
+
+> diff --git a/t/t1307-null-submodule-path.sh b/t/t1307-null-submodule-path.sh
+> new file mode 100644
+> index 0000000..eeda2cb
+> --- /dev/null
+> +++ b/t/t1307-null-submodule-path.sh
+> @@ -0,0 +1,16 @@
+> +#!/bin/sh
+> +
+> +test_description='test empty submodule path'
+> +. ./test-lib.sh
+> +
+> +setup() {
+> +    (printf "[submodule \"test\"]\n" && 
+> +    printf "  path\n" &&
+> +    printf "  url") >.gitmodules
+> +}
+
+You can use single-quotes to avoid having to backslash the embedded
+double-quotes. And I do not see any reason to use printf rather than the
+more readable echo, which can drop the "\n".
+
+And is there any point in having the "url" field?  The presence of a
+valueless bool "path" should be enough, no? It may be easier to see what
+it is we are testing without the extraneous parameter.
+
+With those changes, you could even put it all on one line:
+
+  echo '[submodule "test"] path' >.gitmodules
+
+-Peff
