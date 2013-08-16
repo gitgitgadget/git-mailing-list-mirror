@@ -1,78 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: duplicate objects in packfile
-Date: Fri, 16 Aug 2013 11:01:38 -0400
-Message-ID: <20130816150138.GA4823@sigill.intra.peff.net>
-References: <20130814181718.GA7911@sigill.intra.peff.net>
- <7v4nast9bv.fsf@alter.siamese.dyndns.org>
- <7vvc38ruah.fsf@alter.siamese.dyndns.org>
+From: Jharrod LaFon <jlafon@eyesopen.com>
+Subject: Re: [PATCH] Git segmentation faults if submodule path is empty.
+Date: Fri, 16 Aug 2013 08:12:33 -0700
+Message-ID: <AFCBD71A-21CB-45CC-8386-C65173B6D173@eyesopen.com>
+References: <277BEB82-D618-48D9-A276-4B0E76A11A38@eyesopen.com>
+ <520DCB4B.6090309@web.de> <20130816130957.GB20138@sigill.intra.peff.net>
+ <20130816131406.GC20138@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 16 17:01:48 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 16 17:12:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VALX9-0004jB-G0
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Aug 2013 17:01:47 +0200
+	id 1VALhf-0005MG-Q5
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Aug 2013 17:12:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754712Ab3HPPBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Aug 2013 11:01:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57191 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754564Ab3HPPBl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Aug 2013 11:01:41 -0400
-Received: (qmail 32722 invoked by uid 102); 16 Aug 2013 15:01:41 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Aug 2013 10:01:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Aug 2013 11:01:38 -0400
-Content-Disposition: inline
-In-Reply-To: <7vvc38ruah.fsf@alter.siamese.dyndns.org>
+	id S1753996Ab3HPPMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Aug 2013 11:12:34 -0400
+Received: from exhub018-2.exch018.msoutlookonline.net ([64.78.17.17]:36281
+	"EHLO EXHUB018-2.exch018.msoutlookonline.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752751Ab3HPPMd convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Aug 2013 11:12:33 -0400
+Received: from EXVMBX018-11.exch018.msoutlookonline.net ([64.78.17.52]) by
+ EXHUB018-2.exch018.msoutlookonline.net ([64.78.17.17]) with mapi; Fri, 16 Aug
+ 2013 08:12:33 -0700
+Thread-Topic: [PATCH] Git segmentation faults if submodule path is empty.
+Thread-Index: Ac6akwg6nTJ79osPTU+11QIob57bDQ==
+In-Reply-To: <20130816131406.GC20138@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232433>
 
-On Wed, Aug 14, 2013 at 11:39:34AM -0700, Junio C Hamano wrote:
+OK,  I'll incorporate Jeff's changes, add a test and resubmit the patch.
 
-> > Older versions of JGit used to put duplicate objects in a pack, and
-> > IIRC Shawn declared that a bug in the packer and fixed it, so from
-> > that point of view, I think rejecting is probably the right thing,
-> > even though I think warning and continuing is also acceptable and
-> > indeed may be better.
+Thanks,
+
+--
+Jharrod LaFon
+OpenEye Scientific Software
+
+On Aug 16, 2013, at 7:14 AM, Jeff King <peff@peff.net> wrote:
+
+> On Fri, Aug 16, 2013 at 09:09:58AM -0400, Jeff King wrote:
 > 
-> Also repacking may have a funny corner case. I do not recall the
-> details as the above was a long time ago, but when I was tracking it
-> down, a delta was made against one copy of the base object, and
-> referred to it using delta-offset, while there was another copy of
-> the base object which was found by the bisection search, and from
-> there on, the inconsistencies between these two (they represent the
-> same payload, but they are at different offsets in the same pack and
-> with different in-pack sizes) led to some funky behaviour.
-
-Thanks for the pointer. I found this commit:
-
-  https://eclipse.googlesource.com/jgit/jgit/+/2fbf296fda205446eac11a13abd4fcdb182f28d9
-
-which is presumably what you're thinking of.
-
-I did not run into the problem described in my case, but presumably I
-did not have a delta cycle between the multiple versions. In theory we
-should find the same copy of the object each time we search, but there
-are enough code paths to access the objects that I would not be
-surprised if such funkiness is still triggerable, including infinite
-loops.
-
-That makes me inclined to teach index-pack to reject duplicate objects
-in a single pack in order to prevent denial-of-service attacks. We can
-potentially make them work in all code paths, but given that nobody
-should be doing this legitimately, rejecting the duplicates outright
-keeps our attack surface small, and nobody but attackers or users of
-broken implementations should care.
-
--Peff
+>>>> -	if (parse_config_key(var, "submodule", &name, &namelen, &key) < 0 || !name)
+>>>> +	if (parse_config_key(var, "submodule", &name, &namelen, &key) < 0 || !name || !value)
+>>>> 		return 0;
+>> 
+>> I think this is also the wrong place to make the check, anyway. It is
+>> saying that all values of submodule.X.Y must be non-NULL. But that is
+>> not true. The submodule.X.fetchRecurseSubmodules option can be a
+>> boolean, and:
+>> 
+>>  [submodule "foo"]
+>>    fetchRecurseSubmodules
+>> 
+>> is perfectly valid (and is broken by this patch).
+> 
+> IOW, I think this is the right fix:
+> 
+> diff --git a/submodule.c b/submodule.c
+> index 3f0a3f9..c0f93c2 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -134,6 +134,9 @@ int parse_submodule_config_option(const char *var, const char *value)
+> 		return 0;
+> 
+> 	if (!strcmp(key, "path")) {
+> +		if (!value)
+> +			return config_error_nonbool(var);
+> +
+> 		config = unsorted_string_list_lookup(&config_name_for_path, value);
+> 		if (config)
+> 			free(config->util);
+> @@ -151,6 +154,9 @@ int parse_submodule_config_option(const char *var, const char *value)
+> 	} else if (!strcmp(key, "ignore")) {
+> 		char *name_cstr;
+> 
+> +		if (!value)
+> +			return config_error_nonbool(var);
+> +
+> 		if (strcmp(value, "untracked") && strcmp(value, "dirty") &&
+> 		    strcmp(value, "all") && strcmp(value, "none")) {
+> 			warning("Invalid parameter \"%s\" for config option \"submodule.%s.ignore\"", value, var);
+> 
+> And new options, as they are added, must decide whether they are boolean
+> or not (and check !value as appropriate).
+> 
+> -Peff
