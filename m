@@ -1,66 +1,52 @@
-From: =?UTF-8?q?Mattias=20Andr=C3=A9e?= <maandree@operamail.com>
-Subject: [PATCH v2] CEST is +0200 during April
-Date: Sat, 17 Aug 2013 05:52:00 +0200
-Message-ID: <1376711520-4685-1-git-send-email-maandree@operamail.com>
+From: Aaron Schrab <aaron@schrab.com>
+Subject: Re: [PATCH v2] CEST is +0200 during April
+Date: Sat, 17 Aug 2013 02:36:44 -0400
+Message-ID: <20130817063644.GF10846@pug.qqx.org>
 References: <877gfl1imp.fsf@igel.home>
+ <1376711520-4685-1-git-send-email-maandree@operamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Mattias=20Andr=C3=A9e?= <maandree@operamail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 17 05:52:18 2013
+Cc: git@vger.kernel.org, Andreas Schwab <schwab@linux-m68k.org>
+To: Mattias =?iso-8859-1?Q?Andr=E9e?= <maandree@operamail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 17 08:36:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VAXYm-00044D-5n
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 05:52:16 +0200
+	id 1VAa8B-0005N2-7z
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 08:36:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752633Ab3HQDwM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Aug 2013 23:52:12 -0400
-Received: from smtp-4.sys.kth.se ([130.237.48.193]:35109 "EHLO
-	smtp-4.sys.kth.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751372Ab3HQDwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Aug 2013 23:52:11 -0400
-Received: from mailscan-1.sys.kth.se (mailscan-1.sys.kth.se [130.237.32.91])
-	by smtp-4.sys.kth.se (Postfix) with ESMTP id 15101C10;
-	Sat, 17 Aug 2013 05:52:10 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at kth.se
-Received: from smtp-4.sys.kth.se ([130.237.48.193])
-	by mailscan-1.sys.kth.se (mailscan-1.sys.kth.se [130.237.32.91]) (amavisd-new, port 10024)
-	with LMTP id h2uLkdgKFVBi; Sat, 17 Aug 2013 05:52:07 +0200 (CEST)
-X-KTH-Auth: maandree [193.150.208.92]
-X-KTH-mail-from: maandree@member.fsf.org
-Received: from localhost.localdomain (c193-150-208-92.bredband.comhem.se [193.150.208.92])
-	by smtp-4.sys.kth.se (Postfix) with ESMTPSA id 73546488;
-	Sat, 17 Aug 2013 05:52:05 +0200 (CEST)
-X-Mailer: git-send-email 1.8.3.4
-In-Reply-To: <877gfl1imp.fsf@igel.home>
+	id S1751631Ab3HQGgr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Aug 2013 02:36:47 -0400
+Received: from pug.qqx.org ([50.116.43.67]:50554 "EHLO pug.qqx.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750999Ab3HQGgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Aug 2013 02:36:47 -0400
+Received: by pug.qqx.org (Postfix, from userid 1000)
+	id C544F1E0A4; Sat, 17 Aug 2013 02:36:44 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1376711520-4685-1-git-send-email-maandree@operamail.com>
+User-Agent: Mutt/1.5.21+186 (g51cc38c) (2012-12-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232451>
 
-Signed-off-by: Mattias Andr=C3=A9e <maandree@operamail.com>
----
- Documentation/date-formats.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Mattias, the convention on this list is to send directly to participant=
+s=20
+in the thread as well as the list.  So I've added Andreas as a=20
+recipient.
 
-diff --git a/Documentation/date-formats.txt b/Documentation/date-format=
-s.txt
-index c000f08..61a836e 100644
---- a/Documentation/date-formats.txt
-+++ b/Documentation/date-formats.txt
-@@ -11,7 +11,7 @@ Git internal format::
- 	It is `<unix timestamp> <timezone offset>`, where `<unix
- 	timestamp>` is the number of seconds since the UNIX epoch.
- 	`<timezone offset>` is a positive or negative offset from UTC.
--	For example CET (which is 2 hours ahead UTC) is `+0200`.
-+	For example CEST (which is 2 hours ahead UTC) is `+0200`.
-=20
- RFC 2822::
- 	The standard email format as described by RFC 2822, for example
---=20
-1.8.3.4
+At 05:52 +0200 17 Aug 2013, Mattias Andr=E9e <maandree@operamail.com> w=
+rote:
+>-	For example CET (which is 2 hours ahead UTC) is `+0200`.
+>+	For example CEST (which is 2 hours ahead UTC) is `+0200`.
+
+While changing that line it would be good to also fix the grammar:
+
++	For example CEST (which is 2 hours ahead of UTC) is `+0200`.
+                                             ^^
