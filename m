@@ -1,135 +1,101 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v2] bash prompt: test the prompt with newline in repository
- path
-Date: Sat, 17 Aug 2013 11:01:58 +0200
-Message-ID: <1376730118-11102-1-git-send-email-szeder@ira.uka.de>
-References: <520E7A81.5080302@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] xread(): Fix read error when filtering >= 2GB on Mac OS X
+Date: Sat, 17 Aug 2013 14:40:05 +0200
+Message-ID: <1376743205-12618-1-git-send-email-prohaska@zib.de>
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 17 11:02:16 2013
+X-From: git-owner@vger.kernel.org Sat Aug 17 15:17:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VAcOl-0002a1-T2
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 11:02:16 +0200
+	id 1VAgNF-0006YL-P8
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 15:16:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752339Ab3HQJCL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Aug 2013 05:02:11 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:62201 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752148Ab3HQJCK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Aug 2013 05:02:10 -0400
-Received: from localhost6.localdomain6 (f051130156.adsl.alicedsl.de [78.51.130.156])
-	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
-	id 0MXXss-1VdmXZ3Aco-00WYCv; Sat, 17 Aug 2013 11:02:08 +0200
-X-Mailer: git-send-email 1.8.4.rc3.31.g0f99442
-In-Reply-To: <520E7A81.5080302@kdbg.org>
-X-Provags-ID: V02:K0:54VDOOOxCWbvhfQSiMdWuDxRF1MOI625EoZScxRQ2ne
- eXGNRBc0WuGNzdovmwRbXMyI2rlwAg9fHKBNjXkyjj8tBK8xmF
- Zg+W7YOr5Wb2yK70iUnFc9R8QYHajh6XbbDm2pOsXrHvEoIaUI
- tPy1YwLM4BKNCaw7omfE3LtuUUNp1LkntYxnemeknozodiiSjI
- oqEQ8CXSBJcN+uHbtRm+qC5yxtRdgWe+/hD/IfLpJMq1Hcv+oX
- yPG14qpxGciS9xOCRTpTRGWXZ4+F9RBT76a1+ACdmkYo2RMy4l
- 8rqVFWrAHRg39dMBoQcUOG11G5yduN1PffuOGZjlZwbnLfMcCW
- 9+RVF7UYK0cbVS3ByYPHuWIwzfIAojhUp0tH5eqUrVEV/7aQvy
- 2MyfS7aiqmJVQ==
+	id S1753164Ab3HQNQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Aug 2013 09:16:04 -0400
+Received: from mailer.zib.de ([130.73.108.11]:41817 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753092Ab3HQNQC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Aug 2013 09:16:02 -0400
+X-Greylist: delayed 2112 seconds by postgrey-1.27 at vger.kernel.org; Sat, 17 Aug 2013 09:16:01 EDT
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id r7HCeWPW021100;
+	Sat, 17 Aug 2013 14:40:38 +0200 (CEST)
+Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id r7HCeVKd006515;
+	Sat, 17 Aug 2013 14:40:32 +0200 (MEST)
+X-Mailer: git-send-email 1.8.4.rc0.11.g35f5eaa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232455>
 
-Newlines in the path to a git repository were not an issue for the
-git-specific bash prompt before commit efaa0c1532 (bash prompt:
-combine 'git rev-parse' executions in the main code path, 2013-06-17),
-because the path returned by 'git rev-parse --git-dir' was directly
-stored in a variable, and this variable was later always accessed
-inside double quotes.
+Previously, filtering more than 2GB through an external filter (see
+test) failed on Mac OS X 10.8.4 (12E55) with:
 
-Newlines are not an issue after commit efaa0c1532 either, but it's
-more subtle.  Since efaa0c1532 we use the following single 'git
-rev-parse' execution to query various info about the repository:
+    error: read from external filter cat failed
+    error: cannot feed the input to external filter cat
+    error: cat died of signal 13
+    error: external filter cat failed 141
+    error: external filter cat failed
 
-  git rev-parse --git-dir --is-inside-git-dir \
-          --is-bare-repository --is-inside-work-tree
+The reason is that read() immediately returns with EINVAL if len >= 2GB.
+I haven't found any information under which specific conditions this
+occurs.  My suspicion is that it happens when reading from a pipe, while
+reading from a standard file should always be fine.  I haven't tested
+any other version of Mac OS X, though I'd expect that other versions are
+affected as well.
 
-The results to these queries are separated by a newline character in
-the output, e.g.:
+The problem is fixed by always reading less than 2GB in xread().
+xread() doesn't guarantee to read all the requested data at once, and
+callers are expected to gracefully handle partial reads.  Slicing large
+reads into 2GB pieces should not hurt practical performance.
 
-  /home/szeder/src/git/.git
-  false
-  false
-  true
-
-A newline in the path to the git repository could potentially break
-the parsing of these results and ultimately the bash prompt, unless
-the parsing is done right.  Commit efaa0c1532 got it right, as I
-consciously started parsing 'git rev-parse's output from the end,
-where each record is a single line containing either 'true' or 'false'
-or, after e3e0b9378b (bash prompt: combine 'git rev-parse' for
-detached head, 2013-06-24), the abbreviated commit object name, and
-all what remains at the beginning is the path to the git repository,
-no matter how many lines it is.
-
-This subtlety really warrants its own test, especially since I didn't
-explain it in the log message or in an in-code comment back then, so
-add a test to excercise the prompt with newline characters in the path
-to the repository.  Guard this test with the FUNNYNAMES prerequisite,
-because not all filesystems support newlines in filenames.  Note that
-'git rev-parse --git-dir' prints '.git' or '.' when at the top of the
-worktree or the repository, respectively, and only prints the full
-path to the repository when in a subdirectory, hence the need for
-changing into a subdir in the test.
-
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
+ t/t0021-conversion.sh | 9 +++++++++
+ wrapper.c             | 8 ++++++++
+ 2 files changed, 17 insertions(+)
 
-Added FUNNYNAMES prerequisite and Eric's typofix.
-
- t/t9903-bash-prompt.sh | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
-
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 3c3e4e8c38..59f875e830 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -61,6 +61,29 @@ test_expect_success 'prompt - unborn branch' '
- 	test_cmp expected "$actual"
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index e50f0f7..aec1253 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -190,4 +190,13 @@ test_expect_success 'required filter clean failure' '
+ 	test_must_fail git add test.fc
  '
-=20
-+repo_with_newline=3D'repo
-+with
-+newline'
-+
-+if mkdir "$repo_with_newline" 2>/dev/null
-+then
-+	test_set_prereq FUNNYNAMES
-+else
-+	say 'Your filesystem does not allow newlines in filenames.'
-+fi
-+
-+test_expect_success FUNNYNAMES 'prompt - with newline in path' '
-+	printf " (master)" >expected &&
-+	git init "$repo_with_newline" &&
-+	test_when_finished "rm -rf \"$repo_with_newline\"" &&
-+	mkdir "$repo_with_newline"/subdir &&
-+	(
-+		cd "$repo_with_newline/subdir" &&
-+		__git_ps1 >"$actual"
-+	) &&
-+	test_cmp expected "$actual"
+ 
++test_expect_success 'filter large file' '
++	git config filter.largefile.smudge cat &&
++	git config filter.largefile.clean cat &&
++	dd if=/dev/zero of=2GB count=2097152 bs=1024 &&
++	echo "/2GB filter=largefile" >.gitattributes &&
++	git add 2GB 2>err &&
++	! grep -q "error" err
 +'
 +
- test_expect_success 'prompt - detached head' '
- 	printf " ((%s...))" $(git log -1 --format=3D"%h" --abbrev=3D13 b1^) >=
-expected &&
- 	test_config core.abbrev 13 &&
---=20
-1.8.4.rc3.31.g0f99442
+ test_done
+diff --git a/wrapper.c b/wrapper.c
+index 6a015de..2a2f496 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -139,6 +139,14 @@ ssize_t xread(int fd, void *buf, size_t len)
+ {
+ 	ssize_t nr;
+ 	while (1) {
++#ifdef __APPLE__
++		const size_t twoGB = (1l << 31);
++		/* len >= 2GB immediately fails on Mac OS X with EINVAL when
++		 * reading from pipe. */
++		if (len >= twoGB) {
++			len = twoGB - 1;
++		}
++#endif
+ 		nr = read(fd, buf, len);
+ 		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
+ 			continue;
+-- 
+1.8.4.rc3.5.gfcb973a
