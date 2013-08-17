@@ -1,122 +1,118 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] xread(): Fix read error when filtering >= 2GB on Mac OS X
-Date: Sat, 17 Aug 2013 16:27:29 +0100
-Message-ID: <20130817152729.GR2337@serenity.lan>
-References: <1376743205-12618-1-git-send-email-prohaska@zib.de>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: so, for the really out of date...
+Date: Sat, 17 Aug 2013 17:50:46 +0200
+Message-ID: <520F9BD6.2060204@googlemail.com>
+References: <13AF7B3E-B6F7-4E37-89B9-4542BC4BED8D@mail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sat Aug 17 17:27:53 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigC3817BDDAF6101ECF2C626AD"
+Cc: git@vger.kernel.org
+To: Jules <jules_gilbert@mail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 17 17:51:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VAiPv-0003rG-7H
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 17:27:51 +0200
+	id 1VAimI-0005N5-UK
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 17:50:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574Ab3HQP1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Aug 2013 11:27:38 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:58991 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753509Ab3HQP1i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Aug 2013 11:27:38 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 4C4B5606501;
-	Sat, 17 Aug 2013 16:27:37 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yxvq6pDfglsN; Sat, 17 Aug 2013 16:27:36 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 23EE3198003;
-	Sat, 17 Aug 2013 16:27:31 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <1376743205-12618-1-git-send-email-prohaska@zib.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753726Ab3HQPuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Aug 2013 11:50:55 -0400
+Received: from mail-ee0-f43.google.com ([74.125.83.43]:46762 "EHLO
+	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753630Ab3HQPuy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Aug 2013 11:50:54 -0400
+Received: by mail-ee0-f43.google.com with SMTP id e52so1410909eek.30
+        for <git@vger.kernel.org>; Sat, 17 Aug 2013 08:50:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type;
+        bh=pN0gKOZH0eGIcEnqh6etRbxeCHTdgYo1gWaErgJnh0I=;
+        b=wqR0BZ98OhkhoIuylq+yo9U+Ti8TiWdd6kWbns7bbmSeKzJJ6uzqB/RYM1lrzymHzS
+         m9Ruz+8ssuG8IvreQ16EkYsXlDjyeXrIJy75wAP52EPPtNTDqVegsiYpWn41GXb58R0H
+         5YEhK81fPS7Rb2R81fuHVPOtXGPpPzCWsDz/D5luO3geSQjoivLHqkp8hVhavZ4LlwBk
+         PN0NJDEoZG9J8O3GRCpULYmBkxtFEb5wqgebQy6NDRdC2/ymhPaOo83t0B9TZgm83o/S
+         6Kid3cwh6uKXSbGIOqH7IVqJ1KmABI4APf//84sHYcaAj23DsFbLaV1KEhShtZjbPIWZ
+         ATeA==
+X-Received: by 10.15.83.2 with SMTP id b2mr6600311eez.28.1376754652879;
+        Sat, 17 Aug 2013 08:50:52 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id h52sm4318977eez.3.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 17 Aug 2013 08:50:51 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
+In-Reply-To: <13AF7B3E-B6F7-4E37-89B9-4542BC4BED8D@mail.com>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232460>
 
-On Sat, Aug 17, 2013 at 02:40:05PM +0200, Steffen Prohaska wrote:
-> Previously, filtering more than 2GB through an external filter (see
-> test) failed on Mac OS X 10.8.4 (12E55) with:
-> 
->     error: read from external filter cat failed
->     error: cannot feed the input to external filter cat
->     error: cat died of signal 13
->     error: external filter cat failed 141
->     error: external filter cat failed
-> 
-> The reason is that read() immediately returns with EINVAL if len >= 2GB.
-> I haven't found any information under which specific conditions this
-> occurs.  My suspicion is that it happens when reading from a pipe, while
-> reading from a standard file should always be fine.  I haven't tested
-> any other version of Mac OS X, though I'd expect that other versions are
-> affected as well.
-> 
-> The problem is fixed by always reading less than 2GB in xread().
-> xread() doesn't guarantee to read all the requested data at once, and
-> callers are expected to gracefully handle partial reads.  Slicing large
-> reads into 2GB pieces should not hurt practical performance.
-> 
-> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-> ---
->  t/t0021-conversion.sh | 9 +++++++++
->  wrapper.c             | 8 ++++++++
->  2 files changed, 17 insertions(+)
-> 
-> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-> index e50f0f7..aec1253 100755
-> --- a/t/t0021-conversion.sh
-> +++ b/t/t0021-conversion.sh
-> @@ -190,4 +190,13 @@ test_expect_success 'required filter clean failure' '
->  	test_must_fail git add test.fc
->  '
->  
-> +test_expect_success 'filter large file' '
-> +	git config filter.largefile.smudge cat &&
-> +	git config filter.largefile.clean cat &&
-> +	dd if=/dev/zero of=2GB count=2097152 bs=1024 &&
-> +	echo "/2GB filter=largefile" >.gitattributes &&
-> +	git add 2GB 2>err &&
-> +	! grep -q "error" err
-> +'
-> +
->  test_done
-> diff --git a/wrapper.c b/wrapper.c
-> index 6a015de..2a2f496 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -139,6 +139,14 @@ ssize_t xread(int fd, void *buf, size_t len)
->  {
->  	ssize_t nr;
->  	while (1) {
-> +#ifdef __APPLE__
-> +		const size_t twoGB = (1l << 31);
-> +		/* len >= 2GB immediately fails on Mac OS X with EINVAL when
-> +		 * reading from pipe. */
-> +		if (len >= twoGB) {
-> +			len = twoGB - 1;
-> +		}
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigC3817BDDAF6101ECF2C626AD
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-Please don't use unnecessary curly braces here (see
-Documentation/CodingGuidelines).
+On 08/17/2013 05:10 PM, Jules wrote:
+> I am running a Mac, v 10.6.8
+>=20
+> It's some animal, I really don't follow this, like a lion (I think.)
+>=20
+> Now, this mac is the only machine I let touch the internet.  So obvious=
+ly I have to make git work here.  I have gnu gcc installed.  Is their sou=
+rce code I can compile (see, I'm not only paranoid but old. not a great c=
+ombination, I am learning...)
+>=20
 
-> +#endif
->  		nr = read(fd, buf, len);
->  		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
->  			continue;
-> -- 
-> 1.8.4.rc3.5.gfcb973a
+Jules,
+
+you'll find downloads for git
+at http://git-scm.com/downloads
+There you can download prebuild packages.
+
+However if you want to go by the source, and
+have not git already... (git is maintained using git,
+so if you don't have git, getting git, well before it gets
+complicated):
+At https://github.com/gitster/git you'll find a button
+at the right lower side "Download as zip file", which
+contains the sources.
+
+These should be compilable using gcc. Make sure
+to read the INSTALL file, it contains hints on which
+other software apart from gcc is needed to setup git using
+the sourcecode.
+
+Stefan
+
+
+
+--------------enigC3817BDDAF6101ECF2C626AD
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJSD5vbAAoJEJQCPTzLflhqCZIQAOBse1b0e9VC2gTedhMt24uR
+ceEcNFWNL3+d0rOVWpY9go34Erg9+1/76eBFAF9nitn2hda1GUMXZXG5MoADZcYw
+YCzLbZCbhMFyoIovRewoXyUoOM15PNnHkUEcGQuK3HNADp/QeMCDGBH91oN2izLc
+EMM49Kq1+V6FjrCx9BjSz6kTo+lCUSxe0XV/ivsj1kgCDzBZIT4Le5hi6i3BkNXl
+0VwqhLFO9PbrTFjuPWCI4AahPHJnEsmFWDpg35eoBy2prJaO4c9Yol5Q8O+Ldcax
+YWllmHY72UjVHkb/l5pb/pmKwOuguXqnHm8zRDKYeb6zZIUKoZtoHg7QeQuIlxAx
+LjaD2IXv+F7mcwemUCWEaDpRoiNnJw/qzwsoxT7M0U17cywVm9jhLJr/vlIFxh5w
+XWAc3eurxRdPmrS8ESEsjjL3mPRiN0iEqIwd6NOv9zpWrlqsegdvqkt1dQVvN/3a
+8495jv74vlCzbeukVYHuK90i0FFknZ2f94uoalOd51LT38KS2KgpFIXsHS50c3FP
+r6wdxlRm2B8/zyGAXNA2isEVnvzVJ9585gMTkLLdhEtWxH2cXLOnkpp7OXanwqOs
+CcOnVvilxKKRbE6K6LswI0NzpFPuezbxCCV5v1x6ls9M4ZUg71NYcGU8NF0auVjT
+/DWYhGE07irtIKugGAWO
+=vzIr
+-----END PGP SIGNATURE-----
+
+--------------enigC3817BDDAF6101ECF2C626AD--
