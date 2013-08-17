@@ -1,115 +1,135 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] create_delta_index: simplify condition always evaluating to true
-Date: Sat, 17 Aug 2013 07:58:39 +0100
-Organization: OPDS
-Message-ID: <E5FB18126E7F42D79E085F3924AC9E07@PhilipOakley>
-References: <EE5B338564E14F89B349550B37741AFF@PhilipOakley> <1376688157-8374-1-git-send-email-stefanbeller@googlemail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH v2] bash prompt: test the prompt with newline in repository
+ path
+Date: Sat, 17 Aug 2013 11:01:58 +0200
+Message-ID: <1376730118-11102-1-git-send-email-szeder@ira.uka.de>
+References: <520E7A81.5080302@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <sunshine@sunshineco.com>, <nico@fluxnic.net>
-To: "Stefan Beller" <stefanbeller@googlemail.com>,
-	<git@vger.kernel.org>, <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 17 09:04:14 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 17 11:02:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VAaYX-000840-VF
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 09:04:14 +0200
+	id 1VAcOl-0002a1-T2
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Aug 2013 11:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751820Ab3HQG6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Aug 2013 02:58:40 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:36204 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751721Ab3HQG6j (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Aug 2013 02:58:39 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AncNAKAdD1JOl3GZ/2dsb2JhbABbgwZgiH62SQQEAYEhF3RoAQGBHwEBFAEEAQEEAQgBAS4eAQEhCwIDBQIBAxUMJRQBBBoGBxcGARIIAgECAwGFOAcBgiANAwkKsEINiF6NVYEsEg2BMIMidwOIdYYOhQqNf4ctgTeBZjuBLAIHFgE
-X-IPAS-Result: AncNAKAdD1JOl3GZ/2dsb2JhbABbgwZgiH62SQQEAYEhF3RoAQGBHwEBFAEEAQEEAQgBAS4eAQEhCwIDBQIBAxUMJRQBBBoGBxcGARIIAgECAwGFOAcBgiANAwkKsEINiF6NVYEsEg2BMIMidwOIdYYOhQqNf4ctgTeBZjuBLAIHFgE
-X-IronPort-AV: E=Sophos;i="4.89,900,1367967600"; 
-   d="scan'208";a="585775769"
-Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 17 Aug 2013 07:58:37 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752339Ab3HQJCL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Aug 2013 05:02:11 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:62201 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752148Ab3HQJCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Aug 2013 05:02:10 -0400
+Received: from localhost6.localdomain6 (f051130156.adsl.alicedsl.de [78.51.130.156])
+	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
+	id 0MXXss-1VdmXZ3Aco-00WYCv; Sat, 17 Aug 2013 11:02:08 +0200
+X-Mailer: git-send-email 1.8.4.rc3.31.g0f99442
+In-Reply-To: <520E7A81.5080302@kdbg.org>
+X-Provags-ID: V02:K0:54VDOOOxCWbvhfQSiMdWuDxRF1MOI625EoZScxRQ2ne
+ eXGNRBc0WuGNzdovmwRbXMyI2rlwAg9fHKBNjXkyjj8tBK8xmF
+ Zg+W7YOr5Wb2yK70iUnFc9R8QYHajh6XbbDm2pOsXrHvEoIaUI
+ tPy1YwLM4BKNCaw7omfE3LtuUUNp1LkntYxnemeknozodiiSjI
+ oqEQ8CXSBJcN+uHbtRm+qC5yxtRdgWe+/hD/IfLpJMq1Hcv+oX
+ yPG14qpxGciS9xOCRTpTRGWXZ4+F9RBT76a1+ACdmkYo2RMy4l
+ 8rqVFWrAHRg39dMBoQcUOG11G5yduN1PffuOGZjlZwbnLfMcCW
+ 9+RVF7UYK0cbVS3ByYPHuWIwzfIAojhUp0tH5eqUrVEV/7aQvy
+ 2MyfS7aiqmJVQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232454>
 
-From: "Stefan Beller" <stefanbeller@googlemail.com>
-> The code sequence  ' (1u << i) < hsize && i < 31 ' is a multi step
-> process, whose first step requires that 'i' is already less that 31,
-> otherwise the result (1u << i)  is undefined (and  'undef_val < hsize'
-> can therefore be assumed to be 'false'), and so the later test  i < 31
-> can always be optimized away as dead code ('i' is already less than 
-> 31,
-> or the short circuit 'and' applies).
->
-> So we need to get rid of that code. One way would be to exchange the
-> order of the conditions, so the expression 'i < 31 && (1u << i) < 
-> hsize'
-> would remove that optimized unstable code already.
->
-> However when checking the previous lines in that function, we can 
-> deduce
-> that 'hsize' must always be smaller than (1u<<31), since 506049c7df2c6
-> (fix >4GiB source delta assertion failure), because 'entries' is
-> capped at an upper bound of 0xfffffffeU, so 'hsize' contains a maximum
-> value of 0x3fffffff, which is smaller than (1u<<31), so the value of
-> 'i' will never be larger than 31 and we can remove that condition
-> entirely.
->
-> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
-> Acked-by: Nicolas Pitre <nico@fluxnic.net>
-> ---
+Newlines in the path to a git repository were not an issue for the
+git-specific bash prompt before commit efaa0c1532 (bash prompt:
+combine 'git rev-parse' executions in the main code path, 2013-06-17),
+because the path returned by 'git rev-parse --git-dir' was directly
+stored in a variable, and this variable was later always accessed
+inside double quotes.
 
-Acked-by: Philip Oakley philipoakley@iee.org
+Newlines are not an issue after commit efaa0c1532 either, but it's
+more subtle.  Since efaa0c1532 we use the following single 'git
+rev-parse' execution to query various info about the repository:
 
-If there are concens that future upgrades may make the (i < 31) test a 
-necessity that it should be added before the &&. If the compiler is able 
-to determine it's dead code in that case then that's OK, at least it 
-would be future proof. Then again it's probably not likely in the near 
-future.
+  git rev-parse --git-dir --is-inside-git-dir \
+          --is-bare-repository --is-inside-work-tree
 
->
-> Philip,
-> thanks for the wording of your mail. I get quickly derailed from the
-> warnings of the STACK tool and write the other commit messages than
-> I ought to write. I think the wording of your mail nails it pretty
-> good, so I put it in the commit message as well.
->
-> Stefan
->
->
-> diff-delta.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/diff-delta.c b/diff-delta.c
-> index 93385e1..3797ce6 100644
-> --- a/diff-delta.c
-> +++ b/diff-delta.c
-> @@ -155,7 +155,7 @@ struct delta_index * create_delta_index(const void 
-> *buf, unsigned long bufsize)
->  entries = 0xfffffffeU / RABIN_WINDOW;
->  }
->  hsize = entries / 4;
-> - for (i = 4; (1u << i) < hsize && i < 31; i++);
-> + for (i = 4; (1u << i) < hsize; i++);
->  hsize = 1 << i;
->  hmask = hsize - 1;
->
-> -- 
-> 1.8.4.rc3.2.g2c2b664
->
->
-Philip 
+The results to these queries are separated by a newline character in
+the output, e.g.:
+
+  /home/szeder/src/git/.git
+  false
+  false
+  true
+
+A newline in the path to the git repository could potentially break
+the parsing of these results and ultimately the bash prompt, unless
+the parsing is done right.  Commit efaa0c1532 got it right, as I
+consciously started parsing 'git rev-parse's output from the end,
+where each record is a single line containing either 'true' or 'false'
+or, after e3e0b9378b (bash prompt: combine 'git rev-parse' for
+detached head, 2013-06-24), the abbreviated commit object name, and
+all what remains at the beginning is the path to the git repository,
+no matter how many lines it is.
+
+This subtlety really warrants its own test, especially since I didn't
+explain it in the log message or in an in-code comment back then, so
+add a test to excercise the prompt with newline characters in the path
+to the repository.  Guard this test with the FUNNYNAMES prerequisite,
+because not all filesystems support newlines in filenames.  Note that
+'git rev-parse --git-dir' prints '.git' or '.' when at the top of the
+worktree or the repository, respectively, and only prints the full
+path to the repository when in a subdirectory, hence the need for
+changing into a subdir in the test.
+
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+
+Added FUNNYNAMES prerequisite and Eric's typofix.
+
+ t/t9903-bash-prompt.sh | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 3c3e4e8c38..59f875e830 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -61,6 +61,29 @@ test_expect_success 'prompt - unborn branch' '
+ 	test_cmp expected "$actual"
+ '
+=20
++repo_with_newline=3D'repo
++with
++newline'
++
++if mkdir "$repo_with_newline" 2>/dev/null
++then
++	test_set_prereq FUNNYNAMES
++else
++	say 'Your filesystem does not allow newlines in filenames.'
++fi
++
++test_expect_success FUNNYNAMES 'prompt - with newline in path' '
++	printf " (master)" >expected &&
++	git init "$repo_with_newline" &&
++	test_when_finished "rm -rf \"$repo_with_newline\"" &&
++	mkdir "$repo_with_newline"/subdir &&
++	(
++		cd "$repo_with_newline/subdir" &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
+ test_expect_success 'prompt - detached head' '
+ 	printf " ((%s...))" $(git log -1 --format=3D"%h" --abbrev=3D13 b1^) >=
+expected &&
+ 	test_config core.abbrev 13 &&
+--=20
+1.8.4.rc3.31.g0f99442
