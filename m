@@ -1,92 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tag: Use OPT_BOOL instead of OPT_BOOLEAN to allow one action multiple times
-Date: Sun, 18 Aug 2013 02:27:11 -0700
-Message-ID: <xmqqioz3e4cw.fsf@gitster.dls.corp.google.com>
-References: <1375207251-4998-1-git-send-email-stefanbeller@googlemail.com>
-	<7va9l3x34f.fsf@alter.siamese.dyndns.org>
-	<51F83010.2060804@googlemail.com>
-	<7vfvuvvg0r.fsf@alter.siamese.dyndns.org>
-	<51F8E81E.6000705@googlemail.com>
-	<7vbo5itjfl.fsf@alter.siamese.dyndns.org> <520F9051.4040600@gmail.com>
-	<20130817203458.GB2904@elie.Belkin>
+From: Zhan Jianyu <nasa4836@gmail.com>
+Subject: Does Git now have any C struct version history tracking mechanism?
+Date: Sun, 18 Aug 2013 18:33:12 +0800
+Message-ID: <CAHz2CGW_xR4Q193h2itCELdXEpoAxetj324ATstALHM03cSvFg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefano Lattarini <stefano.lattarini@gmail.com>,
-	Stefan Beller <stefanbeller@googlemail.com>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 18 11:35:12 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 18 12:34:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VAzO9-0005z1-Ng
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 11:35:10 +0200
+	id 1VB0J9-0004G6-0s
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 12:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752633Ab3HRJdE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Aug 2013 05:33:04 -0400
-Received: from mail-yh0-f74.google.com ([209.85.213.74]:58165 "EHLO
-	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751600Ab3HRJdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Aug 2013 05:33:03 -0400
-Received: by mail-yh0-f74.google.com with SMTP id z20so190052yhz.5
-        for <git@vger.kernel.org>; Sun, 18 Aug 2013 02:33:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=zNynkErC9RwWEobD+qJ5Ig6yESq8EJMg56MniGbWnoU=;
-        b=KTEC/oOZqg5v4ONgVkLFEJZfV3OmByt/5JlRV4ag7IrPC5EKtYkhTKNjFcy2XTQhPk
-         7SWpAY3Bw2uCbgtUZ0MT3rUHsqqlsUZhFWBT6zX86cVHQMXOOAAwJknYSDGanrwn4XrG
-         SrqIbgiqsIZqqnJmQfQTuSLaRQzsTVZxRC7tyJ4I2FhkYbDkezNRL9jLBASZC59HALOz
-         +ZCXX3pkq4kfbawAKAiZJaLuJcvhc2XUlE6ofkWHtyLi6AkBc0UNjRaswwjhCxxuWjc1
-         GoxGRZkx2PUSG60Et4Pxp2GW2kIV0nMLKPRlDj6RQ+QjO/cvaOGb4a1HWtzP5qUnNgyG
-         cqqg==
-X-Received: by 10.236.4.69 with SMTP id 45mr2236456yhi.20.1376818031991;
-        Sun, 18 Aug 2013 02:27:11 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id g50si390626yhd.0.1969.12.31.16.00.00
-        (version=TLSv1.1 cipher=AES128-SHA bits=128/128);
-        Sun, 18 Aug 2013 02:27:11 -0700 (PDT)
-Received: from gitster.dls.corp.google.com (gitster.dls.corp.google.com [172.25.228.236])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id CE8DE5A41A0;
-	Sun, 18 Aug 2013 02:27:11 -0700 (PDT)
-Received: by gitster.dls.corp.google.com (Postfix, from userid 110493)
-	id 148EB6BD7D; Sun, 18 Aug 2013 02:27:11 -0700 (PDT)
-In-Reply-To: <20130817203458.GB2904@elie.Belkin> (Jonathan Nieder's message of
-	"Sat, 17 Aug 2013 13:34:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1753076Ab3HRKdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Aug 2013 06:33:54 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:60330 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752650Ab3HRKdx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Aug 2013 06:33:53 -0400
+Received: by mail-wi0-f173.google.com with SMTP id en1so2157599wid.12
+        for <git@vger.kernel.org>; Sun, 18 Aug 2013 03:33:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=UZdR2Tyo1Kas9CN9cjDn8LBI1Ixsxfe/2yKZAIBjSUU=;
+        b=JordTNK4XAdgNvdogXg67WUCFXXK2yBgzF7r6TaJC8VPKetlY7/3HfpnReDr9yjx1u
+         2JcEwMIrhr2mNkvt7dgv/FRC89DiAyfU5Vc5ybQ9vKUfpCBE4Q8GTGn9gMFLNYGMWOJQ
+         SLASQMQ3tjeqfTEgferSPbyljuTx94OjAUvF/eGwGwt7ck5vqYpFQ3kSiyMvTaU6QLgr
+         0Ffgyv1ICsU40pDt6cEkIQ+97BiPJT23g0uFrAyPcqQueb3Tj4V8LHopPxhbQ3FmCiEP
+         +DzYHnJsM3Yla15p6EMJYhHuLPu6ap/0W8OOezYLBWy9jxjf5hOFv7D+s+Bkx1S8o1lx
+         pExw==
+X-Received: by 10.180.85.72 with SMTP id f8mr4244174wiz.0.1376822032593; Sun,
+ 18 Aug 2013 03:33:52 -0700 (PDT)
+Received: by 10.194.80.42 with HTTP; Sun, 18 Aug 2013 03:33:12 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232473>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi, all.
 
-> Stefano Lattarini wrote:
->
->> Why not encourage the use of a standardized '--action' option instead?
->
-> Because it's an unpleasant UI. :)
->
->> This can work with lesser compatibility headaches for both the commands
->> taking mode options and the commands taking mode words:
->>
->>   "git submodule init"   becomes  "git submodule --action=init"
->>   "git tag --delete TAG" becomes  "git tag --action=delete TAGNAME"
->
-> That looks like a bad change in both cases --- it involves more
-> typing without much upside to go along with it.  But
->
-> 	"git submodule init"   gains synonym "git submodule --init"
-> 	"git tag --delete TAG" stays as      "git tag --delete TAG"
->
-> looks fine to me.
+* Background
 
-I agree 100% with the above that illustrates why --action=<name> is
-a bad idea.  As I already said, adding action-option like --init, if
-doing so might help people, I am not opposed to it.
+  Such a requirement came into my mind when I am tracking a gloomy C
+struct , with lengthy list of elements which are either elaborated or
+opaque. So I use git blame to track it down and found that its
+original version is quite simple and intuitive. So I think I could
+just slice out every snapshot of this struct, reading every changelog
+, to get a better knowledge of what it is and why it should be like
+this.
 
-Thanks.
+It seems quite helpful but the process is quite cumbersome. So I
+wonder if there is already some mechanism fulfilling my requirement in
+Git.  If it doesn't,  would it be worthy adding one ?
+
+Thanks
+
+
+
+
+--
+
+Regards,
+Zhan Jianyu
