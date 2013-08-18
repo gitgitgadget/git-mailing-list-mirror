@@ -1,150 +1,90 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 11/24] grep.c: use index api
-Date: Sun, 18 Aug 2013 21:42:00 +0200
-Message-ID: <1376854933-31241-12-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH v3 10/24] make sure partially read index is not changed
+Date: Sun, 18 Aug 2013 21:41:59 +0200
+Message-ID: <1376854933-31241-11-git-send-email-t.gummerer@gmail.com>
 References: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com>
 Cc: trast@inf.ethz.ch, mhagger@alum.mit.edu, gitster@pobox.com,
 	pclouds@gmail.com, robin.rosenberg@dewire.com,
 	sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk,
 	t.gummerer@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 18 21:48:53 2013
+X-From: git-owner@vger.kernel.org Sun Aug 18 21:48:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VB8xz-0003xJ-R7
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 21:48:48 +0200
+	id 1VB8xz-0003xJ-AM
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 21:48:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754863Ab3HRTsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Aug 2013 15:48:41 -0400
-Received: from mail-wg0-f53.google.com ([74.125.82.53]:35925 "EHLO
-	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754647Ab3HRTsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Aug 2013 15:48:40 -0400
-Received: by mail-wg0-f53.google.com with SMTP id c11so2968953wgh.32
-        for <git@vger.kernel.org>; Sun, 18 Aug 2013 12:48:39 -0700 (PDT)
+	id S1754855Ab3HRTsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Aug 2013 15:48:39 -0400
+Received: from mail-we0-f182.google.com ([74.125.82.182]:47533 "EHLO
+	mail-we0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754647Ab3HRTsh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Aug 2013 15:48:37 -0400
+Received: by mail-we0-f182.google.com with SMTP id q59so2837478wes.41
+        for <git@vger.kernel.org>; Sun, 18 Aug 2013 12:48:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=v2et2lfoNuR4nrbl9XHgpyRZ9siQP7hVxqv6DtWWGYM=;
-        b=VOnrCWBvWbS9cs1kP3Qlag8xZDUf9oUEYqmKqrBGJKAIMet8Ofz+jOwaPTdieahZIQ
-         6jixGQCoFeDAtN7v4lPMOWLlV0wU2/C8JT1PEKMhzwjGPhPr5kHQkl+tbJ3iBrJ7QtLq
-         yH6aBsiMLOHesrqnY3IztBAVyQmgkctyj89Y+1eYlBDXHztoHEVU9yqdNornUcR8NBEB
-         XUCRiD3vFi+xkPEH0F1Kl5dtuUBIWFK3m/ThO6OBVR0u7N9zPpyFYmST9ESrJx713+lE
-         Tc53AJR7JXaD/VjLvzbQaXJwroTTcpZwykjOTK9Fe+5FWHFzoLklNDBAJ+U0+P/rYsb/
-         yClg==
-X-Received: by 10.194.240.197 with SMTP id wc5mr5996108wjc.23.1376855319926;
-        Sun, 18 Aug 2013 12:48:39 -0700 (PDT)
+        bh=QBI0GTFW05XysCwRGc4iYOjchhfi7opaZOW+5/w4zoU=;
+        b=NLoP89uqUYzV92uvbbrFbYnQpqjbQ/gB9WTRNOGVdtTVWVqRn/dmV6M2dmAvBZ0Noi
+         sQgNQbv3hY/RzgO3553MZCFfdnUFUsjUeDIPaIFOxmNFPz76VwD7gO3hDyYmGBA/oGIl
+         h94BmX3f7Cbb4GTOYOFp1xbY/p+AYAqMXDkv8Y3qQkMxiavUgZm5pfyakeolD6u3Qym4
+         Vd+W1su/hLTca4ts4hjyb3q3h+UuW2qzO3yWW/KBFNcsyXwMA0zKJXmqKeRr2pI5Rctt
+         sMp0lB2AiLNcJbT4D3vjjGE77V86blXtg9rZHxSeoyYwZB964Sv8INg2ndSx5A6A4P3g
+         /pkA==
+X-Received: by 10.180.187.2 with SMTP id fo2mr5472677wic.65.1376855316680;
+        Sun, 18 Aug 2013 12:48:36 -0700 (PDT)
 Received: from localhost (host105-104-dynamic.0-79-r.retail.telecomitalia.it. [79.0.104.105])
-        by mx.google.com with ESMTPSA id bt8sm11764247wib.8.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id hb2sm13382779wib.0.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 18 Aug 2013 12:48:39 -0700 (PDT)
+        Sun, 18 Aug 2013 12:48:35 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.4.1231.g9fbf354.dirty
 In-Reply-To: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232500>
+
+A partially read index file currently cannot be written to disk.  Make
+sure that never happens, by erroring out when a caller tries to write a
+partially read index.  Do the same when trying to re-read a partially
+read index without having discarded it first to avoid loosing any
+information.
+
+Forcing the caller to load the right part of the index file instead of
+re-reading it when changing it, gives a bit of a performance advantage,
+by avoiding to read parts of the index twice.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- builtin/grep.c | 69 +++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 35 insertions(+), 34 deletions(-)
+ read-cache.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 7dc0389..1114fe8 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -369,41 +369,31 @@ static void run_pager(struct grep_opt *opt, const char *prefix)
- 	free(argv);
- }
+diff --git a/read-cache.c b/read-cache.c
+index 38b9a04..7a27f9b 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1332,6 +1332,8 @@ int read_index_filtered_from(struct index_state *istate, const char *path,
+ 	void *mmap;
+ 	size_t mmap_size;
  
--static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec, int cached)
-+struct grep_opts {
-+	struct grep_opt *opt;
-+	const struct pathspec *pathspec;
-+	int cached;
-+	int hit;
-+};
-+
-+static int grep_cache(struct cache_entry *ce, void *cb_data)
++	if (istate->filter_opts)
++		die("BUG: Can't re-read partially read index");
+ 	errno = EBUSY;
+ 	if (istate->initialized)
+ 		return istate->cache_nr;
+@@ -1455,6 +1457,8 @@ void update_index_if_able(struct index_state *istate, struct lock_file *lockfile
+ 
+ int write_index(struct index_state *istate, int newfd)
  {
--	int hit = 0;
--	int nr;
--	read_cache();
-+	struct grep_opts *opts = cb_data;
- 
--	for (nr = 0; nr < active_nr; nr++) {
--		const struct cache_entry *ce = active_cache[nr];
--		if (!S_ISREG(ce->ce_mode))
--			continue;
--		if (!match_pathspec_depth(pathspec, ce->name, ce_namelen(ce), 0, NULL))
--			continue;
--		/*
--		 * If CE_VALID is on, we assume worktree file and its cache entry
--		 * are identical, even if worktree file has been modified, so use
--		 * cache version instead
--		 */
--		if (cached || (ce->ce_flags & CE_VALID) || ce_skip_worktree(ce)) {
--			if (ce_stage(ce))
--				continue;
--			hit |= grep_sha1(opt, ce->sha1, ce->name, 0, ce->name);
--		}
--		else
--			hit |= grep_file(opt, ce->name);
--		if (ce_stage(ce)) {
--			do {
--				nr++;
--			} while (nr < active_nr &&
--				 !strcmp(ce->name, active_cache[nr]->name));
--			nr--; /* compensate for loop control */
--		}
--		if (hit && opt->status_only)
--			break;
--	}
--	return hit;
-+	if (!S_ISREG(ce->ce_mode))
-+		return 0;
-+	/*
-+	 * If CE_VALID is on, we assume worktree file and its cache entry
-+	 * are identical, even if worktree file has been modified, so use
-+	 * cache version instead
-+	 */
-+	if (opts->cached || (ce->ce_flags & CE_VALID) || ce_skip_worktree(ce))
-+		opts->hit |= grep_sha1(opts->opt, ce->sha1, ce->name, 0, ce->name);
-+	else
-+		opts->hit |= grep_file(opts->opt, ce->name);
-+	if (opts->hit && opts->opt->status_only)
-+		return 1;
-+	return 0;
++	if (istate->filter_opts)
++		die("BUG: index: cannot write a partially read index");
+ 	return istate->ops->write_index(istate, newfd);
  }
  
- static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
-@@ -897,10 +887,21 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	} else if (0 <= opt_exclude) {
- 		die(_("--[no-]exclude-standard cannot be used for tracked contents."));
- 	} else if (!list.nr) {
-+		struct grep_opts opts;
-+		struct filter_opts *filter_opts = xmalloc(sizeof(*filter_opts));
-+
- 		if (!cached)
- 			setup_work_tree();
- 
--		hit = grep_cache(&opt, &pathspec, cached);
-+		memset(filter_opts, 0, sizeof(*filter_opts));
-+		filter_opts->pathspec = &pathspec;
-+		opts.opt = &opt;
-+		opts.pathspec = &pathspec;
-+		opts.cached = cached;
-+		opts.hit = 0;
-+		read_cache_filtered(filter_opts);
-+		for_each_cache_entry(grep_cache, &opts);
-+		hit = opts.hit;
- 	} else {
- 		if (cached)
- 			die(_("both --cached and trees are given."));
 -- 
 1.8.3.4.1231.g9fbf354.dirty
