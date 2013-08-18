@@ -1,68 +1,99 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
 Subject: Re: [RFC PATCHv3] repack: rewrite the shell script in C.
-Date: Sun, 18 Aug 2013 08:41:51 -0700
-Message-ID: <DC7C72E5-8B52-48B2-B10B-1095118865B1@gmail.com>
+Date: Sun, 18 Aug 2013 18:44:46 +0200
+Message-ID: <5210F9FE.1080801@web.de>
 References: <5210DB77.3090004@googlemail.com> <1376836587-25248-1-git-send-email-stefanbeller@googlemail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, l.s.r@web.de, mfick@codeaurora.org,
-	apelisse@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	pclouds@gmail.com, iveqy@iveqy.com, gitster@pobox.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, mfick@codeaurora.org, apelisse@gmail.com,
+	Matthieu.Moy@grenoble-inp.fr, pclouds@gmail.com, iveqy@iveqy.com,
+	gitster@pobox.com
 To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 18 17:42:02 2013
+X-From: git-owner@vger.kernel.org Sun Aug 18 18:45:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VB57A-0002do-85
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 17:42:00 +0200
+	id 1VB66P-0001LJ-B0
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 18:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752185Ab3HRPl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Aug 2013 11:41:56 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:39123 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751301Ab3HRPlz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Aug 2013 11:41:55 -0400
-Received: by mail-pb0-f41.google.com with SMTP id rp2so3982879pbb.14
-        for <git@vger.kernel.org>; Sun, 18 Aug 2013 08:41:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=15xGiscZ+QMzkT650iOoVgeJGOC/eKQ41LZYqmxD6NI=;
-        b=gXiJ9WpBCsCiSEaNrvKI21eyjlB2EbFEjmt7uf18UZSJvbXiilR0fOSgCqLnVCWpMv
-         BoEutT69RjOkeXWCn0B/N2L/kMJsiNO7g8aCOWTzzl0ryyOEX7f5yBfLkwHTsHrzkPLh
-         7wl+r39MscN/ScWdCI89rPXJMN4cNuVlxAamVCC9tWbxCRJxgsUxMXvthwBsea/LznKe
-         PoJwceXZqSpZwgxCU4OQXImo38bObtLv/KS4F2U9TqQ5YQEr0TyJ8lKGe/IbyDgdkqag
-         z2yvQK6x0Qxml5MyCK9d0rapzIqjJ3x4cufT+5MUfG9ZLAcQZvkPganTGLSVMjnmntWh
-         Qkqw==
-X-Received: by 10.67.23.71 with SMTP id hy7mr8476894pad.99.1376840515280;
-        Sun, 18 Aug 2013 08:41:55 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id ai6sm10305454pad.15.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 18 Aug 2013 08:41:54 -0700 (PDT)
+	id S1753957Ab3HRQpK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Aug 2013 12:45:10 -0400
+Received: from mout.web.de ([212.227.17.12]:51143 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753299Ab3HRQpJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Aug 2013 12:45:09 -0400
+Received: from [192.168.2.102] ([79.250.178.242]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MUFGo-1VbwOG1MbS-00Qwpq for <git@vger.kernel.org>;
+ Sun, 18 Aug 2013 18:45:07 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
 In-Reply-To: <1376836587-25248-1-git-send-email-stefanbeller@googlemail.com>
-X-Mauler: Craptastic (2.936)
+X-Provags-ID: V03:K0:VXkLJItgzdso3id9Zdhh+knLlFuWxOFHi5q2KOT721zykS43f0t
+ JyzMd1JT0MP7Faga/1jTS+YGInCqEh3ChpXgtDM0jyraUAAQT64xOHEBoSmmTcd86Jwn5GJ
+ 7vKeqplWQp8vzoMLYn2urnzSpgBy0D8U4iSZ0dBbZTjt6d2F4PkpA/wKUzVov5ZpDVy+8u7
+ Xc6hPHoWefUgOApgHM6bw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232481>
 
-On Aug 18, 2013, at 07:36, Stefan Beller wrote:
+> +static void remove_temporary_files() {
+> +	DIR *dir;
+> +	struct dirent *e;
+> +	char *prefix, *path;
+> +
+> +	prefix =3D mkpathdup(".tmp-%d-pack", getpid());
+> +	path =3D mkpathdup("%s/pack", get_object_directory());
+> +
+> +	dir =3D opendir(path);
+> +	while ((e =3D readdir(dir)) !=3D NULL) {
+> +		if (!prefixcmp(e->d_name, prefix)) {
+> +			struct strbuf fname =3D STRBUF_INIT;
+> +			strbuf_addf(&fname, "%s/%s", path, e->d_name);
+> +			unlink(strbuf_detach(&fname, NULL));
 
-> +			fprintf(stderr,
-> +				"WARNING: Some packs in use have been renamed by\n"
-> +				"WARNING: prefixing old- to their name, in order to\n"
-> +				"WARNING: replace them with the new version of the\n"
-> +				"WARNING: file.  But the operation failed, and\n"
-> +				"WARNING: attempt to rename them back to their\n"
-> +				"WARNING: original names also failed.\n"
+I'm not sure I like the memory allocation done here for each file to be
+deleted, but it's probably not worth worrying about.
 
-Bad grammar "But the operation failed, and attempt to rename them ...".
+> +void get_pack_sha1_list(char *packdir, struct string_list *sha1_list=
+)
+> +{
+> +	DIR *dir;
+> +	struct dirent *e;
+> +	char *path, *suffix;
+> +
+> +	path =3D mkpathdup("%s/pack", get_object_directory());
+> +	suffix =3D ".pack";
+> +
+> +	dir =3D opendir(path);
+> +	while ((e =3D readdir(dir)) !=3D NULL) {
+> +		if (!suffixcmp(e->d_name, suffix)) {
+> +			char *buf, *sha1;
+> +			buf =3D xmemdupz(e->d_name, strlen(e->d_name));
+> +			buf[strlen(e->d_name) - strlen(suffix)] =3D '\0';
+> +			if (strlen(e->d_name) - strlen(suffix) > 40) {
+> +				sha1 =3D &buf[strlen(e->d_name) - strlen(suffix) - 40];
+> +				string_list_append_nodup(sha1_list, sha1);
 
-How about "But the operation failed, and the attempt to rename  
-them ..." instead.
+Unless sha1 =3D=3D buf, this will crash when that string_list is freed
+because sha1 was not returned by malloc.  If it doesn't crash for
+you then I guess sha1_list is never freed. :)  How about just
+taking the part of d_name we need, like this?
+
+			size_t len =3D strlen(e->d_name) - strlen(suffix);
+			if (len > 40) {
+				char *sha1 =3D xmemdupz(e->d_name + len - 40, 40);
+				string_list_append_nodup(sha1_list, sha1);
+			}
+
+> +			} else {
+> +				/*TODO: what should happen to pack files having no 40 char sha1 =
+specifier?*/
+
+What does the current code do with them?  From a quick glance it
+looks like it deletes them in the end, right?
+
+Ren=E9
