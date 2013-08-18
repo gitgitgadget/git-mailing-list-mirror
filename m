@@ -1,126 +1,150 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 12/24] ls-files.c: use index api
-Date: Sun, 18 Aug 2013 21:42:01 +0200
-Message-ID: <1376854933-31241-13-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH v3 11/24] grep.c: use index api
+Date: Sun, 18 Aug 2013 21:42:00 +0200
+Message-ID: <1376854933-31241-12-git-send-email-t.gummerer@gmail.com>
 References: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com>
 Cc: trast@inf.ethz.ch, mhagger@alum.mit.edu, gitster@pobox.com,
 	pclouds@gmail.com, robin.rosenberg@dewire.com,
 	sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk,
 	t.gummerer@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 18 21:48:52 2013
+X-From: git-owner@vger.kernel.org Sun Aug 18 21:48:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VB8y0-0003xJ-BZ
+	id 1VB8xz-0003xJ-R7
 	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 21:48:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754873Ab3HRTsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Aug 2013 15:48:45 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:52557 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754647Ab3HRTso (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Aug 2013 15:48:44 -0400
-Received: by mail-wg0-f47.google.com with SMTP id j13so2835517wgh.2
-        for <git@vger.kernel.org>; Sun, 18 Aug 2013 12:48:43 -0700 (PDT)
+	id S1754863Ab3HRTsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Aug 2013 15:48:41 -0400
+Received: from mail-wg0-f53.google.com ([74.125.82.53]:35925 "EHLO
+	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754647Ab3HRTsk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Aug 2013 15:48:40 -0400
+Received: by mail-wg0-f53.google.com with SMTP id c11so2968953wgh.32
+        for <git@vger.kernel.org>; Sun, 18 Aug 2013 12:48:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nd7VDZ2z/iJsOSB006lvoPkrAJW1+8WRjZkV2pP0Ni0=;
-        b=kgilggXEelg4RE3PKy29RD9TPomlejznAAdlcXSdawBWiseqGJibBOARuMJ6BDpfUG
-         fNL7Lo9et9qIer4aIcVvMtV8J1PUv7idz24hLXnJmm32q5gD3IhijFVLXsCTYAx5lSib
-         08FkSWcM5aHZKFN67ptog5+lXQiQM/p2Mt8SCc17fteOeQcnCZ0Dt6mVTZ8s+Ymsy1xi
-         /w0NzOayyRu2YzGqR88TaJxg1G9UVlE76l2P3J2DoVGmXGCQTh9xFfJP7wrSFI83wX08
-         H+OIDFtq2lGYQ1UXlRvD9O3LjIeNxWeaLPhM5+wsGgaBQ8aqvXGY2zQFiNPqm/FtD4QO
-         nLHQ==
-X-Received: by 10.194.201.202 with SMTP id kc10mr5886139wjc.1.1376855323057;
-        Sun, 18 Aug 2013 12:48:43 -0700 (PDT)
+        bh=v2et2lfoNuR4nrbl9XHgpyRZ9siQP7hVxqv6DtWWGYM=;
+        b=VOnrCWBvWbS9cs1kP3Qlag8xZDUf9oUEYqmKqrBGJKAIMet8Ofz+jOwaPTdieahZIQ
+         6jixGQCoFeDAtN7v4lPMOWLlV0wU2/C8JT1PEKMhzwjGPhPr5kHQkl+tbJ3iBrJ7QtLq
+         yH6aBsiMLOHesrqnY3IztBAVyQmgkctyj89Y+1eYlBDXHztoHEVU9yqdNornUcR8NBEB
+         XUCRiD3vFi+xkPEH0F1Kl5dtuUBIWFK3m/ThO6OBVR0u7N9zPpyFYmST9ESrJx713+lE
+         Tc53AJR7JXaD/VjLvzbQaXJwroTTcpZwykjOTK9Fe+5FWHFzoLklNDBAJ+U0+P/rYsb/
+         yClg==
+X-Received: by 10.194.240.197 with SMTP id wc5mr5996108wjc.23.1376855319926;
+        Sun, 18 Aug 2013 12:48:39 -0700 (PDT)
 Received: from localhost (host105-104-dynamic.0-79-r.retail.telecomitalia.it. [79.0.104.105])
-        by mx.google.com with ESMTPSA id fz8sm11976200wic.0.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id bt8sm11764247wib.8.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 18 Aug 2013 12:48:42 -0700 (PDT)
+        Sun, 18 Aug 2013 12:48:39 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.4.1231.g9fbf354.dirty
 In-Reply-To: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232499>
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- builtin/ls-files.c | 36 +++++++++++++++++++++++++++++++++---
- 1 file changed, 33 insertions(+), 3 deletions(-)
+ builtin/grep.c | 69 +++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 35 insertions(+), 34 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index bebc9c2..fbf9c47 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -288,6 +288,22 @@ static void prune_cache(const char *prefix)
- 	active_nr = last;
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 7dc0389..1114fe8 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -369,41 +369,31 @@ static void run_pager(struct grep_opt *opt, const char *prefix)
+ 	free(argv);
  }
  
-+static int needs_trailing_slash_stripped(void)
-+{
-+	int i;
+-static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec, int cached)
++struct grep_opts {
++	struct grep_opt *opt;
++	const struct pathspec *pathspec;
++	int cached;
++	int hit;
++};
 +
-+	if (!pathspec.nr)
++static int grep_cache(struct cache_entry *ce, void *cb_data)
+ {
+-	int hit = 0;
+-	int nr;
+-	read_cache();
++	struct grep_opts *opts = cb_data;
+ 
+-	for (nr = 0; nr < active_nr; nr++) {
+-		const struct cache_entry *ce = active_cache[nr];
+-		if (!S_ISREG(ce->ce_mode))
+-			continue;
+-		if (!match_pathspec_depth(pathspec, ce->name, ce_namelen(ce), 0, NULL))
+-			continue;
+-		/*
+-		 * If CE_VALID is on, we assume worktree file and its cache entry
+-		 * are identical, even if worktree file has been modified, so use
+-		 * cache version instead
+-		 */
+-		if (cached || (ce->ce_flags & CE_VALID) || ce_skip_worktree(ce)) {
+-			if (ce_stage(ce))
+-				continue;
+-			hit |= grep_sha1(opt, ce->sha1, ce->name, 0, ce->name);
+-		}
+-		else
+-			hit |= grep_file(opt, ce->name);
+-		if (ce_stage(ce)) {
+-			do {
+-				nr++;
+-			} while (nr < active_nr &&
+-				 !strcmp(ce->name, active_cache[nr]->name));
+-			nr--; /* compensate for loop control */
+-		}
+-		if (hit && opt->status_only)
+-			break;
+-	}
+-	return hit;
++	if (!S_ISREG(ce->ce_mode))
 +		return 0;
-+
-+	for (i = 0; i < pathspec.nr; i++) {
-+		int len = strlen(pathspec.items[i].original);
-+
-+		if (len > 1 && (pathspec.items[i].original)[len - 1] == '/')
-+			return 1;
-+	}
++	/*
++	 * If CE_VALID is on, we assume worktree file and its cache entry
++	 * are identical, even if worktree file has been modified, so use
++	 * cache version instead
++	 */
++	if (opts->cached || (ce->ce_flags & CE_VALID) || ce_skip_worktree(ce))
++		opts->hit |= grep_sha1(opts->opt, ce->sha1, ce->name, 0, ce->name);
++	else
++		opts->hit |= grep_file(opts->opt, ce->name);
++	if (opts->hit && opts->opt->status_only)
++		return 1;
 +	return 0;
-+}
-+
- /*
-  * Read the tree specified with --with-tree option
-  * (typically, HEAD) into stage #1 and then
-@@ -445,6 +461,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 	struct dir_struct dir;
- 	struct exclude_list *el;
- 	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
-+	struct filter_opts *opts = xmalloc(sizeof(*opts));
- 	struct option builtin_ls_files_options[] = {
- 		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
- 			N_("paths are separated with NUL character"),
-@@ -510,9 +527,6 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		prefix_len = strlen(prefix);
- 	git_config(git_default_config, NULL);
+ }
  
--	if (read_cache() < 0)
--		die("index file corrupt");
--
- 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
- 			ls_files_usage, 0);
- 	el = add_exclude_list(&dir, EXC_CMDL, "--exclude option");
-@@ -548,6 +562,22 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
- 		       prefix, argv);
+ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+@@ -897,10 +887,21 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	} else if (0 <= opt_exclude) {
+ 		die(_("--[no-]exclude-standard cannot be used for tracked contents."));
+ 	} else if (!list.nr) {
++		struct grep_opts opts;
++		struct filter_opts *filter_opts = xmalloc(sizeof(*filter_opts));
++
+ 		if (!cached)
+ 			setup_work_tree();
  
-+	if (!with_tree && !needs_trailing_slash_stripped()) {
-+		memset(opts, 0, sizeof(*opts));
-+		opts->pathspec = &pathspec;
-+		opts->read_staged = 1;
-+		if (show_resolve_undo)
-+			opts->read_resolve_undo = 1;
-+		read_cache_filtered(opts);
-+	} else {
-+		read_cache();
-+		parse_pathspec(&pathspec, 0,
-+			       PATHSPEC_PREFER_CWD |
-+			       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
-+			       prefix, argv);
-+
-+	}
-+
- 	/* Find common prefix for all pathspec's */
- 	max_prefix = common_prefix(&pathspec);
- 	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
+-		hit = grep_cache(&opt, &pathspec, cached);
++		memset(filter_opts, 0, sizeof(*filter_opts));
++		filter_opts->pathspec = &pathspec;
++		opts.opt = &opt;
++		opts.pathspec = &pathspec;
++		opts.cached = cached;
++		opts.hit = 0;
++		read_cache_filtered(filter_opts);
++		for_each_cache_entry(grep_cache, &opts);
++		hit = opts.hit;
+ 	} else {
+ 		if (cached)
+ 			die(_("both --cached and trees are given."));
 -- 
 1.8.3.4.1231.g9fbf354.dirty
