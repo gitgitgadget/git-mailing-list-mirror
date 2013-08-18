@@ -1,500 +1,102 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [RFC PATCHv4] repack: rewrite the shell script in C.
-Date: Mon, 19 Aug 2013 00:26:26 +0200
-Message-ID: <1376864786-21367-1-git-send-email-stefanbeller@googlemail.com>
-References: <5210F9FE.1080801@web.de>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: git@vger.kernel.org, l.s.r@web.de, mfick@codeaurora.org,
-	apelisse@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	pclouds@gmail.com, iveqy@iveqy.com, gitster@pobox.com,
-	mackyle@gmail.com
-X-From: git-owner@vger.kernel.org Mon Aug 19 00:26:35 2013
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v3 06/24] read-cache: Don't compare uid, gid and ino on
+ cygwin
+Date: Sun, 18 Aug 2013 23:34:54 +0100
+Message-ID: <52114C0E.4030502@ramsay1.demon.co.uk>
+References: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com> <1376854933-31241-7-git-send-email-t.gummerer@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, trast@inf.ethz.ch, mhagger@alum.mit.edu,
+	gitster@pobox.com, pclouds@gmail.com, robin.rosenberg@dewire.com,
+	sunshine@sunshineco.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 19 00:35:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBBQf-0000ys-Ru
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 00:26:34 +0200
+	id 1VBBZ1-0005I4-H1
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 00:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755503Ab3HRW03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Aug 2013 18:26:29 -0400
-Received: from mail-ea0-f180.google.com ([209.85.215.180]:62397 "EHLO
-	mail-ea0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755119Ab3HRW02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Aug 2013 18:26:28 -0400
-Received: by mail-ea0-f180.google.com with SMTP id h10so1970278eaj.11
-        for <git@vger.kernel.org>; Sun, 18 Aug 2013 15:26:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GOIr6bnmFE3v0I8yK0wnec4Zx8ROICfSdOGbEJuDIrw=;
-        b=vV/m4M/HnW8DPMlXIeromXDw6m8/EHqVdAxCnKcM5N4z32i/0Z7YJrLJbecvu9Is1/
-         sXFuVZ980D0T9h4mWprsTouADuWfYRaryHlkcPdZmJbB+sx96iQliaq7My8+Yx2pYJiJ
-         Q5MrwD8btF6clFXYD6a6CHV7DWiH0AGHEcsS9c5jlJj9nrtlh+iCt6ZOjPhDN6FX4wxL
-         E4ax0rJq60kt+AXODefW5Ggxjr1r8FWkDtBQJj4fH2eQI91zM3MzshIhQMBkB4+anWUt
-         wG9tCsFZ8OWRG1nYmGTg9FDghxHWY+ixarhbbd9uOzqP4Z21I1pmfptbBGUKSGcu7n1S
-         s1Qw==
-X-Received: by 10.14.37.4 with SMTP id x4mr17496829eea.16.1376864786469;
-        Sun, 18 Aug 2013 15:26:26 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id a4sm13027905eez.0.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 18 Aug 2013 15:26:25 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc3.2.g2c2b664
-In-Reply-To: <5210F9FE.1080801@web.de>
+	id S1755468Ab3HRWfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Aug 2013 18:35:04 -0400
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:49192 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755140Ab3HRWfD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Aug 2013 18:35:03 -0400
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 79C2C4007D1;
+	Sun, 18 Aug 2013 23:35:00 +0100 (BST)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 389EA4007A6;
+	Sun, 18 Aug 2013 23:35:00 +0100 (BST)
+Received: from [192.168.254.1] (unknown [80.176.147.220])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
+	Sun, 18 Aug 2013 23:34:59 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <1376854933-31241-7-git-send-email-t.gummerer@gmail.com>
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232524>
 
-This is the beginning of the rewrite of the repacking.
+On 18/08/2013 08:41 PM, Thomas Gummerer wrote:
+> Cygwin doesn't have uid, gid and ino stats fields.  Therefore we should
+> never check them in the match_stat_data when working on the CYGWIN
+> platform.
 
- * rename get_pack_sha1_list to get_pack_filename_list, which
- * reads the pack directory only once as suggested by Rene.
- * fix the grammar as suggested by Kyle.
+Hmm, this is simply not true ... ;-)
 
-All tests have been positive at least once now.
-However there is still one non-deterministic error occuring,
-I am tired to search for it now, I'll get it working tommorow.
+The need to omit the uid, gid and ino fields from the stat checks in
+your original code was caused by the "schizophrenic stat" implementation
+in cygwin. (This was also before "core.checkstat" was implemented; note
+the 'check_stat' conditional below ...)
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
----
- Makefile                                        |   2 +-
- builtin.h                                       |   1 +
- builtin/repack.c                                | 372 ++++++++++++++++++++++++
- git-repack.sh => contrib/examples/git-repack.sh |   0
- git.c                                           |   1 +
- 5 files changed, 375 insertions(+), 1 deletion(-)
- create mode 100644 builtin/repack.c
- rename git-repack.sh => contrib/examples/git-repack.sh (100%)
+However, since commit f66450ae ("cygwin: Remove the Win32 l/stat()
+implementation", 22-06-2013), this patch is no longer necessary and
+can simply be dropped from this series.
 
-diff --git a/Makefile b/Makefile
-index ef442eb..4ec5bbe 100644
---- a/Makefile
-+++ b/Makefile
-@@ -464,7 +464,6 @@ SCRIPT_SH += git-pull.sh
- SCRIPT_SH += git-quiltimport.sh
- SCRIPT_SH += git-rebase.sh
- SCRIPT_SH += git-remote-testgit.sh
--SCRIPT_SH += git-repack.sh
- SCRIPT_SH += git-request-pull.sh
- SCRIPT_SH += git-stash.sh
- SCRIPT_SH += git-submodule.sh
-@@ -972,6 +971,7 @@ BUILTIN_OBJS += builtin/reflog.o
- BUILTIN_OBJS += builtin/remote.o
- BUILTIN_OBJS += builtin/remote-ext.o
- BUILTIN_OBJS += builtin/remote-fd.o
-+BUILTIN_OBJS += builtin/repack.o
- BUILTIN_OBJS += builtin/replace.o
- BUILTIN_OBJS += builtin/rerere.o
- BUILTIN_OBJS += builtin/reset.o
-diff --git a/builtin.h b/builtin.h
-index 8afa2de..b56cf07 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -102,6 +102,7 @@ extern int cmd_reflog(int argc, const char **argv, const char *prefix);
- extern int cmd_remote(int argc, const char **argv, const char *prefix);
- extern int cmd_remote_ext(int argc, const char **argv, const char *prefix);
- extern int cmd_remote_fd(int argc, const char **argv, const char *prefix);
-+extern int cmd_repack(int argc, const char **argv, const char *prefix);
- extern int cmd_repo_config(int argc, const char **argv, const char *prefix);
- extern int cmd_rerere(int argc, const char **argv, const char *prefix);
- extern int cmd_reset(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/repack.c b/builtin/repack.c
-new file mode 100644
-index 0000000..bfaaad7
---- /dev/null
-+++ b/builtin/repack.c
-@@ -0,0 +1,372 @@
-+/*
-+ * The shell version was written by Linus Torvalds (2005) and many others.
-+ * This is a translation into C by Stefan Beller (2013)
-+ */
-+
-+#include "builtin.h"
-+#include "cache.h"
-+#include "dir.h"
-+#include "parse-options.h"
-+#include "run-command.h"
-+#include "sigchain.h"
-+#include "strbuf.h"
-+#include "string-list.h"
-+
-+#include "argv-array.h"
-+
-+static const char *const git_repack_usage[] = {
-+	N_("git repack [options]"),
-+	NULL
-+};
-+
-+/* enabled by default since 22c79eab (2008-06-25) */
-+static int delta_base_offset = 1;
-+
-+static int repack_config(const char *var, const char *value, void *cb)
-+{
-+	if (!strcmp(var, "repack.usedeltabaseoffset")) {
-+		delta_base_offset = git_config_bool(var, value);
-+		return 0;
-+	}
-+	return git_default_config(var, value, cb);
-+}
-+
-+static void remove_temporary_files() {
-+	DIR *dir;
-+	struct dirent *e;
-+	char *prefix, *path;
-+
-+	prefix = mkpathdup(".tmp-%d-pack", getpid());
-+	path = mkpathdup("%s/pack", get_object_directory());
-+
-+	dir = opendir(path);
-+	while ((e = readdir(dir)) != NULL) {
-+		if (!prefixcmp(e->d_name, prefix)) {
-+			struct strbuf fname = STRBUF_INIT;
-+			strbuf_addf(&fname, "%s/%s", path, e->d_name);
-+			unlink(strbuf_detach(&fname, NULL));
-+		}
-+	}
-+	free(prefix);
-+	free(path);
-+	closedir(dir);
-+}
-+
-+static void remove_pack_on_signal(int signo)
-+{
-+	remove_temporary_files();
-+	sigchain_pop(signo);
-+	raise(signo);
-+}
-+
-+/*
-+ * Fills the filename list with all the files found in the pack directory
-+ * ending with .pack, without that extension.
-+ */
-+void get_pack_filenames(char *packdir, struct string_list *fname_list)
-+{
-+	DIR *dir;
-+	struct dirent *e;
-+	char *path, *suffix, *fname;
-+
-+	path = mkpathdup("%s/pack", get_object_directory());
-+	suffix = ".pack";
-+
-+	dir = opendir(path);
-+	while ((e = readdir(dir)) != NULL) {
-+		if (!suffixcmp(e->d_name, suffix)) {
-+			size_t len = strlen(e->d_name) - strlen(suffix);
-+			fname = xmemdupz(e->d_name, len);
-+			string_list_append_nodup(fname_list, fname);
-+		}
-+	}
-+	free(path);
-+	closedir(dir);
-+}
-+
-+/*
-+ * remove_pack will remove any files following the pattern *${SHA1}.{EXT}
-+ * where EXT is one of {pack, idx, keep}. The SHA1 consists of 40 chars and
-+ * is specified by the sha1 parameter.
-+ * path is specifying the directory in which all found files will be deleted.
-+ */
-+void remove_pack(char *path, char* sha1)
-+{
-+	char *exts[] = {".pack", ".idx",".keep"};
-+	char *fname;
-+	int ext = 0;
-+	for (ext = 0; ext < 3; ext++) {
-+		fname = mkpathdup("%s/%s%s", path, sha1, exts[ext]);
-+		unlink(fname);
-+		free(fname);
-+	}
-+}
-+
-+int cmd_repack(int argc, const char **argv, const char *prefix) {
-+
-+	int pack_everything = 0;
-+	int pack_everything_but_loose = 0;
-+	int delete_redundant = 0;
-+	char *unpack_unreachable = NULL;
-+	int window = 0, window_memory = 0;
-+	int depth = 0;
-+	int max_pack_size = 0;
-+	int no_reuse_delta = 0, no_reuse_object = 0;
-+	int no_update_server_info = 0;
-+	int quiet = 0;
-+	int local = 0;
-+	char *packdir, *packtmp;
-+	struct child_process cmd;
-+	struct string_list_item *item;
-+	struct string_list existing_packs = STRING_LIST_INIT_DUP;
-+	struct stat statbuffer;
-+
-+	struct option builtin_repack_options[] = {
-+		OPT_BOOL('a', "all", &pack_everything,
-+				N_("pack everything in a single pack")),
-+		OPT_BOOL('A', "all-but-loose", &pack_everything_but_loose,
-+				N_("same as -a, and turn unreachable objects loose")),
-+		OPT_BOOL('d', "delete-redundant", &delete_redundant,
-+				N_("remove redundant packs, and run git-prune-packed")),
-+		OPT_BOOL('f', "no-reuse-delta", &no_reuse_delta,
-+				N_("pass --no-reuse-delta to git-pack-objects")),
-+		OPT_BOOL('F', "no-reuse-object", &no_reuse_object,
-+				N_("pass --no-reuse-object to git-pack-objects")),
-+		OPT_BOOL('n', NULL, &no_update_server_info,
-+				N_("do not run git-update-server-info")),
-+		OPT__QUIET(&quiet, N_("be quiet")),
-+		OPT_BOOL('l', "local", &local,
-+				N_("pass --local to git-pack-objects")),
-+		OPT_STRING(0, "unpack-unreachable", &unpack_unreachable, N_("approxidate"),
-+				N_("with -A, do not loosen objects older than this Packing constraints")),
-+		OPT_INTEGER(0, "window", &window,
-+				N_("size of the window used for delta compression")),
-+		OPT_INTEGER(0, "window-memory", &window_memory,
-+				N_("same as the above, but limit memory size instead of entries count")),
-+		OPT_INTEGER(0, "depth", &depth,
-+				N_("limits the maximum delta depth")),
-+		OPT_INTEGER(0, "max-pack-size", &max_pack_size,
-+				N_("maximum size of each packfile")),
-+		OPT_END()
-+	};
-+
-+	git_config(repack_config, NULL);
-+
-+	argc = parse_options(argc, argv, prefix, builtin_repack_options,
-+				git_repack_usage, 0);
-+
-+	sigchain_push_common(remove_pack_on_signal);
-+
-+	packdir = mkpathdup("%s/pack", get_object_directory());
-+	packtmp = mkpathdup("%s/.tmp-%d-pack", packdir, getpid());
-+
-+	remove_temporary_files();
-+
-+	struct argv_array cmd_args = ARGV_ARRAY_INIT;
-+	argv_array_push(&cmd_args, "pack-objects");
-+	argv_array_push(&cmd_args, "--keep-true-parents");
-+	argv_array_push(&cmd_args, "--honor-pack-keep");
-+	argv_array_push(&cmd_args, "--non-empty");
-+	argv_array_push(&cmd_args, "--all");
-+	argv_array_push(&cmd_args, "--reflog");
-+
-+	if (window)
-+		argv_array_pushf(&cmd_args, "--window=%u", window);
-+
-+	if (window_memory)
-+		argv_array_pushf(&cmd_args, "--window-memory=%u", window_memory);
-+
-+	if (depth)
-+		argv_array_pushf(&cmd_args, "--depth=%u", depth);
-+
-+	if (max_pack_size)
-+		argv_array_pushf(&cmd_args, "--max_pack_size=%u", max_pack_size);
-+
-+	if (pack_everything + pack_everything_but_loose == 0) {
-+		argv_array_push(&cmd_args, "--unpacked");
-+		argv_array_push(&cmd_args, "--incremental");
-+	} else {
-+		if (pack_everything_but_loose && delete_redundant)
-+			argv_array_push(&cmd_args, "--unpack-unreachable");
-+
-+		struct string_list fname_list = STRING_LIST_INIT_DUP;
-+		get_pack_filenames(packdir, &fname_list);
-+		for_each_string_list_item(item, &fname_list) {
-+			char *fname;
-+			fname = mkpathdup("%s/%s.keep", packdir, item->string);
-+			if (stat(fname, &statbuffer) && S_ISREG(statbuffer.st_mode)) {
-+				/* when the keep file is there, we're ignoring that pack */
-+			} else {
-+				string_list_append(&existing_packs, item->string);
-+			}
-+			free(fname);
-+		}
-+
-+		if (existing_packs.nr && unpack_unreachable && delete_redundant) {
-+			argv_array_pushf(&cmd_args, "--unpack-unreachable=%s", unpack_unreachable);
-+		}
-+	}
-+
-+	if (local)
-+		argv_array_push(&cmd_args,  "--local");
-+
-+	if (delta_base_offset)
-+		argv_array_push(&cmd_args,  "--delta-base-offset");
-+
-+	argv_array_push(&cmd_args, packtmp);
-+
-+	memset(&cmd, 0, sizeof(cmd));
-+	cmd.argv = argv_array_detach(&cmd_args, NULL);
-+	cmd.git_cmd = 1;
-+	cmd.out = -1;
-+	cmd.no_stdin = 1;
-+
-+	if (run_command(&cmd))
-+		return 1;
-+
-+	struct string_list names = STRING_LIST_INIT_DUP;
-+	struct string_list rollback = STRING_LIST_INIT_DUP;
-+
-+	char line[1024];
-+	int counter = 0;
-+	FILE *out = xfdopen(cmd.out, "r");
-+	while (fgets(line, sizeof(line), out)) {
-+		/* a line consists of 40 hex chars + '\n' */
-+		assert(strlen(line) == 41);
-+		line[40] = '\0';
-+		string_list_append(&names, line);
-+		counter++;
-+	}
-+	if (!counter)
-+		printf("Nothing new to pack.\n");
-+	fclose(out);
-+
-+	char *exts[2] = {".idx", ".pack"};
-+	int failed = 0;
-+	for_each_string_list_item(item, &names) {
-+		int ext;
-+		for (ext = 0; ext < 1; ext++) {
-+			char *fname, *fname_old;
-+			fname = mkpathdup("%s/%s%s", packdir, item->string, exts[ext]);
-+			if (!file_exists(fname)) {
-+				free(fname);
-+				continue;
-+			}
-+
-+			fname_old = mkpathdup("%s/old-%s%s", packdir, item->string, exts[ext]);
-+			if (file_exists(fname_old))
-+				unlink(fname_old);
-+
-+			if (rename(fname, fname_old)) {
-+				failed = 1;
-+				break;
-+			}
-+			string_list_append_nodup(&rollback, fname);
-+		}
-+		if (failed)
-+			/* set to last element to break for_each loop */
-+			item = names.items + names.nr;
-+	}
-+	if (failed) {
-+		struct string_list rollback_failure;
-+		for_each_string_list_item(item, &rollback) {
-+			char *fname, *fname_old;
-+			fname = mkpathdup("%s/%s", packdir, item->string);
-+			fname_old = mkpathdup("%s/old-%s", packdir, item->string);
-+			if (rename(fname_old, fname))
-+				string_list_append(&rollback_failure, fname);
-+			free(fname);
-+			free(fname_old);
-+		}
-+
-+		if (rollback.nr) {
-+			int i;
-+			fprintf(stderr,
-+				"WARNING: Some packs in use have been renamed by\n"
-+				"WARNING: prefixing old- to their name, in order to\n"
-+				"WARNING: replace them with the new version of the\n"
-+				"WARNING: file.  But the operation failed, and the\n"
-+				"WARNING: attempt to rename them back to their\n"
-+				"WARNING: original names also failed.\n"
-+				"WARNING: Please rename them in $PACKDIR manually:\n");
-+			for (i = 0; i < rollback.nr; i++)
-+				fprintf(stderr, "WARNING:   old-%s -> %s\n",
-+					rollback.items[i].string,
-+					rollback.items[i].string);
-+		}
-+		exit(1);
-+	}
-+
-+	/* Now the ones with the same name are out of the way... */
-+	for_each_string_list_item(item, &names) {
-+		char *fname, *fname_old;
-+		fname = mkpathdup("%s/pack-%s.pack", packdir, item->string);
-+		fname_old = mkpathdup("%s-%s.pack", packtmp, item->string);
-+		stat(fname_old, &statbuffer);
-+		statbuffer.st_mode &= ~S_IWOTH;
-+		chmod(fname_old, statbuffer.st_mode);
-+		if (rename(fname_old, fname))
-+			die("Could not rename packfile: %s -> %s", fname_old, fname);
-+		free(fname);
-+		free(fname_old);
-+
-+		fname = mkpathdup("%s/pack-%s.idx", packdir, item->string);
-+		fname_old = mkpathdup("%s-%s.idx", packtmp, item->string);
-+		stat(fname_old, &statbuffer);
-+		statbuffer.st_mode &= ~S_IWOTH;
-+		chmod(fname_old, statbuffer.st_mode);
-+		if (rename(fname_old, fname))
-+			die("Could not rename packfile: %s -> %s", fname_old, fname);
-+		free(fname);
-+		free(fname_old);
-+	}
-+
-+	/* Remove the "old-" files */
-+	for_each_string_list_item(item, &names) {
-+		char *fname;
-+		fname = mkpathdup("%s/old-pack-%s.idx", packdir, item->string);
-+		if (remove_path(fname))
-+			die("Could not remove file: %s", fname);
-+		free(fname);
-+
-+		fname = mkpathdup("%s/old-pack-%s.pack", packdir, item->string);
-+		if (remove_path(fname))
-+			die("Could not remove file: %s", fname);
-+		free(fname);
-+	}
-+
-+	/* End of pack replacement. */
-+	if (delete_redundant) {
-+		sort_string_list(&names);
-+		for_each_string_list_item(item, &existing_packs) {
-+			char *sha1;
-+			size_t len = strlen(item->string);
-+			if (len < 40)
-+				continue;
-+			sha1 = item->string + len - 40;
-+			if (!string_list_has_string(&names, sha1))
-+				remove_pack(packdir, item->string);
-+		}
-+		argv_array_clear(&cmd_args);
-+		argv_array_push(&cmd_args, "prune-packed");
-+		if (quiet)
-+			argv_array_push(&cmd_args, "--quiet");
-+
-+		memset(&cmd, 0, sizeof(cmd));
-+		cmd.argv = argv_array_detach(&cmd_args, NULL);
-+		cmd.git_cmd = 1;
-+		run_command(&cmd);
-+	}
-+
-+	if (!no_update_server_info) {
-+		argv_array_clear(&cmd_args);
-+		argv_array_push(&cmd_args, "update-server-info");
-+
-+		memset(&cmd, 0, sizeof(cmd));
-+		cmd.argv = argv_array_detach(&cmd_args, NULL);
-+		cmd.git_cmd = 1;
-+		run_command(&cmd);
-+	}
-+	return 0;
-+}
-+
-diff --git a/git-repack.sh b/contrib/examples/git-repack.sh
-similarity index 100%
-rename from git-repack.sh
-rename to contrib/examples/git-repack.sh
-diff --git a/git.c b/git.c
-index 2025f77..03510be 100644
---- a/git.c
-+++ b/git.c
-@@ -396,6 +396,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "remote", cmd_remote, RUN_SETUP },
- 		{ "remote-ext", cmd_remote_ext },
- 		{ "remote-fd", cmd_remote_fd },
-+		{ "repack", cmd_repack, RUN_SETUP },
- 		{ "replace", cmd_replace, RUN_SETUP },
- 		{ "repo-config", cmd_repo_config, RUN_SETUP_GENTLY },
- 		{ "rerere", cmd_rerere, RUN_SETUP },
--- 
-1.8.4.rc3.2.g2c2b664
+[I have not had time to read your new patches yet, but I seem to remember
+being concerned about those platforms which have UNRELIABLE_FSTAT set.
+(ie cygwin, MinGW and Windows.)]
+
+ATB,
+Ramsay Jones
+
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+> 
+> This patch was not tested on Cygwin yet.  I think it's needed though,
+> because the re-reading of the index if it changed will no longer use
+> it's own index_changed function, but use the stat_validity_check
+> function instead.  Would be great if someone running Cygwin could test
+> this.
+> 
+>  read-cache.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/read-cache.c b/read-cache.c
+> index 1f827de..aa17ce7 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -82,6 +82,7 @@ int match_stat_data(const struct stat_data *sd, struct stat *st)
+>  		changed |= CTIME_CHANGED;
+>  #endif
+>  
+> +#if !defined (__CYGWIN__)
+>  	if (check_stat) {
+>  		if (sd->sd_uid != (unsigned int) st->st_uid ||
+>  			sd->sd_gid != (unsigned int) st->st_gid)
+> @@ -89,6 +90,7 @@ int match_stat_data(const struct stat_data *sd, struct stat *st)
+>  		if (sd->sd_ino != (unsigned int) st->st_ino)
+>  			changed |= INODE_CHANGED;
+>  	}
+> +#endif
+>  
+>  #ifdef USE_STDEV
+>  	/*
+> 
