@@ -1,54 +1,54 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
-Subject: netrc credential helper promotion out of contrib?
-Date: Sun, 18 Aug 2013 06:35:46 -0400
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <87k3jjp9q5.fsf@lifelogs.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: What's cooking in git.git (Aug 2013, #04; Thu, 15)
+Date: Sun, 18 Aug 2013 13:46:55 +0200
+Message-ID: <5210B42F.7050106@kdbg.org>
+References: <7vbo4ypon7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 18 12:36:03 2013
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 18 13:47:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VB0L4-0005wK-KK
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 12:36:02 +0200
+	id 1VB1Ru-0005Ax-EU
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 13:47:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753831Ab3HRKf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Aug 2013 06:35:58 -0400
-Received: from plane.gmane.org ([80.91.229.3]:37139 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753691Ab3HRKf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Aug 2013 06:35:57 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1VB0Ky-0005qj-E8
-	for git@vger.kernel.org; Sun, 18 Aug 2013 12:35:56 +0200
-Received: from c-98-229-61-72.hsd1.ma.comcast.net ([98.229.61.72])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 Aug 2013 12:35:56 +0200
-Received: from tzz by c-98-229-61-72.hsd1.ma.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 Aug 2013 12:35:56 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: c-98-229-61-72.hsd1.ma.comcast.net
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-User-Agent: Gnus/5.130008 (Ma Gnus v0.8) Emacs/24.3.50 (gnu/linux)
-Cancel-Lock: sha1:DM81CmQFjvcdhypD4ja8Ie84rGQ=
+	id S1754974Ab3HRLrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Aug 2013 07:47:06 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:24114 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754867Ab3HRLrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Aug 2013 07:47:04 -0400
+Received: from [10.79.126.148] (178.115.250.148.wireless.dyn.drei.com [178.115.250.148])
+	by bsmtp.bon.at (Postfix) with ESMTP id C3960130055;
+	Sun, 18 Aug 2013 13:46:59 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <7vbo4ypon7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232475>
 
-A while has passed since contrib/credential/netrc was added. Is it OK to
-promote it to be part of the main installation?  In that directory
-there's also gnome-keyring, osxkeychain, and wincred; I don't know if
-those are ready for promotion.
+Am 16.08.2013 00:36, schrieb Junio C Hamano:
+> Due to unfortunate regressions, two topics had to be reverted:
+>
+>   * An attempted fix to "git stash save", to detect that going back
+>     to the state of the HEAD needs to lose killed files, and/or
+>     untracked files in a killed directory, to prevent the command
+>     from proceeding without "--force".
+>
+>     This used "ls-files -k" that was unusably slow.
+>
+>   * An attempted enhancement to allow "@" to be used to name "HEAD".
+>
+>     This rewrote "@" in a ref where it shouldn't have,
+>     e.g. refs/@/foo.
 
-Thanks
-Ted
+You still need to remove corresponding paragraphs from the release notes.
+
+-- Hannes
