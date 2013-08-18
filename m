@@ -1,374 +1,650 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 13/24] documentation: add documentation of the index-v5 file format
-Date: Sun, 18 Aug 2013 21:42:02 +0200
-Message-ID: <1376854933-31241-14-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH v3 15/24] read-cache: read index-v5
+Date: Sun, 18 Aug 2013 21:42:04 +0200
+Message-ID: <1376854933-31241-16-git-send-email-t.gummerer@gmail.com>
 References: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com>
 Cc: trast@inf.ethz.ch, mhagger@alum.mit.edu, gitster@pobox.com,
 	pclouds@gmail.com, robin.rosenberg@dewire.com,
 	sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk,
 	t.gummerer@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 18 21:48:58 2013
+X-From: git-owner@vger.kernel.org Sun Aug 18 21:49:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VB8y7-000434-0g
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 21:48:55 +0200
+	id 1VB8yD-000474-NN
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 21:49:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754896Ab3HRTst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Aug 2013 15:48:49 -0400
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:37546 "EHLO
+	id S1754921Ab3HRTs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Aug 2013 15:48:56 -0400
+Received: from mail-wg0-f43.google.com ([74.125.82.43]:40357 "EHLO
 	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754647Ab3HRTss (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Aug 2013 15:48:48 -0400
-Received: by mail-wg0-f43.google.com with SMTP id z12so2833779wgg.34
-        for <git@vger.kernel.org>; Sun, 18 Aug 2013 12:48:46 -0700 (PDT)
+	with ESMTP id S1754911Ab3HRTsy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Aug 2013 15:48:54 -0400
+Received: by mail-wg0-f43.google.com with SMTP id z12so2833833wgg.34
+        for <git@vger.kernel.org>; Sun, 18 Aug 2013 12:48:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/O//XadlL4wlxxmIr4pgQzrPJSFdpTg/+2E3C/eJLtg=;
-        b=laETN693/w+U6fDWa0SZRtAmzf2hHSnpRQrYnKQgu2haaDPhCe4BLHooR4RtEDXaqz
-         O7q8HDj0EiuxQq9EXo3M0+SRTcvw0Jc8/tly6hbIOcPm1w2UafqRSaFxJrbpKqn8XIyK
-         I7F1MJ1x0jogIZVMKkF0nA7EMMidirpHWDOWDwmkUa4DjqgJsN6DoMNW8d7X8wr3hRYR
-         eFJUSntrRRoOGKEHb0DIunu1bt2mUX3nKmOu+sa6WiM1Z3vfMnhIM4116b9G2ye912pd
-         bLS2tvQZJrUP66Yo2iFm8NQi5ndoATJn2k2atK0G4a+Y4hiHnNcNnSWrfTqgrldQNsJg
-         9bRQ==
-X-Received: by 10.194.123.227 with SMTP id md3mr5791745wjb.17.1376855326640;
-        Sun, 18 Aug 2013 12:48:46 -0700 (PDT)
+        bh=k9bjTO3QUw8ZhRXFhl6GOcIvS1OLEUZJ+RdZ5EFYz78=;
+        b=jratW/6jUs/3/JKMn35aNNyxXvn71aNgTTUXlU5Ya0Z+bTahjTorCyWsOSYN0LS1Fi
+         uN9O8tGqjdiDfgrxOc/fFaW2gU1O2wHHYfHSkKGrWVYKHtAbd83yDm3vefv4YVymLlRk
+         2WK7Wo7mOStW7YGH2aDboOLLVENBD+SAWUOG/Pw5Ikj7COr3oyCY3CY52d76+T2tsYq6
+         ovOeybnT/FuogGoh5bbx2dX7D1OCuwB6Ix1kG7hMNzCHx4QebPGHGvQO5rJpjGTfse9X
+         7CPpoRlJWSi6Hd5VX0jzYMw/LNMeglT4rk4cA4FNmGdgDRGOvXZMzL1/cL0q1YxWnn32
+         cICA==
+X-Received: by 10.194.24.168 with SMTP id v8mr5903673wjf.28.1376855333579;
+        Sun, 18 Aug 2013 12:48:53 -0700 (PDT)
 Received: from localhost (host105-104-dynamic.0-79-r.retail.telecomitalia.it. [79.0.104.105])
-        by mx.google.com with ESMTPSA id a4sm12383477wik.11.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id i5sm12396612wiw.7.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 18 Aug 2013 12:48:45 -0700 (PDT)
+        Sun, 18 Aug 2013 12:48:52 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.4.1231.g9fbf354.dirty
 In-Reply-To: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232503>
 
-Add a documentation of the index file format version 5 to
-Documentation/technical.
+Make git read the index file version 5 without complaining.
 
-Helped-by: Michael Haggerty <mhagger@alum.mit.edu>
+This version of the reader doesn't read neither the cache-tree
+nor the resolve undo data, but doesn't choke on an index that
+includes such data.
+
 Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Thomas Rast <trast@student.ethz.ch>
 Helped-by: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Helped-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+Helped-by: Thomas Rast <trast@student.ethz.ch>
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- Documentation/technical/index-file-format-v5.txt | 301 +++++++++++++++++++++++
- 1 file changed, 301 insertions(+)
- create mode 100644 Documentation/technical/index-file-format-v5.txt
+ Makefile        |   1 +
+ cache.h         |  32 +++-
+ read-cache-v5.c | 473 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ read-cache.h    |   1 +
+ 4 files changed, 506 insertions(+), 1 deletion(-)
+ create mode 100644 read-cache-v5.c
 
-diff --git a/Documentation/technical/index-file-format-v5.txt b/Documentation/technical/index-file-format-v5.txt
+diff --git a/Makefile b/Makefile
+index afae23e..a55206d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -857,6 +857,7 @@ LIB_OBJS += quote.o
+ LIB_OBJS += reachable.o
+ LIB_OBJS += read-cache.o
+ LIB_OBJS += read-cache-v2.o
++LIB_OBJS += read-cache-v5.o
+ LIB_OBJS += reflog-walk.o
+ LIB_OBJS += refs.o
+ LIB_OBJS += remote.o
+diff --git a/cache.h b/cache.h
+index 714a334..89f556b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -99,7 +99,7 @@ unsigned long git_deflate_bound(git_zstream *, unsigned long);
+ #define CACHE_SIGNATURE 0x44495243	/* "DIRC" */
+ 
+ #define INDEX_FORMAT_LB 2
+-#define INDEX_FORMAT_UB 4
++#define INDEX_FORMAT_UB 5
+ 
+ /*
+  * The "cache_time" is just the low 32 bits of the
+@@ -121,6 +121,15 @@ struct stat_data {
+ 	unsigned int sd_size;
+ };
+ 
++/*
++ * The *next pointer is used in read_entries_v5 for holding
++ * all the elements of a directory, and points to the next
++ * cache_entry in a directory.
++ *
++ * It is reset by the add_name_hash call in set_index_entry
++ * to set it to point to the next cache_entry in the
++ * correct in-memory format ordering.
++ */
+ struct cache_entry {
+ 	struct stat_data ce_stat_data;
+ 	unsigned int ce_mode;
+@@ -132,11 +141,17 @@ struct cache_entry {
+ 	char name[FLEX_ARRAY]; /* more */
+ };
+ 
++#define CE_NAMEMASK  (0x0fff)
+ #define CE_STAGEMASK (0x3000)
+ #define CE_EXTENDED  (0x4000)
+ #define CE_VALID     (0x8000)
++#define CE_SMUDGED   (0x0400) /* index v5 only flag */
+ #define CE_STAGESHIFT 12
+ 
++#define CONFLICT_CONFLICTED (0x8000)
++#define CONFLICT_STAGESHIFT 13
++#define CONFLICT_STAGEMASK (0x6000)
++
+ /*
+  * Range 0xFFFF0000 in ce_flags is divided into
+  * two parts: in-memory flags and on-disk ones.
+@@ -173,6 +188,19 @@ struct cache_entry {
+ #define CE_EXTENDED_FLAGS (CE_INTENT_TO_ADD | CE_SKIP_WORKTREE)
+ 
+ /*
++ * Representation of the extended on-disk flags in the v5 format.
++ * They must not collide with the ordinary on-disk flags, and need to
++ * fit in 16 bits.  Note however that v5 does not save the name
++ * length.
++ */
++#define CE_INTENT_TO_ADD_V5  (0x4000)
++#define CE_SKIP_WORKTREE_V5  (0x0800)
++#define CE_INVALID_V5        (0x0200)
++#if (CE_VALID|CE_STAGEMASK) & (CE_INTENTTOADD_V5|CE_SKIPWORKTREE_V5|CE_INVALID_V5)
++#error "v5 on-disk flags collide with ordinary on-disk flags"
++#endif
++
++/*
+  * Safeguard to avoid saving wrong flags:
+  *  - CE_EXTENDED2 won't get saved until its semantic is known
+  *  - Bits in 0x0000FFFF have been saved in ce_flags already
+@@ -213,6 +241,8 @@ static inline unsigned create_ce_flags(unsigned stage)
+ #define ce_skip_worktree(ce) ((ce)->ce_flags & CE_SKIP_WORKTREE)
+ #define ce_mark_uptodate(ce) ((ce)->ce_flags |= CE_UPTODATE)
+ 
++#define conflict_stage(c) ((CONFLICT_STAGEMASK & (c)->flags) >> CONFLICT_STAGESHIFT)
++
+ #define ce_permissions(mode) (((mode) & 0100) ? 0755 : 0644)
+ static inline unsigned int create_ce_mode(unsigned int mode)
+ {
+diff --git a/read-cache-v5.c b/read-cache-v5.c
 new file mode 100644
-index 0000000..5209c02
+index 0000000..799b8e7
 --- /dev/null
-+++ b/Documentation/technical/index-file-format-v5.txt
-@@ -0,0 +1,301 @@
-+GIT index format
-+================
-+
-+== The git index
-+
-+   The git index file (.git/index) documents the status of the files
-+     in the git staging area.
-+
-+   The staging area is used for preparing commits, merging, etc.
-+
-+== The git index file format
-+
-+   All binary numbers are in network byte order. Version 5 is described
-+     here. The index file consists of various sections. They appear in
-+     the following order in the file.
-+
-+   - header: the description of the index format, including it's signature,
-+     version and various other fields that are used internally.
-+
-+   - diroffsets (ndir entries of "direcotry offset"): A 4-byte offset
-+       relative to the beginning of the "direntries block" (see below)
-+       for each of the ndir directories in the index, sorted by pathname
-+       (of the directory it's pointing to). [1]
-+
-+   - direntries (ndir entries of "directory offset"): A directory entry
-+       for each of the ndir directories in the index, sorted by pathname
-+       (see below). [2]
-+
-+   - fileoffsets (nfile entries of "file offset"): A 4-byte offset
-+       relative to the beginning of the fileentries block (see below)
-+       for each of the nfile files in the index. [1]
-+
-+   - fileentries (nfile entries of "file entry"): A file entry for
-+       each of the nfile files in the index (see below).
-+
-+   - crdata: A number of entries for conflicted data/resolved conflicts
-+       (see below).
-+
-+   - Extensions (Currently none, see below in the future)
-+
-+     Extensions are identified by signature. Optional extensions can
-+     be ignored if GIT does not understand them.
-+
-+     GIT supports an arbitrary number of extension, but currently none
-+     is implemented. [3]
-+
-+     extsig (32-bits): extension signature. If the first byte is 'A'..'Z'
-+     the extension is optional and can be ignored.
-+
-+     extsize (32-bits): size of the extension, excluding the header
-+       (extsig, extsize, extchecksum).
-+
-+     extchecksum (32-bits): crc32 checksum of the extension signature
-+       and size.
-+
-+    - Extension data.
-+
-+== Header
-+   sig (32-bits): Signature:
-+     The signature is { 'D', 'I', 'R', 'C' } (stands for "dircache")
-+
-+   vnr (32-bits): Version number:
-+     The current supported versions are 2, 3, 4 and 5.
-+
-+   nfile (32-bits): number of file entries in the index.
-+
-+   ndir (32-bits): number of directories in the index.
-+
-+   fblockoffset (32-bits): offset to the file block, relative to the
-+     beginning of the file.
-+
-+   - Offset to the extensions.
-+
-+     nextensions (32-bits): number of extensions.
-+
-+     extoffset (32-bits): offset to the extension. (Possibly none, as
-+       many as indicated in the 4-byte number of extensions)
-+
-+   headercrc (32-bits): crc checksum including the header and the
-+     offsets to the extensions.
-+
-+
-+== Directory offsets (diroffsets)
-+
-+  diroffset (32-bits): offset to the directory relative to the
-+    beginning of the index file. There are ndir + 1 offsets in the
-+    diroffset table, the last is pointing to the end of the last
-+    direntry. With this last entry, we are able to replace the strlen
-+    of the directory name when reading the directory name, by
-+    calculating it from diroffset[n+1]-diroffset[n]-61.  61 is the
-+    size of the directory data, which follows each each directory +
-+    the crc sum + the NUL byte.
-+
-+  This part is needed for making the directory entries bisectable and
-+    thus allowing a binary search.
-+
-+== Directory entry (direntries)
-+
-+  Directory entries are sorted in lexicographic order by the name
-+    of their path starting with the root.
-+
-+  pathname (variable length, nul terminated): relative to top level
-+    directory (without the leading slash). '/' is used as path
-+    separator. A string of length 0 ('') indicates the root directory.
-+    The special path components ".", and ".." (without quotes) are
-+    disallowed. The path also includes a trailing slash. [9]
-+
-+  foffset (32-bits): offset to the lexicographically first file in
-+    the file offsets (fileoffsets), relative to the beginning of
-+    the fileoffset block.
-+
-+  cr (32-bits): offset to conflicted/resolved data at the end of the
-+    index. 0 if there is no such data. [4]
-+
-+  ncr (32-bits): number of conflicted/resolved data entries at the
-+    end of the index if the offset is non 0. If cr is 0, ncr is
-+    also 0.
-+
-+  nsubtrees (32-bits): number of subtrees this tree has in the index.
-+
-+  nfiles (32-bits): number of files in the directory, that are in
-+    the index.
-+
-+  nentries (32-bits): number of entries in the index that is covered
-+    by the tree this entry represents. (-1 if the entry is invalid).
-+    This number includes all the files in this tree, recursively.
-+
-+  objname (160-bits): object name for the object that would result
-+    from writing this span of index as a tree. This is only valid
-+    if nentries is valid, meaning the cache-tree is valid.
-+
-+  flags (16-bits): 'flags' field split into (high to low bits) (For
-+    D/F conflicts)
-+
-+    stage (2-bits): stage of the directory during merge
-+
-+    14-bit unused
-+
-+  dircrc (32-bits): crc32 checksum for each directory entry.
-+
-+  The last 24 bytes (4-byte number of entries + 160-bit object name) are
-+    for the cache tree. An entry can be in an invalidated state which is
-+    represented by having -1 in the entry_count field.
-+
-+  The entries are written out in the top-down, depth-first order. The
-+    first entry represents the root level of the repository, followed by
-+    the first subtree - let's call it A - of the root level, followed by
-+    the first subtree of A, ... There is no prefix compression for
-+    directories.
-+
-+== File offsets (fileoffsets)
-+
-+  fileoffset (32-bits): offset to the file relative to the beginning of
-+    the fileentries block.
-+
-+  This part is needed for making the file entries bisectable and
-+    thus allowing a binary search. There are nfile + 1 offsets in the
-+    fileoffset table, the last is pointing to the end of the last
-+    fileentry. With this last entry, we can replace the strlen when
-+    reading each filename, by calculating its length with the offsets.
-+
-+== File entry (fileentries)
-+
-+  File entries are sorted in ascending order on the name field, after the
-+  respective offset given by the directory entries. All file names are
-+  prefix compressed, meaning the file name is relative to the directory.
-+
-+  filename (variable length, nul terminated). The exact encoding is
-+    undefined, but the filename cannot contain a NUL byte (iow, the same
-+    encoding as a UNIX pathname).
-+
-+  flags (16-bits): 'flags' field split into (high to low bits)
-+
-+    assumevalid (1-bit): assume-valid flag
-+
-+    intenttoadd (1-bit): intent-to-add flag, used by "git add -N".
-+      Extended flag in index v3.
-+
-+    stage (2-bit): stage of the file during merge
-+
-+    skipworktree (1-bit): skip-worktree flag, used by sparse checkout.
-+      Extended flag in index v3.
-+
-+    smudged (1-bit): indicates if the file is racily smudged.
-+
-+    invalid (1-bit): This bit can be set to indicate that a file was
-+      deleted, but not yet removed from the index, because the index
-+      was only partially rewritten.  Entries with this flags should be
-+      ignored when reading the index file.
-+
-+    9-bit unused, must be zero [6]
-+
-+  mode (16-bits): file mode, split into (high to low bits)
-+
-+    objtype (4-bits): object type
-+      valid values in binary are 1000 (regular file), 1010 (symbolic
-+      link) and 1110 (gitlink)
-+
-+    3-bit unused
-+
-+    permission (9-bits): unix permission. Only 0755 and 0644 are valid
-+      for regular files. Symbolic links and gitlinks have value 0 in
-+      this field.
-+
-+  mtimes (32-bits): mtime seconds, the last time a file's data changed
-+    this is stat(2) data
-+
-+  mtimens (32-bits): mtime nanosecond fractions
-+    this is stat(2) data
-+
-+  file size (32-bits): The on-disk size, trucated to 32-bit.
-+    this is stat(2) data
-+
-+  statcrc (32-bits): crc32 checksum over ctime seconds, ctime
-+    nanoseconds, ino, dev, uid, gid (All stat(2) data
-+    except mtime and file size). If the statcrc is 0 it will
-+    be ignored. [7]
-+
-+  objhash (160-bits): SHA-1 for the represented object
-+
-+  entrycrc (32-bits): crc32 checksum for the file entry. The crc code
-+    includes the offset to the offset to the file, relative to the
-+    beginning of the file.
-+
-+== Conflict data
-+
-+  A conflict is represented in the index as a set of higher stage entries.
-+  These entries are stored at the end of the index. When a conflict is
-+  resolved (e.g. with "git add path"). A bit is flipped, to indicate that
-+  the conflict is resolved, but the entries will be kept, so that
-+  conflicts can be recreated (e.g. with "git checkout -m", in case users
-+  want to redo a conflict resolution from scratch.
-+
-+  The conflicts will also be stored in the fileentries part of the index,
-+  to simplify reading and writing of the index.
-+
-+  filename (variable length, nul terminated): filename of the entry,
-+    relative to its containing directory).
-+
-+  nfileconflicts (32-bits): number of conflicts for the file [8]
-+
-+  flags (nfileconflicts entries of "flags") (16-bits): 'flags' field
-+    split into:
-+
-+    conflicted (1-bit): conflicted state (conflicted/resolved) (1 if
-+      conflicted)
-+
-+    stage (2-bits): stage during merge.
-+
-+    13-bit unused
-+
-+  entry_mode (nfileconflicts entries of "entry mode") (16-bits):
-+    octal numbers, entry mode of eache entry in the different stages.
-+    (How many is defined by the 4-byte number before)
-+
-+  objectnames (nfileconflicts entries of "object name") (160-bits):
-+    object names  of the different stages.
-+
-+  conflictcrc (32-bits): crc32 checksum over conflict data.
-+
-+== Design explanations
-+
-+[1] The directory and file offsets are included in the index format
-+    to enable bisectability of the index, for binary searches.Updating
-+    a single entry and partial reading will benefit from this.
-+
-+[2] The directories are saved in their own block, to be able to
-+    quickly search for a directory in the index. They include a
-+    offset to the (lexically) first file in the directory.
-+
-+[3] The data of the cache-tree extension and the resolve undo
-+    extension is now part of the index itself, but if other extensions
-+    come up in the future, there is no need to change the index, they
-+    can simply be added at the end.
-+
-+[4] To avoid rewrites of the whole index when there are conflicts or
-+    conflicts are being resolved, conflicted data will be stored at
-+    the end of the index. To mark the conflict resolved, just a bit
-+    has to be flipped. The data will still be there, if a user wants
-+    to redo the conflict resolution.
-+
-+[5] Since only 4 modes are effectively allowed in git but 32-bit are
-+    used to store them, having a two bit flag for the mode is enough
-+    and saves 4 byte per entry.
-+
-+[6] The length of the file name was dropped, since each file name is
-+    nul terminated anyway.
-+
-+[7] Since all stat data (except mtime and ctime) is just used for
-+    checking if a file has changed a checksum of the data is enough.
-+    In addition to that Thomas Rast suggested ctime could be ditched
-+    completely (core.trustctime=false) and thus included in the
-+    checksum. This would save 24 bytes per index entry, which would
-+    be about 4 MB on the Webkit index.
-+    (Thanks for the suggestion to Michael Haggerty)
-+
-+[8] Since there can be more stage #1 entries, it is necessary to know
-+    the number of conflict data entries there are.
-+
-+[9] As Michael Haggerty pointed out on the mailing list, storing the
-+    trailing slash will simplify a few operations.
++++ b/read-cache-v5.c
+@@ -0,0 +1,473 @@
++#include "cache.h"
++#include "read-cache.h"
++#include "resolve-undo.h"
++#include "cache-tree.h"
++#include "dir.h"
++#include "pathspec.h"
++
++#define ptr_add(x,y) ((void *)(((char *)(x)) + (y)))
++
++struct cache_header_v5 {
++	uint32_t hdr_ndir;
++	uint32_t hdr_fblockoffset;
++	uint32_t hdr_nextension;
++};
++
++struct directory_entry {
++	struct directory_entry **sub;
++	struct directory_entry *next;
++	struct directory_entry *next_hash;
++	struct cache_entry *ce;
++	struct cache_entry *ce_last;
++	struct conflict_entry *conflict;
++	struct conflict_entry *conflict_last;
++	uint32_t conflict_size;
++	uint32_t de_foffset;
++	uint32_t de_cr;
++	uint32_t de_ncr;
++	uint32_t de_nsubtrees;
++	uint32_t de_nfiles;
++	uint32_t de_nentries;
++	unsigned char sha1[20];
++	uint16_t de_flags;
++	uint32_t de_pathlen;
++	char pathname[FLEX_ARRAY];
++};
++
++struct conflict_part {
++	struct conflict_part *next;
++	uint16_t flags;
++	uint16_t entry_mode;
++	unsigned char sha1[20];
++};
++
++struct conflict_entry {
++	struct conflict_entry *next;
++	uint32_t nfileconflicts;
++	struct conflict_part *entries;
++	uint32_t namelen;
++	uint32_t pathlen;
++	char name[FLEX_ARRAY];
++};
++
++#define directory_entry_size(len) (offsetof(struct directory_entry,pathname) + (len) + 1)
++#define conflict_entry_size(len) (offsetof(struct conflict_entry,name) + (len) + 1)
++
++/*****************************************************************
++ * Index File I/O
++ *****************************************************************/
++
++struct ondisk_conflict_part {
++	uint16_t flags;
++	uint16_t entry_mode;
++	unsigned char sha1[20];
++};
++
++struct ondisk_cache_entry {
++	uint16_t flags;
++	uint16_t mode;
++	struct cache_time mtime;
++	uint32_t size;
++	int stat_crc;
++	unsigned char sha1[20];
++};
++
++struct ondisk_directory_entry {
++	uint32_t foffset;
++	uint32_t cr;
++	uint32_t ncr;
++	uint32_t nsubtrees;
++	uint32_t nfiles;
++	uint32_t nentries;
++	unsigned char sha1[20];
++	uint16_t flags;
++};
++
++static int check_crc32(int initialcrc,
++			void *data,
++			size_t len,
++			unsigned int expected_crc)
++{
++	int crc;
++
++	crc = crc32(initialcrc, (Bytef*)data, len);
++	return crc == expected_crc;
++}
++
++static int match_stat_crc(struct stat *st, uint32_t expected_crc)
++{
++	uint32_t data, stat_crc = 0;
++	unsigned int ctimens = 0;
++
++	data = htonl(st->st_ctime);
++	stat_crc = crc32(0, (Bytef*)&data, 4);
++#ifdef USE_NSEC
++	ctimens = ST_CTIME_NSEC(*st);
++#endif
++	data = htonl(ctimens);
++	stat_crc = crc32(stat_crc, (Bytef*)&data, 4);
++	data = htonl(st->st_ino);
++	stat_crc = crc32(stat_crc, (Bytef*)&data, 4);
++	data = htonl(st->st_dev);
++	stat_crc = crc32(stat_crc, (Bytef*)&data, 4);
++	data = htonl(st->st_uid);
++	stat_crc = crc32(stat_crc, (Bytef*)&data, 4);
++	data = htonl(st->st_gid);
++	stat_crc = crc32(stat_crc, (Bytef*)&data, 4);
++
++	return stat_crc == expected_crc;
++}
++
++static int match_stat_basic(const struct cache_entry *ce,
++			    struct stat *st,
++			    int changed)
++{
++
++	if (ce->ce_stat_data.sd_mtime.sec != (unsigned int)st->st_mtime)
++		changed |= MTIME_CHANGED;
++#ifdef USE_NSEC
++	if (ce->ce_stat_data.sd_mtime.nsec != ST_MTIME_NSEC(*st))
++		changed |= MTIME_CHANGED;
++#endif
++	if (ce->ce_stat_data.sd_size != (unsigned int)st->st_size)
++		changed |= DATA_CHANGED;
++
++	if (trust_ctime && ce->ce_stat_crc != 0 && !match_stat_crc(st, ce->ce_stat_crc)) {
++		changed |= OWNER_CHANGED;
++		changed |= INODE_CHANGED;
++	}
++	/* Racily smudged entry? */
++	if (ce->ce_flags & CE_SMUDGED) {
++		if (!changed && !is_empty_blob_sha1(ce->sha1) && ce_modified_check_fs(ce, st))
++			changed |= DATA_CHANGED;
++	}
++	return changed;
++}
++
++static int verify_hdr(void *mmap, unsigned long size)
++{
++	uint32_t *filecrc;
++	unsigned int header_size;
++	struct cache_header *hdr;
++	struct cache_header_v5 *hdr_v5;
++
++	if (size < sizeof(struct cache_header)
++	    + sizeof (struct cache_header_v5) + 4)
++		die("index file smaller than expected");
++
++	hdr = mmap;
++	hdr_v5 = ptr_add(mmap, sizeof(*hdr));
++	/* Size of the header + the size of the extensionoffsets */
++	header_size = sizeof(*hdr) + sizeof(*hdr_v5) + hdr_v5->hdr_nextension * 4;
++	/* Initialize crc */
++	filecrc = ptr_add(mmap, header_size);
++	if (!check_crc32(0, hdr, header_size, ntohl(*filecrc)))
++		return error("bad index file header crc signature");
++	return 0;
++}
++
++static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *ondisk,
++						   char *pathname,
++						   char *name,
++						   size_t len,
++						   size_t pathlen)
++{
++	struct cache_entry *ce = xmalloc(cache_entry_size(len + pathlen));
++	int flags;
++
++	flags = ntoh_s(ondisk->flags);
++	/*
++	 * This entry was invalidated in the index file,
++	 * we don't need any data from it
++	 */
++	if (flags & CE_INVALID_V5)
++		return NULL;
++	ce->ce_stat_data.sd_ctime.sec  = 0;
++	ce->ce_stat_data.sd_mtime.sec  = ntoh_l(ondisk->mtime.sec);
++	ce->ce_stat_data.sd_ctime.nsec = 0;
++	ce->ce_stat_data.sd_mtime.nsec = ntoh_l(ondisk->mtime.nsec);
++	ce->ce_stat_data.sd_dev        = 0;
++	ce->ce_stat_data.sd_ino        = 0;
++	ce->ce_stat_data.sd_uid        = 0;
++	ce->ce_stat_data.sd_gid        = 0;
++	ce->ce_stat_data.sd_size       = ntoh_l(ondisk->size);
++	ce->ce_mode       = ntoh_s(ondisk->mode);
++	ce->ce_flags      = flags & CE_STAGEMASK;
++	ce->ce_flags     |= flags & CE_VALID;
++	ce->ce_flags     |= flags & CE_SMUDGED;
++	if (flags & CE_INTENT_TO_ADD_V5)
++		ce->ce_flags |= CE_INTENT_TO_ADD;
++	if (flags & CE_SKIP_WORKTREE_V5)
++		ce->ce_flags |= CE_SKIP_WORKTREE;
++	ce->ce_stat_crc   = ntoh_l(ondisk->stat_crc);
++	ce->ce_namelen    = len + pathlen;
++	hashcpy(ce->sha1, ondisk->sha1);
++	memcpy(ce->name, pathname, pathlen);
++	memcpy(ce->name + pathlen, name, len);
++	ce->name[len + pathlen] = '\0';
++	return ce;
++}
++
++static struct directory_entry *directory_entry_from_ondisk(struct ondisk_directory_entry *ondisk,
++						   const char *name,
++						   size_t len)
++{
++	struct directory_entry *de = xmalloc(directory_entry_size(len));
++
++	memcpy(de->pathname, name, len);
++	de->pathname[len] = '\0';
++	de->de_flags      = ntoh_s(ondisk->flags);
++	de->de_foffset    = ntoh_l(ondisk->foffset);
++	de->de_cr         = ntoh_l(ondisk->cr);
++	de->de_ncr        = ntoh_l(ondisk->ncr);
++	de->de_nsubtrees  = ntoh_l(ondisk->nsubtrees);
++	de->de_nfiles     = ntoh_l(ondisk->nfiles);
++	de->de_nentries   = ntoh_l(ondisk->nentries);
++	de->de_pathlen    = len;
++	hashcpy(de->sha1, ondisk->sha1);
++	return de;
++}
++
++static struct directory_entry *read_directories(unsigned int *dir_offset,
++				unsigned int *dir_table_offset,
++				void *mmap,
++				int mmap_size)
++{
++	int i, ondisk_directory_size;
++	uint32_t *filecrc, *beginning, *end;
++	struct ondisk_directory_entry *disk_de;
++	struct directory_entry *de;
++	unsigned int data_len, len;
++	char *name;
++
++	/*
++	 * Length of pathname + nul byte for termination + size of
++	 * members of ondisk_directory_entry. (Just using the size
++	 * of the struct doesn't work, because there may be padding
++	 * bytes for the struct)
++	 */
++	ondisk_directory_size = sizeof(disk_de->flags)
++		+ sizeof(disk_de->foffset)
++		+ sizeof(disk_de->cr)
++		+ sizeof(disk_de->ncr)
++		+ sizeof(disk_de->nsubtrees)
++		+ sizeof(disk_de->nfiles)
++		+ sizeof(disk_de->nentries)
++		+ sizeof(disk_de->sha1);
++	name = ptr_add(mmap, *dir_offset);
++	beginning = ptr_add(mmap, *dir_table_offset);
++	end = ptr_add(mmap, *dir_table_offset + 4);
++	len = ntoh_l(*end) - ntoh_l(*beginning) - ondisk_directory_size - 5;
++	disk_de = ptr_add(mmap, *dir_offset + len + 1);
++	de = directory_entry_from_ondisk(disk_de, name, len);
++	de->next = NULL;
++	de->sub = NULL;
++
++	data_len = len + 1 + ondisk_directory_size;
++	filecrc = ptr_add(mmap, *dir_offset + data_len);
++	if (!check_crc32(0, ptr_add(mmap, *dir_offset), data_len, ntoh_l(*filecrc)))
++		die("directory crc doesn't match for '%s'", de->pathname);
++
++	*dir_table_offset += 4;
++	*dir_offset += data_len + 4; /* crc code */
++
++	de->sub = xcalloc(de->de_nsubtrees, sizeof(struct directory_entry *));
++	for (i = 0; i < de->de_nsubtrees; i++) {
++		de->sub[i] = read_directories(dir_offset, dir_table_offset,
++						   mmap, mmap_size);
++	}
++
++	return de;
++}
++
++static int read_entry(struct cache_entry **ce, char *pathname, size_t pathlen,
++		      void *mmap, unsigned long mmap_size,
++		      unsigned int first_entry_offset,
++		      unsigned int foffsetblock)
++{
++	int len, offset_to_offset;
++	char *name;
++	uint32_t foffsetblockcrc, *filecrc, *beginning, *end, entry_offset;
++	struct ondisk_cache_entry *disk_ce;
++
++	beginning = ptr_add(mmap, foffsetblock);
++	end = ptr_add(mmap, foffsetblock + 4);
++	len = ntoh_l(*end) - ntoh_l(*beginning) - sizeof(struct ondisk_cache_entry) - 5;
++	entry_offset = first_entry_offset + ntoh_l(*beginning);
++	name = ptr_add(mmap, entry_offset);
++	disk_ce = ptr_add(mmap, entry_offset + len + 1);
++	*ce = cache_entry_from_ondisk(disk_ce, pathname, name, len, pathlen);
++	filecrc = ptr_add(mmap, entry_offset + len + 1 + sizeof(*disk_ce));
++	offset_to_offset = htonl(foffsetblock);
++	foffsetblockcrc = crc32(0, (Bytef*)&offset_to_offset, 4);
++	if (!check_crc32(foffsetblockcrc,
++		ptr_add(mmap, entry_offset), len + 1 + sizeof(*disk_ce),
++		ntoh_l(*filecrc)))
++		return -1;
++
++	return 0;
++}
++
++struct conflict_entry *create_new_conflict(char *name, int len, int pathlen)
++{
++	struct conflict_entry *conflict_entry;
++
++	if (pathlen)
++		pathlen++;
++	conflict_entry = xmalloc(conflict_entry_size(len));
++	conflict_entry->entries = NULL;
++	conflict_entry->nfileconflicts = 0;
++	conflict_entry->namelen = len;
++	memcpy(conflict_entry->name, name, len);
++	conflict_entry->name[len] = '\0';
++	conflict_entry->pathlen = pathlen;
++	conflict_entry->next = NULL;
++
++	return conflict_entry;
++}
++
++void add_part_to_conflict_entry(struct directory_entry *de,
++					struct conflict_entry *entry,
++					struct conflict_part *conflict_part)
++{
++
++	struct conflict_part *conflict_search;
++
++	entry->nfileconflicts++;
++	de->conflict_size += sizeof(struct ondisk_conflict_part);
++	if (!entry->entries)
++		entry->entries = conflict_part;
++	else {
++		conflict_search = entry->entries;
++		while (conflict_search->next)
++			conflict_search = conflict_search->next;
++		conflict_search->next = conflict_part;
++	}
++}
++
++static int read_entries(struct index_state *istate, struct directory_entry *de,
++			unsigned int first_entry_offset, void *mmap,
++			unsigned long mmap_size, unsigned int *nr,
++			unsigned int foffsetblock)
++{
++	struct cache_entry *ce;
++	int i, subdir = 0;
++
++	for (i = 0; i < de->de_nfiles; i++) {
++		unsigned int subdir_foffsetblock = de->de_foffset + foffsetblock + (i * 4);
++		if (read_entry(&ce, de->pathname, de->de_pathlen, mmap, mmap_size,
++			       first_entry_offset, subdir_foffsetblock) < 0)
++			return -1;
++		while (subdir < de->de_nsubtrees &&
++		       cache_name_compare(ce->name + de->de_pathlen,
++					  ce_namelen(ce) - de->de_pathlen,
++					  de->sub[subdir]->pathname + de->de_pathlen,
++					  de->sub[subdir]->de_pathlen - de->de_pathlen) > 0) {
++			read_entries(istate, de->sub[subdir], first_entry_offset, mmap,
++				     mmap_size, nr, foffsetblock);
++			subdir++;
++		}
++		if (!ce)
++			continue;
++		set_index_entry(istate, (*nr)++, ce);
++	}
++	for (i = subdir; i < de->de_nsubtrees; i++) {
++		read_entries(istate, de->sub[i], first_entry_offset, mmap,
++			     mmap_size, nr, foffsetblock);
++	}
++	return 0;
++}
++
++static struct directory_entry *read_all_directories(struct index_state *istate,
++						    unsigned int *entry_offset,
++						    unsigned int *foffsetblock,
++						    unsigned int *ndirs,
++						    void *mmap, unsigned long mmap_size)
++{
++	unsigned int dir_offset, dir_table_offset;
++	struct cache_header *hdr;
++	struct cache_header_v5 *hdr_v5;
++	struct directory_entry *root_directory;
++
++	hdr = mmap;
++	hdr_v5 = ptr_add(mmap, sizeof(*hdr));
++	istate->cache_alloc = alloc_nr(ntohl(hdr->hdr_entries));
++	istate->cache = xcalloc(istate->cache_alloc, sizeof(struct cache_entry *));
++
++	/* Skip size of the header + crc sum + size of offsets to extensions + size of offsets */
++	dir_offset = sizeof(*hdr) + sizeof(*hdr_v5) + ntohl(hdr_v5->hdr_nextension) * 4 + 4
++		+ (ntohl(hdr_v5->hdr_ndir) + 1) * 4;
++	dir_table_offset = sizeof(*hdr) + sizeof(*hdr_v5) + ntohl(hdr_v5->hdr_nextension) * 4 + 4;
++	root_directory = read_directories(&dir_offset, &dir_table_offset,
++					  mmap, mmap_size);
++
++	*entry_offset = ntohl(hdr_v5->hdr_fblockoffset);
++	*foffsetblock = dir_offset;
++	*ndirs = ntohl(hdr_v5->hdr_ndir);
++	return root_directory;
++}
++
++static int read_index_v5(struct index_state *istate, void *mmap,
++			 unsigned long mmap_size, struct filter_opts *opts)
++{
++	unsigned int entry_offset, ndirs, foffsetblock, nr = 0;
++	struct directory_entry *root_directory, *de, *last_de;
++	const char **paths = NULL;
++	struct pathspec adjusted_pathspec;
++	int need_root = 0, i;
++
++	root_directory = read_all_directories(istate, &entry_offset,
++					      &foffsetblock, &ndirs,
++					      mmap, mmap_size);
++
++	if (opts && opts->pathspec && opts->pathspec->nr) {
++		need_root = 0;
++		paths = xmalloc((opts->pathspec->nr + 1)*sizeof(char *));
++		paths[opts->pathspec->nr] = NULL;
++		for (i = 0; i < opts->pathspec->nr; i++) {
++			char *super = strdup(opts->pathspec->items[i].match);
++			int len = strlen(super);
++			while (len && super[len - 1] == '/' && super[len - 2] == '/')
++				super[--len] = '\0'; /* strip all but one trailing slash */
++			while (len && super[--len] != '/')
++				; /* scan backwards to next / */
++			if (len >= 0)
++				super[len--] = '\0';
++			if (len <= 0) {
++				need_root = 1;
++				break;
++			}
++			paths[i] = super;
++		}
++	}
++
++	if (!need_root)
++		parse_pathspec(&adjusted_pathspec, PATHSPEC_ALL_MAGIC, PATHSPEC_PREFER_CWD, NULL, paths);
++
++	de = root_directory;
++	last_de = de;
++	while (de) {
++		if (need_root ||
++		    match_pathspec_depth(&adjusted_pathspec, de->pathname, de->de_pathlen, 0, NULL)) {
++			if (read_entries(istate, de, entry_offset,
++					 mmap, mmap_size, &nr,
++					 foffsetblock) < 0)
++				return -1;
++		} else {
++			for (i = 0; i < de->de_nsubtrees; i++) {
++				last_de->next = de->sub[i];
++				last_de = last_de->next;
++			}
++		}
++		de = de->next;
++	}
++	istate->cache_nr = nr;
++	return 0;
++}
++
++struct index_ops v5_ops = {
++	match_stat_basic,
++	verify_hdr,
++	read_index_v5,
++	NULL
++};
+diff --git a/read-cache.h b/read-cache.h
+index 644b199..01c76de 100644
+--- a/read-cache.h
++++ b/read-cache.h
+@@ -31,6 +31,7 @@ struct index_ops {
+ };
+ 
+ extern struct index_ops v2_ops;
++extern struct index_ops v5_ops;
+ 
+ #ifndef NEEDS_ALIGNED_ACCESS
+ #define ntoh_s(var) ntohs(var)
 -- 
 1.8.3.4.1231.g9fbf354.dirty
