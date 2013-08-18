@@ -1,99 +1,76 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [RFC PATCHv3] repack: rewrite the shell script in C.
-Date: Sun, 18 Aug 2013 18:44:46 +0200
-Message-ID: <5210F9FE.1080801@web.de>
-References: <5210DB77.3090004@googlemail.com> <1376836587-25248-1-git-send-email-stefanbeller@googlemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, mfick@codeaurora.org, apelisse@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr, pclouds@gmail.com, iveqy@iveqy.com,
-	gitster@pobox.com
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 18 18:45:21 2013
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 0/2] fix cases of rebase -i ignoring core.commentchar
+Date: Sun, 18 Aug 2013 13:12:48 -0400
+Message-ID: <1376845970-31204-1-git-send-email-sunshine@sunshineco.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 18 19:13:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VB66P-0001LJ-B0
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 18:45:17 +0200
+	id 1VB6XR-0006ON-KZ
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Aug 2013 19:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753957Ab3HRQpK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Aug 2013 12:45:10 -0400
-Received: from mout.web.de ([212.227.17.12]:51143 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753299Ab3HRQpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Aug 2013 12:45:09 -0400
-Received: from [192.168.2.102] ([79.250.178.242]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MUFGo-1VbwOG1MbS-00Qwpq for <git@vger.kernel.org>;
- Sun, 18 Aug 2013 18:45:07 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <1376836587-25248-1-git-send-email-stefanbeller@googlemail.com>
-X-Provags-ID: V03:K0:VXkLJItgzdso3id9Zdhh+knLlFuWxOFHi5q2KOT721zykS43f0t
- JyzMd1JT0MP7Faga/1jTS+YGInCqEh3ChpXgtDM0jyraUAAQT64xOHEBoSmmTcd86Jwn5GJ
- 7vKeqplWQp8vzoMLYn2urnzSpgBy0D8U4iSZ0dBbZTjt6d2F4PkpA/wKUzVov5ZpDVy+8u7
- Xc6hPHoWefUgOApgHM6bw==
+	id S1754072Ab3HRRNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Aug 2013 13:13:09 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:57257 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753814Ab3HRRNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Aug 2013 13:13:08 -0400
+Received: by mail-oa0-f52.google.com with SMTP id n12so4291504oag.25
+        for <git@vger.kernel.org>; Sun, 18 Aug 2013 10:13:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=JSZq6fOu09Gc8h80AfhYLfj0tLGKL/l6E73HPJ8exFw=;
+        b=VHvrbaALZWwvRidc8kXDWDrluBFnXhpDM81cH5d1nfJ8Jlcd+4Jn2so8gdhlilYbuP
+         PQ5k7JGYlRZtEMkI+O84DHUwKWQthKDDo3IKOKR7HbRJurNgPvxx4xy7eN1HR//DY+jK
+         0LlPgbzfQ98xBawnJmxRTEKvgTS/aGdAESlwIzD2q+yW/5Ykk3+NedMuv5rx7s1p4i8p
+         isIxUiTev9yX6qw2P6VDs7Fu+J9wYKYXmTk/qIrrqZDtR74yDA8mucQ+oSwFAMwg3XP0
+         XymD43TsQ9BMRC8VlYQZV92LPC0zBVLfP1L4/M39iR07JuLukzTGLtJdw/AezGW8Km3y
+         tkPw==
+X-Received: by 10.182.131.196 with SMTP id oo4mr1932807obb.50.1376845987662;
+        Sun, 18 Aug 2013 10:13:07 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
+        by mx.google.com with ESMTPSA id uz16sm9244405obc.5.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 18 Aug 2013 10:13:06 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc3.500.gc3113b0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232482>
 
-> +static void remove_temporary_files() {
-> +	DIR *dir;
-> +	struct dirent *e;
-> +	char *prefix, *path;
-> +
-> +	prefix =3D mkpathdup(".tmp-%d-pack", getpid());
-> +	path =3D mkpathdup("%s/pack", get_object_directory());
-> +
-> +	dir =3D opendir(path);
-> +	while ((e =3D readdir(dir)) !=3D NULL) {
-> +		if (!prefixcmp(e->d_name, prefix)) {
-> +			struct strbuf fname =3D STRBUF_INIT;
-> +			strbuf_addf(&fname, "%s/%s", path, e->d_name);
-> +			unlink(strbuf_detach(&fname, NULL));
+This is a reroll of [1] which fixes a couple cases where rebase -i
+ignores core.commentchar. One case was an oversight from the original
+patch which added core.commentchar support to rebase -i, and is already
+in 'maint'. The other is a regression introduced by [2] which is still
+in 'next'.
 
-I'm not sure I like the memory allocation done here for each file to be
-deleted, but it's probably not worth worrying about.
+In this reroll, the single patch from v1 is split into two: patch 1/2 is
+suitable for 'maint'; and patch 2/2 is for 'next'. There are no other
+changes.
 
-> +void get_pack_sha1_list(char *packdir, struct string_list *sha1_list=
-)
-> +{
-> +	DIR *dir;
-> +	struct dirent *e;
-> +	char *path, *suffix;
-> +
-> +	path =3D mkpathdup("%s/pack", get_object_directory());
-> +	suffix =3D ".pack";
-> +
-> +	dir =3D opendir(path);
-> +	while ((e =3D readdir(dir)) !=3D NULL) {
-> +		if (!suffixcmp(e->d_name, suffix)) {
-> +			char *buf, *sha1;
-> +			buf =3D xmemdupz(e->d_name, strlen(e->d_name));
-> +			buf[strlen(e->d_name) - strlen(suffix)] =3D '\0';
-> +			if (strlen(e->d_name) - strlen(suffix) > 40) {
-> +				sha1 =3D &buf[strlen(e->d_name) - strlen(suffix) - 40];
-> +				string_list_append_nodup(sha1_list, sha1);
+I wanted to add tests to t3404 for these bugs but couldn't figure out
+how to do it using the external interface of rebase -i. I was able to
+verify before and after behavior by adding temporary echo's to the code
+in order to observe the "internal" functioning.
 
-Unless sha1 =3D=3D buf, this will crash when that string_list is freed
-because sha1 was not returned by malloc.  If it doesn't crash for
-you then I guess sha1_list is never freed. :)  How about just
-taking the part of d_name we need, like this?
+[1]: http://git.661346.n2.nabble.com/PATCH-rebase-i-fix-cases-ignoring-core-commentchar-td7593965.html
+[2]: http://git.661346.n2.nabble.com/PATCH-0-3-fix-interactive-rebase-short-SHA-1-collision-bug-td7593673.html#a7593676
 
-			size_t len =3D strlen(e->d_name) - strlen(suffix);
-			if (len > 40) {
-				char *sha1 =3D xmemdupz(e->d_name + len - 40, 40);
-				string_list_append_nodup(sha1_list, sha1);
-			}
+Eric Sunshine (2):
+  rebase -i: fix skip_unnecessary_picks() to respect core.commentchar
+  rebase -i: fix core.commentchar regression
 
-> +			} else {
-> +				/*TODO: what should happen to pack files having no 40 char sha1 =
-specifier?*/
+ git-rebase--interactive.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-What does the current code do with them?  From a quick glance it
-looks like it deletes them in the end, right?
-
-Ren=E9
+-- 
+1.8.4.rc3.500.gc3113b0
