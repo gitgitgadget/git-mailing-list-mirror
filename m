@@ -1,140 +1,200 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v4] compat: Fix read() of 2GB and more on Mac OS X
-Date: Mon, 19 Aug 2013 09:04:42 -0700
-Message-ID: <CA+55aFzQhJqE4QDwJDKtkTtJpMNbz3_Aw5_Q3yTk5DnhLJyjCQ@mail.gmail.com>
-References: <1376900499-662-1-git-send-email-prohaska@zib.de>
-	<1376926879-30846-1-git-send-email-prohaska@zib.de>
+From: Jharrod LaFon <jlafon@eyesopen.com>
+Subject: Re: [PATCH] Git segmentation faults if submodule path is empty.
+Date: Mon, 19 Aug 2013 09:26:56 -0700
+Message-ID: <B692A7F2-C5C2-4B5A-8FFC-6CF5C9DB72D8@eyesopen.com>
+References: <277BEB82-D618-48D9-A276-4B0E76A11A38@eyesopen.com>
+ <520DCB4B.6090309@web.de> <20130816130957.GB20138@sigill.intra.peff.net>
+ <20130816131406.GC20138@sigill.intra.peff.net>
+ <AFCBD71A-21CB-45CC-8386-C65173B6D173@eyesopen.com>
+ <0C422E09-EE33-4C3F-91D3-F6007F743A38@eyesopen.com>
+ <20130816205246.GA6487@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=047d7b343f1a32dc0404e44f1921
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	John Keeping <john@keeping.me.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Aug 19 18:04:49 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Aug 19 18:27:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBRwn-0004mu-AV
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 18:04:49 +0200
+	id 1VBSIJ-0008PR-JM
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 18:27:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995Ab3HSQEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Aug 2013 12:04:45 -0400
-Received: from mail-vc0-f180.google.com ([209.85.220.180]:38342 "EHLO
-	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750843Ab3HSQEo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Aug 2013 12:04:44 -0400
-Received: by mail-vc0-f180.google.com with SMTP id gf11so3050658vcb.25
-        for <git@vger.kernel.org>; Mon, 19 Aug 2013 09:04:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=gacuDf66y7nZ56TlBeYmb4glW9XgCSx1f4DSwE7UH2I=;
-        b=g1Ti+PvvAmQ4hmx7hDr9RZvPdKq2TDDACSniJb8wTSM5/QaUriIeHx0t92+sdPvngd
-         FkRr2zXsaOsa+PX/2boLzjr8A+wENdR0IKt0lXdK4XMJ17p65VPyovYH/MGGf6+kWpsK
-         HYA7mGQrOoGij5M8EkeWZJyMCHfYF5S1OTGPF5GlvbyfGqXF1LhEk+5XH+xhcTg+LXNN
-         j6xEyfy2FU1M6A3uFSPhLa5on2wDJEw95stk7yt141CR5ykFFou2Jp4EZE89XleoqZnY
-         hIjBG2aTFfYH3bAs0FR8lZzZyrat9gB5a5nOVSJkJEyye01gqiXoOhMclkyGbuQQct+v
-         mh/g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=gacuDf66y7nZ56TlBeYmb4glW9XgCSx1f4DSwE7UH2I=;
-        b=K7pKVfd7DsK3L80X6kfJjwYdiT5ysG6lkyz3CkFBukcArn8eDJIGs/eNo8urJ7tso1
-         2u84LHjM1fS3RnPK76DkU2jvVnHvI7kmLZIBcZignK1A+ABAdmtCZl1nxvTDxK8sql14
-         AH8HhYMYiew6dLL1dh3D72jSCz5gNdQmQwnlk=
-X-Received: by 10.220.91.16 with SMTP id k16mr3720962vcm.21.1376928283153;
- Mon, 19 Aug 2013 09:04:43 -0700 (PDT)
-Received: by 10.220.3.137 with HTTP; Mon, 19 Aug 2013 09:04:42 -0700 (PDT)
-In-Reply-To: <1376926879-30846-1-git-send-email-prohaska@zib.de>
-X-Google-Sender-Auth: k78GqZcXPOvTVxTm3aZKFkYIK0w
+	id S1750862Ab3HSQ07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Aug 2013 12:26:59 -0400
+Received: from exhub018-4.exch018.msoutlookonline.net ([64.78.17.19]:48682
+	"EHLO EXHUB018-4.exch018.msoutlookonline.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750817Ab3HSQ06 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Aug 2013 12:26:58 -0400
+Received: from EXVMBX018-11.exch018.msoutlookonline.net ([64.78.17.52]) by
+ EXHUB018-4.exch018.msoutlookonline.net ([64.78.17.19]) with mapi; Mon, 19 Aug
+ 2013 09:26:58 -0700
+Thread-Topic: [PATCH] Git segmentation faults if submodule path is empty.
+Thread-Index: Ac6c+OzDq7DwqzO9R4iQIhpvwT2NDQ==
+In-Reply-To: <20130816205246.GA6487@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232549>
 
---047d7b343f1a32dc0404e44f1921
-Content-Type: text/plain; charset=UTF-8
+Updated the patch and the patch submission.
 
-On Mon, Aug 19, 2013 at 8:41 AM, Steffen Prohaska <prohaska@zib.de> wrote:
->
-> The reason was that read() immediately returns with EINVAL if nbyte >=
-> 2GB.  According to POSIX [1], if the value of nbyte passed to read() is
-> greater than SSIZE_MAX, the result is implementation-defined.
+ -- >8 --
 
-Yeah, the OS X filesystem layer is an incredible piece of shit. Not
-only doesn't it follow POSIX, it fails *badly*. Because OS X kernel
-engineers apparently have the mental capacity of a retarded rodent on
-crack.
+Git segmentation faults if submodule path is empty.
 
-Linux also refuses to actually read more than a maximum value in one
-go (because quite frankly, doing more than 2GB at a time is just not
-reasonable, especially in unkillable disk wait), but at least Linux
-gives you the partial read, so that the usual "read until you're
-happy" works (which you have to do anyway with sockets, pipes, NFS
-intr mounts, etc etc). Returning EINVAL is a sign of a diseased mind.
+    Git fails due to a segmentation fault if a submodule path is empty.
+    Here is an example .gitmodules that will cause a segmentation fault:
+    [submodule "foo-module"]
+      path
+      url = http://host/repo.git
+    $ git status
+    Segmentation fault (core dumped)
 
-I hate your patch for other reasons, though:
+    This occurs because in the function parse_submodule_config_option, the
+    variable 'value' is assumed to be null, and when passed as an argument
+    to xstrdup a segmentation fault occurs if it is indeed null.
+    This is the case when using the .gitmodules example above.
 
-> The problem for read() is addressed in a similar way by introducing
-> a wrapper function in compat that always reads less than 2GB.
+    This patch addresses the issue by checking to make sure 'value' is not
+    null before using it as an argument to xstrdup.  For some configuration
+    options, such as fetchRecurseSubmodules, an empty value is valid.  If
+    the option being read is 'path', an empty value is not valid, and so
+    an error message is printed.
 
-Why do you do that? We already _have_ wrapper functions for read(),
-namely xread().  Exactly because you basically have to, in order to
-handle signals on interruptible filesystems (which aren't POSIX
-either, but at least sanely so) or from other random sources. And to
-handle the "you can't do reads that big" issue.
+Signed-off-by: Jharrod LaFon <jlafon <at> eyesopen.com>
+---
+ submodule.c                    |    6 ++++++
+ t/t1307-null-submodule-path.sh |   14 ++++++++++++++
+ 2 files changed, 20 insertions(+)
+ create mode 100755 t/t1307-null-submodule-path.sh
 
-So why isn't the patch much more straightforward? Like the attached
-totally untested one that just limits the read/write size to 8MB
-(which is totally arbitrary, but small enough to not have any latency
-issues even on slow disks, and big enough that any reasonable IO
-subsystem will still get good throughput).
+diff --git a/submodule.c b/submodule.c
+index 1821a5b..1a2cf30 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -134,6 +134,9 @@ int parse_submodule_config_option(const char *var, const char *value)
+ 		return 0;
+ 
+ 	if (!strcmp(key, "path")) {
++		if (!value)
++			return config_error_nonbool(var);
++
+ 		config = unsorted_string_list_lookup(&config_name_for_path, value);
+ 		if (config)
+ 			free(config->util);
+@@ -151,6 +154,9 @@ int parse_submodule_config_option(const char *var, const char *value)
+ 	} else if (!strcmp(key, "ignore")) {
+ 		char *name_cstr;
+ 
++		if (!value)
++			return config_error_nonbool(var);
++
+ 		if (strcmp(value, "untracked") && strcmp(value, "dirty") &&
+ 		    strcmp(value, "all") && strcmp(value, "none")) {
+ 			warning("Invalid parameter \"%s\" for config option \"submodule.%s.ignore\"", value, var);
+diff --git a/t/t1307-null-submodule-path.sh b/t/t1307-null-submodule-path.sh
+new file mode 100755
+index 0000000..a4470a8
+--- /dev/null
++++ b/t/t1307-null-submodule-path.sh
+@@ -0,0 +1,14 @@
++#!/bin/sh
++
++test_description='test empty submodule path'
++. ./test-lib.sh
++
++setup() {
++    echo '[submodule "test"] path' > .gitmodules
++}
++
++test_expect_success 'git status with empty submodule path should not seg fault' '
++    setup &&
++    test_must_fail git status
++'
++test_done
+-- 
+1.7.9.5
 
-And by "totally untested" I mean that it actually passes the git test
-suite, but since I didn't apply your patch nor do I have OS X
-anywhere, I can't actually test that it fixes *your* problem. But it
-should.
+ On Aug 16, 2013, at 2:52 PM, Jeff King <peff@peff.net> wrote:
 
-
-                   Linus
-
---047d7b343f1a32dc0404e44f1921
-Content-Type: application/octet-stream; name="patch.diff"
-Content-Disposition: attachment; filename="patch.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_hkjvevsh0
-
-IHdyYXBwZXIuYyB8IDEzICsrKysrKysrKysrLS0KIDEgZmlsZSBjaGFuZ2VkLCAxMSBpbnNlcnRp
-b25zKCspLCAyIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3dyYXBwZXIuYyBiL3dyYXBwZXIu
-YwppbmRleCA2YTAxNWRlNWYwNTYuLmU5OTZmM2RhZTQ2NyAxMDA2NDQKLS0tIGEvd3JhcHBlci5j
-CisrKyBiL3dyYXBwZXIuYwpAQCAtMTMxLDYgKzEzMSwxMyBAQCB2b2lkICp4Y2FsbG9jKHNpemVf
-dCBubWVtYiwgc2l6ZV90IHNpemUpCiB9CiAKIC8qCisgKiBEb2luZyBJTyBpbiBodWdlIGNodW5r
-cyBvbmx5IHJlc3VsdHMgaW4gcGFpbi4gT1MgWCBpcyBidWdneSwKKyAqIGFuZCBldmVuIGluIHRo
-ZSBhYnNlbnNlIG9mIGJ1Z3MgaXQgY2FuIHJlc3VsdCBpbiBiYWQgbGF0ZW5jaWVzCisgKiB3aGVu
-IHlvdSBkZWNpZGUgdG8ga2lsbCB0aGUgcHJvY2Vzcy4KKyAqLworI2RlZmluZSBNQVhfSU9fU0la
-RSAoOCoxMDI0KjEwMjQpCisKKy8qCiAgKiB4cmVhZCgpIGlzIHRoZSBzYW1lIGEgcmVhZCgpLCBi
-dXQgaXQgYXV0b21hdGljYWxseSByZXN0YXJ0cyByZWFkKCkKICAqIG9wZXJhdGlvbnMgd2l0aCBh
-IHJlY292ZXJhYmxlIGVycm9yIChFQUdBSU4gYW5kIEVJTlRSKS4geHJlYWQoKQogICogRE9FUyBO
-T1QgR1VBUkFOVEVFIHRoYXQgImxlbiIgYnl0ZXMgaXMgcmVhZCBldmVuIGlmIHRoZSBkYXRhIGlz
-IGF2YWlsYWJsZS4KQEAgLTEzOSw3ICsxNDYsOCBAQCBzc2l6ZV90IHhyZWFkKGludCBmZCwgdm9p
-ZCAqYnVmLCBzaXplX3QgbGVuKQogewogCXNzaXplX3QgbnI7CiAJd2hpbGUgKDEpIHsKLQkJbnIg
-PSByZWFkKGZkLCBidWYsIGxlbik7CisJCW5yID0gbGVuIDwgTUFYX0lPX1NJWkUgPyBsZW4gOiBN
-QVhfSU9fU0laRTsKKwkJbnIgPSByZWFkKGZkLCBidWYsIG5yKTsKIAkJaWYgKChuciA8IDApICYm
-IChlcnJubyA9PSBFQUdBSU4gfHwgZXJybm8gPT0gRUlOVFIpKQogCQkJY29udGludWU7CiAJCXJl
-dHVybiBucjsKQEAgLTE1NSw3ICsxNjMsOCBAQCBzc2l6ZV90IHh3cml0ZShpbnQgZmQsIGNvbnN0
-IHZvaWQgKmJ1Ziwgc2l6ZV90IGxlbikKIHsKIAlzc2l6ZV90IG5yOwogCXdoaWxlICgxKSB7Ci0J
-CW5yID0gd3JpdGUoZmQsIGJ1ZiwgbGVuKTsKKwkJbnIgPSBsZW4gPCBNQVhfSU9fU0laRSA/IGxl
-biA6IE1BWF9JT19TSVpFOworCQluciA9IHdyaXRlKGZkLCBidWYsIG5yKTsKIAkJaWYgKChuciA8
-IDApICYmIChlcnJubyA9PSBFQUdBSU4gfHwgZXJybm8gPT0gRUlOVFIpKQogCQkJY29udGludWU7
-CiAJCXJldHVybiBucjsK
---047d7b343f1a32dc0404e44f1921--
+> On Fri, Aug 16, 2013 at 10:59:35AM -0700, Jharrod LaFon wrote:
+> 
+>> Here is an updated patch with a test.
+> 
+> Bits like this that should not be part of the commit message should
+> either go after the "---" lines near the diffstat, or should come before
+> a scissors line, like:
+> 
+>  Here is my new patch.
+> 
+>  -- >8 --
+>  Git segmentation faults etc...
+> 
+> That way git-am can do the right thing, and the maintainer does not have
+> to fix up your patch by hand.
+> 
+>> diff --git a/submodule.c b/submodule.c
+>> index 1821a5b..1e4acfd 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -134,6 +134,9 @@ int parse_submodule_config_option(const char *var, const char *value)
+>> 		return 0;
+>> 
+>> 	if (!strcmp(key, "path")) {
+>> +        if (!value)
+>> +            return config_error_nonbool(var);
+> 
+> Your indentation looks like two spaces here, which does not match the
+> rest of the block. It should be one tab.
+> 
+>> @@ -151,6 +154,9 @@ int parse_submodule_config_option(const char *var, const char *value)
+>> 	} else if (!strcmp(key, "ignore")) {
+>> 		char *name_cstr;
+>> 
+>> +        if (!value)
+>> +            return config_error_nonbool(var);
+>> +
+> 
+> Ditto here.
+> 
+>> diff --git a/t/t1307-null-submodule-path.sh b/t/t1307-null-submodule-path.sh
+>> new file mode 100644
+>> index 0000000..eeda2cb
+>> --- /dev/null
+>> +++ b/t/t1307-null-submodule-path.sh
+>> @@ -0,0 +1,16 @@
+>> +#!/bin/sh
+>> +
+>> +test_description='test empty submodule path'
+>> +. ./test-lib.sh
+>> +
+>> +setup() {
+>> +    (printf "[submodule \"test\"]\n" && 
+>> +    printf "  path\n" &&
+>> +    printf "  url") >.gitmodules
+>> +}
+> 
+> You can use single-quotes to avoid having to backslash the embedded
+> double-quotes. And I do not see any reason to use printf rather than the
+> more readable echo, which can drop the "\n".
+> 
+> And is there any point in having the "url" field?  The presence of a
+> valueless bool "path" should be enough, no? It may be easier to see what
+> it is we are testing without the extraneous parameter.
+> 
+> With those changes, you could even put it all on one line:
+> 
+>  echo '[submodule "test"] path' >.gitmodules
+> 
+> -Peff
