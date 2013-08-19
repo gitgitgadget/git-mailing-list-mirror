@@ -1,90 +1,96 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2] compat: Fix read() of 2GB and more on Mac OS X
-Date: Mon, 19 Aug 2013 08:54:08 +0100
-Message-ID: <20130819075408.GT2337@serenity.lan>
-References: <1376743205-12618-1-git-send-email-prohaska@zib.de>
- <1376894300-28929-1-git-send-email-prohaska@zib.de>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCH] submodule: prevent warning in summary output
+Date: Mon, 19 Aug 2013 20:13:30 +1200
+Message-ID: <5211D3AA.6060403@gmail.com>
+References: <1376847095-767956-1-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Aug 19 09:54:39 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Aug 19 10:12:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBKIK-0007I6-Ru
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 09:54:33 +0200
+	id 1VBKZl-0001fW-3L
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 10:12:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750750Ab3HSHy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Aug 2013 03:54:29 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:34066 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729Ab3HSHy2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Aug 2013 03:54:28 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 0490BCDA57D;
-	Mon, 19 Aug 2013 08:54:28 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Own+yD1Et0RW; Mon, 19 Aug 2013 08:54:20 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id E5E91CDA570;
-	Mon, 19 Aug 2013 08:54:10 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <1376894300-28929-1-git-send-email-prohaska@zib.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750773Ab3HSIM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Aug 2013 04:12:28 -0400
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:34298 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750768Ab3HSIM1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Aug 2013 04:12:27 -0400
+Received: by mail-pb0-f51.google.com with SMTP id jt11so4658132pbb.24
+        for <git@vger.kernel.org>; Mon, 19 Aug 2013 01:12:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=qAewoFApLI+mvy1qyRJexoymWk8/1eQbyCpSPvCU6B4=;
+        b=moyzbhNU+uRqGNKmXA5kTTF443HOYTlI9ii5+uKp52/vSYp5R7Ayg+xD+GtUz40hvu
+         sdO7PXL6vXjMx2nUXF1gv8sINsiZWUpQcEc4VCA7hTMU0AfH3ZZEd1Lz+5DOUwkot9zP
+         GN+YfGu7dhH7PIsyUAGtXCBm81osofMei+yZu4I5PAnCzMeisdfB+1J6L6M44nt7WLmv
+         /90YXwlhc4JvCR10WlVG5sQOrGR/Io9NwuCYPr5b3CeOiQ4D410D03LBSWGnEOwBIsmy
+         CtLeLqzMnvKFqF4MflsrCpei4ebclqKSocOK6QNClMnLuP74mW8Q4+BbDqqqK8wZvnHO
+         Kj0g==
+X-Received: by 10.67.14.231 with SMTP id fj7mr11199443pad.115.1376899946623;
+        Mon, 19 Aug 2013 01:12:26 -0700 (PDT)
+Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPSA id xe9sm13584768pbc.21.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 19 Aug 2013 01:12:25 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <1376847095-767956-1-git-send-email-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232532>
 
-On Mon, Aug 19, 2013 at 08:38:20AM +0200, Steffen Prohaska wrote:
-> diff --git a/Makefile b/Makefile
-> index 3588ca1..0f69e24 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -69,6 +69,9 @@ all::
->  # Define NO_MSGFMT_EXTENDED_OPTIONS if your implementation of msgfmt
->  # doesn't support GNU extensions like --check and --statistics
->  #
-> +# Define NEEDS_CLIPPED_READ if your read(2) cannot read more than
-> +# INT_MAX bytes at once (e.g. MacOS X).
-> +#
->  # Define NEEDS_CLIPPED_WRITE if your write(2) cannot write more than
->  # INT_MAX bytes at once (e.g. MacOS X).
->  #
-> @@ -1493,6 +1496,11 @@ ifndef NO_MSGFMT_EXTENDED_OPTIONS
->  	MSGFMT += --check --statistics
->  endif
+Hi Brian,
+On 19/08/13 05:31, brian m. carlson wrote:
+> When git submodule summary is run and there is a deleted submodule, there is an
+> warning from git rev-parse:
+> 
+>   fatal: Not a git repository: '.vim/pathogen/.git'
+> 
+> Silence this warning, since it is fully expected that a deleted submodule will
+> not be a git repository.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  git-submodule.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 2979197..66ee621 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -1071,7 +1071,7 @@ cmd_summary() {
+>  		missing_dst=
 >  
-> +ifdef NEEDS_CLIPPED_READ
-> +	BASIC_CFLAGS += -DNEEDS_CLIPPED_READ
-> +	COMPAT_OBJS += compat/clipped-read.o
+>  		test $mod_src = 160000 &&
+> -		! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_src^0 >/dev/null &&
+> +		! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_src^0 >/dev/null 2>&1 &&
+>  		missing_src=t
+>  
+>  		test $mod_dst = 160000 &&
+> 
 
-You've created compat/clipped-write.c, but...
+I wonder if there are other useful errors this will silence
+unintentionally. Perhaps this would be better (untested)
 
->  Makefile              |  8 ++++++++
->  builtin/var.c         |  1 +
->  config.mak.uname      |  1 +
->  git-compat-util.h     |  5 +++++
->  streaming.c           |  1 +
->  t/t0021-conversion.sh | 14 ++++++++++++++
->  6 files changed, 30 insertions(+)
+ test $mod_src = 160000 &&
+ test -e "$name/.git" &&
+ ! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_src^0 /dev/null &&
+  missing_src=t
 
-... it's not included here.  Did you forget to "git add"?
+Having said that there are precedents for both in git-submodule.sh. If
+there aren't any errors worth catching here then your way is probably
+cleaner than mine.
+
+- C
