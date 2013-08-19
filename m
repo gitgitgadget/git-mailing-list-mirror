@@ -1,50 +1,57 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Notes and submodules
-Date: Mon, 19 Aug 2013 10:13:34 +0200
-Message-ID: <CAC9WiBj-ij1o6JL-FtUuCgdf8ZqrhJb2=dQcSXjRMEwwL4VWFA@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] compat: Fix read() of 2GB and more on Mac OS X
+Date: Mon, 19 Aug 2013 10:20:20 +0200
+Message-ID: <5211D544.8080706@kdbg.org>
+References: <1376743205-12618-1-git-send-email-prohaska@zib.de> <1376894300-28929-1-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 19 10:13:41 2013
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	John Keeping <john@keeping.me.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Aug 19 10:20:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBKaq-0002Jg-KJ
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 10:13:40 +0200
+	id 1VBKhV-0006AV-5c
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 10:20:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750803Ab3HSINg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Aug 2013 04:13:36 -0400
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:41847 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750768Ab3HSINf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Aug 2013 04:13:35 -0400
-Received: by mail-vc0-f169.google.com with SMTP id ib11so2937156vcb.28
-        for <git@vger.kernel.org>; Mon, 19 Aug 2013 01:13:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=le64SBJcLr38873Vg4z7kaiWuWOguFEidBB0f9c1Jjg=;
-        b=vbxOPjVZrbq7SK0SRhlW6EFq9J/BPAkUyq1Kj3vKETHmAeEOJ93xRVAS3oi+pbMTZ7
-         pt6IpvdcklL/ox6drv/mfTb+/cF+57IFqthW9hVrExb+pTLYgPEvk7DJ1q6NfWi8KUgY
-         Y5p71UbYYi2fu80eBRwen06kn7tgNvEXzaO7d5awgdzrI9ypKdgTtboFGreGoVxE+W38
-         uZQQgUj8efKPXafSKf0IWCuhvDQ2+grVStMp/AOPOXZ4aTCZ1E0QH9J9y7W+YVYd1c5b
-         zerFUUcQ9SViEGNFFysM20ockt7estHsrkk9obXI6+vEi/ZZOzUsyDKVwAZGan6xGLtV
-         t9kA==
-X-Received: by 10.58.75.41 with SMTP id z9mr12263694vev.4.1376900015009; Mon,
- 19 Aug 2013 01:13:35 -0700 (PDT)
-Received: by 10.58.96.109 with HTTP; Mon, 19 Aug 2013 01:13:34 -0700 (PDT)
+	id S1750890Ab3HSIU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Aug 2013 04:20:29 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:20293 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750810Ab3HSIU3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Aug 2013 04:20:29 -0400
+Received: from [10.67.83.65] (178.115.251.65.wireless.dyn.drei.com [178.115.251.65])
+	by bsmtp.bon.at (Postfix) with ESMTP id 8E8A4A7EB0;
+	Mon, 19 Aug 2013 10:20:25 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
+In-Reply-To: <1376894300-28929-1-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232534>
 
-Hello,
+Am 19.08.2013 08:38, schrieb Steffen Prohaska:
+> +test_expect_success EXPENSIVE 'filter large file' '
+> +	git config filter.largefile.smudge cat &&
+> +	git config filter.largefile.clean cat &&
+> +	for i in $(test_seq 1 2048); do printf "%1048576d" 1; done >2GB &&
 
-Is it possible to keep submodules notes in the super project  ?
+Shouldn't you count to 2049 to get a file that is over 2GB?
 
-Thanks
--- 
-Francis
+> +	echo "2GB filter=largefile" >.gitattributes &&
+> +	git add 2GB 2>err &&
+> +	! test -s err &&
+> +	rm -f 2GB &&
+> +	git checkout -- 2GB 2>err &&
+> +	! test -s err
+> +'
+
+-- Hannes
