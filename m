@@ -1,95 +1,76 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v4] compat: Fix read() of 2GB and more on Mac OS X
-Date: Mon, 19 Aug 2013 10:28:03 -0700
-Message-ID: <CA+55aFxYRspM+FNyXX8v7WTeCfSAzPdFWSYCzC16J3iJvygRhA@mail.gmail.com>
-References: <1376900499-662-1-git-send-email-prohaska@zib.de>
-	<1376926879-30846-1-git-send-email-prohaska@zib.de>
-	<CA+55aFzQhJqE4QDwJDKtkTtJpMNbz3_Aw5_Q3yTk5DnhLJyjCQ@mail.gmail.com>
-	<xmqqeh9p8ut3.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH gitk 0/4] gitk support for git log -L
+Date: Mon, 19 Aug 2013 10:30:55 -0700
+Message-ID: <xmqq61v18u5s.fsf@gitster.dls.corp.google.com>
+References: <cover.1370806329.git.trast@inf.ethz.ch>
+	<874nblpamj.fsf@linux-k42r.v.cablecom.net>
+	<874nbdnomj.fsf@hexa.v.cablecom.net> <51F6CB7D.1070806@web.de>
+	<87siyu98cq.fsf@linux-k42r.v.cablecom.net>
+	<20130818115456.GA6772@iris.ozlabs.ibm.com>
+	<874namay5p.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	John Keeping <john@keeping.me.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 19 19:28:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>, <git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Aug 19 19:31:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBTFU-0007Rk-Uq
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 19:28:13 +0200
+	id 1VBTIF-0000Vg-TI
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 19:31:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751346Ab3HSR2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Aug 2013 13:28:07 -0400
-Received: from mail-ve0-f179.google.com ([209.85.128.179]:38637 "EHLO
-	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750993Ab3HSR2E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Aug 2013 13:28:04 -0400
-Received: by mail-ve0-f179.google.com with SMTP id c13so3290716vea.10
-        for <git@vger.kernel.org>; Mon, 19 Aug 2013 10:28:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=H1aZqD+FGNP3K/PfK6CPERd5ViwiPxGsq0phaNQOVQo=;
-        b=Epdis9nlc5UGmYR6Vgh1guejleJCySW15igThitg3MRUzlwhqkfOh6bI8n9V/bGJIX
-         1bU0zDeVmyrlxAstm/nZ6DhwN9BiOzbzOaNtKUQulMf+ug2y6Kbpdr/wAuamb0EGgIq3
-         15ib8I4dEXxswfpVVHkhxvb/cDBWbJhw1IjhtfSNmMka36Z7kPvoUqksO9VljOTTr/TX
-         nsJPhTqc0Ww1q4bOBv000m8niXFcDoduI789w6xmTnYyzBicCP0RjAlqpDcorCuQ7fWz
-         pScIkXhU29y6H3yC3/+6MgltjmCBPyDw5RedmG1YLOfKs/YXFCDr2bipSs7JHQqxwj8P
-         oagg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=H1aZqD+FGNP3K/PfK6CPERd5ViwiPxGsq0phaNQOVQo=;
-        b=Vj7I9gWgmw5simj71vn6LCvuiTxHNOaDm6HLL20tyQS9X5FtIaXLsjBkDgkqXd/45r
-         2UmpHDgoyjnqyg3MHLgd4a/qoFSp3TfcCqvTKIaJ2Hy8Ofvn62JaQnoMHmKU6VFqu5/8
-         ES3+wsg7X2Uiy+BM+mqhTA9pbGzyzpUlB1P5o=
-X-Received: by 10.220.145.75 with SMTP id c11mr1039412vcv.30.1376933283257;
- Mon, 19 Aug 2013 10:28:03 -0700 (PDT)
-Received: by 10.220.3.137 with HTTP; Mon, 19 Aug 2013 10:28:03 -0700 (PDT)
-In-Reply-To: <xmqqeh9p8ut3.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: 5O0q1Sm6FB6H92OOB3vv8DLN-B4
+	id S1751044Ab3HSRa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Aug 2013 13:30:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39644 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750908Ab3HSRa6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Aug 2013 13:30:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 231313967F;
+	Mon, 19 Aug 2013 17:30:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lomgTph10nvvKQ73rHvtRF43gFU=; b=CKri4D
+	K/hbVo5pQwQNWLnOD6r7sOhaNyc1l87WztGaqoaUOQDleQHwFcgKP8dNCh7CcsFd
+	0p7tcxmwfdhbotyla005Iji5q2kmTDGsQspyyAXz0S2j2ETbnPNRVWu5IBdO/40D
+	46tIrbMzqcAkLcDCSW38TMAsKFwDEKRxjMU3w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Cb2O0lv7wmX7UuXP0SLBzA6KeM07Yr/U
+	6hK08+cOIM5ItjSW/BVArxfGoOMnOt1RCejEfK1SLNJqSaWQDVr8Hd/epXaaCvUE
+	KGjCZXcOznJJmc0RrT1RAbOs2s3D2B2G9Y51VJNvW5mzZBUl0wHqVAubfbq961Po
+	nrQRARQau9Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1732F3967E;
+	Mon, 19 Aug 2013 17:30:58 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 452293967A;
+	Mon, 19 Aug 2013 17:30:57 +0000 (UTC)
+In-Reply-To: <874namay5p.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
+	of "Mon, 19 Aug 2013 10:21:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1B84D372-08F5-11E3-A43C-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232557>
 
-On Mon, Aug 19, 2013 at 10:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
+Thomas Rast <trast@inf.ethz.ch> writes:
+
+> Whether the option value is a separate argument in argv, or directly
+> stuck to the option.
 >
-> The same argument applies to xwrite(), but currently we explicitly
-> catch EINTR and EAGAIN knowing that on sane systems these are the
-> signs that we got interrupted.
+> stuck:   gitk -L:foo:main.c
+> unstuck: gitk -L :foo:main.c
 >
-> Do we catch EINVAL unconditionally in the same codepath?
+> Existing gitk chokes on 'gitk -S foo', but works with 'git -Sfoo'.
 
-No, and we shouldn't. If EINVAL happens, it will keep happening.
-
-But with the size limiter, it doesn't matter, since we won't hit the
-OS X braindamage.
-
-> Could
-> EINVAL on saner systems mean completely different thing (like our
-> caller is passing bogus parameters to underlying read/write, which
-> is a program bug we would want to catch)?
-
-Yes. Even on OS X, it means that - it's just that OS X notion of what
-is "bogus" is pure crap. But the thing is, looping on EINVAL would be
-wrong even on OS X, since unless you change the size, it will keep
-happening forever.
-
-But with the "limit IO to 8MB" (or whatever) patch, the issue is moot.
-If you get an EINVAL, it will be due to something else being horribly
-horribly wrong.
-
-                 Linus
+I somehow thought that we encourage the "stuck/sticked" form, to
+reduce things the users need to remember to cope better with options
+with optional value.
