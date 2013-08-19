@@ -1,88 +1,83 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Notes and submodules
-Date: Mon, 19 Aug 2013 15:55:56 +0200
-Message-ID: <CALKQrgfGUMrcR+EPTvN9+mFPcW6Q-zv1JM6MJK-61BvF3yYpbQ@mail.gmail.com>
-References: <CAC9WiBj-ij1o6JL-FtUuCgdf8ZqrhJb2=dQcSXjRMEwwL4VWFA@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v2] compat: Fix read() of 2GB and more on Mac OS X
+Date: Mon, 19 Aug 2013 16:41:17 +0200
+Message-ID: <52122E8D.7030209@web.de>
+References: <1376743205-12618-1-git-send-email-prohaska@zib.de> <1376894300-28929-1-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 19 16:13:42 2013
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>,
+	John Keeping <john@keeping.me.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Aug 19 16:41:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBQDF-0003bm-9n
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 16:13:41 +0200
+	id 1VBQe4-0001rc-B3
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 16:41:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835Ab3HSONh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Aug 2013 10:13:37 -0400
-Received: from mail12.copyleft.no ([188.94.218.224]:59421 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750750Ab3HSONg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Aug 2013 10:13:36 -0400
-X-Greylist: delayed 1054 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Aug 2013 10:13:36 EDT
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1VBPw8-0002Hu-Jt
-	for git@vger.kernel.org; Mon, 19 Aug 2013 15:56:00 +0200
-Received: from mail-pb0-f48.google.com ([209.85.160.48])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1VBPw8-000Amb-7J
-	for git@vger.kernel.org; Mon, 19 Aug 2013 15:56:00 +0200
-Received: by mail-pb0-f48.google.com with SMTP id ma3so5003028pbc.35
-        for <git@vger.kernel.org>; Mon, 19 Aug 2013 06:55:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=99lZHUdV35BJjrivLYtSyHpJszXpNKgvqZOrsfDqY50=;
-        b=UAlGCi2X+kd5dtNlS6WZ+ck/O4kuZfX0Zrm5KrKF13vLjLlt0VwDaR1U+xpjKaOIiZ
-         iweoz3GuXm/IBDUM34+IKr24/bncdipU/9DgysWo3+DR5F6v0RBzw4GmFwXlo4T2vMtM
-         ud2hyj9vZRb13rSwvMInR1AbGFygSwOH2+9xUEpDZv4sMaFLLewjrOzZq+v4uvs+TzHu
-         9IvTTOf7+PRpQ/a2kUuJitcIB0g6PXuWDehcLdC2iVxbuqTffQbfvjyzk4pBjvkOAEpJ
-         8SCpdbLRlTo8D4KTZ2XPSoR6yCL6P50YPibSqZp2O/F9qsuowqNCYJUf+0SbFUxIWBrP
-         vbQw==
-X-Received: by 10.69.0.168 with SMTP id az8mr13447082pbd.51.1376920556180;
- Mon, 19 Aug 2013 06:55:56 -0700 (PDT)
-Received: by 10.70.126.67 with HTTP; Mon, 19 Aug 2013 06:55:56 -0700 (PDT)
-In-Reply-To: <CAC9WiBj-ij1o6JL-FtUuCgdf8ZqrhJb2=dQcSXjRMEwwL4VWFA@mail.gmail.com>
+	id S1750870Ab3HSOlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Aug 2013 10:41:20 -0400
+Received: from mout.web.de ([212.227.17.11]:64205 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750783Ab3HSOlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Aug 2013 10:41:19 -0400
+Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0M2Mcy-1W3WjR3ePk-00s3yC for <git@vger.kernel.org>;
+ Mon, 19 Aug 2013 16:41:18 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <1376894300-28929-1-git-send-email-prohaska@zib.de>
+X-Provags-ID: V03:K0:NIlwFJZfYyhal7VDZrE9trAkGKND7oExn8WVo/o6K8CnYvjsrCk
+ BRO8DtVN6EyqFIbe07LnAHH7oUpym8iAgUVfwf9os7INih7LpKGl1U0NNnD9+fUibnka3yx
+ 1HlgOUwPQNRtErjM3bLJvAaeUBWi3aTh/lDlKNUWHHk1RBGzvlqhMNrl/74/HmLYKwQz08c
+ EInx4/vJ51hxgLCHegnNQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232546>
 
-On Mon, Aug 19, 2013 at 10:13 AM, Francis Moreau <francis.moro@gmail.com> wrote:
-> Hello,
->
-> Is it possible to keep submodules notes in the super project  ?
+On 2013-08-19 08.38, Steffen Prohaska wrote:
+[snip]
 
-Not easily. I guess it depends on what you want to use the notes for.
-In order for notes to be generally useful (i.e. show up in logs,
-surviving a notes prune, etc.) they really must reside in the same
-repo as the annotated objects [1]. Now, if all your interaction with
-notes happens through scripts that you control, then I guess it would
-be possible to hack this in some sort of semi-workable way, but you
-would still have to make sure never to run "git notes prune" in the
-super project. I guess the real question here is: Why would you want
-to do this? and is there maybe some other way your use case can be
-accomodated?
+> diff --git a/builtin/var.c b/builtin/var.c
+> index aedbb53..e59f5ba 100644
+> --- a/builtin/var.c
+> +++ b/builtin/var.c
+> @@ -38,6 +38,7 @@ static struct git_var git_vars[] = {
+>  	{ "", NULL },
+>  };
+>  
+> +#undef read
+This is techically right for this very version of the  code,
+but not really future proof, if someone uses read() further down in the code
+(in a later version)
 
-...Johan
+I think the problem comes from further up:
+------------------
+struct git_var {
+	const char *name;
+	const char *(*read)(int);
+};
+-----------------
+could the read be replaced by readfn ?
 
-[1]: If you were to annotate objects in a submodule, but then store
-the notes objects in the super project, it would be impossible for
-"git log" in the submodule to find the notes objects, and your log
-would show no notes. Similarly, a "git log" in the super project would
-see a lot of notes objects pointing to non-existing objects (because
-those objects live in the submodule), hence the notes objects would be
-removed when running "git notes prune" in the super project.
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+===================
+> diff --git a/streaming.c b/streaming.c
+> index debe904..c1fe34a 100644
+> --- a/streaming.c
+> +++ b/streaming.c
+> @@ -99,6 +99,7 @@ int close_istream(struct git_istream *st)
+>  	return r;
+>  }
+>  
+> +#undef read
+Same possible future problem as above.
+When later someone uses read, the original (buggy) read() will be
+used, and not the re-defined clipped_read() from git-compat-util.h
