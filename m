@@ -1,115 +1,88 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] compat: Fix read() of 2GB and more on Mac OS X
-Date: Mon, 19 Aug 2013 09:59:57 -0400
-Message-ID: <CAPig+cTr_B+vtN4sFzepWeW4TpRPD9eKnjy08yJ2pf3KfVU1XA@mail.gmail.com>
-References: <1376894300-28929-1-git-send-email-prohaska@zib.de>
-	<1376900499-662-1-git-send-email-prohaska@zib.de>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Notes and submodules
+Date: Mon, 19 Aug 2013 15:55:56 +0200
+Message-ID: <CALKQrgfGUMrcR+EPTvN9+mFPcW6Q-zv1JM6MJK-61BvF3yYpbQ@mail.gmail.com>
+References: <CAC9WiBj-ij1o6JL-FtUuCgdf8ZqrhJb2=dQcSXjRMEwwL4VWFA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	John Keeping <john@keeping.me.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Aug 19 16:00:05 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 19 16:13:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBQ04-0004bv-Pn
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 16:00:05 +0200
+	id 1VBQDF-0003bm-9n
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 16:13:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750798Ab3HSN77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Aug 2013 09:59:59 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:48986 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748Ab3HSN76 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Aug 2013 09:59:58 -0400
-Received: by mail-lb0-f173.google.com with SMTP id 10so3016438lbf.4
-        for <git@vger.kernel.org>; Mon, 19 Aug 2013 06:59:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=9XShxXcr452+mb3u0MUT3BadYASIcRBSgdBFckXchVY=;
-        b=L2EMJplah/OiClQKUI5r/lRNLMvBrjYvqB6BFSHqE6acy+Hc+83Tn5/buEg2XcPiTt
-         0jeljo0elaoiNPjSoyweGmXT93IVqZrl0PERyd7bak+6a9mRC4s0P9x1BAFLMo34b4Dt
-         pC8CyZCFQWNHovuBPOQ5x5IhroDNH4u3WUGx9k5nIwIuyOEiXRp7TKa1XwTP7sA/Nz3N
-         3AfBeK0aQpCEzrs0D/x1OJIvnXgVcJciUNlCqr8GfK5HJOp6f2a6uw8P3YIPc/FzHKQw
-         zMAD+SHXTNA47d9+sRPHr0uzbKdlucZasm9+6+O+9nB/H9FkDOPRvAucbRtWCtjiJ+R7
-         ej9g==
-X-Received: by 10.112.210.136 with SMTP id mu8mr11841767lbc.25.1376920797295;
- Mon, 19 Aug 2013 06:59:57 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Mon, 19 Aug 2013 06:59:57 -0700 (PDT)
-In-Reply-To: <1376900499-662-1-git-send-email-prohaska@zib.de>
-X-Google-Sender-Auth: FRzLsNd0WKZhxddPmC-X9crcqbQ
+	id S1750835Ab3HSONh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Aug 2013 10:13:37 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:59421 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750750Ab3HSONg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Aug 2013 10:13:36 -0400
+X-Greylist: delayed 1054 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Aug 2013 10:13:36 EDT
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1VBPw8-0002Hu-Jt
+	for git@vger.kernel.org; Mon, 19 Aug 2013 15:56:00 +0200
+Received: from mail-pb0-f48.google.com ([209.85.160.48])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1VBPw8-000Amb-7J
+	for git@vger.kernel.org; Mon, 19 Aug 2013 15:56:00 +0200
+Received: by mail-pb0-f48.google.com with SMTP id ma3so5003028pbc.35
+        for <git@vger.kernel.org>; Mon, 19 Aug 2013 06:55:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=99lZHUdV35BJjrivLYtSyHpJszXpNKgvqZOrsfDqY50=;
+        b=UAlGCi2X+kd5dtNlS6WZ+ck/O4kuZfX0Zrm5KrKF13vLjLlt0VwDaR1U+xpjKaOIiZ
+         iweoz3GuXm/IBDUM34+IKr24/bncdipU/9DgysWo3+DR5F6v0RBzw4GmFwXlo4T2vMtM
+         ud2hyj9vZRb13rSwvMInR1AbGFygSwOH2+9xUEpDZv4sMaFLLewjrOzZq+v4uvs+TzHu
+         9IvTTOf7+PRpQ/a2kUuJitcIB0g6PXuWDehcLdC2iVxbuqTffQbfvjyzk4pBjvkOAEpJ
+         8SCpdbLRlTo8D4KTZ2XPSoR6yCL6P50YPibSqZp2O/F9qsuowqNCYJUf+0SbFUxIWBrP
+         vbQw==
+X-Received: by 10.69.0.168 with SMTP id az8mr13447082pbd.51.1376920556180;
+ Mon, 19 Aug 2013 06:55:56 -0700 (PDT)
+Received: by 10.70.126.67 with HTTP; Mon, 19 Aug 2013 06:55:56 -0700 (PDT)
+In-Reply-To: <CAC9WiBj-ij1o6JL-FtUuCgdf8ZqrhJb2=dQcSXjRMEwwL4VWFA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232545>
 
-On Mon, Aug 19, 2013 at 4:21 AM, Steffen Prohaska <prohaska@zib.de> wrote:
-> Previously, filtering 2GB or more through an external filter (see test)
-> failed on Mac OS X 10.8.4 (12E55) for a 64-bit executable with:
+On Mon, Aug 19, 2013 at 10:13 AM, Francis Moreau <francis.moro@gmail.com> wrote:
+> Hello,
 >
->     error: read from external filter cat failed
->     error: cannot feed the input to external filter cat
->     error: cat died of signal 13
->     error: external filter cat failed 141
->     error: external filter cat failed
->
->
-> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-> ---
->  Makefile              |  8 ++++++++
->  builtin/var.c         |  1 +
->  compat/clipped-read.c | 13 +++++++++++++
->  config.mak.uname      |  1 +
->  git-compat-util.h     |  5 +++++
->  streaming.c           |  1 +
->  t/t0021-conversion.sh | 14 ++++++++++++++
->  7 files changed, 43 insertions(+)
->  create mode 100644 compat/clipped-read.c
->
-> diff --git a/Makefile b/Makefile
-> index 3588ca1..0f69e24 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -69,6 +69,9 @@ all::
->  # Define NO_MSGFMT_EXTENDED_OPTIONS if your implementation of msgfmt
->  # doesn't support GNU extensions like --check and --statistics
->  #
-> +# Define NEEDS_CLIPPED_READ if your read(2) cannot read more than
-> +# INT_MAX bytes at once (e.g. MacOS X).
-> +#
->  # Define NEEDS_CLIPPED_WRITE if your write(2) cannot write more than
->  # INT_MAX bytes at once (e.g. MacOS X).
+> Is it possible to keep submodules notes in the super project  ?
 
-Is it likely that we would see a platform requiring only one or the
-other CLIPPED? Would it make sense to combine these into a single
-NEEDS_CLIPPED_IO?
+Not easily. I guess it depends on what you want to use the notes for.
+In order for notes to be generally useful (i.e. show up in logs,
+surviving a notes prune, etc.) they really must reside in the same
+repo as the annotated objects [1]. Now, if all your interaction with
+notes happens through scripts that you control, then I guess it would
+be possible to hack this in some sort of semi-workable way, but you
+would still have to make sure never to run "git notes prune" in the
+super project. I guess the real question here is: Why would you want
+to do this? and is there maybe some other way your use case can be
+accomodated?
 
->  #
-> @@ -1493,6 +1496,11 @@ ifndef NO_MSGFMT_EXTENDED_OPTIONS
->         MSGFMT += --check --statistics
->  endif
->
-> +ifdef NEEDS_CLIPPED_READ
-> +       BASIC_CFLAGS += -DNEEDS_CLIPPED_READ
-> +       COMPAT_OBJS += compat/clipped-read.o
-> +endif
-> +
->  ifdef NEEDS_CLIPPED_WRITE
->         BASIC_CFLAGS += -DNEEDS_CLIPPED_WRITE
->         COMPAT_OBJS += compat/clipped-write.o
-> diff --git a/builtin/var.c b/builtin/var.c
-> index aedbb53..e59f5ba 100644
-> --- a/builtin/var.c
-> +++ b/builtin/var.c
-> @@ -38,6 +38,7 @@ static struct git_var git_vars[] = {
->         { "", NULL },
->  };
+...Johan
+
+[1]: If you were to annotate objects in a submodule, but then store
+the notes objects in the super project, it would be impossible for
+"git log" in the submodule to find the notes objects, and your log
+would show no notes. Similarly, a "git log" in the super project would
+see a lot of notes objects pointing to non-existing objects (because
+those objects live in the submodule), hence the notes objects would be
+removed when running "git notes prune" in the super project.
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
