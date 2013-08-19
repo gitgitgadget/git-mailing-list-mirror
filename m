@@ -1,102 +1,86 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH v3 06/24] read-cache: Don't compare uid, gid and ino on
- cygwin
-Date: Sun, 18 Aug 2013 23:34:54 +0100
-Message-ID: <52114C0E.4030502@ramsay1.demon.co.uk>
-References: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com> <1376854933-31241-7-git-send-email-t.gummerer@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 2/2] rebase -i: fix core.commentchar regression
+Date: Sun, 18 Aug 2013 20:29:37 -0400
+Message-ID: <CAPig+cR71yjqQhir8nTHsWuGZX5dgjpRvgdGPd4VMUn+DZok0w@mail.gmail.com>
+References: <1376845970-31204-1-git-send-email-sunshine@sunshineco.com>
+	<1376845970-31204-3-git-send-email-sunshine@sunshineco.com>
+	<7vr4dqn1ko.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, trast@inf.ethz.ch, mhagger@alum.mit.edu,
-	gitster@pobox.com, pclouds@gmail.com, robin.rosenberg@dewire.com,
-	sunshine@sunshineco.com
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 19 00:35:11 2013
+Cc: Git List <git@vger.kernel.org>, John Keeping <john@keeping.me.uk>,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 19 02:29:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBBZ1-0005I4-H1
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 00:35:11 +0200
+	id 1VBDLs-0006BU-Gc
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Aug 2013 02:29:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755468Ab3HRWfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Aug 2013 18:35:04 -0400
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:49192 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755140Ab3HRWfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Aug 2013 18:35:03 -0400
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 79C2C4007D1;
-	Sun, 18 Aug 2013 23:35:00 +0100 (BST)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 389EA4007A6;
-	Sun, 18 Aug 2013 23:35:00 +0100 (BST)
-Received: from [192.168.254.1] (unknown [80.176.147.220])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
-	Sun, 18 Aug 2013 23:34:59 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <1376854933-31241-7-git-send-email-t.gummerer@gmail.com>
-X-MDF-HostID: 19
+	id S1755904Ab3HSA3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Aug 2013 20:29:40 -0400
+Received: from mail-la0-f47.google.com ([209.85.215.47]:55722 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755897Ab3HSA3j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Aug 2013 20:29:39 -0400
+Received: by mail-la0-f47.google.com with SMTP id eo20so2846148lab.6
+        for <git@vger.kernel.org>; Sun, 18 Aug 2013 17:29:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=SKTwGJlM678cP4wTe39RDcpideEhauhFziuVElbkAq8=;
+        b=j4obkDIOL7L5Li13dN84XaTUT6cIhPU8eDIkZFJHojdpPLvIxTSEA/rhHDfgMFdTj9
+         zX6O2fmg/k1coTg+HrEsyp/xkqSuRzXmRWrRqAppMqwm46/8dLNFzs0FLjaj9K6K7PYr
+         h36hDlTePBzZyF3Bv+LQxxf/fBvUIK9XzMpSQ1BkxRBO4LwGWOBr83x0s2Jk6VVwEz8o
+         RItUa3I6nM7T5U76uyQh4EuK/RSqHfRHgsxT74l/sdFGivnK1nLjzplfrnF8v7XOcr/y
+         y2DYgwxMfBvJ3bLKTNncJgy/Qwy2SGe+Ib0jsq3g93fk9+2OEs94NDKnat4TJdYG13gG
+         JJeg==
+X-Received: by 10.112.87.68 with SMTP id v4mr9300615lbz.2.1376872177985; Sun,
+ 18 Aug 2013 17:29:37 -0700 (PDT)
+Received: by 10.114.182.236 with HTTP; Sun, 18 Aug 2013 17:29:37 -0700 (PDT)
+In-Reply-To: <7vr4dqn1ko.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: -jvMgirj50XVojmyJGMnWM5Vh-s
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232525>
 
-On 18/08/2013 08:41 PM, Thomas Gummerer wrote:
-> Cygwin doesn't have uid, gid and ino stats fields.  Therefore we should
-> never check them in the match_stat_data when working on the CYGWIN
-> platform.
+On Sun, Aug 18, 2013 at 5:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+>> Intended for 'next'.
+>
+> Thanks.
+>
+> Will queue on top of es/rebase-i-no-abbrev, but we have a chance to
+> rebuild 'next' after 1.8.4 release, so we may want to squash this
+> into the problematic commit when it happens.
 
-Hmm, this is simply not true ... ;-)
+That would be fine. Time permitting, I also would like to send out a
+couple incremental patches atop 'next' which address your comments [1]
+about es/rebase-i-no-abbrev. Those new patches should be suitable for
+squashing if you want to go that route.
 
-The need to omit the uid, gid and ino fields from the stat checks in
-your original code was caused by the "schizophrenic stat" implementation
-in cygwin. (This was also before "core.checkstat" was implemented; note
-the 'check_stat' conditional below ...)
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/232146
 
-However, since commit f66450ae ("cygwin: Remove the Win32 l/stat()
-implementation", 22-06-2013), this patch is no longer necessary and
-can simply be dropped from this series.
-
-[I have not had time to read your new patches yet, but I seem to remember
-being concerned about those platforms which have UNRELIABLE_FSTAT set.
-(ie cygwin, MinGW and Windows.)]
-
-ATB,
-Ramsay Jones
-
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
-> 
-> This patch was not tested on Cygwin yet.  I think it's needed though,
-> because the re-reading of the index if it changed will no longer use
-> it's own index_changed function, but use the stat_validity_check
-> function instead.  Would be great if someone running Cygwin could test
-> this.
-> 
->  read-cache.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/read-cache.c b/read-cache.c
-> index 1f827de..aa17ce7 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -82,6 +82,7 @@ int match_stat_data(const struct stat_data *sd, struct stat *st)
->  		changed |= CTIME_CHANGED;
->  #endif
->  
-> +#if !defined (__CYGWIN__)
->  	if (check_stat) {
->  		if (sd->sd_uid != (unsigned int) st->st_uid ||
->  			sd->sd_gid != (unsigned int) st->st_gid)
-> @@ -89,6 +90,7 @@ int match_stat_data(const struct stat_data *sd, struct stat *st)
->  		if (sd->sd_ino != (unsigned int) st->st_ino)
->  			changed |= INODE_CHANGED;
->  	}
-> +#endif
->  
->  #ifdef USE_STDEV
->  	/*
-> 
+>>
+>>  git-rebase--interactive.sh | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+>> index 3733312..f246810 100644
+>> --- a/git-rebase--interactive.sh
+>> +++ b/git-rebase--interactive.sh
+>> @@ -693,7 +693,7 @@ transform_todo_ids () {
+>>       while read -r command rest
+>>       do
+>>               case "$command" in
+>> -             '#'* | exec)
+>> +             "$comment_char"* | exec)
+>>                       # Be careful for oddball commands like 'exec'
+>>                       # that do not have a SHA-1 at the beginning of $rest.
+>>                       ;;
