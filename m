@@ -1,100 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Should "git apply --check" imply verbose?
-Date: Tue, 20 Aug 2013 12:45:03 -0700
-Message-ID: <7v7gfgkuyo.fsf@alter.siamese.dyndns.org>
-References: <5213873A.6010003@windriver.com>
-	<xmqqioz06y9m.fsf@gitster.dls.corp.google.com>
-	<5213B95D.3040409@windriver.com>
-	<xmqqzjsc5ggp.fsf@gitster.dls.corp.google.com>
-	<20130820151554.6afbcb7f@gandalf.local.home>
+Subject: Re: [PATCH v4 1/4] gitweb: Ensure OPML text fits inside its box.
+Date: Tue, 20 Aug 2013 12:52:25 -0700
+Message-ID: <xmqq61v0w35x.fsf@gitster.dls.corp.google.com>
+References: <cover.1377019362.git.dot@dotat.at>
+	<724e6c13dba3ee00967b4e3f13e472357e24b6c5.1377019362.git.dot@dotat.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Paul Gortmaker <paul.gortmaker@windriver.com>,
-	<git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Steven Rostedt <rostedt@goodmis.org>
-X-From: git-owner@vger.kernel.org Tue Aug 20 21:45:21 2013
+Cc: git@vger.kernel.org,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Tony Finch <dot@dotat.at>
+X-From: git-owner@vger.kernel.org Tue Aug 20 21:52:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBrre-0007C0-R5
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 21:45:15 +0200
+	id 1VBryj-0003CS-PA
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 21:52:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751256Ab3HTTpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 15:45:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47532 "EHLO
+	id S1751595Ab3HTTwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 15:52:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45442 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751045Ab3HTTpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 15:45:06 -0400
+	id S1751266Ab3HTTw3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 15:52:29 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0799A3A1D1;
-	Tue, 20 Aug 2013 19:45:06 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8B363A891;
+	Tue, 20 Aug 2013 19:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cadJLJeVHMmToA63vfBCXM4NeBY=; b=aS5tRC
-	tbrclVGPV0zJR/Rns5v4dWKoQ1QuoEpachf09bvGPYfdl4ms9NZeVgAUE81lDjDR
-	1V8saKjTZtfULggr/cLYUKhcKhweX66N3OrPPjo5nPOe4ML9xocZG24Iu/CGDLEB
-	n7OlWtgR6b65OvptU0WJ0UmXivPoKv/iW6CBo=
+	:content-type; s=sasl; bh=mCw5vc3f4CHIO6i7WramZXMy7Ng=; b=BO4bR1
+	8sX+cRryO+9rgJ+h2mWOdCYfxLdxfLTmEo59olo49JVAB5thz6m7yGnZkfGuz004
+	hPs1cn4SYzs/1d4fWm9mobzwTC+vGWF1ScwPJ6v6DZhiryY7PFeDZVwkLsR5NyJT
+	pot86I3rDqRWNYRU0+en3SS/R2HWSppfA8soA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Dq4kI0IE1YgSocY6A61zPue3sb2ACjan
-	01WeC1Ewhg4DlqPG4yxI/sBHPJ/Jg7aADZZWpK0luh7FJXlk80itqRZ4EVzeAdal
-	Nk9xPl28Uo5zUzXTJj5X1sVJMasu69wzo9OvPWKqntkd6gkaga+71Ke4StB3vcch
-	v//5mEMoqOM=
+	:content-type; q=dns; s=sasl; b=h3RFTTZbUyMLGiz2EvAXTP3vvUvVKb5r
+	v8dz4PRdYheGTdFhSs1v4ChD5oQuFsTipj2hr3deydylKF6ZttH/DfOP9eOpThzc
+	S+dlycfsOKlIvfK2keJ34mzcRYi4gr+PYLq/9Wp7sQI5LP2WgRohX0I4TGjSz6Pt
+	5vyueDxgxvo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECDB43A1CF;
-	Tue, 20 Aug 2013 19:45:05 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFA303A890;
+	Tue, 20 Aug 2013 19:52:28 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 24A2C3A1CA;
-	Tue, 20 Aug 2013 19:45:05 +0000 (UTC)
-In-Reply-To: <20130820151554.6afbcb7f@gandalf.local.home> (Steven Rostedt's
-	message of "Tue, 20 Aug 2013 15:15:54 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 02D4FCA8-09D1-11E3-8D08-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 524773A889;
+	Tue, 20 Aug 2013 19:52:28 +0000 (UTC)
+In-Reply-To: <724e6c13dba3ee00967b4e3f13e472357e24b6c5.1377019362.git.dot@dotat.at>
+	(Tony Finch's message of "Tue, 20 Aug 2013 17:59:02 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0AFDF384-09D2-11E3-AF7F-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232641>
 
-Steven Rostedt <rostedt@goodmis.org> writes:
+Tony Finch <dot@dotat.at> writes:
 
->> I do not think it is necessarily a good idea to assume that people
->> who are learning "git apply" know how GNU patch works.
+> The rss_logo CSS style has a fixed width which is too narrow for
+> the string "OPML". Replace the fixed width with horizontal padding
+> so the text fits with nice margins.
+
+Makes sense to me (although I do not do css).
+
 >
-> Linus told me that "git apply" was basically a replacement for patch.
-> Why would you think it would not be a good idea to assume that people
-> would not be familiar with how GNU patch works?
-
-The audience of Git these days are far more widely spread than the
-kernel circle.  I am not opposed to _helping_ those who happen to
-know "patch", but I was against a description that assumes readers
-know it, i.e. making it a requirement to know "patch" to understand
-"apply".
-
->> But I do agree that the description of -v, --verbose has a lot of
->> room for improvement.
->> 
->> 	Report progress to stderr. By default, only a message about the
->> 	current patch being applied will be printed. This option will cause
->> 	additional information to be reported.
->> 
->> It is totally unclear what "additional information" is reported at
->> all.
-
-In other words, your enhancement to the documentation could go like:
-
-	... By default, ... With this option, you will additionally
-	see such and such and such in the output (this is similar to
-	what "patch --dry-run" would give you).  See the EXAMPLES
-	section to get a feel of how it looks like.
-
-and I would not be opposed, as long as "such and such and such" are
-written in such a way that the reader does not have to have a prior
-experience with GNU patch in order to understand it.
-
-Clear?
+> Signed-off-by: Tony Finch <dot@dotat.at>
+> ---
+>  gitweb/static/gitweb.css | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
+> index cb86d2d..a869be1 100644
+> --- a/gitweb/static/gitweb.css
+> +++ b/gitweb/static/gitweb.css
+> @@ -548,8 +548,7 @@ a.linenr {
+>  
+>  a.rss_logo {
+>  	float: right;
+> -	padding: 3px 0px;
+> -	width: 35px;
+> +	padding: 3px 5px;
+>  	line-height: 10px;
+>  	border: 1px solid;
+>  	border-color: #fcc7a5 #7d3302 #3e1a01 #ff954e;
