@@ -1,136 +1,103 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Dokumenting api-paths.txt
-Date: Tue, 20 Aug 2013 23:40:16 +0200
-Message-ID: <5213E240.9080106@googlemail.com>
-References: <1376864786-21367-1-git-send-email-stefanbeller@googlemail.com> <1376954619-24314-1-git-send-email-stefanbeller@googlemail.com> <52136F9C.6030308@kdbg.org> <5213DE72.3000308@googlemail.com> <20130820213452.GI4110@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Should "git apply --check" imply verbose?
+Date: Tue, 20 Aug 2013 14:43:56 -0700
+Message-ID: <xmqqtxikujfn.fsf@gitster.dls.corp.google.com>
+References: <5213873A.6010003@windriver.com>
+	<xmqqioz06y9m.fsf@gitster.dls.corp.google.com>
+	<5213B95D.3040409@windriver.com>
+	<xmqqzjsc5ggp.fsf@gitster.dls.corp.google.com>
+	<20130820151554.6afbcb7f@gandalf.local.home>
+	<7v7gfgkuyo.fsf@alter.siamese.dyndns.org>
+	<20130820155433.217abb3e@gandalf.local.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig61AE04A22070872AC5FF91EA"
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 20 23:40:24 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Gortmaker <paul.gortmaker@windriver.com>,
+	<git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Steven Rostedt <rostedt@goodmis.org>
+X-From: git-owner@vger.kernel.org Tue Aug 20 23:44:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBtf5-0004oG-RZ
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 23:40:24 +0200
+	id 1VBtii-0007Am-Q0
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 23:44:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751332Ab3HTVkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 17:40:17 -0400
-Received: from mail-ea0-f173.google.com ([209.85.215.173]:33875 "EHLO
-	mail-ea0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751211Ab3HTVkQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 17:40:16 -0400
-Received: by mail-ea0-f173.google.com with SMTP id g10so459278eak.18
-        for <git@vger.kernel.org>; Tue, 20 Aug 2013 14:40:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type;
-        bh=LNUNcQiiMYW3QGJ0yQL9TMuSMzVmyS9svxAqzPAcWOs=;
-        b=s0w31OGIJZHUC7Ow+1mS0bAk3qCygEx04RfnP13Kf3VR+CfHc10llgTYnhnjCEqSSF
-         184F9hT91cxbmxO55LfHuiX4VLJxVNKz0CoIysLZnkoB9l/j7v8vi3aDphtLZCN7oXDM
-         aiUc+Otwsb7ve43ztoqUpF6cA4KQbIBeekktf3GAhfvZFJIKzQjnhm18INrnbz5HqUWS
-         gijoXuLmqOYjJreDsvCpc938RMIddFSBT6ko/D7oYSrhdYXa9+W8iDA0HRBcwwT3Yh4U
-         xEdz/Zi6KIZszLJ+576kR/oFTyL9e5i9zt65cEd8RiO3xITd9goChbsqhNwYL1HzsUkK
-         Zmww==
-X-Received: by 10.14.122.132 with SMTP id t4mr4717590eeh.20.1377034814750;
-        Tue, 20 Aug 2013 14:40:14 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id m54sm4999696eex.2.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 20 Aug 2013 14:40:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
-In-Reply-To: <20130820213452.GI4110@google.com>
-X-Enigmail-Version: 1.4.6
+	id S1751779Ab3HTVoD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 17:44:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45322 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751753Ab3HTVn7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 17:43:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3D383A47A;
+	Tue, 20 Aug 2013 21:43:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dMA/vTRNsXFJoauvX/LN4UhfmQI=; b=Zl/1qn
+	TH04dP4QToMdl9mbJHXiHcySvBFxrLtpxAadv2HnvzzlDhSlzGXN1uJDWUsPwzOx
+	Ng09jsZrpMcYPBpdNORRgo+EwHY6g3VzdN8xc8xiM1sNEQ4E3L/i2wh6XTCQ2CwZ
+	FeWbJQfUeNmq84CPVXExpmtpoyiLc/CO3z2Rg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Y63Dle1y2s+nQlcqbF4ac67gFo9QbMY8
+	Q8vyxH5PUv0ccboeKRhHWZAuAbwmhss2MEny/ZJ0kf2OtBRxP1KlAX3hJlDpDT8x
+	GREkDRG7TQ//ucNxSZGK5YXdDQ3geX01502xuAP9hSIr4RO4S2skvwrTpoCLTtbW
+	hrx7PE3rjlg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E75DA3A478;
+	Tue, 20 Aug 2013 21:43:58 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3EC233A476;
+	Tue, 20 Aug 2013 21:43:58 +0000 (UTC)
+In-Reply-To: <20130820155433.217abb3e@gandalf.local.home> (Steven Rostedt's
+	message of "Tue, 20 Aug 2013 15:54:33 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9E7F2E3E-09E1-11E3-A698-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232651>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig61AE04A22070872AC5FF91EA
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Steven Rostedt <rostedt@goodmis.org> writes:
 
-On 08/20/2013 11:34 PM, Jonathan Nieder wrote:
-> Stefan Beller wrote:
->> On 08/20/2013 03:31 PM, Johannes Sixt wrote:
->=20
->>>> +    packdir =3D mkpathdup("%s/pack", get_object_directory());
->>>> +    packtmp =3D mkpathdup("%s/.tmp-%d-pack", packdir, getpid());
->>>
->>> Should this not be
->>>
->>>     packdir =3D xstrdup(git_path("pack"));
->>>     packtmp =3D xstrdup(git_path("pack/.tmp-%d-pack", getpid()));
->>
->> Just a question for documentational purpose. ;)
->> Am I right suggesting the following:
->>
->> `mkpathdup`::
->> 	Use parameters to build the path on the filesystem,
->> 	i.e. create required folders and then return a duplicate
->> 	of that path. The caller is responsible to free the memory
->=20
-> Right.  mkpathdup is basically just mkpath composed with xstrdup,
-> except that it avoids stomping on mkpath's buffers.
->=20
-> The corresponding almost-shortcut for xstrdup(git_path(s)) is
-> git_pathdup(s).  But that's a minor detail.
->=20
-> Maybe a new Documentation/technical/api-paths.txt is in order.
->=20
-> Thanks,
-> Jonathan
->=20
+>> > Linus told me that "git apply" was basically a replacement for patch.
+>> > Why would you think it would not be a good idea to assume that people
+>> > would not be familiar with how GNU patch works?
+>> 
+>> The audience of Git these days are far more widely spread than the
+>> kernel circle.  I am not opposed to _helping_ those who happen to
+>> know "patch", but I was against a description that assumes readers
+>> know it, i.e. making it a requirement to know "patch" to understand
+>> "apply".
+>
+> Patch is used by much more than just the kernel folks ;-)  I've been
+> using patch much longer than I've been doing kernel development.
 
-Is there a way to create a path, without being using git_path?
-git_path seems to imply adding .git.
+Yeah, I was familiar with "patch" when I started Git, too ;-).
 
-So if I have=20
-	packdir =3D xstrdup(git_path("pack"));
-	...
-	path =3D git_path("%s/%s", packdir, filename)
+But only folks in the kernel circle will be told by Linus the
+similarity between apply and patch, no?
 
-This produces something as:
-=2Egit/.git/objects/pack/.tmp-13199-pack-c59c5758ef159b272f6ab10cb9fadee4=
-43966e71.idx
-definitely having one .git too much.
+In any case...
 
-Also interesting to add would be that git_path operates in the
-=2Egit/objects directory?
+>> In other words, your enhancement to the documentation could go like:
+>> 
+>> 	... By default, ... With this option, you will additionally
+>> 	see such and such and such in the output (this is similar to
+>> 	what "patch --dry-run" would give you).  See the EXAMPLES
+>> 	section to get a feel of how it looks like.
+>> 
+>> and I would not be opposed, as long as "such and such and such" are
+>> written in such a way that the reader does not have to have a prior
+>> experience with GNU patch in order to understand it.
 
-Thanks,
-Stefan
+... I forgot to also add: And by mentioning "similar to", people who
+are familiar with "patch" are also helped by their pre-existing
+knowledge, so both kinds of people win.
 
-
---------------enig61AE04A22070872AC5FF91EA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJSE+JAAAoJEJQCPTzLflhqkg0P/2hwj8PR2QwtREJPbkWVzk7U
-vOoGXHf5WW0lV4EiJLAfVcbh6c24oCIo263vBDVfYiWRR25Dw6PsOcy8MPjKE210
-Iek4+1wZYFjUTw6slDgtWvKDvW63pAYM4awbhAougAb1PoQHzElyyWFVUn1uoefA
-BrdAXHYYjz07uH1U9YACUZDGr45Omd7l+SW5FAlvz2e48Gwj1EGszHixLe7q6PLf
-zprwVTrQb2GbEjGjZFrpBFMsOyfWJvtfXTjzS+gLHuIZXEjlfv/9+EGj7xRqn3pS
-b1HPsYv/DgcFm5fkiytBucschs6NzzULyYtx+SRLqJUnwEZuTUPJR0GyrK/JCGhs
-o1rrRGpqXmXBsN6yUTvCPyIgn2NW3yRu02XdGCs9O1zBvxh7Ly7TBGNiIfBNhr4R
-UWWIG/HHcqtaflhpLnQo63ZdWPiZmgKFPqTU1VjNBVzqKgvcKEFfX8v4xL/4/DfM
-XwJZA/c+FYlbhGzyc21yMdqSZEhU3nKVOcJdNBT1Lcd6P9+kXY0Vj3PY2vk70lCv
-73nUdMK8uienJDezD5wzbRwKnl7X6WNX1QnaA/XQCZVMYHfrsMkcJYCdG31rQcC0
-AYOpzNF+r1BHnxVaGFcoLFMCsTphX8cWxdE9iUBXh+pKhxdPJXBqAc7q2rBHBorf
-FZ1sq4jyx5v/gLOc0+AC
-=c5c7
------END PGP SIGNATURE-----
-
---------------enig61AE04A22070872AC5FF91EA--
+Thanks.
