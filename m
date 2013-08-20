@@ -1,82 +1,71 @@
-From: Steven Rostedt <rostedt@goodmis.org>
-Subject: Re: Should "git apply --check" imply verbose?
-Date: Tue, 20 Aug 2013 15:15:54 -0400
-Message-ID: <20130820151554.6afbcb7f@gandalf.local.home>
-References: <5213873A.6010003@windriver.com>
-	<xmqqioz06y9m.fsf@gitster.dls.corp.google.com>
-	<5213B95D.3040409@windriver.com>
-	<xmqqzjsc5ggp.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: netrc credential helper promotion out of contrib?
+Date: Tue, 20 Aug 2013 12:28:39 -0700
+Message-ID: <xmqqvc305fh4.fsf@gitster.dls.corp.google.com>
+References: <87k3jjp9q5.fsf@lifelogs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Paul Gortmaker <paul.gortmaker@windriver.com>,
-	<git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 20 21:16:07 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ted Zlatanov <tzz@lifelogs.com>
+X-From: git-owner@vger.kernel.org Tue Aug 20 21:28:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBrPN-0004zh-2G
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 21:16:01 +0200
+	id 1VBrbj-0005H9-EV
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 21:28:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751365Ab3HTTP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 15:15:57 -0400
-Received: from hrndva-omtalb.mail.rr.com ([71.74.56.122]:7209 "EHLO
-	hrndva-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751217Ab3HTTP4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 15:15:56 -0400
-X-Authority-Analysis: v=2.0 cv=KJ7Y/S5o c=1 sm=0 a=Sro2XwOs0tJUSHxCKfOySw==:17 a=Drc5e87SC40A:10 a=JcweFNKryUAA:10 a=5SG0PmZfjMsA:10 a=kj9zAlcOel0A:10 a=meVymXHHAAAA:8 a=KGjhK52YXX0A:10 a=psXsv1EI8KAA:10 a=ybZZDoGAAAAA:8 a=t7CeM3EgAAAA:8 a=FM-c_rLgVo3zbo-D5b8A:9 a=CjuIK1q_8ugA:10 a=qIVjreYYsbEA:10 a=2e6ZYRoF4I4A:10 a=Sro2XwOs0tJUSHxCKfOySw==:117
-X-Cloudmark-Score: 0
-X-Authenticated-User: 
-X-Originating-IP: 67.255.60.225
-Received: from [67.255.60.225] ([67.255.60.225:51288] helo=gandalf.local.home)
-	by hrndva-oedge04.mail.rr.com (envelope-from <rostedt@goodmis.org>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id C0/ED-02415-B60C3125; Tue, 20 Aug 2013 19:15:55 +0000
-In-Reply-To: <xmqqzjsc5ggp.fsf@gitster.dls.corp.google.com>
-X-Mailer: Claws Mail 3.9.2 (GTK+ 2.24.20; x86_64-pc-linux-gnu)
+	id S1751548Ab3HTT2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 15:28:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33912 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751045Ab3HTT2m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 15:28:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D8A53A534;
+	Tue, 20 Aug 2013 19:28:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pZbFgzplsb+LPUj9hC2xUM0GgVk=; b=pCmNp6
+	CkjltbdMXfgkxVbOxCMW8Ufu6vca7V8+6v2hrCVtivrSCx9qEYk3DID0aHVcn0d+
+	uX7rRgU2vXyN9pBl3Oks+n+VOoDFUbvfZUwKka6AZKEEQbhxQ60BzCltPPFBb1Iy
+	pdF6/2en5pC0ImpyuhMSgb17NGK7tVC/IBJ0A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=T9VwiVaCOTs3r+F0WJW3kiaxoqqj0cbC
+	MVV7a3Z6sTWtbHVQ0DP8OyMkLaPWF/bY3h/W6Hr3vBaXYfxF9WKmx81woq8RTSYZ
+	6XutviV1p6V46A2NtoIy2C6VDRYhmw5lkn9TOPGZCsEl42Vi6WEn5X4PaY7mpblN
+	MH23F9WUDkg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 32C583A533;
+	Tue, 20 Aug 2013 19:28:42 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9799F3A526;
+	Tue, 20 Aug 2013 19:28:41 +0000 (UTC)
+In-Reply-To: <87k3jjp9q5.fsf@lifelogs.com> (Ted Zlatanov's message of "Sun, 18
+	Aug 2013 06:35:46 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B89A59B4-09CE-11E3-AAF3-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232635>
 
-On Tue, 20 Aug 2013 12:07:18 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+Ted Zlatanov <tzz@lifelogs.com> writes:
 
-> Paul Gortmaker <paul.gortmaker@windriver.com> writes:
-> 
-> > OK, so given your feedback, how do you feel about a patch to the
-> > documentation that indicates to use "-v" in combination with the
-> > "--check" to get equivalent "patch --dry-run" behaviour?   If that
-> > had existed, I'd have not gone rummaging around in the source, so
-> > that should be good enough to help others avoid the same...
-> 
-> I do not think it is necessarily a good idea to assume that people
-> who are learning "git apply" know how GNU patch works.
+> A while has passed since contrib/credential/netrc was added. Is it OK to
+> promote it to be part of the main installation?
 
-Linus told me that "git apply" was basically a replacement for patch.
-Why would you think it would not be a good idea to assume that people
-would not be familiar with how GNU patch works?
+I gave it a quick glance, and it seems to be cleanly written, except
+that "EOHIPPUS" (End-of-Hippus?  Eohippus the extinct horse?) looked
+a bit too strange to my taste ;-).  It does not seem to use features
+older versions of Perl some people are stuck with do not support.
 
-Is it because you expect "git apply" to eventually replace patch all
-out, and want no dependencies on its knowledge?
-
--- Steve
-
-
-> 
-> But I do agree that the description of -v, --verbose has a lot of
-> room for improvement.
-> 
-> 	Report progress to stderr. By default, only a message about the
-> 	current patch being applied will be printed. This option will cause
-> 	additional information to be reported.
-> 
-> It is totally unclear what "additional information" is reported at
-> all.
-> 
-> Thanks.
+I do not mind seeing a patch that moves contrib/credential/netrc to
+credential/netrc and adjusts the top-level Makefile.  The test
+script needs to be updated to fit the rest of t/ hierarchy better,
+though.
