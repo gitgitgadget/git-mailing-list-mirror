@@ -1,64 +1,151 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH v5 0/2] Fix IO of >=2GB on Mac OS X by limiting IO chunks
-Date: Tue, 20 Aug 2013 08:43:53 +0200
-Message-ID: <1376981035-23284-1-git-send-email-prohaska@zib.de>
-References: <1376926879-30846-1-git-send-email-prohaska@zib.de>
+From: Michael Geddes <michael@frog.wheelycreek.net>
+Subject: Re: Re: git clone doesn't work in symlink dir roots on Windows
+Date: Tue, 20 Aug 2013 15:30:55 +0800
+Message-ID: <1928115.O1fVFY9Fid@majorie>
+References: <CABJxLaM9t1HeEVkAiXpOmaOH_V6681w9Q9ZQt37+MpmhX7yN2g@mail.gmail.com> <CABJxLaOaUYxyAsy5mpciiAObmoazFpwB0T4C20cu3eHuSpEpAg@mail.gmail.com> <20130810163459.GE25779@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-	John Keeping <john@keeping.me.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Aug 20 08:45:47 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, Sedat Kapanoglu <sedat@eksiteknoloji.com>, git@vger.kernel.org
+To: msysgit@googlegroups.com
+X-From: msysgit+bncBCLZXZ4RRAEBBM5WZSIAKGQEBRDA3OI@googlegroups.com Tue Aug 20 09:31:02 2013
+Return-path: <msysgit+bncBCLZXZ4RRAEBBM5WZSIAKGQEBRDA3OI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qa0-f55.google.com ([209.85.216.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBfhH-00042T-VA
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 08:45:44 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751367Ab3HTGpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 02:45:32 -0400
-Received: from mailer.zib.de ([130.73.108.11]:64072 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751244Ab3HTGpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 02:45:30 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id r7K6i74s002538;
-	Tue, 20 Aug 2013 08:44:13 +0200 (CEST)
-Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id r7K6i4jp029237;
-	Tue, 20 Aug 2013 08:44:05 +0200 (MEST)
-X-Mailer: git-send-email 1.8.4.rc0.11.g35f5eaa
-In-Reply-To: <1376926879-30846-1-git-send-email-prohaska@zib.de>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232585>
+	(envelope-from <msysgit+bncBCLZXZ4RRAEBBM5WZSIAKGQEBRDA3OI@googlegroups.com>)
+	id 1VBgP7-00066l-St
+	for gcvm-msysgit@m.gmane.org; Tue, 20 Aug 2013 09:31:02 +0200
+Received: by mail-qa0-f55.google.com with SMTP id f11sf126614qae.0
+        for <gcvm-msysgit@m.gmane.org>; Tue, 20 Aug 2013 00:31:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
+         :references:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=S2aXa8yLKSx8OqhU511M8qec7qh7s54OsouRn8aiUH0=;
+        b=B8e3zqSF54WRi5xEy/2TheyH6KB8ooOcxxZhzkmiKHKHA82izgIg4gLo01ikntAsDU
+         AtxsD6+NULKrId0hm5lrSLkzoPneTrw2QVmk/iB53IPzQ2G5V1+pnsOxNuPxf1U1tEq3
+         15fyT9XlzQ2okUQnR/0fC1K6GisFXbYICB/pPCOub6i1FsiheUmU5HN4F2N/W07P4qkR
+         lsSU89Bv3NAdVATDZw+0uSt+eplvu6/ioFsESwHzaI8LA515XTG4wb5qGViKK6B++4l9
+         TFGyTJPg+AjUBWZM/wNsVm914Y+uKbbXVhvuLLzpSbKMPX5/Tj9w/9i74Lh5RyvBqiAZ
+         lJ0w==
+X-Received: by 10.50.2.74 with SMTP id 10mr9081igs.15.1376983860573;
+        Tue, 20 Aug 2013 00:31:00 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.88.98 with SMTP id bf2ls247164igb.15.gmail; Tue, 20 Aug
+ 2013 00:30:59 -0700 (PDT)
+X-Received: by 10.66.121.169 with SMTP id ll9mr814328pab.38.1376983859614;
+        Tue, 20 Aug 2013 00:30:59 -0700 (PDT)
+Received: from smtpauth.rollernet.us (smtpauth.rollernet.us. [2607:fe70:0:3::d])
+        by gmr-mx.google.com with ESMTPS id al8si45616pbd.0.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 20 Aug 2013 00:30:59 -0700 (PDT)
+Received-SPF: pass (google.com: domain of michael@frog.wheelycreek.net designates 2607:fe70:0:3::d as permitted sender) client-ip=2607:fe70:0:3::d;
+Received: from smtpauth.rollernet.us (localhost [127.0.0.1])
+	by smtpauth.rollernet.us (Postfix) with ESMTP id 16D7E594021
+	for <msysgit@googlegroups.com>; Tue, 20 Aug 2013 00:30:56 -0700 (PDT)
+Received: from wheelycreek.net (unknown [203.59.141.93])
+	by smtpauth.rollernet.us (Postfix) with ESMTPA
+	for <msysgit@googlegroups.com>; Tue, 20 Aug 2013 00:30:55 -0700 (PDT)
+Received: from majorie.localnet ([192.168.22.205]:40631)
+	by wheelycreek.net with [XMail 1.26 ESMTP Server]
+	id <S3048> for <msysgit@googlegroups.com> from <michael@frog.wheelycreek.net>;
+	Tue, 20 Aug 2013 07:30:54 -0000
+User-Agent: KMail/4.10.5 (Linux/3.8.0-27-generic; KDE/4.10.5; x86_64; ; )
+In-Reply-To: <20130810163459.GE25779@paksenarrion.iveqy.com>
+X-Rollernet-Abuse: Processed by Roller Network Mail Services. Contact abuse@rollernet.us to report violations. Abuse policy: http://www.rollernet.us/policy
+X-Rollernet-Submit: Submit ID 3d25.52131b2f.a17f2.0
+X-Original-Sender: michael@frog.wheelycreek.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of michael@frog.wheelycreek.net designates
+ 2607:fe70:0:3::d as permitted sender) smtp.mail=michael@frog.wheelycreek.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232586>
 
-This is the revised patch taking the considerations about IO chunk size into
-account.  The series deletes more than it adds and fixes a bug.  Nice.
+This type of functionality is directly supported by the work I've already done 
+on symlinks here:   https://github.com/frogonwheels/git   
+(branches mrg/symlink-v*  )
 
-Steffen Prohaska (2):
-  xread, xwrite: Limit size of IO, fixing IO of 2GB and more on Mac OS X
-  Revert "compate/clipped-write.c: large write(2) fails on Mac OS X/XNU"
+Even if we agree that symlinks only work to a limited degree, or that there 
+are definite limitations, and that the default should be that symlinks NOT be 
+supported within repositories, I'm not sure why people are against 
+incorporating what I've already implemented.. ok well I guess I do - it's 
+about time.
 
- Makefile               |  8 --------
- compat/clipped-write.c | 13 -------------
- config.mak.uname       |  1 -
- git-compat-util.h      |  5 -----
- t/t0021-conversion.sh  | 14 ++++++++++++++
- wrapper.c              | 12 ++++++++++++
- 6 files changed, 26 insertions(+), 27 deletions(-)
- delete mode 100644 compat/clipped-write.c
+Firstly, at the least it means that symlinks like this example where they are  
+outside the repository are supported.  Secondly it means that people who are 
+prepared to accept the limitations will be able to use (or at least clone) 
+repositories containing symlinks.
+
+One of the big, painful limitations is that windoze symlinks need to be marked 
+as directories at the time of creation.  The code I have implemented does it's 
+level best to create the correct type of NTFS symlink based on repository 
+information and falling back on filesystem information.
+
+The argument about permissions is only partially valid, since that can be 
+granted as an individual permission to the user without permanent 
+administrator rights.
+
+//.ichael G.
+
+On Sat, 10 Aug 2013 06:34:59 PM Fredrik Gustafsson wrote:
+> On Sat, Aug 10, 2013 at 07:22:03PM +0300, Sedat Kapanoglu wrote:
+> > > git is a disk intense program, so this setup is not sane at all. With
+> > > that said I know that git on windows historically had problems with
+> > > working on smb-mounted shares (sometimes you're forced to have stupid
+> > > setups). I doubt that git really is the right tool for your work, since
+> > 
+> > I reproduced the same problem in a regular symlink directory. Repro steps:
+> > 
+> > mkdir actualdir
+> > mklink /d symdir actualdir
+> > cd symdir
+> > git init .
+> > 
+> > fatal: Invalid symlink 'D:/gitto': Function not implemented
+> > 
+> > Thanks,
+> > 
+> > Sedat
+> 
+> Good, then we can determinate that this is a symlink error, it seams
+> that readlink() isn't implemented in the msysgit version of msysgit.
+> 
+> However msysgit should have a implementation of readlink() according to:
+> http://mingw.5.n7.nabble.com/Replacement-for-readlink-td30679.html
+> 
+> I've CC:ed the msysgit-maillist so that they can decide if this is
+> something they want to address in newer releases.
+> 
+> (In the git source code the readlink call in this abspath.c)
 
 -- 
-1.8.4.rc3.5.g4f480ff
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
