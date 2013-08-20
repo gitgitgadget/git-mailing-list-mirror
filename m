@@ -1,99 +1,72 @@
-From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT] add FreeBSD support
-Date: Tue, 20 Aug 2013 11:25:48 -0400
-Message-ID: <20130820152547.GC8172@poseidon.cudanet.local>
-References: <1376051548-3126-1-git-send-email-wenqing.lz@taobao.com>
- <20130809144641.GK22686@poseidon.cudanet.local>
- <68E9B1AC-A3A3-47DD-B0A7-07752428D16D@gmail.com>
- <20130809152046.GL22686@poseidon.cudanet.local>
- <20130820074415.GA27247@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] mailmap: fix check for freeing memory
+Date: Tue, 20 Aug 2013 12:12:37 -0400
+Message-ID: <20130820161237.GA4332@sigill.intra.peff.net>
+References: <1377004958-14489-1-git-send-email-stefanbeller@googlemail.com>
+ <878uzw7a6l.fsf@linux-k42r.v.cablecom.net>
+ <52137A63.3010609@googlemail.com>
+ <871u5o785o.fsf@linux-k42r.v.cablecom.net>
+ <52137F59.2030103@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Zheng Liu <gnehzuil.liu@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 20 17:26:00 2013
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 20 18:12:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBnoh-0002Jh-9d
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 17:25:55 +0200
+	id 1VBoY2-000647-LF
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 18:12:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751251Ab3HTPZv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Aug 2013 11:25:51 -0400
-Received: from josefsipek.net ([64.9.206.49]:1761 "EHLO josefsipek.net"
+	id S1751368Ab3HTQMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 12:12:42 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38472 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751111Ab3HTPZu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 11:25:50 -0400
-Received: from poseidon.cudanet.local (unknown [64.235.151.250])
-	by josefsipek.net (Postfix) with ESMTPSA id 71FC5554D8;
-	Tue, 20 Aug 2013 11:25:49 -0400 (EDT)
+	id S1751339Ab3HTQMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 12:12:42 -0400
+Received: (qmail 27073 invoked by uid 102); 20 Aug 2013 16:12:42 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 20 Aug 2013 11:12:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Aug 2013 12:12:37 -0400
 Content-Disposition: inline
-In-Reply-To: <20130820074415.GA27247@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <52137F59.2030103@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232614>
 
-On Tue, Aug 20, 2013 at 03:44:16PM +0800, Zheng Liu wrote:
-> Hi Josef,
->=20
-> On Fri, Aug 09, 2013 at 11:20:46AM -0400, Josef 'Jeff' Sipek wrote:
-> > On Fri, Aug 09, 2013 at 11:04:45PM +0800, gnehzuil.liu wrote:
-> > > ?? 2013-8-9??????10:46??Josef 'Jeff' Sipek <jeffpc@josefsipek.net=
-> =D0=B4????
-> > >=20
-> > > > On Fri, Aug 09, 2013 at 08:32:28PM +0800, Zheng Liu wrote:
-> > > >> From: Zheng Liu <gnehzuil.liu@gmail.com>
-> > > >>=20
-> > > >> Currently guilt doesn't support FreeBSD platform.  This commit=
- tries to
-> > > >> add this support.  The file called 'os.FreeBSD' is copied from=
- os.Darwin
-> > > >> due to these two platforms have almost the same command tools.
-> > > >=20
-> > > > Out of curiosity, is it identical?  I eyeballed it, and they do=
- look
-> > > > identical.  There's probably a better way to do this whole os-s=
-pecific
-> > > > thing, but this will work well enough for now.
-> > >=20
-> > > Yes, it is identical.  Sorry, I am a newbie for guilt, but I am h=
-appy to
-> > > improve this os-specific thing.    Any idea?
-> >=20
-> > So, I'm a bit torn between some "build-time" checking that generate=
-s
-> > something like an "os" file based on what it detects and something =
-that
-> > happens at runtime.  I like that currently there's nothing to do - =
-you just
-> > clone the repo and you're set.  At the same time, the more code can=
- be
-> > avoided executing the faster (in theory) guilt gets.
->=20
-> Sorry for the late reply.  I did a simple experiment that tries to fo=
-ld
-> all os.* files into one file and uses a if statement to export functi=
-ons
-> according to different platforms.  But frankly I don't like this beca=
-use
-> it is not very clearly.  So IMHO we'd better add a 'os.FreeBSD' file =
-to
-> support FreeBSD platform.
+On Tue, Aug 20, 2013 at 04:38:17PM +0200, Stefan Beller wrote:
 
-Yeah, sounds like the simplest (at least for the moment).  I'll commit =
-it.
-Thanks.
+> As proposed I checked recent kernel history and saw:
+> 
+> $ git log --min-parents=2 --oneline 
+> d6a5e06 Merge git://git.kernel.org/pub/scm/linux/kernel/git/steve/gfs2-3.0-fixes
+> 7067552 Merge branch 'x86-urgent-for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip
+> e91dade Merge branch 'timers-urgent-for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip
+> fbf2184 Merge branch 'drm-fixes' of git://people.freedesktop.org/~airlied/linux
+> 3387ed8 Merge tag 'drm-intel-fixes-2013-08-15' of git://people.freedesktop.org/~danvet/drm-intel
+> d2b2c08 Merge branch 'drm-fixes-3.11' of git://people.freedesktop.org/~agd5f/linux
+> 50e37cc Merge branch 'for-3.11-fixes' of git://git.kernel.org/pub/scm/linux/kernel/git/tj/cgroup
+> a08797e Merge tag 'ext4_for_linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tytso/ext4
+> 2620bf0 Merge branch 'fixes' of git://git.linaro.org/people/rmk/linux-arm
+> 359d16c Merge branch 'for-3.11' of git://git.kernel.org/pub/scm/linux/kernel/git/geert/linux-m68k
+> 0f7dd1a Merge tag 'clk-fixes-for-linus' of git://git.linaro.org/people/mturquette/linux
+> 2d2843e Merge tag 'pm-3.11-rc6' of git://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm
+> f43c606 Merge tag 'sound-3.11' of git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound
+> 89cb9ae Merge tag 'usb-3.11-rc6' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb
+> 
+> in their .mailmap it read:
+> 	# repo-abbrev: /pub/scm/linux/kernel/git/
+> 
+> So the abbreviation doesn't take place, can this feature be turned off?
+> I'm still confused by that feature.
 
-=46WIW, the idea I was thinking about was to make "make all" figure out
-various parts of the system and construct an os file.
+It _only_ impacts git-shortlog, not git-log or other traversals. Making
+it an even more dubious feature, IMHO.
 
-Jeff.
-
---=20
-UNIX is user-friendly ... it's just selective about who its friends are
+-Peff
