@@ -1,89 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Dokumenting api-paths.txt
-Date: Tue, 20 Aug 2013 14:59:11 -0700
-Message-ID: <20130820215911.GJ4110@google.com>
-References: <1376864786-21367-1-git-send-email-stefanbeller@googlemail.com>
- <1376954619-24314-1-git-send-email-stefanbeller@googlemail.com>
- <52136F9C.6030308@kdbg.org>
- <5213DE72.3000308@googlemail.com>
- <20130820213452.GI4110@google.com>
- <5213E240.9080106@googlemail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: CPPCheck found 24 high risk bugs in Git v.1.8.3.4
+Date: Wed, 21 Aug 2013 00:26:38 +0200
+Message-ID: <CABPQNSZSXgvLw_i25em38B70EgtZrv9iQh8OaCJzYRCk2vjZXQ@mail.gmail.com>
+References: <85C8141E5DAD94428A121F706995A31F010F116FDAD3@MX1.net.tbe.com>
+ <33FCCE7A2CD5494B88F3C5CDBC341DFD@PhilipOakley> <166132E40AA54EE387BA9B4558823C55@PhilipOakley>
+ <CABPQNSZidMv4MEW+SqVm94pX4szw9QW8LFWsvBTOXYH7ezzycw@mail.gmail.com> <87eh9op5gq.fsf@igel.home>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 20 23:59:21 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Philip Oakley <philipoakley@iee.org>,
+	"Koch, Rick (Subcontractor)" <Rick.Koch@tbe.com>,
+	Git List <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Wed Aug 21 00:27:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBtxP-000058-O8
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 23:59:20 +0200
+	id 1VBuOa-0002mY-Sg
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 00:27:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751329Ab3HTV7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 17:59:16 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:34955 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751178Ab3HTV7P (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 17:59:15 -0400
-Received: by mail-pa0-f45.google.com with SMTP id bg4so4225pad.4
-        for <git@vger.kernel.org>; Tue, 20 Aug 2013 14:59:15 -0700 (PDT)
+	id S1751342Ab3HTW1U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 18:27:20 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:39685 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751274Ab3HTW1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 18:27:20 -0400
+Received: by mail-oa0-f43.google.com with SMTP id i10so2083622oag.16
+        for <git@vger.kernel.org>; Tue, 20 Aug 2013 15:27:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=QSsefQWQh9kVTerTtnMEhBTvlTzkb8ZRzLLnqEnz8xk=;
-        b=qONfUlb+2U9RLucwE6ICQhj/zAtOqeGvACNxH8KeG2L6LrwMbJXueyddPBd7n348T5
-         236S2G/Lcv/uR1Fq1Fa2Mkm3PJzuJ44Aiw1w/r+SoCUY/13uj+UkHNE5PsjEUfSfnZ3m
-         eWghHRBpQ9zdlt8CYUzhajAjo6eKXm0mhmLPPpPETHbFCf/oNN3TIk0+Yai2iYI4U8RR
-         BsZtHZ/Mp2flCmT3jcQ58DyzEgt14Gx8SkgmXG4bNCc/yiZERb93fid1Vrg5PWuIwNIE
-         qFCddl8LTOu7e0btHO1NRH1dlEaYI/4U1FLz2ymMNM5iMDtHcvvsn6WhOm6bU9IVPwv9
-         5OWQ==
-X-Received: by 10.66.219.41 with SMTP id pl9mr4623864pac.187.1377035954970;
-        Tue, 20 Aug 2013 14:59:14 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id xs1sm5903804pac.7.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 20 Aug 2013 14:59:14 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <5213E240.9080106@googlemail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=XlBBSRIeY5knKDJDXR6nEplfyJiTYcoL98czOa8dcJs=;
+        b=gGMsvAjHGdpX2yrBBpEQ/ruB/s6Au4napdwFf6YW9QhdCtc98d3FZe1G5sHnNpWZFg
+         bIDg5cfRdCVo7UJFjsH6i3b1037ZnMR3XlEWv3CjGFL+DSZ8cETc7BCI0xIKQlrnorJF
+         lXfcO1vwapVU2i+2zaM85bkzFwZUdoefMOKtR+UJSJ4s7kBI9IH/VnTFMLTCR9dEudTN
+         qtY0zWfC5uX6iGXboQdvdCGqYKaykKsAINN3fbmbohKmu78RsjSwstei1stww/HcELJW
+         Sq5P1ulGqNz3KEH+mkaYtjhlwBPU9+7l9oaUCcLH0tTH+Xqfp1DfbEfeQdF1+J5vHsm3
+         pVQQ==
+X-Received: by 10.60.95.99 with SMTP id dj3mr3745230oeb.94.1377037638661; Tue,
+ 20 Aug 2013 15:27:18 -0700 (PDT)
+Received: by 10.76.162.68 with HTTP; Tue, 20 Aug 2013 15:26:38 -0700 (PDT)
+In-Reply-To: <87eh9op5gq.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232654>
 
-Stefan Beller wrote:
->>> On 08/20/2013 03:31 PM, Johannes Sixt wrote:
->>>> Stefan Beller wrote:
-
->>>>> +    packdir = mkpathdup("%s/pack", get_object_directory());
->>>>> +    packtmp = mkpathdup("%s/.tmp-%d-pack", packdir, getpid());
->>>>
->>>> Should this not be
->>>>
->>>>     packdir = xstrdup(git_path("pack"));
->>>>     packtmp = xstrdup(git_path("pack/.tmp-%d-pack", getpid()));
-[...]
-> So if I have 
-> 	packdir = xstrdup(git_path("pack"));
-> 	...
-> 	path = git_path("%s/%s", packdir, filename)
+On Tue, Aug 20, 2013 at 8:44 PM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
 >
-> This produces something as:
-> .git/.git/objects/pack/.tmp-13199-pack-c59c5758ef159b272f6ab10cb9fadee443966e71.idx
-> definitely having one .git too much.
+>> diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
+>> index d015e43..0641f4e 100644
+>> --- a/compat/win32/syslog.c
+>> +++ b/compat/win32/syslog.c
+>> @@ -43,11 +43,14 @@ void syslog(int priority, const char *fmt, ...)
+>>   va_end(ap);
+>>
+>>   while ((pos = strstr(str, "%1")) != NULL) {
+>> - str = realloc(str, ++str_len + 1);
+>> - if (!str) {
+>> + char *tmp = realloc(str, ++str_len + 1);
+>> + if (!tmp) {
+>>   warning("realloc failed: '%s'", strerror(errno));
+>> + free(str);
+>>   return;
+>>   }
+>> + pos = tmp + (pos - str);
+>
+> Pedantically, this is undefined (uses of both pos and str may trap after
+> realloc has freed the original pointer), it is better to calculate the
+> difference before calling realloc.
 
-The version with get_object_directory() was right.  The object
-directory is not even necessarily under .git/, since it can be
-overridden using the GIT_OBJECT_DIRECTORY envvar.
-
-> Also interesting to add would be that git_path operates in the
-> .git/objects directory?
-
-git_path is for resolving paths within GIT_DIR, such as
-git_path("config") and git_path("COMMIT_EDITMSG").
-
-Jonathan
+I don't see how it's undefined. It's using the memory that 'pos'
+*points to* that is undefined, no? The difference between 'pos' and
+'str' should still be the same, it's not like realloc somehow
+magically updates 'pos'...
