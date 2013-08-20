@@ -1,101 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] teach git-config to output large integers
-Date: Tue, 20 Aug 2013 15:57:45 -0700
-Message-ID: <20130820225745.GL4110@google.com>
-References: <20130820223953.GA3429@sigill.intra.peff.net>
- <20130820224710.GB24766@sigill.intra.peff.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: CPPCheck found 24 high risk bugs in Git v.1.8.3.4
+Date: Wed, 21 Aug 2013 01:01:32 +0200
+Message-ID: <87y57wnf03.fsf@igel.home>
+References: <85C8141E5DAD94428A121F706995A31F010F116FDAD3@MX1.net.tbe.com>
+	<33FCCE7A2CD5494B88F3C5CDBC341DFD@PhilipOakley>
+	<166132E40AA54EE387BA9B4558823C55@PhilipOakley>
+	<CABPQNSZidMv4MEW+SqVm94pX4szw9QW8LFWsvBTOXYH7ezzycw@mail.gmail.com>
+	<87eh9op5gq.fsf@igel.home>
+	<CABPQNSZSXgvLw_i25em38B70EgtZrv9iQh8OaCJzYRCk2vjZXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 21 00:57:53 2013
+Content-Type: text/plain
+Cc: Philip Oakley <philipoakley@iee.org>,
+	"Koch\, Rick \(Subcontractor\)" <Rick.Koch@tbe.com>,
+	Git List <git@vger.kernel.org>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Wed Aug 21 01:01:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBus4-00050u-VQ
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 00:57:53 +0200
+	id 1VBuvk-0007Hi-DQ
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 01:01:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524Ab3HTW5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 18:57:49 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:58794 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105Ab3HTW5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 18:57:48 -0400
-Received: by mail-pd0-f175.google.com with SMTP id q10so1018008pdj.6
-        for <git@vger.kernel.org>; Tue, 20 Aug 2013 15:57:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=en5zQr1etV4CJDJswLp1vQdSf7uPbEStEqL4/Uy1Qrc=;
-        b=QGSyXfkXdNuwLnjr3dNZ2IsYpnuOLdnD3k27GwFAl3uuXfmXoiOmvBFY4nPaCBGWoO
-         WR99TVM7r12fg8BT0hCBsGGqBza6EueckICCd1JiAFpCY8jxygnQp7nzo8Ua9R7f6kAV
-         VdMBY39N3WE7F7dkMYjK+RT7uQGcMNTr6xJmF6jdFlXxsVpEVnT6zm8whAX314+3xSp0
-         +fAUpa5Y0yf//eNFV85lJzfPhvXq3YnczGecsAkb8saefbcIcFtS3Q2xj/gToYhVyXLN
-         SNSuuTS1nDAAk1E0hQmFelfjnTqjE1+qA9TjesIc4azSe8vWKspp3fkpba7QQfDEV4A3
-         hQkA==
-X-Received: by 10.67.22.106 with SMTP id hr10mr3914967pad.155.1377039468359;
-        Tue, 20 Aug 2013 15:57:48 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id il4sm4340347pbb.36.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 20 Aug 2013 15:57:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20130820224710.GB24766@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751555Ab3HTXBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 19:01:36 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:58331 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751379Ab3HTXBg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 19:01:36 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3cKSDZ0Np1z4KK46;
+	Wed, 21 Aug 2013 01:01:34 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3cKSDZ0DPJzbbn4;
+	Wed, 21 Aug 2013 01:01:34 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id s1ZgrU__75_o; Wed, 21 Aug 2013 01:01:33 +0200 (CEST)
+X-Auth-Info: fh3k/v+b+xtUYd0YnglLYV/931QWjEMBt1Gh6MjUmow=
+Received: from igel.home (ppp-88-217-111-200.dynamic.mnet-online.de [88.217.111.200])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Wed, 21 Aug 2013 01:01:33 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id E06FF2C06D8; Wed, 21 Aug 2013 01:01:32 +0200 (CEST)
+X-Yow: LOOK!!!  I'm WALKING in my SLEEP again!!
+In-Reply-To: <CABPQNSZSXgvLw_i25em38B70EgtZrv9iQh8OaCJzYRCk2vjZXQ@mail.gmail.com>
+	(Erik Faye-Lund's message of "Wed, 21 Aug 2013 00:26:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232666>
 
-Jeff King wrote:
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-> I kind of hate the name "--ulong". I wanted to call it "--size" or
-> something and abstract away the actual platform representation, and just
-> make it "big enough for file sizes".
+> I don't see how it's undefined. It's using the memory that 'pos'
+> *points to* that is undefined, no? The difference between 'pos' and
+> 'str' should still be the same, it's not like realloc somehow
+> magically updates 'pos'...
 
-Yes, something like --size would be more pleasant.
+It does.  Think of segmented architectures, where freeing a pointer
+invalidates its segment, so that even loading the value of the pointer
+traps.  Probably no such architecture is in use any more, though.
 
-It could still use unsigned long internally.  My only worry about
---size is that it does not make it clear we are talking about file
-sizes and not in-memory sizes (size_t), and I'm not too worried about
-that.
+Andreas.
 
-[...]
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-[...]
-> @@ -268,6 +272,10 @@ static char *normalize_value(const char *key, const char *value)
->  			int v = git_config_int(key, value);
->  			sprintf(normalized, "%d", v);
->  		}
-> +		else if (types == TYPE_ULONG)
-> +			sprintf(normalized, "%lu",
-> +				git_config_ulong(key, value));
-> +
->  		else if (types == TYPE_BOOL)
-
-Style: uncuddled "else", stray blank line.  (The former was already
-there, but it still stands out.)  I think
-
-		if (types == TYPE_INT) {
-			...
-		} else if (types == TYPE_ULONG) {
-			...
-		} else if (types == TYPE_BOOL) {
-			...
-		} else if (types == TYPE_BOOL_OR_INT) {
-			...
-		} else {
-			...
-		}
-
-would be easiest to read.
-
-Thanks for taking this on.
-
-Sincerely,
-Jonathan
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
