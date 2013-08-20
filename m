@@ -1,78 +1,69 @@
-From: Thomas Rast <trast@inf.ethz.ch>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] mailmap: fix check for freeing memory
-Date: Tue, 20 Aug 2013 16:23:47 +0200
-Message-ID: <871u5o785o.fsf@linux-k42r.v.cablecom.net>
+Date: Tue, 20 Aug 2013 10:27:55 -0400
+Message-ID: <20130820142755.GA839@sigill.intra.peff.net>
 References: <1377004958-14489-1-git-send-email-stefanbeller@googlemail.com>
-	<878uzw7a6l.fsf@linux-k42r.v.cablecom.net>
-	<52137A63.3010609@googlemail.com>
+ <878uzw7a6l.fsf@linux-k42r.v.cablecom.net>
+ <52137A63.3010609@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, <peff@peff.net>, <gitster@pobox.com>
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	gitster@pobox.com
 To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 20 16:23:54 2013
+X-From: git-owner@vger.kernel.org Tue Aug 20 16:28:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBmqf-0004pw-SS
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 16:23:54 +0200
+	id 1VBmuo-0007WC-6H
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 16:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751069Ab3HTOXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 10:23:50 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:1701 "EHLO edge20.ethz.ch"
+	id S1751198Ab3HTO2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 10:28:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37751 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751013Ab3HTOXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 10:23:49 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 20 Aug
- 2013 16:23:43 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS21.d.ethz.ch (172.31.51.111) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Tue, 20 Aug 2013 16:23:47 +0200
-In-Reply-To: <52137A63.3010609@googlemail.com> (Stefan Beller's message of
-	"Tue, 20 Aug 2013 16:17:07 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1751039Ab3HTO17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 10:27:59 -0400
+Received: (qmail 21933 invoked by uid 102); 20 Aug 2013 14:27:59 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 20 Aug 2013 09:27:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Aug 2013 10:27:55 -0400
+Content-Disposition: inline
+In-Reply-To: <52137A63.3010609@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232604>
 
-Stefan Beller <stefanbeller@googlemail.com> writes:
+On Tue, Aug 20, 2013 at 04:17:07PM +0200, Stefan Beller wrote:
 
-> As I am resending the patch, could somebody please explain me
-> the mechanism of the "# repo-abbrev:" line? Even git itself doesn't
-> use it in the .mailmap file, but a quick google search shows up only
-> kernel repositories.
+> Stepping two steps back, I am trying to figure out, what this repo_abrev
+> thing is doing, as I could find no documentation.
 
-I had no idea (we really lack documentation on this), but some history
-digging shows this:
+It's meant to abbreviate long pathnames in subject lines. As you noted,
+the kernel .mailmap has:
 
-  commit 7595e2ee6ef9b35ebc8dc45543723e1d89765ce3
-  Author: Junio C Hamano <junkio@cox.net>
-  Date:   Sat Nov 25 00:07:54 2006 -0800
+  # repo-abbrev: /pub/scm/linux/kernel/git/
 
-      git-shortlog: make common repository prefix configurable with .mailmap
-      
-      The code had "/pub/scm/linux/kernel/git/" hardcoded which was
-      too specific to the kernel project.
-      
-      With this, a line in the .mailmap file:
-      
-          # repo-abbrev: /pub/scm/linux/kernel/git/
-      
-      can be used to cause the substring to be abbreviated to /.../
-      on the title line of the commit message.
-      
-      Signed-off-by: Junio C Hamano <junkio@cox.net>
+Try "git shortlog" in the kernel and grep for "..." to see its effect.
 
-It apparently serves to abbreviate commits coming from pull requests,
-with a subject like
+It is IMHO a misfeature to have it as part of .mailmap, but it is there
+for historical reasons. And I think it is not really needed these days
+anyway, as the messages created by git-merge are nicer to read in the
+first place (and people tend to use nice readable URLs for accessing
+one-off git pulls, too).
 
-  Merge branch 'release' of git://git.kernel.org/pub/scm/linux/kernel/git/lenb/linux
+> So we're passing there an address, which was just set to zero.
+> This is the only occurence of passing a value at all and the value
+> being passed is 0, so the free in the original patch doesn't need
+> that check either.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Right. I think the intent was to free a previously found repo-abbrev
+line to avoid leaking memory (although arguably, it would make sense to
+keep a list and abbreviate all that we find, I don't think anybody cares
+anymore for the reasons I stated above).
+
+-Peff
