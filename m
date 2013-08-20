@@ -1,112 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Document smart http
-Date: Tue, 20 Aug 2013 10:16:30 -0400
-Message-ID: <20130820141630.GB32370@sigill.intra.peff.net>
-References: <1376975288-17079-1-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 15/24] read-cache: read index-v5
+Date: Tue, 20 Aug 2013 21:16:41 +0700
+Message-ID: <CACsJy8CNHNj6dScPUCiRnv=zqT9QfY+=v3ECsnUR2uR4nkFQHg@mail.gmail.com>
+References: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com> <1376854933-31241-16-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 20 16:16:42 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 20 16:17:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBmjf-0000Jr-CY
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 16:16:39 +0200
+	id 1VBmkO-0000nO-Ko
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 16:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261Ab3HTOQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 10:16:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37652 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751006Ab3HTOQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 10:16:34 -0400
-Received: (qmail 20952 invoked by uid 102); 20 Aug 2013 14:16:34 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 20 Aug 2013 09:16:34 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Aug 2013 10:16:30 -0400
-Content-Disposition: inline
-In-Reply-To: <1376975288-17079-1-git-send-email-pclouds@gmail.com>
+	id S1751459Ab3HTORS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 10:17:18 -0400
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:39309 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751006Ab3HTORN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 10:17:13 -0400
+Received: by mail-oa0-f44.google.com with SMTP id l20so824423oag.31
+        for <git@vger.kernel.org>; Tue, 20 Aug 2013 07:17:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=DQiJCRIERh1V+PGZDlDOmYAW2pV8YUKGHBzRbZLe9Zg=;
+        b=KELHa4CRypikEo2dQ1E+7gqNFUdToeuw4XyPnDMyIex+Q/vxDKq8l3Kj7j8hiVqzLf
+         3zBT8mrNpCI4Zt2iUh2XWrsnQBGbRocXo2d2eykGvXQhOqXycXRmOXQCUW25+70VOrD+
+         JCnW8+k6dm4WOwRC2IpOXCk33Rq0tozepGCOYPKo+gm/PUa8P7QWYtognP00JMkIZWiQ
+         d6Ta4x/REG/0yBBsERx2LmpqpFjFDa45JNH/dE6iWPLrXKsMksMU/gYDZzWUZDv7E9cy
+         sZa0hmFh7y4opg1bWMSA7YPhEI61WGvAI52JhfetoKVxEYwtJoxDZ2u9cncSindQwzaE
+         a+Ng==
+X-Received: by 10.60.62.101 with SMTP id x5mr1844851oer.24.1377008232845; Tue,
+ 20 Aug 2013 07:17:12 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Tue, 20 Aug 2013 07:16:41 -0700 (PDT)
+In-Reply-To: <1376854933-31241-16-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232599>
 
-On Tue, Aug 20, 2013 at 12:08:08PM +0700, Nguyen Thai Ngoc Duy wrote:
-
-> This may provide some clues for those who want to modify smart http
-> code as smart http is pretty much undocumented. Smart http "document"
-> so far is a few commit messages and the source code.
-
-There was also this:
-
-  http://article.gmane.org/gmane.comp.version-control.git/129734
-
-which seems to have never gotten updated enough to be applied along with
-the code. But with some updates to make sure it matches the current
-behavior, it is probably a more comprehensive description.
-
-But if you don't feel like spending more time on this on top of what
-you've already done, I think the patch I'm responding to is better than
-what we have now (i.e., nothing).
-
-> +Reference Discovery
-> +-------------------
+On Mon, Aug 19, 2013 at 2:42 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> +static int read_entry(struct cache_entry **ce, char *pathname, size_t pathlen,
+> +                     void *mmap, unsigned long mmap_size,
+> +                     unsigned int first_entry_offset,
+> +                     unsigned int foffsetblock)
+> +{
+> +       int len, offset_to_offset;
+> +       char *name;
+> +       uint32_t foffsetblockcrc, *filecrc, *beginning, *end, entry_offset;
+> +       struct ondisk_cache_entry *disk_ce;
 > +
-> +The server end always sends the list of references in both push and
-> +fetch cases. This ref list is retrieved by the client's sending HTTP
-> +GET request to a smart http url ending with
-> +"/info/refs?service=<service>" where <service> could be either
-> +git-upload-pack or git-receive-pack for fetching or pushing
-> +respectively. The output is in pkt-line format.
+> +       beginning = ptr_add(mmap, foffsetblock);
+> +       end = ptr_add(mmap, foffsetblock + 4);
+> +       len = ntoh_l(*end) - ntoh_l(*beginning) - sizeof(struct ondisk_cache_entry) - 5;
+> +       entry_offset = first_entry_offset + ntoh_l(*beginning);
+> +       name = ptr_add(mmap, entry_offset);
+> +       disk_ce = ptr_add(mmap, entry_offset + len + 1);
+> +       *ce = cache_entry_from_ondisk(disk_ce, pathname, name, len, pathlen);
+> +       filecrc = ptr_add(mmap, entry_offset + len + 1 + sizeof(*disk_ce));
+> +       offset_to_offset = htonl(foffsetblock);
+> +       foffsetblockcrc = crc32(0, (Bytef*)&offset_to_offset, 4);
+> +       if (!check_crc32(foffsetblockcrc,
+> +               ptr_add(mmap, entry_offset), len + 1 + sizeof(*disk_ce),
+> +               ntoh_l(*filecrc)))
+> +               return -1;
 > +
-> +----
-> +  advertised-refs  =  service
-> +		      flush-pkt
-> +		      (no-refs / list-of-refs)
-> +		      flush-pkt
-> +
-> +  service          =  PKT-LINE("# service=" service-name)
-> +  service-name     =  ("git-upload-pack" / "git-receive-pack")
-> +
-> +  no-refs          =  PKT-LINE(zero-id SP "capabilities^{}"
-> +		      NUL capability-list LF)
-> +
-> +  list-of-refs     =  first-ref *other-ref
-> +  first-ref        =  PKT-LINE(obj-id SP refname
-> +		      NUL capability-list LF)
-> +
-> +  other-ref        =  PKT-LINE(other-tip / other-peeled)
-> +  other-tip        =  obj-id SP refname LF
-> +  other-peeled     =  obj-id SP refname "^{}" LF
-> +
-> +  capability-list  =  capability *(SP capability)
-> +  capability       =  1*(LC_ALPHA / DIGIT / "-" / "_")
-> +  LC_ALPHA         =  %x61-7A
-> +----
+> +       return 0;
+> +}
 
-Most of this is a repeat of what is in the earlier sections. I don't
-think the protocol is changing much and these are not likely to get out of
-date with each other, but I wonder if it is easier on the reader to
-simply describe the output in terms of what is added on top of the
-regular ref advertisement (i.e., the service line). Something like:
+Last thought before book+bed time. I wonder if moving the name part to
+the end of the entry (i.e. chaging on disk format) would simplify this
+code. The new ondisk_cache_entry would be something like this
 
-  stateless-advertised-refs =  service
-                               advertised-refs
-
-  service                   =  PKT-LINE("# service=" service-name)
-  service-name              =  ("git-upload-pack" / "git-receive-pack")
-
-where advertised-refs is defined in the earlier BNF. You may also want
-to note:
-
-  Servers may respond to a smart request with a regular `advertised-refs`
-  response rather than a `stateless-advertised-refs` response. In this
-  case, the client MUST assume that the server does not understand smart
-  HTTP and either abort or proceed with the non-smart protocol.
-
--Peff
+struct ondisk_cache_entry {
+   uint16_t flags;
+   uint16_t mode;
+   struct cache_time mtime;
+   uint32_t size;
+   int stat_crc;
+   unsigned char sha1[20];
+   char name[FLEX_ARRAY];
+};
+-- 
+Duy
