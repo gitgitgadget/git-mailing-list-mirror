@@ -1,79 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mailmap: fix check for freeing memory
-Date: Tue, 20 Aug 2013 10:18:08 -0700
-Message-ID: <xmqqob8s7033.fsf@gitster.dls.corp.google.com>
-References: <1377004958-14489-1-git-send-email-stefanbeller@googlemail.com>
-	<878uzw7a6l.fsf@linux-k42r.v.cablecom.net>
-	<52137A63.3010609@googlemail.com>
-	<871u5o785o.fsf@linux-k42r.v.cablecom.net>
-	<52137F59.2030103@googlemail.com>
-	<20130820161237.GA4332@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <stefanbeller@googlemail.com>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 20 19:18:16 2013
+From: Tony Finch <dot@dotat.at>
+Subject: [PATCH v4 3/4] gitweb: omit the repository owner when it is unset
+Date: Tue, 20 Aug 2013 17:59:44 +0100
+Message-ID: <e5b90eb96919a30661bcad7ba77aba0b6bfcfa72.1377019362.git.dot@dotat.at>
+References: <cover.1377019362.git.dot@dotat.at>
+Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 20 19:28:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBpZQ-0006mC-7G
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 19:18:16 +0200
+	id 1VBpjW-0004nv-UQ
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 19:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751558Ab3HTRSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 13:18:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41110 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751365Ab3HTRSL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 13:18:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3E323A616;
-	Tue, 20 Aug 2013 17:18:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LBHKdY5szdjtNViPTLF3GNzKXRU=; b=uNT1v9
-	xmoZFGLMXRF9S0x2zjJvSC5klTkUuVhWGHWuq4mNcFwCrk4hmsyRWFJVLs2iLvPh
-	HYxorbFU5R35MhxN4507IDFsRf2IRmWnLT+zxu7ty/8Vzz6iW9cX7jl3qC4Dv7J0
-	diXK9wG/gCkwmgeY7akPkOaqunpyZcLiJfNl0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DqYEZ0LhyerpdPXpZjRGpiVwkd6nnuhg
-	BGlwf3KayZRXqN8JDShNIw6zHi5MC76pWUEjQeB6v8cpfkmsxgiIhFcG4njvfymd
-	sfF1cVctnTTrzJ/qI5WrDEUtWaW4/4EFWFqGDdnakqzXhnnTaaKDXytGrTmFMCVi
-	WYJ9dirzY1w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7A943A615;
-	Tue, 20 Aug 2013 17:18:10 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 48F853A60D;
-	Tue, 20 Aug 2013 17:18:10 +0000 (UTC)
-In-Reply-To: <20130820161237.GA4332@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 20 Aug 2013 12:12:37 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7CC60472-09BC-11E3-8576-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751638Ab3HTR2j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 13:28:39 -0400
+Received: from ppsw-33.csi.cam.ac.uk ([131.111.8.133]:43272 "EHLO
+	ppsw-33.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751532Ab3HTR2h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 13:28:37 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:51936)
+	by ppsw-33.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.157]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1VBpjQ-0006By-hL (Exim 4.80_167-5a66dd3)
+	(return-path <fanf2@hermes.cam.ac.uk>); Tue, 20 Aug 2013 18:28:36 +0100
+Received: from fanf2 by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local id 1VBpjQ-0002mh-Cg (Exim 4.72)
+	(return-path <fanf2@hermes.cam.ac.uk>); Tue, 20 Aug 2013 18:28:36 +0100
+In-Reply-To: <cover.1377019362.git.dot@dotat.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232616>
 
-Jeff King <peff@peff.net> writes:
+On the repository summary page, leave the owner line out if the
+repo does not have an owner, rather than displaying a labelled empty
+field. This does not affect the owner column in the projects list
+page, which is present unless $omit_owner is true.
 
-> It _only_ impacts git-shortlog, not git-log or other traversals. Making
-> it an even more dubious feature, IMHO.
+Signed-off-by: Tony Finch <dot@dotat.at>
+---
+ gitweb/gitweb.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I think this was done by an explicit end user request for shortlog.
-
-As you mentioned, merge gives readable merge log messages, but it
-deliberately uses the real URL, not your personal nickname for the
-remote when writing the title line of a merge, i.e.
-
-	Merge [branch <x> of ]<repoURL>
-
-so it would be helped by the repository abbreviation.  It probably
-was an oversight that we did not extend it to the rest of the log
-family.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 8d69ada..c029b98 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -6463,7 +6463,7 @@ sub git_summary {
+ 	print "<div class=\"title\">&nbsp;</div>\n";
+ 	print "<table class=\"projects_list\">\n" .
+ 	      "<tr id=\"metadata_desc\"><td>description</td><td>" . esc_html($descr) . "</td></tr>\n";
+-        unless ($omit_owner) {
++        if ($owner and not $omit_owner) {
+ 	        print  "<tr id=\"metadata_owner\"><td>owner</td><td>" . esc_html($owner) . "</td></tr>\n";
+         }
+ 	if (defined $cd{'rfc2822'}) {
+-- 
+1.8.3.1.605.g85318f5
