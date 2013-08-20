@@ -1,275 +1,171 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] Document smart http
-Date: Tue, 20 Aug 2013 12:08:08 +0700
-Message-ID: <1376975288-17079-1-git-send-email-pclouds@gmail.com>
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH v5 1/2] xread, xwrite: Limit size of IO, fixing IO of 2GB and more on Mac OS X
+Date: Tue, 20 Aug 2013 08:43:54 +0200
+Message-ID: <1376981035-23284-2-git-send-email-prohaska@zib.de>
+References: <1376926879-30846-1-git-send-email-prohaska@zib.de>
+ <1376981035-23284-1-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 20 07:08:26 2013
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+	John Keeping <john@keeping.me.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Aug 20 08:45:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBeB6-0007fh-7j
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 07:08:24 +0200
+	id 1VBfh9-0003wj-T7
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 08:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752037Ab3HTFIU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Aug 2013 01:08:20 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:48397 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751925Ab3HTFIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 01:08:19 -0400
-Received: by mail-pb0-f42.google.com with SMTP id un15so5855092pbc.29
-        for <git@vger.kernel.org>; Mon, 19 Aug 2013 22:08:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=ApTMbqCksPZgvErY2Eoxef+KrfavW1XRru0+whZNWyg=;
-        b=EUZGy/2pEuqnx4HISVCtKM49eARVS1VHReQWkrFpCjRG83y3kXxUZntqyW56Oh8hsr
-         28+8knfVAYB53evHHlQwAQx3NgkVo0y1kvwG8wKM5UxuaN7nApoX6xuJbb2ZaGtewsTI
-         CD2wO+isJZnHP+ie4EfG4e4nblv4ZHS+iztiMSREeLcrCSonqUx84Nm1yiKOV8W2PQ/c
-         5MbcMYlIuP+Ve+26qZJnpDziGUrKY/rHDvkkZI06HkAvWhLoarXjIpGefpBJ+bP4ujbt
-         DRhl+z9jAHxT8RRz02YAoTDpSP68lGZ6FTtu4PQ64pbn2EWITgT8HKaVdRNkEExrHSvc
-         yyhg==
-X-Received: by 10.68.5.228 with SMTP id v4mr16975028pbv.117.1376975298883;
-        Mon, 19 Aug 2013 22:08:18 -0700 (PDT)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPSA id ts6sm18750448pbc.12.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 19 Aug 2013 22:08:17 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 20 Aug 2013 12:08:12 +0700
-X-Mailer: git-send-email 1.8.2.82.gc24b958
+	id S1751387Ab3HTGpd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Aug 2013 02:45:33 -0400
+Received: from mailer.zib.de ([130.73.108.11]:64071 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751207Ab3HTGpa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 02:45:30 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id r7K6iNrF002545;
+	Tue, 20 Aug 2013 08:44:28 +0200 (CEST)
+Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id r7K6i4jq029237;
+	Tue, 20 Aug 2013 08:44:22 +0200 (MEST)
+X-Mailer: git-send-email 1.8.4.rc0.11.g35f5eaa
+In-Reply-To: <1376981035-23284-1-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232583>
 
-This may provide some clues for those who want to modify smart http
-code as smart http is pretty much undocumented. Smart http "document"
-so far is a few commit messages and the source code.
+Previously, filtering 2GB or more through an external filter (see test)
+failed on Mac OS X 10.8.4 (12E55) for a 64-bit executable with:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+    error: read from external filter cat failed
+    error: cannot feed the input to external filter cat
+    error: cat died of signal 13
+    error: external filter cat failed 141
+    error: external filter cat failed
+
+The reason was that read() immediately returns with EINVAL if nbyte >=3D
+2GB.  According to POSIX [1], if the value of nbyte passed to read() is
+greater than SSIZE_MAX, the result is implementation-defined.  The writ=
+e
+function has the same restriction [2].  Since OS X still supports
+running 32-bit executables, the 32-bit limit (SSIZE_MAX =3D INT_MAX
+=3D 2GB - 1) seems to be also imposed on 64-bit executables under certa=
+in
+conditions.  For write, the problem has been addressed earlier [6c642a]=
+=2E
+
+This commit addresses the problem for read() and write() by limiting
+size of IO chunks unconditionally on all platforms in xread() and
+xwrite().  Large chunks only cause problems, like triggering the OS
+X bug or causing latencies when killing the process.  Reasonably sized
+smaller chunks have no negative impact on performance.
+
+The compat wrapper clipped_write() introduced earlier [6c642a] is not
+needed anymore.  It will be reverted in a separate commit.  The new tes=
+t
+catches read and write problems.
+
+Note that 'git add' exits with 0 even if it prints filtering errors to
+stderr.  The test, therefore, checks stderr.  'git add' should probably
+be changed (sometime in another commit) to exit with nonzero if
+filtering fails.  The test could then be changed to use test_must_fail.
+
+Thanks to the following people for suggestions and testing:
+
+    Johannes Sixt <j6t@kdbg.org>
+    John Keeping <john@keeping.me.uk>
+    Jonathan Nieder <jrnieder@gmail.com>
+    Kyle J. McKay <mackyle@gmail.com>
+    Linus Torvalds <torvalds@linux-foundation.org>
+    Torsten B=C3=B6gershausen <tboegi@web.de>
+
+[1] http://pubs.opengroup.org/onlinepubs/009695399/functions/read.html
+[2] http://pubs.opengroup.org/onlinepubs/009695399/functions/write.html
+
+[6c642a] commit 6c642a878688adf46b226903858b53e2d31ac5c3
+    compate/clipped-write.c: large write(2) fails on Mac OS X/XNU
+
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
- Documentation/git-fetch-pack.txt          | 11 +++--
- Documentation/git-receive-pack.txt        | 12 +++++-
- Documentation/git-send-pack.txt           |  9 +++-
- Documentation/git-upload-pack.txt         |  9 +++-
- Documentation/technical/pack-protocol.txt | 69 +++++++++++++++++++++++=
-++++++++
- 5 files changed, 103 insertions(+), 7 deletions(-)
+ t/t0021-conversion.sh | 14 ++++++++++++++
+ wrapper.c             | 12 ++++++++++++
+ 2 files changed, 26 insertions(+)
 
-diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch=
--pack.txt
-index 1e71754..85a9437 100644
---- a/Documentation/git-fetch-pack.txt
-+++ b/Documentation/git-fetch-pack.txt
-@@ -9,10 +9,7 @@ git-fetch-pack - Receive missing objects from another =
-repository
- SYNOPSIS
- --------
- [verse]
--'git fetch-pack' [--all] [--quiet|-q] [--keep|-k] [--thin] [--include-=
-tag]
--	[--upload-pack=3D<git-upload-pack>]
--	[--depth=3D<n>] [--no-progress]
--	[-v] [<host>:]<directory> [<refs>...]
-+'git fetch-pack' [options] [<host>:]<directory> [<refs>...]
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index e50f0f7..b92e6cb 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -190,4 +190,18 @@ test_expect_success 'required filter clean failure=
+' '
+ 	test_must_fail git add test.fc
+ '
 =20
- DESCRIPTION
- -----------
-@@ -90,6 +87,12 @@ be in a separate packet, and the list must end with =
-a flush packet.
- --no-progress::
- 	Do not show the progress.
++test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
++
++test_expect_success EXPENSIVE 'filter large file' '
++	git config filter.largefile.smudge cat &&
++	git config filter.largefile.clean cat &&
++	for i in $(test_seq 1 2048); do printf "%1048576d" 1; done >2GB &&
++	echo "2GB filter=3Dlargefile" >.gitattributes &&
++	git add 2GB 2>err &&
++	! test -s err &&
++	rm -f 2GB &&
++	git checkout -- 2GB 2>err &&
++	! test -s err
++'
++
+ test_done
+diff --git a/wrapper.c b/wrapper.c
+index 6a015de..97e3cf7 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -131,6 +131,14 @@ void *xcalloc(size_t nmemb, size_t size)
+ }
 =20
-+--stateless-rpc::
-+	Smart HTTP mode.
+ /*
++ * Limit size of IO chunks, because huge chunks only cause pain.  OS X=
+ 64-bit
++ * buggy, returning EINVAL if len >=3D INT_MAX; and even in the absens=
+e of bugs,
++ * large chunks can result in bad latencies when you decide to kill th=
+e
++ * process.
++ */
++#define MAX_IO_SIZE (8*1024*1024)
 +
-+--lock-pack::
-+	Issue "lock" command to the remote helper via stdout.
-+
- -v::
- 	Run verbosely.
-=20
-diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-rec=
-eive-pack.txt
-index b1f7dc6..0b2029c 100644
---- a/Documentation/git-receive-pack.txt
-+++ b/Documentation/git-receive-pack.txt
-@@ -9,7 +9,7 @@ git-receive-pack - Receive what is pushed into the repo=
-sitory
- SYNOPSIS
- --------
- [verse]
--'git-receive-pack' <directory>
-+'git-receive-pack' [options] <directory>
-=20
- DESCRIPTION
- -----------
-@@ -35,6 +35,16 @@ are not fast-forwards.
-=20
- OPTIONS
- -------
-+--stateless-rpc::
-+	Smart HTTP mode.
-+
-+--advertise-refs::
-+	Only the initial ref advertisement is output then exits
-+	immediately.
-+
-+--quiet::
-+	Make unpack-objects at the receive-pack end quiet.
-+
- <directory>::
- 	The repository to sync into.
-=20
-diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-p=
-ack.txt
-index dc3a568..6cee3d4 100644
---- a/Documentation/git-send-pack.txt
-+++ b/Documentation/git-send-pack.txt
-@@ -9,7 +9,7 @@ git-send-pack - Push objects over Git protocol to anoth=
-er repository
- SYNOPSIS
- --------
- [verse]
--'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=3D<git-r=
-eceive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]
-+'git send-pack' [options] [<host>:]<directory> [<ref>...]
-=20
- DESCRIPTION
- -----------
-@@ -52,6 +52,13 @@ OPTIONS
- 	Send a "thin" pack, which records objects in deltified form based
- 	on objects not included in the pack to reduce network traffic.
-=20
-+--stateless-rpc::
-+	Smart HTTP mode.
-+
-+--helper-status:
-+	Issue status commands (e.g. "ok" or "error") to the remote
-+	helper via stdout.
-+
- <host>::
- 	A remote host to house the repository.  When this
- 	part is specified, 'git-receive-pack' is invoked via
-diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-uplo=
-ad-pack.txt
-index 0abc806..ce9a455 100644
---- a/Documentation/git-upload-pack.txt
-+++ b/Documentation/git-upload-pack.txt
-@@ -9,7 +9,7 @@ git-upload-pack - Send objects packed back to git-fetch=
--pack
- SYNOPSIS
- --------
- [verse]
--'git-upload-pack' [--strict] [--timeout=3D<n>] <directory>
-+'git-upload-pack' [options] <directory>
-=20
- DESCRIPTION
- -----------
-@@ -31,6 +31,13 @@ OPTIONS
- --timeout=3D<n>::
- 	Interrupt transfer after <n> seconds of inactivity.
-=20
-+--stateless-rpc::
-+	Smart HTTP mode.
-+
-+--advertise-refs::
-+	Only the initial ref advertisement is output then exits
-+	immediately.
-+
- <directory>::
- 	The repository to sync from.
-=20
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/=
-technical/pack-protocol.txt
-index b898e97..7590394 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -546,3 +546,72 @@ An example client/server communication might look =
-like this:
-    S: 0018ok refs/heads/debug\n
-    S: 002ang refs/heads/master non-fast-forward\n
- ----
-+
-+Smart HTTP Transport
-+--------------------
-+
-+Smart HTTP protocol is basically "git protocol on top of http". The
-+base protocol is modified slightly to fit HTTP processing model: no
-+bidirectional full-duplex connections, the program may read the
-+request, write a response and must exit. Any negotiation is broken
-+down into many separate GET or POST requests. The server is
-+stateless. The client must send enough information so that the server
-+can recreate the previous state.
-+
-+Reference Discovery
-+-------------------
-+
-+The server end always sends the list of references in both push and
-+fetch cases. This ref list is retrieved by the client's sending HTTP
-+GET request to a smart http url ending with
-+"/info/refs?service=3D<service>" where <service> could be either
-+git-upload-pack or git-receive-pack for fetching or pushing
-+respectively. The output is in pkt-line format.
-+
-+----
-+  advertised-refs  =3D  service
-+		      flush-pkt
-+		      (no-refs / list-of-refs)
-+		      flush-pkt
-+
-+  service          =3D  PKT-LINE("# service=3D" service-name)
-+  service-name     =3D  ("git-upload-pack" / "git-receive-pack")
-+
-+  no-refs          =3D  PKT-LINE(zero-id SP "capabilities^{}"
-+		      NUL capability-list LF)
-+
-+  list-of-refs     =3D  first-ref *other-ref
-+  first-ref        =3D  PKT-LINE(obj-id SP refname
-+		      NUL capability-list LF)
-+
-+  other-ref        =3D  PKT-LINE(other-tip / other-peeled)
-+  other-tip        =3D  obj-id SP refname LF
-+  other-peeled     =3D  obj-id SP refname "^{}" LF
-+
-+  capability-list  =3D  capability *(SP capability)
-+  capability       =3D  1*(LC_ALPHA / DIGIT / "-" / "_")
-+  LC_ALPHA         =3D  %x61-7A
-+----
-+
-+Packfile Negotiation
-+--------------------
-+
-+For fetching, packet negotiation is via a series of HTTP POST requests
-+to an url ending with "/git-upload-pack" with the content in pkt-line
-+format. git-upload-pack's response consists of a "service" line like
-+in Reference Discovery followed by normal git-upload-pack packet
-+lines. Capability multi_ack_detailed is required by Smart HTTP.
-+
-+Common objects that are discovered are appended onto the request as
-+have lines and are sent again on the next request. This allows the
-+remote side to reinitialize its in-memory list of common objects
-+during the next request and the remote does not need to maintain the
-+negotiation state.
-+
-+Reference Update Request
-+------------------------
-+
-+For pushing, a HTTP POST request is sent to an url ending with
-+"/git-receive-pack" with the content in pkt-line format.
-+git-receive-pack's response consists of a "service" line like in
-+Reference Discovery followed by normal git-receive-pack packet lines.
++/*
+  * xread() is the same a read(), but it automatically restarts read()
+  * operations with a recoverable error (EAGAIN and EINTR). xread()
+  * DOES NOT GUARANTEE that "len" bytes is read even if the data is ava=
+ilable.
+@@ -138,6 +146,8 @@ void *xcalloc(size_t nmemb, size_t size)
+ ssize_t xread(int fd, void *buf, size_t len)
+ {
+ 	ssize_t nr;
++	if (len > MAX_IO_SIZE)
++	    len =3D MAX_IO_SIZE;
+ 	while (1) {
+ 		nr =3D read(fd, buf, len);
+ 		if ((nr < 0) && (errno =3D=3D EAGAIN || errno =3D=3D EINTR))
+@@ -154,6 +164,8 @@ ssize_t xread(int fd, void *buf, size_t len)
+ ssize_t xwrite(int fd, const void *buf, size_t len)
+ {
+ 	ssize_t nr;
++	if (len > MAX_IO_SIZE)
++	    len =3D MAX_IO_SIZE;
+ 	while (1) {
+ 		nr =3D write(fd, buf, len);
+ 		if ((nr < 0) && (errno =3D=3D EAGAIN || errno =3D=3D EINTR))
 --=20
-1.8.2.82.gc24b958
+1.8.4.rc3.5.g4f480ff
