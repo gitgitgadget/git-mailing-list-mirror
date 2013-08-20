@@ -1,85 +1,81 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: CPPCheck found 24 high risk bugs in Git v.1.8.3.4
-Date: Tue, 20 Aug 2013 20:44:37 +0200
-Message-ID: <87eh9op5gq.fsf@igel.home>
-References: <85C8141E5DAD94428A121F706995A31F010F116FDAD3@MX1.net.tbe.com>
-	<33FCCE7A2CD5494B88F3C5CDBC341DFD@PhilipOakley>
-	<166132E40AA54EE387BA9B4558823C55@PhilipOakley>
-	<CABPQNSZidMv4MEW+SqVm94pX4szw9QW8LFWsvBTOXYH7ezzycw@mail.gmail.com>
+From: Paul Gortmaker <paul.gortmaker@windriver.com>
+Subject: Re: Should "git apply --check" imply verbose?
+Date: Tue, 20 Aug 2013 14:45:49 -0400
+Message-ID: <5213B95D.3040409@windriver.com>
+References: <5213873A.6010003@windriver.com> <xmqqioz06y9m.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Philip Oakley <philipoakley@iee.org>,
-	"Koch\, Rick \(Subcontractor\)" <Rick.Koch@tbe.com>,
-	Git List <git@vger.kernel.org>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Tue Aug 20 20:44:49 2013
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Steven Rostedt <rostedt@goodmis.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 20 20:46:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBqvA-0002TN-4D
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 20:44:48 +0200
+	id 1VBqwi-0003Qb-Ce
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 20:46:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751246Ab3HTSoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 14:44:44 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:49891 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750931Ab3HTSon (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 14:44:43 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3cKLX72CGjz4KK2L;
-	Tue, 20 Aug 2013 20:44:39 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3cKLX723sDzbbky;
-	Tue, 20 Aug 2013 20:44:39 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id AxB5tzMHMUwb; Tue, 20 Aug 2013 20:44:38 +0200 (CEST)
-X-Auth-Info: WKLnlj9LiCNjQSOgQq+V+qPTGdF4zm4dBwY3/cyCY8A=
-Received: from igel.home (ppp-88-217-111-200.dynamic.mnet-online.de [88.217.111.200])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Tue, 20 Aug 2013 20:44:38 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id C35E02C0282; Tue, 20 Aug 2013 20:44:37 +0200 (CEST)
-X-Yow: I am KING BOMBA of Sicily!..I will marry LUCILLE BALL next Friday!
-In-Reply-To: <CABPQNSZidMv4MEW+SqVm94pX4szw9QW8LFWsvBTOXYH7ezzycw@mail.gmail.com>
-	(Erik Faye-Lund's message of "Tue, 20 Aug 2013 01:15:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1750987Ab3HTSqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 14:46:20 -0400
+Received: from mail1.windriver.com ([147.11.146.13]:60436 "EHLO
+	mail1.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750812Ab3HTSqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 14:46:19 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca.corp.ad.wrs.com [147.11.189.40])
+	by mail1.windriver.com (8.14.5/8.14.3) with ESMTP id r7KIjhD3018252
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Tue, 20 Aug 2013 11:45:43 -0700 (PDT)
+Received: from [128.224.146.65] (128.224.146.65) by ALA-HCA.corp.ad.wrs.com
+ (147.11.189.40) with Microsoft SMTP Server id 14.2.342.3; Tue, 20 Aug 2013
+ 11:45:42 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
+In-Reply-To: <xmqqioz06y9m.fsf@gitster.dls.corp.google.com>
+X-Originating-IP: [128.224.146.65]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232628>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+On 13-08-20 01:57 PM, Junio C Hamano wrote:
+> Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+> 
+>> TL;DR -- "git apply --reject" implies verbose, but the similar
+>> "git apply --check" does not, which seems inconsistent.
+> 
+> Hmmm, I am of two minds.  From purely idealistic point of view, I
+> can see why defaulting both to non-verbose may look a more
+> attractive way to go, but I have my reservations that is more than
+> the usual change-aversion.
 
-> diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
-> index d015e43..0641f4e 100644
-> --- a/compat/win32/syslog.c
-> +++ b/compat/win32/syslog.c
-> @@ -43,11 +43,14 @@ void syslog(int priority, const char *fmt, ...)
->   va_end(ap);
->
->   while ((pos = strstr(str, "%1")) != NULL) {
-> - str = realloc(str, ++str_len + 1);
-> - if (!str) {
-> + char *tmp = realloc(str, ++str_len + 1);
-> + if (!tmp) {
->   warning("realloc failed: '%s'", strerror(errno));
-> + free(str);
->   return;
->   }
-> + pos = tmp + (pos - str);
+OK, so given your feedback, how do you feel about a patch to the
+documentation that indicates to use "-v" in combination with the
+"--check" to get equivalent "patch --dry-run" behaviour?   If that
+had existed, I'd have not gone rummaging around in the source, so
+that should be good enough to help others avoid the same...
 
-Pedantically, this is undefined (uses of both pos and str may trap after
-realloc has freed the original pointer), it is better to calculate the
-difference before calling realloc.
+P.
+--
 
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+> 
+> Historically, "check" was primarily meant to see if the patch is
+> applicable cleanly in scripts, and we never thought it would make
+> any sense to make it verbose by default.  
+> 
+> On the other hand, the operation of "reject", which was a much later
+> invention, was primarily meant to be observed by humans to see how
+> the patch failed to cleanly apply and where, to help them decide
+> where to look in the target to wiggle the rejected hunk into (even
+> when it is driven from a script).  It did not make much sense to
+> squelch its output.
+> 
+> In addition, because "check" is an idempotent operation that does
+> not touch anything in the index or the working tree, running with
+> "check" and then "check verbose" is possible if somebody runs it
+> without verbose and then decides later that s/he wants to see the
+> details.  But "reject" does touch the working tree files with
+> applicable hunks, so after a quiet "reject", there is no way to see
+> the verbose output like you can with "check".
+> 
