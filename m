@@ -1,63 +1,90 @@
 From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: Git tag output order is incorrect (IMHO)
-Date: Tue, 20 Aug 2013 17:12:47 +0200
-Message-ID: <CALWbr2w7XCuD5tUSwR+Cwv4wyXLk8MHDGyU2Dr+jA9vOfDYqig@mail.gmail.com>
-References: <840FACA0-7E13-41DB-A0F8-124FAB53BFBD@rtcamp.com>
-	<87wqon7ok4.fsf@igel.home>
-	<7vli52uym0.fsf@alter.siamese.dyndns.org>
-	<20130720002241.GA22143@sigill.intra.peff.net>
+Subject: Re: [PATCH] stream_to_pack: xread does not guarantee to read all
+ requested bytes
+Date: Tue, 20 Aug 2013 17:16:22 +0200
+Message-ID: <CALWbr2yaQaCte6+Y3GEa8Hxyhq6GPS64aTNzkGo8pdpcd9ZVUg@mail.gmail.com>
+References: <521333AE.1090506@kdbg.org>
+	<xmqqsiy476h4.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Rahul Bansal <rahul.bansal@rtcamp.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 20 17:12:53 2013
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 20 17:16:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBnc4-000253-Te
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 17:12:53 +0200
+	id 1VBnfX-0004GM-PE
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 17:16:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751274Ab3HTPMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 11:12:49 -0400
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:63776 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751115Ab3HTPMs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 11:12:48 -0400
-Received: by mail-qa0-f42.google.com with SMTP id bv4so2545766qab.8
-        for <git@vger.kernel.org>; Tue, 20 Aug 2013 08:12:48 -0700 (PDT)
+	id S1751551Ab3HTPQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 11:16:23 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:43466 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751545Ab3HTPQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 11:16:23 -0400
+Received: by mail-qa0-f46.google.com with SMTP id bq6so2549399qab.5
+        for <git@vger.kernel.org>; Tue, 20 Aug 2013 08:16:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=RtMIXPX7rq90s+6wWLypF7mPgWiDScxamwmvjbhR4vI=;
-        b=IaAJRMpxJu/o5G2rfJEGp8Kcjac4m8jHEOWNmJZ9yhdREgHn76pT0hZpWPjLX8pZ9Y
-         WH9/fH7NsuMuW0MS3blYsWVUSDPDVilqzUbsjY6AsmLJ6AaGujGfVggDP5LUEzD+LfV+
-         eoO4kF2WnLKTN9zmACBykrJGJY1laWmnMmwOtjpLM/uSB27N1knhhjKoJ6sHZjJHx4m8
-         49LqihfJ2aA0zFHI04+7cdoEGQid8Bs1ZeEFQm8K/JeY9KU7ZgkXL8r7h5uUBmMqKyrd
-         qKzJm859XKoj+LUSe9WEhiFuSwa+FPa03NwsFTvfIMjHgxAe2kX/SQxKvvCNvoIifvAS
-         F5dQ==
-X-Received: by 10.224.54.210 with SMTP id r18mr4500917qag.62.1377011567990;
- Tue, 20 Aug 2013 08:12:47 -0700 (PDT)
-Received: by 10.49.104.211 with HTTP; Tue, 20 Aug 2013 08:12:47 -0700 (PDT)
-In-Reply-To: <20130720002241.GA22143@sigill.intra.peff.net>
+        bh=ofblBoA1IXE55WLhC5YVdz7Mk2IT9EB+MtudqhAcYZY=;
+        b=IlwHyQ789vNfsv9uJ4rdYqwsHQ/2DjdONipJ9EHHbT8o27CPBUW6onoCsQ+oFUCNKc
+         Hl9Ihuhk+Ikl8aZC8/D6qPvl3QzmBk2gD6Dt+nbEhwLgiIDc9hQvUnZ0i9/qhrAocVF3
+         A2cQw5QjNDthIBPAns0YGILO6O9+0oHYrGb3zhPufxtq6Gn1Tjz2XKOAMzrJ38zowu5O
+         O9Rl5gd4SfNVR/nQ2cw5m+zKoBFWgBLs9VlSELCCEJzU52blYyj58EaiEWcuPLzb2jQL
+         4g73hH0fe4g+e3nTK4jZAwiWjk1Ir0lT4dLBQbQfJE8FxniP2u2PuSJn3R7vsZZ47grc
+         +/mQ==
+X-Received: by 10.224.121.3 with SMTP id f3mr4694218qar.47.1377011782425; Tue,
+ 20 Aug 2013 08:16:22 -0700 (PDT)
+Received: by 10.49.104.211 with HTTP; Tue, 20 Aug 2013 08:16:22 -0700 (PDT)
+In-Reply-To: <xmqqsiy476h4.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232612>
 
-On Sat, Jul 20, 2013 at 2:22 AM, Jeff King <peff@peff.net> wrote:
-> I do plan to finish it eventually, but if anyone else feels like picking
-> it up, I'd be glad to review patches and/or share my work-in-progress as
-> a starting point.
+On Tue, Aug 20, 2013 at 5:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Sixt <j6t@kdbg.org> writes:
+>
+>> The deflate loop in bulk-checkin::stream_to_pack expects to get all bytes
+>> from a file that it requests to read in a single function call. But it
+>> used xread(), which does not give that guarantee. Replace it by
+>> read_in_full().
+>>
+>> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+>> ---
+>>  The size is limited to sizeof(ibuf) == 16384 bytes, so that there
+>>  should not be a problem with the unpatched code on any OS in practice.
+>>  Nevertheless, this change seems reasonable from a code hygiene POV.
+>>
+>>  bulk-checkin.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/bulk-checkin.c b/bulk-checkin.c
+>> index 6b0b6d4..118c625 100644
+>> --- a/bulk-checkin.c
+>> +++ b/bulk-checkin.c
+>> @@ -114,7 +114,7 @@ static int stream_to_pack(struct bulk_checkin_state *state,
+>>
+>>               if (size && !s.avail_in) {
+>>                       ssize_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
+>> -                     if (xread(fd, ibuf, rsize) != rsize)
+>> +                     if (read_in_full(fd, ibuf, rsize) != rsize)
+>
+> This is the kind of thing i was wondering and worried about with the
+> other "clipped xread/xwrite" patch.  The original of this caller is
+> obviously wrong.  Thanks for spotting and fixing.
+>
+> I wonder if there are more like this broken caller or xread and/or
+> xwrite.
 
-Hi Jeff,
-I have some free time to come, and would like to work on that feature.
-Does the offer still hold ?
-If it does, I would be interested in your patches.
-
-Cheers,
+I was actually wondering when it's better to use xread() over
+read_in_full() ? Considering that we don't know if xread() will read
+the whole buffer or not, would it not be better to always use
+read_in_full() ? I guess there is a drawback to this, but I'm not
+exactly sure what it is.
