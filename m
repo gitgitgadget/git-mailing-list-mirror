@@ -1,75 +1,63 @@
-From: Paul Gortmaker <paul.gortmaker@windriver.com>
-Subject: Should "git apply --check" imply verbose?
-Date: Tue, 20 Aug 2013 11:11:54 -0400
-Message-ID: <5213873A.6010003@windriver.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: Git tag output order is incorrect (IMHO)
+Date: Tue, 20 Aug 2013 17:12:47 +0200
+Message-ID: <CALWbr2w7XCuD5tUSwR+Cwv4wyXLk8MHDGyU2Dr+jA9vOfDYqig@mail.gmail.com>
+References: <840FACA0-7E13-41DB-A0F8-124FAB53BFBD@rtcamp.com>
+	<87wqon7ok4.fsf@igel.home>
+	<7vli52uym0.fsf@alter.siamese.dyndns.org>
+	<20130720002241.GA22143@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Steven Rostedt <rostedt@goodmis.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 20 17:11:57 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Rahul Bansal <rahul.bansal@rtcamp.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 20 17:12:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBnbA-0001YD-JG
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 17:11:56 +0200
+	id 1VBnc4-000253-Te
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 17:12:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751269Ab3HTPLw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 11:11:52 -0400
-Received: from mail.windriver.com ([147.11.1.11]:44100 "EHLO
-	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751013Ab3HTPLv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 11:11:51 -0400
-Received: from ALA-HCB.corp.ad.wrs.com (ala-hcb.corp.ad.wrs.com [147.11.189.41])
-	by mail.windriver.com (8.14.5/8.14.3) with ESMTP id r7KFBmnv015229
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Tue, 20 Aug 2013 08:11:48 -0700 (PDT)
-Received: from [128.224.146.65] (128.224.146.65) by ALA-HCB.corp.ad.wrs.com
- (147.11.189.41) with Microsoft SMTP Server id 14.2.342.3; Tue, 20 Aug 2013
- 08:11:47 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
-X-Originating-IP: [128.224.146.65]
+	id S1751274Ab3HTPMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 11:12:49 -0400
+Received: from mail-qa0-f42.google.com ([209.85.216.42]:63776 "EHLO
+	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751115Ab3HTPMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 11:12:48 -0400
+Received: by mail-qa0-f42.google.com with SMTP id bv4so2545766qab.8
+        for <git@vger.kernel.org>; Tue, 20 Aug 2013 08:12:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=RtMIXPX7rq90s+6wWLypF7mPgWiDScxamwmvjbhR4vI=;
+        b=IaAJRMpxJu/o5G2rfJEGp8Kcjac4m8jHEOWNmJZ9yhdREgHn76pT0hZpWPjLX8pZ9Y
+         WH9/fH7NsuMuW0MS3blYsWVUSDPDVilqzUbsjY6AsmLJ6AaGujGfVggDP5LUEzD+LfV+
+         eoO4kF2WnLKTN9zmACBykrJGJY1laWmnMmwOtjpLM/uSB27N1knhhjKoJ6sHZjJHx4m8
+         49LqihfJ2aA0zFHI04+7cdoEGQid8Bs1ZeEFQm8K/JeY9KU7ZgkXL8r7h5uUBmMqKyrd
+         qKzJm859XKoj+LUSe9WEhiFuSwa+FPa03NwsFTvfIMjHgxAe2kX/SQxKvvCNvoIifvAS
+         F5dQ==
+X-Received: by 10.224.54.210 with SMTP id r18mr4500917qag.62.1377011567990;
+ Tue, 20 Aug 2013 08:12:47 -0700 (PDT)
+Received: by 10.49.104.211 with HTTP; Tue, 20 Aug 2013 08:12:47 -0700 (PDT)
+In-Reply-To: <20130720002241.GA22143@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232611>
 
-TL;DR -- "git apply --reject" implies verbose, but the similar
-"git apply --check" does not, which seems inconsistent.
+On Sat, Jul 20, 2013 at 2:22 AM, Jeff King <peff@peff.net> wrote:
+> I do plan to finish it eventually, but if anyone else feels like picking
+> it up, I'd be glad to review patches and/or share my work-in-progress as
+> a starting point.
 
-Background:  A common (non-git) workflow can be to use "patch --dry-run"
-to inspect whether a patch is feasible, and then use patch again
-a 2nd time (w/o --dry-run) to actually apply it (and then work
-through the rejects).
+Hi Jeff,
+I have some free time to come, and would like to work on that feature.
+Does the offer still hold ?
+If it does, I would be interested in your patches.
 
-You can also do the above in a git repo, but you lose out because
-"patch" doesn't (yet) capture the patched function names[1] in the
-rejected hunks, making it hard to double check your work.
-
-My initial thought was to replace the above two steps with
-"git apply --check ..." and then "git apply --reject ..." so
-that I could just abandon using patch altogether.
-
-That works great, with just one snag that had me go reading the
-source.  It seems that "git apply --reject" is verbose, and kind
-of looks like the identical output I'd get if I used patch.  But
-"git apply --check" is quite reserved in its output and doesn't
-look at all like "patch --dry-run".  I initially believed that
-"--check" was stopping at the 1st failure, based on the output.
-
-Only when I read the source did I realize it was checking all the
-hunks silently, and adding a "-v" would make it similar to the
-output from "patch --dry-run".
-
-Not a critical issue by any means, but having the "-v" implied
-by "--check" (or perhaps having both default to non-verbose?)
-might save other users from getting confused in the same way.
-
-Thanks,
-Paul.
---
-
-[1] https://savannah.gnu.org/bugs/index.php?39819
+Cheers,
