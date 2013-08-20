@@ -1,99 +1,78 @@
-From: Steven Rostedt <rostedt@goodmis.org>
-Subject: Re: Should "git apply --check" imply verbose?
-Date: Tue, 20 Aug 2013 15:54:33 -0400
-Message-ID: <20130820155433.217abb3e@gandalf.local.home>
-References: <5213873A.6010003@windriver.com>
-	<xmqqioz06y9m.fsf@gitster.dls.corp.google.com>
-	<5213B95D.3040409@windriver.com>
-	<xmqqzjsc5ggp.fsf@gitster.dls.corp.google.com>
-	<20130820151554.6afbcb7f@gandalf.local.home>
-	<7v7gfgkuyo.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: Re: CPPCheck found 24 high risk bugs in Git v.1.8.3.4
+Date: Tue, 20 Aug 2013 22:34:10 +0200
+Message-ID: <5213D2C2.6090006@web.de>
+References: <85C8141E5DAD94428A121F706995A31F010F116FDAD3@MX1.net.tbe.com> <33FCCE7A2CD5494B88F3C5CDBC341DFD@PhilipOakley> <166132E40AA54EE387BA9B4558823C55@PhilipOakley> <CABPQNSZidMv4MEW+SqVm94pX4szw9QW8LFWsvBTOXYH7ezzycw@mail.gmail.com> <87eh9op5gq.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Paul Gortmaker <paul.gortmaker@windriver.com>,
-	<git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 20 21:54:41 2013
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Philip Oakley <philipoakley@iee.org>,
+	"Koch\, Rick \(Subcontractor\)" <Rick.Koch@tbe.com>,
+	Git List <git@vger.kernel.org>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Tue Aug 20 22:34:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBs0k-0004Wa-Sz
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 21:54:39 +0200
+	id 1VBsdE-0003yX-FY
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 22:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751484Ab3HTTyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 15:54:35 -0400
-Received: from hrndva-omtalb.mail.rr.com ([71.74.56.122]:20029 "EHLO
-	hrndva-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751188Ab3HTTye (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 15:54:34 -0400
-X-Authority-Analysis: v=2.0 cv=KJ7Y/S5o c=1 sm=0 a=Sro2XwOs0tJUSHxCKfOySw==:17 a=Drc5e87SC40A:10 a=JcweFNKryUAA:10 a=5SG0PmZfjMsA:10 a=kj9zAlcOel0A:10 a=meVymXHHAAAA:8 a=KGjhK52YXX0A:10 a=psXsv1EI8KAA:10 a=ybZZDoGAAAAA:8 a=vPuw9uf5z3gcY_m_7O4A:9 a=CjuIK1q_8ugA:10 a=qIVjreYYsbEA:10 a=jeBq3FmKZ4MA:10 a=Sro2XwOs0tJUSHxCKfOySw==:117
-X-Cloudmark-Score: 0
-X-Authenticated-User: 
-X-Originating-IP: 67.255.60.225
-Received: from [67.255.60.225] ([67.255.60.225:52644] helo=gandalf.local.home)
-	by hrndva-oedge04.mail.rr.com (envelope-from <rostedt@goodmis.org>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id 5E/82-02415-979C3125; Tue, 20 Aug 2013 19:54:34 +0000
-In-Reply-To: <7v7gfgkuyo.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.9.2 (GTK+ 2.24.20; x86_64-pc-linux-gnu)
+	id S1751422Ab3HTUeU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Aug 2013 16:34:20 -0400
+Received: from mout.web.de ([212.227.15.4]:62994 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751266Ab3HTUeU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 16:34:20 -0400
+Received: from [192.168.2.102] ([79.253.175.147]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0Le4Tw-1VsfZu2BJ6-00pvsR for <git@vger.kernel.org>;
+ Tue, 20 Aug 2013 22:34:18 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <87eh9op5gq.fsf@igel.home>
+X-Provags-ID: V03:K0:Pd3XLsNl+3A4urgYQcESqufeS5B/O2RHGbS5AA3GO3J8qwiRydq
+ aq+wD81hilE+VId4tfjAjfm9HhJZkoVo8a7NRZjkvnt+6sM1+NMp7fosCNglQ+Avl0yBroo
+ m6IkCGttwZLWumyeWt4WgLyQJQ9zkTkd6lbt+MCVkggmYRsQjW7QIPm+MKi5sHZ52LSSjSi
+ lLmsCyaQ3IgxJERk6F5tQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232645>
 
-On Tue, 20 Aug 2013 12:45:03 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+Am 20.08.2013 20:44, schrieb Andreas Schwab:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>
+>> diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
+>> index d015e43..0641f4e 100644
+>> --- a/compat/win32/syslog.c
+>> +++ b/compat/win32/syslog.c
+>> @@ -43,11 +43,14 @@ void syslog(int priority, const char *fmt, ...)
+>>    va_end(ap);
+>>
+>>    while ((pos =3D strstr(str, "%1")) !=3D NULL) {
+>> - str =3D realloc(str, ++str_len + 1);
+>> - if (!str) {
+>> + char *tmp =3D realloc(str, ++str_len + 1);
+>> + if (!tmp) {
+>>    warning("realloc failed: '%s'", strerror(errno));
+>> + free(str);
+>>    return;
+>>    }
+>> + pos =3D tmp + (pos - str);
+>
+> Pedantically, this is undefined (uses of both pos and str may trap af=
+ter
+> realloc has freed the original pointer), it is better to calculate th=
+e
+> difference before calling realloc.
 
-> Steven Rostedt <rostedt@goodmis.org> writes:
-> 
-> >> I do not think it is necessarily a good idea to assume that people
-> >> who are learning "git apply" know how GNU patch works.
-> >
-> > Linus told me that "git apply" was basically a replacement for patch.
-> > Why would you think it would not be a good idea to assume that people
-> > would not be familiar with how GNU patch works?
-> 
-> The audience of Git these days are far more widely spread than the
-> kernel circle.  I am not opposed to _helping_ those who happen to
-> know "patch", but I was against a description that assumes readers
-> know it, i.e. making it a requirement to know "patch" to understand
-> "apply".
+And while at it, perhaps it's better to follow the suggestion in=20
+http://msdn.microsoft.com/en-us/library/aa363679.aspx under Remarks and=
+=20
+replace "%1" with "%1!S!" instead of "% 1".
 
-Patch is used by much more than just the kernel folks ;-)  I've been
-using patch much longer than I've been doing kernel development.
-
-
-> 
-> >> But I do agree that the description of -v, --verbose has a lot of
-> >> room for improvement.
-> >> 
-> >> 	Report progress to stderr. By default, only a message about the
-> >> 	current patch being applied will be printed. This option will cause
-> >> 	additional information to be reported.
-> >> 
-> >> It is totally unclear what "additional information" is reported at
-> >> all.
-> 
-> In other words, your enhancement to the documentation could go like:
-> 
-> 	... By default, ... With this option, you will additionally
-> 	see such and such and such in the output (this is similar to
-> 	what "patch --dry-run" would give you).  See the EXAMPLES
-> 	section to get a feel of how it looks like.
-> 
-> and I would not be opposed, as long as "such and such and such" are
-> written in such a way that the reader does not have to have a prior
-> experience with GNU patch in order to understand it.
-> 
-> Clear?
-
-Looks good to me. Paul, what do you think?
-
-Thanks,
-
--- Steve
+Ren=E9
