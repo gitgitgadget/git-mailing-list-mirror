@@ -1,117 +1,80 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v3 06/24] read-cache: Don't compare uid, gid and ino on cygwin
-Date: Tue, 20 Aug 2013 10:36:50 +0200
-Message-ID: <87li3wiwrh.fsf@gmail.com>
-References: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com> <1376854933-31241-7-git-send-email-t.gummerer@gmail.com> <52114C0E.4030502@ramsay1.demon.co.uk>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Notes and submodules
+Date: Tue, 20 Aug 2013 10:39:10 +0200
+Message-ID: <CAC9WiBiJQ-kafY5xD9nAnxKPQTyhp5sL49szHQj4C4P_UbBmYg@mail.gmail.com>
+References: <CAC9WiBj-ij1o6JL-FtUuCgdf8ZqrhJb2=dQcSXjRMEwwL4VWFA@mail.gmail.com>
+	<CALKQrgfGUMrcR+EPTvN9+mFPcW6Q-zv1JM6MJK-61BvF3yYpbQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, trast@inf.ethz.ch, mhagger@alum.mit.edu,
-	gitster@pobox.com, pclouds@gmail.com, robin.rosenberg@dewire.com,
-	sunshine@sunshineco.com
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Aug 20 10:37:01 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Aug 20 10:39:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VBhQz-0002U1-FW
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 10:37:01 +0200
+	id 1VBhTK-0003ve-AS
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Aug 2013 10:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751861Ab3HTIg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 04:36:57 -0400
-Received: from mail-ee0-f44.google.com ([74.125.83.44]:52278 "EHLO
-	mail-ee0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751848Ab3HTIgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 04:36:55 -0400
-Received: by mail-ee0-f44.google.com with SMTP id b47so63799eek.17
-        for <git@vger.kernel.org>; Tue, 20 Aug 2013 01:36:54 -0700 (PDT)
+	id S1751924Ab3HTIjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 04:39:15 -0400
+Received: from mail-vc0-f177.google.com ([209.85.220.177]:63467 "EHLO
+	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751252Ab3HTIjL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 04:39:11 -0400
+Received: by mail-vc0-f177.google.com with SMTP id gf12so71451vcb.36
+        for <git@vger.kernel.org>; Tue, 20 Aug 2013 01:39:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type;
-        bh=5y1WGLP5c3e+AvBRRWRU6glQQCKW89OKLLOXkqggsgw=;
-        b=cEBApoYnRDxQpmvpukpTyv2elrNvKi5ZYejjfAJVZhZ81kEHUvM26fRu1ZiWhle2hA
-         liGUX7nzVXXZr3lY5x2/nEO8nk1Z/6U9KH8uolGa1mkE+nZZtnSi3VAFlFMi5BNC+0m+
-         Fq2YrGK0Oh9h/qB7M4f91FCV/XJ1PSrvfIPgzdR/kJrZsdp4WgLE2TnBHB9qgGqyqeXy
-         YZv+PdM/2c3JYsUEtGKexZu+Qf4FCHFRlRhMgsf+EjGiJUnvAEee3/Mz9lbemEF3nCJy
-         wKjp7DOlopaNVBqzHZlGH9sH3Luworw/0yGjz2dpMUgqmg71eXw2y4Sv8Xjae2vBZjlb
-         iWAA==
-X-Received: by 10.15.100.198 with SMTP id bn46mr650828eeb.11.1376987814113;
-        Tue, 20 Aug 2013 01:36:54 -0700 (PDT)
-Received: from localhost ([2a02:27e8:10:1047:0:dacb:1376:714a])
-        by mx.google.com with ESMTPSA id p5sm713813eeg.5.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 20 Aug 2013 01:36:52 -0700 (PDT)
-In-Reply-To: <52114C0E.4030502@ramsay1.demon.co.uk>
-User-Agent: Notmuch/0.15.2+119~gf0dfda5 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=oBhrB1DvGI4ue9npffnC8ugcWU+Ove0jXjQSOlU0aBY=;
+        b=JHgYTMCLPv398cIzricyipeJKn3YORnflvzioRvgA/iz3onYHjfg1nRTroClj1bVm6
+         6ijtNbKuVhq5rEsbrcpKR7pk3lwYjm+6KWgpCN2HOC3WNyF4tc/c8nKcF6NDm5zF3zdT
+         fTQV4NPE/2pxViliweUVFDaM+Xczvyt47ercDJkFnVBssJQmVY/GuRvsjuB498ZMDNa7
+         tjS9CW3YT9Pf+1r+H8A71mdAcDg8hEmo5F2xeCyYWYq5NOCDejnsniUbfCe5Ac6u8Q46
+         BBsig0dtiC74pMk7ncSshVzQumYZ9WSTEPir0a7SCpqiETeVvAQatIPED9SUM48kBxzF
+         uR9w==
+X-Received: by 10.58.118.130 with SMTP id km2mr177790veb.0.1376987950824; Tue,
+ 20 Aug 2013 01:39:10 -0700 (PDT)
+Received: by 10.58.96.109 with HTTP; Tue, 20 Aug 2013 01:39:10 -0700 (PDT)
+In-Reply-To: <CALKQrgfGUMrcR+EPTvN9+mFPcW6Q-zv1JM6MJK-61BvF3yYpbQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232589>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+Hello,
 
-> On 18/08/2013 08:41 PM, Thomas Gummerer wrote:
->> Cygwin doesn't have uid, gid and ino stats fields.  Therefore we should
->> never check them in the match_stat_data when working on the CYGWIN
->> platform.
+On Mon, Aug 19, 2013 at 3:55 PM, Johan Herland <johan@herland.net> wrote:
+> On Mon, Aug 19, 2013 at 10:13 AM, Francis Moreau <francis.moro@gmail.com> wrote:
+>> Hello,
+>>
+>> Is it possible to keep submodules notes in the super project  ?
 >
-> Hmm, this is simply not true ... ;-)
+> Not easily. I guess it depends on what you want to use the notes for.
+> In order for notes to be generally useful (i.e. show up in logs,
+> surviving a notes prune, etc.) they really must reside in the same
+> repo as the annotated objects [1]. Now, if all your interaction with
+> notes happens through scripts that you control, then I guess it would
+> be possible to hack this in some sort of semi-workable way, but you
+> would still have to make sure never to run "git notes prune" in the
+> super project. I guess the real question here is: Why would you want
+> to do this? and is there maybe some other way your use case can be
+> accomodated?
 >
-> The need to omit the uid, gid and ino fields from the stat checks in
-> your original code was caused by the "schizophrenic stat" implementation
-> in cygwin. (This was also before "core.checkstat" was implemented; note
-> the 'check_stat' conditional below ...)
->
-> However, since commit f66450ae ("cygwin: Remove the Win32 l/stat()
-> implementation", 22-06-2013), this patch is no longer necessary and
-> can simply be dropped from this series.
->
-> [I have not had time to read your new patches yet, but I seem to remember
-> being concerned about those platforms which have UNRELIABLE_FSTAT set.
-> (ie cygwin, MinGW and Windows.)]
 
-Ah ok, thanks for the clarification.  I misinterpreted your message in
-the previous thread, thinking it would still be necessary.  I'll drop
-this patch.
+Well, I'm tracking different foreign git repositories as submodules.
+Those repositories which tracks different projects are not mine
+therefore I can't save my own stuff directly in them. I need to
+annotate some commits in each submodule.
 
-I can't recall anything about UNRELIABLE_FSTAT though.
+One option would be to clone each repository in my own place, but I
+though it would be simpler if I could store the anntotion in _my_
+super project.
 
-> ATB,
-> Ramsay Jones
->
->> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
->> ---
->>
->> This patch was not tested on Cygwin yet.  I think it's needed though,
->> because the re-reading of the index if it changed will no longer use
->> it's own index_changed function, but use the stat_validity_check
->> function instead.  Would be great if someone running Cygwin could test
->> this.
->>
->>  read-cache.c | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/read-cache.c b/read-cache.c
->> index 1f827de..aa17ce7 100644
->> --- a/read-cache.c
->> +++ b/read-cache.c
->> @@ -82,6 +82,7 @@ int match_stat_data(const struct stat_data *sd, struct stat *st)
->>  		changed |= CTIME_CHANGED;
->>  #endif
->>
->> +#if !defined (__CYGWIN__)
->>  	if (check_stat) {
->>  		if (sd->sd_uid != (unsigned int) st->st_uid ||
->>  			sd->sd_gid != (unsigned int) st->st_gid)
->> @@ -89,6 +90,7 @@ int match_stat_data(const struct stat_data *sd, struct stat *st)
->>  		if (sd->sd_ino != (unsigned int) st->st_ino)
->>  			changed |= INODE_CHANGED;
->>  	}
->> +#endif
->>
->>  #ifdef USE_STDEV
->>  	/*
->>
+Thanks for your time.
+-- 
+Francis
