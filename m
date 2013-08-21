@@ -1,97 +1,98 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 0/2] git-config and large integers
-Date: Tue, 20 Aug 2013 22:34:29 -0400
-Message-ID: <20130821023429.GA25296@sigill.intra.peff.net>
+Date: Tue, 20 Aug 2013 22:43:55 -0400
+Message-ID: <20130821024355.GB25296@sigill.intra.peff.net>
 References: <20130820223953.GA3429@sigill.intra.peff.net>
  <xmqqli3wufmc.fsf@gitster.dls.corp.google.com>
+ <xmqqhaekudzp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 21 04:34:40 2013
+X-From: git-owner@vger.kernel.org Wed Aug 21 04:44:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VByFr-0003n5-Hp
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 04:34:39 +0200
+	id 1VByOz-0001hB-Q0
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 04:44:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752074Ab3HUCef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 22:34:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42563 "EHLO peff.net"
+	id S1752111Ab3HUCoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 22:44:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42640 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752035Ab3HUCee (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 22:34:34 -0400
-Received: (qmail 24851 invoked by uid 102); 21 Aug 2013 02:34:34 -0000
+	id S1751727Ab3HUCoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 22:44:00 -0400
+Received: (qmail 25300 invoked by uid 102); 21 Aug 2013 02:43:59 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 20 Aug 2013 21:34:34 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Aug 2013 22:34:29 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 20 Aug 2013 21:43:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Aug 2013 22:43:55 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqli3wufmc.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqhaekudzp.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232678>
 
-On Tue, Aug 20, 2013 at 04:06:19PM -0700, Junio C Hamano wrote:
+On Tue, Aug 20, 2013 at 04:41:30PM -0700, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+> If this applied on the writing side, I would understand it very
+> much, i.e.
 > 
-> > I was playing with a hook for file size limits that wanted to store the
-> > limit in git-config. It turns out we don't do a very good job of big
-> > integers:
-> >
-> >   $ git config foo.size 2g
-> >   $ git config --int foo.size
-> >   -2147483648
-> >
-> > Oops. After this series, we properly notice the error:
-> >
-> >   $ git config --int foo.size
-> >   fatal: bad config value for 'foo.size' in .git/config
-> >
-> > and even better, provide a way to access large values:
-> >
-> >   $ git config --ulong foo.size
-> >   2147483648
+> 	$ git config --int32 foo.size 2g
+>         fatal: "2g" is too large to be read as "int32".
+
+It does, by the way. When you request a type on the writing side, we
+normalize (and complain in the same way as we do when reading).
+
+> and as a complement it may make sense as a warning mechanism to also
+> error out when existing value does not fit on the "platform" int, so
+> your 
 > 
-> I may be missing something, but why do we even need a new option for
-> the command that is known to always produce textual output?
+> >>   $ git config --int foo.size
+> >>   fatal: bad config value for 'foo.size' in .git/config
+> 
+> might make sense (even though I'd suggest being more explicit than
+> "bad value" in this case---"the value specified will not fit when
+> used in a variable of type int on this platform").
 
-We could do all math with int64_t (for example) and then print the
-stringified representation. But then we would not be matching the same
-checks that git is doing internally.
+Yes, the error message is terrible, and I think an extra patch on top to
+improve it is worth doing. But note that I am not introducing that error
+here at all. On 32-bit systems, we already correctly range-checked and
+produced that error. It is only on 64-bit systems that the range check
+was flat out wrong. It checked against "long"'s precision, but then cast
+the result to an int, losing bits. A possibly worse example than the
+negative one is:
 
-For example, on a 32-bit system, setting core.packedGitLimit to 4G will
-produce an error for "git config --int core.packedgitlimit", as we
-cannot represent the size internally. We could do the conversion in such
-a way that we print the correct size, but it does not represent what
-happens when "git pack-objects" is run (you get the same error).
+  $ git config foo.bar 4g
+  $ git config --int foo.bar
+  0
 
-> As you said "Oops", the first example that shows a string of digits
-> prefixed by a minus sign for input "2g" is buggy, and I think it is
-> perfectly reasonable to fix it to show a stringified representation
-> of 2*1024*1024*1024 when asked for "--int".
+Again, that is what git's internal code is seeing. And that is why
+keeping the range check for git-config has value: it lets you see what
+git would see internally.
 
-The negative value is a little bit of a sidetrack. For both "git config
---int" and for internal use, we do not correctly range-check integer
-values. And that's why we print the negative value, when we should say
-"this is a bogus out-of-range value". The latter is what we have always
-done for values outside of range, both internal and external, and it is
-only that our range check was bogus (and we fed negative crap to the
-code instead of complaining). That is fixed by the first patch.
+> When .git/config is shared on two different boxes (think: NFS), the
+> size of "int" might be different between them, so the logic to produce
+> such a warning may have to explicitly check against int32_t, not
+> platform int and say "will not fit in 'int' on some machines".
 
-And that leads to the second patch. The "--int" option provides a range
-check of (typically) -2^32 to 2^32-1. But many of our values internally
-use a larger range. We can either drop that range check (which means we
-will let you inspect values with config that git internally will barf
-on, with no clue), or we need to add another option with a different
-range to retrieve those values. I chose to add another option because I
-think the range check has value.
+I don't really see the value in that. You can always write whatever you
+like in the config file. The reader is responsible during parsing for
+saying "Hey, I am 32-bit and I can't handle this". And we already do
+that, and it works fine. So if you have an NFS-shared .git/config, and
+you set "pack.deltacachesize" to "4g", a 64-bit machine will do fine
+with that, and a 32-bit machine will complain. Which seems like the only
+sane thing to do.
 
-Does that explain the problem more fully?
-
+There are a few config options that use "unsigned long" that I would
+argue should be "off_t" or something (for example,
+core.bigFileThreshold, which cannot be more than 4G on a 32-bit machine,
+simply because we can't represent the size. On the other hand, there is
+probably a ton of stuff that does not work with 4G files on such a
+system, because we use unsigned long all over the place inside the
+code).
 -Peff
