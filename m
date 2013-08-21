@@ -1,58 +1,89 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Git access to Bzr repository fails for enwc
-Date: Wed, 21 Aug 2013 15:16:49 -0500
-Message-ID: <CAMP44s0zMbgt8snc=HkDqYHCWGZ3b4_oFZs64K48RjoXVR+1Tw@mail.gmail.com>
-References: <jwvbo4ygbo8.fsf-monnier+emacs@gnu.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] rebase --preserve-merges: ignore "merge.log" config
+Date: Wed, 21 Aug 2013 16:22:27 -0400
+Message-ID: <CAPig+cTWgaMLLUBEetAQnNG2U34d8YgYPSSNds4oFim4uB=2WA@mail.gmail.com>
+References: <1377110937-13439-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Stefan Monnier <monnier@iro.umontreal.ca>
-X-From: git-owner@vger.kernel.org Wed Aug 21 22:16:55 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 21 22:22:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCEpr-0001Vm-7O
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 22:16:55 +0200
+	id 1VCEvL-00014E-KP
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 22:22:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752746Ab3HUUQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Aug 2013 16:16:51 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:58599 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752733Ab3HUUQu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Aug 2013 16:16:50 -0400
-Received: by mail-lb0-f174.google.com with SMTP id w20so997214lbh.33
-        for <git@vger.kernel.org>; Wed, 21 Aug 2013 13:16:49 -0700 (PDT)
+	id S1752781Ab3HUUWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 16:22:30 -0400
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:57568 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752765Ab3HUUW2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Aug 2013 16:22:28 -0400
+Received: by mail-lb0-f182.google.com with SMTP id v20so1008144lbc.13
+        for <git@vger.kernel.org>; Wed, 21 Aug 2013 13:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DWBCfBRk2+ZT9iGvp+gJd5ErN1ZsYpZsuouzmIK97Qk=;
-        b=Nxd8FLE0dBr8UQFBX5amOddZ19zIN2SaY7yShMtBxbkPWrnN8q3XW9VzBA2lfzcRb7
-         8LCJSL5YrZ8RnhWLxxJH/rNbw7M6X8yyEgjmsvtuCnNfrAqVmJklRUYdfyNM7AilmCu/
-         MYyzP0xawNR/o/I0mgKfxDK3OYkLxlyBS2TT19tV96ATmMSH3XBt7twaqfJoH66+bFGs
-         pB2+UQd+4sl0lafXi3Xk1nICmcwOuB5m5MPK2tydZNlHf6RLo6RD0DvvaHSA/JZ4V3Xo
-         GGauSoq2FXJu+8Ond+HftrKV81+w5wIQhgSXnKTYZ0fV6cU3Co9beAnZTuT20IC8BUhL
-         1clw==
-X-Received: by 10.152.37.103 with SMTP id x7mr7352857laj.28.1377116209404;
- Wed, 21 Aug 2013 13:16:49 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Wed, 21 Aug 2013 13:16:49 -0700 (PDT)
-In-Reply-To: <jwvbo4ygbo8.fsf-monnier+emacs@gnu.org>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=9TkJqI5dCmiex44VtF+LlDYKk1bSHrlCr0mrcmmMwKw=;
+        b=ZrEb0HU+EQvNTzNYjG2QxAG6AgDFeVyzltcs3/QJgAR49xkJV6xhT+TtbWMSVGGemC
+         oYUo/cNsADIKgUaNRInm1vm1edwT7760NWFkOFIISmThq3Za9Vs9rvUI+cddRvX3C9UM
+         5faCuuF51tkOHGv3LfoQ3JcO3NfSF2dUfnlM1XyULCkX0VefGD/8wy0T7rSXoGOYgBX/
+         0xrnrGkWaFh1/iEBnTIvO9uM1NAPndNeep2bysRZ/THuITb+fSaJv6lMt8knqGz/Fduu
+         jXjQ2ONloz8zC8xnOi4zz3Mmi/6cE8zgy5wS6K0O75HHYE+kxaKW1jYRJhxwd6XhvS0q
+         Pjaw==
+X-Received: by 10.112.89.100 with SMTP id bn4mr8512695lbb.16.1377116547194;
+ Wed, 21 Aug 2013 13:22:27 -0700 (PDT)
+Received: by 10.114.182.236 with HTTP; Wed, 21 Aug 2013 13:22:27 -0700 (PDT)
+In-Reply-To: <1377110937-13439-1-git-send-email-ralf.thielow@gmail.com>
+X-Google-Sender-Auth: nVzWt4MWXlUK90GgFS2no8kSbZM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232725>
 
-On Thu, Aug 15, 2013 at 11:31 AM, Stefan Monnier
-<monnier@iro.umontreal.ca> wrote:
-> I've had good success recently with the git->bzr bridge, but the
-> following still fails.  This is on Debian with the git from "unstable".
+On Wed, Aug 21, 2013 at 2:48 PM, Ralf Thielow <ralf.thielow@gmail.com> wrote:
+> When "merge.log" config is set, "rebase --preserve-merges"
+> will add the log lines to the message of the rebased merge
+> commit.
+>
+> A rebase should not modify a commit message automatically.
+>
+> Teach "git-rebase" to ignore that configuration by passing "--no-log"
+> to the git-merge call.
+>
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+> diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
+> index 2e0c364..2454811 100755
+> --- a/t/t3409-rebase-preserve-merges.sh
+> +++ b/t/t3409-rebase-preserve-merges.sh
+> @@ -96,4 +108,17 @@ test_expect_success 'rebase -p preserves no-ff merges' '
+>         )
+>  '
+>
+> +test_expect_success 'rebase -p ignores merge.log config' '
+> +       (
+> +       cd clone4 &&
+> +       git fetch &&
+> +       git -c merge.log=1 rebase -p origin/topic &&
+> +       cat >expected <<-\EOF &&
+> +
+> +       EOF
 
-Which version are you using? The latest version works fine here:
+This might be clearer with a simple 'echo' instead of 'cat' with heredoc:
 
-https://github.com/felipec/git/blob/fc/master/git-remote-bzr.py
+  echo >expected &&
 
--- 
-Felipe Contreras
+> +       git log --format="%b" -1 >current
+> +       test_cmp expected current
+> +       )
+> +'
+> +
+>  test_done
+> --
+> 1.8.4.rc4.dirty
