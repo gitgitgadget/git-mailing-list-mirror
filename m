@@ -1,48 +1,84 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: t3010 broken by 2eac2a4
-Date: Wed, 21 Aug 2013 16:31:56 -0400
-Message-ID: <82078845-3AB9-4B36-9130-039CC33C8A7A@gernhardtsoftware.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 21 22:32:46 2013
+From: Brandon Casey <bcasey@nvidia.com>
+Subject: [PATCH 3/3] Revert "bash prompt: avoid command substitution when finalizing gitstring"
+Date: Wed, 21 Aug 2013 13:49:33 -0700
+Message-ID: <1377118173-23405-3-git-send-email-bcasey@nvidia.com>
+References: <1377118173-23405-1-git-send-email-bcasey@nvidia.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Brandon Casey <drafnel@gmail.com>,
+	<szeder@ira.uka.de>
+To: <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 21 22:49:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCF55-0006rd-UR
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 22:32:40 +0200
+	id 1VCFLc-0005m8-8H
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 22:49:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752745Ab3HUUcg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Aug 2013 16:32:36 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:56317 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752235Ab3HUUcf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Aug 2013 16:32:35 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id B00B527361DC; Wed, 21 Aug 2013 20:32:18 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=3.5 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from dhcp-10-4-2-155.wireless.rochester.edu (u-of-rochester-128-151-150-1.wireless.rochester.edu [128.151.150.1])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 6A72727361A9
-	for <git@vger.kernel.org>; Wed, 21 Aug 2013 20:32:06 +0000 (UTC)
-X-Mailer: Apple Mail (2.1508)
+	id S1752963Ab3HUUtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 16:49:41 -0400
+Received: from hqemgate14.nvidia.com ([216.228.121.143]:18742 "EHLO
+	hqemgate14.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752957Ab3HUUtk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Aug 2013 16:49:40 -0400
+Received: from hqnvupgp07.nvidia.com (Not Verified[216.228.121.13]) by hqemgate14.nvidia.com
+	id <B521527e10000>; Wed, 21 Aug 2013 13:49:37 -0700
+Received: from hqemhub02.nvidia.com ([172.20.12.94])
+  by hqnvupgp07.nvidia.com (PGP Universal service);
+  Wed, 21 Aug 2013 13:49:39 -0700
+X-PGP-Universal: processed;
+	by hqnvupgp07.nvidia.com on Wed, 21 Aug 2013 13:49:39 -0700
+Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub02.nvidia.com
+ (172.20.150.31) with Microsoft SMTP Server id 8.3.298.1; Wed, 21 Aug 2013
+ 13:49:09 -0700
+X-Mailer: git-send-email 1.8.4.rc0.2.g6cf5c31
+In-Reply-To: <1377118173-23405-1-git-send-email-bcasey@nvidia.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232728>
 
-With 2eac2a4: "ls-files -k: a directory only can be killed if the index has a non-directory" applied, t3010 fails test 3 "validate git ls-files -k output".  It ends up missing the pathx/ju/nk file.
+From: Brandon Casey <drafnel@gmail.com>
 
-OS X 10.8.4
-Xcode 4.6.3
-clang "Apple LLVM version 4.2 (clang-425.0.28) (based on LLVM 3.2svn)" 
+This reverts commit 69a8141a5d81925b7e08cb228535e9ea4a7a02e3.
 
-~~ Brian Gernhardt
+Old Bash (3.0) which is distributed with RHEL 4.X and other ancient
+platforms that are still in wide use, does not have a printf that
+supports -v.  Let's revert this patch and go back to using printf
+in the traditional way.
+
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
+ contrib/completion/git-prompt.sh | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index a81ef5a..7698ec4 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -433,11 +433,7 @@ __git_ps1 ()
+ 	local gitstring="$c${b##refs/heads/}${f:+$z$f}$r$p"
+ 
+ 	if [ $pcmode = yes ]; then
+-		if [[ -n ${ZSH_VERSION-} ]]; then
+-			gitstring=$(printf -- "$printf_format" "$gitstring")
+-		else
+-			printf -v gitstring -- "$printf_format" "$gitstring"
+-		fi
++		gitstring=$(printf -- "$printf_format" "$gitstring")
+ 		PS1="$ps1pc_start$gitstring$ps1pc_end"
+ 	else
+ 		printf -- "$printf_format" "$gitstring"
+-- 
+1.8.4.rc0.2.g6cf5c31
+
+
+-----------------------------------------------------------------------------------
+This email message is for the sole use of the intended recipient(s) and may contain
+confidential information.  Any unauthorized review, use, disclosure or distribution
+is prohibited.  If you are not the intended recipient, please contact the sender by
+reply email and destroy all copies of the original message.
+-----------------------------------------------------------------------------------
