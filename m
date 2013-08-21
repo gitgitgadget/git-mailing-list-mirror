@@ -1,186 +1,74 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [RFC PATCHv4] repack: rewrite the shell script in C.
-Date: Wed, 21 Aug 2013 11:20:03 +0200
-Message-ID: <52148643.2050706@kdbg.org>
-References: <1376864786-21367-1-git-send-email-stefanbeller@googlemail.com> <1376954619-24314-1-git-send-email-stefanbeller@googlemail.com> <52136F9C.6030308@kdbg.org> <52138686.1070304@googlemail.com> <5213BC0C.6090901@web.de> <5213EF74.7020408@googlemail.com>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH] repack: rewrite the shell script in C.
+Date: Wed, 21 Aug 2013 12:37:59 +0200
+Message-ID: <52149887.9050601@googlemail.com>
+References: <5213EF74.7020408@googlemail.com> <1377038334-15799-1-git-send-email-stefanbeller@googlemail.com> <20130821082527.GC2802@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
-	git@vger.kernel.org, mfick@codeaurora.org, apelisse@gmail.com,
+Cc: git@vger.kernel.org, mfick@codeaurora.org, apelisse@gmail.com,
 	Matthieu.Moy@grenoble-inp.fr, pclouds@gmail.com, iveqy@iveqy.com,
-	gitster@pobox.com, mackyle@gmail.com
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 21 11:20:24 2013
+	gitster@pobox.com, mackyle@gmail.com, j6t@kdbg.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 21 12:38:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VC4aV-0005Hk-Es
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 11:20:23 +0200
+	id 1VC5np-0000tY-EB
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 12:38:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751512Ab3HUJUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Aug 2013 05:20:16 -0400
-Received: from bsmtp5.bon.at ([195.3.86.187]:26739 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751422Ab3HUJUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Aug 2013 05:20:15 -0400
-Received: from [10.67.203.136] (178.115.251.136.wireless.dyn.drei.com [178.115.251.136])
-	by bsmtp.bon.at (Postfix) with ESMTP id 803B2CDF92;
-	Wed, 21 Aug 2013 11:20:08 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130307 Thunderbird/17.0.4
-In-Reply-To: <5213EF74.7020408@googlemail.com>
+	id S1751668Ab3HUKiC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 06:38:02 -0400
+Received: from mail-ea0-f182.google.com ([209.85.215.182]:53563 "EHLO
+	mail-ea0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751232Ab3HUKh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Aug 2013 06:37:59 -0400
+Received: by mail-ea0-f182.google.com with SMTP id o10so141315eaj.13
+        for <git@vger.kernel.org>; Wed, 21 Aug 2013 03:37:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=suYwHSsTVHd3Apo6vmtXCChGDy9VEQ65e2vfFFdJWgo=;
+        b=jkNngwoN4ok2/fqhNaW8SWO1VgOyZ2DxsArLvPTHExPQDcEq+Ej9qDdZrynZoAJzDo
+         yDPrPQrQM2DK5qojOBcuSqifgg7IMyyzDHRRMLwpPBXHlejGRWzzaT07fLkrY+pga1OB
+         z+okmNB93TuMbHVA4YIFTe7FGxv9VvoDClu9SFNO1vdMymsinQ/R/QDyWoGXcAtMYdKQ
+         r6kAg2b2CvlUSqFG25wZV99WmtRzSuOqkTAnrNbGeXnF8XiFp2qx5oxhCJ8QWqqAkZUU
+         Vipzyw0J6JTKffq4Z7W66KI2kwnAXjnY8zLK4J3Mi6DiWy7GHVAzpPRIhHYytNfYN6B9
+         KjnA==
+X-Received: by 10.14.103.69 with SMTP id e45mr2631607eeg.51.1377081478150;
+        Wed, 21 Aug 2013 03:37:58 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id f49sm8742805eec.7.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 21 Aug 2013 03:37:57 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
+In-Reply-To: <20130821082527.GC2802@elie.Belkin>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232697>
 
-Am 21.08.2013 00:36, schrieb Stefan Beller:
-> I think I got all the suggestions except the
-> use of git_path/mkpathdup.
-> I replaced mkpathdup by mkpath where possible,
-> but it's still not perfect.
-> I'll wait for the dokumentation patch of Jonathan,
-> before changing all these occurences forth and back
-> again.
+On 08/21/2013 10:25 AM, Jonathan Nieder wrote:
+>> +static int delta_base_offset = 0;
+> 
+> The "= 0" is automatic for statics without an initializer.  The
+> prevailing style in git is to leave it out.
+> 
+> Behavior change: in the script, wasn't the default "true"?
+> 
 
-I trust Jonathan's judgement of how to use git_path, mkpath, and mkpathdup 
-more than my own. So, please take my earlier comments in this regard with 
-an appropriately large grain of salt.
+Yes, I was printing out the arguments of shell version and 
+of the C version and tried to match the arguments.
+I must have missconfigured the test repository where
+I run these differential tests. 
+Now that I test again, the --delta-base-offset option
+shows up as default as it is documented.
 
-> Below there is just the diff against RFC PATCHv4,
-> however I'll send the whole patch as well.
+Now fixing the rest of your annotations.
 
-Thanks, that is VERY helpful!
-
-I'll comment here and have a look at the full patch later.
-
->...
->   int cmd_repack(int argc, const char **argv, const char *prefix) {
->
-
-You should move the opening brace to the next line, which would then not 
-be empty anymore.
-
->...
-> @@ -217,34 +217,34 @@ int cmd_repack(int argc, const char **argv, const char *prefix) {
->   	argv_array_push(&cmd_args, packtmp);
->
->   	memset(&cmd, 0, sizeof(cmd));
-> -	cmd.argv = argv_array_detach(&cmd_args, NULL);
-> +	cmd.argv = cmd_args.argv;
->   	cmd.git_cmd = 1;
->   	cmd.out = -1;
->   	cmd.no_stdin = 1;
->
-> -	if (run_command(&cmd))
-> +	if (start_command(&cmd))
->   		return 1;
-
-You should have an int ret here and use it like
-
-	ret = start_command(&cmd);
-	if (ret)
-		return ret;
-
-to retain any exit codes from the sub-process. I know, the script didn't 
-preserve it:
-
-	names=$(git pack-objects ...) || exit 1
-
-but that was not idiomatic as it should have been written as
-
-	names=$(git pack-objects ...) || exit
-
-to forward the failure exit code.
-
->
-> -	struct string_list names = STRING_LIST_INIT_DUP;
-> -	struct string_list rollback = STRING_LIST_INIT_DUP;
-> -
-> -	char line[1024];
-> -	int counter = 0;
-> -	FILE *out = xfdopen(cmd.out, "r");
-
-Nice! I missed these decl-after-stmt in my earlier review.
-
-> +	count_packs = 0;
-> +	out = xfdopen(cmd.out, "r");
->   	while (fgets(line, sizeof(line), out)) {
->   		/* a line consists of 40 hex chars + '\n' */
-> -		assert(strlen(line) == 41);
-> +		if (strlen(line) != 41)
-> +			die("repack: Expecting 40 character sha1 lines only from pack-objects.");
-
-I agree with Jonathan that you should use strbuf_getline() here.
-
->   		line[40] = '\0';
->   		string_list_append(&names, line);
-> -		counter++;
-> +		count_packs++;
->   	}
-> -	if (!counter)
-> -		printf("Nothing new to pack.\n");
-> +	if (finish_command(&cmd))
-> +		return 1;
-
-Same as above here:
-
-	ret = finish_command(&cmd);
-	if (ret)
-		return ret;
-
-I would prefer to see
-
-	argv_array_clear(&cmd_args);
-
-here, i.e., at the end of the current use rather than later at the 
-beginning of the next use. (Ditto for the other uses of cmd_args.)
-
->   	fclose(out);
-
-This should happen before finish_command(). It doesn't matter if there are 
-no errors, but if things go awry, closing the channel before 
-finish_command() avoids deadlocks.
-
->
-> +	if (!count_packs && !quiet)
-> +		printf("Nothing new to pack.\n");
-> +
->...
-> @@ -301,33 +299,33 @@ int cmd_repack(int argc, const char **argv, const char *prefix) {
->   	for_each_string_list_item(item, &names) {
->   		for (ext = 0; ext < 2; ext++) {
->   			char *fname, *fname_old;
-> +			struct stat statbuffer;
->   			fname = mkpathdup("%s/pack-%s%s", packdir, item->string, exts[ext]);
-> -			fname_old = mkpathdup("%s-%s%s", packtmp, item->string, exts[ext]);
-> -			stat(fname_old, &statbuffer);
-> -			statbuffer.st_mode &= ~S_IWUSR | ~S_IWGRP | ~S_IWOTH;
-> -			chmod(fname_old, statbuffer.st_mode);
-> +			fname_old = mkpath("%s-%s%s", packtmp, item->string, exts[ext]);
-> +			if (!stat(fname_old, &statbuffer)) {
-> +				statbuffer.st_mode &= ~S_IWUSR | ~S_IWGRP | ~S_IWOTH;
-
-This is still wrong: it should be one of
-
-			... &= ~S_IWUSR & ~S_IWGRP & ~S_IWOTH;
-			... &= ~(S_IWUSR | S_IWGRP | S_IWOTH);
-
-> +				chmod(fname_old, statbuffer.st_mode);
-> +			}
->   			if (rename(fname_old, fname))
-> -				die("Could not rename packfile: %s -> %s", fname_old, fname);
-> +				die_errno(_("renaming '%s' failed"), fname_old);
->   			free(fname);
-> -			free(fname_old);
->   		}
->   	}
->...
-
-Everything else looks OK. But as I said, mkpath() may have to be reverted 
-to mkpathdup() as per Jonathans comments.
-
--- Hannes
+Stefan
