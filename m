@@ -1,124 +1,122 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: [PATCH] git-diff: Clarify operation when not inside a repository.
-Date: Wed, 21 Aug 2013 13:34:58 -0400
-Message-ID: <201308211734.r7LHYwNh008859@hobgoblin.ariadne.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 21 19:35:11 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] git-remote-mediawiki: reset private ref after non-dumb push
+Date: Wed, 21 Aug 2013 10:59:27 -0700
+Message-ID: <xmqq1u5nudq8.fsf@gitster.dls.corp.google.com>
+References: <1377072617-25086-1-git-send-email-Matthieu.Moy@imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 21 19:59:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCCJJ-00068J-84
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 19:35:09 +0200
+	id 1VCCh5-0005kc-Qy
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 19:59:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752291Ab3HURfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Aug 2013 13:35:03 -0400
-Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:39732
-	"EHLO qmta05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752100Ab3HURfC (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Aug 2013 13:35:02 -0400
-Received: from omta08.westchester.pa.mail.comcast.net ([76.96.62.12])
-	by qmta05.westchester.pa.mail.comcast.net with comcast
-	id FUgq1m0010Fqzac55Vb0Ue; Wed, 21 Aug 2013 17:35:00 +0000
-Received: from hobgoblin.ariadne.com ([24.34.72.61])
-	by omta08.westchester.pa.mail.comcast.net with comcast
-	id FVaz1m01V1KKtkw3UVb0mY; Wed, 21 Aug 2013 17:35:00 +0000
-Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
-	by hobgoblin.ariadne.com (8.14.5/8.14.5) with ESMTP id r7LHYxEi008860;
-	Wed, 21 Aug 2013 13:34:59 -0400
-Received: (from worley@localhost)
-	by hobgoblin.ariadne.com (8.14.5/8.14.5/Submit) id r7LHYwNh008859;
-	Wed, 21 Aug 2013 13:34:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1377106500;
-	bh=cLAmL6uRxmZrGHs7ta/s79Qi5/g/5br648kjysjwW1Y=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=mSdOOAX8zp97xjmEfYhcxIj3fT5eG+HV4DQb4FAbNWqbY5VsQ2Duhe15nk0HJV1B7
-	 ouy68oS/ZQ/cduCqdmn2o5fa4ZF40dOok+xb7iHi57Q4m6s1iXHIkQeoH3ClNcF3SK
-	 35DkgYFuGaMDEESne5lkHobtoU0bGIgCOvZrLGmdLQOQNe3v/KmAWa1bfnUWT5hNv2
-	 nu59J9yVBXd6s3M2P1oWW1M+oxU76sRvBqKgQShCtBgpioxtKVWDVpLBui57QK6FzM
-	 4/6eSeFmX2cbDlwN0+T2iYzbhT5k2SePg26Oh8lIbWOW3VUYMrhGalNhEANI8+FtiD
-	 6f9IzWIYBr/kg==
+	id S1753044Ab3HUR7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 13:59:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52912 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752988Ab3HUR7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Aug 2013 13:59:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B86153AE6B;
+	Wed, 21 Aug 2013 17:59:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7RGsEAfnj06+Kh7Ln2IBtH0ZcFE=; b=l9feRV
+	mB+n11wDhCqUyzy8vY5lCpaPpYjBAyTcVBj79pTsxWq/k4cPXLs+5coMkLR5/cQd
+	kQJlsYQdNno3abLatiJ10tSJ3YcurC5x55INVT3/wxkyYiY0FJEAGSkGeAEW1b/y
+	VhEyQ1lUYp1LP/OIiHSLTjeklrirrE9wFG6bE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nfPBJxIsHzLb5jmHEDvg37doxiKO/Fol
+	PFqKub2NZ36vI7akzvdozxp7AArBkHU1XIfa0Y8NDn6uGXpFFpM1vC5a8JnSRRvd
+	4TSKBa2/1/OMdokGg6Mhp0PRHkUqYgir/N80OuBIt5X2s7xhMkmcGahuwUtxtM5a
+	aAK+e3DAmBU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABA133AE6A;
+	Wed, 21 Aug 2013 17:59:30 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B1403AE62;
+	Wed, 21 Aug 2013 17:59:29 +0000 (UTC)
+In-Reply-To: <1377072617-25086-1-git-send-email-Matthieu.Moy@imag.fr>
+	(Matthieu Moy's message of "Wed, 21 Aug 2013 10:10:16 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6D3ABE2E-0A8B-11E3-A739-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232711>
 
-Clarify documentation for git-diff:  State that when not inside a
-repository, --no-index is implied (and thus two arguments are
-mandatory).
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-Clarify error message from diff-no-index to inform user that CWD is
-not inside a repository and thus two arguments are mandatory.
+> Git-mediawiki's "dumb push" sends the local revisions to the remote wiki,
+> but does not update the local metadata to reflect the push (hence, the
+> next pull will have to re-import the exported revisions).
+>
+> The previous implementation was simply omitting the update to the private
+> ref after a dumb push. This was broken by 664059fb62 (Felipe Contreras,
+> Apr 17 2013, transport-helper: update remote helper namespace), which
+> does an automatic update of the private ref (not just the
+> remote-tracking) on push.
+>
+> This patch fixes git-remote-mediawiki to reset the private ref after the
+> push is completed, cancelling the automatic update triggered by
+> 664059fb62.
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> Just a resend of the RFC
+> ( http://thread.gmane.org/gmane.comp.version-control.git/232224 ),
+> which received no comment.
+>
+>  contrib/mw-to-git/git-remote-mediawiki.perl | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
+> index f8d7d2c..13919ad 100755
+> --- a/contrib/mw-to-git/git-remote-mediawiki.perl
+> +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
+> @@ -53,6 +53,7 @@ if (@ARGV != 2) {
+>  
+>  my $remotename = $ARGV[0];
+>  my $url = $ARGV[1];
+> +my $reset_private_ref_to = undef;
+>  
+>  # Accept both space-separated and multiple keys in config file.
+>  # Spaces should be written as _ anyway because we'll use chomp.
+> @@ -161,6 +162,9 @@ sub parse_command {
+>  	my ($line) = @_;
+>  	my @cmd = split(/ /, $line);
+>  	if (!defined $cmd[0]) {
+> +		if ($reset_private_ref_to) {
+> +			run_git("update-ref -m \"Git-MediaWiki non-dumb push\" refs/mediawiki/$remotename/master $reset_private_ref_to");
+> +		}
 
-Signed-off-by: Dale Worley <worley@ariadne.com>
----
+So reset-private-ref-to is recorded for a non-dumb push, but...
 
+>  		return 0;
+>  	}
+>  	if ($cmd[0] eq 'capabilities') {
+> @@ -1209,9 +1213,10 @@ sub mw_push_revision {
+>  				die("Unknown error from mw_push_file()\n");
+>  			}
+>  		}
+> -		if (!$dumb_push) {
+> +		if ($dumb_push) {
+> +			$reset_private_ref_to = $remoteorigin_sha1;
 
-This clarification is to avoid a problem I ran into.  I executed 'git
-diff' in the remote working tree of a repository, and not in the
-repository directory itself.  Because of that, git-diff assumed
-git-diff --no-index, and executed diff-no-index.  Since I hadn't
-provided paths, diff-no-index produced an error message.
-Unfortunately, the error message presupposes that the decision to
-execute diff-no-index reflects the user's intention, thus leaving me
-confused, as the error message is only:
-    usage: git diff [--no-index] <path> <path>
-and does not cover the case I intended.  This patch changes the
-message to notify the user that he is getting --no-index semantics
-because he is outside of a repository:
-    Not within a git repository:
-    usage: git diff [--no-index] <path> <path>
-The additional line is suppressed if the user specified --no-index.
+... it is set for dumb-push?  I am confused.
 
-The documentation is expanded to state that execution outside of a
-repository forces --no-index behavior.  Previously, the manual implied
-this but did not state it, making it easy for the user to overlook
-that it's possible to run git-diff outside of a repository.
-
-Dale
-
-
- Documentation/git-diff.txt |    3 ++-
- diff-no-index.c            |    6 +++++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index 78d6d50..9f74989 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -31,7 +31,8 @@ two blob objects, or changes between two files on disk.
- +
- If exactly two paths are given and at least one points outside
- the current repository, 'git diff' will compare the two files /
--directories. This behavior can be forced by --no-index.
-+directories. This behavior can be forced by --no-index or by 
-+executing 'git diff' outside of a working tree.
- 
- 'git diff' [--options] --cached [<commit>] [--] [<path>...]::
- 
-diff --git a/diff-no-index.c b/diff-no-index.c
-index e66fdf3..98c5f76 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -215,9 +215,13 @@ void diff_no_index(struct rev_info *revs,
- 		     path_inside_repo(prefix, argv[i+1])))
- 			return;
- 	}
--	if (argc != i + 2)
-+	if (argc != i + 2) {
-+	        if (!no_index) {
-+		        fprintf(stderr, "Not within a git repository:\n");
-+		}
- 		usagef("git diff %s <path> <path>",
- 		       no_index ? "--no-index" : "[--no-index]");
-+	}
- 
- 	diff_setup(&revs->diffopt);
- 	for (i = 1; i < argc - 2; ) {
--- 
-1.7.7.6
+> +		} else {
+>  			run_git(qq(notes --ref=${remotename}/mediawiki add -f -m "mediawiki_revision: ${mw_revision}" ${sha1_commit}));
+> -			run_git(qq(update-ref -m "Git-MediaWiki push" refs/mediawiki/${remotename}/master ${sha1_commit} ${sha1_child}));
+>  		}
+>  	}
