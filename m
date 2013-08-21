@@ -1,130 +1,82 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH] repack: rewrite the shell script in C.
-Date: Wed, 21 Aug 2013 14:53:38 +0200
-Message-ID: <5214B852.7090504@googlemail.com>
-References: <5213EF74.7020408@googlemail.com> <1377038334-15799-1-git-send-email-stefanbeller@googlemail.com> <vpqhaeje8e0.fsf@anie.imag.fr>
+Date: Wed, 21 Aug 2013 15:05:10 +0200
+Message-ID: <vpq1u5n9ou1.fsf@anie.imag.fr>
+References: <5213EF74.7020408@googlemail.com>
+	<1377038334-15799-1-git-send-email-stefanbeller@googlemail.com>
+	<vpqhaeje8e0.fsf@anie.imag.fr> <5214B6F8.6030102@googlemail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigC31D3504D24B2FB166ED21C9"
+Content-Type: text/plain
 Cc: git@vger.kernel.org, mfick@codeaurora.org, apelisse@gmail.com,
 	pclouds@gmail.com, iveqy@iveqy.com, gitster@pobox.com,
 	mackyle@gmail.com, j6t@kdbg.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 21 14:53:50 2013
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 21 15:05:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VC7uv-0000Ud-SP
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 14:53:42 +0200
+	id 1VC86N-00082B-3n
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 15:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751802Ab3HUMxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Aug 2013 08:53:37 -0400
-Received: from mail-ee0-f49.google.com ([74.125.83.49]:35583 "EHLO
-	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751698Ab3HUMxg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Aug 2013 08:53:36 -0400
-Received: by mail-ee0-f49.google.com with SMTP id d41so212824eek.22
-        for <git@vger.kernel.org>; Wed, 21 Aug 2013 05:53:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type;
-        bh=AKvs5vdrsaYjuYqV8GphvLA/y335UjpeDaHYPn+3GZE=;
-        b=xpyRh1j60tuKYGEcclyouw+uGc1J6kGaUiU7Sy4o4b+q5Fo3ntC6/n0Z04lLEbAu7M
-         xxaHwzCg1JeBZmU07b1J91hS4RAZO68tezB4asOfOR+/O00q+kwcrwqUN1lRpulK5lqI
-         xMy6KiRzfBAvzfB54FpJVz/gbQuWoli/AJShYu5ZpeRaYyQg0R/54At9OPujzmLn8mMh
-         g7ga3/jDTgHeh3I+KZWSPYtMdgHKpBw2k0M4tFyOkVdfP1t1E/uZhDPUZEKV1NbHK9z4
-         Jk/N9+tYvqKP4JTpMyvEpzaTN4rVpi76MUcpegzm/S6cNpvMfx2o20T+LC2CrcAETxyw
-         mPXA==
-X-Received: by 10.15.100.198 with SMTP id bn46mr10170846eeb.11.1377089615829;
-        Wed, 21 Aug 2013 05:53:35 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id p5sm9616988eeg.5.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 21 Aug 2013 05:53:35 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
-In-Reply-To: <vpqhaeje8e0.fsf@anie.imag.fr>
-X-Enigmail-Version: 1.4.6
+	id S1751519Ab3HUNF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 09:05:27 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:46054 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751486Ab3HUNF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Aug 2013 09:05:26 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r7LD59nk008769
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 21 Aug 2013 15:05:09 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VC862-0007QM-Qf; Wed, 21 Aug 2013 15:05:10 +0200
+In-Reply-To: <5214B6F8.6030102@googlemail.com> (Stefan Beller's message of
+	"Wed, 21 Aug 2013 14:47:52 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 21 Aug 2013 15:05:10 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r7LD59nk008769
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1377695110.63485@VjPew+QoygWFZkNNUDMKSQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232700>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigC31D3504D24B2FB166ED21C9
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-On 08/21/2013 10:49 AM, Matthieu Moy wrote:
-> I tend to dislike these "set a variable and break twice" to exit nested=
+> On 08/21/2013 10:49 AM, Matthieu Moy wrote:
+>>> +	if (start_command(&cmd))
+>>> > +		return 1;
+>> A warning message would be welcome in addition to returning 1.
+>> 
+>
+> Johannes Sixt proposes to retain the return value of
+> the sub process, which I'd agree on.
 
-> loops. Using an auxiliary function, you could just do
->=20
-> int f()
-> {
-> 	for_each {
-> 		for () {
-> 			...
-> 			if ()
-> 				return 1;
-> 			...
-> 		}
-> 	}
-> 	return 0;
-> }
->=20
-> (Matter of taste, though. Some people may disagree)
->=20
-> A good side effect would be to move some code out of cmd_repack, which
-> is rather long.
+Yes.
 
-Thank you very much for the review, it helps me very much to focus
-on the small details.
+> I'd expect the pack-objects to bring up the warning as
+> the stderr is untouched in the command invocation.
 
-I intend to have the C code in this patch as close to the
-shell version as possible. This goes both for functionality as
-well as style/organisation within the file.
+I was more thinking of weird cases like failure to fork or so. But
+according to api-run-command.txt:
 
-All the additional changes, such as this one
-(Or in the previous mail, retaining the error code of subprocesses)
-I'd like to put in small follow up patches changing just one thing
-at a time.
+  . If a system call failed, errno is set and -1 is returned. A diagnostic
+    is printed.
 
-But as these follow up changes heavily rely on the very first patch
-I will first try to get that right, meaning accepted into pu.
-Then I can send patches with these proposals such as making more
-functions.
+So you actually don't need it. In this case, following Johannes's
+suggestion, you'd return -1 from the main function, which is unusual but
+AFAICT is OK.
 
-Thanks,
-Stefan
-
-
---------------enigC31D3504D24B2FB166ED21C9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJSFLhSAAoJEJQCPTzLflhqMtcP/1ht/r4TZg+Ofqe3mNPG4QBW
-oUd+l6qzKqn0EMaj83a0d9YfaZq2hwavGCWQQiUaqUFo9Kv87svSVBaw35U7doOZ
-htRS8TMYulPmmPziQ8ovCntIZvwUBg5nFEaTNOY8d0bBetFyaFaoyU6ctjL6ucpl
-dueZ25jZdP3iPcD+9bHPxaJzjx9yeczaEoEdGy62aqKBZBcc7Um/VBb3QPAeGyvc
-QpLN/CXPfYKAE73WtbGRXoqttgNLnIxYf5mnDZTsQFpkyabZXIgi33yrmgjri7oj
-5BlsIwe+Z1dVlFyfaSaSPMYo5FUUQjFzsyUKF4UIjWIth9H9PWe0aj1WBkdMxMss
-/eUWGBU4prOX5TiGEToV4Qn9AvUCEx+1IrXNawM9q7eDWZRva9qKq4chleatcrPO
-SdezZYciJv9qfjlA5eqIHPye4dJl8j6SIIgml58tPgReCfyMGrVt5PXzJb3Zpwcx
-dH72gMYOuQCsibH2gFac8iBin2xu9HuRw+OtGXTt1m8+Z709flhT2101Vg4pZLyU
-Kzx3HluOm7E0dCU0teqs4PrywiNfhnhZp44to5xWJA/qo5G+ea2Hh9J7rlPyaC5p
-g0OR/IsWziPj4cOnGzli57i/IczsIPmOT/m8TwsGAXyKucj3a5j7saH7wQDHdPFv
-0i7V+//3zYoRdhr3QKIS
-=iuq7
------END PGP SIGNATURE-----
-
---------------enigC31D3504D24B2FB166ED21C9--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
