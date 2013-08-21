@@ -1,91 +1,133 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v3 04/24] read-cache: clear version in discard_index()
-Date: Wed, 21 Aug 2013 05:06:31 +0200
-Message-ID: <87ob8r4ua0.fsf@gmail.com>
-References: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com> <1376854933-31241-5-git-send-email-t.gummerer@gmail.com> <xmqqmwoc5f6t.fsf@gitster.dls.corp.google.com>
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH] Add gui.displayuntracked option
+Date: Wed, 21 Aug 2013 06:29:13 +0300
+Message-ID: <20130821032913.GA6092@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, trast@inf.ethz.ch, mhagger@alum.mit.edu,
-	pclouds@gmail.com, robin.rosenberg@dewire.com,
-	sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 21 05:06:58 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Wed Aug 21 05:37:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VByl6-0000NL-Ha
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 05:06:56 +0200
+	id 1VBzEH-0005H2-Jt
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 05:37:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105Ab3HUDGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Aug 2013 23:06:53 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:55902 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752045Ab3HUDGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Aug 2013 23:06:52 -0400
-Received: by mail-pa0-f45.google.com with SMTP id bg4so255515pad.32
-        for <git@vger.kernel.org>; Tue, 20 Aug 2013 20:06:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type;
-        bh=VvKA0WFoaMBl9QWMX0uaCqaxg9A8oM5iX8KpiKLQjvg=;
-        b=Ili1tugFgiMBifqMMLmB7ji9Wf+k9u1lQySgk7KaJQzZ5tdCqVJuK324emk6YgTm4b
-         ekm0txeNTPjEv6IRhmzVyaePFeUkad3cRZi0ySqaTsp9eoau4tJCtbPbu6RMouOPIUdo
-         l90f2xRRk/qNgkKmaBcdkSfbRMAtx7qk0ICF/sHiEnoK1zNG7NDp8IttjZBAoYqD68km
-         Bn5QYPKChpT8jry723Ig4sZwj7Sdz4DfNsovAUmTNSFSMEnLBsRpBeWzjxxOjWBJ3WGM
-         +qU+Oj8ZhJ76GKTiL+W8MmiNzm2XdlcdNRIiK1JjMVAUmr2F0eIloXD2W6gTKCscmXx+
-         RVUg==
-X-Received: by 10.68.115.15 with SMTP id jk15mr5435573pbb.36.1377054412114;
-        Tue, 20 Aug 2013 20:06:52 -0700 (PDT)
-Received: from localhost ([2001:470:6d:596:7e6d:62ff:fe8c:90ce])
-        by mx.google.com with ESMTPSA id py4sm5240527pbb.33.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 20 Aug 2013 20:06:51 -0700 (PDT)
-In-Reply-To: <xmqqmwoc5f6t.fsf@gitster.dls.corp.google.com>
-User-Agent: Notmuch/0.15.2+119~gf0dfda5 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+	id S1752182Ab3HUDg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Aug 2013 23:36:56 -0400
+Received: from m1plsmtpa01-06.prod.mesa1.secureserver.net ([64.202.165.34]:36137
+	"EHLO m1plsmtpa01-06.prod.mesa1.secureserver.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752085Ab3HUDgz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Aug 2013 23:36:55 -0400
+X-Greylist: delayed 456 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Aug 2013 23:36:55 EDT
+Received: from wheezy.local ([89.27.29.195])
+	by m1plsmtpa01-06.prod.mesa1.secureserver.net with 
+	id FFV91m00K4CavkR01FVHuJ; Tue, 20 Aug 2013 20:29:19 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232683>
 
-Junio C Hamano <gitster@pobox.com> writes:
+When git is used to track only a subset of a directory, or
+there is no sure way to divide files to ignore from files to track,
+git user have to live with large number of untracked files. These files
+present in file list, and should always be scrolled through
+to handle real changes. Situation can become even worse, then number
+of the untracked files grows above the maxfilesdisplayed limit. In the
+case, even staged can be hidden by git-gui.
 
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
->
->> All fields except index_state->version are reset in discard_index.
->> Reset the version too.
->
-> What is the practical consequence of not clearing this field?  I
-> somehow have a feeling that this was done deliberately, so that we
-> can stick to the version of the index file format better, once the
-> user said "update-index --index-version $N" to set it up.  I suspect
-> that the patch would affect a codepath that does read_cache(), calls
-> discard_index(), populates the index and then does write_cache().
-> We stick to the version the user specified earlier in our current
-> code, while the patched code will revert to whatever default built
-> into your Git binary, no?
+This change introduces new configuration variable gui.displayuntracked,
+which, when set to false, instructs git-gui not to show untracked files
+in files list. They can be staged from commandline or other tools (like
+IDE of file manager), then they become visible. Default value of the
+option is true, which is compatible with current behavior.
 
-Yeah you're right, I missed that use-case.  I'll drop this patch from
-the re-roll.  Sorry for the noise.
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+Hi. I've been using git for some time and have collected a
+number of changes which might worth sharing.
+Please consider adding them to the upstream.
 
->>
->> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
->> ---
->>  read-cache.c | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/read-cache.c b/read-cache.c
->> index de0bbcd..1e22f6f 100644
->> --- a/read-cache.c
->> +++ b/read-cache.c
->> @@ -1558,6 +1558,7 @@ int discard_index(struct index_state *istate)
->>  	for (i = 0; i < istate->cache_nr; i++)
->>  		free(istate->cache[i]);
->>  	resolve_undo_clear_index(istate);
->> +	istate->version = 0;
->>  	istate->cache_nr = 0;
->>  	istate->cache_changed = 0;
->>  	istate->timestamp.sec = 0;
+Thanks,
+Max
+
+ Documentation/config.txt |  4 ++++
+ git-gui/git-gui.sh       | 14 ++++++++++----
+ git-gui/lib/option.tcl   |  1 +
+ 3 files changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index bbba728..7a786b2 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1277,6 +1277,10 @@ gui.diffcontext::
+ 	Specifies how many context lines should be used in calls to diff
+ 	made by the linkgit:git-gui[1]. The default is "5".
+ 
++gui.displayuntracked::
++	Determines if linkgit::git-gui[1] shows untracked files
++	in the file list. The defaulit is "true".
++
+ gui.encoding::
+ 	Specifies the default encoding to use for displaying of
+ 	file contents in linkgit:git-gui[1] and linkgit:gitk[1].
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 89f636f..42c35ad 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -898,6 +898,7 @@ set font_descs {
+ 	{fontdiff font_diff {mc "Diff/Console Font"}}
+ }
+ set default_config(gui.stageuntracked) ask
++set default_config(gui.displayuntracked) true
+ 
+ ######################################################################
+ ##
+@@ -1536,18 +1537,23 @@ proc rescan_stage2 {fd after} {
+ 	set buf_rdf {}
+ 	set buf_rlo {}
+ 
+-	set rescan_active 3
++	set rescan_active 2
+ 	ui_status [mc "Scanning for modified files ..."]
+ 	set fd_di [git_read diff-index --cached -z [PARENT]]
+ 	set fd_df [git_read diff-files -z]
+-	set fd_lo [eval git_read ls-files --others -z $ls_others]
+ 
+ 	fconfigure $fd_di -blocking 0 -translation binary -encoding binary
+ 	fconfigure $fd_df -blocking 0 -translation binary -encoding binary
+-	fconfigure $fd_lo -blocking 0 -translation binary -encoding binary
++
+ 	fileevent $fd_di readable [list read_diff_index $fd_di $after]
+ 	fileevent $fd_df readable [list read_diff_files $fd_df $after]
+-	fileevent $fd_lo readable [list read_ls_others $fd_lo $after]
++
++	if {[is_config_true gui.displayuntracked]} {
++		set fd_lo [eval git_read ls-files --others -z $ls_others]
++		fconfigure $fd_lo -blocking 0 -translation binary -encoding binary
++		fileevent $fd_lo readable [list read_ls_others $fd_lo $after]
++		incr rescan_active
++	}
+ }
+ 
+ proc load_message {file {encoding {}}} {
+diff --git a/git-gui/lib/option.tcl b/git-gui/lib/option.tcl
+index 0cf1da1..2177db6 100644
+--- a/git-gui/lib/option.tcl
++++ b/git-gui/lib/option.tcl
+@@ -159,6 +159,7 @@ proc do_options {} {
+ 		{c gui.encoding {mc "Default File Contents Encoding"}}
+ 		{b gui.warndetachedcommit {mc "Warn before committing to a detached head"}}
+ 		{s gui.stageuntracked {mc "Staging of untracked files"} {list "yes" "no" "ask"}}
++		{b gui.displayuntracked {mc "Show untracked files"}}
+ 		} {
+ 		set type [lindex $option 0]
+ 		set name [lindex $option 1]
+-- 
+1.8.4.rc3.902.g80a4b9e
