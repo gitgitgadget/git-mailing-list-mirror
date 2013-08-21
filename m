@@ -1,275 +1,73 @@
-From: Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Subject: [PATCH 2/2] git-send-email: Cache generated message-ids, use them when prompting
-Date: Wed, 21 Aug 2013 19:04:22 +0000
-Message-ID: <1377111862-13199-3-git-send-email-rv@rasmusvillemoes.dk>
-References: <1376701126-5759-1-git-send-email-rv@rasmusvillemoes.dk>
- <1377111862-13199-1-git-send-email-rv@rasmusvillemoes.dk>
-Cc: Rasmus Villemoes <rv@rasmusvillemoes.dk>
-To: gitster@pobox.com, sandals@crustytoothpaste.net,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 21 21:05:27 2013
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 0/3] t3404 incremental improvements
+Date: Wed, 21 Aug 2013 15:12:55 -0400
+Message-ID: <1377112378-45511-1-git-send-email-sunshine@sunshineco.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 21 21:13:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCDig-0002IP-BY
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 21:05:26 +0200
+	id 1VCDqR-0004k4-PB
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 21:13:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752615Ab3HUTFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Aug 2013 15:05:20 -0400
-Received: from mail-ee0-f52.google.com ([74.125.83.52]:39220 "EHLO
-	mail-ee0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751969Ab3HUTFT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Aug 2013 15:05:19 -0400
-Received: by mail-ee0-f52.google.com with SMTP id c41so462054eek.39
-        for <git@vger.kernel.org>; Wed, 21 Aug 2013 12:05:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=kR/K/a6Co0NeCKqFAPY9FgbwRJhBqYUtUBIBNCM2MSQ=;
-        b=bAnL0zvW462OcQok4IvxgF/0kKjILnvVfGOMP+/7+srqxvhUXYMLReAVA4/O2ysQ+f
-         FuWxfBszD9mj1gv7mYh3eRnBNDZ3u1/g9bcDzjUWby6Cu9pKgHIUfU2ImAO/7p/rCD/I
-         uGgy78ePorGL6x5kN5wBayw9uRRpVQVnyv3lz5Jy9RuV3xVGGFchI5rXvzxDnKwl5wEy
-         UYsyWSzfq+06+QNk4fzKWbE+kl1x7IixPN43xXG/7p3op0lpugCZdCS1KxKY/EFPqm4o
-         9DBBGwyQsIg3Mh/RhaSdbIZs2vEIzCClTciGvnIgFUJi+dJTkdkUWCglDxoffyTwjz5n
-         TqnQ==
-X-Gm-Message-State: ALoCoQlfgsekWYWZJxW4W8/SK989RO410GU/CaFhug+5M+FlM7krf83V6wDZ+jhiV0oyxzo5u2eW
-X-Received: by 10.15.48.197 with SMTP id h45mr12532982eew.0.1377111917663;
-        Wed, 21 Aug 2013 12:05:17 -0700 (PDT)
-Received: from villemoes-sl500.decode.is (wildmoose.dk. [83.169.18.19])
-        by mx.google.com with ESMTPSA id b45sm11933719eef.4.1969.12.31.16.00.00
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 21 Aug 2013 12:05:16 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc3.2.g61bff3f
-In-Reply-To: <1377111862-13199-1-git-send-email-rv@rasmusvillemoes.dk>
+	id S1752502Ab3HUTNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 15:13:15 -0400
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:46726 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752477Ab3HUTNO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Aug 2013 15:13:14 -0400
+Received: by mail-oa0-f48.google.com with SMTP id o17so1712951oag.35
+        for <git@vger.kernel.org>; Wed, 21 Aug 2013 12:13:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=zcqCWTJtqQqQgF9WspDqLvec2nRKK60IwfRHt5XCRNs=;
+        b=KKQHBN7cqBAa4T2RELx/xKeOJ3G6kFUvrotNy265YOkVkp+YxP3BT5pCEG4E0DNRYj
+         vrq5b6qyDD/YJsoh/6Z29CUxVzYdL57LVp6txPCY147yVteLatrt2H+7PQFrjdD+l+C9
+         n2grQl9WP0TVsmp7IfCkgtVhHIiU/L4q811QWPf2RAXENHLlr4qJFbBknV+8OcsXs7/x
+         Yr7k+i9SHBrX8h6WBAuSsLKUqVF7yDwmCOQJ8sHdLS9IybBDzyjKISzlXXL/STr6AhPS
+         UEIrXmrRuN0+3dmXk1Yhq5BxsC+yjdfpadbEHxAplimlXPAN6qUrLkhg/B5O05T3irEE
+         bn1Q==
+X-Received: by 10.182.225.162 with SMTP id rl2mr9852901obc.72.1377112391538;
+        Wed, 21 Aug 2013 12:13:11 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
+        by mx.google.com with ESMTPSA id z2sm12357303obi.3.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 21 Aug 2013 12:13:10 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc4.499.gfb33910
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232718>
 
-Allow the user to specify a file (sendemail.msgidcachefile) in which
-to store the message-ids generated by git-send-email, along with time
-and subject information. When prompting for a Message-ID to be used in
-In-Reply-To, that file can be used to generate a list of options.
+This set of patches was meant to be a re-roll of [1] addressing Junio's
+comments, however [1] graduated to 'next' before I found time to work on
+it further, so these are instead incremental patches atop 'next'.
 
-When composing v2 or v3 of a patch or patch series, this avoids the
-need to get one's MUA to display the Message-ID of the earlier email
-(which is cumbersome in some MUAs) and then copy-paste that.
+patch 1: address Junio's comment [2]
 
-Listing all previously sent emails is useless, so currently only the
-10 most "relevant" emails. "Relevant" is based on a simple scoring,
-which might need to be revised: Count the words in the old subject
-which also appear in the subject of the first email to be sent; add a
-bonus if the old email was first in a batch (that is, [00/74] is more
-likely to be relevant than [43/74]). Resort to comparing timestamps
-(newer is more relevant) when the scores tie.
+patch 2: address Junio's comment [3] with a sledge-hammer approach;
+whether to accept this patch is a judgment call
 
-To limit disk usage, the oldest half of the cached entries are
-expunged when the cache file exceeds sendemail.msgidcachemaxsize
-(default 100kB). This also ensures that we will never have to read,
-score, and sort 1000s of entries on each invocation of git-send-email.
+patch 3: trivial cleanup which should make the test easier to comprehend
+for future readers
 
-Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
----
- git-send-email.perl |  133 ++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 127 insertions(+), 6 deletions(-)
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/232146
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/232146/focus=232159
+[3]: http://thread.gmane.org/gmane.comp.version-control.git/232146/focus=232158
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index ac3b02d..5094267 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -203,6 +203,7 @@ my ($validate, $confirm);
- my (@suppress_cc);
- my ($auto_8bit_encoding);
- my ($compose_encoding);
-+my ($msgid_cache_file, $msgid_cache_maxsize);
- 
- my ($debug_net_smtp) = 0;		# Net::SMTP, see send_message()
- 
-@@ -237,6 +238,8 @@ my %config_settings = (
-     "from" => \$sender,
-     "assume8bitencoding" => \$auto_8bit_encoding,
-     "composeencoding" => \$compose_encoding,
-+    "msgidcachefile" => \$msgid_cache_file,
-+    "msgidcachemaxsize" => \$msgid_cache_maxsize,
- );
- 
- my %config_path_settings = (
-@@ -796,11 +799,23 @@ sub expand_one_alias {
- @bcclist = expand_aliases(@bcclist);
- @bcclist = validate_address_list(sanitize_address_list(@bcclist));
- 
-+if ($compose && $compose > 0) {
-+	@files = ($compose_filename . ".final", @files);
-+}
-+
- if ($thread && !defined $initial_reply_to && $prompting) {
-+	my @choices = ();
-+	if ($msgid_cache_file) {
-+		my $first_subject = get_patch_subject($files[0]);
-+		$first_subject =~ s/^GIT: //;
-+		@choices = msgid_cache_getmatches($first_subject, 10);
-+		@choices = map {[$_->{id}, sprintf "[%s] %s", format_2822_time($_->{epoch}), $_->{subject}]} @choices;
-+	}
- 	$initial_reply_to = ask(
- 		"Message-ID to be used as In-Reply-To for the first email (if any)? ",
- 		default => "",
--		valid_re => qr/\@.*\./, confirm_only => 1);
-+		valid_re => qr/\@.*\./, confirm_only => 1,
-+		choices => \@choices);
- }
- if (defined $initial_reply_to) {
- 	$initial_reply_to =~ s/^\s*<?//;
-@@ -818,10 +833,6 @@ if (!defined $smtp_server) {
- 	$smtp_server ||= 'localhost'; # could be 127.0.0.1, too... *shrug*
- }
- 
--if ($compose && $compose > 0) {
--	@files = ($compose_filename . ".final", @files);
--}
--
- # Variables we set as part of the loop over files
- our ($message_id, %mail, $subject, $reply_to, $references, $message,
- 	$needs_confirm, $message_num, $ask_default);
-@@ -1136,7 +1147,7 @@ sub send_message {
- 	my $to = join (",\n\t", @recipients);
- 	@recipients = unique_email_list(@recipients,@cc,@bcclist);
- 	@recipients = (map { extract_valid_address_or_die($_) } @recipients);
--	my $date = format_2822_time($time++);
-+	my $date = format_2822_time($time);
- 	my $gitversion = '@@GIT_VERSION@@';
- 	if ($gitversion =~ m/..GIT_VERSION../) {
- 	    $gitversion = Git::version();
-@@ -1477,6 +1488,11 @@ foreach my $t (@files) {
- 
- 	my $message_was_sent = send_message();
- 
-+	if ($message_was_sent && $msgid_cache_file && !$dry_run) {
-+		msgid_cache_this($message_id, $message_num == 1 ? 1 : 0, , $time, $subject);
-+	}
-+	$time++;
-+
- 	# set up for the next message
- 	if ($thread && $message_was_sent &&
- 		($chain_reply_to || !defined $reply_to || length($reply_to) == 0 ||
-@@ -1521,6 +1537,8 @@ sub cleanup_compose_files {
- 
- $smtp->quit if $smtp;
- 
-+msgid_cache_write() if $msgid_cache_file && !$dry_run;
-+
- sub unique_email_list {
- 	my %seen;
- 	my @emails;
-@@ -1569,3 +1587,106 @@ sub body_or_subject_has_nonascii {
- 	}
- 	return 0;
- }
-+
-+my @msgid_new_entries;
-+sub msgid_cache_this {
-+	my $msgid = shift;
-+	my $first = shift;
-+	my $epoch = shift;
-+	my $subject = shift;
-+	# Make sure there are no tabs which will confuse us, and save
-+	# some valuable horizontal real-estate by removing redundant
-+	# whitespace.
-+	if ($subject) {
-+		$subject =~ s/^\s+|\s+$//g;
-+		$subject =~ s/\s+/ /g;
-+	}
-+	# Replace undef or the empty string by an actual string.
-+	$subject = '(none)' if (!defined $subject || $subject eq '');
-+
-+	push @msgid_new_entries, {id => $msgid, first => $first, subject => $subject, epoch => $epoch};
-+}
-+
-+
-+# For now, use a simple tab-separated format:
-+#
-+#    $id\t$wasfirst\t$unixtime\t$subject\n
-+sub msgid_cache_read {
-+	my $fh;
-+	my $line;
-+	my @entries;
-+	if (not open ($fh, '<', $msgid_cache_file)) {
-+		# A non-existing cache file is ok, but should we warn if errno != ENOENT?
-+		return ();
-+	}
-+	while ($line = <$fh>) {
-+		chomp($line);
-+		my ($id, $first, $epoch, $subject) = split /\t/, $line;
-+		push @entries, {id=>$id, first=>$first, epoch=>$epoch, subject=>$subject};
-+	}
-+	close($fh);
-+	return @entries;
-+}
-+
-+sub msgid_cache_getmatches {
-+	my ($first_subject, $maxentries) = @_;
-+	my @list = msgid_cache_read();
-+
-+	# We need to find the message-ids which are most likely to be
-+	# useful. There are probably better ways to do this, but for
-+	# now we simply count how many words in the old subject also
-+	# appear in $first_subject.
-+	my %words = map {$_ => 1} msgid_subject_words($first_subject);
-+	for my $item (@list) {
-+		# Emails which were first in a batch are more likely
-+		# to be used for followups (cf. the example in "man
-+		# git-send-email"), so give those a head start.
-+		my $score = $item->{first} ? 3 : 0;
-+		for (msgid_subject_words($item->{subject})) {
-+			$score++ if exists $words{$_};
-+		}
-+		$item->{score} = $score;
-+	}
-+	@list = sort {$b->{score} <=> $a->{score} ||
-+		      $b->{epoch} <=> $a->{epoch}} @list;
-+	@list = @list[0 .. $maxentries-1] if (@list > $maxentries);
-+	return @list;
-+}
-+
-+sub msgid_subject_words {
-+	my $subject = shift;
-+	# Ignore initial "[PATCH 02/47]"
-+	$subject =~ s/^\s*\[.*?\]//;
-+	my @words = split /\s+/, $subject;
-+	# Ignore short words. 
-+	@words = grep { length > 3 } @words;
-+	return @words;
-+}
-+
-+sub msgid_cache_write {
-+	msgid_cache_do_write(1, \@msgid_new_entries);
-+
-+	if (defined $msgid_cache_maxsize && $msgid_cache_maxsize =~ m/^\s*([0-9]+)\s*([kKmMgG]?)$/) {
-+		my %SI = ('' => 1, 'k' => 1e3, 'm' => 1e6, 'g' => 1e9);
-+		$msgid_cache_maxsize = $1 * $SI{lc($2)};
-+	}
-+	else {
-+		$msgid_cache_maxsize = 100000;
-+	}
-+	if (-s $msgid_cache_file > $msgid_cache_maxsize) {
-+		my @entries = msgid_cache_read();
-+		splice @entries, 0, int(@entries/2);
-+		msgid_cache_do_write(0, \@entries);
-+	}
-+}
-+
-+sub msgid_cache_do_write {
-+	my $append = shift;
-+	my $entries = shift;
-+	my $fh;
-+	if (not open($fh, $append ? '>>' : '>', $msgid_cache_file)) {
-+		die "cannot open $msgid_cache_file for writing: $!";
-+	}
-+	printf $fh "%s\t%d\t%s\t%s\n", $_->{id}, $_->{first}, $_->{epoch}, $_->{subject} for (@$entries);
-+	close($fh);
-+}
+Eric Sunshine (3):
+  t3404: preserve test_tick state across short SHA-1 collision test
+  t3404: make tests more self-contained
+  t3404: simplify short SHA-1 collision test
+
+ t/t3404-rebase-interactive.sh | 77 ++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 72 insertions(+), 5 deletions(-)
+
 -- 
-1.7.9.5
+1.8.4.rc4.499.gfb33910
