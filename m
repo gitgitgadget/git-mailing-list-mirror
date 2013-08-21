@@ -1,89 +1,124 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [RFC PATCHv6 2/2] repack: retain the return value of pack-objects
-Date: Wed, 21 Aug 2013 19:28:16 +0200
-Message-ID: <1377106096-28195-2-git-send-email-stefanbeller@googlemail.com>
-References: <5214F816.3010303@googlemail.com>
- <1377106096-28195-1-git-send-email-stefanbeller@googlemail.com>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: git@vger.kernel.org, mfick@codeaurora.org, apelisse@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr, pclouds@gmail.com, iveqy@iveqy.com,
-	gitster@pobox.com, mackyle@gmail.com, j6t@kdbg.org
-X-From: git-owner@vger.kernel.org Wed Aug 21 19:28:33 2013
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: [PATCH] git-diff: Clarify operation when not inside a repository.
+Date: Wed, 21 Aug 2013 13:34:58 -0400
+Message-ID: <201308211734.r7LHYwNh008859@hobgoblin.ariadne.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 21 19:35:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCCCt-0005Kx-BA
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 19:28:31 +0200
+	id 1VCCJJ-00068J-84
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 19:35:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752235Ab3HUR2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Aug 2013 13:28:21 -0400
-Received: from mail-ea0-f176.google.com ([209.85.215.176]:54063 "EHLO
-	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751726Ab3HUR2T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Aug 2013 13:28:19 -0400
-Received: by mail-ea0-f176.google.com with SMTP id q16so418529ead.35
-        for <git@vger.kernel.org>; Wed, 21 Aug 2013 10:28:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ip2ZuNENpeEJy31SN3THff2yFIAjhjMwn9u4aYoCtEI=;
-        b=us2ye/MWcIDaCWNDg7+OciI/H+wneGIA28x7lkMGziaLmTgbjay21PbDRAiZ0ULUuJ
-         FhTBb2z/1fwAnfbEtm1L2yKdtNa7t3Je6A2gR5GRNHoEUfrbq3osaMkOHgIJSbUUhWNO
-         MZAa7G2ovLPjYZ7+YoAD2+PoHGGprmqeHn2yRltaKYaaiu9ZdAeC4VTfAx2/leI59X3f
-         l9YZ/6SJx31X0fp+tB5LoFkv6iis/6PbyXxrULXbvrcI3DKlpQwVH9CvRQC9cRLS00Vj
-         RQVhrrvIwyxRnjRdhpQOoFLdsN+XkiOEXheRU/r41n3LdEIfUZPIA1hen/k+otQ9CenM
-         NNKg==
-X-Received: by 10.15.107.132 with SMTP id cb4mr5100254eeb.54.1377106098201;
-        Wed, 21 Aug 2013 10:28:18 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id p5sm11335083eeg.5.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 21 Aug 2013 10:28:17 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc3.1.gc1ebd90
-In-Reply-To: <1377106096-28195-1-git-send-email-stefanbeller@googlemail.com>
+	id S1752291Ab3HURfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 13:35:03 -0400
+Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:39732
+	"EHLO qmta05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752100Ab3HURfC (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Aug 2013 13:35:02 -0400
+Received: from omta08.westchester.pa.mail.comcast.net ([76.96.62.12])
+	by qmta05.westchester.pa.mail.comcast.net with comcast
+	id FUgq1m0010Fqzac55Vb0Ue; Wed, 21 Aug 2013 17:35:00 +0000
+Received: from hobgoblin.ariadne.com ([24.34.72.61])
+	by omta08.westchester.pa.mail.comcast.net with comcast
+	id FVaz1m01V1KKtkw3UVb0mY; Wed, 21 Aug 2013 17:35:00 +0000
+Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
+	by hobgoblin.ariadne.com (8.14.5/8.14.5) with ESMTP id r7LHYxEi008860;
+	Wed, 21 Aug 2013 13:34:59 -0400
+Received: (from worley@localhost)
+	by hobgoblin.ariadne.com (8.14.5/8.14.5/Submit) id r7LHYwNh008859;
+	Wed, 21 Aug 2013 13:34:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1377106500;
+	bh=cLAmL6uRxmZrGHs7ta/s79Qi5/g/5br648kjysjwW1Y=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=mSdOOAX8zp97xjmEfYhcxIj3fT5eG+HV4DQb4FAbNWqbY5VsQ2Duhe15nk0HJV1B7
+	 ouy68oS/ZQ/cduCqdmn2o5fa4ZF40dOok+xb7iHi57Q4m6s1iXHIkQeoH3ClNcF3SK
+	 35DkgYFuGaMDEESne5lkHobtoU0bGIgCOvZrLGmdLQOQNe3v/KmAWa1bfnUWT5hNv2
+	 nu59J9yVBXd6s3M2P1oWW1M+oxU76sRvBqKgQShCtBgpioxtKVWDVpLBui57QK6FzM
+	 4/6eSeFmX2cbDlwN0+T2iYzbhT5k2SePg26Oh8lIbWOW3VUYMrhGalNhEANI8+FtiD
+	 6f9IzWIYBr/kg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232710>
 
-During the review process of the previous commit (repack: rewrite the
-shell script in C), Johannes Sixt proposed to retain any exit codes from
-the sub-process, which makes it probably more obvious in case of failure.
+Clarify documentation for git-diff:  State that when not inside a
+repository, --no-index is implied (and thus two arguments are
+mandatory).
 
-As the commit before should behave as close to the original shell
-script, the proposed change is put in this extra commit.
-The infrastructure however was already setup in the previous commit.
-(Having a local 'ret' variable)
+Clarify error message from diff-no-index to inform user that CWD is
+not inside a repository and thus two arguments are mandatory.
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+Signed-off-by: Dale Worley <worley@ariadne.com>
 ---
- builtin/repack.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index fb050c0..1f13e0d 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -231,7 +231,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+
+This clarification is to avoid a problem I ran into.  I executed 'git
+diff' in the remote working tree of a repository, and not in the
+repository directory itself.  Because of that, git-diff assumed
+git-diff --no-index, and executed diff-no-index.  Since I hadn't
+provided paths, diff-no-index produced an error message.
+Unfortunately, the error message presupposes that the decision to
+execute diff-no-index reflects the user's intention, thus leaving me
+confused, as the error message is only:
+    usage: git diff [--no-index] <path> <path>
+and does not cover the case I intended.  This patch changes the
+message to notify the user that he is getting --no-index semantics
+because he is outside of a repository:
+    Not within a git repository:
+    usage: git diff [--no-index] <path> <path>
+The additional line is suppressed if the user specified --no-index.
+
+The documentation is expanded to state that execution outside of a
+repository forces --no-index behavior.  Previously, the manual implied
+this but did not state it, making it easy for the user to overlook
+that it's possible to run git-diff outside of a repository.
+
+Dale
+
+
+ Documentation/git-diff.txt |    3 ++-
+ diff-no-index.c            |    6 +++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index 78d6d50..9f74989 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -31,7 +31,8 @@ two blob objects, or changes between two files on disk.
+ +
+ If exactly two paths are given and at least one points outside
+ the current repository, 'git diff' will compare the two files /
+-directories. This behavior can be forced by --no-index.
++directories. This behavior can be forced by --no-index or by 
++executing 'git diff' outside of a working tree.
  
- 	ret = start_command(&cmd);
- 	if (ret)
--		return 1;
-+		return ret;
+ 'git diff' [--options] --cached [<commit>] [--] [<path>...]::
  
- 	count_packs = 0;
- 	out = xfdopen(cmd.out, "r");
-@@ -245,7 +245,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	fclose(out);
- 	ret = finish_command(&cmd);
- 	if (ret)
--		return 1;
-+		return ret;
- 	argv_array_clear(&cmd_args);
+diff --git a/diff-no-index.c b/diff-no-index.c
+index e66fdf3..98c5f76 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -215,9 +215,13 @@ void diff_no_index(struct rev_info *revs,
+ 		     path_inside_repo(prefix, argv[i+1])))
+ 			return;
+ 	}
+-	if (argc != i + 2)
++	if (argc != i + 2) {
++	        if (!no_index) {
++		        fprintf(stderr, "Not within a git repository:\n");
++		}
+ 		usagef("git diff %s <path> <path>",
+ 		       no_index ? "--no-index" : "[--no-index]");
++	}
  
- 	if (!count_packs && !quiet)
+ 	diff_setup(&revs->diffopt);
+ 	for (i = 1; i < argc - 2; ) {
 -- 
-1.8.4.rc3.1.gc1ebd90
+1.7.7.6
