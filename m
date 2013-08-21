@@ -1,90 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC PATCHv6 1/2] repack: rewrite the shell script in C
-Date: Wed, 21 Aug 2013 23:52:15 +0200
-Message-ID: <vpqr4dm67ao.fsf@anie.imag.fr>
-References: <5214F816.3010303@googlemail.com>
-	<1377106096-28195-1-git-send-email-stefanbeller@googlemail.com>
-	<xmqqfvu2u5io.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Document the HTTP transport protocols
+Date: Wed, 21 Aug 2013 18:00:21 -0400
+Message-ID: <20130821220021.GA32130@sigill.intra.peff.net>
+References: <1377092713-25434-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <stefanbeller@googlemail.com>, git@vger.kernel.org,
-	mfick@codeaurora.org, apelisse@gmail.com, pclouds@gmail.com,
-	iveqy@iveqy.com, mackyle@gmail.com, j6t@kdbg.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 21 23:52:42 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	rctay89@gmail.com, "Shawn O. Pearce" <spearce@spearce.org>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 22 00:00:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCGKX-0001LV-GM
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 23:52:41 +0200
+	id 1VCGS4-0003gG-OV
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Aug 2013 00:00:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752171Ab3HUVwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Aug 2013 17:52:37 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:49194 "EHLO shiva.imag.fr"
+	id S1752226Ab3HUWAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 18:00:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50184 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751624Ab3HUVwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Aug 2013 17:52:36 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r7LLqDsg031982
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 21 Aug 2013 23:52:13 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VCGK7-00026Z-JK; Wed, 21 Aug 2013 23:52:15 +0200
-In-Reply-To: <xmqqfvu2u5io.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 21 Aug 2013 13:56:47 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 21 Aug 2013 23:52:14 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r7LLqDsg031982
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1377726737.89712@LxwxdDd6SSI0MSb92hzK6g
+	id S1751624Ab3HUWAY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Aug 2013 18:00:24 -0400
+Received: (qmail 15234 invoked by uid 102); 21 Aug 2013 22:00:24 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 21 Aug 2013 17:00:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Aug 2013 18:00:21 -0400
+Content-Disposition: inline
+In-Reply-To: <1377092713-25434-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232741>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Aug 21, 2013 at 08:45:13PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-> Stefan Beller <stefanbeller@googlemail.com> writes:
->
->> The motivation of this patch is to get closer to a goal of being
->> able to have a core subset of git functionality built in to git.
->> That would mean
->>
->>  * people on Windows could get a copy of at least the core parts
->>    of Git without having to install a Unix-style shell
->>
->>  * people deploying to servers don't have to rewrite the #! line
->>    or worry about the PATH and quality of installed POSIX
->>    utilities, if they are only using the built-in part written
->>    in C
->
-> I am not sure what is meant by the latter.  Rewriting #! is part of
-> any scripted Porcelain done by the top-level Makefile, and I do not
-> think we have seen any problem reports on it.
+>  On the topic, C Git's (maybe) violations on this spec are:
+>  
+>   - The client does not strip trailing slashes from $GIT_URL before
+>     sending to the server, as described in section "URL Format".
 
-I think the case of a server with exotic OS and totally broken /bin/sh
-would also benefit from this (the user won't have to find a non-broken
-sh and point SHELL_PATH to it). I have no concrete example though.
+Yeah. We get the basic gist right by not adding an extra "/" if there is
+already a trailing slash (so you do not have http://host/path//info/refs").
+But we do not go out of our way to remove multiple slashes that the user
+hands out (either at the end or in the middle of the URL). I doubt that
+it matters in practice.
 
->> +		size_t len = strlen(e->d_name) - strlen(".pack");
->
-> decl-after-stmt.
+>   - The client does not check that HTTP status code is either 200 or
+>     304 when receiving response in discovering references phase.
 
-Stefan: you can make sure this does not happen again by adding
+We rely on curl's CURLOPT_FAILONERROR to handle errors. And curl handles
+redirects internally. So yes, we could get a "204" or something weird,
+but it would almost certainly not pass the other checks (proper
+content-type, starting with pkt-line, etc). I doubt it's a problem in
+practice.
 
-CFLAGS += -Wdeclaration-after-statement
+We also handle 401 these days, which is not in the document, but
+obviously makes sense to do (ditto for 407, but I cannot remember if we
+actually handle that or not; there were patches, but I think they may
+have been dropped).
 
-in config.mak.
+>   - The client verifies the first 5 bytes against pattern
+>     "^[0-9a-fA-F]{4}#" instead of "^[0-9a-f]{4}#" as described in
+>     section "discovering references".
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I think this could be counted as "be liberal in what you accept",
+although I do not know offhand of any implementations that use
+uppercase. But if it is not true pkt-line we would figure it out pretty
+quickly anyway.
+
+> [...]
+
+I read through the rest and did not see anything inaccurate. Thanks for
+working on this.
+
+-Peff
