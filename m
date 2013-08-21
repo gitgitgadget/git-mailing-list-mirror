@@ -1,86 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Document the HTTP transport protocols
-Date: Wed, 21 Aug 2013 11:45:33 -0700
-Message-ID: <xmqqsiy2uble.fsf@gitster.dls.corp.google.com>
-References: <1377092713-25434-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, rctay89@gmail.com,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 21 20:45:44 2013
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] rebase --preserve-merges: ignore "merge.log" config
+Date: Wed, 21 Aug 2013 20:48:57 +0200
+Message-ID: <1377110937-13439-1-git-send-email-ralf.thielow@gmail.com>
+Cc: gitster@pobox.com, Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 21 20:49:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCDPZ-0000dW-9x
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 20:45:41 +0200
+	id 1VCDSw-0005Wk-QL
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 20:49:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752508Ab3HUSph convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Aug 2013 14:45:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39037 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752116Ab3HUSpg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Aug 2013 14:45:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E7AD3B1AC;
-	Wed, 21 Aug 2013 18:45:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Raz7/uYHPy/X
-	q6KVmvi3ZeHw8Cw=; b=AW+YSg95MfmnVa5+1jOlFVV52SyRY6cYpsLmkI70ZxXy
-	VutXZUkr69LXjPL1mUPtO1jORVLig7FNJd4sqHOQ1HxQluy9YALhIzyU3KQRxs/Z
-	Z19b8bO6zCNsyMAdIvimhqra+12Lyi5vdVyGO5ddx07qJCOI3+jPSfi/MEhu8hU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=w/18V8
-	ycu+ppQUko0CrK86Ag2BbswpPIgNNIG6Ty2TFtWEuB7kOFmpWTj5ajSG+thP9Qzh
-	S1rvH/haFDLeTLnJkMfH+3nfyMpjx1/8pAERFpBpNHQ9BEKROi1rSxJYHGvD69NV
-	0e3Yp5+c49KERnU7hUhY+a9z/cewU+TEi75eU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01DA83B1AB;
-	Wed, 21 Aug 2013 18:45:36 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 514643B1AA;
-	Wed, 21 Aug 2013 18:45:35 +0000 (UTC)
-In-Reply-To: <1377092713-25434-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 21
- Aug 2013 20:45:13 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DD784AE8-0A91-11E3-A96F-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752579Ab3HUStG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 14:49:06 -0400
+Received: from mail-ea0-f173.google.com ([209.85.215.173]:39606 "EHLO
+	mail-ea0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752245Ab3HUStE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Aug 2013 14:49:04 -0400
+Received: by mail-ea0-f173.google.com with SMTP id g10so457852eak.32
+        for <git@vger.kernel.org>; Wed, 21 Aug 2013 11:49:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=XHfC/l+DZkl239ZaeHMUVGJvN1h3wwUMqi8Z9MrBUjY=;
+        b=CpBmLOzXgqj2Ctbhvs4aMqHfcU/L/jJhkurP4LJxMz6EMtAt9qYJE9z6j6+9TMSbBJ
+         18rPYnk7AVLEhisMqUGSEjmv1CeN+U7z4QzlouOTgndPgq84FVrW5PUH3PUBDm7Toflm
+         cXxDYRWxf0neGEMSrTLPiRmdILxe8cnopkRl+m4ZWqvt3+kbi+ylQ4+LVv9q4pLUTun5
+         CYq0rJvKQXD28KxPkvrMg4kWxRhv1Ys3XXNg/WjDQYb1fpo9Nw6GIumbssW7gKUAm/r0
+         1MJ+Lf9JQHdAwgZO+SXtQ5Us/HFhTdU0P9aXTUfKzTypCGwW4aeFuzsNyCNcLfT0SuUh
+         wAjw==
+X-Received: by 10.14.111.9 with SMTP id v9mr12240308eeg.35.1377110943258;
+        Wed, 21 Aug 2013 11:49:03 -0700 (PDT)
+Received: from localhost (dslb-178-005-189-036.pools.arcor-ip.net. [178.5.189.36])
+        by mx.google.com with ESMTPSA id i1sm11850557eeg.0.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 21 Aug 2013 11:49:02 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc4.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232714>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+When "merge.log" config is set, "rebase --preserve-merges"
+will add the log lines to the message of the rebased merge
+commit.
 
->  This is basically the version from Tay Ray Chuan [1] with one more
->  proofreading round from me. My changes besides realignments are belo=
-w.
->  There are TODOs remain but I think the document is valuable as it is=
-=2E
+A rebase should not modify a commit message automatically.
 
-Thanks.
+Teach "git-rebase" to ignore that configuration by passing "--no-log"
+to the git-merge call.
 
->  On the topic, C Git's (maybe) violations on this spec are:
-> =20
->   - The client does not strip trailing slashes from $GIT_URL before
->     sending to the server, as described in section "URL Format".
-> =20
->   - The client does not check that HTTP status code is either 200 or
->     304 when receiving response in discovering references phase.
->
->   - The client verifies the first 5 bytes against pattern
->     "^[0-9a-fA-F]{4}#" instead of "^[0-9a-f]{4}#" as described in
->     section "discovering references".
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ git-rebase--interactive.sh        |  3 ++-
+ t/t3409-rebase-preserve-merges.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-Perhaps add these to "small projects ideas"?  The last one may want
-to be phrased a bit better, though.  I needed to read it twice to
-realize that you are saying "the client accepts hexadecimal using
-uppercase alphabets where it should not".
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 83d6d46..4743c59 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -352,8 +352,9 @@ pick_one_preserving_merges () {
+ 			msg_content="$(commit_message $sha1)"
+ 			# No point in merging the first parent, that's HEAD
+ 			new_parents=${new_parents# $first_parent}
++			merge_args="--no-log --no-ff"
+ 			if ! do_with_author output eval \
+-			'git merge --no-ff $strategy_args -m "$msg_content" $new_parents'
++			'git merge $merge_args $strategy_args -m "$msg_content" $new_parents'
+ 			then
+ 				printf "%s\n" "$msg_content" > "$GIT_DIR"/MERGE_MSG
+ 				die_with_patch $sha1 "Error redoing merge $sha1"
+diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
+index 2e0c364..2454811 100755
+--- a/t/t3409-rebase-preserve-merges.sh
++++ b/t/t3409-rebase-preserve-merges.sh
+@@ -28,6 +28,8 @@ export GIT_AUTHOR_EMAIL
+ #     \--A3    <-- topic2
+ #      \
+ #       B2     <-- origin/topic
++#
++# Clone 4 (same as Clone 3)
+ 
+ test_expect_success 'setup for merge-preserving rebase' \
+ 	'echo First > A &&
+@@ -64,6 +66,16 @@ test_expect_success 'setup for merge-preserving rebase' \
+ 		git merge --no-ff topic2
+ 	) &&
+ 
++	git clone ./. clone4 &&
++	(
++		cd clone4 &&
++		git checkout -b topic2 origin/topic &&
++		echo Sixth > A &&
++		git commit -a -m "Modify A3" &&
++		git checkout -b topic origin/topic &&
++		git merge --no-ff topic2
++	) &&
++
+ 	git checkout topic &&
+ 	echo Fourth >> B &&
+ 	git commit -a -m "Modify B2"
+@@ -96,4 +108,17 @@ test_expect_success 'rebase -p preserves no-ff merges' '
+ 	)
+ '
+ 
++test_expect_success 'rebase -p ignores merge.log config' '
++	(
++	cd clone4 &&
++	git fetch &&
++	git -c merge.log=1 rebase -p origin/topic &&
++	cat >expected <<-\EOF &&
++
++	EOF
++	git log --format="%b" -1 >current
++	test_cmp expected current
++	)
++'
++
+ test_done
+-- 
+1.8.4.rc4.dirty
