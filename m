@@ -1,89 +1,85 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] rebase --preserve-merges: ignore "merge.log" config
-Date: Wed, 21 Aug 2013 16:22:27 -0400
-Message-ID: <CAPig+cTWgaMLLUBEetAQnNG2U34d8YgYPSSNds4oFim4uB=2WA@mail.gmail.com>
-References: <1377110937-13439-1-git-send-email-ralf.thielow@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] git-remote-mediawiki: reset private ref after non-dumb push
+Date: Wed, 21 Aug 2013 22:26:17 +0200
+Message-ID: <vpqy57u7pue.fsf@anie.imag.fr>
+References: <1377072617-25086-1-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqq1u5nudq8.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 21 22:22:39 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 21 22:26:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCEvL-00014E-KP
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 22:22:36 +0200
+	id 1VCEzI-0006nb-Cz
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Aug 2013 22:26:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752781Ab3HUUWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Aug 2013 16:22:30 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:57568 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752765Ab3HUUW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Aug 2013 16:22:28 -0400
-Received: by mail-lb0-f182.google.com with SMTP id v20so1008144lbc.13
-        for <git@vger.kernel.org>; Wed, 21 Aug 2013 13:22:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=9TkJqI5dCmiex44VtF+LlDYKk1bSHrlCr0mrcmmMwKw=;
-        b=ZrEb0HU+EQvNTzNYjG2QxAG6AgDFeVyzltcs3/QJgAR49xkJV6xhT+TtbWMSVGGemC
-         oYUo/cNsADIKgUaNRInm1vm1edwT7760NWFkOFIISmThq3Za9Vs9rvUI+cddRvX3C9UM
-         5faCuuF51tkOHGv3LfoQ3JcO3NfSF2dUfnlM1XyULCkX0VefGD/8wy0T7rSXoGOYgBX/
-         0xrnrGkWaFh1/iEBnTIvO9uM1NAPndNeep2bysRZ/THuITb+fSaJv6lMt8knqGz/Fduu
-         jXjQ2ONloz8zC8xnOi4zz3Mmi/6cE8zgy5wS6K0O75HHYE+kxaKW1jYRJhxwd6XhvS0q
-         Pjaw==
-X-Received: by 10.112.89.100 with SMTP id bn4mr8512695lbb.16.1377116547194;
- Wed, 21 Aug 2013 13:22:27 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Wed, 21 Aug 2013 13:22:27 -0700 (PDT)
-In-Reply-To: <1377110937-13439-1-git-send-email-ralf.thielow@gmail.com>
-X-Google-Sender-Auth: nVzWt4MWXlUK90GgFS2no8kSbZM
+	id S1752692Ab3HUU0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 16:26:35 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:48175 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752393Ab3HUU0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Aug 2013 16:26:33 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r7LKQFMg007398
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 21 Aug 2013 22:26:17 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VCEyv-0001lX-N5; Wed, 21 Aug 2013 22:26:17 +0200
+In-Reply-To: <xmqq1u5nudq8.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 21 Aug 2013 10:59:27 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 21 Aug 2013 22:26:17 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r7LKQFMg007398
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1377721577.70096@CNBtMBCHCYua3GizEpNOTw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232726>
 
-On Wed, Aug 21, 2013 at 2:48 PM, Ralf Thielow <ralf.thielow@gmail.com> wrote:
-> When "merge.log" config is set, "rebase --preserve-merges"
-> will add the log lines to the message of the rebased merge
-> commit.
->
-> A rebase should not modify a commit message automatically.
->
-> Teach "git-rebase" to ignore that configuration by passing "--no-log"
-> to the git-merge call.
->
-> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
-> ---
-> diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
-> index 2e0c364..2454811 100755
-> --- a/t/t3409-rebase-preserve-merges.sh
-> +++ b/t/t3409-rebase-preserve-merges.sh
-> @@ -96,4 +108,17 @@ test_expect_success 'rebase -p preserves no-ff merges' '
->         )
->  '
->
-> +test_expect_success 'rebase -p ignores merge.log config' '
-> +       (
-> +       cd clone4 &&
-> +       git fetch &&
-> +       git -c merge.log=1 rebase -p origin/topic &&
-> +       cat >expected <<-\EOF &&
-> +
-> +       EOF
+Junio C Hamano <gitster@pobox.com> writes:
 
-This might be clearer with a simple 'echo' instead of 'cat' with heredoc:
+>> diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
+>> index f8d7d2c..13919ad 100755
+>> --- a/contrib/mw-to-git/git-remote-mediawiki.perl
+>> +++ b/contrib/mw-to-git/git-remote-mediawiki.perl
+>> @@ -53,6 +53,7 @@ if (@ARGV != 2) {
+>>  
+>>  my $remotename = $ARGV[0];
+>>  my $url = $ARGV[1];
+>> +my $reset_private_ref_to = undef;
+>>  
+>>  # Accept both space-separated and multiple keys in config file.
+>>  # Spaces should be written as _ anyway because we'll use chomp.
+>> @@ -161,6 +162,9 @@ sub parse_command {
+>>  	my ($line) = @_;
+>>  	my @cmd = split(/ /, $line);
+>>  	if (!defined $cmd[0]) {
+>> +		if ($reset_private_ref_to) {
+>> +			run_git("update-ref -m \"Git-MediaWiki non-dumb push\" refs/mediawiki/$remotename/master $reset_private_ref_to");
+>> +		}
+>
+> So reset-private-ref-to is recorded for a non-dumb push, but...
 
-  echo >expected &&
+> ... it is set for dumb-push?  I am confused.
 
-> +       git log --format="%b" -1 >current
-> +       test_cmp expected current
-> +       )
-> +'
-> +
->  test_done
-> --
-> 1.8.4.rc4.dirty
+Oops, I'm the one who did the confusion indeed. It should be
+s/non-dumb/dumb/ here and in the subject line.
+
+Don't merge this one, I've fixed locally and will resend (this or
+another fix, depending on the outcome of the discussion).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
