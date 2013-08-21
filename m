@@ -1,143 +1,102 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: [RFC PATCHv6 1/2] repack: rewrite the shell script in C
-Date: Thu, 22 Aug 2013 00:57:35 +0200
-Message-ID: <521545DF.2040004@googlemail.com>
-References: <5214F816.3010303@googlemail.com> <1377106096-28195-1-git-send-email-stefanbeller@googlemail.com> <xmqqfvu2u5io.fsf@gitster.dls.corp.google.com> <52153C01.6040101@googlemail.com> <xmqqsiy2slo3.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [DO NOT APPLY PATCH 4/4] index-pack: optionally skip duplicate packfile entries
+Date: Wed, 21 Aug 2013 16:20:07 -0700
+Message-ID: <xmqqob8qskbc.fsf@gitster.dls.corp.google.com>
+References: <20130821204955.GA28025@sigill.intra.peff.net>
+	<20130821205555.GD28165@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig49A146088DD0534ED41B3D20"
-Cc: git@vger.kernel.org, mfick@codeaurora.org, apelisse@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr, pclouds@gmail.com, iveqy@iveqy.com,
-	mackyle@gmail.com, j6t@kdbg.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 22 00:57:40 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 22 01:20:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCHLP-0002GK-QI
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Aug 2013 00:57:40 +0200
+	id 1VCHhJ-0001ef-HA
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Aug 2013 01:20:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753025Ab3HUW5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Aug 2013 18:57:32 -0400
-Received: from mail-ea0-f179.google.com ([209.85.215.179]:36812 "EHLO
-	mail-ea0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753007Ab3HUW5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Aug 2013 18:57:31 -0400
-Received: by mail-ea0-f179.google.com with SMTP id b10so571165eae.10
-        for <git@vger.kernel.org>; Wed, 21 Aug 2013 15:57:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type;
-        bh=uQ/y32N5+XiIqzaatYQyqb0Wr4vp3aAxTJz+f4vDpaE=;
-        b=GWiNma9i6V47ABtdiyiaiVbU/DXpeDFncW2S8VELDmNtX8yy74O13HH5dtGDiwxdL1
-         o8vI5u8ZQReyPTt2UvyoZbKW/luZt2kjxaPFi1pV5onakjdew1Zd7LJ47p1dNASwXaQn
-         V0hEIZuNe4vZGRaYbLk/4fDSr7o/Q2f/EWGUkyKa+2p7g9Ap4yIs6fZ96p3Pgrd2WGjx
-         LTHo9NIoAI/4gptuI+c4oBer++b1cdJ8nu/eI8bXaZ8bcWOC+uhYL35jUL+nX2k7MTy6
-         HUFssl2s5qM0u5eoLuluYD4l6X4bKsXgxqxSlZUz9oupTqEc+Wp2G5RRShBJvjTp6u4r
-         ch/g==
-X-Received: by 10.14.113.137 with SMTP id a9mr13233749eeh.3.1377125849876;
-        Wed, 21 Aug 2013 15:57:29 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id k7sm13207356eeg.13.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 21 Aug 2013 15:57:29 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
-In-Reply-To: <xmqqsiy2slo3.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.4.6
+	id S1753059Ab3HUXUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 19:20:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39169 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752936Ab3HUXUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Aug 2013 19:20:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F01D3B626;
+	Wed, 21 Aug 2013 23:20:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Yw+PWWBGxV6SfXDdzdG2sSQ0hw4=; b=q4qrE3
+	g1FQ631DCMfBXAi94ei9nl6LHcbH9aGNVQ7VpuzHEYZsROAI2mw6opJsmPxJTLPd
+	V5JbKxt3Ue9LrPOd4/g0CR3Gebg5g1ckmg4LA1J/me0C8Hd8u3hHcqTYPHu7V7Qw
+	m4Psm02OnGf36vePWLab18c/1OUrlNqNQ2vvg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Lp9yB97uJh2li0DAPdlcO5M5zyGWd3zr
+	Wn2dK1ShfFo1mSfJqOjNylwdLKkkLNvhsQS2NoF2Rsh15Neuc69kVGih5mgO/NBN
+	zVPrmTt4V9+GsbfNY4Jb3BV974La5rXKD5/WlFdZgNcfFnJuWmfMbss6G6kTdHjD
+	wLd29hhYGhM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 701DB3B624;
+	Wed, 21 Aug 2013 23:20:09 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D56DB3B61E;
+	Wed, 21 Aug 2013 23:20:08 +0000 (UTC)
+In-Reply-To: <20130821205555.GD28165@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 21 Aug 2013 16:55:55 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 38771598-0AB8-11E3-A953-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232749>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig49A146088DD0534ED41B3D20
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Jeff King <peff@peff.net> writes:
 
-On 08/22/2013 12:50 AM, Junio C Hamano wrote:
-> Stefan Beller <stefanbeller@googlemail.com> writes:
->=20
->>>> +static int delta_base_offset =3D 1;
->>>> +char *packdir;
->>>
->>> Does this have to be global?
->>
->> We could pass it to all the functions, making it not global.
->=20
-> Sorry for being unclear; I meant "not static".  It is perfectly fine
-> for this to be a file-scope static.
+> When we are building the pack index, we can notice that
+> there are duplicate objects, pick one "winner" instance, and
+> mention the object only once in the index (mapped to the
+> winner's offset).
+>
+> This has the effect that the duplicate packfile entries are
+> never found by lookup. The data still exists in the
+> packfile, though, and can be used as a delta base if delta
+> base offsets are used. If delta refs are used, then it is
+> possible that some deltas may be broken.
 
-No need to be sorry! I am sleepy, and may missunderstand even clear
-messages. I'll change it to static of course.
+I do not understand the last bit.  If two copies of an object exist
+but you have only one slot for the object in the index, and another
+object names it as its base with ref-delta, then reconstituting it
+should work just fine---whichever representation of the base object
+is recorded in the .idx, that first needs to be reconstituted before
+the delta is applied to it, and both copies should yield identical
+contents for the delta base object, no?
 
->=20
->>>> +
->>>> +		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)))
->>>> +			string_list_append_nodup(fname_list, fname);
->>>
->>> mental note: this is getting names of non-kept packs, not all packs.
->>
->> I should document that. ;)
->=20
-> Rather, consider giving the function a better name, perhaps?
+In any case, ejecting one from the pack .idx would not help in the
+presense of either broken or malicious packer that reuses delta too
+aggressively.  Suppose you have objects A and B and somehow manage
+to create a cycle of deltas, A names B as its delta base and B names
+A as its delta base.  The packer may notice its mistake and then add
+another copy of A as a base object.  The pack contains two copies of
+A (one is delta based on B, the other is full) and B (delta against
+A).
 
-What about one of:
-get_non_kept_pack_filenames
-get_prunable_pack_filenames
-get_remove_candidate_pack_filenames
+If B refers to the copy of A that is delta against B using ofs-delta,
+fixing the .idx file will have no effect.  read_packed_sha1(B) will
+read the delta data of B, finds the offset to start reading the data
+for A which was excised from the .idx and unless that codepath is
+updated to consult revindex (i.e. you mark one copy of A in the .pack
+as bad, and when B refers to that bad copy of A via ofs-delta, you
+check the offset against revindex to get the object name of A and go
+to the good copy of A), you will never finish reading B because
+reading the bad copy of A will lead you to first reconstitute B.
 
->=20
->>>> +	while (strbuf_getline(&line, out, '\n') !=3D EOF) {
->>>> +		if (line.len !=3D 40)
->>>> +			die("repack: Expecting 40 character sha1 lines only from pack-ob=
-jects.");
->>>> +		strbuf_addstr(&line, "");
->>>
->>> What is this addstr() about?
->>
->> According to the documentation of strbufs, we cannot assume to have sa=
-ne=20
->> strings, but anything.
->=20
-> Sorry, I do not get this.  What is a sane string and what is an
-> insane string?  sb->buf[sb-len] is always terminated with a NUL
-> when strbuf_getline() returns success, isn't it?
->=20
+> I think this line of "fixing" should probably be scrapped.
 
-I should read the strbuf documentation again. Thanks for pointing it
-out. I'll remove the strbuf_addstr(&line, "");
-
-Thanks for your patience in the reviews,
-Stefan
-
-
---------------enig49A146088DD0534ED41B3D20
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with undefined - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJSFUXfAAoJEJQCPTzLflhq3L8QAIBrM2XwUFvI7dPM42szuGjm
-ZxWkbA5eNSa9n+HEartUUA1o2YZIj5TwZjzLZNxBSCAyipWOxqBeAHK0hrIV/hMu
-9f3we9DAPlILWFMwNmGjrSh9vhpWTdio6mdk4Tyu9j4gsYmg20YRnCd4tsrq6tbC
-udq5AB8TZO41wmvcnwlrtrnL1Yp8j0cImhkKRrO3/sgTpRsORfCOaQIUee5AL7EZ
-Rr7nhEbAve07Y9mlpVM0+1RAmtyEwIbBzfYWd8SUMjPCmxQQ1NPLQBS/MVcX09a9
-CS3gEO3xngg3L4miz3SUtC0Tl1iEwU5mpGmUFjIGBmdB9DsZVvdcNHSGV8VDyH3+
-MKwwOZeQ1ZWoqNs0cP9mRWQq98vEeuqv+/OwJPpcHNAiXzjyxN0oHcpyn7GCw5vb
-WnO8G1defRFH3fmvRTfSRZP7wU03Za+TAo3l43DFRbGCpyNHD9Wzl589q6gOsPGr
-Dff+ENWpLQlZws1AniT6dh1B2JiLKXvwxhBUZRw+mmAgndPCEYqTu+/InXihOM6C
-ULw1qTE8tMMoXAVRf+j1Z8BvLO3VmMUOULcgXXNu7Inf19o5ppEFKEZ5kzaLTGyY
-BIQ+b7dulv/7D+LKucyFrP0vPj3WoICIoDY3lbJK80ELd4H+It9wPxvURXMVuBoB
-KyFlHA7imvZ3oMMJMpvg
-=efbK
------END PGP SIGNATURE-----
-
---------------enig49A146088DD0534ED41B3D20--
+I tend to agree.
