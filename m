@@ -1,89 +1,84 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: t3010 broken by 2eac2a4
-Date: Thu, 22 Aug 2013 18:53:07 -0400
-Message-ID: <CAPig+cQ15Qq7pJ0sLmnuQt_EERn9fkzCa-Gr-pb6a_zf1MLcGQ@mail.gmail.com>
-References: <82078845-3AB9-4B36-9130-039CC33C8A7A@gernhardtsoftware.com>
-	<xmqqbo4qu3g4.fsf@gitster.dls.corp.google.com>
-	<CAPig+cQHTvmTWvGfg1Z3KfBrPD+QbSEbYBYz6XWT3KKu3-+jyQ@mail.gmail.com>
-	<xmqqbo4pqvde.fsf@gitster.dls.corp.google.com>
-	<CAPig+cQmvRDDc3BHbta_UhCQe9QvbtAm0RJgt6HbtgFAKgo0Vg@mail.gmail.com>
-	<xmqq7gfdqumd.fsf@gitster.dls.corp.google.com>
-	<CAPig+cSEQLk2M+X5QP7mkm846wqqHRCjPHgO7O3URvNcsYO6+w@mail.gmail.com>
-	<xmqq38q1qu3l.fsf@gitster.dls.corp.google.com>
-	<CAPig+cSgM-kO0Mk9qbGfLR8DZkYQt60Va4N2wfRBVqmReTPowQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCHv2 0/6] duplicate objects and delta cycles, oh my!
+Date: Thu, 22 Aug 2013 19:12:15 -0400
+Message-ID: <20130822231215.GA16978@sigill.intra.peff.net>
+References: <20130821204955.GA28025@sigill.intra.peff.net>
+ <20130821205220.GB28165@sigill.intra.peff.net>
+ <CACsJy8DkUeS3s+X=gKX4ZAi82g_D_9t=bBVs8NNY2EeqM9W-rQ@mail.gmail.com>
+ <20130822144305.GA21219@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
-	"git@vger.kernel.org List" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 23 00:53:14 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 23 01:12:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCdkf-000821-NB
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 00:53:14 +0200
+	id 1VCe3D-0005P9-Vj
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 01:12:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753968Ab3HVWxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Aug 2013 18:53:09 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:49679 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753648Ab3HVWxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Aug 2013 18:53:08 -0400
-Received: by mail-oa0-f54.google.com with SMTP id o6so4861144oag.13
-        for <git@vger.kernel.org>; Thu, 22 Aug 2013 15:53:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=SB+0fJv/JHRFlz3Mu4surzqYEE+9HYt011x5rSGVd2s=;
-        b=zPqEPu8H0RXva0NZxXA9u2CrMM4BKEs0nGhC5wDFMQCN1tEVnZwx3fN1bdNnnqshEZ
-         ExU/Ol77KeQ6KmU5+aDWN/9GM6/bf/VHu5QpgJCwfo9K8KB84TDAPhweZeEpsfSw5rv2
-         Xwoljcs9BIWFKPYA/8dOBHRkXrWTWDyWxwDbYT4CYXzgID6GD2g4fixy9i1w4ma+S1Yo
-         D0Y1Cr9Cqflo8vZePRGB2NGKY1BzfHC4w3zPvOcPc+HCYDSsOAsC5eN5y2936rX7m8I3
-         CA7EvF+3ZGMiwCPq5F2IVdGXYedjWh1dL1Eoz3BC3p08uZrXSntPoV2BR2hF/yK5EBs7
-         lU/Q==
-X-Received: by 10.182.51.132 with SMTP id k4mr4027275obo.101.1377211987643;
- Thu, 22 Aug 2013 15:53:07 -0700 (PDT)
-Received: by 10.182.224.167 with HTTP; Thu, 22 Aug 2013 15:53:07 -0700 (PDT)
-In-Reply-To: <CAPig+cSgM-kO0Mk9qbGfLR8DZkYQt60Va4N2wfRBVqmReTPowQ@mail.gmail.com>
-X-Google-Sender-Auth: 5iKke6X-vWETFXr_UkfkzdO8YDE
+	id S1754456Ab3HVXMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Aug 2013 19:12:20 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59989 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753963Ab3HVXMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Aug 2013 19:12:19 -0400
+Received: (qmail 23692 invoked by uid 102); 22 Aug 2013 23:12:20 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 Aug 2013 18:12:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Aug 2013 19:12:15 -0400
+Content-Disposition: inline
+In-Reply-To: <20130822144305.GA21219@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232785>
 
-On Thu, Aug 22, 2013 at 5:59 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Thu, Aug 22, 2013 at 5:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Eric Sunshine <sunshine@sunshineco.com> writes:
->>> On Thu, Aug 22, 2013 at 5:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> Now, I am curious how it breaks on OS X.
->>>>
->>>> My suspition is that "ignore_case" may have something to do with it,
->>>> but what 2eac2a4c (ls-files -k: a directory only can be killed if
->>>> the index has a non-directory, 2013-08-15) uses are the bog-standard
->>>> cache_name_exists() and directory_exists_in_index(), so one of these
->>>> internal API implementation has trouble on case insensitive
->>>> filesystems, perhaps?  I dunno.
->>>
->>> That's exactly my suspicion at the moment. It's an obvious difference
->>> between Linux and OS X. I'm just in the process of trying to compare
->>> between the two platforms.
->>
->> Or perhaps de->d_type does not exist?  In such a case, we end up
->> doing get_index_dtype() via get_dtype(), but in this codepath I
->> suspect that we do not want to.  We are interested in the type of
->> the entity on the filesystem.
->
-> de->d_type exists on both platforms. get_dtype() is never called.
->
-> However, I did discover that treat_path() is being invoked fewer times
-> on OSX than on Linux. For instance, in the repository created by
-> t3010, treat_path() is called 19 times on Linux, but only 17 times on
-> OSX.
+On Thu, Aug 22, 2013 at 10:43:05AM -0400, Jeff King wrote:
 
-Status update: For the 'pathx' directory created by the t3010 test,
-directory_exists_in_index() returns false on OSX, but true is returned
-on Linux.
+> > write_idx_file() is called after index-pack processes all delta
+> > objects. Could resolve_deltas() go cyclic with certain duplicate
+> > object setup?
+> 
+> Good question. I'm not sure. I'll check it out.
+
+I think the answer is "no", based on both reasoning and testing (both of
+which are included in patches 3-4 of the series below).
+
+So here's my re-roll of the series.
+
+  [1/6]: test-sha1: add a binary output mode
+
+    New in this iteration; the previous version piped test-sha1 into
+    perl to create the pack trailer, but with this simple change we can
+    drop the perl dependency.
+
+  [2/6]: sha1-lookup: handle duplicate keys with GIT_USE_LOOKUP
+
+    Same code as before. I've factored the pack-creation bits from the
+    tests into lib-pack.sh, so they can be reused elsewhere when we want
+    to create bogus packs (and patches 3-4 reuse them here).
+
+  [3/6]: add tests for indexing packs with delta cycles
+  [4/6]: test index-pack on packs with recoverable delta cycles
+
+    New tests covering delta cycles.
+
+  [5/6]: index-pack: optionally reject packs with duplicate objects
+
+    Similar to before, but I converted the config flag to a simple
+    boolean (since we scrapped the "fix" of the tri-state "allow,
+    reject, fix").
+
+  [6/6]: default pack.indexDuplicates to false
+
+    This flips the safety check on by default everywhere (before, it was
+    left off for index-pack).
+
+-Peff
