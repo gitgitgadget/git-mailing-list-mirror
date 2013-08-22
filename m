@@ -1,138 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [DO NOT APPLY PATCH 4/4] index-pack: optionally skip duplicate
- packfile entries
-Date: Wed, 21 Aug 2013 20:47:10 -0400
-Message-ID: <20130822004710.GA563@sigill.intra.peff.net>
-References: <20130821204955.GA28025@sigill.intra.peff.net>
- <20130821205555.GD28165@sigill.intra.peff.net>
- <xmqqob8qskbc.fsf@gitster.dls.corp.google.com>
+From: Brandon Casey <bcasey@nvidia.com>
+Subject: [PATCH] contrib/git-prompt.sh: handle missing 'printf -v' more gracefully
+Date: Wed, 21 Aug 2013 18:17:22 -0700
+Message-ID: <1377134242-15012-1-git-send-email-bcasey@nvidia.com>
+References: <CA+sFfMfa422PF1inOOeTBRE7HRqL5zwCJNagx9Ya0i_LbpwQcg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 22 02:47:19 2013
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, <szeder@ira.uka.de>,
+	Brandon Casey <drafnel@gmail.com>
+To: <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 22 03:17:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCJ3V-0000gg-Sg
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Aug 2013 02:47:18 +0200
+	id 1VCJWq-0004FG-En
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Aug 2013 03:17:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753353Ab3HVArO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Aug 2013 20:47:14 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51284 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753331Ab3HVArN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Aug 2013 20:47:13 -0400
-Received: (qmail 23176 invoked by uid 102); 22 Aug 2013 00:47:13 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 21 Aug 2013 19:47:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Aug 2013 20:47:10 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqob8qskbc.fsf@gitster.dls.corp.google.com>
+	id S1753134Ab3HVBRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Aug 2013 21:17:32 -0400
+Received: from hqemgate14.nvidia.com ([216.228.121.143]:9510 "EHLO
+	hqemgate14.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752468Ab3HVBRb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Aug 2013 21:17:31 -0400
+Received: from hqnvupgp07.nvidia.com (Not Verified[216.228.121.13]) by hqemgate14.nvidia.com
+	id <B521566a80000>; Wed, 21 Aug 2013 18:17:28 -0700
+Received: from hqemhub01.nvidia.com ([172.20.12.94])
+  by hqnvupgp07.nvidia.com (PGP Universal service);
+  Wed, 21 Aug 2013 18:17:31 -0700
+X-PGP-Universal: processed;
+	by hqnvupgp07.nvidia.com on Wed, 21 Aug 2013 18:17:31 -0700
+Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub01.nvidia.com
+ (172.20.150.30) with Microsoft SMTP Server id 8.3.298.1; Wed, 21 Aug 2013
+ 18:17:31 -0700
+X-Mailer: git-send-email 1.8.4.rc0.2.g6cf5c31
+In-Reply-To: <CA+sFfMfa422PF1inOOeTBRE7HRqL5zwCJNagx9Ya0i_LbpwQcg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232757>
 
-On Wed, Aug 21, 2013 at 04:20:07PM -0700, Junio C Hamano wrote:
+From: Brandon Casey <drafnel@gmail.com>
 
-> I do not understand the last bit.  If two copies of an object exist
-> but you have only one slot for the object in the index, and another
-> object names it as its base with ref-delta, then reconstituting it
-> should work just fine---whichever representation of the base object
-> is recorded in the .idx, that first needs to be reconstituted before
-> the delta is applied to it, and both copies should yield identical
-> contents for the delta base object, no?
-> 
-> In any case, ejecting one from the pack .idx would not help in the
-> presense of either broken or malicious packer that reuses delta too
-> aggressively.  Suppose you have objects A and B and somehow manage
-> to create a cycle of deltas, A names B as its delta base and B names
-> A as its delta base.  The packer may notice its mistake and then add
-> another copy of A as a base object.  The pack contains two copies of
-> A (one is delta based on B, the other is full) and B (delta against
-> A).
+Old Bash (3.0) which is distributed with RHEL 4.X and other ancient
+platforms that are still in wide use, do not have a printf that
+supports -v.  Neither does Zsh (which is already handled in the code).
 
-Yes, that is the potentially problematic scenario...
+As suggested by Junio, let's test whether printf supports the -v
+option and store the result.  Then later, we can use it to
+determine whether 'printf -v' can be used, or whether printf
+must be called in a subshell.
 
-> If B refers to the copy of A that is delta against B using ofs-delta,
-> fixing the .idx file will have no effect.  read_packed_sha1(B) will
-> read the delta data of B, finds the offset to start reading the data
-> for A which was excised from the .idx and unless that codepath is
-> updated to consult revindex (i.e. you mark one copy of A in the .pack
-> as bad, and when B refers to that bad copy of A via ofs-delta, you
-> check the offset against revindex to get the object name of A and go
-> to the good copy of A), you will never finish reading B because
-> reading the bad copy of A will lead you to first reconstitute B.
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
 
-Yes. There are two levels of brokenness here.
+This replaces [PATCH 3/3] Revert "bash prompt: avoid command substitution
+when finalizing gitstring".
 
-One is that the pack has a delta base offset for B that leads to the
-"wrong" A, creating a cycle. This is an utterly broken pack and cannot
-be fixed automatically (you do not even know the name of the cycled A
-because you cannot constitute it to find its name and realize that it
-has a duplicate!). But we should notice this during index-pack, because
-we cannot reconstruct the object.
+This may or may not need to be updated to use "${var-}" depending on
+your response to my other email, but this seems sufficient.
 
-Another situation is that your delta base points to the "right" A. You
-can reconstruct either A or B, because although there is a duplicate,
-there are no cycles in the delta chain (i.e., the chain does not care
-about object name, only offset, and offsets point only one way).
+-Brandon
 
-So we do not have a problem at all with reconstructing the object data.
-We do have two ways we might access A from the same pack. For regular
-object lookup, that is probably not a big deal. For operations like
-repacking that look more closely at the on-disk representation, I do not
-know. We may mark A as "has a delta" or "does not have a delta" at one
-point in the code, but then later find the other copy of A which does
-not match. I did not trace through all of pack-objects to find whether
-that is possible, or what bugs it might cause. But indexing only one
-copy as the "master" means that we will always get a consistent view of
-the object (from that particular pack, at least).
+ contrib/completion/git-prompt.sh | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-Now consider REF_DELTA. We lookup the base object by name, so we may get
-a different answer depending on how it is indexed. E.g., index-pack
-keeps an internal hash table, whereas later callers will use the .idx
-file. When looking at the .idx file, we may use a regular binary search,
-or sha1_entry_pos. The exact order of the search may even change from
-git version to git version.
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index a81ef5a..639888a 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -84,6 +84,10 @@
+ # the colored output of "git status -sb" and are available only when
+ # using __git_ps1 for PROMPT_COMMAND or precmd.
+ 
++# check whether printf supports -v
++__git_printf_supports_v=
++printf -v __git_printf_supports_v -- '%s' yes >/dev/null 2>&1
++
+ # stores the divergence from upstream in $p
+ # used by GIT_PS1_SHOWUPSTREAM
+ __git_ps1_show_upstream ()
+@@ -433,10 +437,10 @@ __git_ps1 ()
+ 	local gitstring="$c${b##refs/heads/}${f:+$z$f}$r$p"
+ 
+ 	if [ $pcmode = yes ]; then
+-		if [[ -n ${ZSH_VERSION-} ]]; then
+-			gitstring=$(printf -- "$printf_format" "$gitstring")
+-		else
++		if test "$__git_printf_supports_v" = yes; then
+ 			printf -v gitstring -- "$printf_format" "$gitstring"
++		else
++			gitstring=$(printf -- "$printf_format" "$gitstring")
+ 		fi
+ 		PS1="$ps1pc_start$gitstring$ps1pc_end"
+ 	else
+-- 
+1.8.4.rc0.2.g6cf5c31
 
-So you may have a situation where index-pack finds the "right" A and
-properly reconstructs the file while creating the .idx, and thinks all
-is well. But later lookups may find the "wrong" A, and fail. In other
-words, we cannot trust that data that makes it through index-pack is not
-corrupted (and it is index-pack's output that lets receive-pack commit
-to the client that we have their objects, so we want to be reasonably
-sure we have uncorrupted copies at that point).
 
-Choosing a single "master" A to go in the .idx means we will get a
-consistent view of A once the .idx is generated. But it may not be the
-right one, and it may not be the one we used to check that we can
-resolve A and B in the first place.
-
-The right fix for that situation is to keep both entries in the .idx,
-detect delta cycles, then look up extra copies of A, but being aware
-that you already found one copy in the .idx and that sha1_entry_pos (or
-the vanilla binary search) should return any other copies, if they
-exist. I do not think we detect delta cycles at all (though I didn't
-check), but certainly we do not have a way to tell sha1_entry_pos any
-different information so that it will find the "other" A.
-
-So I think it is a recoverable state, but it is a non-trivial bit of
-code for something that should never happen. Rejecting on push/fetch via
-index-pack is simple and easy, and we can deal with the fallout if and
-when it ever actually happens.
-
-> > I think this line of "fixing" should probably be scrapped.
-> 
-> I tend to agree.
-
-OK. Let's drop the "skip" patch, then. I'll re-roll with a patch to flip
-the default to "reject".
-
--Peff
+-----------------------------------------------------------------------------------
+This email message is for the sole use of the intended recipient(s) and may contain
+confidential information.  Any unauthorized review, use, disclosure or distribution
+is prohibited.  If you are not the intended recipient, please contact the sender by
+reply email and destroy all copies of the original message.
+-----------------------------------------------------------------------------------
