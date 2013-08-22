@@ -1,84 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 0/6] duplicate objects and delta cycles, oh my!
-Date: Thu, 22 Aug 2013 19:12:15 -0400
-Message-ID: <20130822231215.GA16978@sigill.intra.peff.net>
-References: <20130821204955.GA28025@sigill.intra.peff.net>
- <20130821205220.GB28165@sigill.intra.peff.net>
- <CACsJy8DkUeS3s+X=gKX4ZAi82g_D_9t=bBVs8NNY2EeqM9W-rQ@mail.gmail.com>
- <20130822144305.GA21219@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t3010 broken by 2eac2a4
+Date: Thu, 22 Aug 2013 16:12:39 -0700
+Message-ID: <xmqqwqndpbfc.fsf@gitster.dls.corp.google.com>
+References: <82078845-3AB9-4B36-9130-039CC33C8A7A@gernhardtsoftware.com>
+	<xmqqbo4qu3g4.fsf@gitster.dls.corp.google.com>
+	<CAPig+cQHTvmTWvGfg1Z3KfBrPD+QbSEbYBYz6XWT3KKu3-+jyQ@mail.gmail.com>
+	<xmqqbo4pqvde.fsf@gitster.dls.corp.google.com>
+	<CAPig+cQmvRDDc3BHbta_UhCQe9QvbtAm0RJgt6HbtgFAKgo0Vg@mail.gmail.com>
+	<xmqq7gfdqumd.fsf@gitster.dls.corp.google.com>
+	<CAPig+cSEQLk2M+X5QP7mkm846wqqHRCjPHgO7O3URvNcsYO6+w@mail.gmail.com>
+	<xmqq38q1qu3l.fsf@gitster.dls.corp.google.com>
+	<CAPig+cSgM-kO0Mk9qbGfLR8DZkYQt60Va4N2wfRBVqmReTPowQ@mail.gmail.com>
+	<CAPig+cQ15Qq7pJ0sLmnuQt_EERn9fkzCa-Gr-pb6a_zf1MLcGQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 23 01:12:24 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+	"git\@vger.kernel.org List" <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Aug 23 01:12:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCe3D-0005P9-Vj
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 01:12:24 +0200
+	id 1VCe3e-0006AL-27
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 01:12:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754456Ab3HVXMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Aug 2013 19:12:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59989 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753963Ab3HVXMT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Aug 2013 19:12:19 -0400
-Received: (qmail 23692 invoked by uid 102); 22 Aug 2013 23:12:20 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 Aug 2013 18:12:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Aug 2013 19:12:15 -0400
-Content-Disposition: inline
-In-Reply-To: <20130822144305.GA21219@sigill.intra.peff.net>
+	id S1754543Ab3HVXMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Aug 2013 19:12:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57641 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754085Ab3HVXMp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Aug 2013 19:12:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96AB53B3A2;
+	Thu, 22 Aug 2013 23:12:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O0GF6X/umlrbmbJl4uL1NMGqYWw=; b=spIfss
+	lukvIDDEFL6+/CP83/tECQReG0yUqI2W3rOcUu167tIAmEiXgMnwNJovk1frlD1j
+	hmJ8AbUWY9OiDvkJIQk8r03laA9YGQEX8YttLPNzZ8pkL8Q0yVbtBw/N1/+M8+oZ
+	qAqZ7H3MfX7odEBZXuzytgXFMyivDQBq3ndOs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ffcy70dsUiQgyUbS0k7S90smw29Vwq2x
+	CjbOplgyZnfFMBWx2uyA4/r9udktF2HPcjgDqtEYTfizEp8op9VsIbpNgjWWC7RE
+	kYBRX+UZHN8FmOAk/f6qmf/xl1yGflay0tlc7I3jqthRyQP7WvWqcMqnuLHklR6S
+	P5TwmEBg8MQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8533C3B3A0;
+	Thu, 22 Aug 2013 23:12:44 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B4A413B39B;
+	Thu, 22 Aug 2013 23:12:42 +0000 (UTC)
+In-Reply-To: <CAPig+cQ15Qq7pJ0sLmnuQt_EERn9fkzCa-Gr-pb6a_zf1MLcGQ@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 22 Aug 2013 18:53:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 58F62872-0B80-11E3-9047-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232786>
 
-On Thu, Aug 22, 2013 at 10:43:05AM -0400, Jeff King wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> > write_idx_file() is called after index-pack processes all delta
-> > objects. Could resolve_deltas() go cyclic with certain duplicate
-> > object setup?
-> 
-> Good question. I'm not sure. I'll check it out.
+> Status update: For the 'pathx' directory created by the t3010 test,
+> directory_exists_in_index() returns false on OSX, but true is returned
+> on Linux.
 
-I think the answer is "no", based on both reasoning and testing (both of
-which are included in patches 3-4 of the series below).
-
-So here's my re-roll of the series.
-
-  [1/6]: test-sha1: add a binary output mode
-
-    New in this iteration; the previous version piped test-sha1 into
-    perl to create the pack trailer, but with this simple change we can
-    drop the perl dependency.
-
-  [2/6]: sha1-lookup: handle duplicate keys with GIT_USE_LOOKUP
-
-    Same code as before. I've factored the pack-creation bits from the
-    tests into lib-pack.sh, so they can be reused elsewhere when we want
-    to create bogus packs (and patches 3-4 reuse them here).
-
-  [3/6]: add tests for indexing packs with delta cycles
-  [4/6]: test index-pack on packs with recoverable delta cycles
-
-    New tests covering delta cycles.
-
-  [5/6]: index-pack: optionally reject packs with duplicate objects
-
-    Similar to before, but I converted the config flag to a simple
-    boolean (since we scrapped the "fix" of the tri-state "allow,
-    reject, fix").
-
-  [6/6]: default pack.indexDuplicates to false
-
-    This flips the safety check on by default everywhere (before, it was
-    left off for index-pack).
-
--Peff
+Because a regular pathx/ju is in the index at that point, the
+correct answer directory_exists_in_index() should give for 'pathx'
+is "index_directory", not "index_nonexistent", I think.
