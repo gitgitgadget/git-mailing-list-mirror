@@ -1,289 +1,138 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH] repack: rewrite the shell script in C (squashing proposal)
-Date: Thu, 22 Aug 2013 22:06:36 +0200
-Message-ID: <1377201996-27296-1-git-send-email-stefanbeller@googlemail.com>
-References: <5215EC1A.7060004@kdbg.org>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: git@vger.kernel.org, mfick@codeaurora.org, apelisse@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr, pclouds@gmail.com, iveqy@iveqy.com,
-	gitster@pobox.com, mackyle@gmail.com, j6t@kdbg.org
-X-From: git-owner@vger.kernel.org Thu Aug 22 22:06:37 2013
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: [PATCHv2] git-diff: Clarify operation when not inside a repository.
+Date: Thu, 22 Aug 2013 16:31:21 -0400
+Message-ID: <201308222031.r7MKVL6O028293@freeze.ariadne.com>
+References: <201308211734.r7LHYwNh008859@hobgoblin.ariadne.com> <xmqqwqneuc69.fsf@gitster.dls.corp.google.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 22 22:31:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCb9P-00058n-Mp
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Aug 2013 22:06:36 +0200
+	id 1VCbXW-0002MQ-4g
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Aug 2013 22:31:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754309Ab3HVUGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Aug 2013 16:06:31 -0400
-Received: from mail-ee0-f54.google.com ([74.125.83.54]:57732 "EHLO
-	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754303Ab3HVUGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Aug 2013 16:06:30 -0400
-Received: by mail-ee0-f54.google.com with SMTP id e53so1161503eek.13
-        for <git@vger.kernel.org>; Thu, 22 Aug 2013 13:06:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nMmASIm8sfqjt71DLLCcdJJskDXyDJ3jSesCO0PHAdU=;
-        b=pDNeThQFiU0Xwf5pztM5VfCiUzHmXoMGjS8kd62Xc11XujsI0l1t6NFHmqDnUVtO0p
-         98LDjtusM1fJCDYZo0n2hWmuML1gNFOlbpzKjwLX+TTPldJGWBZ6rfP/CqPVv+yhZC/8
-         ABMx/IELnjQBx9sqZTaoDKaT058JllBm830nhWzIMc5vnN3UJzOUa30ZsLvcMvjnC0UV
-         hcoJRyQ9zsgmfj3MVtDNMNTpJtCnN2bJlfHfs1p+7jHhK4OZIou1YV6DVdWj/mDz2e2y
-         J5rVlywxlIO0cU8ql3Ex8XoF1cxYSEjrwalkcmP2jWNUD3ZGr6/HmUuWTEXLfwFCxO44
-         WnAA==
-X-Received: by 10.14.225.199 with SMTP id z47mr21020947eep.24.1377201989159;
-        Thu, 22 Aug 2013 13:06:29 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id a1sm19801293eem.1.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 22 Aug 2013 13:06:27 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc3.1.gc1ebd90
-In-Reply-To: <5215EC1A.7060004@kdbg.org>
+	id S1753733Ab3HVUbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Aug 2013 16:31:25 -0400
+Received: from qmta11.westchester.pa.mail.comcast.net ([76.96.59.211]:33765
+	"EHLO QMTA11.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753084Ab3HVUbY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Aug 2013 16:31:24 -0400
+Received: from omta01.westchester.pa.mail.comcast.net ([76.96.62.11])
+	by QMTA11.westchester.pa.mail.comcast.net with comcast
+	id Fvys1m04o0EZKEL5BwXPvm; Thu, 22 Aug 2013 20:31:23 +0000
+Received: from freeze.ariadne.com ([24.34.72.61])
+	by omta01.westchester.pa.mail.comcast.net with comcast
+	id FwXN1m0101KKtkw3MwXPZA; Thu, 22 Aug 2013 20:31:23 +0000
+Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
+	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r7MKVMQI028294;
+	Thu, 22 Aug 2013 16:31:22 -0400
+Received: (from worley@localhost)
+	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r7MKVL6O028293;
+	Thu, 22 Aug 2013 16:31:21 -0400
+In-reply-to: <xmqqwqneuc69.fsf@gitster.dls.corp.google.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1377203483;
+	bh=22GzLODfl2p93wUA3MUsyGX3PMPeVpNPPjWMAwDZDZ8=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=Fngh9lvgX5T9Co6tgzh2sUXuNeiZgHdq+8nb1ObZpg1qLQ46hFCgL0qKxygPsH9Zd
+	 B3u+bqyDQ3gtXRwoItKxbwR4VVU2qN9UPocqXQvF27TUq8WM0/Jg4TYq6/QrAhlI4Q
+	 xExBA/TiJGZOidQswFTroBXEDKtPjleFCn55/VNusKucUXMQtXTADD1nhfVEgSXlci
+	 kyKFAyMwDzOHCx2NOAkjRmftZswnv0Wz+SDEsZgaonE/VVkgpjxhVrDVTv64xVBGH6
+	 5glUYCYA5tf6budANhtUcvZNc6FlqP/SrtaN8BoguRs7LHp4pwBDuqobIg9nESK5A+
+	 s6t/5o4SwuVKA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232773>
 
-This patch is meant to be squashed into bb4335a21441a0
-(repack: rewrite the shell script in C), I'll do so when rerolling
-the series. For reviewing I'll just send this patch.
+Clarify documentation for git-diff:  State that when not inside a
+repository, --no-index is implied (and thus two arguments are
+mandatory).
 
-* Remove comments, which likely get out of date (authorship is kept in
-  git anyway)
-* rename get_pack_filenames to get_non_kept_pack_filenames
-* catch return value of unlink and fail as the shell version did
-* beauty fixes to remove_temporary_files as Junio proposed
-* install signal handling after static variables packdir, packtmp are set
-* remove adding the empty string to the buffer.
-* fix the rollback mechanism (wrong variable name)
+Clarify error message from diff-no-index to inform user that CWD is
+not inside a repository and thus two arguments are mandatory.
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+Signed-off-by: Dale Worley <worley@ariadne.com>
 ---
- builtin/repack.c | 78 ++++++++++++++++++++++++++------------------------------
- 1 file changed, 36 insertions(+), 42 deletions(-)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 1f13e0d..e0d1f17 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -1,8 +1,3 @@
--/*
-- * The shell version was written by Linus Torvalds (2005) and many others.
-- * This is a translation into C by Stefan Beller (2013)
-- */
--
- #include "builtin.h"
- #include "cache.h"
- #include "dir.h"
-@@ -13,9 +8,8 @@
- #include "string-list.h"
- #include "argv-array.h"
+
+The error message has been updated from [PATCH].  "git diff" outside a
+repository now produces:
+
+    Not a git repository
+    To compare two paths outside a working tree:
+    usage: git diff [--no-index] <path> <path>
+
+This should inform the user of his error regardless of whether he
+intended to perform a within-repository "git diff" or an
+out-of-repository "git diff".
+
+This message is closer to the message that other Git commands produce:
+
+    fatal: Not a git repository (or any parent up to mount parent )
+    Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+
+"git diff --no-index" produces the same message as before (since the
+user is clearly invoking the non-repository behavior):
+
+    usage: git diff --no-index <path> <path>
+
+Regarding the change to git-diff.txt, perhaps "forced ... by executing
+'git diff' outside of a working tree" is not the best wording, but it
+should be clear to the reader that (1) it is possible to execute 'git
+diff' outside of a working tree, and (2) when doing so, the behavior
+will be as if '--no-index' was specified.
+
+I've also added some comments for the new code.
+
+
+ Documentation/git-diff.txt |    3 ++-
+ diff-no-index.c            |   12 +++++++++++-
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index 78d6d50..9f74989 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -31,7 +31,8 @@ two blob objects, or changes between two files on disk.
+ +
+ If exactly two paths are given and at least one points outside
+ the current repository, 'git diff' will compare the two files /
+-directories. This behavior can be forced by --no-index.
++directories. This behavior can be forced by --no-index or by 
++executing 'git diff' outside of a working tree.
  
--/* enabled by default since 22c79eab (2008-06-25) */
- static int delta_base_offset = 1;
--char *packdir;
-+static char *packdir, *packtmp;
+ 'git diff' [--options] --cached [<commit>] [--] [<path>...]::
  
- static const char *const git_repack_usage[] = {
- 	N_("git repack [options]"),
-@@ -41,18 +35,16 @@ static void remove_temporary_files(void)
- 	DIR *dir;
- 	struct dirent *e;
- 
--	/* .git/objects/pack */
--	strbuf_addstr(&buf, get_object_directory());
--	strbuf_addstr(&buf, "/pack");
--	dir = opendir(buf.buf);
--	if (!dir) {
--		strbuf_release(&buf);
-+	dir = opendir(packdir);
-+	if (!dir)
- 		return;
--	}
- 
--	/* .git/objects/pack/.tmp-$$-pack-* */
-+	strbuf_addstr(&buf, packdir);
-+
-+	/* dirlen holds the length of the path before the file name */
- 	dirlen = buf.len + 1;
--	strbuf_addf(&buf, "/.tmp-%d-pack-", (int)getpid());
-+	strbuf_addf(&buf, "%s", packtmp);
-+	/* prefixlen holds the length of the prefix */
- 	prefixlen = buf.len - dirlen;
- 
- 	while ((e = readdir(dir))) {
-@@ -73,11 +65,16 @@ static void remove_pack_on_signal(int signo)
- 	raise(signo);
- }
- 
--static void get_pack_filenames(struct string_list *fname_list)
-+/*
-+ * Adds all packs hex strings to the fname list, which do not
-+ * have a corresponding .keep file.
-+ */
-+static void get_non_kept_pack_filenames(struct string_list *fname_list)
- {
- 	DIR *dir;
- 	struct dirent *e;
- 	char *fname;
-+	size_t len;
- 
- 	if (!(dir = opendir(packdir)))
- 		return;
-@@ -86,7 +83,7 @@ static void get_pack_filenames(struct string_list *fname_list)
- 		if (suffixcmp(e->d_name, ".pack"))
- 			continue;
- 
--		size_t len = strlen(e->d_name) - strlen(".pack");
-+		len = strlen(e->d_name) - strlen(".pack");
- 		fname = xmemdupz(e->d_name, len);
- 
- 		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)))
-@@ -95,14 +92,14 @@ static void get_pack_filenames(struct string_list *fname_list)
- 	closedir(dir);
- }
- 
--static void remove_redundant_pack(const char *path, const char *sha1)
-+static void remove_redundant_pack(const char *path_prefix, const char *hex)
- {
- 	const char *exts[] = {".pack", ".idx", ".keep"};
- 	int i;
- 	struct strbuf buf = STRBUF_INIT;
- 	size_t plen;
- 
--	strbuf_addf(&buf, "%s/%s", path, sha1);
-+	strbuf_addf(&buf, "%s/%s", path_prefix, hex);
- 	plen = buf.len;
- 
- 	for (i = 0; i < ARRAY_SIZE(exts); i++) {
-@@ -115,15 +112,14 @@ static void remove_redundant_pack(const char *path, const char *sha1)
- int cmd_repack(int argc, const char **argv, const char *prefix)
- {
- 	const char *exts[2] = {".idx", ".pack"};
--	char *packtmp;
- 	struct child_process cmd;
- 	struct string_list_item *item;
- 	struct argv_array cmd_args = ARGV_ARRAY_INIT;
- 	struct string_list names = STRING_LIST_INIT_DUP;
--	struct string_list rollback = STRING_LIST_INIT_DUP;
-+	struct string_list rollback = STRING_LIST_INIT_NODUP;
- 	struct string_list existing_packs = STRING_LIST_INIT_DUP;
- 	struct strbuf line = STRBUF_INIT;
--	int count_packs, ext, ret;
-+	int nr_packs, ext, ret, failed;
- 	FILE *out;
- 
- 	/* variables to be filled by option parsing */
-@@ -173,11 +169,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, builtin_repack_options,
- 				git_repack_usage, 0);
- 
--	sigchain_push_common(remove_pack_on_signal);
--
- 	packdir = mkpathdup("%s/pack", get_object_directory());
- 	packtmp = mkpathdup("%s/.tmp-%d-pack", packdir, (int)getpid());
- 
-+	sigchain_push_common(remove_pack_on_signal);
-+
- 	argv_array_push(&cmd_args, "pack-objects");
- 	argv_array_push(&cmd_args, "--keep-true-parents");
- 	argv_array_push(&cmd_args, "--honor-pack-keep");
-@@ -201,7 +197,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		argv_array_push(&cmd_args, "--unpacked");
- 		argv_array_push(&cmd_args, "--incremental");
- 	} else {
--		get_pack_filenames(&existing_packs);
-+		get_non_kept_pack_filenames(&existing_packs);
- 
- 		if (existing_packs.nr && delete_redundant) {
- 			if (unpack_unreachable)
-@@ -233,14 +229,13 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	if (ret)
- 		return ret;
- 
--	count_packs = 0;
-+	nr_packs = 0;
- 	out = xfdopen(cmd.out, "r");
- 	while (strbuf_getline(&line, out, '\n') != EOF) {
- 		if (line.len != 40)
- 			die("repack: Expecting 40 character sha1 lines only from pack-objects.");
--		strbuf_addstr(&line, "");
- 		string_list_append(&names, line.buf);
--		count_packs++;
-+		nr_packs++;
+diff --git a/diff-no-index.c b/diff-no-index.c
+index e66fdf3..9734ec3 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -215,9 +215,19 @@ void diff_no_index(struct rev_info *revs,
+ 		     path_inside_repo(prefix, argv[i+1])))
+ 			return;
  	}
- 	fclose(out);
- 	ret = finish_command(&cmd);
-@@ -248,10 +243,10 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		return ret;
- 	argv_array_clear(&cmd_args);
+-	if (argc != i + 2)
++	if (argc != i + 2) {
++	        if (!no_index) {
++		        /* There was no --no-index and there were not two
++			 * paths.  It is possible that the user intended
++			 * to do an inside-repository operation. */
++		        fprintf(stderr, "Not a git repository\n");
++		        fprintf(stderr,
++				"To compare two paths outside a working tree:\n");
++		}
++		/* Give the usage message for non-repository usage and exit. */
+ 		usagef("git diff %s <path> <path>",
+ 		       no_index ? "--no-index" : "[--no-index]");
++	}
  
--	if (!count_packs && !quiet)
-+	if (!nr_packs && !quiet)
- 		printf("Nothing new to pack.\n");
- 
--	int failed = 0;
-+	failed = 0;
- 	for_each_string_list_item(item, &names) {
- 		for (ext = 0; ext < 2; ext++) {
- 			char *fname, *fname_old;
-@@ -262,24 +257,23 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				continue;
- 			}
- 
--			fname_old = mkpathdup("%s/old-%s%s", packdir,
-+			fname_old = mkpath("%s/old-%s%s", packdir,
- 						item->string, exts[ext]);
- 			if (file_exists(fname_old))
--				unlink(fname_old);
-+				if (unlink(fname_old))
-+					failed = 1;
- 
--			if (rename(fname, fname_old)) {
-+			if (!failed && rename(fname, fname_old)) {
- 				failed = 1;
- 				break;
- 			}
--			string_list_append_nodup(&rollback, fname);
--			free(fname);
--			free(fname_old);
-+			string_list_append(&rollback, fname);
- 		}
- 		if (failed)
- 			break;
- 	}
- 	if (failed) {
--		struct string_list rollback_failure;
-+		struct string_list rollback_failure = STRING_LIST_INIT_DUP;
- 		for_each_string_list_item(item, &rollback) {
- 			char *fname, *fname_old;
- 			fname = mkpathdup("%s/%s", packdir, item->string);
-@@ -289,7 +283,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 			free(fname);
- 		}
- 
--		if (rollback.nr) {
-+		if (rollback_failure.nr) {
- 			int i;
- 			fprintf(stderr,
- 				"WARNING: Some packs in use have been renamed by\n"
-@@ -299,10 +293,10 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				"WARNING: attempt to rename them back to their\n"
- 				"WARNING: original names also failed.\n"
- 				"WARNING: Please rename them in %s manually:\n", packdir);
--			for (i = 0; i < rollback.nr; i++)
-+			for (i = 0; i < rollback_failure.nr; i++)
- 				fprintf(stderr, "WARNING:   old-%s -> %s\n",
--					rollback.items[i].string,
--					rollback.items[i].string);
-+					rollback_failure.items[i].string,
-+					rollback_failure.items[i].string);
- 		}
- 		exit(1);
- 	}
+ 	diff_setup(&revs->diffopt);
+ 	for (i = 1; i < argc - 2; ) {
 -- 
-1.8.4.rc3.1.gc1ebd90
+1.7.7.6
