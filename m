@@ -1,74 +1,74 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Document the HTTP transport protocols
-Date: Thu, 22 Aug 2013 18:27:20 +0700
-Message-ID: <CACsJy8A4c3gFeX+q4hPjki8+mLjv_xo4tNbhyyCcmaUX7tYFLA@mail.gmail.com>
-References: <1377092713-25434-1-git-send-email-pclouds@gmail.com> <20130821220021.GA32130@sigill.intra.peff.net>
+Subject: Re: [PATCH 2/4] index-pack: optionally reject packs with duplicate objects
+Date: Thu, 22 Aug 2013 20:45:19 +0700
+Message-ID: <CACsJy8DkUeS3s+X=gKX4ZAi82g_D_9t=bBVs8NNY2EeqM9W-rQ@mail.gmail.com>
+References: <20130821204955.GA28025@sigill.intra.peff.net> <20130821205220.GB28165@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@fluxnic.net>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Aug 22 13:27:56 2013
+X-From: git-owner@vger.kernel.org Thu Aug 22 15:45:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCT3U-0001NP-3b
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Aug 2013 13:27:56 +0200
+	id 1VCVD0-0001gL-BQ
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Aug 2013 15:45:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042Ab3HVL1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Aug 2013 07:27:51 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:52542 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753011Ab3HVL1v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Aug 2013 07:27:51 -0400
-Received: by mail-ob0-f182.google.com with SMTP id wo10so3376845obc.27
-        for <git@vger.kernel.org>; Thu, 22 Aug 2013 04:27:50 -0700 (PDT)
+	id S1752295Ab3HVNpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Aug 2013 09:45:50 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:36708 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752011Ab3HVNpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Aug 2013 09:45:49 -0400
+Received: by mail-ob0-f174.google.com with SMTP id wd6so3549962obb.5
+        for <git@vger.kernel.org>; Thu, 22 Aug 2013 06:45:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=jyqgYhWSuDBLTMFkDScAkDhPTLWwZqJPe466cEqgAwg=;
-        b=KlML+fddDyLZEGWyQWi3n6eRRfOlMDvAmd3gvf7gYc4h+JLavxfGTBw20b7H49OC4l
-         pYccFiPdlpBYBSzvAlYConoHj1ul0wKoKN6GT1CjRD7ENpEoBOCQdO4KfBd5JvnDNBvb
-         zQxo4zC+547b5BkhWjzDKrQtKWwU/Lg3YhfiVF1maBcmSd4e8XiI4gr2LDtyOWokXsIa
-         l5J6baWWgfu1q1eptq5R4vd6dZ+D9MFzynwCetF2QdxfdICMoE65hj/BLNbyt9PsQ3ID
-         BZEcX9SYxjnOyOcrvtSQVtU2mb+yTmdF1BapQ8W/+KACUFbIUZSbzet4TibXIfp76k1t
-         lzqQ==
-X-Received: by 10.182.66.229 with SMTP id i5mr1204890obt.88.1377170870316;
- Thu, 22 Aug 2013 04:27:50 -0700 (PDT)
-Received: by 10.182.87.105 with HTTP; Thu, 22 Aug 2013 04:27:20 -0700 (PDT)
-In-Reply-To: <20130821220021.GA32130@sigill.intra.peff.net>
+        bh=e6scW4QP96ORbePhTm932P7vkkhotYEjPIYlDro/siU=;
+        b=VFI9d3M2DYFxs5cVTBvIZQRog3pLsTsDqrMFrvjwzec5v6yCfeOEIjFZTW5CkgNfXx
+         zw0hfwkQaPFAJbJqYOP2Td0XOO6iInmH5OtrgPSEDWElN8lHxoE6NVmD1rY4RC7ooG3I
+         GXNxB79iM9Bpz/MFN2//zjTbM+Q/F4H4PlSs7w7MFH3jlCq5cPYcA5jbAxZHsWU0qzyA
+         0l/1YU+GsD0WBafuu5HqMvG2aXpC7LNbm1mVtUkX+/AN4SNS2c9yXovaCib9lAcslu9n
+         ZikiFaAHeHTDzz3Lh+qUjLfGe0azZa2h8IIvMnEmf5mHUDNeTrzXeKyAzEYZ0E0+v9in
+         pntw==
+X-Received: by 10.182.214.98 with SMTP id nz2mr14399492obc.37.1377179149317;
+ Thu, 22 Aug 2013 06:45:49 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Thu, 22 Aug 2013 06:45:19 -0700 (PDT)
+In-Reply-To: <20130821205220.GB28165@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232766>
 
-On Thu, Aug 22, 2013 at 5:00 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Aug 21, 2013 at 08:45:13PM +0700, Nguyen Thai Ngoc Duy wrote:
+On Thu, Aug 22, 2013 at 3:52 AM, Jeff King <peff@peff.net> wrote:
+> @@ -68,6 +81,16 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
+>         else
+>                 sorted_by_sha = list = last = NULL;
 >
->>  On the topic, C Git's (maybe) violations on this spec are:
->>
->>   - The client does not strip trailing slashes from $GIT_URL before
->>     sending to the server, as described in section "URL Format".
->
-> Yeah. We get the basic gist right by not adding an extra "/" if there is
-> already a trailing slash (so you do not have http://host/path//info/refs").
-> But we do not go out of our way to remove multiple slashes that the user
-> hands out (either at the end or in the middle of the URL). I doubt that
-> it matters in practice.
+> +       if (opts->duplicates == WRITE_IDX_DUPLICATES_REJECT) {
+> +               struct pack_idx_entry **dup;
+> +
+> +               dup = find_duplicate(sorted_by_sha, nr_objects,
+> +                                    sizeof(*sorted_by_sha), sha1_compare);
+> +               if (dup)
+> +                       die("pack has duplicate entries for %s",
+> +                           sha1_to_hex((*dup)->sha1));
+> +       }
+> +
+>         if (opts->flags & WRITE_IDX_VERIFY) {
+>                 assert(index_name);
+>                 f = sha1fd_check(index_name);
 
-It may make writing rewrite/matching patterns in http server a tiny
-bit harder, but should not be a big deal. I agree with Junio this
-could be something a new contributor can work on to get familiar with
-(scary, imo) transport/connect code.
-
-I agree with the rest of your comments that those "violations" do not
-matter much (when I raised them I did not mean "fix Git", just
-checking if I missed anything) and the document is ok as-is.
+write_idx_file() is called after index-pack processes all delta
+objects. Could resolve_deltas() go cyclic with certain duplicate
+object setup?
 -- 
 Duy
