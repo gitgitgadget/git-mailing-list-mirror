@@ -1,56 +1,180 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] git-commit: search author pattern against mailmap
-Date: Fri, 23 Aug 2013 21:47:37 +0200
-Message-ID: <CALWbr2x28wrzxJ=M6meCX8G0Bh4ObvHkYGqfGTNwPjWMxgJjQg@mail.gmail.com>
-References: <1377265711-11492-1-git-send-email-apelisse@gmail.com>
-	<xmqqbo4opajg.fsf@gitster.dls.corp.google.com>
-	<20130823183541.GB30130@sigill.intra.peff.net>
-	<xmqqwqncnsaz.fsf@gitster.dls.corp.google.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: CPPCheck found 24 high risk bugs in Git v.1.8.3.4 (fetch.c L588)
+Date: Fri, 23 Aug 2013 20:51:05 +0100
+Organization: OPDS
+Message-ID: <0AED97BABBFA43DAAE14B8355C81AE3B@PhilipOakley>
+References: <85C8141E5DAD94428A121F706995A31F010F116FDAD3@MX1.net.tbe.com> <33FCCE7A2CD5494B88F3C5CDBC341DFD@PhilipOakley> <85C8141E5DAD94428A121F706995A31F010F116FDADE@MX1.net.tbe.com> <2A02F37CE50C4BE38860C7D36F1F14CC@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 23 21:47:44 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=response
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Koch, Rick \(Subcontractor\)" <Rick.Koch@tbe.com>
+X-From: git-owner@vger.kernel.org Fri Aug 23 21:51:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCxKh-0002cV-CH
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 21:47:43 +0200
+	id 1VCxNy-00089O-Pc
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 21:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932067Ab3HWTrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Aug 2013 15:47:39 -0400
-Received: from mail-qc0-f175.google.com ([209.85.216.175]:36882 "EHLO
-	mail-qc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755952Ab3HWTri (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Aug 2013 15:47:38 -0400
-Received: by mail-qc0-f175.google.com with SMTP id m4so570832qcy.34
-        for <git@vger.kernel.org>; Fri, 23 Aug 2013 12:47:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=omqCgDzyr0nkFLy4rnRsDCGZ3WLFPZMEtK95fhezovQ=;
-        b=qxqTLdQT3VUf0A2+qBph68xAGC3XqmK54+DBDM0OoXExQ6wbPV7JfZyjFmA1gzev8d
-         kTj61FvJpbfimC4khInLnoK2BdhtOUrk+9wCVKMzSgeJH6FOjAE9T7D/4sKx9or0LTHp
-         EOo30ORgLe0U3L64QjWutaBQ6Ok/h38TXotUBWj9VMTJKTS5Bw/FvSKxT6oaJSULUXJQ
-         aDcOCMnQj2Wy3cM2l/prnq/4rmsd2mXlz6/pBVPLBFwp3VJdsdBkLVzATxayIhQyRurB
-         6I5Sfd4JWs21N7+p0jZOaW0dsTdSKjj3PqpmK25puPJEQpFbtKtLHC0Tj+3bAW06v9Se
-         M5jg==
-X-Received: by 10.224.126.196 with SMTP id d4mr746983qas.62.1377287257825;
- Fri, 23 Aug 2013 12:47:37 -0700 (PDT)
-Received: by 10.49.104.211 with HTTP; Fri, 23 Aug 2013 12:47:37 -0700 (PDT)
-In-Reply-To: <xmqqwqncnsaz.fsf@gitster.dls.corp.google.com>
+	id S932101Ab3HWTvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Aug 2013 15:51:01 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:11947 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756486Ab3HWTvA (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Aug 2013 15:51:00 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AtgLABO8F1JOl3GZ/2dsb2JhbABXA4MHiWK3EgQEAYEfF3SCHwUBAQQBCAEBHREeAQEhBQYBAQMFAgEDFQELHgcUAQQaBgcGEQYTCAIBAgMBA4dnCrZ3jzeBKQsFGIMLfAOId4YQmkGDHzuBNQ
+X-IPAS-Result: AtgLABO8F1JOl3GZ/2dsb2JhbABXA4MHiWK3EgQEAYEfF3SCHwUBAQQBCAEBHREeAQEhBQYBAQMFAgEDFQELHgcUAQQaBgcGEQYTCAIBAgMBA4dnCrZ3jzeBKQsFGIMLfAOId4YQmkGDHzuBNQ
+X-IronPort-AV: E=Sophos;i="4.89,944,1367967600"; 
+   d="scan'208";a="420844517"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 23 Aug 2013 20:50:58 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232831>
 
-On Fri, Aug 23, 2013 at 9:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> OK, so how about labelling it as a bugfix, like this perhaps?  We
-> obviously need a test or two, though.
+From: "Philip Oakley" <philipoakley@iee.org>
+Sent: Monday, August 19, 2013 10:46 PM
+> From: "Koch, Rick (Subcontractor)" <Rick.Koch@tbe.com>
+>
+>> Ran CPPCheck 1.5.6 on Windows-XP.
+>
+> Hi Rick,
+> Thank you for the clarification.
+> Normal practice on the list is to use Reply All, so everyone can 
+> participate in the discussion.
+>
+> It looks like most of the reports are false positives. My bikeshedding 
+> thought would be that it is common in Git to inspect all the call 
+> sites such that they don't create the various problems, rather than 
+> protect against the problems within the various functions, which may 
+> be a cause of the reports (i.e. different philosophical approach to 
+> checking).
+>
 
-OK,
-I will resubmit tomorrow with some tests.
+I have double checked the reported:
+    "wrongPrintfScanfArgNum(CppCheck) \git-master\builtin\fetch.c
+    fetch.c 588".
+
+                        fprintf(stderr, " x %-*s %-*s -> %s\n",
+                                TRANSPORT_SUMMARY(_("[deleted]")),
+                                REFCOL_WIDTH, _("(none)"), 
+prettify_refname(ref->name));
+
+
+At first it did look like there were not enough parameters to satisfy 
+the "%-*s" format strings, given that the second invocation has an 
+obvious width. This is the only usage within the prune_refs function.
+
+A little further looking shows that the "%-*s" format is used 
+extensively in the wider fetch.c and that the TRANSPORT_SUMMARY(), macro 
+returns two values as required by the fprintf.
+
+Inaddition  those other invocations aren't flagged showing that this is 
+a false positive, and is a good example for feeding back to CPPCheck (If 
+you wish Rick) as an example so they can see what went wrong.
+
+Does CPPCheck give more details of 'why' it thinks the other faults are 
+present? (e.g. the double pointer checks which can be tricky)
+
+> regards
+>
+> Philip
+> ---
+>
+> v/r
+>
+> Roderick (Rick) Koch
+> OSF - Information Assurance
+> Team Teledyne / Sentar Inc.
+> Work: 256-726-1253
+> Rick.Koch@tbe.com
+>
+>
+> -----Original Message-----
+> From: Philip Oakley [mailto:philipoakley@iee.org]
+>
+> From: "Koch, Rick (Subcontractor)" <Rick.Koch@tbe.com>
+> Sent: Monday, August 19, 2013 6:09 PM
+>>I'm directing to this e-mail, as it seems to be the approved forum for
+>>posting Git bugs. We ran CPPCheck against Git v.1.8.3.4 and found 24
+>>high risk bugs. Please see the attachment xlsx.
+>
+>>Is there a method to post to the Git community to allow the community
+>>to review and debunk as faults positive or develop patches to fix 
+>>lists
+>>code files?
+>
+>>v/r
+>
+>>Roderick (Rick) Koch
+>>Information Assurance
+>>Rick.Koch@tbe.com
+>
+> What OS version / CPPCheck version was this checked on?
+>
+> In case other readers don't have a .xlsx reader here is Rick's list in 
+> plain text (may be white space damaged).
+>
+> I expect some will be false positives, and some will just be being too 
+> cautious.
+>
+> Philip
+>
+> description resourceFilePath fileName lineNumber
+>      nullPointer(CppCheck) \git-master\builtin\add.c add.c 286
+>      wrongPrintfScanfArgNum(CppCheck) \git-master\builtin\fetch.c 
+> fetch.c 588
+
+False positive.
+
+>      nullPointer(CppCheck) \git-master\builtin\ls-files.c ls-files.c
+> 144
+>      nullPointer(CppCheck) \git-master\builtin\merge.c merge.c 1208
+>      doubleFree(CppCheck) \git-master\builtin\notes.c notes.c 275
+>      nullPointer(CppCheck) \git-master\builtin\reflog.c reflog.c 437
+>      uninitvar(CppCheck) \git-master\builtin\rev-list.c rev-list.c 342
+>      uninitvar(CppCheck) \git-master\builtin\rev-list.c rev-list.c 342
+>      uninitvar(CppCheck) \git-master\compat\regex\regcomp.c regcomp.c
+> 2803
+>      uninitvar(CppCheck) \git-master\compat\regex\regcomp.c regcomp.c
+> 2802
+>      uninitvar(CppCheck) \git-master\compat\regex\regcomp.c regcomp.c
+> 2805
+>      memleakOnRealloc(CppCheck) \git-master\compat\win32\syslog.c 
+> syslog.c 46
+
+True report.
+
+>      uninitvar(CppCheck)
+> \git-master\contrib\examples\builtin-fetch--tool.c 
+> builtin-fetch--tool.c
+> 419
+>      uninitvar(CppCheck) \git-master\fast-import.c fast-import.c 2917
+>      nullPointer(CppCheck) \git-master\line-log.c line-log.c 638
+>      nullPointer(CppCheck) \git-master\mailmap.c mailmap.c 156
+>      uninitvar(CppCheck) \git-master\merge-recursive.c 
+> merge-recursive.c 1887
+>      uninitvar(CppCheck) \git-master\notes.c notes.c 805
+>      uninitvar(CppCheck) \git-master\notes.c notes.c 805
+>      deallocret(CppCheck) \git-master\pretty.c pretty.c 677
+>      resourceLeak(CppCheck) \git-master\refs.c refs.c 3041
+>      doubleFree(CppCheck) \git-master\sequencer.c sequencer.c 924
+>      nullPointer(CppCheck) \git-master\sha1_file.c sha1_file.c 125
+>      doubleFree(CppCheck) \git-master\shell.c shell.c 130
+>
+>
+> --
+Philip 
