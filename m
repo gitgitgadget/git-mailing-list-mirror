@@ -1,91 +1,91 @@
-From: Corey Thompson <cmtptr@gmail.com>
-Subject: Re: git-p4 out of memory for very large repository
-Date: Fri, 23 Aug 2013 07:59:20 -0400
-Message-ID: <20130823115920.GB8182@jerec>
-References: <20130823011245.GA7693@jerec>
- <52170C6A.4080708@diamand.org>
- <20130823114856.GA8182@jerec>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: [BUGLET] git bisect visualize does not show BISECT_HEAD
+Date: Fri, 23 Aug 2013 15:21:27 +0200
+Organization: Bertin Technologies
+Message-ID: <20130823152127.73733364@chalon.bertin.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Fri Aug 23 13:59:30 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: dirson@bertin.fr, poulot-cazajous@bertin.fr, metral@bertin.fr
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 23 15:29:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCq1Z-0003bc-0q
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 13:59:29 +0200
+	id 1VCrQR-0008Ff-TB
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 15:29:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755463Ab3HWL7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Aug 2013 07:59:25 -0400
-Received: from mail-gh0-f179.google.com ([209.85.160.179]:33202 "EHLO
-	mail-gh0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755282Ab3HWL7Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Aug 2013 07:59:24 -0400
-Received: by mail-gh0-f179.google.com with SMTP id f16so99031ghb.10
-        for <git@vger.kernel.org>; Fri, 23 Aug 2013 04:59:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=XgnRqV3FbWGYUDEUvKJWufN1dVexOVtjvZaU7+pfpqk=;
-        b=Avi8wJnyTlfhYYgaO5Wx7sYKfNmqBeg4lkZUQlRWVbn1VGhMvZp4YPW77vH/aSRvrC
-         c/fYByYVOif+o8XTQKdKGV9KT7NP8U0niDjRWe7KQ8Hnoc7Zm9zKIolGSMQ8bCF377FL
-         OCcgyLq/9Qp7WfHkZ3rHjyPctZ+wLWWMDwxTp6lha74A0JbuQlOXq6SkYJbRi5C5XPJ7
-         GjrE57Vyw4rfxOMrlwCjIIi/ZLvbp5kSyA4968NimrWUYOEXxjEK+kZ8AfwnSSm5A9hb
-         LaoBRq3MpF3nSya2r2QtDZ8XE5JN4o9FrTkbsDU3gz6RzXF2MYqMJXRYI/cgvznlzXfJ
-         NgnA==
-X-Received: by 10.236.228.137 with SMTP id f9mr15305172yhq.44.1377259163845;
-        Fri, 23 Aug 2013 04:59:23 -0700 (PDT)
-Received: from jerec (c-71-59-19-88.hsd1.ga.comcast.net. [71.59.19.88])
-        by mx.google.com with ESMTPSA id s9sm19844366yhb.9.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 23 Aug 2013 04:59:23 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20130823114856.GA8182@jerec>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754948Ab3HWN3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Aug 2013 09:29:12 -0400
+Received: from blois.bertin.fr ([195.68.26.9]:51850 "EHLO blois.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753109Ab3HWN3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Aug 2013 09:29:11 -0400
+X-Greylist: delayed 479 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Aug 2013 09:29:11 EDT
+Received: from blois.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id D5E374C2B
+	for <git@vger.kernel.org>; Fri, 23 Aug 2013 15:21:09 +0200 (CEST)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by blois.bertin.fr (Postfix) with ESMTP id B3E784522
+	for <git@vger.kernel.org>; Fri, 23 Aug 2013 15:21:09 +0200 (CEST)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0MRZ00EO4JR9O6E0@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Fri, 23 Aug 2013 15:21:09 +0200 (CEST)
+X-Mailer: Claws Mail 3.9.2 (GTK+ 2.24.20; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8250-7.0.0.1014-20094.001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232807>
 
-On Fri, Aug 23, 2013 at 07:48:56AM -0400, Corey Thompson wrote:
-> Sorry, I guess I could have included more details in my original post.
-> Since then, I have also made an attempt to clone another (slightly more
-> recent) branch, and at last had success.  So I see this does indeed
-> work, it just seems to be very unhappy with one particular branch.
-> 
-> So, here are a few statistics I collected on the two branches.
-> 
-> branch-that-fails:
-> total workspace disk usage (current head): 12GB
-> 68 files over 20MB
-> largest three being about 118MB
-> 
-> branch-that-clones:
-> total workspace disk usage (current head): 11GB
-> 22 files over 20MB
-> largest three being about 80MB
-> 
-> I suspect that part of the problem here might be that my company likes
-> to submit very large binaries into our repo (.tar.gzs, pre-compiled
-> third party binaries, etc.).
-> 
-> Is there any way I can clone this in pieces?  The best I've come up with
-> is to clone only up to a change number just before it tends to fail, and
-> then rebase to the latest.  My clone succeeded, but the rebase still
-> runs out of memory.  It would be great if I could specify a change
-> number to rebase up to, so that I can just take this thing a few hundred
-> changes at a time.
-> 
-> Thanks,
-> Corey
+[v1.8.3.4]
 
-And I still haven't told you anything about my platform or git
-version...
+"git bisect visualize" when run without --no-checkout has the standard gitk handling of
+"HEAD" showing what the current revision being tested is (as a yellow node).
 
-This is on Fedora Core 11, with git 1.8.3.4 built from the github repo
-(117eea7e).
+Now when using --no-checkout, the information "current revision" we may be looking for
+has nothing to do with HEAD any longer: we need BISECT_HEAD instead - and if by any chance
+HEAD would happen to be in the displayed scope, the user may do wrong assumptions about
+it (maybe).
+
+
+Wondering whether there would be any flags that would pass to gitk through "bisect visualize",
+I naively tried:
+
+ $ git bisect visualize -h
+ usage: git log [<options>] [<revision range>] [[--] <path>...]
+   or: git show [options] <object>...
+
+    --quiet               suppress diff output
+    --source              show source
+    --use-mailmap         Use mail map file
+    --decorate[=...]      decorate options
+    -L <n,m:file>         Process line range n,m in file, counting from 1
+
+Wandering away from what I was look for:
+
+ $ git bisect visualize --decorate
+ ... some git log output
+
+That seems unfortunate in its own right as well...
+
+
+Back to the problem of visualizing the info, it looks like gitk would need a way to display
+refs that are not displayed by default, when we need them.  Something like:
+
+	gitk --explicit-refs=BISECT_HEAD,refs/whatever
+
+That would also be helpful when one tries to look at the reflog graphically: whereas
+gitk accepts to show whatever@{1} and friends, it never tells us which revision corresponds
+to which reflog entry, and --explicit-refs=whatever@{1},whatever@{2} would help here, as would
+something like --explicit-refs=whatever@{*} or --explicit-refs=whatever@{1..5}, but that starts
+to be more tricky to formalize.
+
+Thoughts, anyone ?
+
+-- 
+Yann Dirson - Bertin Technologies
