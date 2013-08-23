@@ -1,66 +1,66 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCHv2 0/6] duplicate objects and delta cycles, oh my!
-Date: Thu, 22 Aug 2013 19:35:17 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1308221933450.14472@syhkavp.arg>
-References: <20130821204955.GA28025@sigill.intra.peff.net>
- <20130821205220.GB28165@sigill.intra.peff.net>
- <CACsJy8DkUeS3s+X=gKX4ZAi82g_D_9t=bBVs8NNY2EeqM9W-rQ@mail.gmail.com>
- <20130822144305.GA21219@sigill.intra.peff.net>
- <20130822231215.GA16978@sigill.intra.peff.net>
+From: Corey Thompson <cmtptr@gmail.com>
+Subject: git-p4 out of memory for very large repository
+Date: Thu, 22 Aug 2013 21:12:45 -0400
+Message-ID: <20130823011245.GA7693@jerec>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 23 01:35:33 2013
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 23 03:12:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCePZ-0000pk-Nt
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 01:35:30 +0200
+	id 1VCfvs-00051v-O4
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 03:12:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754450Ab3HVXf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Aug 2013 19:35:26 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:25390 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753411Ab3HVXfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Aug 2013 19:35:25 -0400
-Received: from xanadu.home ([70.83.209.44]) by VL-VM-MR005.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MRY00H4SHITG1A0@VL-VM-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 22 Aug 2013 19:35:17 -0400 (EDT)
-In-reply-to: <20130822231215.GA16978@sigill.intra.peff.net>
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1754188Ab3HWBMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Aug 2013 21:12:52 -0400
+Received: from mail-yh0-f48.google.com ([209.85.213.48]:34689 "EHLO
+	mail-yh0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754048Ab3HWBMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Aug 2013 21:12:52 -0400
+Received: by mail-yh0-f48.google.com with SMTP id f73so3047yha.35
+        for <git@vger.kernel.org>; Thu, 22 Aug 2013 18:12:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=Wd2YsC8tVM5/keAqvW9sysHJpOegJBYP3w6+B5p8BXo=;
+        b=JpaWH8ynAmvv9qnR1kicVpVauQTZIL5iRfZ9/UNSed1jw2a0efCiVj7c9nYbaCgGLx
+         25K6Y2KcvA2nvh9XSocFDlYUX10DEEZvz2liQ2IWj5vPR6iWtkWqPrki+gms7kr5i/um
+         Vkox5GFTZqA8fbVgl6Bn/LNLMUR/OfzN0f+mfYj5JocmyhiEbk+Ww9W2hoqGZHltmzTj
+         X+657xQlQpWg8JD1mUWYnrnHHcr/1TUlSQrxI24ah/7M6liQ9AWSZsVqnhWzPk5LlJjO
+         JPaJ0imVgbp6k+jTNiljJ2wSj9SyXhbkzwvpnos1xzWbP9CLt19XJiXm45wjj5T6gMRA
+         uJ4Q==
+X-Received: by 10.236.53.164 with SMTP id g24mr12904524yhc.18.1377220371624;
+        Thu, 22 Aug 2013 18:12:51 -0700 (PDT)
+Received: from jerec (c-71-59-19-88.hsd1.ga.comcast.net. [71.59.19.88])
+        by mx.google.com with ESMTPSA id s9sm17724180yhb.9.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 22 Aug 2013 18:12:50 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232795>
 
-On Thu, 22 Aug 2013, Jeff King wrote:
+Hello,
 
-> On Thu, Aug 22, 2013 at 10:43:05AM -0400, Jeff King wrote:
-> 
-> > > write_idx_file() is called after index-pack processes all delta
-> > > objects. Could resolve_deltas() go cyclic with certain duplicate
-> > > object setup?
-> > 
-> > Good question. I'm not sure. I'll check it out.
-> 
-> I think the answer is "no", based on both reasoning and testing (both of
-> which are included in patches 3-4 of the series below).
-> 
-> So here's my re-roll of the series.
+Has anyone actually gotten git-p4 to clone a large Perforce repository?
+I have one codebase in particular that gets to about 67%, then
+consistently gets get-fast-import (and often times a few other
+processes) killed by the OOM killer.
 
-This looks all good to me.
+I've found some patches out there that claim to resolve this, but
+they're all for versions of git-p4.py from several years ago.  Not only
+will they not apply cleanly, but as far as I can tell the issues that
+these patches are meant to address aren't in the current version,
+anyway.
 
+Any suggestions would be greatly appreciated.
 
-Acked-by: Nicolas Pitre <nico@fluxnic.net>
-
-
-Nicolas
+Thanks,
+Corey
