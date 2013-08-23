@@ -1,87 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Remove dead link
-Date: Fri, 23 Aug 2013 11:01:53 -0700
-Message-ID: <xmqq1u5kp9pq.fsf@gitster.dls.corp.google.com>
-References: <884d025e9da6f309d33dffdd1ed3731defa514ba.1377267683.git.mina86@mina86.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Loeliger <jdl@jdl.com>, git@vger.kernel.org,
-	Michal Nazarewicz <mina86@mina86.com>
-To: Michal Nazarewicz <mpn@google.com>
-X-From: git-owner@vger.kernel.org Fri Aug 23 20:02:03 2013
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: Re: [PATCHv2] git-diff: Clarify operation when not inside a repository.
+Date: Fri, 23 Aug 2013 14:11:40 -0400
+Message-ID: <201308231811.r7NIBeH9027848@freeze.ariadne.com>
+References: <201308211734.r7LHYwNh008859@hobgoblin.ariadne.com>
+	<xmqqwqneuc69.fsf@gitster.dls.corp.google.com>
+	<201308222031.r7MKVL6O028293@freeze.ariadne.com> <xmqqioyxqwdr.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 23 20:11:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCvgP-0001Qt-JX
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 20:02:01 +0200
+	id 1VCvpr-0000BF-Nx
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 20:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755789Ab3HWSB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Aug 2013 14:01:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48673 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754923Ab3HWSB5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Aug 2013 14:01:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 603133B518;
-	Fri, 23 Aug 2013 18:01:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WHmCVHOB5b+/7G6jss4JK5vGLxw=; b=tXd+2+
-	CiZ+0ct5vfGN0HXNhjQYPL1cwNcCrRgXxmBxbpMyDBpa+j8hG/R2OEMjlN6lV0cc
-	MOVOlgvoew1qhqUCCF6M1zljF2AChCHU6AGyjPmnW/0lme3s10z3TSGdyyqgdPM7
-	u78I7p1esquuYgXNWrhB73ex+2vVb25gNGEGw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pY8/PwKTJ5IL1Xt4Og+Clexak8gKhoz4
-	4SxxemnqFXtEb1ZtCsTLKvJUU4wU/tde0A8+df5vWH8Lv9yUWmA1j3/SLAcmHOKn
-	nmHm4l93qHUycLQZoKaHZuq0FXOlM7CNBP2ctf7YK1welHDqXo4xIoBf78mlLeFL
-	8dLZvD/iEIw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 568983B517;
-	Fri, 23 Aug 2013 18:01:56 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AEF823B515;
-	Fri, 23 Aug 2013 18:01:55 +0000 (UTC)
-In-Reply-To: <884d025e9da6f309d33dffdd1ed3731defa514ba.1377267683.git.mina86@mina86.com>
-	(Michal Nazarewicz's message of "Fri, 23 Aug 2013 16:25:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 18E246AA-0C1E-11E3-AD2E-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755192Ab3HWSLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Aug 2013 14:11:44 -0400
+Received: from qmta11.westchester.pa.mail.comcast.net ([76.96.59.211]:51516
+	"EHLO QMTA11.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755538Ab3HWSLm (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Aug 2013 14:11:42 -0400
+Received: from omta05.westchester.pa.mail.comcast.net ([76.96.62.43])
+	by QMTA11.westchester.pa.mail.comcast.net with comcast
+	id GCvG1m0050vyq2s5BJBiCQ; Fri, 23 Aug 2013 18:11:42 +0000
+Received: from freeze.ariadne.com ([24.34.72.61])
+	by omta05.westchester.pa.mail.comcast.net with comcast
+	id GJBh1m00T1KKtkw3RJBhAF; Fri, 23 Aug 2013 18:11:41 +0000
+Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
+	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r7NIBee1027849;
+	Fri, 23 Aug 2013 14:11:40 -0400
+Received: (from worley@localhost)
+	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r7NIBeH9027848;
+	Fri, 23 Aug 2013 14:11:40 -0400
+In-reply-to: <xmqqioyxqwdr.fsf@gitster.dls.corp.google.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1377281502;
+	bh=zgEwOlHkwXQep1J6niLMsLzYNX8d50RKJgWk03KVU7E=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=tVQhGvdIF18/m4y3iBY6H7TTLVGMsP0U/7aA0pE4/QVrD5I8HsUoCLQYIinMfnDVU
+	 w3/2h0XupOAOkgXhBzhJu4uxvcJQHFss7u0RgKcr9GGNKrt08Dffje2ulLWmfJHCgY
+	 HVkGq0H0A0jUjn8CaCGIp1WeR2AdSgv5Kl3JH0iRr4NAuLibJgKin5L1zoRnMgUySz
+	 opf3FaYhEFgRCPUDOyYIA5WWiIWZ6KHovARNx/4KgOddnoO39GfyVbsRyTZarzAh1i
+	 L+kVQCsN3CAFLMKrY1LD4MgKsg0MjEgb+dhu53OPGGGq02UrWthQ6u0pALNu+gSBOu
+	 9K0CMIGxgKawg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232818>
 
-Michal Nazarewicz <mpn@google.com> writes:
+> From: Junio C Hamano <gitster@pobox.com>
 
-> From: Michal Nazarewicz <mina86@mina86.com>
->
-> Signed-off-by: Michal Nazarewicz <mina86@mina86.com>
-> ---
->  Documentation/technical/pack-heuristics.txt | 6 ------
->  1 file changed, 6 deletions(-)
->
-> diff --git a/Documentation/technical/pack-heuristics.txt b/Documentation/technical/pack-heuristics.txt
-> index 8b7ae1c..b7bd951 100644
-> --- a/Documentation/technical/pack-heuristics.txt
-> +++ b/Documentation/technical/pack-heuristics.txt
-> @@ -366,12 +366,6 @@ been detailed!
->  
->      <linus> Yes, we always write out most recent first
->  
-> -For the other record:
-> -
-> -    <pasky> njs`: http://pastebin.com/547965
-> -
-> -The 'net never forgets, so that should be good until the end of time.
-> -
->      <njs`> And, yeah, I got the part about deeper-in-history stuff
->          having worse IO characteristics, one sort of doesn't care.
+> I suspect that it may be a good idea to split the section altogether
+> to reduce confusion like what triggered this thread, e.g.
+> 
+>     'git diff' [--options] [--] [<path>...]::
+> 
+>             This form is to view the changes you made relative to
+>             the index (staging area for the next commit).  In other
+>             words, the differences are what you _could_ tell Git to
+>             further add to the index but you still haven't.  You can
+>             stage these changes by using linkgit:git-add[1].
+> 
+>     'git diff' --no-index [--options] [--] <path> <path>::
+> 
+> 	    This form is to compare the given two paths on the
+> 	    filesystem.  When run in a working tree controlled by
+> 	    Git, if at least one of the paths points outside the
+> 	    working tree, or when run outside a working tree
+> 	    controlled by Git, you can omit the `--no-index` option.
+> 
+> For now, I'll queue your version as-is modulo style fixes, while
+> waiting for others to help polishing the documentation better.
 
-That is unfortunate, especially given the last line that the patch
-removes.  Has anybody asked pastebin folks why it is gone and if it
-can be resurrected?
+It'd difficult to figure out how to describe it well.  In my opinion,
+the problem here is the DWIM nature of the command, which means that
+there is a lot of interaction between the options that are specified,
+the number of path arguments, and the circumstances.  My preference is
+for "do what I say", that the options restrict the command to operate
+in exactly one way, which determines the way the paths are used (and
+thus their number) and the context in which it can be used.  But
+that's not how git-diff works.
+
+Dale
