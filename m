@@ -1,88 +1,59 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Re: [PATCHv2] git-diff: Clarify operation when not inside a repository.
-Date: Fri, 23 Aug 2013 14:11:40 -0400
-Message-ID: <201308231811.r7NIBeH9027848@freeze.ariadne.com>
-References: <201308211734.r7LHYwNh008859@hobgoblin.ariadne.com>
-	<xmqqwqneuc69.fsf@gitster.dls.corp.google.com>
-	<201308222031.r7MKVL6O028293@freeze.ariadne.com> <xmqqioyxqwdr.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 23 20:11:55 2013
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: =?UTF-8?B?UmU6IEhvdyB0byBzZXQgdGFiIHNpemUgZm9yIGh1bmtzIGluIOKAnGdpdCBhZGQgLXA=?=
+	=?UTF-8?B?4oCdPw==?=
+Date: Fri, 23 Aug 2013 20:19:41 +0200
+Message-ID: <CALWbr2xvMtXddpnkVs8TkSiaLcmpJGY7_hUTa3r_1X1SgDyhng@mail.gmail.com>
+References: <52179BAB.3040505@itvault.info>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: alex@itvault.info
+X-From: git-owner@vger.kernel.org Fri Aug 23 20:19:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCvpr-0000BF-Nx
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 20:11:48 +0200
+	id 1VCvxa-00048R-Hf
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 20:19:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755192Ab3HWSLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Aug 2013 14:11:44 -0400
-Received: from qmta11.westchester.pa.mail.comcast.net ([76.96.59.211]:51516
-	"EHLO QMTA11.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755538Ab3HWSLm (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Aug 2013 14:11:42 -0400
-Received: from omta05.westchester.pa.mail.comcast.net ([76.96.62.43])
-	by QMTA11.westchester.pa.mail.comcast.net with comcast
-	id GCvG1m0050vyq2s5BJBiCQ; Fri, 23 Aug 2013 18:11:42 +0000
-Received: from freeze.ariadne.com ([24.34.72.61])
-	by omta05.westchester.pa.mail.comcast.net with comcast
-	id GJBh1m00T1KKtkw3RJBhAF; Fri, 23 Aug 2013 18:11:41 +0000
-Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
-	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r7NIBee1027849;
-	Fri, 23 Aug 2013 14:11:40 -0400
-Received: (from worley@localhost)
-	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r7NIBeH9027848;
-	Fri, 23 Aug 2013 14:11:40 -0400
-In-reply-to: <xmqqioyxqwdr.fsf@gitster.dls.corp.google.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1377281502;
-	bh=zgEwOlHkwXQep1J6niLMsLzYNX8d50RKJgWk03KVU7E=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=tVQhGvdIF18/m4y3iBY6H7TTLVGMsP0U/7aA0pE4/QVrD5I8HsUoCLQYIinMfnDVU
-	 w3/2h0XupOAOkgXhBzhJu4uxvcJQHFss7u0RgKcr9GGNKrt08Dffje2ulLWmfJHCgY
-	 HVkGq0H0A0jUjn8CaCGIp1WeR2AdSgv5Kl3JH0iRr4NAuLibJgKin5L1zoRnMgUySz
-	 opf3FaYhEFgRCPUDOyYIA5WWiIWZ6KHovARNx/4KgOddnoO39GfyVbsRyTZarzAh1i
-	 L+kVQCsN3CAFLMKrY1LD4MgKsg0MjEgb+dhu53OPGGGq02UrWthQ6u0pALNu+gSBOu
-	 9K0CMIGxgKawg==
+	id S1755640Ab3HWSTm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Aug 2013 14:19:42 -0400
+Received: from mail-qa0-f50.google.com ([209.85.216.50]:61962 "EHLO
+	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754761Ab3HWSTm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Aug 2013 14:19:42 -0400
+Received: by mail-qa0-f50.google.com with SMTP id o13so458366qaj.2
+        for <git@vger.kernel.org>; Fri, 23 Aug 2013 11:19:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=4H25iwmozoopgAi153MZDQWiC4KioErXSYX27zHFH7g=;
+        b=dcUnoYfDqC8yLLkBW5k9DY8P3BMI/QGIbX2+xo1/ZBMClilRXT5YnggcAXYhj9T6LL
+         kV7dnlZwDO/YZRv9r5YLK0cQXOHoloHys3dN8Z4G/QB4gnUs8xfh5Ek0lj9BdiqcWF5z
+         U0O/STLT53bspBz/gPTCsQ8sXifD+eL5drpiMjSDhXqr5zUnU5hwor/CPx6YVPESzzGS
+         UZt3qt6eLVAX+q7o40xdGyz2XdLWY0RLnoVB1azzPeT8wd/3kKLYTbsbu353R53NUpMn
+         wULtyl5JySFaRZUoLj6oaroORAIkZ/XmJeDfFiDt6c0c+7I1bqfIUXB15zX9KKDPZ/gZ
+         rzxw==
+X-Received: by 10.49.3.131 with SMTP id c3mr1295219qec.33.1377281981311; Fri,
+ 23 Aug 2013 11:19:41 -0700 (PDT)
+Received: by 10.49.104.211 with HTTP; Fri, 23 Aug 2013 11:19:41 -0700 (PDT)
+In-Reply-To: <52179BAB.3040505@itvault.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232819>
 
-> From: Junio C Hamano <gitster@pobox.com>
+On Fri, Aug 23, 2013 at 7:28 PM, =D0=AF=D0=BD=D1=87=D0=B0=D1=80=D1=83=D0=
+=BA =D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B0=D0=BD=D0=B4=D1=80 <alex@itvaul=
+t.info> wrote:
+> But those settings seems does not affect on |git add -p|. How to set =
+tab
+> size for hunks in *git add -p* command?
 
-> I suspect that it may be a good idea to split the section altogether
-> to reduce confusion like what triggered this thread, e.g.
-> 
->     'git diff' [--options] [--] [<path>...]::
-> 
->             This form is to view the changes you made relative to
->             the index (staging area for the next commit).  In other
->             words, the differences are what you _could_ tell Git to
->             further add to the index but you still haven't.  You can
->             stage these changes by using linkgit:git-add[1].
-> 
->     'git diff' --no-index [--options] [--] <path> <path>::
-> 
-> 	    This form is to compare the given two paths on the
-> 	    filesystem.  When run in a working tree controlled by
-> 	    Git, if at least one of the paths points outside the
-> 	    working tree, or when run outside a working tree
-> 	    controlled by Git, you can omit the `--no-index` option.
-> 
-> For now, I'll queue your version as-is modulo style fixes, while
-> waiting for others to help polishing the documentation better.
-
-It'd difficult to figure out how to describe it well.  In my opinion,
-the problem here is the DWIM nature of the command, which means that
-there is a lot of interaction between the options that are specified,
-the number of path arguments, and the circumstances.  My preference is
-for "do what I say", that the options restrict the command to operate
-in exactly one way, which determines the way the paths are used (and
-thus their number) and the context in which it can be used.  But
-that's not how git-diff works.
-
-Dale
+That's because "git add -p" doesn't go through less/pager.
+You can certainly change the tabs size for your terminal with "tabs -4"=
+ though.
