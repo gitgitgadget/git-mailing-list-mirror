@@ -1,91 +1,149 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: [BUGLET] git bisect visualize does not show BISECT_HEAD
-Date: Fri, 23 Aug 2013 15:21:27 +0200
-Organization: Bertin Technologies
-Message-ID: <20130823152127.73733364@chalon.bertin.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: dirson@bertin.fr, poulot-cazajous@bertin.fr, metral@bertin.fr
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 23 15:29:21 2013
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: [PATCH] git-commit: search author pattern against mailmap
+Date: Fri, 23 Aug 2013 15:48:31 +0200
+Message-ID: <1377265711-11492-1-git-send-email-apelisse@gmail.com>
+Cc: Antoine Pelisse <apelisse@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 23 15:49:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCrQR-0008Ff-TB
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 15:29:16 +0200
+	id 1VCrjX-0005Gz-Ur
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 15:49:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754948Ab3HWN3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Aug 2013 09:29:12 -0400
-Received: from blois.bertin.fr ([195.68.26.9]:51850 "EHLO blois.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753109Ab3HWN3L (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Aug 2013 09:29:11 -0400
-X-Greylist: delayed 479 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Aug 2013 09:29:11 EDT
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id D5E374C2B
-	for <git@vger.kernel.org>; Fri, 23 Aug 2013 15:21:09 +0200 (CEST)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id B3E784522
-	for <git@vger.kernel.org>; Fri, 23 Aug 2013 15:21:09 +0200 (CEST)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0MRZ00EO4JR9O6E0@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Fri, 23 Aug 2013 15:21:09 +0200 (CEST)
-X-Mailer: Claws Mail 3.9.2 (GTK+ 2.24.20; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8250-7.0.0.1014-20094.001
+	id S1755061Ab3HWNs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Aug 2013 09:48:56 -0400
+Received: from mail-we0-f179.google.com ([74.125.82.179]:59705 "EHLO
+	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754857Ab3HWNsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Aug 2013 09:48:55 -0400
+Received: by mail-we0-f179.google.com with SMTP id t58so560980wes.38
+        for <git@vger.kernel.org>; Fri, 23 Aug 2013 06:48:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=jEcxSOwT7XroPrFAzVCY2J8TPIrwCAhmy30Y1aU2rEE=;
+        b=BKHXtTniRrjXw0ciUbF1d0pZxP3CNys+zYMHISCNwneg7CtCTAuVHQ9erlaIZEX9A8
+         szBzXPtWqLF1Crzpax16J9N+RB/AlA5TkhXEnslBDITR0URn/q7o1ryU63pvil5LKN97
+         1eSav2O/V+eo/IkmaRMa256BJobgPnFLS6NndrvnNZvDXAcPQS8lj3NZ1eJoAiRH8Rf8
+         FILAiND39PN43mtBPuhIzWjU8rFe2YBCWsMHhlvzB1O60MCrc9wslCM/xri4wQo5pLTy
+         RUCFoyFxap8O5mUX5SJgo63Kplv5ZAog6YkxRrIMHyvzPzxl8uVl+VUsjfBWVayUiIpc
+         Cgqg==
+X-Received: by 10.194.19.5 with SMTP id a5mr1362520wje.48.1377265733948;
+        Fri, 23 Aug 2013 06:48:53 -0700 (PDT)
+Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
+        by mx.google.com with ESMTPSA id jc18sm4112914wic.5.1969.12.31.16.00.00
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 23 Aug 2013 06:48:53 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc4.1.g0d8beaa.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232809>
 
-[v1.8.3.4]
+When committing for someone else, using the --author option, it can be
+nice to use the mailmap file to find the correct name spelling and email
+address.
 
-"git bisect visualize" when run without --no-checkout has the standard gitk handling of
-"HEAD" showing what the current revision being tested is (as a yellow node).
+Currently, you would have to find the correct mapping in mailmap file
+first, and then use the full ident form when committing.
 
-Now when using --no-checkout, the information "current revision" we may be looking for
-has nothing to do with HEAD any longer: we need BISECT_HEAD instead - and if by any chance
-HEAD would happen to be in the displayed scope, the user may do wrong assumptions about
-it (maybe).
+Let's allow git-commit to find if an entry exists in mailmap file for
+that pattern, and use that instead.
 
+Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+---
+Hi,
+I would use that feature at work where I happen to commit some work for
+other colleagues, while we heavily rely on mailmap file to have decent indents.
 
-Wondering whether there would be any flags that would pass to gitk through "bisect visualize",
-I naively tried:
+On the other hand, I'm kind of embarrassed to add this new option to
+git-commit.
 
- $ git bisect visualize -h
- usage: git log [<options>] [<revision range>] [[--] <path>...]
-   or: git show [options] <object>...
+ Documentation/git-commit.txt |  6 +++++-
+ builtin/commit.c             | 16 +++++++++++++++-
+ 2 files changed, 20 insertions(+), 2 deletions(-)
 
-    --quiet               suppress diff output
-    --source              show source
-    --use-mailmap         Use mail map file
-    --decorate[=...]      decorate options
-    -L <n,m:file>         Process line range n,m in file, counting from 1
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 1a7616c..9e3fe04 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 	   [--dry-run] [(-c | -C | --fixup | --squash) <commit>]
+ 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+ 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+-	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
++	   [--use-mailmap] [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+ 	   [-i | -o] [-S[<keyid>]] [--] [<file>...]
 
-Wandering away from what I was look for:
+ DESCRIPTION
+@@ -131,6 +131,10 @@ OPTIONS
+ 	commit by that author (i.e. rev-list --all -i --author=<author>);
+ 	the commit author is then copied from the first such commit found.
 
- $ git bisect visualize --decorate
- ... some git log output
++--use-mailmap::
++	When used with `--author=<author>`, match the <author> pattern
++	against mapped name and email. See linkgit:git-shortlog[1].
++
+ --date=<date>::
+ 	Override the author date used in the commit.
 
-That seems unfortunate in its own right as well...
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 10acc53..fbd0664 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -30,6 +30,7 @@
+ #include "column.h"
+ #include "sequencer.h"
+ #include "notes-utils.h"
++#include "mailmap.h"
 
+ static const char * const builtin_commit_usage[] = {
+ 	N_("git commit [options] [--] <pathspec>..."),
+@@ -87,6 +88,7 @@ static enum {
+ } commit_style;
 
-Back to the problem of visualizing the info, it looks like gitk would need a way to display
-refs that are not displayed by default, when we need them.  Something like:
-
-	gitk --explicit-refs=BISECT_HEAD,refs/whatever
-
-That would also be helpful when one tries to look at the reflog graphically: whereas
-gitk accepts to show whatever@{1} and friends, it never tells us which revision corresponds
-to which reflog entry, and --explicit-refs=whatever@{1},whatever@{2} would help here, as would
-something like --explicit-refs=whatever@{*} or --explicit-refs=whatever@{1..5}, but that starts
-to be more tricky to formalize.
-
-Thoughts, anyone ?
-
--- 
-Yann Dirson - Bertin Technologies
+ static const char *logfile, *force_author;
++static int mailmap;
+ static const char *template_file;
+ /*
+  * The _message variables are commit names from which to take
+@@ -945,13 +947,24 @@ static const char *find_author_by_nickname(const char *name)
+ 	av[++ac] = buf.buf;
+ 	av[++ac] = NULL;
+ 	setup_revisions(ac, av, &revs, NULL);
++	if (mailmap) {
++		revs.mailmap = xcalloc(1, sizeof(struct string_list));
++		read_mailmap(revs.mailmap, NULL);
++	}
+ 	prepare_revision_walk(&revs);
+ 	commit = get_revision(&revs);
+ 	if (commit) {
+ 		struct pretty_print_context ctx = {0};
++		const char *format;
++
++		if (mailmap)
++			format = "%aN <%aE>";
++		else
++			format = "%an <%ae>";
++
+ 		ctx.date_mode = DATE_NORMAL;
+ 		strbuf_release(&buf);
+-		format_commit_message(commit, "%an <%ae>", &buf, &ctx);
++		format_commit_message(commit, format, &buf, &ctx);
+ 		return strbuf_detach(&buf, NULL);
+ 	}
+ 	die(_("No existing author found with '%s'"), name);
+@@ -1428,6 +1441,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		OPT_GROUP(N_("Commit message options")),
+ 		OPT_FILENAME('F', "file", &logfile, N_("read message from file")),
+ 		OPT_STRING(0, "author", &force_author, N_("author"), N_("override author for commit")),
++		OPT_BOOLEAN(0, "use-mailmap", &mailmap, N_("Use mailmap file when searching for author")),
+ 		OPT_STRING(0, "date", &force_date, N_("date"), N_("override date for commit")),
+ 		OPT_CALLBACK('m', "message", &message, N_("message"), N_("commit message"), opt_parse_m),
+ 		OPT_STRING('c', "reedit-message", &edit_message, N_("commit"), N_("reuse and edit message from specified commit")),
+--
+1.8.4.rc4.1.g0d8beaa.dirty
