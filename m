@@ -1,83 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t3010 broken by 2eac2a4
-Date: Thu, 22 Aug 2013 22:36:46 -0700
-Message-ID: <7vsiy1j7dd.fsf@alter.siamese.dyndns.org>
-References: <82078845-3AB9-4B36-9130-039CC33C8A7A@gernhardtsoftware.com>
-	<xmqqbo4qu3g4.fsf@gitster.dls.corp.google.com>
-	<CAPig+cQHTvmTWvGfg1Z3KfBrPD+QbSEbYBYz6XWT3KKu3-+jyQ@mail.gmail.com>
-	<xmqqbo4pqvde.fsf@gitster.dls.corp.google.com>
-	<CAPig+cQmvRDDc3BHbta_UhCQe9QvbtAm0RJgt6HbtgFAKgo0Vg@mail.gmail.com>
-	<xmqq7gfdqumd.fsf@gitster.dls.corp.google.com>
-	<CAPig+cSEQLk2M+X5QP7mkm846wqqHRCjPHgO7O3URvNcsYO6+w@mail.gmail.com>
-	<xmqq38q1qu3l.fsf@gitster.dls.corp.google.com>
-	<CAPig+cSgM-kO0Mk9qbGfLR8DZkYQt60Va4N2wfRBVqmReTPowQ@mail.gmail.com>
-	<CAPig+cQ15Qq7pJ0sLmnuQt_EERn9fkzCa-Gr-pb6a_zf1MLcGQ@mail.gmail.com>
-	<xmqqwqndpbfc.fsf@gitster.dls.corp.google.com>
-	<CAPig+cSqtMOYvxbvXstm9nqQD9sQ378NKCHSK7Ec6GrK5VJiGA@mail.gmail.com>
-	<CAPig+cR0Z0gghUH5C6+XCuGQ3gz5JoWrnObVbbA5_ahPmC8G2Q@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: git-p4 out of memory for very large repository
+Date: Fri, 23 Aug 2013 08:16:58 +0100
+Message-ID: <52170C6A.4080708@diamand.org>
+References: <20130823011245.GA7693@jerec>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
-	"git\@vger.kernel.org List" <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Aug 23 07:36:56 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Corey Thompson <cmtptr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 23 09:17:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCk3K-00010Y-Kz
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 07:36:54 +0200
+	id 1VClcd-0006Wh-H4
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 09:17:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754472Ab3HWFgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Aug 2013 01:36:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37506 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754303Ab3HWFgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Aug 2013 01:36:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 516FF36427;
-	Fri, 23 Aug 2013 05:36:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dJ8AbUHnf+PSRj/jGOeYiv2STUM=; b=gSmM+r
-	ZyxU6DjZ7IfoSVcxLzQ/QgmTsAgQlRcfB1h1JtKA/oJvT6uuBJriTb1GJJf3JFjN
-	6BTVKFtPpifa+PerLKoln+f3VGBCaQNLWhxjZ8Ywl3XCAuDcj5SilKr1Ntov9ntc
-	XLiOZwAeDpsg4W01Hpjvs+JPcptCM9E/jEau4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QaRnPPIRpqBFhWZ62PrXjxNpm557Cvy2
-	RrPYHuraCrAofHwyQIOC3OJinSdAv+xU8E8DhyZqp4/ccCwMi9fyGOrmTm7lyAam
-	qzxp1K9xz9Jc2qDUSoqT5wy6zl0re/nVE2sDcEN0B8o4J9sRwcKd1fbwlAl1gvrp
-	rvHDyxk3uIs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43DC036425;
-	Fri, 23 Aug 2013 05:36:49 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9913736424;
-	Fri, 23 Aug 2013 05:36:48 +0000 (UTC)
-In-Reply-To: <CAPig+cR0Z0gghUH5C6+XCuGQ3gz5JoWrnObVbbA5_ahPmC8G2Q@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 23 Aug 2013 00:32:26 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 01612C7A-0BB6-11E3-9C6D-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754824Ab3HWHRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Aug 2013 03:17:24 -0400
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:35309 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754792Ab3HWHRX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Aug 2013 03:17:23 -0400
+Received: by mail-wg0-f47.google.com with SMTP id j13so198391wgh.2
+        for <git@vger.kernel.org>; Fri, 23 Aug 2013 00:17:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=ii8dkKS7lVdJxZ0be+gMU/U4SeRC+grKs2fPUJxzu4E=;
+        b=I0c3BF8wSYxhFBR+rOSHYPG4aF1QKQYm++yXTAMczatQPtBtAzesqpv+B5uSZ9vu0f
+         VebTvUjokL2nLzNMNtgJcD1ZDaD1Ws8QzfVtkQfE2CnJU7ytoQcUT2zIgZ5H7gSE3Hdl
+         hQdMCcfE1htOjWClBM37BucuEuSJRZQglChzM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=ii8dkKS7lVdJxZ0be+gMU/U4SeRC+grKs2fPUJxzu4E=;
+        b=Cxz9O88DasY5lqM1cezA0cGYgXFJgd9BWepYRyiYx3UZ+84EZ1wG21sT5Cpe8CFhov
+         6gIsmka0CTGZQU4PLvp/nAI7PBcxb21VMfqByQ2RjvNcRFPkR5BZBx5cNRzGUDpa+YDn
+         6DDgQzPyDG3IkAwlG9RmNTN/NfIZk1jyJmwXQLxv0BOtGXAQtTIS1xHGYvwoav/RDA2z
+         zpXhlN4pmyC1HfqYEDIVzZ5TxjjnhdFoxMv9zS6pyE8lct8yvgJzPWxHow9jy6pyIBzg
+         14oaQraeMuWQp+tabxgNEu2iMASx10TxCWWQref5JSCn8BGoE8VPQGprwAUgcr2Y/y8t
+         rc+g==
+X-Gm-Message-State: ALoCoQnhV7O3/J8fbhVmuYhwiITePQmOSu7i6GXI23WTqngDZebrbbzcSRBMelC/xv4ey0hpY2xK
+X-Received: by 10.180.160.240 with SMTP id xn16mr964051wib.62.1377242241718;
+        Fri, 23 Aug 2013 00:17:21 -0700 (PDT)
+Received: from [86.14.230.179] (cpc14-cmbg17-2-0-cust690.5-4.cable.virginmedia.com. [86.14.230.179])
+        by mx.google.com with ESMTPSA id l5sm1631359wia.6.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 23 Aug 2013 00:17:20 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
+In-Reply-To: <20130823011245.GA7693@jerec>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232801>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On 23/08/13 02:12, Corey Thompson wrote:
+> Hello,
+>
+> Has anyone actually gotten git-p4 to clone a large Perforce repository?
 
-> I sent a patch [1] which resolves the problem, although the solution
-> is not especially pretty (due to some ugliness in the existing
-> implementation).
+Yes. I've cloned repos with a couple of Gig of files.
 
-Yeah, thanks.
+> I have one codebase in particular that gets to about 67%, then
+> consistently gets get-fast-import (and often times a few other
+> processes) killed by the OOM killer.
 
-I tend to agree with you that fixing the "icase" callee not to rely
-on having the trailing slash (which is looking past the end of the
-given string), instead of working that breakage around on the
-caller's side like your patch did, would be a better alternative,
-though.
+What size is this codebase? Which version and platform of git are you using?
+
+Maybe it's a regression, or perhaps you've hit some new, previously 
+unknown size limit?
+
+Thanks
+Luke
+
+
+>
+> I've found some patches out there that claim to resolve this, but
+> they're all for versions of git-p4.py from several years ago.  Not only
+> will they not apply cleanly, but as far as I can tell the issues that
+> these patches are meant to address aren't in the current version,
+> anyway.
+>
+> Any suggestions would be greatly appreciated.
+>
+> Thanks,
+> Corey
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
