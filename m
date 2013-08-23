@@ -1,97 +1,119 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: git-p4 out of memory for very large repository
-Date: Fri, 23 Aug 2013 08:16:58 +0100
-Message-ID: <52170C6A.4080708@diamand.org>
-References: <20130823011245.GA7693@jerec>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] git-remote-mediawiki: reset private ref after non-dumb push
+Date: Fri, 23 Aug 2013 10:25:29 +0200
+Message-ID: <vpqbo4o3jba.fsf@anie.imag.fr>
+References: <1376400700-8863-1-git-send-email-Matthieu.Moy@imag.fr>
+	<CAMP44s2u1edB3g9GK_kak3Nc-fe4TDBjFU_JqskBW+J0Q9BJrg@mail.gmail.com>
+	<vpqa9ka7mku.fsf@anie.imag.fr>
+	<CAMP44s3jh4iEbgONaEU0WSCc5YiGYoK8edcgWU6qmUARToVRuw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Corey Thompson <cmtptr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 23 09:17:30 2013
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 23 10:25:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VClcd-0006Wh-H4
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 09:17:27 +0200
+	id 1VCmge-00045S-6y
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 10:25:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754824Ab3HWHRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Aug 2013 03:17:24 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:35309 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754792Ab3HWHRX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Aug 2013 03:17:23 -0400
-Received: by mail-wg0-f47.google.com with SMTP id j13so198391wgh.2
-        for <git@vger.kernel.org>; Fri, 23 Aug 2013 00:17:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=ii8dkKS7lVdJxZ0be+gMU/U4SeRC+grKs2fPUJxzu4E=;
-        b=I0c3BF8wSYxhFBR+rOSHYPG4aF1QKQYm++yXTAMczatQPtBtAzesqpv+B5uSZ9vu0f
-         VebTvUjokL2nLzNMNtgJcD1ZDaD1Ws8QzfVtkQfE2CnJU7ytoQcUT2zIgZ5H7gSE3Hdl
-         hQdMCcfE1htOjWClBM37BucuEuSJRZQglChzM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=ii8dkKS7lVdJxZ0be+gMU/U4SeRC+grKs2fPUJxzu4E=;
-        b=Cxz9O88DasY5lqM1cezA0cGYgXFJgd9BWepYRyiYx3UZ+84EZ1wG21sT5Cpe8CFhov
-         6gIsmka0CTGZQU4PLvp/nAI7PBcxb21VMfqByQ2RjvNcRFPkR5BZBx5cNRzGUDpa+YDn
-         6DDgQzPyDG3IkAwlG9RmNTN/NfIZk1jyJmwXQLxv0BOtGXAQtTIS1xHGYvwoav/RDA2z
-         zpXhlN4pmyC1HfqYEDIVzZ5TxjjnhdFoxMv9zS6pyE8lct8yvgJzPWxHow9jy6pyIBzg
-         14oaQraeMuWQp+tabxgNEu2iMASx10TxCWWQref5JSCn8BGoE8VPQGprwAUgcr2Y/y8t
-         rc+g==
-X-Gm-Message-State: ALoCoQnhV7O3/J8fbhVmuYhwiITePQmOSu7i6GXI23WTqngDZebrbbzcSRBMelC/xv4ey0hpY2xK
-X-Received: by 10.180.160.240 with SMTP id xn16mr964051wib.62.1377242241718;
-        Fri, 23 Aug 2013 00:17:21 -0700 (PDT)
-Received: from [86.14.230.179] (cpc14-cmbg17-2-0-cust690.5-4.cable.virginmedia.com. [86.14.230.179])
-        by mx.google.com with ESMTPSA id l5sm1631359wia.6.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 23 Aug 2013 00:17:20 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
-In-Reply-To: <20130823011245.GA7693@jerec>
+	id S1754364Ab3HWIZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Aug 2013 04:25:35 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60889 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753947Ab3HWIZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Aug 2013 04:25:33 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r7N8PSax018293
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 23 Aug 2013 10:25:28 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VCmgT-0005fM-Dt; Fri, 23 Aug 2013 10:25:29 +0200
+In-Reply-To: <CAMP44s3jh4iEbgONaEU0WSCc5YiGYoK8edcgWU6qmUARToVRuw@mail.gmail.com>
+	(Felipe Contreras's message of "Thu, 22 Aug 2013 12:20:42 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 23 Aug 2013 10:25:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r7N8PSax018293
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1377851129.1361@+ajATOdDdrOnS48DYQcNhQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232802>
 
-On 23/08/13 02:12, Corey Thompson wrote:
-> Hello,
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> On Wed, Aug 21, 2013 at 4:36 PM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> On Tue, Aug 13, 2013 at 8:31 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+>>>
+>>>> Felipe: Is this the right fix for git-remote-mediawiki? Any better idea?
+>>>
+>>> Why not keep track of the revisions yourself? You can have file where
+>>> you store which was the last revision that was fetched.
+>>
+>> I don't really understand the point of the "private namespace" anymore I
+>> guess. Why do we have both refs/remotes/$remote and
+>> refs/$foreign_vcs/$remote, if they are always kept in sync?
 >
-> Has anyone actually gotten git-p4 to clone a large Perforce repository?
+> They are not always in sync; if a push fails, the private namespace is
+> not updated.
+[...]
+> As I said, they are not exactly the same. It is possible refs/remotes
+> point to a mercurial revision on the remote server, and refs/hg points
+> to a mercurial revision on the local internal repository, and they are
+> not the same.
 
-Yes. I've cloned repos with a couple of Gig of files.
+This is assuming you follow the scheme
 
-> I have one codebase in particular that gets to about 67%, then
-> consistently gets get-fast-import (and often times a few other
-> processes) killed by the OOM killer.
+  git -> local repo for other vcs -> remote repo for other vcs
 
-What size is this codebase? Which version and platform of git are you using?
+which itself more or less assumes that the other VCS is a decentralized
+VCS. I understand this is a good idea for hg or bzr remote helpers, but
+not applicable for git-remote-mediawiki.
 
-Maybe it's a regression, or perhaps you've hit some new, previously 
-unknown size limit?
+I find this very unclear in the doc. How about adding something like
+this in the "'refspec' <refspec>::" part?
 
-Thanks
-Luke
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -176,6 +176,12 @@ applicable refspec takes precedence.  The left-hand of refspecs
+ advertised with this capability must cover all refs reported by
+ the list command.  If no 'refspec' capability is advertised,
+ there is an implied `refspec *:*`.
+++
++When writing remote-helpers for decentralized version control
++systems, it is advised to keep a local copy of the repository to
++interact with, and to let the private namespace refs point to this
++local repository, while the refs/remotes namespace is used to track
++the remote repository.
+ 
+ 'bidi-import'::
+        This modifies the 'import' capability.
 
+So, now, I understand the point of the private namespace in the case of
+DVCS, but still note really for interactions with centralized VCS.
 
->
-> I've found some patches out there that claim to resolve this, but
-> they're all for versions of git-p4.py from several years ago.  Not only
-> will they not apply cleanly, but as far as I can tell the issues that
-> these patches are meant to address aren't in the current version,
-> anyway.
->
-> Any suggestions would be greatly appreciated.
->
-> Thanks,
-> Corey
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Back to my original problem: the point of dumb push is to make sure the
+next import will re-import the pushed revisions. if I use something
+other than the private namespace to keep track of the last imported,
+then I'll need to do a non-fast forward update to the private ref. I
+could do that by sending "feature force\n" it the beginning of the
+fast-import stream when importing, but that loses one safety feature
+(e.g. I detected the breakage thanks to the non-fast forward error
+message, while the tests incorrectly pass if I enable "force").
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
