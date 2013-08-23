@@ -1,223 +1,76 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 2/2] dir: fix core.ignorecase inconsistency with missing '/'
-Date: Fri, 23 Aug 2013 16:29:19 -0400
-Message-ID: <1377289759-46838-3-git-send-email-sunshine@sunshineco.com>
-References: <1377289759-46838-1-git-send-email-sunshine@sunshineco.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 23 22:29:56 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-commit: search author pattern against mailmap
+Date: Fri, 23 Aug 2013 13:44:48 -0700
+Message-ID: <xmqqsiy0nnlr.fsf@gitster.dls.corp.google.com>
+References: <1377265711-11492-1-git-send-email-apelisse@gmail.com>
+	<xmqqbo4opajg.fsf@gitster.dls.corp.google.com>
+	<20130823183541.GB30130@sigill.intra.peff.net>
+	<xmqqwqncnsaz.fsf@gitster.dls.corp.google.com>
+	<CALWbr2x28wrzxJ=M6meCX8G0Bh4ObvHkYGqfGTNwPjWMxgJjQg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 23 22:45:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VCxzR-0003HZ-47
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 22:29:49 +0200
+	id 1VCyE7-0003Q1-QM
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Aug 2013 22:45:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755824Ab3HWU3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Aug 2013 16:29:45 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:33974 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755787Ab3HWU3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Aug 2013 16:29:44 -0400
-Received: by mail-ie0-f170.google.com with SMTP id 17so1676648iea.29
-        for <git@vger.kernel.org>; Fri, 23 Aug 2013 13:29:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CNWruQNUXgNWdPbQ52ILpoxPVLYWld1SI2fjEo/pGEA=;
-        b=smDoQUfokZ3rrcTTekhKvdEMtdSzlLg/Il6YeKj7QtBsUXOydM8iSeg6reSEqIYenQ
-         UQEwfaSkt2WBwbEaLOrFD4SwRt316u/Un/HRbtZfex+2Oop4PudGRtY2nXDwfjeTPp37
-         07cSim6ijf7Q7hBtIjqOLQCCu5xMHcDlSvbM+us4DwdE7VJfWx3vNoRGIQR4pGkCQ3aC
-         Lnlr8qY6mZd9yhNhCX7EH0rgkyhTbDFj/jKniD93cA0/I/NyYzDEz34ghYSmiXcAiel5
-         /Ni1l1gqTQiQGFWhGb2Ma1uHGMsPoFMh28jpC4+sEojdDAurmDr4qzTW+NyQIhqV7Iyb
-         4vJg==
-X-Received: by 10.50.36.5 with SMTP id m5mr2849026igj.3.1377289783828;
-        Fri, 23 Aug 2013 13:29:43 -0700 (PDT)
-Received: from localhost.localdomain (user-12l3dfg.cable.mindspring.com. [69.81.181.240])
-        by mx.google.com with ESMTPSA id cl4sm89620igc.1.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 23 Aug 2013 13:29:42 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc4.557.g46c5bb2
-In-Reply-To: <1377289759-46838-1-git-send-email-sunshine@sunshineco.com>
+	id S932094Ab3HWUo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Aug 2013 16:44:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63359 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755748Ab3HWUoz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Aug 2013 16:44:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A2803B6AA;
+	Fri, 23 Aug 2013 20:44:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LONlLu4co4X9dm8ifV/ejVd3O8s=; b=DMTMhQ
+	1n07n5rsLJxNAdoMIrqhFWcrWZ3nXyCMI/ryUdmkXuD4o6CQazsjFO60BYliyyUQ
+	lCjhI4GsUjJk0VNh7L3R9v+pknOkwRT7TQw17mM3MhgdPgJxCdxflcF7lnPsTAld
+	PI02KxqUdavDq9ZWw5iz4ooOsB2nhl1Xomj+U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AC+ioFdTAUVTSIW5cSkXv01p/NIFdmth
+	zW/jIE8SiGuZCKbu/MQHR0ypoo/D9Uc1I1IwX0R+W66IWx6KWlyBY0bO+zwBgDYY
+	Ogmlhh97mVok7t5+wrQfAPm9+QP0ajx7gFrpTdW9msbCzo6l6hFqhR3WdgRQHUMe
+	jahWFdhejnk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 476913B6A9;
+	Fri, 23 Aug 2013 20:44:52 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 779F33B6A8;
+	Fri, 23 Aug 2013 20:44:51 +0000 (UTC)
+In-Reply-To: <CALWbr2x28wrzxJ=M6meCX8G0Bh4ObvHkYGqfGTNwPjWMxgJjQg@mail.gmail.com>
+	(Antoine Pelisse's message of "Fri, 23 Aug 2013 21:47:37 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DBB2BFD2-0C34-11E3-856A-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232836>
 
-Although undocumented, directory_exists_in_index_icase(dirname,len)
-unconditionally assumes the presence of a '/' at dirname[len], despite
-being past the end-of-string. Callers are expected to respect this
-assumption by ensuring that a '/' is present beyond the last character
-of the passed path.
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-directory_exists_in_index(), on the other hand, expects no trailing '/'
-(and never looks beyond end-of-string). Callers are expected to respect
-this by ensuring the absence of '/'.
+> On Fri, Aug 23, 2013 at 9:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> OK, so how about labelling it as a bugfix, like this perhaps?  We
+>> obviously need a test or two, though.
+>
+> OK,
+> I will resubmit tomorrow with some tests.
 
-2eac2a4cc4bdc8d7 (ls-files -k: a directory only can be killed if the
-index has a non-directory; 2013-08-15) adds a caller which forgets to
-ensure the trailing '/' beyond end-of-string, which leads to
-inconsistent behavior between directory_exists_in_index() and
-directory_exists_in_index_icase(), depending upon the setting of
-core.ignorecase.
+Thanks.
 
-One approach to fix this would be to augment the new caller (added by
-2eac2a4cc4bdc8d7) to add a '/' beyond end-of-string, but this places
-extra burden on the caller to account for an implementation detail of
-directory_exists_in_index_icase().
-
-Another approach would be for directory_exists_in_index_icase() to take
-responsibility for its own requirements by copying the incoming path and
-adding a trailing '/', but such copying can become expensive.
-
-The approach taken by this patch is to pass the strbufs already used by
-their callers into directory_exists_in_index() and
-directory_exists_in_index_icase() rather than 'const char *' + 'size_t
-len'. This allows both functions to satisfy their own internal
-requirements -- by manipulating the strbuf to add or remove the trailing
-'/' -- without placing burden upon callers and without having to make
-expensive copies of each incoming string.
-
-This also fixes an initially-unnoticed failure, when core.ignorecase is
-true, in a t3010 test added by 3c56875176390eee (t3010: update to
-demonstrate "ls-files -k" optimization pitfalls; 2013-08-15).
-
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- dir.c                               | 42 +++++++++++++++++++++++--------------
- t/t3010-ls-files-killed-modified.sh |  2 +-
- 2 files changed, 27 insertions(+), 17 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index edd666a..6f761a1 100644
---- a/dir.c
-+++ b/dir.c
-@@ -887,14 +887,21 @@ enum exist_status {
-  * the directory name; instead, use the case insensitive
-  * name hash.
-  */
--static enum exist_status directory_exists_in_index_icase(const char *dirname, int len)
-+static enum exist_status directory_exists_in_index_icase(struct strbuf *dirname)
- {
--	const struct cache_entry *ce = cache_name_exists(dirname, len + 1, ignore_case);
-+	const struct cache_entry *ce;
- 	unsigned char endchar;
-+	size_t len = dirname->len;
-+	int need_slash = len && dirname->buf[len - 1] != '/';
-+
-+	if (need_slash)
-+		strbuf_addch(dirname, '/');
-+	ce = cache_name_exists(dirname->buf, dirname->len, ignore_case);
-+	strbuf_setlen(dirname, len);
- 
- 	if (!ce)
- 		return index_nonexistent;
--	endchar = ce->name[len];
-+	endchar = ce->name[need_slash ? len : len - 1];
- 
- 	/*
- 	 * The cache_entry structure returned will contain this dirname
-@@ -922,21 +929,25 @@ static enum exist_status directory_exists_in_index_icase(const char *dirname, in
-  * the files it contains) will sort with the '/' at the
-  * end.
-  */
--static enum exist_status directory_exists_in_index(const char *dirname, int len)
-+static enum exist_status directory_exists_in_index(struct strbuf *dirname)
- {
--	int pos;
-+	int pos, len;
- 
- 	if (ignore_case)
--		return directory_exists_in_index_icase(dirname, len);
-+		return directory_exists_in_index_icase(dirname);
-+
-+	len = dirname->len;
-+	if (len && dirname->buf[len - 1] == '/')
-+		len--;
- 
--	pos = cache_name_pos(dirname, len);
-+	pos = cache_name_pos(dirname->buf, len);
- 	if (pos < 0)
- 		pos = -pos-1;
- 	while (pos < active_nr) {
- 		const struct cache_entry *ce = active_cache[pos++];
- 		unsigned char endchar;
- 
--		if (strncmp(ce->name, dirname, len))
-+		if (strncmp(ce->name, dirname->buf, len))
- 			break;
- 		endchar = ce->name[len];
- 		if (endchar > '/')
-@@ -983,11 +994,10 @@ static enum exist_status directory_exists_in_index(const char *dirname, int len)
-  *  (c) otherwise, we recurse into it.
-  */
- static enum path_treatment treat_directory(struct dir_struct *dir,
--	const char *dirname, int len, int exclude,
-+	struct strbuf *dirname, int exclude,
- 	const struct path_simplify *simplify)
- {
--	/* The "len-1" is to strip the final '/' */
--	switch (directory_exists_in_index(dirname, len-1)) {
-+	switch (directory_exists_in_index(dirname)) {
- 	case index_directory:
- 		return path_recurse;
- 
-@@ -999,7 +1009,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 			break;
- 		if (!(dir->flags & DIR_NO_GITLINKS)) {
- 			unsigned char sha1[20];
--			if (resolve_gitlink_ref(dirname, "HEAD", sha1) == 0)
-+			if (!resolve_gitlink_ref(dirname->buf, "HEAD", sha1))
- 				return path_untracked;
- 		}
- 		return path_recurse;
-@@ -1010,7 +1020,8 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 	if (!(dir->flags & DIR_HIDE_EMPTY_DIRECTORIES))
- 		return exclude ? path_excluded : path_untracked;
- 
--	return read_directory_recursive(dir, dirname, len, 1, simplify);
-+	return read_directory_recursive(dir, dirname->buf, dirname->len, 1,
-+					simplify);
- }
- 
- /*
-@@ -1161,7 +1172,7 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
- 	if ((dir->flags & DIR_COLLECT_KILLED_ONLY) &&
- 	    (dtype == DT_DIR) &&
- 	    !has_path_in_index &&
--	    (directory_exists_in_index(path->buf, path->len) == index_nonexistent))
-+	    (directory_exists_in_index(path) == index_nonexistent))
- 		return path_none;
- 
- 	exclude = is_excluded(dir, path->buf, &dtype);
-@@ -1178,8 +1189,7 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
- 		return path_none;
- 	case DT_DIR:
- 		strbuf_addch(path, '/');
--		return treat_directory(dir, path->buf, path->len, exclude,
--			simplify);
-+		return treat_directory(dir, path, exclude, simplify);
- 	case DT_REG:
- 	case DT_LNK:
- 		return exclude ? path_excluded : path_untracked;
-diff --git a/t/t3010-ls-files-killed-modified.sh b/t/t3010-ls-files-killed-modified.sh
-index 198d308..78954bd 100755
---- a/t/t3010-ls-files-killed-modified.sh
-+++ b/t/t3010-ls-files-killed-modified.sh
-@@ -107,7 +107,7 @@ test_expect_success 'git ls-files -k to show killed files (icase).' '
- 	git -c core.ignorecase=true ls-files -k >.output
- '
- 
--test_expect_failure 'validate git ls-files -k output (icase).' '
-+test_expect_success 'validate git ls-files -k output (icase).' '
- 	test_cmp .expected .output
- '
- 
--- 
-1.8.4.rc4.557.g46c5bb2
+Also, after I sent out that "like this" patch, I realized that the
+mailmap string-list no longer has to be on the heap if we are doing
+it unconditionally (it can be an auto variable in the function,
+sitting next to "struct strbuf buf").
