@@ -1,84 +1,148 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: contrib/credential/netrc/git-credential-netrc: Use of uninitialized
- value in string
-Date: Sat, 24 Aug 2013 16:55:32 +0200
-Message-ID: <CALWbr2ynAvevTxFd3duAfFzgv0DCGTDxFUaniW-8hM+eoLiOEw@mail.gmail.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [ANNOUNCE] tig-1.2.1
+Date: Sat, 24 Aug 2013 17:07:44 +0200
+Message-ID: <20130824150744.GA18899@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>, Ted Zlatanov <tzz@lifelogs.com>
-X-From: git-owner@vger.kernel.org Sat Aug 24 16:55:39 2013
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 24 17:08:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDFFa-0007CF-3j
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 16:55:38 +0200
+	id 1VDFRX-0002zv-Oy
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 17:08:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754771Ab3HXOzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Aug 2013 10:55:33 -0400
-Received: from mail-qe0-f46.google.com ([209.85.128.46]:55468 "EHLO
-	mail-qe0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750746Ab3HXOzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Aug 2013 10:55:33 -0400
-Received: by mail-qe0-f46.google.com with SMTP id f6so925816qej.5
-        for <git@vger.kernel.org>; Sat, 24 Aug 2013 07:55:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=MnEFAW6D7iHCN/ZmLVDyvSYnA2eKPtBN3AZAQ1luGmo=;
-        b=kUAWFs/QQPTlpt+J/l/GKNkzpUOMHcwz0AD4m3ITvtU7DEFxMumeBP965NBrl/R9Y/
-         FSBH5p2nBAdDUM53xxREftX+TchPGcBSslMyH4qSmfPW2EiKGvaJH/bUMcgp/I5arkk4
-         lMK91E5i0SpyaiJMKNqg6ZgVg5160wPXyUwlUygz/I52vFMS4UeAPGLU9KzPxKTP9Pfc
-         AOasL09LZnLVojjbUjw/lx8ZnctKKCV/MYH/VovKirSodnn8aOamDDzsbnnYJwmEoMB7
-         +DyaU4GTbydYd+TmvYwsaKqix8oSxlsQbE9+Ck6aQ4IR3AeYsAbfPULhQ0mfbFlnQBW3
-         24Tw==
-X-Received: by 10.224.160.194 with SMTP id o2mr5468255qax.3.1377356132426;
- Sat, 24 Aug 2013 07:55:32 -0700 (PDT)
-Received: by 10.49.104.211 with HTTP; Sat, 24 Aug 2013 07:55:32 -0700 (PDT)
+	id S1755200Ab3HXPHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Aug 2013 11:07:55 -0400
+Received: from mgw2.diku.dk ([130.225.96.92]:48587 "EHLO mgw2.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755176Ab3HXPHy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Aug 2013 11:07:54 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw2.diku.dk (Postfix) with ESMTP id 4CF5519BCF9
+	for <git@vger.kernel.org>; Sat, 24 Aug 2013 17:07:53 +0200 (CEST)
+Received: from mgw2.diku.dk ([127.0.0.1])
+ by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 13131-03 for <git@vger.kernel.org>; Sat, 24 Aug 2013 17:07:44 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw2.diku.dk (Postfix) with ESMTP id B3A9119BCF3
+	for <git@vger.kernel.org>; Sat, 24 Aug 2013 17:07:44 +0200 (CEST)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP id 0A5316DFAB2
+	for <git@vger.kernel.org>; Sat, 24 Aug 2013 17:07:04 +0200 (CEST)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id 9DB9F2AB1F; Sat, 24 Aug 2013 17:07:44 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232886>
 
 Hello,
-I've tried to use the netrc credential with git-send-email
-(v1.8.4-rc2), and I've had the following log (running with -d -v):
 
-We were given search token protocol and value smtp
-We were given search token host and value smtp.gmail.com:587
-We were given search token username and value apelisse@gmail.com
-Searching for host = smtp.gmail.com:587
-Searching for password = (any value)
-Searching for path = (any value)
-Searching for protocol = smtp
-Searching for username = apelisse@gmail.com
-Using GPG to open /home/antoine/.authinfo.gpg: [gpg --decrypt
-/home/antoine/.authinfo.gpg]
+Due to a bug in the handling of submodules, here is a new release of
+Tig. In addition to the bug fix, this new version reduces memory usage
+and startup time of the main view and shows the blob size in the tree
+view.
 
-You need a passphrase to unlock the secret key for
-user: "Antoine Pelisse <apelisse@gmail.com>"
-2048-bit RSA key, ID DE2A8792, created 2010-12-31 (main key ID A066A853)
+Note to packagers: the manual and manpage documentation files now live
+inside the doc/ directory and and have .asciidoc as the extension. The
+SITES file has been removed as its content has been merged into README.
 
-gpg: encrypted with 2048-bit RSA key, ID DE2A8792, created 2010-12-31
-      "Antoine Pelisse <apelisse@gmail.com>"
-compare host [smtp.gmail.com:587] to [smtp.gmail.com:587] (entry:
-password=secret, username=apelisse@gmail.com, host=smtp.gmail.com:587)
-OK: any value satisfies check password
-OK: any value satisfies check path
-Use of uninitialized value $_[2] in printf at
-/home/antoine/code/git/contrib/credential/netrc/git-credential-netrc
-line 419.
-compare protocol [] to [smtp] (entry: password=secret,
-username=apelisse@gmail.com, host=smtp.gmail.com:587)
-Use of uninitialized value in string eq at
-/home/antoine/code/git/contrib/credential/netrc/git-credential-netrc
-line 378.
+What is Tig?
+------------
 
-I can fix the problem by adding a "protocol smtp" to the matching
-line, but I wonder why this would be necessary ? After all, if host
-smtp.gmail.com:587 matches, do we need to match the protocol ?
+Tig is an ncurses-based text-mode interface for git. It functions mainly
+as a Git repository browser, but can also assist in staging changes for
+commit at chunk level and act as a pager for output from various Git
+commands.
 
-Cheers,
-Antoine
+Resources
+---------
+
+ - Homepage:	http://jonas.nitro.dk/tig/
+ - Manual:	http://jonas.nitro.dk/tig/manual.html
+ - Tarballs:	http://jonas.nitro.dk/tig/releases/
+ - Git URL:	git://github.com/jonas/tig.git 
+ - Gitweb:	http://repo.or.cz/w/tig.git
+ - Q&A:		http://stackoverflow.com/questions/tagged/tig
+
+Release notes
+-------------
+Incompatibilities:
+
+ - Move manual and man pages to doc/ directory and rename AsciiDoc files
+   to have .asciidoc as the extension to make them render on GitHub.
+
+Improvements:
+
+ - Show blob sizes in the tree view either as bytes or using binary unit
+   prefixes. Example: `set show-file-size = units`. (GH #163)
+ - Reduce main view memory usage and startup time, especially when revision
+   graph rendering is disabled. (GH #160)
+
+Bug fixes:
+
+ - Fix submodule-related setup to check for non-zero return value from
+   setenv(). (GH #188)
+
+Change summary
+--------------
+The diffstat and log summary for changes made in this release.
+
+ .gitignore                     |   18 +-
+ BUGS                           |    4 +-
+ INSTALL                        |   92 +++--
+ Makefile                       |   76 ++--
+ NEWS                           |   62 ++-
+ README                         |   28 +-
+ SITES                          |    7 -
+ asciidoc.conf                  |   65 ---
+ contrib/announcement.sh        |   11 +-
+ contrib/aspell.dict            |   18 +-
+ contrib/config.make            |   16 +
+ contrib/config.make-Darwin     |    5 +
+ contrib/tig.spec.in            |    6 +-
+ contrib/update-release-docs.sh |    6 +-
+ doc/asciidoc.conf              |   65 +++
+ doc/manual.asciidoc            |  606 +++++++++++++++++++++++++
+ doc/tig.1.asciidoc             |  195 ++++++++
+ doc/tigmanual.7.asciidoc       |   20 +
+ doc/tigrc.5.asciidoc           |  757 ++++++++++++++++++++++++++++++++
+ manual.txt                     |  604 -------------------------
+ tig.1.txt                      |  176 --------
+ tig.c                          |  333 +++++++++++----
+ tigmanual.7.txt                |   20 -
+ tigrc.5.txt                    |  736 -------------------------------
+ 24 files changed, 2119 insertions(+), 1807 deletions(-)
+
+Dan Church (1):
+      Fix man page install
+
+Jonas Fonseca (19):
+      Move documentation to doc directory
+      Rework README to include the list of online resources
+      Fix submodule-related setup to properly check setenv return value
+      Fix path to sysconfdir-based gitconfig in tig(1)
+      Fix HTML doc installation
+      Ignore *.swp files and restrict to only ignore top-level config.make
+      Add work-around for building manpages with Homebrew-based xmlto
+      Improve the installation instructions
+      Show blob sizes in the tree view
+      Ignore generated HTML files in the whole tree
+      Dynamically allocate commit titles to reduce memory usage
+      Postpone ref list lookup to the draw phase
+      Bypass all graph calls and memory allocations when the graph is disabled
+      Free graph symbols when reloading the main view
+      Remove the dont_free line struct flag in favor of custom help_done
+      Fix regression that skipped commits with no messages
+      Simplify the install goal and rename $(PROGS) to $(EXE)
+      Use capitalized Git and Tig when talking about the systems in general
+      tig-1.2.1
+
+-- 
+Jonas Fonseca
