@@ -1,148 +1,108 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [ANNOUNCE] tig-1.2.1
-Date: Sat, 24 Aug 2013 17:07:44 +0200
-Message-ID: <20130824150744.GA18899@diku.dk>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 0/13] Modernize user-manual
+Date: Sat, 24 Aug 2013 20:31:32 +0100
+Organization: OPDS
+Message-ID: <1E7ACF7D33524F728C058D4F850613D1@PhilipOakley>
+References: <282216171.1090748.1377328932833.JavaMail.ngmail@webmail08.arcor-online.net>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 24 17:08:01 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <gitster@pobox.com>, <wking@tremily.us>
+To: "Thomas Ackermann" <th.acker@arcor.de>,
+	"Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 24 21:31:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDFRX-0002zv-Oy
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 17:08:00 +0200
+	id 1VDJYf-0006iX-Ot
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 21:31:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755200Ab3HXPHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Aug 2013 11:07:55 -0400
-Received: from mgw2.diku.dk ([130.225.96.92]:48587 "EHLO mgw2.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755176Ab3HXPHy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Aug 2013 11:07:54 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw2.diku.dk (Postfix) with ESMTP id 4CF5519BCF9
-	for <git@vger.kernel.org>; Sat, 24 Aug 2013 17:07:53 +0200 (CEST)
-Received: from mgw2.diku.dk ([127.0.0.1])
- by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 13131-03 for <git@vger.kernel.org>; Sat, 24 Aug 2013 17:07:44 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw2.diku.dk (Postfix) with ESMTP id B3A9119BCF3
-	for <git@vger.kernel.org>; Sat, 24 Aug 2013 17:07:44 +0200 (CEST)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP id 0A5316DFAB2
-	for <git@vger.kernel.org>; Sat, 24 Aug 2013 17:07:04 +0200 (CEST)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 9DB9F2AB1F; Sat, 24 Aug 2013 17:07:44 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755447Ab3HXTba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Aug 2013 15:31:30 -0400
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:43582 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755432Ab3HXTb3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Aug 2013 15:31:29 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah8NAOMIGVJOl3GZ/2dsb2JhbABagweJa7cjBAQBgRoXdGgBAYEfAQEUAQQBAQQBCAEBLh4BASELAgMFAgEDDgcMJRQBBBoGBxcGARIIAgECAwGFOAcBghENAwkKrFoFiXKNf4FGgTODI30DiHmGEZpFgTqBZTuBLQ
+X-IPAS-Result: Ah8NAOMIGVJOl3GZ/2dsb2JhbABagweJa7cjBAQBgRoXdGgBAYEfAQEUAQQBAQQBCAEBLh4BASELAgMFAgEDDgcMJRQBBBoGBxcGARIIAgECAwGFOAcBghENAwkKrFoFiXKNf4FGgTODI30DiHmGEZpFgTqBZTuBLQ
+X-IronPort-AV: E=Sophos;i="4.89,947,1367967600"; 
+   d="scan'208";a="439285359"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 24 Aug 2013 20:31:26 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232887>
 
-Hello,
+From: "Thomas Ackermann" <th.acker@arcor.de>
+> Hi,
+>
+> command output has changed for some commands in the last years,
+> so reflect this also in the user-manual. While doing so, fix some
+> minor
+> spelling, formatting and wording issues.
+>
+> Further, some references and recommendations which nowadays might
+> only confuse and not help new Git users where removed. Also some
+> explanations where rephrased to IMHO make them easier to understand
+> for new users.
 
-Due to a bug in the handling of submodules, here is a new release of
-Tig. In addition to the bug fix, this new version reduces memory usage
-and startup time of the main view and shows the blob size in the tree
-view.
+Since 1.8.3 we have had the ability to list the main Git Guides using
+the 'git help -g' option, unfortunately the User Manual is not in a man
+format, so it isn't listed within the help option.
 
-Note to packagers: the manual and manpage documentation files now live
-inside the doc/ directory and and have .asciidoc as the extension. The
-SITES file has been removed as its content has been merged into README.
+Is it worth adjusting the User Manual formatting such that it could be
+displayed as a man page? (which would also require a file name change
+from user-manual.txt to git-user-manual.txt). Or create a new man page
+helper `git-user-manual.txt` that would provide a follow-me link to the
+current user manual?
 
-What is Tig?
-------------
+Back at $gmane/216146 Junio noted that the git(1) man page does contain
+onward links to the user manual, but I believe that users should be able
+to get to it directly from a git command such as 'git help user-manual'.
+Easy access makes it more likely to be read, in the same way that man 
+pages are checked.
 
-Tig is an ncurses-based text-mode interface for git. It functions mainly
-as a Git repository browser, but can also assist in staging changes for
-commit at chunk level and act as a pager for output from various Git
-commands.
+Philip
 
-Resources
----------
-
- - Homepage:	http://jonas.nitro.dk/tig/
- - Manual:	http://jonas.nitro.dk/tig/manual.html
- - Tarballs:	http://jonas.nitro.dk/tig/releases/
- - Git URL:	git://github.com/jonas/tig.git 
- - Gitweb:	http://repo.or.cz/w/tig.git
- - Q&A:		http://stackoverflow.com/questions/tagged/tig
-
-Release notes
--------------
-Incompatibilities:
-
- - Move manual and man pages to doc/ directory and rename AsciiDoc files
-   to have .asciidoc as the extension to make them render on GitHub.
-
-Improvements:
-
- - Show blob sizes in the tree view either as bytes or using binary unit
-   prefixes. Example: `set show-file-size = units`. (GH #163)
- - Reduce main view memory usage and startup time, especially when revision
-   graph rendering is disabled. (GH #160)
-
-Bug fixes:
-
- - Fix submodule-related setup to check for non-zero return value from
-   setenv(). (GH #188)
-
-Change summary
---------------
-The diffstat and log summary for changes made in this release.
-
- .gitignore                     |   18 +-
- BUGS                           |    4 +-
- INSTALL                        |   92 +++--
- Makefile                       |   76 ++--
- NEWS                           |   62 ++-
- README                         |   28 +-
- SITES                          |    7 -
- asciidoc.conf                  |   65 ---
- contrib/announcement.sh        |   11 +-
- contrib/aspell.dict            |   18 +-
- contrib/config.make            |   16 +
- contrib/config.make-Darwin     |    5 +
- contrib/tig.spec.in            |    6 +-
- contrib/update-release-docs.sh |    6 +-
- doc/asciidoc.conf              |   65 +++
- doc/manual.asciidoc            |  606 +++++++++++++++++++++++++
- doc/tig.1.asciidoc             |  195 ++++++++
- doc/tigmanual.7.asciidoc       |   20 +
- doc/tigrc.5.asciidoc           |  757 ++++++++++++++++++++++++++++++++
- manual.txt                     |  604 -------------------------
- tig.1.txt                      |  176 --------
- tig.c                          |  333 +++++++++++----
- tigmanual.7.txt                |   20 -
- tigrc.5.txt                    |  736 -------------------------------
- 24 files changed, 2119 insertions(+), 1807 deletions(-)
-
-Dan Church (1):
-      Fix man page install
-
-Jonas Fonseca (19):
-      Move documentation to doc directory
-      Rework README to include the list of online resources
-      Fix submodule-related setup to properly check setenv return value
-      Fix path to sysconfdir-based gitconfig in tig(1)
-      Fix HTML doc installation
-      Ignore *.swp files and restrict to only ignore top-level config.make
-      Add work-around for building manpages with Homebrew-based xmlto
-      Improve the installation instructions
-      Show blob sizes in the tree view
-      Ignore generated HTML files in the whole tree
-      Dynamically allocate commit titles to reduce memory usage
-      Postpone ref list lookup to the draw phase
-      Bypass all graph calls and memory allocations when the graph is disabled
-      Free graph symbols when reloading the main view
-      Remove the dont_free line struct flag in favor of custom help_done
-      Fix regression that skipped commits with no messages
-      Simplify the install goal and rename $(PROGS) to $(EXE)
-      Use capitalized Git and Tig when talking about the systems in general
-      tig-1.2.1
-
--- 
-Jonas Fonseca
+>
+> The last patch removes a lengthy paragraph which states that "git
+> prune"
+> (and "git fsck") should only be used in a quiescent repository.  The
+> man-page for "git prune" tells nothing about this. So either the
+> removal should be OK or we have to duplicate the warning paragraph
+> in the man-page of "git prune"?
+>
+> [PATCH 01/13] Call it "Git User Manual" and remove reference to very
+> old Git version
+> [PATCH 02/13] Use current "detached HEAD" message
+> [PATCH 03/13] Use current output for "git repack"
+> [PATCH 04/13] Use "git merge" instead of "git pull ."
+> [PATCH 05/13] Fix some typos
+> [PATCH 06/13] Simplify "How to make a commit"
+> [PATCH 07/13] Improve description in "How to merge"
+> [PATCH 08/13] Improve section "Manipulating branches"
+> [PATCH 09/13] Improve section "Merge multiple trees"
+> [PATCH 10/13] Remove unnecessary historical note from "Object storage
+> format"
+> [PATCH 11/13] Remove obscure reference from "Examples"
+> [PATCH 12/13] Remove irrelevant reference from "Tying it all together"
+> [PATCH 13/13] "git prune" is safe now
+>
+> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+>
+>
+> ---
+> Thomas
