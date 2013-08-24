@@ -1,108 +1,70 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 0/13] Modernize user-manual
-Date: Sat, 24 Aug 2013 20:31:32 +0100
-Organization: OPDS
-Message-ID: <1E7ACF7D33524F728C058D4F850613D1@PhilipOakley>
-References: <282216171.1090748.1377328932833.JavaMail.ngmail@webmail08.arcor-online.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/3] Fixes for tests run without perl
+Date: Sat, 24 Aug 2013 12:58:38 -0700
+Message-ID: <20130824195838.GA2960@elie.Belkin>
+References: <1377316906-70338-1-git-send-email-draenog@pld-linux.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <gitster@pobox.com>, <wking@tremily.us>
-To: "Thomas Ackermann" <th.acker@arcor.de>,
-	"Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 24 21:31:39 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Kacper Kornet <draenog@pld-linux.org>
+X-From: git-owner@vger.kernel.org Sat Aug 24 21:58:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDJYf-0006iX-Ot
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 21:31:38 +0200
+	id 1VDJz1-0002Lm-BI
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 21:58:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755447Ab3HXTba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Aug 2013 15:31:30 -0400
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:43582 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755432Ab3HXTb3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Aug 2013 15:31:29 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah8NAOMIGVJOl3GZ/2dsb2JhbABagweJa7cjBAQBgRoXdGgBAYEfAQEUAQQBAQQBCAEBLh4BASELAgMFAgEDDgcMJRQBBBoGBxcGARIIAgECAwGFOAcBghENAwkKrFoFiXKNf4FGgTODI30DiHmGEZpFgTqBZTuBLQ
-X-IPAS-Result: Ah8NAOMIGVJOl3GZ/2dsb2JhbABagweJa7cjBAQBgRoXdGgBAYEfAQEUAQQBAQQBCAEBLh4BASELAgMFAgEDDgcMJRQBBBoGBxcGARIIAgECAwGFOAcBghENAwkKrFoFiXKNf4FGgTODI30DiHmGEZpFgTqBZTuBLQ
-X-IronPort-AV: E=Sophos;i="4.89,947,1367967600"; 
-   d="scan'208";a="439285359"
-Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 24 Aug 2013 20:31:26 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755706Ab3HXT6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Aug 2013 15:58:47 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:46728 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755688Ab3HXT6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Aug 2013 15:58:46 -0400
+Received: by mail-pa0-f49.google.com with SMTP id ld10so1925307pab.36
+        for <git@vger.kernel.org>; Sat, 24 Aug 2013 12:58:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=byjeygAdUOx2PM6uzGD7bjADKSHIrTRa1qqZaRVkXYc=;
+        b=hsVIBOv6NeWAHyAGXm9vfpYV7AZmHBHSEMLX+spL2X7n0xXJiFEzZdttt2ggNR0sIk
+         +hKjNgHaGa6GzENWNzyQf6hrIz/OhBi1py/LVupOjzk6Jb+x4l68uOrRRem9wn+7/dDw
+         c5WDc1EadgT40W3rXmmszehcf2hwIu5whY85j+tWk8Iee2hB8O1o5NHkyQEnDOo5qEik
+         rdlq0FVkST06mVfdTL50XcpctUBSbbugpSHWxGPren6mfdH1VpyVEjokJ7AiXf4Z1DNQ
+         fdUlgaK01x4E3x5KgIVy4iZaFhPARBHiGU6a/7xprodn/R8WTgBVk1ZlTnJ0U6iRTrMV
+         nM1g==
+X-Received: by 10.66.161.38 with SMTP id xp6mr5615652pab.145.1377374326193;
+        Sat, 24 Aug 2013 12:58:46 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id hx1sm7802832pbb.35.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 24 Aug 2013 12:58:44 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1377316906-70338-1-git-send-email-draenog@pld-linux.org>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232888>
 
-From: "Thomas Ackermann" <th.acker@arcor.de>
-> Hi,
->
-> command output has changed for some commands in the last years,
-> so reflect this also in the user-manual. While doing so, fix some
-> minor
-> spelling, formatting and wording issues.
->
-> Further, some references and recommendations which nowadays might
-> only confuse and not help new Git users where removed. Also some
-> explanations where rephrased to IMHO make them easier to understand
-> for new users.
+Hi,
 
-Since 1.8.3 we have had the ability to list the main Git Guides using
-the 'git help -g' option, unfortunately the User Manual is not in a man
-format, so it isn't listed within the help option.
+Kacper Kornet wrote:
 
-Is it worth adjusting the User Manual formatting such that it could be
-displayed as a man page? (which would also require a file name change
-from user-manual.txt to git-user-manual.txt). Or create a new man page
-helper `git-user-manual.txt` that would provide a follow-me link to the
-current user manual?
+> This is a set of fixes for problems found while running
+> test suite without perl installed.
 
-Back at $gmane/216146 Junio noted that the git(1) man page does contain
-onward links to the user manual, but I believe that users should be able
-to get to it directly from a git command such as 'git help user-manual'.
-Easy access makes it more likely to be read, in the same way that man 
-pages are checked.
+I don't think git ever supported that.  The PERL prerequisite
+was to check for systems that did not have (a suitable) perl
+at runtime, but perl is still pretty heavily used in tests.
 
-Philip
+I assume you do have perl installed and that these fixes are
+from testing the NO_PERL=YesPlease case, which is valuable.
+Thanks for working on this.
 
->
-> The last patch removes a lengthy paragraph which states that "git
-> prune"
-> (and "git fsck") should only be used in a quiescent repository.  The
-> man-page for "git prune" tells nothing about this. So either the
-> removal should be OK or we have to duplicate the warning paragraph
-> in the man-page of "git prune"?
->
-> [PATCH 01/13] Call it "Git User Manual" and remove reference to very
-> old Git version
-> [PATCH 02/13] Use current "detached HEAD" message
-> [PATCH 03/13] Use current output for "git repack"
-> [PATCH 04/13] Use "git merge" instead of "git pull ."
-> [PATCH 05/13] Fix some typos
-> [PATCH 06/13] Simplify "How to make a commit"
-> [PATCH 07/13] Improve description in "How to merge"
-> [PATCH 08/13] Improve section "Manipulating branches"
-> [PATCH 09/13] Improve section "Merge multiple trees"
-> [PATCH 10/13] Remove unnecessary historical note from "Object storage
-> format"
-> [PATCH 11/13] Remove obscure reference from "Examples"
-> [PATCH 12/13] Remove irrelevant reference from "Tying it all together"
-> [PATCH 13/13] "git prune" is safe now
->
-> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
->
->
-> ---
-> Thomas
+Now on to the patches.
+
+Jonathan
