@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/6] sha1-lookup: handle duplicate keys with GIT_USE_LOOKUP
-Date: Fri, 23 Aug 2013 20:02:25 -0400
-Message-ID: <20130824000225.GB25833@sigill.intra.peff.net>
+Subject: [PATCH 3/6] add tests for indexing packs with delta cycles
+Date: Fri, 23 Aug 2013 20:02:31 -0400
+Message-ID: <20130824000231.GC25833@sigill.intra.peff.net>
 References: <20130824000111.GA20255@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -10,288 +10,169 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Nicolas Pitre <nico@fluxnic.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 24 02:02:33 2013
+X-From: git-owner@vger.kernel.org Sat Aug 24 02:02:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VD1JI-0001hz-H4
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 02:02:33 +0200
+	id 1VD1JO-0001sa-N0
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 02:02:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754794Ab3HXAC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Aug 2013 20:02:28 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41484 "EHLO peff.net"
+	id S1754845Ab3HXACe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Aug 2013 20:02:34 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41492 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754492Ab3HXAC2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Aug 2013 20:02:28 -0400
-Received: (qmail 30023 invoked by uid 102); 24 Aug 2013 00:02:28 -0000
+	id S1754492Ab3HXACe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Aug 2013 20:02:34 -0400
+Received: (qmail 30031 invoked by uid 102); 24 Aug 2013 00:02:34 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Aug 2013 19:02:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Aug 2013 20:02:25 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Aug 2013 19:02:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Aug 2013 20:02:31 -0400
 Content-Disposition: inline
 In-Reply-To: <20130824000111.GA20255@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232845>
 
-The sha1_entry_pos function tries to be smart about
-selecting the middle of a range for its binary search by
-looking at the value differences between the "lo" and "hi"
-constraints. However, it is unable to cope with entries with
-duplicate keys in the sorted list.
+If we receive a broken or malicious pack from a remote, we
+will feed it to index-pack. As index-pack processes the
+objects as a stream, reconstructing and hashing each object
+to get its name, it is not very susceptible to doing the
+wrong with bad data (it simply notices that the data is
+bogus and aborts).
 
-We may hit a point in the search where both our "lo" and
-"hi" point to the same key. In this case, the range of
-values between our endpoints is 0, and trying to scale the
-difference between our key and the endpoints over that range
-is undefined (i.e., divide by zero). The current code
-catches this with an "assert(lov < hiv)".
+However, one question raised on the list is whether it could
+be susceptible to problems during the delta-resolution
+phase. In particular, can a cycle in the packfile deltas
+cause us to go into an infinite loop or cause any other
+problem?
 
-Moreover, after seeing that the first 20 byte of the key are
-the same, we will try to establish a value from the 21st
-byte. Which is nonsensical.
+The answer is no.
 
-Instead, we can detect the case that we are in a run of
-duplicates, and simply do a final comparison against any one
-of them (since they are all the same, it does not matter
-which). If the keys match, we have found our entry (or one
-of them, anyway).  If not, then we know that we do not need
-to look further, as we must be in a run of the duplicate
-key.
+We cannot have a cycle of delta-base offsets, because they
+go only in one direction (the OFS_DELTA object mentions its
+base by an offset towards the beginning of the file, and we
+explicitly reject negative offsets).
+
+We can have a cycle of REF_DELTA objects, which refer to
+base objects by sha1 name. However, index-pack does not know
+these sha1 names ahead of time; it has to reconstruct the
+objects to get their names, and it cannot do so if there is
+a delta cycle (in other words, it does not even realize
+there is a cycle, but only that there are items that cannot
+be resolved).
+
+Even though we can reason out that index-pack should handle
+this fine, let's add a few tests to make sure it behaves
+correctly.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Acked-by: Nicolas Pitre <nico@fluxnic.net>
 ---
- sha1-lookup.c                     | 47 +++++++++++++++++++++++
- t/lib-pack.sh                     | 78 +++++++++++++++++++++++++++++++++++++++
- t/t5308-pack-detect-duplicates.sh | 73 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 198 insertions(+)
- create mode 100644 t/lib-pack.sh
- create mode 100755 t/t5308-pack-detect-duplicates.sh
+ t/lib-pack.sh                | 22 +++++++++++++++++
+ t/t5309-pack-delta-cycles.sh | 59 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 81 insertions(+)
+ create mode 100755 t/t5309-pack-delta-cycles.sh
 
-diff --git a/sha1-lookup.c b/sha1-lookup.c
-index c4dc55d..2dd8515 100644
---- a/sha1-lookup.c
-+++ b/sha1-lookup.c
-@@ -204,7 +204,54 @@ int sha1_entry_pos(const void *table,
- 			 * byte 0 thru (ofs-1) are the same between
- 			 * lo and hi; ofs is the first byte that is
- 			 * different.
-+			 *
-+			 * If ofs==20, then no bytes are different,
-+			 * meaning we have entries with duplicate
-+			 * keys. We know that we are in a solid run
-+			 * of this entry (because the entries are
-+			 * sorted, and our lo and hi are the same,
-+			 * there can be nothing but this single key
-+			 * in between). So we can stop the search.
-+			 * Either one of these entries is it (and
-+			 * we do not care which), or we do not have
-+			 * it.
-+			 *
-+			 * Furthermore, we know that one of our
-+			 * endpoints must be the edge of the run of
-+			 * duplicates. For example, given this
-+			 * sequence:
-+			 *
-+			 *     idx 0 1 2 3 4 5
-+			 *     key A C C C C D
-+			 *
-+			 * If we are searching for "B", we might
-+			 * hit the duplicate run at lo=1, hi=3
-+			 * (e.g., by first mi=3, then mi=0). But we
-+			 * can never have lo > 1, because B < C.
-+			 * That is, if our key is less than the
-+			 * run, we know that "lo" is the edge, but
-+			 * we can say nothing of "hi". Similarly,
-+			 * if our key is greater than the run, we
-+			 * know that "hi" is the edge, but we can
-+			 * say nothing of "lo".
-+			 *
-+			 * Therefore if we do not find it, we also
-+			 * know where it would go if it did exist:
-+			 * just on the far side of the edge that we
-+			 * know about.
- 			 */
-+			if (ofs == 20) {
-+				mi = lo;
-+				mi_key = base + elem_size * mi + key_offset;
-+				cmp = memcmp(mi_key, key, 20);
-+				if (!cmp)
-+					return mi;
-+				if (cmp < 0)
-+					return -1 - hi;
-+				else
-+					return -1 - lo;
-+			}
-+
- 			hiv = hi_key[ofs_0];
- 			if (ofs_0 < 19)
- 				hiv = (hiv << 8) | hi_key[ofs_0+1];
 diff --git a/t/lib-pack.sh b/t/lib-pack.sh
-new file mode 100644
-index 0000000..fecd5a0
---- /dev/null
+index fecd5a0..7e8685b 100644
+--- a/t/lib-pack.sh
 +++ b/t/lib-pack.sh
-@@ -0,0 +1,78 @@
-+#!/bin/sh
-+#
-+# Support routines for hand-crafting weird or malicious packs.
-+#
-+# You can make a complete pack like:
-+#
-+#   pack_header 2 >foo.pack &&
-+#   pack_obj e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 >>foo.pack &&
-+#   pack_obj e68fe8129b546b101aee9510c5328e7f21ca1d18 >>foo.pack &&
-+#   pack_trailer foo.pack
-+
-+# Print the big-endian 4-byte octal representation of $1
-+uint32_octal () {
-+	n=$1
-+	printf '\%o' $(($n / 16777216)); n=$((n % 16777216))
-+	printf '\%o' $(($n /    65536)); n=$((n %    65536))
-+	printf '\%o' $(($n /      256)); n=$((n %      256))
-+	printf '\%o' $(($n           ));
-+}
-+
-+# Print the big-endian 4-byte binary representation of $1
-+uint32_binary () {
-+	printf "$(uint32_octal "$1")"
-+}
-+
-+# Print a pack header, version 2, for a pack with $1 objects
-+pack_header () {
-+	printf 'PACK' &&
-+	printf '\0\0\0\2' &&
-+	uint32_binary "$1"
-+}
-+
-+# Print the pack data for object $1, as a delta against object $2 (or as a full
-+# object if $2 is missing or empty). The output is suitable for including
-+# directly in the packfile, and represents the entirety of the object entry.
-+# Doing this on the fly (especially picking your deltas) is quite tricky, so we
-+# have hardcoded some well-known objects. See the case statements below for the
-+# complete list.
-+pack_obj () {
-+	case "$1" in
-+	# empty blob
-+	e69de29bb2d1d6434b8b29ae775ad8c2e48c5391)
-+		case "$2" in
-+		'')
-+			printf '\060\170\234\003\0\0\0\0\1'
+@@ -55,6 +55,28 @@ pack_obj () {
+ 			printf '\062\170\234\143\267\3\0\0\116\0\106'
+ 			return
+ 			;;
++		01d7713666f4de822776c7622c10f1b07de280dc)
++			printf '\165\1\327\161\66\146\364\336\202\47\166' &&
++			printf '\307\142\54\20\361\260\175\342\200\334\170' &&
++			printf '\234\143\142\142\142\267\003\0\0\151\0\114'
 +			return
 +			;;
 +		esac
 +		;;
 +
-+	# blob containing "\7\76"
-+	e68fe8129b546b101aee9510c5328e7f21ca1d18)
++	# blob containing "\7\0"
++	01d7713666f4de822776c7622c10f1b07de280dc)
 +		case "$2" in
 +		'')
-+			printf '\062\170\234\143\267\3\0\0\116\0\106'
++			printf '\062\170\234\143\147\0\0\0\20\0\10'
 +			return
 +			;;
-+		esac
-+		;;
-+	esac
-+
-+	echo >&2 "BUG: don't know how to print $1${2:+ (from $2)}"
-+	return 1
-+}
-+
-+# Compute and append pack trailer to "$1"
-+pack_trailer () {
-+	test-sha1 -b <"$1" >trailer.tmp &&
-+	cat trailer.tmp >>"$1" &&
-+	rm -f trailer.tmp
-+}
-+
-+# Remove any existing packs to make sure that
-+# whatever we index next will be the pack that we
-+# actually use.
-+clear_packs () {
-+	rm -f .git/objects/pack/*
-+}
-diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
++		e68fe8129b546b101aee9510c5328e7f21ca1d18)
++			printf '\165\346\217\350\22\233\124\153\20\32\356' &&
++			printf '\225\20\305\62\216\177\41\312\35\30\170\234' &&
++			printf '\143\142\142\142\147\0\0\0\53\0\16'
++			return
++			;;
+ 		esac
+ 		;;
+ 	esac
+diff --git a/t/t5309-pack-delta-cycles.sh b/t/t5309-pack-delta-cycles.sh
 new file mode 100755
-index 0000000..04fe242
+index 0000000..1640bf7
 --- /dev/null
-+++ b/t/t5308-pack-detect-duplicates.sh
-@@ -0,0 +1,73 @@
++++ b/t/t5309-pack-delta-cycles.sh
+@@ -0,0 +1,59 @@
 +#!/bin/sh
 +
-+test_description='handling of duplicate objects in incoming packfiles'
++test_description='test index-pack handling of delta cycles in packfiles'
 +. ./test-lib.sh
 +. "$TEST_DIRECTORY"/lib-pack.sh
 +
-+# The sha1s we have in our pack. It's important that these have the same
-+# starting byte, so that they end up in the same fanout section of the index.
-+# That lets us make sure we are exercising the binary search with both sets.
-+LO_SHA1=e68fe8129b546b101aee9510c5328e7f21ca1d18
-+HI_SHA1=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
++# Two similar-ish objects that we have computed deltas between.
++A=01d7713666f4de822776c7622c10f1b07de280dc
++B=e68fe8129b546b101aee9510c5328e7f21ca1d18
 +
-+# And here's a "missing sha1" which will produce failed lookups. It must also
-+# be in the same fanout section, and should be between the two (so that during
-+# our binary search, we are sure to end up looking at one or the other of the
-+# duplicate runs).
-+MISSING_SHA1='e69d000000000000000000000000000000000000'
-+
-+# git will never intentionally create packfiles with
-+# duplicate objects, so we have to construct them by hand.
-+#
-+# $1 is the name of the packfile to create
-+#
-+# $2 is the number of times to duplicate each object
-+create_pack () {
-+	pack_header "$((2 * $2))" >"$1" &&
-+	for i in $(test_seq 1 "$2"); do
-+		pack_obj $LO_SHA1 &&
-+		pack_obj $HI_SHA1
-+	done >>"$1" &&
-+	pack_trailer "$1"
-+}
-+
-+# double-check that create_pack actually works
-+test_expect_success 'pack with no duplicates' '
-+	create_pack no-dups.pack 1 &&
-+	git index-pack --stdin <no-dups.pack
-+'
-+
-+test_expect_success 'index-pack will allow duplicate objects by default' '
++# double-check our hand-constucted packs
++test_expect_success 'index-pack works with a single delta (A->B)' '
 +	clear_packs &&
-+	create_pack dups.pack 100 &&
-+	git index-pack --stdin <dups.pack
++	{
++		pack_header 2 &&
++		pack_obj $A $B &&
++		pack_obj $B
++	} >ab.pack &&
++	pack_trailer ab.pack &&
++	git index-pack --stdin <ab.pack &&
++	git cat-file -t $A &&
++	git cat-file -t $B
 +'
 +
-+test_expect_success 'create batch-check test vectors' '
-+	cat >input <<-EOF &&
-+	$LO_SHA1
-+	$HI_SHA1
-+	$MISSING_SHA1
-+	EOF
-+	cat >expect <<-EOF
-+	$LO_SHA1 blob 2
-+	$HI_SHA1 blob 0
-+	$MISSING_SHA1 missing
-+	EOF
++test_expect_success 'index-pack works with a single delta (B->A)' '
++	clear_packs &&
++	{
++		pack_header 2 &&
++		pack_obj $A &&
++		pack_obj $B $A
++	} >ba.pack &&
++	pack_trailer ba.pack &&
++	git index-pack --stdin <ba.pack &&
++	git cat-file -t $A &&
++	git cat-file -t $B
 +'
 +
-+test_expect_success 'lookup in duplicated pack (binary search)' '
-+	git cat-file --batch-check <input >actual &&
-+	test_cmp expect actual
++test_expect_success 'index-pack detects missing base objects' '
++	clear_packs &&
++	{
++		pack_header 1 &&
++		pack_obj $A $B
++	} >missing.pack &&
++	pack_trailer missing.pack &&
++	test_must_fail git index-pack --fix-thin --stdin <missing.pack
 +'
 +
-+test_expect_success 'lookup in duplicated pack (GIT_USE_LOOKUP)' '
-+	(
-+		GIT_USE_LOOKUP=1 &&
-+		export GIT_USE_LOOKUP &&
-+		git cat-file --batch-check <input >actual
-+	) &&
-+	test_cmp expect actual
++test_expect_success 'index-pack detects REF_DELTA cycles' '
++	clear_packs &&
++	{
++		pack_header 2 &&
++		pack_obj $A $B &&
++		pack_obj $B $A
++	} >cycle.pack &&
++	pack_trailer cycle.pack &&
++	test_must_fail git index-pack --fix-thin --stdin <cycle.pack
 +'
 +
 +test_done
