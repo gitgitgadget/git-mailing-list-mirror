@@ -1,124 +1,84 @@
 From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH] commit: search author pattern against mailmap
-Date: Sat, 24 Aug 2013 16:07:47 +0200
-Message-ID: <1377353267-3886-1-git-send-email-apelisse@gmail.com>
-References: <xmqqsiy0nnlr.fsf@gitster.dls.corp.google.com>
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 24 16:08:35 2013
+Subject: contrib/credential/netrc/git-credential-netrc: Use of uninitialized
+ value in string
+Date: Sat, 24 Aug 2013 16:55:32 +0200
+Message-ID: <CALWbr2ynAvevTxFd3duAfFzgv0DCGTDxFUaniW-8hM+eoLiOEw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>, Ted Zlatanov <tzz@lifelogs.com>
+X-From: git-owner@vger.kernel.org Sat Aug 24 16:55:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDEW0-00028O-Vr
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 16:08:33 +0200
+	id 1VDFFa-0007CF-3j
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 16:55:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754294Ab3HXOI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Aug 2013 10:08:28 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:56575 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754162Ab3HXOI1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Aug 2013 10:08:27 -0400
-Received: by mail-wi0-f173.google.com with SMTP id ey16so1679023wid.6
-        for <git@vger.kernel.org>; Sat, 24 Aug 2013 07:08:25 -0700 (PDT)
+	id S1754771Ab3HXOzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Aug 2013 10:55:33 -0400
+Received: from mail-qe0-f46.google.com ([209.85.128.46]:55468 "EHLO
+	mail-qe0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750746Ab3HXOzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Aug 2013 10:55:33 -0400
+Received: by mail-qe0-f46.google.com with SMTP id f6so925816qej.5
+        for <git@vger.kernel.org>; Sat, 24 Aug 2013 07:55:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=b1udd1pHSaeEPx/+tr7X0sQ+eaoNH9LALqrkV0B6Ol0=;
-        b=Jq9rHD4PqBkc6fxg3bxe2kKDSsBZBAWMv7kIEokQTYdNbagt+dh3jAQ9tHJQALrT8w
-         C8SbDOtN+iwoTVxzfFKaPj1E36Rhu0YThZIDP9Y8idBnAInCTckov4Xom2YQXxZ0TwVc
-         ybWAQGRPYt6Nwcq20oTRd/tLVg4qe1ejPYm46Z4qVzFPMRClvOYdW+KG3n5M5rlGs6M7
-         SlhFAodwTCIwjXnLZgWdU+e7KPvcFhz45JQdwD8NJE5gBcsUpVtlKIVTzoePZYXpnXsu
-         NcJ0tLPIx997y/3sgE+moGZ9csxxckwnsMd6HTDKJkI8E3ZIHUJbN4m0RGYDrRpf+Nvy
-         o54Q==
-X-Received: by 10.194.95.10 with SMTP id dg10mr17926wjb.36.1377353304428;
-        Sat, 24 Aug 2013 07:08:24 -0700 (PDT)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPSA id jf2sm4377611wic.2.1969.12.31.16.00.00
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 24 Aug 2013 07:08:23 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc4.2.g8483dfa
-In-Reply-To: <xmqqsiy0nnlr.fsf@gitster.dls.corp.google.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=MnEFAW6D7iHCN/ZmLVDyvSYnA2eKPtBN3AZAQ1luGmo=;
+        b=kUAWFs/QQPTlpt+J/l/GKNkzpUOMHcwz0AD4m3ITvtU7DEFxMumeBP965NBrl/R9Y/
+         FSBH5p2nBAdDUM53xxREftX+TchPGcBSslMyH4qSmfPW2EiKGvaJH/bUMcgp/I5arkk4
+         lMK91E5i0SpyaiJMKNqg6ZgVg5160wPXyUwlUygz/I52vFMS4UeAPGLU9KzPxKTP9Pfc
+         AOasL09LZnLVojjbUjw/lx8ZnctKKCV/MYH/VovKirSodnn8aOamDDzsbnnYJwmEoMB7
+         +DyaU4GTbydYd+TmvYwsaKqix8oSxlsQbE9+Ck6aQ4IR3AeYsAbfPULhQ0mfbFlnQBW3
+         24Tw==
+X-Received: by 10.224.160.194 with SMTP id o2mr5468255qax.3.1377356132426;
+ Sat, 24 Aug 2013 07:55:32 -0700 (PDT)
+Received: by 10.49.104.211 with HTTP; Sat, 24 Aug 2013 07:55:32 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232885>
 
-"git commit --author=$name" sets the author to one whose name
-matches the given string from existing commits, when $name is not in
-the "Name <e-mail>" format. However, it does not honor the mailmap
-to use the canonical name for the author found this way.
+Hello,
+I've tried to use the netrc credential with git-send-email
+(v1.8.4-rc2), and I've had the following log (running with -d -v):
 
-Fix it by telling the logic to find a matching existing author to
-honor the mailmap, and use the name and email after applying the
-mailmap.
+We were given search token protocol and value smtp
+We were given search token host and value smtp.gmail.com:587
+We were given search token username and value apelisse@gmail.com
+Searching for host = smtp.gmail.com:587
+Searching for password = (any value)
+Searching for path = (any value)
+Searching for protocol = smtp
+Searching for username = apelisse@gmail.com
+Using GPG to open /home/antoine/.authinfo.gpg: [gpg --decrypt
+/home/antoine/.authinfo.gpg]
 
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
- builtin/commit.c   |  7 ++++++-
- t/t4203-mailmap.sh | 11 +++++++++++
- 2 files changed, 17 insertions(+), 1 deletion(-)
+You need a passphrase to unlock the secret key for
+user: "Antoine Pelisse <apelisse@gmail.com>"
+2048-bit RSA key, ID DE2A8792, created 2010-12-31 (main key ID A066A853)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 10acc53..21e0f95 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -30,6 +30,7 @@
- #include "column.h"
- #include "sequencer.h"
- #include "notes-utils.h"
-+#include "mailmap.h"
- 
- static const char * const builtin_commit_usage[] = {
- 	N_("git commit [options] [--] <pathspec>..."),
-@@ -935,6 +936,7 @@ static const char *find_author_by_nickname(const char *name)
- 	struct rev_info revs;
- 	struct commit *commit;
- 	struct strbuf buf = STRBUF_INIT;
-+	struct string_list mailmap = STRING_LIST_INIT_NODUP;
- 	const char *av[20];
- 	int ac = 0;
- 
-@@ -945,13 +947,16 @@ static const char *find_author_by_nickname(const char *name)
- 	av[++ac] = buf.buf;
- 	av[++ac] = NULL;
- 	setup_revisions(ac, av, &revs, NULL);
-+	revs.mailmap = &mailmap;
-+	read_mailmap(revs.mailmap, NULL);
-+
- 	prepare_revision_walk(&revs);
- 	commit = get_revision(&revs);
- 	if (commit) {
- 		struct pretty_print_context ctx = {0};
- 		ctx.date_mode = DATE_NORMAL;
- 		strbuf_release(&buf);
--		format_commit_message(commit, "%an <%ae>", &buf, &ctx);
-+		format_commit_message(commit, "%aN <%aE>", &buf, &ctx);
- 		return strbuf_detach(&buf, NULL);
- 	}
- 	die(_("No existing author found with '%s'"), name);
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index baa4685..4d715f0 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -470,4 +470,15 @@ test_expect_success 'Blame output (complex mapping)' '
- 	test_cmp expect actual.fuzz
- '
- 
-+cat >expect <<\EOF
-+Some Dude <some@dude.xx>
-+EOF
-+
-+test_expect_success 'commit --author honors mailmap' '
-+	test_must_fail git commit --author "nick" --allow-empty -meight &&
-+	git commit --author "Some Dude" --allow-empty -meight &&
-+	git show --pretty=format:"%an <%ae>%n" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-1.8.4.rc4.2.g8483dfa
+gpg: encrypted with 2048-bit RSA key, ID DE2A8792, created 2010-12-31
+      "Antoine Pelisse <apelisse@gmail.com>"
+compare host [smtp.gmail.com:587] to [smtp.gmail.com:587] (entry:
+password=secret, username=apelisse@gmail.com, host=smtp.gmail.com:587)
+OK: any value satisfies check password
+OK: any value satisfies check path
+Use of uninitialized value $_[2] in printf at
+/home/antoine/code/git/contrib/credential/netrc/git-credential-netrc
+line 419.
+compare protocol [] to [smtp] (entry: password=secret,
+username=apelisse@gmail.com, host=smtp.gmail.com:587)
+Use of uninitialized value in string eq at
+/home/antoine/code/git/contrib/credential/netrc/git-credential-netrc
+line 378.
+
+I can fix the problem by adding a "protocol smtp" to the matching
+line, but I wonder why this would be necessary ? After all, if host
+smtp.gmail.com:587 matches, do we need to match the protocol ?
+
+Cheers,
+Antoine
