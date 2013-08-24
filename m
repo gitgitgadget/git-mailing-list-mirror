@@ -1,112 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/6] default pack.indexDuplicates to false
-Date: Fri, 23 Aug 2013 20:02:45 -0400
-Message-ID: <20130824000245.GF25833@sigill.intra.peff.net>
-References: <20130824000111.GA20255@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 17/24] read-cache: read cache-tree in index-v5
+Date: Sat, 24 Aug 2013 07:09:33 +0700
+Message-ID: <CACsJy8Br8EaEtoZeaz2eLKvxDmPJqUc02bYsL_OSLJvJ2dBU-g@mail.gmail.com>
+References: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com> <1376854933-31241-18-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 24 02:02:55 2013
+	Thomas Rast <trast@inf.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 24 02:10:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VD1Jd-0002Fp-0B
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 02:02:53 +0200
+	id 1VD1Qn-0006C6-CM
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Aug 2013 02:10:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755245Ab3HXACt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Aug 2013 20:02:49 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41511 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755203Ab3HXACs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Aug 2013 20:02:48 -0400
-Received: (qmail 30138 invoked by uid 102); 24 Aug 2013 00:02:48 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Aug 2013 19:02:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Aug 2013 20:02:45 -0400
-Content-Disposition: inline
-In-Reply-To: <20130824000111.GA20255@sigill.intra.peff.net>
+	id S1754750Ab3HXAKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Aug 2013 20:10:06 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:41027 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754044Ab3HXAKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Aug 2013 20:10:05 -0400
+Received: by mail-ob0-f175.google.com with SMTP id xn12so1327482obc.20
+        for <git@vger.kernel.org>; Fri, 23 Aug 2013 17:10:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=voBr5A7iQem0ckOFoezTpW6zJugLTwTlzZDXYw7SUEs=;
+        b=JxgxhfFTG5rdRFC+MPd9Bb2hBQUl9D2TniJO9kiCWjidEPzI69XF7eJZ3KgDfIPxq6
+         eSc1Otsmlvxj6rhvOsp09EkPy2fy08lojw6PoEUq2Uib67fQxdIYh5Iy5GJiG6ef7kpT
+         ZcUHb42DnEAek5V9RLMPVNIWnpiDEWqBTjxhP1mD96+3C60oaj1+JjGpk848E0mxOemE
+         dxUlGf1xHlrrS7ibyHWOvPj1usFevqH1vBe+obb9aO0x8bfFXgRNszNDfMv9wZtzUTwO
+         vowOMXDABNhigA9HIY4dUn5ZmMwZ6nuNvxQ/UtbMpA+vHwlF0R3qD+uZYXq55odTQdtE
+         uFCQ==
+X-Received: by 10.60.118.41 with SMTP id kj9mr1981778oeb.31.1377303003857;
+ Fri, 23 Aug 2013 17:10:03 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Fri, 23 Aug 2013 17:09:33 -0700 (PDT)
+In-Reply-To: <1376854933-31241-18-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232849>
 
-We should never see duplicate objects in packs, and it is
-unknown what kind of complications such packs could create
-during the repacking process. The previous commit introduced
-a safety valve for checking packs coming into the repository
-and being indexed by index-pack.
+On Mon, Aug 19, 2013 at 2:42 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> +/*
+> + * This function modifies the directory argument that is given to it.
+> + * Don't use it if the directory entries are still needed after.
+> + */
 
-Let's turn the safety valve on by default. This helps
-protect sites receiving packfiles from potentially malicious
-strangers, and shouldn't affect normal use (and if it does,
-it will have helped us identify a buggy packfile writer).
-In a pinch, users can recover by turning off the option, or
-by resorting to unpack-objects to explode the pack.
+There goes my hope of keeping directory_entry* in core so that at
+write-time, after validation, we only need to recreate some trees
+instead of all of them..
 
-Note that this also turns the option on for packs we write
-ourselves (e.g., via pack-objects, fast-import, or streaming
-large blobs). We do not expect maliciously constructed
-packfiles in these code paths, of course, but it can serve
-as an extra check that we have no accidentally created a
-buggy pack (and the check itself is cheap to perform).
+Or we could make cache-tree keep references to directory_entry. If a
+cache-tree is not invalidated, then the attached directory_tree should
+be reused..
 
-Signed-off-by: Jeff King <peff@peff.net>
-Acked-by: Nicolas Pitre <nico@fluxnic.net>
----
- pack-write.c                      | 1 -
- t/t5308-pack-detect-duplicates.sh | 9 ++++-----
- 2 files changed, 4 insertions(+), 6 deletions(-)
+> +static struct cache_tree *cache_tree_convert_v5(struct directory_entry *de)
+> +{
+> +       if (!de->de_nentries)
+> +               return NULL;
+> +       sort_directories(de);
+> +       return convert_one(de);
+> +}
+> +
+>  static int read_entries(struct index_state *istate, struct directory_entry *de,
+>                         unsigned int first_entry_offset, void *mmap,
+>                         unsigned long mmap_size, unsigned int *nr,
+> @@ -591,6 +668,7 @@ static int read_index_v5(struct index_state *istate, void *mmap,
+>                 }
+>                 de = de->next;
+>         }
+> +       istate->cache_tree = cache_tree_convert_v5(root_directory);
+>         istate->cache_nr = nr;
+>         return 0;
+>  }
 
-diff --git a/pack-write.c b/pack-write.c
-index da946a7..1e3c459 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -7,7 +7,6 @@ void reset_pack_idx_option(struct pack_idx_option *opts)
- 	memset(opts, 0, sizeof(*opts));
- 	opts->version = 2;
- 	opts->off32_limit = 0x7fffffff;
--	opts->allow_duplicates = 1;
- }
- 
- static int sha1_compare(const void *_a, const void *_b)
-diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
-index 97ce2e0..e0ba5e1 100755
---- a/t/t5308-pack-detect-duplicates.sh
-+++ b/t/t5308-pack-detect-duplicates.sh
-@@ -37,10 +37,10 @@ test_expect_success 'index-pack will allow duplicate objects by default' '
- 	git index-pack --stdin <no-dups.pack
- '
- 
--test_expect_success 'index-pack will allow duplicate objects by default' '
-+test_expect_success 'index-pack will allow duplicate objects if asked' '
- 	clear_packs &&
- 	create_pack dups.pack 100 &&
--	git index-pack --stdin <dups.pack
-+	git -c pack.indexDuplicates=true index-pack --stdin <dups.pack
- '
- 
- test_expect_success 'create batch-check test vectors' '
-@@ -70,11 +70,10 @@ test_expect_success 'index-pack can reject packs with duplicates' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'index-pack can reject packs with duplicates' '
-+test_expect_success 'index-pack rejects packs with duplicates by default' '
- 	clear_packs &&
- 	create_pack dups.pack 2 &&
--	test_must_fail \
--		git -c pack.indexDuplicates=0 index-pack --stdin <dups.pack &&
-+	test_must_fail git index-pack --stdin <dups.pack &&
- 	test_expect_code 1 git cat-file -e $LO_SHA1
- '
- 
+Otherwise we do need to free root_directory down to the deepest
+subtrees, I think. People have been complaining about read-cache
+leaking memory like mad, so this is a real issue. Even if you keep
+references in cache-tree, you still need to free it
+cache_tree_invalidate_path() to avoid leaking
 -- 
-1.8.4.rc2.28.g6bb5f3f
+Duy
