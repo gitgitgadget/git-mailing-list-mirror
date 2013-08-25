@@ -1,89 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] Fix path prefixing in grep_object
-Date: Sun, 25 Aug 2013 00:41:09 -0400
-Message-ID: <20130825044108.GA21300@sigill.intra.peff.net>
-References: <1377394558-371-1-git-send-email-hordp@cisco.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 06/13] Simplify "How to make a commit"
+Date: Sat, 24 Aug 2013 22:05:27 -0700
+Message-ID: <20130825050527.GI2882@elie.Belkin>
+References: <282216171.1090748.1377328932833.JavaMail.ngmail@webmail08.arcor-online.net>
+ <1687455733.1090999.1377329376866.JavaMail.ngmail@webmail08.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	phil.hord@gmail.com
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Sun Aug 25 06:41:21 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, wking@tremily.us
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Sun Aug 25 07:05:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDS8b-0003rI-Og
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 06:41:18 +0200
+	id 1VDSWI-0000gR-Be
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 07:05:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756008Ab3HYElM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Aug 2013 00:41:12 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52515 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755980Ab3HYElL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Aug 2013 00:41:11 -0400
-Received: (qmail 11602 invoked by uid 102); 25 Aug 2013 04:41:11 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 24 Aug 2013 23:41:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Aug 2013 00:41:09 -0400
+	id S1755743Ab3HYFFf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Aug 2013 01:05:35 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:50844 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753984Ab3HYFFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Aug 2013 01:05:34 -0400
+Received: by mail-pd0-f181.google.com with SMTP id g10so2186422pdj.26
+        for <git@vger.kernel.org>; Sat, 24 Aug 2013 22:05:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=CPvCYI969b6r/ie0ZSHzaO5YyeRzx0em+YUqSiq2NEc=;
+        b=Ab9V2SGvQ1D5C7/tOm6t0+Yg1QaiVyXMFg2oooHxR6PftD/SVUg254rxWB6NJJZPA8
+         FfSoZzurESoc+QdQYqGzUsQ3iDagseK9i1bsCX62aoTs2xucwYraCVjjEryjGz5OZIE5
+         39TosMAGMF+CHC9JVZtPIjoPRGtYXELMcszn4XXBK/fyRxOSeRmOer1aB5fiZ2J2GjqG
+         gx3vElFS63hskDy4+VVvk7H/P1Kw8ZHK9urOV6vul0NNR1PlFbaMsRGSfKy5e+2iEmT9
+         mjcumTJV9A3tTW/9TQbDNberbIlZP4tu+Huqa8wm4a3QdARSoteQ2REOQdl9XTj1B6RP
+         rt+Q==
+X-Received: by 10.66.161.229 with SMTP id xv5mr7652829pab.87.1377407131952;
+        Sat, 24 Aug 2013 22:05:31 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id uw6sm9751453pbc.8.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 24 Aug 2013 22:05:30 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1377394558-371-1-git-send-email-hordp@cisco.com>
+In-Reply-To: <1687455733.1090999.1377329376866.JavaMail.ngmail@webmail08.arcor-online.net>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232915>
 
-On Sat, Aug 24, 2013 at 09:35:58PM -0400, Phil Hord wrote:
+Thomas Ackermann wrote:
 
-> When the pathspec given to grep includes a tree name, the full
-> name of matched files is assembled using colon as a separator.
-> If the pathspec includes a tree name, it should use a slash
-> instead.
-> 
-> Check if the pathspec already names a tree and ref (including
-> a colon) and use a slash if so.
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -1080,19 +1080,14 @@ produce no output at that point.
+>  
+>  Modifying the index is easy:
+>  
+> -To update the index with the new contents of a modified file, use
+> +To add the contents of a new file to the index or update the index 
+> +with the new contents of a modified file, use
 
-Makes sense.
+That's a mouthful.  I'd say
 
-> I'm not sure about the detection I used here.  It works, but it is
-> not terribly robust.  Is there a better way to handle this?  Maybe
-> something like 'prefix_pathspec(name,"");'.
+	To update the index with the contents of a new or modified file, use
 
-I think the information you want has been thrown away by the time we get
-to grep_object. Only get_sha1 knows whether the name was really a direct
-tree reference or if it had to traverse paths.
+[...]
+> -To add the contents of a new file to the index, use
+> -
+> --------------------------------------------------
+> -$ git add path/to/file
+> --------------------------------------------------
+> -
 
-So we are necessarily reconstructing based on what we know of the
-syntax. And I think that your rule is OK, because we know that refnames
-cannot contain a colon. So even though pathnames can, we do not have to
-care; we only want to know "is there a path in the name", and if we have
-at least one colon, the answer is yes.
+\o/
 
->  builtin/grep.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> -To remove a file from the index and from the working tree,
+> +To remove a file from the index and from the working tree, use
+>  
+>  -------------------------------------------------
+>  $ git rm path/to/file
 
-A test would be nice. Both to make sure we do not re-break it, and because
-it helps demonstrate the problem very easily (it took me a minute to
-figure out what was going on from your description).
-
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 03bc442..d0deae4 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -480,8 +480,9 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
->  		len = name ? strlen(name) : 0;
->  		strbuf_init(&base, PATH_MAX + len + 1);
->  		if (len) {
-> +			int has_colon = !!strchr(name,':');
->  			strbuf_add(&base, name, len);
-> -			strbuf_addch(&base, ':');
-> +			strbuf_addch(&base, has_colon?'/':':');
-
-Please use whitespace with your ternary operator. The '/':':' made me
-think I was reading Perl for a minute. :)
-
--Peff
+In git 2.0, (plain "rm" followed by) "git add" should work for this,
+too.
