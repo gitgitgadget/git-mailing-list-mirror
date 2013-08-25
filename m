@@ -1,147 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] mailmap: handle mailmap blobs without trailing newlines
-Date: Sun, 25 Aug 2013 05:11:00 -0400
-Message-ID: <20130825091100.GB6089@sigill.intra.peff.net>
-References: <20130825084549.GA5912@sigill.intra.peff.net>
- <20130825085500.GA6089@sigill.intra.peff.net>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Aw: Re: [PATCH 05/13] Fix some typos
+Date: Sun, 25 Aug 2013 11:13:11 +0200 (CEST)
+Message-ID: <892787868.481320.1377421991470.JavaMail.ngmail@webmail16.arcor-online.net>
+References: <20130825050159.GH2882@elie.Belkin> <282216171.1090748.1377328932833.JavaMail.ngmail@webmail08.arcor-online.net>
+ <1171853844.1090991.1377329328622.JavaMail.ngmail@webmail08.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 25 11:11:12 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, wking@tremily.us
+To: jrnieder@gmail.com, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Sun Aug 25 11:13:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDWLk-00034Y-Ri
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 11:11:09 +0200
+	id 1VDWNp-0004xX-2B
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 11:13:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756161Ab3HYJLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Aug 2013 05:11:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54276 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755103Ab3HYJLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Aug 2013 05:11:03 -0400
-Received: (qmail 25059 invoked by uid 102); 25 Aug 2013 09:11:02 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 25 Aug 2013 04:11:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Aug 2013 05:11:00 -0400
-Content-Disposition: inline
-In-Reply-To: <20130825085500.GA6089@sigill.intra.peff.net>
+	id S1755908Ab3HYJNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Aug 2013 05:13:13 -0400
+Received: from mail-in-04.arcor-online.net ([151.189.21.44]:36199 "EHLO
+	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754619Ab3HYJNM (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Aug 2013 05:13:12 -0400
+Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
+	by mx.arcor.de (Postfix) with ESMTP id 7FCEAA9D38;
+	Sun, 25 Aug 2013 11:13:11 +0200 (CEST)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id 776F42E60C5;
+	Sun, 25 Aug 2013 11:13:11 +0200 (CEST)
+Received: from webmail16.arcor-online.net (webmail16.arcor-online.net [151.189.8.70])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 6E8D7197581;
+	Sun, 25 Aug 2013 11:13:11 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net 6E8D7197581
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1377421991; bh=pPWbTIn/ChiMhdwj154Rlt5hYsnGv5lrhUoeW41mqd4=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=JBs6jYbziBhm7gddNLRL7y5PSbUkxu+rsHar8guF28IHy5BYUae7HkT6SVuNm2O5u
+	 CVdw2Flz/LfOggwyMc+oxctb2Dce2ES8VKitmS40dUvIukX+m81rAbSlDN1RPWW5yl
+	 U9Irz1cEat6wJy4rCGfJnuDJEOQNQ9WNiUZRM2LY=
+Received: from [178.7.23.208] by webmail16.arcor-online.net (151.189.8.70) with HTTP (Arcor Webmail); Sun, 25 Aug 2013 11:13:11 +0200 (CEST)
+In-Reply-To: <20130825050159.GH2882@elie.Belkin>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 178.7.23.208
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232942>
 
-On Sun, Aug 25, 2013 at 04:55:00AM -0400, Jeff King wrote:
-
-> On Sun, Aug 25, 2013 at 04:45:50AM -0400, Jeff King wrote:
+ 
+> >  
+> > -Or you can use linkgit:git-name-rev[1], which will give the commit a
+> > +or you can use linkgit:git-name-rev[1], which will give the commit a
 > 
-> > This is the minimal fix. Another option would be to switch
-> > read_mailmap_buf to read_mailmap_string, and I think we could even get
-> > away with avoiding the extra allocation/copy in the loop (because
-> > read_mailmap_line seems to cope with newline-or-EOS just fine). But it
-> > may be better to save that for 'master'.
+> I think this reads better with a capital 'O'.  (The pedant in me
+> likes it, too, since a colon ends a sentence.)
 > 
-> Hmm, actually, this isn't quite true. read_mailmap_line does handle the
-> optional trailing newline properly, but the underlying parsing routines
-> really do want to see a NUL at the end of each line (because they came
-> from code that just calls fgets). So we really do want to tie off each
-> line. But given that our only caller is handing us blob contents which
-> get immediately freed, we could still do that without an extra
-> allocation if:
+> The lowercase 'but' later in this section should perhaps also be
+> capitalized, since it also starts an independent thought.
 > 
->   1. We make it clear that the input must be NUL-terminated (i.e., by
->      renaming the function and dropping the len parameter).
+> 	But that may sometimes help you guess which tags come after the
+> 	given commit.
+>
+
+I am no native speaker, but I am a little reluctant to start a new sentence
+with "But" or "Or". 
+
+> The sentence "So, you can run something like ... then search for a
+> line that looks like ..." is a sequence of incomplete thoughts.  It
+> could be paraphrased a little to scan better:
 > 
->   2. We drop the "const" from the buf parameter so that we can simply
->      terminate each line as we go.
+> 	So, if you run something like "git show-branch e05db0fd
+> 	v1.5.0-rc0 v1.5.0-rc1 v1.5.0-rc2"
 > 
-> I'll see what the patch looks like.
+> 		$ git show-branch e05db0fd v1.5.0-rc0 v1.5.0-rc1 v1.5.0-rc2
+> 		! [e05db...
+> 
+> 	then a line like
+> 
+> 		+ ++ [e05db0fd] Fix warnings in ...
+> 
+> 	shows that e05db0fd is reachable from itself, from v1.5.0-rc1,
+> 	and from v1.5.0-rc2, and not from v1.5.0-rc0.
+> 
 
-I think the end result is actually more readable and easier to follow.
-The only downside is that a true "I have a const buffer without NUL
-termination" caller would have to make a copy of its buffer. But there
-is no such caller currently (and I do not foresee adding one).
+OK; thanks! I will add this.
 
-Here's the patch directly on top of my other one. I had originally
-thought to put the first to 'maint' and then do the refactoring in
-'master', but this really didn't end up being any more invasive than the
-original fix. So maybe it is worth doing both on 'maint' (or squashing
-them together, in which case the rationale in the commit messages need
-combined).
+> >  
+> > -To see how submodule support works, create (for example) four example
+> > +To see how submodule support works, create four example
+> 
+> I'd keep the joke.
+>
 
--- >8 --
-Subject: mailmap: avoid allocation when reading from blob
+I totally missed the joke ...
 
-The read_mailmap_blob function reads the whole blob into a
-buffer, then calls read_mailmap_buf to do the heavy lifting.
-The latter function ends up making a NUL-terminated copy of
-each line of the blob in order to call read_mailmap_line,
-which was originally written to handle the line-at-a-time
-input from fgets().
 
-We can avoid the extra copy if we simply NUL-terminate each
-line in place, and assume that the input buffer is itself
-NUL-terminated. Neither of these is a problem, since our
-only caller is read_mailmap_blob, which has a non-const
-NUL-terminated buffer already.
-
-Signed-off-by: Jeff King <peff@peff.net>
 ---
- mailmap.c | 27 +++++++++------------------
- 1 file changed, 9 insertions(+), 18 deletions(-)
-
-diff --git a/mailmap.c b/mailmap.c
-index a635873..caa7c6b 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -187,26 +187,17 @@ static void read_mailmap_buf(struct string_list *map,
- 	return 0;
- }
- 
--static void read_mailmap_buf(struct string_list *map,
--			     const char *buf, unsigned long len,
--			     char **repo_abbrev)
-+static void read_mailmap_string(struct string_list *map, char *buf,
-+				char **repo_abbrev)
- {
--	while (len) {
--		const char *end = memchr(buf, '\n', len);
--		unsigned long linelen;
--		char *line;
--
--		if (end)
--			linelen = end - buf + 1;
--		else
--			linelen = len;
-+	while (*buf) {
-+		char *end = strchrnul(buf, '\n');
- 
--		line = xmemdupz(buf, linelen);
--		read_mailmap_line(map, line, repo_abbrev);
-+		if (*end)
-+			*end++ = '\0';
- 
--		free(line);
--		buf += linelen;
--		len -= linelen;
-+		read_mailmap_line(map, buf, repo_abbrev);
-+		buf = end;
- 	}
- }
- 
-@@ -230,7 +221,7 @@ static int read_mailmap_blob(struct string_list *map,
- 	if (type != OBJ_BLOB)
- 		return error("mailmap is not a blob: %s", name);
- 
--	read_mailmap_buf(map, buf, size, repo_abbrev);
-+	read_mailmap_string(map, buf, repo_abbrev);
- 
- 	free(buf);
- 	return 0;
--- 
-1.8.4.2.g87d4a77
+Thomas
