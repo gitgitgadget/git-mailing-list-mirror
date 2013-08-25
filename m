@@ -1,139 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] mailmap: handle mailmap blobs without trailing newlines
-Date: Sun, 25 Aug 2013 04:45:51 -0400
-Message-ID: <20130825084549.GA5912@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/3] t3404: preserve test_tick state across short SHA-1
+ collision test
+Date: Sun, 25 Aug 2013 01:53:18 -0700
+Message-ID: <20130825085318.GV2882@elie.Belkin>
+References: <1377112378-45511-1-git-send-email-sunshine@sunshineco.com>
+ <1377112378-45511-2-git-send-email-sunshine@sunshineco.com>
+ <20130825055550.GN2882@elie.Belkin>
+ <CAPig+cSns+_mOMRVRv2Kqb3vHNQGoE4NGZ3ELu7y3pQ57VqPXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 25 10:46:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Aug 25 10:53:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDVxO-000661-UW
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 10:45:59 +0200
+	id 1VDW4f-0004NW-L6
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 10:53:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756152Ab3HYIpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Aug 2013 04:45:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54108 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756127Ab3HYIpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Aug 2013 04:45:53 -0400
-Received: (qmail 23896 invoked by uid 102); 25 Aug 2013 08:45:53 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 25 Aug 2013 03:45:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Aug 2013 04:45:51 -0400
+	id S1756166Ab3HYIxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Aug 2013 04:53:25 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:36160 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756129Ab3HYIxX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Aug 2013 04:53:23 -0400
+Received: by mail-pd0-f175.google.com with SMTP id q10so2285325pdj.6
+        for <git@vger.kernel.org>; Sun, 25 Aug 2013 01:53:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ocHAVyu8G7WvZ1uH32R8JJhJUglFKziG3W46BF0vgj4=;
+        b=Q7lN7pBUP5i9yJwIdoULGc69UROIViJgfRPeibddeH3aYltyX/QSUloG2iVfA7F2lx
+         doMBYAFawHUll4GF4wLn/BmIcaVZ3Dk2qd6xWYTfIdmbTZz713Bb8rHYxL8XwnQ4PRxC
+         uCieoWWwjaoQvZoJmzlCnFek3/EBM1XaaN0AiO7pmA8mpvBML4ctUbxLoWk1kPCNtacl
+         J/nDfPAVGx/xP7+Qb/NPvFifXANV5yY2+op7JElkZnweMDVUu4TEx9vDGTEARJbSquGj
+         vsc2kADczpXOn4whk5JbQJ450+zxTgSiUuvGwtYliTToujw6RGrufF7cY72I2H/ka39B
+         H+gw==
+X-Received: by 10.68.252.106 with SMTP id zr10mr9190368pbc.63.1377420803179;
+        Sun, 25 Aug 2013 01:53:23 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id ta10sm12520568pab.5.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 25 Aug 2013 01:53:22 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <CAPig+cSns+_mOMRVRv2Kqb3vHNQGoE4NGZ3ELu7y3pQ57VqPXw@mail.gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232939>
 
-The read_mailmap_buf function reads each line of the mailmap
-using strchrnul, like:
+Eric Sunshine wrote:
+> On Sun, Aug 25, 2013 at 1:55 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-    const char *end = strchrnul(buf, '\n');
-    unsigned long linelen = end - buf + 1;
+>> Would be clearer if the code in a subshell were indented:
+>>
+>>         (
+>>                 unset test_tick &&
+>>                 test_commit ...
+>>         )
+>
+> I considered it, but decided against it for a couple reasons:
+>
+> * In this script, there already is a mix between the two styles:
+> indented vs. unindented.
+>
+> * In this particular patch, the test_commit line creating commit3
+> wrapped beyond 80 columns when indented.
 
-But that's off-by-one when we actually hit the NUL byte; our
-line does not have a terminator, and so is only "end - buf"
-bytes long. As a result, when we subtract the linelen from
-the total len, we end up with (unsigned long)-1 bytes left
-in the buffer, and we start reading random junk from memory.
+I'm just one person, but I find the indented form way more readable.
+Long lines or lines with \ continuation are not a big deal.
 
-We could fix it with:
+[...]
+>                                      Should this be worth a re-roll?
 
-    unsigned long linelen = end - buf + !!*end;
+Since the file already has a mixture of styles, if there's no other
+reason to reroll, I'd suggest leaving it alone.
 
-but it is questionable for a function called read_mailmap_buf
-to be using strchrnul in the first place.  It happens to work
-because our buffers come from blobs, and read_sha1_file always
-NUL-terminates the object data. But let's future-proof the
-function by actually handling non-terminated strings
-correctly, and fix the off-by-one at the same time.
+The next time it bugs me or someone else, that person can write a
+patch that cleans up the whole file on top. :)
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Intended for 'maint'. The bug was introduced in 0861090, but I built the
-fix on top of 8c473ce, the tip of the jk/mailmap-from-blob topic, as it
-avoids annoying textual conflicts in the test script.
-
-v1.8.2 was the first version with the bug, so this is not an "oops, we
-failed to find this new bug during v1.8.4-rc series" problem. I found it
-now because I turned on mailmap.blob for all of github.com, which
-exposed the code to a much larger array of random inputs.
-
-This is the minimal fix. Another option would be to switch
-read_mailmap_buf to read_mailmap_string, and I think we could even get
-away with avoiding the extra allocation/copy in the loop (because
-read_mailmap_line seems to cope with newline-or-EOS just fine). But it
-may be better to save that for 'master'.
-
- mailmap.c          | 12 +++++++++---
- t/t4203-mailmap.sh | 16 +++++++++++++++-
- 2 files changed, 24 insertions(+), 4 deletions(-)
-
-diff --git a/mailmap.c b/mailmap.c
-index b16542f..a635873 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -192,10 +192,16 @@ static void read_mailmap_buf(struct string_list *map,
- 			     char **repo_abbrev)
- {
- 	while (len) {
--		const char *end = strchrnul(buf, '\n');
--		unsigned long linelen = end - buf + 1;
--		char *line = xmemdupz(buf, linelen);
-+		const char *end = memchr(buf, '\n', len);
-+		unsigned long linelen;
-+		char *line;
- 
-+		if (end)
-+			linelen = end - buf + 1;
-+		else
-+			linelen = len;
-+
-+		line = xmemdupz(buf, linelen);
- 		read_mailmap_line(map, line, repo_abbrev);
- 
- 		free(line);
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index aae30d9..10c7b12 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -159,7 +159,8 @@ test_expect_success 'setup mailmap blob tests' '
- 	Blob Guy <author@example.com>
- 	Blob Guy <bugs@company.xx>
- 	EOF
--	git add just-bugs both &&
-+	printf "Tricky Guy <author@example.com>" >no-newline &&
-+	git add just-bugs both no-newline &&
- 	git commit -m "my mailmaps" &&
- 	echo "Repo Guy <author@example.com>" >.mailmap &&
- 	echo "Internal Guy <author@example.com>" >internal.map
-@@ -243,6 +244,19 @@ test_expect_success 'mailmap.blob defaults to HEAD:.mailmap in bare repo' '
- 	)
- '
- 
-+test_expect_success 'mailmap.blob can handle blobs without trailing newline' '
-+	cat >expect <<-\EOF &&
-+	Tricky Guy (1):
-+	      initial
-+
-+	nick1 (1):
-+	      second
-+
-+	EOF
-+	git -c mailmap.blob=map:no-newline shortlog HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'cleanup after mailmap.blob tests' '
- 	rm -f .mailmap
- '
--- 
-1.8.4.2.g87d4a77
+Thanks,
+Jonathan
