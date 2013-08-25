@@ -1,84 +1,84 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] dir: test_one_path: fix inconsistent behavior due to
- missing '/'
-Date: Sun, 25 Aug 2013 04:05:30 -0400
-Message-ID: <CAPig+cSY8oMeAaS2GRaPhwCkfO=eLa6-UPcJGRe98c0uUFbm8Q@mail.gmail.com>
-References: <1377232155-7300-1-git-send-email-sunshine@sunshineco.com>
-	<1377232155-7300-3-git-send-email-sunshine@sunshineco.com>
-	<20130825060045.GP2882@elie.Belkin>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Aw: Re: [PATCH 02/13] Use current "detached HEAD" message
+Date: Sun, 25 Aug 2013 10:10:40 +0200 (CEST)
+Message-ID: <1764880917.480568.1377418240632.JavaMail.ngmail@webmail16.arcor-online.net>
+References: <20130825034916.GB2882@elie.Belkin> <282216171.1090748.1377328932833.JavaMail.ngmail@webmail08.arcor-online.net>
+ <1667680014.1090850.1377329140347.JavaMail.ngmail@webmail08.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 25 10:05:45 2013
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, wking@tremily.us
+To: jrnieder@gmail.com
+X-From: git-owner@vger.kernel.org Sun Aug 25 10:10:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDVKR-0004hu-Lg
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 10:05:44 +0200
+	id 1VDVPW-0000wU-Iu
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 10:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756179Ab3HYIFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Aug 2013 04:05:36 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:57533 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756163Ab3HYIFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Aug 2013 04:05:32 -0400
-Received: by mail-la0-f51.google.com with SMTP id es20so1530895lab.38
-        for <git@vger.kernel.org>; Sun, 25 Aug 2013 01:05:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=FoE+8tsKmN/yvoLoj89R2jhtUuaDfqYpnMe0QqtMayQ=;
-        b=t1QxsWeKvEmvGGnOO7gX9GL5TwFvYqk3lZCs739xX+BFTvo8XveAum9NkJfGQawrS6
-         nOrmzFY5cpnpznB86nfizj+NjLrRxOAGsjVajmIuNx9Nm94Yih6oZtb67tXofPTvHecX
-         q16uV0mnVXEwzNHCi0GjgX2lWBQfwBePTfEbNjuL89Q60Pb7kAYJyucf2nngBmh5gFW+
-         SCszkkDBoaPAlHfZHf4Dj30hgSZUOuYUeNytPSz6D395LVNdm6JQ3Rd3EW4j3bxJin2s
-         CtrSg4J61oXvALvA9bWbh3pKUlk4ORUmBx9cM1fNr0fm82wTdirBGCW6A4ILC1Y3SsJl
-         1cTw==
-X-Received: by 10.112.172.137 with SMTP id bc9mr7153828lbc.21.1377417930890;
- Sun, 25 Aug 2013 01:05:30 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Sun, 25 Aug 2013 01:05:30 -0700 (PDT)
-In-Reply-To: <20130825060045.GP2882@elie.Belkin>
-X-Google-Sender-Auth: IsmpooBqkQw6FECPpbOXQFLhDzw
+	id S1756071Ab3HYIKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Aug 2013 04:10:52 -0400
+Received: from mail-in-08.arcor-online.net ([151.189.21.48]:53632 "EHLO
+	mail-in-08.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756092Ab3HYIKl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Aug 2013 04:10:41 -0400
+Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
+	by mx.arcor.de (Postfix) with ESMTP id 9C75C3AE4BF;
+	Sun, 25 Aug 2013 10:10:40 +0200 (CEST)
+Received: from mail-in-08.arcor-online.net (mail-in-08.arcor-online.net [151.189.21.48])
+	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 96B7A116018;
+	Sun, 25 Aug 2013 10:10:40 +0200 (CEST)
+Received: from webmail16.arcor-online.net (webmail16.arcor-online.net [151.189.8.70])
+	by mail-in-08.arcor-online.net (Postfix) with ESMTP id 95F993AE496;
+	Sun, 25 Aug 2013 10:10:40 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-08.arcor-online.net 95F993AE496
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1377418240; bh=GLaIcs7u8jHUNBYfpU+0haDFGOMw+ze8vGRkkrIIN/4=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=uENDGW/VKA4HFf+nFVIBch5fH4mTITKM520NMq5Z9/TIzaoOJmidouOUo9DI6O3d7
+	 LCdSnUx9QTbeMslcUkHNb5V0qsbt0/h5/tqhqbdh4Fd1Pt8esTyIzDHgPokWzUsf2t
+	 SdOa/JMQsA87cHyuHN/yiM5Hh+aRu5Kp04sFnJZQ=
+Received: from [178.7.23.208] by webmail16.arcor-online.net (151.189.8.70) with HTTP (Arcor Webmail); Sun, 25 Aug 2013 10:10:40 +0200 (CEST)
+In-Reply-To: <20130825034916.GB2882@elie.Belkin>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 178.7.23.208
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232936>
 
-On Sun, Aug 25, 2013 at 2:00 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Eric Sunshine wrote:
->
->> Although undocumented, directory_exists_in_index_icase(dirname,len)
->> unconditionally assumes the presence of a '/' at dirname[len] (despite
->> being past the end-of-string). Callers are expected to respect
-> [...]
->>                                                Fix this problem.
->
-> So, does this fix the problem by changing
-> directory_exists_in_index_icase() to be more liberal in what it
-> accepts, or callers to be more conservative in what they pass in?
+ 
+> 
+> I wonder if this longer wall of text (added in 13be3e31, 2010-01-29)
+> is too aggressive.
+> 
+> It is the only piece of advice that I explicitly disable in
+> ~/.gitconfig, so I haven't looked at it again for a while.  Since
+> then, the usual stream of questions about how to recover from people
+> who accidentally detached HEAD has still been showing up in #git, so I
+> don't think the message succeeded in its purpose.
+> 
 
-It places the onus upon the caller. As mentioned in the cover letter
-[1], I was not happy with this solution. Junio felt likewise. A
-follow-up series [2] fixes both directory_exists_in_index() and
-directory_exists_in_index_icase() to be more liberal in what they
-accept, relieving the caller of the burden. By the time that series
-was posted, however, Junio and Peff had decided that a fix at a more
-fundamental level would be better (a conclusion with which I agree,
-but for which I do not yet have sufficient knowledge about git
-internals to implement). In the meantime, as an interim bug fix, Junio
-decided [3] to apply the patch to which you responded (but with an
-updated commit message).
+I like the message :-) But of course without really knowing how a
+"detached HEAD" looks like in the object store, people might feel
+unsure about what to do next.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/232796
-[2]: http://thread.gmane.org/gmane.comp.version-control.git/232833
-[3]: http://thread.gmane.org/gmane.comp.version-control.git/232833/focus=232837
+> 
+> 	grep "no branch" Documentation/user-manual.txt
+> 
+> finds two other instances of that message, which this branch doesn't
+> touch.  One is about a bisection, where (no branch) is pretty close
+> to the actual message ('(no branch, bisect started on master)').
+> The other is about submodules.  Here's a patch for potential squashing
+> in that corrects it.
+> 
 
-> Please forgive my laziness.  I ask in order to save future readers the
-> time of digging into the code.
+Thanks for spotting this!
+
+
+---
+Thomas
