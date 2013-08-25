@@ -1,88 +1,62 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/3] t3404: preserve test_tick state across short SHA-1
- collision test
-Date: Sun, 25 Aug 2013 01:53:18 -0700
-Message-ID: <20130825085318.GV2882@elie.Belkin>
-References: <1377112378-45511-1-git-send-email-sunshine@sunshineco.com>
- <1377112378-45511-2-git-send-email-sunshine@sunshineco.com>
- <20130825055550.GN2882@elie.Belkin>
- <CAPig+cSns+_mOMRVRv2Kqb3vHNQGoE4NGZ3ELu7y3pQ57VqPXw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] mailmap: handle mailmap blobs without trailing newlines
+Date: Sun, 25 Aug 2013 04:55:00 -0400
+Message-ID: <20130825085500.GA6089@sigill.intra.peff.net>
+References: <20130825084549.GA5912@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Aug 25 10:53:30 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 25 10:55:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDW4f-0004NW-L6
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 10:53:29 +0200
+	id 1VDW6H-0005rZ-Qg
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 10:55:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756166Ab3HYIxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Aug 2013 04:53:25 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:36160 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756129Ab3HYIxX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Aug 2013 04:53:23 -0400
-Received: by mail-pd0-f175.google.com with SMTP id q10so2285325pdj.6
-        for <git@vger.kernel.org>; Sun, 25 Aug 2013 01:53:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ocHAVyu8G7WvZ1uH32R8JJhJUglFKziG3W46BF0vgj4=;
-        b=Q7lN7pBUP5i9yJwIdoULGc69UROIViJgfRPeibddeH3aYltyX/QSUloG2iVfA7F2lx
-         doMBYAFawHUll4GF4wLn/BmIcaVZ3Dk2qd6xWYTfIdmbTZz713Bb8rHYxL8XwnQ4PRxC
-         uCieoWWwjaoQvZoJmzlCnFek3/EBM1XaaN0AiO7pmA8mpvBML4ctUbxLoWk1kPCNtacl
-         J/nDfPAVGx/xP7+Qb/NPvFifXANV5yY2+op7JElkZnweMDVUu4TEx9vDGTEARJbSquGj
-         vsc2kADczpXOn4whk5JbQJ450+zxTgSiUuvGwtYliTToujw6RGrufF7cY72I2H/ka39B
-         H+gw==
-X-Received: by 10.68.252.106 with SMTP id zr10mr9190368pbc.63.1377420803179;
-        Sun, 25 Aug 2013 01:53:23 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPSA id ta10sm12520568pab.5.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 25 Aug 2013 01:53:22 -0700 (PDT)
+	id S1756229Ab3HYIzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Aug 2013 04:55:04 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54172 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756129Ab3HYIzD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Aug 2013 04:55:03 -0400
+Received: (qmail 24352 invoked by uid 102); 25 Aug 2013 08:55:02 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 25 Aug 2013 03:55:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Aug 2013 04:55:00 -0400
 Content-Disposition: inline
-In-Reply-To: <CAPig+cSns+_mOMRVRv2Kqb3vHNQGoE4NGZ3ELu7y3pQ57VqPXw@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+In-Reply-To: <20130825084549.GA5912@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232940>
 
-Eric Sunshine wrote:
-> On Sun, Aug 25, 2013 at 1:55 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Sun, Aug 25, 2013 at 04:45:50AM -0400, Jeff King wrote:
 
->> Would be clearer if the code in a subshell were indented:
->>
->>         (
->>                 unset test_tick &&
->>                 test_commit ...
->>         )
->
-> I considered it, but decided against it for a couple reasons:
->
-> * In this script, there already is a mix between the two styles:
-> indented vs. unindented.
->
-> * In this particular patch, the test_commit line creating commit3
-> wrapped beyond 80 columns when indented.
+> This is the minimal fix. Another option would be to switch
+> read_mailmap_buf to read_mailmap_string, and I think we could even get
+> away with avoiding the extra allocation/copy in the loop (because
+> read_mailmap_line seems to cope with newline-or-EOS just fine). But it
+> may be better to save that for 'master'.
 
-I'm just one person, but I find the indented form way more readable.
-Long lines or lines with \ continuation are not a big deal.
+Hmm, actually, this isn't quite true. read_mailmap_line does handle the
+optional trailing newline properly, but the underlying parsing routines
+really do want to see a NUL at the end of each line (because they came
+from code that just calls fgets). So we really do want to tie off each
+line. But given that our only caller is handing us blob contents which
+get immediately freed, we could still do that without an extra
+allocation if:
 
-[...]
->                                      Should this be worth a re-roll?
+  1. We make it clear that the input must be NUL-terminated (i.e., by
+     renaming the function and dropping the len parameter).
 
-Since the file already has a mixture of styles, if there's no other
-reason to reroll, I'd suggest leaving it alone.
+  2. We drop the "const" from the buf parameter so that we can simply
+     terminate each line as we go.
 
-The next time it bugs me or someone else, that person can write a
-patch that cleans up the whole file on top. :)
+I'll see what the patch looks like.
 
-Thanks,
-Jonathan
+-Peff
