@@ -1,137 +1,90 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] write_index: optionally allow broken null sha1s
-Date: Sat, 24 Aug 2013 23:15:00 -0700
-Message-ID: <20130825061500.GR2882@elie.Belkin>
-References: <20130824013310.GA9343@sigill.intra.peff.net>
+Subject: Re: [PATCH v2 2/3] t3404: rebase -i: demonstrate short SHA-1
+ collision
+Date: Sat, 24 Aug 2013 23:16:49 -0700
+Message-ID: <20130825061649.GS2882@elie.Belkin>
+References: <1377303042-50868-1-git-send-email-sunshine@sunshineco.com>
+ <1377303042-50868-3-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 25 08:15:19 2013
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Aug 25 08:16:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDTba-0001Dd-Ea
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 08:15:18 +0200
+	id 1VDTdC-0002bd-0T
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 08:16:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756014Ab3HYGPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Aug 2013 02:15:07 -0400
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:43966 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755783Ab3HYGPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Aug 2013 02:15:06 -0400
-Received: by mail-pb0-f45.google.com with SMTP id mc17so2220602pbc.32
-        for <git@vger.kernel.org>; Sat, 24 Aug 2013 23:15:05 -0700 (PDT)
+	id S1756028Ab3HYGQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Aug 2013 02:16:54 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:38489 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755783Ab3HYGQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Aug 2013 02:16:53 -0400
+Received: by mail-pd0-f176.google.com with SMTP id q10so2206328pdj.7
+        for <git@vger.kernel.org>; Sat, 24 Aug 2013 23:16:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=08O3EwGaAzUnjOv2exRqh+2Gi7XINwPnjXgQ34iRv7E=;
-        b=e/Yoi9FiE0knYbi+BG++kjRBfyVX0PBUe1vMAfXV9dkfKAwij0Z9hfhb3/fz3ja4vd
-         diCAgrQ6Kn2jqIyoMfZYm/M9AYqp2mlASum2bg6kig3X8+3yePaHS3orwHf09gd5uO9O
-         mRpK/oqJhwBAIdZDmCrszEqNdN+ALB4TqrOatZ2vPsIl5lczeXM0wv4mQ0Umc7vnqCZG
-         BE8KYGY3h5aYcwxcRQtWqhx4VuV89y/DN4hfYoQyCiIhPwjvtf3x6YbqaAvGXqXhAelK
-         K+WSTbZFBeyJydQ9SiDOHveP4CM0VdG+kEf8cWbZnLebDXXYr/AXoXBZ3/bI0LukGJL5
-         3wMQ==
-X-Received: by 10.66.227.194 with SMTP id sc2mr7950864pac.41.1377411305328;
-        Sat, 24 Aug 2013 23:15:05 -0700 (PDT)
+        bh=REbIeV7bRUVNIH2LXasOFzgk4b4Bt0Lt8KJRszkYlfU=;
+        b=odGuM8of+CywDLdotsIou+x3bI4zHKwOLDVYlOZsRDXiu+PiXXbiatUAfBKUSieuiz
+         CBwcm1SeGIdsZUUx56qWVg/LGQR80M3RzwI2HlcBWu5+0jue0VLQ4cEgDm1CbSm+FoBQ
+         qxdVVrNodrz7mbQ0ZnNjSnDMANENEhqHIj70z6w4y3JV9gr8uV3vmb31N6+cGrAHENc8
+         t5dcKkelFX2I3QJmGMewm6sUiTMvSpIlDbeTxAgERmSA5011w7jUHiPHIycBs1fFtvuu
+         fI5I6klBZ/VKXyCzYCl7r2Wi9bsY5ixIv0anv+Bi6OfxZWFex6QIdGcCDEuw/iCqFOPE
+         T4+g==
+X-Received: by 10.66.248.198 with SMTP id yo6mr244469pac.143.1377411413550;
+        Sat, 24 Aug 2013 23:16:53 -0700 (PDT)
 Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPSA id xn12sm11747518pac.12.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id py4sm10047750pbb.33.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 24 Aug 2013 23:15:04 -0700 (PDT)
+        Sat, 24 Aug 2013 23:16:52 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20130824013310.GA9343@sigill.intra.peff.net>
+In-Reply-To: <1377303042-50868-3-git-send-email-sunshine@sunshineco.com>
 User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232929>
 
-Hi,
+Eric Sunshine wrote:
 
-Jeff King wrote:
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1037,4 +1037,28 @@ test_expect_success 'rebase -i with --strategy and -X' '
+>  	test $(cat file1) = Z
+>  '
+>  
+> +test_expect_success 'short SHA-1 setup' '
+> +	test_when_finished "git checkout master" &&
+> +	git checkout --orphan collide &&
+> +	git rm -rf . &&
+> +	(
+> +	unset test_tick &&
+> +	test_commit collide1 collide &&
+> +	test_commit --notick collide2 collide &&
+> +	test_commit --notick collide3 collide
+> +	)
 
-> ---
-> I was tempted to not involve filter-branch in this commit at all, and
-> instead require the user to manually invoke
->
->   GIT_ALLOW_NULL_SHA1=1 git filter-branch ...
->
-> to perform such a filter.  That would be slightly safer, but requires
-> some specialized knowledge from the user (and advice on using
-> filter-branch to remove such entries already exists on places like
-> stackoverflow, and this patch makes it Just Work on recent versions of
-> git).
+Style: would be clearer indented:
 
-The above few paragraphs explained the most mysterious part of the
-patch to me.  I think they would be fine to include in the commit
-message.
+	(
+		unset test_tick &&
+		test_commit ...
+	)
 
-[...]
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1817,8 +1817,17 @@ int write_index(struct index_state *istate, int newfd)
->  			continue;
->  		if (!ce_uptodate(ce) && is_racy_timestamp(istate, ce))
->  			ce_smudge_racily_clean_entry(ce);
-> -		if (is_null_sha1(ce->sha1))
-> -			return error("cache entry has null sha1: %s", ce->name);
-> +		if (is_null_sha1(ce->sha1)) {
-> +			static const char msg[] = "cache entry has null sha1: %s";
-> +			static int allow = -1;
-> +
-> +			if (allow < 0)
-> +				allow = git_env_bool("GIT_ALLOW_NULL_SHA1", 0);
-> +			if (allow)
-> +				warning(msg, ce->name);
-> +			else
-> +				return error(msg, ce->name);
-> +		}
+> +test_expect_failure 'short SHA-1 collide' '
+> +	test_when_finished "reset_rebase && git checkout master" &&
+> +	git checkout collide &&
+> +	(
+> +	unset test_tick &&
 
-Makes sense.
-
-[...]
-> --- /dev/null
-> +++ b/t/t7009-filter-branch-null-sha1.sh
-> @@ -0,0 +1,54 @@
-> +#!/bin/sh
-> +
-> +test_description='filter-branch removal of trees with null sha1'
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'create base commits' '
-> +	test_commit one &&
-> +	test_commit two &&
-> +	test_commit three
-> +'
-> +
-> +test_expect_success 'create a commit with a bogus null sha1 in the tree' '
-> +	test_tick &&
-> +	tree=$(
-> +		{
-> +			git ls-tree HEAD &&
-> +			printf "160000 commit $_z40\\tbroken"
-> +		} | git mktree
-> +	) &&
-
-To avoid pipes involving git commands, since they can losing the exit
-status (and hence information about whether git crashed):
-
-	{
-		git ls-tree HEAD &&
-		echo "160000 commit $_z40	broken"
-	} >listing &&
-	echo "add broken entry" >msg &&
-
-	tree=$(git mktree <listing) &&
-	test_tick &&
-	commit=$(git commit-tree "$tree" -p HEAD <msg) &&
-	git update-ref HEAD "$commit"
-
-The rest looks good.
+Likewise.
 
 Thanks,
 Jonathan
