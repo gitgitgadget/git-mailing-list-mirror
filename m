@@ -1,153 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 02/13] Use current "detached HEAD" message
-Date: Sat, 24 Aug 2013 20:49:16 -0700
-Message-ID: <20130825034916.GB2882@elie.Belkin>
-References: <282216171.1090748.1377328932833.JavaMail.ngmail@webmail08.arcor-online.net>
- <1667680014.1090850.1377329140347.JavaMail.ngmail@webmail08.arcor-online.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] git-remote-mediawiki: reset private ref after non-dumb push
+Date: Sat, 24 Aug 2013 20:50:20 -0700
+Message-ID: <xmqq61uumnsz.fsf@gitster.dls.corp.google.com>
+References: <1376400700-8863-1-git-send-email-Matthieu.Moy@imag.fr>
+	<CAMP44s2u1edB3g9GK_kak3Nc-fe4TDBjFU_JqskBW+J0Q9BJrg@mail.gmail.com>
+	<vpqa9ka7mku.fsf@anie.imag.fr>
+	<CAMP44s3jh4iEbgONaEU0WSCc5YiGYoK8edcgWU6qmUARToVRuw@mail.gmail.com>
+	<vpqbo4o3jba.fsf@anie.imag.fr>
+	<CAMP44s281qkdMXUM-2P6T+emFajASX6Jyj4nk8_cU5xYJYvdLA@mail.gmail.com>
+	<vpq8uzr5y4v.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, wking@tremily.us
-To: Thomas Ackermann <th.acker@arcor.de>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 X-From: git-owner@vger.kernel.org Sun Aug 25 05:50:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDRLg-0006lB-EA
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 05:50:44 +0200
+	id 1VDRLg-0006lB-Vk
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 05:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755505Ab3HYDtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Aug 2013 23:49:22 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:48926 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755400Ab3HYDtV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Aug 2013 23:49:21 -0400
-Received: by mail-pb0-f53.google.com with SMTP id up15so2157363pbc.12
-        for <git@vger.kernel.org>; Sat, 24 Aug 2013 20:49:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=uNWDZw6sfqKgGi0+517PNk4jyJMgXe1hpdkFpB2omSo=;
-        b=qpvKwE0Kp/QfVBuJKEWsqagnXd0U9ToCngXDQwZuDVJ9DB7oeUCjNDMX/ZHUPN2hoW
-         EM4LUYZFVVajP2ahBZfdSPNum8811ys3WbeB8jDJnJpTE3hnnpA+1pHlIwvmwxcREQIb
-         wIX2RjvLVj8fxa8J2HaZcbdkdgG9Ne41W9P+qB7PvBlXqWEGqTX5yDq21htDls6JJA1v
-         ODaq23nU8OVmg3zFVjPuD5fju3PESlSwlt4xblw/Ay3DnpdBsWUQmU5JrGUSJ8s3deh0
-         fxytItsBc48W+vMI/pMprjjERQpXZTvekexXdM3IjhBYTW6+qKjv8oTlx9msdGg7ovZ/
-         aibQ==
-X-Received: by 10.67.30.70 with SMTP id kc6mr7123825pad.32.1377402560707;
-        Sat, 24 Aug 2013 20:49:20 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPSA id ib9sm9356312pbc.43.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 24 Aug 2013 20:49:19 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1667680014.1090850.1377329140347.JavaMail.ngmail@webmail08.arcor-online.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1755574Ab3HYDu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Aug 2013 23:50:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59183 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755400Ab3HYDu0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Aug 2013 23:50:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 474772C3D2;
+	Sun, 25 Aug 2013 03:50:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PEsVZdZhg/YevAN9Df08zdjn4OM=; b=yMfBaC
+	kFJK0GO5aLR0d0TINzRLnci/7XA5sI8LTGGqrZjnshd3R35L1sqTxuuCpGFXcB65
+	aG5qCkV4sjoJrkItCdFmwdQS1sJiwAhf0C6iDsIW7a4YXnlm2PsJKxbWGOy3bDMQ
+	kqIaZuxE0MPGTHEuqFv9PyDgVHKSO2R2p8nYI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HzgncFltxbjaNoviMFe/f/pQWEVbXXME
+	bfJatgAFG7/54adtxk/OqhmyFM+uawQ/AdKzhbu3jmVmmuck+2Q0tN8d0oCipM8v
+	HyInH82C6LuBSUHm5XTab4sbXIb8kCdf5bW/pld3ySF192kW4cvL6NUm1ep3C+qg
+	PFAkpAfDVqo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BF402C3CF;
+	Sun, 25 Aug 2013 03:50:23 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 97EEE2C3CE;
+	Sun, 25 Aug 2013 03:50:22 +0000 (UTC)
+In-Reply-To: <vpq8uzr5y4v.fsf@anie.imag.fr> (Matthieu Moy's message of "Sat,
+	24 Aug 2013 09:46:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 77DA0320-0D39-11E3-AA00-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232905>
 
-Thomas Ackermann wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -312,10 +312,17 @@ referenced by a tag:
->  
->  	------------------------------------------------
->  	$ git checkout v2.6.17
-> -	Note: moving to "v2.6.17" which isn't a local branch
-> -	If you want to create a new branch from this checkout, you may do so
-> -	(now or later) by using -b with the checkout command again. Example:
-> -	  git checkout -b <new_branch_name>
-> +	Note: checking out 'v2.6.17'.
-> +
-> +	You are in 'detached HEAD' state. You can look around, make experimental
-> +	changes and commit them, and you can discard any commits you make in this
-> +	state without impacting any branches by performing another checkout.
-> +
-> +	If you want to create a new branch to retain commits you create, you may
-> +	do so (now or later) by using -b with the checkout command again. Example:
-> +
-> +	  git checkout -b new_branch_name
-> +
->  	HEAD is now at 427abfa... Linux v2.6.17
+> How would I do that? The update to the remote namespace is done by Git,
+> not by the remote-helper.
+>
+> OK, I'm now convinced that my solution is the right one. The
+> alternatives are far more complex and I still fail to see the benefits.
 
-I wonder if this longer wall of text (added in 13be3e31, 2010-01-29)
-is too aggressive.
+Sounds like a plan, even though it smells like the "update is done
+by Git" that does not have any way to opt-out may be the real design
+mistake and your "solution" is a work-around to that.
 
-It is the only piece of advice that I explicitly disable in
-~/.gitconfig, so I haven't looked at it again for a while.  Since
-then, the usual stream of questions about how to recover from people
-who accidentally detached HEAD has still been showing up in #git, so I
-don't think the message succeeded in its purpose.
-
-That might be partly because it is too long to digest at a glance.
-
-When I see this message, what I actually take in is
-
-                  $ git checkout v1.7.3
- Hmm, capital --->Note: checking out 'v1.7.3'.
- heading before
- lowercase        You are in 'detached HEAD' state. You ...
- sentence.
-                                                            ... checkout.
-
-                  If you want ...
-                  do so (now or later) by using -b               .... Example:
-
-                    git ...
-
-                  HEAD is ...
- Phew, I can ---->$
- type commands
- again.
-
-Whereas I think the message is just meant to convey the following:
-
-      $ git checkout v2.6.17
-      note: checking out a tag for inspection and discardable experiments on top
-
-      To create a new branch to save your changes:
-
-            git checkout -b my-branch-based-on-v2.6.17
-
-      HEAD is now at 427abfa... Linux v2.6.17
-      $
-
->  ------------------------------------------------
->  
-> @@ -326,7 +333,7 @@ and git branch shows that you are no longer on a branch:
->  $ cat .git/HEAD
->  427abfa28afedffadfca9dd8b067eb6d36bac53f
->  $ git branch
-> -* (no branch)
-> +* (detached from v2.6.17)
-
-	grep "no branch" Documentation/user-manual.txt
-
-finds two other instances of that message, which this branch doesn't
-touch.  One is about a bisection, where (no branch) is pretty close
-to the actual message ('(no branch, bisect started on master)').
-The other is about submodules.  Here's a patch for potential squashing
-in that corrects it.
-
-Thanks,
-Jonathan
-
-diff --git i/Documentation/user-manual.txt w/Documentation/user-manual.txt
-index 3e226190..b76219ee 100644
---- i/Documentation/user-manual.txt
-+++ w/Documentation/user-manual.txt
-@@ -3647,7 +3647,7 @@ working on a branch.
- 
- -------------------------------------------------
- $ git branch
--* (no branch)
-+* (detached from d266b98)
-   master
- -------------------------------------------------
- 
+Would it be a possibility to make it tunable, perhaps by introducing
+a capability on the remote-interface side that allows you to tell it
+not to mess with the remote namespace?  If we were doing this from
+scratch, I would suspect that we would have made the capability work
+the other way around (Git does not do the update by default, but
+helpers c an ask Git to do so).
