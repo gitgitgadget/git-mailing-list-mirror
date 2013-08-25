@@ -1,72 +1,63 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Aw: Re: [PATCH 11/13] Remove obscure reference from "Examples"
-Date: Sun, 25 Aug 2013 11:30:15 +0200 (CEST)
-Message-ID: <923442091.481498.1377423015102.JavaMail.ngmail@webmail16.arcor-online.net>
-References: <20130825052553.GL2882@elie.Belkin> <282216171.1090748.1377328932833.JavaMail.ngmail@webmail08.arcor-online.net>
- <883409466.1091151.1377329645768.JavaMail.ngmail@webmail08.arcor-online.net>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] commit: search author pattern against mailmap
+Date: Sun, 25 Aug 2013 11:47:34 +0200
+Message-ID: <CALWbr2w0C77j-Qw0L03dT04pm81iz0sn-W8+=t7271nhCW=OYw@mail.gmail.com>
+References: <xmqqsiy0nnlr.fsf@gitster.dls.corp.google.com>
+	<1377353267-3886-1-git-send-email-apelisse@gmail.com>
+	<20130825040122.GA18676@sigill.intra.peff.net>
+	<xmqqob8ml588.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, wking@tremily.us
-To: jrnieder@gmail.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Sun Aug 25 11:30:31 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 25 11:52:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDWeU-0003Oo-OK
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 11:30:31 +0200
+	id 1VDWzh-0005pB-5t
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 11:52:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756176Ab3HYJaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Aug 2013 05:30:17 -0400
-Received: from mail-in-09.arcor-online.net ([151.189.21.49]:52275 "EHLO
-	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754619Ab3HYJaQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Aug 2013 05:30:16 -0400
-Received: from mail-in-18-z2.arcor-online.net (mail-in-18-z2.arcor-online.net [151.189.8.35])
-	by mx.arcor.de (Postfix) with ESMTP id 1E87A1975AB;
-	Sun, 25 Aug 2013 11:30:15 +0200 (CEST)
-Received: from mail-in-17.arcor-online.net (mail-in-17.arcor-online.net [151.189.21.57])
-	by mail-in-18-z2.arcor-online.net (Postfix) with ESMTP id 168B033B52D;
-	Sun, 25 Aug 2013 11:30:15 +0200 (CEST)
-Received: from webmail16.arcor-online.net (webmail16.arcor-online.net [151.189.8.70])
-	by mail-in-17.arcor-online.net (Postfix) with ESMTP id 16560CBAB1;
-	Sun, 25 Aug 2013 11:30:15 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-17.arcor-online.net 16560CBAB1
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1377423015; bh=0UTmgy9dQQJ+kXgbaSIsOxBwAnF7TU3uXwKoWDz24xU=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=QwrxeyJVuJrTVqh9ff/BvaY1AFcimpzDRDM+CEN5h4qYTUMoVkh7BeUDbVxn7dA/j
-	 pmpHvPGN4SreNp/nSrCiZsuMtzDn9Bs45JhHVkt2Cu4VHKqKhd5Ac3/JtOhu0obsBD
-	 tplM/UZJi2KzOBlaK0zqeBkTBqX5RHGktcP61jo8=
-Received: from [178.7.23.208] by webmail16.arcor-online.net (151.189.8.70) with HTTP (Arcor Webmail); Sun, 25 Aug 2013 11:30:15 +0200 (CEST)
-In-Reply-To: <20130825052553.GL2882@elie.Belkin>
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 178.7.23.208
+	id S1756199Ab3HYJrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Aug 2013 05:47:36 -0400
+Received: from mail-qe0-f43.google.com ([209.85.128.43]:44832 "EHLO
+	mail-qe0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756193Ab3HYJrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Aug 2013 05:47:35 -0400
+Received: by mail-qe0-f43.google.com with SMTP id t7so1208621qeb.30
+        for <git@vger.kernel.org>; Sun, 25 Aug 2013 02:47:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8cRBg9sSHFm6gT3UQLz29iNkINk8C1r+uvE9I5xLlJU=;
+        b=pd9mx5LKSe+E8+BqRllvZkdWaGy/SnWEW5pbia51tc9wm3OtjAIrkmu2ibgmeMoami
+         2dMaCxfNJNqoxQoktIGAMUjMaFLBiJCvvPSslUlQjrUnLSB5JAQROFJSMR6u5IiO8Al0
+         CvyhjhWUwBx8IsuYMpib5dotCpAxQ6m/6eUrmvUvbL7il36eaqZoNJFio1z4/fFOULms
+         xZ/PCQERBJ4tj5K071L9cDarPnXurieHvOZa6/vnjlKaJfsRpvQTxqbnyyhmiEDzTi6q
+         MoNy5jRJLODlXqMP1NpRs2C0LLZBUTopfHTbMR1x5Ngo4UOe7Z/wsXz5n9aVtipQPhso
+         1hQw==
+X-Received: by 10.224.156.197 with SMTP id y5mr158159qaw.83.1377424054672;
+ Sun, 25 Aug 2013 02:47:34 -0700 (PDT)
+Received: by 10.49.104.211 with HTTP; Sun, 25 Aug 2013 02:47:34 -0700 (PDT)
+In-Reply-To: <xmqqob8ml588.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232945>
 
- 
-> >  
-> >   - A "test" tree into which patches are initially placed so that they
-> >     can get some exposure when integrated with other ongoing development.
-> > -   This tree is available to Andrew for pulling into -mm whenever he
-> > -   wants.
-> 
-> This drops useful information (namely, that Tony was publishing
-> history for two people to consume).  Perhaps it should spell out "the
-> bleeding-edge -mm tree"?
-> 
+On Sun, Aug 25, 2013 at 7:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>> Do we need to clear_mailmap before returning to avoid a leak?
+>
+> Good question. What I queued yesterday seems to have a call to
+> clear_mailmap(&mailmap) before that return.
 
-This is even worse for me;-) For everyone not involved in Linux kernel development
-this sentence completely makes no sense. Is there perhaps a more general
-description for the situation?
+Indeed, the version you queued has clear_mailmap(), not the version
+you sent by email.
 
+Will resend.
 
----
-Thomas
+Thanks,
