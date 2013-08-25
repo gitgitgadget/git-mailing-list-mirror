@@ -1,61 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] Fix path prefixing in grep_object
-Date: Sun, 25 Aug 2013 01:54:33 -0400
-Message-ID: <20130825055433.GA7296@sigill.intra.peff.net>
-References: <1377394558-371-1-git-send-email-hordp@cisco.com>
- <20130825044108.GA21300@sigill.intra.peff.net>
- <20130825054142.GM2882@elie.Belkin>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/3] t3404: preserve test_tick state across short SHA-1
+ collision test
+Date: Sat, 24 Aug 2013 22:55:50 -0700
+Message-ID: <20130825055550.GN2882@elie.Belkin>
+References: <1377112378-45511-1-git-send-email-sunshine@sunshineco.com>
+ <1377112378-45511-2-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Phil Hord <hordp@cisco.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, phil.hord@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 25 07:56:09 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Aug 25 07:56:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDTJ3-0005OJ-E5
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 07:56:09 +0200
+	id 1VDTJ3-0005OJ-Um
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 07:56:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756015Ab3HYFyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Aug 2013 01:54:36 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52996 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755996Ab3HYFyf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Aug 2013 01:54:35 -0400
-Received: (qmail 15261 invoked by uid 102); 25 Aug 2013 05:54:35 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 25 Aug 2013 00:54:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Aug 2013 01:54:33 -0400
+	id S1756023Ab3HYFz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Aug 2013 01:55:56 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:61430 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755996Ab3HYFzz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Aug 2013 01:55:55 -0400
+Received: by mail-pa0-f46.google.com with SMTP id fa1so2211531pad.33
+        for <git@vger.kernel.org>; Sat, 24 Aug 2013 22:55:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=RXPf7CbVvwCT3TVZ2YMh0SW9e6bdkyYb1490OAKS4Qc=;
+        b=BRPRAOsLzIMsbl9j/qLAvxY4+FTqXH1Oze30Zwj5ei/w0+HZm8lOcXmZiZU3IGNLd9
+         QsVFFZzaPJDGTlS6nN8qTisDw2J+zUyYHq74BDcoa4yuISIfcKalIAbX2RcAzugQrPjZ
+         4w9VVUsxqCFZaXaFEirj4fF2EZ0E6TqXhucKZCUJXmaZAtLYY/CT6c54klqrdnMbFG9p
+         fzcfS+urfGJY6n18xpHCnuZcnB0YvZZ5RiC9HY9DaJo4aZF814gmdZg0jm2wP8rsweFU
+         bg+G5Tqi0EMkO176uVDElOp/b1dB/C9tqzvGRh1e0vzmiaQ6SfFqE/+UYOOYxeeKMsNM
+         Cvtw==
+X-Received: by 10.66.158.196 with SMTP id ww4mr7840838pab.57.1377410154874;
+        Sat, 24 Aug 2013 22:55:54 -0700 (PDT)
+Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
+        by mx.google.com with ESMTPSA id ai6sm11641537pad.15.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 24 Aug 2013 22:55:53 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20130825054142.GM2882@elie.Belkin>
+In-Reply-To: <1377112378-45511-2-git-send-email-sunshine@sunshineco.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232925>
 
-On Sat, Aug 24, 2013 at 10:41:42PM -0700, Jonathan Nieder wrote:
+Hi,
 
-> Jeff King wrote:
-> 
-> > So we are necessarily reconstructing based on what we know of the
-> > syntax. And I think that your rule is OK, because we know that refnames
-> > cannot contain a colon.
-> 
-> What happens with expressions like HEAD^{/test:}?
+Eric Sunshine wrote:
 
-Ugh, right. Names are more than just refnames.
+> The short SHA-1 collision test requires carefully crafted commits in
+> order to ensure a collision at rebase time.
 
-So I think the only way to do this robustly is to ask get_sha1 to
-remember more about what happened. We might even be able to get away
-without teaching get_sha1_with_context anything else; it already records
-the path, so we should be able to just check whether that is non-empty.
+Yeah, this breaks the usual rule that tests should be independent
+of hashing function.  But it's the best we can do, I think.
 
-But we use an object_array to store the list of objects, and it has no
-room for such a bit. So we'd probably want to refactor that, too.
+[...]
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -994,17 +994,23 @@ test_expect_success 'short SHA-1 setup' '
+>  	test_when_finished "git checkout master" &&
+>  	git checkout --orphan collide &&
+>  	git rm -rf . &&
+> +	(
+>  	unset test_tick &&
+>  	test_commit collide1 collide &&
+>  	test_commit --notick collide2 collide &&
+>  	test_commit --notick "collide3 115158b5" collide collide3 collide3
+> +	)
 
--Peff
+Would be clearer if the code in a subshell were indented:
+
+	(
+		unset test_tick &&
+		test_commit ...
+	)
+
+[...]
+>  test_expect_success 'short SHA-1 collide' '
+>  	test_when_finished "reset_rebase && git checkout master" &&
+>  	git checkout collide &&
+> +	(
+> +	unset test_tick &&
+> +	test_tick &&
+>  	FAKE_COMMIT_MESSAGE="collide2 815200e" \
+>  	FAKE_LINES="reword 1 2" git rebase -i HEAD~2
+> +	)
+
+Likewise.
+
+Hope that helps,
+Jonathan
