@@ -1,76 +1,86 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 07/13] Improve description in "How to merge"
-Date: Sat, 24 Aug 2013 22:08:20 -0700
-Message-ID: <20130825050820.GJ2882@elie.Belkin>
-References: <282216171.1090748.1377328932833.JavaMail.ngmail@webmail08.arcor-online.net>
- <8609038.1091034.1377329428557.JavaMail.ngmail@webmail08.arcor-online.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit: search author pattern against mailmap
+Date: Sat, 24 Aug 2013 22:16:55 -0700
+Message-ID: <xmqqob8ml588.fsf@gitster.dls.corp.google.com>
+References: <xmqqsiy0nnlr.fsf@gitster.dls.corp.google.com>
+	<1377353267-3886-1-git-send-email-apelisse@gmail.com>
+	<20130825040122.GA18676@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, wking@tremily.us
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Sun Aug 25 07:08:31 2013
+Cc: Antoine Pelisse <apelisse@gmail.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Aug 25 07:17:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDSYv-00055q-La
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 07:08:30 +0200
+	id 1VDShL-00024U-4p
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 07:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755923Ab3HYFIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Aug 2013 01:08:25 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:47904 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755853Ab3HYFIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Aug 2013 01:08:24 -0400
-Received: by mail-pa0-f43.google.com with SMTP id hz10so2181205pad.16
-        for <git@vger.kernel.org>; Sat, 24 Aug 2013 22:08:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=5YS1M1RPWcydM5g6dGbgQUKkk4ChrRHlfEDpzTfF1XA=;
-        b=EE+vQKIDZy6qNmdAEkR/XxQWH1kgu36zTBvfw6DAauiNeC2jScMimXf9G2rESk6xZe
-         gRZwf6EcA0X4NtefQwroS8DCkD2ckrGmqsOnmOD6avOhAFjXoqskkIr7oMlEIOW3utS6
-         vfSaDPhBOfkq+68yoIdNxBjO60jcYTbRahyZAU2JmB45V+3indRbO8uFG8DzSYvZZq6r
-         psiTV1mUIfjntSXNwkC9ts86fJXEor/9Aqij4dMNFLhAroeqBTtoBhM5M5Lf9UmoYzgY
-         hSOKoMlFza7Bv+gm2Owp5aqKP91Qcr4wuejK0klmSC8rVh3O+JPpDgAEREj24xjFHotF
-         zCqQ==
-X-Received: by 10.67.21.130 with SMTP id hk2mr7678625pad.76.1377407304481;
-        Sat, 24 Aug 2013 22:08:24 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPSA id ot4sm11404086pac.17.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 24 Aug 2013 22:08:23 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <8609038.1091034.1377329428557.JavaMail.ngmail@webmail08.arcor-online.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1755841Ab3HYFQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Aug 2013 01:16:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41216 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754206Ab3HYFQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Aug 2013 01:16:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7DAB2E3C2;
+	Sun, 25 Aug 2013 05:16:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=X/vfyRCGRH0Id7namPmBIZqwa2Y=; b=kWvcUt
+	dPsco6mTzkyojzUUwZ1BmgCksh0CeLVlAZiIzgnNYT5lGQc4oDP+N4Buf37MrJzj
+	KbkTcCVjGX6FPC3RdomvHSKln9QvlB6jpN7iMPmV4QPSnSTWDWRqmw4TxkG9+gr5
+	CGqRB/OeXOjf49EVGRGgdgt+3Zxy3sU/P9vEs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=j2GVOLsFRm/UzV5BC4yU47JuEe/nripB
+	OB1is6y9aVRFa9cII3Cls7ZR5Ou2DbSq6eHuztoX0aQ4D7DskNx/a56JwcaJWmlZ
+	UoRL2zBcl2402+Qf/bquXuhfOzlOUkoPvafmxI1g15vI6VlIuwDRJ70gucR2h673
+	IRw0iZThXtI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE2BD2E3C0;
+	Sun, 25 Aug 2013 05:16:57 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A6492E3BF;
+	Sun, 25 Aug 2013 05:16:57 +0000 (UTC)
+In-Reply-To: <20130825040122.GA18676@sigill.intra.peff.net> (Jeff King's
+	message of "Sun, 25 Aug 2013 00:01:22 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 901FACD0-0D45-11E3-8778-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232918>
 
-Thomas Ackermann wrote:
+Jeff King <peff@peff.net> writes:
 
-> Describe the conflict resolution in terms of the
-> commands the user is supposed to use.
-[...]
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -1251,10 +1251,8 @@ Automatic merge failed; fix conflicts and then commit the result.
->  -------------------------------------------------
->  
->  Conflict markers are left in the problematic files, and after
-> -you resolve the conflicts manually, you can update the index
-> -with the contents and run Git commit, as you normally would when
-> -creating a new file.
+> On Sat, Aug 24, 2013 at 04:07:47PM +0200, Antoine Pelisse wrote:
+>
+>> @@ -945,13 +947,16 @@ static const char *find_author_by_nickname(const char *name)
+>>  	av[++ac] = buf.buf;
+>>  	av[++ac] = NULL;
+>>  	setup_revisions(ac, av, &revs, NULL);
+>> +	revs.mailmap = &mailmap;
+>> +	read_mailmap(revs.mailmap, NULL);
+>> +
+>>  	prepare_revision_walk(&revs);
+>>  	commit = get_revision(&revs);
+>>  	if (commit) {
+>>  		struct pretty_print_context ctx = {0};
+>>  		ctx.date_mode = DATE_NORMAL;
+>>  		strbuf_release(&buf);
+>> -		format_commit_message(commit, "%an <%ae>", &buf, &ctx);
+>> +		format_commit_message(commit, "%aN <%aE>", &buf, &ctx);
+>>  		return strbuf_detach(&buf, NULL);
+>>  	}
+>>  	die(_("No existing author found with '%s'"), name);
+>
+> Do we need to clear_mailmap before returning to avoid a leak?
 
-Hm.  It's been too long since I was a novice, since I find the above
-clear already.
-
-To make the text clearer, I think it would be best to *add* an example
-instead of replacing it by one.
-
-Thanks,
-Jonathan
+Good question. What I queued yesterday seems to have a call to
+clear_mailmap(&mailmap) before that return.
