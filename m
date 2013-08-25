@@ -1,82 +1,94 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] Fix path prefixing in grep_object
-Date: Sat, 24 Aug 2013 21:23:14 -0700
-Message-ID: <20130825042314.GE2882@elie.Belkin>
-References: <1377394558-371-1-git-send-email-hordp@cisco.com>
- <CABURp0qG7Nnjpp17MAO7Ltwf51EsswZ3GcT-qyt14Vs1tc9pGw@mail.gmail.com>
- <xmqqa9k6moif.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 00/24] Index-v5
+Date: Sun, 25 Aug 2013 11:40:42 +0700
+Message-ID: <CACsJy8BgQxefys0h7ZfiLP3zrGnEqtkiUoe4GkBAEi+JnojT9A@mail.gmail.com>
+References: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com>
+ <CACsJy8AkvUiJhjYVCuMrNwZPR7AiO-CZFazvOG-mVO=+Qq9O3Q@mail.gmail.com> <xmqq61uuo4dl.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Phil Hord <phil.hord@gmail.com>, Phil Hord <hordp@cisco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Gummerer <t.gummerer@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 25 06:23:24 2013
+X-From: git-owner@vger.kernel.org Sun Aug 25 06:41:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDRrH-0000VS-R9
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 06:23:24 +0200
+	id 1VDS8c-0003rI-9t
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 06:41:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755778Ab3HYEXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Aug 2013 00:23:20 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:36095 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755482Ab3HYEXT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Aug 2013 00:23:19 -0400
-Received: by mail-pb0-f42.google.com with SMTP id un15so2172514pbc.29
-        for <git@vger.kernel.org>; Sat, 24 Aug 2013 21:23:19 -0700 (PDT)
+	id S1756016Ab3HYElO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Aug 2013 00:41:14 -0400
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:53237 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755980Ab3HYElN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Aug 2013 00:41:13 -0400
+Received: by mail-ob0-f181.google.com with SMTP id dn14so2101964obc.26
+        for <git@vger.kernel.org>; Sat, 24 Aug 2013 21:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=G/I2kyj2CHBBr8/LoGqtvZrN1gRY6U0+SOGd3+aF+lM=;
-        b=mTCUn6/0/eHfl5iW+NKbx2Eb2AC+EOLjdSwsiUnwO6do+GsHgD/tv8EJL+9OQfdJyN
-         5TIs/w9HD+5Ygw7Andh3jz9X/SLHs6i8YsZaX6YZhp15CPUcoDBoPdzGWxO9YOf6Hw1p
-         lAQEMe48VRIytXUmCSfb3KQSoA+FlQYP2QG0JFKw6XRfbMgJAbxCZoHH7wzZKy04soxS
-         CwlDsSF/cyIPT+30gm8wVcnFpAQ3qYswvff8YT1ttxWHUMpBptOnP9xpFKK06wKeDRIS
-         RoRQa5lFQ2QrenonEQjX/vrVJsJLgsI9cUoNfwMzjPBnUYsKoyOK8uqZREX7pGpuO4eS
-         cj0Q==
-X-Received: by 10.66.139.166 with SMTP id qz6mr7490950pab.88.1377404599224;
-        Sat, 24 Aug 2013 21:23:19 -0700 (PDT)
-Received: from elie.Belkin (c-107-3-135-164.hsd1.ca.comcast.net. [107.3.135.164])
-        by mx.google.com with ESMTPSA id wr9sm9561197pbc.7.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 24 Aug 2013 21:23:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqa9k6moif.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=sDS0BlPEYnhpM6Io8PZNTe2WYPHFhkhNyzHL6bu9Ans=;
+        b=a1En4nvaYAkKperQJ0uodgd/Bw4e1SCZesOx3dAwvSmgZ/tfluDU1eLkHBWQscbVdo
+         iD/UI/NnQmqU5XSHk4+5VcILLIBn4AqJI/hbgs1TWWEnKsf4ZJgJwVBY5Zg0er+gh1bi
+         0JHNquxam3kOVT84NCPtcyEUhK+dMm3tAHbsuqq8T6skHAKDj1zKFNlaASohKqVOuen9
+         TN3gxrlo7fdbWBWYapy3GCsMYzUKWGiUhD5sXAugPUns3yWzaob3oruv+Cr4P2xoeipg
+         JjvcYDAk11OKjnB+I17NR0wu1BH+zw7w5RHsNXTja54KHp84GGEncxS9PGECacHrpCp7
+         VTFA==
+X-Received: by 10.182.46.232 with SMTP id y8mr7570975obm.13.1377405672536;
+ Sat, 24 Aug 2013 21:41:12 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Sat, 24 Aug 2013 21:40:42 -0700 (PDT)
+In-Reply-To: <xmqq61uuo4dl.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232913>
 
-Junio C Hamano wrote:
-> Phil Hord <phil.hord@gmail.com> writes:
->> On Sat, Aug 24, 2013 at 9:35 PM, Phil Hord <hordp@cisco.com> wrote:
-
->>> When the pathspec given to grep includes a tree name, the full
->>> name of matched files is assembled using colon as a separator.
->>> If the pathspec includes a tree name, it should use a slash
->>> instead.
-[...]
->>   If the tree name includes an object name, as in
->>   HEAD:some/path, it should use a slash instead.
+On Sun, Aug 25, 2013 at 10:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> What problem are you trying to solve?  It should use HEAD:some/path,
-> not HEAD/some/path.
+>> On Mon, Aug 19, 2013 at 2:41 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>>
+>> I'm done reviewing this version (I neglected the extension writing
+>> patches because after spending hours on the main write patch I don't
+>> want to look at them anymore :p). Now that rc period is over, with a
+>> partial write proof-of-concept, I think it's enough to call Junio's
+>> attention on the series, see if we have any chance of merging it. The
+>> partial write POC is needed to make sure we don't overlook anything,
+>> just support update-index is enough.
+>
+> I've been following the review comment threads after looking at the
+> patches myself when they were posted. I was hoping to see some API
+> improvement over the current "we (have to) have everything available
+> in-core in a flat array" model, which gives a lot of convenience and
+> IO overhead at the same time, that would make me say "yes, this
+> operation, that we need to do very often, will certainly be helped
+> by this new API, and in order to support that style of API better,
+> the current file format is inadequate and we do need to go to the
+> proposed tree like on-disk format" for at least one, but
+> unfortunately I haven't found any (yet).
 
-I think Phil meant that when "git grep" is asked to search within
-"HEAD:some/path", filenames tacked on at the end should be appended
-with a '/' separator instead of the usual ':' (e.g.,
-"HEAD:some/path/inner/path.c", not "HEAD:some/path:inner/path.c").
-Otherwise I cannot copy and paste "git grep" output and get something
-suitable for passing to "git show".
-
-I don't think we have a standard name for the tree:path syntax.  I've
-always just called it tree:path syntax. :)
-
-Hope that helps,
-Jonathan
+Thomas is in the best position to answer this, but I'll give it a try.
+In my opinon, v2-4 works well for moderate-sized worktrees, v5 aims to
+make the index scale better. One way to make it scale is not to read
+the whole index up when you only need a portion of the index.
+read_index_filtered() enables this. We could implement
+read_index_filtered() on v2 too, but because v2 lacks proper data
+structure to support it, we need to scan through all on-disk entries.
+"git diff" and "git status" with pathspec may benefit from this (and
+for large worktrees, people better use pathspec than whole-tree
+"status"). The flat (but not full) array model seems best fit because
+we still need to support v2. Another v5 improvement is fast "git add
+-u/git commit -a" when partial write is implemented. I don't think
+such a patch is posted. There may be API addition to aid v5 code but
+it should not be big API change.
+-- 
+Duy
