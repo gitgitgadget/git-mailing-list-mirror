@@ -1,77 +1,73 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: [RFC/PATCH] Fix path prefixing in grep_object
-Date: Sat, 24 Aug 2013 21:35:58 -0400
-Message-ID: <1377394558-371-1-git-send-email-hordp@cisco.com>
-Cc: phil.hord@gmail.com, Phil Hord <hordp@cisco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 25 03:39:08 2013
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [RFC/PATCH] Fix path prefixing in grep_object
+Date: Sat, 24 Aug 2013 22:07:30 -0400
+Message-ID: <CABURp0qG7Nnjpp17MAO7Ltwf51EsswZ3GcT-qyt14Vs1tc9pGw@mail.gmail.com>
+References: <1377394558-371-1-git-send-email-hordp@cisco.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Sun Aug 25 04:07:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDPIJ-0005US-Ig
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 03:39:07 +0200
+	id 1VDPkD-0001wK-GM
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 04:07:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754869Ab3HYBgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Aug 2013 21:36:10 -0400
-Received: from rcdn-iport-6.cisco.com ([173.37.86.77]:27396 "EHLO
-	rcdn-iport-6.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754537Ab3HYBgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Aug 2013 21:36:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=1158; q=dns/txt; s=iport;
-  t=1377394569; x=1378604169;
-  h=from:to:cc:subject:date:message-id;
-  bh=lqlfTbKNkTPQ8aGT2TNK5ku/WHTcywzxoVHWKGpJfYw=;
-  b=YP/1Y8zFOrFHzHoPHhZPHAO9OrUcvPVjwys1J9Yc+FiJpt+cIbid1oEW
-   kgsb//fxvIkuRoCcwLyw9GHEPQzKN1lB5nnlOkIqTgFGCcgUbKklraIBL
-   Dfj0VA3fAKbhUdO2KMdqvQCCIFYp7wB+ZfSMMmIohcxIjOM8Y3dmQqab2
-   A=;
-X-IronPort-AV: E=Sophos;i="4.89,949,1367971200"; 
-   d="scan'208";a="251358945"
-Received: from rcdn-core2-2.cisco.com ([173.37.113.189])
-  by rcdn-iport-6.cisco.com with ESMTP; 25 Aug 2013 01:36:09 +0000
-Received: from ipsn-lnx-hordp.cisco.com (rtp-hordp-8914.cisco.com [10.117.80.101])
-	by rcdn-core2-2.cisco.com (8.14.5/8.14.5) with ESMTP id r7P1a80x006739;
-	Sun, 25 Aug 2013 01:36:08 GMT
-X-Mailer: git-send-email 1.8.4.557.g34b3a2e
+	id S1754624Ab3HYCHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Aug 2013 22:07:53 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:56294 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754530Ab3HYCHx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Aug 2013 22:07:53 -0400
+Received: by mail-vb0-f46.google.com with SMTP id p13so1325705vbe.33
+        for <git@vger.kernel.org>; Sat, 24 Aug 2013 19:07:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=mNfrlCtORQ/MIq6y7WILizLp6zeiGluCwIio7NS9EzY=;
+        b=ONDFAS5T+vIhskmyi7BWWwidH5nKjUgDjX7pjtJEUFm1oXKZHrQYXAhtfhwJDNYS3+
+         1V/H0OLnTMGp1kO9XseRoD+Myh0Q6cAJPiiG8HY3XcJrRJIIKMAVWzz1m+cZ/hLo/dHy
+         z5eWRuV4BAoKQz5Q/vA2o1WP2mDuzX+i996LlGLxBfVliV47OagoTZ20tLAU2Iv2a3KF
+         gf9Pd3qVYCMNxDa7W38bttqVuOqFex+Zi12lJIKq7dkcwASRb3d12zuC/rwF7jTOJv5D
+         oeUBSFHO+8kj6w5xmtkbW2OXEfqCOcaz54dZAZQF7oU23KxMGaH/bjp+Vhd62n2cXM5N
+         MK4A==
+X-Received: by 10.58.198.13 with SMTP id iy13mr7334328vec.11.1377396471330;
+ Sat, 24 Aug 2013 19:07:51 -0700 (PDT)
+Received: by 10.58.49.197 with HTTP; Sat, 24 Aug 2013 19:07:30 -0700 (PDT)
+In-Reply-To: <1377394558-371-1-git-send-email-hordp@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232893>
 
-When the pathspec given to grep includes a tree name, the full
-name of matched files is assembled using colon as a separator.
-If the pathspec includes a tree name, it should use a slash
-instead.
+On Sat, Aug 24, 2013 at 9:35 PM, Phil Hord <hordp@cisco.com> wrote:
+>
+> When the pathspec given to grep includes a tree name, the full
+> name of matched files is assembled using colon as a separator.
+> If the pathspec includes a tree name, it should use a slash
+> instead.
+>
+> Check if the pathspec already names a tree and ref (including
+> a colon) and use a slash if so.
 
-Check if the pathspec already names a tree and ref (including
-a colon) and use a slash if so.
----
+I think I used lots of wrong terminology there.  What do I call these
+things?
 
-I'm not sure about the detection I used here.  It works, but it is
-not terribly robust.  Is there a better way to handle this?  Maybe
-something like 'prefix_pathspec(name,"");'.
+HEAD:path is a tree.
 
- builtin/grep.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+HEAD is a commit name.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 03bc442..d0deae4 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -480,8 +480,9 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 		len = name ? strlen(name) : 0;
- 		strbuf_init(&base, PATH_MAX + len + 1);
- 		if (len) {
-+			int has_colon = !!strchr(name,':');
- 			strbuf_add(&base, name, len);
--			strbuf_addch(&base, ':');
-+			strbuf_addch(&base, has_colon?'/':':');
- 		}
- 		init_tree_desc(&tree, data, size);
- 		hit = grep_tree(opt, pathspec, &tree, &base, base.len,
--- 
-1.8.4.557.g34b3a2e
+Maybe like this?
+
+  When a tree is given to grep, the full name of matched files
+  is assembled using colon as a separator.
+
+  If the tree name includes an object name, as in
+  HEAD:some/path, it should use a slash instead.
+
+Phil
