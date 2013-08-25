@@ -1,134 +1,59 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH] commit: search author pattern against mailmap
-Date: Sun, 25 Aug 2013 12:01:29 +0200
-Message-ID: <1377424889-15399-1-git-send-email-apelisse@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] commit: search author pattern against mailmap
+Date: Sun, 25 Aug 2013 06:30:41 -0400
+Message-ID: <20130825103041.GB12556@sigill.intra.peff.net>
 References: <xmqqob8ml588.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 25 12:02:08 2013
+ <1377424889-15399-1-git-send-email-apelisse@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 25 12:31:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDX94-00068g-C7
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 12:02:06 +0200
+	id 1VDXb3-0006sf-Cw
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Aug 2013 12:31:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756378Ab3HYKCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Aug 2013 06:02:01 -0400
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:35643 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756371Ab3HYKCA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Aug 2013 06:02:00 -0400
-Received: by mail-wg0-f52.google.com with SMTP id l18so1570354wgh.19
-        for <git@vger.kernel.org>; Sun, 25 Aug 2013 03:01:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=oQ4wJl2Vm+ZBNekcoWkMHHhGzIkolFzLJx7f4HWotBI=;
-        b=wGmm+gGeWyQseqDHg5rJ8DMqAhBs+T8dbupFxFjWdEheKQ2R571ZBgJy1ci9lhWYq8
-         muFi9+265D/oXOzNblNUqzGl+LYFOYwCVl2omJNiXuNRzSetHsUK0+iX9ux26Tm4WnRk
-         IqeCDrzWXiFj2lZB+smwj3mPjzGe5JQAMGWbWRnvI0wnb532b5u3Q6oRMhBuA04cievO
-         bRc9ae+cJTsuLT7u2GqbtIw8UL5GqWSOIm8FtcxZbqo4bz6OhHV6w4IiA7JIoaTRYA1j
-         V+zJmBHlINQvhd1W78LuLkkrB3i7eGeOZD7R2igi/V81CjFiYOujuoITXn6Suvyr7JLm
-         zClg==
-X-Received: by 10.180.72.47 with SMTP id a15mr3816215wiv.63.1377424919030;
-        Sun, 25 Aug 2013 03:01:59 -0700 (PDT)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPSA id gg10sm9666991wib.1.1969.12.31.16.00.00
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 25 Aug 2013 03:01:58 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc4.2.g8483dfa.dirty
-In-Reply-To: <xmqqob8ml588.fsf@gitster.dls.corp.google.com>
+	id S1754710Ab3HYKaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Aug 2013 06:30:46 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54795 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754347Ab3HYKaq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Aug 2013 06:30:46 -0400
+Received: (qmail 28918 invoked by uid 102); 25 Aug 2013 10:30:45 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 25 Aug 2013 05:30:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Aug 2013 06:30:41 -0400
+Content-Disposition: inline
+In-Reply-To: <1377424889-15399-1-git-send-email-apelisse@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232948>
 
-"git commit --author=$name" sets the author to one whose name
-matches the given string from existing commits, when $name is not in
-the "Name <e-mail>" format. However, it does not honor the mailmap
-to use the canonical name for the author found this way.
+On Sun, Aug 25, 2013 at 12:01:29PM +0200, Antoine Pelisse wrote:
 
-Fix it by telling the logic to find a matching existing author to
-honor the mailmap, and use the name and email after applying the
-mailmap.
+> So I kept clear_mailmap() where you put it, but I think it could be moved
+> right after get_revision(). That is because I think format_commit_message()
+> will run another read_mailmap() with an heap-allocated string_list.
+> Anyway, I'm not sure it makes a big difference here.
 
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
-Hey,
-So I kept clear_mailmap() where you put it, but I think it could be moved
-right after get_revision(). That is because I think format_commit_message()
-will run another read_mailmap() with an heap-allocated string_list.
-Anyway, I'm not sure it makes a big difference here.
+Yeah, format_commit_message does not even pay attention to our
+revs.mailmap.
 
-Thanks,
-Antoine
+It does make me wonder if there should simply be a static singleton
+mailmap that gets loaded once per program invocation and then cleaned up
+at exit. That is clearly what format_commit_message is doing. Is there
+actually a use case for having a custom one in rev_info? It's not like
+you can even control where it reads from when you call read_mailmap.
 
- builtin/commit.c   |  8 +++++++-
- t/t4203-mailmap.sh | 11 +++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+I guess we need it as a boolean "do we want to mailmap at all" for the
+regular pretty formats, but it could just be a flag in rev_info instead
+of a pointer.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 10acc53..a48a7fe 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -30,6 +30,7 @@
- #include "column.h"
- #include "sequencer.h"
- #include "notes-utils.h"
-+#include "mailmap.h"
-
- static const char * const builtin_commit_usage[] = {
- 	N_("git commit [options] [--] <pathspec>..."),
-@@ -935,6 +936,7 @@ static const char *find_author_by_nickname(const char *name)
- 	struct rev_info revs;
- 	struct commit *commit;
- 	struct strbuf buf = STRBUF_INIT;
-+	struct string_list mailmap = STRING_LIST_INIT_NODUP;
- 	const char *av[20];
- 	int ac = 0;
-
-@@ -945,13 +947,17 @@ static const char *find_author_by_nickname(const char *name)
- 	av[++ac] = buf.buf;
- 	av[++ac] = NULL;
- 	setup_revisions(ac, av, &revs, NULL);
-+	revs.mailmap = &mailmap;
-+	read_mailmap(revs.mailmap, NULL);
-+
- 	prepare_revision_walk(&revs);
- 	commit = get_revision(&revs);
- 	if (commit) {
- 		struct pretty_print_context ctx = {0};
- 		ctx.date_mode = DATE_NORMAL;
- 		strbuf_release(&buf);
--		format_commit_message(commit, "%an <%ae>", &buf, &ctx);
-+		format_commit_message(commit, "%aN <%aE>", &buf, &ctx);
-+		clear_mailmap(&mailmap);
- 		return strbuf_detach(&buf, NULL);
- 	}
- 	die(_("No existing author found with '%s'"), name);
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index baa4685..4d715f0 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -470,4 +470,15 @@ test_expect_success 'Blame output (complex mapping)' '
- 	test_cmp expect actual.fuzz
- '
-
-+cat >expect <<\EOF
-+Some Dude <some@dude.xx>
-+EOF
-+
-+test_expect_success 'commit --author honors mailmap' '
-+	test_must_fail git commit --author "nick" --allow-empty -meight &&
-+	git commit --author "Some Dude" --allow-empty -meight &&
-+	git show --pretty=format:"%an <%ae>%n" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
---
-1.8.4.rc4.2.g8483dfa.dirty
+-Peff
