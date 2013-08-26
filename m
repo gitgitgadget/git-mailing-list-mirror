@@ -1,219 +1,113 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v8 2/2] status: always show tracking branch even no change
-Date: Mon, 26 Aug 2013 15:02:49 +0800
-Message-ID: <2f3a942d7049e80dca689aa68d494b70c288f2c7.1377500206.git.worldhello.net@gmail.com>
-References: <cover.1377500206.git.worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 26 09:10:26 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] Fix path prefixing in grep_object
+Date: Mon, 26 Aug 2013 00:14:11 -0700
+Message-ID: <xmqqfvtwkjp8.fsf@gitster.dls.corp.google.com>
+References: <1377394558-371-1-git-send-email-hordp@cisco.com>
+	<CABURp0qG7Nnjpp17MAO7Ltwf51EsswZ3GcT-qyt14Vs1tc9pGw@mail.gmail.com>
+	<xmqqa9k6moif.fsf@gitster.dls.corp.google.com>
+	<20130825042314.GE2882@elie.Belkin>
+	<xmqqk3jal4t7.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Phil Hord <phil.hord@gmail.com>, Phil Hord <hordp@cisco.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 26 09:14:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDqwT-0000nZ-Ur
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 09:10:26 +0200
+	id 1VDr0G-0004Hl-4Q
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 09:14:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756247Ab3HZHKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Aug 2013 03:10:20 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:49674 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755317Ab3HZHKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Aug 2013 03:10:16 -0400
-Received: by mail-pa0-f49.google.com with SMTP id ld10so3071090pab.36
-        for <git@vger.kernel.org>; Mon, 26 Aug 2013 00:10:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=koeU3MFWavyyY2aF7cHt3cLx6JdYNWMopkcMKOvJFtA=;
-        b=y5ib3/pif4IukEG0u+CmTfQoaXerAn8CRXpfVKzg800M9vAvn+zNDqI85G0t0aUjQn
-         zKLcZbH8PObGSrKCxFhShbe0WghrsKkgJGJvUflqf2x6jX+m7eoThV1Aw+1vwwbVKfjL
-         iHcreI+wbSA7VJsqcZYCDTRtI/1pzOmI7t/cXqZv6OH51faAzGX+y0eKtiXQhsG+870U
-         quVqTmwbOe6MukcmVT6C37B46Dp6Zd69UZj1m9Ko0V0w5M6bRliG8BFIZAaorJ2Zcwje
-         +0iwnapTX+IUdvR5RCQqxeKq6EIKbDuipZJ5cS86Xe5EYPjsJVrBMS0ZwLlTN9Ft7L82
-         SohQ==
-X-Received: by 10.66.194.13 with SMTP id hs13mr1276156pac.163.1377501015921;
-        Mon, 26 Aug 2013 00:10:15 -0700 (PDT)
-Received: from localhost.localdomain ([114.248.144.150])
-        by mx.google.com with ESMTPSA id kd1sm17994787pab.20.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 26 Aug 2013 00:10:14 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc3.2.g434fd97
-In-Reply-To: <cover.1377500206.git.worldhello.net@gmail.com>
-In-Reply-To: <cover.1377500206.git.worldhello.net@gmail.com>
-References: <7v7gfiojz7.fsf@alter.siamese.dyndns.org> <cover.1377500206.git.worldhello.net@gmail.com>
+	id S1756240Ab3HZHOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Aug 2013 03:14:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50768 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755929Ab3HZHOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Aug 2013 03:14:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBD3D39F0C;
+	Mon, 26 Aug 2013 07:14:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wVBeU0cebkY1jP0GknOsDB01ypg=; b=iZjMj6
+	hZUlj/5HJgnhYg6DmOQNP4Goia78pHDu6dsxqrEvU2ras4K21NYAexyWVuD5s8yv
+	ZxY6cafWpK+0aAPAYe76uZPgn05a4A+3kLBL+gUoRr5P8hWlu6NCsfgYaQZ24IFH
+	krtE5f5d3qHgw5+6vL4/vS4XkqPbzFN4RZlbA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=P7VVK5rwKVK8RKMZKVom86tJvM3d3LZC
+	SiljKuNsGHXMhcpNVgqAWFhxViGpI79kymZO4qnN8Cg/GHZTb3y3OnTS3GgmgO78
+	NKJi41fWw4jo0+GFNEtAZAGWDmEyG80LC/qS08bIvuqqMEgbdJX45RRz0pt+j8EL
+	fayOqM6/fjM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CEF1F39F0B;
+	Mon, 26 Aug 2013 07:14:14 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AB0639F09;
+	Mon, 26 Aug 2013 07:14:14 +0000 (UTC)
+In-Reply-To: <xmqqk3jal4t7.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Sat, 24 Aug 2013 22:25:56 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1CE0907E-0E1F-11E3-9F47-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232980>
 
-In order to see what the current branch is tracking, one way is using
-"git branch -v -v", but branches other than the current are also
-reported. Another way is using "git status", such as:
+Junio C Hamano <gitster@pobox.com> writes:
 
-    $ git status
-    # On branch master
-    # Your branch is ahead of 'origin/master' by 1 commit.
-    ...
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> I think Phil meant that when "git grep" is asked to search within
+>> "HEAD:some/path", filenames tacked on at the end should be appended
+>> with a '/' separator instead of the usual ':' (e.g.,
+>> "HEAD:some/path/inner/path.c", not "HEAD:some/path:inner/path.c").
+>
+> Ah, OK.
+>
+> I am not sure if we have a proper hint in the revision parser
+> machinery, but it may not be too hard to teach rev-cmdline interface
+> to keep that kind of information (i.e. "This tree object name is a
+> result of parsing '<tree-ish>:path' syntax").
 
-But this will not work if there is no change between the current
-branch and its upstream. Always report upstream tracking info
-even if there is no difference, so that "git status" is consistent
-for checking tracking info for current branch. E.g.
+Actually, having thought about this a bit more, I am no longer sure
+if this is even a good idea to begin with.
 
-    $ git status
-    # On branch feature1
-    # Your branch is identical to 'github/feature1'.
-    ...
+An output line that begins with HEAD:some/path:inner/path.c from
+"git grep" is an answer to this question: find the given pattern in
+a tree-ish specified with "HEAD:some/path".
 
-    $ git status -bs
-    ## feature1...github/feature1
-    ...
+On the other hand, HEAD:some/path/inner/path.c is an answer to a
+different question: find the pattern in a tree-ish specified with
+"HEAD".  The question may optionally be further qualified with "but
+limit the search to some/path".  Both the question and its answer
+are more intuitive than the former one.
 
-    $ git checkout feature1
-    Already on 'feature1'
-    Your branch is identical to 'github/feature1'.
-    ...
+And we have a nice way to ask that question directly, i.e.
 
-Also add some test cases in t6040.
+    $ git grep -e pattern HEAD some/path
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- remote.c                 |  7 ++++---
- t/t6040-tracking-info.sh | 34 +++++++++++++++++++++++++++++++++-
- wt-status.c              | 10 +++++-----
- 3 files changed, 42 insertions(+), 9 deletions(-)
+which can be extended naturally to more than one path, e.g.
 
-diff --git a/remote.c b/remote.c
-index 87c8dd3..7a8fe3f 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1788,9 +1788,6 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 		upstream_is_gone = 1;
- 		break;
- 	default:
--		/* Nothing to report if neither side has changes. */
--		if (!ours && !theirs)
--			return 0;
- 		/* with base */
- 		break;
- 	}
-@@ -1804,6 +1801,10 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 		if (advice_status_hints)
- 			strbuf_addf(sb,
- 				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
-+	} else if (!ours && !theirs) {
-+		strbuf_addf(sb,
-+			_("Your branch is identical to '%s'.\n"),
-+			base);
- 	} else if (!theirs) {
- 		strbuf_addf(sb,
- 			Q_("Your branch is ahead of '%s' by %d commit.\n",
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 6f678a4..b24a18c 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -32,7 +32,8 @@ test_expect_success setup '
- 		git checkout -b brokenbase origin &&
- 		git checkout -b b5 --track brokenbase &&
- 		advance g &&
--		git branch -d brokenbase
-+		git branch -d brokenbase &&
-+		git checkout -b b6 origin
- 	) &&
- 	git checkout -b follower --track master &&
- 	advance h
-@@ -61,6 +62,7 @@ b2 origin/master: ahead 1, behind 1
- b3 origin/master: behind 1
- b4 origin/master: ahead 2
- b5 brokenbase: gone
-+b6 origin/master
- EOF
- 
- test_expect_success 'branch -vv' '
-@@ -93,6 +95,13 @@ test_expect_success 'checkout (upstream is gone)' '
- 	test_i18ngrep "is based on .*, but the upstream is gone." actual
- '
- 
-+test_expect_success 'checkout (identical to upstream)' '
-+	(
-+		cd test && git checkout b6
-+	) >actual &&
-+	test_i18ngrep "Your branch is identical to .origin/master" actual
-+'
-+
- test_expect_success 'status (diverged from upstream)' '
- 	(
- 		cd test &&
-@@ -113,6 +122,16 @@ test_expect_success 'status (upstream is gone)' '
- 	test_i18ngrep "is based on .*, but the upstream is gone." actual
- '
- 
-+test_expect_success 'status (identical to upstream)' '
-+	(
-+		cd test &&
-+		git checkout b6 >/dev/null &&
-+		# reports nothing to commit
-+		test_must_fail git commit --dry-run
-+	) >actual &&
-+	test_i18ngrep "Your branch is identical to .origin/master" actual
-+'
-+
- cat >expect <<\EOF
- ## b1...origin/master [ahead 1, behind 1]
- EOF
-@@ -139,6 +158,19 @@ test_expect_success 'status -s -b (upstream is gone)' '
- 	test_i18ncmp expect actual
- '
- 
-+cat >expect <<\EOF
-+## b6...origin/master
-+EOF
-+
-+test_expect_success 'status -s -b (identical to upstream)' '
-+	(
-+		cd test &&
-+		git checkout b6 >/dev/null &&
-+		git status -s -b | head -1
-+	) >actual &&
-+	test_i18ncmp expect actual
-+'
-+
- test_expect_success 'fail to track lightweight tags' '
- 	git checkout master &&
- 	git tag light &&
-diff --git a/wt-status.c b/wt-status.c
-index 4b1713e..c5e6817 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1396,11 +1396,6 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 		upstream_is_gone = 1;
- 		break;
- 	default:
--		/* Stop reporting if neither side has changes. */
--		if (!num_ours && !num_theirs) {
--			fputc(s->null_termination ? '\0' : '\n', s->fp);
--			return;
--		}
- 		/* with base */
- 		break;
- 	}
-@@ -1410,6 +1405,11 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 	color_fprintf(s->fp, header_color, "...");
- 	color_fprintf(s->fp, branch_color_remote, "%s", base);
- 
-+	if (!upstream_is_gone && !num_ours && !num_theirs) {
-+		fputc(s->null_termination ? '\0' : '\n', s->fp);
-+		return;
-+	}
-+
- 	color_fprintf(s->fp, header_color, " [");
- 	if (upstream_is_gone) {
- 		color_fprintf(s->fp, header_color, _("gone"));
--- 
-1.8.4.rc3.2.g434fd97
+    $ git grep -e pattern HEAD some/path another/hierarchy
+
+without having to repeat HEAD: part again for each path.
+
+If the user asked the question of the former form, i.e.
+
+    $ git grep -e pattern HEAD:some/path
+
+there may be a reason why the user wanted to ask it in that
+(somewhat strange) way.  I am not 100% sure if it is a good idea to
+give an answer to a question different from what the user asked by
+internally rewriting the question to
+
+    $ git grep -e pattern HEAD -- some/path
+
+So...
