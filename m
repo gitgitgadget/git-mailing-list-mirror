@@ -1,98 +1,84 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH 2/2] grep: use slash for path delimiter, not colon
-Date: Mon, 26 Aug 2013 17:03:04 -0400
-Message-ID: <CABURp0pPzRH5JdPEooyZw0iccD891E1i_CbTqDfVJnx+drfQEw@mail.gmail.com>
-References: <20130826195331.GA21051@sigill.intra.peff.net> <20130826195616.GB21074@sigill.intra.peff.net>
- <521BB6DA.5050807@kdbg.org> <20130826205215.GB23598@sigill.intra.peff.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Issue with compiling git 1.8.4 under uclibc with gcc 4.6.3
+Date: Mon, 26 Aug 2013 23:07:50 +0200
+Message-ID: <87fvtwi2jd.fsf@igel.home>
+References: <521BB643.304@gmail.com> <20130826201804.GB13130@blizzard>
+	<521BBA98.7010102@gmail.com> <20130826203154.GA21357@blizzard>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j6t@kdbg.org>, Phil Hord <hordp@cisco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 26 23:03:31 2013
+Content-Type: text/plain
+Cc: Lance <lancethepants@gmail.com>, git@vger.kernel.org
+To: Lukas Fleischer <git@cryptocrack.de>
+X-From: git-owner@vger.kernel.org Mon Aug 26 23:07:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VE3wg-0005yt-3t
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 23:03:30 +0200
+	id 1VE411-0000ea-72
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 23:07:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752525Ab3HZVD0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Aug 2013 17:03:26 -0400
-Received: from mail-vb0-f47.google.com ([209.85.212.47]:50570 "EHLO
-	mail-vb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752253Ab3HZVDZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Aug 2013 17:03:25 -0400
-Received: by mail-vb0-f47.google.com with SMTP id h10so2456588vbh.34
-        for <git@vger.kernel.org>; Mon, 26 Aug 2013 14:03:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Wtdvxyn+2Z+3qJxu/7DvgNvp4Kq93AAwsAP+WR4EFdg=;
-        b=z6O0q2xT+XPLWRN6hD1VIaofeTOkxkfdhei6tJuhgMVQKPhkiYFzcH/lW5AwyYmy6c
-         vYeCpSJ4q1VvEWL/s9Vew5CFItf0SmnJD8D8BThIk05ExxWJfKuVD+10xYZuTlp0OXOQ
-         7IFQty92j06/FSZRWgcclt4S3kLAk3DrOKxCkqoQDgVTvAojKLRLc90Piov23QRXsB1Q
-         KsV2I+YtEzvcEZFZFdM3Qs7Nn28qi7Fq7MQhJ7nsgyxrXIbqkOpjuLdCH/stQXjDtPix
-         ffbhH8T5KpM6/hjYSXrj4H9p226mXymuDPBg5GvIIdc61bd9x2hkdwQMhQ4i33srmGyG
-         wPHQ==
-X-Received: by 10.221.64.17 with SMTP id xg17mr16513111vcb.5.1377551004635;
- Mon, 26 Aug 2013 14:03:24 -0700 (PDT)
-Received: by 10.58.49.197 with HTTP; Mon, 26 Aug 2013 14:03:04 -0700 (PDT)
-In-Reply-To: <20130826205215.GB23598@sigill.intra.peff.net>
+	id S1752538Ab3HZVHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Aug 2013 17:07:54 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:60955 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752288Ab3HZVHy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Aug 2013 17:07:54 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3cP5Qc2Nv6z4KK8y;
+	Mon, 26 Aug 2013 23:07:52 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3cP5Qc25dBzbbhR;
+	Mon, 26 Aug 2013 23:07:52 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id RN-wKqOwEN4h; Mon, 26 Aug 2013 23:07:51 +0200 (CEST)
+X-Auth-Info: 86I9s1h/jpjHE0fJy5D8+qOnDFzCzC564G5zDnQZ4Gc=
+Received: from igel.home (ppp-88-217-105-56.dynamic.mnet-online.de [88.217.105.56])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Mon, 26 Aug 2013 23:07:51 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id EBC902C15D1; Mon, 26 Aug 2013 23:07:50 +0200 (CEST)
+X-Yow: My haircut is totally traditional!
+In-Reply-To: <20130826203154.GA21357@blizzard> (Lukas Fleischer's message of
+	"Mon, 26 Aug 2013 22:31:54 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233030>
 
-On Mon, Aug 26, 2013 at 4:52 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Aug 26, 2013 at 10:13:14PM +0200, Johannes Sixt wrote:
->
->> Am 26.08.2013 21:56, schrieb Jeff King:
->> > Also, prevent the delimiter being added twice, as happens now in these
->> > examples:
+Lukas Fleischer <git@cryptocrack.de> writes:
+
+> On Mon, Aug 26, 2013 at 02:29:12PM -0600, Lance wrote:
+>> [...]
+>> >>     CC config.o
+>> >>config.c: In function 'get_next_char':
+>> >>config.c:220:14: error: expected identifier before '(' token
+>> >>config.c:220:14: error: expected statement before ')' token
+>> >>config.c:220:14: error: expected statement before ')' token
+>> >>config.c:224:11: error: expected identifier before '(' token
+>> >Does changing line 220 of config.c to
 >> >
->> >   git grep -l foo HEAD:
->> >   HEAD::some/path/to/foo.txt
->> >        ^
->>
->> Which one of these two does it print then?
->>
->>     HEAD:/some/path/to/foo.txt
->>     HEAD:some/path/to/foo.txt
+>> >     int c = (cf->fgetc)(cf);
+>> >
+>> >fix it?
+>> I also had to change line 224 to the following
+>> 
+>>                 c = (cf->fgetc)(cf);
+>> 
+>> Once both places were changes, it compiled successfully.
 >
-> It should (and does) print the latter.
->
-> But I do note that our pathspec handling for subdirectories seems buggy.
-> If you do:
->
->   $ cd Documentation
->   $ git grep -l foo | head -1
->   RelNotes/1.5.1.5.txt
->
-> that's fine; we limit to the current directory. But then if you do:
->
->   $ git grep -l foo HEAD | head -1
->   HEAD:RelNotes/1.5.1.5.txt
->
-> we still limit to the current directory, but the output does not note
-> this (it should be "HEAD:./RelNotes/1.5.1.5.txt"). I think this bug is
-> orthogonal to Phil's patch, though.
+> Sounds like a parser bug to me.
 
-Maybe not.  My path completes the assumption that the L:R value
-returned by grep is an object ref; but Junio still thought it wasn't.
-I think this is another case where his view was correct.
+No, it isn't.  fgetc may be a function-like macro that expands to an
+arbitrary expression (same for ungetc or ftell, or any other indentifier
+that matches a C library function, for that matter).
 
-There's more bad news on this front.
+Andreas.
 
-    $ cd Documentation
-    $ git grep -l foo HEAD .. | head -1
-    HEAD:../.gitignore
-
-That's not a valid ref, either (though maybe it could be).
-
-Phil
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
