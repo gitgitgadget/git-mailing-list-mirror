@@ -1,90 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] grep: use slash for path delimiter, not colon
-Date: Mon, 26 Aug 2013 17:13:20 -0400
-Message-ID: <20130826211320.GA26417@sigill.intra.peff.net>
-References: <20130826195331.GA21051@sigill.intra.peff.net>
- <20130826195616.GB21074@sigill.intra.peff.net>
- <521BB6DA.5050807@kdbg.org>
- <20130826205215.GB23598@sigill.intra.peff.net>
- <CABURp0pPzRH5JdPEooyZw0iccD891E1i_CbTqDfVJnx+drfQEw@mail.gmail.com>
+From: Gordon Fontenot <gordon@thoughtbot.com>
+Subject: Alias compdef between 1.8.0 and 1.8.3
+Date: Mon, 26 Aug 2013 17:18:15 -0400
+Message-ID: <20130826211815.GA78587@Gordons-MacBook-Pro.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j6t@kdbg.org>, Phil Hord <hordp@cisco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 26 23:13:29 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 26 23:18:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VE46L-0004Pv-34
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 23:13:29 +0200
+	id 1VE4Av-0007cC-Fv
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 23:18:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752093Ab3HZVNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Aug 2013 17:13:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40067 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751743Ab3HZVNY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Aug 2013 17:13:24 -0400
-Received: (qmail 32248 invoked by uid 102); 26 Aug 2013 21:13:24 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Aug 2013 16:13:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Aug 2013 17:13:20 -0400
+	id S1752196Ab3HZVSI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Aug 2013 17:18:08 -0400
+Received: from mail-qc0-f169.google.com ([209.85.216.169]:41823 "EHLO
+	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922Ab3HZVSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Aug 2013 17:18:07 -0400
+Received: by mail-qc0-f169.google.com with SMTP id k8so955374qcq.14
+        for <git@vger.kernel.org>; Mon, 26 Aug 2013 14:18:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :user-agent;
+        bh=VLNFKBvPbAiOwWghWAqe54Ig3AB22pP3WXCz3LCOtSo=;
+        b=WnfjPFqzU1EiWFN+DLggdf56ozUpoPpLP9YcOMPnu1CZmMVUNuPzmUUJxDWSHHRK8x
+         NKJFDhYX89lewyMPBGOOK4CL8dEAITfvW3MDRmSeXYfnnAIv4if/C54wZrE9rMlMLQDU
+         FWWzsSvGNcDxBD+jYgoHRSVySQXWaz3yqM/FvDJAZUCQh4VNt+0PAqImfNqTQ1yZd/Lm
+         eBomwIF/0KHxTrL6JB5DUEAAg054jZz+61KBunmsNZcpVBUKX1FffpAWschug0E9twC0
+         RUVU4USmjt5wxp9N2yoOn4SeIDrwynBpIhr0yE9r1NTzspFnqLRlGbAKquMF2rD4juWS
+         SB/g==
+X-Gm-Message-State: ALoCoQnOBPivw/aNDtWMwkmAWu9e6QvT6mKStpDCpjHLR7G89X7jDkn6qGThdg7ofNqjUOOWcemw
+X-Received: by 10.49.96.68 with SMTP id dq4mr3736911qeb.92.1377551885566;
+        Mon, 26 Aug 2013 14:18:05 -0700 (PDT)
+Received: from localhost ([66.228.83.116])
+        by mx.google.com with ESMTPSA id i10sm23087179qev.8.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 26 Aug 2013 14:18:04 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CABURp0pPzRH5JdPEooyZw0iccD891E1i_CbTqDfVJnx+drfQEw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233032>
 
-On Mon, Aug 26, 2013 at 05:03:04PM -0400, Phil Hord wrote:
+Hello all,
 
-> >   $ git grep -l foo HEAD | head -1
-> >   HEAD:RelNotes/1.5.1.5.txt
-> >
-> > we still limit to the current directory, but the output does not note
-> > this (it should be "HEAD:./RelNotes/1.5.1.5.txt"). I think this bug is
-> > orthogonal to Phil's patch, though.
-> 
-> Maybe not.  My path completes the assumption that the L:R value
-> returned by grep is an object ref; but Junio still thought it wasn't.
-> I think this is another case where his view was correct.
+As of 1.8.0, the compdefs I set up for my shell aliases (in zsh 5.0)
+worked. They can be found here:
+https://github.com/gfontenot/dotfiles/blob/master/git/completion.zsh
 
-I certainly assumed it was, because it is in most cases it is. And something
-like "HEAD:RelNotes/1.5.1.5.txt" certainly _looks_ like one, and is
-generated by the current git. And what is the point of coming up with a
-file listing if the names you return do not actually exist?
+However, once updating to 1.8.3, they broke, complaining that zsh
+couldn't find the command __git-checkout_main (for example). Is there
+something special that I should be doing to get these completions to
+work again?
 
-> There's more bad news on this front.
-> 
->     $ cd Documentation
->     $ git grep -l foo HEAD .. | head -1
->     HEAD:../.gitignore
-> 
-> That's not a valid ref, either (though maybe it could be).
+Thanks,
+ - Gordon
 
-Yes, though we seem to normalize paths already. So the other entries
-from that command are (in git.git):
-
-  HEAD:../.mailmap
-  HEAD:RelNotes/1.5.1.5.txt
-
-So we could either:
-
-  1. Prepend the current path before normalizing to yield:
-
-      HEAD:.mailmap
-      HEAD:Documentation/RelNotes/1.5.1.5.txt
-
-  2. Teach the get_sha1 path parser about "..", and prepend "./" when we
-     are in a prefixed subdir.
-
-      HEAD:./../.mailmap
-      HEAD:./RelNotes/1.5.1.5.txt
-
--Peff
+--=20
+Gordon Fontenot
+iOS developer at=A0thoughtbot
+http://www.thoughtbot.com
+@gfontenot
