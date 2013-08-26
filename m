@@ -1,174 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] grep: use slash for path delimiter, not colon
-Date: Mon, 26 Aug 2013 15:56:16 -0400
-Message-ID: <20130826195616.GB21074@sigill.intra.peff.net>
-References: <20130826195331.GA21051@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, phil.hord@gmail.com,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Mon Aug 26 21:56:25 2013
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: the pager
+Date: Mon, 26 Aug 2013 15:57:41 -0400
+Message-ID: <201308261957.r7QJvfjF028935@freeze.ariadne.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 26 21:57:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VE2tk-0001IK-E4
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 21:56:24 +0200
+	id 1VE2vA-0002JJ-Cm
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 21:57:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751895Ab3HZT4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Aug 2013 15:56:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39538 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751626Ab3HZT4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Aug 2013 15:56:20 -0400
-Received: (qmail 28302 invoked by uid 102); 26 Aug 2013 19:56:20 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Aug 2013 14:56:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Aug 2013 15:56:16 -0400
-Content-Disposition: inline
-In-Reply-To: <20130826195331.GA21051@sigill.intra.peff.net>
+	id S1752303Ab3HZT5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Aug 2013 15:57:45 -0400
+Received: from qmta15.westchester.pa.mail.comcast.net ([76.96.59.228]:44351
+	"EHLO qmta15.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752290Ab3HZT5o (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Aug 2013 15:57:44 -0400
+Received: from omta17.westchester.pa.mail.comcast.net ([76.96.62.89])
+	by qmta15.westchester.pa.mail.comcast.net with comcast
+	id HPds1m0071vXlb85FXxjVJ; Mon, 26 Aug 2013 19:57:43 +0000
+Received: from freeze.ariadne.com ([24.34.72.61])
+	by omta17.westchester.pa.mail.comcast.net with comcast
+	id HXxi1m00y1KKtkw3dXxiTv; Mon, 26 Aug 2013 19:57:43 +0000
+Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
+	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r7QJvfRN028936;
+	Mon, 26 Aug 2013 15:57:42 -0400
+Received: (from worley@localhost)
+	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r7QJvfjF028935;
+	Mon, 26 Aug 2013 15:57:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1377547063;
+	bh=Z1NNwBXnisUh3DRPBPTnlYQEvrpac4YUoSl6TtwJYws=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=WGecxW93qT2Tpr8EijILQPr/iEre28r40WNe1CgLf36NEdzPAyVNTGLbOhzDWCHAC
+	 mGiQtNY8r63EYw1VZd9ZKXPFTi+AnQucD3UMpVRviOtk4BtkV2Ddl6rAczZLDiSk1t
+	 kX8VaeN8RO844o2KH9o2SqjBIdHT7cqQLzNW3EjJvK/LOk3ycDuQMXYAiiVzzOJYT0
+	 j+bGsVgeIyZES5kG/Nh/JZnqOKd1DtPRQLgG6QsRGRB3pfrQlvN01G+YiuH/My4i5m
+	 VAdYhDkgxZoHaZYqJjBKjnajuUG3BTbCws54y/bRoyFNH4CwDdD1GfT5l/NFD7JDG0
+	 VScKxfaft8cQw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233019>
 
-From: Phil Hord <hordp@cisco.com>
+I've noticed that Git by default puts long output through "less" as a
+pager.  I don't like that, but this is not the time to change
+established behavior.  But while tracking that down, I noticed that
+the paging behavior is controlled by at least 5 things:
 
-When a commit is grepped and matching filenames are printed, grep-objects
-creates the filename by prefixing the original cmdline argument to the
-matched path separated by a colon.  Normally this forms a valid blob
-reference to the filename, like this:
+the -p/--paginate/--no-pager options
+the GIT_PAGER environment variable
+the PAGER environment variable
+the core.pager Git configuration variable
+the build-in default (which seems to usually be "less")
 
-  git grep -l foo HEAD
-  HEAD:some/path/to/foo.txt
-      ^
+There is documentation in git.1 and git-config.1, and the two are not
+coordinated to make it clear what happens in all cases.  And the
+built-in default is not mentioned at all.
 
-But a tree path may be given to grep instead; in this case the colon is
-not a valid delimiter to use since it is placed inside a path.
+What is the (intended) order of precedence of specifiers of paging
+behavior?  My guess is that it should be the order I've given above.
 
-  git grep -l foo HEAD:some
-  HEAD:some:path/to/foo.txt
-           ^
-
-The slash path delimiter should be used instead.  Fix git grep to
-discern the correct delimiter so it can report valid object names.
-
-  git grep -l foo HEAD:some
-  HEAD:some/path/to/foo.txt
-           ^
-
-Also, prevent the delimiter being added twice, as happens now in these
-examples:
-
-  git grep -l foo HEAD:
-  HEAD::some/path/to/foo.txt
-       ^
-  git grep -l foo HEAD:some/
-  HEAD:some/:path/to/foo.txt
-            ^
-
-Add a test to confirm correct path forming.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I left the author as you, since you have done all the hard work; this is
-really just me rebasing your patch on top of mine. But note that you did
-not signoff the original.
-
- builtin/grep.c  | 13 +++++++++----
- t/t7810-grep.sh | 15 +++++++++++++++
- 2 files changed, 24 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index ee47d49..2df7986 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -26,6 +26,7 @@ struct object_to_grep {
- struct object_to_grep {
- 	struct object *item;
- 	const char *name;
-+	unsigned has_path:1;
- };
- 
- static int use_threads = 1;
-@@ -462,7 +463,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- }
- 
- static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
--		       struct object *obj, const char *name)
-+		       struct object *obj, const char *name, char delimiter)
- {
- 	if (obj->type == OBJ_BLOB)
- 		return grep_sha1(opt, obj->sha1, name, 0, NULL);
-@@ -485,7 +486,8 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 		strbuf_init(&base, PATH_MAX + len + 1);
- 		if (len) {
- 			strbuf_add(&base, name, len);
--			strbuf_addch(&base, ':');
-+			if (name[len-1] != delimiter)
-+				strbuf_addch(&base, delimiter);
- 		}
- 		init_tree_desc(&tree, data, size);
- 		hit = grep_tree(opt, pathspec, &tree, &base, base.len,
-@@ -506,7 +508,8 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
- 	for (i = 0; i < nr; i++) {
- 		struct object *real_obj;
- 		real_obj = deref_tag(list[i].item, NULL, 0);
--		if (grep_object(opt, pathspec, real_obj, list[i].name)) {
-+		if (grep_object(opt, pathspec, real_obj, list[i].name,
-+				list[i].has_path ? '/' : ':')) {
- 			hit = 1;
- 			if (opt->status_only)
- 				break;
-@@ -822,8 +825,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	for (i = 0; i < argc; i++) {
- 		const char *arg = argv[i];
- 		unsigned char sha1[20];
-+		struct object_context oc;
- 		/* Is it a rev? */
--		if (!get_sha1(arg, sha1)) {
-+		if (!get_sha1_with_context(arg, 0, sha1, &oc)) {
- 			struct object *object = parse_object_or_die(sha1, arg);
- 			if (!seen_dashdash)
- 				verify_non_filename(prefix, arg);
-@@ -831,6 +835,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			ALLOC_GROW(list, list_nr+1, list_alloc);
- 			list[list_nr].item = object;
- 			list[list_nr].name = arg;
-+			list[list_nr].has_path = !!oc.path[0];
- 			list_nr++;
- 			continue;
- 		}
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index f698001..2494bfc 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -886,6 +886,21 @@ cat >expected <<EOF
- '
- 
- cat >expected <<EOF
-+HEAD:t/a/v:1:vvv
-+HEAD:t/v:1:vvv
-+EOF
-+
-+test_expect_success "grep HEAD -- path/" '
-+	git grep -n -e vvv HEAD -- t/ >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success "grep HEAD:path" '
-+	git grep -n -e vvv HEAD:t/ >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
- hello.c:int main(int argc, const char **argv)
- hello.c:	printf("Hello world.\n");
- EOF
--- 
-1.8.4.2.g87d4a77
+Dale
