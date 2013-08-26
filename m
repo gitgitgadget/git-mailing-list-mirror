@@ -1,68 +1,162 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: the pager
-Date: Mon, 26 Aug 2013 15:57:41 -0400
-Message-ID: <201308261957.r7QJvfjF028935@freeze.ariadne.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 26 21:57:54 2013
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v2] submodule: prevent warning in summary output
+Date: Mon, 26 Aug 2013 21:59:44 +0200
+Message-ID: <521BB3B0.4060908@web.de>
+References: <1376958397-800967-1-git-send-email-sandals@crustytoothpaste.net> <521B114B.2080709@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Aug 26 21:59:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VE2vA-0002JJ-Cm
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 21:57:52 +0200
+	id 1VE2x5-0003lO-88
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 21:59:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303Ab3HZT5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Aug 2013 15:57:45 -0400
-Received: from qmta15.westchester.pa.mail.comcast.net ([76.96.59.228]:44351
-	"EHLO qmta15.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752290Ab3HZT5o (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Aug 2013 15:57:44 -0400
-Received: from omta17.westchester.pa.mail.comcast.net ([76.96.62.89])
-	by qmta15.westchester.pa.mail.comcast.net with comcast
-	id HPds1m0071vXlb85FXxjVJ; Mon, 26 Aug 2013 19:57:43 +0000
-Received: from freeze.ariadne.com ([24.34.72.61])
-	by omta17.westchester.pa.mail.comcast.net with comcast
-	id HXxi1m00y1KKtkw3dXxiTv; Mon, 26 Aug 2013 19:57:43 +0000
-Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
-	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r7QJvfRN028936;
-	Mon, 26 Aug 2013 15:57:42 -0400
-Received: (from worley@localhost)
-	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r7QJvfjF028935;
-	Mon, 26 Aug 2013 15:57:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1377547063;
-	bh=Z1NNwBXnisUh3DRPBPTnlYQEvrpac4YUoSl6TtwJYws=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=WGecxW93qT2Tpr8EijILQPr/iEre28r40WNe1CgLf36NEdzPAyVNTGLbOhzDWCHAC
-	 mGiQtNY8r63EYw1VZd9ZKXPFTi+AnQucD3UMpVRviOtk4BtkV2Ddl6rAczZLDiSk1t
-	 kX8VaeN8RO844o2KH9o2SqjBIdHT7cqQLzNW3EjJvK/LOk3ycDuQMXYAiiVzzOJYT0
-	 j+bGsVgeIyZES5kG/Nh/JZnqOKd1DtPRQLgG6QsRGRB3pfrQlvN01G+YiuH/My4i5m
-	 VAdYhDkgxZoHaZYqJjBKjnajuUG3BTbCws54y/bRoyFNH4CwDdD1GfT5l/NFD7JDG0
-	 VScKxfaft8cQw==
+	id S1752327Ab3HZT7r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Aug 2013 15:59:47 -0400
+Received: from mout.web.de ([212.227.17.11]:49740 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751998Ab3HZT7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Aug 2013 15:59:46 -0400
+Received: from [192.168.178.41] ([79.193.82.101]) by smtp.web.de (mrweb004)
+ with ESMTPA (Nemesis) id 0MgZLb-1VRZck0ulL-00O0q1 for <git@vger.kernel.org>;
+ Mon, 26 Aug 2013 21:59:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <521B114B.2080709@gmail.com>
+X-Enigmail-Version: 1.5.2
+X-Provags-ID: V03:K0:Zpkuwss4CV3mcQgAhx5yswXqUaGGzZnUK25PcE7xq0jqJjWpUk4
+ YmBp9M0Y4rc4OuYKXLRL9sDcuM57M4s9wDKTJyecf1DLokO6AlGrpUdIgDWTDbdVmqoXdIb
+ a0Kv6p2c9/Agr6GWYEd7EuDI1oHrsAvwUjn7rSB3ji53kxVR1XV+Nc2rGUVaP8YCVkGn34h
+ MwjBsJLernSVVztiEwCxg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233020>
 
-I've noticed that Git by default puts long output through "less" as a
-pager.  I don't like that, but this is not the time to change
-established behavior.  But while tracking that down, I noticed that
-the paging behavior is controlled by at least 5 things:
+Am 26.08.2013 10:26, schrieb Chris Packham:
+> Hi Brian,
+> 
+> Sorry for the delay.
 
-the -p/--paginate/--no-pager options
-the GIT_PAGER environment variable
-the PAGER environment variable
-the core.pager Git configuration variable
-the build-in default (which seems to usually be "less")
+Same here.
 
-There is documentation in git.1 and git-config.1, and the two are not
-coordinated to make it clear what happens in all cases.  And the
-built-in default is not mentioned at all.
+> On 20/08/13 12:26, brian m. carlson wrote:
+>> When git submodule summary is run and there is a deleted submodule, there is an
+>> warning from git rev-parse:
+>>
+>>   fatal: Not a git repository: '.vim/pathogen/.git'
+>>
+>> Silence this warning, since it is fully expected that a deleted submodule will
+>> not be a git repository.
+>>
+>> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+>> ---
+>>
+>> I hesitated to add the test for $status because it will end up having no effect
+>> since we exclude that case later.  However, for correctness, I included it.
+>>
+>>  git-submodule.sh | 3 +++
+>>  1 file changed, 3 insertions(+)
+>>
+>> diff --git a/git-submodule.sh b/git-submodule.sh
+>> index 2979197..eec3135 100755
+>> --- a/git-submodule.sh
+>> +++ b/git-submodule.sh
+>> @@ -1070,7 +1070,10 @@ cmd_summary() {
+>>  		missing_src=
+>>  		missing_dst=
+>>  
+>> +		test $status = D && missing_src=t
+> 
+> I tend to agree with you that this line is redundant. I'm not sure that
+> it's what Jens was looking for in v1.
 
-What is the (intended) order of precedence of specifiers of paging
-behavior?  My guess is that it should be the order I've given above.
+Unfortunately you'll get another two "fatal: Not a git repository:" errors
+when you drop this. Further down a "git rev-list" and a "git log" are run
+on the submodule unless one of the "missing" variables is set. But this
+doesn't feel quite right as we are misusing the missing_src variable for
+something else here ...
 
-Dale
+>> +
+>>  		test $mod_src = 160000 &&
+>> +		test -e "$name/.git" &&
+>>  		! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_src^0 >/dev/null &&
+>>  		missing_src=t
+>>
+> 
+> This part looks good to me.
+
+I agree that this is much better than just piping all errors to /dev/null,
+but I was thinking of
+
++               test $status != D &&
+
+instead of
+
++		test -e "$name/.git" &&
+
+above to still catch errors where the submodule repo is gone but the
+submodule wasn't deleted.
+
+The following diff silences all "fatal: Not a git repository:" errors for
+me using the status variable. But now four tests in t7401 are failing
+because they disagree about an empty line and/or the "(0)" at the end of
+a line. But this could be a good starting point (and includes a test for
+what we are trying to fix here :-).
+
+----------------------------------8<-------------------------
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 2979197..69f6a1b 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -1071,6 +1071,7 @@ cmd_summary() {
+                missing_dst=
+
+                test $mod_src = 160000 &&
++               test $status != D &&
+                ! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_src^0 >/dev/null &&
+                missing_src=t
+
+@@ -1103,6 +1104,7 @@ cmd_summary() {
+                        else
+                                range=$sha1_dst
+                        fi
++                       test $status != D &&
+                        GIT_DIR="$name/.git" \
+                        git rev-list --first-parent $range -- | wc -l
+                        )
+@@ -1143,6 +1145,7 @@ cmd_summary() {
+                                GIT_DIR="$name/.git" \
+                                git log --pretty='format:  > %s' -1 $sha1_dst
+                        else
++                               test $status != D &&
+                                GIT_DIR="$name/.git" \
+                                git log --pretty='format:  < %s' -1 $sha1_src
+                        fi
+diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
+index ac2434c..66c73f6 100755
+--- a/t/t7401-submodule-summary.sh
++++ b/t/t7401-submodule-summary.sh
+@@ -215,12 +215,13 @@ EOF
+ commit_file sm1 &&
+ rm -rf sm1
+ test_expect_success 'deleted submodule' "
+-       git submodule summary >actual &&
++       git submodule summary >actual 2>err &&
+        cat >expected <<-EOF &&
+ * sm1 $head6...0000000:
+
+ EOF
+-       test_cmp expected actual
++       test_cmp expected actual &&
++       ! test -s err
+ "
+
+ test_create_repo sm2 &&
