@@ -1,96 +1,146 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2] write_index: optionally allow broken null sha1s
-Date: Mon, 26 Aug 2013 10:31:35 -0400
-Message-ID: <20130826143135.GB14858@sigill.intra.peff.net>
-References: <20130824013310.GA9343@sigill.intra.peff.net>
- <20130825061500.GR2882@elie.Belkin>
- <20130825095818.GA12556@sigill.intra.peff.net>
- <20130825195412.GA2752@elie.Belkin>
- <xmqqob8lj8dx.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 26 16:31:44 2013
+From: Phil Hord <hordp@cisco.com>
+Subject: [PATCHv2] grep: use slash for path delimiter, not colon
+Date: Mon, 26 Aug 2013 10:46:12 -0400
+Message-ID: <1377528372-31206-1-git-send-email-hordp@cisco.com>
+Cc: phil.hord@gmail.com, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Phil Hord <hordp@cisco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 26 16:46:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDxpX-00037Q-B6
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 16:31:43 +0200
+	id 1VDy40-0005b4-6Z
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 16:46:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755477Ab3HZObj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Aug 2013 10:31:39 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37367 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755408Ab3HZObj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Aug 2013 10:31:39 -0400
-Received: (qmail 11790 invoked by uid 102); 26 Aug 2013 14:31:39 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Aug 2013 09:31:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Aug 2013 10:31:35 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqob8lj8dx.fsf@gitster.dls.corp.google.com>
+	id S1751936Ab3HZOqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Aug 2013 10:46:36 -0400
+Received: from rcdn-iport-9.cisco.com ([173.37.86.80]:32493 "EHLO
+	rcdn-iport-9.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751694Ab3HZOqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Aug 2013 10:46:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=3064; q=dns/txt; s=iport;
+  t=1377528395; x=1378737995;
+  h=from:to:cc:subject:date:message-id;
+  bh=n5XYFPwxDeun1WHxV7rl3Y+z5IkTTQlN1swXGmXlCac=;
+  b=XVU7P+8UQboIAC1IWDsGnnMjIASdUcstog1DT8RmjvCXiUaozAQUInL0
+   uLlXin9UqGC6MT2Obz/8qf1THH/GT7H8Rxi/yt8vBsb92wRU0hAuAbkN6
+   /PFII5s2Qk9NdkkP60iZy3xzH4dATeidEFw78ccvBI1P1+U9X0vvXGJ1F
+   Y=;
+X-IronPort-AV: E=Sophos;i="4.89,958,1367971200"; 
+   d="scan'208";a="248695869"
+Received: from rcdn-core-5.cisco.com ([173.37.93.156])
+  by rcdn-iport-9.cisco.com with ESMTP; 26 Aug 2013 14:46:34 +0000
+Received: from ipsn-lnx-hordp.cisco.com (rtp-hordp-8914.cisco.com [10.117.80.101])
+	by rcdn-core-5.cisco.com (8.14.5/8.14.5) with ESMTP id r7QEkXCr020769;
+	Mon, 26 Aug 2013 14:46:33 GMT
+X-Mailer: git-send-email 1.8.4.557.g34b3a2e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232996>
 
-On Sun, Aug 25, 2013 at 11:03:54PM -0700, Junio C Hamano wrote:
+When a commit is grepped and matching filenames are printed, grep-objects
+creates the filename by prefixing the original cmdline argument to the
+matched path separated by a colon.  Normally this forms a valid blob
+reference to the filename, like this:
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> 
-> > In other words, why not use something like this?
-> >
-> > 	write_index: optionally allow broken null sha1s
-> >
-> > 	Commit 4337b58 (do not write null sha1s to on-disk index, 2012-07-28)
-> > 	added a safety check preventing git from writing null sha1s into the
-> > 	index. The intent was to catch errors in other parts of the code that
-> > 	might let such an entry slip into the index (or worse, a tree).
-> >
-> > 	Some existing repositories have some invalid trees that contain null
-> > 	sha1s already, though.  Until 4337b58, a common way to clean this up
-> > 	would be to use git-filter-branch's index-filter to repair such broken
-> > 	entries.  That now fails when filter-branch tries to write out the
-> > 	index.
-> >
-> > 	Introduce a GIT_ALLOW_NULL_SHA1 environment variable to relax this check
-> > 	and make it easier to recover from such a history.
-> 
-> I found this version more readable than Peff's (albeit slightly).
+  git grep -l foo HEAD
+  HEAD:some/path/to/foo.txt
+      ^
 
-OK. Do you want to apply with Jonathan's wording, then?
+But a tree path may be given to grep instead; in this case the colon is
+not a valid delimiter to use since it is placed inside a path.
 
-There's one subtle thing I didn't mention in the "it is already on stack
-overflow". If you have a version of git which complains about the null
-sha1, then the SO advice is already broken. But if the SO works, then
-you do not have a version of git which complains. So why do you care?
+  git grep -l foo HEAD:some
+  HEAD:some:path/to/foo.txt
+           ^
 
-And the answer is: you may be pushing to a remote with a version of git
-that complains, and which has receive.fsckObjects set (and in many
-cases, that remote is GitHub, since we have had that check on for a
-while).
+The slash path delimiter should be used instead.  Fix git grep to
+discern the correct delimiter so it can report valid object names.
 
-I don't know if it is worth spelling that out or not.
+  git grep -l foo HEAD:some
+  HEAD:some/path/to/foo.txt
+           ^
 
-> > After this patch, do you think (in a separate change) it would make
-> > sense for cache-tree.c::update_one() to check for null sha1 and error
-> > out unless GIT_ALLOW_NULL_SHA1 is true?  That would let us get rid of
-> > the caveat from the last paragraph.
-> 
-> Hmm, interesting thought.
+Also, prevent the delimiter being added twice, as happens now in these
+examples:
 
-I think it is worth doing. The main reason I put the original check on
-writing to the index is that it more clearly pinpoints the source of the
-error. If we just died during git-write-tree, then you know somebody
-broke your index, but you don't know which command.
+  git grep -l foo HEAD:
+  HEAD::some/path/to/foo.txt
+       ^
+  git grep -l foo HEAD:some/
+  HEAD:some/:path/to/foo.txt
+            ^
 
-But checking in both places would add extra protection, and would make
-possible the "relax on read, strict on write" policy that filter-branch
-wants to do.
+Add a test to confirm correct path forming.
+---
+This version is a bit more deterministic and also adds a test.
 
--Peff
+It accepts the expense of examining the path argument again to 
+determine if it is a tree-ish + path rather than just a tree (commit).
+The get_sha1 call occurs one extra time for each tree-ish argument,
+so it's not expensive. We avoid mucking with the object_array API this
+way, and also do not rely on the object-type to tell us anything about
+the way the object name was spelled.
+
+This one also adds a check to avoid duplicating an extant delimiter.
+
+ builtin/grep.c  |  9 ++++++++-
+ t/t7810-grep.sh | 15 +++++++++++++++
+ 2 files changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 03bc442..6fc418f 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -480,8 +480,15 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		len = name ? strlen(name) : 0;
+ 		strbuf_init(&base, PATH_MAX + len + 1);
+ 		if (len) {
++			struct object_context ctx;
++			unsigned char sha1[20];
++			char delimiter = ':';
++			if (!get_sha1_with_context(name, 0, sha1, &ctx) &&
++				ctx.path[0]!=0)
++				delimiter='/';
+ 			strbuf_add(&base, name, len);
+-			strbuf_addch(&base, ':');
++			if (name[len-1] != delimiter)
++				strbuf_addch(&base, delimiter);
+ 		}
+ 		init_tree_desc(&tree, data, size);
+ 		hit = grep_tree(opt, pathspec, &tree, &base, base.len,
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index f698001..2494bfc 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -886,6 +886,21 @@ test_expect_success 'grep -e -- -- path' '
+ '
+ 
+ cat >expected <<EOF
++HEAD:t/a/v:1:vvv
++HEAD:t/v:1:vvv
++EOF
++
++test_expect_success "grep HEAD -- path/" '
++	git grep -n -e vvv HEAD -- t/ >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success "grep HEAD:path" '
++	git grep -n -e vvv HEAD:t/ >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
+ hello.c:int main(int argc, const char **argv)
+ hello.c:	printf("Hello world.\n");
+ EOF
+-- 
+1.8.4.557.g34b3a2e
