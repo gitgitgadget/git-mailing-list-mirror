@@ -1,79 +1,145 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Documentation/remote-helpers: document common use-case for private ref
-Date: Mon, 26 Aug 2013 11:21:39 +0200
-Message-ID: <1377508899-11104-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: felipe.contreras@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Aug 26 11:21:57 2013
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [RFC/PATCH] Fix path prefixing in grep_object
+Date: Mon, 26 Aug 2013 07:44:09 -0400
+Message-ID: <CABURp0oGMTEgX3TKKEMAOxe6T0=uij+bAyc+5u0x_UHwEPo3CQ@mail.gmail.com>
+References: <1377394558-371-1-git-send-email-hordp@cisco.com>
+ <CABURp0qG7Nnjpp17MAO7Ltwf51EsswZ3GcT-qyt14Vs1tc9pGw@mail.gmail.com>
+ <xmqqa9k6moif.fsf@gitster.dls.corp.google.com> <20130825042314.GE2882@elie.Belkin>
+ <xmqqk3jal4t7.fsf@gitster.dls.corp.google.com> <xmqqfvtwkjp8.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Phil Hord <hordp@cisco.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 26 13:44:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDszk-0003q9-6k
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 11:21:56 +0200
+	id 1VDvDm-00039z-RW
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 13:44:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751945Ab3HZJVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Aug 2013 05:21:52 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39577 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751531Ab3HZJVv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Aug 2013 05:21:51 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r7Q9LfWw023945
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 26 Aug 2013 11:21:42 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1VDszW-0001vb-Sz; Mon, 26 Aug 2013 11:21:42 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1VDszW-0002ue-IN; Mon, 26 Aug 2013 11:21:42 +0200
-X-Mailer: git-send-email 1.8.4.rc4.4.g57d5d3d
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 26 Aug 2013 11:21:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r7Q9LfWw023945
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1378113702.61425@/7P5MYpxghrlyiUps9fdjQ
+	id S1755370Ab3HZLob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Aug 2013 07:44:31 -0400
+Received: from mail-ve0-f180.google.com ([209.85.128.180]:65196 "EHLO
+	mail-ve0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751644Ab3HZLoa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Aug 2013 07:44:30 -0400
+Received: by mail-ve0-f180.google.com with SMTP id pb11so1937843veb.39
+        for <git@vger.kernel.org>; Mon, 26 Aug 2013 04:44:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=XB3MASaHaLae9aqpxAz/PE36Abmk00/qdhuvQt/95PU=;
+        b=tN3kY6k009ziE+XHW7oOD3YKdKrgLU9sGih7mpYdcAEDJfAf2rv2xHyKL64f7zYqBu
+         owlGobw1vQhZZfsq2CW1GtR20cTU6XfNquqIphpl2GB/T0m5zAGrk/DBQTeCn4eDdZh/
+         etArWEJZ7jOAN61Oh0Oxzi6sLfsPqaCiLwVX87kFlehHoKyMOE1qGU9UlGupBVEp+vDw
+         GdW/jXnw1BnuzcnuXPHjKq/MDYQQ2etQCHY/MGVZpdEwt6YxprZDjVT3f5YysrM1OmIz
+         G/jos4GpEiH5y4tC1p0frp7vk4jEPmi00nTryHCwQ5vycsDdV/9JPFxmSxJ6zKKz34qn
+         6THA==
+X-Received: by 10.220.237.208 with SMTP id kp16mr14502695vcb.4.1377517469474;
+ Mon, 26 Aug 2013 04:44:29 -0700 (PDT)
+Received: by 10.58.49.197 with HTTP; Mon, 26 Aug 2013 04:44:09 -0700 (PDT)
+In-Reply-To: <xmqqfvtwkjp8.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232990>
 
-The current documentation mentions the private ref namespace, but does
-not really explain why it can be useful.
+On Mon, Aug 26, 2013 at 3:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>>
+>>> I think Phil meant that when "git grep" is asked to search within
+>>> "HEAD:some/path", filenames tacked on at the end should be appended
+>>> with a '/' separator instead of the usual ':' (e.g.,
+>>> "HEAD:some/path/inner/path.c", not "HEAD:some/path:inner/path.c").
+>>
+>> Ah, OK.
+>>
+>> I am not sure if we have a proper hint in the revision parser
+>> machinery, but it may not be too hard to teach rev-cmdline interface
+>> to keep that kind of information (i.e. "This tree object name is a
+>> result of parsing '<tree-ish>:path' syntax").
+>
+> Actually, having thought about this a bit more, I am no longer sure
+> if this is even a good idea to begin with.
+>
+> An output line that begins with HEAD:some/path:inner/path.c from
+> "git grep" is an answer to this question: find the given pattern in
+> a tree-ish specified with "HEAD:some/path".
+>
+> On the other hand, HEAD:some/path/inner/path.c is an answer to a
+> different question: find the pattern in a tree-ish specified with
+> "HEAD".  The question may optionally be further qualified with "but
+> limit the search to some/path".  Both the question and its answer
+> are more intuitive than the former one.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-This small patch was sent inline during a previous conversation, but
-did not really catch attention ;-).
+I disagree.  The man page says that git grep lists the filenames of
+matching files.  And it usually does.  When told to search in a
+different branch, the filename is helpfully shown in a form that other
+git commands recognize, namely $branch:$path. This is useful for
+scripts that want to do something with the resulting file names.
 
-Resending as a proper patch.
+But when a path included in the query with the branch, the output is
+useless to my scripts or finger memory without some cleanup first.
+The aim of this patch is to fix that so the cleanup is not necessary.
 
- Documentation/gitremote-helpers.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+   $ git grep -l setup_check HEAD Documentation
+   HEAD:Documentation/technical/api-gitattributes.txt
 
-diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-index 0827f69..9ae36da 100644
---- a/Documentation/gitremote-helpers.txt
-+++ b/Documentation/gitremote-helpers.txt
-@@ -176,6 +176,12 @@ applicable refspec takes precedence.  The left-hand of refspecs
- advertised with this capability must cover all refs reported by
- the list command.  If no 'refspec' capability is advertised,
- there is an implied `refspec *:*`.
-++
-+When writing remote-helpers for decentralized version control
-+systems, it is advised to keep a local copy of the repository to
-+interact with, and to let the private namespace refs point to this
-+local repository, while the refs/remotes namespace is used to track
-+the remote repository.
- 
- 'bidi-import'::
- 	This modifies the 'import' capability.
--- 
-1.8.4.rc4.4.g57d5d3d
+   $ git grep -l setup_check HEAD:Documentation
+   HEAD:Documentation:technical/api-gitattributes.txt
+
+The path in the first example is meaningful.  The path in the second
+example is erroneous.
+
+
+> And we have a nice way to ask that question directly, i.e.
+>
+>     $ git grep -e pattern HEAD some/path
+>
+> which can be extended naturally to more than one path, e.g.
+>
+>     $ git grep -e pattern HEAD some/path another/hierarchy
+>
+> without having to repeat HEAD: part again for each path.
+
+Yes, but that's not always what I want. Sometimes I want to search on
+different trees. When doing so, why should I be crippled with broken
+output?
+
+    $ git grep -e pattern origin/master:some/path origin/next:another/hierarchy
+    origin/master:some/path:sub/dir/foo.txt
+    origin/next:another/hierarchy:path/frotz.c
+
+I would prefer to have real paths I can pass to 'git show', ones with
+just one meaningful colon rather than two vague ones:
+
+    origin/master:some/path/sub/dir/foo.txt
+    origin/next:another/hierarchy/path/frotz.c
+
+> If the user asked the question of the former form, i.e.
+>
+>     $ git grep -e pattern HEAD:some/path
+>
+> there may be a reason why the user wanted to ask it in that
+> (somewhat strange) way.  I am not 100% sure if it is a good idea to
+> give an answer to a question different from what the user asked by
+> internally rewriting the question to
+>
+>     $ git grep -e pattern HEAD -- some/path
+
+We are not rewriting the question at all.
+
+The current code assumes the user gave only an object name and is
+trying to help by prefixing that name on the matched path using the
+colon as a separator, as would be the norm.  But that is the wrong
+separator in some cases, specifically when the tree reference includes
+a path.
+
+Phil
