@@ -1,61 +1,75 @@
-From: Lukas Fleischer <git@cryptocrack.de>
-Subject: Re: Issue with compiling git 1.8.4 under uclibc with gcc 4.6.3
-Date: Mon, 26 Aug 2013 22:31:54 +0200
-Message-ID: <20130826203154.GA21357@blizzard>
-References: <521BB643.304@gmail.com>
- <20130826201804.GB13130@blizzard>
- <521BBA98.7010102@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] grep: use slash for path delimiter, not colon
+Date: Mon, 26 Aug 2013 16:52:15 -0400
+Message-ID: <20130826205215.GB23598@sigill.intra.peff.net>
+References: <20130826195331.GA21051@sigill.intra.peff.net>
+ <20130826195616.GB21074@sigill.intra.peff.net>
+ <521BB6DA.5050807@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Lance <lancethepants@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 26 22:32:05 2013
+Content-Type: text/plain; charset=utf-8
+Cc: phil.hord@gmail.com, Phil Hord <hordp@cisco.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Aug 26 22:52:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VE3SG-0000n9-Ku
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 22:32:05 +0200
+	id 1VE3m1-0006qo-Tn
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 22:52:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752421Ab3HZUcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Aug 2013 16:32:00 -0400
-Received: from elnino.cryptocrack.de ([46.165.227.75]:36738 "EHLO
-	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752401Ab3HZUb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Aug 2013 16:31:59 -0400
-Received: from localhost (p57B4037E.dip0.t-ipconnect.de [87.180.3.126]);
-	by elnino.cryptocrack.de (OpenSMTPD) with ESMTP id 06485200;
-	TLS version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO;
-	Mon, 26 Aug 2013 22:31:55 +0200 (CEST)
+	id S1752676Ab3HZUwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Aug 2013 16:52:22 -0400
+Received: from cloud.peff.net ([50.56.180.127]:39914 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751820Ab3HZUwT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Aug 2013 16:52:19 -0400
+Received: (qmail 31193 invoked by uid 102); 26 Aug 2013 20:52:19 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Aug 2013 15:52:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Aug 2013 16:52:15 -0400
 Content-Disposition: inline
-In-Reply-To: <521BBA98.7010102@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <521BB6DA.5050807@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233026>
 
-On Mon, Aug 26, 2013 at 02:29:12PM -0600, Lance wrote:
-> [...]
-> >>     CC config.o
-> >>config.c: In function 'get_next_char':
-> >>config.c:220:14: error: expected identifier before '(' token
-> >>config.c:220:14: error: expected statement before ')' token
-> >>config.c:220:14: error: expected statement before ')' token
-> >>config.c:224:11: error: expected identifier before '(' token
-> >Does changing line 220 of config.c to
-> >
-> >     int c = (cf->fgetc)(cf);
-> >
-> >fix it?
-> I also had to change line 224 to the following
-> 
->                 c = (cf->fgetc)(cf);
-> 
-> Once both places were changes, it compiled successfully.
+On Mon, Aug 26, 2013 at 10:13:14PM +0200, Johannes Sixt wrote:
 
-Sounds like a parser bug to me. Should we patch this in Git in order to
-make it compile with (broken?) GCC versions?
-> [...]
+> Am 26.08.2013 21:56, schrieb Jeff King:
+> > Also, prevent the delimiter being added twice, as happens now in these
+> > examples:
+> > 
+> >   git grep -l foo HEAD:
+> >   HEAD::some/path/to/foo.txt
+> >        ^
+> 
+> Which one of these two does it print then?
+> 
+>     HEAD:/some/path/to/foo.txt
+>     HEAD:some/path/to/foo.txt
+
+It should (and does) print the latter.
+
+But I do note that our pathspec handling for subdirectories seems buggy.
+If you do:
+
+  $ cd Documentation
+  $ git grep -l foo | head -1
+  RelNotes/1.5.1.5.txt
+
+that's fine; we limit to the current directory. But then if you do:
+
+  $ git grep -l foo HEAD | head -1
+  HEAD:RelNotes/1.5.1.5.txt
+
+we still limit to the current directory, but the output does note note
+this (it should be "HEAD:./RelNotes/1.5.1.5.txt"). I think this bug is
+orthogonal to Phil's patch, though.
+
+-Peff
