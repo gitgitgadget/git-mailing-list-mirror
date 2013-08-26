@@ -1,82 +1,70 @@
-From: Bruce Korb <bruce.korb@gmail.com>
-Subject: Re: git-svn - canonicalize: Assertion `*src != '/'' failed.
-Date: Mon, 26 Aug 2013 10:52:06 -0700
-Message-ID: <CAKRnqNLupBKdvkK-LCuO8a+cz00oJbCcjKDEV8FepV9xSOAJEw@mail.gmail.com>
-References: <521B8D61.8040608@gmail.com> <20130826172853.GR4110@google.com>
- <CAKRnqNK4ZftcejAHjCcnFukr=Dm_U109uFmXEmXT+VpeW4DCBA@mail.gmail.com> <20130826174242.GT4110@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2] grep: use slash for path delimiter, not colon
+Date: Mon, 26 Aug 2013 15:28:26 -0400
+Message-ID: <20130826192826.GA23598@sigill.intra.peff.net>
+References: <1377528372-31206-1-git-send-email-hordp@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: GIT Development <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 26 19:52:33 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, phil.hord@gmail.com,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Mon Aug 26 21:28:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VE0xt-0007YM-2S
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 19:52:33 +0200
+	id 1VE2St-0006fF-5A
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 21:28:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072Ab3HZRw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Aug 2013 13:52:29 -0400
-Received: from mail-wg0-f42.google.com ([74.125.82.42]:47978 "EHLO
-	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751984Ab3HZRw2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Aug 2013 13:52:28 -0400
-Received: by mail-wg0-f42.google.com with SMTP id j13so3967498wgh.5
-        for <git@vger.kernel.org>; Mon, 26 Aug 2013 10:52:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=lEwnCq6TKGYGYN07t8Zr6Z77aQ2peG1dtudZng3iYJQ=;
-        b=Mtm3gSOal4kdwS2bnEmw3WSTjlfMN7PCIhQx3LlDDObipQn3JGv6QveG1Tq4mdq6rq
-         wdKc2LJo9S8OHKPEQVm+p6yI0p9QDDau79nUIn0x/OcZ1Duz7yK1V8HUY8+8W60hIPp0
-         EZ/+xJ48BSDVbSUqg9PPDTS97mEZRsE13TBKxrEKa0aQOxM9AtKqJICYcY7jlE0r28Km
-         ZunJYPUZDeWsQOMIWYVdRh9nGoD1tla80lZnGKkUR0pgOBws3IKMT9y+LhLHU6tPlgmB
-         8a5/0K/ydIe1Q1Y8D65SSs/LJ/0nnYMj1sj42I+P3XIS0VtYdlUUvEcTY/544GFrJ12D
-         GGnQ==
-X-Received: by 10.194.201.225 with SMTP id kd1mr2836469wjc.35.1377539547213;
- Mon, 26 Aug 2013 10:52:27 -0700 (PDT)
-Received: by 10.194.24.193 with HTTP; Mon, 26 Aug 2013 10:52:06 -0700 (PDT)
-In-Reply-To: <20130826174242.GT4110@google.com>
+	id S1751760Ab3HZT2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Aug 2013 15:28:35 -0400
+Received: from cloud.peff.net ([50.56.180.127]:39342 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751570Ab3HZT2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Aug 2013 15:28:34 -0400
+Received: (qmail 26923 invoked by uid 102); 26 Aug 2013 19:28:34 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Aug 2013 14:28:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Aug 2013 15:28:26 -0400
+Content-Disposition: inline
+In-Reply-To: <1377528372-31206-1-git-send-email-hordp@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233015>
 
-On Mon, Aug 26, 2013 at 10:42 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Bruce Korb wrote:
->
->> $ git svn --version
->> git-svn version 1.8.1.4 (svn 1.7.11)
->
-> Hm.  Two ideas:
->
->  * Does 1.8.2 or newer work better?  (It contains v1.8.2-rc0~110^2,
->    "git-svn: do not escape certain characters in paths", 2013-01-17,
->    which at first glance looks unlikely to help but might be worth a
->    try.)
->
->  * Does "git svn clone file://$PWD/private-lustre-svn $PWD/private-lustre-git"
->    work?
->
-> Ciao,
-> Jonathan
+On Mon, Aug 26, 2013 at 10:46:12AM -0400, Phil Hord wrote:
 
-I get different results:
+> This version is a bit more deterministic and also adds a test.
+> 
+> It accepts the expense of examining the path argument again to 
+> determine if it is a tree-ish + path rather than just a tree (commit).
+> The get_sha1 call occurs one extra time for each tree-ish argument,
+> so it's not expensive.
 
-> $ git svn clone file://$PWD/private-lustre-svn $PWD/private-lustre-git
-> Initialized empty Git repository in /u/bkorb/work/private-lustre-git/.git/
-> Couldn't open a repository: Unable to connect to a repository at URL 'file:///u/bkorb/work/private-lustre-svn': \
-> Unable to open an ra_local session to URL: Unable to open repository 'file:///u/bkorb/work/private-lustre-svn' \
-> at /usr/lib/perl5/vendor_perl/5.16.2/Git/SVN.pm line 148.
+I don't like this approach in general because it lacks atomicity. IOW,
+the thing you are looking up may change between the two get_sha1 calls.
+You're _almost_ good here because you don't actually care what the
+second call returns, but only which features it _would_ have used. But
+you may see the second call fail because the ref doesn't exist anymore,
+or points to a different tree, and you will erroneously use ":" instead
+of "/".
 
-That makes it look like I didn't get a proper copy of the SVN repo.
-Since the real repo lives behind a firewall through two ssh hops,
-getting what I need may require learning Subversion instead of using
-conversion and familiar tools.....
+I admit this is not that likely, but I'd really rather avoid introducing
+such races if we can.
 
-(I need to extract patch sets for three development branches so I can
-apply them to a lustre GIT repo.)
+> We avoid mucking with the object_array API this way, and also do not
+> rely on the object-type to tell us anything about the way the object
+> name was spelled.
+
+Changing the object_array API would be hard, but I don't think we need
+to do it here. Can we simply stop using object_array to pass the list,
+and instead just have a custom list?
+
+I'll see how painful that is.
+
+-Peff
