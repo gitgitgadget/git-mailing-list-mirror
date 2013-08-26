@@ -1,96 +1,95 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [PATCH v2] submodule: prevent warning in summary output
-Date: Mon, 26 Aug 2013 20:26:51 +1200
-Message-ID: <521B114B.2080709@gmail.com>
-References: <1376958397-800967-1-git-send-email-sandals@crustytoothpaste.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] git-remote-mediawiki: reset private ref after non-dumb push
+Date: Mon, 26 Aug 2013 10:48:50 +0200
+Message-ID: <vpqhaeckfbh.fsf@anie.imag.fr>
+References: <1376400700-8863-1-git-send-email-Matthieu.Moy@imag.fr>
+	<CAMP44s2u1edB3g9GK_kak3Nc-fe4TDBjFU_JqskBW+J0Q9BJrg@mail.gmail.com>
+	<vpqa9ka7mku.fsf@anie.imag.fr>
+	<CAMP44s3jh4iEbgONaEU0WSCc5YiGYoK8edcgWU6qmUARToVRuw@mail.gmail.com>
+	<vpqbo4o3jba.fsf@anie.imag.fr>
+	<CAMP44s281qkdMXUM-2P6T+emFajASX6Jyj4nk8_cU5xYJYvdLA@mail.gmail.com>
+	<vpq8uzr5y4v.fsf@anie.imag.fr>
+	<xmqq61uumnsz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Mon Aug 26 10:25:54 2013
+Content-Type: text/plain
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 26 10:49:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VDs7W-0007by-3l
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 10:25:54 +0200
+	id 1VDsTz-0002Lf-6S
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Aug 2013 10:49:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755699Ab3HZIZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Aug 2013 04:25:50 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:39244 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755496Ab3HZIZt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Aug 2013 04:25:49 -0400
-Received: by mail-pd0-f169.google.com with SMTP id r10so3184251pdi.14
-        for <git@vger.kernel.org>; Mon, 26 Aug 2013 01:25:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=InzDPHIwgRSs55759li4guRfPduBt43DrAnpSRaEVpY=;
-        b=c1QZiiqQIMqsz3FOjDXaMSlyPRnYK68tK0/djPmiMfHbXRbLL4xifBxAlX3rLgfo7e
-         kb6wv/BrThGklfZQShKHnw9tGOEzKAyBHe2/wBb/6rx67YMz87mSSzTJOgkSeiskD17J
-         F1wn1JgB2sFd1GCXqXDQbLKrCqMDOJErdhvz50VLEySJndffTSs35l1twTD05GkbVayj
-         fposcLNgII2Nh30w8w/aGV15ACeg3dA5j4gjkuyfW7kooE1zNqftLj58111KDuD0Dmjd
-         l6zTtmWkqt6TLp6SJwVWsB9beU8ydbIACf755OHTIW5z/a8PWK47XNf1QKmGox9Adh7Z
-         owLg==
-X-Received: by 10.66.243.196 with SMTP id xa4mr1506810pac.174.1377505547777;
-        Mon, 26 Aug 2013 01:25:47 -0700 (PDT)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id hx1sm16443512pbb.35.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 26 Aug 2013 01:25:47 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
-In-Reply-To: <1376958397-800967-1-git-send-email-sandals@crustytoothpaste.net>
+	id S1756560Ab3HZItC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Aug 2013 04:49:02 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:49829 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751555Ab3HZItA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Aug 2013 04:49:00 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r7Q8moaI024820
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 26 Aug 2013 10:48:52 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VDsTj-0001XN-0i; Mon, 26 Aug 2013 10:48:51 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 26 Aug 2013 10:48:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r7Q8moaI024820
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1378111732.79403@rREBXSCRL7tZM45PsT2bgQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/232987>
 
-Hi Brian,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Sorry for the delay.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> How would I do that? The update to the remote namespace is done by Git,
+>> not by the remote-helper.
+>>
+>> OK, I'm now convinced that my solution is the right one. The
+>> alternatives are far more complex and I still fail to see the benefits.
+>
+> Sounds like a plan, even though it smells like the "update is done
+> by Git" that does not have any way to opt-out may be the real design
+> mistake and your "solution" is a work-around to that.
+>
+> Would it be a possibility to make it tunable, perhaps by introducing
+> a capability on the remote-interface side that allows you to tell it
+> not to mess with the remote namespace?
 
-On 20/08/13 12:26, brian m. carlson wrote:
-> When git submodule summary is run and there is a deleted submodule, there is an
-> warning from git rev-parse:
-> 
->   fatal: Not a git repository: '.vim/pathogen/.git'
-> 
-> Silence this warning, since it is fully expected that a deleted submodule will
-> not be a git repository.
-> 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
-> 
-> I hesitated to add the test for $status because it will end up having no effect
-> since we exclude that case later.  However, for correctness, I included it.
-> 
->  git-submodule.sh | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 2979197..eec3135 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -1070,7 +1070,10 @@ cmd_summary() {
->  		missing_src=
->  		missing_dst=
->  
-> +		test $status = D && missing_src=t
+Ideally, it would be possible to ask for a non-update without a fatal
+error on old Git versions, but this is not possible (hence, my fix is
+the "portable" one, that works on Git 1.8.4).
 
-I tend to agree with you that this line is redundant. I'm not sure that
-it's what Jens was looking for in v1.
+But that's probably the best we can do now.
 
-> +
->  		test $mod_src = 160000 &&
-> +		test -e "$name/.git" &&
->  		! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_src^0 >/dev/null &&
->  		missing_src=t
-> 
+> If we were doing this from scratch, I would suspect that we would have
+> made the capability work the other way around (Git does not do the
+> update by default, but helpers c an ask Git to do so).
 
-This part looks good to me.
+Not updating was the default until 664059fb62 (i.e. until 1.8.4), so the
+default already changed once. I tend to agree with Felipe that doing the
+update by default makes sense.
+
+git-remote-mediawiki is kind of a special case, as the remote side uses
+a very different data model, hence it can make sense to export+reimport
+to get locally what the remote side received. But when interacting with
+something closer to Git (bzr, hg, ...), the mapping should be close to
+1-1 and re-importing wouldn't make sense.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
