@@ -1,61 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 06/11] Simplify "How to make a commit"
-Date: Tue, 27 Aug 2013 12:08:33 -0700
-Message-ID: <xmqqfvtvc5ou.fsf@gitster.dls.corp.google.com>
-References: <1403569571.34349.1377625974290.JavaMail.ngmail@webmail19.arcor-online.net>
-	<878772375.34519.1377626477170.JavaMail.ngmail@webmail19.arcor-online.net>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] Improve font rendering on retina macbooks
+Date: Tue, 27 Aug 2013 20:10:31 +0100
+Message-ID: <87vc2rdk60.fsf@fox.patthoyts.tk>
+References: <CAMtfEwTGTCKhuFK116-z2ePE70T1iXdPx7BB1xLxRdfsAfws=Q@mail.gmail.com>
+Reply-To: patthoyts@users.sourceforge.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, martinvonz@gmail.com, jrnieder@gmail.com,
-	wking@tremily.us, philipoakley@iee.org
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Tue Aug 27 21:08:44 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Mads =?iso-8859-1?Q?D=F8rup?= <mads@dorup.dk>
+X-From: git-owner@vger.kernel.org Tue Aug 27 21:10:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEOd6-00010g-Qq
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 21:08:41 +0200
+	id 1VEOf1-0002WD-Gb
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 21:10:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752994Ab3H0TIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Aug 2013 15:08:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44453 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752602Ab3H0TIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Aug 2013 15:08:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E87903CB08;
-	Tue, 27 Aug 2013 19:08:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YZ4OR9fVtklwD5SGVNdlzJobp+4=; b=dp7/+4
-	2mIFhz5i/ZqKiE2rih8CMcaD/vbSQDsHE+ora5nlApFOVNByWWvmk/HqsrUCE/ny
-	D8it7tDW7lfRrk5NUxDrHXTjE55M+EBpYjWR+OSR7yKmvfQp5VEEQ6175NGJpRIZ
-	Q4R9T5LDlUMBCwjuxUFc54ugLXkZJ22jzevJc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kzZrcAtpUAE8ikV3/sZ9GThk0ZBapgft
-	v/yMNHdBo3XMC9jJDipU4CC6os+ARkG4VGYxyOcR3+5rNFfQ4EfgT+UpqH2d2PCq
-	8VlqsX1+0iJyMt1yEavcYFKLzTcK9UnmHgfqAGYL6XzC/F4kVsIxTZVZ0xZR5s4l
-	1ErZY3ePqwM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D030D3CB07;
-	Tue, 27 Aug 2013 19:08:35 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 146AB3CB06;
-	Tue, 27 Aug 2013 19:08:35 +0000 (UTC)
-In-Reply-To: <878772375.34519.1377626477170.JavaMail.ngmail@webmail19.arcor-online.net>
-	(Thomas Ackermann's message of "Tue, 27 Aug 2013 20:01:17 +0200
-	(CEST)")
+	id S1753212Ab3H0TKg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Aug 2013 15:10:36 -0400
+Received: from know-smtprelay-omc-1.server.virginmedia.net ([80.0.253.65]:55173
+	"EHLO know-smtprelay-omc-1.server.virginmedia.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752254Ab3H0TKf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Aug 2013 15:10:35 -0400
+Received: from fox.patthoyts.tk ([94.171.229.22])
+	by know-smtprelay-1-imp with bizsmtp
+	id HvAZ1m00Y0VeUS601vAZTR; Tue, 27 Aug 2013 20:10:33 +0100
+X-Originating-IP: [94.171.229.22]
+X-Spam: 0
+X-Authority: v=2.0 cv=A800pNqG c=1 sm=1 a=qXJDgLqI18Q8M6O+O33hhA==:17
+ a=F0HhOJWMmYsA:10 a=vIoWlpIS1WMA:10 a=CtgcEeagiGAA:10 a=8nJEP1OIZ-IA:10
+ a=FP58Ms26AAAA:8 a=oJkSE-2d8ysA:10 a=NEAV23lmAAAA:8 a=Rf460ibiAAAA:8
+ a=MSedERPdp2gypr6vRCkA:9 a=wPNLvfGTeEIA:10 a=qXJDgLqI18Q8M6O+O33hhA==:117
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id E8A6220181; Tue, 27 Aug 2013 20:10:32 +0100 (BST)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+In-Reply-To: <CAMtfEwTGTCKhuFK116-z2ePE70T1iXdPx7BB1xLxRdfsAfws=Q@mail.gmail.com>
+	("Mads =?iso-8859-1?Q?D=F8rup=22's?= message of "Sun, 21 Jul 2013 14:23:48
+ +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1264E298-0F4C-11E3-9910-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233139>
 
-Sounds good.
+Mads D=F8rup <mads@dorup.dk> writes:
+
+>Hi there
+>
+>I've created a very small change to git gui that considerably improves=
+ the
+>experience on my machine at least:
+>
+>diff --git a/git-gui/macosx/Info.plist b/git-gui/macosx/Info.plist
+>index b3bf15f..1ade121 100644
+>--- a/git-gui/macosx/Info.plist
+>+++ b/git-gui/macosx/Info.plist
+>@@ -24,5 +24,7 @@
+>=A0 =A0 =A0 =A0 <string>GITg</string>
+>=A0 =A0 =A0 =A0 <key>CFBundleVersion</key>
+>=A0 =A0 =A0 =A0 <string>@@GITGUI_VERSION@@</string>
+>+ =A0 =A0 =A0 <key>NSHighResolutionCapable</key>
+>+ =A0 =A0 =A0 <true/>
+>=A0</dict>
+>=A0</plist>
+>
+>
+>I've read the documentation for submitting patches to git where it say=
+s that I
+>have to e-mail the patch to the mail list, with relevant developers as=
+ CC. Pat
+>are you the relevant developer for this?
+>
+>Here is a screenshot comparison of before and after the change:
+>
+>https://github.com/git/git/pull/48
+>
+>Please let me know how to proceed to get this patch in, if you like it=
+=2E I've
+>never contributed here before, so please me know about any procedures =
+I have
+>missed.
+>
+>Regards, Mads D=F8rup
+
+Looks like it makes a big difference from those pictures. Patch
+applied. Thank you.
+
+--=20
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
