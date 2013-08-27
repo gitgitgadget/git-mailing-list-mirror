@@ -1,69 +1,77 @@
-From: Ron Tregaskis - NOAA Federal <ron.tregaskis@noaa.gov>
-Subject: Re: Eclipse
-Date: Tue, 27 Aug 2013 12:55:30 -0400
-Message-ID: <521CDA02.2030103@noaa.gov>
-References: <521CC15A.9020602@noaa.gov> <521CC289.5020204@web.de>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH 12/23] pack v4: creation code
+Date: Tue, 27 Aug 2013 12:59:15 -0400 (EDT)
+Message-ID: <alpine.LFD.2.03.1308271252570.14472@syhkavp.arg>
+References: <1377577567-27655-1-git-send-email-nico@fluxnic.net>
+ <1377577567-27655-13-git-send-email-nico@fluxnic.net>
+ <xmqqppszdtiv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Aug 27 18:55:46 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 27 18:59:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEMYN-0007bA-QC
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 18:55:40 +0200
+	id 1VEMbw-0001yU-2H
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 18:59:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753502Ab3H0Qzf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Aug 2013 12:55:35 -0400
-Received: from na3sys009aog124.obsmtp.com ([74.125.149.151]:38597 "EHLO
-	na3sys009aog124.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753395Ab3H0Qzf (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Aug 2013 12:55:35 -0400
-Received: from mail-qe0-f50.google.com ([209.85.128.50]) (using TLSv1) by na3sys009aob124.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUhzaBsFOFBIIukkwMY3LRkOj5VNgZLt5@postini.com; Tue, 27 Aug 2013 09:55:34 PDT
-Received: by mail-qe0-f50.google.com with SMTP id s14so2734899qeb.37
-        for <git@vger.kernel.org>; Tue, 27 Aug 2013 09:55:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=0xucyEkHlU56UxYYyz/gaeZKADDM7kZD5W+mhWrNl/0=;
-        b=f+rgBSfeeEKl/NJewgU22qG9Kt1KtLI2Q1qzcdQnhNgRwIO0LkpFtgNGPmoNFVaa3U
-         9k5G8+u2B6dcjMG8haUJMTgqwl9RVFTSTJ7jydgcer3LsQHf/dFODgXpgpHDqI/7Go9N
-         wZeFqXV0YMuqy1ftbcj9r7RHW9FJwM2XtI+2Ujeuk9bRNa+Cs3M5IZnLewX/DWevwhpZ
-         pQLLFLZgQ+ka4r2iNjmUqB3417OhXvhn7mWKBGpXLiDJgQLqfJPGima2bJtqqJKaZG3f
-         yJmliDzkIBBzTmBCcI8xNFL+OkaIN0mpFuT4gTTxdenLpfSUUdnMUjRWXALiKtq0TmT1
-         rPZA==
-X-Gm-Message-State: ALoCoQmf2yO1IcIhbW5RiAO7t6D9HZjvEdgFxp0NhIbg904c/rOVY+/JrbJcHoR6TRwFDkF2wsKB
-X-Received: by 10.49.63.39 with SMTP id d7mr3747160qes.78.1377622533979;
-        Tue, 27 Aug 2013 09:55:33 -0700 (PDT)
-Received: from [155.206.131.106] ([155.206.131.106])
-        by mx.google.com with ESMTPSA id q4sm30466783qah.2.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 27 Aug 2013 09:55:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <521CC289.5020204@web.de>
+	id S1753312Ab3H0Q7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Aug 2013 12:59:16 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:60342 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752314Ab3H0Q7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Aug 2013 12:59:15 -0400
+Received: from yoda.home ([70.83.209.44]) by VL-VM-MR004.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0MS7002HG8IRFLN0@VL-VM-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 27 Aug 2013 12:59:15 -0400 (EDT)
+Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
+ with ESMTPSA id 2114E2DA052D; Tue, 27 Aug 2013 12:59:15 -0400 (EDT)
+In-reply-to: <xmqqppszdtiv.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233117>
 
-Gee, sorry I asked.
+On Tue, 27 Aug 2013, Junio C Hamano wrote:
 
-On 8/27/2013 11:15 AM, Torsten B=F6gershausen wrote:
-> On 27.08.13 17:10, Ron Tregaskis - NOAA Federal wrote:
->> Does git work with Eclipse?
->
-> No.
->
-> If the question is "does Eclipse work with git": yes.
-> For more information please feel free to spend some seconds using a s=
-each engine.
->
+> Nicolas Pitre <nico@fluxnic.net> writes:
+> 
+> > Let's actually open the destination pack file and write the header and
+> > the tables.
+> >
+> > The header isn't much different from pack v3, except for the pack version
+> > number of course.
+> >
+> > The first table is the sorted SHA1 table normally found in the pack index
+> > file.  With pack v4 we write this table in the main pack file instead as
+> > it is index referenced by subsequent objects in the pack.  Doing so has
+> > many advantages:
+> >
+> > - The SHA1 references used to be duplicated on disk: once in the pack
+> >   index file, and then at least once or more within commit and tree
+> >   objects referencing them.  The only SHA1 which is not being listed more
+> >   than once this way is the one for a branch tip commit object and those
+> >   are normally very few.  Now all that SHA1 data is represented only once.
+> >
+> 
+> This tickles my curiosity. Why isn't this SHA-1 table sorted by
+> reference count the same way as the tree path and the people name
+> tables to keep the average length of varint references short?
+
+Doing so allows for the SHA1 index used in objects to be used directly 
+for lookups into the pack index in order to know immediately the 
+location of the referenced object bypassing the binary search.  
+Furthermore, SHA1 references are rather evenly spread across the whole 
+table.  Only tree objects may share the same SHA1 references repeatedly 
+across multiple objects, and those are likely to end up being deltas 
+against each other.
+
+
+Nicolas
