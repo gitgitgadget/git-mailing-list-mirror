@@ -1,88 +1,73 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH/RFC] core.precomposeunicode is true by default
-Date: Tue, 27 Aug 2013 21:34:09 +0200
-Message-ID: <521CFF31.9070607@web.de>
-References: <201307270321.32398.tboegi@web.de> <7vmwp5z3iu.fsf@alter.siamese.dyndns.org> <521CAD88.4080609@web.de> <xmqqvc2rfau9.fsf@gitster.dls.corp.google.com> <521CC07B.4000504@web.de> <xmqqhaebdrp6.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 04/11] Use "git merge" instead of "git pull ."
+Date: Tue, 27 Aug 2013 12:44:22 -0700
+Message-ID: <20130827194422.GW4110@google.com>
+References: <1403569571.34349.1377625974290.JavaMail.ngmail@webmail19.arcor-online.net>
+ <1685937666.34465.1377626298173.JavaMail.ngmail@webmail19.arcor-online.net>
+ <xmqqob8jc5s6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Ackermann <th.acker@arcor.de>, git@vger.kernel.org,
+	martinvonz@gmail.com, wking@tremily.us, philipoakley@iee.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 27 21:34:19 2013
+X-From: git-owner@vger.kernel.org Tue Aug 27 21:44:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEP1s-0003xA-GK
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 21:34:16 +0200
+	id 1VEPBo-0003Ca-IZ
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 21:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753688Ab3H0TeM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Aug 2013 15:34:12 -0400
-Received: from mout.web.de ([212.227.17.12]:62975 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752726Ab3H0TeM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Aug 2013 15:34:12 -0400
-Received: from [192.168.209.26] ([195.67.191.23]) by smtp.web.de (mrweb102)
- with ESMTPA (Nemesis) id 0MJCSM-1VCk4R3n5e-002mDA for <git@vger.kernel.org>;
- Tue, 27 Aug 2013 21:34:10 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <xmqqhaebdrp6.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:syFzrHIabEK6skaU3JXZabbziJIHfzjuSWeNZiKstJ++8uK74hi
- HLLdLrwaJnkOVYVheM/zFKPs+M3a9SnoFDt5iABeqf+ncnH5RfFswzRDNE/dzhFYR3tneA/
- Z6eUZ6CzsnFRFyclgijlyeo+NO4tLOFahnWoyrSgYUgsuaZw8QaHsseTgT9livTKaWV8vHp
- tyGpyYVxSj9qmilQo7ORw==
+	id S1752625Ab3H0To2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Aug 2013 15:44:28 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:46664 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752518Ab3H0To1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Aug 2013 15:44:27 -0400
+Received: by mail-pb0-f42.google.com with SMTP id un15so5286169pbc.29
+        for <git@vger.kernel.org>; Tue, 27 Aug 2013 12:44:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=cKomW6DRKgJL1kMuD66CO8S1CT+Kw2GF/5L40+oBTWI=;
+        b=nyYFja6sqtb48ADTo0DhuS6JzbM0TUgxi3T6pcuXjXjX+g6VVm6RxaWUuKyQArLPRA
+         rHa3EpTmkuCcQtVS50B0ZgTSeTjuO9Sg2Oza3/Rze30MJKQGBCSkzhrH2hwN2V/Vldgc
+         /qjYtoQZ1ksEnxdu/0sfv0+BukOwvoQ2rj0xUvx2Yym6NHCK6WOo9xFajGkvrbTbO4WG
+         RL12Nf9aFcqam5ZUsHD8Tnq1xvzBHKhcH4KvyyqXQilirnVQTPUpnWEsuyj4H0B4F89F
+         iddsuXPAShmY8rkD5oqc7uQ4BK0XUfljkYhN4fMOdpwMx59gZzeoCvM6oyGLc/lLbM10
+         skcw==
+X-Received: by 10.68.225.42 with SMTP id rh10mr10815678pbc.176.1377632667351;
+        Tue, 27 Aug 2013 12:44:27 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id wp8sm26366269pbc.26.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 27 Aug 2013 12:44:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqob8jc5s6.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233146>
 
-On 2013-08-27 18.27, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->>>> 2)
->>>> When we access a repo from Windows/Linux using SAMBA,
->>> You mean s/repo/repository that resides on HFS+/?
->> Sorry being unclear here, trying being clearer with an example:
->> I have a /data/Docs on my linux box, which is handled by git
->>
->> I export /data/Docs via SAMBA, and use the Finder under Mac OS to ha=
-ve it
->> mounted on my Mac OS X box:
->> //tb@Linux/Docs on /Volumes/Docs (smbfs, nodev, nosuid, mounted by t=
-b)
->>>> readdir() will return decomposed.
->>>> When the repo is created by nonMacOS, core.precomposeunicode is un=
-defined.
->>>> The precomposition is off, but should be on,=20
->>>> precomposed_unicode =3D -1, but should be =3D 1
->>> I do not think UTF-8-MAC is widely available; even if you flip the
->>> bit on, would it help much?
->> In the above example
->> /data/Docs/.git/config was created by Linux, so it does not have
->> core.precomposeunicode set, neither false nor true.
->> The Linux box does not have  UTF-8-MAC under iconv,
->> but will ignore core.precomposeunicode anyway (since the code is not=
- compiled here)
->>
->> The Mac OS machine sees it under /Volumes/Docs/.git/config
->> And here we want the precomposition, even if core.precomposeunicode
->> is not present in the config.
->=20
-> It almost makes me wonder if you want not a per-repository but a
-> per-machine configuration, i.e. "Whichever repository I am
-> accessing, either on a local filesystem or shared over the network,
-> readdir() on my box reports wrong paths, and I need correction."
->=20
-> That, or "if it hurts, don't do the remote mount then."
-No, we don't need to be that restrictive.
-We already have repository/user/system wide configuration files,
-allowing tweeks and this is a good thing.
+On Tue, Aug 27, 2013 at 12:06:33PM -0700, Junio C Hamano wrote:
+> Thomas Ackermann <th.acker@arcor.de> writes:
+> 
+> > "git pull ." works, but "git merge" is the recommended
+> > way for new users to do things. (The old description
+> > also should have read "The former is actually *not* very
+> > commonly used".)
+> 
+> It does not matter that you are unaware other people use it often.
+> I'd suggest dropping the first hunk altogether.
 
-Re-Re-reading $gmane/188940:=20
-I am happy having the V2 patch from today being queued, thanks.
+Eh, the claim "The former is actually very commonly used." is
+confusing on its own (even though it used to be true) and elaborating
+wouldn't help much with education, so the first hunk makes sense to
+me.  But maybe it should have been done in a separate patch. ;-)
 
-As a next step I will have a look into the advice machine.
-=20
+Thanks,
+Jonathan
