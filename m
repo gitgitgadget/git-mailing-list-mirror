@@ -1,208 +1,88 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] Document pack v4 format
-Date: Tue, 27 Aug 2013 14:53:01 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1308271433210.14472@syhkavp.arg>
-References: <1377577567-27655-1-git-send-email-nico@fluxnic.net>
- <1377602225-30439-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/11] Call it "Git User Manual" and remove reference to very old Git version
+Date: Tue, 27 Aug 2013 12:04:04 -0700
+Message-ID: <xmqqsixvc5wb.fsf@gitster.dls.corp.google.com>
+References: <1403569571.34349.1377625974290.JavaMail.ngmail@webmail19.arcor-online.net>
+	<1972849803.34382.1377626115372.JavaMail.ngmail@webmail19.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_F57mw4C6Oc0ejt5j94QYNg)"
-Cc: git@vger.kernel.org
-To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 27 20:53:18 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, martinvonz@gmail.com, jrnieder@gmail.com,
+	wking@tremily.us, philipoakley@iee.org
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Tue Aug 27 21:04:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEOOA-0006AH-IB
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 20:53:15 +0200
+	id 1VEOYq-00063r-C5
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 21:04:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753298Ab3H0SxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Aug 2013 14:53:09 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:55408 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752231Ab3H0SxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Aug 2013 14:53:08 -0400
-Received: from yoda.home ([70.83.209.44]) by VL-VM-MR001.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MS700FOXDSI7NC0@VL-VM-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 27 Aug 2013 14:53:06 -0400 (EDT)
-Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTPSA id 6DB712DA052D; Tue, 27 Aug 2013 14:53:06 -0400 (EDT)
-In-reply-to: <1377602225-30439-1-git-send-email-pclouds@gmail.com>
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1753599Ab3H0TEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Aug 2013 15:04:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64625 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752573Ab3H0TEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Aug 2013 15:04:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 838343C805;
+	Tue, 27 Aug 2013 19:04:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pNAUOSzECYeis8ofYxguenkH2eA=; b=TV+q5b
+	luGHqT1w/6i56ZPPyFL65jpsJG+N9PAJoK5yKNeMcbMoGF/QgZFRrKlGKcA8Nnsu
+	IwazYq9FZJMGZ8tcP+li5wQoJSbj01OKaPaIhyFxxXuW3dZXIpYNpYUt+xbwcf1G
+	zbme63+5ivG4xSvzWmvRIN6dAnB7Re82u75Lo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o6icjc1bywFs4tasDRG0kAZGo5HFiJdl
+	0nt7Y0XQRkKMP+Y013qmO/9BBMhtvrCr6S6Qy5hkP0QIXEzWdYbt7dgnY3j8KDvI
+	63KH6rGy3GPheBJfGoqX/y3GAz5HTNygKVl/PemjUVE3nLc8Mq6JGYr4BxXtPu9B
+	plfJR8Aeslc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25E023C804;
+	Tue, 27 Aug 2013 19:04:10 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F9343C7FD;
+	Tue, 27 Aug 2013 19:04:08 +0000 (UTC)
+In-Reply-To: <1972849803.34382.1377626115372.JavaMail.ngmail@webmail19.arcor-online.net>
+	(Thomas Ackermann's message of "Tue, 27 Aug 2013 19:55:15 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 737660BC-0F4B-11E3-81B6-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233135>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Thomas Ackermann <th.acker@arcor.de> writes:
 
---Boundary_(ID_F57mw4C6Oc0ejt5j94QYNg)
-Content-type: TEXT/PLAIN; charset=UTF-8
-Content-transfer-encoding: 8BIT
-
-On Tue, 27 Aug 2013, Nguyễn Thái Ngọc Duy wrote:
-
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
 > ---
->  For my education but may help people who are interested in the
->  format. Most is gathered from commit messages, except the delta tree
->  entries.
 
-Excellent!  That's the kind of thing I need help with.
+I tend to agree with Jonathan that this should be "User's Manual".
 
-Some corrections below.
+I've tentatively queued uncontroversial bits from v1 series already
+on 'pu', by the way, and I do not think I have time to queue rerolls
+of any topic today, so please expect a longer turn-around time than
+usual.
 
->  Documentation/technical/pack-format-v4.txt (new) | 110 +++++++++++++++++++++++
->  1 file changed, 110 insertions(+)
->  create mode 100644 Documentation/technical/pack-format-v4.txt
-> 
-> diff --git a/Documentation/technical/pack-format-v4.txt b/Documentation/technical/pack-format-v4.txt
-> new file mode 100644
-> index 0000000..9123a53
-> --- /dev/null
-> +++ b/Documentation/technical/pack-format-v4.txt
-> @@ -0,0 +1,110 @@
-> +Git pack v4 format
-> +==================
-> +
-> +== pack-*.pack files have the following format:
-> +
-> +   - A header appears at the beginning and consists of the following:
-> +
-> +     4-byte signature:
-> +	  The signature is: {'P', 'A', 'C', 'K'}
-> +
-> +     4-byte version number (network byte order): must be version
-> +     number 4
-> +
-> +     4-byte number of objects contained in the pack (network byte
-> +     order)
-
-Conceptually, I'd suggest we don't talk about what follows as part of 
-the header.  Maybe the "tables" section would make more sense.
-
-> +   - (20 * nr_objects)-byte SHA-1 table: sorted in memcmp() order.
-> +
-> +   - Commit name dictionary: the uncompressed length in variable
-> +     encoding, followed by zlib-compressed dictionary. Each entry
-> +     consists of two prefix bytes storing timezone followed by a
-> +     NUL-terminated string.
-> +
-> +     Entries should be sorted by frequency so that the most frequent
-> +     entry has the smallest index, thus most efficient variable
-> +     encoding.
-> +
-> +   - Tree path dictionary: similar format to commit name
-> +     dictionary. Each entry consists of two prefix bytes storing entry
-> +     mode, then a NUL-terminated path name. Same sort order
-> +     recommendation applies.
-> +
-> +   - The header is followed by number of object entries, each of
-> +     which looks like this:
-> +
-> +     (undeltified representation)
-> +     n-byte type and length (4-bit type, (n-1)*7+4-bit length)
-> +     [uncompressed data]
-> +     [compressed data]
-> +
-> +     (deltified representation)
-> +     n-byte type and length (4-bit type, (n-1)*7+4-bit length)
-> +     base object name in SHA-1 reference encoding
-> +     compressed delta data
-> +
-> +     In undeltified format, blobs and tags do not have the
-> +     uncompressed data, all object content is compressed. Trees are
-> +     not compressed at all. Some headers in commits are stored
-> +     uncompressed, the rest is compressed.
-> +
-> +     All objects except trees are deltified and compressed the same
-> +     way in v3. Trees however are deltified differently and use
-
-Let's note that commits are not deltified at all.
-
-> +     undeltified representation. See "Tree representation" below for
-> +     details.
-> +
-> +  - The trailer records 20-byte SHA-1 checksum of all of the above.
-> +
-> +=== Commit representation
-> +
-> +  - n-byte type and length (4-bit type, (n-1)*7+4-bit length)
-> +
-> +  - Tree SHA-1 in SHA-1 reference encoding
-> +
-> +  - Parent count in variable length encoding
-> +
-> +  - Parent SHA-1s in SHA-1 reference encoding
-> +
-> +  - Author reference: the index, in variable length encoding, to comit
-> +    name dictionary, which covers the name and also the time zone.
-> +
-> +  - Author timestamp in variable length encoding
-> +
-> +  - Committer reference: the index, in variable length encoding, to
-> +    comit name dictionary, which covers the name and also the time
-> +    zone.
-> +
-> +  - Committer timestamp in variable length encoding
-> +
-> +  - Compressed data of remaining header and the body
-> +
-> +=== Tree representation
-> +
-> +  - n-byte type and length (4-bit type, (n-1)*7+4-bit length)
-> +
-> +  - Number of trees in variable length encoding
-
-Maybe that would be better to refer to tree entries instead of trees.
-
-> +  - A number of trees, each consists of
-> +
-> +    Path component reference: an index, in variable length encoding,
-> +    into tree path dictionary, which also covers entry mode.
-
-Note the index nust have 1 added due to 0 being reserved.
-
-> +    SHA-1 in SHA-1 reference encoding.
-> +
-> +Path component reference zero is an indicator of deltified portion and
-> +has the following format:
-> +
-> +  - path component reference: zero
-> +
-> +  - index of the entry to copy from, in variable length encoding
-
-I'd say "index of the starting entry in the tree object to copy from" to 
-be clearer.  Also bit 0 of this index has a special meaning, therefore 
-the actual index must be shifted left by 1 bit.
-
-> +  - number of entries in variable length encoding
-
-"number of entries to copy ..."
-
-> +
-> +  - base tree in SHA-1 reference encoding
-
-The presence of this one depends on bit 0 in the index above.  If that 
-bit is set then this base tree is provided.  Otherwise it is not 
-provided and the previous base tree reference encountered in this tree 
-object should be used.  This is to avoid repeating a SHA1 reference,
-especially if a literal 20-byte SHA1 has to be used, when multiple 
-references to the same base tree are made which is likely to be the 
-common case.
-
-> +=== SHA-1 reference encoding
-> +
-> +This encoding is used to encode SHA-1 efficiently if it's already in
-> +the SHA-1 table. It starts with an index number in variable length
-> +encoding. If it's not zero, its value minus one is the index in the
-> +SHA-1 table. If it's zero, 20 bytes of SHA-1 is followed.
-> -- 
-> 1.8.2.83.gc99314b
-
---Boundary_(ID_F57mw4C6Oc0ejt5j94QYNg)--
+>  Documentation/user-manual.txt | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index fe723e4..103ec9a 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -1,6 +1,5 @@
+> -Git User's Manual (for version 1.5.3 or newer)
+> -______________________________________________
+> -
+> +Git User Manual
+> +_______________
+>  
+>  Git is a fast distributed revision control system.
