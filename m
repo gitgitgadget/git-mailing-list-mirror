@@ -1,106 +1,140 @@
 From: Nicolas Pitre <nico@fluxnic.net>
-Subject: [PATCH 20/23] pack index v3
-Date: Tue, 27 Aug 2013 00:26:04 -0400
-Message-ID: <1377577567-27655-21-git-send-email-nico@fluxnic.net>
+Subject: [PATCH 14/23] pack v4: object data copy
+Date: Tue, 27 Aug 2013 00:25:58 -0400
+Message-ID: <1377577567-27655-15-git-send-email-nico@fluxnic.net>
 References: <1377577567-27655-1-git-send-email-nico@fluxnic.net>
 Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 27 06:27:02 2013
+X-From: git-owner@vger.kernel.org Tue Aug 27 06:27:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEArr-0007MP-3l
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 06:26:59 +0200
+	id 1VEAsI-0007jK-RR
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 06:27:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753164Ab3H0E0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Aug 2013 00:26:55 -0400
+	id S1753169Ab3H0E07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Aug 2013 00:26:59 -0400
 Received: from relais.videotron.ca ([24.201.245.36]:47516 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753097Ab3H0E0e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Aug 2013 00:26:34 -0400
+	with ESMTP id S1753011Ab3H0E0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Aug 2013 00:26:33 -0400
 Received: from yoda.home ([70.83.209.44]) by VL-VM-MR006.ip.videotron.ca
  (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MS600F6B9O5GV90@VL-VM-MR006.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 27 Aug 2013 00:26:30 -0400 (EDT)
+ 2011)) with ESMTP id <0MS600G0G9O51090@VL-VM-MR006.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 27 Aug 2013 00:26:29 -0400 (EDT)
 Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTP id 2303A2DA05FA	for <git@vger.kernel.org>; Tue,
- 27 Aug 2013 00:26:30 -0400 (EDT)
+ with ESMTP id A955F2DA05FA	for <git@vger.kernel.org>; Tue,
+ 27 Aug 2013 00:26:29 -0400 (EDT)
 X-Mailer: git-send-email 1.8.4.22.g54757b7
 In-reply-to: <1377577567-27655-1-git-send-email-nico@fluxnic.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233058>
 
-This is a minor change over pack index v2.  Since pack v4 already contains
-the sorted SHA1 table, it is therefore ommitted from the index file.
+Blob and tag objects have no particular changes except for their object
+header.
+
+Delta objects are also copied as is, except for their delta base reference
+which is converted to the new way as used elsewhere in pack v4 encoding
+i.e. an index into the SHA1 table or a literal SHA1 prefixed by 0 if not
+found in the table (see add_sha1_ref).  This is true for both REF_DELTA
+as well as OFS_DELTA.
+
+Object payload is validated against the recorded CRC32 in the source
+pack index file when possible.
 
 Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
 ---
- pack-write.c    |  6 +++++-
- packv4-create.c | 10 +++++++++-
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ packv4-create.c | 66 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-diff --git a/pack-write.c b/pack-write.c
-index ca9e63b..631007e 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -87,6 +87,8 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
- 
- 	/* if last object's offset is >= 2^31 we should use index V2 */
- 	index_version = need_large_offset(last_obj_offset, opts) ? 2 : opts->version;
-+	if (index_version < opts->version)
-+		index_version = opts->version;
- 
- 	/* index versions 2 and above need a header */
- 	if (index_version >= 2) {
-@@ -127,7 +129,9 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
- 			uint32_t offset = htonl(obj->offset);
- 			sha1write(f, &offset, 4);
- 		}
--		sha1write(f, obj->sha1, 20);
-+		/* Pack v4 (using index v3) carries the SHA1 table already */
-+		if (index_version < 3)
-+			sha1write(f, obj->sha1, 20);
- 		git_SHA1_Update(&ctx, obj->sha1, 20);
- 		if ((opts->flags & WRITE_IDX_STRICT) &&
- 		    (i && !hashcmp(list[-2]->sha1, obj->sha1)))
 diff --git a/packv4-create.c b/packv4-create.c
-index 63dc3d2..bb171c5 100644
+index 6e0bb1d..a6dc818 100644
 --- a/packv4-create.c
 +++ b/packv4-create.c
-@@ -1007,8 +1007,10 @@ static void process_one_pack(char *src_pack, char *dst_pack)
- 	struct packed_git *p;
- 	struct sha1file *f;
- 	struct pack_idx_entry *objs, **p_objs;
-+	struct pack_idx_option idx_opts;
- 	unsigned i, nr_objects;
- 	off_t written = 0;
-+	unsigned char pack_sha1[20];
+@@ -12,6 +12,7 @@
+ #include "object.h"
+ #include "tree-walk.h"
+ #include "pack.h"
++#include "pack-revindex.h"
  
- 	p = open_pack(src_pack);
- 	if (!p)
-@@ -1034,11 +1036,17 @@ static void process_one_pack(char *src_pack, char *dst_pack)
- 	for (i = 0; i < nr_objects; i++) {
- 		off_t obj_pos = written;
- 		struct pack_idx_entry *obj = p_objs[i];
-+		crc32_begin(f);
- 		written += packv4_write_object(f, p, obj);
- 		obj->offset = obj_pos;
-+		obj->crc32 = crc32_end(f);
- 	}
  
--	sha1close(f, NULL, CSUM_CLOSE | CSUM_FSYNC);
-+	sha1close(f, pack_sha1, CSUM_CLOSE | CSUM_FSYNC);
-+
-+	reset_pack_idx_option(&idx_opts);
-+	idx_opts.version = 3;
-+	write_idx_file(dst_pack, p_objs, nr_objects, &idx_opts, pack_sha1);
+ static int pack_compression_level = Z_DEFAULT_COMPRESSION;
+@@ -673,6 +674,71 @@ static unsigned int write_object_header(struct sha1file *f, enum object_type typ
+ 	return end - buf;
  }
  
- static int git_pack_config(const char *k, const char *v, void *cb)
++static unsigned long copy_object_data(struct sha1file *f, struct packed_git *p,
++				      off_t offset)
++{
++	struct pack_window *w_curs = NULL;
++	struct revindex_entry *revidx;
++	enum object_type type;
++	unsigned long avail, size, datalen, written;
++	int hdrlen, idx_nr;
++	unsigned char *src, *end, buf[24];
++
++	revidx = find_pack_revindex(p, offset);
++	idx_nr = revidx->nr;
++	datalen = revidx[1].offset - offset;
++
++	src = use_pack(p, &w_curs, offset, &avail);
++	hdrlen = unpack_object_header_buffer(src, avail, &type, &size);
++
++	written = write_object_header(f, type, size);
++
++	if (type == OBJ_OFS_DELTA) {
++		unsigned char c = src[hdrlen++];
++		off_t base_offset = c & 127;
++		while (c & 128) {
++			base_offset += 1;
++			if (!base_offset || MSB(base_offset, 7))
++				die("delta offset overflow");
++			c = src[hdrlen++];
++			base_offset = (base_offset << 7) + (c & 127);
++		}
++		base_offset = offset - base_offset;
++		if (base_offset <= 0 || base_offset >= offset)
++			die("delta offset out of bound");
++		revidx = find_pack_revindex(p, base_offset);
++		end = add_sha1_ref(buf, nth_packed_object_sha1(p, revidx->nr));
++		sha1write(f, buf, end - buf);
++		written += end - buf;
++	} else if (type == OBJ_REF_DELTA) {
++		end = add_sha1_ref(buf, src + hdrlen);
++		hdrlen += 20;
++		sha1write(f, buf, end - buf);
++		written += end - buf;
++	}
++
++	if (p->index_version > 1 &&
++	    check_pack_crc(p, &w_curs, offset, datalen, idx_nr))
++		die("bad CRC for object at offset %"PRIuMAX" in %s",
++		    (uintmax_t)offset, p->pack_name);
++
++	offset += hdrlen;
++	datalen -= hdrlen;
++
++	while (datalen) {
++		src = use_pack(p, &w_curs, offset, &avail);
++		if (avail > datalen)
++			avail = datalen;
++		sha1write(f, src, avail);
++		written += avail;
++		offset += avail;
++		datalen -= avail;
++	}
++	unuse_pack(&w_curs);
++
++	return written;
++}
++
+ static struct packed_git *open_pack(const char *path)
+ {
+ 	char arg[PATH_MAX];
 -- 
 1.8.4.22.g54757b7
