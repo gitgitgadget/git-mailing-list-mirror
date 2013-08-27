@@ -1,84 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/23] Preliminary pack v4 support
-Date: Tue, 27 Aug 2013 08:03:49 -0700
-Message-ID: <xmqqioyrfa5m.fsf@gitster.dls.corp.google.com>
-References: <1377577567-27655-1-git-send-email-nico@fluxnic.net>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH/RFC] core.precomposeunicode is true by default
+Date: Tue, 27 Aug 2013 17:06:35 +0200
+Message-ID: <521CC07B.4000504@web.de>
+References: <201307270321.32398.tboegi@web.de> <7vmwp5z3iu.fsf@alter.siamese.dyndns.org> <521CAD88.4080609@web.de> <xmqqvc2rfau9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Aug 27 17:03:59 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 27 17:06:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEKoH-00006j-Bv
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 17:03:57 +0200
+	id 1VEKr6-0002Nk-ID
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 17:06:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753966Ab3H0PDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Aug 2013 11:03:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57662 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753607Ab3H0PDw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Aug 2013 11:03:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F16233C164;
-	Tue, 27 Aug 2013 15:03:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ckK2oQmP7nvRJBF5iczML5c5T0c=; b=DSNMjD
-	g3cyCbZatAu4m1McXyQPi0hP7peFbK8eaQBrKBGnoL9yAC+vLAyQ6GXRq3uxwkil
-	p2iKK3I27ZChUR/0rp9KoRw0jA1EA2Hv5+m6E+rJEzpajo8udCndDKxu3L1GWSNu
-	w5CVA9bKQgUqUu2vF+/S07wxd03ws1U5UUpNc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SBwNESxOVmi26I9dywec/nkfSRttGpzn
-	BKFr52yc6pMmc98l1krFp2KCj+cMMsD3wFM8wQtES44zZ2DKdWimPZTnNT8+Xhu3
-	tzvSWLydzP5gkeRNP7DXCy2cIcf+DN1QEzqI6A7iT5gsS2ehlIh6t0m3zLjlQyHw
-	4zJ/0cDaPeQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE2533C163;
-	Tue, 27 Aug 2013 15:03:51 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5EB73C162;
-	Tue, 27 Aug 2013 15:03:50 +0000 (UTC)
-In-Reply-To: <1377577567-27655-1-git-send-email-nico@fluxnic.net> (Nicolas
-	Pitre's message of "Tue, 27 Aug 2013 00:25:44 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E1D6460C-0F29-11E3-A898-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751704Ab3H0PGs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Aug 2013 11:06:48 -0400
+Received: from mout.web.de ([212.227.17.12]:61607 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751570Ab3H0PGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Aug 2013 11:06:48 -0400
+Received: from birne.lan ([195.67.191.23]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0MYefK-1Varxc26MM-00VREl for <git@vger.kernel.org>; Tue,
+ 27 Aug 2013 17:06:46 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <xmqqvc2rfau9.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:DFwaeMGFm4jTzODm1INCTZ/vvWb41r3aj72HTDgzv8PNDNP+Mil
+ H/Z6ulDlKgY3NNx3QQT2//wnR35P8TC2vIfJof36iEZdDtT98XSppK4jCp1LPjTxfkVnLV0
+ 3m0X3cnGqufQQaIR3XfNJ0nXm7s+wnQqCPPnj/DvDG8B89BC6SJoTC1I5pE5/l2pF9XPODG
+ qwA0MWXd2O1EgidqpAlBA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233097>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
+On 27.08.13 16:49, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>
+>>> ... see if that path can be seen under its alias.  Why do we set it
+>>> to "false"?  Isn't this the true culprit?
+>>>
+>>> After all, this is not in the "reinit" codepath, so we know we are
+>>> dealing with a repository that was created afresh.
+>> There is nothing wrong with the auto-sensing as such.
+>> The problem for many users today is that we set core.precomposeunico=
+de
+>> to false, when it should be true.
+> I think we are in agreement then.
+>
+> The code detects a broken filesystem just fine, but what it does
+> when it finds the filesystem is broken is wrong---it sets the
+> variable to false.  That makes the whole auto-sensing wrong, and I
+> think it makes sense to correct that behaviour.
+>
+>> Let's look what precomposed_unicode does and go through a couple
+>> of git operations.
+>>
+>> 1)
+>> When we create a repo under Mac OS using HFS+,
+>> we want to have precomposed_unicode =3D 1
+> Yes.
+>
+>> 2)
+>> When we access a repo from Windows/Linux using SAMBA,
+> You mean s/repo/repository that resides on HFS+/?
+Sorry being unclear here, trying being clearer with an example:
+I have a /data/Docs on my linux box, which is handled by git
 
-> Subject says it all... at last !
->
-> This can also be fetched here:
->
-> 	git://git.linaro.org/people/nico/git
->
-> Demonstration of what it does at the moment:
->
-> 	http://article.gmane.org/gmane.comp.version-control.git/233038
->
-> I'd like to preserve the author time stamps as they relate to where in
-> the world I was when the corresponding code was written.  You'll notice
-> I didn't work on the code in the same order as it is now presented.
+I export /data/Docs via SAMBA, and use the Finder under Mac OS to have =
+it
+mounted on my Mac OS X box:
+//tb@Linux/Docs on /Volumes/Docs (smbfs, nodev, nosuid, mounted by tb)
+>> readdir() will return decomposed.
+>> When the repo is created by nonMacOS, core.precomposeunicode is unde=
+fined.
+>> The precomposition is off, but should be on,=20
+>> precomposed_unicode =3D -1, but should be =3D 1
+> I do not think UTF-8-MAC is widely available; even if you flip the
+> bit on, would it help much?
+In the above example
+/data/Docs/.git/config was created by Linux, so it does not have
+core.precomposeunicode set, neither false nor true.
+The Linux box does not have  UTF-8-MAC under iconv,
+but will ignore core.precomposeunicode anyway (since the code is not co=
+mpiled here)
 
-We can also notice things like "From: user@machine.(none)" ;-)
+The Mac OS machine sees it under /Volumes/Docs/.git/config
+And here we want the precomposition, even if core.precomposeunicode
+is not present in the config.
 
-> Still open question: what to do with a thin pack.  Should we really
-> complete it with local objects upon reception, or were we only over
-> paranoid at the time we imposed this rule?
-
-I do not think paranoia had much to do with it.  I am afraid that
-allowing a delta in a pack to depend on a base in another pack means
-that the former pack becomes unusable without the latter, which
-would make object store management (e.g. partial repacking) a lot
-more cumbersome, no?
+=20
