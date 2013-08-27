@@ -1,70 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 05/23] pack v4: add commit object parsing
-Date: Tue, 27 Aug 2013 10:42:53 -0700
-Message-ID: <xmqq4nabdo82.fsf@gitster.dls.corp.google.com>
-References: <1377577567-27655-1-git-send-email-nico@fluxnic.net>
-	<1377577567-27655-6-git-send-email-nico@fluxnic.net>
-	<xmqq7gf7f94f.fsf@gitster.dls.corp.google.com>
-	<alpine.LFD.2.03.1308271238270.14472@syhkavp.arg>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [PATCH v2 0/11] Modernize user-manual
+Date: Tue, 27 Aug 2013 19:52:54 +0200 (CEST)
+Message-ID: <1403569571.34349.1377625974290.JavaMail.ngmail@webmail19.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Aug 27 19:43:06 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: martinvonz@gmail.com, jrnieder@gmail.com, th.acker@arcor.de,
+	gitster@pobox.com, wking@tremily.us, philipoakley@iee.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 27 19:53:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VENIG-0001XH-PR
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 19:43:05 +0200
+	id 1VENRs-0000lj-79
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 19:53:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753525Ab3H0RnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Aug 2013 13:43:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47366 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753366Ab3H0Rm7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Aug 2013 13:42:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96E9D3CBA2;
-	Tue, 27 Aug 2013 17:42:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7YR6Vnn13riWkcAmQPysRLjJpeA=; b=kB80BF
-	/lVj6s+SByUunIXNNp9w/t8v/M1Ss2Ok/GfvmH7nFr9atvxPlGCkvzPA2Vz0I7aS
-	8nA+g7g0PRy+/QHlxsudEQAY8mZ0ti5ItEYzs8vT+eJz2VRmdT4833Lf8teVNPmO
-	yk1Et7X6VAPZ/9ysfROT0UdQwLGcWKTp+eBBU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ChQiLTOqQzZ0yJC0Kd7Hp8DJ5GQlZYMl
-	GXg7giH6/xNXfesqnqrxc2XwiVKtU+vMmGv47SCWu/0K7KJSdeiX/GaWj6ouoD99
-	NI2iqrk3uFDrHPXrmhPUowSxaCOFyy7/dpBX71VFH0Rs10A5lsAvKevw0+20abpt
-	Qn8eiJe6xzM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A6053CBA0;
-	Tue, 27 Aug 2013 17:42:58 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BAE9A3CB9D;
-	Tue, 27 Aug 2013 17:42:55 +0000 (UTC)
-In-Reply-To: <alpine.LFD.2.03.1308271238270.14472@syhkavp.arg> (Nicolas
-	Pitre's message of "Tue, 27 Aug 2013 12:47:20 -0400 (EDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1B1FC77E-0F40-11E3-B3CC-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752864Ab3H0Rw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Aug 2013 13:52:56 -0400
+Received: from mail-in-07.arcor-online.net ([151.189.21.47]:41191 "EHLO
+	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752752Ab3H0Rwz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Aug 2013 13:52:55 -0400
+Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
+	by mx.arcor.de (Postfix) with ESMTP id 52E07107AD9;
+	Tue, 27 Aug 2013 19:52:54 +0200 (CEST)
+Received: from mail-in-17.arcor-online.net (mail-in-17.arcor-online.net [151.189.21.57])
+	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id 496A22E61A3;
+	Tue, 27 Aug 2013 19:52:54 +0200 (CEST)
+Received: from webmail19.arcor-online.net (webmail19.arcor-online.net [151.189.8.77])
+	by mail-in-17.arcor-online.net (Postfix) with ESMTP id 477AFCBC53;
+	Tue, 27 Aug 2013 19:52:54 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-17.arcor-online.net 477AFCBC53
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1377625974; bh=KdGZ+3waWRasWi9OUbM6qK3aLoooo6hWibN8M66TLeA=;
+	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=WURciiol7NNNQL5TxRkHw8WI8zIyBsE3JbrvOpTHcVC1zoXukdlWLRYTVI/K1/a3f
+	 TsBCeqlmdO2T7emuI18EadSJUYAB/Pw7HyoRUsYzAwT7GdXI4VUVj08lR1tHcsUZwZ
+	 BbSgvweDgTVfScI6hWX17LNDKD9VZba6oB+vNhG0=
+Received: from [178.7.16.225] by webmail19.arcor-online.net (151.189.8.77) with HTTP (Arcor Webmail); Tue, 27 Aug 2013 19:52:54 +0200 (CEST)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 178.7.16.225
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233120>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
+Hi,
 
-> Hmmm....  The problem I have with split_ident_line() right now is about 
-> the fact that it is too liberal with whitespaces.  Here I must be sure I 
-> can deconstruct a commit object and be sure I still can regenerate it 
-> byte for byte in order to match its SHA1 signature.
+this is v2 of my patches for user-manual.txt.
 
-Yeah, I now see.  It's the same "accept with leniency"
-get_sha1_hex() does, which is not appropriate for the 
-purpose of this codepath.
+Thanks to Junio, Jonathan, Martin and Philip for your comments!
+
+I think Philips remarks should be part of a separate patch series which then
+also should address the current differences in layout between user-manual.html
+and user-manual.pdf.
+
+Changes in v2:
+
+[PATCH 01/13] Call it "Git User Manual" and remove reference to very old Git version 
+-> same as v1
+[PATCH 02/13] Use current "detached HEAD" message 
+-> fixed another occurence of "(no branch)"
+[PATCH 03/13] Use current output for "git repack" 
+-> add location where packfile is created
+[PATCH 04/13] Use "git merge" instead of "git pull ." 
+-> reverted changes in "Getting updates with git pull"
+[PATCH 05/13] Fix some typos  and improve wording
+-> better wording
+[PATCH 06/13] Simplify "How to make a commit" 
+-> better wording
+[PATCH 07/13] Improve description in "How to merge" 
+-> this patch was dropped
+[PATCH 08/13] Improve section "Manipulating branches" 
+-> add missing case for "current"
+[PATCH 09/13] Improve section "Merge multiple trees" 
+-> better wording
+[PATCH 10/13] Remove unnecessary historical note from "Object storage format"
+-> same as in v1
+[PATCH 11/13] Remove obscure reference from "Examples"
+-> this patch was dropped
+[PATCH 12/13] Remove irrelevant reference from "Tying it all together"
+-> same as in v1
+[PATCH 13/13] "git prune" is safe now
+-> weakend warning for "git prune"
+
+Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+
+---
+Thomas
