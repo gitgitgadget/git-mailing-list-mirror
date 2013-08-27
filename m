@@ -1,67 +1,69 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [ANNOUNCE] Git v1.8.4
-Date: Tue, 27 Aug 2013 07:40:43 +0700
-Message-ID: <CACsJy8C3rbxLmSgoR6LY6okHOC=1U4rcdH3CXSYB==+5d81aUg@mail.gmail.com>
-References: <xmqqfvu0nkim.fsf@gitster.dls.corp.google.com> <alpine.LFD.2.03.1308232242180.14472@syhkavp.arg>
+From: Lukas Fleischer <git@cryptocrack.de>
+Subject: Re: [PATCH] config: do not use C function names as struct members
+Date: Tue, 27 Aug 2013 02:56:01 +0200
+Message-ID: <20130827005601.GA14679@blizzard>
+References: <521BB643.304@gmail.com>
+ <20130826201804.GB13130@blizzard>
+ <521BBA98.7010102@gmail.com>
+ <20130826203154.GA21357@blizzard>
+ <20130826205901.GC23598@sigill.intra.peff.net>
+ <20130826215718.GB6219@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Aug 27 02:41:25 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Lance <lancethepants@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 27 02:56:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VE7LX-0008Em-5Q
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 02:41:23 +0200
+	id 1VE7Zu-0001A3-4g
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 02:56:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752524Ab3H0AlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Aug 2013 20:41:15 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:57022 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752341Ab3H0AlN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Aug 2013 20:41:13 -0400
-Received: by mail-oa0-f53.google.com with SMTP id k18so4504020oag.12
-        for <git@vger.kernel.org>; Mon, 26 Aug 2013 17:41:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=VVE2uzX9rNWmkrTvz7xY7r9tj19HPNxs4NXntONgmVo=;
-        b=rwBlw1WwuNb4V+Pxrah41I0AOLsdqg4+HsLobUdS/5g5FyXbtQmMKoScA93VQ1kSjq
-         t/JN96GotPJcPLr0XHe7o6aNhjrpMl3guOwZs9ueAbUcpiFmFhbcutJdeREoBu3irf6p
-         7P/qMZsandncVnhHGt+gNeg5WWNRURVGZrTXOLUfYR2O0lJFjFXC/IxSH8OmGPhXHC47
-         uOQaApYfGY3+XjeyVNDvIr8KMNAnvx+m0Y2y/Jtuuzd/cyahakC6fRrPMfCIKC9vs38h
-         2qDl2TxNk0CJzPTXE5axZ0eP/AMUKBfw7LX2N8NWHybT2bFHUY8KtW91h4QCmqAkyRvA
-         C5nA==
-X-Received: by 10.182.121.137 with SMTP id lk9mr16823603obb.32.1377564073289;
- Mon, 26 Aug 2013 17:41:13 -0700 (PDT)
-Received: by 10.182.87.105 with HTTP; Mon, 26 Aug 2013 17:40:43 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.03.1308232242180.14472@syhkavp.arg>
+	id S1752526Ab3H0A4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Aug 2013 20:56:09 -0400
+Received: from elnino.cryptocrack.de ([46.165.227.75]:24335 "EHLO
+	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752410Ab3H0A4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Aug 2013 20:56:08 -0400
+Received: from localhost (p57B4037E.dip0.t-ipconnect.de [87.180.3.126]);
+	by elnino.cryptocrack.de (OpenSMTPD) with ESMTP id 7647a56e;
+	TLS version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO;
+	Tue, 27 Aug 2013 02:56:02 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20130826215718.GB6219@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233040>
 
-On Tue, Aug 27, 2013 at 7:06 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
-> Yes, after being vaporware for many many years (I don't even remember
-> when I started making references to a possible pack format version 4 --
-> certainly more than 6 years ago) I finally completed the code to produce
-> a new pack format I'm actually happy with.
->
-> ...
->
-> But the biggest gain will come from direct interpretation of the native
-> pack data encoding.  However I'll let others do that part, as well as
-> the required fsck support and all the backward compatibility handling,
-> etc.  Now that the encoding design is pretty much settled I think it is
-> good for review, and for others to get involved as well.
->
-> Interested?  ;-)
+On Mon, Aug 26, 2013 at 05:57:18PM -0400, Jeff King wrote:
+> On Mon, Aug 26, 2013 at 04:59:01PM -0400, Jeff King wrote:
+> 
+> > Hmm. I wonder if fgetc is a macro in uclibc? Just grepping their
+> > stdio.h, it looks like that is a possibility.
+> > 
+> > I think they are probably wrong to do so (but I'd have to check the
+> > standard). However, the cleaner workaround would probably be to call the
+> > fgetc struct member something else.
+> 
+> Nope, it's allowed. I think we should do the patch below:
+> 
+> -- >8 --
+> Subject: config: do not use C function names as struct members
+> [...]
+> 
+> Instead, we can simply use non-colliding names.
 
-A clone url, or a patch series please! :-)
--- 
-Duy
+Yes, this sounds like a better idea to me. So, FWIW, +1 from me.
+
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  config.c | 32 ++++++++++++++++----------------
+>  1 file changed, 16 insertions(+), 16 deletions(-)
+> 
+> [...]
