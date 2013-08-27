@@ -1,191 +1,115 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] Document pack v4 format
-Date: Tue, 27 Aug 2013 18:17:05 +0700
-Message-ID: <1377602225-30439-1-git-send-email-pclouds@gmail.com>
-References: <1377577567-27655-1-git-send-email-nico@fluxnic.net>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [RFC/PATCH] Fix path prefixing in grep_object
+Date: Tue, 27 Aug 2013 07:54:34 -0400
+Message-ID: <CABURp0r6neiqhOA=JsT67Oxr-zUNLpsr71bVc7F_hWWM61KoGQ@mail.gmail.com>
+References: <1377394558-371-1-git-send-email-hordp@cisco.com>
+ <CABURp0qG7Nnjpp17MAO7Ltwf51EsswZ3GcT-qyt14Vs1tc9pGw@mail.gmail.com>
+ <xmqqa9k6moif.fsf@gitster.dls.corp.google.com> <20130825042314.GE2882@elie.Belkin>
+ <xmqqk3jal4t7.fsf@gitster.dls.corp.google.com> <xmqqfvtwkjp8.fsf@gitster.dls.corp.google.com>
+ <CABURp0oGMTEgX3TKKEMAOxe6T0=uij+bAyc+5u0x_UHwEPo3CQ@mail.gmail.com>
+ <xmqqr4dgifp5.fsf@gitster.dls.corp.google.com> <CABURp0odEGgZO1yWFgXS+akPb4wJHiTLoQcmqBd00oYnPZ77vA@mail.gmail.com>
+ <xmqqbo4kicsm.fsf@gitster.dls.corp.google.com> <xmqqhaebhj3u.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 27 13:14:21 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Phil Hord <hordp@cisco.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 27 13:55:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEHE4-0002gR-JP
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 13:14:20 +0200
+	id 1VEHrT-0001bp-Cb
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 13:55:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752152Ab3H0LOQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Aug 2013 07:14:16 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:52820 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751851Ab3H0LOP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Aug 2013 07:14:15 -0400
-Received: by mail-pb0-f53.google.com with SMTP id up15so4706954pbc.12
-        for <git@vger.kernel.org>; Tue, 27 Aug 2013 04:14:14 -0700 (PDT)
+	id S1753344Ab3H0Ly4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Aug 2013 07:54:56 -0400
+Received: from mail-ve0-f177.google.com ([209.85.128.177]:53683 "EHLO
+	mail-ve0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753332Ab3H0Lyz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Aug 2013 07:54:55 -0400
+Received: by mail-ve0-f177.google.com with SMTP id cz11so2985066veb.36
+        for <git@vger.kernel.org>; Tue, 27 Aug 2013 04:54:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=HELyfbEfGSKOzEDhL303g98Uzki4zLQVsuN5P0WIA7w=;
-        b=J9fdFs7fIUAEaVNAdDMmckFH/0UMU1y51pq7FgeNrOPyrNbq44OrUPdMTAXOltpw8D
-         FEUa+gUbTjlTw2bBRX6k3mMZIyPE0BF6DPIcgpQWUyjdvMTHfw3MFsjSF4h0FpNT0OWQ
-         UBkOZQ9bDpQaa08/dZvIok+m0MWHSVJny+LXS5+LQJ/LiBXCkFttgj8Q8dPCk1WEDzuk
-         dpX4yLk967ZXCQddlZz3sJ8ImU0zm0WFm2KI6ZMZlE9rUAnjcUKfQFE+VjW+DuXI0mDY
-         VIp49NxPTV93qT+i19P8V7+gvZBb6Xgd29RgAgWzmlJfbLxyrJDUjsL0qCTS23iCRfY+
-         UuHA==
-X-Received: by 10.68.162.97 with SMTP id xz1mr8191941pbb.166.1377602054823;
-        Tue, 27 Aug 2013 04:14:14 -0700 (PDT)
-Received: from lanh ([115.73.224.155])
-        by mx.google.com with ESMTPSA id wp8sm23999051pbc.26.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 27 Aug 2013 04:14:14 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 27 Aug 2013 18:17:13 +0700
-X-Mailer: git-send-email 1.8.2.83.gc99314b
-In-Reply-To: <1377577567-27655-1-git-send-email-nico@fluxnic.net>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0/LBQUhwwT8v9zK3EjOy/k9LKg/80bnGvFVVr94WoNg=;
+        b=I9H8xcMzjLu57AI4b04cqxbPQJIjI4laH3AkNzgpcb1YU9esD7ihVAaQ65cjbek2T9
+         c5+Tzx0lm3Zxs50hxIIUwUkA3G1FvGflxkhz+KRTh2T1jK5gdwfkae7SrPhH7qWcnpZ6
+         3pm7Dcgp+Hb9mODwb6eyFPuBbv6lXgnUPoxoj6OG4vUxVCJOgGkGcreiBwE4qHnOZsmY
+         fRDDpIfccTidFVslvHCqM4eMCmm4sCcKuHXUQFWBt34v+7kkfjg45mlJ1uRDBXP4AYqQ
+         myCu2lGRjXZI4rhPe1GaIl1nEJuAcXmUIKWP3Eb1ymPflg43MTMIZbQ4RI5IcMHRXRto
+         I2Bw==
+X-Received: by 10.52.92.73 with SMTP id ck9mr16717407vdb.2.1377604494287; Tue,
+ 27 Aug 2013 04:54:54 -0700 (PDT)
+Received: by 10.58.49.197 with HTTP; Tue, 27 Aug 2013 04:54:34 -0700 (PDT)
+In-Reply-To: <xmqqhaebhj3u.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233084>
 
+On Tue, Aug 27, 2013 at 12:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Not necessarily.  If the user is asking the question in a more
+>> natural way (I want to see where in 'next' branch's tip commit hits
+>> appear, by the way, I know I am only interested in builtin/ so I'd
+>> give pathspec as well when I am asking this question), the output
+>> does give <commit> <colon> <path>, so it is more than coincidence.
+>
+> This part needs to be qualified.  "Natural" is of course in the eyes
+> of beholder.  If we assume that your #1 holds true (i.e. the tuple
+> <in which tree object are we reporting, what path we saw hits> is
+> important and merging them into one <in what blob we saw hits> lose
+> information),
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- For my education but may help people who are interested in the
- format. Most is gathered from commit messages, except the delta tree
- entries.
-=20
- .idx is not documented yet, but it does not change much and not the
- focus right now anyway.
+"My #1" is really "what I inferred from your statements."  I did not
+think the tuple was important, but I agree that may be my
+shortsightedness.  If the tuple is important, then it seems to me that
+the --null behavior is a bug (the colon is left intact); but changing
+it now seems senseless or harmful.
 
- Documentation/technical/pack-format-v4.txt (new) | 110 +++++++++++++++=
-++++++++
- 1 file changed, 110 insertions(+)
- create mode 100644 Documentation/technical/pack-format-v4.txt
+> then it is natural to ask "inside origin/master tree,
+> where do I have hits?  By the way, I am only interested in builtin/"
+> and get "origin/master:builtin/pack-objects.c" as an answer (this is
+> from your earlier example), than asking "inside origin/master:builtin
+> tree, where do I have hits?"
+>
+> If we do not consider #1 is false and the tree information can be
+> discarded, then it does not matter if we converted the colon after
+> origin/master to slash when we answer the latter question, and the
+> latter question stops being unnatural.
+>
+>> ...
+>> but it might be a good change to allow A:B:C to be parsed as a
+>> proper extended SHA-1 expression and make it yield
+>>
+>>       git rev-parse $(git rev-parse $(git rev-parse A):B):C
+>>
+>> Right now, "B:C" is used as a path inside tree-ish "A", but I think
+>> we can safely fall back, when path B:C does not appear in tree-ish
+>> A, to see if path B appears in it and is a tree, and then turn it
+>> into a look-up of path C in that tree A:B.
+>
+> And if we want to keep the <tree, path> tuple, but still want to
+> make it easier to work with the output, allowing A:B:C to be parsed
+> as an extended SHA-1 expression would be a reasonable solution, not
+> a work-around. The answer is given to the question asked in either
+> way (either "in origin/master, but limited to these pathspecs" or
+> "in the tree origin/master:builtin/") without losing information,
+> but the issue you had is that the answer to the latter form of
+> question is not understood by the object name parser, which I
+> personally think is a bug.
 
-diff --git a/Documentation/technical/pack-format-v4.txt b/Documentation=
-/technical/pack-format-v4.txt
-new file mode 100644
-index 0000000..9123a53
---- /dev/null
-+++ b/Documentation/technical/pack-format-v4.txt
-@@ -0,0 +1,110 @@
-+Git pack v4 format
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+=3D=3D pack-*.pack files have the following format:
-+
-+   - A header appears at the beginning and consists of the following:
-+
-+     4-byte signature:
-+	  The signature is: {'P', 'A', 'C', 'K'}
-+
-+     4-byte version number (network byte order): must be version
-+     number 4
-+
-+     4-byte number of objects contained in the pack (network byte
-+     order)
-+
-+   - (20 * nr_objects)-byte SHA-1 table: sorted in memcmp() order.
-+
-+   - Commit name dictionary: the uncompressed length in variable
-+     encoding, followed by zlib-compressed dictionary. Each entry
-+     consists of two prefix bytes storing timezone followed by a
-+     NUL-terminated string.
-+
-+     Entries should be sorted by frequency so that the most frequent
-+     entry has the smallest index, thus most efficient variable
-+     encoding.
-+
-+   - Tree path dictionary: similar format to commit name
-+     dictionary. Each entry consists of two prefix bytes storing entry
-+     mode, then a NUL-terminated path name. Same sort order
-+     recommendation applies.
-+
-+   - The header is followed by number of object entries, each of
-+     which looks like this:
-+
-+     (undeltified representation)
-+     n-byte type and length (4-bit type, (n-1)*7+4-bit length)
-+     [uncompressed data]
-+     [compressed data]
-+
-+     (deltified representation)
-+     n-byte type and length (4-bit type, (n-1)*7+4-bit length)
-+     base object name in SHA-1 reference encoding
-+     compressed delta data
-+
-+     In undeltified format, blobs and tags do not have the
-+     uncompressed data, all object content is compressed. Trees are
-+     not compressed at all. Some headers in commits are stored
-+     uncompressed, the rest is compressed.
-+
-+     All objects except trees are deltified and compressed the same
-+     way in v3. Trees however are deltified differently and use
-+     undeltified representation. See "Tree representation" below for
-+     details.
-+
-+  - The trailer records 20-byte SHA-1 checksum of all of the above.
-+
-+=3D=3D=3D Commit representation
-+
-+  - n-byte type and length (4-bit type, (n-1)*7+4-bit length)
-+
-+  - Tree SHA-1 in SHA-1 reference encoding
-+
-+  - Parent count in variable length encoding
-+
-+  - Parent SHA-1s in SHA-1 reference encoding
-+
-+  - Author reference: the index, in variable length encoding, to comit
-+    name dictionary, which covers the name and also the time zone.
-+
-+  - Author timestamp in variable length encoding
-+
-+  - Committer reference: the index, in variable length encoding, to
-+    comit name dictionary, which covers the name and also the time
-+    zone.
-+
-+  - Committer timestamp in variable length encoding
-+
-+  - Compressed data of remaining header and the body
-+
-+=3D=3D=3D Tree representation
-+
-+  - n-byte type and length (4-bit type, (n-1)*7+4-bit length)
-+
-+  - Number of trees in variable length encoding
-+
-+  - A number of trees, each consists of
-+
-+    Path component reference: an index, in variable length encoding,
-+    into tree path dictionary, which also covers entry mode.
-+
-+    SHA-1 in SHA-1 reference encoding.
-+
-+Path component reference zero is an indicator of deltified portion and
-+has the following format:
-+
-+  - path component reference: zero
-+
-+  - index of the entry to copy from, in variable length encoding
-+
-+  - number of entries in variable length encoding
-+
-+  - base tree in SHA-1 reference encoding
-+
-+=3D=3D=3D SHA-1 reference encoding
-+
-+This encoding is used to encode SHA-1 efficiently if it's already in
-+the SHA-1 table. It starts with an index number in variable length
-+encoding. If it's not zero, its value minus one is the index in the
-+SHA-1 table. If it's zero, 20 bytes of SHA-1 is followed.
---=20
-1.8.2.83.gc99314b
+I am beginning to agree, though we discovered some other weird output
+from grep which also does not parse. (origin/master:../relative/path).
+
+It seems that fixing this bug could be very confusing for
+get_sha1_with_context unless the context was rewritten to match the
+traditional syntax.
+
+P
