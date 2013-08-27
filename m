@@ -1,115 +1,143 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [RFC/PATCH] Fix path prefixing in grep_object
-Date: Tue, 27 Aug 2013 07:54:34 -0400
-Message-ID: <CABURp0r6neiqhOA=JsT67Oxr-zUNLpsr71bVc7F_hWWM61KoGQ@mail.gmail.com>
-References: <1377394558-371-1-git-send-email-hordp@cisco.com>
- <CABURp0qG7Nnjpp17MAO7Ltwf51EsswZ3GcT-qyt14Vs1tc9pGw@mail.gmail.com>
- <xmqqa9k6moif.fsf@gitster.dls.corp.google.com> <20130825042314.GE2882@elie.Belkin>
- <xmqqk3jal4t7.fsf@gitster.dls.corp.google.com> <xmqqfvtwkjp8.fsf@gitster.dls.corp.google.com>
- <CABURp0oGMTEgX3TKKEMAOxe6T0=uij+bAyc+5u0x_UHwEPo3CQ@mail.gmail.com>
- <xmqqr4dgifp5.fsf@gitster.dls.corp.google.com> <CABURp0odEGgZO1yWFgXS+akPb4wJHiTLoQcmqBd00oYnPZ77vA@mail.gmail.com>
- <xmqqbo4kicsm.fsf@gitster.dls.corp.google.com> <xmqqhaebhj3u.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH] remote: filter out invalid remote configurations
+Date: Tue, 27 Aug 2013 15:06:36 +0200
+Message-ID: <1377608796-13732-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Phil Hord <hordp@cisco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 27 13:55:05 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 27 15:06:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEHrT-0001bp-Cb
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 13:55:03 +0200
+	id 1VEIyw-0004LB-6f
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 15:06:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753344Ab3H0Ly4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Aug 2013 07:54:56 -0400
-Received: from mail-ve0-f177.google.com ([209.85.128.177]:53683 "EHLO
-	mail-ve0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753332Ab3H0Lyz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Aug 2013 07:54:55 -0400
-Received: by mail-ve0-f177.google.com with SMTP id cz11so2985066veb.36
-        for <git@vger.kernel.org>; Tue, 27 Aug 2013 04:54:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0/LBQUhwwT8v9zK3EjOy/k9LKg/80bnGvFVVr94WoNg=;
-        b=I9H8xcMzjLu57AI4b04cqxbPQJIjI4laH3AkNzgpcb1YU9esD7ihVAaQ65cjbek2T9
-         c5+Tzx0lm3Zxs50hxIIUwUkA3G1FvGflxkhz+KRTh2T1jK5gdwfkae7SrPhH7qWcnpZ6
-         3pm7Dcgp+Hb9mODwb6eyFPuBbv6lXgnUPoxoj6OG4vUxVCJOgGkGcreiBwE4qHnOZsmY
-         fRDDpIfccTidFVslvHCqM4eMCmm4sCcKuHXUQFWBt34v+7kkfjg45mlJ1uRDBXP4AYqQ
-         myCu2lGRjXZI4rhPe1GaIl1nEJuAcXmUIKWP3Eb1ymPflg43MTMIZbQ4RI5IcMHRXRto
-         I2Bw==
-X-Received: by 10.52.92.73 with SMTP id ck9mr16717407vdb.2.1377604494287; Tue,
- 27 Aug 2013 04:54:54 -0700 (PDT)
-Received: by 10.58.49.197 with HTTP; Tue, 27 Aug 2013 04:54:34 -0700 (PDT)
-In-Reply-To: <xmqqhaebhj3u.fsf@gitster.dls.corp.google.com>
+	id S1753055Ab3H0NGq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Aug 2013 09:06:46 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:53360 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752479Ab3H0NGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Aug 2013 09:06:45 -0400
+Received: from cmartin.tk (unknown [46.189.27.162])
+	by hessy.dwim.me (Postfix) with ESMTPA id A30AD80169
+	for <git@vger.kernel.org>; Tue, 27 Aug 2013 15:06:42 +0200 (CEST)
+Received: (nullmailer pid 13770 invoked by uid 1000);
+	Tue, 27 Aug 2013 13:06:36 -0000
+X-Mailer: git-send-email 1.8.4.561.g1c3d45d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233085>
 
-On Tue, Aug 27, 2013 at 12:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Not necessarily.  If the user is asking the question in a more
->> natural way (I want to see where in 'next' branch's tip commit hits
->> appear, by the way, I know I am only interested in builtin/ so I'd
->> give pathspec as well when I am asking this question), the output
->> does give <commit> <colon> <path>, so it is more than coincidence.
->
-> This part needs to be qualified.  "Natural" is of course in the eyes
-> of beholder.  If we assume that your #1 holds true (i.e. the tuple
-> <in which tree object are we reporting, what path we saw hits> is
-> important and merging them into one <in what blob we saw hits> lose
-> information),
+In remote's configuration callback, anything that looks like
+'remote.<name>.*' creates a remote '<name>'. This remote may not end
+up having any configuration for a remote, but it's still in the list,
+so 'git remote' shows it, which means something like
 
-"My #1" is really "what I inferred from your statements."  I did not
-think the tuple was important, but I agree that may be my
-shortsightedness.  If the tuple is important, then it seems to me that
-the --null behavior is a bug (the colon is left intact); but changing
-it now seems senseless or harmful.
+    [remote "bogus"]
+        hocus =3D pocus
 
-> then it is natural to ask "inside origin/master tree,
-> where do I have hits?  By the way, I am only interested in builtin/"
-> and get "origin/master:builtin/pack-objects.c" as an answer (this is
-> from your earlier example), than asking "inside origin/master:builtin
-> tree, where do I have hits?"
->
-> If we do not consider #1 is false and the tree information can be
-> discarded, then it does not matter if we converted the colon after
-> origin/master to slash when we answer the latter question, and the
-> latter question stops being unnatural.
->
->> ...
->> but it might be a good change to allow A:B:C to be parsed as a
->> proper extended SHA-1 expression and make it yield
->>
->>       git rev-parse $(git rev-parse $(git rev-parse A):B):C
->>
->> Right now, "B:C" is used as a path inside tree-ish "A", but I think
->> we can safely fall back, when path B:C does not appear in tree-ish
->> A, to see if path B appears in it and is a tree, and then turn it
->> into a look-up of path C in that tree A:B.
->
-> And if we want to keep the <tree, path> tuple, but still want to
-> make it easier to work with the output, allowing A:B:C to be parsed
-> as an extended SHA-1 expression would be a reasonable solution, not
-> a work-around. The answer is given to the question asked in either
-> way (either "in origin/master, but limited to these pathspecs" or
-> "in the tree origin/master:builtin/") without losing information,
-> but the issue you had is that the answer to the latter form of
-> question is not understood by the object name parser, which I
-> personally think is a bug.
+will show a remote 'bogus' in the listing, even though it won't work
+as a remote name for either git-fetch or git-push.
 
-I am beginning to agree, though we discovered some other weird output
-from grep which also does not parse. (origin/master:../relative/path).
+=46ilter out the remotes that we created which have no urls in order to
+work around such configuration entries.
 
-It seems that fixing this bug could be very confusing for
-get_sha1_with_context unless the context was rewritten to match the
-traditional syntax.
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
 
-P
+---
+
+Due to git's callback-based config, it seemed a lot simpler to let it
+do it wrong and then filter out what won't be usable, rather than
+delaying the creation of a remote until we're sure we do want it.
+
+The tests that made use of a remote 'existing' with just .fetch seem
+to be written that way because they can get away with it, rather than
+any assertion that it should be allowed in day-to-day git usage, but
+correct me if I'm wrong.
+
+ remote.c          | 17 +++++++++++++++++
+ t/t5505-remote.sh |  2 ++
+ t/t7201-co.sh     |  2 +-
+ 3 files changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/remote.c b/remote.c
+index 68eb99b..00a1d7a 100644
+--- a/remote.c
++++ b/remote.c
+@@ -141,6 +141,9 @@ static struct remote *make_remote(const char *name,=
+ int len)
+ 	int i;
+=20
+ 	for (i =3D 0; i < remotes_nr; i++) {
++		if (!remotes[i])
++			continue;
++
+ 		if (len ? (!strncmp(name, remotes[i]->name, len) &&
+ 			   !remotes[i]->name[len]) :
+ 		    !strcmp(name, remotes[i]->name))
+@@ -469,6 +472,19 @@ static int handle_config(const char *key, const ch=
+ar *value, void *cb)
+ 	return 0;
+ }
+=20
++static void filter_valid_remotes(void)
++{
++	int i;
++	for (i =3D 0; i < remotes_nr; i++) {
++		if (!remotes[i])
++			continue;
++
++		/* It's not a remote unless it has at least one url */
++		if (remotes[i]->url_nr =3D=3D 0 && remotes[i]->pushurl_nr =3D=3D 0)
++			remotes[i] =3D NULL;
++	}
++}
++
+ static void alias_all_urls(void)
+ {
+ 	int i, j;
+@@ -504,6 +520,7 @@ static void read_config(void)
+ 			make_branch(head_ref + strlen("refs/heads/"), 0);
+ 	}
+ 	git_config(handle_config, NULL);
++	filter_valid_remotes();
+ 	alias_all_urls();
+ }
+=20
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index dd10ff0..848e7b7 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -130,9 +130,11 @@ to delete them, use:
+ EOF
+ 	} &&
+ 	git tag footag &&
++	git remote add oops .
+ 	git config --add remote.oops.fetch "+refs/*:refs/*" &&
+ 	git remote remove oops 2>actual1 &&
+ 	git branch foobranch &&
++	git remote add oops .
+ 	git config --add remote.oops.fetch "+refs/*:refs/*" &&
+ 	git remote rm oops 2>actual2 &&
+ 	git branch -d foobranch &&
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 0c9ec0a..4647f1c 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -431,7 +431,7 @@ test_expect_success 'detach a symbolic link HEAD' '
+=20
+ test_expect_success \
+     'checkout with --track fakes a sensible -b <name>' '
+-    git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/=
+*" &&
++    git remote add origin . &&
+     git update-ref refs/remotes/origin/koala/bear renamer &&
+=20
+     git checkout --track origin/koala/bear &&
+--=20
+1.8.4.561.g1c3d45d
