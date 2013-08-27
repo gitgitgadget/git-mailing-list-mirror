@@ -1,66 +1,72 @@
-From: larsbj@gullik.org (Lars Gullik =?iso-8859-1?Q?Bj=F8nnes?=)
-Subject: Re: [PATCH 01/11] Call it "Git User Manual" and remove reference to very old Git version
-Date: Tue, 27 Aug 2013 23:16:48 +0200
-Organization: LyX Developer http://www.lyx.org/
-Message-ID: <m3d2oybzr3.fsf@black.gullik.net>
-References: <1403569571.34349.1377625974290.JavaMail.ngmail@webmail19.arcor-online.net>
-	<1972849803.34382.1377626115372.JavaMail.ngmail@webmail19.arcor-online.net>
-	<xmqqsixvc5wb.fsf@gitster.dls.corp.google.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2013, #06; Tue, 27)
+Date: Tue, 27 Aug 2013 23:25:15 +0200
+Message-ID: <CALWbr2wrHsa7LwZcEPYKe=kCrSHKsdrU6Bwevtb=2MwLrXtMnw@mail.gmail.com>
+References: <xmqqsixvaqh5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 27 23:17:10 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Joern Hees <dev@joernhees.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 27 23:25:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEQdQ-0001x5-NI
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 23:17:09 +0200
+	id 1VEQlP-0007RH-08
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Aug 2013 23:25:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752766Ab3H0VRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Aug 2013 17:17:00 -0400
-Received: from plane.gmane.org ([80.91.229.3]:47157 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752271Ab3H0VRA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Aug 2013 17:17:00 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1VEQdG-0001rA-DG
-	for git@vger.kernel.org; Tue, 27 Aug 2013 23:16:58 +0200
-Received: from cm-84.209.196.170.getinternet.no ([84.209.196.170])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 Aug 2013 23:16:58 +0200
-Received: from larsbj by cm-84.209.196.170.getinternet.no with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 Aug 2013 23:16:58 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: cm-84.209.196.170.getinternet.no
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-Cancel-Lock: sha1:B10gg/FATDvX6HJTNR7zrzan9iQ=
+	id S1752271Ab3H0VZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Aug 2013 17:25:17 -0400
+Received: from mail-qc0-f181.google.com ([209.85.216.181]:40625 "EHLO
+	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752585Ab3H0VZQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Aug 2013 17:25:16 -0400
+Received: by mail-qc0-f181.google.com with SMTP id i17so895238qcy.12
+        for <git@vger.kernel.org>; Tue, 27 Aug 2013 14:25:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=tXNgYrj1DqtWZnG9J/FEkVCBPE2+l8EdvFM+0rSOvAg=;
+        b=S+X+C9SZUfETohQyrJhkM9NDRTyv/ePKXxH2a0l7NTd/6Q8QsaHz1tLOtea0hBybBp
+         GE15F6kO6Rh2+TwwUCH8SmVFohq/zFgC6EdTUKgvpw9s3bbCY3eESKg9hGmLR/sToW2r
+         4ytWZPUvc0dHwLMZ1Me84XUAhAzx0N7FS2Rrb+Ou2AGb6uZtrOyRKmfcAtcTB3+WF1Vm
+         /hjyKEQIi8ZuDlxJcpshgXLPOWSLrrmIzuKsSlFUyCq2zDycOX1Zy+Pu7+t70CDqBefa
+         AfrPFkpxL+iCUIsPEZxjjWccrYYRUQKWzzQYm2y8Y5H7hyxxOKuzSwCIjwty0Sn+YpzX
+         ALOQ==
+X-Received: by 10.224.138.8 with SMTP id y8mr25772865qat.27.1377638715963;
+ Tue, 27 Aug 2013 14:25:15 -0700 (PDT)
+Received: by 10.49.104.211 with HTTP; Tue, 27 Aug 2013 14:25:15 -0700 (PDT)
+In-Reply-To: <xmqqsixvaqh5.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233163>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-| Thomas Ackermann <th.acker@arcor.de> writes:
+On Tue, Aug 27, 2013 at 9:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> * jh/remote-hg-fetch-fix (2013-07-25) 2 commits
+>   (merged to 'next' on 2013-07-25 at 33161ad)
+>  + Revert "remotes-hg: bugfix for fetching non local remotes"
+>   (merged to 'next' on 2013-07-24 at 9c96641)
+>  + remotes-hg: bugfix for fetching non local remotes
 >
->> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
->> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
->> ---
+>  Originally merged to 'next' on 2013-07-25
 >
-| I tend to agree with Jonathan that this should be "User's Manual".
+>  Reverted.
+>
+>  Waiting for the final patch to replace, after discussion settles.
 
-Not going into which one might be more correct, but a  quick google
-search for "User's Manual" and "User Manual" give these results:
+I think it has already been replaced by:
 
-User's Manual: 5.7M hits.
-User Manual: ~29M hits.
-
--- 
-	Lgb
+> * fc/remote-hg-shared-setup (2013-08-11) 2 commits
+>   (merged to 'next' on 2013-08-14 at aae6858)
+>  + remote-hg: add shared repo upgrade
+>  + remote-hg: ensure shared repo is initialized
+>
+>  Originally merged to 'next' on 2013-08-14
+>
+>  Will cook in 'next'.
