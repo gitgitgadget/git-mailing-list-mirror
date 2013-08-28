@@ -1,77 +1,91 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: What's cooking in git.git (Aug 2013, #06; Tue, 27)
-Date: Wed, 28 Aug 2013 08:39:16 +0200
-Message-ID: <521D9B14.2070408@viscovery.net>
-References: <xmqqsixvaqh5.fsf@gitster.dls.corp.google.com> <20130827205125.GA23783@sigill.intra.peff.net> <xmqqbo4ic0ap.fsf@gitster.dls.corp.google.com> <20130827214808.GA26350@sigill.intra.peff.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH v2 1/5] replace: forbid replacing an object with one of a different type
+Date: Wed, 28 Aug 2013 09:31:21 +0200
+Message-ID: <878uzmclva.fsf@linux-k42r.v.cablecom.net>
+References: <20130827194022.11172.56453.chriscool@tuxfamily.org>
+	<20130827194828.11172.73829.chriscool@tuxfamily.org>
+	<xmqqk3j6c1x0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 28 08:39:30 2013
+Content-Type: text/plain
+Cc: Christian Couder <chriscool@tuxfamily.org>, <git@vger.kernel.org>,
+	"Philip Oakley" <philipoakley@iee.org>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 28 09:31:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEZPc-00047Y-4x
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 08:39:28 +0200
+	id 1VEaDy-000245-1m
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 09:31:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753753Ab3H1GjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Aug 2013 02:39:23 -0400
-Received: from so.liwest.at ([212.33.55.24]:32469 "EHLO so.liwest.at"
+	id S1754388Ab3H1Hb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Aug 2013 03:31:26 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:12927 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752694Ab3H1GjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Aug 2013 02:39:21 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1VEZPR-0001TP-Cw; Wed, 28 Aug 2013 08:39:17 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id EBFD91660F;
-	Wed, 28 Aug 2013 08:39:16 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <20130827214808.GA26350@sigill.intra.peff.net>
-X-Spam-Score: -1.0 (-)
+	id S1752347Ab3H1HbZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Aug 2013 03:31:25 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 28 Aug
+ 2013 09:31:17 +0200
+Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
+ CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Wed, 28 Aug 2013 09:31:21 +0200
+In-Reply-To: <xmqqk3j6c1x0.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 27 Aug 2013 13:30:03 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233178>
 
-Am 8/27/2013 23:48, schrieb Jeff King:
-> The counterarguments I can see are:
-> 
->   1. Who cares? If you want to know whether pack-objects will choke on
->      your huge config value, then run pack-objects.
-> 
->   2. Such a check would involve knowing which type we use internally to
->      look at packSizeLimit, and that is utterly undocumented (and
->      subject to change; e.g., it seems kind of senseless that we have a
->      4G pack-size limit on 32-bit platforms, and we may want to fix
->      that).
-> 
-> So if you do not buy the argument that communicating git's internal
-> range checks is useful, then we can simply say "--int is magically long
-> on every platform, and you can use it for everything numeric". And
-> implement it with int64_t. You may be able to read or write some values
-> for certain keys that git will barf on internally, but that is git's
-> problem.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I'm in the camp of these (counter) arguments.
+> Christian Couder <chriscool@tuxfamily.org> writes:
+>
+>> Users replacing an object with one of a different type were not
+>> prevented to do so, even if it was obvious, and stated in the doc,
+>> that bad things would result from doing that.
+>>
+>> To avoid mistakes, it is better to just forbid that though.
+>>
+>> There is no case where one object can be replaced with one of a
+>> different type while keeping the history valid, because:
+>>
+>> * Annotated tags contain the type of the tagged object.
+>
+> If you replace the tagged object and the tag at the same time,
+> wouldn't that make the resulting history valid again?
+>
+> Granted, there may not be a strong reason to reuse the object name
+> of the tagged object in such a case, but this "there may not be" is
+> merely "I do not think of offhand", so I am not sure what workflow
+> of other people we are breaking with this change.  A light-weight
+> tag may already point at the tagged object (in other words, the
+> object name of the tagged object is known to the outside world) and
+> that could be a reason why you would need to reuse the object name
+> of that object while changing its type.
+>
+> I dunno.
 
-When my shell script asks for 'git config --int 3g', I expect to be
-returned a positive 10-digit. What would I care which type Git or any
-other tool is using internally? I only care whether my shell can work with
-numbers that large. Or the next tool that I feed the number to. But that's
-my business, not Git's.
+Hrm, you're right, that's a flaw in my logic.  You could do the same in
+all other cases too, e.g. replace a tree so that an entry is of a
+different type and at the same time change the type of the object
+itself.  You however have to carefully go through all objects that refer
+to the one that was replaced, and fix the type in all of them.
 
-> The one thing it doesn't get you is that you can currently set unsigned
-> values to "-1" in the config to have them treated as ULONG_MAX. This is
-> undocumented and as far as I know not used by anyone.
+It still seems an extremely unsafe thing to do with trees: especially
+for small trees there is a small probability that you will generate the
+same tree again in the future (by having the same blobs in the directory
+again) and record it as a subtree or the 'tree' field of a commit.  The
+history would then again be invalid.
 
-And it better stays that way. Magic numbers should be encoded with magic
-strings in the config file.
+Should we add a --force flag of some sort to allow the user to do this,
+while keeping the normal safety checks?
 
--- Hannes
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
