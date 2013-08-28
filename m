@@ -1,94 +1,102 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [RFC/PATCH v2 3/3] status: introduce status.displayCommentChar to
- disable display of #
-Date: Wed, 28 Aug 2013 14:59:52 -0700
-Message-ID: <CAJDDKr6RDiAxgUdaE5aH4-wxYRY7fKnUukX1D-t07=-_P0CZAg@mail.gmail.com>
-References: <vpqhaeaasuf.fsf@anie.imag.fr>
-	<1377694024-24173-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1377694024-24173-3-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqq1u5da8dp.fsf@gitster.dls.corp.google.com>
-	<20130828201803.GB8088@sigill.intra.peff.net>
-	<xmqqmwo18pgw.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2] git-diff: Clarify operation when not inside a repository.
+Date: Wed, 28 Aug 2013 15:16:49 -0700
+Message-ID: <xmqq38pt8nqm.fsf@gitster.dls.corp.google.com>
+References: <201308211734.r7LHYwNh008859@hobgoblin.ariadne.com>
+	<xmqqwqneuc69.fsf@gitster.dls.corp.google.com>
+	<201308222031.r7MKVL6O028293@freeze.ariadne.com>
+	<xmqqioyxqwdr.fsf@gitster.dls.corp.google.com>
+	<201308231811.r7NIBeH9027848@freeze.ariadne.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 00:00:03 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: worley@alum.mit.edu (Dale R. Worley)
+X-From: git-owner@vger.kernel.org Thu Aug 29 00:17:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEnmT-0001CR-0Y
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 00:00:01 +0200
+	id 1VEo2x-0005ey-Pj
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 00:17:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754628Ab3H1V7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Aug 2013 17:59:53 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:49935 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754067Ab3H1V7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Aug 2013 17:59:52 -0400
-Received: by mail-pa0-f49.google.com with SMTP id ld10so21499pab.36
-        for <git@vger.kernel.org>; Wed, 28 Aug 2013 14:59:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2NulcEEVtrc3ocdiuqu/RiJl9ziY8iHiXFNSMISTGaE=;
-        b=bSmflzd4K2FIrO+FgVHX/rXdsQlCEWVNDcs0T3LqAZt319iRBUW8cFlzbEMVGPPVuW
-         XtgUQMTZ1SHiMeTouSwroysNynezPHXbuQi/yDptHcxbfG1HNpzhVn0iZOK/OmtdomeG
-         A9dd0fsnhbW2olGHkhrWyXWpDJSOYyYBbhMcJwtN9CyhQCF0Yzam/ZxnWNndeoSuMzRx
-         qcG6Tn+qj9BMAMuD9Kms/VhNydqXyIAARtM+C5cCiGBETV1D4ycJkn0XXNAhJatogBjb
-         vTvfnNK12jLlLPs3uICh73d5wOc6MkLXNh1YOeX6tyFsOPDMau3h4Wgx5Jjcfs1hRVLu
-         9qog==
-X-Received: by 10.68.201.6 with SMTP id jw6mr4686645pbc.202.1377727192496;
- Wed, 28 Aug 2013 14:59:52 -0700 (PDT)
-Received: by 10.70.95.230 with HTTP; Wed, 28 Aug 2013 14:59:52 -0700 (PDT)
-In-Reply-To: <xmqqmwo18pgw.fsf@gitster.dls.corp.google.com>
+	id S1753464Ab3H1WQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Aug 2013 18:16:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63741 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753141Ab3H1WQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Aug 2013 18:16:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BCE223DA72;
+	Wed, 28 Aug 2013 22:16:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sRTU40wqO+RTwa0E5NmUNbIdnKY=; b=IPU82A
+	mhNSS7utrH21C628+zpASlRaZEzS7ECEuA5dVKljeFdv5VtrmBbxDRK9X92uX5N9
+	gDyZVMZx7bHW7pe8wuxhcAb91SjUWVjlC/h/ok71g27QbdmtYRN4lBuKwaKbshuz
+	kYVpq+XM+pqh6p7IdYJh9fq5E6/ikaSw/kfao=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jfogIQhEl6s/edwNhttGXFAsA9pGaZOS
+	uDsSZS0iYFv3Xf1QUBSXPO+59bfMbHkJED20xyIqN9hS84zVo2OKLfk37YQ1ef1D
+	sEJs/d2lwZ4Fr54akxKv79m4jwnApWa79/25qOUp1YKjv6KwNcHPNb+fZ/wKLe2o
+	47QLHqpqEn8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58F3C3DA6E;
+	Wed, 28 Aug 2013 22:16:55 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F32B3DA64;
+	Wed, 28 Aug 2013 22:16:53 +0000 (UTC)
+In-Reply-To: <201308231811.r7NIBeH9027848@freeze.ariadne.com> (Dale
+	R. Worley's message of "Fri, 23 Aug 2013 14:11:40 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 8B1A4528-102F-11E3-B047-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233225>
 
-On Wed, Aug 28, 2013 at 2:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
+worley@alum.mit.edu (Dale R. Worley) writes:
+
+>> For now, I'll queue your version as-is modulo style fixes, while
+>> waiting for others to help polishing the documentation better.
 >
->> On Wed, Aug 28, 2013 at 01:05:38PM -0700, Junio C Hamano wrote:
->>
->>> What are our plans to help existing scripts people have written over
->>> time, especially before "status -s" was invented, that will be
->>> broken by use of this?
->>
->> I thought that our response to parsing the long output of "git status"
->> was always "you are doing it wrong". The right way has always been to
->> run the plumbing tools yourself, followed eventually by the --porcelain
->> mode to "git status" being blessed as a convenient plumbing.
->>
->> I will not say that people might not do it anyway, but at what point do
->> we say "you were warned"?
->
-> OK, sounds good enough.
+> It'd difficult to figure out how to describe it well.  In my
+> opinion, the problem here is the DWIM nature of the command,
+> ... My preference is ... But that's not how git-diff works.
 
-I personally think it's a little strange for this to be configurable.
+So given the constraints, I think this is the best we can do.  As nobody
+seems to be helping to polish the text, here is my attempt, on top
+of your patch.
 
-I have a poor imagination and cannot imagine why it needs to be
-switchable.  If someone switches it to "a" does that mean that any
-commit message line that starts with the letter "a" will be filtered
-out?
+ Documentation/git-diff.txt | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-Specifically, core.commentchar seems really unnecessary to me.  What
-is the benefit?
-
-I do see downsides -- folks do parse the output, they don't read the
-release notes, they don't know any better, but, hey, "it works", so
-they'll be broken just because someone doesn't like "#"?
-
-What about hooks that write custom commit messages?  Do they need to
-start caring about core.commentchar?
-
-Curious,
--- 
-David
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index b1630ba..33fbd8c 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -28,11 +28,15 @@ two blob objects, or changes between two files on disk.
+ 	words, the differences are what you _could_ tell Git to
+ 	further add to the index but you still haven't.  You can
+ 	stage these changes by using linkgit:git-add[1].
+-+
+-If exactly two paths are given and at least one points outside
+-the current repository, 'git diff' will compare the two files /
+-directories. This behavior can be forced by --no-index or by
+-executing 'git diff' outside of a working tree.
++
++'git diff' --no-index [--options] [--] [<path>...]::
++
++	This form is to compare the given two paths on the
++	filesystem.  You can omit the `--no-index` option when
++	running the command in a working tree controlled by Git and
++	at least one of the paths points outside the working tree,
++	or when running the command outside a working tree
++	controlled by Git.
+ 
+ 'git diff' [--options] --cached [<commit>] [--] [<path>...]::
+ 
