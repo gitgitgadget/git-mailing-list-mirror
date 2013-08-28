@@ -1,95 +1,81 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Re: the pager
-Date: Wed, 28 Aug 2013 14:19:48 -0400
-Message-ID: <201308281819.r7SIJmnh025977@freeze.ariadne.com>
-References: <201308261957.r7QJvfjF028935@freeze.ariadne.com> <xmqqd2ozhhob.fsf@gitster.dls.corp.google.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 28 20:19:56 2013
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] builtin/fetch.c: Fix a sparse warning
+Date: Wed, 28 Aug 2013 19:56:17 +0100
+Message-ID: <521E47D1.9060106@ramsay1.demon.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 28 20:56:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEkLU-000099-2N
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 20:19:56 +0200
+	id 1VEkvA-0004XX-VW
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 20:56:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753460Ab3H1STw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Aug 2013 14:19:52 -0400
-Received: from qmta09.westchester.pa.mail.comcast.net ([76.96.62.96]:59798
-	"EHLO qmta09.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752980Ab3H1STv (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Aug 2013 14:19:51 -0400
-Received: from omta24.westchester.pa.mail.comcast.net ([76.96.62.76])
-	by qmta09.westchester.pa.mail.comcast.net with comcast
-	id JAQh1m0031ei1Bg59JKq8d; Wed, 28 Aug 2013 18:19:50 +0000
-Received: from freeze.ariadne.com ([24.34.72.61])
-	by omta24.westchester.pa.mail.comcast.net with comcast
-	id JJKq1m00A1KKtkw3kJKq7H; Wed, 28 Aug 2013 18:19:50 +0000
-Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
-	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r7SIJnEQ025978;
-	Wed, 28 Aug 2013 14:19:49 -0400
-Received: (from worley@localhost)
-	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r7SIJmnh025977;
-	Wed, 28 Aug 2013 14:19:48 -0400
-In-reply-to: <xmqqd2ozhhob.fsf@gitster.dls.corp.google.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1377713990;
-	bh=Us2zX+vSFmQcdOfWUc3qquhWB3RRs18Rmvl71K2ItzM=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=Nb8qdQG/vENbOjCFa12ZZyyqWD2BENS2zJaUjaCSdyiCAq8DJkN3d4xi5yG2Gw1Hh
-	 YcNXUxG4ilB/ghRU6jk3DNXsuF3FQ5Nhd5Sm9u8nP+r4q2KJsyaztbeA1xR3NgkGo1
-	 oOlr/DRzO4lVqLugBMrNyfqZq3R6lkwTbqczg5lJW/xd+gcrNsuSvabIkYzw2eXLmW
-	 3cPkBrVtmnbO7eG7sEdK9Dt+GULOsY6+3PsTIyVqZEmqPuIWGwv+x3iOBemfaqLvQm
-	 QWxZUO0eipWArfhPjtfms7PJAIZipYyRnJI19QMD87g5f39Kz7XHSfziDkMG8zWN31
-	 SUMpaMOvfnITQ==
+	id S1754577Ab3H1S4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Aug 2013 14:56:45 -0400
+Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:48694 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754410Ab3H1S4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Aug 2013 14:56:44 -0400
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 99E0AAC42B6;
+	Wed, 28 Aug 2013 19:56:42 +0100 (BST)
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 690B4AC42CC;
+	Wed, 28 Aug 2013 19:56:42 +0100 (BST)
+Received: from [192.168.254.1] (unknown [80.176.147.220])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP;
+	Wed, 28 Aug 2013 19:56:42 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+X-MDF-HostID: 17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233193>
 
-> From: Junio C Hamano <gitster@pobox.com>
-> 
-> > I've noticed that Git by default puts long output through "less" as a
-> > pager.  I don't like that, but this is not the time to change
-> > established behavior.  But while tracking that down, I noticed that
-> > the paging behavior is controlled by at least 5 things:
-> >
-> > the -p/--paginate/--no-pager options
-> > the GIT_PAGER environment variable
-> > the PAGER environment variable
-> > the core.pager Git configuration variable
-> > the build-in default (which seems to usually be "less")
-> > ...
-> > What is the (intended) order of precedence of specifiers of paging
-> > behavior?  My guess is that it should be the order I've given above.
-> 
-> I think that sounds about right (I didn't check the code, though).
-> The most specific to the command line invocation (i.e. option)
-> trumps the environment, which trumps the configured default, and the
-> hard wired stuff is used as the fallback default.
-> 
-> I am not sure about PAGER environment and core.pager, though.
-> People want Git specific pager that applies only to Git process
-> specified to core.pager, and still want to use their own generic
-> PAGER to other programs, so my gut feeling is that it would make
-> sense to consider core.pager a way to specify GIT_PAGER without
-> contaminating the environment, and use both to override the generic
-> PAGER (in other words, core.pager should take precedence over PAGER
-> as far as Git is concerned).
 
-I've just discovered this bit of documentation.  Within the git-var
-manual page is this entry:
+Sparse issues an "'prepare_transport' was not declared. Should it
+be static?" warning. In order to suppress the warning, since this
+symbol only requires file scope, we simply add the static modifier
+to it's declaration.
 
-       GIT_PAGER
-           Text viewer for use by git commands (e.g., less). The value is
-           meant to be interpreted by the shell. The order of preference is
-           the $GIT_PAGER environment variable, then core.pager configuration,
-           then $PAGER, and then finally less.
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-This suggests that the ordering is GIT_PAGER > core.pager > PAGER >
-default.
+Hi Junio,
 
-Dale
+When you re-build the next branch, could you please squash this into
+commit db5723c6 ("fetch: refactor code that prepares a transport",
+07-08-2013). [from the 'jc/transport-do-not-use-connect-twice-in-fetch'
+branch]
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+
+ builtin/fetch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index e880116..9e654ef 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -747,7 +747,7 @@ static void set_option(struct transport *transport, const char *name, const char
+ 			name, transport->url);
+ }
+ 
+-struct transport *prepare_transport(struct remote *remote)
++static struct transport *prepare_transport(struct remote *remote)
+ {
+ 	struct transport *transport;
+ 	transport = transport_get(remote, NULL);
+-- 
+1.8.4
