@@ -1,77 +1,77 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFC/PATCH] status: introduce status.displayCommentChar to disable
- display of #
-Date: Wed, 28 Aug 2013 13:03:08 +0200
-Message-ID: <521DD8EC.6050800@viscovery.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] status: introduce status.displayCommentChar to disable display of #
+Date: Wed, 28 Aug 2013 14:43:36 +0200
+Message-ID: <vpqhaeaasuf.fsf@anie.imag.fr>
 References: <1377678752-16302-1-git-send-email-Matthieu.Moy@imag.fr>
+	<521DD8EC.6050800@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 28 13:03:29 2013
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Aug 28 14:43:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEdX3-0000IC-0w
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 13:03:25 +0200
+	id 1VEf6B-0000WM-VD
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 14:43:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753052Ab3H1LDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Aug 2013 07:03:15 -0400
-Received: from so.liwest.at ([212.33.55.24]:14877 "EHLO so.liwest.at"
+	id S1755342Ab3H1Mnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Aug 2013 08:43:43 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:44136 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752627Ab3H1LDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Aug 2013 07:03:13 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1VEdWn-0006nA-61; Wed, 28 Aug 2013 13:03:09 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id E8DBC1660F;
-	Wed, 28 Aug 2013 13:03:08 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <1377678752-16302-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Spam-Score: -1.0 (-)
+	id S1753582Ab3H1Mnn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Aug 2013 08:43:43 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r7SChZt2006820
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 28 Aug 2013 14:43:35 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VEf61-0006Gj-6d; Wed, 28 Aug 2013 14:43:37 +0200
+In-Reply-To: <521DD8EC.6050800@viscovery.net> (Johannes Sixt's message of
+	"Wed, 28 Aug 2013 13:03:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 28 Aug 2013 14:43:36 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r7SChZt2006820
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1378298618.16443@Ok6OI84unvKvrzkz8WZQfA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233184>
 
-Am 8/28/2013 10:32, schrieb Matthieu Moy:
-> Historically, "git status" needed to prefix each output line with '#' so
-> that the output could be added as comment to the commit message. This
-> prefix comment has no real purpose when "git status" is ran from the
-> command-line, and this may distract users from the real content.
-> 
-> Allow the user to disable this prefix comment. In the long run, if users
-> like the non-prefix output, it may make sense to flip the default value
-> to true.
-> 
-> Obviously, status.displayCommentChar applies to "git status" but is
-> ignored by "git commit", so the status is still commented in
-> COMMIT_EDITMSG.
-> 
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> As a beginner (long ago), I found this comment-prefixed output really
-> weird. I got used to it,...
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-You have my sympathy.
+> How does your solution work when dirty submodules are involved and
+> submodule status is included?f
 
-How does your solution work when dirty submodules are involved and
-submodule status is included?
+Badly ;-).
 
-> +test_expect_success 'status with status.displayCommentChar=false' '
-> +	"$PERL_PATH" -pi -e "s/^\# //; s/^\#$//; s/^#\t/\t/" expect &&
+I didn't notice the subcommand call for submodules summary. It's a bit
+more tricky to get right, as the "git sumbodule summary --for-status"
+call did not know whether it was called from commit or from status.
 
-Perl's -i does not work on Windows when no backup file extension is given.
-Therefore, please use a temporary file or "... -pi.bak ..."
+I fixed this by adding a --[no-]-display-comment-char to git submodule
+summary.
 
-> +	git -c status.displayCommentChar=false status >output &&
-> +	test_i18ncmp expect output
-> +'
+>> +test_expect_success 'status with status.displayCommentChar=false' '
+>> +	"$PERL_PATH" -pi -e "s/^\# //; s/^\#$//; s/^#\t/\t/" expect &&
+>
+> Perl's -i does not work on Windows when no backup file extension is given.
+> Therefore, please use a temporary file or "... -pi.bak ..."
 
--- Hannes
+OK I didn't know that. I went the old good sed+mv way.
+
+New series comming.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
