@@ -1,147 +1,79 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/8] remote-bzr: fix export of utf-8 authors
-Date: Wed, 28 Aug 2013 16:38:54 -0500
-Message-ID: <CAMP44s1P1NgusfH4oS4y-NNCXsNNrECSd5je01D6HL_=p7OHBw@mail.gmail.com>
-References: <1377717793-27170-1-git-send-email-felipe.contreras@gmail.com>
-	<1377717793-27170-2-git-send-email-felipe.contreras@gmail.com>
-	<vpqhae97f8j.fsf@anie.imag.fr>
-	<CAMP44s2bu9gUE=McYq1prhjC3O2CRj1W_Yc+-CjTkk6Gc3JFTw@mail.gmail.com>
-	<CALWbr2xi1+EKHry4GRwLv=SwRUsaTKLQc6RUfuPKEre4pcpaFg@mail.gmail.com>
-	<CAMP44s2G0Nm56q30EXgjpatsJhQZgiJ6uxr83o_74TsUAnHt3w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH v2 3/3] status: introduce status.displayCommentChar to disable display of #
+Date: Wed, 28 Aug 2013 14:39:27 -0700
+Message-ID: <xmqqmwo18pgw.fsf@gitster.dls.corp.google.com>
+References: <vpqhaeaasuf.fsf@anie.imag.fr>
+	<1377694024-24173-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1377694024-24173-3-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqq1u5da8dp.fsf@gitster.dls.corp.google.com>
+	<20130828201803.GB8088@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 28 23:39:01 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	j.sixt@viscovery.net
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 28 23:39:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEnS8-00020X-Fy
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 23:39:00 +0200
+	id 1VEnSk-0002YQ-L0
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 23:39:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754993Ab3H1Vi4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Aug 2013 17:38:56 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:38017 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754222Ab3H1Viz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Aug 2013 17:38:55 -0400
-Received: by mail-lb0-f182.google.com with SMTP id r12so3500lbi.41
-        for <git@vger.kernel.org>; Wed, 28 Aug 2013 14:38:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UFqyEYedJ9AascMVOmQmubUU4wC5snOxl9rhi7JFGyw=;
-        b=xA37Lp3uyTcv7XLjwonJioP7peGGhJkplt3G89I+bCzXagRAMaKguDJWya9GZufWNp
-         wSL4cZ8aV3ZulWmhjrzSc8kV45FLD6xiO44SrNEWQvqVeGKdMJul+kuSTKymIRuwKFdj
-         IEbEhGzSd/qwDJ1RH9GYv1RJWVNGDBexee6mNHdtaSeVbfKgyocCU9ElhheKZLfqpMNG
-         YoyeNN7gPeEjSggVen9SfeAXmKHS0BnS2PBrZbWozrCD0oxPCCHRvnpHrHeLrgYk1yyu
-         2YCW1Worc9Z/xNay6s6PSNNmnBePyZvpYUPvPEFLLYCuiYuKmcBC5Ddx2S6M5ITPIIuo
-         bqhw==
-X-Received: by 10.152.27.202 with SMTP id v10mr77504lag.43.1377725934594; Wed,
- 28 Aug 2013 14:38:54 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Wed, 28 Aug 2013 14:38:54 -0700 (PDT)
-In-Reply-To: <CAMP44s2G0Nm56q30EXgjpatsJhQZgiJ6uxr83o_74TsUAnHt3w@mail.gmail.com>
+	id S1755040Ab3H1Vjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Aug 2013 17:39:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34864 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753024Ab3H1Vje (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Aug 2013 17:39:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33C4A3DAC7;
+	Wed, 28 Aug 2013 21:39:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2HzvYD2dijV87eGco9wD03RAa/E=; b=ey+Jvs
+	OHyC7PO5BFuMDMO/7unNe4/UCumE7QXE+uUTEyCZA5TUBB3AZeloqqISwUQd2LqU
+	KiOQooFNXvdvCbTk9GzXpxrH9be1di1IahIBC/67dcfs5bORvs2ry6D2XSYlraN7
+	98Isyt/gx6d5AWU/9bU9+39t99JrnoAYbCdZo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wZKcYtu1OGlDl2UpMSMkT4Hawo+oQDde
+	sKPweNyPw8oNpXdSbvbX+aoOW2pxwEnDtZbCY9lXJarRrwb+AQPF1qcLbGQVJ/cW
+	dV/m0x5iMMwL2OxrDv07OpgC4UbvGhIRy5u7I2khKPCrSyP3pP06tLpsHGWtdnTk
+	qk2Tshh9HF0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 273EA3DAC6;
+	Wed, 28 Aug 2013 21:39:33 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F3A83DAC3;
+	Wed, 28 Aug 2013 21:39:30 +0000 (UTC)
+In-Reply-To: <20130828201803.GB8088@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 28 Aug 2013 16:18:03 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 525B59B6-102A-11E3-95DF-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233220>
 
-On Wed, Aug 28, 2013 at 4:21 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Wed, Aug 28, 2013 at 3:54 PM, Antoine Pelisse <apelisse@gmail.com>=
- wrote:
->> On Wed, Aug 28, 2013 at 10:48 PM, Felipe Contreras
->> <felipe.contreras@gmail.com> wrote:
->>> On Wed, Aug 28, 2013 at 3:05 PM, Matthieu Moy
->>> <Matthieu.Moy@grenoble-inp.fr> wrote:
->>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>>
->>>>> +     echo greg >> content &&
->>>>> +     git add content &&
->>>>> +     git commit -m one
->>>>
->>>> test_commit would make it shorter.
->>>
->>> And it would make it inconsistent with the rest of the script.
->>>
->>>>> +     bzr log | grep "^committer: " > ../actual
->>>>> +     ) &&
->>>>> +
->>>>> +     echo "committer: Gr=C3=A9goire <committer@example.com>" > e=
-xpected &&
->>>>
->>>> Git's source code usually says >../actual and >expected, without s=
-pace
->>>> after '>'.
->>>
->>> Not that usually:
->>>
->>> % git grep ' > ' t/*.sh | wc -l
->>> 1943
->>
->> There are many false positive in that count.
->>
->> As in this one:
->> $ git grep ' >[^ ]' -- t/*.sh | wc -l
->> 10354
+Jeff King <peff@peff.net> writes:
+
+> On Wed, Aug 28, 2013 at 01:05:38PM -0700, Junio C Hamano wrote:
 >
-> Ten thousand is still a lot, and the claim remains: it's far from
-> unusual to follow this style.
+>> What are our plans to help existing scripts people have written over
+>> time, especially before "status -s" was invented, that will be
+>> broken by use of this?
+>
+> I thought that our response to parsing the long output of "git status"
+> was always "you are doing it wrong". The right way has always been to
+> run the plumbing tools yourself, followed eventually by the --porcelain
+> mode to "git status" being blessed as a convenient plumbing.
+>
+> I will not say that people might not do it anyway, but at what point do
+> we say "you were warned"?
 
-Er, I read that command wrong, but whatever the actual number is, the
-point is that there's a lot.
-
-In fact, I could only count 43 false positives in that command:
-
-t/annotate-tests.sh:test_expect_success 'blame -L X (X > nlines)' '
-t/annotate-tests.sh:test_expect_success 'blame -L ,Y (Y > nlines)' '
-t/lib-diff-alternative.sh:    if(n > 1)
-t/lib-diff-alternative.sh:    if(n > 2)
-t/lib-diff-alternative.sh:+    if(n > 2)
-t/lib-diff-alternative.sh:-    if(n > 1)
-t/t3800-mktag.sh: > 0 +0000
-t/t4041-diff-submodule-option.sh:  > Add foo3 ($added foo3)
-t/t4041-diff-submodule-option.sh:  > Add foo3 ($added foo3)
-t/t4041-diff-submodule-option.sh:  > Add foo3 ($added foo3)
-t/t4041-diff-submodule-option.sh:  > Add foo5 ($added foo5)
-t/t4041-diff-submodule-option.sh:  > Add foo4 ($added foo4)
-t/t4041-diff-submodule-option.sh:  > change
-t/t4041-diff-submodule-option.sh:  > change
-t/t4041-diff-submodule-option.sh:  > change
-t/t4041-diff-submodule-option.sh:  > change
-t/t4041-diff-submodule-option.sh:  > change
-t/t4041-diff-submodule-option.sh:  > change
-t/t4041-diff-submodule-option.sh:  > change
-t/t4041-diff-submodule-option.sh:  > change
-t/t7401-submodule-summary.sh:  > Add foo2
-t/t7401-submodule-summary.sh:  > Add foo2
-t/t7401-submodule-summary.sh:  > Add foo2
-t/t7401-submodule-summary.sh:  > Add foo3
-t/t7401-submodule-summary.sh:  > Add foo3
-t/t7401-submodule-summary.sh:  > Add foo5
-t/t7401-submodule-summary.sh:  > Add foo4
-t/t7401-submodule-summary.sh:  > Add foo5
-t/t7401-submodule-summary.sh:  > Add foo4
-t/t7401-submodule-summary.sh:  > Add foo5
-t/t7401-submodule-summary.sh:  > Add foo7
-t/t7401-submodule-summary.sh:  > Add foo9
-t/t7401-submodule-summary.sh:  > Add foo9
-t/t7401-submodule-summary.sh:  > Add foo9
-t/t7401-submodule-summary.sh:#   > Add foo9
-t/t7508-status.sh:#   > Add foo
-t/t7508-status.sh:#   > Add foo
-t/t7508-status.sh:#   > Add bar
-t/t7508-status.sh:#   > Add bar
-t/t7508-status.sh:#   > Add bar
-t/t7508-status.sh:#   > 2nd commit
-t/t7508-status.sh:;   > Add bar
-t/t7508-status.sh:;   > 2nd commit
-
---=20
-=46elipe Contreras
+OK, sounds good enough.
