@@ -1,91 +1,130 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH v2 1/5] replace: forbid replacing an object with one of a different type
-Date: Wed, 28 Aug 2013 09:31:21 +0200
-Message-ID: <878uzmclva.fsf@linux-k42r.v.cablecom.net>
-References: <20130827194022.11172.56453.chriscool@tuxfamily.org>
-	<20130827194828.11172.73829.chriscool@tuxfamily.org>
-	<xmqqk3j6c1x0.fsf@gitster.dls.corp.google.com>
+From: "Brecht Machiels" <Brecht.Machiels@kla-tencor.com>
+Subject: Re: BUG: git subtree split - revert commit followed by a merge
+Date: Wed, 28 Aug 2013 09:59:28 +0200
+Organization: KLA-Tencor
+Message-ID: <op.w2ioheg99vfd47@bel1pc-0098.adcorp.kla-tencor.com>
+References: <E71F820BDC168F4B91A464A8FD8ABBD8389BD9C7@CH1PRD0310MB391.namprd03.prod.outlook.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Christian Couder <chriscool@tuxfamily.org>, <git@vger.kernel.org>,
-	"Philip Oakley" <philipoakley@iee.org>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 28 09:31:30 2013
+Content-Type: text/plain; charset=iso-8859-15; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: apenwarr@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 28 10:05:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEaDy-000245-1m
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 09:31:30 +0200
+	id 1VEakn-0003Qp-NB
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 10:05:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754388Ab3H1Hb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Aug 2013 03:31:26 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:12927 "EHLO edge20.ethz.ch"
+	id S1752797Ab3H1IFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Aug 2013 04:05:11 -0400
+Received: from plane.gmane.org ([80.91.229.3]:46328 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752347Ab3H1HbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Aug 2013 03:31:25 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 28 Aug
- 2013 09:31:17 +0200
-Received: from linux-k42r.v.cablecom.net.ethz.ch (129.132.153.233) by
- CAS20.d.ethz.ch (172.31.51.110) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Wed, 28 Aug 2013 09:31:21 +0200
-In-Reply-To: <xmqqk3j6c1x0.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 27 Aug 2013 13:30:03 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1752607Ab3H1IFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Aug 2013 04:05:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1VEakQ-00036S-Jq
+	for git@vger.kernel.org; Wed, 28 Aug 2013 10:05:02 +0200
+Received: from 192.146.11.2 ([192.146.11.2])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 28 Aug 2013 10:05:02 +0200
+Received: from Brecht.Machiels by 192.146.11.2 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 28 Aug 2013 10:05:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 192.146.11.2
+User-Agent: Opera Mail/1.0 (Win32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233179>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Christian Couder <chriscool@tuxfamily.org> writes:
+I think I understand what's going on. If there are no net changes in one  
+of the two branches, the id of the merge commit will be the same as that  
+of the last commit on the other branch (pass the -d option to 'git subtree  
+split' to see the new commit id's of the split out commits). In that case,  
+git-subtree will drop the merge commit. I believe this is done because for  
+regular commits, this means that the commit does not make changes to files  
+in the subtree directory. I'm not sure I'm right about this, as I would  
+expect the merge commit's hash to depend on the hashes of its parent  
+commits.
+
+I was thinking the solution would be to simply adjust the copy_or_skip  
+function to always copy merge commits. However, this may result in the  
+produced commit history to differ from before (unnecessary merge commits  
+were previously left out), leading to other problems.
+
+A solution might be to check for the presence of such commit +  
+revert-commit branches. This can be done by checking for each parent of a  
+merge commit if it is the ancestor of any of the other parents (using git  
+merge-base --is-ancestor).
+
+Best regards,
+Brecht
+
+On Tue, 27 Aug 2013 15:09:30 +0200, Machiels, Brecht  
+<Brecht.Machiels@kla-tencor.com> wrote:
+
+> Hello:
 >
->> Users replacing an object with one of a different type were not
->> prevented to do so, even if it was obvious, and stated in the doc,
->> that bad things would result from doing that.
->>
->> To avoid mistakes, it is better to just forbid that though.
->>
->> There is no case where one object can be replaced with one of a
->> different type while keeping the history valid, because:
->>
->> * Annotated tags contain the type of the tagged object.
+> I'm running into the problem described in this mailing list post:
+> 	http://thread.gmane.org/gmane.comp.version-control.git/202645
 >
-> If you replace the tagged object and the tag at the same time,
-> wouldn't that make the resulting history valid again?
+>  'git subtree split' fails to reconstruct the history when a revert  
+> commit is followed by a merge commit. I have slightly adjusted the test  
+> script provided by Fabien in his mailing list post:
 >
-> Granted, there may not be a strong reason to reuse the object name
-> of the tagged object in such a case, but this "there may not be" is
-> merely "I do not think of offhand", so I am not sure what workflow
-> of other people we are breaking with this change.  A light-weight
-> tag may already point at the tagged object (in other words, the
-> object name of the tagged object is known to the outside world) and
-> that could be a reason why you would need to reuse the object name
-> of that object while changing its type.
+>     git init
+>    # create a directory that is going to be split
+>     mkdir doc
+>     echo "TEST" > doc/README
+>     git add doc
+>     # commit A
+>     git commit -a -m"first version"
+>    # create a branch with a new commit (Z)
+>     git checkout -b test
+>     echo "TEST" > doc/README1
+>     git add doc/README1
+>     git commit -a -m"added README1"
+>     git checkout master
+>    # modify the README file (commit B)
+>     echo "TEST_" > doc/README
+>     git commit -a -m"second version"
+>    # revert the change (commit C)
+>     echo "TEST" > doc/README
+>     git commit -a -m"revert second version"
+>     # or use git revert HEAD^
+>    # split
+>     git subtree split --prefix="doc" --branch=TARGET
+>    # add another commit (to a file *not* in the subtree dir)
+>     echo "BLA" > BLA
+>     git add BLA
+>     git commit -a -m"third version"
+>    # adding another commit to a file in the subtree dir will "fix" things
+>     #echo "MEH" > doc/MEH
+>     #git add doc
+>     #git commit -a -m"fourth version"
 >
-> I dunno.
-
-Hrm, you're right, that's a flaw in my logic.  You could do the same in
-all other cases too, e.g. replace a tree so that an entry is of a
-different type and at the same time change the type of the object
-itself.  You however have to carefully go through all objects that refer
-to the one that was replaced, and fix the type in all of them.
-
-It still seems an extremely unsafe thing to do with trees: especially
-for small trees there is a small probability that you will generate the
-same tree again in the future (by having the same blobs in the directory
-again) and record it as a subtree or the 'tree' field of a commit.  The
-history would then again be invalid.
-
-Should we add a --force flag of some sort to allow the user to do this,
-while keeping the normal safety checks?
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+>     # the log will show the 3 commits as expected (including B and C)
+>     GIT_PAGER= git log --oneline TARGET
+>    # merge the test branch
+>     git merge -m"merged test" test
+>    # attempt to re-split; this will fail
+>     git subtree split --prefix="doc" --branch=TARGET
+>    # see what history split generates
+>     git subtree split --prefix="doc" --branch=TARGET2
+>
+> I have discovered that if the revert commit is followed by another  
+> commit that makes changes in the subtree directory, the split will work  
+> as expected (see "fourth version" above).
+>
+> See also this related SO question where I ask for a workaround:  
+> http://stackoverflow.com/questions/18465867
