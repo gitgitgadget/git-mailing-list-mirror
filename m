@@ -1,90 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] remote-bzr: fix export of utf-8 authors
-Date: Wed, 28 Aug 2013 14:58:39 -0700
-Message-ID: <xmqq7gf58okw.fsf@gitster.dls.corp.google.com>
-References: <1377717793-27170-1-git-send-email-felipe.contreras@gmail.com>
-	<1377717793-27170-2-git-send-email-felipe.contreras@gmail.com>
-	<vpqhae97f8j.fsf@anie.imag.fr>
-	<CAMP44s2bu9gUE=McYq1prhjC3O2CRj1W_Yc+-CjTkk6Gc3JFTw@mail.gmail.com>
-	<vpqy57l4jcx.fsf@anie.imag.fr>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [RFC/PATCH v2 3/3] status: introduce status.displayCommentChar to
+ disable display of #
+Date: Wed, 28 Aug 2013 14:59:52 -0700
+Message-ID: <CAJDDKr6RDiAxgUdaE5aH4-wxYRY7fKnUukX1D-t07=-_P0CZAg@mail.gmail.com>
+References: <vpqhaeaasuf.fsf@anie.imag.fr>
+	<1377694024-24173-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1377694024-24173-3-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqq1u5da8dp.fsf@gitster.dls.corp.google.com>
+	<20130828201803.GB8088@sigill.intra.peff.net>
+	<xmqqmwo18pgw.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 28 23:59:08 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 29 00:00:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEnlb-0000SI-U5
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 23:59:08 +0200
+	id 1VEnmT-0001CR-0Y
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 00:00:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754288Ab3H1V6n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Aug 2013 17:58:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40598 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752476Ab3H1V6n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Aug 2013 17:58:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4B433DBF0;
-	Wed, 28 Aug 2013 21:58:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=bSqx/+PdYIKy
-	iTCFJywb99gs9Hg=; b=iFis7lWsuHaUj9btmOoSPNqL7bgnqrK5aRbfNLtJqEM1
-	SMBEKNKdcwazs4d8C98twAixMfMc6bhL11yfubgRED5pnoxWnvR9uUxyWquHcbTS
-	fAqSuFfbIytDsErLrSRqhDlTWNJyDr6kBaIlOt6D/UlnS3W9RYXumUwR27Rzf1w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=GY4cY+
-	lnuuf6bJgDatoBwCCTP2jjPxMH9mJ2EM+BCHIchYkZnC4e7m4EhnbrsfaV+9/MhT
-	PyAPGGJ/6JV7LbqmlxylYBe1tarZm4JII2K1JnRmzkkb0VGBC7kSP7NKKnPjhQoC
-	MPbvswdfTm7OSsnrE6vX3/JWw+Etx+cSKwbf0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7B0A3DBEF;
-	Wed, 28 Aug 2013 21:58:42 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0FAE23DBEE;
-	Wed, 28 Aug 2013 21:58:41 +0000 (UTC)
-In-Reply-To: <vpqy57l4jcx.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	28 Aug 2013 23:05:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 009806C6-102D-11E3-B8A6-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754628Ab3H1V7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Aug 2013 17:59:53 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:49935 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754067Ab3H1V7w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Aug 2013 17:59:52 -0400
+Received: by mail-pa0-f49.google.com with SMTP id ld10so21499pab.36
+        for <git@vger.kernel.org>; Wed, 28 Aug 2013 14:59:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=2NulcEEVtrc3ocdiuqu/RiJl9ziY8iHiXFNSMISTGaE=;
+        b=bSmflzd4K2FIrO+FgVHX/rXdsQlCEWVNDcs0T3LqAZt319iRBUW8cFlzbEMVGPPVuW
+         XtgUQMTZ1SHiMeTouSwroysNynezPHXbuQi/yDptHcxbfG1HNpzhVn0iZOK/OmtdomeG
+         A9dd0fsnhbW2olGHkhrWyXWpDJSOYyYBbhMcJwtN9CyhQCF0Yzam/ZxnWNndeoSuMzRx
+         qcG6Tn+qj9BMAMuD9Kms/VhNydqXyIAARtM+C5cCiGBETV1D4ycJkn0XXNAhJatogBjb
+         vTvfnNK12jLlLPs3uICh73d5wOc6MkLXNh1YOeX6tyFsOPDMau3h4Wgx5Jjcfs1hRVLu
+         9qog==
+X-Received: by 10.68.201.6 with SMTP id jw6mr4686645pbc.202.1377727192496;
+ Wed, 28 Aug 2013 14:59:52 -0700 (PDT)
+Received: by 10.70.95.230 with HTTP; Wed, 28 Aug 2013 14:59:52 -0700 (PDT)
+In-Reply-To: <xmqqmwo18pgw.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233224>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Wed, Aug 28, 2013 at 2:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
->> On Wed, Aug 28, 2013 at 3:05 PM, Matthieu Moy
->> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> On Wed, Aug 28, 2013 at 01:05:38PM -0700, Junio C Hamano wrote:
 >>
->>>> +     bzr log | grep "^committer: " > ../actual
->>>> +     ) &&
->>>> +
->>>> +     echo "committer: Gr=C3=A9goire <committer@example.com>" > ex=
-pected &&
->>>
->>> Git's source code usually says >../actual and >expected, without sp=
-ace
->>> after '>'.
+>>> What are our plans to help existing scripts people have written over
+>>> time, especially before "status -s" was invented, that will be
+>>> broken by use of this?
 >>
->> Not that usually:
+>> I thought that our response to parsing the long output of "git status"
+>> was always "you are doing it wrong". The right way has always been to
+>> run the plumbing tools yourself, followed eventually by the --porcelain
+>> mode to "git status" being blessed as a convenient plumbing.
 >>
->> % git grep ' > ' t/*.sh | wc -l
->> 1943
+>> I will not say that people might not do it anyway, but at what point do
+>> we say "you were warned"?
 >
-> Do I really need to quote the paragraph in CodingGuidelines?
+> OK, sounds good enough.
 
-Existing violations are not an excuse to make things worse by adding
-more.  I think with these comments we can expect a reroll coming,
-and it should be trivial for any contributor to fix it while at it.
+I personally think it's a little strange for this to be configurable.
+
+I have a poor imagination and cannot imagine why it needs to be
+switchable.  If someone switches it to "a" does that mean that any
+commit message line that starts with the letter "a" will be filtered
+out?
+
+Specifically, core.commentchar seems really unnecessary to me.  What
+is the benefit?
+
+I do see downsides -- folks do parse the output, they don't read the
+release notes, they don't know any better, but, hey, "it works", so
+they'll be broken just because someone doesn't like "#"?
+
+What about hooks that write custom commit messages?  Do they need to
+start caring about core.commentchar?
+
+Curious,
+-- 
+David
