@@ -1,116 +1,118 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [RFC/PATCH v2 2/3] submodule: introduce --[no-]display-comment-char
-Date: Wed, 28 Aug 2013 23:07:00 +0200
-Message-ID: <521E6674.1010201@web.de>
-References: <vpqhaeaasuf.fsf@anie.imag.fr> <1377694024-24173-1-git-send-email-Matthieu.Moy@imag.fr> <1377694024-24173-2-git-send-email-Matthieu.Moy@imag.fr>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2] remote-bzr: fix export of utf-8 authors
+Date: Wed, 28 Aug 2013 16:14:40 -0500
+Message-ID: <1377724480-18649-1-git-send-email-felipe.contreras@gmail.com>
+References: <CAPig+cSt6HCuB2VOj_-C+e7BeXJD72hKdtNN3ueyKn6B4DSu7A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, j.sixt@viscovery.net,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 28 23:07:14 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Antoine Pelisse <apelisse@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 28 23:19:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEmxO-0002xE-8y
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 23:07:14 +0200
+	id 1VEn9F-0003ot-KO
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 23:19:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755776Ab3H1VHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Aug 2013 17:07:08 -0400
-Received: from mout.web.de ([212.227.15.14]:59331 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755770Ab3H1VHH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Aug 2013 17:07:07 -0400
-Received: from [192.168.178.41] ([91.3.168.10]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0MfYTr-1VPT6p1zcx-00P8wl for <git@vger.kernel.org>;
- Wed, 28 Aug 2013 23:07:04 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <1377694024-24173-2-git-send-email-Matthieu.Moy@imag.fr>
-X-Enigmail-Version: 1.5.2
-X-Provags-ID: V03:K0:MZBX5SrvkaEMpo1qADhlcTBAtwlC1v6sz5X5oiv122sh+E8WvAW
- cYBU21YbnIqIou1RVpXQm/e3RTwJ3P9FUJCwOciw8HU6sTyyllhAfUunZ0QpZ5/XC3SOBM0
- C+lmecZLULeOsPuJtTX2a2DntuGbJWRp8C/Ungl0wYXqjZAgXV4CZZkI+Ss6jisi4895Tjw
- GCozikNeoAfPayhO5e0tg==
+	id S1755949Ab3H1VTZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Aug 2013 17:19:25 -0400
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:41149 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753122Ab3H1VTZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Aug 2013 17:19:25 -0400
+Received: by mail-ob0-f181.google.com with SMTP id dn14so7420381obc.12
+        for <git@vger.kernel.org>; Wed, 28 Aug 2013 14:19:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=GEl0DJNG7C9FfuknCwpYRWLC/FNgWjlBMOz3pGOImwg=;
+        b=oPwqc7dZwN1x7JW2zOJ3SI8R22dE0rkDyZg+IKKmH10F2MxzkZXweYqDWD8gp0iq1q
+         nMB3aPqOloZXm2F3blBmpj7apMD3U8x0y+4xxerfoAogU1w3UYyhJ2kfmRioE7ke2rbv
+         dDqXXJL6J6/kXArDm8z4fk0suqn9cYWdSwp22710ggo2y64lymKkYA0Ks2XR2o4oVbSo
+         PA9qNEr82SFnfFHhJf+CKQPc5011D9e4Ow+XrevdyRB48rwf/tMk64xrNCGIr4LGdXC4
+         M8l/vi61kXGvLEugyl5+vScUsDvz/GAott8LXJxy2MnKtghswnTdrBrss4w4ztMtbTTz
+         MDQA==
+X-Received: by 10.182.153.200 with SMTP id vi8mr25331611obb.27.1377724764621;
+        Wed, 28 Aug 2013 14:19:24 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id ps5sm29010806oeb.8.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 28 Aug 2013 14:19:23 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4-fc-3-g64bc480
+In-Reply-To: <CAPig+cSt6HCuB2VOj_-C+e7BeXJD72hKdtNN3ueyKn6B4DSu7A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233216>
 
-Am 28.08.2013 14:47, schrieb Matthieu Moy:
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> (--for-status was undocumented, so I didn't bother documenting this either)
+Reported-by: Joakim Verona <joakim@verona.se>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/remote-helpers/git-remote-bzr |  1 +
+ contrib/remote-helpers/test-bzr.sh    | 30 +++++++++++++++++++++++++++=
++++
+ 2 files changed, 31 insertions(+)
 
-That's fine, as both if these options will - hopefully - only be used
-by wt-status.c internally.
-
-But I'm not terribly happy about having the --for-status option in the
-submodule script in the first place, as I believe it should rather be
-handled by wt-status.c itself (reading the output of submodule summary
-using the start_command()/finish_command() combo instead of the simple
-run_command() currently used and prepending the comment char by using
-status_printf() & friends for each line).
-
-Having said that (and currently not having the time to do the above
-myself), if we go along the route you are currently taking I'd prefer
-to only add one other to-be-obsoleted-some-time-later option to the
-submodule script. So what about only adding --no-display-comment-char
-(and maybe call it --drop-status-comment-char or such to make meaning
-and context a bit more obvious ;-)?
-
->  git-submodule.sh | 20 ++++++++++++++++----
->  1 file changed, 16 insertions(+), 4 deletions(-)
-> 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 2979197..ac0fdad 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -966,6 +966,7 @@ set_name_rev () {
->  cmd_summary() {
->  	summary_limit=-1
->  	for_status=
-> +	display_comment_char=t
->  	diff_cmd=diff-index
->  
->  	# parse $args after "submodule ... summary".
-> @@ -981,6 +982,12 @@ cmd_summary() {
->  		--for-status)
->  			for_status="$1"
->  			;;
-> +		--display-comment-char)
-> +			display_comment_char=t
-> +			;;
-> +		--no-display-comment-char)
-> +			display_comment_char=
-> +			;;
->  		-n|--summary-limit)
->  			summary_limit="$2"
->  			isnumber "$summary_limit" || usage
-> @@ -1151,13 +1158,18 @@ cmd_summary() {
->  		echo
->  	done |
->  	if test -n "$for_status"; then
-> +		if test -n "$display_comment_char"; then
-> +			filter_cmd='git stripspace -c'
-> +		else
-> +			filter_cmd=cat
-> +		fi
->  		if [ -n "$files" ]; then
-> -			gettextln "Submodules changed but not updated:" | git stripspace -c
-> +			gettextln "Submodules changed but not updated:" | $filter_cmd
->  		else
-> -			gettextln "Submodule changes to be committed:" | git stripspace -c
-> +			gettextln "Submodule changes to be committed:" | $filter_cmd
->  		fi
-> -		printf "\n" | git stripspace -c
-> -		git stripspace -c
-> +		printf "\n" | $filter_cmd
-> +		$filter_cmd
->  	else
->  		cat
->  	fi
-> 
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-hel=
+pers/git-remote-bzr
+index c3a3cac..08b0b61 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -168,6 +168,7 @@ class Parser:
+         if not m:
+             return None
+         _, name, email, date, tz =3D m.groups()
++        name =3D name.decode('utf-8')
+         committer =3D '%s <%s>' % (name, email)
+         tz =3D int(tz)
+         tz =3D ((tz / 100) * 3600) + ((tz % 100) * 60)
+diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helper=
+s/test-bzr.sh
+index dce281f..b0d70fd 100755
+--- a/contrib/remote-helpers/test-bzr.sh
++++ b/contrib/remote-helpers/test-bzr.sh
+@@ -358,4 +358,34 @@ test_expect_success 'strip' '
+ 	test_cmp expected actual
+ '
+=20
++test_expect_success 'export utf-8 authors' '
++	test_when_finished "rm -rf bzrrepo gitrepo && LC_ALL=3DC && unset GIT=
+_COMMITTER_NAME" &&
++
++	LC_ALL=3Den_US.UTF-8
++	export LC_ALL
++
++	GIT_COMMITTER_NAME=3D"Gr=C3=A9goire"
++	export GIT_COMMITTER_NAME
++
++	bzr init bzrrepo &&
++
++	(
++	git init gitrepo &&
++	cd gitrepo &&
++	echo greg >> content &&
++	git add content &&
++	git commit -m one &&
++	git remote add bzr "bzr::../bzrrepo" &&
++	git push bzr
++	) &&
++
++	(
++	cd bzrrepo &&
++	bzr log | grep "^committer: " > ../actual
++	) &&
++
++	echo "committer: Gr=C3=A9goire <committer@example.com>" > expected &&
++	test_cmp expected actual
++'
++
+ test_done
+--=20
+1.8.4-fc-3-g64bc480
