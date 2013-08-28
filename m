@@ -1,51 +1,53 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 4/8] remote-hg: add missing &&s in the test
-Date: Wed, 28 Aug 2013 14:23:09 -0500
-Message-ID: <1377717793-27170-5-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 5/8] remote-hg: improve basic test
+Date: Wed, 28 Aug 2013 14:23:10 -0500
+Message-ID: <1377717793-27170-6-git-send-email-felipe.contreras@gmail.com>
 References: <1377717793-27170-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Antoine Pelisse <apelisse@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 28 21:28:24 2013
+X-From: git-owner@vger.kernel.org Wed Aug 28 21:28:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VElPk-0003eS-AR
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 21:28:24 +0200
+	id 1VElPo-0003hD-3L
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 21:28:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755050Ab3H1T2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Aug 2013 15:28:15 -0400
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:37455 "EHLO
+	id S1755070Ab3H1T2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Aug 2013 15:28:22 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:52332 "EHLO
 	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754807Ab3H1T2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Aug 2013 15:28:14 -0400
-Received: by mail-oa0-f41.google.com with SMTP id j17so3305547oag.0
-        for <git@vger.kernel.org>; Wed, 28 Aug 2013 12:28:13 -0700 (PDT)
+	with ESMTP id S1754867Ab3H1T2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Aug 2013 15:28:19 -0400
+Received: by mail-oa0-f41.google.com with SMTP id j17so3331419oag.14
+        for <git@vger.kernel.org>; Wed, 28 Aug 2013 12:28:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ugYOpi/F7R9uPdn6kwuelnsUs4p06yQGWL9QJZt2QOw=;
-        b=P3sUWxGK1QFkWWuciquTG71y4b3/LLjxIMruI6IvJf0d25CccBDbmS/8ONm2qtlGO2
-         p5YInK+D8rnQA6izrgnmlu2JqpGLwI+OwwClNB8V6r8Hz3KE5eOumhXXwF3sZm8nzTaU
-         4XrpvkuBmPnO/QW7BMO9Tr77XSZ6Q6ckFovITqJBw6FtY+b2YfmdBlmzUapYYSN+DotY
-         IfOcwNR3JusTNDB0olaqt0ePOOWqIVsQkR1QV6kBEOEHRP2ogrXVJJkVwl2M15/ccYcK
-         0Rmeh7mU+z1jGxo5OCCft2kao2zBP9iTXXMASnxdh5uvqk50fKDhy2qbMxlgWV8iNBgl
-         +ebA==
-X-Received: by 10.182.66.82 with SMTP id d18mr7800644obt.98.1377718093830;
-        Wed, 28 Aug 2013 12:28:13 -0700 (PDT)
+        bh=S7Kl28oxZ7lf20E93JOUmRGpR7z9Bipazov3G8WSJEY=;
+        b=CnUX1CS5xnHCXrH2pfl12Q2HHPT2RG2Z6LSuDCqlfWX/iJ4lbupbA3p6UYSNNE4mJ1
+         qVKFkKDr5cxgKPXqsZjbH9ugjdTDatp/Bv5MlGbYUBilfzpuW9p/B2aoX2qsKY1QV/Z4
+         pFDl9UC+7FcEgUzIWiYbl7lM4tCbIlHIC50R2sTpsSitUdigKlS3G5O0Mys028ITxIbj
+         qO7VgIEV2Ah4pGcfgimBFGlGzzXEmklO3PDoC8yXC6P4hzXYkrdaIYVfzNgRRYHgZ3Pr
+         oFWmjTcYxVxkxQsc2OOWkqbPn83ia47yXxCGKsyFe1Ci4vrVPilJNE+nEPqSyC8lUwW+
+         FGJg==
+X-Received: by 10.182.237.75 with SMTP id va11mr3222636obc.5.1377718098906;
+        Wed, 28 Aug 2013 12:28:18 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id z5sm27527420obg.13.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id hl3sm27510313obb.0.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 28 Aug 2013 12:28:13 -0700 (PDT)
+        Wed, 28 Aug 2013 12:28:18 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1377717793-27170-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233199>
+
+It appears 'let' is not present in all shells.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
@@ -53,26 +55,21 @@ Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
-index cbf8617..94b0bba 100755
+index 94b0bba..5a6f745 100755
 --- a/contrib/remote-helpers/test-hg.sh
 +++ b/contrib/remote-helpers/test-hg.sh
-@@ -577,7 +577,7 @@ test_expect_success 'remote big push fetch first' '
- 	echo five > content &&
- 	git commit -q -a -m five &&
+@@ -75,10 +75,10 @@ check_push () {
+ 			grep "^   [a-f0-9]*\.\.[a-f0-9]* *${branch} -> ${branch}$" error || ref_ret=1
+ 			;;
+ 		esac
+-		let 'ref_ret' && echo "match for '$branch' failed" && break
++		test $ref_ret -ne 0 && echo "match for '$branch' failed" && break
+ 	done
  
--	check_push 1 --all <<-EOF
-+	check_push 1 --all <<-EOF &&
- 	master
- 	good_bmark
- 	bad_bmark:fetch-first
-@@ -633,7 +633,7 @@ test_expect_failure 'remote big push dry-run' '
- 	(
- 	cd gitrepo &&
- 
--	check_push 0 --dry-run --all <<-EOF
-+	check_push 1 --dry-run --all <<-EOF &&
- 	master
- 	good_bmark
- 	branches/good_branch
+-	if let 'expected_ret != ret || ref_ret'
++	if test $expected_ret -ne $ret -o $ref_ret -ne 0
+ 	then
+ 		return 1
+ 	fi
 -- 
 1.8.4-fc
