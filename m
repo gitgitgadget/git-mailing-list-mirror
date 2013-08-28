@@ -1,130 +1,218 @@
-From: "Brecht Machiels" <Brecht.Machiels@kla-tencor.com>
-Subject: Re: BUG: git subtree split - revert commit followed by a merge
-Date: Wed, 28 Aug 2013 09:59:28 +0200
-Organization: KLA-Tencor
-Message-ID: <op.w2ioheg99vfd47@bel1pc-0098.adcorp.kla-tencor.com>
-References: <E71F820BDC168F4B91A464A8FD8ABBD8389BD9C7@CH1PRD0310MB391.namprd03.prod.outlook.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: apenwarr@gmail.com
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [RFC/PATCH] status: introduce status.displayCommentChar to disable display of #
+Date: Wed, 28 Aug 2013 10:32:32 +0200
+Message-ID: <1377678752-16302-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 28 10:05:30 2013
+X-From: git-owner@vger.kernel.org Wed Aug 28 10:37:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEakn-0003Qp-NB
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 10:05:26 +0200
+	id 1VEbFm-0003Gm-Mw
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Aug 2013 10:37:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752797Ab3H1IFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Aug 2013 04:05:11 -0400
-Received: from plane.gmane.org ([80.91.229.3]:46328 "EHLO plane.gmane.org"
+	id S1752601Ab3H1IhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Aug 2013 04:37:18 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:37833 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752607Ab3H1IFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Aug 2013 04:05:06 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1VEakQ-00036S-Jq
-	for git@vger.kernel.org; Wed, 28 Aug 2013 10:05:02 +0200
-Received: from 192.146.11.2 ([192.146.11.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Aug 2013 10:05:02 +0200
-Received: from Brecht.Machiels by 192.146.11.2 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Aug 2013 10:05:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 192.146.11.2
-User-Agent: Opera Mail/1.0 (Win32)
+	id S1752423Ab3H1IhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Aug 2013 04:37:15 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r7S8bAIm002070
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 28 Aug 2013 10:37:11 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1VEbFX-0004Aw-JM; Wed, 28 Aug 2013 10:37:11 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1VEbFX-0004HL-9S; Wed, 28 Aug 2013 10:37:11 +0200
+X-Mailer: git-send-email 1.8.4.9.g95f16b1
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 28 Aug 2013 10:37:11 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r7S8bAIm002070
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1378283833.33454@m4K9MigauglwnB9ZFYOT1A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233180>
 
-Hi,
+Historically, "git status" needed to prefix each output line with '#' so
+that the output could be added as comment to the commit message. This
+prefix comment has no real purpose when "git status" is ran from the
+command-line, and this may distract users from the real content.
 
-I think I understand what's going on. If there are no net changes in one  
-of the two branches, the id of the merge commit will be the same as that  
-of the last commit on the other branch (pass the -d option to 'git subtree  
-split' to see the new commit id's of the split out commits). In that case,  
-git-subtree will drop the merge commit. I believe this is done because for  
-regular commits, this means that the commit does not make changes to files  
-in the subtree directory. I'm not sure I'm right about this, as I would  
-expect the merge commit's hash to depend on the hashes of its parent  
-commits.
+Allow the user to disable this prefix comment. In the long run, if users
+like the non-prefix output, it may make sense to flip the default value
+to true.
 
-I was thinking the solution would be to simply adjust the copy_or_skip  
-function to always copy merge commits. However, this may result in the  
-produced commit history to differ from before (unnecessary merge commits  
-were previously left out), leading to other problems.
+Obviously, status.displayCommentChar applies to "git status" but is
+ignored by "git commit", so the status is still commented in
+COMMIT_EDITMSG.
 
-A solution might be to check for the presence of such commit +  
-revert-commit branches. This can be done by checking for each parent of a  
-merge commit if it is the ancestor of any of the other parents (using git  
-merge-base --is-ancestor).
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+As a beginner (long ago), I found this comment-prefixed output really
+weird. I got used to it, so it stopped bugging me and I didn't do
+anything to fix it.
 
-Best regards,
-Brecht
+ Documentation/config.txt |  5 +++++
+ builtin/commit.c         |  5 +++++
+ t/t7508-status.sh        | 20 ++++++++++++++++++++
+ wt-status.c              | 26 +++++++++++++++++++-------
+ wt-status.h              |  1 +
+ 5 files changed, 50 insertions(+), 7 deletions(-)
 
-On Tue, 27 Aug 2013 15:09:30 +0200, Machiels, Brecht  
-<Brecht.Machiels@kla-tencor.com> wrote:
-
-> Hello:
->
-> I'm running into the problem described in this mailing list post:
-> 	http://thread.gmane.org/gmane.comp.version-control.git/202645
->
->  'git subtree split' fails to reconstruct the history when a revert  
-> commit is followed by a merge commit. I have slightly adjusted the test  
-> script provided by Fabien in his mailing list post:
->
->     git init
->    # create a directory that is going to be split
->     mkdir doc
->     echo "TEST" > doc/README
->     git add doc
->     # commit A
->     git commit -a -m"first version"
->    # create a branch with a new commit (Z)
->     git checkout -b test
->     echo "TEST" > doc/README1
->     git add doc/README1
->     git commit -a -m"added README1"
->     git checkout master
->    # modify the README file (commit B)
->     echo "TEST_" > doc/README
->     git commit -a -m"second version"
->    # revert the change (commit C)
->     echo "TEST" > doc/README
->     git commit -a -m"revert second version"
->     # or use git revert HEAD^
->    # split
->     git subtree split --prefix="doc" --branch=TARGET
->    # add another commit (to a file *not* in the subtree dir)
->     echo "BLA" > BLA
->     git add BLA
->     git commit -a -m"third version"
->    # adding another commit to a file in the subtree dir will "fix" things
->     #echo "MEH" > doc/MEH
->     #git add doc
->     #git commit -a -m"fourth version"
->
->     # the log will show the 3 commits as expected (including B and C)
->     GIT_PAGER= git log --oneline TARGET
->    # merge the test branch
->     git merge -m"merged test" test
->    # attempt to re-split; this will fail
->     git subtree split --prefix="doc" --branch=TARGET
->    # see what history split generates
->     git subtree split --prefix="doc" --branch=TARGET2
->
-> I have discovered that if the revert commit is followed by another  
-> commit that makes changes in the subtree directory, the split will work  
-> as expected (see "fourth version" above).
->
-> See also this related SO question where I ask for a workaround:  
-> http://stackoverflow.com/questions/18465867
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ec57a15..dacf4b9 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2118,6 +2118,11 @@ status.branch::
+ 	Set to true to enable --branch by default in linkgit:git-status[1].
+ 	The option --no-branch takes precedence over this variable.
+ 
++status.displayCommentChar::
++	If set to false, linkgit:git-status[1] will not prefix each
++	line with the comment char (`core.commentchar`, i.e. `#` by
++	default). Defaults to true.
++
+ status.showUntrackedFiles::
+ 	By default, linkgit:git-status[1] and linkgit:git-commit[1] show
+ 	files which are not currently tracked by Git. Directories which
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 10acc53..6d6b9d2 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1182,6 +1182,10 @@ static int git_status_config(const char *k, const char *v, void *cb)
+ 		s->use_color = git_config_colorbool(k, v);
+ 		return 0;
+ 	}
++	if (!strcmp(k, "status.displaycommentchar")) {
++		s->display_comment_char = git_config_bool(k, v);
++		return 0;
++	}
+ 	if (!prefixcmp(k, "status.color.") || !prefixcmp(k, "color.status.")) {
+ 		int slot = parse_status_slot(k, 13);
+ 		if (slot < 0)
+@@ -1496,6 +1500,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	gitmodules_config();
+ 	git_config(git_commit_config, &s);
+ 	status_format = STATUS_FORMAT_NONE; /* Ignore status.short */
++	s.display_comment_char = 1; /* Ignore status.displayCommentChar */
+ 	determine_whence(&s);
+ 	s.colopts = 0;
+ 
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index ac3d0fe..7736426 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -113,6 +113,26 @@ test_expect_success 'status (2)' '
+ 	test_i18ncmp expect output
+ '
+ 
++test_expect_success 'status with status.displayCommentChar=false' '
++	"$PERL_PATH" -pi -e "s/^\# //; s/^\#$//; s/^#\t/\t/" expect &&
++	git -c status.displayCommentChar=false status >output &&
++	test_i18ncmp expect output
++'
++
++test_expect_success 'commit ignores status.displayCommentChar=false in COMMIT_EDITMSG' '
++	cat >.git/editor <<-\EOF &&
++	#! /bin/sh
++	cp "$1" output
++EOF
++	chmod 755 .git/editor &&
++	(
++		EDITOR=.git/editor &&
++		export EDITOR &&
++		test_must_fail git commit
++	) &&
++	! grep "^[^#]" output
++'
++
+ cat >expect <<\EOF
+ # On branch master
+ # Changes to be committed:
+diff --git a/wt-status.c b/wt-status.c
+index cb24f1f..765599d 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -45,9 +45,11 @@ static void status_vprintf(struct wt_status *s, int at_bol, const char *color,
+ 
+ 	strbuf_vaddf(&sb, fmt, ap);
+ 	if (!sb.len) {
+-		strbuf_addch(&sb, comment_line_char);
+-		if (!trail)
+-			strbuf_addch(&sb, ' ');
++		if (s->display_comment_char) {
++			strbuf_addch(&sb, comment_line_char);
++			if (!trail)
++				strbuf_addch(&sb, ' ');
++		}
+ 		color_print_strbuf(s->fp, color, &sb);
+ 		if (trail)
+ 			fprintf(s->fp, "%s", trail);
+@@ -58,7 +60,7 @@ static void status_vprintf(struct wt_status *s, int at_bol, const char *color,
+ 		eol = strchr(line, '\n');
+ 
+ 		strbuf_reset(&linebuf);
+-		if (at_bol) {
++		if (at_bol && s->display_comment_char) {
+ 			strbuf_addch(&linebuf, comment_line_char);
+ 			if (*line != '\n' && *line != '\t')
+ 				strbuf_addch(&linebuf, ' ');
+@@ -128,6 +130,7 @@ void wt_status_prepare(struct wt_status *s)
+ 	s->untracked.strdup_strings = 1;
+ 	s->ignored.strdup_strings = 1;
+ 	s->show_branch = -1;  /* unspecified */
++	s->display_comment_char = 1;
+ }
+ 
+ static void wt_status_print_unmerged_header(struct wt_status *s)
+@@ -774,12 +777,21 @@ static void wt_status_print_tracking(struct wt_status *s)
+ 	if (!format_tracking_info(branch, &sb))
+ 		return;
+ 
++	char comment_line_string[3];
++	int i = 0;
++	if (s->display_comment_char) {
++		comment_line_string[i++] = comment_line_char;
++		comment_line_string[i++] = ' ';
++	}
++	comment_line_string[i] = '\0';
++
+ 	for (cp = sb.buf; (ep = strchr(cp, '\n')) != NULL; cp = ep + 1)
+ 		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s),
+-				 "%c %.*s", comment_line_char,
++				 "%s%.*s", comment_line_string,
+ 				 (int)(ep - cp), cp);
+-	color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "%c",
+-			 comment_line_char);
++	if (s->display_comment_char)
++		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "%c",
++				 comment_line_char);
+ }
+ 
+ static int has_unmerged(struct wt_status *s)
+diff --git a/wt-status.h b/wt-status.h
+index fb7152e..ac02c64 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -50,6 +50,7 @@ struct wt_status {
+ 	enum commit_whence whence;
+ 	int nowarn;
+ 	int use_color;
++	int display_comment_char;
+ 	int relative_paths;
+ 	int submodule_summary;
+ 	int show_ignored_files;
+-- 
+1.8.4.9.g95f16b1
