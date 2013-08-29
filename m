@@ -1,15 +1,10 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] stage: add edit command
-Date: Thu, 29 Aug 2013 13:42:12 -0500
-Message-ID: <521f960477ebf_16921225e74769a3@nysa.mail>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Officially start moving to the term 'staging area'
+Date: Thu, 29 Aug 2013 20:50:30 +0200
+Message-ID: <vpqli3kqqkp.fsf@anie.imag.fr>
 References: <20130829180129.GA4880@nysa>
- <1377799744-5201-1-git-send-email-felipe.contreras@gmail.com>
- <1377799744-5201-3-git-send-email-felipe.contreras@gmail.com>
- <vpqk3j4s5ut.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org,
 	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>,
@@ -18,70 +13,92 @@ Cc: git@vger.kernel.org,
 	Philip Oakley <philipoakley@iee.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Scott Chacon <schacon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 20:49:39 2013
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 29 20:50:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF7Hl-0000aH-Jl
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:49:37 +0200
+	id 1VF7Ir-0001Pa-GG
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756875Ab3H2Stc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 14:49:32 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:45198 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755070Ab3H2Stb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 14:49:31 -0400
-Received: by mail-oa0-f43.google.com with SMTP id i10so1110817oag.2
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 11:49:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=Hmg3F9x4hHOXeNxOpSFFTKuHrecB3MfSuD3IQjTXT3U=;
-        b=0sriUHZYRdQWs7jrUIS+gy7hsJ14m/dB6wuZmtID8hc7I83eNU15anVWNKWrhW5q2b
-         ecjHGHvpf8Ms0HtHGjjc4YWVK2NXeIr8th8SdsZcRzFPB0Upxo8R8W8lhlqHJaMfwuew
-         1zQjo9baLjxnBVqMxbuXDo1P1AONt3OuYHCAHF/rlsfLrBAzUjiSpsnSxQZ5pU+ev7aO
-         iuV4qXO9hWHk1HhGqO9FExe+NB7NMyBWGyHoDUseFfr9XcK/o/8qtNiqJiUe2lB+wGuQ
-         zFYb2g96VnmnHTo6LJWP/0FUnHiFkzf1ewwGHcTdaXDL3hcbxUu5eM6BUetTLphORxcM
-         OsjQ==
-X-Received: by 10.182.186.97 with SMTP id fj1mr3136515obc.53.1377802171177;
-        Thu, 29 Aug 2013 11:49:31 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id nw5sm4697404obc.9.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 11:49:29 -0700 (PDT)
-In-Reply-To: <vpqk3j4s5ut.fsf@anie.imag.fr>
+	id S1755070Ab3H2Sul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 14:50:41 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:40659 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752093Ab3H2Sul (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 14:50:41 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r7TIoSWM007365
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 29 Aug 2013 20:50:28 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VF7Ic-00035y-Q3; Thu, 29 Aug 2013 20:50:30 +0200
+In-Reply-To: <20130829180129.GA4880@nysa> (Felipe Contreras's message of "Thu,
+	29 Aug 2013 13:01:29 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 29 Aug 2013 20:50:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r7TIoSWM007365
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1378407033.51019@1YxRBIGL5yithSdiH/eoHw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233335>
 
-Matthieu Moy wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > +'edit'::
-> > +
-> > +Manually edit the staging area (as a diff).
-> > +
-> 
-> That sounds interesting. It reminds me "git add --edit", but they are
-> different ('stage edit' edits the patch with HEAD, 'add --edit' edits
-> the patch with the worktree).
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-That's not the only difference; 'add --edit' is incremental.
+> It has been discussed many times in the past that 'index' is not an
+> appropriate description for what the high-level user does with it, and
+> it has been agreed that 'staging area' is the best term.
 
-> Can we find a consistent user-interface where "git add --edit" and "git
-> stage edit" have a closer syntax? Maybe "git stage edit --work" as a
-> synonym for "git add --edit"?
+Thanks for working on this. No time for a really detailed review, but a
+few remarks.
 
-Well, the action is adding changes to the staging area. To me, I'm not editing
-the stage, I'm editing the change I'm adding to the stage, so 'git stage
---edit' is perfectly fine.
+> The term 'staging area' is more intuitive [...]
+>
+> The first step in moving Git towards this term, is first to add --stage
+> options for every command that uses --index or --cache.
+
+These explanations make sense. I think it would be better to put part of
+it in commit messages, so that future contributors can "git blame" the
+doc/implem of these --stage and find them (i.e. avoid the
+misunderstanding that occured with "git stage" command which was
+proposed for removal).
+
+> After adding the new --stage options and making sure no functionality is
+> lost, they can become the recommended ones in the documentation,
+> eventually, the old ones get deprecated, and eventually obsoleted.
+
+Same: putting this in the commit message would cast in stone that we
+want to obsolete the old ones.
+
+(But that was nice to have this cover-letter)
+
+> Moreover, the --stage and --work
+
+--work alone sounds weird. At least to me, it does not immediately imply
+"working tree". It is tempting to call the option --work-tree, but git
+already has a global option with that name (git --work-tree=foo bar).
+
+Perhaps --worktree to limit the confusion?
+
+> reset', and after these options are added, the complicated table to
+> explain the different behaviors between --soft, --mixed, and --hard
+> becomes so simple it's not needed any more:
+
+I didn't understand the table, but yes, the --soft, --mixed, and --hard
+is terrible, I need to read the doc whenever I do something non-trivial
+with reset :-(.
 
 -- 
-Felipe Contreras
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
