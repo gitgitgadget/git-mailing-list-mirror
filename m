@@ -1,80 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Officially start moving to the term 'staging area'
-Date: Thu, 29 Aug 2013 23:03:55 +0200
-Message-ID: <vpqwqn4nr9g.fsf@anie.imag.fr>
-References: <20130829180129.GA4880@nysa> <vpqli3kqqkp.fsf@anie.imag.fr>
-	<521f998d25eb4_174378fe7481879@nysa.mail>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/2] repack: rewrite the shell script in C
+Date: Thu, 29 Aug 2013 16:04:54 -0500
+Message-ID: <CAMP44s19gcJAYJ_MbvdoU99EeeHPDj9t+34jBs=MC33VC9nTNw@mail.gmail.com>
+References: <1377808774-12505-1-git-send-email-stefanbeller@googlemail.com>
+	<1377808774-12505-2-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Scott Chacon <schacon@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 23:04:28 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 29 23:05:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF9OC-0007fJ-0b
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 23:04:24 +0200
+	id 1VF9On-00084p-HD
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 23:05:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756021Ab3H2VET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 17:04:19 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:59456 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753696Ab3H2VES (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 17:04:18 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r7TL3sTa004934
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 29 Aug 2013 23:03:55 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VF9Nl-0003vv-66; Thu, 29 Aug 2013 23:03:57 +0200
-In-Reply-To: <521f998d25eb4_174378fe7481879@nysa.mail> (Felipe Contreras's
-	message of "Thu, 29 Aug 2013 13:57:17 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 29 Aug 2013 23:03:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r7TL3sTa004934
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1378415036.56227@/HGtor7LGqIhaSqrPxNq9A
+	id S1756905Ab3H2VE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 17:04:56 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:37566 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756816Ab3H2VE4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 17:04:56 -0400
+Received: by mail-lb0-f169.google.com with SMTP id z5so506981lbh.0
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 14:04:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=gqSTm8kpPc4KIkb6q/hBgoiqrC3IVpO1WDKhQyInjr0=;
+        b=v/uozY6D0V5T6l/mpqhm2yzPpjgs6a59Qc9eME0GZLInrCJMAZwjwIILerzB9/mlkc
+         asTY30om0Ie728yxWMIaYRWHnRq4Tf8QEbUzbzuMMPgnVPKKeUSqVAHocNvkixx1xBL2
+         4HacwakbheCEVTp+q5+Nwrr+1UqHm2zyZ7NrOawxBCxdqjfa4ohdnQHU9n/wQoaCo+K+
+         t8EZbS0CP/O6V0xmsR8bP+bt6iA3X+K/0Uoi8KX/UcliCR/wX7bOFfOTtiRU0nWDhg5z
+         kChjgq035AvoZTzs6y2hJXldfKc9lx5YSwgwoho1pTWLzlcIPcPoVKiOzEkiu3aUatyj
+         w1JQ==
+X-Received: by 10.112.64.36 with SMTP id l4mr4751300lbs.15.1377810294779; Thu,
+ 29 Aug 2013 14:04:54 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Thu, 29 Aug 2013 14:04:54 -0700 (PDT)
+In-Reply-To: <1377808774-12505-2-git-send-email-stefanbeller@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233361>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> Matthieu Moy wrote:
+On Thu, Aug 29, 2013 at 3:39 PM, Stefan Beller
+<stefanbeller@googlemail.com> wrote:
+> The motivation of this patch is to get closer to a goal of being
+> able to have a core subset of git functionality built in to git.
+> That would mean
 >
->> --work alone sounds weird. At least to me, it does not immediately imply
->> "working tree". It is tempting to call the option --work-tree, but git
->> already has a global option with that name (git --work-tree=foo bar).
->
-> Yes, --work sounds weird, but so does --cherry. I thought about --wt, but I
-> felt --work was more understandable, and --work-tree doesn't really give much
-> more value,
+>  * people on Windows could get a copy of at least the core parts
+>    of Git without having to install a Unix-style shell
 
-I think it does: I understand --work as "the verb to work", so 
-"git reset --work" sounds like "tell 'git reset' to work", while
-"git reset --work-tree" sounds like "tell git to reset the work tree".
+I think this is great, I'm looking forward to improve the situation in
+this regard.
 
-> except more characters to type =/
+Do you have in mind any other command that should also be replaced this way?
 
-Then, we can have --work-tree and a short version -w.
+> This patch is meant to be mostly a literal translation of the
+> git-repack script; the intent is that later patches would start using
+> more library facilities, but this patch is meant to be as close to a
+> no-op as possible so it doesn't do that kind of thing.
+
+I'm not sure if this has been tackled already, or you could take a
+look into that, but:
+
+http://article.gmane.org/gmane.comp.version-control.git/147190
+
+Cheers.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Felipe Contreras
