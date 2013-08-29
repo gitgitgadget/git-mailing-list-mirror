@@ -1,203 +1,106 @@
-From: Brad King <brad.king@kitware.com>
-Subject: [PATCH/RFC 7/7] update-ref: support multiple simultaneous updates
-Date: Thu, 29 Aug 2013 10:11:55 -0400
-Message-ID: <8d323b9c2a71a9bafa8b48caf1d85c1035549b16.1377784597.git.brad.king@kitware.com>
-References: <cover.1377784597.git.brad.king@kitware.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 29 16:22:39 2013
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: The gitweb author initials feature from a36817b doesn't work with
+ i18n names
+Date: Thu, 29 Aug 2013 16:26:29 +0200
+Message-ID: <CACBZZX4i-Tu1G07e9=5DYFjY9EtRGO8gLJf71d5aLeaE-cj-8w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 29 16:26:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF37L-0000xR-Qb
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 16:22:36 +0200
+	id 1VF3BW-00048Q-W7
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 16:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755350Ab3H2OW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 10:22:29 -0400
-Received: from tripoint.kitware.com ([66.194.253.20]:48737 "EHLO
-	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754170Ab3H2OWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 10:22:15 -0400
-X-Greylist: delayed 522 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Aug 2013 10:22:15 EDT
-Received: by vesper.kitware.com (Postfix, from userid 1000)
-	id 80D0D9FB8E; Thu, 29 Aug 2013 10:11:55 -0400 (EDT)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <cover.1377784597.git.brad.king@kitware.com>
+	id S1753460Ab3H2O0u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Aug 2013 10:26:50 -0400
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:47113 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753001Ab3H2O0t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Aug 2013 10:26:49 -0400
+Received: by mail-oa0-f44.google.com with SMTP id l17so644817oag.17
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 07:26:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=DFXYJ2w2wmrZxMOpCSTaT8Md4qkoMtbf9sH4T2qvRaA=;
+        b=JulylOauYWqsVG0wwhBVJAUNaG/tn1vLeTu1Z2BNwzbG/o9xDbdihbmCozfwkjvMkd
+         gmiB7hcUosO/nmTFqGiNXAPmSyX8jBxyPSZLDrRgB6qbcXhjp8rG3OhGDBMHYp0O/l4f
+         ijbgvUXbH010txagPkolv7a8JWiq5rQGGrgTwSMXoTZJgMpSwhLFrruFaBwA1SWN6dif
+         oqp7mHEb3pTKQqbq2eCvNmWlagqrYop5npS28GM23G03CIxqYuW6mzMl3Y27hz7ctws1
+         iz3z6C/6fi3mgtwV/0MzIs0AHMHyOjSeTKFoAUIw1KS8ejJC1i/EU7sRAiamPNh7pI0n
+         bxVA==
+X-Received: by 10.60.80.167 with SMTP id s7mr2729693oex.38.1377786409497; Thu,
+ 29 Aug 2013 07:26:49 -0700 (PDT)
+Received: by 10.76.173.201 with HTTP; Thu, 29 Aug 2013 07:26:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233265>
 
-Add a --stdin signature to read update instructions from standard input
-and apply multiple ref updates and deletes together.
+The @author_initials feature Jakub added in a36817b claims to use a
+i18n regexp (/\b([[:upper:]])\B/g), but in Perl this doesn't actually
+do anything unless the string being matched against has the UTF8 flag.
 
-Signed-off-by: Brad King <brad.king@kitware.com>
----
- Documentation/git-update-ref.txt |   19 +++++++-
- builtin/update-ref.c             |   93 +++++++++++++++++++++++++++++++++++++-
- 2 files changed, 110 insertions(+), 2 deletions(-)
+So as a result it abbreviates me to "AB" not "=C3=86AB". Here's somethi=
+ng
+that demonstrates the issue:
 
-diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
-index 0df13ff..a79afe8 100644
---- a/Documentation/git-update-ref.txt
-+++ b/Documentation/git-update-ref.txt
-@@ -8,7 +8,7 @@ git-update-ref - Update the object name stored in a ref safely
- SYNOPSIS
- --------
- [verse]
--'git update-ref' [-m <reason>] (-d <ref> [<oldvalue>] | [--no-deref] <ref> <newvalue> [<oldvalue>])
-+'git update-ref' [-m <reason>] (-d <ref> [<oldvalue>] | [--no-deref] <ref> <newvalue> [<oldvalue>] | --stdin)
- 
- DESCRIPTION
- -----------
-@@ -58,6 +58,23 @@ archive by creating a symlink tree).
- With `-d` flag, it deletes the named <ref> after verifying it
- still contains <oldvalue>.
- 
-+With `--stdin`, update-ref reads instructions from standard input
-+and performs all modifications together.  Specify updates with
-+lines of the form:
-+
-+	[ --no-deref SP ] <ref> SP <newvalue> [ SP <oldvalue> ] LF
-+
-+and deletes with lines of the form:
-+
-+	[ --no-deref SP ] -d SP <ref> [ SP <oldvalue> ] LF
-+
-+or as updates with 40 "0" as <newvalue>.  Blank lines are ignored.
-+Lines of any other format or a repeated <ref> produce an error.
-+If all <ref>s can be locked with matching <oldvalue>s
-+simultaneously all modifications are performed.  Otherwise, no
-+modifications are performed.  Note that while each individual
-+<ref> is updated or deleted atomically, a concurrent reader may
-+still see a subset of the modifications.
- 
- Logging Updates
- ---------------
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 51d2684..2f0d34c 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -6,19 +6,102 @@
- static const char * const git_update_ref_usage[] = {
- 	N_("git update-ref [options] -d <refname> [<oldval>]"),
- 	N_("git update-ref [options]    <refname> <newval> [<oldval>]"),
-+	N_("git update-ref [options] --stdin"),
- 	NULL
- };
- 
-+static const char blank[] = " \t\r\n";
-+
-+static int updates_size;
-+static int updates_count;
-+static struct ref_update *updates;
-+
-+static void update_refs_stdin(const char *line)
-+{
-+	int delete = 0, i;
-+	const char *c, *s, *oldvalue, *value[2] = {0,0};
-+	struct ref_update *update;
-+	c = line;
-+
-+	/* Skip blank lines: */
-+	if (*c == '\n')
-+		return;
-+
-+	/* Allocate a ref_update struct: */
-+	if (updates_count == updates_size) {
-+		updates_size = updates_size? updates_size*2 : 16;
-+		updates = xrealloc(updates, sizeof(*updates)*updates_size);
-+		memset(updates + updates_count, 0,
-+		       sizeof(*updates)*(updates_size-updates_count));
-+	}
-+	update = &updates[updates_count++];
-+
-+	/* --no-deref SP */
-+	if (strncmp(c, "--no-deref ", 11) == 0) {
-+		c += 11;
-+		update->flags |= REF_NODEREF;
-+	}
-+
-+	/* -d SP */
-+	if (strncmp(c, "-d ", 3) == 0) {
-+		c += 3;
-+		delete = 1;
-+	}
-+
-+	/* <ref> */
-+	s = c;
-+	c = s + strcspn(s, blank);
-+	update->ref_name = xstrndup(s, c-s);
-+
-+	/* [ SP <value> ]... */
-+	for (i=0; i < 2; ++i) {
-+		if (*c != ' ')
-+			break;
-+		++c;
-+		s = c;
-+		c = s + strcspn(s, blank);
-+		value[i] = xstrndup(s, c-s);
-+	}
-+
-+	if (*c && *c != '\n')
-+		die("unrecognized input line: %s", line);
-+
-+	if (check_refname_format(update->ref_name, REFNAME_ALLOW_ONELEVEL))
-+		die("invalid <ref> format on input line: %s", line);
-+
-+	if (delete) {
-+		hashclr(update->new_sha1);
-+		oldvalue = value[0];
-+		if (value[1])
-+			die("both <newvalue> and <oldvalue> on delete line: %s",
-+			    line);
-+	} else {
-+		if (!value[0])
-+			die("missing <newvalue> on update line: %s", line);
-+		if (get_sha1(value[0], update->new_sha1))
-+			die("invalid <newvalue> on update line: %s", line);
-+		oldvalue = value[1];
-+	}
-+	if (oldvalue) {
-+		update->old_sha1 = xmalloc(20);
-+		if (get_sha1(oldvalue, update->old_sha1))
-+			die("invalid <oldvalue> on %s line: %s",
-+			    delete? "delete":"update", line);
-+	}
-+}
-+
- int cmd_update_ref(int argc, const char **argv, const char *prefix)
- {
- 	const char *refname, *oldval, *msg = NULL;
- 	unsigned char sha1[20], oldsha1[20];
--	int delete = 0, no_deref = 0, flags = 0;
-+	int delete = 0, no_deref = 0, read_stdin = 0, flags = 0;
-+	char line[1000];
- 	struct option options[] = {
- 		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
- 		OPT_BOOLEAN('d', NULL, &delete, N_("delete the reference")),
- 		OPT_BOOLEAN( 0 , "no-deref", &no_deref,
- 					N_("update <refname> not the one it points to")),
-+		OPT_BOOLEAN( 0 , "stdin", &read_stdin, N_("read updates from stdin")),
- 		OPT_END(),
- 	};
- 
-@@ -28,6 +111,14 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
- 	if (msg && !*msg)
- 		die("Refusing to perform update with empty message.");
- 
-+	if (read_stdin) {
-+		if (delete || no_deref || argc > 0)
-+			usage_with_options(git_update_ref_usage, options);
-+		while (fgets(line, sizeof(line), stdin))
-+			update_refs_stdin(line);
-+		return update_refs(msg, updates, updates_count, DIE_ON_ERR);
-+	}
-+
- 	if (delete) {
- 		if (argc < 1 || argc > 2)
- 			usage_with_options(git_update_ref_usage, options);
--- 
-1.7.10.4
+$ cat author-initials.pl
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+#binmode STDOUT, ':utf8';
+open my $fd, "-|", "git", "blame", "--incremental", "--", "Makefile"
+or die "Can't open: $!";
+#binmode $fd, ":utf8";
+while (my $line =3D <$fd>) {
+        next unless my ($author) =3D $line =3D~ /^author (.*)/;
+        my @author_initials =3D ($author =3D~ /\b([[:upper:]])\B/g);
+        printf "%s (%s)\n",  join("", @author_initials), $author;
+}
+
+With those two binmode commands commented out:
+
+$ perl author-initials.pl |sort|uniq -c|sort -nr|head -n 5
+     99 JH (Junio C Hamano)
+     35 JN (Jonathan Nieder)
+     35 JK (Jeff King)
+     20 JS (Johannes Schindelin)
+     16 AB (=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason)
+
+And uncommented:
+
+$ perl author-initials.pl |sort|uniq -c|sort -nr|head -n 5
+     99 JH (Junio C Hamano)
+     35 JN (Jonathan Nieder)
+     35 JK (Jeff King)
+     20 JS (Johannes Schindelin)
+     16 =C3=86AB (=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason)
+
+Jakub, do you see a reason not to just apply this:
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index f429f75..29b3fb5 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -6631,6 +6631,7 @@ sub git_blame_common {
+                        $hash_base, '--', $file_name
+                        or die_error(500, "Open git-blame --porcelain f=
+ailed");
+        }
++       binmode $fd, ":utf8";
+
+        # incremental blame data returns early
+        if ($format eq 'data') {
+
+I haven't gotten an env where I can test gitweb running, but that
+looks like it should work to me.
