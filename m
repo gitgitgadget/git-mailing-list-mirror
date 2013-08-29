@@ -1,108 +1,106 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 7/9] fast-export: add support to delete refs
-Date: Thu, 29 Aug 2013 10:23:26 -0500
-Message-ID: <1377789808-2213-8-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 8/9] transport-helper: add support to delete branches
+Date: Thu, 29 Aug 2013 10:23:27 -0500
+Message-ID: <1377789808-2213-9-git-send-email-felipe.contreras@gmail.com>
 References: <1377789808-2213-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 29 17:29:16 2013
+X-From: git-owner@vger.kernel.org Thu Aug 29 17:29:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF49q-0000bZ-B3
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 17:29:14 +0200
+	id 1VF4A3-0000oo-RN
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 17:29:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755204Ab3H2P3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 11:29:10 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:41125 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755096Ab3H2P3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 11:29:08 -0400
-Received: by mail-oa0-f47.google.com with SMTP id g12so759125oah.20
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 08:29:08 -0700 (PDT)
+	id S1753756Ab3H2P3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 11:29:23 -0400
+Received: from mail-oa0-f50.google.com ([209.85.219.50]:52536 "EHLO
+	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752673Ab3H2P3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 11:29:23 -0400
+Received: by mail-oa0-f50.google.com with SMTP id i4so764013oah.23
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 08:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6lGJHk4qmr1L8Ha1ymJPSamw7bQ/daMckNSGrvZQgi4=;
-        b=T/riSwDIa29zojLBNpFdRrE15VeIq5P9NnYOLpmxJ5y9j5mOJSRX76F7tefLWiz3Ha
-         rhLXVqAMyTVpUfKb24O2U+wH/VGhzTX5jpsHlfzgHMui9EZoYJcEKMSxXC3DNhFJ4xGg
-         B8pOJfMG5/7itaWKUgqnC9n9KjN99APzd6ilqFsxQKIlFrQ8s+EsG3Tt8559zwzsbgaw
-         SuYg4VxlcREcWBubdZhZ6uAuUCKoz1c8olPposGX8nhKOW5QhkgujNybCi5rAoD3ViqM
-         VRsisdrWK5lnKp6h1t0JPo42zlo/1aY0XuX1BYRZIR/dSHQqAm36n4JAzAuiCAwYgG85
-         pjbQ==
-X-Received: by 10.60.51.196 with SMTP id m4mr2967035oeo.1.1377790148498;
-        Thu, 29 Aug 2013 08:29:08 -0700 (PDT)
+        bh=+v48rauq3NTD8f8caz1jUB7zCOp1nmHKvxPAueKeyH8=;
+        b=QzJqHY6CSCkjikm4oaNX77zCgQpudVhnAgi/OI2R6wbeOoty4joeN7iFOKwl2YgLe0
+         Qt4+Lk2GAdYWnI5YtPXjm9jHxmHCw42ysDJjk0WKJpGCHjh/ml2fAs5tDlxrCE6fwUgQ
+         yzOw5WOIgOwGwg0sc/BYoCORoA5rSjSeILkVzBla18l3/gTrHfmL4ajcgEC8KCq4VlWE
+         ltNb6fDds4JBsRO4pvHd3O1HakfKosM5VDBzSn9m8EvNwSrZMMfMPKOJ1BC36JZJapgj
+         sEvBjNQ3F+XGUCMcA8aWEBaBCiwX/Z6yjB0N5l6HuPMnQr0p20he4aGpOLddjgMnq8XN
+         fGGw==
+X-Received: by 10.60.124.195 with SMTP id mk3mr2064314oeb.54.1377790162737;
+        Thu, 29 Aug 2013 08:29:22 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id rr6sm32918678oeb.0.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id a18sm31902655obf.7.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 08:29:07 -0700 (PDT)
+        Thu, 29 Aug 2013 08:29:21 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1377789808-2213-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233275>
+
+For remote-helpers that use 'export' to push.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/fast-export.c  | 14 ++++++++++++++
- t/t9350-fast-export.sh | 11 +++++++++++
- 2 files changed, 25 insertions(+)
+ t/t5801-remote-helpers.sh |  8 ++++++++
+ transport-helper.c        | 11 ++++++-----
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 7f314f0..9b728ca 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -665,6 +665,19 @@ static void import_marks(char *input_file)
- 	fclose(f);
- }
- 
-+static void handle_deletes(void)
-+{
-+	int i;
-+	for (i = 0; i < refspecs_nr; i++) {
-+		struct refspec *refspec = &refspecs[i];
-+		if (*refspec->src)
-+			continue;
-+
-+		printf("reset %s\nfrom %s\n\n",
-+			refspec->dst, sha1_to_hex(null_sha1));
-+	}
-+}
-+
- int cmd_fast_export(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info revs;
-@@ -755,6 +768,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	handle_tags_and_duplicates(&extra_refs);
-+	handle_deletes();
- 
- 	if (export_filename && lastimportid != last_idnum)
- 		export_marks(export_filename);
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index dc6666f..ea6c96c 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -511,4 +511,15 @@ test_expect_success 'use refspec' '
- 	test_cmp expected actual
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index 8e2dd9f..a66a4e3 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -94,6 +94,14 @@ test_expect_success 'push new branch with old:new refspec' '
+ 	compare_refs local HEAD server refs/heads/new-refspec
  '
  
-+test_expect_success 'delete refspec' '
-+	git branch to-delete &&
-+	git fast-export --refspec :refs/heads/to-delete to-delete ^to-delete > actual &&
-+	cat > expected <<-EOF &&
-+	reset refs/heads/to-delete
-+	from 0000000000000000000000000000000000000000
-+
-+	EOF
-+	test_cmp expected actual
++test_expect_success 'push delete branch' '
++	(cd local &&
++	 git push origin :new-name
++	) &&
++	test_must_fail git --git-dir="server/.git" \
++	 rev-parse --verify refs/heads/new-name
 +'
 +
- test_done
+ test_expect_success 'cloning without refspec' '
+ 	GIT_REMOTE_TESTGIT_REFSPEC="" \
+ 	git clone "testgit::${PWD}/server" local2 2>error &&
+diff --git a/transport-helper.c b/transport-helper.c
+index c7135ef..5490796 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -844,18 +844,19 @@ static int push_refs_with_export(struct transport *transport,
+ 		}
+ 		free(private);
+ 
+-		if (ref->deletion)
+-			die("remote-helpers do not support ref deletion");
+-
+ 		if (ref->peer_ref) {
+ 			if (strcmp(ref->name, ref->peer_ref->name)) {
+ 				struct strbuf buf = STRBUF_INIT;
+-				strbuf_addf(&buf, "%s:%s", ref->peer_ref->name, ref->name);
++				if (!ref->deletion)
++					strbuf_addf(&buf, "%s:%s", ref->peer_ref->name, ref->name);
++				else
++					strbuf_addf(&buf, ":%s", ref->name);
+ 				string_list_append(&revlist_args, "--refspec");
+ 				string_list_append(&revlist_args, buf.buf);
+ 				strbuf_release(&buf);
+ 			}
+-			string_list_append(&revlist_args, ref->peer_ref->name);
++			if (!ref->deletion)
++				string_list_append(&revlist_args, ref->peer_ref->name);
+ 		}
+ 	}
+ 
 -- 
 1.8.4-fc
