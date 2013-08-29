@@ -1,61 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 06/11] Simplify "How to make a commit"
-Date: Thu, 29 Aug 2013 11:16:42 -0700
-Message-ID: <xmqqr4dc4b1x.fsf@gitster.dls.corp.google.com>
-References: <1403569571.34349.1377625974290.JavaMail.ngmail@webmail19.arcor-online.net>
-	<878772375.34519.1377626477170.JavaMail.ngmail@webmail19.arcor-online.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, martinvonz@gmail.com, jrnieder@gmail.com,
-	wking@tremily.us, philipoakley@iee.org
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Thu Aug 29 20:16:50 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/9] Add --stage and --work options
+Date: Thu, 29 Aug 2013 13:14:31 -0500
+Message-ID: <1377800080-5309-1-git-send-email-felipe.contreras@gmail.com>
+References: <20130829180129.GA4880@nysa>
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 29 20:19:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF6m1-0002Nb-Kk
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:16:49 +0200
+	id 1VF6od-0004Gp-0P
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:19:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755513Ab3H2SQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 14:16:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44259 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752769Ab3H2SQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 14:16:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8575B3D79B;
-	Thu, 29 Aug 2013 18:16:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NhE3KRNWhvNfdIYc6H2vvku0fTw=; b=Kh0jxS
-	twbBuQBwpr7S0OYNe1roicMsFRcynkwfuWe+ISmcs6k+O3ID5OLE5lrA5qm6zDPS
-	43Qxx+QrP5+t3pgt1T2ThrftScKtMQAzAYc7UsBrY3RP1k+lDUj+THcyB64XrSbg
-	huWOwYUzaWCKXo97mtUb+nMyf9hmx25ApyhQw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Q7r0l1DYDegZ1u3mVXwWoXw8oblaRdE2
-	HTJOlCTp4xgDKJplEhG5qcZCAAMg5cDFU/H0cHFISA+I6daQj6hyOT+k0zzQcvf8
-	sjNiKUygv9TF3XTy33ZelirxIzAvxoIrOJtL8b5tjVfbvPug/kOkMp3HfatNCyo3
-	x+Md0wlIfw0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A4623D79A;
-	Thu, 29 Aug 2013 18:16:44 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AAB3C3D796;
-	Thu, 29 Aug 2013 18:16:43 +0000 (UTC)
-In-Reply-To: <878772375.34519.1377626477170.JavaMail.ngmail@webmail19.arcor-online.net>
-	(Thomas Ackermann's message of "Tue, 27 Aug 2013 20:01:17 +0200
-	(CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 28A3E7F2-10D7-11E3-998B-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756431Ab3H2ST0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 14:19:26 -0400
+Received: from mail-oa0-f50.google.com ([209.85.219.50]:48914 "EHLO
+	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753965Ab3H2STZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 14:19:25 -0400
+Received: by mail-oa0-f50.google.com with SMTP id i4so1061976oah.23
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 11:19:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=cSJ0GmYeIwGP8EKrazLdHD0cp+WAabBfkh6fg/CInxM=;
+        b=uO+oPLCwRYTNIm5HnDY8GoywnsvbFnZxRzZO4IHSRfztQFk1Jm+clc+KEiW744ujuD
+         hAKfaCFZZ03RfgCe31dp9guL+h1CjvAztBf9rbSNQDeaxvwc1dYaYDgOaCpiag8aIQe3
+         e14+qLiLzDqd9v+SDc/V0iLo4GAMwI72HPAEHcPeYBPHa8j+NNjg2yA01mzKavL9XFlC
+         x0Xa5rThvdgcp3J7cYHMSEEzuRd83vZ4jn/7cUQOJc8Jc4/cz7g1M3sOiFzwGK2r33CG
+         T0ir3t5Kmit5+tmxs+Hp2pm7sV+h37yuptc2kyDbXH+eillrs4mXb3r7SSOCInzlU1BU
+         mIDw==
+X-Received: by 10.182.243.138 with SMTP id wy10mr3473489obc.83.1377800365440;
+        Thu, 29 Aug 2013 11:19:25 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id pt4sm32754458obb.14.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 29 Aug 2013 11:19:24 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4-fc
+In-Reply-To: <20130829180129.GA4880@nysa>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233309>
 
-Looks good; thanks.
+Hi,
+
+Some commands (git diff) already have the --staged alias, this patch series
+document them, and do the same for the rest.
+
+Also, add a --work (and --no-work) option, so that in addition to --stage, we
+can replace --cached in 'git apply'.
+
+The old options remain unchanged.
+
+Felipe Contreras (9):
+  diff: document --staged
+  grep: add --staged option
+  rm: add --staged option
+  stash: add --stage option to save
+  stash: add --stage to pop and apply
+  submodule: add --staged options
+  apply: add --stage option
+  apply: add --work, --no-work options
+  completion: update --staged options
+
+ Documentation/git-apply.txt            | 11 +++++++++--
+ Documentation/git-diff.txt             |  4 ++--
+ Documentation/git-grep.txt             |  5 ++++-
+ Documentation/git-rm.txt               |  5 ++++-
+ Documentation/git-stash.txt            | 14 +++++++-------
+ Documentation/git-submodule.txt        |  8 ++++++--
+ builtin/apply.c                        |  7 +++++++
+ builtin/grep.c                         |  2 ++
+ builtin/rm.c                           |  1 +
+ contrib/completion/git-completion.bash | 10 +++++-----
+ git-stash.sh                           | 12 +++++++++---
+ git-submodule.sh                       | 10 +++++-----
+ 12 files changed, 61 insertions(+), 28 deletions(-)
+
+-- 
+1.8.4-fc
