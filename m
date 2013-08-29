@@ -1,76 +1,105 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/2] repack: rewrite the shell script in C
-Date: Thu, 29 Aug 2013 16:04:54 -0500
-Message-ID: <CAMP44s19gcJAYJ_MbvdoU99EeeHPDj9t+34jBs=MC33VC9nTNw@mail.gmail.com>
-References: <1377808774-12505-1-git-send-email-stefanbeller@googlemail.com>
-	<1377808774-12505-2-git-send-email-stefanbeller@googlemail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 3/4] get rid of "git submodule summary --for-status"
+Date: Thu, 29 Aug 2013 23:05:52 +0200
+Message-ID: <vpqr4dcnr67.fsf@anie.imag.fr>
+References: <1377781536-31955-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1377781536-31955-4-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqsixs2run.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 23:05:04 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 29 23:06:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF9On-00084p-HD
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 23:05:01 +0200
+	id 1VF9Pz-0000P4-2T
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 23:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756905Ab3H2VE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 17:04:56 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:37566 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756816Ab3H2VE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 17:04:56 -0400
-Received: by mail-lb0-f169.google.com with SMTP id z5so506981lbh.0
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 14:04:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=gqSTm8kpPc4KIkb6q/hBgoiqrC3IVpO1WDKhQyInjr0=;
-        b=v/uozY6D0V5T6l/mpqhm2yzPpjgs6a59Qc9eME0GZLInrCJMAZwjwIILerzB9/mlkc
-         asTY30om0Ie728yxWMIaYRWHnRq4Tf8QEbUzbzuMMPgnVPKKeUSqVAHocNvkixx1xBL2
-         4HacwakbheCEVTp+q5+Nwrr+1UqHm2zyZ7NrOawxBCxdqjfa4ohdnQHU9n/wQoaCo+K+
-         t8EZbS0CP/O6V0xmsR8bP+bt6iA3X+K/0Uoi8KX/UcliCR/wX7bOFfOTtiRU0nWDhg5z
-         kChjgq035AvoZTzs6y2hJXldfKc9lx5YSwgwoho1pTWLzlcIPcPoVKiOzEkiu3aUatyj
-         w1JQ==
-X-Received: by 10.112.64.36 with SMTP id l4mr4751300lbs.15.1377810294779; Thu,
- 29 Aug 2013 14:04:54 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Thu, 29 Aug 2013 14:04:54 -0700 (PDT)
-In-Reply-To: <1377808774-12505-2-git-send-email-stefanbeller@googlemail.com>
+	id S1756655Ab3H2VGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 17:06:11 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:42884 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753905Ab3H2VGK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 17:06:10 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r7TL5nth029276
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 29 Aug 2013 23:05:49 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VF9Pc-0003xG-IM; Thu, 29 Aug 2013 23:05:52 +0200
+In-Reply-To: <xmqqsixs2run.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 29 Aug 2013 12:56:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 29 Aug 2013 23:05:50 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r7TL5nth029276
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1378415154.76309@p8RMvt82Tn1zW6SFh5fA6Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233362>
 
-On Thu, Aug 29, 2013 at 3:39 PM, Stefan Beller
-<stefanbeller@googlemail.com> wrote:
-> The motivation of this patch is to get closer to a goal of being
-> able to have a core subset of git functionality built in to git.
-> That would mean
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 >
->  * people on Windows could get a copy of at least the core parts
->    of Git without having to install a Unix-style shell
+>> +	/* prepend header, only if there's an actual output */
+>> +	if (len) {
+>> +		if (uncommitted)
+>> +			strbuf_addstr(&summary, _("Submodules changed but not updated:"));
+>> +		else
+>> +			strbuf_addstr(&summary, _("Submodule changes to be committed:"));
+>> +		strbuf_addstr(&summary, "\n\n");
+>> +	}
+>> +	strbuf_addbuf(&summary, &cmd_stdout);
+>> +	strbuf_release(&cmd_stdout);
+>> +
+>> +	summary_content = strbuf_detach(&summary, &len);
+>> +	strbuf_add_commented_lines(&summary, summary_content, len);
+>> +	free(summary_content);
+>> +
+>> +	summary_content = strbuf_detach(&summary, &len);
+>> +	fprintf(s->fp, summary_content);
+>> +	free(summary_content);
+>
+> This "fprintf()" looks bogus to me.
 
-I think this is great, I'm looking forward to improve the situation in
-this regard.
+Oops, indeed. I forgot the "%s".
 
-Do you have in mind any other command that should also be replaced this way?
+> How about adding this on top?
 
-> This patch is meant to be mostly a literal translation of the
-> git-repack script; the intent is that later patches would start using
-> more library facilities, but this patch is meant to be as close to a
-> no-op as possible so it doesn't do that kind of thing.
+Your solution is better, yes.
 
-I'm not sure if this has been tackled already, or you could take a
-look into that, but:
-
-http://article.gmane.org/gmane.comp.version-control.git/147190
-
-Cheers.
+>  wt-status.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/wt-status.c b/wt-status.c
+> index d91661d..1f17652 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -710,9 +710,8 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
+>  	strbuf_add_commented_lines(&summary, summary_content, len);
+>  	free(summary_content);
+>  
+> -	summary_content = strbuf_detach(&summary, &len);
+> -	fprintf(s->fp, summary_content);
+> -	free(summary_content);
+> +	fputs(summary.buf, s->fp);
+> +	strbuf_release(&summary);
+>  }
+>  
+>  static void wt_status_print_other(struct wt_status *s,
 
 -- 
-Felipe Contreras
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
