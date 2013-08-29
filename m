@@ -1,88 +1,96 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH/RFC 0/7] Multiple simultaneously locked ref updates
-Date: Thu, 29 Aug 2013 14:23:53 -0400
-Message-ID: <521F91B9.5030801@kitware.com>
-References: <cover.1377784597.git.brad.king@kitware.com> <201308290932.18199.mfick@codeaurora.org> <521F6CF0.6040905@kitware.com> <xmqq7gf479jm.fsf@gitster.dls.corp.google.com> <521F8033.6070302@kitware.com> <xmqqd2ow5q1h.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 6/7] refs: add update_refs for multiple simultaneous updates
+Date: Thu, 29 Aug 2013 11:32:13 -0700
+Message-ID: <xmqqmwo04ac2.fsf@gitster.dls.corp.google.com>
+References: <cover.1377784597.git.brad.king@kitware.com>
+	<518ba77096664a679e4c7212e4cc4d496c6b38d3.1377784597.git.brad.king@kitware.com>
+	<xmqqhae85rbl.fsf@gitster.dls.corp.google.com>
+	<521F90EC.6040208@kitware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Martin Fick <mfick@codeaurora.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 20:25:58 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Brad King <brad.king@kitware.com>
+X-From: git-owner@vger.kernel.org Thu Aug 29 20:32:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF6up-0008Ve-Iu
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:25:55 +0200
+	id 1VF716-0004m9-VU
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:32:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756716Ab3H2SZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 14:25:51 -0400
-Received: from na3sys009aog122.obsmtp.com ([74.125.149.147]:50567 "HELO
-	na3sys009aog122.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1756490Ab3H2SZu (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Aug 2013 14:25:50 -0400
-Received: from mail-oa0-f49.google.com ([209.85.219.49]) (using TLSv1) by na3sys009aob122.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUh+SJaWSl9SOSFYhiO9lzX8rRgmcU1TW@postini.com; Thu, 29 Aug 2013 11:25:50 PDT
-Received: by mail-oa0-f49.google.com with SMTP id i7so1079468oag.8
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 11:25:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=zcjIJ7oWq4Xo0kzIJjbTI4q+CAdlqtZPLtqoCILP8QM=;
-        b=Y+waY6xOhxbNADvARIqSRRl/2Cm7iOstHRNV0wMf5ec6xa60s9folZ3aP12tNbsBRw
-         7X2iVml8iIalIzvJRwqDskDiVwAD/ICknRRNJ5d1tZcgcxF4pbl5f2NX4fI5/NRY2LQo
-         OMNiknxfxrCLGgndKxp6hgBWJkJJM2YXu3pm88RndGJBPuQiSP51LHPoyp+NdN+XTxsM
-         2tw+C8API2xcUGeqHbkmB9gjH5NGyFqMFTaD/EDAJiq8GV9TPH4D4RD7M9m58Cwz7RVd
-         TqdeBZNIAQXpzKHmTIAM1x/q+wN5RY3tVSFoQk+cpFp+4LhEeZXbBvZ1rTKzhaGGT4fX
-         21Wg==
-X-Gm-Message-State: ALoCoQng1pcIgSrI7RwCoBrsFUQY0mren7obWgSvPkGr5F5b9ATywGzPvs01t/rbN02lQtss8MNSQAef2Bcj/NpSxPY4Tskrl6Uc0uNRdsyFRatH9nXO3juoEjN6HQ/GYLerlYSkfiAj+d76WtR3B3QCZ7KiFuFV/A==
-X-Received: by 10.60.50.168 with SMTP id d8mr1540347oeo.77.1377800731957;
-        Thu, 29 Aug 2013 11:25:31 -0700 (PDT)
-X-Received: by 10.60.50.168 with SMTP id d8mr1540340oeo.77.1377800731862;
-        Thu, 29 Aug 2013 11:25:31 -0700 (PDT)
-Received: from [192.168.1.225] (tripoint.kitware.com. [66.194.253.20])
-        by mx.google.com with ESMTPSA id r3sm33786036oep.2.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 11:25:31 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
-In-Reply-To: <xmqqd2ow5q1h.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.4
+	id S1756311Ab3H2ScV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 14:32:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64094 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754741Ab3H2ScQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 14:32:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A3A233D0F5;
+	Thu, 29 Aug 2013 18:32:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WBnced2GVun/F7PsAh6r7EGoXVY=; b=f9y4Dd
+	96DXzojVOmMxmj+wbUAkldOFhs8z+hZuuCwc2vUODOMIOjhozhfPsa7SRwZFU6rL
+	FHFcttMIwaNxNouEFznveCsUYrg9PEBoRcZblYi3HkBDOuEndtDymQNk/VPWB1JH
+	9LLLZk3IrvbV94KEuzki9eVik4hgcyvafkIhg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KNTb8NKp69n7Lf4/yiJjaE1cgqbS2mWv
+	U16qQZm3+yZ6ZkfN/bmzyb6fXNZfoBY+HUmUpzPa1Bjnh08OqXSignGfTcA1nVwP
+	UHTKl6cEUdmonP/4YOFK8vchEq4qWHqBpeYxbsFWG4vJzOaHNwcMCRJ67h+tiwWQ
+	67epr30nSDg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AA8E3D0F4;
+	Thu, 29 Aug 2013 18:32:15 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 027AC3D0F2;
+	Thu, 29 Aug 2013 18:32:14 +0000 (UTC)
+In-Reply-To: <521F90EC.6040208@kitware.com> (Brad King's message of "Thu, 29
+	Aug 2013 14:20:28 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 53BE9570-10D9-11E3-9E2A-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233325>
 
-On 08/29/2013 02:07 PM, Junio C Hamano wrote:
-> I didn't mean to force the caller of new "update-ref --stdin"; the
-> new code you wrote for it is what feeds the input to update_refs()
-> function, and that is one place you can make sure you do not lock
-> yourself out.
-> 
-> Besides, if you get two updates to the same ref from --stdin, you
-> would need to verify these are identical (i.e. updating to the same
-> new object name from the same old object name; otherwise the requests
-> are conflicting and do not make sense), so the code to collect the
-> requests from stdin needs to match potential duplicates anyway.
-> 
-> One clean way to do so may be to put an update request (old and new
-> sha1) in a structure, and use a string_list to hold list of refs,
-> with the util field pointing at the update request data.
-> 
->> - this process already has the lock because it was asked to
->>   update the same file multiple times simultaneously, or
-> 
-> The second case is like left hand not knowing what right hand is
-> doing, no?  It should not happen if we code it right.
+Brad King <brad.king@kitware.com> writes:
 
-Yes.  All of the above is what I originally intended when asking
-the question in the cover letter.  Using string_list and its util
-field may be useful.  However, see also my response at
-$gmane/233260 about how it may fold into sorting.
+> On 08/29/2013 01:39 PM, Junio C Hamano wrote:
+>> Brad King <brad.king@kitware.com> writes:
+>>> +	for (i=0; i < n; ++i) {
+>> 
+>> Style:
+>> 
+>> 	for (i = 0; i < n; i++) {
+>
+> Fixed.
+>
+>> Is it asking for AB-BA deadlock?  If so, is the caller responsible
+>> for avoiding it?
+>
+> Since we don't actually block waiting for locks we won't really
+> deadlock.
 
-Thanks for the reviews!
--Brad
+Ahh, OK.
+
+> For Git's internal API I think we can document this in a comment so
+> that update_refs does not have to sort.  Then we can add a new
+> ref_update_sort function to sort an array of struct ref_update.
+> The user-facing "update-ref --stdin" can then use ref_update_sort.
+
+My immediate reaction was "is there a case where the caller knows
+that it already has a sorted collection?".  The single caller you
+are envisioning could collect the proposed updates to a string list
+and dedup, I think, and the resulting list would then be already
+sorted.
+
+But it may not be a bad idea to keep the callers dumb and have this
+function always sort, dedup, *and* fail inconsistent request.  Then
+your original caller that just collects --stdin input can pass
+possibly unsorted, duplicated and/or inconsistent request to the
+function and have it do the sanity check.
