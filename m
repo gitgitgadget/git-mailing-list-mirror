@@ -1,154 +1,144 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3] remote-hg: support for notes
-Date: Thu, 29 Aug 2013 17:29:50 -0500
-Message-ID: <1377815390-1480-1-git-send-email-felipe.contreras@gmail.com>
-References: <xmqqzjs016zx.fsf@gitster.dls.corp.google.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 30 00:34:35 2013
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH v2] git-p4: Ask "p4" to interpret View setting
+Date: Thu, 29 Aug 2013 18:40:37 -0400
+Message-ID: <20130829224037.GA25879@padd.com>
+References: <CACGba4zdA=3tBE9UR=i9P9kNAL1HUc3UwSHbYeq4s9fwaN4=Mw@mail.gmail.com>
+ <20130810201123.GA31706@padd.com>
+ <CACGba4wbqyHzXDCQxG31EKawfc-D4jpVYqbB4GdmK4hM=Oi4mw@mail.gmail.com>
+ <20130816012420.GA20985@padd.com>
+ <20130825022944.GA16027@padd.com>
+ <CACGba4wqSYf+qg21C7-0Y1r+ZafvggEVQrPu3nMdTr5PdtEOXQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: kazuki saitoh <ksaitoh560@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 30 00:40:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFAnR-0003RR-UJ
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 00:34:34 +0200
+	id 1VFAtb-0007EC-KS
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 00:40:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756868Ab3H2Wea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 18:34:30 -0400
-Received: from mail-oa0-f42.google.com ([209.85.219.42]:62274 "EHLO
-	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755304Ab3H2We3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 18:34:29 -0400
-Received: by mail-oa0-f42.google.com with SMTP id j10so1166611oah.29
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 15:34:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+y0A1tj5rQ8XOg+bVfpggjtt0PzPhDAn9eb6NNrEAz4=;
-        b=y2X/F7bFd0im+zD2bm/i2GwAmLyouKjrtwmOGd38+HVCNQYMMcqBO8iHKGwortL4Nj
-         mAG96CvgthEVeID6BCQNkN5qNdr8mClYfFb+Qqg49lnaYFFAFje+eO+FiJknlEXsAupb
-         HPl15bc8AI1JbP44lMOzwvScBeXX2VCkBKdNob+8zCBg25CLMN8Ln3zg8179lY2Yxvy5
-         BDWXHHHSbe2Enj7POxRhGlDPD69/TpiSVEy1c9SkBpV8lyUuwoZLw9VmWMDNPKJCp1aH
-         nhwHJknPVfQTda8oBMDyu0XbRm95OPYzRfF0UFVD//Xcm4tjWRadpJEJLz7biF6XyQ2V
-         0gxQ==
-X-Received: by 10.182.165.5 with SMTP id yu5mr4234163obb.93.1377815667295;
-        Thu, 29 Aug 2013 15:34:27 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id xr8sm33924612obc.12.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 15:34:26 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4-fc
-In-Reply-To: <xmqqzjs016zx.fsf@gitster.dls.corp.google.com>
+	id S1753651Ab3H2Wkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 18:40:41 -0400
+Received: from honk.padd.com ([74.3.171.149]:58596 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752381Ab3H2Wkk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 18:40:40 -0400
+Received: from arf.padd.com (unknown [50.105.10.190])
+	by honk.padd.com (Postfix) with ESMTPSA id 29CB13052;
+	Thu, 29 Aug 2013 15:40:40 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 1889A22D03; Thu, 29 Aug 2013 18:40:38 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CACGba4wqSYf+qg21C7-0Y1r+ZafvggEVQrPu3nMdTr5PdtEOXQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233377>
 
-Keep track of Mercurial revisions as Git notes under the 'refs/notes/hg'
-ref, this way, the user can easily see which Mercurial revision
-correspond to certain Git commit.
+ksaitoh560@gmail.com wrote on Tue, 27 Aug 2013 11:43 +0900:
+> > Do you have an updated patch?  Want to take some time to clean up and
+> > resubmit the entire series?  The batching should be incorporated with
+> > the last 2/2 that I sent out.
+> 
+> I don't have other update.
+> I'm satisfied because able to want to do and it became better than my
+> original modification thanks to your cooperation.
+> (> a few-hundred-thousand file repo
+> I didn't think that it work with so HUGE repo.)
+> 
+> How should I do?
+> Should I create one patch mail that incorporated your sent one?
+> Or nothing to do?
 
-Unfortunately, there's no way to efficiently update the notes after
-doing an export (push), so they'll have to be updated when importing
-(fetching).
+It would be good if you could fold the one I sent in with yours,
+and clean up any stylistic issues as you go.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-hg | 35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+I'll play with it a bit more, then send on to Junio for
+the next release.
 
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index 307d82c..7f50b40 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -23,8 +23,12 @@ import subprocess
- import urllib
- import atexit
- import urlparse, hashlib
-+import time as ptime
- 
- #
-+# If you want to see Mercurial revisions as Git commit notes:
-+# git config core.notesRef refs/notes/hg
-+#
- # If you are not in hg-git-compat mode and want to disable the tracking of
- # named branches:
- # git config --global remote-hg.track-branches false
-@@ -126,6 +130,7 @@ class Marks:
-         self.rev_marks = {}
-         self.last_mark = 0
-         self.version = 0
-+        self.last_note = 0
- 
-     def load(self):
-         if not os.path.exists(self.path):
-@@ -137,6 +142,7 @@ class Marks:
-         self.marks = tmp['marks']
-         self.last_mark = tmp['last-mark']
-         self.version = tmp.get('version', 1)
-+        self.last_note = tmp.get('last-note', 0)
- 
-         for rev, mark in self.marks.iteritems():
-             self.rev_marks[mark] = rev
-@@ -150,7 +156,7 @@ class Marks:
-         self.version = 2
- 
-     def dict(self):
--        return { 'tips': self.tips, 'marks': self.marks, 'last-mark' : self.last_mark, 'version' : self.version }
-+        return { 'tips': self.tips, 'marks': self.marks, 'last-mark' : self.last_mark, 'version' : self.version, 'last-note' : self.last_note }
- 
-     def store(self):
-         json.dump(self.dict(), open(self.path, 'w'))
-@@ -525,6 +531,31 @@ def export_ref(repo, name, kind, head):
-     print "from :%u" % rev_to_mark(head)
-     print
- 
-+    pending_revs = set(revs) - notes
-+    if pending_revs:
-+        note_mark = marks.next_mark()
-+        ref = "refs/notes/hg"
-+
-+        print "commit %s" % ref
-+        print "mark :%d" % (note_mark)
-+        print "committer remote-hg <> %s" % (ptime.strftime('%s %z'))
-+        desc = "Notes for %s\n" % (name)
-+        print "data %d" % (len(desc))
-+        print desc
-+        if marks.last_note:
-+            print "from :%u" % marks.last_note
-+
-+        for rev in pending_revs:
-+            notes.add(rev)
-+            c = repo[rev]
-+            print "N inline :%u" % rev_to_mark(c)
-+            msg = c.hex()
-+            print "data %d" % (len(msg))
-+            print msg
-+        print
-+
-+        marks.last_note = note_mark
-+
-     marks.set_tip(ename, head.hex())
- 
- def export_tag(repo, tag):
-@@ -1126,6 +1157,7 @@ def main(args):
-     global filenodes
-     global fake_bmark, hg_version
-     global dry_run
-+    global notes, alias
- 
-     alias = args[1]
-     url = args[2]
-@@ -1165,6 +1197,7 @@ def main(args):
-     except:
-         hg_version = None
-     dry_run = False
-+    notes = set()
- 
-     repo = get_repo(url, alias)
-     prefix = 'refs/hg/%s' % alias
--- 
-1.8.4-fc
+Thanks, this is a good addition!
+
+		-- Pete
+
+
+> 2013/8/25 Pete Wyckoff <pw@padd.com>:
+> > pw@padd.com wrote on Thu, 15 Aug 2013 21:24 -0400:
+> >> ksaitoh560@gmail.com wrote on Wed, 14 Aug 2013 09:59 +0900:
+> >> > > My only concern is in the commit message, about performance.  A
+> >> > > change that has lots of files in it will cause many roundtrips to
+> >> > > p4d to do "p4 where" on each.  When the files don't have much
+> >> > > edited content, this new approach will make the import take twice
+> >> > > as long, I'll guess.  Do you have a big repository where you
+> >> > > could test that?
+> >> >
+> >> > I measured performance of "git p4 clone  --use-client-spec" with a
+> >> > repository it has 1925 files, 50MB.
+> >> >   Original:    8.05s user 32.02s system 15% cpu 4:25.34 total
+> >> >   Apply patch:    9.02s user 53.19s system 14% cpu 6:56.41 total
+> >> >
+> >> > It is acceptable in my situation, but looks quite slow...
+> >> >
+> >> > Then I implemented one batch query version
+> >> >    7.92s user 33.03s system 15% cpu 4:25.59 total
+> >> >
+> >> > It is same as original
+> >> >
+> >> > My additional patch is below.
+> >> > I investigate call graph (attached rough sketch) and
+> >> > implement batch query in "commit()" and "splitFilesIntoBranches()".
+> >> > In addition, modified "map_in_client" to just search cache value.
+> >> >
+> >> > Could you accept?
+> >>
+> >> This looks good.  I've started my own performance testing
+> >> on a few-hundred-thousand file repo to confirm your findings.
+> >>
+> >> If it seems to work out, we can clean up the patch.  Otherwise
+> >> maybe need to think about having both implementations and use
+> >> the by-hand one for "...".  I don't like that approach.  Let's
+> >> hope it's not needed.
+> >
+> > I tried with a few repos:
+> >
+> > Small repo, single-commit clone:
+> >
+> >     Current:     0m0.35s user 0m0.30s sys 0m11.52s elapsed 5.69 %CPU
+> >     No batching: 0m0.66s user 0m0.77s sys 0m34.42s elapsed 4.17 %CPU
+> >     Batching:    0m0.28s user 0m0.29s sys 0m10.85s elapsed 5.27 %CPU
+> >
+> > Big repo, single-commit clone:
+> >
+> >     Current:     6m21.38s user 1m35.36s sys 19m44.83s elapsed 40.23 %CPU
+> >     No batching: 1m53.13s user 24m34.35s sys 146m13.80s elapsed 18.09 %CPU (*)
+> >     Batching:    6m22.01s user 1m44.23s sys 21m19.73s elapsed 37.99 %CPU
+> >
+> >     The "no batching" run died with an unrelated p4 timeout.
+> >
+> > Big repo, 1000 incremental changes:
+> >
+> >     Current:     0m13.43s user 0m19.82s sys 11m12.58s elapsed 4.94 %CPU
+> >     No batching: 0m20.29s user 0m39.94s sys 38m44.69s elapsed 2.59 %CPU (*)
+> >     Batching:    0m16.15s user 0m26.60s sys 13m55.69s elapsed 5.11 %CPU
+> >
+> >     The "no batching" run died at 28% of the way through.
+> >
+> > There is probably a 20%-ish slowdown in my environment with this
+> > approach.  But given that the timescale for these operations is
+> > measured in the tens of minutes, I don't think a couple more matters
+> > too much to anybody.
+> >
+> > The attractiveness of the simplicity and increased client spec feature
+> > coverage weighs in its favor.  Let's go ahead and inflict this on the
+> > world and see what they think.
+> >
+> > Do you have an updated patch?  Want to take some time to clean up and
+> > resubmit the entire series?  The batching should be incorporated with
+> > the last 2/2 that I sent out.
+> >
+> >                 -- Pete
+> 
