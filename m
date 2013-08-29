@@ -1,148 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] git-init does not respect existing separate-git-dir
-Date: Thu, 29 Aug 2013 10:12:44 -0700
-Message-ID: <xmqq38ps775f.fsf@gitster.dls.corp.google.com>
-References: <521F40E6.4040102@gmx.com> <20130829130450.GA9323@lanh>
+From: Brad King <brad.king@kitware.com>
+Subject: Re: [PATCH/RFC 0/7] Multiple simultaneously locked ref updates
+Date: Thu, 29 Aug 2013 13:09:07 -0400
+Message-ID: <521F8033.6070302@kitware.com>
+References: <cover.1377784597.git.brad.king@kitware.com> <201308290932.18199.mfick@codeaurora.org> <521F6CF0.6040905@kitware.com> <xmqq7gf479jm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ximin Luo <infinity0@gmx.com>, git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 19:12:58 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Martin Fick <mfick@codeaurora.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 29 19:17:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF5mB-0008Sg-SZ
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 19:12:56 +0200
+	id 1VF5qh-0003AK-FG
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 19:17:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754670Ab3H2RMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 13:12:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34975 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754369Ab3H2RMt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 13:12:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E0813D23F;
-	Thu, 29 Aug 2013 17:12:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AZ2kC0PiHyLBw5yi62BtQDe18jY=; b=ARGdBq
-	dCEZMtZC2SdXU/0FjMOaWN8OmHJkElOTaK6NvLXKT2VPaDs5j9KYOVt9c5iefE2u
-	yxSpNj32u95Bbf3qtVb1JuaixLpRZX2Yi9jbzvuAYwL06jJmTFGdNrEPcdTomqZU
-	Q3wLV97x4ki2BpQ0re4sBhIA6/Bh1ejJA0wIc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PEPm9RicsW1sEczBPedxOufWGZ4yDAei
-	IxudaE/sOc3C1FPD4nl66JT+Cz3WHKsXeunHwqQhD4OTc5ft3HeVjyAN6T8+T4zu
-	HUM/r2FuipdKdITLajUjTpa+YfITBLPTCkrsvmt25yHgOiIKtwWcGcBgnB8nm4au
-	mMzfSn+qyiU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 518233D23E;
-	Thu, 29 Aug 2013 17:12:48 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9EBFF3D23D;
-	Thu, 29 Aug 2013 17:12:46 +0000 (UTC)
-In-Reply-To: <20130829130450.GA9323@lanh> (Duy Nguyen's message of "Thu, 29
-	Aug 2013 20:04:50 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3A2D0F2A-10CE-11E3-A37B-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754102Ab3H2RRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 13:17:31 -0400
+Received: from na3sys009aog116.obsmtp.com ([74.125.149.240]:44651 "HELO
+	na3sys009aog116.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751820Ab3H2RRa (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Aug 2013 13:17:30 -0400
+X-Greylist: delayed 403 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Aug 2013 13:17:30 EDT
+Received: from mail-oa0-f51.google.com ([209.85.219.51]) (using TLSv1) by na3sys009aob116.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKUh+CKpSWV3hn8jHffPOosHhGtUq6XHf5@postini.com; Thu, 29 Aug 2013 10:17:30 PDT
+Received: by mail-oa0-f51.google.com with SMTP id h1so950224oag.24
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 10:17:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=wBkwt7Ia8N35zzags/SMi2qtPbwAYd+tJEKG/drclUc=;
+        b=Af0JCx1JFPv5xLyyQwQ2S+kWtpq6bFcMRNA5b2HqQUSu7eN11wV9vgnM2kuceEaQK/
+         vpxg6q7AI4P4yFF6nO8kDMEK1/p5sQ5DT2mRTMDO/v07yXRimoiQB6iU39OgwRIJVfwi
+         FAnShcJmhXGpGFAjyrK2Flh9caezXWQf41hVqPIPSBrLrbRhlpBWeU1CuaOHY1FaTQto
+         pzH4AkY5W0Mlcy/kIOnuDPj3kbzibALtXEf1xpglN9ttPN8u6MzJ2EaSUuMq+d+lEsh3
+         8enMhZ12cx2bIDIP6Xe4f/Kmj+Ty+LYXvytsIpe4YbEhVVYn9GK/kb2F4hw6O44cNmjp
+         8/MQ==
+X-Received: by 10.182.106.114 with SMTP id gt18mr3251273obb.77.1377796246770;
+        Thu, 29 Aug 2013 10:10:46 -0700 (PDT)
+X-Gm-Message-State: ALoCoQlQxFQZYWWIIOHx5lpoJUD+CiCsjs6+kUeSRwRkNBKVwuR6WPXJxOtLMcOkGQjVWRRhJMJO8SL/LfdQhpFudei6pD9yU8kY705BG0Ffvu0Jnqf2B+8M48ABIATLrqOoaJ4SOYKm7iSHzLr/WdE+7OrB1ucdHw==
+X-Received: by 10.182.106.114 with SMTP id gt18mr3251261obb.77.1377796246688;
+        Thu, 29 Aug 2013 10:10:46 -0700 (PDT)
+Received: from [192.168.1.225] (tripoint.kitware.com. [66.194.253.20])
+        by mx.google.com with ESMTPSA id nw5sm4230104obc.9.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 29 Aug 2013 10:10:45 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
+In-Reply-To: <xmqq7gf479jm.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233287>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On 08/29/2013 12:21 PM, Junio C Hamano wrote:
+> Brad King <brad.king@kitware.com> writes:
+>> needs to reject duplicate ref names from the stdin lines before
+>> trying to lock the ref twice to avoid this message.
+> 
+> How about trying not to feed duplicates?
 
-> On Thu, Aug 29, 2013 at 01:39:02PM +0100, Ximin Luo wrote:
->> It should not be necessary to re-specify --separate-git-dir when re-initialising a git repo.
->> 
->> $ git init --separate-git-dir ../repo
->> Initialized empty Git repository in /home/infinity0/tmp/repo/
->> 
->> $ git init
->> /home/infinity0/tmp/wtree/.git/refs: Not a directory
->> 1
->
-> This patch seems to work. Lightly tested.
->
-> -- 8< --
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> index 78aa387..d0e5b2e 100644
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -192,6 +192,15 @@ static int create_default_files(const char *template_path)
->  		die(_("insane git directory %s"), git_dir);
->  	memcpy(path, git_dir, len);
->  
-> +	if (!lstat(path, &st1) && S_ISREG(st1.st_mode)) {
-> +		git_dir = read_gitfile(git_dir);
-> +		len = strlen(git_dir);
-> +		if (len > sizeof(path)-50)
-> +			die(_("insane git directory %s"), git_dir);
-> +		set_git_dir(git_dir);
+Sure, perhaps it is simplest to push the responsibility on the user
+to avoid duplicates.  However, the error message will need to be
+re-worded to distinguish this case from a stale lock or competing
+process since both locks may come from the same update-ref process.
 
-This repetition from the pre-context of the patch makes me wonder if
-it may be a better solution to make sure we have already resolved
-the gitfile way before we get here, so that get_git_dir() gives the
-real location.
+Without checking the input for duplicates ourselves we cannot
+distinguish these cases to provide a more informative error message.
+However, such a check would add runtime overhead even for valid input.
+If we prefer to avoid input validation then here is proposed new
+wording for the lock failure message:
 
-The codepaths in init and clone are both special in that they may be
-dealing with a new repository and because of that, they may need to
-call set_git_dir() themselves, but in the codeflow for normal (read:
-those who deal with an existing repositories) programs, discovery of
-the real ".git" directory is done by environment.c::get_git_dir(),
-which to calls setup_git_env(), which in turn read_gitfile()'s on
-".git" when using the default ".git", like so:
+--------------------------------------------------------------------
+fatal: Unable to create '....lock': File exists.
 
-    static void setup_git_env(void)
-    {
-            git_dir = getenv(GIT_DIR_ENVIRONMENT);
-            git_dir = git_dir ? xstrdup(git_dir) : NULL;
-            if (!git_dir) {
-                    git_dir = read_gitfile(DEFAULT_GIT_DIR_ENVIRONMENT);
-                    git_dir = git_dir ? xstrdup(git_dir) : NULL;
-            }
-            if (!git_dir)
-                    git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
+The lock file may exist because:
+- another running git process already has the lock, or
+- this process already has the lock because it was asked to
+  update the same file multiple times simultaneously, or
+- a stale lock is left from a git process that crashed earlier.
+In the last case, make sure no other git process is running and
+remove the file manually to continue.
+--------------------------------------------------------------------
 
-And after this sequence, git_object_dir and git_index_file are
-computed off of git_dir, unless they are specified to use an
-alternate location via environment variables.
+IIUC the message cannot say anything about a 'ref' because it is
+used for other file type lock failures too.
 
-I wonder if the last "use DEFAULT_GIT_DIR_ENVIRONMENT" (which is
-".git") should also do the read_gitfile() thing, perhaps like this
-(totally untested):
-
- environment.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/environment.c b/environment.c
-index 5398c36..944e10e 100644
---- a/environment.c
-+++ b/environment.c
-@@ -123,14 +123,16 @@ static char *expand_namespace(const char *raw_namespace)
- 
- static void setup_git_env(void)
- {
-+	const char *gitfile;
-+
- 	git_dir = getenv(GIT_DIR_ENVIRONMENT);
--	git_dir = git_dir ? xstrdup(git_dir) : NULL;
--	if (!git_dir) {
--		git_dir = read_gitfile(DEFAULT_GIT_DIR_ENVIRONMENT);
--		git_dir = git_dir ? xstrdup(git_dir) : NULL;
--	}
- 	if (!git_dir)
- 		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
-+	gitfile = read_gitfile(git_dir);
-+	if (!gitfile)
-+		git_dir = xstrdup(git_dir);
-+	else
-+		git_dir = gitfile;
- 	git_object_dir = getenv(DB_ENVIRONMENT);
- 	if (!git_object_dir) {
- 		git_object_dir = xmalloc(strlen(git_dir) + 9);
+Comments?
+-Brad
