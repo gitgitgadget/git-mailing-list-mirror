@@ -1,72 +1,75 @@
 From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH/RFC 6/7] refs: add update_refs for multiple simultaneous
- updates
-Date: Thu, 29 Aug 2013 14:38:50 -0400
-Message-ID: <521F953A.9090309@kitware.com>
-References: <cover.1377784597.git.brad.king@kitware.com> <518ba77096664a679e4c7212e4cc4d496c6b38d3.1377784597.git.brad.king@kitware.com> <xmqqhae85rbl.fsf@gitster.dls.corp.google.com> <521F90EC.6040208@kitware.com> <xmqqmwo04ac2.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH/RFC 7/7] update-ref: support multiple simultaneous updates
+Date: Thu, 29 Aug 2013 14:42:39 -0400
+Message-ID: <521F961F.3090801@kitware.com>
+References: <cover.1377784597.git.brad.king@kitware.com> <8d323b9c2a71a9bafa8b48caf1d85c1035549b16.1377784597.git.brad.king@kitware.com> <xmqqioyo4a7w.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 20:40:37 2013
+X-From: git-owner@vger.kernel.org Thu Aug 29 20:44:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF793-0002Df-1g
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:40:37 +0200
+	id 1VF7Co-0005BB-1b
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:44:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756032Ab3H2Skc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 14:40:32 -0400
-Received: from na3sys009aog108.obsmtp.com ([74.125.149.199]:38459 "HELO
-	na3sys009aog108.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753417Ab3H2Skb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Aug 2013 14:40:31 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]) (using TLSv1) by na3sys009aob108.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUh+Vn9SYuOUSohk7ucwQBUBeebseW9O9@postini.com; Thu, 29 Aug 2013 11:40:31 PDT
-Received: by mail-ob0-f178.google.com with SMTP id ef5so887158obb.23
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 11:40:30 -0700 (PDT)
+	id S1756717Ab3H2SoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 14:44:25 -0400
+Received: from na3sys009aog115.obsmtp.com ([74.125.149.238]:45434 "HELO
+	na3sys009aog115.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1754315Ab3H2SoY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Aug 2013 14:44:24 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]) (using TLSv1) by na3sys009aob115.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKUh+Wh3pe+iCIjJoA2IBQ2g7SsEGLL5Kc@postini.com; Thu, 29 Aug 2013 11:44:24 PDT
+Received: by mail-oa0-f49.google.com with SMTP id i7so1095672oag.36
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 11:44:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
          :cc:subject:references:in-reply-to:content-type
          :content-transfer-encoding;
-        bh=kH1NT4kAilKMk6r2/rTijH6CJcmt6duhA6c9XkkcF04=;
-        b=Q/g4l0804c79SkZqRQk0qBV2C3E55W6BS6VmSVQXioddSCRCB4iJ//1qFbVDwtTAVO
-         ldEujttiKzFqr0FNyJEwcXUuU338Q5TLbHeiaifXWPWitj4WwU4oi5dXA+QJ4aQTQ3yo
-         qxj+6UaXHDIftJ1fIKjXALyWhqyPJ20F27dWd2F5M8udTX2XaILKcupTCTTRoHtDrKl5
-         OucRVJ0WsWmOcRK3NGKjspbZslmGjyk4Fys8l0+Joq4qFlX6thza8nlgvpVhCix8PNMT
-         JtP1KQ8XmaCGreRoZKIdcgrAQ9hxndsP1c6CM2Qy7XxWLOktJCfvhtlIiD8hOnlU/Ycz
-         np5g==
-X-Gm-Message-State: ALoCoQk13nHkEQWgcxLRFM7Vg/ZmHfFHUr8zr6koOp6FypsCGXzLCKvKTqU9/3HQBMPB0IYuYhv11cWZFSTELLjroTcMYLYwyK6o+7WEboUrUqv0cK3I2xLNuKedKQQcGfgT8ZQwqBVuR8pubxLbOsZZiMEzPMzUAw==
-X-Received: by 10.182.29.198 with SMTP id m6mr3539011obh.105.1377801630711;
-        Thu, 29 Aug 2013 11:40:30 -0700 (PDT)
-X-Received: by 10.182.29.198 with SMTP id m6mr3539006obh.105.1377801630645;
-        Thu, 29 Aug 2013 11:40:30 -0700 (PDT)
+        bh=y3pYQz+0whyNv9cao8fyWm1BawXc2lQbN4yp9zF8EfM=;
+        b=ZscWcROLs0861c/vW+eBHy5dQov2TGX+knPEJPmmCdj0WcAE7jal1QSQorT9E+u8sY
+         Dav8mptbzZ4zPRBixViL0F9Co7UnhXf1LNb+bR0z79agZyFk25tq0/G7rvlhDt+lNTTR
+         FlREV6YiYWGvrauC0xs+eRjaTkHqlgIqevVcE8cwjHJHgAVKBN3ztVzeG3VjY/sUj3fK
+         u6Z722vZQPYHUJAPjDKHPdZbbi+drY5JSBAGIaS6dNax4V9r11A+mchE8ojJOBHZFlQd
+         zsFen/RuhO0SKS4IKQYFpDjzr3N1i8IqT1RDi/NO/tyoAGDqnauBcT4hbHVA83xgNYHA
+         HshA==
+X-Gm-Message-State: ALoCoQmxXXqgaOaIqBbh373xcJNmmaQ0+tfPuhMXsIwKTr+XVQ8S+byGAvkMxpKC6EN1nSGmaVQ7TWuqPjqHn2kYIf9KZXQ8FU9ZDUP/0hIXXZyd73rbeDSACIaQUlPyzjWndfDNBP72h2as2UW8dU8nPNQRVVGe8A==
+X-Received: by 10.182.113.131 with SMTP id iy3mr3532640obb.64.1377801863385;
+        Thu, 29 Aug 2013 11:44:23 -0700 (PDT)
+X-Received: by 10.182.113.131 with SMTP id iy3mr3532635obb.64.1377801863277;
+        Thu, 29 Aug 2013 11:44:23 -0700 (PDT)
 Received: from [192.168.1.225] (tripoint.kitware.com. [66.194.253.20])
-        by mx.google.com with ESMTPSA id z5sm32821194obg.13.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id qi5sm32798357obb.6.1969.12.31.16.00.00
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 11:40:28 -0700 (PDT)
+        Thu, 29 Aug 2013 11:44:22 -0700 (PDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
-In-Reply-To: <xmqqmwo04ac2.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqioyo4a7w.fsf@gitster.dls.corp.google.com>
 X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233332>
 
-On 08/29/2013 02:32 PM, Junio C Hamano wrote:
-> But it may not be a bad idea to keep the callers dumb and have this
-> function always sort, dedup, *and* fail inconsistent request.
+On 08/29/2013 02:34 PM, Junio C Hamano wrote:
+> Brad King <brad.king@kitware.com> writes:
+> 
+>> +	const char *c, *s, *oldvalue, *value[2] = {0,0};
+> 
+> This patch has many style issues of the same kind, lack of a SP at
+> places where there should be between operators and after comma.
 
-I agree.  I was just starting to write the comment for update_refs
-and it basically would have said "always use ref_update_sort and
-check for duplicates first".  We might was well build it into the
-function.  If some call site in the future wants to optimize a case
-known to be sorted it can be refactored later.
+Okay, I can fix those.  However, for this patch I'm particularly
+interested in suggestions for the proposed stdin format.  Right
+now it just looks like the command line, but it feels strange to
+parse "-options" from a formatted input stream that is not an
+options response file.
 
 Thanks,
 -Brad
