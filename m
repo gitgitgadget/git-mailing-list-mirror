@@ -1,112 +1,159 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Officially start moving to the term 'staging area'
-Date: Thu, 29 Aug 2013 17:10:58 -0500
-Message-ID: <CAMP44s3ABKMAhp_P+QZBWOfjp_wPkqB0A63v6n2mKZv_Ln+qKg@mail.gmail.com>
-References: <20130829180129.GA4880@nysa>
-	<xmqqeh9c4a2t.fsf@gitster.dls.corp.google.com>
-	<CAM9Z-nmXPgfbXezbORb=NCqQuW4p3Dka+bHVdt_n7Sh=jehY7A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remote-hg: support for notes
+Date: Thu, 29 Aug 2013 15:12:34 -0700
+Message-ID: <xmqqzjs016zx.fsf@gitster.dls.corp.google.com>
+References: <xmqqa9k049qc.fsf@gitster.dls.corp.google.com>
+	<1377813000-24465-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Scott Chacon <schacon@gmail.com>
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 30 00:11:05 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 30 00:12:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFAQj-00061y-Ce
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 00:11:05 +0200
+	id 1VFASK-00073R-Ie
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 00:12:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756487Ab3H2WLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 18:11:00 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:43064 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753905Ab3H2WK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 18:10:59 -0400
-Received: by mail-lb0-f178.google.com with SMTP id z5so1236556lbh.37
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 15:10:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=oMVRmuN8HKX//S08kRVv6y1y+tNTb/e0u8dbgyf+Z9s=;
-        b=HnjVVGsaGTD9tYYgLep8TW+MQkpeA2oLfeKdNljy/5Jbt4S3eYTMgDD4Fo0+avJPBX
-         9joy9yFMxkUvL1n/U7YMShS1YZaKSfTzTrzOoAsUIeS42rsf0TAmKbhBnpS7XiDAJoWg
-         1WwXaZck5lWknAWi9jM/h0bvSr43mPXKif1woo39oTE5PhZAv8OCMkGOU8tatDEo1KKC
-         7VgY7sR2mYQvDUQoXKkVqnN+QH4lyM6/CGwfw6ajwe08z+iIohrf9w5nsbLa0tUfObJS
-         xRs8rtnl2Q8fMOhpCyUIdtP8urEtRL0OTSe/oxYiKna8EIMolS/f6JhLCBhNhwelMru4
-         pN5w==
-X-Received: by 10.152.3.42 with SMTP id 10mr4868002laz.22.1377814258471; Thu,
- 29 Aug 2013 15:10:58 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Thu, 29 Aug 2013 15:10:58 -0700 (PDT)
-In-Reply-To: <CAM9Z-nmXPgfbXezbORb=NCqQuW4p3Dka+bHVdt_n7Sh=jehY7A@mail.gmail.com>
+	id S1752536Ab3H2WMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 18:12:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45744 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751838Ab3H2WMk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 18:12:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A66C3DA74;
+	Thu, 29 Aug 2013 22:12:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4KV+Pq6MMdolUskasDWo5RO+IVc=; b=yQjCAy
+	ct3RDlNeWgELOjeyLFESddNB48Kll6Jsn+rdjayuiNjYm0gV8FVnNW34eTqfK7RY
+	5yYtmgo7QKTPuIm6GVCNHDw/mH4SMIeFrPivVtom4YqT3FtjfXCzAQXv+OZ/sfAh
+	i9zqxriHvG2ieh2fHe+vBgrzmQ8WDbhj2YT2A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hz+vJlWGnZeW0tjMaLWBuPGb64PcfaC8
+	+TBbqkYmj9gVpUHbvucKfVyV2MsFXggd2zmXPLrkd+IwTxayy3z4+upv4zvPmCFK
+	PqLf+yz8LXODphDkMpEeNkA9PBwVlKTsTP9URCPwSk3vUHdmoe2nkvAFlZzouuap
+	KNWan/idnO8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A1483DA73;
+	Thu, 29 Aug 2013 22:12:39 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F4693DA70;
+	Thu, 29 Aug 2013 22:12:37 +0000 (UTC)
+In-Reply-To: <1377813000-24465-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Thu, 29 Aug 2013 16:50:00 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1D34E9AE-10F8-11E3-9BF9-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233374>
 
-On Thu, Aug 29, 2013 at 4:55 PM, Drew Northup <n1xim.email@gmail.com> wrote:
-> On Thu, Aug 29, 2013 at 2:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> It has been discussed many times in the past that 'index' is not an
->>> appropriate description for what the high-level user does with it, and
->>> it has been agreed that 'staging area' is the best term.
->>
->> "add" is the verb, not "index" (which is a noun that refers
->> to the thing that keeps track of what will be written as a tree to
->> be committed next).
->>
->> And it will stay that way.
->>
->> IIRC, when this was discussed, many non-native speakers had trouble
->> with the verb "to stage", not just from i18n/l10n point of view.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+
+I somehow find this way under-explained to be useful for its users.
+
+Is it clear what "support for notes" means in the context of
+remote-hg?  Do we send data stored in our notes when we push back to
+Hg?  Does Hg have a mechanism to store additional data out of band,
+and we add notes when we pull from Hg?  Or does this "support" do
+something else, and if so what does it do?
+
+>  contrib/remote-helpers/git-remote-hg | 32 +++++++++++++++++++++++++++++++-
+>  1 file changed, 31 insertions(+), 1 deletion(-)
 >
-> I agree with Junio.
-
-All right, you are the only person (presumably other than Junio) that
-thinks "index" is the right name for what high-level users should be
-familiar with.
-
-> This effort is better spent making the
-> documentation clearer and more succinct. The reality is that a user
-> needs to build a model in their mind of what they are doing which maps
-> enough (completely is not required) to what is actually going on to
-> get work done. If the documentation or the instruction is getting in
-> the way of that in the name of simplifying the presentation then the
-> presentation is wrong.
->
-> We add content snapshots to the index of content (creating
-> "temporary"--they will be garbage collected eventually if they become
-> orphans--objects into the store at the same time). We build commits
-> from those snapshots (in whole or in part, typically only using the
-> most recent snapshots of new things added to the index) and save those
-> in the object store with the content and tree objects. Sometimes we
-> create tag objects to record something special about commits, trees,
-> and content blobs.
->
-> That's the real model (with some rough edges). Explaining what that
-> has to do with distributed version control is the hard part.
-
-The user doesn't need to know the format of the index, or the packs,
-in fact, they don't even need to know the index or packs even exist.
-
-All the user needs to know about this is that there's an area where
-contents of the next commit are being prepared, and "staging area" is
-the best name for that mental area. How that area is actually
-implemented (the index) is not relevant to the user.
-
-Everyone agrees on that, except you, and possibly Junio.
-
--- 
-Felipe Contreras
+> diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+> index 307d82c..e49fcfa 100755
+> --- a/contrib/remote-helpers/git-remote-hg
+> +++ b/contrib/remote-helpers/git-remote-hg
+> @@ -23,6 +23,7 @@ import subprocess
+>  import urllib
+>  import atexit
+>  import urlparse, hashlib
+> +import time as ptime
+>  
+>  #
+>  # If you are not in hg-git-compat mode and want to disable the tracking of
+> @@ -126,6 +127,7 @@ class Marks:
+>          self.rev_marks = {}
+>          self.last_mark = 0
+>          self.version = 0
+> +        self.last_note = 0
+>  
+>      def load(self):
+>          if not os.path.exists(self.path):
+> @@ -137,6 +139,7 @@ class Marks:
+>          self.marks = tmp['marks']
+>          self.last_mark = tmp['last-mark']
+>          self.version = tmp.get('version', 1)
+> +        self.last_note = tmp.get('last-note', 0)
+>  
+>          for rev, mark in self.marks.iteritems():
+>              self.rev_marks[mark] = rev
+> @@ -150,7 +153,7 @@ class Marks:
+>          self.version = 2
+>  
+>      def dict(self):
+> -        return { 'tips': self.tips, 'marks': self.marks, 'last-mark' : self.last_mark, 'version' : self.version }
+> +        return { 'tips': self.tips, 'marks': self.marks, 'last-mark' : self.last_mark, 'version' : self.version, 'last-note' : self.last_note }
+>  
+>      def store(self):
+>          json.dump(self.dict(), open(self.path, 'w'))
+> @@ -525,6 +528,31 @@ def export_ref(repo, name, kind, head):
+>      print "from :%u" % rev_to_mark(head)
+>      print
+>  
+> +    pending_revs = set(revs) - notes
+> +    if pending_revs:
+> +        note_mark = marks.next_mark()
+> +        ref = "refs/notes/hg"
+> +
+> +        print "commit %s" % ref
+> +        print "mark :%d" % (note_mark)
+> +        print "committer remote-hg <> %s" % (ptime.strftime('%s %z'))
+> +        desc = "Notes for %s\n" % (name)
+> +        print "data %d" % (len(desc))
+> +        print desc
+> +        if marks.last_note:
+> +            print "from :%u" % marks.last_note
+> +
+> +        for rev in pending_revs:
+> +            notes.add(rev)
+> +            c = repo[rev]
+> +            print "N inline :%u" % rev_to_mark(c)
+> +            msg = c.hex()
+> +            print "data %d" % (len(msg))
+> +            print msg
+> +        print
+> +
+> +        marks.last_note = note_mark
+> +
+>      marks.set_tip(ename, head.hex())
+>  
+>  def export_tag(repo, tag):
+> @@ -1126,6 +1154,7 @@ def main(args):
+>      global filenodes
+>      global fake_bmark, hg_version
+>      global dry_run
+> +    global notes, alias
+>  
+>      alias = args[1]
+>      url = args[2]
+> @@ -1165,6 +1194,7 @@ def main(args):
+>      except:
+>          hg_version = None
+>      dry_run = False
+> +    notes = set()
+>  
+>      repo = get_repo(url, alias)
+>      prefix = 'refs/hg/%s' % alias
