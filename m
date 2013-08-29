@@ -1,75 +1,69 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH/RFC 7/7] update-ref: support multiple simultaneous updates
-Date: Thu, 29 Aug 2013 14:42:39 -0400
-Message-ID: <521F961F.3090801@kitware.com>
-References: <cover.1377784597.git.brad.king@kitware.com> <8d323b9c2a71a9bafa8b48caf1d85c1035549b16.1377784597.git.brad.king@kitware.com> <xmqqioyo4a7w.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 8/8] remote-hg: support for notes
+Date: Thu, 29 Aug 2013 11:45:15 -0700
+Message-ID: <xmqqa9k049qc.fsf@gitster.dls.corp.google.com>
+References: <1377717793-27170-1-git-send-email-felipe.contreras@gmail.com>
+	<1377717793-27170-9-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 20:44:33 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 29 20:45:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF7Co-0005BB-1b
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:44:30 +0200
+	id 1VF7Df-0005nu-Rz
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756717Ab3H2SoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 14:44:25 -0400
-Received: from na3sys009aog115.obsmtp.com ([74.125.149.238]:45434 "HELO
-	na3sys009aog115.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1754315Ab3H2SoY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Aug 2013 14:44:24 -0400
-Received: from mail-oa0-f49.google.com ([209.85.219.49]) (using TLSv1) by na3sys009aob115.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUh+Wh3pe+iCIjJoA2IBQ2g7SsEGLL5Kc@postini.com; Thu, 29 Aug 2013 11:44:24 PDT
-Received: by mail-oa0-f49.google.com with SMTP id i7so1095672oag.36
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 11:44:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=y3pYQz+0whyNv9cao8fyWm1BawXc2lQbN4yp9zF8EfM=;
-        b=ZscWcROLs0861c/vW+eBHy5dQov2TGX+knPEJPmmCdj0WcAE7jal1QSQorT9E+u8sY
-         Dav8mptbzZ4zPRBixViL0F9Co7UnhXf1LNb+bR0z79agZyFk25tq0/G7rvlhDt+lNTTR
-         FlREV6YiYWGvrauC0xs+eRjaTkHqlgIqevVcE8cwjHJHgAVKBN3ztVzeG3VjY/sUj3fK
-         u6Z722vZQPYHUJAPjDKHPdZbbi+drY5JSBAGIaS6dNax4V9r11A+mchE8ojJOBHZFlQd
-         zsFen/RuhO0SKS4IKQYFpDjzr3N1i8IqT1RDi/NO/tyoAGDqnauBcT4hbHVA83xgNYHA
-         HshA==
-X-Gm-Message-State: ALoCoQmxXXqgaOaIqBbh373xcJNmmaQ0+tfPuhMXsIwKTr+XVQ8S+byGAvkMxpKC6EN1nSGmaVQ7TWuqPjqHn2kYIf9KZXQ8FU9ZDUP/0hIXXZyd73rbeDSACIaQUlPyzjWndfDNBP72h2as2UW8dU8nPNQRVVGe8A==
-X-Received: by 10.182.113.131 with SMTP id iy3mr3532640obb.64.1377801863385;
-        Thu, 29 Aug 2013 11:44:23 -0700 (PDT)
-X-Received: by 10.182.113.131 with SMTP id iy3mr3532635obb.64.1377801863277;
-        Thu, 29 Aug 2013 11:44:23 -0700 (PDT)
-Received: from [192.168.1.225] (tripoint.kitware.com. [66.194.253.20])
-        by mx.google.com with ESMTPSA id qi5sm32798357obb.6.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 11:44:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
-In-Reply-To: <xmqqioyo4a7w.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.4
+	id S1755410Ab3H2SpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 14:45:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64005 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752200Ab3H2SpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 14:45:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FBAA3DA3B;
+	Thu, 29 Aug 2013 18:45:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ifCOaAR5TGyeyMpZnCn4FopZWsc=; b=K7EwvV
+	Zy8V/iX1a/72L3I2EQ/eRr7kR3m2mOd+eefq3y+9HLck/uAGeGgBlIeWqtxjW07b
+	zqNnWNBARfCDRVKBhWNrvrZooOq010eU11r8TPmYbruwMJTZp4q5WnOKxVekRXT8
+	BOLON6S5dHjSd4KnPbf2pSi3pr5wa7hmWu/dE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JaCR/oS8sTWI2EsO/4WyZ175Tc8O9ayq
+	5CgRG2KFOYUOeU3hduwOJh7PxhrEuG/Oh66YuxymeX1lsXC/qj/PZieSTsDN6ztL
+	pyMxOU4BcLiMVB8aSiK+cYEKHLQIwZ/ZW5YHMh/DbLD4YHcDAF74EPXIJoQ7peKV
+	D72U0a4wQgs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 738ED3DA3A;
+	Thu, 29 Aug 2013 18:45:18 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC9B03DA38;
+	Thu, 29 Aug 2013 18:45:17 +0000 (UTC)
+In-Reply-To: <1377717793-27170-9-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Wed, 28 Aug 2013 14:23:13 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 264EC7AC-10DB-11E3-ACFB-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233333>
 
-On 08/29/2013 02:34 PM, Junio C Hamano wrote:
-> Brad King <brad.king@kitware.com> writes:
-> 
->> +	const char *c, *s, *oldvalue, *value[2] = {0,0};
-> 
-> This patch has many style issues of the same kind, lack of a SP at
-> places where there should be between operators and after comma.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Okay, I can fix those.  However, for this patch I'm particularly
-interested in suggestions for the proposed stdin format.  Right
-now it just looks like the command line, but it feels strange to
-parse "-options" from a formatted input stream that is not an
-options response file.
+> @@ -629,6 +657,7 @@ def do_import(parser):
+>          print "feature import-marks=%s" % path
+>      print "feature export-marks=%s" % path
+>      print "feature force"
+> +    print "feature notes"
 
-Thanks,
--Brad
+The remaining patches in the series seem reasonable, but this patch
+seems to rely on an undefined feature "notes", whose design has not
+been discussed here.  Will queue without this one for now.
