@@ -1,93 +1,60 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [BUG] git-init does not respect existing separate-git-dir
-Date: Thu, 29 Aug 2013 20:04:50 +0700
-Message-ID: <20130829130450.GA9323@lanh>
-References: <521F40E6.4040102@gmx.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: nd/magic-pathspec exposes breakage in git-add--interactive on Windows
+Date: Thu, 29 Aug 2013 15:01:38 +0200
+Message-ID: <CALxABCZaeS9eC50CxeqHLrKm530YXH1TRKtSUQEsd81L3Jxwyg@mail.gmail.com>
+References: <521EF02A.2020300@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ximin Luo <infinity0@gmx.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 15:01:54 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Aug 29 15:02:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF1rF-0001PH-L4
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 15:01:53 +0200
+	id 1VF1rP-0001WG-Jf
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 15:02:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754172Ab3H2NBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 09:01:49 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:50446 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753001Ab3H2NBs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 09:01:48 -0400
-Received: by mail-pa0-f46.google.com with SMTP id fa1so893841pad.5
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 06:01:48 -0700 (PDT)
+	id S1754205Ab3H2NB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 09:01:59 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:36581 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753001Ab3H2NB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 09:01:59 -0400
+Received: by mail-ob0-f173.google.com with SMTP id ta17so413302obb.32
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 06:01:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=wTnya751fvCnTAKrJA11EtU+2Em9McYhPdPHjt+kT2Q=;
-        b=GRYdx59C9xkCE0b7cyE01lf0UasKMnH5fOdg9Pvo6Ip7FkeAYo4gbrN3NZ9sJRZc+u
-         +fRQTlkN+Sm/+UV9vcNuxL1v666pfY9utWUiMdgWjYNQAsCbfB+Rp8YUIANjBkzL5UJk
-         +Y6MYg6PMrpfUuxQgXKg0IZypAnUeD3NgC6eLQ5pAcBk15agHscsckMNEGFF+7SxCrvr
-         NUgcjc0LODnB8hM6V3rNV+tmDRoH8rBWo9iYY+4pjh3UCf1+9V4HZGoQTZYBfzMzEV/y
-         vXXFIwTh1gRv8StF8x5gXeeCQBUZlrp/FJ9evQmOIUBfa/o7WBuD3zc7KUzPwwDCD2Os
-         6+aw==
-X-Received: by 10.66.189.98 with SMTP id gh2mr4348649pac.60.1377781308104;
-        Thu, 29 Aug 2013 06:01:48 -0700 (PDT)
-Received: from lanh ([115.73.241.36])
-        by mx.google.com with ESMTPSA id zq10sm40901382pab.6.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 06:01:47 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Thu, 29 Aug 2013 20:04:50 +0700
-Content-Disposition: inline
-In-Reply-To: <521F40E6.4040102@gmx.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=+WwVATfEM/SrxpEnYEEw4Mnvvmr0gMYj41/i8p7bpWg=;
+        b=uK92CwvFtOlX9/oQHC036zRp9+m/oGuIATrPaY50crHkbh6BbpFC/8OSWUEIlmw+Q3
+         ZxkOpXYCdxTjcqmRV+41Y+RqQSSZlEusTgvqbmRhxn74wNX6dCz6HXhZArh4rXYtiF+n
+         pQUk809fq/w8Bx+BjsZmX+nkDlsJdEMT3FazpNkJOGfiL1y5WB7q6FJegKfObNzVaz2m
+         OuL1UMlBdRlC3sjFICoDuEARI6oQGbY0fcWP+9goTSTdc+bFO1B2z0g27qox8nYpk3wf
+         JhhacGlUGHhNt4yP5U7tUpn0zLp04CsF/fvllYX5VBsiOEPku30Dvb1Zs/+D/xlgOUVI
+         H6lQ==
+X-Received: by 10.182.131.166 with SMTP id on6mr2352309obb.60.1377781318602;
+ Thu, 29 Aug 2013 06:01:58 -0700 (PDT)
+Received: by 10.60.101.225 with HTTP; Thu, 29 Aug 2013 06:01:38 -0700 (PDT)
+In-Reply-To: <521EF02A.2020300@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233251>
 
-On Thu, Aug 29, 2013 at 01:39:02PM +0100, Ximin Luo wrote:
-> It should not be necessary to re-specify --separate-git-dir when re-initialising a git repo.
-> 
-> $ git init --separate-git-dir ../repo
-> Initialized empty Git repository in /home/infinity0/tmp/repo/
-> 
-> $ git init
-> /home/infinity0/tmp/wtree/.git/refs: Not a directory
-> 1
+On Thu, Aug 29, 2013 at 8:54 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> It looks like on Windows we disallow arguments that contain double-quote,
+> colon, or asterisk, and otherwise wrap arguments in double-quotes if they
+> contain space. Then pass them through qx{}, which I can only guess what it
+> does.
 
-This patch seems to work. Lightly tested.
-
--- 8< --
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 78aa387..d0e5b2e 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -192,6 +192,15 @@ static int create_default_files(const char *template_path)
- 		die(_("insane git directory %s"), git_dir);
- 	memcpy(path, git_dir, len);
- 
-+	if (!lstat(path, &st1) && S_ISREG(st1.st_mode)) {
-+		git_dir = read_gitfile(git_dir);
-+		len = strlen(git_dir);
-+		if (len > sizeof(path)-50)
-+			die(_("insane git directory %s"), git_dir);
-+		set_git_dir(git_dir);
-+		memcpy(path, git_dir, len);
-+	}
-+
- 	if (len && path[len-1] != '/')
- 		path[len++] = '/';
--- 8< -- 
-
-> One big motivation is so "git init" can be a good "fire-and-forget"
-> invocation that should work anywhere. Currently, one has to do "git
-> init --separate-git-dir $(git rev-parse --git-dir)" which is a lot
-> less elegant.
---
-Duy
+Well, the command interpreter of the platform implementation caused
+this, I believe.
+Quoting of the double quotes for it was too cumbersome for rarely used
+combination
+(windows, ActiveState Perl, and Git). I guess it is more popular now?
