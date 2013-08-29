@@ -1,153 +1,203 @@
 From: Brad King <brad.king@kitware.com>
-Subject: [PATCH/RFC 6/7] refs: add update_refs for multiple simultaneous updates
-Date: Thu, 29 Aug 2013 10:11:54 -0400
-Message-ID: <518ba77096664a679e4c7212e4cc4d496c6b38d3.1377784597.git.brad.king@kitware.com>
+Subject: [PATCH/RFC 7/7] update-ref: support multiple simultaneous updates
+Date: Thu, 29 Aug 2013 10:11:55 -0400
+Message-ID: <8d323b9c2a71a9bafa8b48caf1d85c1035549b16.1377784597.git.brad.king@kitware.com>
 References: <cover.1377784597.git.brad.king@kitware.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 29 16:22:37 2013
+X-From: git-owner@vger.kernel.org Thu Aug 29 16:22:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF37L-0000xR-9j
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 16:22:35 +0200
+	id 1VF37L-0000xR-Qb
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 16:22:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755286Ab3H2OW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 10:22:28 -0400
-Received: from tripoint.kitware.com ([66.194.253.20]:48740 "EHLO
+	id S1755350Ab3H2OW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 10:22:29 -0400
+Received: from tripoint.kitware.com ([66.194.253.20]:48737 "EHLO
 	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754451Ab3H2OWP (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1754170Ab3H2OWP (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 29 Aug 2013 10:22:15 -0400
+X-Greylist: delayed 522 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Aug 2013 10:22:15 EDT
 Received: by vesper.kitware.com (Postfix, from userid 1000)
-	id 7CF749FB8D; Thu, 29 Aug 2013 10:11:55 -0400 (EDT)
+	id 80D0D9FB8E; Thu, 29 Aug 2013 10:11:55 -0400 (EDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <cover.1377784597.git.brad.king@kitware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233264>
 
-Add 'struct ref_update' to encode the information needed to update or
-delete a ref (name, new sha1, optional old sha1, no-deref flag).  Add
-function 'update_refs' accepting an array of updates to perform.  First
-acquire locks on all refs with verified old values.  Then update or
-delete all refs accordingly.  Fail if any one lock cannot be obtained or
-any one old value does not match.
-
-Though the refs themeselves cannot be modified together in a single
-atomic transaction, this function does enable some useful semantics.
-For example, a caller may create a new branch starting from the head of
-another branch and rewind the original branch at the same time.  This
-transfers ownership of commits between branches without risk of losing
-commits added to the original branch by a concurrent process, or risk of
-a concurrent process creating the new branch first.
+Add a --stdin signature to read update instructions from standard input
+and apply multiple ref updates and deletes together.
 
 Signed-off-by: Brad King <brad.king@kitware.com>
 ---
- refs.c |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- refs.h |   11 +++++++++++
- 2 files changed, 77 insertions(+)
+ Documentation/git-update-ref.txt |   19 +++++++-
+ builtin/update-ref.c             |   93 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 110 insertions(+), 2 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 5a6c14e..0a0c19e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3238,6 +3238,72 @@ int update_ref(const char *action, const char *refname,
- 	return update_ref_write(action, refname, sha1, lock, onerr);
- }
+diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
+index 0df13ff..a79afe8 100644
+--- a/Documentation/git-update-ref.txt
++++ b/Documentation/git-update-ref.txt
+@@ -8,7 +8,7 @@ git-update-ref - Update the object name stored in a ref safely
+ SYNOPSIS
+ --------
+ [verse]
+-'git update-ref' [-m <reason>] (-d <ref> [<oldvalue>] | [--no-deref] <ref> <newvalue> [<oldvalue>])
++'git update-ref' [-m <reason>] (-d <ref> [<oldvalue>] | [--no-deref] <ref> <newvalue> [<oldvalue>] | --stdin)
  
-+int update_refs(const char *action, struct ref_update *updates,
-+		int n, enum action_on_err onerr)
+ DESCRIPTION
+ -----------
+@@ -58,6 +58,23 @@ archive by creating a symlink tree).
+ With `-d` flag, it deletes the named <ref> after verifying it
+ still contains <oldvalue>.
+ 
++With `--stdin`, update-ref reads instructions from standard input
++and performs all modifications together.  Specify updates with
++lines of the form:
++
++	[ --no-deref SP ] <ref> SP <newvalue> [ SP <oldvalue> ] LF
++
++and deletes with lines of the form:
++
++	[ --no-deref SP ] -d SP <ref> [ SP <oldvalue> ] LF
++
++or as updates with 40 "0" as <newvalue>.  Blank lines are ignored.
++Lines of any other format or a repeated <ref> produce an error.
++If all <ref>s can be locked with matching <oldvalue>s
++simultaneously all modifications are performed.  Otherwise, no
++modifications are performed.  Note that while each individual
++<ref> is updated or deleted atomically, a concurrent reader may
++still see a subset of the modifications.
+ 
+ Logging Updates
+ ---------------
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 51d2684..2f0d34c 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -6,19 +6,102 @@
+ static const char * const git_update_ref_usage[] = {
+ 	N_("git update-ref [options] -d <refname> [<oldval>]"),
+ 	N_("git update-ref [options]    <refname> <newval> [<oldval>]"),
++	N_("git update-ref [options] --stdin"),
+ 	NULL
+ };
+ 
++static const char blank[] = " \t\r\n";
++
++static int updates_size;
++static int updates_count;
++static struct ref_update *updates;
++
++static void update_refs_stdin(const char *line)
 +{
-+	int ret = 0, delnum = 0, i;
-+	int *types;
-+	struct ref_lock **locks;
-+	const char **delnames;
++	int delete = 0, i;
++	const char *c, *s, *oldvalue, *value[2] = {0,0};
++	struct ref_update *update;
++	c = line;
 +
-+	if (!updates || !n)
-+		return 0;
++	/* Skip blank lines: */
++	if (*c == '\n')
++		return;
 +
-+	/* Allocate work space: */
-+	types = xmalloc(sizeof(int)*n);
-+	locks = xmalloc(sizeof(struct ref_lock*)*n);
-+	delnames = xmalloc(sizeof(const char*)*n);
++	/* Allocate a ref_update struct: */
++	if (updates_count == updates_size) {
++		updates_size = updates_size? updates_size*2 : 16;
++		updates = xrealloc(updates, sizeof(*updates)*updates_size);
++		memset(updates + updates_count, 0,
++		       sizeof(*updates)*(updates_size-updates_count));
++	}
++	update = &updates[updates_count++];
 +
-+	/* Acquire all locks while verifying old values: */
-+	for (i=0; i < n; ++i) {
-+		locks[i] = update_ref_lock(updates[i].ref_name,
-+					   updates[i].old_sha1,
-+					   updates[i].flags,
-+					   &types[i], onerr);
-+		if (!locks[i])
++	/* --no-deref SP */
++	if (strncmp(c, "--no-deref ", 11) == 0) {
++		c += 11;
++		update->flags |= REF_NODEREF;
++	}
++
++	/* -d SP */
++	if (strncmp(c, "-d ", 3) == 0) {
++		c += 3;
++		delete = 1;
++	}
++
++	/* <ref> */
++	s = c;
++	c = s + strcspn(s, blank);
++	update->ref_name = xstrndup(s, c-s);
++
++	/* [ SP <value> ]... */
++	for (i=0; i < 2; ++i) {
++		if (*c != ' ')
 +			break;
++		++c;
++		s = c;
++		c = s + strcspn(s, blank);
++		value[i] = xstrndup(s, c-s);
 +	}
 +
-+	/* Abort if we did not get all locks: */
-+	if (i < n) {
-+		while (--i >= 0)
-+			unlock_ref(locks[i]);
-+		free(types);
-+		free(locks);
-+		free(delnames);
-+		return 1;
++	if (*c && *c != '\n')
++		die("unrecognized input line: %s", line);
++
++	if (check_refname_format(update->ref_name, REFNAME_ALLOW_ONELEVEL))
++		die("invalid <ref> format on input line: %s", line);
++
++	if (delete) {
++		hashclr(update->new_sha1);
++		oldvalue = value[0];
++		if (value[1])
++			die("both <newvalue> and <oldvalue> on delete line: %s",
++			    line);
++	} else {
++		if (!value[0])
++			die("missing <newvalue> on update line: %s", line);
++		if (get_sha1(value[0], update->new_sha1))
++			die("invalid <newvalue> on update line: %s", line);
++		oldvalue = value[1];
 +	}
-+
-+	/* Perform updates first so live commits remain referenced: */
-+	for (i=0; i < n; ++i)
-+		if (!is_null_sha1(updates[i].new_sha1)) {
-+			ret |= update_ref_write(action,
-+						updates[i].ref_name,
-+						updates[i].new_sha1,
-+						locks[i], onerr);
-+			locks[i] = 0; /* freed by update_ref_write */
-+		}
-+
-+	/* Perform deletes now that updates are safely completed: */
-+	for (i=0; i < n; ++i)
-+		if (locks[i]) {
-+			delnames[delnum++] = locks[i]->ref_name;
-+			ret |= delete_ref_loose(locks[i], types[i]);
-+		}
-+	ret |= repack_without_refs(delnames, delnum);
-+	for (i=0; i < delnum; ++i)
-+		unlink_or_warn(git_path("logs/%s", delnames[i]));
-+	clear_loose_ref_cache(&ref_cache);
-+	for (i=0; i < n; ++i)
-+		if (locks[i])
-+			unlock_ref(locks[i]);
-+
-+	free(types);
-+	free(locks);
-+	free(delnames);
-+	return ret;
++	if (oldvalue) {
++		update->old_sha1 = xmalloc(20);
++		if (get_sha1(oldvalue, update->old_sha1))
++			die("invalid <oldvalue> on %s line: %s",
++			    delete? "delete":"update", line);
++	}
 +}
 +
- struct ref *find_ref_by_name(const struct ref *list, const char *name)
+ int cmd_update_ref(int argc, const char **argv, const char *prefix)
  {
- 	for ( ; list; list = list->next)
-diff --git a/refs.h b/refs.h
-index 2cd307a..5763f3a 100644
---- a/refs.h
-+++ b/refs.h
-@@ -214,6 +214,17 @@ int update_ref(const char *action, const char *refname,
- 		const unsigned char *sha1, const unsigned char *oldval,
- 		int flags, enum action_on_err onerr);
+ 	const char *refname, *oldval, *msg = NULL;
+ 	unsigned char sha1[20], oldsha1[20];
+-	int delete = 0, no_deref = 0, flags = 0;
++	int delete = 0, no_deref = 0, read_stdin = 0, flags = 0;
++	char line[1000];
+ 	struct option options[] = {
+ 		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
+ 		OPT_BOOLEAN('d', NULL, &delete, N_("delete the reference")),
+ 		OPT_BOOLEAN( 0 , "no-deref", &no_deref,
+ 					N_("update <refname> not the one it points to")),
++		OPT_BOOLEAN( 0 , "stdin", &read_stdin, N_("read updates from stdin")),
+ 		OPT_END(),
+ 	};
  
-+struct ref_update {
-+	const char *ref_name;
-+	unsigned char new_sha1[20];
-+	unsigned char *old_sha1;
-+	int flags;
-+};
-+
-+/** lock all refs and then write all of them */
-+int update_refs(const char *action, struct ref_update *updates,
-+		int n, enum action_on_err onerr);
-+
- extern int parse_hide_refs_config(const char *var, const char *value, const char *);
- extern int ref_is_hidden(const char *);
+@@ -28,6 +111,14 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 	if (msg && !*msg)
+ 		die("Refusing to perform update with empty message.");
  
++	if (read_stdin) {
++		if (delete || no_deref || argc > 0)
++			usage_with_options(git_update_ref_usage, options);
++		while (fgets(line, sizeof(line), stdin))
++			update_refs_stdin(line);
++		return update_refs(msg, updates, updates_count, DIE_ON_ERR);
++	}
++
+ 	if (delete) {
+ 		if (argc < 1 || argc > 2)
+ 			usage_with_options(git_update_ref_usage, options);
 -- 
 1.7.10.4
