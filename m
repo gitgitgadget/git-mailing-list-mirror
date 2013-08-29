@@ -1,79 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Officially start moving to the term 'staging area'
-Date: Thu, 29 Aug 2013 11:37:46 -0700
-Message-ID: <xmqqeh9c4a2t.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] Add proper 'stage' command
+Date: Thu, 29 Aug 2013 20:38:41 +0200
+Message-ID: <vpq8uzks5ou.fsf@anie.imag.fr>
 References: <20130829180129.GA4880@nysa>
+	<1377799744-5201-1-git-send-email-felipe.contreras@gmail.com>
+	<1377799744-5201-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: git@vger.kernel.org,
 	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>,
 	Miles Bader <miles@gnu.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Philip Oakley <philipoakley@iee.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Scott Chacon <schacon@gmail.com>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 20:38:03 2013
+X-From: git-owner@vger.kernel.org Thu Aug 29 20:39:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF76W-0000F7-AD
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:38:00 +0200
+	id 1VF77R-0000y4-W5
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:38:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757116Ab3H2Shw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 14:37:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41168 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756575Ab3H2Shu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 14:37:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B8C83D4D0;
-	Thu, 29 Aug 2013 18:37:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pnvDJhsISNDTuqu7A1Si42l+J98=; b=J6Cf05
-	YUZpw1F10UTlqgmwOJyLSWj+H6IlQ4RTpjUiOH5lVrAjhETR26f0s9tqjkNr7o1j
-	FXdVOs2cLnZM7tdG5P+M9hqk6HeW4Hji8fb1cClvcfDz9zWfGfkeCnFgtGeO4cuv
-	zRr4sX4F27s8tzgiUwIz74QrmNMWWLqGIwd2Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ACNIk/ybgh05CWvtL1lNgCmXmQl3o6CS
-	0TPLk78NjMnRz1tNS80QjIOOJMNSrsEDDu2TtK/2WBQvMu6oLCG80EqX0LAYeUZb
-	XKIoOuiPR3cCCssnWN5b8UVhEARjgF+iiyW7kmceB/q4mTlI+G7QLORoHe7ji7Q/
-	bxxN1OEGLeM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDE383D4CE;
-	Thu, 29 Aug 2013 18:37:48 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2415F3D4CD;
-	Thu, 29 Aug 2013 18:37:48 +0000 (UTC)
-In-Reply-To: <20130829180129.GA4880@nysa> (Felipe Contreras's message of "Thu,
-	29 Aug 2013 13:01:29 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1A5D2660-10DA-11E3-A87F-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756381Ab3H2Siy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 14:38:54 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:56695 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753844Ab3H2Six (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 14:38:53 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r7TIce6a010413
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 29 Aug 2013 20:38:40 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VF77C-00031l-26; Thu, 29 Aug 2013 20:38:42 +0200
+In-Reply-To: <1377799744-5201-2-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Thu, 29 Aug 2013 13:09:03 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 29 Aug 2013 20:38:40 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r7TIce6a010413
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1378406324.7762@ZZURus4bouiv98Fw77HuJQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233329>
 
 Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> It has been discussed many times in the past that 'index' is not an
-> appropriate description for what the high-level user does with it, and
-> it has been agreed that 'staging area' is the best term.
+> +COMMANDS
+> +--------
+> +
+> +With no arguments, it's a synonym for linkgit:git-add[1].
 
-"add" is the verb, not "index" (which is a noun that refers
-to the thing that keeps track of what will be written as a tree to
-be committed next).
+This would not be very useful since "git add" errors out when called
+without arguments ;-).
 
-And it will stay that way.
+The accurate description of your code would be closer to "When the first
+argument is not a subcommand, it's a synonym for linkgit:git-add[1].".
+I'm not sure I like it, as it creates ambiguities (e.g. need to spell
+"git stage -- diff" to add a file called "diff". Not a strong objection
+though, as we already have refs Vs filename ambiguities in many places.
 
-IIRC, when this was discussed, many non-native speakers had trouble
-with the verb "to stage", not just from i18n/l10n point of view.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
