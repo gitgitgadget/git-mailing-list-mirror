@@ -1,103 +1,89 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: git-p4 out of memory for very large repository
-Date: Thu, 29 Aug 2013 18:46:09 -0400
-Message-ID: <20130829224609.GB25879@padd.com>
-References: <20130823011245.GA7693@jerec>
- <52170C6A.4080708@diamand.org>
- <20130823114856.GA8182@jerec>
- <20130825155001.GA875@padd.com>
- <20130826134756.GA1335@jerec>
- <20130828154135.GA16921@jerec>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] remote-hg: support for notes
+Date: Thu, 29 Aug 2013 15:49:04 -0700
+Message-ID: <xmqqr4dc15b3.fsf@gitster.dls.corp.google.com>
+References: <xmqqzjs016zx.fsf@gitster.dls.corp.google.com>
+	<1377815390-1480-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
-To: Corey Thompson <cmtptr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 30 00:46:18 2013
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 30 00:49:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFAym-00023i-Un
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 00:46:17 +0200
+	id 1VFB1d-0003vJ-Vj
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 00:49:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756161Ab3H2WqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 18:46:13 -0400
-Received: from honk.padd.com ([74.3.171.149]:59184 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752585Ab3H2WqM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 18:46:12 -0400
-Received: from arf.padd.com (unknown [50.105.10.190])
-	by honk.padd.com (Postfix) with ESMTPSA id 5C3333052;
-	Thu, 29 Aug 2013 15:46:11 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 8058922D03; Thu, 29 Aug 2013 18:46:09 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20130828154135.GA16921@jerec>
+	id S1756032Ab3H2WtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 18:49:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38924 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752381Ab3H2WtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 18:49:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B31FB3DAF9;
+	Thu, 29 Aug 2013 22:49:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lzfb9rxb5L381EiPK2cvDdYv+YY=; b=Zd9Gr9
+	/jw9epaXV8LAX2eLVHpZ69JzgOaN7QMNSt0RTdwScyYe3Dhve4aUSnPN8MGXFy1Y
+	Wi1Vmoa12BHgMTNC3XmAjCdUV1JOHVs3UWFAC5E1T4triN2uxE9pzFy/kgAvoV/G
+	tZ6aYtCjG09YkRTEiqNZGtWVtNzcZjC81KOHA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RbxnBysoqp62xRI+qEQ5ujDTRoLQ96aF
+	WR/2vi4FP7TJcqeDAlLyllrDpcPcTu27chCczgvqcIFQ9kG4w0LpiX4IKyajozBD
+	Cir3SZNgqHcw070KAc1oJpy9O8SZtzI3R011eaWrREs0x3fDQUe2jI+DtsqaHtkf
+	7kHVmXiUATk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A5B103DAF8;
+	Thu, 29 Aug 2013 22:49:06 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0271B3DAF6;
+	Thu, 29 Aug 2013 22:49:05 +0000 (UTC)
+In-Reply-To: <1377815390-1480-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Thu, 29 Aug 2013 17:29:50 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 356A8ACE-10FD-11E3-B536-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233380>
 
-cmtptr@gmail.com wrote on Wed, 28 Aug 2013 11:41 -0400:
-> On Mon, Aug 26, 2013 at 09:47:56AM -0400, Corey Thompson wrote:
-> > You are correct that git-fast-import is killed by the OOM killer, but I
-> > was unclear about which process was malloc()ing so much memory that the
-> > OOM killer got invoked (as other completely unrelated processes usually
-> > also get killed when this happens).
-> > 
-> > Unless there's one gigantic file in one change that gets removed by
-> > another change, I don't think that's the problem; as I mentioned in
-> > another email, the machine has 32GB physical memory and the largest
-> > single file in the current head is only 118MB.  Even if there is a very
-> > large transient file somewhere in the history, I seriously doubt it's
-> > tens of gigabytes in size.
-> > 
-> > I have tried watching it with top before, but it takes several hours
-> > before it dies.  I haven't been able to see any explosion of memory
-> > usage, even within the final hour, but I've never caught it just before
-> > it dies, either.  I suspect that whatever the issue is here, it happens
-> > very quickly.
-> > 
-> > If I'm unable to get through this today using the incremental p4 sync
-> > method you described, I'll try running a full-blown clone overnight with
-> > top in batch mode writing to a log file to see whether it catches
-> > anything.
-> > 
-> > Thanks again,
-> > Corey
-> 
-> Unforunately I have not made much progress.  The incremental sync method
-> fails with the output pasted below.  The change I specified is only one
-> change number above where that repo was cloned...
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-I usually just do "git p4 sync @505859".  The error message below
-crops up when things get confused.  Usually after a previous
-error.  I tend to destroy the repo and try again.  Sorry I don't
-can't explain better what's happening here.  It's not a memory
-issue; it reports only 24 MB used.
+> Keep track of Mercurial revisions as Git notes under the 'refs/notes/hg'
+> ref, this way, the user can easily see which Mercurial revision
+> correspond to certain Git commit.
+>
+> Unfortunately, there's no way to efficiently update the notes after
+> doing an export (push), so they'll have to be updated when importing
+> (fetching).
+>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  contrib/remote-helpers/git-remote-hg | 35 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 34 insertions(+), 1 deletion(-)
+>
+> diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+> index 307d82c..7f50b40 100755
+> --- a/contrib/remote-helpers/git-remote-hg
+> +++ b/contrib/remote-helpers/git-remote-hg
+> @@ -23,8 +23,12 @@ import subprocess
+>  import urllib
+>  import atexit
+>  import urlparse, hashlib
+> +import time as ptime
+>  
+>  #
+> +# If you want to see Mercurial revisions as Git commit notes:
+> +# git config core.notesRef refs/notes/hg
+> +#
 
-> So I tried a 'git p4 rebase' overnight with top running, and as I feared
-> I did not see anything out of the ordinary.  git, git-fast-import, and
-> git-p4 all hovered under 1.5% MEM the entire time, right up until
-> death.  The last entry in my log shows git-fast-import at 0.8%, with git
-> and git-p4 at 0.0% and 0.1%, respectively.  I could try again with a
-> more granular period, but I feel like this method is ultimately a goose
-> chase.
-
-Bizarre.  There is no good explanation why memory usage would go
-up to 32 GB (?) within one top interval (3 sec ?).  My theory
-about one gigantic object is debunked:  you have only the 118 MB
-one.  Perhaps there's some container or process memory limit, as
-Luke guessed, but it's not obvious here.
-
-The other big hammer is "strace".  If you're still interested in
-playing with this, you could do:
-
-    strace -vf -tt -s 200 -o /tmp/strace.out git p4 clone ....
-
-and hours later, see if something suggests itself toward the
-end of that output file.
-
-		-- Pete
+Yup.  This is better.  Will queue.
