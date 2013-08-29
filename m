@@ -1,210 +1,130 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 2/2] stage: add edit command
-Date: Thu, 29 Aug 2013 13:09:04 -0500
-Message-ID: <1377799744-5201-3-git-send-email-felipe.contreras@gmail.com>
-References: <20130829180129.GA4880@nysa>
- <1377799744-5201-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 29 20:14:24 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 05/11] Fix some typos and improve wording
+Date: Thu, 29 Aug 2013 11:16:19 -0700
+Message-ID: <xmqqvc2o4b2k.fsf@gitster.dls.corp.google.com>
+References: <1403569571.34349.1377625974290.JavaMail.ngmail@webmail19.arcor-online.net>
+	<70864071.34489.1377626361141.JavaMail.ngmail@webmail19.arcor-online.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, martinvonz@gmail.com, jrnieder@gmail.com,
+	wking@tremily.us, philipoakley@iee.org
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Thu Aug 29 20:16:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF6je-0000fX-Ue
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:14:23 +0200
+	id 1VF6lf-00026a-Kl
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 20:16:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756335Ab3H2SOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 14:14:18 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:44175 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756238Ab3H2SOR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 14:14:17 -0400
-Received: by mail-ob0-f181.google.com with SMTP id dn14so845633obc.26
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 11:14:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=w62SyFCrndZIxGlghQ6LmPC1iB1vqC27zoj6EWeMjjo=;
-        b=qNMP1su+F/MhV5PexZFCFL7cpLr9/3h0umiBUV1Wm0rtLzUUQgem/gzoD2XRESGHGY
-         RsgPlyFWGxqiT4bP/yW8iTDa4sgAls3Q41UXHVsd2Z4h7Iqkfx8iXFzPJfSKSJE4MfXn
-         lQfDE9nYuvIAGVGPexYbU+te+HlucmxE0WumiYn73HNOY2NmGIi2c5d+BCBJ37vtXWpM
-         /ZwafPawJ15R88HHGKK8f2oVz9SPjOnb6gUuui3nO0T9ppTfKLWEff4oiDlr+o78+F9J
-         AOqSbUbGuhYhXpP/QXcpN9Z0JD7AVL9vPqMTgSLE5ANKj0oxtdWjEDbcr2qijnSi8DWz
-         qA3w==
-X-Received: by 10.60.133.133 with SMTP id pc5mr2242292oeb.63.1377800057459;
-        Thu, 29 Aug 2013 11:14:17 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id rl1sm33778559oeb.7.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 11:14:16 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4-fc
-In-Reply-To: <1377799744-5201-1-git-send-email-felipe.contreras@gmail.com>
+	id S1753905Ab3H2SQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 14:16:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47375 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753650Ab3H2SQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 14:16:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FF4F3D76D;
+	Thu, 29 Aug 2013 18:16:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PXpvyVKOUswKjpNE/4VxxL5I7Mo=; b=SX1EAV
+	QjjfuvVLEgnmn8ebGQM3sdBvs6WIXWa+avp52Qjao5eGHFq2EwcSshFwHxDwZ1VB
+	sPOJYj4sDRCcl95p+ZI/aaB+qU2hnGjRYjf3i9VbiSyVzIhLPsJvRC83Jg4yS1PH
+	L1kQ+3oSci7b72M0Xg3hvcAyfvjvZlI/61S/c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=amQuh3fRVNMwdKe7HI3xUaWdpnY3nFJW
+	wO6F2Mi0xgrX1iG3WQc+uFtMngWMMUq7LU8ICV8P9VSqXgwIukjhFDoiKBY6l3Nr
+	jGT3fZ/WrTwbd+ySVCUYBGtog4mUNdS/b4cc5C9AXWoowDzWRd1jHd51DdUbQFhl
+	+exbQFhB7TM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55DF53D76C;
+	Thu, 29 Aug 2013 18:16:21 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99B3F3D76B;
+	Thu, 29 Aug 2013 18:16:20 +0000 (UTC)
+In-Reply-To: <70864071.34489.1377626361141.JavaMail.ngmail@webmail19.arcor-online.net>
+	(Thomas Ackermann's message of "Tue, 27 Aug 2013 19:59:21 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1AE3C6FA-10D7-11E3-922E-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233307>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/git-stage.txt            |  5 +++
- builtin/stage.c                        | 74 ++++++++++++++++++++++++++++++++++
- contrib/completion/git-completion.bash |  4 +-
- 3 files changed, 82 insertions(+), 1 deletion(-)
+Thomas Ackermann <th.acker@arcor.de> writes:
 
-diff --git a/Documentation/git-stage.txt b/Documentation/git-stage.txt
-index 318bf45..3e52a66 100644
---- a/Documentation/git-stage.txt
-+++ b/Documentation/git-stage.txt
-@@ -15,6 +15,7 @@ SYNOPSIS
- 'git stage diff' [options] [<commit>] [--] [<paths>...]
- 'git stage rm' [options] [--] [<paths>...]
- 'git stage apply' [options] [--] [<paths>...]
-+'git stage edit'
- 
- DESCRIPTION
- -----------
-@@ -45,6 +46,10 @@ Remove files from the staging area only. See linkgit:git-rm[1] --staged.
- 
- Apply a patch to the staging area. See linkgit:git-rm[1] --staged.
- 
-+'edit'::
-+
-+Manually edit the staging area (as a diff).
-+
- SEE ALSO
- --------
- linkgit:git-add[1]
-diff --git a/builtin/stage.c b/builtin/stage.c
-index 3023d17..d3c58d5 100644
---- a/builtin/stage.c
-+++ b/builtin/stage.c
-@@ -6,6 +6,9 @@
- 
- #include "builtin.h"
- #include "parse-options.h"
-+#include "diff.h"
-+#include "diffcore.h"
-+#include "revision.h"
- 
- static const char *const stage_usage[] = {
- 	N_("git stage [options] [--] <paths>..."),
-@@ -16,6 +19,74 @@ static const char *const stage_usage[] = {
- 	NULL
- };
- 
-+static int do_reset(const char *prefix)
-+{
-+	const char *argv[] = { "reset", "--quiet", NULL };
-+	return cmd_reset(2, argv, prefix);
-+}
-+
-+static int do_apply(const char *file, const char *prefix)
-+{
-+	const char *argv[] = { "apply", "--recount", "--cached", file, NULL };
-+	return cmd_apply(4, argv, prefix);
-+}
-+
-+static int edit(int argc, const char **argv, const char *prefix)
-+{
-+	char *file = git_pathdup("STAGE_EDIT.patch");
-+	int out;
-+	struct rev_info rev;
-+	int ret = 0;
-+	struct stat st;
-+
-+	read_cache();
-+
-+	init_revisions(&rev, prefix);
-+	rev.diffopt.context = 7;
-+
-+	argc = setup_revisions(argc, argv, &rev, NULL);
-+	add_head_to_pending(&rev);
-+	if (!rev.pending.nr) {
-+		struct tree *tree;
-+		tree = lookup_tree(EMPTY_TREE_SHA1_BIN);
-+		add_pending_object(&rev, &tree->object, "HEAD");
-+	}
-+
-+	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
-+	rev.diffopt.use_color = 0;
-+	DIFF_OPT_SET(&rev.diffopt, IGNORE_DIRTY_SUBMODULES);
-+
-+	out = open(file, O_CREAT | O_WRONLY, 0666);
-+	if (out < 0)
-+		die(_("Could not open '%s' for writing."), file);
-+	rev.diffopt.file = xfdopen(out, "w");
-+	rev.diffopt.close_file = 1;
-+
-+	if (run_diff_index(&rev, 1))
-+		die(_("Could not write patch"));
-+	if (launch_editor(file, NULL, NULL))
-+		exit(1);
-+
-+	if (stat(file, &st))
-+		die_errno(_("Could not stat '%s'"), file);
-+
-+	ret = do_reset(prefix);
-+	if (ret)
-+		goto leave;
-+
-+	if (!st.st_size)
-+		goto leave;
-+
-+	ret = do_apply(file, prefix);
-+	if (ret)
-+		goto leave;
-+
-+leave:
-+	unlink(file);
-+	free(file);
-+	return ret;
-+}
-+
- int cmd_stage(int argc, const char **argv, const char *prefix)
- {
- 	struct option options[] = { OPT_END() };
-@@ -46,6 +117,9 @@ int cmd_stage(int argc, const char **argv, const char *prefix)
- 
- 			return cmd_apply(argc, argv, prefix);
- 		}
-+		if (!strcmp(argv[1], "edit")) {
-+			return edit(argc - 1, argv + 1, prefix);
-+		}
- 	}
- 
- 	return cmd_add(argc, argv, prefix);
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 8cf26e2..2b81e78 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1693,7 +1693,7 @@ _git_stage ()
- {
- 	__git_has_doubledash && return
- 
--	local subcommands="add reset diff rm apply"
-+	local subcommands="add reset diff rm apply edit"
- 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
- 	if [ -z "$subcommand" ]; then
- 		__gitcomp "$subcommands"
-@@ -1711,6 +1711,8 @@ _git_stage ()
- 		_git_rm;;
- 	apply)
- 		_git_apply;;
-+	edit)
-+		;;
- 	*)
- 		_git_add;
- 	esac
--- 
-1.8.4-fc
+> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+> ---
+>  Documentation/user-manual.txt | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
+>
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index 6241a43..465d9cb 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -219,7 +219,7 @@ of development leading to that point.
+>  
+>  The best way to see how this works is using the linkgit:gitk[1]
+>  command; running gitk now on a Git repository and looking for merge
+> -commits will help understand how the Git organizes history.
+> +commits will help understand how Git organizes history.
+>  
+>  In the following, we say that commit X is "reachable" from commit Y
+>  if commit X is an ancestor of commit Y.  Equivalently, you could say
+> @@ -793,7 +793,7 @@ e05db0fd4f31dde7005f075a84f96b360d05984b
+>  -------------------------------------------------
+>  
+>  Or you could recall that the `...` operator selects all commits
+> -contained reachable from either one reference or the other but not
+> +reachable from either one reference or the other but not
+>  both; so
+>  
+>  -------------------------------------------------
+> @@ -820,7 +820,7 @@ You could just visually inspect the commits since e05db0fd:
+>  $ gitk e05db0fd..
+>  -------------------------------------------------
+>  
+> -Or you can use linkgit:git-name-rev[1], which will give the commit a
+> +or you can use linkgit:git-name-rev[1], which will give the commit a
+
+As raised during the initial review, the previous sentence has ended
+and this begins a new sentence, I think, hence "Or", not "or".
+
+>  name based on any tag it finds pointing to one of the commit's
+>  descendants:
+>  
+> @@ -864,8 +864,8 @@ because it outputs only commits that are not reachable from v1.5.0-rc1.
+>  
+>  As yet another alternative, the linkgit:git-show-branch[1] command lists
+>  the commits reachable from its arguments with a display on the left-hand
+> -side that indicates which arguments that commit is reachable from.  So,
+> -you can run something like
+> +side that indicates which arguments that commit is reachable from.  
+> +So, if you run something like
+>  -------------------------------------------------
+>  $ git show-branch e05db0fd v1.5.0-rc0 v1.5.0-rc1 v1.5.0-rc2
+> @@ -877,15 +877,15 @@ available
+>  ...
+>  -------------------------------------------------
+>  
+> -then search for a line that looks like
+> +then a line like
+>  
+>  -------------------------------------------------
+>  + ++ [e05db0fd] Fix warnings in sha1_file.c - use C99 printf format if
+>  available
+>  -------------------------------------------------
+>  
+> -Which shows that e05db0fd is reachable from itself, from v1.5.0-rc1, and
+> -from v1.5.0-rc2, but not from v1.5.0-rc0.
+> +shows that e05db0fd is reachable from itself, from v1.5.0-rc1,
+> +and from v1.5.0-rc2, and not from v1.5.0-rc0.
+
+This is easier to read. Good.
