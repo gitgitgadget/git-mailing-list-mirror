@@ -1,156 +1,84 @@
 From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Re: the pager
-Date: Thu, 29 Aug 2013 11:41:56 -0400
-Message-ID: <201308291541.r7TFfuJr023110@freeze.ariadne.com>
-References: <201308261957.r7QJvfjF028935@freeze.ariadne.com>
-        <xmqqd2ozhhob.fsf@gitster.dls.corp.google.com>
-        <201308281819.r7SIJmnh025977@freeze.ariadne.com> <xmqqr4dd8suz.fsf@gitster.dls.corp.google.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 29 17:42:05 2013
+Subject: Re: [PATCHv2] git-diff: Clarify operation when not inside a repository.
+Date: Thu, 29 Aug 2013 11:44:16 -0400
+Message-ID: <201308291544.r7TFiGjm023154@freeze.ariadne.com>
+References: <201308211734.r7LHYwNh008859@hobgoblin.ariadne.com>
+	<xmqqwqneuc69.fsf@gitster.dls.corp.google.com>
+	<201308222031.r7MKVL6O028293@freeze.ariadne.com>
+	<xmqqioyxqwdr.fsf@gitster.dls.corp.google.com>
+	<201308231811.r7NIBeH9027848@freeze.ariadne.com> <xmqq38pt8nqm.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 29 17:44:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF4MG-0001d9-4G
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 17:42:04 +0200
+	id 1VF4OV-0003Jw-Jf
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 17:44:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755165Ab3H2Pl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 11:41:59 -0400
-Received: from qmta02.westchester.pa.mail.comcast.net ([76.96.62.24]:59754
-	"EHLO qmta02.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755112Ab3H2Pl6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Aug 2013 11:41:58 -0400
-Received: from omta07.westchester.pa.mail.comcast.net ([76.96.62.59])
-	by qmta02.westchester.pa.mail.comcast.net with comcast
-	id JeTi1m0051GhbT851fhx8h; Thu, 29 Aug 2013 15:41:57 +0000
+	id S1753389Ab3H2PoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 11:44:19 -0400
+Received: from qmta08.westchester.pa.mail.comcast.net ([76.96.62.80]:54504
+	"EHLO qmta08.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753240Ab3H2PoT (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Aug 2013 11:44:19 -0400
+Received: from omta16.westchester.pa.mail.comcast.net ([76.96.62.88])
+	by qmta08.westchester.pa.mail.comcast.net with comcast
+	id Jf5W1m00A1uE5Es58fkJTJ; Thu, 29 Aug 2013 15:44:18 +0000
 Received: from freeze.ariadne.com ([24.34.72.61])
-	by omta07.westchester.pa.mail.comcast.net with comcast
-	id Jfhx1m00N1KKtkw3TfhxJJ; Thu, 29 Aug 2013 15:41:57 +0000
+	by omta16.westchester.pa.mail.comcast.net with comcast
+	id JfkH1m01J1KKtkw3cfkJ98; Thu, 29 Aug 2013 15:44:18 +0000
 Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
-	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r7TFfurs023111;
-	Thu, 29 Aug 2013 11:41:56 -0400
+	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r7TFiHmV023155;
+	Thu, 29 Aug 2013 11:44:17 -0400
 Received: (from worley@localhost)
-	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r7TFfuJr023110;
-	Thu, 29 Aug 2013 11:41:56 -0400
-In-reply-to: <xmqqr4dd8suz.fsf@gitster.dls.corp.google.com>
+	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r7TFiGjm023154;
+	Thu, 29 Aug 2013 11:44:16 -0400
+In-reply-to: <xmqq38pt8nqm.fsf@gitster.dls.corp.google.com>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1377790917;
-	bh=APTjdGs5f/OUN0YvzNK3aFBUq/GP5y2FZKDWpu11kPw=;
+	s=q20121106; t=1377791058;
+	bh=RJ/9smXOTHhkp7/U9VpGK5u7hNJD6hwmcc4QfRaOcMs=;
 	h=Received:Received:Received:Received:Date:Message-Id:From:To:
 	 Subject;
-	b=N7iYWdHLogcoKEv3SqHHrj1xvfrLfLa3q3Wxvxkq81JZSDIHrDNXJsEMI8nWSSQ3t
-	 GJ078lqxhVsVIF4zmhE/v78BgXgazUBJHWy6ujy4OMmyvBfI+A/mTMFenClsYMk/cO
-	 Lk5ova09g9OcLorvJhezoNroPaaAfaF14Aav6nDWWih+6OItWU5MMfkBwaMwcuKmRD
-	 lpIOlzYHuaLZf1ovvn04vtmV7PgJHjSDd4keKsTlwFTrxb5UpQxJMQnJeKiMPiGOYv
-	 /ps0dMZA+stCbMa0vV022W/oHPFnbCZ1EkI4TZhSpjgbQArsGUXumqX7jIQBIbCl5J
-	 /lwBBYQQ47LqA==
+	b=YEpbwH7I7+oHauu3C0K3E0DkGMRrukAZeGcxGScosNMwDituANhpHViI9zYeGRdYQ
+	 x8W5HjTBXu5NzJPvijUJLwoSgHfQo9Cp5q1F3tw3ulSjcXBrx66iwzPphZuewJQJxH
+	 /kWzBICNX4sSFoziqkE08FAFljsTnOjxaI/9J/BetBHONn9YwzpHB3moSCrjwDVnb0
+	 T9JoLFjQGqlretZ/DYum+pXGVX5ppIT5GLjMxWz8ZywxnjB0VVTOYE0ILr4JfGL+cT
+	 rVz56RvAElu+kl5wvTh+QI1yqfYXutcgEWoLP4XteEOS7/AvD9tI6VJh3FNFpC/C9P
+	 ubCUOpK+tnBug==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233279>
 
-So I set out to verify in the code that the order of priority of pager
-specification is
+> From: Junio C Hamano <gitster@pobox.com>
 
-    GIT_PAGER > core.pager > PAGER > default
+> diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+> index b1630ba..33fbd8c 100644
+> --- a/Documentation/git-diff.txt
+> +++ b/Documentation/git-diff.txt
+> @@ -28,11 +28,15 @@ two blob objects, or changes between two files on disk.
+>  	words, the differences are what you _could_ tell Git to
+>  	further add to the index but you still haven't.  You can
+>  	stage these changes by using linkgit:git-add[1].
+> -+
+> -If exactly two paths are given and at least one points outside
+> -the current repository, 'git diff' will compare the two files /
+> -directories. This behavior can be forced by --no-index or by
+> -executing 'git diff' outside of a working tree.
+> +
+> +'git diff' --no-index [--options] [--] [<path>...]::
+> +
+> +	This form is to compare the given two paths on the
+> +	filesystem.  You can omit the `--no-index` option when
+> +	running the command in a working tree controlled by Git and
+> +	at least one of the paths points outside the working tree,
+> +	or when running the command outside a working tree
+> +	controlled by Git.
 
-I discovered that there is also a pager.<command> configuration
-variable.
-
-I was expecting the code to be simple, uniform (with regard to the 5
-sources), and reasonably well documented.  The relevant parts of the
-code that I have located so far include:
-
-in environment.c:
-
-    const char *pager_program;
-
-in config.c:
-
-    int git_config_with_options(config_fn_t fn, void *data,
-                                const char *filename,
-                                const char *blob_ref,
-                                int respect_includes)
-    {
-            char *repo_config = NULL;
-            int ret;
-            struct config_include_data inc = CONFIG_INCLUDE_INIT;
-
-            if (respect_includes) {
-                    inc.fn = fn;
-                    inc.data = data;
-                    fn = git_config_include;
-                    data = &inc;
-            }
-
-            /*
-             * If we have a specific filename, use it. Otherwise, follow the
-             * regular lookup sequence.
-             */
-            if (filename)
-                    return git_config_from_file(fn, filename, data);
-            else if (blob_ref)
-                    return git_config_from_blob_ref(fn, blob_ref, data);
-
-            repo_config = git_pathdup("config");
-            ret = git_config_early(fn, data, repo_config);
-            if (repo_config)
-                    free(repo_config);
-            return ret;
-    }
-
-in pager.c:
-
-    /* returns 0 for "no pager", 1 for "use pager", and -1 for "not specified" */
-    int check_pager_config(const char *cmd)
-    {
-            struct pager_config c;
-            c.cmd = cmd;
-            c.want = -1;
-            c.value = NULL;
-            git_config(pager_command_config, &c);
-            if (c.value)
-                    pager_program = c.value;
-            return c.want;
-    }
-
-    const char *git_pager(int stdout_is_tty)
-    {
-            const char *pager;
-
-            if (!stdout_is_tty)
-                    return NULL;
-
-            pager = getenv("GIT_PAGER");
-            if (!pager) {
-                    if (!pager_program)
-                            git_config(git_default_config, NULL);
-                    pager = pager_program;
-            }
-            if (!pager)
-                    pager = getenv("PAGER");
-            if (!pager)
-                    pager = DEFAULT_PAGER;
-            else if (!*pager || !strcmp(pager, "cat"))
-                    pager = NULL;
-
-            return pager;
-    }
-
-What's with the code?  It's not simple, it's not uniform (e.g.,
-setting env. var. PAGER to "cat" will cause git_pager() to return
-NULL, but setting preprocessor var. DEFAULT_PAGER to "cat" will cause
-it to return "cat"), and it's barely got any comments at all (a global
-variable has *no description whatsoever*).
-
-I'd like to clean up the manual pages at least, but it would take me
-hours to figure out what the code *does*.
-
-I know I'm griping here, but I thought that part of the reward for
-contributing to an open-source project was as a showcase of one's
-work.  Commenting your code is what you learn first in programming.
+That does break out the --no-index case in a clearer way.
 
 Dale
