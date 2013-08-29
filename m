@@ -1,72 +1,115 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2013, #07; Wed, 28)
-Date: Wed, 28 Aug 2013 18:14:51 -0700
-Message-ID: <3820ED29-09F9-4846-ACF2-7EF67C54DCDA@gmail.com>
-References: <xmqqtxi9761a.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 03:15:06 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: http.postBuffer set at the server side?
+Date: Wed, 28 Aug 2013 23:52:09 -0400
+Message-ID: <20130829035209.GC22788@sigill.intra.peff.net>
+References: <871B6C10EBEFE342A772D1159D132085416127CF@umechphj.easf.csd.disa.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
+X-From: git-owner@vger.kernel.org Thu Aug 29 05:52:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEqp9-00042j-VW
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 03:15:00 +0200
+	id 1VEtHO-00067q-1W
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 05:52:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754194Ab3H2BOz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Aug 2013 21:14:55 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:63695 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753044Ab3H2BOz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Aug 2013 21:14:55 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rq2so6921755pbb.5
-        for <git@vger.kernel.org>; Wed, 28 Aug 2013 18:14:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=fK/GjCXldOrOK8du9oH0ude0HTPX5zGWx+JdyJ9I448=;
-        b=AnW9QLRLfcYh5LA1Bdkqx3VfGa3PYjm6xj/6C/IbnJA/xzRJVzoS1muB4f+DwdOnEj
-         3PsJzC9vaZPF51KP1M8br3FtfThMISrZ3yViGEFPUBIaVKJqn+zhutpSR5r//ztUSls/
-         p8bLYpd+SyV1qNdxGqULZtVXt2FxFckhqcJLuaNbCkHKrGbpU1IeNnBh4eCY0JQmgUrp
-         iJs8x1GUYdKOgvfbH0tnJXK4LLOoGNNWD/sQetDNQCPo2o+RQ5JPvq3MBmv5vOYwU3FW
-         iM1qCNA0r45ijSmkDdX1V7l5OxNlu4FUtzUSIjroSA13sXde4piB5qKE5E+qyWWgcdSR
-         19cA==
-X-Received: by 10.68.14.234 with SMTP id s10mr659960pbc.139.1377738894705;
-        Wed, 28 Aug 2013 18:14:54 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id ta10sm36944282pab.5.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 28 Aug 2013 18:14:53 -0700 (PDT)
-In-Reply-To: <xmqqtxi9761a.fsf@gitster.dls.corp.google.com>
-X-Mauler: Craptastic (2.936)
+	id S1755578Ab3H2DwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Aug 2013 23:52:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33265 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753339Ab3H2DwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Aug 2013 23:52:13 -0400
+Received: (qmail 27177 invoked by uid 102); 29 Aug 2013 03:52:13 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Aug 2013 22:52:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Aug 2013 23:52:09 -0400
+Content-Disposition: inline
+In-Reply-To: <871B6C10EBEFE342A772D1159D132085416127CF@umechphj.easf.csd.disa.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233233>
 
-On Aug 28, 2013, at 16:24, Junio C Hamano wrote:
+On Wed, Aug 28, 2013 at 11:08:02PM +0000, Pyeron, Jason J CTR (US) wrote:
 
-> * km/svn-1.8-serf-only (2013-07-18) 3 commits
->  (merged to 'next' on 2013-08-28 at 1119134)
-> + Git.pm: revert _temp_cache use of temp_is_locked
-> + git-svn: allow git-svn fetching to work using serf
-> + Git.pm: add new temp_is_locked function
->
-> Originally merged to 'next' on 2013-07-19
->
-> Subversion 1.8.0 that was recently released breaks older subversion
-> clients coming over http/https in various ways.
->
-> Will merge to 'master'.
+> We have systems hosting git which are behind proxies, and unless the
+> client sets the http.postBuffer to a large size they connections
+> fails.
+> 
+> Is there a way to set this on the server side? If not would a patch be
+> possible to fix this?
 
-This series could be cleaned up by squashing "Git.pm: revert  
-_temp_cache use of temp_is_locked" into "Git.pm: add new  
-temp_is_locked function" if desired since that "Git.pm: add new  
-temp_is_locked function" commit contains the one-line change that  
-"Git.pm: revert _temp_cache use of temp_is_locked" reverts.
+What would it mean to set it on the server?  It is the size at which the
+client decides to use a "chunked" transfer-encoding rather than
+buffering the whole output to send at once. So you'd want to figure out
+why the server is upset about the chunked encoding.
+
+> jason.pyeron@hostname /home/jason.pyeron/desktop/projectname
+> $ git push remote --all
+> Username for 'https://server.fqdn':
+> Password for 'https://jpyeron@server.fqdn':
+> Counting objects: 1820, done.
+> Delta compression using up to 4 threads.
+> Compressing objects: 100% (1276/1276), done.
+> error: RPC failed; result=22, HTTP code = 411
+> fatal: The remote end hung up unexpectedly
+> Writing objects: 100% (1820/1820), 17.72 MiB | 5.50 MiB/s, done.
+> Total 1820 (delta 527), reused 26 (delta 6)
+> fatal: The remote end hung up unexpectedly
+
+The server (or the proxy) returns 411, complaining that it didn't get a
+Content-Length header. That's because the git http client doesn't know
+how big the content is ahead of time (and that's kind of the point of
+chunked encoding; the content is streamed).
+
+> jason.pyeron@hostname /home/jason.pyeron/desktop/projectname
+> $ git config http.postBuffer 524288000
+> 
+> jason.pyeron@hostname /home/jason.pyeron/desktop/projectname
+> $ git push remote --all
+> Username for 'https://server.fqdn':
+> Password for 'https://jpyeron@server.fqdn':
+> Counting objects: 1820, done.
+> Delta compression using up to 4 threads.
+> Compressing objects: 100% (1276/1276), done.
+> Writing objects: 100% (1820/1820), 17.72 MiB | 11.31 MiB/s, done.
+> Total 1820 (delta 519), reused 26 (delta 6)
+> To https://server.fqdn/git/netasset-portal/
+>  * [new branch]      master -> master
+
+And here you've bumped the buffer to 500MB, so git will potentially
+buffer that much in memory before sending anything. Which works for your
+17MB packfile, as we buffer the whole thing and then send the exact size
+ahead of time, appeasing the proxy.
+
+But there are two problems I see with just bumping the postBuffer value:
+
+  1. You've just postponed the problem. The first 501MB push will fail
+     again. You can bump it higher, but you may eventually hit a point
+     where your buffer is too big to fit in RAM.
+
+  2. You've lost the pipelining. With a small postBuffer, we are
+     streaming content up to the server as pack-objects generates it.
+     But with a large buffer, we generate all of the content, then start
+     sending the first byte (notice how the progress meter, which is
+     generated by pack-objects, shows twice as fast in the second case.
+     It is not measuring the network at all, but is streaming into
+     git-remote-https's buffer).
+
+If the server really insists on a content-length header, then we can't
+ever fix (2). But we could fix (1) by spooling the packfile to disk and
+then sending from there (under the assumption that you have way more
+temporary disk space than RAM).
+
+However, if you have control of the proxies, the best thing would be to
+tweak its config to stop complaining about a lack of content-length
+header (at least in cases where you're getting a "chunked"
+content-transfer-encoding). That would solve both issues (and without
+clients having to change anything).
+
+-Peff
