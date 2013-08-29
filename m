@@ -1,105 +1,51 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Add testcase for needless objects during a shallow fetch
-Date: Thu, 29 Aug 2013 16:50:40 +0700
-Message-ID: <CACsJy8BDxkpFG=nfVENeAHMyhdokwvbpxu26m0RtHou_WK2Mkw@mail.gmail.com>
-References: <20130828153638.GF10217@login.drsnuggles.stderr.nl> <1377705722-17053-1-git-send-email-matthijs@stdin.nl>
+From: Michal Dudek <Michal.Dudek@cern.ch>
+Subject: GIT pre-commit hook problem with "git commit -m 'text' file.c"
+ syntax
+Date: Thu, 29 Aug 2013 12:29:15 +0000
+Message-ID: <CABF5274B2F4714E97745603BDD7A3F7979E4C99@PLOXCHG23.cern.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthijs Kooijman <matthijs@stdin.nl>
-X-From: git-owner@vger.kernel.org Thu Aug 29 11:51:20 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 29 14:29:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VEysm-0003AO-K2
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 11:51:16 +0200
+	id 1VF1Lo-0004GL-8T
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 14:29:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756011Ab3H2JvM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Aug 2013 05:51:12 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:62104 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753296Ab3H2JvL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Aug 2013 05:51:11 -0400
-Received: by mail-ob0-f175.google.com with SMTP id xn12so204845obc.20
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 02:51:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=+/dWoAt6zpt9Yg5ldQAMbwdhCEfgIbc/+OgYDJzB7GM=;
-        b=vZWe89v33qtql6/kbzgTAzYzbsfc1EVThO2rvJosrNq7mgXAQYAQIDwWqTk/9pWiil
-         A2x2YfdnNCSoS86glf1yLAOXJjmXL1+lRpq8+llPKcSrYBXTbFWWvtgR+hETQLOO1gcI
-         +8sR0vkXESZmxMTQkGyT9Ox0Ntqz9HupTQXEpjI9r9aJqbvxo2Dn6x8tmfR+quMa0h6J
-         0nMTqNQEO8JdTChsHJKncxWR22dd3ybo1GYIvZjlt40FRdHukCH3lnPqmlH9/YM2y1C7
-         D2iW8j5pkz02R+zNtddL+ZLjBFsZZWrSO3mPuW8qnGlNKGQaP3/C8mxGHVhUmtqqRpBh
-         Ce9w==
-X-Received: by 10.60.80.167 with SMTP id s7mr1821489oex.38.1377769870606; Thu,
- 29 Aug 2013 02:51:10 -0700 (PDT)
-Received: by 10.182.87.105 with HTTP; Thu, 29 Aug 2013 02:50:40 -0700 (PDT)
-In-Reply-To: <1377705722-17053-1-git-send-email-matthijs@stdin.nl>
+	id S1754751Ab3H2M3T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 08:29:19 -0400
+Received: from cernmx31.cern.ch ([137.138.144.179]:9710 "EHLO CERNMX31.cern.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752276Ab3H2M3R convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Aug 2013 08:29:17 -0400
+Received: from CERNFE22.cern.ch (137.138.144.151) by cernmxgwlb2.cern.ch
+ (137.138.144.179) with Microsoft SMTP Server (TLS) id 14.2.318.1; Thu, 29 Aug
+ 2013 14:29:16 +0200
+Received: from PLOXCHG23.cern.ch ([fe80::1976:74b3:fc31:2b14]) by
+ CERNFE22.cern.ch ([fe80::897b:8d03:da25:5b36%10]) with mapi id
+ 14.02.0318.004; Thu, 29 Aug 2013 14:29:16 +0200
+Thread-Topic: GIT pre-commit hook problem with "git commit -m 'text' file.c"
+ syntax
+Thread-Index: Ac6kszWt5bKlnTPuSmaoV7HXpZrnoA==
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [137.138.217.55]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233248>
 
-On Wed, Aug 28, 2013 at 11:02 PM, Matthijs Kooijman <matthijs@stdin.nl>=
- wrote:
-> This is a testcase that checks for a problem where, during a specific
-> shallow fetch where the client does not have any commits that are a
-> successor of the new shallow root (i.e., the fetch creates a new
-> detached piece of history), the server would simply send over _all_
-> objects, instead of taking into account the objects already present i=
-n
-> the client.
+Hi!
+I am writing a "pre-hook" script, which will be responsible for checking style (formatting/indenting) of the C source code. The script at the beginning executes "git diff --name-only -z --cached HEAD" in order to get all the committed changes, then it makes a two copies of the staged file, one is kept as an original and the second one is formatted by "astyle" program. Then I am creating patch using "git diff" between the original file and formatted one. After that I am applying patch (asking user some questions before doing that) to the index or to the file in the working tree (behaviour depends on the situation, if the file was staged and modified after that (git status returns file as "staged" and "modified but NOT staged") I am applying changes to index using "git apply -v --cached patc
+ h", otherwise if the file was staged and no changes to it were made afterwards (git status returns file as "staged" only) I am modifying file in the working tree using "git apply -v patch" and adding modified file to stage using "git add my_file.c"). Everything works fine till the moment when user modifies a file and commits it using command "git commit -m 'comment' my_file.c". After that the committed file looks ok (also in git log etc.) but when I type "git status" or use "gitk" I see some leftovers. Gitk shows a "local changes checked to index but not committed" -- this is a raw file before applying a patch -- and "local uncommitted changes not checked into index" -- this is a file after patch was applied. The manual says that listing files as arguments to the commit command, make the
+  git ignore changes staged in the index, and instead record the current content of the listed files. I would like to ask you if there is a way to force commit to ALWAYS add files before commit? Can I distinguish, that the commit was executed using syntax "git commit -m 'text' file.c"? Is there any other solution for my problem?
 
-Thanks. This reminds me I should add a test case in the 4/6 to
-demonstrate the regression and let it verify again in 6/6 that the
-temporary regression is gone. Will reroll the series with your patch
-included.
-
->
-> The actual problem was fixed by a recent patch series by Nguy=E1=BB=85=
-n Th=C3=A1i
-> Ng=E1=BB=8Dc Duy already.
->
-> Signed-off-by: Matthijs Kooijman <matthijs@stdin.nl>
-> ---
->  t/t5500-fetch-pack.sh | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-> index fd2598e..a022d65 100755
-> --- a/t/t5500-fetch-pack.sh
-> +++ b/t/t5500-fetch-pack.sh
-> @@ -393,6 +393,17 @@ test_expect_success 'fetch in shallow repo unrea=
-chable shallow objects' '
->                 git fsck --no-dangling
->         )
->  '
-> +test_expect_success 'fetch creating new shallow root' '
-> +       (
-> +               git clone "file://$(pwd)/." shallow10 &&
-> +               git commit --allow-empty -m empty &&
-> +               cd shallow10 &&
-> +               git fetch --depth=3D1 --progress 2> actual &&
-> +               # This should fetch only the empty commit, no tree or
-> +               # blob objects
-> +               grep "remote: Total 1" actual
-> +       )
-> +'
->
->  test_expect_success 'setup tests for the --stdin parameter' '
->         for head in C D E F
-> --
-> 1.8.4.rc1
->
-
-
-
---=20
-Duy
+Thank you for your time!
+Michal Dudek
