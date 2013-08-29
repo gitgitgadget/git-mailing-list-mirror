@@ -1,107 +1,93 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: the pager
-Date: Thu, 29 Aug 2013 17:55:29 +0200
-Message-ID: <vpqsixsv6dq.fsf@anie.imag.fr>
-References: <201308261957.r7QJvfjF028935@freeze.ariadne.com>
-	<xmqqd2ozhhob.fsf@gitster.dls.corp.google.com>
-	<201308281819.r7SIJmnh025977@freeze.ariadne.com>
-	<xmqqr4dd8suz.fsf@gitster.dls.corp.google.com>
-	<201308291541.r7TFfuJr023110@freeze.ariadne.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/5] replace: forbid replacing an object with one of a different type
+Date: Thu, 29 Aug 2013 09:04:03 -0700
+Message-ID: <xmqqli3k7abw.fsf@gitster.dls.corp.google.com>
+References: <xmqqk3j6c1x0.fsf@gitster.dls.corp.google.com>
+	<878uzmclva.fsf@linux-k42r.v.cablecom.net>
+	<xmqqa9k1a9wq.fsf@gitster.dls.corp.google.com>
+	<20130829.082936.1893875995125817253.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: worley@alum.mit.edu (Dale R. Worley)
-X-From: git-owner@vger.kernel.org Thu Aug 29 17:57:23 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: trast@inf.ethz.ch, git@vger.kernel.org, philipoakley@iee.org,
+	j6t@kdbg.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Aug 29 18:04:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF4b4-0004oY-Os
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 17:57:23 +0200
+	id 1VF4hp-0001ak-WC
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 18:04:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754814Ab3H2P5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 11:57:18 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52489 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754082Ab3H2P5S (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 11:57:18 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r7TFtSb4015548
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 29 Aug 2013 17:55:28 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VF4ZG-0001fu-1a; Thu, 29 Aug 2013 17:55:30 +0200
-In-Reply-To: <201308291541.r7TFfuJr023110@freeze.ariadne.com> (Dale R.
-	Worley's message of "Thu, 29 Aug 2013 11:41:56 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 29 Aug 2013 17:55:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r7TFtSb4015548
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1378396532.95524@0JLscdcJp8W2rZc0bHzjZA
+	id S1753376Ab3H2QEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 12:04:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36861 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752200Ab3H2QEJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 12:04:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B7F93B5B2;
+	Thu, 29 Aug 2013 16:04:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Zy1LIRApnyUkM/0P/jruBUq9udY=; b=CfND7l
+	IC4gTkaCJ5CkWVRt0qYVLPdD6JT0a3efwGGOePN+dvYk7VaAu2X4aJ8iziJ0SY2w
+	0NLUN2dahiCwa3gz08X9i3+66c3m9xfbRCQZGjZ7r9cjdCqgOfWbzhGqTO4HzF6M
+	6d79jmQ+TMgiDV3yxZO9TiDrib5rQQ5Bz7vOw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NQNNpKXHw5KONWJmCzrlwNQl37mHP6T8
+	VYw/Hk8oReoQJTlNXuIPkro77umEONe3KfSML9Gn6bmurqgyOvkaAARBK0c7xlrB
+	aVYVOlmpSYniTdzbnt6XrOxTbvcXI2H2DppZhGU7kydy/VMz1ZMfkKorsiPsjwor
+	owMO1/4exJ8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BE563B5B1;
+	Thu, 29 Aug 2013 16:04:08 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F20643B5A8;
+	Thu, 29 Aug 2013 16:04:05 +0000 (UTC)
+In-Reply-To: <20130829.082936.1893875995125817253.chriscool@tuxfamily.org>
+	(Christian Couder's message of "Thu, 29 Aug 2013 08:29:36 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A17A539A-10C4-11E3-9D6B-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233282>
 
-worley@alum.mit.edu (Dale R. Worley) writes:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
->     const char *git_pager(int stdout_is_tty)
->     {
->             const char *pager;
->
->             if (!stdout_is_tty)
->                     return NULL;
->
->             pager = getenv("GIT_PAGER");
->             if (!pager) {
->                     if (!pager_program)
->                             git_config(git_default_config, NULL);
->                     pager = pager_program;
->             }
->             if (!pager)
->                     pager = getenv("PAGER");
->             if (!pager)
->                     pager = DEFAULT_PAGER;
->             else if (!*pager || !strcmp(pager, "cat"))
->                     pager = NULL;
+> But if all the objects that point to an object, called O, are to be
+> replaced, then in most cases object O probably doesn't need to be
+> replaced. It's probably sufficient to create the new object, called
+> O2, that would replace object O and to replace all the objects
+> pointing to object O with objects pointing to O2.
 
-I guess the "else" could and should be dropped. If you do so (and
-possibly insert a blank line between the DEFAULT_PAGER case and the
-"pager = NULL" case), you get a nice pattern
+Hmmmm.
 
-if (!pager)
-	try_something();
-if (!pager)
-	try_next_option();
-...
+What the above says, with "probably" and "most cases", can easily
+inferred by anybody remotely intelligent, and the only reason to
+have something like the above paragraph would be if it assures that
+the statement holds without these qualifications to weaken it, which
+it doesn't.  I am not sure this paragraph adds much value.
 
-> Commenting your code is what you learn first in programming.
+> The only case where someone might really want to replace object 0,
+> with an object O2 of a different type, and all the objects pointing to
+> it, is if it's really important, perhaps for external reasons, to have
+> object O's SHA1 point to O2.
 
-Not commenting too much is the second thing you learn ;-).
+The same comment applies here.
 
-I agree that a comment like this would help, though:
+> And anyway, if one really wants to do that, it can still be done using
+> "git update-ref".
 
---- a/cache.h
-+++ b/cache.h
-@@ -1266,7 +1266,7 @@ static inline ssize_t write_str_in_full(int fd, const char *str)
- 
- /* pager.c */
- extern void setup_pager(void);
--extern const char *pager_program;
-+extern const char *pager_program; /* value read from git_config() */
- extern int pager_in_use(void);
- extern int pager_use_color;
- extern int term_columns(void);
+And I really do not think this sentence is right---you can justify
+with the same sentence to remove "git replace" wrapper.
 
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+The earlier suggestion to bypass the new hand-holding with "--force"
+is more sensible, I think.
