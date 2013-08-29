@@ -1,110 +1,63 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Officially start moving to the term 'staging area'
-Date: Thu, 29 Aug 2013 13:57:17 -0500
-Message-ID: <521f998d25eb4_174378fe7481879@nysa.mail>
-References: <20130829180129.GA4880@nysa>
- <vpqli3kqqkp.fsf@anie.imag.fr>
+Subject: Re: [PATCH 2/4] transport-helper: add dont-update-private capability
+Date: Thu, 29 Aug 2013 14:14:20 -0500
+Message-ID: <CAMP44s2aV8X8TJigSqiSPB2HkK7hdxC2dFPWf5X62h90Y7M8Jg@mail.gmail.com>
+References: <vpqsixvfvdk.fsf@anie.imag.fr>
+	<1377802704-30881-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1377802704-30881-2-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Scott Chacon <schacon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 21:12:42 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Aug 29 21:14:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF7e6-0008JV-CD
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 21:12:42 +0200
+	id 1VF7g0-0001F4-Uy
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 21:14:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756116Ab3H2TMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 15:12:09 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:37375 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755667Ab3H2TMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 15:12:07 -0400
-Received: by mail-oa0-f53.google.com with SMTP id k18so1137522oag.26
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 12:12:07 -0700 (PDT)
+	id S1756771Ab3H2TOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 15:14:23 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:49250 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755304Ab3H2TOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 15:14:21 -0400
+Received: by mail-lb0-f180.google.com with SMTP id q8so1070552lbi.39
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 12:14:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=by0k3kVSZ4NwK70KQrBYM1lL/fPJWyVIuTr525mM9m4=;
-        b=suoyDfdOMIWH+AywHphvcqYMFyArhiKnDxMpjueLO2Xh6TSIXanlrNcHzZDjsprNo3
-         2npS6td5WayeYvAmVRyILiE4eyQb8gHtXxNGk4Re8xp67ZHnn6S+I6OWe5Jaqw4oN4A9
-         EP8/ljhocsRnsI0St75tYu1HRIJckxU09GpOTSY45BSqYFhsAGvoE0m4mSVSNgBDlVf5
-         JKm8FDHQRN4Xi52yr4IK8LhzRVkSStIFabVJiytWhDhnS6jP8oYXwukW/5dB0qyN6/H4
-         iA/ySRnhwZFr6id9+XXg5lv0pFduDdGaH3PdEQ1HvKs3lwJCZyJuie5623rWP5DkHCsJ
-         oQtA==
-X-Received: by 10.60.43.169 with SMTP id x9mr1319056oel.88.1377803527325;
-        Thu, 29 Aug 2013 12:12:07 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id u3sm22324984oeq.3.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 12:12:06 -0700 (PDT)
-In-Reply-To: <vpqli3kqqkp.fsf@anie.imag.fr>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=QcYKfFlUT3NUyab0iVuu8VTyuNkt2TijkpBioc2QmEE=;
+        b=YkQlQ6gKe1EihqruV7ezG9YkLeK0Wbb9huKqhtDEOo5bMugra5HT/j7+pmKMZHMIB8
+         z5HAAYbrDoAgArBHeMWa4ZbYeOU07ocq7yz8/70rlGx/5Y2I46oBgbw29x9ctIGarPkb
+         OvTTLaW6EJJQ1F1GE3mqggLVHwqdnUIvMDTpD82oMtzBBa75gvGoTeMBlpHgYoGtvcbH
+         TDJIg7D6LLyAnOqGaUVKzYLVYD2JDZ7tonQGQXS4fHqU6T+Ord5aM6ok+S7nxRu0rrxP
+         AaQB5T12VvhvdpXT9RR8ni4IVl1z+qPKcHTDRhuxdLmy0eqT/MylqMtA1Kbp9ODNZ9pZ
+         WdCA==
+X-Received: by 10.152.22.35 with SMTP id a3mr1978686laf.45.1377803660362; Thu,
+ 29 Aug 2013 12:14:20 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Thu, 29 Aug 2013 12:14:20 -0700 (PDT)
+In-Reply-To: <1377802704-30881-2-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233344>
 
-Matthieu Moy wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > It has been discussed many times in the past that 'index' is not an
-> > appropriate description for what the high-level user does with it, and
-> > it has been agreed that 'staging area' is the best term.
-> 
-> Thanks for working on this. No time for a really detailed review, but a
-> few remarks.
-> 
-> > The term 'staging area' is more intuitive [...]
-> >
-> > The first step in moving Git towards this term, is first to add --stage
-> > options for every command that uses --index or --cache.
-> 
-> These explanations make sense. I think it would be better to put part of
-> it in commit messages, so that future contributors can "git blame" the
-> doc/implem of these --stage and find them (i.e. avoid the
-> misunderstanding that occured with "git stage" command which was
-> proposed for removal).
+On Thu, Aug 29, 2013 at 1:58 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> Since 664059fb62 (Felipe Contreras, Apr 17 2013, transport-helper: update
+> remote helper namespace), a 'push' operation on a remote helper updates
+> the private ref by default. This is often a good thing, but it can also
+> be desirable to disable this update to force the next 'pull' to re-import
+> the pushed revisions.
+>
+> Allow remote-helpers to disable the automatic update by introducing a new
+> capability.
 
-Yes, but which commit? All of them? Perhaps it would make sense to add a link
-to the cover e-mail, or add an explanation in Documentation/gitstagingarea.txt
-or something.
-
-> > Moreover, the --stage and --work
-> 
-> --work alone sounds weird. At least to me, it does not immediately imply
-> "working tree". It is tempting to call the option --work-tree, but git
-> already has a global option with that name (git --work-tree=foo bar).
-
-Yes, --work sounds weird, but so does --cherry. I thought about --wt, but I
-felt --work was more understandable, and --work-tree doesn't really give much
-more value, except more characters to type =/
-
-> > reset', and after these options are added, the complicated table to
-> > explain the different behaviors between --soft, --mixed, and --hard
-> > becomes so simple it's not needed any more:
-> 
-> I didn't understand the table, but yes, the --soft, --mixed, and --hard
-> is terrible, I need to read the doc whenever I do something non-trivial
-> with reset :-(.
-
-Me too, I always got 'git reset --hard', now I get 'git reset', but that's
-about it, for the rest I have to read the documentation. Also, 'git stage
-reset' makes it even easier.
+Looks good to me, but how about 'no-private-update'?
 
 -- 
 Felipe Contreras
