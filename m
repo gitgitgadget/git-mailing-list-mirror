@@ -1,105 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 3/4] get rid of "git submodule summary --for-status"
-Date: Thu, 29 Aug 2013 23:05:52 +0200
-Message-ID: <vpqr4dcnr67.fsf@anie.imag.fr>
-References: <1377781536-31955-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1377781536-31955-4-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqqsixs2run.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Stalled git cloning and possible solutions
+Date: Thu, 29 Aug 2013 14:10:34 -0700
+Message-ID: <20130829211034.GB4110@google.com>
+References: <201308300118.19166.vkrishn4@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 23:06:19 2013
+To: "V.Krishn" <vkrishn4@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 29 23:10:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VF9Pz-0000P4-2T
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 23:06:15 +0200
+	id 1VF9UJ-0003E8-Ct
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 23:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756655Ab3H2VGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 17:06:11 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:42884 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753905Ab3H2VGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 17:06:10 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r7TL5nth029276
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 29 Aug 2013 23:05:49 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VF9Pc-0003xG-IM; Thu, 29 Aug 2013 23:05:52 +0200
-In-Reply-To: <xmqqsixs2run.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 29 Aug 2013 12:56:48 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 29 Aug 2013 23:05:50 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r7TL5nth029276
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1378415154.76309@p8RMvt82Tn1zW6SFh5fA6Q
+	id S1756292Ab3H2VKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 17:10:39 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:36197 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753896Ab3H2VKi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 17:10:38 -0400
+Received: by mail-pa0-f49.google.com with SMTP id ld10so1422874pab.36
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 14:10:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=NtCtIfGeT8UPIq8SfGI0fhllzc+xsFPeLqv3U/YJtjY=;
+        b=N7DZ629vt42dsF3eCnhx/uqgJSLykRuaaYvJ9LM7gI7hgO/8swDddn0OfJMIIM2FD7
+         qZ7pbpo2wGWPqOZ1J5uBuZaTxi1IEBaHCUhE0PPYYEOL3cMZmth/d19hFRnSW2x96LIL
+         SX2q3J/8nUt8+LT0NLL0Wcphw2m+mLIpWF+iZUYe/ItdGYMPHSsXp7tfloX8aoGg+EBk
+         ktm328qKKczx3rErgYdbeH/vNN7M9lyJDfestR7ETj19Daj4JukZPA2r/iC3zt6CQcLV
+         eB8zSGnp4AB8amDkt+kZg7C3nwStOF9g8e+55jMMeJxBLu+P7ogeYEJllAjCixJA3Rq4
+         AJWw==
+X-Received: by 10.66.233.195 with SMTP id ty3mr6703209pac.70.1377810638455;
+        Thu, 29 Aug 2013 14:10:38 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id bt1sm39967910pbb.2.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 29 Aug 2013 14:10:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <201308300118.19166.vkrishn4@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233363>
 
-Junio C Hamano <gitster@pobox.com> writes:
+V.Krishn wrote:
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+> Quite sometimes when cloning a large repo stalls, hitting Ctrl+c cleans what 
+> been downloaded, and process needs re-start.
 >
->> +	/* prepend header, only if there's an actual output */
->> +	if (len) {
->> +		if (uncommitted)
->> +			strbuf_addstr(&summary, _("Submodules changed but not updated:"));
->> +		else
->> +			strbuf_addstr(&summary, _("Submodule changes to be committed:"));
->> +		strbuf_addstr(&summary, "\n\n");
->> +	}
->> +	strbuf_addbuf(&summary, &cmd_stdout);
->> +	strbuf_release(&cmd_stdout);
->> +
->> +	summary_content = strbuf_detach(&summary, &len);
->> +	strbuf_add_commented_lines(&summary, summary_content, len);
->> +	free(summary_content);
->> +
->> +	summary_content = strbuf_detach(&summary, &len);
->> +	fprintf(s->fp, summary_content);
->> +	free(summary_content);
->
-> This "fprintf()" looks bogus to me.
+> Is there a way to recover or continue from already downloaded files during 
+> cloning ?
 
-Oops, indeed. I forgot the "%s".
+No, sadly.  The pack sent for a clone is generated dynamically, so
+there's no easy way to support the equivalent of an HTTP Range request
+to resume.  Someone might implement an appropriate protocol extension
+to tackle this (e.g., peff's seed-with-clone.bundle hack) some day,
+but for now it doesn't exist.
 
-> How about adding this on top?
+What you *can* do today is create a bundle from the large repo
+somewhere with a reliable connection and then grab that using a
+resumable transport such as HTTP.  A kind person made a service to do
+that.
 
-Your solution is better, yes.
+  http://thread.gmane.org/gmane.comp.version-control.git/181380
 
->  wt-status.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
->
-> diff --git a/wt-status.c b/wt-status.c
-> index d91661d..1f17652 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -710,9 +710,8 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
->  	strbuf_add_commented_lines(&summary, summary_content, len);
->  	free(summary_content);
->  
-> -	summary_content = strbuf_detach(&summary, &len);
-> -	fprintf(s->fp, summary_content);
-> -	free(summary_content);
-> +	fputs(summary.buf, s->fp);
-> +	strbuf_release(&summary);
->  }
->  
->  static void wt_status_print_other(struct wt_status *s,
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Hope that helps,
+Jonathan
