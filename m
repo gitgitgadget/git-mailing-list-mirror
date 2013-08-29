@@ -1,82 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* [PATCH 1/8] remote-bzr: fix export of utf-8 authors
-Date: Thu, 29 Aug 2013 14:44:43 -0700
-Message-ID: <xmqq4na82mus.fsf@gitster.dls.corp.google.com>
-References: <1377717793-27170-1-git-send-email-felipe.contreras@gmail.com>
-	<1377717793-27170-2-git-send-email-felipe.contreras@gmail.com>
-	<vpqhae97f8j.fsf@anie.imag.fr>
-	<CAMP44s2bu9gUE=McYq1prhjC3O2CRj1W_Yc+-CjTkk6Gc3JFTw@mail.gmail.com>
-	<vpqy57l4jcx.fsf@anie.imag.fr>
-	<xmqq7gf58okw.fsf@gitster.dls.corp.google.com>
-	<xmqqhae82nsb.fsf_-_@gitster.dls.corp.google.com>
-	<CALWbr2xe8jC4QnLTEOWJX_kn_FcQjSafPn=NKd3UsK9fO5f=_g@mail.gmail.com>
-	<xmqq8uzk2mzb.fsf@gitster.dls.corp.google.com>
+From: "V.Krishn" <vkrishn4@gmail.com>
+Subject: Re: Stalled git cloning and possible solutions
+Date: Fri, 30 Aug 2013 03:05:10 +0530
+Message-ID: <201308300305.10440.vkrishn4@gmail.com>
+References: <201308300118.19166.vkrishn4@gmail.com> <20130829211034.GB4110@google.com>
+Reply-To: vkrishn4@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 29 23:45:00 2013
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 29 23:48:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFA1T-0007PZ-O1
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 23:45:00 +0200
+	id 1VFA4P-0000oh-30
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Aug 2013 23:48:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755068Ab3H2Vo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 17:44:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51201 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752490Ab3H2Voz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 17:44:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99CC83DB4B;
-	Thu, 29 Aug 2013 21:44:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WeTqXw1L2GAa77Hm1ybfJbG+d/0=; b=EtZUNq
-	6sqBqUCyY01L8GsH3469o+JNrjMSOlPB6yPqNgrUu5NYq4O6sU7+8jiAI2zpeJ9S
-	hbUN/iTjaUQCIPabPxwHWs7Ts665aKPs3CQ90Ircoajb05GAb9kRGvSXL0LZuOUz
-	O4buMxXlyShIni3RmBpp8Fa+DrkDgqxZ8XZLk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ut9sZLEzs6H82MnkXZTtOBAd8cE0F8/8
-	Q9+X289v3pQcCf4vlpxRlOVyFUTUywWhC2m/DkxTERVd9zZtiXQJuvAlRLvGPguL
-	yy8VWlPl2AvJGT+07ApvEc8KKJ5pc8reyZ/r1YCab1TBm0C7Be3vgbmr1fq68FOp
-	n8kJXaVxuao=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80C463DB4A;
-	Thu, 29 Aug 2013 21:44:54 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC76E3DB45;
-	Thu, 29 Aug 2013 21:44:52 +0000 (UTC)
-In-Reply-To: <xmqq8uzk2mzb.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 29 Aug 2013 14:42:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3CBF4FB6-10F4-11E3-926F-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756674Ab3H2Vr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 17:47:57 -0400
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:33515 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756653Ab3H2Vr4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 17:47:56 -0400
+Received: by mail-qc0-f172.google.com with SMTP id c11so489006qcv.17
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 14:47:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:reply-to:to:subject:date:user-agent:references:in-reply-to:cc
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        bh=6kuvY37noGrm3dAtQbLrAzUhUJmePGieWRZqAOIu/j4=;
+        b=zh+I6B4IcbMXS1hD+hN/9+XJ9O0RUfAWzXyq/9CSUAvNfVQGJo7o4KBWx9qL7pBkdb
+         i0vI4RCCwiEj6NoB5XFJFdx4obOJ+M0OKbrrUAMJpf6I0udv2GaoJ40ugRhZAaSaV6gj
+         jngHzY6IV3013Eez7P5IlC8b1jOi0BOXbI7e4dpBrvLVZEYpr2pl9E9E9z16vpLw/bya
+         mnQHW1QLAXpYb8EetyH9c5FTgzBkzd2Du4lanOsGb5LcIv5N+eZo3BJCuBloZEiqIaBV
+         /fsO5C7e2gZ0LkGDY0jks6TRSex/6TvfYWv9jPdaQKo15K4EYEI55z4Ai9YhxsvyIA2s
+         i3MQ==
+X-Received: by 10.49.17.162 with SMTP id p2mr6490273qed.69.1377812876089;
+        Thu, 29 Aug 2013 14:47:56 -0700 (PDT)
+Received: from microknoppix.localnet ([117.227.33.153])
+        by mx.google.com with ESMTPSA id a2sm45333977qek.7.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 29 Aug 2013 14:47:55 -0700 (PDT)
+User-Agent: KMail/1.13.7 (Linux/3.3.7-64; KDE/4.7.4; x86_64; ; )
+In-Reply-To: <20130829211034.GB4110@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233370>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Friday, August 30, 2013 02:40:34 AM you wrote:
+> V.Krishn wrote:
+> > Quite sometimes when cloning a large repo stalls, hitting Ctrl+c cleans
+> > what been downloaded, and process needs re-start.
+> > 
+> > Is there a way to recover or continue from already downloaded files
+> > during cloning ?
+> 
+> No, sadly.  The pack sent for a clone is generated dynamically, so
+> there's no easy way to support the equivalent of an HTTP Range request
+> to resume.  Someone might implement an appropriate protocol extension
+> to tackle this (e.g., peff's seed-with-clone.bundle hack) some day,
+> but for now it doesn't exist.
 
->> May I ask what pattern you used to replace all these or if you went
->> through manually ?
->
-> "M-x query-replace" from "> " to ">" with manual inspection. I never
-> use full automation myself, as I do not trust that I am careful
-> enough and it is prone to unexpected changes that I can easily miss.
+This is what I tried but then realized something more is needed:
 
-... I forgot to add:
+During stalled clone avoid  Ctrl+c. 
+1. Copy the content .i.e .git folder some other place.
+2. cd <new dir>
+3. git config fetch.unpackLimit 999999
+4. git config transfer.unpackLimit 999999
+5. cat .git/config #to see if config went ok
+ 
+6. recover process:
+ git unpack-objects -r --strict <.git/objects/pack/tmp_pack_0mSPsc
 
-    An extra pair of eyeballs to make sure I didn't make stupid
-    misconversions is greatly appreciated.
+THEN... hopefully thought following should do the trick
+ git pull
+ OR
+ git-fetch-pack
+ OR
+ git repack + git pull
 
-Thanks.
+but then something more is needed.... :)
+like index/map file... etc for it work.
+
+> 
+> What you *can* do today is create a bundle from the large repo
+> somewhere with a reliable connection and then grab that using a
+> resumable transport such as HTTP.  A kind person made a service to do
+> that.
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/181380
+
+Service looks nice. Hope its gets sponsors to keep it running.
+
+-- 
+Regards.
+V.Krishn
