@@ -1,78 +1,90 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 6/6] pull: trivial cleanup
-Date: Fri, 30 Aug 2013 16:56:50 -0500
-Message-ID: <1377899810-1818-7-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 1/6] reset: trivial refactoring
+Date: Fri, 30 Aug 2013 16:56:45 -0500
+Message-ID: <1377899810-1818-2-git-send-email-felipe.contreras@gmail.com>
 References: <1377899810-1818-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 31 00:01:56 2013
+X-From: git-owner@vger.kernel.org Sat Aug 31 00:01:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFWlP-00075N-AC
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 00:01:55 +0200
+	id 1VFWlE-0006zB-Ki
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 00:01:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756212Ab3H3WBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 18:01:45 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:39210 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756125Ab3H3WBn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Aug 2013 18:01:43 -0400
-Received: by mail-oa0-f46.google.com with SMTP id o20so2972187oag.19
-        for <git@vger.kernel.org>; Fri, 30 Aug 2013 15:01:43 -0700 (PDT)
+	id S1754746Ab3H3WBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 18:01:33 -0400
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:54669 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753582Ab3H3WBb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 18:01:31 -0400
+Received: by mail-oa0-f47.google.com with SMTP id g12so2961796oah.6
+        for <git@vger.kernel.org>; Fri, 30 Aug 2013 15:01:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nj33u1jU9rS/8FuzudZWHc+3CjpsIiMuGk3fjHzl3tw=;
-        b=W6nAwfuFJwEXtrfpKVZSDuXEMNmHGMrtjIbCnEg38Nvboofmon4/e7u089zsAqPKZA
-         N97Hp/L79oa8NPTj0vV4bmwTrxZaIODZO4AXBw+d8Q8/uE6vQHjIQ3qNld+s2OUvr1bo
-         841PLSQhgIt8jSMklb7wmd9ZfWW4xza6AT5oDkFw1zs4etS+L/4GPj2rq4AamTtbm3XP
-         AZboQtmtp8H2EQh4rkmSd0KfRCcz55MrlS0gA0hgxZ+DgR0roKdfW+6S6/aa+MAhhd0h
-         LELpWBmrxHpX+kHvDFNeXqGplPbNoGeU/LvU95G0cXxXlcyz1zWVzDgKTKwxziEetnck
-         C0nA==
-X-Received: by 10.60.145.241 with SMTP id sx17mr3621915oeb.57.1377900103191;
-        Fri, 30 Aug 2013 15:01:43 -0700 (PDT)
+        bh=1hGmMq48a7Vg6UJrnlCFzOE0oeJkfifjACDjYp5+/I8=;
+        b=ga6/ZC0Mp34QAbPft8Pw/Vp9UMzkznxe3ONuv6eM8hh0uScdAh+2JzPMmeIFrVskkl
+         AhXopCdjKRegDws+qUioA1+18J7y3gAb1AL0rTb/0slxsndQ7z+r9siRGJk+BCfpvST8
+         hzuTidmz9ozKskO1jf9YvFE5eusUVU4eGQhStwE1MT/W8qiaAn2K/LOzBS6yJJF0GQPQ
+         9OI33A095jOirCg6CXB4FnhQAFk/u97ynmDxNRfLp5WKunnC9ezl4B+Bfngs1NUauJOu
+         VnfK4WTbCHhg+xhw1hR2KtgIDqMclcBoquiPfyb/oBqRs+J+t87n9+/0ceCDXBYmFTm4
+         DfqA==
+X-Received: by 10.182.18.102 with SMTP id v6mr8516382obd.71.1377900091087;
+        Fri, 30 Aug 2013 15:01:31 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id u3sm127290oeq.3.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id rr6sm141313oeb.0.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 30 Aug 2013 15:01:42 -0700 (PDT)
+        Fri, 30 Aug 2013 15:01:30 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1377899810-1818-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233477>
 
-There's no need to remove 'refs/heads/' yet again.
+After commit 3fde386 (reset [--mixed]: use diff-based reset whether or
+not pathspec was given), some code can be moved to the 'reset_type ==
+MIXED' check.
+
+Let's move the code that is specific to MIXED.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- git-pull.sh | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ builtin/reset.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/git-pull.sh b/git-pull.sh
-index f0df41c..3bdcbfd 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -166,7 +166,6 @@ error_on_no_merge_candidates () {
- 		op_prep=with
- 	fi
+diff --git a/builtin/reset.c b/builtin/reset.c
+index afa6e02..225e3f1 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -326,8 +326,11 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
+ 		int newfd = hold_locked_index(lock, 1);
+ 		if (reset_type == MIXED) {
++			int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
+ 			if (read_from_tree(pathspec, sha1))
+ 				return 1;
++			refresh_index(&the_index, flags, NULL, NULL,
++				      _("Unstaged changes after reset:"));
+ 		} else {
+ 			int err = reset_index(sha1, reset_type, quiet);
+ 			if (reset_type == KEEP && !err)
+@@ -336,12 +339,6 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 				die(_("Could not reset index file to revision '%s'."), rev);
+ 		}
  
--	curr_branch=${curr_branch#refs/heads/}
- 	upstream=$(git config "branch.$curr_branch.merge")
- 	remote=$(git config "branch.$curr_branch.remote")
- 
-@@ -183,7 +182,7 @@ error_on_no_merge_candidates () {
- 		echo "You asked to pull from the remote '$1', but did not specify"
- 		echo "a branch. Because this is not the default configured remote"
- 		echo "for your current branch, you must specify a branch on the command line."
--	elif [ -z "$curr_branch" -o -z "$upstream" ]; then
-+	elif [ -z "$curr_branch_short" -o -z "$upstream" ]; then
- 		. git-parse-remote
- 		error_on_missing_default_upstream "pull" $op_type $op_prep \
- 			"git pull <remote> <branch>"
+-		if (reset_type == MIXED) { /* Report what has not been updated. */
+-			int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
+-			refresh_index(&the_index, flags, NULL, NULL,
+-				      _("Unstaged changes after reset:"));
+-		}
+-
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+ 		    commit_locked_index(lock))
+ 			die(_("Could not write new index file."));
 -- 
 1.8.4-fc
