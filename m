@@ -1,96 +1,228 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Stalled git cloning and possible solutions
-Date: Fri, 30 Aug 2013 19:41:45 +0700
-Message-ID: <CACsJy8DntFs-exeQ28=tqF3963zd1szTghZybmC6DrTNNF8Lfg@mail.gmail.com>
-References: <201308300118.19166.vkrishn4@gmail.com> <20130829211034.GB4110@google.com>
- <CACsJy8CxeZGu-nudeGtAFJdzsYMjyNX01yeVOAcRV1kOjA+dkg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "V.Krishn" <vkrishn4@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 30 14:42:25 2013
+From: Nazri Ramliy <ayiehere@gmail.com>
+Subject: [PATCH] Teach git to change to a given directory using -C option
+Date: Fri, 30 Aug 2013 21:35:19 +0800
+Message-ID: <1377869719-5942-1-git-send-email-ayiehere@gmail.com>
+Cc: Nazri Ramliy <ayiehere@gmail.com>
+To: git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com
+X-From: git-owner@vger.kernel.org Fri Aug 30 15:35:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFO1w-0008BC-Jm
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 14:42:24 +0200
+	id 1VFOr0-0006wH-Sl
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 15:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756541Ab3H3MmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 08:42:19 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:39237 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752874Ab3H3MmQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Aug 2013 08:42:16 -0400
-Received: by mail-oa0-f47.google.com with SMTP id g12so2180143oah.6
-        for <git@vger.kernel.org>; Fri, 30 Aug 2013 05:42:15 -0700 (PDT)
+	id S1754755Ab3H3NfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 09:35:04 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:40616 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754478Ab3H3NfD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 09:35:03 -0400
+Received: by mail-pb0-f43.google.com with SMTP id md4so1885898pbc.2
+        for <git@vger.kernel.org>; Fri, 30 Aug 2013 06:35:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=F0udTvFOTmEBQD5SEyeaxhb5QYQNfetLNflMfUwRXTA=;
-        b=JHalDAzD1yF7u8NXXskMqJdUD/NFrYQ6WBFU591pRVFK2AUNij3n+dYIb6/7DBPFP6
-         AC0N9WJDzMJ48yCFXe6TdATcrNP8IXPPIyQVtZQsfesL+lWmloqSh8wPkVjcmXKuc5qS
-         bzEeIM74Zz9Zngsc5Q867ShnM/NwHVJCBFXZkjQePrzB3FI8eFLHQtfIQXQHylQ9mXqx
-         KiGi/FgED1KF6tC764/J9WE1fJDjQ89AywfH/QY7Mn8sO7Fhh5oXk10Wdyt/BAvCOW9+
-         V/FM+78pXbYDNWS6LemYoT8+LFd4woUf3lSsho+HY1bola3lEkuebSCJE+JP2D3EnE3A
-         76jw==
-X-Received: by 10.60.80.167 with SMTP id s7mr6741224oex.38.1377866535781; Fri,
- 30 Aug 2013 05:42:15 -0700 (PDT)
-Received: by 10.182.87.105 with HTTP; Fri, 30 Aug 2013 05:41:45 -0700 (PDT)
-In-Reply-To: <CACsJy8CxeZGu-nudeGtAFJdzsYMjyNX01yeVOAcRV1kOjA+dkg@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=egOXhQqrvW9wrSfIBCZreqtUragmifpFfyN4YcRj8Kw=;
+        b=T3l+4Z8XcEocFNG+V9RP60DdpRXZIlynS2/mUG++dUnrrOImbSdFD3m7+h7MReVn+0
+         5aXJOBeLOZKAXvLtEpb/xn5jo5IWFWfJWybgA9RTDof0fQeJd4mJxKW/H2dJ4P+/ll+3
+         NcjaKLGdpxSbJdiopduowF5EcPuSernhf8KrTe0FSQEYe/sudNIbOEIgJdrOjrI3Ymap
+         wmp9kpd73eNm+OUT707dNC6awuvFK2uIWe2h0z+Kcn/FnJfh4Z5OV88esbKBlvQ2zrHc
+         T7rWt5M6svGmd7JCUxNTq+pvSEMoicDWSjykFUdObn3RwAsJay+irFUqfe39RiroEi7t
+         AVKg==
+X-Received: by 10.68.164.1 with SMTP id ym1mr10219746pbb.33.1377869702350;
+        Fri, 30 Aug 2013 06:35:02 -0700 (PDT)
+Received: from bigbear.localdomain (lbn-26-27.tm.net.my. [202.188.26.27])
+        by mx.google.com with ESMTPSA id qf7sm47892310pac.14.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 30 Aug 2013 06:35:01 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.1.g098df5a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233441>
 
-On Fri, Aug 30, 2013 at 7:17 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> OK how about a new capability "resume" to upload-pack. fetch-pack can
-> then send capability "resume[=<SHA-1>,<skip>]" to upload-pack. The
-> first time it sends "resume" without parameters, and upload-pack will
-> send back an SHA-1 to identify the pack being transferred together
-> with a full pack as usual. When early disconnection happens, it sends
-> the received SHA-1 and the received pack's size so far. It either
-> receives the remaining part, or a full pack.
->
-> When upload-pack gets "resume", it calculates a checksum of all input
-> that may impact pack generation. If the checksum matches the SHA-1
-> from fetch-pack, it'll continue to generate the pack as usual, but
-> will skip sending the first <skip> bytes (maybe with a fake header so
-> that fetch-pack realizes this is a partial pack). If the checksum does
-> not match, it sends full pack again. I count on index-pack to spot
-> corrupt resumed pack due to bugs.
->
-> The input to calculate SHA-1 checksum includes:
->
->  - the result SHA-1 list from rev-list
->  - git version string
->  - .git/shallow
->  - replace object database
->  - pack.* config
->  - maybe some other variables (I haven't checked pack-objects)
+This is similar in spirit to to "make -C dir ..." and "tar -C dir ...".
 
-should have tested something first before I wrote. --threads adds some
-randomness to pack generation so it has to be --threads=1. Not sure if
-git repository hosts are happy with it..
+Currently it takes more effort (keypresses) to invoke git command in a
+different directory than the current one without leaving the current
+directory:
 
-> Another Git implementation can generate this SHA-1 in a totally
-> different way and may even cache the generated pack.
->
-> If at resume time, the load balancer directs the request to another
-> upload-pack that generates this SHA-1 differently, ok this won't work
-> (i.e. full pack is returned). In a busy repository, some refs may have
-> moved so rev-list result at the resume time won't match any more, but
-> we can deal with that later by relaxing to allow "want " lines with
-> SHA-1 that are reachable from current refs, not just one of the refs
-> (pack v4 or reachability bitmaps help).
-> --
-> Duy
+    1. (cd ~/foo && git status)
+       git --git-dir=~/foo/.git --work-dir=~/foo status
+       GIT_DIR=~/foo/.git GIT_WORK_TREE=~/foo git status
+    2. (cd ../..; git grep foo)
+    3. for d in d1 d2 d3; do (cd $d && git svn rebase); done
 
+While doable the methods shown above are arguably more suitable for
+scripting than quick command line invocations.
 
+With this new option, the above can be done with less keystrokes:
 
+    1. git -C ~/foo status
+    2. git -C ../.. grep foo
+    3. for d in d1 d2 d3; do git -C $d svn rebase; done
+
+A new test script is added to verify the behavior of this option with
+other path-related options like --git-dir and --work-tree.
+
+Signed-off-by: Nazri Ramliy <ayiehere@gmail.com>
+---
+This is a reroll of [1]. The only difference is the rewording of the
+commit message.  I'm resending this as I've found it to be useful in my
+daily git usage in that it helps me stay focused on what I'm doing in
+the current directory while needing to run git on another directory.
+
+nazri.
+
+[1] http://permalink.gmane.org/gmane.comp.version-control.git/221954
+
+ Documentation/git.txt | 13 +++++++++
+ git.c                 | 15 ++++++++--
+ t/t0056-git-C.sh      | 76 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 102 insertions(+), 2 deletions(-)
+ create mode 100755 t/t0056-git-C.sh
+
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index dca11cc..0d44fa2 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -395,6 +395,19 @@ displayed. See linkgit:git-help[1] for more information,
+ because `git --help ...` is converted internally into `git
+ help ...`.
+ 
++-C <directory>::
++	Run as if git were started in <directory> instead of the current
++	working directory. If multiple -C options are given, subsequent
++	directory arguments are interpreted relative to the previous one: -C
++	/usr -C src is equivalent to -C /usr/src. This option affects options
++	that expect path name like --git-dir and --work-tree in that their
++	interpretations of the path names would be made relative to the
++	effective working directory caused by the -C option. For example the
++	following invocations are equivalent:
++
++	    git --git-dir=a.git --work-tree=b -C c status
++	    git --git-dir=c/a.git --work-tree=c/b status
++
+ -c <name>=<value>::
+ 	Pass a configuration parameter to the command. The value
+ 	given will override values from configuration files.
+diff --git a/git.c b/git.c
+index 2025f77..2207ee5 100644
+--- a/git.c
++++ b/git.c
+@@ -7,7 +7,7 @@
+ #include "commit.h"
+ 
+ const char git_usage_string[] =
+-	"git [--version] [--help] [-c name=value]\n"
++	"git [--version] [--help] [-C directory] [-c name=value]\n"
+ 	"           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
+ 	"           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]\n"
+ 	"           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
+@@ -54,7 +54,18 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 		/*
+ 		 * Check remaining flags.
+ 		 */
+-		if (!prefixcmp(cmd, "--exec-path")) {
++		if (!strcmp(cmd, "-C")) {
++			if (*argc < 2) {
++				fprintf(stderr, "No directory given for -C.\n" );
++				usage(git_usage_string);
++			}
++			if (chdir((*argv)[1]))
++				die_errno("Cannot change to '%s'", (*argv)[1]);
++			if (envchanged)
++				*envchanged = 1;
++			(*argv)++;
++			(*argc)--;
++		} else if (!prefixcmp(cmd, "--exec-path")) {
+ 			cmd += 11;
+ 			if (*cmd == '=')
+ 				git_set_argv_exec_path(cmd + 1);
+diff --git a/t/t0056-git-C.sh b/t/t0056-git-C.sh
+new file mode 100755
+index 0000000..370eae6
+--- /dev/null
++++ b/t/t0056-git-C.sh
+@@ -0,0 +1,76 @@
++#!/bin/sh
++
++test_description='"-C <directory>" option and it effects on other path-related options'
++
++. ./test-lib.sh
++
++test_expect_success '"git -C <dir>" runs git from the directory <dir>' '
++	test_create_repo dir1 &&
++	echo 1 >dir1/a.txt &&
++	(cd dir1 && git add a.txt && git commit -m "initial in dir1") &&
++	expected="initial in dir1" &&
++	actual=$(git -C dir1 log --format=%s) &&
++	test "$expected" = "$actual"
++'
++
++test_expect_success 'Multiple -C options: "-C dir1 -C dir2" is equivalent to "-C dir1/dir2"' '
++	test_create_repo dir1/dir2 &&
++	echo 1 >dir1/dir2/a.txt &&
++	git -C dir1/dir2 add a.txt &&
++	expected="initial in dir1/dir2" &&
++	git -C dir1/dir2 commit -m "$expected" &&
++	actual=$(git -C dir1 -C dir2 log --format=%s) &&
++	test "$expected" = "$actual"
++'
++
++test_expect_success 'Effect on --git-dir option: "-C c --git-dir=a.git" is equivalent to "--git-dir c/a.git"' '
++	mkdir c &&
++	mkdir c/a &&
++	mkdir c/a.git &&
++	(cd c/a.git && git init --bare) &&
++	echo 1 >c/a/a.txt &&
++	git --git-dir c/a.git --work-tree=c/a add a.txt &&
++	git --git-dir c/a.git --work-tree=c/a commit -m "initial" &&
++	expected="$(git --git-dir=c/a.git log -1 --format=%s)" &&
++	actual=$(git -C c --git-dir=a.git log -1 --format=%s) &&
++	test "$expected" = "$actual"
++'
++
++test_expect_success 'Order should not matter: "--git-dir=a.git -C c" is equivalent to "-C c --git-dir=a.git"' '
++	expected="$(git -C c --git-dir=a.git log -1 --format=%s)" &&
++	actual=$(git --git-dir=a.git -C c log -1 --format=%s) &&
++	test "$expected" = "$actual"
++'
++
++test_expect_success 'Effect on --work-tree option: "-C c/a.git --work-tree=../a"  is equivalent to "--work-tree=c/a --git-dir=c/a.git"' '
++	rm c/a/a.txt &&
++	expected="$(git --git-dir=c/a.git --work-tree=c/a status)" &&
++	actual="$(git -C c/a.git --work-tree=../a status)" &&
++	test "$expected" = "$actual"
++'
++
++test_expect_success 'Order should not matter: "--work-tree=../a -C c/a.git" is equivalent to "-C c/a.git --work-tree=../a"' '
++	expected="$(git -C c/a.git --work-tree=../a status)" &&
++	actual="$(git --work-tree=../a -C c/a.git status)" &&
++	test "$expected" = "$actual"
++'
++
++test_expect_success 'Effect on --git-dir and --work-tree options - "-C c --git-dir=a.git --work-tree=a" is equivalent to "--git-dir=c/a.git --work-tree=c/a"' '
++	expected="$(git --git-dir=c/a.git --work-tree=c/a status)" &&
++	actual="$(git -C c --git-dir=a.git --work-tree=a status)" &&
++	test "$expected" = "$actual"
++'
++
++test_expect_success 'Order should not matter: "-C c --git-dir=a.git --work-tree=a" is equivalent to "--git-dir=a.git -C c --work-tree=a"' '
++	expected="$(git -C c --git-dir=a.git --work-tree=a status)" &&
++	actual="$(git --git-dir=a.git -C c --work-tree=a status)" &&
++	test "$expected" = "$actual"
++'
++
++test_expect_success 'Order should not matter: "-C c --git-dir=a.git --work-tree=a" is equivalent to "--git-dir=a.git --work-tree=a -C c"' '
++	expected="$(git -C c --git-dir=a.git --work-tree=a status)" &&
++	actual="$(git --git-dir=a.git --work-tree=a -C c status)" &&
++	test "$expected" = "$actual"
++'
++
++test_done
 -- 
-Duy
+1.8.4.1.g098df5a
