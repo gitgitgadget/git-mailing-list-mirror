@@ -1,99 +1,101 @@
 From: Brad King <brad.king@kitware.com>
-Subject: [PATCH v2 3/8] refs: factor update_ref steps into helpers
-Date: Fri, 30 Aug 2013 14:12:01 -0400
-Message-ID: <d327c12d90c0c2500e51fb07c06f516f94438ff0.1377885441.git.brad.king@kitware.com>
+Subject: [PATCH v2 5/8] refs: add function to repack without multiple refs
+Date: Fri, 30 Aug 2013 14:12:03 -0400
+Message-ID: <d968768528a9f588f15468623489ce115a1a0fb9.1377885441.git.brad.king@kitware.com>
 References: <cover.1377784597.git.brad.king@kitware.com> <cover.1377885441.git.brad.king@kitware.com>
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 30 20:14:04 2013
+X-From: git-owner@vger.kernel.org Fri Aug 30 20:14:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFTCt-0007jF-Ky
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 20:14:04 +0200
+	id 1VFTD3-0007qi-4b
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 20:14:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756752Ab3H3SNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 14:13:47 -0400
-Received: from tripoint.kitware.com ([66.194.253.20]:50944 "EHLO
+	id S1756837Ab3H3SOB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 14:14:01 -0400
+Received: from tripoint.kitware.com ([66.194.253.20]:50949 "EHLO
 	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754841Ab3H3SNq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Aug 2013 14:13:46 -0400
+	with ESMTP id S1756702Ab3H3SNr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 14:13:47 -0400
 Received: by vesper.kitware.com (Postfix, from userid 1000)
-	id D06469FB8B; Fri, 30 Aug 2013 14:12:06 -0400 (EDT)
+	id D62219FB8D; Fri, 30 Aug 2013 14:12:06 -0400 (EDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <cover.1377885441.git.brad.king@kitware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233457>
 
-Factor the lock and write steps and error handling into helper functions
-update_ref_lock and update_ref_write to allow later use elsewhere.
-Expose lock_any_ref_for_update's type_p to update_ref_lock callers.
+Generalize repack_without_ref as repack_without_refs to support a list
+of refs and implement the former in terms of the latter.
 
 Signed-off-by: Brad King <brad.king@kitware.com>
 ---
- refs.c |   28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ refs.c |   29 ++++++++++++++++++++++-------
+ 1 file changed, 22 insertions(+), 7 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index c69fd68..2e755b4 100644
+index 5dd86ee..3bcd26e 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3170,12 +3170,13 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
- 	return retval;
- }
- 
--int update_ref(const char *action, const char *refname,
--		const unsigned char *sha1, const unsigned char *oldval,
--		int flags, enum action_on_err onerr)
-+static struct ref_lock *update_ref_lock(const char *refname,
-+					const unsigned char *oldval,
-+					int flags, int *type_p,
-+					enum action_on_err onerr)
- {
- 	static struct ref_lock *lock;
--	lock = lock_any_ref_for_update(refname, oldval, flags, NULL);
-+	lock = lock_any_ref_for_update(refname, oldval, flags, type_p);
- 	if (!lock) {
- 		const char *str = "Cannot lock the ref '%s'.";
- 		switch (onerr) {
-@@ -3183,8 +3184,14 @@ int update_ref(const char *action, const char *refname,
- 		case DIE_ON_ERR: die(str, refname); break;
- 		case QUIET_ON_ERR: break;
- 		}
--		return 1;
- 	}
-+	return lock;
-+}
-+
-+static int update_ref_write(const char *action, const char *refname,
-+			    const unsigned char *sha1, struct ref_lock *lock,
-+			    enum action_on_err onerr)
-+{
- 	if (write_ref_sha1(lock, sha1, action) < 0) {
- 		const char *str = "Cannot update the ref '%s'.";
- 		switch (onerr) {
-@@ -3197,6 +3204,17 @@ int update_ref(const char *action, const char *refname,
+@@ -2414,25 +2414,35 @@ static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
  	return 0;
  }
  
-+int update_ref(const char *action, const char *refname,
-+	       const unsigned char *sha1, const unsigned char *oldval,
-+	       int flags, enum action_on_err onerr)
+-static int repack_without_ref(const char *refname)
++static int repack_without_refs(const char **refnames, int n)
+ {
+ 	struct ref_dir *packed;
+ 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *ref_to_delete;
++	int i, removed = 0;
++
++	/* Look for a packed ref: */
++	for (i = 0; i < n; ++i)
++		if (get_packed_ref(refnames[i]))
++			break;
+ 
+-	if (!get_packed_ref(refname))
+-		return 0; /* refname does not exist in packed refs */
++	/* Avoid locking if we have nothing to do: */
++	if (i == n)
++		return 0; /* no refname exists in packed refs */
+ 
+ 	if (lock_packed_refs(0)) {
+ 		unable_to_lock_error(git_path("packed-refs"), errno);
+-		return error("cannot delete '%s' from packed refs", refname);
++		return error("cannot delete '%s' from packed refs", refnames[i]);
+ 	}
+ 	packed = get_packed_refs(&ref_cache);
+ 
+-	/* Remove refname from the cache: */
+-	if (remove_entry(packed, refname) == -1) {
++	/* Remove refnames from the cache: */
++	for (i = 0; i < n; ++i)
++		if (remove_entry(packed, refnames[i]) != -1)
++			removed = 1;
++	if (!removed) {
+ 		/*
+-		 * The packed entry disappeared while we were
++		 * All packed entries disappeared while we were
+ 		 * acquiring the lock.
+ 		 */
+ 		rollback_packed_refs();
+@@ -2450,6 +2460,11 @@ static int repack_without_ref(const char *refname)
+ 	return commit_packed_refs();
+ }
+ 
++static int repack_without_ref(const char *refname)
 +{
-+	static struct ref_lock *lock;
-+	lock = update_ref_lock(refname, oldval, flags, 0, onerr);
-+	if (!lock)
-+		return 1;
-+	return update_ref_write(action, refname, sha1, lock, onerr);
++	return repack_without_refs(&refname, 1);
 +}
 +
- struct ref *find_ref_by_name(const struct ref *list, const char *name)
+ static int delete_ref_loose(struct ref_lock *lock, int flag)
  {
- 	for ( ; list; list = list->next)
+ 	int err, i, ret = 0;
 -- 
 1.7.10.4
