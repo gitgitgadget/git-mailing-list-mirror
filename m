@@ -1,109 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 7/8] update-ref: support multiple simultaneous updates
-Date: Fri, 30 Aug 2013 15:51:43 -0700
-Message-ID: <xmqqbo4eyeps.fsf@gitster.dls.corp.google.com>
-References: <cover.1377784597.git.brad.king@kitware.com>
-	<cover.1377885441.git.brad.king@kitware.com>
-	<ba564b6566b54d780a24355ca893294d814d8d24.1377885441.git.brad.king@kitware.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brad King <brad.king@kitware.com>
-X-From: git-owner@vger.kernel.org Sat Aug 31 00:51:53 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/2] branch: improve verbose option
+Date: Fri, 30 Aug 2013 17:59:41 -0500
+Message-ID: <1377903583-3550-1-git-send-email-felipe.contreras@gmail.com>
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 31 01:04:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFXXk-0007qk-Dn
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 00:51:52 +0200
+	id 1VFXjv-0006Tk-3g
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 01:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756389Ab3H3Wvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 18:51:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50875 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755096Ab3H3Wvr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Aug 2013 18:51:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68A233DE29;
-	Fri, 30 Aug 2013 22:51:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/HxMh2ooi+pcQ9F6p8GwVVEMgDQ=; b=hEgQvZ
-	Hihd4v5UmLRXcx8yZ2EH2iYPfxTW5PU/hR0nc9IlDF+qDoYTBfuWwVyHbZ8vOSxv
-	DzUOh0IXSGjDJ0bD1UcZa92cJCD2l87ZxLrMNv2i3UPFOGWuaFiAbR0F+1CfRgiP
-	Oj9dYNx5XKnUVC0WbbmgEYq3JnZXuFUpS2cTI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NLBSf2yekp03Phy1PgcVly5PYSTPJ185
-	gj7ls6XpslSuyXOTK2WGxr8n+4U8+Hq2eKlzU7pygSFr/6kmTjWft+3HDi+0GKV/
-	x+5vpL1jJDuP5HDemcneYGLPknSN8qs0jrGcNOl0ns0S8XbJRyY/H9gzZuVuM2UY
-	Air/7GwoUU4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 518693DE27;
-	Fri, 30 Aug 2013 22:51:46 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F24F3DE26;
-	Fri, 30 Aug 2013 22:51:45 +0000 (UTC)
-In-Reply-To: <ba564b6566b54d780a24355ca893294d814d8d24.1377885441.git.brad.king@kitware.com>
-	(Brad King's message of "Fri, 30 Aug 2013 14:12:05 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BEE7F024-11C6-11E3-9E04-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756565Ab3H3XEX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 19:04:23 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:62109 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756238Ab3H3XEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 19:04:21 -0400
+Received: by mail-ob0-f174.google.com with SMTP id wd6so2494042obb.33
+        for <git@vger.kernel.org>; Fri, 30 Aug 2013 16:04:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=zrN/NLEtrffSJO5XP8qMcQ2p5+3K4gVghRhoe8E2P64=;
+        b=NSnx6aaCCn3p6xBNjfMN21MgSDFrn+5k49YgXnxx8IEdsUtFzRVMCG0N1RE9dcAepB
+         xgpuX/1RWatZSW7WWJEheMc9GghI1MizDGHAsRtwmTrMyWpqdhJQh2Yp/TA6M7fh1xtg
+         VobGqCSuWXY8CdHZkDK6DUS22EB7wwwlTxEPV2fOUkkh0SxdCjzLAyu9yFpj5TsEs3QE
+         1SvpxuGV1PcS503hNzJOgGvZXkDRnViBY6q3woOKmUo6vyhgiQ1ZiTdxfpi7Og0FwS7X
+         9xnu6vGnn2U1pV95+qgSqlp+NqNDxaEapyOV6Oomf2EXbgj19iML5tuDv453ayYwfjBn
+         n4jA==
+X-Received: by 10.182.29.198 with SMTP id m6mr8633349obh.105.1377903861103;
+        Fri, 30 Aug 2013 16:04:21 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id s14sm435512oeo.1.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 30 Aug 2013 16:04:20 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4-fc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233480>
 
-Brad King <brad.king@kitware.com> writes:
+Hi,
 
-> Add a --stdin signature to read update instructions from standard input
-> and apply multiple ref updates together.  Use an input format that
-> supports any update that could be specified via the command-line,
-> including object names like 'branch:path with space'.
->
-> Signed-off-by: Brad King <brad.king@kitware.com>
-> ---
->  Documentation/git-update-ref.txt |   21 ++++++-
->  builtin/update-ref.c             |  121 +++++++++++++++++++++++++++++++++++++-
->  2 files changed, 140 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
-> index 0df13ff..295d0bb 100644
-> --- a/Documentation/git-update-ref.txt
-> +++ b/Documentation/git-update-ref.txt
-> @@ -8,7 +8,7 @@ git-update-ref - Update the object name stored in a ref safely
->  SYNOPSIS
->  --------
->  [verse]
-> -'git update-ref' [-m <reason>] (-d <ref> [<oldvalue>] | [--no-deref] <ref> <newvalue> [<oldvalue>])
-> +'git update-ref' [-m <reason>] (-d <ref> [<oldvalue>] | [--no-deref] <ref> <newvalue> [<oldvalue>] | --stdin)
->  
->  DESCRIPTION
->  -----------
-> @@ -58,6 +58,25 @@ archive by creating a symlink tree).
->  With `-d` flag, it deletes the named <ref> after verifying it
->  still contains <oldvalue>.
->  
-> +With `--stdin`, update-ref reads instructions from standard input and
-> +performs all modifications together.  Empty lines are ignored.
-> +Each non-empty line is parsed as whitespace-separated arguments.
-> +Use single-quotes to enclose whitespace and backslashes and an
-> +unquoted backslash to escape a single quote.
+This has been discussed before:
 
-That is somewhat unusual.
+http://thread.gmane.org/gmane.comp.version-control.git/224489
 
-When we need to deal with arbitrary strings (like pathnames), other
-parts of the system usually give the user two interfaces, --stdin
-with and without -z, and the strings are C-quoted when run without
-the -z option, and terminated with NUL when run with the -z option.
+but in the spirit of the perfect being the enemy of the good, nothing got done.
 
-> +Specify updates with
-> +lines of the form:
-> +
-> +	[--no-deref] [--] <ref> <newvalue> [<oldvalue>]
+This series makes 'git branch -v' much faster, and gives us the most important
+information; the configured upstream tracking branch. Showing ahead/behind is
+not as important, specially considering that currently 'git branch -v' doesn't
+show the branch we are comparing the ahead/behind to.
 
-What is -- doing here?  refs given to update-ref begin with refs/
-(otherwise it is HEAD), no?
+Strictly speaking it's a regression, but nobody would complain, and if somebody
+does, it should be easy to revert if needed.
+
+Felipe Contreras (2):
+  branch: trivial cleanup
+  branch: reorganize verbose options
+
+ builtin/branch.c         | 33 +++++++++++++++------------------
+ t/t6040-tracking-info.sh |  8 ++++----
+ 2 files changed, 19 insertions(+), 22 deletions(-)
+
+-- 
+1.8.4-fc
