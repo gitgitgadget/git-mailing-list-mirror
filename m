@@ -1,10 +1,11 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: Officially start moving to the term 'staging area'
-Date: Fri, 30 Aug 2013 15:28:18 -0500
-Message-ID: <CAMP44s0Lv+HTFt6RxyRehfA_NpSPtnr2v4EnAO_vxQcOtQZLbQ@mail.gmail.com>
+Date: Fri, 30 Aug 2013 15:40:39 -0500
+Message-ID: <CAMP44s2cba_UGmYJuwf9kw-OG4FQz6eRefRC0xa7pnx6ctFRjw@mail.gmail.com>
 References: <20130829180129.GA4880@nysa>
 	<xmqqeh9c4a2t.fsf@gitster.dls.corp.google.com>
 	<CAMP44s3=gRwORdxYiXnioufg8Ag3tmuZth5_-+NbJWV_v1FDxA@mail.gmail.com>
+	<CAMP44s0yxaS3YeF5gprTecfa0rzLso96cE9gWM629iM0Sc5+Bg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -18,73 +19,147 @@ Cc: git@vger.kernel.org,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Scott Chacon <schacon@gmail.com>,
 	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Drew Northup <n1xim.email@gmail.com>
+	Drew Northup <n1xim.email@gmail.com>,
+	Pete Harlan <pgit@pcharlan.com>, Aghiles <aghilesk@gmail.com>,
+	Jeff King <peff@peff.net>, Phil Hord <hordp@cisco.com>,
+	Victor Engmark <victor.engmark@terreactive.ch>,
+	David <bouncingcats@gmail.com>,
+	Alexey Feldgendler <alexeyf@opera.com>,
+	Alexei Sholik <alcosholik@gmail.com>,
+	=?UTF-8?Q?Zbigniew_J=C4=99drzejewski=2DSzmek?= <zbyszek@in.waw.pl>,
+	Sebastien Douche <sdouche@gmail.com>,
+	Thiago Farina <tfransosi@gmail.com>,
+	Mark Lodato
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 30 22:28:24 2013
+X-From: git-owner@vger.kernel.org Fri Aug 30 22:40:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFVIu-0006r0-Fe
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 22:28:24 +0200
+	id 1VFVUr-0005VT-7E
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 22:40:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754278Ab3H3U2U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Aug 2013 16:28:20 -0400
-Received: from mail-la0-f43.google.com ([209.85.215.43]:52714 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751835Ab3H3U2T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Aug 2013 16:28:19 -0400
-Received: by mail-la0-f43.google.com with SMTP id ep20so1915077lab.2
-        for <git@vger.kernel.org>; Fri, 30 Aug 2013 13:28:18 -0700 (PDT)
+	id S1755756Ab3H3Ukl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Aug 2013 16:40:41 -0400
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:47478 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755723Ab3H3Ukk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Aug 2013 16:40:40 -0400
+Received: by mail-lb0-f178.google.com with SMTP id z5so2278749lbh.37
+        for <git@vger.kernel.org>; Fri, 30 Aug 2013 13:40:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=T/5gyto+Y+DQNWI6TP0MlItjDElWV0dXrxo3WCtwxDA=;
-        b=GkDV2bPJ/WP4/I1JT/LPplBVkOO4UV2XaV9PigOiLQwtIKkGrFmzLfhs0MXG4cm8kO
-         p0QN0JnDLU5u74yKyoFYFYHcJ/b1myxxTgWhHPxIWpUfPZHoGC5fuSvRL5/qYBDevhC6
-         eWc4my02uLDMsViLxBIi5zdp4qhTSsBIctmqb/s4iaIwAFOdmhvpIkZiQILDBN5Gag37
-         5MIU9gtmUbctl2GTwji1ay3hWmecEAPoudvsrz9tM04+Olq2JtJXGkX4bys0LQNd5WKX
-         EfPCQqvLFgDFKxsc2+fZ6mOvdGNv7v0tcjddnC58lXAgNhmuT4HnSBxP2wpHS2mbUX35
-         E8tA==
-X-Received: by 10.112.51.166 with SMTP id l6mr9417340lbo.5.1377894498091; Fri,
- 30 Aug 2013 13:28:18 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Fri, 30 Aug 2013 13:28:18 -0700 (PDT)
-In-Reply-To: <CAMP44s3=gRwORdxYiXnioufg8Ag3tmuZth5_-+NbJWV_v1FDxA@mail.gmail.com>
+        bh=WQN2zEK7qlfRz6T0vwy8XuAaeG+OEs4Am+jGsXbYxQg=;
+        b=ifttK7/DezXxucbnlAde5DbHDT4zOTZUzdVvPkT9rNEWOlkxyDuRrHjRUpZEXO7dYV
+         QtWKsDvjbPZI5dYY4wTbYbqPjiOPFRRZ8pSIZBKsgMibQKkmGosxPLXK9IVsqC5wYsqu
+         AniYaxpSW/f7VvaRNK3uYydC8mPnRINCHd//sQXTlW44wevDHOyuPW9V75ZNTzbwIkAJ
+         9/YGmhgW0E2gklhAlWmzMjH3LAfkjBaRyOjDbxtHRR4rKZg9zpzxuvb/N1rifjsC9EUK
+         200zbDmSBCBEnnT64e3GhjWewda25jv9U+GOc2dAkDu2NQrztP3NRmVzjzqo4STFs3xz
+         CB8A==
+X-Received: by 10.112.35.225 with SMTP id l1mr3230501lbj.35.1377895239324;
+ Fri, 30 Aug 2013 13:40:39 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Fri, 30 Aug 2013 13:40:39 -0700 (PDT)
+In-Reply-To: <CAMP44s0yxaS3YeF5gprTecfa0rzLso96cE9gWM629iM0Sc5+Bg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233469>
 
-On Thu, Aug 29, 2013 at 2:57 PM, Felipe Contreras
+On Fri, Aug 30, 2013 at 2:11 PM, Felipe Contreras
 <felipe.contreras@gmail.com> wrote:
-> On Thu, Aug 29, 2013 at 1:37 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
+> On Thu, Aug 29, 2013 at 2:57 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
 
->> IIRC, when this was discussed, many non-native speakers had trouble
->> with the verb "to stage", not just from i18n/l10n point of view.
+>> Here are the threads once again:
+>>
+>> http://thread.gmane.org/gmane.comp.version-control.git/197111
+>> http://thread.gmane.org/gmane.comp.version-control.git/166675
+>> http://thread.gmane.org/gmane.comp.version-control.git/115666
 >
-> Well, you recall incorrectly.
+> I take it you still haven't read those threads, and you don't plan to=
+=2E
+> So I have to go through each and every comment and summarize what eac=
+h
+> person concluded.
 >
-> There was *A SINGLE* non-native speaker that complained, about
-> "stage", not "staging area", =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason, =
-and he even said
-> he had already translated index/cache to "the commit area"[1].
+> Hopefully you would come back to me before I waste my time, but it
+> seems there's no other way to make you see the reality of what was
+> actually already discussed and agreed.
 
-Actually, not only did =C3=86var not have a problem with "staging area"=
-,
-but he told you this argument about i18n/l10n didn't make sense at
-all, and you agreed:
+So here's the summary, as I said, *everybody* is in favor of "staging
+area" or something other than "index", with the exception of Drew
+Northup, I've put a summary of the conclusion of each person that
+voiced an opinion on the matter, and I've CC'ed them here, so they can
+reiterate their opinion, or clarify it.
 
-http://article.gmane.org/gmane.comp.version-control.git/197371
+Junio, do you accept that virtually *everyone* is in favor of "staging
+area" now?
 
-In fact, all non-native speakers said they liked the term "staging
-area", like everybody else.
+=3D=3D Against =3D=3D
 
-So please enlighten us, which non-native speakers had a problem from
-the translation point of view, and why does it matter?
+Drew Northup:
+index is good
+
+=3D=3D For =3D=3D
+
+Jay Soffian:
+staging area is better
+
+Pete Harlan:
+Aghiles:
+"staging area" is good for teaching
+
+Piotr Krukowiecki:
+"staging area" makes sense
+
+Jonathan Nieder:
+"staging area" is better than "index"
+
+Jeff King:
+"staging area" makes perfect sense
+
+Miles Bader:
+"staging area" is good
+
+Phil Hord:
+"staging area" is better than index/cache
+
+Victor Engmark:
+maybe "git bucket"
+
+David (bouncingcats):
+maybe "precommit"
+
+Alexey Feldgendler:
+"staging area" translates better into Russian (than precommit)
+
+Alexei Sholik:
+"staging area" is better
+
+Zbigniew J=C4=99drzejewski-Szmek:
+"staging area" is better
+
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+In Icelandic "index/stage" is translated to "the commit area"
+
+Sebastien Douche:
+"stage" is better than "cache"/"index"
+
+Thiago Farina:
+"precommit" is better
+
+Mark Lodato:
+"staging" is the most appropriate
+
+Philip Oakley:
+"staging area" is OK
+
+Matthieu Moy:
+something needs to be done
 
 --=20
 =46elipe Contreras
