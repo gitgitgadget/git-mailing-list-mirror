@@ -1,165 +1,188 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v6 11/28] cherry-pick: copy notes and run hooks
-Date: Fri, 30 Aug 2013 00:56:05 -0500
-Message-ID: <1377842182-18724-12-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v6 08/28] builtin: move run_rewrite_hook() to rewrite.c
+Date: Fri, 30 Aug 2013 00:56:02 -0500
+Message-ID: <1377842182-18724-9-git-send-email-felipe.contreras@gmail.com>
 References: <1377842182-18724-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Martin von Zweigbergk <martinvonz@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 30 08:01:35 2013
+X-From: git-owner@vger.kernel.org Fri Aug 30 08:01:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFHm3-0007Jh-3H
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 08:01:35 +0200
+	id 1VFHm2-0007Jh-1R
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 08:01:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755658Ab3H3GBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 02:01:30 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:38371 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755636Ab3H3GB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Aug 2013 02:01:28 -0400
-Received: by mail-ob0-f181.google.com with SMTP id dn14so1450000obc.26
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 23:01:28 -0700 (PDT)
+	id S1755583Ab3H3GBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 02:01:24 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:37853 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755466Ab3H3GBV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 02:01:21 -0400
+Received: by mail-ob0-f170.google.com with SMTP id eh20so1493458obb.29
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 23:01:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Rc5nDgR18khxi2pWDydYrO1lVsqOmQX6frl27VSIbGQ=;
-        b=cAnJqnQD5tlqMZXIV6rP4y59AYxKIYOiLPU5eDd9ECMEkFw7qQlPDDlt6JZhTvwmdD
-         8AFWG+uLE4GwnaN40uzn1Z0kMmvBShtWUmdjW7vb9xlFkWv+GgpOy9iRzoeehVE888WR
-         /8N/n2ZNkZ+oCHCePaSIf6/esczKFnqqZGKSnMIIpgyC3wl15HcP7mADr4OhGnTuySaN
-         ohEWaPEDrMZC2xRHe8DcptyAKXKzwBc72u3NhBZ4e0Vbl4J5iJJATi/MwT8AVnXaS5n+
-         P4nrYC+0I12+vxT9R4eYgs9T8EgQu2F1LDhYRQtKNxV94CNzsc+eeBwid4TO9N6g92Y2
-         1ang==
-X-Received: by 10.60.52.244 with SMTP id w20mr5568452oeo.30.1377842488287;
-        Thu, 29 Aug 2013 23:01:28 -0700 (PDT)
+        bh=S8zFzVyPGayH9EZupIOo+9dKcb0PVxFHD95dZmJ+Htc=;
+        b=kpzOn5Yz+hVBewJLw4bAP5X5TPmq6kYdtiNffefjDgvRj6a8w1CuWl1xF9BCzGZWxy
+         xFEozpo2BG3NrLmkYNhg/lMzPixPt350JCgICXLONkhwRR5M6BzG8kLUlo9xIxor3n3E
+         ekZ6MwhyenT8xvMbvdlwxI1njj07oLy+douizm7elOtxqEuctWRva0rtfqqgCp0NcFor
+         QfO8UqhgRGjF9hiQczyMW+O8kWLgkxD4Y5uG1+UdFkj6jOLaXSXofW0tP8CD+BQHt3PI
+         hwtk1SpTxqvGjMQPFvHsSxu0O1NF3xw3f37mkXhJe4qFnqDMmusQauMxzJMGR2TxsKJW
+         9Eyg==
+X-Received: by 10.60.52.81 with SMTP id r17mr5654000oeo.3.1377842480616;
+        Thu, 29 Aug 2013 23:01:20 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id s9sm32420999obu.4.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id s9sm32420840obu.4.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 23:01:27 -0700 (PDT)
+        Thu, 29 Aug 2013 23:01:19 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1377842182-18724-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233404>
 
-If no action-name is specified, nothing is done.
+And use struct rewrite.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/config.txt   |  9 ++++-----
- Documentation/githooks.txt |  8 ++++----
- rewrite.c                  |  1 +
- sequencer.c                | 25 ++++++++++++++++++++++++-
- 4 files changed, 33 insertions(+), 10 deletions(-)
+ builtin/commit.c | 38 +++++---------------------------------
+ rewrite.c        | 32 ++++++++++++++++++++++++++++++++
+ rewrite.h        |  1 +
+ 3 files changed, 38 insertions(+), 33 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ec57a15..7e7f89f 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1691,11 +1691,10 @@ GIT_NOTES_REF) is also implicitly added to the list of refs to be
- displayed.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 10acc53..7bfe9d0 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -30,6 +30,7 @@
+ #include "column.h"
+ #include "sequencer.h"
+ #include "notes-utils.h"
++#include "rewrite.h"
  
- notes.rewrite.<command>::
--	When rewriting commits with <command> (currently `amend` or
--	`rebase`) and this variable is set to `true`, Git
--	automatically copies your notes from the original to the
--	rewritten commit.  Defaults to `true`, but see
--	"notes.rewriteRef" below.
-+	When rewriting commits with <command> (currently `amend`, `rebase`, or
-+	`cherry-pick`) and this variable is set to `true`, Git automatically
-+	copies your notes from the original to the rewritten commit.  Defaults
-+	to `true`, but see "notes.rewriteRef" below.
+ static const char * const builtin_commit_usage[] = {
+ 	N_("git commit [options] [--] <pathspec>..."),
+@@ -1386,38 +1387,6 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+ 	return git_status_config(k, v, s);
+ }
  
- notes.rewriteMode::
- 	When copying notes during a rewrite (see the
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index d48bf4d..8cfa13b 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -352,10 +352,10 @@ post-rewrite
- ~~~~~~~~~~~~
- 
- This hook is invoked by commands that rewrite commits (`git commit
----amend`, 'git-rebase'; currently 'git-filter-branch' does 'not' call
--it!).  Its first argument denotes the command it was invoked by:
--currently one of `amend` or `rebase`.  Further command-dependent
--arguments may be passed in the future.
-+--amend`, `git rebase`, `git cherry-pick`; currently `git filter-branch` does
-+'not' call it!).  Its first argument denotes the command it was invoked by
-+(e.g. `rebase`).  Further command-dependent arguments may be passed in the
-+future.
- 
- The hook receives a list of the rewritten commits on stdin, in the
- format
+-static int run_rewrite_hook(const unsigned char *oldsha1,
+-			    const unsigned char *newsha1)
+-{
+-	/* oldsha1 SP newsha1 LF NUL */
+-	static char buf[2*40 + 3];
+-	struct child_process proc;
+-	const char *argv[3];
+-	int code;
+-	size_t n;
+-
+-	argv[0] = find_hook("post-rewrite");
+-	if (!argv[0])
+-		return 0;
+-
+-	argv[1] = "amend";
+-	argv[2] = NULL;
+-
+-	memset(&proc, 0, sizeof(proc));
+-	proc.argv = argv;
+-	proc.in = -1;
+-	proc.stdout_to_stderr = 1;
+-
+-	code = start_command(&proc);
+-	if (code)
+-		return code;
+-	n = snprintf(buf, sizeof(buf), "%s %s\n",
+-		     sha1_to_hex(oldsha1), sha1_to_hex(newsha1));
+-	write_in_full(proc.in, buf, n);
+-	close(proc.in);
+-	return finish_command(&proc);
+-}
+-
+ int cmd_commit(int argc, const char **argv, const char *prefix)
+ {
+ 	static struct wt_status s;
+@@ -1653,13 +1622,16 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	run_hook(get_index_file(), "post-commit", NULL);
+ 	if (amend && !no_post_rewrite) {
+ 		struct notes_rewrite_cfg *cfg;
++		struct rewritten rewrite;
++		memset(&rewrite, 0, sizeof(rewrite));
+ 		cfg = init_copy_notes_for_rewrite("amend");
+ 		if (cfg) {
+ 			/* we are amending, so current_head is not NULL */
+ 			copy_note_for_rewrite(cfg, current_head->object.sha1, sha1);
+ 			finish_copy_notes_for_rewrite(cfg, "Notes added by 'git commit --amend'");
+ 		}
+-		run_rewrite_hook(current_head->object.sha1, sha1);
++		add_rewritten(&rewrite, current_head->object.sha1, sha1);
++		run_rewrite_hook(&rewrite, "amend");
+ 	}
+ 	if (!quiet)
+ 		print_summary(prefix, sha1, !current_head);
 diff --git a/rewrite.c b/rewrite.c
-index 4dddcd9..4f95094 100644
+index 2793688..c8efaa8 100644
 --- a/rewrite.c
 +++ b/rewrite.c
-@@ -2,6 +2,7 @@
+@@ -1,5 +1,6 @@
+ #include "cache.h"
  #include "rewrite.h"
- #include "run-command.h"
- #include "notes-utils.h"
-+#include "builtin.h"
++#include "run-command.h"
  
  void add_rewritten(struct rewritten *list, unsigned char *from, unsigned char *to)
  {
-diff --git a/sequencer.c b/sequencer.c
-index 46848c4..076bb9d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -22,6 +22,22 @@ const char sign_off_header[] = "Signed-off-by: ";
- static const char cherry_picked_prefix[] = "(cherry picked from commit ";
- static struct rewritten rewritten;
- 
-+static void finish(struct replay_opts *opts)
-+{
-+	const char *name;
-+
-+	if (opts->action != REPLAY_PICK)
-+		return;
-+
-+	name = opts->action_name ? opts->action_name : "cherry-pick";
-+
-+	if (!*name)
-+		return;
-+
-+	copy_rewrite_notes(&rewritten, name, "Notes added by 'git cherry-pick'");
-+	run_rewrite_hook(&rewritten, name);
-+}
-+
- static int is_rfc2822_line(const char *buf, int len)
- {
- 	int i;
-@@ -1033,6 +1049,8 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
- 		}
+@@ -69,3 +70,34 @@ void load_rewritten(struct rewritten *list, const char *file)
  	}
- 
-+	finish(opts);
-+
- 	/*
- 	 * Sequence of picks finished successfully; cleanup by
- 	 * removing the .git/sequencer directory
-@@ -1104,8 +1122,13 @@ static int sequencer_skip(struct replay_opts *opts)
- 
- static int single_pick(struct commit *cmit, struct replay_opts *opts)
- {
-+	int ret;
- 	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
--	return do_pick_commit(cmit, opts);
-+	ret = do_pick_commit(cmit, opts);
-+	if (ret)
-+		return ret;
-+	finish(opts);
-+	return 0;
+ 	strbuf_release(&buf);
  }
++
++int run_rewrite_hook(struct rewritten *list, const char *name)
++{
++	struct strbuf buf = STRBUF_INIT;
++	struct child_process proc;
++	const char *argv[3];
++	int code, i;
++
++	argv[0] = find_hook("post-rewrite");
++	if (!argv[0])
++		return 0;
++
++	argv[1] = name;
++	argv[2] = NULL;
++
++	memset(&proc, 0, sizeof(proc));
++	proc.argv = argv;
++	proc.in = -1;
++	proc.stdout_to_stderr = 1;
++
++	code = start_command(&proc);
++	if (code)
++		return code;
++	for (i = 0; i < list->nr; i++) {
++		struct rewritten_item *item = &list->items[i];
++		strbuf_addf(&buf, "%s %s\n", sha1_to_hex(item->from), sha1_to_hex(item->to));
++	}
++	write_in_full(proc.in, buf.buf, buf.len);
++	close(proc.in);
++	return finish_command(&proc);
++}
+diff --git a/rewrite.h b/rewrite.h
+index 09e7222..fd00e66 100644
+--- a/rewrite.h
++++ b/rewrite.h
+@@ -14,5 +14,6 @@ struct rewritten {
+ void add_rewritten(struct rewritten *list, unsigned char *from, unsigned char *to);
+ int store_rewritten(struct rewritten *list, const char *file);
+ void load_rewritten(struct rewritten *list, const char *file);
++int run_rewrite_hook(struct rewritten *list, const char *name);
  
- int sequencer_pick_revisions(struct replay_opts *opts)
+ #endif
 -- 
 1.8.4-fc
