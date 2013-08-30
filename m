@@ -1,188 +1,143 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v6 08/28] builtin: move run_rewrite_hook() to rewrite.c
-Date: Fri, 30 Aug 2013 00:56:02 -0500
-Message-ID: <1377842182-18724-9-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v6 10/28] cherry-pick: add --action-name option
+Date: Fri, 30 Aug 2013 00:56:04 -0500
+Message-ID: <1377842182-18724-11-git-send-email-felipe.contreras@gmail.com>
 References: <1377842182-18724-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Martin von Zweigbergk <martinvonz@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 30 08:01:36 2013
+X-From: git-owner@vger.kernel.org Fri Aug 30 08:01:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFHm2-0007Jh-1R
+	id 1VFHm2-0007Jh-IC
 	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 08:01:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755583Ab3H3GBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 02:01:24 -0400
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:37853 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755466Ab3H3GBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Aug 2013 02:01:21 -0400
-Received: by mail-ob0-f170.google.com with SMTP id eh20so1493458obb.29
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 23:01:20 -0700 (PDT)
+	id S1755631Ab3H3GB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 02:01:28 -0400
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:62144 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755466Ab3H3GB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 02:01:26 -0400
+Received: by mail-oa0-f48.google.com with SMTP id o17so1766955oag.7
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 23:01:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=S8zFzVyPGayH9EZupIOo+9dKcb0PVxFHD95dZmJ+Htc=;
-        b=kpzOn5Yz+hVBewJLw4bAP5X5TPmq6kYdtiNffefjDgvRj6a8w1CuWl1xF9BCzGZWxy
-         xFEozpo2BG3NrLmkYNhg/lMzPixPt350JCgICXLONkhwRR5M6BzG8kLUlo9xIxor3n3E
-         ekZ6MwhyenT8xvMbvdlwxI1njj07oLy+douizm7elOtxqEuctWRva0rtfqqgCp0NcFor
-         QfO8UqhgRGjF9hiQczyMW+O8kWLgkxD4Y5uG1+UdFkj6jOLaXSXofW0tP8CD+BQHt3PI
-         hwtk1SpTxqvGjMQPFvHsSxu0O1NF3xw3f37mkXhJe4qFnqDMmusQauMxzJMGR2TxsKJW
-         9Eyg==
-X-Received: by 10.60.52.81 with SMTP id r17mr5654000oeo.3.1377842480616;
-        Thu, 29 Aug 2013 23:01:20 -0700 (PDT)
+        bh=Pe/Q7bJVe/BXhFhYfU6q/u1twMee15r4lp5fmqBMdEA=;
+        b=PNmgtJ1syVDrNlSSlSx/VT3a9jOUsUFU6Jo1Drmxr1Le9Oc556hqQYMcCLMuG75UB1
+         h//EmRqUvzLZ9mYC2dlvFexT1Gvm1RrjMdKCKfdWVrwhoFzZjW3T4Ng3tlkiXGrENbcM
+         9B1HuRWKOMllp1En5M7c2uro/Vm2iZu4/Tj8wdUHWq0lv4Iuy+ViDi5fPgPqxKBhdIy6
+         TgJXTqLuV12rfyEErDLOlsSbmA/SaMFkzIGGZS/WOtge5UJBP1cRA/LJOEggraOAQ233
+         W++vnjD+iK1X9F0yZvlx3gpj0GfKB3QN+x16/sQfxzYg0I7om9R9lc+yFQHslii/BQtl
+         rCpg==
+X-Received: by 10.60.60.5 with SMTP id d5mr5652710oer.0.1377842485777;
+        Thu, 29 Aug 2013 23:01:25 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id s9sm32420840obu.4.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id z5sm35755452obg.13.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 23:01:19 -0700 (PDT)
+        Thu, 29 Aug 2013 23:01:24 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1377842182-18724-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233405>
 
-And use struct rewrite.
+So it can be used by other tools (e.g. git rebase), and the right action
+is passed to the hooks and notes rewrite stuff.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/commit.c | 38 +++++---------------------------------
- rewrite.c        | 32 ++++++++++++++++++++++++++++++++
- rewrite.h        |  1 +
- 3 files changed, 38 insertions(+), 33 deletions(-)
+ builtin/revert.c           | 2 ++
+ git-rebase--interactive.sh | 4 ++--
+ sequencer.c                | 6 +++++-
+ sequencer.h                | 2 ++
+ 4 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 10acc53..7bfe9d0 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -30,6 +30,7 @@
- #include "column.h"
- #include "sequencer.h"
- #include "notes-utils.h"
-+#include "rewrite.h"
+diff --git a/builtin/revert.c b/builtin/revert.c
+index d3ae2c4..ca28e52 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -124,6 +124,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 		OPT_END(),
+ 		OPT_END(),
+ 		OPT_END(),
++		OPT_END(),
+ 	};
  
- static const char * const builtin_commit_usage[] = {
- 	N_("git commit [options] [--] <pathspec>..."),
-@@ -1386,38 +1387,6 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 	return git_status_config(k, v, s);
+ 	if (opts->action == REPLAY_PICK) {
+@@ -134,6 +135,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 			OPT_BOOLEAN(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
+ 			OPT_BOOLEAN(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
+ 			OPT_BOOLEAN(0, "skip-empty", &opts->skip_empty, N_("skip empty commits")),
++			OPT_STRING(0, "action-name", &opts->action_name, N_("name"), N_("action name")),
+ 			OPT_END(),
+ 		};
+ 		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 83d6d46..e8143ae 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -251,7 +251,7 @@ pick_one () {
+ 
+ 	test -d "$rewritten" &&
+ 		pick_one_preserving_merges "$@" && return
+-	output eval git cherry-pick "$strategy_args" $empty_args $ff "$@"
++	output eval git cherry-pick "--action-name ''" "$strategy_args" $empty_args $ff "$@"
  }
  
--static int run_rewrite_hook(const unsigned char *oldsha1,
--			    const unsigned char *newsha1)
--{
--	/* oldsha1 SP newsha1 LF NUL */
--	static char buf[2*40 + 3];
--	struct child_process proc;
--	const char *argv[3];
--	int code;
--	size_t n;
--
--	argv[0] = find_hook("post-rewrite");
--	if (!argv[0])
--		return 0;
--
--	argv[1] = "amend";
--	argv[2] = NULL;
--
--	memset(&proc, 0, sizeof(proc));
--	proc.argv = argv;
--	proc.in = -1;
--	proc.stdout_to_stderr = 1;
--
--	code = start_command(&proc);
--	if (code)
--		return code;
--	n = snprintf(buf, sizeof(buf), "%s %s\n",
--		     sha1_to_hex(oldsha1), sha1_to_hex(newsha1));
--	write_in_full(proc.in, buf, n);
--	close(proc.in);
--	return finish_command(&proc);
--}
--
- int cmd_commit(int argc, const char **argv, const char *prefix)
- {
- 	static struct wt_status s;
-@@ -1653,13 +1622,16 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	run_hook(get_index_file(), "post-commit", NULL);
- 	if (amend && !no_post_rewrite) {
- 		struct notes_rewrite_cfg *cfg;
-+		struct rewritten rewrite;
-+		memset(&rewrite, 0, sizeof(rewrite));
- 		cfg = init_copy_notes_for_rewrite("amend");
- 		if (cfg) {
- 			/* we are amending, so current_head is not NULL */
- 			copy_note_for_rewrite(cfg, current_head->object.sha1, sha1);
- 			finish_copy_notes_for_rewrite(cfg, "Notes added by 'git commit --amend'");
- 		}
--		run_rewrite_hook(current_head->object.sha1, sha1);
-+		add_rewritten(&rewrite, current_head->object.sha1, sha1);
-+		run_rewrite_hook(&rewrite, "amend");
- 	}
- 	if (!quiet)
- 		print_summary(prefix, sha1, !current_head);
-diff --git a/rewrite.c b/rewrite.c
-index 2793688..c8efaa8 100644
---- a/rewrite.c
-+++ b/rewrite.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "rewrite.h"
-+#include "run-command.h"
+ pick_one_preserving_merges () {
+@@ -361,7 +361,7 @@ pick_one_preserving_merges () {
+ 			echo "$sha1 $(git rev-parse HEAD^0)" >> "$rewritten_list"
+ 			;;
+ 		*)
+-			output eval git cherry-pick "$strategy_args" "$@" ||
++			output eval git cherry-pick "--action-name ''" "$strategy_args" "$@" ||
+ 				die_with_patch $sha1 "Could not pick $sha1"
+ 			;;
+ 		esac
+diff --git a/sequencer.c b/sequencer.c
+index 56d791f..46848c4 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -829,7 +829,9 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
+ 	else if (!strcmp(key, "options.strategy-option")) {
+ 		ALLOC_GROW(opts->xopts, opts->xopts_nr + 1, opts->xopts_alloc);
+ 		opts->xopts[opts->xopts_nr++] = xstrdup(value);
+-	} else
++	} else if (!strcmp(key, "options.action-name"))
++		git_config_string(&opts->action_name, key, value);
++	else
+ 		return error(_("Invalid key: %s"), key);
  
- void add_rewritten(struct rewritten *list, unsigned char *from, unsigned char *to)
- {
-@@ -69,3 +70,34 @@ void load_rewritten(struct rewritten *list, const char *file)
+ 	if (!error_flag)
+@@ -1006,6 +1008,8 @@ static void save_opts(struct replay_opts *opts)
+ 							"options.strategy-option",
+ 							opts->xopts[i], "^$", 0);
  	}
- 	strbuf_release(&buf);
++	if (opts->action_name)
++		git_config_set_in_file(opts_file, "options.action-name", opts->action_name);
  }
-+
-+int run_rewrite_hook(struct rewritten *list, const char *name)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct child_process proc;
-+	const char *argv[3];
-+	int code, i;
-+
-+	argv[0] = find_hook("post-rewrite");
-+	if (!argv[0])
-+		return 0;
-+
-+	argv[1] = name;
-+	argv[2] = NULL;
-+
-+	memset(&proc, 0, sizeof(proc));
-+	proc.argv = argv;
-+	proc.in = -1;
-+	proc.stdout_to_stderr = 1;
-+
-+	code = start_command(&proc);
-+	if (code)
-+		return code;
-+	for (i = 0; i < list->nr; i++) {
-+		struct rewritten_item *item = &list->items[i];
-+		strbuf_addf(&buf, "%s %s\n", sha1_to_hex(item->from), sha1_to_hex(item->to));
-+	}
-+	write_in_full(proc.in, buf.buf, buf.len);
-+	close(proc.in);
-+	return finish_command(&proc);
-+}
-diff --git a/rewrite.h b/rewrite.h
-index 09e7222..fd00e66 100644
---- a/rewrite.h
-+++ b/rewrite.h
-@@ -14,5 +14,6 @@ struct rewritten {
- void add_rewritten(struct rewritten *list, unsigned char *from, unsigned char *to);
- int store_rewritten(struct rewritten *list, const char *file);
- void load_rewritten(struct rewritten *list, const char *file);
-+int run_rewrite_hook(struct rewritten *list, const char *name);
  
- #endif
+ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
+diff --git a/sequencer.h b/sequencer.h
+index efec1b5..6dfffaa 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -48,6 +48,8 @@ struct replay_opts {
+ 
+ 	/* Only used by REPLAY_NONE */
+ 	struct rev_info *revs;
++
++	const char *action_name;
+ };
+ 
+ int sequencer_pick_revisions(struct replay_opts *opts);
 -- 
 1.8.4-fc
