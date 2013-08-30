@@ -1,156 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] check-ignore: Add option to ignore index contents
-Date: Thu, 29 Aug 2013 17:57:28 -0700
-Message-ID: <7vob8gj8qv.fsf@alter.siamese.dyndns.org>
-References: <20130829224652.GA13621@opensourcesolutions.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] has_sha1_file: re-check pack directory before giving up
+Date: Thu, 29 Aug 2013 21:10:53 -0400
+Message-ID: <20130830011052.GA21895@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Adam Spiers <git@adamspiers.org>
-To: Dave Williams <dave@opensourcesolutions.co.uk>
-X-From: git-owner@vger.kernel.org Fri Aug 30 02:57:43 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 30 03:11:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFD1w-00031V-Hg
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 02:57:41 +0200
+	id 1VFDEq-0002AA-7n
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 03:11:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754286Ab3H3A5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Aug 2013 20:57:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60261 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752103Ab3H3A5e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Aug 2013 20:57:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5779633B65;
-	Fri, 30 Aug 2013 00:57:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VqucbwJ1fnv4eyQQA7Hcjt36YKY=; b=o6Jwhx
-	V+nMKnGQfU/mSVXNIpT1RtizuphECxBWJrYCoQBxYqn7pa2iYRebGg3wqur9DBdO
-	9mHIyxmsBRsyzyD+fylOuCYYW2nPkNdZTUSLIpisSZCCy5vPYSyBsZhstud6wMF0
-	SU/KPvBEGLlzLr1lmM5HBkcrwqFLEAZuRbY/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J33zgEFFhE6E0NRC6gkwQrhU63eKJOEu
-	xY3gKD801HKgIbRWtCWUWUODDx9CwdzFVirJ93YwpM1Q2xin58Wd3EMRlK//rNkk
-	byHGiE2FQO/Pr/7CdaJ3/1Cg+J7nwzQ43pWCbnDyL3y90UgSVqKfa575tiFfWDbH
-	REzOxAx35es=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A72C33B64;
-	Fri, 30 Aug 2013 00:57:31 +0000 (UTC)
-Received: from pobox.com (unknown [50.161.4.97])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 57BE933B63;
-	Fri, 30 Aug 2013 00:57:30 +0000 (UTC)
-In-Reply-To: <20130829224652.GA13621@opensourcesolutions.co.uk> (Dave
-	Williams's message of "Thu, 29 Aug 2013 23:46:52 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2590DCFE-110F-11E3-BA65-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753395Ab3H3BK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Aug 2013 21:10:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41706 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753113Ab3H3BKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Aug 2013 21:10:55 -0400
+Received: (qmail 24804 invoked by uid 102); 30 Aug 2013 01:10:55 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 29 Aug 2013 20:10:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Aug 2013 21:10:53 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233385>
 
-Dave Williams <dave@opensourcesolutions.co.uk> writes:
+When we read a sha1 file, we first look for a packed
+version, then a loose version, and then re-check the pack
+directory again before concluding that we cannot find it.
+This lets us handle a process that is writing to the
+repository simultaneously (e.g., receive-pack writing a new
+pack followed by a ref update, or git-repack packing
+existing loose objects into a new pack).
 
-> check-ignore currently shows how .gitignore rules would treat untracked
-> paths. Tracked paths do not generate useful output.  This prevents
-> debugging of why a path became tracked unexpectedly unless that path is
-> first removed from the index with git rm --cached <path>
->
-> This option (-i, --ignore-index) simply by-passes the check for the path
-> being in the index and hence allows tracked path to be checked too.
->
-> Whilst this behaviour deviates from the characteristics of git add and
-> git status its use case is unlikely to cause any user confusion.
->
-> Signed-off-by: Dave Williams <dave@opensourcesolutions.co.uk>
-> ---
->  Documentation/git-check-ignore.txt |  6 ++++++
->  builtin/check-ignore.c             | 10 +++++++---
->  2 files changed, 13 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
-> index d2df487..bb878ff 100644
-> --- a/Documentation/git-check-ignore.txt
-> +++ b/Documentation/git-check-ignore.txt
-> @@ -45,6 +45,12 @@ OPTIONS
->  	not be possible to distinguish between paths which match a
->  	pattern and those which don't.
->  
-> +-i, --ignore-index::
-> +	Don't look in the index when undertaking the checks. This means
-> +	the results deviate from those seen by git add and git status
-> +	but is useful when understanding why a path became tracked by
-> +	e.g. git add . and was not ignored as expected by the rules.
+However, we do not do the same trick with has_sha1_file; we
+only check the packed objects once, followed by loose
+objects. This means that we might incorrectly report that we
+do not have an object, even though we could find it if we
+simply re-checked the pack directory.
 
-Please think twice after you write "This means", "What this means
-is", etc. to see if you can get rid of sentence before that, which
-needed such clarification.  If the sentence can stand on its own,
-and what follows "This means" is also useful information, then it is
-a sign that "What this means is" is better rephrased as "Note that".
+By itself, this is usually not a big deal. The other process
+is running simultaneously, so we may run has_sha1_file
+before it writes, anyway. It is a race whether we see the
+object or not.  However, we may also see other things
+the writing process has done (like updating refs); and in
+that case, we must be able to also see the new objects.
 
-Also, I think `git add .` should be quoted to make it clear where
-the sample command begins and ends.  Using a pair of `` would be the
-most appropriate here.
+For example, imagine we are doing a for_each_ref iteration,
+and somebody simultaneously pushes. Receive-pack may write
+the pack and update a ref after we have examined the
+objects/pack directory, but before the iteration gets to the
+updated ref. When we do finally see the updated ref,
+for_each_ref will call has_sha1_file to check whether the
+ref is broken. If has_sha1_file returns the wrong answer, we
+erroneously will think that the ref is broken.
 
->  OUTPUT
->  ------
->  
-> diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-> index 4a8fc70..c8f6ae1 100644
-> --- a/builtin/check-ignore.c
-> +++ b/builtin/check-ignore.c
-> @@ -5,7 +5,7 @@
->  #include "pathspec.h"
->  #include "parse-options.h"
->  
-> -static int quiet, verbose, stdin_paths, show_non_matching;
-> +static int quiet, verbose, stdin_paths, show_non_matching, ignore_index;
->  static const char * const check_ignore_usage[] = {
->  "git check-ignore [options] pathname...",
->  "git check-ignore [options] --stdin < <list-of-paths>",
-> @@ -24,6 +24,8 @@ static const struct option check_ignore_options[] = {
->  		    N_("input paths are terminated by a null character")),
->  	OPT_BOOLEAN('n', "non-matching", &show_non_matching,
->  		    N_("show non-matching input paths")),
-> +	OPT_BOOLEAN('i', "ignore-index", &ignore_index,
-> +		    N_("ignore index when checking")),
->  	OPT_END()
->  };
->  
-> @@ -82,7 +84,9 @@ static int check_ignore(struct dir_struct *dir,
->  	 * should not be ignored, in order to be consistent with
->  	 * 'git status', 'git add' etc.
->  	 */
-> -	seen = find_pathspecs_matching_against_index(pathspec);
-> +	if (!ignore_index) {
-> +		seen = find_pathspecs_matching_against_index(pathspec);
-> +	}
->  	for (i = 0; pathspec[i]; i++) {
->  		path = pathspec[i];
->  		full_path = prefix_path(prefix, prefix
-> @@ -90,7 +94,7 @@ static int check_ignore(struct dir_struct *dir,
->  		full_path = check_path_for_gitlink(full_path);
->  		die_if_path_beyond_symlink(full_path, prefix);
->  		exclude = NULL;
-> -		if (!seen[i]) {
-> +		if (ignore_index || !seen[i]) {
->  			exclude = last_exclude_matching(dir, full_path, &dtype);
->  		}
->  		if (!quiet && (exclude || show_non_matching))
+In the case of git-fsck, which uses the
+DO_FOR_EACH_INCLUDE_BROKEN flag, this will cause us to
+erroneously complain that the ref points to an invalid
+object. But for git-repack, which does not use that flag, we
+will skip the ref completely! So not only will we fail to
+process the new objects that the ref points to (which is
+acceptabale, since the processes are running simultaneously,
+and we might well do our whole repack before the other
+process updates the ref), but we will not see the ref at
+all. Its old objects may be omitted from the pack (and even
+lost, if --unpack-unreachable is used with an expiration
+time).
 
-Hmph, if ignoring what is in the index is what the new feature wants
-to do, why does it even need to touch check_ignore() function at all
-and add a global variable ignore_index to keep track of that state?
+There's no test included here, because the success case is
+two processes running simultaneously forever. But you can
+replicate the issue with:
 
-Isn't it sufficient to skip the call to read_cache() when that
-option is given?
+  # base.sh
+  # run this in one terminal; it creates and pushes
+  # repeatedly to a repository
+  git init parent &&
+  (cd parent &&
 
-You would need to add tests for this, too.
+    # create a base commit that will trigger us looking at
+    # the objects/pack directory before we hit the updated ref
+    echo content >file &&
+    git add file &&
+    git commit -m base &&
 
-Thanks.
+    # set the unpack limit abnormally low, which
+    # lets us simulate full-size pushes using tiny ones
+    git config receive.unpackLimit 1
+  ) &&
+  git clone parent child &&
+  cd child &&
+  n=0 &&
+  while true; do
+    echo $n >file && git add file && git commit -m $n &&
+    git push origin HEAD:refs/remotes/child/master &&
+    n=$(($n + 1))
+  done
+
+  # fsck.sh
+  # now run this simultaneously in another terminal; it
+  # repeatedly fscks, looking for us to consider the
+  # newly-pushed ref broken.
+  cd parent &&
+  while true; do
+    broken=`git fsck 2>&1 | grep remotes/child`
+    if test -n "$broken"; then
+      echo $broken
+      exit 1
+    fi
+  done
+
+Without this patch, the fsck loop fails within a few seconds
+(and almost instantly if the test repository actually has a
+large number of refs). With it, the two can run
+indefinitely.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I observed this being triggered in practice on a repository with a large
+number of refs. Clients complained of refs being reported as bogus by
+the server and being omitted (because of upload-pack missing the ref in
+the advertisement), and git-fsck would randomly report breakages (that
+would then go away if run again). I didn't observe any object loss as I
+theorized above, but I'm pretty sure it's possible (ironically, _not_
+the new objects, because they will be newer than the prune time, but the
+old objects they are based on).
+
+Note that this works against the optimization in b495697 (fetch-pack:
+avoid repeatedly re-scanning pack directory, 2013-01-26), which uses
+has_sha1_file specifically to avoid the re-scan. But it is much more
+important to be correct here, so I'd like to start with this fix. For
+the use case in b495697, we can have a "quick but occasionally wrong"
+version.
+
+ sha1_file.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 8e27db1..06784fb 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2925,7 +2925,10 @@ int has_sha1_file(const unsigned char *sha1)
+ 
+ 	if (find_pack_entry(sha1, &e))
+ 		return 1;
+-	return has_loose_object(sha1);
++	if (has_loose_object(sha1))
++		return 1;
++	reprepare_packed_git();
++	return find_pack_entry(sha1, &e);
+ }
+ 
+ static void check_tree(const void *buf, size_t size)
+-- 
+1.8.4.2.g87d4a77
