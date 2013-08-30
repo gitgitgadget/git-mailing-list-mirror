@@ -1,101 +1,115 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: Officially start moving to the term 'staging area'
-Date: Fri, 30 Aug 2013 07:16:34 +0200
-Message-ID: <b677f1ae-662f-4728-b625-189bc392c74d@email.android.com>
-References: <20130829180129.GA4880@nysa> <xmqqeh9c4a2t.fsf@gitster.dls.corp.google.com> <CAM9Z-nmXPgfbXezbORb=NCqQuW4p3Dka+bHVdt_n7Sh=jehY7A@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] revision: add --except option
+Date: Fri, 30 Aug 2013 00:40:25 -0500
+Message-ID: <CAMP44s2=S=6_DAVuiG+0iO+rxQuPqqsL8fEtzGkSxJfaBu3hdQ@mail.gmail.com>
+References: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Scott Chacon <schacon@gmail.com>
-To: Drew Northup <n1xim.email@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 30 07:16:55 2013
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 30 07:40:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFH4m-000730-AL
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 07:16:52 +0200
+	id 1VFHRh-0003Rt-65
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 07:40:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754298Ab3H3FQs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Aug 2013 01:16:48 -0400
-Received: from mail-we0-f179.google.com ([74.125.82.179]:51670 "EHLO
-	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753440Ab3H3FQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Aug 2013 01:16:47 -0400
-Received: by mail-we0-f179.google.com with SMTP id t58so1199040wes.10
-        for <git@vger.kernel.org>; Thu, 29 Aug 2013 22:16:46 -0700 (PDT)
+	id S1752612Ab3H3Fk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 01:40:29 -0400
+Received: from mail-la0-f49.google.com ([209.85.215.49]:45259 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752567Ab3H3Fk2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 01:40:28 -0400
+Received: by mail-la0-f49.google.com with SMTP id ev20so1160650lab.36
+        for <git@vger.kernel.org>; Thu, 29 Aug 2013 22:40:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=Hs6mkZq5p6cQBgX1H7tqt3MljrvHt0PXl9Y21D3TXbc=;
-        b=vXCHGwAkSiqx2MDKhFAvfmyNxc36OTSnNFBebaPub58meX/uxNx10rPIg/YFMWlAkx
-         g4dVrG5rfHRC5Id5YhDNAwECWGFp6R4OqO+JoQ+F71HQ4ChvI35+2iyzQfZrdy0HfGP0
-         oNIdTuUVHvmS2jDooWGHsPcWQJzj2bI5Cj/I/o+kg6joVg9MGxRQGkhIuIDP3yClxJOp
-         zJG917Kj9Kj3mhXYQFU/PgDpPbvOAssdinseg61n31m9Umup2hEzRc8PisKDWpH1q9aq
-         FfGk5c9RufbnhpdgKwyzh6kM68qZQEjbzd4SVMYAl4V6M+U542pouQ+k+/p6Kxpv0u+Q
-         oUmQ==
-X-Received: by 10.180.8.42 with SMTP id o10mr925565wia.0.1377839806360;
-        Thu, 29 Aug 2013 22:16:46 -0700 (PDT)
-Received: from [100.106.110.201] ([46.77.124.201])
-        by mx.google.com with ESMTPSA id i3sm1324495wiw.7.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 29 Aug 2013 22:16:45 -0700 (PDT)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAM9Z-nmXPgfbXezbORb=NCqQuW4p3Dka+bHVdt_n7Sh=jehY7A@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Rp8NBP9VXM08scLSgtV3cNV34MHqDNCnlWiDhr/G0L4=;
+        b=iniplDvnL96rf5qIcENRYxsAkX3bM8WDUQ996zNN3YcDGZ5+lM0wT2DH+e2KxWiedd
+         79ECb1aEQretkBEhc92wuftOec3x2G1aZmhIh7YIxmq06cjve2cUtCq2zlJuGXm66We7
+         lzYUbc0LeSfsh09H2WN5YHqCfZkjNdRH0FbSjcAq6+yx8SzjN337JGSgwstaC4/zp3qH
+         LuBE6trUkfseRnNtZhroMa3At+GBj8sMUQ9HVjd7b3JrFtrySXMhQDeD4IgN4lamZ/4a
+         Wpn1MppWR3+635x4W3P8iN7d9Z2xi26jDFBMIQTAj33m+ExrNyE0dFL214dP9yCA6CCv
+         LVNg==
+X-Received: by 10.112.168.170 with SMTP id zx10mr6420429lbb.0.1377841225707;
+ Thu, 29 Aug 2013 22:40:25 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Thu, 29 Aug 2013 22:40:25 -0700 (PDT)
+In-Reply-To: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233394>
 
-Drew Northup <n1xim.email@gmail.com> napisa=C5=82:
->I agree with Junio. This effort is better spent making the
->documentation clearer and more succinct. The reality is that a user
->needs to build a model in their mind of what they are doing which maps
->enough (completely is not required) to what is actually going on to
->get work done. If the documentation or the instruction is getting in
->the way of that in the name of simplifying the presentation then the
->presentation is wrong.
-
-Why do you think the "stage"  model do not map enough?=20
-
-
->We add content snapshots to the index of content (creating
->"temporary"--they will be garbage collected eventually if they become
->orphans--objects into the store at the same time). We build commits
->from those snapshots (in whole or in part, typically only using the
->most recent snapshots of new things added to the index) and save those
->in the object store with the content and tree objects. Sometimes we
->create tag objects to record something special about commits, trees,
->and content blobs.
-
-The above can be rewritten to use the 'staging area' concept just fine.=
- And I don't think you should say to inexperienced users things like 't=
-ree objects'.
-
-A good exercise would be to take documentation of some command and show=
- that it can or can't be rewritten to use the other term.=20
-
-Instead of 'indexing' or 'staging' content you could also use term 'mar=
-k'. You mark content to add, for removal, you can diff it or revert.=20
-
-
-
+On Fri, Aug 30, 2013 at 12:00 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> So that it's possible to remove certain refs from the list without
+> removing the objects that are referenced by other refs.
 >
->That's the real model (with some rough edges). Explaining what that
->has to do with distributed version control is the hard part.
+> For example this repository:
+>
+>   * 374e8dd (crap) crap
+>   * 4cbbf7b (test) two
+>   * d025ae0 (HEAD, master) one
+>
+> When using '--branches --except crap':
+>
+>   * 4cbbf7b (test) two
+>   * d025ae0 (HEAD, master) one
+>
+> But when using '--branches --not crap' nothing will come out.
 
+Doesn't work with certain refs, here's a fix:
 
---=20
-Piotr Krukowiecki=20
+diff --git a/revision.c b/revision.c
+index 375adab..25564c1 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2575,6 +2575,13 @@ void reset_revision_walk(void)
+        clear_object_flags(SEEN | ADDED | SHOWN);
+ }
+
++static int refcmp(const char *a, const char *b)
++{
++       a = prettify_refname(a);
++       b = prettify_refname(b);
++       return strcmp(a, b);
++}
++
+ int prepare_revision_walk(struct rev_info *revs)
+ {
+        int nr = revs->pending.nr;
+@@ -2591,7 +2598,7 @@ int prepare_revision_walk(struct rev_info *revs)
+                for (i = 0; i < revs->cmdline.nr; i++) {
+                        struct rev_cmdline_entry *ce;
+                        ce = &revs->cmdline.rev[i];
+-                       if ((ce->flags & SKIP) && !strcmp(ce->name, e->name))
++                       if ((ce->flags & SKIP) && !refcmp(ce->name, e->name))
+                                goto next;
+                }
+                if (commit) {
+diff --git a/t/t6112-rev-list-except.sh b/t/t6112-rev-list-except.sh
+index b8f9a61..a295f43 100755
+--- a/t/t6112-rev-list-except.sh
++++ b/t/t6112-rev-list-except.sh
+@@ -32,4 +32,11 @@ test_expect_success 'rev-list --except with extra' '
+        test_cmp expect actual
+ '
+
++test_expect_success 'rev-list --except with full ref' '
++
++       git rev-list --topo-order --branches --except refs/heads/merge
+> actual &&
++       git rev-list --topo-order test > expect &&
++       test_cmp expect actual
++'
++
+ test_done
+
+-- 
+Felipe Contreras
