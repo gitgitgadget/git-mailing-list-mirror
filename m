@@ -1,7 +1,7 @@
 From: Brad King <brad.king@kitware.com>
-Subject: [PATCH v2 8/8] update-ref: add test cases covering --stdin signature
-Date: Fri, 30 Aug 2013 14:12:06 -0400
-Message-ID: <944b2af0ff064577734fd13cf40039fa4ebc10ec.1377885441.git.brad.king@kitware.com>
+Subject: [PATCH v2 7/8] update-ref: support multiple simultaneous updates
+Date: Fri, 30 Aug 2013 14:12:05 -0400
+Message-ID: <ba564b6566b54d780a24355ca893294d814d8d24.1377885441.git.brad.king@kitware.com>
 References: <cover.1377784597.git.brad.king@kitware.com> <cover.1377885441.git.brad.king@kitware.com>
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
@@ -11,246 +11,225 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFTCs-0007jF-IJ
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 20:14:02 +0200
+	id 1VFTCt-0007jF-44
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 20:14:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756786Ab3H3SNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 14:13:52 -0400
-Received: from tripoint.kitware.com ([66.194.253.20]:50952 "EHLO
+	id S1756822Ab3H3SNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 14:13:53 -0400
+Received: from tripoint.kitware.com ([66.194.253.20]:50951 "EHLO
 	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756735Ab3H3SNr (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1756725Ab3H3SNr (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 30 Aug 2013 14:13:47 -0400
 Received: by vesper.kitware.com (Postfix, from userid 1000)
-	id E27549FB93; Fri, 30 Aug 2013 14:12:06 -0400 (EDT)
+	id DE64A9FB90; Fri, 30 Aug 2013 14:12:06 -0400 (EDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <cover.1377885441.git.brad.king@kitware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233455>
 
-Extend t/t1400-update-ref.sh to cover cases using the --stdin option.
+Add a --stdin signature to read update instructions from standard input
+and apply multiple ref updates together.  Use an input format that
+supports any update that could be specified via the command-line,
+including object names like 'branch:path with space'.
 
 Signed-off-by: Brad King <brad.king@kitware.com>
 ---
- t/t1400-update-ref.sh |  206 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 206 insertions(+)
+ Documentation/git-update-ref.txt |   21 ++++++-
+ builtin/update-ref.c             |  121 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 140 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index e415ee0..9fd03fc 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -302,4 +302,210 @@ test_expect_success \
- 	'git cat-file blob master@{2005-05-26 23:42}:F (expect OTHER)' \
- 	'test OTHER = $(git cat-file blob "master@{2005-05-26 23:42}:F")'
+diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
+index 0df13ff..295d0bb 100644
+--- a/Documentation/git-update-ref.txt
++++ b/Documentation/git-update-ref.txt
+@@ -8,7 +8,7 @@ git-update-ref - Update the object name stored in a ref safely
+ SYNOPSIS
+ --------
+ [verse]
+-'git update-ref' [-m <reason>] (-d <ref> [<oldvalue>] | [--no-deref] <ref> <newvalue> [<oldvalue>])
++'git update-ref' [-m <reason>] (-d <ref> [<oldvalue>] | [--no-deref] <ref> <newvalue> [<oldvalue>] | --stdin)
  
-+a=refs/heads/a
-+b=refs/heads/b
-+c=refs/heads/c
-+z=0000000000000000000000000000000000000000
-+e="''"
+ DESCRIPTION
+ -----------
+@@ -58,6 +58,25 @@ archive by creating a symlink tree).
+ With `-d` flag, it deletes the named <ref> after verifying it
+ still contains <oldvalue>.
+ 
++With `--stdin`, update-ref reads instructions from standard input and
++performs all modifications together.  Empty lines are ignored.
++Each non-empty line is parsed as whitespace-separated arguments.
++Use single-quotes to enclose whitespace and backslashes and an
++unquoted backslash to escape a single quote.  Specify updates with
++lines of the form:
 +
-+test_expect_success 'stdin works with no input' '
-+	rm -f stdin &&
-+	touch stdin &&
-+	git update-ref --stdin < stdin &&
-+	git rev-parse --verify -q $m
-+'
++	[--no-deref] [--] <ref> <newvalue> [<oldvalue>]
 +
-+test_expect_success 'stdin fails with bad line lines' '
-+	echo " " > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: no ref on line:  " err &&
-+	echo "--" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: no ref on line: --" err &&
-+	echo "--bad-option" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: unknown option --bad-option" err &&
-+	echo "-\'"'"' $a $m" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: unknown option -'"'"'" err &&
-+	echo "~a $m" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: invalid ref format on line: ~a $m" err &&
-+	echo "$a '"'"'master" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: unterminated single-quote: '"'"'master" err &&
-+	echo "$a \master" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: unquoted backslash not escaping single-quote: \\\\master" err &&
-+	echo "$a $m $m $m" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: too many arguments on line: $a $m $m $m" err &&
-+	echo "$a" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: missing new value on line: $a" err
-+'
++Lines of any other format or a repeated <ref> produce an error.
++Specify a zero <newvalue> to delete a ref and/or a zero <oldvalue>
++to make sure that a ref not exist.  Use either 40 "0" or the
++empty string (written as '') to specify a zero value.
 +
-+test_expect_success 'stdin fails with duplicate refs' '
-+	echo "$a $m" > stdin &&
-+	echo "$b $m" >> stdin &&
-+	echo "$a $m" >> stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: Multiple updates for ref '"'"'$a'"'"' not allowed." err
-+'
++If all <ref>s can be locked with matching <oldvalue>s
++simultaneously all modifications are performed.  Otherwise, no
++modifications are performed.  Note that while each individual
++<ref> is updated or deleted atomically, a concurrent reader may
++still see a subset of the modifications.
+ 
+ Logging Updates
+ ---------------
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 51d2684..eb8db85 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -6,19 +6,129 @@
+ static const char * const git_update_ref_usage[] = {
+ 	N_("git update-ref [options] -d <refname> [<oldval>]"),
+ 	N_("git update-ref [options]    <refname> <newval> [<oldval>]"),
++	N_("git update-ref [options] --stdin"),
+ 	NULL
+ };
+ 
++static const char blank[] = " \t\r\n";
 +
-+test_expect_success 'stdin create ref works with no old value' '
-+	echo "$a $m" > stdin &&
-+	git update-ref --stdin < stdin &&
-+	git rev-parse $m > expect &&
-+	git rev-parse $a > actual &&
-+	test_cmp expect actual
-+'
++static int updates_size;
++static int updates_count;
++static struct ref_update *updates;
 +
-+test_expect_success 'stdin create ref works with zero old value' '
-+	echo "$b $m $z" > stdin &&
-+	git update-ref --stdin < stdin &&
-+	git rev-parse $m > expect &&
-+	git rev-parse $b > actual &&
-+	test_cmp expect actual &&
-+	git update-ref -d $b &&
-+	echo "$b $m $e" > stdin &&
-+	git update-ref --stdin < stdin &&
-+	git rev-parse $m > expect &&
-+	git rev-parse $b > actual &&
-+	test_cmp expect actual
-+'
++static const char* update_refs_stdin_next_arg(const char* next,
++					      struct strbuf *arg)
++{
++	/* Skip leading whitespace: */
++	while (isspace(*next))
++		++next;
 +
-+test_expect_success 'stdin create ref fails with wrong old value' '
-+	echo "$c $m $m~1" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: Cannot lock the ref '"'"'$c'"'"'" err &&
-+	test_must_fail git rev-parse --verify -q $c
-+'
++	/* Return NULL when no argument is found: */
++	if (!*next)
++		return NULL;
 +
-+test_expect_success 'stdin create ref fails with bad old value' '
-+	echo "$c $m does-not-exist" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: invalid old value on line: $c $m does-not-exist" err &&
-+	test_must_fail git rev-parse --verify -q $c
-+'
++	/* Parse the argument: */
++	strbuf_reset(arg);
++	for (;;) {
++		char c = *next;
++		if (!c || isspace(c))
++			break;
++		++next;
++		if (c == '\'') {
++			size_t len = strcspn(next, "'");
++			if (!next[len])
++				die("unterminated single-quote: '%s", next);
++			strbuf_add(arg, next, len);
++			next += len + 1;
++			continue;
++		}
++		if (c == '\\') {
++			if (*next == '\'')
++				c = *next++;
++			else
++				die("unquoted backslash not escaping "
++				    "single-quote: \\%s", next);
++		}
++		strbuf_addch(arg, c);
++	}
++	return next;
++}
 +
-+test_expect_success 'stdin create ref fails with bad new value' '
-+	echo "$c does-not-exist" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: invalid new value on line: $c does-not-exist" err &&
-+	test_must_fail git rev-parse --verify -q $c
-+'
++static void update_refs_stdin(const char *line)
++{
++	int options = 1, flags = 0, argc = 0;
++	char *argv[3] = {0, 0, 0};
++	struct strbuf arg = STRBUF_INIT;
++	struct ref_update *update;
++	const char *next = line;
 +
-+test_expect_success 'stdin update ref works with right old value' '
-+	echo "$b $m~1 $m" > stdin &&
-+	git update-ref --stdin < stdin &&
-+	git rev-parse $m~1 > expect &&
-+	git rev-parse $b > actual &&
-+	test_cmp expect actual
-+'
++	/* Skip blank lines: */
++	if (!line[0])
++		return;
 +
-+test_expect_success 'stdin update ref fails with wrong old value' '
-+	echo "$b $m~1 $m" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: Cannot lock the ref '"'"'$b'"'"'" err &&
-+	git rev-parse $m~1 > expect &&
-+	git rev-parse $b > actual &&
-+	test_cmp expect actual
-+'
++	/* Parse arguments on this line: */
++	while ((next = update_refs_stdin_next_arg(next, &arg)) != NULL) {
++		if (options && arg.buf[0] == '-')
++			if (!strcmp(arg.buf, "--no-deref"))
++				flags |= REF_NODEREF;
++			else if (!strcmp(arg.buf, "--"))
++				options = 0;
++			else
++				die("unknown option %s", arg.buf);
++		else if (argc >= 3)
++			die("too many arguments on line: %s", line);
++		else {
++			argv[argc++] = xstrdup(arg.buf);
++			options = 0;
++		}
++	}
++	strbuf_release(&arg);
 +
-+test_expect_success 'stdin delete ref fails with wrong old value' '
-+	echo "$a $e $m~1" > stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: Cannot lock the ref '"'"'$a'"'"'" err &&
-+	git rev-parse $m > expect &&
-+	git rev-parse $a > actual &&
-+	test_cmp expect actual
-+'
++	/* Allocate and zero-init a struct ref_update: */
++	if (updates_count == updates_size) {
++		updates_size = updates_size ? (updates_size * 2) : 16;
++		updates = xrealloc(updates, sizeof(*updates) * updates_size);
++		memset(updates + updates_count, 0,
++		       sizeof(*updates) * (updates_size - updates_count));
++	}
++	update = &updates[updates_count++];
++	update->flags = flags;
 +
-+test_expect_success 'stdin update symref works with --no-deref' '
-+	git symbolic-ref TESTSYMREF $b &&
-+	echo "--no-deref TESTSYMREF $a $b" > stdin &&
-+	git update-ref --stdin < stdin &&
-+	git rev-parse TESTSYMREF > expect &&
-+	git rev-parse $a > actual &&
-+	test_cmp expect actual &&
-+	git rev-parse $m~1 > expect &&
-+	git rev-parse $b > actual &&
-+	test_cmp expect actual
-+'
++	/* Set the update ref_name: */
++	if (!argv[0])
++		die("no ref on line: %s", line);
++	if (check_refname_format(argv[0], REFNAME_ALLOW_ONELEVEL))
++		die("invalid ref format on line: %s", line);
++	update->ref_name = argv[0];
++	argv[0] = 0;
 +
-+test_expect_success 'stdin delete symref works with --no-deref' '
-+	git symbolic-ref TESTSYMREF $b &&
-+	echo "--no-deref TESTSYMREF $e $b" > stdin &&
-+	git update-ref --stdin < stdin &&
-+	test_must_fail git rev-parse --verify -q TESTSYMREF &&
-+	git rev-parse $m~1 > expect &&
-+	git rev-parse $b > actual &&
-+	test_cmp expect actual
-+'
++	/* Set the update new_sha1 and, if specified, old_sha1: */
++	if (!argv[1])
++		die("missing new value on line: %s", line);
++	if (*argv[1] && get_sha1(argv[1], update->new_sha1))
++		die("invalid new value on line: %s", line);
++	if (argv[2]) {
++		update->have_old = 1;
++		if (*argv[2] && get_sha1(argv[2], update->old_sha1))
++			die("invalid old value on line: %s", line);
++	}
 +
-+test_expect_success 'stdin delete ref works with right old value' '
-+	echo "$b $e $m~1" > stdin &&
-+	git update-ref --stdin < stdin &&
-+	test_must_fail git rev-parse --verify -q $b
-+'
++	while (argc > 0)
++		free(argv[--argc]);
++}
 +
-+test_expect_success 'stdin create refs works with some old values' '
-+	echo "$a $m" > stdin &&
-+	echo "$b $m $z" >> stdin &&
-+	echo "$c $z $z" >> stdin &&
-+	git update-ref --stdin < stdin &&
-+	git rev-parse $m > expect &&
-+	git rev-parse $a > actual &&
-+	test_cmp expect actual &&
-+	git rev-parse $b > actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git rev-parse --verify -q $c
-+'
+ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *refname, *oldval, *msg = NULL;
+ 	unsigned char sha1[20], oldsha1[20];
+-	int delete = 0, no_deref = 0, flags = 0;
++	int delete = 0, no_deref = 0, read_stdin = 0, flags = 0;
++	struct strbuf line = STRBUF_INIT;
+ 	struct option options[] = {
+ 		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
+ 		OPT_BOOLEAN('d', NULL, &delete, N_("delete the reference")),
+ 		OPT_BOOLEAN( 0 , "no-deref", &no_deref,
+ 					N_("update <refname> not the one it points to")),
++		OPT_BOOLEAN( 0 , "stdin", &read_stdin, N_("read updates from stdin")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -28,6 +138,15 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 	if (msg && !*msg)
+ 		die("Refusing to perform update with empty message.");
+ 
++	if (read_stdin) {
++		if (delete || no_deref || argc > 0)
++			usage_with_options(git_update_ref_usage, options);
++		while (strbuf_getline(&line, stdin, '\n') != EOF)
++			update_refs_stdin(line.buf);
++		strbuf_release(&line);
++		return update_refs(msg, updates, updates_count, DIE_ON_ERR);
++	}
 +
-+test_expect_success 'stdin update refs works with identity updates' '
-+	echo "" > stdin && # also test blank lines
-+	echo "$a $m $m" >> stdin &&
-+	echo "" >> stdin &&
-+	echo " '"'"'$b'"'"'  $m $m " >> stdin &&
-+	echo "" >> stdin &&
-+	echo "-- $c  $z  $e  " >> stdin &&
-+	echo "" >> stdin &&
-+	git update-ref --stdin < stdin &&
-+	git rev-parse $m > expect &&
-+	git rev-parse $a > actual &&
-+	test_cmp expect actual &&
-+	git rev-parse $b > actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git rev-parse --verify -q $c
-+'
-+
-+test_expect_success 'stdin update refs fails with wrong old value' '
-+	git update-ref $c $m &&
-+	echo "$a $m $m" > stdin &&
-+	echo "$b $m $m" >> stdin &&
-+	echo "$c $e $e" >> stdin &&
-+	test_must_fail git update-ref --stdin < stdin 2> err &&
-+	grep "fatal: Cannot lock the ref '"'"'$c'"'"'" err &&
-+	git rev-parse $m > expect &&
-+	git rev-parse $a > actual &&
-+	test_cmp expect actual &&
-+	git rev-parse $b > actual &&
-+	test_cmp expect actual &&
-+	git rev-parse $c > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'stdin delete refs works with packed and loose refs' '
-+	git pack-refs --all &&
-+	git update-ref $c $m~1 &&
-+	echo "$a $z $m" > stdin &&
-+	echo "$b $z $m" >> stdin &&
-+	echo "$c $e $m~1" >> stdin &&
-+	git update-ref --stdin < stdin &&
-+	test_must_fail git rev-parse --verify -q $a &&
-+	test_must_fail git rev-parse --verify -q $b &&
-+	test_must_fail git rev-parse --verify -q $c
-+'
-+
- test_done
+ 	if (delete) {
+ 		if (argc < 1 || argc > 2)
+ 			usage_with_options(git_update_ref_usage, options);
 -- 
 1.7.10.4
