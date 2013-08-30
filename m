@@ -1,115 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GIT PULL] hotfix on fr.po for the maint branch
-Date: Fri, 30 Aug 2013 11:07:06 -0700
-Message-ID: <xmqqli3jyrw5.fsf@gitster.dls.corp.google.com>
-References: <CANYiYbG6MweCwLaUw5Uk3S9a0hUY1vuS+ORCF1BipkZkJeHjrw@mail.gmail.com>
-	<xmqq61un15lo.fsf@gitster.dls.corp.google.com>
-	<21533323.C8UgJI1nMs@cayenne>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Fix the author initials in blame for non-ASCII names
+Date: Fri, 30 Aug 2013 20:08:09 +0200
+Message-ID: <CANQwDwcyTWgk0jhhGUgP-UZDLQ5EGhh5oueitGD5fpgS5bLtzw@mail.gmail.com>
+References: <20130829163935.GA9689@ruderich.org> <1377851821-5412-1-git-send-email-avarab@gmail.com>
+ <xmqqppsvyrzj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Sebastien Helleu <flashcode@flashtux.org>
-To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-X-From: git-owner@vger.kernel.org Fri Aug 30 20:07:16 2013
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	git <git@vger.kernel.org>, Simon Ruderich <simon@ruderich.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 30 20:08:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFT6J-0003sZ-SQ
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 20:07:16 +0200
+	id 1VFT7b-0004a9-0a
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 20:08:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756804Ab3H3SHK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Aug 2013 14:07:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41272 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756699Ab3H3SHJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Aug 2013 14:07:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAACF3CA4D;
-	Fri, 30 Aug 2013 18:07:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=BxStaYxfcnvW
-	pD77w8XD+w7g8q4=; b=qKMwB6LVWS8Mai0wyTEU81u8mu1PYyC1wk3rgAGmu2+l
-	xLxoOokzTpCqosCPsLWL6ybHri4+0jvFuApb8UcQ4s712wkTELjb1j+lMo67a3/l
-	1Mg8czm9c5ic8NSsElHAoEkIawJcxrfJn4QDVIJyK1mNZWRu9n6QGHP27SKhZOY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=B8GZkM
-	eCRGLMLaDqHjQzzVDg9+chfoiaBT74ZYOH5RyldLtIUsAkxTOLpyw+gO3jyu4bvi
-	FrQkix3aR2RyGqI1MV78J9rUArTVvSu9TlwU0Cpotu8y0tx6JuoKEyCulZuI0zK4
-	FWx0dHamk48GZTeaZAK8WO7uek7TM7ZNyfmxs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD4543CA4C;
-	Fri, 30 Aug 2013 18:07:08 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 467F23CA4A;
-	Fri, 30 Aug 2013 18:07:08 +0000 (UTC)
-In-Reply-To: <21533323.C8UgJI1nMs@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-	"Fri, 30 Aug 2013 19:23:54 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FC14EF56-119E-11E3-B726-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756868Ab3H3SIb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Aug 2013 14:08:31 -0400
+Received: from mail-qe0-f53.google.com ([209.85.128.53]:35834 "EHLO
+	mail-qe0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756752Ab3H3SIa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Aug 2013 14:08:30 -0400
+Received: by mail-qe0-f53.google.com with SMTP id 1so1150246qee.12
+        for <git@vger.kernel.org>; Fri, 30 Aug 2013 11:08:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=5/BGYP6e+LmHamtfY0UpCCYk+qZte4rkeH0vRzzxJBU=;
+        b=QJvrl6Ms8XUitul9ZCDEQflF0jiwzucOCZfRZBarChojKzPUY8Rd086+M032gl1ZTQ
+         JZyGKJmyojtphcmjFnSsmweD7npuFGVQlFHSlBPSb7Jc7qv43dvUwvcVgXATLCG2gABJ
+         NONetIOyBfpauItouQPmH+RfZdProoRy2/0nJLE074RR2zWs34xmm76pzbnvVeBB2pVO
+         rGvEnbX1BhiGThzVOK2ZFmWoucR5S8L1vcd/6pYCZQh/04tVXJbGwI2bf3PIb3Lo8fXU
+         kild5Z7gEgZPWEkn1CT/+tTqBPxvz4TRxYITQ05WV2y4g3ds2uH5bauOrGXtMhTbUotH
+         4uLw==
+X-Received: by 10.224.126.196 with SMTP id d4mr13610308qas.62.1377886110036;
+ Fri, 30 Aug 2013 11:08:30 -0700 (PDT)
+Received: by 10.49.83.134 with HTTP; Fri, 30 Aug 2013 11:08:09 -0700 (PDT)
+In-Reply-To: <xmqqppsvyrzj.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233449>
 
-Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
+On Fri, Aug 30, 2013 at 8:05 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Le vendredi 30 ao=C3=BBt 2013 09:54:59 Junio C Hamano a =C3=A9crit :
->> Jiang Xin <worldhello.net@gmail.com> writes:
->> > Please merge this commit to the maint branch.
->> >=20
->> > The following changes since commit=20
-> e230c568c4b9a991e3175e5f65171a566fd8e39c:
->> >   Git 1.8.4 (2013-08-23 11:49:46 -0700)
->> >=20
->> > are available in the git repository at:
->> >   git://github.com/git-l10n/git-po master
->> >=20
->> > for you to fetch changes up to 21860882c8782771e99aa68fab6e365c628=
-ff39d:
->> >   l10n: fr.po: hotfix for commit 6b388fc (2013-08-30 16:59:29 +080=
-0)
->> >=20
->> > ----------------------------------------------------------------
->> >=20
->> > Sebastien Helleu (1):
->> >       l10n: fr.po: hotfix for commit 6b388fc
->>=20
->> Hmph, what happened that requires a "hotfix" to message strings?
->
-> Well, as the author of the first commit,, I must say that the quality=
- was not=20
-> good. But it became visible and hooked up a reviewer only when it was=
- promoted=20
-> to stable version...
->
-> There are some strings that do not make sense in the usage pages, a m=
-issing %s=20
-> in one.  	Agreed that applying this patch does not solve a critical i=
-ssue, but=20
-> it is low risk.
+>> Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+>> Tested-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> Tested-by: Simon Ruderich <simon@ruderich.org>
+>> ---
+>>  gitweb/gitweb.perl | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index f429f75..ad48a5a 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -6631,6 +6631,7 @@ sub git_blame_common {
+>>                       $hash_base, '--', $file_name
+>>                       or die_error(500, "Open git-blame --porcelain =
+failed");
+>>       }
+>> +     binmode $fh, ':utf8';
 
-OK, I was just reacting to the "hotfix" wording and wondering the
-level of urgency.  Will pull to maint later before cutting 1.8.4.1.
+Should be $fd, not $fh.
 
-Thanks.
+> [Fri Aug 30 17:48:17 2013] gitweb.perl: Global symbol "$fh" requires
+> explicit package name at /home/gitster/w/buildfarm/next/t/../gitweb/g=
+itweb.perl line 6634.
+> [Fri Aug 30 17:48:17 2013] gitweb.perl: Execution of /home/gitster/w/=
+buildfarm/next/t/../gitweb/gitweb.perl aborted due to compilation error=
+s.
 
->
->>=20
->> >  po/TEAMS |    1 +
->> >  po/fr.po | 1591
->> >  ++++++++++++++++++++++++++++++++++---------------------------- 2 =
-files
->> >  changed, 874 insertions(+), 718 deletions(-)
->> >=20
->> > --
->> > Jiang Xin
+I wonder how it passed =C3=86var and Simon tests. Perhaps proposal had =
+$fd?
+
+--=20
+Jakub Narebski
