@@ -1,372 +1,63 @@
-From: kazuki saitoh <ksaitoh560@gmail.com>
-Subject: [PATCH v2] git p4: implement view spec wildcards with "p4 where"
-Date: Fri, 30 Aug 2013 19:02:06 +0900
-Message-ID: <CACGba4xVs0_TNti-MwDdefGhHNZXXirkk++RX8c7xiUHCWJDwA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 30 12:02:19 2013
+From: Thorsten Glaser <t.glaser@tarent.de>
+Subject: [PATCH] fix shell syntax error in template
+Date: Fri, 30 Aug 2013 12:40:30 +0200
+Message-ID: <20130830104308.AAF467001B5@tglase.lan.tarent.de>
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Fri Aug 30 12:51:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFLWy-0004jp-0p
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 12:02:16 +0200
+	id 1VFMI9-0007x0-8S
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Aug 2013 12:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755496Ab3H3KCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 06:02:10 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:57317 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753996Ab3H3KCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Aug 2013 06:02:08 -0400
-Received: by mail-lb0-f173.google.com with SMTP id o14so1531361lbi.4
-        for <git@vger.kernel.org>; Fri, 30 Aug 2013 03:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=4AjEFzpfNjuU/2GDYgdkbbnAK5QaV5DMQRjIGm36rao=;
-        b=a6I5V0EW+vR6wEuT/o2Ux+O9ApIWDmovMCL2abPNaTGrgcHYPKbcgt5q0TnkHv1Dm8
-         XIxaykoNkCtSMkPQk64cbW3j1nmnOceKhT3UXLUAAr93m8pXnwhaaoSu1kRFVV+yznSU
-         /GXdQ0cMhe02GVqouvGzdJtORC+dnz47ICeKKHWgPsFV9wp1chF85wM81uXbXQv3j5e/
-         cm9y9D20rcVJXZ6ofZkVS8MgWXv8Xo+6ml0UDckI6YaAobD/OdNgKoK52f+zUjYFXU06
-         +wVJdCCLIfp5WQKvNGPBybLSLjxajSfxAwuyKUCI6Dk9+npLJoFpTGSJnlNxzzFYoXcS
-         HAnA==
-X-Received: by 10.112.77.134 with SMTP id s6mr994735lbw.38.1377856926488; Fri,
- 30 Aug 2013 03:02:06 -0700 (PDT)
-Received: by 10.114.176.232 with HTTP; Fri, 30 Aug 2013 03:02:06 -0700 (PDT)
+	id S1755268Ab3H3Ku4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 06:50:56 -0400
+Received: from ugs.tarent.de ([193.107.123.165]:38603 "EHLO ugs.tarent.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754721Ab3H3Ku4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 06:50:56 -0400
+X-Greylist: delayed 464 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Aug 2013 06:50:56 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by ugs.tarent.de (Postfix) with ESMTP id 5DAFE60612D21;
+	Fri, 30 Aug 2013 12:43:09 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by ugs.tarent.de (Postfix) with ESMTP id 3ADAA60612D22;
+	Fri, 30 Aug 2013 12:43:09 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new-2.6.1 (20080629) (Debian) at tarent.de
+Received: from ugs.tarent.de ([127.0.0.1])
+	by localhost (ugs.tarent.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 76gWaWqhi+3E; Fri, 30 Aug 2013 12:43:09 +0200 (CEST)
+Received: from tglase.lan.tarent.de (tglase.lan.tarent.de [172.26.3.108])
+	by ugs.tarent.de (Postfix) with ESMTPS id 063D960612D21;
+	Fri, 30 Aug 2013 12:43:09 +0200 (CEST)
+Received: by tglase.lan.tarent.de (Postfix, from userid 2339)
+	id AAF467001B5; Fri, 30 Aug 2013 12:43:08 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233437>
 
-Currently, git p4 does not support many of the view
-wildcards, such as * and %%n.  It only knows the
-common ... mapping, and exclusions.
+an if clause must not be empty; add a "colon" command
 
-Redo the entire wildcard code around the idea of
-directly querying the p4 server for the mapping.  For each
-commit, invoke "p4 where" with committed file paths as args and use
-the client mapping to decide where the file goes in git.
-
-This simplifies a lot of code, and adds support for all
-wildcards supported by p4.
-Downside is that there is probably a 20%-ish slowdown with this approach.
-
-[pw: redo code and tests]
-
-Signed-off-by: Kazuki Saitoh <ksaitoh560@gmail.com>
-Signed-off-by: Pete Wyckoff <pw@padd.com>
+Signed-off-by: Thorsten Glaser <t.glaser@tarent.de>
 ---
- git-p4.py | 223 +++++++++++++++++---------------------------------------------
- 1 file changed, 59 insertions(+), 164 deletions(-)
+ templates/hooks--pre-push.sample | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/git-p4.py b/git-p4.py
-index 31e71ff..1793e86 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -780,11 +780,14 @@ def getClientSpec():
-     # dictionary of all client parameters
-     entry = specList[0]
-
-+    # the //client/ name
-+    client_name = entry["Client"]
-+
-     # just the keys that start with "View"
-     view_keys = [ k for k in entry.keys() if k.startswith("View") ]
-
-     # hold this new View
--    view = View()
-+    view = View(client_name)
-
-     # append the lines, in order, to the view
-     for view_num in range(len(view_keys)):
-@@ -1555,8 +1558,8 @@ class P4Submit(Command, P4UserMap):
-             for b in body:
-                 labelTemplate += "\t" + b + "\n"
-             labelTemplate += "View:\n"
--            for mapping in clientSpec.mappings:
--                labelTemplate += "\t%s\n" % mapping.depot_side.path
-+            for depot_side in clientSpec.mappings:
-+                labelTemplate += "\t%s\n" % depot_side
-
-             if self.dry_run:
-                 print "Would create p4 label %s for tag" % name
-@@ -1568,7 +1571,7 @@ class P4Submit(Command, P4UserMap):
-
-                 # Use the label
-                 p4_system(["tag", "-l", name] +
--                          ["%s@%s" % (mapping.depot_side.path,
-changelist) for mapping in clientSpec.mappings])
-+                          ["%s@%s" % (depot_side, changelist) for
-depot_side in clientSpec.mappings])
-
-                 if verbose:
-                     print "created p4 label for tag %s" % name
-@@ -1796,117 +1799,16 @@ class View(object):
-     """Represent a p4 view ("p4 help views"), and map files in a
-        repo according to the view."""
-
--    class Path(object):
--        """A depot or client path, possibly containing wildcards.
--           The only one supported is ... at the end, currently.
--           Initialize with the full path, with //depot or //client."""
--
--        def __init__(self, path, is_depot):
--            self.path = path
--            self.is_depot = is_depot
--            self.find_wildcards()
--            # remember the prefix bit, useful for relative mappings
--            m = re.match("(//[^/]+/)", self.path)
--            if not m:
--                die("Path %s does not start with //prefix/" % self.path)
--            prefix = m.group(1)
--            if not self.is_depot:
--                # strip //client/ on client paths
--                self.path = self.path[len(prefix):]
--
--        def find_wildcards(self):
--            """Make sure wildcards are valid, and set up internal
--               variables."""
--
--            self.ends_triple_dot = False
--            # There are three wildcards allowed in p4 views
--            # (see "p4 help views").  This code knows how to
--            # handle "..." (only at the end), but cannot deal with
--            # "%%n" or "*".  Only check the depot_side, as p4 should
--            # validate that the client_side matches too.
--            if re.search(r'%%[1-9]', self.path):
--                die("Can't handle %%n wildcards in view: %s" % self.path)
--            if self.path.find("*") >= 0:
--                die("Can't handle * wildcards in view: %s" % self.path)
--            triple_dot_index = self.path.find("...")
--            if triple_dot_index >= 0:
--                if triple_dot_index != len(self.path) - 3:
--                    die("Can handle only single ... wildcard, at end: %s" %
--                        self.path)
--                self.ends_triple_dot = True
--
--        def ensure_compatible(self, other_path):
--            """Make sure the wildcards agree."""
--            if self.ends_triple_dot != other_path.ends_triple_dot:
--                 die("Both paths must end with ... if either does;\n" +
--                     "paths: %s %s" % (self.path, other_path.path))
--
--        def match_wildcards(self, test_path):
--            """See if this test_path matches us, and fill in the value
--               of the wildcards if so.  Returns a tuple of
--               (True|False, wildcards[]).  For now, only the ... at end
--               is supported, so at most one wildcard."""
--            if self.ends_triple_dot:
--                dotless = self.path[:-3]
--                if test_path.startswith(dotless):
--                    wildcard = test_path[len(dotless):]
--                    return (True, [ wildcard ])
--            else:
--                if test_path == self.path:
--                    return (True, [])
--            return (False, [])
--
--        def match(self, test_path):
--            """Just return if it matches; don't bother with the wildcards."""
--            b, _ = self.match_wildcards(test_path)
--            return b
--
--        def fill_in_wildcards(self, wildcards):
--            """Return the relative path, with the wildcards filled in
--               if there are any."""
--            if self.ends_triple_dot:
--                return self.path[:-3] + wildcards[0]
--            else:
--                return self.path
--
--    class Mapping(object):
--        def __init__(self, depot_side, client_side, overlay, exclude):
--            # depot_side is without the trailing /... if it had one
--            self.depot_side = View.Path(depot_side, is_depot=True)
--            self.client_side = View.Path(client_side, is_depot=False)
--            self.overlay = overlay  # started with "+"
--            self.exclude = exclude  # started with "-"
--            assert not (self.overlay and self.exclude)
--            self.depot_side.ensure_compatible(self.client_side)
--
--        def __str__(self):
--            c = " "
--            if self.overlay:
--                c = "+"
--            if self.exclude:
--                c = "-"
--            return "View.Mapping: %s%s -> %s" % \
--                   (c, self.depot_side.path, self.client_side.path)
--
--        def map_depot_to_client(self, depot_path):
--            """Calculate the client path if using this mapping on the
--               given depot path; does not consider the effect of other
--               mappings in a view.  Even excluded mappings are returned."""
--            matches, wildcards = self.depot_side.match_wildcards(depot_path)
--            if not matches:
--                return ""
--            client_path = self.client_side.fill_in_wildcards(wildcards)
--            return client_path
--
--    #
--    # View methods
--    #
--    def __init__(self):
-+    def __init__(self, client_name):
-         self.mappings = []
-+        self.client_prefix = "//%s/" % client_name
-+        # cache results of "p4 where" to lookup client file locations
-+        self.client_spec_path_cache = {}
-
-     def append(self, view_line):
-         """Parse a view line, splitting it into depot and client
--           sides.  Append to self.mappings, preserving order."""
-+           sides.  Append to self.mappings, preserving order.  This
-+           is only needed for tag creation."""
-
-         # Split the view line into exactly two words.  P4 enforces
-         # structure on these lines that simplifies this quite a bit.
-@@ -1934,76 +1836,62 @@ class View(object):
-             depot_side = view_line[0:space_index]
-             rhs_index = space_index + 1
-
--        if view_line[rhs_index] == '"':
--            # Second word is double quoted.  Make sure there is a
--            # double quote at the end too.
--            if not view_line.endswith('"'):
--                die("View line with rhs quote should end with one: %s" %
--                    view_line)
--            # skip the quotes
--            client_side = view_line[rhs_index+1:-1]
--        else:
--            client_side = view_line[rhs_index:]
--
-         # prefix + means overlay on previous mapping
--        overlay = False
-         if depot_side.startswith("+"):
--            overlay = True
-             depot_side = depot_side[1:]
-
--        # prefix - means exclude this path
-+        # prefix - means exclude this path, leave out of mappings
-         exclude = False
-         if depot_side.startswith("-"):
-             exclude = True
-             depot_side = depot_side[1:]
-
--        m = View.Mapping(depot_side, client_side, overlay, exclude)
--        self.mappings.append(m)
-+        if not exclude:
-+            self.mappings.append(depot_side)
-
--    def map_in_client(self, depot_path):
--        """Return the relative location in the client where this
--           depot file should live.  Returns "" if the file should
--           not be mapped in the client."""
-+    def convert_client_path(self, clientFile):
-+        # chop off //client/ part to make it relative
-+        if not clientFile.startswith(self.client_prefix):
-+            die("No prefix '%s' on clientFile '%s'" %
-+                (self.client_prefix, clientFile))
-+        return clientFile[len(self.client_prefix):]
-
--        paths_filled = []
--        client_path = ""
-+    def update_client_spec_path_cache(self, files):
-+        """ Caching file paths by "p4 where" batch query """
-
--        # look at later entries first
--        for m in self.mappings[::-1]:
-+        # List depot file paths exclude that already cached
-+        fileArgs = [f['path'] for f in files if f['path'] not in
-self.client_spec_path_cache]
-
--            # see where will this path end up in the client
--            p = m.map_depot_to_client(depot_path)
-+        if len(fileArgs) == 0:
-+            return  # All files in cache
-
--            if p == "":
--                # Depot path does not belong in client.  Must remember
--                # this, as previous items should not cause files to
--                # exist in this path either.  Remember that the list is
--                # being walked from the end, which has higher precedence.
--                # Overlap mappings do not exclude previous mappings.
--                if not m.overlay:
--                    paths_filled.append(m.client_side)
-+        where_result = p4CmdList(["-x", "-", "where"], stdin=fileArgs)
-+        for res in where_result:
-+            if "code" in res and res["code"] == "error":
-+                # assume error is "... file(s) not in client view"
-+                continue
-+            if "clientFile" not in res:
-+                die("No clientFile from 'p4 where %s'" % depot_path)
-+            if "unmap" in res:
-+                # it will list all of them, but only one not unmap-ped
-+                continue
-+            self.client_spec_path_cache[res['depotFile']] =
-self.convert_client_path(res["clientFile"])
-
--            else:
--                # This mapping matched; no need to search any further.
--                # But, the mapping could be rejected if the client path
--                # has already been claimed by an earlier mapping (i.e.
--                # one later in the list, which we are walking backwards).
--                already_mapped_in_client = False
--                for f in paths_filled:
--                    # this is View.Path.match
--                    if f.match(p):
--                        already_mapped_in_client = True
--                        break
--                if not already_mapped_in_client:
--                    # Include this file, unless it is from a line that
--                    # explicitly said to exclude it.
--                    if not m.exclude:
--                        client_path = p
-+        # not found files or unmap files set to ""
-+        for depotFile in fileArgs:
-+            if depotFile not in self.client_spec_path_cache:
-+                self.client_spec_path_cache[depotFile] = ""
-
--                # a match, even if rejected, always stops the search
--                break
-+    def map_in_client(self, depot_path):
-+        """Return the relative location in the client where this
-+           depot file should live.  Returns "" if the file should
-+           not be mapped in the client."""
-
--        return client_path
-+        if depot_path in self.client_spec_path_cache:
-+            return self.client_spec_path_cache[depot_path]
-+
-+        die( "Error: %s is not found in client spec path" % depot_path )
-+        return ""
-
- class P4Sync(Command, P4UserMap):
-     delete_actions = ( "delete", "move/delete", "purge" )
-@@ -2130,6 +2018,10 @@ class P4Sync(Command, P4UserMap):
-         """Look at each depotFile in the commit to figure out to what
-            branch it belongs."""
-
-+        if self.clientSpecDirs:
-+            files = self.extractFilesFromCommit(commit)
-+            self.clientSpecDirs.update_client_spec_path_cache(files)
-+
-         branches = {}
-         fnum = 0
-         while commit.has_key("depotFile%s" % fnum):
-@@ -2379,6 +2271,9 @@ class P4Sync(Command, P4UserMap):
-             else:
-                 sys.stderr.write("Ignoring file outside of prefix:
-%s\n" % f['path'])
-
-+        if self.clientSpecDirs:
-+            self.clientSpecDirs.update_client_spec_path_cache(files)
-+
-         self.gitStream.write("commit %s\n" % branch)
- #        gitStream.write("mark :%s\n" % details["change"])
-         self.committedChanges.add(int(details["change"]))
+diff --git a/templates/hooks--pre-push.sample b/templates/hooks--pre-push.sample
+index 15ab6d8..1f3bceb 100755
+--- a/templates/hooks--pre-push.sample
++++ b/templates/hooks--pre-push.sample
+@@ -30,6 +30,7 @@ do
+ 	if [ "$local_sha" = $z40 ]
+ 	then
+ 		# Handle delete
++		:
+ 	else
+ 		if [ "$remote_sha" = $z40 ]
+ 		then
 -- 
-1.8.4
+1.8.4.rc3
