@@ -1,87 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] revision: introduce --exclude=<glob> to tame wildcards
-Date: Fri, 30 Aug 2013 17:29:44 -0700
-Message-ID: <xmqqwqn2wvlz.fsf@gitster.dls.corp.google.com>
-References: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com>
-	<7vhae7k7t1.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1y2kvSnF3dKDMr9QtS40PNSW93DWCxFUoL658YkqYeVA@mail.gmail.com>
-	<CAPc5daVSqoE74kmsobg7RpMtiL3vzKN+ckAcWEKU_Q_wF8HYuA@mail.gmail.com>
-	<CAMP44s0P=XF5C8+fU2cJ-Xuq57iqcAn674Upub6N=+iiMpQK0g@mail.gmail.com>
-	<xmqqeh9b15x6.fsf@gitster.dls.corp.google.com>
-	<xmqq1u5aybri.fsf_-_@gitster.dls.corp.google.com>
-	<CACsJy8DOx8Q5kLizfeP2AgDaD8+EDsQL9xtOGphrmgG=dAabcQ@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] Make setup_git_env() resolve .git file when $GIT_DIR is not specified
+Date: Sat, 31 Aug 2013 08:04:14 +0700
+Message-ID: <1377911054-20086-1-git-send-email-pclouds@gmail.com>
+References: <xmqq38ps775f.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 31 02:29:53 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Ximin Luo <infinity0@gmx.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 31 03:01:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFZ4a-0007Um-GS
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 02:29:52 +0200
+	id 1VFZZ1-0007ce-QQ
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 03:01:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755125Ab3HaA3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 20:29:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32945 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752991Ab3HaA3s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Aug 2013 20:29:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 614843DE66;
-	Sat, 31 Aug 2013 00:29:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YcNd7BhSxfTDBMm5JCWdJgUHCT4=; b=ExKma1
-	J1tTXa2fQDgc+BB82KD+VDRLsh8/WILwE34mXBVO5VHbJ94ILWMVnokvAMJYiURe
-	M2dWBO0HcQGAw9lDAZB30cVvM4hImvH50rfmbp4++l5HxrzYhtN2bAiJHqETlOBZ
-	y+XX5hHt+gUerptmVkgmA4dzsondV/u+m2B+0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bXL1TyPH9kQA4YxUsi89AVlC1AHmjvqo
-	62zzcIAK/5K4hhPAalz8JVy9avAP9A3mMU4bsNr/G0kfkG7jBdeqnZtEffInO7wu
-	w76/rw6aIMzi775yZF2tw1Z6GfRH+aRTaO7Bl5UKEhpgHO+B1WevdIKctbV1xdmD
-	AeIkk7y0hHg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DCBA3DE65;
-	Sat, 31 Aug 2013 00:29:47 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 555943DE63;
-	Sat, 31 Aug 2013 00:29:46 +0000 (UTC)
-In-Reply-To: <CACsJy8DOx8Q5kLizfeP2AgDaD8+EDsQL9xtOGphrmgG=dAabcQ@mail.gmail.com>
-	(Duy Nguyen's message of "Sat, 31 Aug 2013 07:22:45 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 70270520-11D4-11E3-B669-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755714Ab3HaBBP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Aug 2013 21:01:15 -0400
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:62267 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754461Ab3HaBBO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 21:01:14 -0400
+Received: by mail-pb0-f48.google.com with SMTP id ma3so2499111pbc.21
+        for <git@vger.kernel.org>; Fri, 30 Aug 2013 18:01:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=C9JS0f81bBHMtWazqUpRIccbzyRfxCEEqUFFBy2OOS0=;
+        b=t7kMNjaxAt0bwS05xnkk9UaTUbSOhLlA5kvvPPOkgI4px6VNHTSvohU+HfPMiwCuY1
+         LiYt3s34JqlnVbZ7eomAl8H+t1MVtVjzVLB+gCZD8NoeLkDK0dwYxNoCQOwEaMa4QC7E
+         9Xdi/h8+a2PGyv9M9p8XrJSBkb/3NNbjUsYxhMhb5UdF1troWeesWM1zWNYwRlEqiWRN
+         JT88o28eu2a1xp/Gx2ZVpFJAtwToKUR3tmG807cyHF4UhSmhWQcFmWUbMAsA3Bs8Hxp0
+         mFxXgBeTQj2xzryihkPiicXE32ytDQCmuVJTnkRw6SFzAwNhXFzjsDwoauXid+3VmZ+Q
+         De0g==
+X-Received: by 10.68.244.200 with SMTP id xi8mr12766927pbc.156.1377910874329;
+        Fri, 30 Aug 2013 18:01:14 -0700 (PDT)
+Received: from lanh ([115.73.192.224])
+        by mx.google.com with ESMTPSA id fl3sm937635pad.10.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 30 Aug 2013 18:01:13 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 31 Aug 2013 08:04:16 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
+In-Reply-To: <xmqq38ps775f.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233488>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+This makes reinitializing on a .git file repository work.
 
-> On Sat, Aug 31, 2013 at 6:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> +static int ref_excluded(struct rev_info *revs, const char *path)
->> +{
->> +       struct string_list_item *item;
->> +
->> +       if (!revs->ref_excludes)
->> +               return 0;
->> +       for_each_string_list_item(item, revs->ref_excludes) {
->> +               if (!fnmatch(item->string, path, 0))
->> +                       return 1;
->> +       }
->> +       return 0;
->> +}
->
-> If you pursue this, please use wildmatch instead so it supports "foo/**".
+This is probably the only case that setup_git_env() (via
+set_git_dir()) is called on a .git file. Other cases in
+setup_git_dir_gently() and enter_repo() both cover .git file case
+explicitly because they need to verify the target repo is valid.
 
-The thought crossed my mind and I think we should match what the
-existing --glob=<pattern> option does.  A cursory look in
-refs.c::filter_refs() used by refs.c::for_each_glob_ref_in() tells
-me that we are using fnmatch without FNM_PATHNAME, so that is what
-the above part does.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+Reported-by: Ximin Luo <infinity0@gmx.com>
+---
+ Slight change in the patch to xstrdup(gitfile) because read_gitfile
+ returns a static buffer.
+
+ environment.c   | 9 ++++-----
+ t/t0001-init.sh | 4 ++++
+ 2 files changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/environment.c b/environment.c
+index 5398c36..378254c 100644
+--- a/environment.c
++++ b/environment.c
+@@ -123,14 +123,13 @@ static char *expand_namespace(const char *raw_nam=
+espace)
+=20
+ static void setup_git_env(void)
+ {
++	const char *gitfile;
++
+ 	git_dir =3D getenv(GIT_DIR_ENVIRONMENT);
+-	git_dir =3D git_dir ? xstrdup(git_dir) : NULL;
+-	if (!git_dir) {
+-		git_dir =3D read_gitfile(DEFAULT_GIT_DIR_ENVIRONMENT);
+-		git_dir =3D git_dir ? xstrdup(git_dir) : NULL;
+-	}
+ 	if (!git_dir)
+ 		git_dir =3D DEFAULT_GIT_DIR_ENVIRONMENT;
++	gitfile =3D read_gitfile(git_dir);
++	git_dir =3D xstrdup(gitfile ? gitfile : git_dir);
+ 	git_object_dir =3D getenv(DB_ENVIRONMENT);
+ 	if (!git_object_dir) {
+ 		git_object_dir =3D xmalloc(strlen(git_dir) + 9);
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index ad66410..9fb582b 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -379,6 +379,10 @@ test_expect_success 'init with separate gitdir' '
+ 	test -d realgitdir/refs
+ '
+=20
++test_expect_success 're-init on .git file' '
++	( cd newdir && git init )
++'
++
+ test_expect_success 're-init to update git link' '
+ 	(
+ 	cd newdir &&
+--=20
+1.8.2.83.gc99314b
