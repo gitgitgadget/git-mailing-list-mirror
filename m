@@ -1,61 +1,72 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 07/11] Documentation/replace: tell that -f option bypasses
- the type check
-Date: Sat, 31 Aug 2013 21:12:10 +0200
-Message-ID: <20130831191215.26699.720.chriscool@tuxfamily.org>
-References: <20130831190528.26699.33964.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
-	Thomas Rast <trast@inf.ethz.ch>, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 31 21:14:04 2013
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] git send-email: include [anything]-by: signatures
+Date: Sat, 31 Aug 2013 22:22:50 +0300
+Message-ID: <20130831192250.GA3823@redhat.com>
+References: <20130826165747.GA30788@redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 31 21:21:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFqcV-0001Jf-JI
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 21:14:03 +0200
+	id 1VFqjH-0004Y1-Hv
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 21:21:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755287Ab3HaTNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Aug 2013 15:13:49 -0400
-Received: from [194.158.98.15] ([194.158.98.15]:48173 "EHLO mail-2y.bbox.fr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752603Ab3HaTNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Aug 2013 15:13:35 -0400
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 4FD5C77;
-	Sat, 31 Aug 2013 21:12:54 +0200 (CEST)
-X-git-sha1: ad7e7001abdd0f0d8740047d503f5500f44a1b58 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20130831190528.26699.33964.chriscool@tuxfamily.org>
+	id S1752889Ab3HaTUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Aug 2013 15:20:50 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:44627 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752554Ab3HaTUt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Aug 2013 15:20:49 -0400
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r7VJKmW2030646
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sat, 31 Aug 2013 15:20:48 -0400
+Received: from redhat.com (vpn1-7-65.ams2.redhat.com [10.36.7.65])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id r7VJKkah015248;
+	Sat, 31 Aug 2013 15:20:47 -0400
+Content-Disposition: inline
+In-Reply-To: <20130826165747.GA30788@redhat.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233543>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-replace.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+On Mon, Aug 26, 2013 at 07:57:47PM +0300, Michael S. Tsirkin wrote:
+> Consider [anything]-by: a valid signature.
+> This includes Tested-by: Acked-by: Reviewed-by: etc.
+> 
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 
-diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
-index 736b48c..a2bd2ee 100644
---- a/Documentation/git-replace.txt
-+++ b/Documentation/git-replace.txt
-@@ -21,10 +21,12 @@ replaced. The content of the 'replace' reference is the SHA-1 of the
- replacement object.
- 
- The replaced object and the replacement object must be of the same type.
--There is no other restriction on them.
-+This restriction can be bypassed using `-f`.
- 
- Unless `-f` is given, the 'replace' reference must not yet exist.
- 
-+There is no other restriction on the replaced and replacement objects.
-+
- Replacement references will be used by default by all Git commands
- except those doing reachability traversal (prune, pack transfer and
- fsck).
--- 
-1.8.4.rc1.31.g530f5ce.dirty
+Ping.
+Any opinion on whether this change is acceptable?
+
+> ---
+>  git-send-email.perl | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index ecbf56f..bb9093b 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1359,7 +1359,7 @@ foreach my $t (@files) {
+>  	# Now parse the message body
+>  	while(<$fh>) {
+>  		$message .=  $_;
+> -		if (/^(Signed-off-by|Cc): (.*)$/i) {
+> +		if (/^([A-Za-z-]*-by|Cc): (.*)$/i) {
+>  			chomp;
+>  			my ($what, $c) = ($1, $2);
+>  			chomp $c;
+> -- 
+> MST
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
