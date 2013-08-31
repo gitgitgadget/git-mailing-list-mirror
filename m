@@ -1,94 +1,68 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH] remote-hg: skip ill-formed references
-Date: Sat, 31 Aug 2013 04:15:42 +0300
-Message-ID: <20130831011542.GA10486@wheezy.local>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Add testcase for needless objects during a shallow fetch
+Date: Sat, 31 Aug 2013 08:25:42 +0700
+Message-ID: <CACsJy8Dv7tVG_oWcPvNTy-zxD7axZxoXHcE1=TFwTv9+wGFCOQ@mail.gmail.com>
+References: <20130828153638.GF10217@login.drsnuggles.stderr.nl>
+ <1377705722-17053-1-git-send-email-matthijs@stdin.nl> <CACsJy8BDxkpFG=nfVENeAHMyhdokwvbpxu26m0RtHou_WK2Mkw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 31 03:16:05 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthijs Kooijman <matthijs@stdin.nl>
+X-From: git-owner@vger.kernel.org Sat Aug 31 03:26:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFZnH-0006YW-Q0
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 03:16:04 +0200
+	id 1VFZxC-0003Oz-5r
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 03:26:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863Ab3HaBPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 21:15:48 -0400
-Received: from p3plsmtpa08-10.prod.phx3.secureserver.net ([173.201.193.111]:42478
-	"EHLO p3plsmtpa08-10.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752551Ab3HaBPs (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Aug 2013 21:15:48 -0400
-Received: from wheezy.local ([89.27.29.195])
-	by p3plsmtpa08-10.prod.phx3.secureserver.net with 
-	id KDFf1m00U4CavkR01DFlE5; Fri, 30 Aug 2013 18:15:47 -0700
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754571Ab3HaB0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 21:26:13 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:35499 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753212Ab3HaB0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 21:26:13 -0400
+Received: by mail-ob0-f177.google.com with SMTP id f8so2550600obp.22
+        for <git@vger.kernel.org>; Fri, 30 Aug 2013 18:26:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4cHRiDdUdHxbG/M0F2TrsXCWPeiMfzKORt5ygDT/MAw=;
+        b=aSbgKA5xmoOlp818YgcL+U1ilhhXyfphmE0nhWeC4ZoHId2LYBTZW1jGgByIK10Pt2
+         daBZ+yVKYQTv6O4sAAi204oYuauEixYB2TqMpcG+vVoefa09Iec2myQFftEEZ9kxq7wq
+         CM43adG8rruwV0DZze/rkAdkiKqMHXa0eI7SGTbTzTu0T6CEZkUehkelnePNyNjXiA3M
+         dgFWjTNTaUA7cmdsOghmelJj03FQMF6F3QMhzCBm6uzZknlCIDvL2+NF+8bA+ne0j0gA
+         doxWXPv3XIkN9SbiWN7M9v1PwvH6iypIgLM9LsvjNt0/lD6Joo08ZjqNJN/cNr6bwsbQ
+         5pjA==
+X-Received: by 10.182.134.229 with SMTP id pn5mr8537315obb.88.1377912372409;
+ Fri, 30 Aug 2013 18:26:12 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Fri, 30 Aug 2013 18:25:42 -0700 (PDT)
+In-Reply-To: <CACsJy8BDxkpFG=nfVENeAHMyhdokwvbpxu26m0RtHou_WK2Mkw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233490>
 
-References which fail check_refname_format() cause the whole
-import to fail. This might be undesirable if the references
-are not important.
+On Thu, Aug 29, 2013 at 4:50 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Aug 28, 2013 at 11:02 PM, Matthijs Kooijman <matthijs@stdin.nl> wrote:
+>> This is a testcase that checks for a problem where, during a specific
+>> shallow fetch where the client does not have any commits that are a
+>> successor of the new shallow root (i.e., the fetch creates a new
+>> detached piece of history), the server would simply send over _all_
+>> objects, instead of taking into account the objects already present in
+>> the client.
+>
+> Thanks. This reminds me I should add a test case in the 4/6 to
+> demonstrate the regression and let it verify again in 6/6 that the
+> temporary regression is gone. Will reroll the series with your patch
+> included.
 
-A better solution would be to provide some mapping, either
-by some reversible encoding, or by generating and storing
-the associations locally.
-
-But this is already going to allow working with many
-existing repositories.
----
-If there is no smarter solution ongoing maybe this could be
-useful.
- contrib/remote-helpers/git-remote-hg | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
-
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index 0194c67..e32003b 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -591,6 +591,17 @@ def list_head(repo, cur):
-     print "@refs/heads/%s HEAD" % head
-     g_head = (head, node)
- 
-+def print_list_entry_if_valid(ref):
-+    # same checks as in check_refname_format() in refs.c
-+    if ref.startswith('.') or ref.find('/.') != -1 or \
-+            ref.find('..') != -1 or \
-+            any([(c <= ' ' or c in '~^:\\\177') for c in ref]) or \
-+            ref.endswith('/') or \
-+            ref.endswith('.lock'):
-+        warn("Ill-named reference '%s' skipped" % ref)
-+    else:
-+        print "? %s" % ref
-+
- def do_list(parser):
-     global branches, bmarks, track_branches
- 
-@@ -611,15 +622,15 @@ def do_list(parser):
- 
-     if track_branches:
-         for branch in branches:
--            print "? refs/heads/branches/%s" % gitref(branch)
-+            print_list_entry_if_valid("refs/heads/branches/%s" % gitref(branch))
- 
-     for bmark in bmarks:
--        print "? refs/heads/%s" % gitref(bmark)
-+        print_list_entry_if_valid("refs/heads/%s" % gitref(bmark))
- 
-     for tag, node in repo.tagslist():
-         if tag == 'tip':
-             continue
--        print "? refs/tags/%s" % gitref(tag)
-+        print_list_entry_if_valid("refs/tags/%s" % gitref(tag))
- 
-     print
- 
+No. It's too hard. The difference is what base a delta object use and
+checking that might not be entirely reliable because the algorithm in
+pack-objects might change some day.
 -- 
-1.8.4.rc3.902.g80a4b9e
+Duy
