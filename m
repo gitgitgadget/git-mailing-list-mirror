@@ -1,97 +1,81 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 0/2] branch: improve verbose option
-Date: Sat, 31 Aug 2013 15:41:02 +0100
-Organization: OPDS
-Message-ID: <CD323DA08A0540A89D9BFB28F541AFB4@PhilipOakley>
-References: <1377903583-3550-1-git-send-email-felipe.contreras@gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Madhu <enometh@meer.net>
+Subject: git-rebase --continue eats commits
+Date: Sat, 31 Aug 2013 20:56:06 +0530 (IST)
+Message-ID: <20130831.205606.373615550.enometh@meer.net>
+References: <20100626125924.160F11F212@leonis4.robolove.meer.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
+Content-Type: Text/Plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>, "Jeff King" <peff@peff.net>,
-	"Michael J Gruber" <git@drmicha.warpmail.net>
-To: "Felipe Contreras" <felipe.contreras@gmail.com>,
-	<git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 31 16:40:49 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 31 17:56:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFmM5-0001U4-Bc
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 16:40:49 +0200
+	id 1VFnXg-0004nX-T8
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 17:56:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753533Ab3HaOkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Aug 2013 10:40:45 -0400
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:58555 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753043Ab3HaOko (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 31 Aug 2013 10:40:44 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhcMACH/IVJOl3GZ/2dsb2JhbABagwc1g3iFPrd8BAQBgR0XdIIfBQEBBAEIAQEZFR4BASEFBgIDBQIBAxUBBAIFIQICFAEECBIGBxcGARIIAgECAwGHXwMJCginT4gXDYlogSmLZoJwgnA0gQADjw+GfYMYiwiFL4MhOw
-X-IPAS-Result: AhcMACH/IVJOl3GZ/2dsb2JhbABagwc1g3iFPrd8BAQBgR0XdIIfBQEBBAEIAQEZFR4BASEFBgIDBQIBAxUBBAIFIQICFAEECBIGBxcGARIIAgECAwGHXwMJCginT4gXDYlogSmLZoJwgnA0gQADjw+GfYMYiwiFL4MhOw
-X-IronPort-AV: E=Sophos;i="4.89,997,1367967600"; 
-   d="scan'208";a="430484200"
-Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 31 Aug 2013 15:40:41 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755971Ab3HaP4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Aug 2013 11:56:49 -0400
+Received: from vps4.hungerhost.com ([199.167.40.167]:59388 "EHLO
+	vps4.hungerhost.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755812Ab3HaP4s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Aug 2013 11:56:48 -0400
+X-Greylist: delayed 1832 seconds by postgrey-1.27 at vger.kernel.org; Sat, 31 Aug 2013 11:56:48 EDT
+Received: from [59.92.79.28] (port=44315 helo=localhost)
+	by vps4.hungerhost.com with esmtpsa (SSLv3:DHE-RSA-AES256-SHA:256)
+	(Exim 4.80.1)
+	(envelope-from <enometh@meer.net>)
+	id 1VFn40-00069e-6g
+	for git@vger.kernel.org; Sat, 31 Aug 2013 11:26:13 -0400
+X-Mailer: Mew version 6.5 on Emacs 24.3.50 / Mule 6.0 (HANACHIRUSATO)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - vps4.hungerhost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - meer.net
+X-Get-Message-Sender-Via: vps4.hungerhost.com: authenticated_id: enometh@secure.meer.net
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233519>
 
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Sent: Friday, August 30, 2013 11:59 PM
-> Hi,
->
-> This has been discussed before:
->
-> http://thread.gmane.org/gmane.comp.version-control.git/224489
->
-> but in the spirit of the perfect being the enemy of the good, nothing 
-> got done.
->
-> This series makes 'git branch -v' much faster, and gives us the most 
-> important
-> information; the configured upstream tracking branch.
 
-Yes, It's someting I often want reminding of (which origin server, which 
-master?, ..etc.) always appear to start here.
+Don't know if this has been resolved-by-debate here before, But if
+`git-rebase' finds a hitherto untracked file in the worktree, which it
+wants to create, it then aborts asking you to remove the file.  So if
+you remove it and ask git to continue with `git-rebase --continue', it
+then deletes the commit that was being applied from the branch. ---Madhu
 
->        Showing ahead/behind is
-> not as important,
 
-I still find this useful - if it's up to date I don't need reminding of 
-which remote / upstream tracking branch it's configured against ;-)
+(setenv "TDIR" "/dev/shm/foo/")
 
-These two bits of information, while related are separate. If anything I 
-think I'd prefer both, but then again optimisations are still good.
+mkdir -pv $TDIR && cd $TDIR && git-init
+(cd $TDIR && echo a > a && git add a && git commit -m "a")
+(cd $TDIR && echo b > b && git add b && git commit -m "b")
+(cd $TDIR && echo c > c && git add c && git commit -m "c")
+(cd $TDIR && EDITOR="sed -i -e 's/^pick/edit/'" git rebase -i 'HEAD^^')
+(cd $TDIR && echo fubar > c)
+(cd $TDIR && git-rebase --continue)
 
-Bikeshedding ends.
+    Rebasing (2/2)
+error: The following untracked working tree files would be overwritten by merge:
+	c
+    Please move or remove them before you can merge.
+    Aborting
+    Could not apply ddd6f51...
 
-Philip
+(cd $TDIR && rm -fv c)
+(cd $TDIR && git-rebase --continue)
 
->    specially considering that currently 'git branch -v' doesn't
-> show the branch we are comparing the ahead/behind to.
->
-> Strictly speaking it's a regression, but nobody would complain, and if 
-> somebody
-> does, it should be easy to revert if needed.
->
-> Felipe Contreras (2):
->  branch: trivial cleanup
->  branch: reorganize verbose options
->
-> builtin/branch.c         | 33 +++++++++++++++------------------
-> t/t6040-tracking-info.sh |  8 ++++----
-> 2 files changed, 19 insertions(+), 22 deletions(-)
->
-> -- 
+    Rebasing (2/2)
+Successfully rebased and updated refs/heads/master.
+
+(cd $TDIR && git log)
+
+;; commit `c' is gone
