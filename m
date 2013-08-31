@@ -1,116 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/6] rebase: trivial style fixes
-Date: Fri, 30 Aug 2013 20:49:27 -0700
-Message-ID: <xmqqbo4ewmd4.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 4/6] reset: trivial style cleanup
+Date: Fri, 30 Aug 2013 20:49:52 -0700
+Message-ID: <xmqq7gf2wmcf.fsf@gitster.dls.corp.google.com>
 References: <1377899810-1818-1-git-send-email-felipe.contreras@gmail.com>
-	<1377899810-1818-4-git-send-email-felipe.contreras@gmail.com>
+	<1377899810-1818-5-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 31 05:49:42 2013
+X-From: git-owner@vger.kernel.org Sat Aug 31 05:50:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFcBr-0001FN-WC
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 05:49:36 +0200
+	id 1VFcCF-0001Si-1g
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 05:49:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754307Ab3HaDtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 23:49:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44032 "EHLO
+	id S1754787Ab3HaDtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 23:49:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39253 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753091Ab3HaDtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Aug 2013 23:49:31 -0400
+	id S1753585Ab3HaDty (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 23:49:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97D3E33AC1;
-	Sat, 31 Aug 2013 03:49:30 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81EDD33AEC;
+	Sat, 31 Aug 2013 03:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FdUBspZQ9QrO4BJzRXeTK4a/+rU=; b=E3S4/O
-	MdgekyOt6YyNIaDDeLTMWqhVWhNYmM8xytCntEA4w5odJSQBt87U8x5n0lvP7AYc
-	edSBUDYnpQBEFqKB2a6/EqxSU1dD8tzkPV642hLEvHp/dfvj4B5YR2W4fL6Kmd4G
-	aaGCumk8DfgTZ8gidPBOvhFy7/7/nELlyuY08=
+	:content-type; s=sasl; bh=oU75t5RYG8T2vkHt6hMk6ye2MsM=; b=UfEtZA
+	ohs9o3bys5ZsrMU73oj9wFt7JFl3UEZQ5w/OTUmsCoXM0fgoOu7ZBzIB7G2AadwX
+	RkpbboyFKiSWvawt5GkxbpNh8TYRAHC8B/k8H6t6nttMCXkifRuclJmHYCH1B1gl
+	2bzjwONWXw5Z9waWJxQl1hre7g8rNUUfboC0Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NuYc+P7Xb/7P1yA+0W1A8MyGYYfdARQq
-	WQhvreSBs81nBSqTl37rgCLdOSiIOObuq4wYBWdCXoDaU/kH0UmfPwiWyjSxcKz/
-	9VvtltBn/7ZBAVK6Zb8b+j/EJWp0/9HKqADxCCmuneXsVjlCmvlpYhf/9Ip2NgcH
-	WZ1RMC+fxUw=
+	:content-type; q=dns; s=sasl; b=R3+07n6nQ1cQ+Ur+yfjEWsit2vlZDimP
+	KPsmu348t0CrmvNqP2zPh1fHeJ556YJ9fMrDAeYcXC1VlA86AB8DPBfy8zHeuCkr
+	esA6nqvp9fHmS8rUgOLShpSTtIA1u4CSkWYZjnVFIRhrIFP+q0ZLvuQOHy3GLRNp
+	Yx/FS6vV39w=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D44133AC0;
-	Sat, 31 Aug 2013 03:49:30 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DFE933AEB;
+	Sat, 31 Aug 2013 03:49:54 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 059F933ABE;
-	Sat, 31 Aug 2013 03:49:29 +0000 (UTC)
-In-Reply-To: <1377899810-1818-4-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Fri, 30 Aug 2013 16:56:47 -0500")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD98733AEA;
+	Sat, 31 Aug 2013 03:49:53 +0000 (UTC)
+In-Reply-To: <1377899810-1818-5-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Fri, 30 Aug 2013 16:56:48 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 56FA3F06-11F0-11E3-A0B2-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 65231670-11F0-11E3-A51F-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233497>
 
 Felipe Contreras <felipe.contreras@gmail.com> writes:
 
 > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 > ---
->  git-rebase.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  builtin/reset.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index 8d7659a..2c02853 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -324,7 +324,7 @@ done
->  test $# -gt 2 && usage
+> diff --git a/builtin/reset.c b/builtin/reset.c
+> index 225e3f1..7e65934 100644
+> --- a/builtin/reset.c
+> +++ b/builtin/reset.c
+> @@ -323,7 +323,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+>  		die_if_unmerged_cache(reset_type);
 >  
->  if test -n "$cmd" &&
-> -   test "$interactive_rebase" != explicit
-> +	test "$interactive_rebase" != explicit
->  then
->  	die "$(gettext "The --exec option must be used with the --interactive option")"
->  fi
-> @@ -486,7 +486,7 @@ case "$#" in
->  	switch_to="$1"
->  
->  	if git show-ref --verify --quiet -- "refs/heads/$1" &&
-> -	   orig_head=$(git rev-parse -q --verify "refs/heads/$1")
-> +		orig_head=$(git rev-parse -q --verify "refs/heads/$1")
->  	then
->  		head_name="refs/heads/$1"
->  	elif orig_head=$(git rev-parse -q --verify "$1")
+>  	if (reset_type != SOFT) {
+> -		struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
+> +		struct lock_file *lock = xcalloc(1, sizeof(*lock));
 
-I am not sure about this change.  I do not personally have strong
-preference on this, but it would be better to be consistent.
-
-The style of the original we see above seems to be the one that is
-consistently used in this file for conditionals that span multiple
-lines.  That is, to align the beginning of subsequent lines with the
-beginning of the conditional (i.e. the "g" in "git show-ref" on the
-first line)---which happens to be in line with what we use in our C
-sources, too.
-
-I see there is one oddball in that file, though.
-
- git-rebase.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 8d7659a..187793e 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -422,7 +422,7 @@ then
- 	case "$#" in
- 	0)
- 		if ! upstream_name=$(git rev-parse --symbolic-full-name \
--			--verify -q @{upstream} 2>/dev/null)
-+		   --verify -q @{upstream} 2>/dev/null)
- 		then
- 			. git-parse-remote
- 			error_on_missing_default_upstream "rebase" "rebase" \
+Good.  Thanks.
