@@ -1,143 +1,89 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 4/8] refs: factor delete_ref loose ref step into a
- helper
-Date: Sat, 31 Aug 2013 18:30:13 +0200
-Message-ID: <52221A15.20804@alum.mit.edu>
-References: <cover.1377784597.git.brad.king@kitware.com> <cover.1377885441.git.brad.king@kitware.com> <aa8dc7fb089894b43fdf25e2e0e144229db544a6.1377885441.git.brad.king@kitware.com>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Fix the author initials in blame for non-ASCII names
+Date: Sat, 31 Aug 2013 18:42:36 +0200
+Message-ID: <CANQwDwdrmyMLZ299t4T-o6uGmfbHL_A83R37_zy0-jyFXEq1+A@mail.gmail.com>
+References: <20130829163935.GA9689@ruderich.org> <1377851821-5412-1-git-send-email-avarab@gmail.com>
+ <xmqqppsvyrzj.fsf@gitster.dls.corp.google.com> <xmqqhae7yrls.fsf@gitster.dls.corp.google.com>
+ <74435A51-B404-4EC8-8CF8-6289F49E6DBD@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Martin Fick <mfick@codeaurora.org>
-To: Brad King <brad.king@kitware.com>
-X-From: git-owner@vger.kernel.org Sat Aug 31 18:30:25 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Simon Ruderich <simon@ruderich.org>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 31 18:43:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFo48-0005b8-Dz
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 18:30:24 +0200
+	id 1VFoGN-0003Fs-0h
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 18:43:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754327Ab3HaQaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Aug 2013 12:30:19 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:62720 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753901Ab3HaQaS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 31 Aug 2013 12:30:18 -0400
-X-AuditID: 1207440f-b7f786d000001f20-c5-52221a1996eb
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 75.5C.07968.91A12225; Sat, 31 Aug 2013 12:30:17 -0400 (EDT)
-Received: from [192.168.69.9] (p57A2512F.dip0.t-ipconnect.de [87.162.81.47])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r7VGUEHQ029294
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 31 Aug 2013 12:30:15 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130804 Thunderbird/17.0.8
-In-Reply-To: <aa8dc7fb089894b43fdf25e2e0e144229db544a6.1377885441.git.brad.king@kitware.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqCsppRRkcLKb32LnOgmLrivdTBYN
-	vVeYLe6/X8fkwOJxua+XyePjs+XsHhcvKXt83iQXwBLFbZOUWFIWnJmep2+XwJ3x6fdX5oLZ
-	IhW7XjxjbmB8xN/FyMkhIWAi0bzrBiOELSZx4d56ti5GLg4hgcuMEvffPGaHcM4wSVw+38oO
-	UsUroCnxdPV5VhCbRUBV4sGG5UwgNpuArsSinmYwW1QgTGLH9IlsEPWCEidnPmEBsUWA6let
-	awCLMwv4SXQ9mQ02R1ggSOLH5GZWiGVbGSVuTuwDW8YpECNx7/taVogGHYl3fQ+YIWx5ie1v
-	5zBPYBSYhWTHLCRls5CULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6KXm1mil5pSuokR
-	EtD8Oxi71sscYhTgYFTi4U1YqhAkxJpYVlyZe4hRkoNJSZQ3UFwpSIgvKT+lMiOxOCO+qDQn
-	tfgQowQHs5II7+mVikFCvCmJlVWpRfkwKWkOFiVxXvUl6n5CAumJJanZqakFqUUwWRkODiUJ
-	3rMSQEMFi1LTUyvSMnNKENJMHJwgw7mkRIpT81JSixJLSzLiQdEaXwyMV5AUD9De8yDtvMUF
-	iblAUYjWU4y6HO+a5n1iFGLJy89LlRLnvQ1SJABSlFGaB7cClr5eMYoDfSwMMYoHmPrgJr0C
-	WsIEtOTaRJDniksSEVJSDYwbw2f/81WZa/KVozzt4yNrroJ9TLu+LtVmevzv9rlDvoEZHRdT
-	jzeVKG1O+aGlGa+vLWS2xFnszLYJV4qT02U+fIp13L7j7tpTJibnZp3tWCeq4Rhw 
+	id S1754854Ab3HaQm6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Aug 2013 12:42:58 -0400
+Received: from mail-qe0-f42.google.com ([209.85.128.42]:55545 "EHLO
+	mail-qe0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754764Ab3HaQm5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 Aug 2013 12:42:57 -0400
+Received: by mail-qe0-f42.google.com with SMTP id w7so1591218qeb.1
+        for <git@vger.kernel.org>; Sat, 31 Aug 2013 09:42:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=k3ticqWCspUMi1Suoz39qRNpjEK3wGKsx2MjRns4jDs=;
+        b=HJFveOf7IE014Ow5544VvZkaToFBbGVs8HNaYgRtVHv9f8wGfMoVrJJ76gyXc4Dnpm
+         d+FRao5JeviUSFpv3VK+UfkarHCpUC7pJcIC6uDqjIGtWb0QBPKD6i8GSmYdI70A0LGf
+         4T065OaI6lTAs543TWaQOuT+a2EQkgTVLT7+4cTGgVS7X2n8njmLIHKrCMNap6bjmRfs
+         6eCIEBy9G+bZukJWPC5WyilBx2hw4xTn68FHCbyZcLe04XMrcsAwLFlyInvFwOmQlWKp
+         I+UZYy8vKG51qG66XSaqhf2MnQdtZn+4i7H18q6UMCnCnIPaqRloW8tRJLNQEcE7nnyz
+         J8eA==
+X-Received: by 10.49.50.232 with SMTP id f8mr18363092qeo.63.1377967376055;
+ Sat, 31 Aug 2013 09:42:56 -0700 (PDT)
+Received: by 10.49.83.134 with HTTP; Sat, 31 Aug 2013 09:42:36 -0700 (PDT)
+In-Reply-To: <74435A51-B404-4EC8-8CF8-6289F49E6DBD@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233522>
 
-On 08/30/2013 08:12 PM, Brad King wrote:
-> Factor loose ref deletion into helper function delete_ref_loose to allow
-> later use elsewhere.
-> 
-> Signed-off-by: Brad King <brad.king@kitware.com>
-> ---
->  refs.c |   22 +++++++++++++++-------
->  1 file changed, 15 insertions(+), 7 deletions(-)
-> 
-> diff --git a/refs.c b/refs.c
-> index 2e755b4..5dd86ee 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2450,14 +2450,9 @@ static int repack_without_ref(const char *refname)
->  	return commit_packed_refs();
->  }
->  
-> -int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
-> +static int delete_ref_loose(struct ref_lock *lock, int flag)
->  {
-> -	struct ref_lock *lock;
-> -	int err, i = 0, ret = 0, flag = 0;
-> -
-> -	lock = lock_ref_sha1_basic(refname, sha1, delopt, &flag);
-> -	if (!lock)
-> -		return 1;
-> +	int err, i, ret = 0;
->  	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
->  		/* loose */
->  		i = strlen(lock->lk->filename) - 5; /* .lock */
-> @@ -2468,6 +2463,19 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
->  
->  		lock->lk->filename[i] = '.';
->  	}
-> +	return ret;
-> +}
-> +
+On Fri, Aug 30, 2013 at 11:39 PM, Kyle J. McKay <mackyle@gmail.com> wro=
+te:
+> On Aug 30, 2013, at 11:13, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+
+>>>> +       binmode $fh, ':utf8';
+
+> What happens if the author name is written in ISO-8859-1 instead of U=
+TF-8 in
+> the actual commit object itself?
+>
+> I'm pretty sure I've seen this where older commits have a ISO-8859-1 =
+author
+> name and then newer commits have a UTF-8 version of the same author's=
+ name.
+>
+> In fact, in the git repository itself, look at commit 0cb3f80d (UTF-8=
+) and
+> commit 7eb93c89 (ISO-8859-1) to see this in action.
+
+Well, then you have a problem, though it is only with old history (befo=
+re
+introduction of "encoding" header in commit object).
+
+Better and more complete solution would be to use to_utf8() function
+instead of 'utf8' layer, which when finding invalid UTF-8 sequence uses
+$fallback_encoding (by default "latin1", i.e. ISO-8859-1) instead.
 
 
-At first glance it is odd that delete_ref_loose() takes a (struct
-ref_lock *) argument but only actually uses lock->lk->filename.  But I
-guess that the function is so specific to the contents of struct
-ref_lock and indeed struct lock_file that it wouldn't make sense to pass
-it only the filename attribute.  So OK.
+In my TODO list is creating PerlIO layer ':utf8-with-fallback' which wo=
+uld
+replace all those to_utf8() calls...
 
-Given that ret is only returned, you could restore the filename before
-the if statement and replace the ret variable with an immediate return
-statement:
-
-static int delete_ref_loose(struct ref_lock *lock, int flag)
-{
-	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
-		/* loose */
-		int err, i = strlen(lock->lk->filename) - 5; /* .lock */
-
-		lock->lk->filename[i] = 0;
-		err = unlink_or_warn(lock->lk->filename);
-		lock->lk->filename[i] = '.';
-		if (err && errno != ENOENT)
-			return 1;
-	}
-	return 0;
-}
-
-> +int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
-> +{
-> +	struct ref_lock *lock;
-> +	int ret = 0, flag = 0;
-> +
-> +	lock = lock_ref_sha1_basic(refname, sha1, delopt, &flag);
-> +	if (!lock)
-> +		return 1;
-> +	ret |= delete_ref_loose(lock, flag);
-> +
->  	/* removing the loose one could have resurrected an earlier
->  	 * packed one.  Also, if it was not loose we need to repack
->  	 * without it.
-> 
-
-Otherwise looks good.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+--=20
+Jakub Narebski
