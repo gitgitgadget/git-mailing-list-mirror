@@ -1,99 +1,68 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [RFC/PATCH v2 3/3] status: introduce status.displayCommentChar
- to disable display of #
-Date: Sat, 31 Aug 2013 00:00:20 +0000
-Message-ID: <20130831000019.GA899703@vauxhall.crustytoothpaste.net>
-References: <vpqhaeaasuf.fsf@anie.imag.fr>
- <1377694024-24173-1-git-send-email-Matthieu.Moy@imag.fr>
- <1377694024-24173-3-git-send-email-Matthieu.Moy@imag.fr>
- <xmqq1u5da8dp.fsf@gitster.dls.corp.google.com>
- <20130828201803.GB8088@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] revision: introduce --exclude=<glob> to tame wildcards
+Date: Sat, 31 Aug 2013 07:22:45 +0700
+Message-ID: <CACsJy8DOx8Q5kLizfeP2AgDaD8+EDsQL9xtOGphrmgG=dAabcQ@mail.gmail.com>
+References: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com>
+ <7vhae7k7t1.fsf@alter.siamese.dyndns.org> <CAMP44s1y2kvSnF3dKDMr9QtS40PNSW93DWCxFUoL658YkqYeVA@mail.gmail.com>
+ <CAPc5daVSqoE74kmsobg7RpMtiL3vzKN+ckAcWEKU_Q_wF8HYuA@mail.gmail.com>
+ <CAMP44s0P=XF5C8+fU2cJ-Xuq57iqcAn674Upub6N=+iiMpQK0g@mail.gmail.com>
+ <xmqqeh9b15x6.fsf@gitster.dls.corp.google.com> <xmqq1u5aybri.fsf_-_@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pWyiEgJYm5f9v55/"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	j.sixt@viscovery.net
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 31 02:00:40 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 31 02:23:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFYcJ-0001cZ-Us
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 02:00:40 +0200
+	id 1VFYyF-0004IL-UC
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 02:23:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755660Ab3HaAAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Aug 2013 20:00:35 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:59983 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754538Ab3HaAAe (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Aug 2013 20:00:34 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1CA1928072;
-	Sat, 31 Aug 2013 00:00:32 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20130828201803.GB8088@sigill.intra.peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.11-rc4-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752905Ab3HaAXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Aug 2013 20:23:16 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:33062 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751896Ab3HaAXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Aug 2013 20:23:15 -0400
+Received: by mail-ob0-f175.google.com with SMTP id xn12so2571036obc.34
+        for <git@vger.kernel.org>; Fri, 30 Aug 2013 17:23:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=+9SGyKZeLJXySR9nAlLO82cWAp7Ymn0iw/p45aFkEWU=;
+        b=noDWhYjd02f+MLasG5zM2EUUxd1DJ2yXxFDRE2U82jlhkAD8gZh2RACwtFQ0RDF0ky
+         Np299AMYRB7gF30ErLMuevPAlbmoaOuM7SY+iaguZOZKlvT/AMO8N9VjXAxTvccG5DMO
+         +eG8eJg9PRKsJJtwBFpgKQ1SMjDx7jFzKQMRLFPLs3uij0nGmQCcoUWEq2DDLivFCi49
+         xUnZL69sVvt4uTXK5HUhphJMh18LRYp4+Pa9tmjAojDWF4Cl9uvDY0mLZdIMLpIV6t7w
+         qo6TCXwR5rWJUpPW8Z0Bdy/CGY2t8i/52hG2z35H+7/SMz0fPJH86Zvxx1oQlrp0n5fg
+         KnpA==
+X-Received: by 10.182.134.229 with SMTP id pn5mr8402180obb.88.1377908595204;
+ Fri, 30 Aug 2013 17:23:15 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Fri, 30 Aug 2013 17:22:45 -0700 (PDT)
+In-Reply-To: <xmqq1u5aybri.fsf_-_@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233486>
 
+On Sat, Aug 31, 2013 at 6:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> +static int ref_excluded(struct rev_info *revs, const char *path)
+> +{
+> +       struct string_list_item *item;
+> +
+> +       if (!revs->ref_excludes)
+> +               return 0;
+> +       for_each_string_list_item(item, revs->ref_excludes) {
+> +               if (!fnmatch(item->string, path, 0))
+> +                       return 1;
+> +       }
+> +       return 0;
+> +}
 
---pWyiEgJYm5f9v55/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Aug 28, 2013 at 04:18:03PM -0400, Jeff King wrote:
-> On Wed, Aug 28, 2013 at 01:05:38PM -0700, Junio C Hamano wrote:
->=20
-> > What are our plans to help existing scripts people have written over
-> > time, especially before "status -s" was invented, that will be
-> > broken by use of this?
->=20
-> I thought that our response to parsing the long output of "git status"
-> was always "you are doing it wrong". The right way has always been to
-> run the plumbing tools yourself, followed eventually by the --porcelain
-> mode to "git status" being blessed as a convenient plumbing.
->=20
-> I will not say that people might not do it anyway, but at what point do
-> we say "you were warned"?
-
-It already has changed.  At cPanel, we had code that broke with a new
-version of git because the output of git status changed between 1.7.11
-and 1.8.3.  We fixed it to use --porcelain and had no problems.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---pWyiEgJYm5f9v55/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBCgAGBQJSITITAAoJEL9TXYEfUvaLglgQALwKXtIHzXuFkt+aLnyMLALe
-1dV4e5jBvSe4b++cpw3vR5dlMLw8unCHhwMbXmSwnJkBF7Maw/ejEXw2OS3N55vt
-GErc0k7u3MKCLMXsK+skjX2m6GcK8cGqwyGPmsIoMFKb2UuAkzjSBBCjtVgWkPc3
-ZvrfF5uv+xuEJhV8csNOR5oqz+O19cjz0sg0UFMCL4gX+PdXtsKb7kKYJUDFv4H3
-Fejiq1wQg9659Jyao/vc7kSKb9qI710s0kBktICI4j+zSIEwSBFp+IvHFb1mfMm0
-d0qTuD1MvdNwqpsefWlFNzDjVjWOcbIuzfCGDnjAc2G1LnKIXLhhZbgC35K77dVg
-o4nDWhk6tc/qzFEHFaQRgE8lWZdNhixj5OlDJJA4vth4xi4w46+5/8cX45aZSMJB
-iHNX4nY+rTkac3POh/lqCq6G4NBjbU12dtLOWgFmr6v3nHp73q/pLl0BXqG7RZeB
-TxWoelxhHGcR9LrCWz9RnkO0UYnzqyugkiyW3kbQqNinhYjmuvZtM0dvfOjb/ej9
-YzNrkd7KdKUlBdMIDTBdzihPDI9CbJQszykjLtWB1bU2ZQk/Smc2JBnxe0gJ4pJq
-kwOwlxEZ0BhDZJe5LT10giTLVZqnrVOATqj/fTHDSywahgbXIlSZi7WjpADs/5O/
-XV1h3pmJF4grM8Hnn3Do
-=LbNw
------END PGP SIGNATURE-----
-
---pWyiEgJYm5f9v55/--
+If you pursue this, please use wildmatch instead so it supports "foo/**".
+-- 
+Duy
