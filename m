@@ -1,109 +1,89 @@
-From: Patrick Atoon <patrick.atoon@gmail.com>
-Subject: Authentication with e-mail address as user name for HTTPS remote
-Date: Sat, 31 Aug 2013 08:52:06 +0200
-Message-ID: <CADZGgi9-nLpcaHQOevBnY9HZtkLD6Zn=gCZq8u5yefPV7gYaTg@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: Officially start moving to the term 'staging area'
+Date: Sat, 31 Aug 2013 09:46:54 +0200
+Message-ID: <52219F6E.6090605@web.de>
+References: <20130829180129.GA4880@nysa> <vpqli3kqqkp.fsf@anie.imag.fr> <521f998d25eb4_174378fe7481879@nysa.mail> <521FA90A.9040903@web.de> <CAMP44s3m_7UffHfie8=_izPt5tCw+9SXPa4sqoHuphuVyTHqcw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 31 08:52:14 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Miles Bader <miles@gnu.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Scott Chacon <schacon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 31 09:47:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VFf2b-00005y-Bi
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 08:52:13 +0200
+	id 1VFfu6-0001al-81
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Aug 2013 09:47:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756130Ab3HaGwI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Aug 2013 02:52:08 -0400
-Received: from mail-qc0-f171.google.com ([209.85.216.171]:57623 "EHLO
-	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753324Ab3HaGwH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Aug 2013 02:52:07 -0400
-Received: by mail-qc0-f171.google.com with SMTP id n1so1513513qcw.2
-        for <git@vger.kernel.org>; Fri, 30 Aug 2013 23:52:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=u4yzCRZL+ZXogLb5Va3+wTR8osgVfR1OLFl10razczA=;
-        b=AvBq14hzYRZ7CfrdMMs8l9S/cPRbDiW6HiwWzj2lmkAklzM35MwmRW1YiRzhi+hw3a
-         XkQ/8jYp4kxaD5B1Kb+rAqiorm+S3MT6zHq2OD2K2QsdWtcFxO2PQTkMBOufRXDrXFPq
-         EtY88CDtuQfB9qPwL9SINZn2cr6HwsXVo+cIIXKXIH7pT5QnKdLM63ALm1U2qpf0QHWv
-         t5vRFYzX/9TkbasZEgKa+6WlGpe/OEFoTxK8jkbRm8spHhC+rgTQEE+xvCY6c8dRjtFn
-         k3tB5JNpQh9Lwoa7BYmvW5J57mFkj+ZPs91MNIKA4un5hA/Eij+VRGuusgmxXMVknaDp
-         KWYQ==
-X-Received: by 10.224.28.130 with SMTP id m2mr17311487qac.35.1377931926353;
- Fri, 30 Aug 2013 23:52:06 -0700 (PDT)
-Received: by 10.49.39.71 with HTTP; Fri, 30 Aug 2013 23:52:06 -0700 (PDT)
+	id S1754596Ab3HaHr0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Aug 2013 03:47:26 -0400
+Received: from mout.web.de ([212.227.17.12]:52603 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753324Ab3HaHrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Aug 2013 03:47:25 -0400
+Received: from [192.168.2.102] ([79.253.149.114]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0LsQLM-1VzpRb36nA-011xre for <git@vger.kernel.org>;
+ Sat, 31 Aug 2013 09:47:24 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <CAMP44s3m_7UffHfie8=_izPt5tCw+9SXPa4sqoHuphuVyTHqcw@mail.gmail.com>
+X-Provags-ID: V03:K0:KzmfcvthgyLNvk1r714ZuEdr210vG2sah+1GuEaZOIagEFezzr/
+ 619Eq/9PKteAz8KBuRk3wA0BI76Xxw21SDjqk/X0WrsHj4GQ4kNTg5OZlwn7969YDAXDW0G
+ 9CKNyq9409YqFr0duvRqB+9KiKpgCnhkdEqJA84HO1c7TDbHK53gde8QWffXBcpeF6Eezba
+ onoCyqEaHagHFefFQ4ilg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233506>
 
-Hello,
+Am 29.08.2013 22:36, schrieb Felipe Contreras:
+> On Thu, Aug 29, 2013 at 3:03 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wro=
+te:
+>> If you have a --work-tree option then parseopt accepts --work as wel=
+l,
+>> unless it's ambiguous, i.e. another option starts with --work, too. =
+ So you
+>> can have a descriptive, extra-long option and type just a few charac=
+ters at
+>> the same time.
+>
+> Right, but what do we use in the documentation? Writing --work-tree i=
+n
+> the 'git reset' table for example would be rather ugly. I'm fine with
+> --work-tree, but I think it would be weird to have short-hands in the
+> documentation, although not entirely bad.
 
-I run into a problem with command line git on Linux.
+I don't see what's so ugly about it.
 
-The remote git server I try to clone from uses HTTPS as a protocol and
-requires full
-fledged e-mail addresses for a user name in its authentication. In
-TortoiseGit (with
-winstore) or SourceTree, the user name and password are asked and
-stored. But on the
-command line I'm stuck, unable to provide the user name.
+The git command itself has a --work-tree parameter for specifying the=20
+location of the checked-out files, however.  It could be confusing to=20
+have the same parameter do different things:
 
-Here is what happens. First try cloning without specifying the user name:
+	$ git reset --work-tree=3D/some/where reset --work-tree
 
----8<-------------------------------------------------------
-$ git clone https://git.server.com/git/test.git
-Initialized empty Git repository in /tmp/git/test/.git/
-error: The requested URL returned error: 401 Authorization Required
-while accessing
-https://git.server.com/git/test.git/nfo/refs
+Perhaps a note in the documentation is enough to clear this up.
 
-fatal: HTTP request failed
----8<-------------------------------------------------------
 
-I couldn't find a "--username" flag or something similar for the git
-command, so my next
-try was to incorporate the user name in the URL, basic auth style. The
-repo URL looks
-something like this:
+In general I think that the full long option should be mentioned in=20
+synopsis and description, while abbreviated parameters could be used in=
+=20
+an example.  The ability to understand unambiguous shortened options is=
+=20
+a general feature and doesn't have to be explained in the manpage for a=
+=20
+specific command.
 
-https://user.email@emaildomain.com@git.server.com/git/test.git
+NB: It would be nice to have more commands use parseopt, for that=20
+feature alone.
 
-Note the double "@" there, it is bound to cause trouble.
-This is what happened:
-
----8<-------------------------------------------------------
-$ git clone https://user.email@emaildomain.com@git.server.com/git/test.git
-Initialized empty Git repository in /tmp/git/test/.git/
-Password:
-error: Couldn't resolve host 'emaildomain.com@git.server.com' while accessing
-https://user.email@emaildomain.com@git.server.com/git/test.git/info/refs
-
-fatal: HTTP request failed
----8<-------------------------------------------------------
-
-It appears the "@" was picked up as an indication that the URL
-contains the username,
-however the URL was split at the wrong position. The splitting
-algorithm doesn't seem to
-take into account that a user name might contain an "@".
-
-My request: please modify command line git to support full fledged
-e-mail addresses as
-user names in HTTPS requests.
-
-I'm not a C adept, still I browsed the code a bit and bumped into
-"transport.c"'s
-"transport_anonymize_url" method. I think that code could be modified
-to do a better job
-of splitting the URL, which might then avoid problems down the line.
-
-Thanks for reading this far.
-
-Regards,
-
-Patrick
+Ren=C3=A9
