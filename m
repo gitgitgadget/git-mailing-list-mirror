@@ -1,139 +1,105 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v3 2/2] submodule: don't print status output with ignore=all
-Date: Sun,  1 Sep 2013 20:06:49 +0000
-Message-ID: <1378066009-1017855-3-git-send-email-sandals@crustytoothpaste.net>
-References: <1378066009-1017855-1-git-send-email-sandals@crustytoothpaste.net>
-Cc: jrnieder@gmail.com, Jens.Lehmann@web.de, judge.packham@gmail.com,
-	gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 01 22:07:27 2013
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v3 07/11] Documentation/replace: tell that -f option bypasses the type check
+Date: Sun, 1 Sep 2013 21:11:24 +0100
+Organization: OPDS
+Message-ID: <29D8721CD44F4C3180D6F1BA5CDCF38E@PhilipOakley>
+References: <20130831190528.26699.33964.chriscool@tuxfamily.org><20130831191215.26699.720.chriscool@tuxfamily.org><70F5C527E29F43A9BE85694F560E01A9@PhilipOakley> <20130901.134900.829124962244710553.chriscool@tuxfamily.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <gitster@pobox.com>, "Git List" <git@vger.kernel.org>,
+	<trast@inf.ethz.ch>, <j6t@kdbg.org>
+To: "Christian Couder" <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sun Sep 01 22:11:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGDvi-0001iP-4h
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Sep 2013 22:07:26 +0200
+	id 1VGDzJ-0002qi-L1
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Sep 2013 22:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754333Ab3IAUHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Sep 2013 16:07:16 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:60031 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753071Ab3IAUHM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Sep 2013 16:07:12 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 43C0528078;
-	Sun,  1 Sep 2013 20:07:12 +0000 (UTC)
-X-Mailer: git-send-email 1.8.4.rc3
-In-Reply-To: <1378066009-1017855-1-git-send-email-sandals@crustytoothpaste.net>
+	id S1753284Ab3IAULF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Sep 2013 16:11:05 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:9962 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752168Ab3IAULE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Sep 2013 16:11:04 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AoAMAHWeI1JOl3GZ/2dsb2JhbABagwc1iTa3fgQEAYEdF3RoAQGBHwEBFAEEAQEEAQgBAS4eAQEhCwIDBQIBAw4HDCUUAQQaBgcXBhMIAgECAwGFOAcBghIZCrkej3+DJIEAA4h9hhKKFYsLhSyBOimBPjs
+X-IPAS-Result: AoAMAHWeI1JOl3GZ/2dsb2JhbABagwc1iTa3fgQEAYEdF3RoAQGBHwEBFAEEAQEEAQgBAS4eAQEhCwIDBQIBAw4HDCUUAQQaBgcXBhMIAgECAwGFOAcBghIZCrkej3+DJIEAA4h9hhKKFYsLhSyBOimBPjs
+X-IronPort-AV: E=Sophos;i="4.89,1003,1367967600"; 
+   d="scan'208";a="421590859"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 01 Sep 2013 21:10:59 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233594>
 
-git status prints information for submodules, but it should ignore the status of
-those which have submodule.<name>.ignore set to all.  Fix it so that it does
-properly ignore those which have that setting either in .git/config or in
-.gitmodules.
+From: "Christian Couder" <chriscool@tuxfamily.org>
+> From: "Philip Oakley" <philipoakley@iee.org>
+>>
+>> From: "Christian Couder" <chriscool@tuxfamily.org>
+>>>
+>>> The replaced object and the replacement object must be of the same
+>>> type.
+>>> -There is no other restriction on them.
+>>> +This restriction can be bypassed using `-f`.
+>>>
+>>> Unless `-f` is given, the 'replace' reference must not yet exist.
+>>>
+>>> +There is no other restriction on the replaced and replacement
+>>> objects.
+>>
+>> Is this trying to allude to the fact that merge commits may be
+>> exchanged with non-merge commits? I strongly believe that this
+>> ability
+>> to exchange merge and non-merge commits should be stated _explicitly_
+>> to counteract the false beliefs that are listed out on the internet.
+>
+> Maybe we can show that in an example. But I think the patch is quite
+> clear as it is and should be enough.
+>
+> If we really want to correct some false beliefs, the best would be to
+> state the truth where those false beliefs are stated.
+>
+I've added a sub-comment to the original SO post that started this
+thread (my post $gmane/231598 - SO/a/18027030/717355), but given the
+guy's blog has comments going back to 2009 I suspect its a bit of a
+http://xkcd.com/386/ task, hence my desire that it's explicitly
+mentioned in the 'replace' documentation. In addition, if the guy 
+doesn't correct his post I'll mark it down in a couple of days to make 
+it plain to other readers it's in error.
 
-Not ignored are submodules that are added, deleted, or moved (which is
-essentially a combination of the first two) because it is not easily possible to
-determine the old path once a move has occurred, nor is it easily possible to
-detect which adds and deletions are moves and which are not.  This also
-preserves the previous behavior of always listing modules which are to be
-deleted.
+The creation of a (merge?) commit that's equivalent to a graft line
+isn't something that jumps out (to me) as an easy couple lines of bash
+script.
 
-Tests are included which verify that this change has no effect on git submodule
-summary without the --for-status option.
+A 'graft2replace' script (or 'git-graft' command) which takes an
+existing graft file (or command line list) and creates the replacement 
+objects and then does the replace, all while still in a dirty tree would 
+be the holy grail for properly deprecating grafts (which are sooo easy 
+to create)
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- git-submodule.sh             |  7 +++++++
- t/t7401-submodule-summary.sh | 30 ++++++++++++++++++++++++++++++
- t/t7508-status.sh            |  4 ++--
- 3 files changed, 39 insertions(+), 2 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 38520db..004b21c 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -1036,6 +1036,13 @@ cmd_summary() {
- 		do
- 			# Always show modules deleted or type-changed (blob<->module)
- 			test $status = D -o $status = T && echo "$sm_path" && continue
-+			# Respect the ignore setting for --for-status.
-+			if test -n "$for_status"
-+			then
-+				name=$(module_name "$sm_path")
-+				ignore_config=$(get_submodule_config "$name" ignore none)
-+				test $status != A -a $ignore_config = all && continue
-+			fi
- 			# Also show added or modified modules which are checked out
- 			GIT_DIR="$sm_path/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
- 			echo "$sm_path"
-diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
-index ac2434c..ca9441e 100755
---- a/t/t7401-submodule-summary.sh
-+++ b/t/t7401-submodule-summary.sh
-@@ -104,6 +104,36 @@ EOF
- 	test_cmp expected actual
- "
- 
-+test_expect_success '.gitmodules ignore=all has no effect' "
-+	git config --add -f .gitmodules submodule.sm1.ignore all &&
-+	git config --add -f .gitmodules submodule.sm1.path sm1 &&
-+	git submodule summary >actual &&
-+	cat >expected <<-EOF &&
-+* sm1 $head1...$head2 (1):
-+  > Add foo3
-+
-+EOF
-+	test_cmp expected actual &&
-+	git config -f .gitmodules --remove-section submodule.sm1
-+"
-+
-+test_expect_success '.git/config ignore=all has no effect' "
-+	git config --add -f .gitmodules submodule.sm1.ignore none &&
-+	git config --add -f .gitmodules submodule.sm1.path sm1 &&
-+	git config --add submodule.sm1.ignore all &&
-+	git config --add submodule.sm1.path sm1 &&
-+	git submodule summary >actual &&
-+	cat >expected <<-EOF &&
-+* sm1 $head1...$head2 (1):
-+  > Add foo3
-+
-+EOF
-+	test_cmp expected actual &&
-+	git config --remove-section submodule.sm1 &&
-+	git config -f .gitmodules --remove-section submodule.sm1
-+"
-+
-+
- commit_file sm1 &&
- head3=$(
- 	cd sm1 &&
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index ac3d0fe..fb89fb9 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1316,7 +1316,7 @@ test_expect_success "--ignore-submodules=all suppresses submodule summary" '
- 	test_i18ncmp expect output
- '
- 
--test_expect_failure '.gitmodules ignore=all suppresses submodule summary' '
-+test_expect_success '.gitmodules ignore=all suppresses submodule summary' '
- 	git config --add -f .gitmodules submodule.subname.ignore all &&
- 	git config --add -f .gitmodules submodule.subname.path sm &&
- 	git status > output &&
-@@ -1324,7 +1324,7 @@ test_expect_failure '.gitmodules ignore=all suppresses submodule summary' '
- 	git config -f .gitmodules  --remove-section submodule.subname
- '
- 
--test_expect_failure '.git/config ignore=all suppresses submodule summary' '
-+test_expect_success '.git/config ignore=all suppresses submodule summary' '
- 	git config --add -f .gitmodules submodule.subname.ignore none &&
- 	git config --add -f .gitmodules submodule.subname.path sm &&
- 	git config --add submodule.subname.ignore all &&
--- 
-1.8.4.rc3
+>> It's probably better stated in a separate patch for that explicit
+>> purpose to avoid mixed messages within this commit.
+>
+> If people agree, I will add a another patch with an example in an
+> EXAMPLE section.
+>
+> Thanks,
+> Christian.
+>
+>
+Thanks for your work on this.
+Philip 
