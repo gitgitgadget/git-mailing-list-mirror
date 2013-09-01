@@ -1,71 +1,100 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v3 3/4] get rid of "git submodule summary --for-status"
-Date: Sun, 01 Sep 2013 15:47:43 +0200
-Message-ID: <5223457F.2080608@web.de>
-References: <1377781536-31955-1-git-send-email-Matthieu.Moy@imag.fr> <1377781536-31955-4-git-send-email-Matthieu.Moy@imag.fr> <521FA6ED.9010005@web.de> <vpqioyonqdn.fsf@anie.imag.fr> <5220F539.9050700@web.de> <5220F7D7.2000300@web.de> <5220FBD5.6020807@web.de> <20130831160759.GB899703@vauxhall.crustytoothpaste.net>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v3 01/11] replace: forbid replacing an object with one of a different type
+Date: Sun, 1 Sep 2013 20:26:28 +0100
+Organization: OPDS
+Message-ID: <9D27EE89D9994C0997D19E0C0AF7493F@PhilipOakley>
+References: <20130831190528.26699.33964.chriscool@tuxfamily.org><20130831191215.26699.18957.chriscool@tuxfamily.org><7D7C5D53BA544AAD92B05DF9635926C8@PhilipOakley> <20130901.135321.1182162250658468787.chriscool@tuxfamily.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	gitster@pobox.com
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Sun Sep 01 15:47:55 2013
+Cc: <gitster@pobox.com>, <git@vger.kernel.org>, <trast@inf.ethz.ch>,
+	<j6t@kdbg.org>
+To: "Christian Couder" <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sun Sep 01 21:26:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VG80Q-0004ZD-Rl
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Sep 2013 15:47:55 +0200
+	id 1VGDHx-0005vo-OW
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Sep 2013 21:26:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753717Ab3IANrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Sep 2013 09:47:51 -0400
-Received: from mout.web.de ([212.227.17.12]:55205 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752020Ab3IANru (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Sep 2013 09:47:50 -0400
-Received: from [192.168.178.41] ([91.3.187.67]) by smtp.web.de (mrweb004)
- with ESMTPA (Nemesis) id 0MC6ZE-1V7MZu3nd2-008pys for <git@vger.kernel.org>;
- Sun, 01 Sep 2013 15:47:48 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <20130831160759.GB899703@vauxhall.crustytoothpaste.net>
-X-Enigmail-Version: 1.5.2
-X-Provags-ID: V03:K0:CMI5aFEr9n8Um1iEV8QVaOZG62QF2JN/e9g1ycLG9NXKBxIgiIP
- /XKIhtZJhkIYuGuGVABn9xm+c8OdSumDu9+ooown0v5XNIrwKL1HekrGO5wboFJsxbD3tXs
- jJT95Gv5ZNSs/e7bKAkOgDn7qRxASWGgdE4q6r7ad/Vl17G9nrh+X7LFk1phoJ3gJjhlyzz
- escjA8pTTrxw/lisyuFdw==
+	id S1756290Ab3IAT0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Sep 2013 15:26:17 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:24928 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752894Ab3IAT0R (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Sep 2013 15:26:17 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: An0MAB+UI1JOl3GZ/2dsb2JhbABagweJa7d+BAQBgR0XdGgBAYEfAQEUAQQBAQQBCAEBLh4BASELAgMFAgEDDgcMJRQBBBoGBxcGEwgCAQIDAYU4BwGCEhkKuSuPf4MkgQADiH2GEoUMlUCBOimBPjs
+X-IPAS-Result: An0MAB+UI1JOl3GZ/2dsb2JhbABagweJa7d+BAQBgR0XdGgBAYEfAQEUAQQBAQQBCAEBLh4BASELAgMFAgEDDgcMJRQBBBoGBxcGEwgCAQIDAYU4BwGCEhkKuSuPf4MkgQADiH2GEoUMlUCBOimBPjs
+X-IronPort-AV: E=Sophos;i="4.89,1002,1367967600"; 
+   d="scan'208";a="435766474"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip03ir2.opaltelecom.net with SMTP; 01 Sep 2013 20:26:15 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233590>
 
-Am 31.08.2013 19:08, schrieb brian m. carlson:
-> On Fri, Aug 30, 2013 at 10:08:53PM +0200, Jens Lehmann wrote:
->> Am 30.08.2013 21:51, schrieb Jens Lehmann:
->>> Am 30.08.2013 21:40, schrieb Jens Lehmann:
->>>> Am 29.08.2013 23:23, schrieb Matthieu Moy:
->>>>> Jens Lehmann <Jens.Lehmann@web.de> writes:
->>>>>
->>>>>> Am 29.08.2013 15:05, schrieb Matthieu Moy:
->>>>> Because of the missing quotes around $for_status, it seems the test is
->>>>> unconditionnaly true:
->>>>>
->>>>> $ test -n t ; echo $?
->>>>> 0
->>>>> $ test -n   ; echo $?
->>>>> 0
+From: "Christian Couder" <chriscool@tuxfamily.org>
+> From: "Philip Oakley" <philipoakley@iee.org>
 >>
->> Right you are, I did not notice the missing "" in my review. Looks like
->> we also should add one or more tests making sure that submodule summary
->> and status never honor the ignore settings.
-> 
-> How do we want to handle this?  I can send a reroll and include some
-> new tests, but if this code is going away, then there's no point.
+>> Sorry for not replying earlier in the series.
+>>
+>> From: "Christian Couder" <chriscool@tuxfamily.org>
+>>> Users replacing an object with one of a different type were not
+>>> prevented to do so, even if it was obvious, and stated in the doc,
+>>> that bad things would result from doing that.
+>>>
+>>> To avoid mistakes, it is better to just forbid that though.
+>>>
+>>> If one object is replaced with one of a different type, the only way
+>>> to keep the history valid is to also replace all the other objects
+>>> that point to the replaced object.
+>>
+>> Isn't this a recursion problem? Taken in that order one unravels the
+>> whole DAG.
+>>
+>> However if considered in the reverse direction, one can replace an
+>> existing object within the DAG with a carefully crafted alternative 
+>> of
+>> the same type, but which then wrongly references other dangling
+>> objects which are then replaced by objects which have the right type
+>> (this last replacement requires -f force).
+>
+> I am not sure I understand what you are saying.
+>
+> Anyway in a previous version of this patch I tried to be more explicit
+> about this, but Junio basically said that he found no value in
+> discussing this more explicitely...
 
-A reroll would be great, as I think your patch is a bugfix that should
-go in rather soonish no matter how we continue with the comment signs.
-Two new tests (one for submodule summary and one for submodule status)
-with both the global ignore setting and a submodule specific one set
-to "all" showing no impact on the output would suffice (and trigger the
-then also fixed missing "" bug ;-).
+I would agree that it's not worth discussing it more explicitly.
+
+My comment was more about the direction of the line of reasoning which I 
+felt was a bit Catch 22 when starting from an existing complete DAG (no 
+garbage) and attempting to replace an object with another of a different 
+type and still have a valid DAG.  The construction of the replacement 
+items needs to be in the right order if one of the replacements is of 
+the 'wrong' type (such a construction requires the creation or uses, and 
+ultimately replacement of, extraneous objects that aren't (yet) in the 
+DAG).
+
+But as already been said that's a problem for the user of the --force 
+option ;-)
+
+Philip
+
+>
+> Thanks,
+> Christian.
+> 
