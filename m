@@ -1,216 +1,95 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/6] Add concept of 'publish' branch
-Date: Sun, 1 Sep 2013 04:41:28 -0400
-Message-ID: <CAPig+cQUiSC4r01nSqRnrDj230x=tUK4dGUXhWrUitSAVKZ-Wg@mail.gmail.com>
-References: <1378024002-26190-1-git-send-email-felipe.contreras@gmail.com>
-	<1378024002-26190-3-git-send-email-felipe.contreras@gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 11/11] t6050-replace: use some long option names
+Date: Sun, 01 Sep 2013 12:01:32 +0200 (CEST)
+Message-ID: <20130901.120132.1611298105222242724.chriscool@tuxfamily.org>
+References: <20130831190528.26699.33964.chriscool@tuxfamily.org>
+	<20130831191215.26699.76207.chriscool@tuxfamily.org>
+	<CAPig+cSwQdhybTzRwqGLbdxGRcAZfBeU6jjWYy43G0oT0hxkNw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@imag.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 01 10:41:37 2013
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org, philipoakley@iee.org,
+	trast@inf.ethz.ch, j6t@kdbg.org
+To: sunshine@sunshineco.com
+X-From: git-owner@vger.kernel.org Sun Sep 01 12:01:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VG3Dz-0004Zx-VO
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Sep 2013 10:41:36 +0200
+	id 1VG4Tl-0001NG-M1
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Sep 2013 12:01:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755322Ab3IAIlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Sep 2013 04:41:32 -0400
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:44577 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754749Ab3IAIla (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Sep 2013 04:41:30 -0400
-Received: by mail-lb0-f180.google.com with SMTP id q8so2976960lbi.25
-        for <git@vger.kernel.org>; Sun, 01 Sep 2013 01:41:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=QLkiV7bOnDO4Kkw4Udb+SOa3v1hsw5OMmMKKiNgNXOs=;
-        b=wxLCBqlBYbb/P7WgMTs3Gd4qldNjgi8u6WPm7jlPAL7zsnm81QUDhpZWPdONDwkC5q
-         3MGnd4cfGJPUGf1lZK5KgaxfrWVRDyric649v7MPjxpYTADK+o+Znz98Ng8q3mUTSlrF
-         aphsrKsZSUWkxT+o3fLuJejtDCBkLQSoaytUQqsQ42mTbooMgWYv8P9P6MKThC2pQYLf
-         4EhYd0lKZV5oeCZ+E8H/UmiZ2EptPrsCHP1gnNO08lyFDmPCXI38snd1I0H0u9+VVnua
-         DBMZN8+eHoMcpB9TSE5RlH7SiZdDm1VTFf+WmYxWNW1Q1zkOaOXlmZUcYUKBnwIwecI7
-         64hg==
-X-Received: by 10.152.116.7 with SMTP id js7mr16000114lab.11.1378024889041;
- Sun, 01 Sep 2013 01:41:29 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Sun, 1 Sep 2013 01:41:28 -0700 (PDT)
-In-Reply-To: <1378024002-26190-3-git-send-email-felipe.contreras@gmail.com>
-X-Google-Sender-Auth: Ue90BQFs_sd-Ozef_cHMeJvjVK8
+	id S1757217Ab3IAKBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Sep 2013 06:01:44 -0400
+Received: from mail-2y.bbox.fr ([194.158.98.15]:53911 "EHLO mail-2y.bbox.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755596Ab3IAKBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Sep 2013 06:01:43 -0400
+Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-2y.bbox.fr (Postfix) with ESMTP id C30565E;
+	Sun,  1 Sep 2013 12:01:36 +0200 (CEST)
+In-Reply-To: <CAPig+cSwQdhybTzRwqGLbdxGRcAZfBeU6jjWYy43G0oT0hxkNw@mail.gmail.com>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233580>
 
-On Sun, Sep 1, 2013 at 4:26 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> The upstream branch is:
+From: Eric Sunshine <sunshine@sunshineco.com>
 >
->   branch.$name.remote
->   branch.$name.merge
->
-> The publish branch is:
->
->   branch.$name.pushremote
->   branch.$name.push
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  builtin/push.c | 19 +++++++++++++++----
->  remote.c       | 34 ++++++++++++++++++++++++++++------
->  remote.h       |  4 ++++
->  3 files changed, 47 insertions(+), 10 deletions(-)
->
-> diff --git a/builtin/push.c b/builtin/push.c
-> index 5dc06a3..f2deddf 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -150,6 +150,20 @@ static void setup_push_current(struct remote *remote, struct branch *branch)
->         add_refspec(branch->name);
->  }
->
-> +static void setup_push_simple(struct remote *remote, struct branch *branch,
-> +                               int triangular)
-> +{
-> +       if (branch->push_name) {
-> +               struct strbuf refspec = STRBUF_INIT;
-> +               strbuf_addf(&refspec, "%s:%s", branch->name, branch->push_name);
-> +               add_refspec(refspec.buf);
+>> diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+>> index 0b07a0b..5dc26e8 100755
+>> --- a/t/t6050-replace.sh
+>> +++ b/t/t6050-replace.sh
+>> @@ -122,9 +122,9 @@ test_expect_success '"git replace" listing and deleting' '
+>>       test "$HASH2" = "$(git replace -l)" &&
+>>       test "$HASH2" = "$(git replace)" &&
+>>       aa=${HASH2%??????????????????????????????????????} &&
+>> -     test "$HASH2" = "$(git replace -l "$aa*")" &&
+>> +     test "$HASH2" = "$(git replace --list "$aa*")" &&
+>>       test_must_fail git replace -d $R &&
+>> -     test_must_fail git replace -d &&
+>> +     test_must_fail git replace --delete &&
+>>       test_must_fail git replace -l -d $HASH2 &&
+> 
+> Is this sort of change a good idea? A person reading the code, but not
+> familiar with this particular patch, might not understand the
+> seemingly random choice of short versus long option usage. Such a
+> person might be led to wonder if there is some subtle difference
+> between the short and long forms,
 
-strbuf_release(&refspec);
+I don't think that we should care about people who might wonder if
+there are subtle differences between short and long forms, because of
+such tests.
 
-> +       } else if (triangular) {
-> +               setup_push_current(remote, branch);
-> +       } else {
-> +               setup_push_upstream(remote, branch, triangular);
-> +       }
-> +}
-> +
->  static char warn_unspecified_push_default_msg[] =
->  N_("push.default is unset; its implicit value is changing in\n"
->     "Git 2.0 from 'matching' to 'simple'. To squelch this message\n"
-> @@ -210,10 +224,7 @@ static void setup_default_push_refspecs(struct remote *remote)
->                 break;
->
->         case PUSH_DEFAULT_SIMPLE:
-> -               if (triangular)
-> -                       setup_push_current(remote, get_current_branch(remote));
-> -               else
-> -                       setup_push_upstream(remote, get_current_branch(remote), triangular);
-> +               setup_push_simple(remote, get_current_branch(remote), triangular);
->                 break;
->
->         case PUSH_DEFAULT_UPSTREAM:
-> diff --git a/remote.c b/remote.c
-> index efcba93..04c7ed9 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -350,13 +350,17 @@ static int handle_config(const char *key, const char *value, void *cb)
->                                 explicit_default_remote_name = 1;
->                         }
->                 } else if (!strcmp(subkey, ".pushremote")) {
-> +                       if (git_config_string(&branch->pushremote_name, key, value))
-> +                               return -1;
->                         if (branch == current_branch)
-> -                               if (git_config_string(&pushremote_name, key, value))
-> -                                       return -1;
-> +                               pushremote_name = xstrdup(branch->pushremote_name);
->                 } else if (!strcmp(subkey, ".merge")) {
->                         if (!value)
->                                 return config_error_nonbool(key);
->                         add_merge(branch, xstrdup(value));
-> +               } else if (!strcmp(subkey, ".push")) {
-> +                       if (git_config_string(&branch->push_name, key, value))
-> +                               return -1;
->                 }
->                 return 0;
->         }
-> @@ -1492,6 +1496,14 @@ struct branch *branch_get(const char *name)
->                         }
->                 }
->         }
-> +       if (ret && ret->pushremote_name) {
-> +               struct remote *pushremote;
-> +               pushremote = pushremote_get(ret->pushremote_name);
-> +               ret->push.src = xstrdup(ret->push_name);
-> +               if (remote_find_tracking(pushremote, &ret->push)
-> +                   && !strcmp(ret->pushremote_name, "."))
-> +                       ret->push.dst = xstrdup(ret->push_name);
-> +       }
->         return ret;
->  }
->
-> @@ -1694,6 +1706,15 @@ int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1)
->         return found;
->  }
->
-> +static char *get_base(struct branch *branch)
-> +{
-> +       if (branch->push.dst)
-> +               return branch->push.dst;
-> +       if (branch->merge && branch->merge[0] && branch->merge[0]->dst)
-> +               return branch->merge[0]->dst;
-> +       return NULL;
-> +}
-> +
->  /*
->   * Return true if there is anything to report, otherwise false.
->   */
-> @@ -1710,15 +1731,16 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
->          * Nothing to report unless we are marked to build on top of
->          * somebody else.
->          */
-> -       if (!branch ||
-> -           !branch->merge || !branch->merge[0] || !branch->merge[0]->dst)
-> +       if (!branch)
-> +               return 0;
-> +       base = get_base(branch);
-> +       if (!base)
->                 return 0;
->
->         /*
->          * If what we used to build on no longer exists, there is
->          * nothing to report.
->          */
-> -       base = branch->merge[0]->dst;
->         if (read_ref(base, sha1))
->                 return 0;
->         theirs = lookup_commit_reference(sha1);
-> @@ -1781,7 +1803,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
->         if (!stat_tracking_info(branch, &num_ours, &num_theirs))
->                 return 0;
->
-> -       base = branch->merge[0]->dst;
-> +       base = get_base(branch);
->         base = shorten_unambiguous_ref(base, 0);
->         if (!num_theirs) {
->                 strbuf_addf(sb,
-> diff --git a/remote.h b/remote.h
-> index cf56724..79e5adf 100644
-> --- a/remote.h
-> +++ b/remote.h
-> @@ -138,6 +138,10 @@ struct branch {
->         struct refspec **merge;
->         int merge_nr;
->         int merge_alloc;
-> +
-> +       const char *pushremote_name;
-> +       const char *push_name;
-> +       struct refspec push;
->  };
->
->  struct branch *branch_get(const char *name);
-> --
-> 1.8.4-337-g7358a66-dirty
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+The doc says that there is no difference, and there is also no
+difference in other git commands, and git replace is an advanced
+command, and very few regular users probably read tests, ...
+
+> and then unnecessarily spend time
+> digging into the code and documentation in an attempt to figure it
+> out. Alternately, someone reading the code might be led to assume that
+> the person who added the tests was being sloppy.
+
+Why not just assume that the person who added the tests is so great as
+to even take care of testing the long options names?
+
+> Hopefully, t0040-parse-options should already be proof enough that
+> long options are correctly handled, 
+
+Yeah, indeed!
+
+> but if you really want to test
+> them here too, it seems like a separate test would be more appropriate
+> than randomly changing short form options to long in various tests.
+
+Introducing some randomness in tests also has some value, you
+know. And at the same time it doesn't even slow down the test suite
+while adding separate tests would slow it down, and make readers spend
+more time reading the whole test suite, and would be a bigger burden
+for git developers to maintain for no good reason.
+
+Best,
+Christian.
