@@ -1,87 +1,114 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 1/6] merge: simplify ff-only option
-Date: Mon,  2 Sep 2013 17:17:53 -0500
-Message-ID: <1378160278-14872-2-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 2/6] t: replace pulls with merges
+Date: Mon,  2 Sep 2013 17:17:54 -0500
+Message-ID: <1378160278-14872-3-git-send-email-felipe.contreras@gmail.com>
 References: <1378160278-14872-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 03 00:22:54 2013
+X-From: git-owner@vger.kernel.org Tue Sep 03 00:22:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGcWL-0000xA-Si
+	id 1VGcWM-0000xA-E0
 	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 00:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759062Ab3IBWWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 18:22:47 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:54223 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756218Ab3IBWWq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 18:22:46 -0400
-Received: by mail-ob0-f181.google.com with SMTP id dn14so4957548obc.40
-        for <git@vger.kernel.org>; Mon, 02 Sep 2013 15:22:46 -0700 (PDT)
+	id S1759098Ab3IBWWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 18:22:51 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:56545 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756218Ab3IBWWt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Sep 2013 18:22:49 -0400
+Received: by mail-ob0-f180.google.com with SMTP id v19so4925977obq.39
+        for <git@vger.kernel.org>; Mon, 02 Sep 2013 15:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DpGIxzfH4Ytwt9F5m96OPkze8ga4mp3lU3SBuENUiHA=;
-        b=RCy+QpWGiwTjZFZMCOQ6JD3fCTJWZ8YWGb0qcGOeWHjQkp2J+s4sw2MPw4E7LMeDq0
-         xx0yVtLYZVYJLoJ5d1y4eyz+W+GLaFvl20y5Pnxztox6MS4dQj1NE7JMLjM+gxLzPF8b
-         Ps/nNIWn+8nCTTBQ6uT+YpZn6z+kL4bZiiasFsuYs9C+l/0zfcfKcYVIozBn/ZTxPrb1
-         iajPcKv8RyrZiO2mi3ViP8PvzGbxITwhlKT6z2nPhP0whMlE/Lui+BkzJe8LNSQ+ugby
-         I3kQp4HPO0yrnEJ+aLOFOBC9uzgRJmc1cWzmeaSsM4buLYytARBnQ5cJuaSNU2/VcGaf
-         Fv9g==
-X-Received: by 10.182.230.135 with SMTP id sy7mr18252087obc.24.1378160565949;
-        Mon, 02 Sep 2013 15:22:45 -0700 (PDT)
+        bh=eG6txFzFFtpoaTVqvLHdQwZUoqz2pcl8okp+wpJQxbI=;
+        b=orE180cSaMpqOYhoGRgx9KibUiYW/dkZXI7S+MEn9QSIcxfWZvugwg5t1dENobQk3g
+         iveuLAM0rCB5/7OAdca69a3kxgG8XbVmqPhQr4JtruF6BGJFscoR94jjoS4P7z4F1zcB
+         lYsFuRDd2qmI2k3hcpC7WZj9Ngpdnk0JbUDguhFlDH7JIS6HuKwSM0V86mb+oHbHi5b3
+         p9cJJMLjeJfVPechyTXRsaAdxnhWrjAf6Y2GyWwXlhw3ZSnxUfBVh598ke2VK8kbuOAs
+         Bn96xu/swz0tUO/h3MiaBa9p9Opsy0wDBqjVw99Qe7oV3bXQLhAcD7U4YPkIAlrwQUXI
+         KG3w==
+X-Received: by 10.60.42.168 with SMTP id p8mr36330oel.73.1378160568463;
+        Mon, 02 Sep 2013 15:22:48 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id b5sm15163610obj.8.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id it7sm15149723obb.11.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 02 Sep 2013 15:22:45 -0700 (PDT)
+        Mon, 02 Sep 2013 15:22:47 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-338-gefd7fa6
 In-Reply-To: <1378160278-14872-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233667>
+
+This is what the code intended.
 
 No functional changes.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/merge.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ t/annotate-tests.sh                    | 2 +-
+ t/t4200-rerere.sh                      | 2 +-
+ t/t9114-git-svn-dcommit-merge.sh       | 2 +-
+ t/t9500-gitweb-standalone-no-errors.sh | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 34a6166..da9fc08 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -186,13 +186,6 @@ static int option_parse_n(const struct option *opt,
- 	return 0;
- }
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index d4e7f47..01deece 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -92,7 +92,7 @@ test_expect_success 'blame 2 authors + 1 branch2 author' '
+ '
  
--static int option_parse_ff_only(const struct option *opt,
--			  const char *arg, int unset)
--{
--	fast_forward = FF_ONLY;
--	return 0;
--}
--
- static struct option builtin_merge_options[] = {
- 	{ OPTION_CALLBACK, 'n', NULL, NULL, NULL,
- 		N_("do not show a diffstat at the end of the merge"),
-@@ -210,9 +203,9 @@ static struct option builtin_merge_options[] = {
- 	OPT_BOOL('e', "edit", &option_edit,
- 		N_("edit message before committing")),
- 	OPT_SET_INT(0, "ff", &fast_forward, N_("allow fast-forward (default)"), FF_ALLOW),
--	{ OPTION_CALLBACK, 0, "ff-only", NULL, NULL,
-+	{ OPTION_SET_INT, 0, "ff-only", &fast_forward, NULL,
- 		N_("abort if fast-forward is not possible"),
--		PARSE_OPT_NOARG | PARSE_OPT_NONEG, option_parse_ff_only },
-+		PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, FF_ONLY },
- 	OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
- 	OPT_BOOL(0, "verify-signatures", &verify_signatures,
- 		N_("Verify that the named commit has a valid GPG signature")),
+ test_expect_success 'merge branch1 & branch2' '
+-	git pull . branch1
++	git merge branch1
+ '
+ 
+ test_expect_success 'blame 2 authors + 2 merged-in authors' '
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index 7f6666f..cf19eb7 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -172,7 +172,7 @@ test_expect_success 'first postimage wins' '
+ 	git show second^:a1 | sed "s/To die: t/To die! T/" >a1 &&
+ 	git commit -q -a -m third &&
+ 
+-	test_must_fail git pull . first &&
++	test_must_fail git merge first &&
+ 	# rerere kicked in
+ 	! grep "^=======\$" a1 &&
+ 	test_cmp expect a1
+diff --git a/t/t9114-git-svn-dcommit-merge.sh b/t/t9114-git-svn-dcommit-merge.sh
+index f524d2f..d33d714 100755
+--- a/t/t9114-git-svn-dcommit-merge.sh
++++ b/t/t9114-git-svn-dcommit-merge.sh
+@@ -62,7 +62,7 @@ test_expect_success 'setup git mirror and merge' '
+ 	echo friend > README &&
+ 	cat tmp >> README &&
+ 	git commit -a -m "friend" &&
+-	git pull . merge
++	git merge merge
+ 	'
+ 
+ test_debug 'gitk --all & sleep 1'
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index 6fca193..3864388 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -328,7 +328,7 @@ test_expect_success \
+ 	 git add b &&
+ 	 git commit -a -m "On branch" &&
+ 	 git checkout master &&
+-	 git pull . b &&
++	 git merge b &&
+ 	 git tag merge_commit'
+ 
+ test_expect_success \
 -- 
 1.8.4-338-gefd7fa6
