@@ -1,121 +1,72 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] revision: introduce --exclude=<glob> to tame wildcards
-Date: Mon, 02 Sep 2013 22:11:26 +0200
-Message-ID: <5224F0EE.1080205@kdbg.org>
-References: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com> <7vhae7k7t1.fsf@alter.siamese.dyndns.org> <CAMP44s1y2kvSnF3dKDMr9QtS40PNSW93DWCxFUoL658YkqYeVA@mail.gmail.com> <CAPc5daVSqoE74kmsobg7RpMtiL3vzKN+ckAcWEKU_Q_wF8HYuA@mail.gmail.com> <CAMP44s0P=XF5C8+fU2cJ-Xuq57iqcAn674Upub6N=+iiMpQK0g@mail.gmail.com> <xmqqeh9b15x6.fsf@gitster.dls.corp.google.com> <xmqq1u5aybri.fsf_-_@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 02 22:11:43 2013
+From: Ted Wood <coolfactor@mac.com>
+Subject: Re: Git installation on Mac OS X - problem
+Date: Mon, 02 Sep 2013 13:26:53 -0700
+Message-ID: <2DA3B860-6AE0-4C2E-9B6B-BA3BA36C63B8@mac.com>
+References: <4EA7B5FB-14EF-4106-B52E-3A28B85AFAF2@mac.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 02 22:27:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGaTJ-0007hF-0f
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 22:11:37 +0200
+	id 1VGaiS-0006OW-AY
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 22:27:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757288Ab3IBULb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 16:11:31 -0400
-Received: from bsmtp5.bon.at ([195.3.86.187]:15378 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756110Ab3IBULa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 16:11:30 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id D1CBA1300AD;
-	Mon,  2 Sep 2013 22:11:27 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id B42B719F3F8;
-	Mon,  2 Sep 2013 22:11:26 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <xmqq1u5aybri.fsf_-_@gitster.dls.corp.google.com>
+	id S1757288Ab3IBU06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 16:26:58 -0400
+Received: from st11p01mm-asmtpout005.mac.com ([17.172.204.240]:62343 "EHLO
+	st11p01mm-asmtp005.mac.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755287Ab3IBU06 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 Sep 2013 16:26:58 -0400
+X-Greylist: delayed 626 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Sep 2013 16:26:57 EDT
+Received: from [192.168.1.144]
+ (S0106001217476e98.cc.shawcable.net [96.54.68.30])
+ by st11p01mm-asmtp005.mac.com
+ (Oracle Communications Messaging Server 7u4-27.07(7.0.4.27.6) 64bit (built Jun
+ 21 2013)) with ESMTPSA id <0MSI0045EM4UZE10@st11p01mm-asmtp005.mac.com> for
+ git@vger.kernel.org; Mon, 02 Sep 2013 20:26:55 +0000 (GMT)
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.10.8794,1.0.431,0.0.0000
+ definitions=2013-09-02_04:2013-09-02,2013-09-02,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=5 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=7.0.1-1305240000 definitions=main-1309020123
+In-reply-to: <4EA7B5FB-14EF-4106-B52E-3A28B85AFAF2@mac.com>
+X-Mailer: Apple Mail (2.1508)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233657>
 
-Am 31.08.2013 01:55, schrieb Junio C Hamano:
-> People often find "git log --branches" etc. that includes _all_
-> branches is cumbersome to use when they want to grab most but except
-> some.  The same applies to --tags, --all and --glob.
+
+Sorry... I misread the README... it does indeed say /usr/local/git, which is where the new binary was installed correctly. Eyes have been crossed by all of these software re-installations and terminal commands. :P
+
+Thanks.
+
+~Ted
+
+
+
+On 2013-09-02, at 1:16 PM, Ted Wood <coolfactor@mac.com> wrote:
+
 > 
-> Teach the revision machinery to remember patterns, and then upon the
-> next such a globbing option, exclude those that match the pattern.
+> I've recently re-installed all of my MacPorts installations due to a third-party application corrupting my installation. Upon attempting to install git-core via MacPorts, it hangs on the "Building" stage, with no disk activity (clang process is active in Terminal). So, I attempted to download the .pkg install from git-scm.com. This Installer says the installation was complete, but Apple's outdated version of git (1.7.3) is still the active binary.
 > 
-> With this, I can view only my integration branches (e.g. maint,
-> master, etc.) without topic branches, which are named after two
-> letters from primary authors' names, slash and topic name.
+> Two observations:
+> 1) The README.txt file says that Git will be installed into /usr/local/bin
+> 2) The installation actually seems to be installed into /usr/bin, according to the installation log, which I have attached. This is the same location as Apple's version of Git.
 > 
->     git rev-list --no-walk --exclude=??/* --branches |
->     git name-rev --refs refs/heads/* --stdin
+> Of particular interest is the PATH variable setting at the very top of the log file, which makes no reference to /usr/local/bin... only /usr/bin.
 > 
-> This one shows things reachable from local and remote branches that
-> have not been merged to the integration branches.
+>        Installer[18576]: Env: PATH=/usr/bin:/bin:/usr/sbin:/sbin
 > 
->     git log --remotes --branches --not --exclude=??/* --branches
+> I've rarely experienced problems with installing software in the past. Is this an oversight on the part of the package assembler, or am I missing something?
 > 
-> It may be a bit rough around the edges, in that the pattern to give
-> the exclude option depends on what globbing option follows.  In
-> these examples, the pattern "??/*" is used, not "refs/heads/??/*",
-> because the globbing option that follows the -"-exclude=<pattern>"
-> is "--branches".  As each use of globbing option resets previously
-> set "--exclude", this may not be such a bad thing, though.
-
-I argued "--except should trump everything" earlier, but the case
-involving --not
-
-  --branches --except maint --not master
-
-to mean the same as
-
-  --branches --except maint master
-
-just does not make sense.
-
-An alternative would be that --not would divide the command line
-arguments into ranges within which one --except would subtract
-subsequent refs from earlier globbing arguments in the same range.
-That's not simpler to explain than your current proposal.
-
-So I like the relative simplicity of this approach. Here is a bit of
-documentation.
-
---- 8< ---
-Subject: [PATCH] document --exclude option
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- Documentation/rev-list-options.txt | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 5bdfb42..650c252 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -174,6 +174,21 @@ parents) and `--max-parents=-1` (negative numbers denote no upper limit).
- 	is automatically prepended if missing. If pattern lacks '?', '{asterisk}',
- 	or '[', '/{asterisk}' at the end is implied.
- 
-+--exclude=<glob-pattern>::
-+
-+	Do not include refs matching '<glob-pattern>' that the next `--all`,
-+	`--branches`, `--tags`, `--remotes`, or `--glob` would otherwise
-+	consider. Repetitions of this option accumulate exclusion patterns
-+	up to the next `--all`, `--branches`, `--tags`, `--remotes`, or
-+	`--glob` option (other options or arguments do not clear
-+	accumlated patterns).
-++
-+The patterns given should not begin with `refs/heads`, `refs/tags`, or
-+`refs/remotes` when applied to `--branches`, `--tags`, or `--remotes`,
-+restrictively, and they must begin with `refs/` when applied to `--glob`
-+or `--all`. If a trailing '/{asterisk}' is intended, it must be given
-+explicitly.
-+
- --ignore-missing::
- 
- 	Upon seeing an invalid object name in the input, pretend as if
--- 
-1.8.4.33.gd68f7e8
+> ~Ted
+> 
+> <Git Installer Log 2-Sep-2013.txt>
