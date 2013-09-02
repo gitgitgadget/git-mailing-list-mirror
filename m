@@ -1,73 +1,100 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: [PATCH v2 5/7] glossary: more precise definition of treeish (a.k.a. tree-ish)
-Date: Mon,  2 Sep 2013 01:34:24 -0400
-Message-ID: <1378100066-31889-6-git-send-email-rhansen@bbn.com>
-References: <1378100066-31889-1-git-send-email-rhansen@bbn.com>
-Cc: Richard Hansen <rhansen@bbn.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Sep 02 08:20:59 2013
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] revision: add --except option
+Date: Mon, 02 Sep 2013 08:25:37 +0200
+Message-ID: <52242F61.3090404@viscovery.net>
+References: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com> <7vhae7k7t1.fsf@alter.siamese.dyndns.org> <5220503F.2080608@viscovery.net> <CAMP44s0D98tggTjQsMn+-03KgSsbrh3nxYfLofpC1gfnJpEPyw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 02 08:25:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGNVS-0007kT-Op
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 08:20:59 +0200
+	id 1VGNa8-0000e3-Eb
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 08:25:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757262Ab3IBGUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 02:20:50 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:48513 "EHLO smtp.bbn.com"
+	id S1754914Ab3IBGZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 02:25:44 -0400
+Received: from so.liwest.at ([212.33.55.13]:36623 "EHLO so.liwest.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756978Ab3IBGUr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 02:20:47 -0400
-Received: from socket.bbn.com ([192.1.120.102]:55320)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1VGMmj-000NLg-Op; Mon, 02 Sep 2013 01:34:45 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 14E5A4015A
-X-Mailer: git-send-email 1.8.4
-In-Reply-To: <1378100066-31889-1-git-send-email-rhansen@bbn.com>
+	id S1753713Ab3IBGZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Sep 2013 02:25:44 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1VGNZx-00053S-IZ; Mon, 02 Sep 2013 08:25:38 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 335271660F;
+	Mon,  2 Sep 2013 08:25:37 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <CAMP44s0D98tggTjQsMn+-03KgSsbrh3nxYfLofpC1gfnJpEPyw@mail.gmail.com>
+X-Enigmail-Version: 1.5.2
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233608>
 
-A treeish isn't a ref.  Also, mention dereferencing, and that a commit
-dereferences to a tree, to support gitrevisions(7) and rev-parse's
-error messages.
+Am 8/31/2013 21:27, schrieb Felipe Contreras:
+> On Fri, Aug 30, 2013 at 2:56 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>> Am 8/30/2013 8:32, schrieb Junio C Hamano:
+>>> If you have a history where
+>>>
+>>>  - branches "master" and "maint" point at commit A;
+>>>  - branch "next" points at commit B that is a descendant of A; and
+>>>  - there are tags X and Y pointing at commits that are ahead of B
+>>>    or behind A
+>>>
+>>> i.e.
+>>>
+>>>       ----X----A----B----Y
+>>>
+>>> what are the desired semantics for these?
+>>
+>> I think the simplest were that --except trumps everything and means
+>> "whatever else I say, do as if I did not mention the following".
+> 
+> Actually, my patch is almost there, I attach the necessary changed
+> below to make everything work. I've added debug prints to show what
+> it's actually doing:
+> 
+>>>  (1) --branches --except maint
+>>
+>> => master next
+> 
+> => master next
+> 
+>>>  (2) --all --not --branches --except maint
+>>
+>> => X Y --not master next
+> 
+> => ^master ^next X Y HEAD
+> 
+>>>  (3) ^master next --except maint
+>>
+>> => ^master next
+> 
+> => ^master next
+> 
+>> (4) Y next --except master next --not --branches
+>>
+>> this => Y --not maint
+>> or this => Y --not maint master next
+> 
+> => Y
+> 
+> Remember that maint (or rather ^maint) is after --except.
 
-Signed-off-by: Richard Hansen <rhansen@bbn.com>
----
- Documentation/glossary-content.txt | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+Sure, but why is it not in the result? maint is not even mentioned under
+--except. Confused...
 
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index 257a7fe..a2edcc3 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -499,9 +499,18 @@ should not be combined with other pathspec.
- 	<<def_tree,tree>> is equivalent to a <<def_directory,directory>>.
- 
- [[def_treeish]]treeish (also tree-ish)::
--	A <<def_ref,ref>> pointing to either a <<def_commit_object,commit
--	object>>, a <<def_tree_object,tree object>>, or a <<def_tag_object,tag
--	object>> pointing to a tag or commit or tree object.
-+	A <<def_tree_object,tree object>> or an <<def_object,object>>
-+	that can be recursively dereferenced to a tree object.
-+	Dereferencing a <<def_commit_object,commit object>> yields the
-+	tree object corresponding to the <<def_revision,revision>>'s
-+	top <<def_directory,directory>>.
-+	The following are all treeishes:
-+	a <<def_committish,committish>>,
-+	a tree object,
-+	a <<def_tag_object,tag object>> that points to a tree object,
-+	a tag object that points to a tag object that points to a tree
-+	object,
-+	etc.
- 
- [[def_unmerged_index]]unmerged index::
- 	An <<def_index,index>> which contains unmerged
--- 
-1.8.4
+Ah, are you treating the union of master, next, and --branches as --except
+and ignore --not?
+
+-- Hannes
