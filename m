@@ -1,90 +1,89 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] {fetch,receive}-pack: drop unpack-objects, delay loosing
- objects until the end
-Date: Mon, 2 Sep 2013 00:38:59 -0400
-Message-ID: <CAPig+cTscSov3kHX6Mj_LpK1CeH+x4NTexdWZD42NT-KfohvrA@mail.gmail.com>
-References: <1378091107-31682-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 02 06:39:24 2013
+From: Richard Hansen <rhansen@bbn.com>
+Subject: [PATCH v2] peel_onion(): add support for <rev>^{tag}
+Date: Mon,  2 Sep 2013 01:42:31 -0400
+Message-ID: <1378100551-892-1-git-send-email-rhansen@bbn.com>
+Cc: Richard Hansen <rhansen@bbn.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Sep 02 07:43:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGLv9-0005Db-Us
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 06:39:24 +0200
+	id 1VGMuk-0004nZ-Hd
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 07:43:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753322Ab3IBEjD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Sep 2013 00:39:03 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:40914 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752254Ab3IBEjB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Sep 2013 00:39:01 -0400
-Received: by mail-lb0-f169.google.com with SMTP id z5so2924102lbh.28
-        for <git@vger.kernel.org>; Sun, 01 Sep 2013 21:39:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=SBoZEclRjRvfueYCtwJNF0mp/iaV3Iv9FUbTJqwgn84=;
-        b=if9be/1x7O04bcasTB2ChGtxBzB0mKHUw72DZKdjCxAZegbOzvSMOetYJhu5kKrc5L
-         5xeQ7jI9CQtdiaBdOiQgFAWrSioN/IjEOJF6QCSLgeU0SYut67p4iLF9WCqmssX5hn7F
-         uclxx006aSMt/iptlX6EADteQDpUBuPQ7UmUvWpOj+lyEElpG1H2oWLeuTtl8h0QPbIf
-         jeuWj1ApIR34wiv+Wh5MuVOyu5qkmpeF3cpkIhFi5yk4dM754hzjb/cwgECpLuXSnS4o
-         JRuk27ZtoSORN49HxXm8mwUTLvKP+vl5Ik/BhSHqW6ebHAl+2IqnRE8cwPMpFJ//magl
-         ah3g==
-X-Received: by 10.152.22.65 with SMTP id b1mr48945laf.46.1378096739730; Sun,
- 01 Sep 2013 21:38:59 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Sun, 1 Sep 2013 21:38:59 -0700 (PDT)
-In-Reply-To: <1378091107-31682-1-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: wdUjXwEc5mvYvZa9CAog9DvzLIU
+	id S1753593Ab3IBFm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 01:42:58 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:51533 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752266Ab3IBFm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Sep 2013 01:42:58 -0400
+X-Greylist: delayed 493 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Sep 2013 01:42:58 EDT
+Received: from socket.bbn.com ([192.1.120.102]:59482)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1VGMua-0009Xf-CO; Mon, 02 Sep 2013 01:42:52 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id B6CAA4015A
+X-Mailer: git-send-email 1.8.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233598>
 
-On Sun, Sep 1, 2013 at 11:05 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> Current code peaks into the transfered pack's header, if the number o=
-f
+Complete the <rev>^{<type>} family of object specifiers by having
+<rev>^{tag} dereference <rev> until a tag object is found (or fail if
+unable).
 
-s/peaks/peeks/
+At first glance this may not seem very useful, as commits, trees, and
+blobs cannot be peeled to a tag, and a tag would just peel to itself.
+However, this can be used to ensure that <rev> names a tag object:
 
-> objects is under a limit, unpack-objects is called to handle the rest=
-,
-> otherwise index-pack is. This patch makes fetch-pack use index-pack
-> unconditionally, then turn objects loose and remove the pack at the
-> end. unpack-objects is deprecated and may be removed in future.
->
-> There are a few reasons for this:
->
->  - down to two code paths to maintain regarding pack reading
->    (sha1_file.c and index-pack.c). When .pack v4 comes, we don't need
->    to duplicate work in index-pack and unpack-objects.
->
->  - the number of objects should not be the only indicator for
->    unpacking. If there are a few large objects in the pack, the pack
->    should be kept anyway. Keeping the pack lets us examine the whole
->    pack later and make a better decision.
->
->  - by going through index-pack first, then unpack, we pay extra cost
->    for completing a thin pack into a full one. But compared to fetch'=
-s
->    total time, it should not be noticeable because unpack-objects is
->    only called when the pack contains a small number of objects.
->
->  - unpack-objects does not support streaming large blobs. Granted
->    force_object_loose(), which is used by this patch, does not either=
-=2E
->    But it'll be easier to do so because sha1_file.c interface support=
-s
->    streaming.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+    $ git rev-parse --verify v1.8.4^{tag}
+    04f013dc38d7512eadb915eba22efc414f18b869
+    $ git rev-parse --verify master^{tag}
+    error: master^{tag}: expected tag type, but the object dereferences to tree type
+    fatal: Needed a single revision
+
+Signed-off-by: Richard Hansen <rhansen@bbn.com>
+---
+Changes since v1 (2013-06-18, see
+<http://thread.gmane.org/gmane.comp.version-control.git/228323>):
+  * improved commit message
+  * added usage note to gitrevisions[7]
+
+ Documentation/revisions.txt | 3 +++
+ sha1_name.c                 | 2 ++
+ 2 files changed, 5 insertions(+)
+
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index d477b3f..b3322ad 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -121,6 +121,9 @@ some output processing may assume ref names in UTF-8.
+ object that exists, without requiring 'rev' to be a tag, and
+ without dereferencing 'rev'; because a tag is already an object,
+ it does not have to be dereferenced even once to get to an object.
+++
++'rev{caret}\{tag\}' can be used to ensure that 'rev' identifies an
++existing tag object.
+ 
+ '<rev>{caret}\{\}', e.g. 'v0.99.8{caret}\{\}'::
+   A suffix '{caret}' followed by an empty brace pair
+diff --git a/sha1_name.c b/sha1_name.c
+index 65ad066..6dc496d 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -679,6 +679,8 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
+ 	sp++; /* beginning of type name, or closing brace for empty */
+ 	if (!strncmp(commit_type, sp, 6) && sp[6] == '}')
+ 		expected_type = OBJ_COMMIT;
++	else if (!strncmp(tag_type, sp, 3) && sp[3] == '}')
++		expected_type = OBJ_TAG;
+ 	else if (!strncmp(tree_type, sp, 4) && sp[4] == '}')
+ 		expected_type = OBJ_TREE;
+ 	else if (!strncmp(blob_type, sp, 4) && sp[4] == '}')
+-- 
+1.8.4
