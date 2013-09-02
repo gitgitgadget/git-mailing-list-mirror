@@ -1,106 +1,88 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH V2] check-ignore: Add option to ignore index contents
-Date: Mon, 2 Sep 2013 18:15:31 -0400
-Message-ID: <CAPig+cRPmFViknOkq3OnK3wjTtdd+7ywrCJUHd_85=4xyzHH_g@mail.gmail.com>
-References: <20130902212054.GA7012@opensourcesolutions.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Adam Spiers <git@adamspiers.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Dave Williams <dave@opensourcesolutions.co.uk>
-X-From: git-owner@vger.kernel.org Tue Sep 03 00:15:38 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/6] Preparation for non-ff pulls by default
+Date: Mon,  2 Sep 2013 17:17:52 -0500
+Message-ID: <1378160278-14872-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 03 00:22:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGcPJ-0006AC-IF
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 00:15:37 +0200
+	id 1VGcWG-0000tw-Jm
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 00:22:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759077Ab3IBWPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 18:15:34 -0400
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:61410 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759070Ab3IBWPd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 18:15:33 -0400
-Received: by mail-lb0-f177.google.com with SMTP id p5so4215177lbi.8
-        for <git@vger.kernel.org>; Mon, 02 Sep 2013 15:15:32 -0700 (PDT)
+	id S1757298Ab3IBWWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 18:22:44 -0400
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:45443 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756218Ab3IBWWo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Sep 2013 18:22:44 -0400
+Received: by mail-ob0-f171.google.com with SMTP id tb18so4978348obb.2
+        for <git@vger.kernel.org>; Mon, 02 Sep 2013 15:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=QnvOuEQ4EMkf9PzBc6jF5UX7nw0iLj5RRKFzSLx2wKM=;
-        b=aLUCs+R2oxnCrQzc54TtIPYRxFwn1qP+Di3R533wox8ebNzJB20d1cFN/jnOFiba6a
-         IdWTSpLV+ddHK7w8EuHJkHwJxHacPx3P1P8CU/4ac+vRfr9WH02BdzSYV5W/ekpeuSdb
-         wzEkMfx4CSznF+TMuuHs16Nb0Xw/6VStdUcq95Sr0bCv1JYMWBHZ3T7KDQj9TDNFw5pj
-         2dcVjCTH+87GNIvfgDxLGoL8QxObuZi5fu4IviYAkgo/n5lPIKC7JnDuhIuQrG5Ksb9q
-         VqN1luEB2hblT5B1MeoZJwbWqCjn8FskHUVw/vAMKUmJfp6PKdN4Ywz0nSqxfTMcVvbC
-         E6vw==
-X-Received: by 10.152.19.70 with SMTP id c6mr8483139lae.25.1378160132013; Mon,
- 02 Sep 2013 15:15:32 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Mon, 2 Sep 2013 15:15:31 -0700 (PDT)
-In-Reply-To: <20130902212054.GA7012@opensourcesolutions.co.uk>
-X-Google-Sender-Auth: 9xzwviMypqYhOHtcBlT4552A3vI
+        h=from:to:cc:subject:date:message-id;
+        bh=Lpn8USbFAIWG5IqtXtSBpmbzfUtCAAV3I0nc+4Epjxc=;
+        b=UMx2o10rTgo0Ec/HNahx8cZCktuWaE6y7IpPFPya774Y5z/B6zO/HzhdPRlJTkjas6
+         S0A3fIOcag4Kn5KJriJeVUBSnyvYQ/1tjNh4WuNJJl+drsSSQJgdZCbZZCDkjXAafzRG
+         2/ZCJ8L4Q971nj+hO53mFhqoMETSODjTBB+S42mnACRaXi+lWmgLy0rZ19+GA6AVDcgE
+         aNLZWw2zKAUdJcAwmf3s5TpnY/RajX2t4pgtn1Q2abL0n+49m8ifJlhpS+sNb+EeDt+q
+         cwxraJsaiz1/ZTztxqrnZU9JqsVUBd/MJACEcFC66UAYY99FGF+ny0v3Mjvxuc2QgrHg
+         kp3A==
+X-Received: by 10.60.133.233 with SMTP id pf9mr3599981oeb.46.1378160563527;
+        Mon, 02 Sep 2013 15:22:43 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id bq4sm15199172obb.1.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 02 Sep 2013 15:22:42 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4-338-gefd7fa6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233665>
 
-On Mon, Sep 2, 2013 at 5:20 PM, Dave Williams
-<dave@opensourcesolutions.co.uk> wrote:
-> I have updated the original version of this patch to encompass the
-> feedback comments obtained. Updates include:
-> 1) Rename option to --no-index for consistency with other commands
-> 2) Improved Documentation text
-> 3) Extension to test scripts to include this option
->
-> Regarding test scripts I have scoped coverage to ensure correct
-> behaviour with the new option in all standard cases but without
-> duplicating every single corner case.
->
-> The original patch is at $gmane/233381.
+It is very typical for Git newcomers to inadvertently create merges and worst:
+inadvertently pushing them. This is one of the reasons many experienced users
+prefer to avoid 'git pull', and recommend newcomers to avoid it as well.
 
-This commentary, which is not intended as part of the commit message,
-normally goes below the '---' line after your sign-off just before the
-diffstat. When the project maintainer applies a patch with git-am,
-such commentary is stripped out automatically, otherwise he has to
-strip it manually. (Alternately, you could use a -->8-- line to
-separate the above commentary from the commit message.)
+To avoid these problems and keep 'git pull' useful, it has been suggested
+that 'git pull' barfs by default if the merge is non-fast-forward, which
+unfortunately would break backwards compatibility.
 
-One more minor issue below...
+This patch series leaves everything in place to enable this new mode, but it
+only gets enabled if the user specifically configures it; pull.mode =
+merge-ff-only.
 
-> check-ignore currently shows how .gitignore rules would treat untracked
-> paths. Tracked paths do not generate useful output.  This prevents
-> debugging of why a path became tracked unexpectedly unless that path is
-> first removed from the index with `git rm --cached <path>`.
->
-> This option (-i, --no-index) simply by-passes the check for the path
-> being in the index and hence allows tracked paths to be checked too.
->
-> Whilst this behaviour deviates from the characteristics of `git add` and
-> `git status` its use case is unlikely to cause any user confusion.
->
-> Test scripts are augmented to check this option against the standard
-> ignores to ensure correct behaviour.
->
-> Signed-off-by: Dave Williams <dave@opensourcesolutions.co.uk>
-> ---
-> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-> index c29342d..0ad0534 100755
-> --- a/t/t0008-ignores.sh
-> +++ b/t/t0008-ignores.sh
-> @@ -87,6 +87,9 @@ test_check_ignore () {
->  # check-ignore --verbose output is the same as normal output except
->  # for the extra first column.
->  #
-> +# A parameter is used to determine if the tests are run with the
-> +# normal case (using the index), or with the -i or --no_index option.
+Later on this mode can be enabled by default (e.g. in v2.0).
 
-s/--no_index/--no-index/
+To achieve that first some configurations are renamed: for example: pull.rebase
+=> pull.mode = rebase, but the old ones remain functional, thus there are no
+functional changes.
 
-> +#
->  # Arguments:
->  #   - (optional) prereqs for this test, e.g. 'SYMLINKS'
->  #   - test name
+Felipe Contreras (6):
+  merge: simplify ff-only option
+  t: replace pulls with merges
+  pull: rename pull.rename to pull.mode
+  pull: refactor $rebase variable into $mode
+  pull: add --merge option
+  pull: add merge-ff-only option
+
+ Documentation/config.txt               | 24 +++++++------
+ Documentation/git-pull.txt             | 10 ++++--
+ branch.c                               |  4 +--
+ builtin/merge.c                        | 20 +++++------
+ git-pull.sh                            | 49 ++++++++++++++++++++-------
+ t/annotate-tests.sh                    |  2 +-
+ t/t3200-branch.sh                      | 40 +++++++++++-----------
+ t/t4200-rerere.sh                      |  2 +-
+ t/t5520-pull.sh                        | 62 ++++++++++++++++++++++++++++++++++
+ t/t5601-clone.sh                       |  4 +--
+ t/t9114-git-svn-dcommit-merge.sh       |  2 +-
+ t/t9500-gitweb-standalone-no-errors.sh |  2 +-
+ 12 files changed, 157 insertions(+), 64 deletions(-)
+
+-- 
+1.8.4-338-gefd7fa6
