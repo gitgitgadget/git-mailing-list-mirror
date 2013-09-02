@@ -1,338 +1,141 @@
-From: Dave Williams <dave@opensourcesolutions.co.uk>
-Subject: [PATCH V2] check-ignore: Add option to ignore index contents
-Date: Mon, 2 Sep 2013 22:20:54 +0100
-Message-ID: <20130902212054.GA7012@opensourcesolutions.co.uk>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v3 07/11] Documentation/replace: tell that -f option bypasses the type check
+Date: Mon, 2 Sep 2013 22:50:06 +0100
+Organization: OPDS
+Message-ID: <66A16BF0137D40568A34C316DDA6D32E@PhilipOakley>
+References: <70F5C527E29F43A9BE85694F560E01A9@PhilipOakley><20130901.134900.829124962244710553.chriscool@tuxfamily.org><29D8721CD44F4C3180D6F1BA5CDCF38E@PhilipOakley> <20130902.081157.986549849748779440.chriscool@tuxfamily.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Adam Spiers <git@adamspiers.org>, Duy Nguyen <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 02 23:21:11 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <gitster@pobox.com>, <git@vger.kernel.org>, <trast@inf.ethz.ch>,
+	<j6t@kdbg.org>
+To: "Christian Couder" <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Sep 02 23:50:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGbYc-0006Ub-Cw
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 23:21:11 +0200
+	id 1VGc0X-00035I-Qx
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 23:50:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758959Ab3IBVVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 17:21:05 -0400
-Received: from 46-65-59-139.zone16.bethere.co.uk ([46.65.59.139]:63379 "EHLO
-	loganberry.opensourcesolutions.co.uk" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756194Ab3IBVVE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Sep 2013 17:21:04 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by loganberry.opensourcesolutions.co.uk (Postfix) with ESMTP id 97956EEC9C4;
-	Mon,  2 Sep 2013 22:21:01 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at loganberry.opensourcesolutions.co.uk
-Received: from loganberry.opensourcesolutions.co.uk ([127.0.0.1])
-	by localhost (loganberry.opensourcesolutions.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 2OMdIp5A4vY6; Mon,  2 Sep 2013 22:20:54 +0100 (BST)
-Received: from tangerine (tangerine.opensourcesolutions.co.uk [192.168.149.59])
-	by loganberry.opensourcesolutions.co.uk (Postfix) with ESMTP id BC01BEEC9A8;
-	Mon,  2 Sep 2013 22:20:54 +0100 (BST)
-Received: by tangerine (Postfix, from userid 1000)
-	id A2B4C1005B4; Mon,  2 Sep 2013 22:20:54 +0100 (BST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758997Ab3IBVt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 17:49:58 -0400
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:39836 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758963Ab3IBVt5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Sep 2013 17:49:57 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AucLAO4GJVJOl3GZ/2dsb2JhbABagwc1iTa4AgQEAYEqF3SCHwUBAQQBCAEBLh4BASEFBgIDBQIBAw4HDCUUAQQaBgcXBhMIAgECAwGHawq5Io92gySBAAOIfYYSihWLC4UsgTopgT47
+X-IPAS-Result: AucLAO4GJVJOl3GZ/2dsb2JhbABagwc1iTa4AgQEAYEqF3SCHwUBAQQBCAEBLh4BASEFBgIDBQIBAw4HDCUUAQQaBgcXBhMIAgECAwGHawq5Io92gySBAAOIfYYSihWLC4UsgTopgT47
+X-IronPort-AV: E=Sophos;i="4.89,1009,1367967600"; 
+   d="scan'208";a="440082789"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 02 Sep 2013 22:49:54 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233661>
 
-I have updated the original version of this patch to encompass the
-feedback comments obtained. Updates include:
-1) Rename option to --no-index for consistency with other commands
-2) Improved Documentation text
-3) Extension to test scripts to include this option
+From: "Christian Couder" <chriscool@tuxfamily.org>
+> From: "Philip Oakley" <philipoakley@iee.org>
+>>
+>> From: "Christian Couder" <chriscool@tuxfamily.org>
+>>
+>>> Maybe we can show that in an example. But I think the patch is quite
+>>> clear as it is and should be enough.
+>>>
+>>> If we really want to correct some false beliefs, the best would be 
+>>> to
+>>> state the truth where those false beliefs are stated.
+>>>
+>> I've added a sub-comment to the original SO post that started this
+>> thread (my post $gmane/231598 - SO/a/18027030/717355), but given the
+>> guy's blog has comments going back to 2009 I suspect its a bit of a
+>> http://xkcd.com/386/ task, hence my desire that it's explicitly
+>> mentioned in the 'replace' documentation. In addition, if the guy
+>> doesn't correct his post I'll mark it down in a couple of days to 
+>> make
+>> it plain to other readers it's in error.
+>>
+>> The creation of a (merge?) commit that's equivalent to a graft line
+>> isn't something that jumps out (to me) as an easy couple lines of 
+>> bash
+>> script.
+>>
+>> A 'graft2replace' script (or 'git-graft' command) which takes an
+>> existing graft file (or command line list) and creates the 
+>> replacement
+>> objects and then does the replace, all while still in a dirty tree
+>> would be the holy grail for properly deprecating grafts (which are
+>> sooo easy to create)
+>
+> You mean something like the following:
+>
+> $ cat  ./graft2replace.sh
+> #!/bin/bash
+>
+> while read orig parents
+> do
+>        printf "%s" "git cat-file commit $orig"
+>        printf "%s" " | perl -n -e 'print unless /^parent /'"
+>        insn=''
+>        for commit in $parents; do insn="$insn print \"parent 
+> $commit\\n\";"; done
+>        printf "%s" " | perl -n -e 'print; if (/^tree /) { $insn }'"
+>        printf "%s\n" " > new_commit.txt"
+>        printf "%s\n" 'REPL=$(git hash-object -t commit -w 
+> new_commit.txt)'
 
-Regarding test scripts I have scoped coverage to ensure correct
-behaviour with the new option in all standard cases but without
-duplicating every single corner case.
+Does `hash-object` do the inverese of `cat-file commit`?
 
-The original patch is at $gmane/233381.
+I didn't find the hash-object(1) man page very informative on that 
+matter and a (very) quick look at its code made me think it was just 
+hashing the raw contents which wouldn't be what what was wanted.
 
+>        printf "%s\n" "git replace $orig \$REPL"
+> done
+>
+> This generates shell instructions from a graft file. Then you only 
+> need to execute the generated shell instructions.
+> For example:
+>
+> $ cat graft_file.txt
+> 5bf34fff3186254d7254583675d10ddf98df989b 
+> 79fe155489351e8af829a3106e7150397c57d863 
+> dcfbab6bea3df3166503f3084cec2679f10f9e80
+> fb5657082148297b61fbca7e64d51c1e7870309a
+>
+> $ cat graft_file.txt | ./graft2replace.sh
+> git cat-file commit 5bf34fff3186254d7254583675d10ddf98df989b | 
+> perl -n -e 'print unless /^parent /' | perl -n -e 'print; if (/^tree 
+> /) {  print "parent 79fe155489351e8af829a3106e7150397c57d863\n"; print 
+> "parent dcfbab6bea3df3166503f3084cec2679f10f9e80\n"; }' > 
+> new_commit.txt
+> REPL=$(git hash-object -t commit -w new_commit.txt)
+> git replace 5bf34fff3186254d7254583675d10ddf98df989b $REPL
+> git cat-file commit fb5657082148297b61fbca7e64d51c1e7870309a | 
+> perl -n -e 'print unless /^parent /' | perl -n -e 'print; if (/^tree 
+> /) {  }' > new_commit.txt
+> REPL=$(git hash-object -t commit -w new_commit.txt)
+> git replace fb5657082148297b61fbca7e64d51c1e7870309a $REPL
+>
+> Note that I haven't really tested it.
+>
+> Best,
+> Christian.
+> --
 
+I think we could call it 'git-graft', being the help function/script 
+that converts raw grafts to proper object replacements ;-)
 
-check-ignore currently shows how .gitignore rules would treat untracked
-paths. Tracked paths do not generate useful output.  This prevents
-debugging of why a path became tracked unexpectedly unless that path is
-first removed from the index with `git rm --cached <path>`.
-
-This option (-i, --no-index) simply by-passes the check for the path
-being in the index and hence allows tracked paths to be checked too.
-
-Whilst this behaviour deviates from the characteristics of `git add` and
-`git status` its use case is unlikely to cause any user confusion.
-
-Test scripts are augmented to check this option against the standard
-ignores to ensure correct behaviour.
-
-Signed-off-by: Dave Williams <dave@opensourcesolutions.co.uk>
----
- Documentation/git-check-ignore.txt |  7 ++++
- builtin/check-ignore.c             | 14 ++++---
- t/t0008-ignores.sh                 | 77 +++++++++++++++++++++++++++++++++-----
- 3 files changed, 83 insertions(+), 15 deletions(-)
-
-diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
-index d2df487..96c591f 100644
---- a/Documentation/git-check-ignore.txt
-+++ b/Documentation/git-check-ignore.txt
-@@ -45,6 +45,13 @@ OPTIONS
- 	not be possible to distinguish between paths which match a
- 	pattern and those which don't.
- 
-+-i, --no-index::
-+	Don't look in the index when undertaking the checks. This can
-+	be used to debug why a path became tracked by e.g. `git add .`
-+	and was not ignored by the rules as expected by the user or when
-+	developing patterns including negation to match a path previously
-+	added with `git add -f`.
-+
- OUTPUT
- ------
- 
-diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index 4a8fc70..2b0c8a6 100644
---- a/builtin/check-ignore.c
-+++ b/builtin/check-ignore.c
-@@ -5,7 +5,7 @@
- #include "pathspec.h"
- #include "parse-options.h"
- 
--static int quiet, verbose, stdin_paths, show_non_matching;
-+static int quiet, verbose, stdin_paths, show_non_matching, no_index;
- static const char * const check_ignore_usage[] = {
- "git check-ignore [options] pathname...",
- "git check-ignore [options] --stdin < <list-of-paths>",
-@@ -24,6 +24,8 @@ static const struct option check_ignore_options[] = {
- 		    N_("input paths are terminated by a null character")),
- 	OPT_BOOLEAN('n', "non-matching", &show_non_matching,
- 		    N_("show non-matching input paths")),
-+	OPT_BOOLEAN('i', "no-index", &no_index,
-+		    N_("ignore index when checking")),
- 	OPT_END()
- };
- 
-@@ -67,7 +69,7 @@ static int check_ignore(struct dir_struct *dir,
- 			const char *prefix, const char **pathspec)
- {
- 	const char *path, *full_path;
--	char *seen;
-+	char *seen = NULL;
- 	int num_ignored = 0, dtype = DT_UNKNOWN, i;
- 	struct exclude *exclude;
- 
-@@ -82,7 +84,9 @@ static int check_ignore(struct dir_struct *dir,
- 	 * should not be ignored, in order to be consistent with
- 	 * 'git status', 'git add' etc.
- 	 */
--	seen = find_pathspecs_matching_against_index(pathspec);
-+	if (!no_index) {
-+		seen = find_pathspecs_matching_against_index(pathspec);
-+	}
- 	for (i = 0; pathspec[i]; i++) {
- 		path = pathspec[i];
- 		full_path = prefix_path(prefix, prefix
-@@ -90,7 +94,7 @@ static int check_ignore(struct dir_struct *dir,
- 		full_path = check_path_for_gitlink(full_path);
- 		die_if_path_beyond_symlink(full_path, prefix);
- 		exclude = NULL;
--		if (!seen[i]) {
-+		if (no_index || !seen[i]) {
- 			exclude = last_exclude_matching(dir, full_path, &dtype);
- 		}
- 		if (!quiet && (exclude || show_non_matching))
-@@ -157,7 +161,7 @@ int cmd_check_ignore(int argc, const char **argv, const char *prefix)
- 		die(_("--non-matching is only valid with --verbose"));
- 
- 	/* read_cache() is only necessary so we can watch out for submodules. */
--	if (read_cache() < 0)
-+	if (!no_index && read_cache() < 0)
- 		die(_("index file corrupt"));
- 
- 	memset(&dir, 0, sizeof(dir));
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index c29342d..0ad0534 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -66,11 +66,11 @@ test_check_ignore () {
- 
- 	init_vars &&
- 	rm -f "$HOME/stdout" "$HOME/stderr" "$HOME/cmd" &&
--	echo git $global_args check-ignore $quiet_opt $verbose_opt $non_matching_opt $args \
-+	echo git $global_args check-ignore $quiet_opt $verbose_opt $non_matching_opt $no_index_opt $args \
- 		>"$HOME/cmd" &&
- 	echo "$expect_code" >"$HOME/expected-exit-code" &&
- 	test_expect_code "$expect_code" \
--		git $global_args check-ignore $quiet_opt $verbose_opt $non_matching_opt $args \
-+		git $global_args check-ignore $quiet_opt $verbose_opt $non_matching_opt $no_index_opt $args \
- 		>"$HOME/stdout" 2>"$HOME/stderr" &&
- 	test_cmp "$HOME/expected-stdout" "$HOME/stdout" &&
- 	stderr_empty_on_success "$expect_code"
-@@ -87,6 +87,9 @@ test_check_ignore () {
- # check-ignore --verbose output is the same as normal output except
- # for the extra first column.
- #
-+# A parameter is used to determine if the tests are run with the
-+# normal case (using the index), or with the -i or --no_index option.
-+#
- # Arguments:
- #   - (optional) prereqs for this test, e.g. 'SYMLINKS'
- #   - test name
-@@ -94,19 +97,26 @@ test_check_ignore () {
- #     from the other verbosity modes is automatically inferred
- #     from this value)
- #   - code to run (should invoke test_check_ignore)
--test_expect_success_multi () {
-+#   - index option: --index, -i or --no-index
-+test_expect_success_multitude () {
- 	prereq=
--	if test $# -eq 4
-+	if test $# -eq 5
- 	then
- 		prereq=$1
- 		shift
- 	fi
-+	if test "$4" = "--index"
-+	then
-+		no_index_opt=
-+	else
-+		no_index_opt=$4
-+	fi
- 	testname="$1" expect_all="$2" code="$3"
- 
- 	expect_verbose=$( echo "$expect_all" | grep -v '^::	' )
- 	expect=$( echo "$expect_verbose" | sed -e 's/.*	//' )
- 
--	test_expect_success $prereq "$testname" '
-+	test_expect_success $prereq "$testname${no_index_opt:+ with $no_index_opt}" '
- 		expect "$expect" &&
- 		eval "$code"
- 	'
-@@ -114,9 +124,10 @@ test_expect_success_multi () {
- 	# --quiet is only valid when a single pattern is passed
- 	if test $( echo "$expect_all" | wc -l ) = 1
- 	then
--		for quiet_opt in '-q' '--quiet'
-+		for quiet_opt in ' -q' ' --quiet'
- 		do
--			test_expect_success $prereq "$testname${quiet_opt:+ with $quiet_opt}" "
-+			opts="$no_index_opt$quiet_opt"
-+			test_expect_success $prereq "$testname${opts:+ with $opts}" "
- 			expect '' &&
- 			$code
- 		"
-@@ -124,7 +135,7 @@ test_expect_success_multi () {
- 		quiet_opt=
- 	fi
- 
--	for verbose_opt in '-v' '--verbose'
-+	for verbose_opt in ' -v' ' --verbose'
- 	do
- 		for non_matching_opt in '' ' -n' ' --non-matching'
- 		do
-@@ -139,12 +150,24 @@ test_expect_success_multi () {
- 				expect '$my_expect' &&
- 				$code
- 			"
--			opts="$verbose_opt$non_matching_opt"
-+			opts="$no_index_opt$verbose_opt$non_matching_opt"
- 			test_expect_success $prereq "$testname${opts:+ with $opts}" "$test_code"
- 		done
- 	done
- 	verbose_opt=
- 	non_matching_opt=
-+	no_index_opt=
-+}
-+
-+test_expect_success_multi () {
-+	test_expect_success_multitude "$@" "--index"
-+}
-+
-+test_expect_success_no_index_multi () {
-+	for ni in '-i' '--no-index'
-+	do
-+		test_expect_success_multitude "$@" "$ni"
-+	done
- }
- 
- test_expect_success 'setup' '
-@@ -288,7 +311,7 @@ test_expect_success_multi 'needs work tree' '' '
- 
- # First make sure that the presence of a file in the working tree
- # does not impact results, but that the presence of a file in the
--# index does.
-+# index does unless the --no-index option is used.
- 
- for subdir in '' 'a/'
- do
-@@ -303,22 +326,42 @@ do
- 		"::	${subdir}non-existent" \
- 		"test_check_ignore '${subdir}non-existent' 1"
- 
-+	test_expect_success_no_index_multi "non-existent file $where not ignored" \
-+		"::	${subdir}non-existent" \
-+		"test_check_ignore '${subdir}non-existent' 1"
-+
- 	test_expect_success_multi "non-existent file $where ignored" \
- 		".gitignore:1:one	${subdir}one" \
- 		"test_check_ignore '${subdir}one'"
- 
-+	test_expect_success_no_index_multi "non-existent file $where ignored" \
-+		".gitignore:1:one	${subdir}one" \
-+		"test_check_ignore '${subdir}one'"
-+
- 	test_expect_success_multi "existing untracked file $where not ignored" \
- 		"::	${subdir}not-ignored" \
- 		"test_check_ignore '${subdir}not-ignored' 1"
- 
-+	test_expect_success_no_index_multi "existing untracked file $where not ignored" \
-+		"::	${subdir}not-ignored" \
-+		"test_check_ignore '${subdir}not-ignored' 1"
-+
- 	test_expect_success_multi "existing tracked file $where not ignored" \
- 		"::	${subdir}ignored-but-in-index" \
- 		"test_check_ignore '${subdir}ignored-but-in-index' 1"
- 
-+	test_expect_success_no_index_multi "existing tracked file $where shown as ignored" \
-+		".gitignore:2:ignored-*	${subdir}ignored-but-in-index" \
-+		"test_check_ignore '${subdir}ignored-but-in-index'"
-+
- 	test_expect_success_multi "existing untracked file $where ignored" \
- 		".gitignore:2:ignored-*	${subdir}ignored-and-untracked" \
- 		"test_check_ignore '${subdir}ignored-and-untracked'"
- 
-+	test_expect_success_no_index_multi "existing untracked file $where ignored" \
-+		".gitignore:2:ignored-*	${subdir}ignored-and-untracked" \
-+		"test_check_ignore '${subdir}ignored-and-untracked'"
-+
- 	test_expect_success_multi "mix of file types $where" \
- "::	${subdir}non-existent
- .gitignore:1:one	${subdir}one
-@@ -332,6 +375,20 @@ do
- 			${subdir}ignored-but-in-index
- 			${subdir}ignored-and-untracked'
- 		"
-+
-+	test_expect_success_no_index_multi "mix of file types $where" \
-+"::	${subdir}non-existent
-+.gitignore:1:one	${subdir}one
-+::	${subdir}not-ignored
-+.gitignore:2:ignored-*	${subdir}ignored-but-in-index
-+.gitignore:2:ignored-*	${subdir}ignored-and-untracked" \
-+		"test_check_ignore '
-+			${subdir}non-existent
-+			${subdir}one
-+			${subdir}not-ignored
-+			${subdir}ignored-but-in-index
-+			${subdir}ignored-and-untracked'
-+		"
- done
- 
- # Having established the above, from now on we mostly test against
--- 
-1.8.4.rc3
+Philip 
