@@ -1,102 +1,127 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Turn off pathspec magic on "{checkout,reset,add} -p"
- on native Windows builds
-Date: Mon, 02 Sep 2013 08:42:18 +0200
-Message-ID: <5224334A.2090300@viscovery.net>
-References: <521EF02A.2020300@viscovery.net> <1378001284-18426-1-git-send-email-pclouds@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] revision: add --except option
+Date: Mon, 2 Sep 2013 01:48:37 -0500
+Message-ID: <CAMP44s3eUmA9pVfZFbXHNvDiYwp9jttSTb6DBr8JrgTfhfD+_Q@mail.gmail.com>
+References: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com>
+	<7vhae7k7t1.fsf@alter.siamese.dyndns.org>
+	<5220503F.2080608@viscovery.net>
+	<CAMP44s0D98tggTjQsMn+-03KgSsbrh3nxYfLofpC1gfnJpEPyw@mail.gmail.com>
+	<52242F61.3090404@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 02 08:42:25 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Sep 02 08:48:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGNqC-00063V-Cv
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 08:42:24 +0200
+	id 1VGNwM-00088J-Nu
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 08:48:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756978Ab3IBGmU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Sep 2013 02:42:20 -0400
-Received: from so.liwest.at ([212.33.55.13]:51515 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753713Ab3IBGmU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 02:42:20 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1VGNq6-0006SC-4i; Mon, 02 Sep 2013 08:42:18 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id E0A651660F;
-	Mon,  2 Sep 2013 08:42:17 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <1378001284-18426-1-git-send-email-pclouds@gmail.com>
-X-Enigmail-Version: 1.5.2
-X-Spam-Score: -1.0 (-)
+	id S1755484Ab3IBGsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 02:48:40 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:59085 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755172Ab3IBGsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Sep 2013 02:48:39 -0400
+Received: by mail-lb0-f172.google.com with SMTP id x18so3623040lbi.31
+        for <git@vger.kernel.org>; Sun, 01 Sep 2013 23:48:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=NxvEwZuYiPdHbz9Oxs6GW6mXIR/jezRpIOyt6I/LxYM=;
+        b=zlBQaAtF/GrDJOnibCjweTlXoDZTT1TQqNc4S2e5hOSUh6tgNsX9XD+8/iBGqjRcPL
+         GvJ+jlYTDR+6lj104hCsEOur/ZRBNu/6kVKlhQyu+u2NDlHR7aJbv2dktn/1nQQEG58k
+         hp4Qtv8CbkvMJ/KXdrEc9ONNox6SHNUZlXvOMC4w7HEVo/I75hbf1T+zo+4NwimUWhgQ
+         PfsTHbVw0xi/EP599AQkytaRRmWJJgk+XOt9CYsSVNuwrUqFDUcslTlkogNw6JSH00mU
+         f6JP94+TVM6umgQZt2iNSoDaLclidDGfnMf0AeYchoay7EOr8KZLeKlPCSS1AUg0cjI/
+         rnBA==
+X-Received: by 10.112.0.242 with SMTP id 18mr19372906lbh.18.1378104517992;
+ Sun, 01 Sep 2013 23:48:37 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Sun, 1 Sep 2013 23:48:37 -0700 (PDT)
+In-Reply-To: <52242F61.3090404@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233619>
 
-Am 9/1/2013 4:08, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
-> git-add--interactive.perl rejects arguments with colons in 21e9757
-> (Hack git-add--interactive to make it work with ActiveState Perl -
-> 2007-08-01). Pathspec magic starts with a colon, so it won't work if
-> these pathspecs are passed to git-add--interactive.perl running with
-> ActiveState Perl. Make sure we only pass plain paths in this case.
->=20
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  Johannes, can you check the test suite passes for you with this
->  patch? I assume that Cygwin Perl behaves differently and does not hi=
-t
->  this limit. So I keep the special case to GIT_WINDOWS_NATIVE only.
->  I'll resend the patch with a few others on the same topic if it work=
-s
->  for you.
+On Mon, Sep 2, 2013 at 1:25 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Am 8/31/2013 21:27, schrieb Felipe Contreras:
+>> On Fri, Aug 30, 2013 at 2:56 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>>> Am 8/30/2013 8:32, schrieb Junio C Hamano:
+>>>> If you have a history where
+>>>>
+>>>>  - branches "master" and "maint" point at commit A;
+>>>>  - branch "next" points at commit B that is a descendant of A; and
+>>>>  - there are tags X and Y pointing at commits that are ahead of B
+>>>>    or behind A
+>>>>
+>>>> i.e.
+>>>>
+>>>>       ----X----A----B----Y
+>>>>
+>>>> what are the desired semantics for these?
+>>>
+>>> I think the simplest were that --except trumps everything and means
+>>> "whatever else I say, do as if I did not mention the following".
+>>
+>> Actually, my patch is almost there, I attach the necessary changed
+>> below to make everything work. I've added debug prints to show what
+>> it's actually doing:
+>>
+>>>>  (1) --branches --except maint
+>>>
+>>> => master next
+>>
+>> => master next
+>>
+>>>>  (2) --all --not --branches --except maint
+>>>
+>>> => X Y --not master next
+>>
+>> => ^master ^next X Y HEAD
+>>
+>>>>  (3) ^master next --except maint
+>>>
+>>> => ^master next
+>>
+>> => ^master next
+>>
+>>> (4) Y next --except master next --not --branches
+>>>
+>>> this => Y --not maint
+>>> or this => Y --not maint master next
+>>
+>> => Y
+>>
+>> Remember that maint (or rather ^maint) is after --except.
+>
+> Sure, but why is it not in the result? maint is not even mentioned under
+> --except. Confused...
 
-It does not help. The error in git-add--interactive is avoided, but the
-failure in t2016-checkout-patch.sh is now:
+It is mentioned under --except, by --branches.
 
-expecting success:
-        set_state dir/foo work head &&
-        # the third n is to get out in case it mistakenly does not appl=
-y
-        (echo y; echo n; echo n) | (cd dir && git checkout -p foo) &&
-        verify_saved_state bar &&
-        verify_state dir/foo head head
+> Ah, are you treating the union of master, next, and --branches as --except
+> and ignore --not?
 
-No changes.
-not ok 13 - path limiting works: foo inside dir
+These are the same:
 
-and the same "No changes." happens in t7105-reset-patch.sh
+Y next --except master next --not --branches
+Y next --except master next --not master next maint
 
-> +#ifdef GIT_WINDOWS_NATIVE
-> +	/*
-> +	 * Pathspec magic is completely turned off on native Windows
-> +	 * builds because git-add-interactive.perl won't accept
-> +	 * arguments with colons in them. :/foo is an exception
-> +	 * because no colons remain after parsing.
-> +	 */
-> +	parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP,
-> +		       PATHSPEC_PREFER_FULL |
-> +		       PATHSPEC_SYMLINK_LEADING_PATH,
-> +		       prefix, argv);
-> +#else
->  	/*
->  	 * git-add--interactive itself does not parse pathspec. It
->  	 * simply passes the pathspec to other builtin commands. Let's
-> @@ -281,6 +293,7 @@ int interactive_add(int argc, const char **argv, =
-const char *prefix, int patch)
->  		       PATHSPEC_SYMLINK_LEADING_PATH |
->  		       PATHSPEC_PREFIX_ORIGIN,
->  		       prefix, argv);
-> +#endif
-> [etc.]
+If you add more positive branches:
 
--- Hannes
+They get removed anyway by --except:
+
+Y next master maint --except master next --not master next maint
+Y master maint --except master --not master maint
+Y maint --except --not maint
+Y
+
+-- 
+Felipe Contreras
