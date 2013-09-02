@@ -1,155 +1,122 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v3 2/4] transport-helper: add dont-update-private capability
-Date: Mon,  2 Sep 2013 09:41:17 +0200
-Message-ID: <1378107677-28741-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <CAMP44s0rvsEixDz8v2aqAu2UCfXb8qTFAb+1CpwAyhC-6QONYw@mail.gmail.com>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Sep 02 09:41:46 2013
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Turn off pathspec magic on "{checkout,reset,add} -p" on
+ native Windows builds
+Date: Mon, 2 Sep 2013 16:30:00 +0700
+Message-ID: <20130902092959.GA17306@lanh>
+References: <521EF02A.2020300@viscovery.net>
+ <1378001284-18426-1-git-send-email-pclouds@gmail.com>
+ <5224334A.2090300@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Sep 02 11:27:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGOlc-0000Ol-NX
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 09:41:45 +0200
+	id 1VGQPW-0005eQ-D1
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 11:27:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758266Ab3IBHl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 03:41:29 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:57194 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757313Ab3IBHl0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 03:41:26 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r827fImZ017039
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 2 Sep 2013 09:41:18 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1VGOlC-0004ld-No; Mon, 02 Sep 2013 09:41:18 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1VGOlC-0007UZ-E6; Mon, 02 Sep 2013 09:41:18 +0200
-X-Mailer: git-send-email 1.8.4.12.g98a4f55.dirty
-In-Reply-To: <CAMP44s0rvsEixDz8v2aqAu2UCfXb8qTFAb+1CpwAyhC-6QONYw@mail.gmail.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 02 Sep 2013 09:41:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r827fImZ017039
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1378712478.30231@d4t/y1tGv66BAq6XSrO6ig
+	id S1758421Ab3IBJ06 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Sep 2013 05:26:58 -0400
+Received: from mail-pb0-f54.google.com ([209.85.160.54]:59936 "EHLO
+	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758411Ab3IBJ05 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Sep 2013 05:26:57 -0400
+Received: by mail-pb0-f54.google.com with SMTP id ro12so4519750pbb.41
+        for <git@vger.kernel.org>; Mon, 02 Sep 2013 02:26:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=33IqZimjGqqToklcddJEwdVEqTVUAi6zSibm3xyufxE=;
+        b=ertbI1q6ymATcMh6Ks60M1G7G28G55ZzN1ZCmQ5EOtyM0xc8GgAA9G2Ule40lNSnM9
+         7o/35606B2y9n7rQATjg0dLUqvZj7BEOciFv2aabawXagadHzLF9scLcgQ56IqOY/8Y3
+         vrJzMnR0DMVR6A1uwJ6IBH4wd+vYDM2pOdXzTfbE8UtGUsbuVVcu4/eTxFqg0DLOZYQO
+         dVeVaJJxBbPe189UwhGBLwhGbHRaC2oGA4B/JlSsEpvqREoHVoioh5hTbjr/3pvwZHtr
+         SciwufGGftC/MsZT0vD3hQkyEY6/dKW/Hk7MtU1gX5OZlpMU4wxWFe/VOJhd7XLaBNmg
+         M/7w==
+X-Received: by 10.66.171.204 with SMTP id aw12mr25239045pac.7.1378114016719;
+        Mon, 02 Sep 2013 02:26:56 -0700 (PDT)
+Received: from lanh ([115.73.192.103])
+        by mx.google.com with ESMTPSA id a5sm14712163pbw.4.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 02 Sep 2013 02:26:55 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 02 Sep 2013 16:30:00 +0700
+Content-Disposition: inline
+In-Reply-To: <5224334A.2090300@viscovery.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233631>
 
-Since 664059fb62 (Felipe Contreras, Apr 17 2013, transport-helper: update
-remote helper namespace), a 'push' operation on a remote helper updates
-the private ref by default. This is often a good thing, but it can also
-be desirable to disable this update to force the next 'pull' to re-import
-the pushed revisions.
+On Mon, Sep 02, 2013 at 08:42:18AM +0200, Johannes Sixt wrote:
+> Am 9/1/2013 4:08, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
+> > git-add--interactive.perl rejects arguments with colons in 21e9757
+> > (Hack git-add--interactive to make it work with ActiveState Perl -
+> > 2007-08-01). Pathspec magic starts with a colon, so it won't work i=
+f
+> > these pathspecs are passed to git-add--interactive.perl running wit=
+h
+> > ActiveState Perl. Make sure we only pass plain paths in this case.
+> >=20
+> > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
+mail.com>
+> > ---
+> >  Johannes, can you check the test suite passes for you with this
+> >  patch? I assume that Cygwin Perl behaves differently and does not =
+hit
+> >  this limit. So I keep the special case to GIT_WINDOWS_NATIVE only.
+> >  I'll resend the patch with a few others on the same topic if it wo=
+rks
+> >  for you.
+>=20
+> It does not help. The error in git-add--interactive is avoided, but t=
+he
+> failure in t2016-checkout-patch.sh is now:
+>=20
+> expecting success:
+>         set_state dir/foo work head &&
+>         # the third n is to get out in case it mistakenly does not ap=
+ply
+>         (echo y; echo n; echo n) | (cd dir && git checkout -p foo) &&
+>         verify_saved_state bar &&
+>         verify_state dir/foo head head
+>=20
+> No changes.
+> not ok 13 - path limiting works: foo inside dir
+>=20
+> and the same "No changes." happens in t7105-reset-patch.sh
 
-Allow remote-helpers to disable the automatic update by introducing a new
-capability.
+Right. Because I got rid of ':(prefix)foo' form but I passed 'foo'
+instead of 'dir/foo'. How about this on top?
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-> There's an extra unnecessary space here, no?
-
-Indeed (the new option is shorter, and I didn't rewrap). It doesn't
-really matter, but in case, here's an updated version.
-
- Documentation/gitremote-helpers.txt |  5 +++++
- git-remote-testgit.sh               |  1 +
- t/t5801-remote-helpers.sh           | 11 +++++++++++
- transport-helper.c                  |  7 +++++--
- 4 files changed, 22 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-index 0827f69..ee9e134 100644
---- a/Documentation/gitremote-helpers.txt
-+++ b/Documentation/gitremote-helpers.txt
-@@ -120,6 +120,11 @@ connecting (see the 'connect' command under COMMANDS).
- When choosing between 'push' and 'export', Git prefers 'push'.
- Other frontends may have some other order of preference.
- 
-+'no-private-update'::
-+	When using the 'refspec' capability, git normally updates the
-+	private ref on successful push. This update is disabled when
-+	the remote-helper declares the capability 'no-private-update'.
-+
- 
- Capabilities for Fetching
- ^^^^^^^^^^^^^^^^^^^^^^^^^
-diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
-index 2109070..6d2f282 100755
---- a/git-remote-testgit.sh
-+++ b/git-remote-testgit.sh
-@@ -38,6 +38,7 @@ do
- 			echo "*export-marks $gitmarks"
- 		fi
- 		test -n "$GIT_REMOTE_TESTGIT_SIGNED_TAGS" && echo "signed-tags"
-+		test -n "$GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE" && echo "no-private-update"
- 		echo
- 		;;
- 	list)
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 8c4c539..613f69a 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -182,6 +182,17 @@ test_expect_success 'push update refs' '
- 	)
- '
- 
-+test_expect_success 'push update refs disabled by no-private-update' '
-+	(cd local &&
-+	echo more-update >>file &&
-+	git commit -a -m more-update &&
-+	git rev-parse --verify testgit/origin/heads/update >expect &&
-+	GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE=t git push origin update &&
-+	git rev-parse --verify testgit/origin/heads/update >actual &&
-+	test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'push update refs failure' '
- 	(cd local &&
- 	git checkout update &&
-diff --git a/transport-helper.c b/transport-helper.c
-index 63cabc3..3328394 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -27,7 +27,8 @@ struct helper_data {
- 		push : 1,
- 		connect : 1,
- 		signed_tags : 1,
--		no_disconnect_req : 1;
-+		no_disconnect_req : 1,
-+		no_private_update : 1;
- 	char *export_marks;
- 	char *import_marks;
- 	/* These go from remote name (as in "list") to private name */
-@@ -205,6 +206,8 @@ static struct child_process *get_helper(struct transport *transport)
- 			strbuf_addstr(&arg, "--import-marks=");
- 			strbuf_addstr(&arg, capname + strlen("import-marks "));
- 			data->import_marks = strbuf_detach(&arg, NULL);
-+		} else if (!prefixcmp(capname, "no-private-update")) {
-+			data->no_private_update = 1;
- 		} else if (mandatory) {
- 			die("Unknown mandatory capability %s. This remote "
- 			    "helper probably needs newer version of Git.",
-@@ -723,7 +726,7 @@ static void push_update_refs_status(struct helper_data *data,
- 		if (push_update_ref_status(&buf, &ref, remote_refs))
- 			continue;
- 
--		if (!data->refspecs)
-+		if (!data->refspecs || data->no_private_update)
- 			continue;
- 
- 		/* propagate back the update to the remote namespace */
--- 
-1.8.4.12.g98a4f55.dirty
+-- 8< --
+diff --git a/builtin/add.c b/builtin/add.c
+index 3402239..a138360 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -257,9 +257,15 @@ int run_add_interactive(const char *revision, cons=
+t char *patch_mode,
+ 	if (revision)
+ 		args[ac++] =3D revision;
+ 	args[ac++] =3D "--";
++#ifdef GIT_WINDOWS_NATIVE
++	GUARD_PATHSPEC(pathspec, PATHSPEC_FROMTOP);
++	for (i =3D 0; i < pathspec->nr; i++)
++		args[ac++] =3D pathspec->items[i].match;
++#else
+ 	for (i =3D 0; i < pathspec->nr; i++)
+ 		/* pass original pathspec, to be re-parsed */
+ 		args[ac++] =3D pathspec->items[i].original;
++#endif
+=20
+ 	status =3D run_command_v_opt(args, RUN_GIT_CMD);
+ 	free(args);
+-- 8< --
