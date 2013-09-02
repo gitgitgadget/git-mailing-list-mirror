@@ -1,533 +1,154 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] sha1-name: refactor get_sha1() parsing
-Date: Mon,  2 Sep 2013 01:50:43 -0500
-Message-ID: <1378104643-3636-1-git-send-email-felipe.contreras@gmail.com>
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Matthieu Moy <matthieu.moy@imag.fr>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 02 08:55:38 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2 2/4] transport-helper: add no-private-update capability
+Date: Mon,  2 Sep 2013 09:19:46 +0200
+Message-ID: <1378106388-27992-2-git-send-email-Matthieu.Moy@imag.fr>
+References: <CAMP44s2aV8X8TJigSqiSPB2HkK7hdxC2dFPWf5X62h90Y7M8Jg@mail.gmail.com>
+ <1378106388-27992-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Sep 02 09:20:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGO2z-0001st-3q
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 08:55:37 +0200
+	id 1VGOQl-0001Rr-SV
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 09:20:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932065Ab3IBGz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 02:55:29 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:61563 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757681Ab3IBGz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 02:55:27 -0400
-Received: by mail-oa0-f43.google.com with SMTP id i10so4851982oag.16
-        for <git@vger.kernel.org>; Sun, 01 Sep 2013 23:55:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=KOyjkOveBjgB+NM9bRLJD/BEZgYlZDK7fD60U+Lp5Mk=;
-        b=CNhppuvbx646IehtNv/xG3KDX2HHxcrWPHS4ZjAeduz4IyHuUB7yniV8TzztvO99KU
-         049YQDKGICzoOhRMep5xxviCMxlg3Trs8QsMyMF5oxxnG1cUjJ/Fx4E9oNZqpmkEmNTQ
-         uKUcICLc2glASDXPXjD1jqW5RSd0w+tOsztQJL5v0AQZRGjBcq/MiioBMetwmPH4bulO
-         lN9r4jM0InufWFetgdEccSqz/xIY4Uk0/qop19Ec/Ecq/nIYlf5gDWOn+YdxIollaFQg
-         VZr5/Uhs38YMmdYYk7h8pP3Xw6Fj+OVtbaz66Gv9QuXYNogtroHPxljjAJGuE1bf2cFz
-         vRyA==
-X-Received: by 10.60.138.136 with SMTP id qq8mr134903oeb.59.1378104926496;
-        Sun, 01 Sep 2013 23:55:26 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id a18sm11994847obf.7.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 01 Sep 2013 23:55:25 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4-338-gefd7fa6
+	id S1758000Ab3IBHUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 03:20:05 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:44025 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757281Ab3IBHUC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Sep 2013 03:20:02 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r827JrZV008773
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 2 Sep 2013 09:19:53 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1VGOQU-0004ZI-8m; Mon, 02 Sep 2013 09:19:54 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1VGOQT-0007IU-VZ; Mon, 02 Sep 2013 09:19:54 +0200
+X-Mailer: git-send-email 1.8.4.12.g98a4f55.dirty
+In-Reply-To: <1378106388-27992-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 02 Sep 2013 09:19:53 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r827JrZV008773
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1378711193.9628@4f/EEvPb661r0p/37vkl5w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233622>
 
-Instead of parsing left to right, do it right do left, this way it is
-much more natural and probably efficient too, as there's less
-recursivity.
+Since 664059fb62 (Felipe Contreras, Apr 17 2013, transport-helper: update
+remote helper namespace), a 'push' operation on a remote helper updates
+the private ref by default. This is often a good thing, but it can also
+be desirable to disable this update to force the next 'pull' to re-import
+the pushed revisions.
 
-In theory there shouldn't be any functional changes, although there's at
-least one error message that has changed.
+Allow remote-helpers to disable the automatic update by introducing a new
+capability.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- sha1_name.c                    | 319 ++++++++++++++++++++++++-----------------
- t/t1506-rev-parse-diagnosis.sh |   2 +-
- 2 files changed, 185 insertions(+), 136 deletions(-)
+Change since v1: just changed the capability name.
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 65ad066..e66bda1 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -430,7 +430,6 @@ static inline int upstream_mark(const char *string, int len)
- 	return 0;
- }
+ Documentation/gitremote-helpers.txt |  6 ++++++
+ git-remote-testgit.sh               |  1 +
+ t/t5801-remote-helpers.sh           | 11 +++++++++++
+ transport-helper.c                  |  7 +++++--
+ 4 files changed, 23 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index 0827f69..1eacf1e 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -120,6 +120,12 @@ connecting (see the 'connect' command under COMMANDS).
+ When choosing between 'push' and 'export', Git prefers 'push'.
+ Other frontends may have some other order of preference.
  
--static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags);
- static int interpret_nth_prior_checkout(const char *name, struct strbuf *buf);
- 
- static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
-@@ -571,29 +570,24 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 	return 0;
- }
- 
--static int get_parent(const char *name, int len,
--		      unsigned char *result, int idx)
-+static int get_parent(unsigned char *sha1, int idx)
- {
--	unsigned char sha1[20];
--	int ret = get_sha1_1(name, len, sha1, GET_SHA1_COMMITTISH);
- 	struct commit *commit;
- 	struct commit_list *p;
- 
--	if (ret)
--		return ret;
- 	commit = lookup_commit_reference(sha1);
- 	if (!commit)
- 		return -1;
- 	if (parse_commit(commit))
- 		return -1;
- 	if (!idx) {
--		hashcpy(result, commit->object.sha1);
-+		hashcpy(sha1, commit->object.sha1);
- 		return 0;
- 	}
- 	p = commit->parents;
- 	while (p) {
- 		if (!--idx) {
--			hashcpy(result, p->item->object.sha1);
-+			hashcpy(sha1, p->item->object.sha1);
- 			return 0;
- 		}
- 		p = p->next;
-@@ -601,16 +595,10 @@ static int get_parent(const char *name, int len,
- 	return -1;
- }
- 
--static int get_nth_ancestor(const char *name, int len,
--			    unsigned char *result, int generation)
-+static int get_nth_ancestor(unsigned char *sha1, int generation)
- {
--	unsigned char sha1[20];
- 	struct commit *commit;
--	int ret;
- 
--	ret = get_sha1_1(name, len, sha1, GET_SHA1_COMMITTISH);
--	if (ret)
--		return ret;
- 	commit = lookup_commit_reference(sha1);
- 	if (!commit)
- 		return -1;
-@@ -620,7 +608,7 @@ static int get_nth_ancestor(const char *name, int len,
- 			return -1;
- 		commit = commit->parents->item;
- 	}
--	hashcpy(result, commit->object.sha1);
-+	hashcpy(sha1, commit->object.sha1);
- 	return 0;
- }
- 
-@@ -649,12 +637,10 @@ struct object *peel_to_type(const char *name, int namelen,
- 	}
- }
- 
--static int peel_onion(const char *name, int len, unsigned char *sha1)
-+static int peel_onion(const char *name, const char *str, int len, unsigned char *sha1)
- {
--	unsigned char outer[20];
--	const char *sp;
-+	const char *sp, *end = NULL;
- 	unsigned int expected_type = 0;
--	unsigned lookup_flags = 0;
- 	struct object *o;
- 
- 	/*
-@@ -665,18 +651,24 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
- 	 * "ref^{commit}".  "commit^{tree}" could be used to find the
- 	 * top-level tree of the given commit.
- 	 */
--	if (len < 4 || name[len-1] != '}')
--		return -1;
- 
--	for (sp = name + len - 1; name <= sp; sp--) {
--		int ch = *sp;
--		if (ch == '{' && name < sp && sp[-1] == '^')
-+	if (len < 3)
-+		return 0;
++'no-private-update'::
++	When using the 'refspec' capability, git normally updates the
++	private ref on successful push. This update is disabled when
++	the remote-helper declares the capability
++	'no-private-update'.
 +
-+	sp = str;
-+	if (sp[0] != '^' || sp[1] != '{')
-+		return 0;
-+
-+	for (end = sp; *end; end++)
-+		if (*end == '}')
- 			break;
--	}
--	if (sp <= name)
--		return -1;
-+	if (!end)
-+		return 0;
-+
-+	end++;
-+	len = end - str;
  
--	sp++; /* beginning of type name, or closing brace for empty */
-+	sp += 2;
- 	if (!strncmp(commit_type, sp, 6) && sp[6] == '}')
- 		expected_type = OBJ_COMMIT;
- 	else if (!strncmp(tree_type, sp, 4) && sp[4] == '}')
-@@ -692,35 +684,28 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
- 	else
- 		return -1;
- 
--	if (expected_type == OBJ_COMMIT)
--		lookup_flags = GET_SHA1_COMMITTISH;
--	else if (expected_type == OBJ_TREE)
--		lookup_flags = GET_SHA1_TREEISH;
--
--	if (get_sha1_1(name, sp - name - 2, outer, lookup_flags))
--		return -1;
--
--	o = parse_object(outer);
-+	o = parse_object(sha1);
- 	if (!o)
- 		return -1;
- 	if (!expected_type) {
--		o = deref_tag(o, name, sp - name - 2);
-+		o = deref_tag(o, name, end - name);
- 		if (!o || (!o->parsed && !parse_object(o->sha1)))
- 			return -1;
- 		hashcpy(sha1, o->sha1);
--		return 0;
-+		return len;
- 	}
- 
- 	/*
--	 * At this point, the syntax look correct, so
-+	 * At this point, the syntax looks correct, so
- 	 * if we do not get the needed object, we should
- 	 * barf.
- 	 */
--	o = peel_to_type(name, len, o, expected_type);
-+	o = peel_to_type(name, end - name, o, expected_type);
- 	if (!o)
- 		return -1;
- 
- 	hashcpy(sha1, o->sha1);
-+
- 	if (sp[0] == '/') {
- 		/* "$commit^{/foo}" */
- 		char *prefix;
-@@ -732,15 +717,16 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
- 		 * We don't need regex anyway. '' pattern always matches.
- 		 */
- 		if (sp[1] == '}')
--			return 0;
-+			return len;
- 
--		prefix = xstrndup(sp + 1, name + len - 1 - (sp + 1));
-+		prefix = xstrndup(sp + 1, end - sp - 2);
- 		commit_list_insert((struct commit *)o, &list);
- 		ret = get_sha1_oneline(prefix, sha1, list);
- 		free(prefix);
--		return ret;
-+		if (ret)
-+			return -1;
- 	}
--	return 0;
-+	return len;
- }
- 
- static int get_describe_name(const char *name, int len, unsigned char *sha1)
-@@ -764,54 +750,6 @@ static int get_describe_name(const char *name, int len, unsigned char *sha1)
- 	return -1;
- }
- 
--static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags)
--{
--	int ret, has_suffix;
--	const char *cp;
--
--	/*
--	 * "name~3" is "name^^^", "name~" is "name~1", and "name^" is "name^1".
--	 */
--	has_suffix = 0;
--	for (cp = name + len - 1; name <= cp; cp--) {
--		int ch = *cp;
--		if ('0' <= ch && ch <= '9')
--			continue;
--		if (ch == '~' || ch == '^')
--			has_suffix = ch;
--		break;
--	}
--
--	if (has_suffix) {
--		int num = 0;
--		int len1 = cp - name;
--		cp++;
--		while (cp < name + len)
--			num = num * 10 + *cp++ - '0';
--		if (!num && len1 == len - 1)
--			num = 1;
--		if (has_suffix == '^')
--			return get_parent(name, len1, sha1, num);
--		/* else if (has_suffix == '~') -- goes without saying */
--		return get_nth_ancestor(name, len1, sha1, num);
--	}
--
--	ret = peel_onion(name, len, sha1);
--	if (!ret)
--		return 0;
--
--	ret = get_sha1_basic(name, len, sha1);
--	if (!ret)
--		return 0;
--
--	/* It could be describe output that is "SOMETHING-gXXXX" */
--	ret = get_describe_name(name, len, sha1);
--	if (!ret)
--		return 0;
--
--	return get_short_sha1(name, len, sha1, lookup_flags);
--}
--
- /*
-  * This interprets names like ':/Initial revision of "git"' by searching
-  * through history and returning the first commit whose message starts
-@@ -1288,22 +1226,168 @@ static char *resolve_relative_path(const char *rel)
- 			   rel);
- }
- 
-+static int resolve_ancestry(const char *str, int len, unsigned char *sha1)
-+{
-+	int has_suffix;
-+	const char *cp, *end;
-+	int num = 0, ret;
-+
-+	/*
-+	 * "name~3" is "name^^^", "name~" is "name~1", and "name^" is "name^1".
-+	 */
-+	has_suffix = 0;
-+	for (cp = str; *cp; cp++) {
-+		int ch = *cp;
-+		if ('0' <= ch && ch <= '9')
-+			continue;
-+		if (ch == '~' || ch == '^') {
-+			if (has_suffix)
-+				break;
-+			has_suffix = ch;
-+			continue;
-+		}
-+		break;
-+	}
-+
-+	if (!has_suffix)
-+		return 0;
-+
-+	end = cp;
-+	cp = str + 1;
-+	if (cp == end)
-+		num = 1;
-+	else
-+		while (cp < end)
-+			num = num * 10 + *cp++ - '0';
-+	len = end - str;
-+	if (has_suffix == '^')
-+		ret = get_parent(sha1, num);
-+	else
-+		ret = get_nth_ancestor(sha1, num);
-+	if (ret)
-+		return ret;
-+	return len;
-+}
-+
-+static int resolve_tree(struct object_context *oc, const char *str, int len,
-+		unsigned char *sha1, unsigned char *tree_sha1)
-+{
-+	int ret;
-+	const char *filename = str + 1;
-+	char *new_filename = NULL;
-+
-+	new_filename = resolve_relative_path(filename);
-+	if (new_filename)
-+		filename = new_filename;
-+	hashcpy(tree_sha1, sha1);
-+	ret = get_tree_entry(tree_sha1, filename, sha1, &oc->mode);
-+	hashcpy(oc->tree, tree_sha1);
-+	strncpy(oc->path, filename, sizeof(oc->path));
-+	oc->path[sizeof(oc->path) - 1] = '\0';
-+
-+	free(new_filename);
-+	return ret;
-+}
-+
-+static int resolve(const char *name, int len, unsigned char *sha1,
-+		struct object_context *oc, const char *prefix, unsigned flags)
-+{
-+	const char *cp;
-+	int ret;
-+	int tmp_len;
-+	int bracket_depth;
-+	unsigned char tree_sha1[20];
-+	unsigned lookup_flags = flags;
-+
-+	for (cp = name, bracket_depth = 0; *cp; cp++) {
-+		if (*cp == '{')
-+			bracket_depth++;
-+		else if (bracket_depth && *cp == '}')
-+			bracket_depth--;
-+		else if (!bracket_depth) {
-+			if (*cp == '^') {
-+				if (cp[1] == '{') {
-+					const char *sp = cp + 2;
-+					if (!strncmp(commit_type, sp, 6) && sp[6] == '}')
-+						lookup_flags = GET_SHA1_COMMITTISH;
-+					else if (!strncmp(tree_type, sp, 4) && sp[4] == '}')
-+						lookup_flags = GET_SHA1_TREEISH;
-+					else if (sp[0] == '/')
-+						lookup_flags = GET_SHA1_COMMITTISH;
-+					else
-+						lookup_flags = 0;
-+				} else {
-+					lookup_flags = GET_SHA1_COMMITTISH;
-+				}
-+				break;
-+			}
-+			if (*cp == '~') {
-+				lookup_flags = GET_SHA1_COMMITTISH;
-+				break;
-+			}
-+			if (*cp == ':') {
-+				lookup_flags = GET_SHA1_TREEISH;
-+				break;
-+			}
-+		}
-+	}
-+
-+	tmp_len = cp - name;
-+	ret = get_sha1_basic(name, tmp_len, sha1);
-+	if (!ret)
-+		goto next;
-+	ret = get_short_sha1(name, tmp_len, sha1, lookup_flags);
-+	if (!ret)
-+		goto next;
-+	ret = get_describe_name(name, tmp_len, sha1);
-+	if (!ret)
-+		goto next;
-+
-+	return -1;
-+
-+next:
-+	if (!*cp)
-+		return 0;
-+	while (*cp == '^' || *cp == '~') {
-+		ret = peel_onion(name, cp, len - (cp - name), sha1);
-+		if (ret < 0)
-+			return ret;
-+		cp += ret;
-+		ret = resolve_ancestry(cp, len - (cp - name), sha1);
-+		if (ret < 0)
-+			return ret;
-+		cp += ret;
-+	}
-+	if (!*cp)
-+		return 0;
-+	if (*cp != ':')
-+		/* malformed */
-+		return -1;
-+	ret = resolve_tree(oc, cp, len - (cp - name), sha1, tree_sha1);
-+	if (ret < 0) {
-+		if (flags & GET_SHA1_ONLY_TO_DIE) {
-+			diagnose_invalid_sha1_path(prefix, oc->path,
-+						   tree_sha1,
-+						   name, cp - name);
-+		}
-+		return ret;
-+	}
-+	return 0;
-+}
-+
- static int get_sha1_with_context_1(const char *name,
- 				   unsigned flags,
- 				   const char *prefix,
- 				   unsigned char *sha1,
- 				   struct object_context *oc)
- {
--	int ret, bracket_depth;
- 	int namelen = strlen(name);
- 	const char *cp;
- 	int only_to_die = flags & GET_SHA1_ONLY_TO_DIE;
- 
- 	memset(oc, 0, sizeof(*oc));
- 	oc->mode = S_IFINVALID;
--	ret = get_sha1_1(name, namelen, sha1, flags);
--	if (!ret)
--		return ret;
-+
- 	/*
- 	 * sha1:path --> object name of path in ent sha1
- 	 * :path -> object name of absolute path in index
-@@ -1364,43 +1448,8 @@ static int get_sha1_with_context_1(const char *name,
- 		free(new_path);
- 		return -1;
- 	}
--	for (cp = name, bracket_depth = 0; *cp; cp++) {
--		if (*cp == '{')
--			bracket_depth++;
--		else if (bracket_depth && *cp == '}')
--			bracket_depth--;
--		else if (!bracket_depth && *cp == ':')
--			break;
--	}
--	if (*cp == ':') {
--		unsigned char tree_sha1[20];
--		int len = cp - name;
--		if (!get_sha1_1(name, len, tree_sha1, GET_SHA1_TREEISH)) {
--			const char *filename = cp+1;
--			char *new_filename = NULL;
--
--			new_filename = resolve_relative_path(filename);
--			if (new_filename)
--				filename = new_filename;
--			ret = get_tree_entry(tree_sha1, filename, sha1, &oc->mode);
--			if (ret && only_to_die) {
--				diagnose_invalid_sha1_path(prefix, filename,
--							   tree_sha1,
--							   name, len);
--			}
--			hashcpy(oc->tree, tree_sha1);
--			strncpy(oc->path, filename,
--				sizeof(oc->path));
--			oc->path[sizeof(oc->path)-1] = '\0';
- 
--			free(new_filename);
--			return ret;
--		} else {
--			if (only_to_die)
--				die("Invalid object name '%.*s'.", len, name);
--		}
--	}
--	return ret;
-+	return resolve(name, namelen, sha1, oc, prefix, flags);
- }
- 
- /*
-diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
-index f950c10..0f76d1f 100755
---- a/t/t1506-rev-parse-diagnosis.sh
-+++ b/t/t1506-rev-parse-diagnosis.sh
-@@ -104,7 +104,7 @@ test_expect_success 'correct relative file objects (6)' '
- 
- test_expect_success 'incorrect revision id' '
- 	test_must_fail git rev-parse foobar:file.txt 2>error &&
--	grep "Invalid object name '"'"'foobar'"'"'." error &&
-+	grep "unknown revision or path not in the working tree." error
- 	test_must_fail git rev-parse foobar 2> error &&
- 	grep "unknown revision or path not in the working tree." error
+ Capabilities for Fetching
+ ^^^^^^^^^^^^^^^^^^^^^^^^^
+diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
+index 2109070..6d2f282 100755
+--- a/git-remote-testgit.sh
++++ b/git-remote-testgit.sh
+@@ -38,6 +38,7 @@ do
+ 			echo "*export-marks $gitmarks"
+ 		fi
+ 		test -n "$GIT_REMOTE_TESTGIT_SIGNED_TAGS" && echo "signed-tags"
++		test -n "$GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE" && echo "no-private-update"
+ 		echo
+ 		;;
+ 	list)
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index 8c4c539..613f69a 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -182,6 +182,17 @@ test_expect_success 'push update refs' '
+ 	)
  '
+ 
++test_expect_success 'push update refs disabled by no-private-update' '
++	(cd local &&
++	echo more-update >>file &&
++	git commit -a -m more-update &&
++	git rev-parse --verify testgit/origin/heads/update >expect &&
++	GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE=t git push origin update &&
++	git rev-parse --verify testgit/origin/heads/update >actual &&
++	test_cmp expect actual
++	)
++'
++
+ test_expect_success 'push update refs failure' '
+ 	(cd local &&
+ 	git checkout update &&
+diff --git a/transport-helper.c b/transport-helper.c
+index 63cabc3..3328394 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -27,7 +27,8 @@ struct helper_data {
+ 		push : 1,
+ 		connect : 1,
+ 		signed_tags : 1,
+-		no_disconnect_req : 1;
++		no_disconnect_req : 1,
++		no_private_update : 1;
+ 	char *export_marks;
+ 	char *import_marks;
+ 	/* These go from remote name (as in "list") to private name */
+@@ -205,6 +206,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 			strbuf_addstr(&arg, "--import-marks=");
+ 			strbuf_addstr(&arg, capname + strlen("import-marks "));
+ 			data->import_marks = strbuf_detach(&arg, NULL);
++		} else if (!prefixcmp(capname, "no-private-update")) {
++			data->no_private_update = 1;
+ 		} else if (mandatory) {
+ 			die("Unknown mandatory capability %s. This remote "
+ 			    "helper probably needs newer version of Git.",
+@@ -723,7 +726,7 @@ static void push_update_refs_status(struct helper_data *data,
+ 		if (push_update_ref_status(&buf, &ref, remote_refs))
+ 			continue;
+ 
+-		if (!data->refspecs)
++		if (!data->refspecs || data->no_private_update)
+ 			continue;
+ 
+ 		/* propagate back the update to the remote namespace */
 -- 
-1.8.4-338-gefd7fa6
+1.8.4.12.g98a4f55.dirty
