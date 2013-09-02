@@ -1,56 +1,57 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] revision: add --except option
-Date: Mon, 02 Sep 2013 08:30:30 +0200
-Message-ID: <52243086.6030102@viscovery.net>
-References: <1377984383-15770-1-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 02 08:30:37 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/4] t: rev-parse-parents: cleanups
+Date: Mon,  2 Sep 2013 01:30:35 -0500
+Message-ID: <1378103439-3225-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 02 08:35:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGNem-00029g-Jf
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 08:30:36 +0200
+	id 1VGNjT-0003hp-EN
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 08:35:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757704Ab3IBGab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 02:30:31 -0400
-Received: from so.liwest.at ([212.33.55.13]:39676 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757654Ab3IBGaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 02:30:30 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1VGNef-0001di-Ib; Mon, 02 Sep 2013 08:30:29 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 569B01660F;
-	Mon,  2 Sep 2013 08:30:29 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <1377984383-15770-1-git-send-email-felipe.contreras@gmail.com>
-X-Enigmail-Version: 1.5.2
-X-Spam-Score: -1.0 (-)
+	id S1755298Ab3IBGfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 02:35:23 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:32946 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755120Ab3IBGfX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Sep 2013 02:35:23 -0400
+Received: by mail-ob0-f170.google.com with SMTP id eh20so4173503obb.1
+        for <git@vger.kernel.org>; Sun, 01 Sep 2013 23:35:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=oUPPiiOv+DdgkR+WKSrBulmmo4ydqFxS1y2cWG/WvpM=;
+        b=hBI+P1UBF2GAnQHmIbEGfhziqJKm979Uog1SPTT+b6l8maE9/8vwTClKywFhF9Ff7b
+         eIT7OuQXRT/q5N5vKyD0xqQ+e7m/4D1O3RxoRP2fh0iYPuceUplz/aJy7jp6VQW7kQ1l
+         fhfCU29LU4LjMCSXmHPbVAY7N1IPcy3xA3EuFNsthgyQdr97psvrm1iwzsBSuke/Bu8c
+         USehR1vhDMGQg0e3p8ZhgPY2+bX1+hp1SDcaHxtjNHd+vVN4+j7i8i1Zs/m5qI7xkPlg
+         I7XpwL0M942jOynJThv4Rcq2TV3tAAj4uOwo9zlSmM8AjvIO1MSOZkeYw/7LLz490sL0
+         UfbQ==
+X-Received: by 10.60.33.74 with SMTP id p10mr15839528oei.18.1378103722840;
+        Sun, 01 Sep 2013 23:35:22 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id z2sm11961040obi.3.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 01 Sep 2013 23:35:22 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4-338-gefd7fa6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233610>
 
-Am 8/31/2013 23:26, schrieb Felipe Contreras:
-> +--except::
-> +	Skip the following object names. For example:
-> +	'--branches --except master' will show all the branches, except master.
-> +	This differs from --not in that --except will still show the object, if
-> +	they are referenced by another object name.
+Felipe Contreras (4):
+  t: rev-parse-parents: fix style
+  t: rev-parse-parents: fix weird ! notation
+  t: rev-parse-parents: avoid yoda conditions
+  t: rev-parse-parents: simplify setup
 
---except needs a bit more documentation, in particular, how it interacts
-with --not.
+ t/t6101-rev-parse-parents.sh | 96 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 69 insertions(+), 27 deletions(-)
 
-It would be better to settle on the meaning of --except before throwing
-back and forth implementations.
-
--- Hannes
+-- 
+1.8.4-338-gefd7fa6
