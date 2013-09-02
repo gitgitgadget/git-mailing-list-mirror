@@ -1,130 +1,121 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: git-p4 out of memory for very large repository
-Date: Mon, 02 Sep 2013 20:42:36 +0100
-Message-ID: <5224EA2C.7090001@diamand.org>
-References: <20130823011245.GA7693@jerec> <52170C6A.4080708@diamand.org> <20130823114856.GA8182@jerec> <20130825155001.GA875@padd.com> <20130826134756.GA1335@jerec> <20130828154135.GA16921@jerec> <20130829224609.GB25879@padd.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] revision: introduce --exclude=<glob> to tame wildcards
+Date: Mon, 02 Sep 2013 22:11:26 +0200
+Message-ID: <5224F0EE.1080205@kdbg.org>
+References: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com> <7vhae7k7t1.fsf@alter.siamese.dyndns.org> <CAMP44s1y2kvSnF3dKDMr9QtS40PNSW93DWCxFUoL658YkqYeVA@mail.gmail.com> <CAPc5daVSqoE74kmsobg7RpMtiL3vzKN+ckAcWEKU_Q_wF8HYuA@mail.gmail.com> <CAMP44s0P=XF5C8+fU2cJ-Xuq57iqcAn674Upub6N=+iiMpQK0g@mail.gmail.com> <xmqqeh9b15x6.fsf@gitster.dls.corp.google.com> <xmqq1u5aybri.fsf_-_@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Corey Thompson <cmtptr@gmail.com>, git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Mon Sep 02 21:42:45 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 02 22:11:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGa1M-0002Ev-8W
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 21:42:44 +0200
+	id 1VGaTJ-0007hF-0f
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 22:11:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758923Ab3IBTmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 15:42:40 -0400
-Received: from mail-wg0-f53.google.com ([74.125.82.53]:46587 "EHLO
-	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757074Ab3IBTmj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 15:42:39 -0400
-Received: by mail-wg0-f53.google.com with SMTP id n12so4028822wgh.20
-        for <git@vger.kernel.org>; Mon, 02 Sep 2013 12:42:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=oTcUqTZgnC538w1ush6y4An0VfUtIJ3Szfj30jxabKo=;
-        b=QyGHhPoOrw9OonmmDg90cbbv+Q5DGxAiDgKfVhKB0cUS32+ftp+MgyDk1o4bvYBe77
-         xhoXaSbldoVttVCLBiCz2S+M9O0RU43EOYQcYk1fqM9GNeTlM7e3eAiVL4RAT7n8oew8
-         0AC9/a0SvX9P3uNXldvbDjYZFrT4w7rIPnBEw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=oTcUqTZgnC538w1ush6y4An0VfUtIJ3Szfj30jxabKo=;
-        b=e48fH22fSGyANN32IxfXByV3z21pN02RU9R8aCtBTZetbUbIKriU8Gzqz8SF6X0BEY
-         TDgNMSc/ohWycEKSetc1vmMxk7hytAhC6q1clvKmh5NgpPYr+Ia+jpcPL8cRNPjMzf5M
-         65YmCuI+BPz9nNK0EURz3WzMV8y5NtEMxaZ+7ViY5+kUOHhllk31Yc3NI3UdjFI99s4Z
-         joReXsQGZ3rbNfCR/6Jfqh9q5lBdCQeVGReCd2Diq2U16WmwDD6lr9GGlg/z4jXEhK9H
-         o3MM+UrOUxlWG/6bhClnkjacqG9Ua2QpivEbyb0tCagjSyj67+KGxW6DTvB7GTpeIqOd
-         VjgA==
-X-Gm-Message-State: ALoCoQkdoHCeqw62kvmOQwzOwK/XGwdb+icJldbVAyaL7M1KtUsWFa8kqTAG7PiL678mXKwaJl3y
-X-Received: by 10.180.37.199 with SMTP id a7mr15020019wik.43.1378150958125;
-        Mon, 02 Sep 2013 12:42:38 -0700 (PDT)
-Received: from [86.14.230.179] (cpc14-cmbg17-2-0-cust690.5-4.cable.virginmedia.com. [86.14.230.179])
-        by mx.google.com with ESMTPSA id u8sm20643836wiz.2.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 02 Sep 2013 12:42:37 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
-In-Reply-To: <20130829224609.GB25879@padd.com>
+	id S1757288Ab3IBULb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 16:11:31 -0400
+Received: from bsmtp5.bon.at ([195.3.86.187]:15378 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756110Ab3IBULa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Sep 2013 16:11:30 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id D1CBA1300AD;
+	Mon,  2 Sep 2013 22:11:27 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id B42B719F3F8;
+	Mon,  2 Sep 2013 22:11:26 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <xmqq1u5aybri.fsf_-_@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233656>
 
-I guess you could try changing the OOM score for git-fast-import.
+Am 31.08.2013 01:55, schrieb Junio C Hamano:
+> People often find "git log --branches" etc. that includes _all_
+> branches is cumbersome to use when they want to grab most but except
+> some.  The same applies to --tags, --all and --glob.
+> 
+> Teach the revision machinery to remember patterns, and then upon the
+> next such a globbing option, exclude those that match the pattern.
+> 
+> With this, I can view only my integration branches (e.g. maint,
+> master, etc.) without topic branches, which are named after two
+> letters from primary authors' names, slash and topic name.
+> 
+>     git rev-list --no-walk --exclude=??/* --branches |
+>     git name-rev --refs refs/heads/* --stdin
+> 
+> This one shows things reachable from local and remote branches that
+> have not been merged to the integration branches.
+> 
+>     git log --remotes --branches --not --exclude=??/* --branches
+> 
+> It may be a bit rough around the edges, in that the pattern to give
+> the exclude option depends on what globbing option follows.  In
+> these examples, the pattern "??/*" is used, not "refs/heads/??/*",
+> because the globbing option that follows the -"-exclude=<pattern>"
+> is "--branches".  As each use of globbing option resets previously
+> set "--exclude", this may not be such a bad thing, though.
 
-change /proc/<pid>/oomadj.
+I argued "--except should trump everything" earlier, but the case
+involving --not
 
-I think a value of -31 would make it very unlikely to be killed.
+  --branches --except maint --not master
 
-On 29/08/13 23:46, Pete Wyckoff wrote:
-> cmtptr@gmail.com wrote on Wed, 28 Aug 2013 11:41 -0400:
->> On Mon, Aug 26, 2013 at 09:47:56AM -0400, Corey Thompson wrote:
->>> You are correct that git-fast-import is killed by the OOM killer, but I
->>> was unclear about which process was malloc()ing so much memory that the
->>> OOM killer got invoked (as other completely unrelated processes usually
->>> also get killed when this happens).
->>>
->>> Unless there's one gigantic file in one change that gets removed by
->>> another change, I don't think that's the problem; as I mentioned in
->>> another email, the machine has 32GB physical memory and the largest
->>> single file in the current head is only 118MB.  Even if there is a very
->>> large transient file somewhere in the history, I seriously doubt it's
->>> tens of gigabytes in size.
->>>
->>> I have tried watching it with top before, but it takes several hours
->>> before it dies.  I haven't been able to see any explosion of memory
->>> usage, even within the final hour, but I've never caught it just before
->>> it dies, either.  I suspect that whatever the issue is here, it happens
->>> very quickly.
->>>
->>> If I'm unable to get through this today using the incremental p4 sync
->>> method you described, I'll try running a full-blown clone overnight with
->>> top in batch mode writing to a log file to see whether it catches
->>> anything.
->>>
->>> Thanks again,
->>> Corey
->>
->> Unforunately I have not made much progress.  The incremental sync method
->> fails with the output pasted below.  The change I specified is only one
->> change number above where that repo was cloned...
->
-> I usually just do "git p4 sync @505859".  The error message below
-> crops up when things get confused.  Usually after a previous
-> error.  I tend to destroy the repo and try again.  Sorry I don't
-> can't explain better what's happening here.  It's not a memory
-> issue; it reports only 24 MB used.
->
->> So I tried a 'git p4 rebase' overnight with top running, and as I feared
->> I did not see anything out of the ordinary.  git, git-fast-import, and
->> git-p4 all hovered under 1.5% MEM the entire time, right up until
->> death.  The last entry in my log shows git-fast-import at 0.8%, with git
->> and git-p4 at 0.0% and 0.1%, respectively.  I could try again with a
->> more granular period, but I feel like this method is ultimately a goose
->> chase.
->
-> Bizarre.  There is no good explanation why memory usage would go
-> up to 32 GB (?) within one top interval (3 sec ?).  My theory
-> about one gigantic object is debunked:  you have only the 118 MB
-> one.  Perhaps there's some container or process memory limit, as
-> Luke guessed, but it's not obvious here.
->
-> The other big hammer is "strace".  If you're still interested in
-> playing with this, you could do:
->
->      strace -vf -tt -s 200 -o /tmp/strace.out git p4 clone ....
->
-> and hours later, see if something suggests itself toward the
-> end of that output file.
->
-> 		-- Pete
+to mean the same as
+
+  --branches --except maint master
+
+just does not make sense.
+
+An alternative would be that --not would divide the command line
+arguments into ranges within which one --except would subtract
+subsequent refs from earlier globbing arguments in the same range.
+That's not simpler to explain than your current proposal.
+
+So I like the relative simplicity of this approach. Here is a bit of
+documentation.
+
+--- 8< ---
+Subject: [PATCH] document --exclude option
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ Documentation/rev-list-options.txt | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 5bdfb42..650c252 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -174,6 +174,21 @@ parents) and `--max-parents=-1` (negative numbers denote no upper limit).
+ 	is automatically prepended if missing. If pattern lacks '?', '{asterisk}',
+ 	or '[', '/{asterisk}' at the end is implied.
+ 
++--exclude=<glob-pattern>::
++
++	Do not include refs matching '<glob-pattern>' that the next `--all`,
++	`--branches`, `--tags`, `--remotes`, or `--glob` would otherwise
++	consider. Repetitions of this option accumulate exclusion patterns
++	up to the next `--all`, `--branches`, `--tags`, `--remotes`, or
++	`--glob` option (other options or arguments do not clear
++	accumlated patterns).
+++
++The patterns given should not begin with `refs/heads`, `refs/tags`, or
++`refs/remotes` when applied to `--branches`, `--tags`, or `--remotes`,
++restrictively, and they must begin with `refs/` when applied to `--glob`
++or `--all`. If a trailing '/{asterisk}' is intended, it must be given
++explicitly.
++
+ --ignore-missing::
+ 
+ 	Upon seeing an invalid object name in the input, pretend as if
+-- 
+1.8.4.33.gd68f7e8
