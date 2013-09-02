@@ -1,101 +1,329 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: Officially start moving to the term 'staging area'
-Date: Wed, 4 Sep 2013 09:36:19 -0400
-Message-ID: <CAM9Z-nnGV4hMG1bAY9u+U+qU5vwi95RWFLj2-75AQUZc5mQDtw@mail.gmail.com>
-References: <20130829180129.GA4880@nysa>
-	<xmqqeh9c4a2t.fsf@gitster.dls.corp.google.com>
-	<CAM9Z-nmXPgfbXezbORb=NCqQuW4p3Dka+bHVdt_n7Sh=jehY7A@mail.gmail.com>
-	<b677f1ae-662f-4728-b625-189bc392c74d@email.android.com>
-	<CAM9Z-nmLQUrJk73pi_0a1_ccGMnqU_t=uOZze622_GEtWfMvQQ@mail.gmail.com>
-	<CAA01CsqNKMqExq1PYanotzQ-wTcf=7c5BQ_49xGu4QasXSCoeQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Scott Chacon <schacon@gmail.com>
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 04 15:36:25 2013
+From: Joergen Edelbo <jed@napatech.com>
+Subject: [PATCH] git-gui: Modify push dialog to support Gerrit review
+Date: Mon, 2 Sep 2013 10:54:19 +0200
+Message-ID: <20130904150853.52EC4121B7E@jed-dev-01.labnet>
+Cc: spearce@spearce.org, hvoigt@hvoigt.net, jed@napatech.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 04 17:16:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHDFw-0006NY-D2
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 15:36:24 +0200
+	id 1VHEpA-0003tC-P9
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 17:16:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762595Ab3IDNgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 09:36:20 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:59919 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762587Ab3IDNgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 09:36:19 -0400
-Received: by mail-ie0-f175.google.com with SMTP id u16so564327iet.6
-        for <git@vger.kernel.org>; Wed, 04 Sep 2013 06:36:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=BhmODe66QysdXDWdAGh/mKZj7O+pAziCTNbO1e/DSDI=;
-        b=RJEK1Qo7kNa4hTTK1MGR4kBgNIrJBkRovgeRAXfAZmzRb/C7sswF0pBberohJ8Bptx
-         aYu2YfWL/uKHPqgZuI0UT/TxdoFQLb95NeiUq76qxojIcX//J5mNlB4g+0YKS0Uafou8
-         x/mWaxcBWlP+ZFIyZE6ecL3I8hILbuKxRnkwW/PG1NF2EH+TAfi3QCdaxjyktK08puaY
-         PQNq5QLt3XaPF3Sqz0Kul2BQ1X0gUE0tYZEuvRfyn1+m0mJ9QGsJyr7kBRP81YcvWMAS
-         5xCK40bC9xMHUt9avgmOrl1ibDwhQtCslKzxjUMiloVylIT5ayVKs0C+Qf88eyXaMPxO
-         +shw==
-X-Received: by 10.43.125.4 with SMTP id gq4mr1788385icc.1.1378301779333; Wed,
- 04 Sep 2013 06:36:19 -0700 (PDT)
-Received: by 10.43.111.72 with HTTP; Wed, 4 Sep 2013 06:36:19 -0700 (PDT)
-In-Reply-To: <CAA01CsqNKMqExq1PYanotzQ-wTcf=7c5BQ_49xGu4QasXSCoeQ@mail.gmail.com>
+	id S1762957Ab3IDPQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 11:16:48 -0400
+Received: from nat.napatech.com ([188.120.77.114]:2202 "EHLO jed-dev-01.labnet"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756587Ab3IDPQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 11:16:47 -0400
+X-Greylist: delayed 469 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Sep 2013 11:16:46 EDT
+Received: by jed-dev-01.labnet (Postfix, from userid 1000)
+	id 52EC4121B7E; Wed,  4 Sep 2013 17:08:53 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233837>
 
-On Wed, Sep 4, 2013 at 3:13 AM, Piotr Krukowiecki
-<piotr.krukowiecki@gmail.com> wrote:
-> Just wanted to point to a Dr. Dobb's article from Monday:
-> http://www.drdobbs.com/tools/getting-started-with-git-the-fundamental/240160261?pgno=2
->
-> The author does not use the use the word "index" at all. Instead he
-> writes in following way:
->
-> ---------------------------------------------------------------------------------------
-<DR DOBBS QUOTE>
-> ---------------------------------------------------------------------------------------
->
->
-> Sorry for not responding to your comments Drew, no time at the moment.
+Problem: It is not possible to push for Gerrit review
+as you will always try to push to /refs/heads/... on
+the remote. As you should not be forced to work on a
+branch with the same name as some branch on the remote,
+some more flexibility in the selection of destination
+branch is also needed.
 
-NP. What he writes [in that quote at least] is entirely reasonable. In
-fact, oddly enough (as I presume you meant it as a refutation), it can
-be seen to support my argument: don't mess with the core code much (if
-at all) but fix the documentation. That's all that I've been arguing
-since day one. We don't need to make big huge changes in every part of
-the Git metaphor set to better explain what is going on to newbies and
-casual users. (Aside from the fact that there's a huge body of
-existing documentation, tools, and usage patterns that depends on the
-currently predominant model.)
+Changes done:
 
-I still argue that for a not insignificant group of users--people who
-are happy with the current paradigm and therefore aren't making a lot
-of noise--the current core metaphor is actually useful despite the
-name being more than just a tad bit unfortunate. Alas, for dealing
-with some of the advanced usage explanations it can be argued that the
-"staging area" metaphor (it implies _completed_ bundles ready to
-package into commits and ship--I envision shipping trailers being
-filled with _immutable_ boxes and attached to trucks) is actually
-harmful, but we can talk about that if there's a need.
+Remove selection of branches to push - push always HEAD.
+This can be justified by the fact that this far the most
+common thing to do.
+Specify both the remote repository to push to as well as
+the specific branch on that remote. This gives the flexibility.
 
+Add option to specify "Gerrit review". If selected, replace
+the traditional "heads" with the artificial "for" in the
+destination ref spec. This is what actually solved the trigger
+problem.
+
+Limit the branches to select from to the known branches
+for currently selected remote. This is motivated in better
+usability. Works only when "usettk" is true - it is left for
+further study how to change the values in tk_optionMenu on the
+fly.
+
+Signed-off-by: Joergen Edelbo <jed@napatech.com>
+---
+Hi there,
+
+We are at Napatech A/S just about to roll out a Git/Gerrit/Jenkins
+solution. It will really help the gui oriented people in pushing
+commits if this can be done directly in git-gui.
+
+BR
+Joergen Edelbo
+Napatech A/S
+
+ lib/transport.tcl |  184 +++++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 142 insertions(+), 42 deletions(-)
+
+diff --git a/lib/transport.tcl b/lib/transport.tcl
+index e5d211e..4c20ef7 100644
+--- a/lib/transport.tcl
++++ b/lib/transport.tcl
+@@ -59,20 +59,42 @@ proc push_to {remote} {
+ 	console::exec $w $cmd
+ }
+ 
+-proc start_push_anywhere_action {w} {
+-	global push_urltype push_remote push_url push_thin push_tags
+-	global push_force
+-	global repo_config
+-
+-	set is_mirror 0
+-	set r_url {}
++proc get_remote_rep {} {
++	global push_urltype push_remote push_url
++	set rep {}
+ 	switch -- $push_urltype {
+-	remote {
+-		set r_url $push_remote
+-		catch {set is_mirror $repo_config(remote.$push_remote.mirror)}
++	remote { set rep $push_remote }
++	url    { set rep $push_url }
+ 	}
+-	url {set r_url $push_url}
++	return $rep
++}
++
++proc get_remote_branch {} {
++	global push_branchtype push_branch push_new
++	set branch {}
++	switch -- $push_branchtype {
++	existing { set branch $push_branch }
++	create   { set branch $push_new }
++	}
++   return $branch
++}
++
++proc get_remote_ref_spec {} {
++	global gerrit_review
++	set push_branch [get_remote_branch]
++	if {$gerrit_review} {
++		return "refs/for/$push_branch"
++	} else {
++		return "refs/heads/$push_branch"
+ 	}
++}
++
++proc start_push_anywhere_action {w} {
++	global push_thin push_tags push_force
++	global repo_config current_branch is_detached
++
++	set is_mirror 0
++	set r_url [get_remote_rep]
+ 	if {$r_url eq {}} return
+ 
+ 	set cmd [list git push]
+@@ -87,28 +109,25 @@ proc start_push_anywhere_action {w} {
+ 		lappend cmd --tags
+ 	}
+ 	lappend cmd $r_url
++
++	catch {set is_mirror $repo_config(remote.$r_url.mirror)}
+ 	if {$is_mirror} {
+ 		set cons [console::new \
+ 			[mc "push %s" $r_url] \
+ 			[mc "Mirroring to %s" $r_url]]
+ 	} else {
+-		set cnt 0
+-		foreach i [$w.source.l curselection] {
+-			set b [$w.source.l get $i]
+-			lappend cmd "refs/heads/$b:refs/heads/$b"
+-			incr cnt
+-		}
+-		if {$cnt == 0} {
+-			return
+-		} elseif {$cnt == 1} {
+-			set unit branch
++		if {$is_detached} {
++			set src HEAD
+ 		} else {
+-			set unit branches
++			set src $current_branch
+ 		}
++		set dest [get_remote_ref_spec]
++
++		lappend cmd "$src:$dest"
+ 
+ 		set cons [console::new \
+ 			[mc "push %s" $r_url] \
+-			[mc "Pushing %s %s to %s" $cnt $unit $r_url]]
++			[mc "Pushing %s to %s" $src $dest]]
+ 	}
+ 	console::exec $cons $cmd
+ 	destroy $w
+@@ -117,10 +136,58 @@ proc start_push_anywhere_action {w} {
+ trace add variable push_remote write \
+ 	[list radio_selector push_urltype remote]
+ 
++proc update_branchtype {br} {
++	global current_branch push_branch push_branchtype
++	if {$br eq {}} {
++		set push_branchtype create
++		set push_branch {}
++	} else {
++		set push_branchtype existing
++		if {[lsearch -sorted -exact $br $current_branch] != -1} {
++			set push_branch $current_branch
++		} elseif {[lsearch -sorted -exact $br master] != -1} {
++			set push_branch master
++		} else {
++			set push_branch [lindex $br 0]
++		}
++	}
++}
++
++proc all_branches_combined {} {
++	set branches [list]
++	foreach spec [all_tracking_branches] {
++		set refn [lindex $spec 2]
++		regsub ^refs/heads/ $refn {} name
++		if { $name ne {HEAD} && [lsearch $branches $name] eq -1} {
++			lappend branches $name
++		}
++	}
++	update_branchtype  $branches
++	return $branches
++}
++
++proc update_branches {} {
++	global push_remote branch_combo
++	set branches [list]
++	foreach spec [all_tracking_branches] {
++		if {[lindex $spec 1] eq $push_remote} {
++			set refn [lindex $spec 0]
++			regsub ^refs/(heads|remotes)/$push_remote/ $refn {} name
++			if {$name ne {HEAD}} {
++				lappend branches $name
++			}
++		}
++	}
++	update_branchtype  $branches
++	$branch_combo configure -values $branches
++	return $branches
++}
++
+ proc do_push_anywhere {} {
+-	global all_remotes current_branch
+-	global push_urltype push_remote push_url push_thin push_tags
+-	global push_force use_ttk NS
++	global all_remotes use_ttk branch_combo
++	global push_urltype push_remote push_url
++	global push_branchtype push_branch push_new
++	global push_thin push_tags push_force NS gerrit_review
+ 
+ 	set w .push_setup
+ 	toplevel $w
+@@ -129,7 +196,7 @@ proc do_push_anywhere {} {
+ 	wm geometry $w "+[winfo rootx .]+[winfo rooty .]"
+ 	pave_toplevel $w
+ 
+-	${NS}::label $w.header -text [mc "Push Branches"] \
++	${NS}::label $w.header -text [mc "Push current HEAD"] \
+ 		-font font_uibold -anchor center
+ 	pack $w.header -side top -fill x
+ 
+@@ -144,21 +211,6 @@ proc do_push_anywhere {} {
+ 	pack $w.buttons.cancel -side right -padx 5
+ 	pack $w.buttons -side bottom -fill x -pady 10 -padx 10
+ 
+-	${NS}::labelframe $w.source -text [mc "Source Branches"]
+-	slistbox $w.source.l \
+-		-height 10 \
+-		-width 70 \
+-		-selectmode extended
+-	foreach h [load_all_heads] {
+-		$w.source.l insert end $h
+-		if {$h eq $current_branch} {
+-			$w.source.l select set end
+-			$w.source.l yview end
+-		}
+-	}
+-	pack $w.source.l -side left -fill both -expand 1
+-	pack $w.source -fill both -expand 1 -pady 5 -padx 5
+-
+ 	${NS}::labelframe $w.dest -text [mc "Destination Repository"]
+ 	if {$all_remotes ne {}} {
+ 		${NS}::radiobutton $w.dest.remote_r \
+@@ -202,7 +254,51 @@ proc do_push_anywhere {} {
+ 	grid columnconfigure $w.dest 1 -weight 1
+ 	pack $w.dest -anchor nw -fill x -pady 5 -padx 5
+ 
++	${NS}::labelframe $w.destbr -text [mc "Destination Branches"]
++	set all_branches [all_branches_combined]
++	if {$all_branches ne {}} {
++		${NS}::radiobutton $w.destbr.remote_b \
++			-text [mc "Known Branch:        "] \
++			-value existing \
++			-variable push_branchtype
++		if {$use_ttk} {
++			ttk::combobox $w.destbr.remote_n -state readonly \
++				-exportselection false \
++				-textvariable push_branch
++			set branch_combo $w.destbr.remote_n
++			update_branches
++		} else {
++			eval tk_optionMenu $w.destbr.remote_n push_branch $all_branches
++		}
++		grid $w.destbr.remote_b $w.destbr.remote_n -sticky w
++	}
++
++	${NS}::radiobutton $w.destbr.branch_r \
++		-text [mc "Arbitrary Branch:"] \
++		-value create \
++		-variable push_branchtype
++	${NS}::entry $w.destbr.branch_t \
++		-width 50 \
++		-textvariable push_new \
++		-validate key \
++		-validatecommand {
++			if {%d == 1 && [regexp {\s} %S]} {return 0}
++			if {%d == 1 && [string length %S] > 0} {
++				set push_branchtype create
++			}
++			return 1
++		}
++	grid $w.destbr.branch_r $w.destbr.branch_t -sticky we -padx {0 5}
++	${NS}::checkbutton $w.destbr.gerrit \
++		-text [mc "Push for Gerrit review (refs/for/...)"] \
++		-variable gerrit_review
++	grid $w.destbr.gerrit -columnspan 2 -sticky w
++
++	grid columnconfigure $w.destbr 1 -weight 1
++	pack $w.destbr -anchor nw -fill x -pady 5 -padx 5
++
+ 	${NS}::labelframe $w.options -text [mc "Transfer Options"]
++
+ 	${NS}::checkbutton $w.options.force \
+ 		-text [mc "Force overwrite existing branch (may discard changes)"] \
+ 		-variable push_force
+@@ -222,10 +318,14 @@ proc do_push_anywhere {} {
+ 	set push_force 0
+ 	set push_thin 0
+ 	set push_tags 0
++	set gerrit_review 0
+ 
+ 	bind $w <Visibility> "grab $w; focus $w.buttons.create"
+ 	bind $w <Key-Escape> "destroy $w"
+ 	bind $w <Key-Return> [list start_push_anywhere_action $w]
++	if {$all_remotes ne {}} {
++		bind $w.dest.remote_m <<ComboboxSelected>> { update_branches }
++	}
+ 	wm title $w [append "[appname] ([reponame]): " [mc "Push"]]
+ 	wm deiconify $w
+ 	tkwait window $w
 -- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+1.7.9.5
