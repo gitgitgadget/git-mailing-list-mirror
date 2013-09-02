@@ -1,58 +1,59 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Turn off pathspec magic on "{checkout,reset,add} -p" on
- native Windows builds
-Date: Mon, 2 Sep 2013 18:56:13 +0700
-Message-ID: <CACsJy8BxGVyVsOV=XyWRqSnNjna0LQOAk6rgJ_jRkVox1jUSxQ@mail.gmail.com>
-References: <521EF02A.2020300@viscovery.net> <1378001284-18426-1-git-send-email-pclouds@gmail.com>
- <5224334A.2090300@viscovery.net> <20130902092959.GA17306@lanh> <52246B70.3080200@viscovery.net>
+From: Evgeny Kotkov <evgeny.kotkov@gmail.com>
+Subject: Re: git svn fetch segfault on exit
+Date: Mon, 2 Sep 2013 15:57:33 +0400
+Message-ID: <CAPWhs-6E_9T61uf20YKXzwE2j8Tq-sOU9BUw_dVVe=LAH69_iw@mail.gmail.com>
+References: <51E7B382.8050302@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Sep 02 13:56:57 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, uli.heller@daemons-point.com
+To: Jonathan Lambrechts <jonathanlambrechts@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 02 13:57:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGSkT-0006df-Sr
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 13:56:50 +0200
+	id 1VGSlZ-0007GQ-To
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 13:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932107Ab3IBL4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 07:56:46 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:57706 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932068Ab3IBL4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 07:56:45 -0400
-Received: by mail-ob0-f174.google.com with SMTP id wd6so4445812obb.33
-        for <git@vger.kernel.org>; Mon, 02 Sep 2013 04:56:43 -0700 (PDT)
+	id S1758273Ab3IBL5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 07:57:54 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:59878 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755365Ab3IBL5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Sep 2013 07:57:53 -0400
+Received: by mail-qc0-f174.google.com with SMTP id e9so1122819qcy.19
+        for <git@vger.kernel.org>; Mon, 02 Sep 2013 04:57:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=VmUkr7DhMM/aUQDL6QW1DLHe6uTR4yRy8mRhmo3PU80=;
-        b=eYHcvbdYQ03zx265GuNYSoz8/rh2XPFPREptFEeNlUd1Hs33fc9LAZrZiJco6XJksR
-         SSkkZVqqgHR3IkRfN1SfQxQEJNdlyy4JLJtNLWMcATIEG1nsV3K9IuuZEujrvKHZSxDj
-         cakjzoR+l5Hnh96KNdmQSC2r83tK9I1raOyy+gaFPCXmpB/SQq54cZfP7fiBo4u0uMhy
-         iQ8m4vNsOKzT3H0ORiqrn2puOA+z84+ouQd/9TlS+YR5bcScySMMXS16GMZL1TPSxhjT
-         S4y3rhku8RRXqbmp63tBRzDMnakSPYESYmyYdeHkbvYhsAK2TpZpWA3bzDKywnO845MI
-         WHCg==
-X-Received: by 10.182.119.229 with SMTP id kx5mr16723428obb.23.1378123003823;
- Mon, 02 Sep 2013 04:56:43 -0700 (PDT)
-Received: by 10.182.87.105 with HTTP; Mon, 2 Sep 2013 04:56:13 -0700 (PDT)
-In-Reply-To: <52246B70.3080200@viscovery.net>
+        bh=8DsyBvwNHJsxrCXfya/4J5fQkH8jybmQn6x22fboVhY=;
+        b=owJSTtL7GNzIQtwlRapooQBWecnZBKXY3/QAjWvnt+37X3Tn3UXgmOcbxnC7jIaGJk
+         9LWt5qINCyaGajaMcUhYdjoBIFmUms/LF3lkGBcSz6wSEl8YiKmpEEvqjjBxUNf+VVP6
+         60J5c5hsIxZzU2JBisHFiY851/wBpmVkyLAU94BwB+5A5kxHJ7AfGn+HjpTZFLP9WAPe
+         0CN8sM1V9B1Lbckjh9u3uxi71BrzpROXMuXru+/EhZCjnzORf6MVgMYWpioQom075VSN
+         FCDA+D3gURt9nX1W9LxjDYTbWhkFVmWGOTZJ5gYt3ttmXuSB5t/Z2t4bvDqSbalT9+Je
+         0aRw==
+X-Received: by 10.229.47.71 with SMTP id m7mr848751qcf.25.1378123073076; Mon,
+ 02 Sep 2013 04:57:53 -0700 (PDT)
+Received: by 10.49.81.176 with HTTP; Mon, 2 Sep 2013 04:57:33 -0700 (PDT)
+In-Reply-To: <51E7B382.8050302@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233634>
 
-On Mon, Sep 2, 2013 at 5:41 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Which features do we lose on Windows with the previous patch and this fixup?
+> Every git svn call that involves a fetch produces a segmentation fault on
+> exit (but the operation succeeds).
 
-New pathspec magic :(glob), :(literal) and :(icase). You can still use
-them via --*-pathspecs or equivalent env variables. You just can't
-enable them per individual pathspec.
--- 
-Duy
+>From what I see, this looks quite similiar to the 'serf' issue I've recently
+reported to the serf-dev mailing list [1].  It should be fixed by now, so,
+the latest serf@trunk build should work fine.
+
+[1]: https://groups.google.com/d/msg/serf-dev/gOn9HTUN98U/pz0_AqdrmJYJ
+
+
+Regards,
+Evgeny Kotkov
