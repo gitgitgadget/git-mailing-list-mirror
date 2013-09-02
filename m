@@ -1,54 +1,155 @@
-From: uli <uli.heller@daemons-point.com>
-Subject: Re: git svn fetch segfault on exit
-Date: Mon, 2 Sep 2013 00:40:16 -0700 (PDT)
-Message-ID: <1378107616368-7595155.post@n2.nabble.com>
-References: <51E7B382.8050302@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 02 09:40:23 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v3 2/4] transport-helper: add dont-update-private capability
+Date: Mon,  2 Sep 2013 09:41:17 +0200
+Message-ID: <1378107677-28741-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <CAMP44s0rvsEixDz8v2aqAu2UCfXb8qTFAb+1CpwAyhC-6QONYw@mail.gmail.com>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Sep 02 09:41:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGOkJ-0008KG-Dw
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 09:40:23 +0200
+	id 1VGOlc-0000Ol-NX
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Sep 2013 09:41:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756289Ab3IBHkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 03:40:17 -0400
-Received: from sam.nabble.com ([216.139.236.26]:34236 "EHLO sam.nabble.com"
+	id S1758266Ab3IBHl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 03:41:29 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:57194 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753288Ab3IBHkQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 03:40:16 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <uli.heller@daemons-point.com>)
-	id 1VGOkC-0005mV-C7
-	for git@vger.kernel.org; Mon, 02 Sep 2013 00:40:16 -0700
-In-Reply-To: <51E7B382.8050302@gmail.com>
+	id S1757313Ab3IBHl0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Sep 2013 03:41:26 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r827fImZ017039
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 2 Sep 2013 09:41:18 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1VGOlC-0004ld-No; Mon, 02 Sep 2013 09:41:18 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1VGOlC-0007UZ-E6; Mon, 02 Sep 2013 09:41:18 +0200
+X-Mailer: git-send-email 1.8.4.12.g98a4f55.dirty
+In-Reply-To: <CAMP44s0rvsEixDz8v2aqAu2UCfXb8qTFAb+1CpwAyhC-6QONYw@mail.gmail.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 02 Sep 2013 09:41:18 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r827fImZ017039
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1378712478.30231@d4t/y1tGv66BAq6XSrO6ig
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233630>
 
-I'm facing the same issue. I'm using git-1.8.4 and subversion 1.8.3 on
-Ubuntu.
+Since 664059fb62 (Felipe Contreras, Apr 17 2013, transport-helper: update
+remote helper namespace), a 'push' operation on a remote helper updates
+the private ref by default. This is often a good thing, but it can also
+be desirable to disable this update to force the next 'pull' to re-import
+the pushed revisions.
 
-I'm proposing a different modification to Ra.pm:
+Allow remote-helpers to disable the automatic update by introducing a new
+capability.
 
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+> There's an extra unnecessary space here, no?
 
+Indeed (the new option is shorter, and I didn't rewrap). It doesn't
+really matter, but in case, here's an updated version.
 
-Jonathan's modifications basically disable the use of $RA. The modifications
-above ensure that the destructor of $RA is called before doing an
-apr_terminate().
+ Documentation/gitremote-helpers.txt |  5 +++++
+ git-remote-testgit.sh               |  1 +
+ t/t5801-remote-helpers.sh           | 11 +++++++++++
+ transport-helper.c                  |  7 +++++--
+ 4 files changed, 22 insertions(+), 2 deletions(-)
 
-Best regards, Uli.
-
-
-
---
-View this message in context: http://git.661346.n2.nabble.com/git-svn-fetch-segfault-on-exit-tp7592205p7595155.html
-Sent from the git mailing list archive at Nabble.com.
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index 0827f69..ee9e134 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -120,6 +120,11 @@ connecting (see the 'connect' command under COMMANDS).
+ When choosing between 'push' and 'export', Git prefers 'push'.
+ Other frontends may have some other order of preference.
+ 
++'no-private-update'::
++	When using the 'refspec' capability, git normally updates the
++	private ref on successful push. This update is disabled when
++	the remote-helper declares the capability 'no-private-update'.
++
+ 
+ Capabilities for Fetching
+ ^^^^^^^^^^^^^^^^^^^^^^^^^
+diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
+index 2109070..6d2f282 100755
+--- a/git-remote-testgit.sh
++++ b/git-remote-testgit.sh
+@@ -38,6 +38,7 @@ do
+ 			echo "*export-marks $gitmarks"
+ 		fi
+ 		test -n "$GIT_REMOTE_TESTGIT_SIGNED_TAGS" && echo "signed-tags"
++		test -n "$GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE" && echo "no-private-update"
+ 		echo
+ 		;;
+ 	list)
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index 8c4c539..613f69a 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -182,6 +182,17 @@ test_expect_success 'push update refs' '
+ 	)
+ '
+ 
++test_expect_success 'push update refs disabled by no-private-update' '
++	(cd local &&
++	echo more-update >>file &&
++	git commit -a -m more-update &&
++	git rev-parse --verify testgit/origin/heads/update >expect &&
++	GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE=t git push origin update &&
++	git rev-parse --verify testgit/origin/heads/update >actual &&
++	test_cmp expect actual
++	)
++'
++
+ test_expect_success 'push update refs failure' '
+ 	(cd local &&
+ 	git checkout update &&
+diff --git a/transport-helper.c b/transport-helper.c
+index 63cabc3..3328394 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -27,7 +27,8 @@ struct helper_data {
+ 		push : 1,
+ 		connect : 1,
+ 		signed_tags : 1,
+-		no_disconnect_req : 1;
++		no_disconnect_req : 1,
++		no_private_update : 1;
+ 	char *export_marks;
+ 	char *import_marks;
+ 	/* These go from remote name (as in "list") to private name */
+@@ -205,6 +206,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 			strbuf_addstr(&arg, "--import-marks=");
+ 			strbuf_addstr(&arg, capname + strlen("import-marks "));
+ 			data->import_marks = strbuf_detach(&arg, NULL);
++		} else if (!prefixcmp(capname, "no-private-update")) {
++			data->no_private_update = 1;
+ 		} else if (mandatory) {
+ 			die("Unknown mandatory capability %s. This remote "
+ 			    "helper probably needs newer version of Git.",
+@@ -723,7 +726,7 @@ static void push_update_refs_status(struct helper_data *data,
+ 		if (push_update_ref_status(&buf, &ref, remote_refs))
+ 			continue;
+ 
+-		if (!data->refspecs)
++		if (!data->refspecs || data->no_private_update)
+ 			continue;
+ 
+ 		/* propagate back the update to the remote namespace */
+-- 
+1.8.4.12.g98a4f55.dirty
