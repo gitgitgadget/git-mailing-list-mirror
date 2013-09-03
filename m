@@ -1,63 +1,61 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 07/11] Documentation/replace: tell that -f option bypasses
- the type check
-Date: Tue, 03 Sep 2013 09:10:21 +0200
-Message-ID: <20130903071026.29838.52710.chriscool@tuxfamily.org>
+Subject: [PATCH v4 06/11] replace: bypass the type check if -f option is used
+Date: Tue, 03 Sep 2013 09:10:20 +0200
+Message-ID: <20130903071026.29838.76437.chriscool@tuxfamily.org>
 References: <20130903070551.29838.43576.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
 	Thomas Rast <trast@inf.ethz.ch>, Johannes Sixt <j6t@kdbg.org>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 09:17:56 2013
+X-From: git-owner@vger.kernel.org Tue Sep 03 09:17:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGks5-0008IL-Gc
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 09:17:53 +0200
+	id 1VGks6-0008IL-1I
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 09:17:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932559Ab3ICHRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 03:17:46 -0400
-Received: from mail-1y.bbox.fr ([194.158.98.14]:53251 "EHLO mail-1y.bbox.fr"
+	id S932561Ab3ICHRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 03:17:47 -0400
+Received: from mail-1y.bbox.fr ([194.158.98.14]:53243 "EHLO mail-1y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932528Ab3ICHRU (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932533Ab3ICHRU (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 3 Sep 2013 03:17:20 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 4CADC5D;
-	Tue,  3 Sep 2013 09:17:19 +0200 (CEST)
-X-git-sha1: ad7e7001abdd0f0d8740047d503f5500f44a1b58 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id D9A6C61;
+	Tue,  3 Sep 2013 09:17:18 +0200 (CEST)
+X-git-sha1: a687c5f54eede130ee5a413565cf68dfb1f0626a 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20130903070551.29838.43576.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233698>
+
+If -f option, which means '--force', is used, we can allow an object
+to be replaced with one of a different type, as the user should know
+what (s)he is doing.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-replace.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ builtin/replace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
-index 736b48c..a2bd2ee 100644
---- a/Documentation/git-replace.txt
-+++ b/Documentation/git-replace.txt
-@@ -21,10 +21,12 @@ replaced. The content of the 'replace' reference is the SHA-1 of the
- replacement object.
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 9a94769..95736d9 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -103,7 +103,7 @@ static int replace_object(const char *object_ref, const char *replace_ref,
  
- The replaced object and the replacement object must be of the same type.
--There is no other restriction on them.
-+This restriction can be bypassed using `-f`.
- 
- Unless `-f` is given, the 'replace' reference must not yet exist.
- 
-+There is no other restriction on the replaced and replacement objects.
-+
- Replacement references will be used by default by all Git commands
- except those doing reachability traversal (prune, pack transfer and
- fsck).
+ 	obj_type = sha1_object_info(object, NULL);
+ 	repl_type = sha1_object_info(repl, NULL);
+-	if (obj_type != repl_type)
++	if (!force && obj_type != repl_type)
+ 		die("Objects must be of the same type.\n"
+ 		    "'%s' points to a replaced object of type '%s'\n"
+ 		    "while '%s' points to a replacement object of type '%s'.",
 -- 
 1.8.4.rc1.31.g530f5ce.dirty
