@@ -1,64 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/4] t: rev-parse-parents: avoid yoda conditions
-Date: Tue, 3 Sep 2013 03:12:56 -0400
-Message-ID: <20130903071256.GD3608@sigill.intra.peff.net>
-References: <1378103439-3225-1-git-send-email-felipe.contreras@gmail.com>
- <1378103439-3225-4-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 09:13:05 2013
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v4 04/11] t6050-replace: add test to clean up all the replace
+ refs
+Date: Tue, 03 Sep 2013 09:10:18 +0200
+Message-ID: <20130903071026.29838.37890.chriscool@tuxfamily.org>
+References: <20130903070551.29838.43576.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+	Thomas Rast <trast@inf.ethz.ch>, Johannes Sixt <j6t@kdbg.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 03 09:17:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGknQ-0005ag-3I
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 09:13:04 +0200
+	id 1VGkrh-00082e-3G
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 09:17:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759453Ab3ICHM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 03:12:59 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52850 "EHLO peff.net"
+	id S932548Ab3ICHRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 03:17:23 -0400
+Received: from mail-1y.bbox.fr ([194.158.98.14]:53232 "EHLO mail-1y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755160Ab3ICHM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 03:12:59 -0400
-Received: (qmail 20161 invoked by uid 102); 3 Sep 2013 07:12:59 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Sep 2013 02:12:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Sep 2013 03:12:56 -0400
-Content-Disposition: inline
-In-Reply-To: <1378103439-3225-4-git-send-email-felipe.contreras@gmail.com>
+	id S932530Ab3ICHRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 03:17:19 -0400
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-1y.bbox.fr (Postfix) with ESMTP id 08BEE52;
+	Tue,  3 Sep 2013 09:17:18 +0200 (CEST)
+X-git-sha1: dcfbab6bea3df3166503f3084cec2679f10f9e80 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20130903070551.29838.43576.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233690>
 
-On Mon, Sep 02, 2013 at 01:30:38AM -0500, Felipe Contreras wrote:
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t6050-replace.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-> Just as 5 == X is weird, so is comparing first the expected value, and
-> then the value we are testing. So switch them around.
-
-Actually, our normal comparison order for test output is "test_cmp
-expect actual", as it shows a test failure as a diff with the expected
-output as the base (i.e., the diff shows what went wrong).
-
-That reasoning does not apply to "test a = b", which shows no output at
-all. However, if you want to clean up and modernize these tests, it
-would probably be better to simply convert them to use test_cmp.
-
-I wonder if we should have a:
-
-  test_cmp_args () {
-          echo "$1" >expect &&
-          echo "$1" >actual &&
-          test_cmp expect actual
-  }
-
-to let these remain one-liners like:
-
-  test_cmp_args "$(git rev-parse start)" "$(git rev-parse final^1^1^1)"
-
--Peff
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index 5c352c4..05be228 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -276,4 +276,10 @@ test_expect_success 'replaced and replacement objects must be of the same type'
+ 	grep "$BLOB. points to a replacement object of type .blob" err
+ '
+ 
++test_expect_success 'replace ref cleanup' '
++	test -n "$(git replace)" &&
++	git replace -d $(git replace) &&
++	test -z "$(git replace)"
++'
++
+ test_done
+-- 
+1.8.4.rc1.31.g530f5ce.dirty
