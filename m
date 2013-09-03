@@ -1,161 +1,125 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] revision: introduce --exclude=<glob> to tame wildcards
-Date: Mon, 2 Sep 2013 18:09:50 -0500
-Message-ID: <CAMP44s2+cG2kb=o9OTT=8=2pm+xCwZEJE5dNkmyKx6P=03sX-Q@mail.gmail.com>
-References: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com>
-	<7vhae7k7t1.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1y2kvSnF3dKDMr9QtS40PNSW93DWCxFUoL658YkqYeVA@mail.gmail.com>
-	<CAPc5daVSqoE74kmsobg7RpMtiL3vzKN+ckAcWEKU_Q_wF8HYuA@mail.gmail.com>
-	<CAMP44s0P=XF5C8+fU2cJ-Xuq57iqcAn674Upub6N=+iiMpQK0g@mail.gmail.com>
-	<xmqqeh9b15x6.fsf@gitster.dls.corp.google.com>
-	<xmqq1u5aybri.fsf_-_@gitster.dls.corp.google.com>
-	<5224F0EE.1080205@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Sep 03 01:09:57 2013
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: Re: the pager
+Date: Mon, 2 Sep 2013 22:27:48 -0400
+Message-ID: <201309030227.r832RmBd013888@freeze.ariadne.com>
+References: <201308261957.r7QJvfjF028935@freeze.ariadne.com>
+	<xmqqd2ozhhob.fsf@gitster.dls.corp.google.com>
+	<201308281819.r7SIJmnh025977@freeze.ariadne.com>
+	<xmqqr4dd8suz.fsf@gitster.dls.corp.google.com>
+	<201308291541.r7TFfuJr023110@freeze.ariadne.com> <vpqsixsv6dq.fsf@anie.imag.fr>
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Sep 03 04:27:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGdFt-0004Y9-39
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 01:09:57 +0200
+	id 1VGgLV-00072M-7V
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 04:27:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753458Ab3IBXJx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Sep 2013 19:09:53 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:37217 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752655Ab3IBXJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Sep 2013 19:09:52 -0400
-Received: by mail-la0-f52.google.com with SMTP id ev20so3968650lab.39
-        for <git@vger.kernel.org>; Mon, 02 Sep 2013 16:09:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/lZao0Yx5xeAbV24LS1EUjTRaJjl+JcZfBw+4t3A3io=;
-        b=TxBLyVz+j/qgatFJK6cd/XEmhOjEjMiF8LLvL6en1BFF/rLwjngYPC3JP8xHlNPrt0
-         hfScLSQrrVZu+apG7xROU9cJhX4Rid9R5lCi61+7sntsEU+e5pRyC1v8u0jhXR2Xt6ey
-         kz83jOqF5fi0p2jZpXnZ2tXWxRhNBt3b/7g8KMCmJ7PubF5B6Y4ohnJ9w1DHAE40lE5l
-         DWFN/kwB1cQ1HF/oHimm6Li9AakwmGzrsCoxAk/ubo4/9KHEmjrR6JdeZZkUzY+TqwQM
-         FcJ9NHO8yINLRKsut7gxUlG75SrGJlMKM5NOmpmXhnbuFg2ys7ORqCSVcAhXRR6Qw7eu
-         UjrA==
-X-Received: by 10.112.168.170 with SMTP id zx10mr22736130lbb.0.1378163390549;
- Mon, 02 Sep 2013 16:09:50 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Mon, 2 Sep 2013 16:09:50 -0700 (PDT)
-In-Reply-To: <5224F0EE.1080205@kdbg.org>
+	id S1759188Ab3ICC1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Sep 2013 22:27:53 -0400
+Received: from qmta15.westchester.pa.mail.comcast.net ([76.96.59.228]:57821
+	"EHLO qmta15.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753966Ab3ICC1w (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Sep 2013 22:27:52 -0400
+Received: from omta19.westchester.pa.mail.comcast.net ([76.96.62.98])
+	by qmta15.westchester.pa.mail.comcast.net with comcast
+	id LRe31m00727AodY5FSTqG6; Tue, 03 Sep 2013 02:27:50 +0000
+Received: from freeze.ariadne.com ([24.34.72.61])
+	by omta19.westchester.pa.mail.comcast.net with comcast
+	id LSTq1m00R1KKtkw3fSTqSE; Tue, 03 Sep 2013 02:27:50 +0000
+Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
+	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r832RnN2013889;
+	Mon, 2 Sep 2013 22:27:49 -0400
+Received: (from worley@localhost)
+	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r832RmBd013888;
+	Mon, 2 Sep 2013 22:27:48 -0400
+In-reply-to: <vpqsixsv6dq.fsf@anie.imag.fr> (Matthieu.Moy@grenoble-inp.fr)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1378175270;
+	bh=Xvv3Fd6sCYvYofVNcB4dEueWYWym4Mt/dGJdC3RFeW0=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=ZVHwHnHGYW0hUAiGRKQOZ4QXkB/DkgK48u+zMbBHFWM7B88cJGX3whi9jz/HU8KQG
+	 DTFnoURaBusiNz38/O3rgFzgGEQjsCyk9s76S9+/skqczzXjjYfFF5uC+Je5+MLoRO
+	 yHROTwPd/TJRsDpvMjBzNP2U//BOxFjq/vb7CLTyuvdecxshcakl2Gci+JUuOVHy4x
+	 QrdFMfUfGLFaWFTe9yxypPgPy3FS5OiuFygCky1yyOH1iAtWh16epWeQZVHJDp5yZF
+	 Bhv2Y/DG69RyKMGACEey1ut2XOyRQPeFg9+NcmB6hcVBYr+hDkx+5IDS315GuicoNK
+	 g9xSC5zO9Fzww==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233675>
 
-On Mon, Sep 2, 2013 at 3:11 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 31.08.2013 01:55, schrieb Junio C Hamano:
->> People often find "git log --branches" etc. that includes _all_
->> branches is cumbersome to use when they want to grab most but except
->> some.  The same applies to --tags, --all and --glob.
->>
->> Teach the revision machinery to remember patterns, and then upon the
->> next such a globbing option, exclude those that match the pattern.
->>
->> With this, I can view only my integration branches (e.g. maint,
->> master, etc.) without topic branches, which are named after two
->> letters from primary authors' names, slash and topic name.
->>
->>     git rev-list --no-walk --exclude=??/* --branches |
->>     git name-rev --refs refs/heads/* --stdin
->>
->> This one shows things reachable from local and remote branches that
->> have not been merged to the integration branches.
->>
->>     git log --remotes --branches --not --exclude=??/* --branches
->>
->> It may be a bit rough around the edges, in that the pattern to give
->> the exclude option depends on what globbing option follows.  In
->> these examples, the pattern "??/*" is used, not "refs/heads/??/*",
->> because the globbing option that follows the -"-exclude=<pattern>"
->> is "--branches".  As each use of globbing option resets previously
->> set "--exclude", this may not be such a bad thing, though.
->
-> I argued "--except should trump everything" earlier, but the case
-> involving --not
->
->   --branches --except maint --not master
->
-> to mean the same as
->
->   --branches --except maint master
->
-> just does not make sense.
+> From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 
-No, but this could make sense:
+> >     const char *git_pager(int stdout_is_tty)
+> >     {
+> >             const char *pager;
+> >
+> >             if (!stdout_is_tty)
+> >                     return NULL;
+> >
+> >             pager = getenv("GIT_PAGER");
+> >             if (!pager) {
+> >                     if (!pager_program)
+> >                             git_config(git_default_config, NULL);
+> >                     pager = pager_program;
+> >             }
+> >             if (!pager)
+> >                     pager = getenv("PAGER");
+> >             if (!pager)
+> >                     pager = DEFAULT_PAGER;
+> >             else if (!*pager || !strcmp(pager, "cat"))
+> >                     pager = NULL;
+> 
+> I guess the "else" could and should be dropped. If you do so (and
+> possibly insert a blank line between the DEFAULT_PAGER case and the
+> "pager = NULL" case), you get a nice pattern
+> 
+> if (!pager)
+> 	try_something();
+> if (!pager)
+> 	try_next_option();
 
---branches ^master --except maint --not master
-==
---branches --except maint
+That's true, but it would change the effect of using "cat" as a value:
+"cat" as a value of DEFAULT_PAGER would cause git_pager() to return
+NULL, whereas now it causes git_pager() to return "cat".  (All other
+places where "cat" can be a value are translated to NULL already.)
 
-> An alternative would be that --not would divide the command line
-> arguments into ranges within which one --except would subtract
-> subsequent refs from earlier globbing arguments in the same range.
-> That's not simpler to explain than your current proposal.
+This is why I want to know what the *intended* behavior is, because we
+might be changing Git's behavior, and I want to know that if we do
+that, we're changing it to what it should be.  And I haven't seen
+anyone venture an opinion on what the intended behavior is.
 
-Something like that can be easily done in my approach:
+> I agree that a comment like this would help, though:
+> 
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1266,7 +1266,7 @@ static inline ssize_t write_str_in_full(int fd, const char *str)
+>  
+>  /* pager.c */
+>  extern void setup_pager(void);
+> -extern const char *pager_program;
+> +extern const char *pager_program; /* value read from git_config() */
+>  extern int pager_in_use(void);
+>  extern int pager_use_color;
+>  extern int term_columns(void);
 
---- a/revision.c
-+++ b/revision.c
-@@ -1984,6 +1984,7 @@ static int handle_revision_pseudo_opt(const char
-*submodule,
-                handle_reflog(revs, *flags);
-        } else if (!strcmp(arg, "--not")) {
-                *flags ^= UNINTERESTING | BOTTOM;
-+               *flags &= ~SKIP;
-        } else if (!strcmp(arg, "--except")) {
-                *flags |= SKIP;
-        } else if (!strcmp(arg, "--no-walk")) {
-@@ -2628,7 +2629,8 @@ int prepare_revision_walk(struct rev_info *revs)
-                for (i = 0; i < revs->cmdline.nr; i++) {
-                        struct rev_cmdline_entry *ce;
-                        ce = &revs->cmdline.rev[i];
--                       if ((ce->flags & SKIP) && !refcmp(ce->name, e->name)) {
-+                       if ((ce->flags & SKIP) && !refcmp(ce->name, e->name) &&
-+                                       ((ce->flags & UNINTERESTING)
-== (e->item->flags & UNINTERESTING))) {
-                                e->item->flags =
-recalculate_flag(revs, e->item->sha1, ce->name);
-                                goto next;
-                        }
-diff --git a/t/t6112-rev-list-except.sh b/t/t6112-rev-list-except.sh
-index a40a641..441e1da 100755
---- a/t/t6112-rev-list-except.sh
-+++ b/t/t6112-rev-list-except.sh
-@@ -57,4 +57,21 @@ test_expect_success 'rev-list --except and --not
-with proper flags' '
-        test_cmp expect actual
- '
+First off, the wording is wrong, it should be "value set by
+git_config()".
 
-+test_expect_success 'rev-list --not ranges' '
-+
-+       git rev-list --topo-order test --not master --except master
-test > actual &&
-+       git rev-list --topo-order test > expect &&
-+       test_cmp expect actual
-+'
-+
-+test_expect_success 'rev-list multiple --not ranges' '
-+
-+       git checkout -b extra test &&
-+       echo five > content &&
-+       git commit -a -m five &&
-+       git rev-list --topo-order test --not master --except master
-test --not extra > actual &&
-+       git rev-list --topo-order test extra > expect &&
-+       test_cmp expect actual
-+'
-+
+But that doesn't tell the reader what the significance of the value
+is.  I suspect that a number of global variables need to be marked:
 
--- 
-Felipe Contreras
+> /* The pager program name, or "cat" if there is no pager.
+>  * Can be overridden by the pager.<cmd> configuration value for a
+>  * single command, or suppressed by the --no-pager option.
+>  * Set by calling git_config().
+>  * NULL if hasn't been set yet by calling git_config(). */
+> extern const char *pager_program;
+
+Dale
