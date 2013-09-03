@@ -1,74 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] {fetch,receive}-pack: drop unpack-objects, delay loosing
- objects until the end
-Date: Tue, 3 Sep 2013 13:25:14 -0400
-Message-ID: <20130903172514.GB1050@sigill.intra.peff.net>
-References: <1378091107-31682-1-git-send-email-pclouds@gmail.com>
- <20130903064938.GB3608@sigill.intra.peff.net>
- <CACsJy8ButV8Y6Rm=F8dLTw3NvRCJZ1RgJ5f-591ASbOqfDRRTQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] t: rev-parse-parents: avoid yoda conditions
+Date: Tue, 03 Sep 2013 10:31:00 -0700
+Message-ID: <xmqq8uzdu817.fsf@gitster.dls.corp.google.com>
+References: <1378103439-3225-1-git-send-email-felipe.contreras@gmail.com>
+	<1378103439-3225-4-git-send-email-felipe.contreras@gmail.com>
+	<20130903071256.GD3608@sigill.intra.peff.net>
+	<20130903075107.GA25540@goldbirke>
+	<20130903080358.GA30158@sigill.intra.peff.net>
+	<CAMP44s112mwgs=8n0XCnTtPM2V-O5RYE2ns+fjCvgkxj+kEY8Q@mail.gmail.com>
+	<20130903111006.GJ29840@goldbirke>
+	<CAMP44s349-v6xtCvbDzycVj1wBwTdAgLmuGxB0pYn6CmHYkM1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 19:25:30 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 03 19:31:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGuLz-0003uF-RL
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 19:25:24 +0200
+	id 1VGuRf-00069j-Vs
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 19:31:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758549Ab3ICRZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 13:25:18 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56896 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756708Ab3ICRZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 13:25:17 -0400
-Received: (qmail 16943 invoked by uid 102); 3 Sep 2013 17:25:17 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Sep 2013 12:25:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Sep 2013 13:25:14 -0400
-Content-Disposition: inline
-In-Reply-To: <CACsJy8ButV8Y6Rm=F8dLTw3NvRCJZ1RgJ5f-591ASbOqfDRRTQ@mail.gmail.com>
+	id S1757015Ab3ICRbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 13:31:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34448 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756429Ab3ICRbL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 13:31:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA4C73F3DB;
+	Tue,  3 Sep 2013 17:31:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OWgdJSZUO6wY8LtTG8T7WBD8wnk=; b=mAEzdn
+	qSTxWypKlto7eBHR7BtwTz6UmAX4KBc4cWhGVhx1lJmgkJRZywRzZbe6hGNZ4p6I
+	77mcq86Wzx5Gj8jLIuriP4PQcKb5o0RD1G1KfgQBJa+t+p3GL3aGfmJgIrIyI0h7
+	1WaQytRlBkDafAx1G7O+CGxtEgUku2QXlS/zU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Kx3r4sVlZ0Mgr2huXNTd5ZRbIf4VC33q
+	mZ2hqNjUlZTKdOaB8pfDEvj9TjQly1JGby8M5vi8nSgnDnU2MfESsXJwABu7gvbx
+	p5nmWMv5z64LZcExfcc6sUVJMHEJAUL6lTX5YGD1WG2PgkrJxeHS0sEJFqY4slin
+	Mpuh6K88lGA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D918F3F3D8;
+	Tue,  3 Sep 2013 17:31:06 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 79F413F3B9;
+	Tue,  3 Sep 2013 17:31:03 +0000 (UTC)
+In-Reply-To: <CAMP44s349-v6xtCvbDzycVj1wBwTdAgLmuGxB0pYn6CmHYkM1Q@mail.gmail.com>
+	(Felipe Contreras's message of "Tue, 3 Sep 2013 08:39:54 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9BB74A96-14BE-11E3-B224-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233748>
 
-On Tue, Sep 03, 2013 at 06:56:23PM +0700, Nguyen Thai Ngoc Duy wrote:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> > ...but the cost is paid by total pack size, not number of objects. So if
-> > I am pushing up a commit with a large uncompressible blob, I've
-> > effectively doubled my disk I/O. It would make more sense to me for
-> > index-pack to learn command-line options specifying the limits, and then
-> > to operate on the pack as it streams in. E.g., to decide after seeing
-> > the header to unpack rather than index, or to drop large blobs from the
-> > pack (and put them in their own pack directly) as we are streaming into
-> > it (we do not know the blob size ahead of time, but we can make a good
-> > guess if it has a large on-disk size in the pack).
-> 
-> Yeah letting index-pack do the work was my backup plan :) I think if
-> there is a big blob in the pack, then the pack should not be unpacked
-> at all. If you store big blobs in a separate pack you already pay the
-> the lookup cost of one more pack in find_pack_entry(), why go through
-> the process of unpacking? index-pack still has the advantage of
-> streaming though. Will rework.
+> There are two ways to fix an inconsistency, the other way is to fix
+> test_cmp. But that would be a change, and change is not welcome in
+> Git.
 
-In general, our large-blob strategy is to push them out to their own
-pack so that we do not incur the I/O overhead of rewriting them whenever
-we repack. But the flipside is that we have to pay the cost of an extra
-.idx open and lookup for each such object. In the longer term, I think
-it might make sense to be able to generate a multi-pack .idx for such a
-case (or even to simply store the large blobs in a special area indexed
-by the object sha1, as we do for loose objects).
-
-But that is all orthogonal to your patch. I think as long as we are
-moving towards "index-pack makes the decisions while it processes the
-pack" we are going in a good direction. Even if we do not implement all
-of the decisions immediately, it leaves room for doing so later without
-loss of efficiency.
-
--Peff
+If you want to do "test_cmp $actual $expect", you would have to
+first "fix" people's expectation that "diff A B" produces a change
+necessary to bring A to B, which would not likely to happen.  We do
+the 'test_cmp expect actual' for a reason.
