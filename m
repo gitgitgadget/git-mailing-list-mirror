@@ -1,145 +1,160 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH v2] peel_onion(): add support for <rev>^{tag}
-Date: Tue, 03 Sep 2013 14:36:39 -0400
-Message-ID: <52262C37.3030406@bbn.com>
-References: <1378100551-892-1-git-send-email-rhansen@bbn.com> <20130903070546.GC3608@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 1/2] sha1-name: pass len argument to interpret_branch_name()
+Date: Tue, 03 Sep 2013 11:40:37 -0700
+Message-ID: <xmqqioyhsq8q.fsf@gitster.dls.corp.google.com>
+References: <1378103670-3394-1-git-send-email-felipe.contreras@gmail.com>
+	<1378103670-3394-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Sep 03 20:36:49 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Stefano Lattarini <stefano.lattarini@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 03 20:40:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGvT6-00089q-Sp
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 20:36:49 +0200
+	id 1VGvX2-0001D2-NV
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 20:40:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932076Ab3ICSgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 14:36:45 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:58206 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755725Ab3ICSgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 14:36:44 -0400
-Received: from socket.bbn.com ([192.1.120.102]:55386)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1VGvSy-000G88-1J; Tue, 03 Sep 2013 14:36:40 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id BB7803FFDB
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
-In-Reply-To: <20130903070546.GC3608@sigill.intra.peff.net>
-X-Enigmail-Version: 1.5.2
+	id S1760585Ab3ICSkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 14:40:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58398 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760351Ab3ICSks (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 14:40:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12D843EF82;
+	Tue,  3 Sep 2013 18:40:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7/+8yihBFV16AcEwqIBc6FK6TeU=; b=R8+67W
+	mh+2fosOLM9F9fvGUe+vL/pulGfJmU527d/WVNL34AiBX9GbJfgrqB0GHDMFZEl2
+	tidOjvNnh8CllI+Q5lJyYc1/yR5kFKB3PO+z+rw+UrTycleDwUllXUxVns/CxuUq
+	IvWP9SQCsQojQsDswysKl+bJBZqIYuWektEuI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fCbQysr8878/uQg53o2ivkhyOEVN6mS3
+	ZIfKhZTxZkoai8YELDOQupY32vpURFCpF26cOj48ncosAtYrjVE/9lW7bwo7vfc/
+	lD+toUrdk3p9jxT886duPt/+xGMJyXJrTq0Ml4xTUwaRpyf8EekgnzEPdW37p4k4
+	RRYt0FZxsFQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AFB33EF77;
+	Tue,  3 Sep 2013 18:40:44 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2D64D3EF53;
+	Tue,  3 Sep 2013 18:40:41 +0000 (UTC)
+In-Reply-To: <1378103670-3394-2-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Mon, 2 Sep 2013 01:34:29 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 563B8F2C-14C8-11E3-8BBD-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233757>
 
-On 2013-09-03 03:05, Jeff King wrote:
-> FWIW, this makes sense to me.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Thank you for the feedback.  I posted a reroll of the patch that you've
-already replied to, but for the benefit of others searching the mailing
-list archive, v3 can be found at
-<http://thread.gmane.org/gmane.comp.version-control.git/233752>.
+> This is useful to make sure we don't step outside the boundaries of what
+> we are interpreting at the moment. For example while interpreting
+> foobar@{u}~1, the job of interpret_branch_name() ends right before ~1,
+> but there's no way to figure that out inside the function, unless the
+> len argument is passed.
+>
+> So let's do that.
+>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 
-I have a patch submission question:  Is it OK that I didn't use the
-'--in-reply-to' argument to 'git send-email' when I sent the v3 reroll?
- Should I have marked it as a reply to the v2 email?  Or should I have
-marked it as a reply to your review of the v2 email?
+Makes sense to me.  Thanks.
 
-> You can already accomplish the same thing
-> by checking the output of $(git cat-file -t $name), but this is a
-> natural extension of the other ^{} rules, and I can see making some
-> callers more natural.
-
-Exactly.  I updated the commit message to explain this so that other
-people know why it might be a good feature to have.
-
-> Can you please add a test (probably in t1511) that checks the behavior,
-> similar to what you wrote in the commit message?
-
-Done.  I see by your reply that my fear of going a bit overboard in the
-test was justified.  :)  I don't mind rerolling if you'd prefer a
-simpler test.
-
-For future reference, is there a preference for putting tests of a new
-feature in a separate commit?  In the same commit?  Doesn't really matter?
-
->> diff --git a/sha1_name.c b/sha1_name.c
->> index 65ad066..6dc496d 100644
->> --- a/sha1_name.c
->> +++ b/sha1_name.c
->> @@ -679,6 +679,8 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
->>  	sp++; /* beginning of type name, or closing brace for empty */
->>  	if (!strncmp(commit_type, sp, 6) && sp[6] == '}')
->>  		expected_type = OBJ_COMMIT;
->> +	else if (!strncmp(tag_type, sp, 3) && sp[3] == '}')
->> +		expected_type = OBJ_TAG;
-> 
-> This is not a problem you are introducing to this code, but the use of
-> opaque constants like commit_type along with the magic number "6"
-> assuming that it contains "commit" seems like a maintenance nightmare
-> (the only thing saving us is that it will almost certainly never change
-> from "commit"; but then why do we have the opaque type in the first
-> place?).
-
-I agree.  I didn't address this in the reroll.
-
-> 
-> I wonder if we could do better with:
-> 
->   #define COMMIT_TYPE "commit"
->   ...
->   if (!strncmp(COMMIT_TYPE, sp, strlen(COMMIT_TYPE))
->       && sp[strlen(COMMIT_TYPE)] == '}')
-> 
-> Any compiler worth its salt will optimize the strlen on a string
-> constant into a constant itself. The length makes it a bit less
-> readable, though.
-
-True, and I'm not a huge fan of macros.
-
-> 
-> I wonder if we could do even better with:
-> 
->   const char *x;
->   ...
->   if ((x = skip_prefix(sp, commit_type)) && *x == '}')
-> 
-> which avoids the magic lengths altogether
-
-Not bad, especially since skip_prefix() already exists.
-
-> (though the compiler cannot
-> optimize out the strlen call inside skip_prefix, because we declare
-> commit_type and friends as an extern.  It probably doesn't matter in
-> peel_onion, though, which should not generally be performance critical
-> anyway).
-
-Yeah, I can't see performance being a problem there.
-
-There's also this awkward approach, which would avoid strlen() altogether:
-
-commit.h:
-
-    extern const char *commit_type;
-    extern const size_t commit_type_len;
-
-commit.c:
-
-    const char commit_type_array[] = "commit";
-    const char *commit_type = &commit_type_array[0];
-    const size_t commit_type_len = sizeof(commit_type_array) - 1;
-
-sha1_name.c peel_onion():
-
-    if (!strncmp(commit_type, sp, commit_type_len)
-        && sp[commit_type_len] == '}')
-
-but I prefer your skip_prefix() suggestion.
-
--Richard
+> ---
+>  cache.h     |  2 +-
+>  refs.c      |  2 +-
+>  revision.c  |  2 +-
+>  sha1_name.c | 10 ++++++----
+>  4 files changed, 9 insertions(+), 7 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index 85b544f..9fbc5fa 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -893,7 +893,7 @@ extern char *resolve_refdup(const char *ref, unsigned char *sha1, int reading, i
+>  
+>  extern int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
+>  extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
+> -extern int interpret_branch_name(const char *str, struct strbuf *);
+> +extern int interpret_branch_name(const char *str, int len, struct strbuf *);
+>  extern int get_sha1_mb(const char *str, unsigned char *sha1);
+>  
+>  extern int refname_match(const char *abbrev_name, const char *full_name, const char **rules);
+> diff --git a/refs.c b/refs.c
+> index 7922261..8fd5faf 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -1951,7 +1951,7 @@ static int remove_empty_directories(const char *file)
+>  static char *substitute_branch_name(const char **string, int *len)
+>  {
+>  	struct strbuf buf = STRBUF_INIT;
+> -	int ret = interpret_branch_name(*string, &buf);
+> +	int ret = interpret_branch_name(*string, *len, &buf);
+>  
+>  	if (ret == *len) {
+>  		size_t size;
+> diff --git a/revision.c b/revision.c
+> index 84ccc05..3ef1384 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -200,7 +200,7 @@ static void add_pending_object_with_mode(struct rev_info *revs,
+>  		revs->no_walk = 0;
+>  	if (revs->reflog_info && obj->type == OBJ_COMMIT) {
+>  		struct strbuf buf = STRBUF_INIT;
+> -		int len = interpret_branch_name(name, &buf);
+> +		int len = interpret_branch_name(name, 0, &buf);
+>  		int st;
+>  
+>  		if (0 < len && name[len] && buf.len)
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 65ad066..93197b9 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -1012,7 +1012,7 @@ static int reinterpret(const char *name, int namelen, int len, struct strbuf *bu
+>  	int ret;
+>  
+>  	strbuf_add(buf, name + len, namelen - len);
+> -	ret = interpret_branch_name(buf->buf, &tmp);
+> +	ret = interpret_branch_name(buf->buf, buf->len, &tmp);
+>  	/* that data was not interpreted, remove our cruft */
+>  	if (ret < 0) {
+>  		strbuf_setlen(buf, used);
+> @@ -1046,14 +1046,16 @@ static int reinterpret(const char *name, int namelen, int len, struct strbuf *bu
+>   * If the input was ok but there are not N branch switches in the
+>   * reflog, it returns 0.
+>   */
+> -int interpret_branch_name(const char *name, struct strbuf *buf)
+> +int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
+>  {
+>  	char *cp;
+>  	struct branch *upstream;
+> -	int namelen = strlen(name);
+>  	int len = interpret_nth_prior_checkout(name, buf);
+>  	int tmp_len;
+>  
+> +	if (!namelen)
+> +		namelen = strlen(name);
+> +
+>  	if (!len) {
+>  		return len; /* syntax Ok, not enough switches */
+>  	} else if (len > 0) {
+> @@ -1100,7 +1102,7 @@ int interpret_branch_name(const char *name, struct strbuf *buf)
+>  int strbuf_branchname(struct strbuf *sb, const char *name)
+>  {
+>  	int len = strlen(name);
+> -	int used = interpret_branch_name(name, sb);
+> +	int used = interpret_branch_name(name, len, sb);
+>  
+>  	if (used == len)
+>  		return 0;
