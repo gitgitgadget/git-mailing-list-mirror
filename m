@@ -1,119 +1,137 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] pager: turn on "cat" optimization for DEFAULT_PAGER
-Date: Tue, 3 Sep 2013 03:41:50 -0400
-Message-ID: <20130903074150.GE3608@sigill.intra.peff.net>
-References: <201308261957.r7QJvfjF028935@freeze.ariadne.com>
- <xmqqd2ozhhob.fsf@gitster.dls.corp.google.com>
- <201308281819.r7SIJmnh025977@freeze.ariadne.com>
- <xmqqr4dd8suz.fsf@gitster.dls.corp.google.com>
- <201308291541.r7TFfuJr023110@freeze.ariadne.com>
- <vpqsixsv6dq.fsf@anie.imag.fr>
- <201309030227.r832RmBd013888@freeze.ariadne.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] Teach git to change to a given directory using -C option
+Date: Tue, 3 Sep 2013 03:42:45 -0400
+Message-ID: <CAPig+cTQrjmiKYWoo57BTBNS0nuR+NMDf8uCk5EqAvcMzr0iVA@mail.gmail.com>
+References: <20130902133911.GA23924@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	gitster@pobox.com
-To: "Dale R. Worley" <worley@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Sep 03 09:41:58 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Nazri Ramliy <ayiehere@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 03 09:43:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGlFN-0004yt-LM
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 09:41:58 +0200
+	id 1VGlGc-0005fz-Qv
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 09:43:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932516Ab3ICHlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 03:41:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53049 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932502Ab3ICHlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 03:41:52 -0400
-Received: (qmail 21859 invoked by uid 102); 3 Sep 2013 07:41:52 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Sep 2013 02:41:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Sep 2013 03:41:50 -0400
-Content-Disposition: inline
-In-Reply-To: <201309030227.r832RmBd013888@freeze.ariadne.com>
+	id S932653Ab3ICHmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 03:42:49 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:37757 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932502Ab3ICHmr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 03:42:47 -0400
+Received: by mail-la0-f46.google.com with SMTP id eh20so4233473lab.5
+        for <git@vger.kernel.org>; Tue, 03 Sep 2013 00:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=34lY+h1we0rmCfoqAdU7ftfuFr2SW/9/zgEa5mc2Vuo=;
+        b=JcSMukyikKoVf35g5QXYnuAxb/6z7cnQsQG29mH9/ejAs0++wLW952fJXR+m9Ti0hI
+         uIuJSHAaXNemSFAezpRGRKpX4oYu4sxkDJb9Ot0htnpb1XBUKxQZuK6GPLv/Ac3eL/dr
+         mHK+5PF1Lzl9C2Pyhnt6F2xV39WmSw4+GxKMID7/YGUjmScTSVYPX7kG1XrcuSk3oWr7
+         2ji51WGiBBpH0mdpqIx6n5WIqA3k6BIvVMS5+6btaQ69CudfIhwgjOYUcuZ7E4ieVAlv
+         f0WTZzQSvxENljHvVwwtW1xIvJk96x7QH+0zi+tiHUdC4YNmgdmeExBg06K7OGClCGvx
+         Y+MQ==
+X-Received: by 10.152.36.98 with SMTP id p2mr25207745laj.14.1378194165975;
+ Tue, 03 Sep 2013 00:42:45 -0700 (PDT)
+Received: by 10.114.182.236 with HTTP; Tue, 3 Sep 2013 00:42:45 -0700 (PDT)
+In-Reply-To: <20130902133911.GA23924@gmail.com>
+X-Google-Sender-Auth: jWkgagcjlADzbDh4xpIdFtOkLPk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233704>
 
-On Mon, Sep 02, 2013 at 10:27:48PM -0400, Dale R. Worley wrote:
+On Mon, Sep 2, 2013 at 9:39 AM, Nazri Ramliy <ayiehere@gmail.com> wrote:
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 83edf30..7a1369a 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -395,6 +395,20 @@ displayed. See linkgit:git-help[1] for more information,
+>  because `git --help ...` is converted internally into `git
+>  help ...`.
+>
+> +-C <path>::
+> +       Run as if git were started in <path> instead of the current working
+> +       directory. If multiple -C options are given, subsequent relative <path>
+> +       arguments are interpreted relative to the previous effective directory:
+> +       "-C /usr -C src" is equivalent to "-C /usr/src", while "-C src -C /usr"
+> +       is equivalent to "C /usr". This option affects options that expect path
 
-> > I guess the "else" could and should be dropped. If you do so (and
-> > possibly insert a blank line between the DEFAULT_PAGER case and the
-> > "pager = NULL" case), you get a nice pattern
-> > 
-> > if (!pager)
-> > 	try_something();
-> > if (!pager)
-> > 	try_next_option();
-> 
-> That's true, but it would change the effect of using "cat" as a value:
-> "cat" as a value of DEFAULT_PAGER would cause git_pager() to return
-> NULL, whereas now it causes git_pager() to return "cat".  (All other
-> places where "cat" can be a value are translated to NULL already.)
-> 
-> This is why I want to know what the *intended* behavior is, because we
-> might be changing Git's behavior, and I want to know that if we do
-> that, we're changing it to what it should be.  And I haven't seen
-> anyone venture an opinion on what the intended behavior is.
+No wish to bike-shed, however, I find "effective directory" somewhat
+difficult to digest due to its jargony feel. It also seems ambiguous
+(to me) since "previous effective directory" may mean "directory when
+git was run" or "directory set by most recent -C". My earlier
+suggestion
 
-I'll venture my opinion. We should do this:
+    When multiple -C options are given, each subsequent non-absolute
+    -C <path> is interpreted relative to the preceding -C <path>.
 
--- >8 --
-Subject: pager: turn on "cat" optimization for DEFAULT_PAGER
+avoided jargon and left no room for ambiguity.
 
-If the user specifies a pager of "cat" (or the empty
-string), whether it is in the environment or from config, we
-automagically optimize it out to mean "no pager" and avoid
-forking at all. We treat an empty pager variable similary.
+However, perhaps the examples are clear enough to make excessive prose
+explanation unnecessary, thus:
 
-However, we did not apply this optimization when
-DEFAULT_PAGER was set to "cat" (or the empty string). There
-is no reason to treat DEFAULT_PAGER any differently. The
-optimization should not be user-visible (unless the user has
-a bizarre "cat" in their PATH). And even if it is, we are
-better off behaving consistently between the compile-time
-default and the environment and config settings.
+    Run as if git was started in <path> instead of the current
+    working directory. Multiple -C options are allowed and acted upon
+    in the order given, thus "-C /usr -C src" is equivalent to "-C
+    /usr/src", and "-C src -C /usr" is equivalent to "C /usr". This
+    option affects ...
 
-The stray "else" we are removing from this code was
-introduced by 402461a (pager: do not fork a pager if PAGER
-is set to empty., 2006-04-16). At that time, the line
-directly above used:
+> diff --git a/t/t0056-git-C.sh b/t/t0056-git-C.sh
+> new file mode 100755
+> index 0000000..7dc1e48
+> --- /dev/null
+> +++ b/t/t0056-git-C.sh
+> @@ -0,0 +1,83 @@
+> +#!/bin/sh
+> +
+> +test_description='"-C <path>" option and its effects on other path-related options'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success '"git -C <path>" runs git from the directory <path>' '
+> +       test_create_repo dir1 &&
+> +       echo 1 >dir1/a.txt &&
+> +       (cd dir1 && git add a.txt && git commit -m "initial in dir1") &&
+> +       echo "initial in dir1" >expected &&
+> +       git -C dir1 log --format=%s >actual &&
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'Multiple -C options: "-C dir1 -C dir2" is equivalent to "-C dir1/dir2"' '
+> +       test_create_repo dir1/dir2 &&
+> +       echo 1 >dir1/dir2/a.txt &&
+> +       git -C dir1/dir2 add a.txt &&
+> +       expected="initial in dir1/dir2"
+> +       echo $expected >expected &&
+> +       git -C dir1/dir2 commit -m "$expected" &&
 
-   if (!pager)
-	   pager = "less";
+It's curious that this test uses a variable ($expected) to avoid
+repeating literal "initial in dir1/dir2", however, the previous test
+repeats its literal "initial in dir1". (IMHO, the repeated literal
+actually makes the test a bit easier to read, and it's not likely to
+be a maintenance burden.)
 
-as a fallback, meaning that it could not possibly trigger
-the optimization. Later, a3d023d (Provide a build time
-default-pager setting, 2009-10-30) turned that constant into
-a build-time setting which could be anything, but didn't
-loosen the "else" to let DEFAULT_PAGER use the optimization.
+> +       git -C dir1 -C dir2 log --format=%s >actual &&
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'Relative followed by fullpath: "-C ./here -C /there" is equivalent to "-C /there"' '
+> +       echo "initial in dir1/dir2" >expected &&
+> +       git -C dir1 -C "$PWD/dir1/dir2" log --format=%s >actual &&
 
-Noticed-by: Dale R. Worley <worley@alum.mit.edu>
-Suggested-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Signed-off-by: Jeff King <peff@peff.net>
----
- pager.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+It is suggested in t/README that, for Windows (MSYS bash)
+compatibility, you should use $(pwd) rather than $PWD.
 
-diff --git a/pager.c b/pager.c
-index c1ecf65..fa19765 100644
---- a/pager.c
-+++ b/pager.c
-@@ -54,7 +54,7 @@ const char *git_pager(int stdout_is_tty)
- 		pager = getenv("PAGER");
- 	if (!pager)
- 		pager = DEFAULT_PAGER;
--	else if (!*pager || !strcmp(pager, "cat"))
-+	if (!*pager || !strcmp(pager, "cat"))
- 		pager = NULL;
- 
- 	return pager;
--- 
-1.8.4.2.g87d4a77
+> +       test_cmp expected actual
+> +'
+> +
+> +test_done
+> --
+> 1.8.4.24.g5fcd118
