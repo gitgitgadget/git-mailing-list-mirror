@@ -1,100 +1,159 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] revision: introduce --exclude=<glob> to tame wildcards
-Date: Tue, 03 Sep 2013 08:45:46 -0700
-Message-ID: <xmqq8uzdvrh1.fsf@gitster.dls.corp.google.com>
-References: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com>
-	<7vhae7k7t1.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1y2kvSnF3dKDMr9QtS40PNSW93DWCxFUoL658YkqYeVA@mail.gmail.com>
-	<CAPc5daVSqoE74kmsobg7RpMtiL3vzKN+ckAcWEKU_Q_wF8HYuA@mail.gmail.com>
-	<CAMP44s0P=XF5C8+fU2cJ-Xuq57iqcAn674Upub6N=+iiMpQK0g@mail.gmail.com>
-	<xmqqeh9b15x6.fsf@gitster.dls.corp.google.com>
-	<xmqq1u5aybri.fsf_-_@gitster.dls.corp.google.com>
-	<CAMP44s1hhoPbeBsmN8NL_VtCz3bO-jg1sPP7hovL1kPBhbrXFQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 17:45:59 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v4 2/4] transport-helper: add no-private-update capability
+Date: Tue,  3 Sep 2013 17:45:14 +0200
+Message-ID: <1378223114-12523-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <1378107677-28741-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Sep 03 17:46:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGsnh-0006BQ-TT
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 17:45:54 +0200
+	id 1VGsoU-0006Uy-Ja
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 17:46:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756745Ab3ICPpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 11:45:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61437 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755243Ab3ICPpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 11:45:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E33473E122;
-	Tue,  3 Sep 2013 15:45:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uGKf58qvzLwjQw0jix6C7RYQxIc=; b=ZedhVt
-	GRhEGBCZ3m9eyFtXvAWIFvdANDsqotijpOiiqdYSAKLCTpBUXXjfnVYkEff52N2L
-	RsEnwSeDwmV9rlM8ZtFcqDLhESy0ZB2QhiLexU2fIU3vroUUCaIf9Ubz965wLGsJ
-	evn13KGrHym6CFKba2MfIqsWORyMyj3Xu13Ho=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JaRXzxr9EHq93z+dKHVcyl9M3YYQRtvj
-	Zf3tfq7SCGedEw4DmtAqU1FH88RTH3D++Krao0yk64AHV1BTDnSepefzOfpdMqm8
-	UdDW+BqPwYudLvLth5tQY58x7FmYtUWE/dN6PEpDUYY+3Q2bC3i3wTKcfIjlar/V
-	4HG8sM4IwyA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6E693E121;
-	Tue,  3 Sep 2013 15:45:48 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 31EFB3E11B;
-	Tue,  3 Sep 2013 15:45:48 +0000 (UTC)
-In-Reply-To: <CAMP44s1hhoPbeBsmN8NL_VtCz3bO-jg1sPP7hovL1kPBhbrXFQ@mail.gmail.com>
-	(Felipe Contreras's message of "Sat, 31 Aug 2013 14:33:52 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E735C74A-14AF-11E3-8BE7-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756625Ab3ICPqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 11:46:39 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36619 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756372Ab3ICPqi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 11:46:38 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r83FjEBC002493
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 3 Sep 2013 17:45:14 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1VGsn6-0004lh-3X; Tue, 03 Sep 2013 17:45:16 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1VGsn5-0003Gy-Pn; Tue, 03 Sep 2013 17:45:15 +0200
+X-Mailer: git-send-email 1.8.4.12.g98a4f55.dirty
+In-Reply-To: <1378107677-28741-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 03 Sep 2013 17:45:14 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r83FjEBC002493
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1378827916.85526@iadAnfKQH/3tllJFoBvE0Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233732>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Since 664059fb62 (Felipe Contreras, Apr 17 2013, transport-helper: update
+remote helper namespace), a 'push' operation on a remote helper updates
+the private ref by default. This is often a good thing, but it can also
+be desirable to disable this update to force the next 'pull' to re-import
+the pushed revisions.
 
-> On Fri, Aug 30, 2013 at 6:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> People often find "git log --branches" etc. that includes _all_
->> branches is cumbersome to use when they want to grab most but except
->> some.  The same applies to --tags, --all and --glob.
->
-> This idea looks very familiar, from the wording of this commit message
-> it seems you came with the idea out of nowhere. Did you?
+Allow remote-helpers to disable the automatic update by introducing a new
+capability.
 
-As the comment after three-dash quotes, the inspiration came from
-this suggestion:
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
 
- > It may be a good idea to step back a bit and think of this topic as
- > a way to enhance the --branches option and its friends with only the
- > inclusive wildcard semantics.
+I feel really stupid for sending so many versions now :-(. v3 was
+fixing a whitespace issue, but forgot to re-apply the change I did
+manually while sending v2, hence the commit message was wrong
+(dont-update-private -> no-private-update).
 
-which is not anything new.  It takes from J6t's
+Not terribly important, but if it's still time, this one should be
+correct.
 
-      To unclutter 'git branch' output, I rename work-in-progress branches
-      to begin with "wip/", ready-to-merge branches do not carry this
-      prefix. To inspect unmerged work of the latter kind of branches I
-      would like to type... what?
+ Documentation/gitremote-helpers.txt |  5 +++++
+ git-remote-testgit.sh               |  1 +
+ t/t5801-remote-helpers.sh           | 11 +++++++++++
+ transport-helper.c                  |  7 +++++--
+ 4 files changed, 22 insertions(+), 2 deletions(-)
 
-But the thing is, that is nothing new, either.
-
-Pretty much ever since we added --branches --tags and later --glob,
-
- (1) traversing from "almost all but minus some branches", and
- (2) stopping traversal at "almost all but minus some branches"
-
-were what people sometimes wanted to have (which is pretty much what
-the first paragraph of the proposed commit message says) using
-"negative glob". Looking the phrase in the list archive finds for
-example $gmane/159770 from 2010, but I would not be surprised if you
-find older message wishing the same.
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index 0827f69..ee9e134 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -120,6 +120,11 @@ connecting (see the 'connect' command under COMMANDS).
+ When choosing between 'push' and 'export', Git prefers 'push'.
+ Other frontends may have some other order of preference.
+ 
++'no-private-update'::
++	When using the 'refspec' capability, git normally updates the
++	private ref on successful push. This update is disabled when
++	the remote-helper declares the capability 'no-private-update'.
++
+ 
+ Capabilities for Fetching
+ ^^^^^^^^^^^^^^^^^^^^^^^^^
+diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
+index 2109070..6d2f282 100755
+--- a/git-remote-testgit.sh
++++ b/git-remote-testgit.sh
+@@ -38,6 +38,7 @@ do
+ 			echo "*export-marks $gitmarks"
+ 		fi
+ 		test -n "$GIT_REMOTE_TESTGIT_SIGNED_TAGS" && echo "signed-tags"
++		test -n "$GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE" && echo "no-private-update"
+ 		echo
+ 		;;
+ 	list)
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index 8c4c539..613f69a 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -182,6 +182,17 @@ test_expect_success 'push update refs' '
+ 	)
+ '
+ 
++test_expect_success 'push update refs disabled by no-private-update' '
++	(cd local &&
++	echo more-update >>file &&
++	git commit -a -m more-update &&
++	git rev-parse --verify testgit/origin/heads/update >expect &&
++	GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE=t git push origin update &&
++	git rev-parse --verify testgit/origin/heads/update >actual &&
++	test_cmp expect actual
++	)
++'
++
+ test_expect_success 'push update refs failure' '
+ 	(cd local &&
+ 	git checkout update &&
+diff --git a/transport-helper.c b/transport-helper.c
+index 63cabc3..3328394 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -27,7 +27,8 @@ struct helper_data {
+ 		push : 1,
+ 		connect : 1,
+ 		signed_tags : 1,
+-		no_disconnect_req : 1;
++		no_disconnect_req : 1,
++		no_private_update : 1;
+ 	char *export_marks;
+ 	char *import_marks;
+ 	/* These go from remote name (as in "list") to private name */
+@@ -205,6 +206,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 			strbuf_addstr(&arg, "--import-marks=");
+ 			strbuf_addstr(&arg, capname + strlen("import-marks "));
+ 			data->import_marks = strbuf_detach(&arg, NULL);
++		} else if (!prefixcmp(capname, "no-private-update")) {
++			data->no_private_update = 1;
+ 		} else if (mandatory) {
+ 			die("Unknown mandatory capability %s. This remote "
+ 			    "helper probably needs newer version of Git.",
+@@ -723,7 +726,7 @@ static void push_update_refs_status(struct helper_data *data,
+ 		if (push_update_ref_status(&buf, &ref, remote_refs))
+ 			continue;
+ 
+-		if (!data->refspecs)
++		if (!data->refspecs || data->no_private_update)
+ 			continue;
+ 
+ 		/* propagate back the update to the remote namespace */
+-- 
+1.8.4.12.g98a4f55.dirty
