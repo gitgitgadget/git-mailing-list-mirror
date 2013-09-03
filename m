@@ -1,68 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: the pager
-Date: Tue, 3 Sep 2013 04:16:52 -0400
-Message-ID: <20130903081652.GG3608@sigill.intra.peff.net>
-References: <201308261957.r7QJvfjF028935@freeze.ariadne.com>
- <xmqqd2ozhhob.fsf@gitster.dls.corp.google.com>
- <201308281819.r7SIJmnh025977@freeze.ariadne.com>
- <xmqqr4dd8suz.fsf@gitster.dls.corp.google.com>
- <201308291541.r7TFfuJr023110@freeze.ariadne.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] git send-email: include [anything]-by: signatures
+Date: Tue, 3 Sep 2013 11:44:54 +0300
+Message-ID: <20130903084454.GC18901@redhat.com>
+References: <20130826165747.GA30788@redhat.com>
+ <20130831192250.GA3823@redhat.com>
+ <20130903063535.GA3608@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: "Dale R. Worley" <worley@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Sep 03 10:17:02 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 03 10:43:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGlnK-0005ge-DG
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 10:17:02 +0200
+	id 1VGmCV-0002Nz-V8
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 10:43:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932505Ab3ICIQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 04:16:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53304 "EHLO peff.net"
+	id S932510Ab3ICIm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 04:42:59 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:33284 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932457Ab3ICIQz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 04:16:55 -0400
-Received: (qmail 23595 invoked by uid 102); 3 Sep 2013 08:16:55 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Sep 2013 03:16:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Sep 2013 04:16:52 -0400
+	id S932487Ab3ICIm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 04:42:58 -0400
+Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r838gqp0017644
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Tue, 3 Sep 2013 04:42:52 -0400
+Received: from redhat.com (vpn1-7-77.ams2.redhat.com [10.36.7.77])
+	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id r838go1a002112;
+	Tue, 3 Sep 2013 04:42:51 -0400
 Content-Disposition: inline
-In-Reply-To: <201308291541.r7TFfuJr023110@freeze.ariadne.com>
+In-Reply-To: <20130903063535.GA3608@sigill.intra.peff.net>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233710>
 
-On Thu, Aug 29, 2013 at 11:41:56AM -0400, Dale R. Worley wrote:
+On Tue, Sep 03, 2013 at 02:35:35AM -0400, Jeff King wrote:
+> On Sat, Aug 31, 2013 at 10:22:50PM +0300, Michael S. Tsirkin wrote:
+> 
+> > On Mon, Aug 26, 2013 at 07:57:47PM +0300, Michael S. Tsirkin wrote:
+> > > Consider [anything]-by: a valid signature.
+> > > This includes Tested-by: Acked-by: Reviewed-by: etc.
+> > > 
+> > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > 
+> > Ping.
+> > Any opinion on whether this change is acceptable?
+> 
+> I was left confused by your commit message, as it wasn't clear to me
+> what a "signature" is. But the point of it seems to be that people
+> mention others in commit messages using "X-by:" pseudo-headers besides
+> "signed-off-by", and you want to cc them along with the usual S-O-B.
+> 
+> That seems like a reasonable goal, but I have two concerns.
+> 
+> One, I would think the utility of this would be per-project, depending
+> on what sorts of things people in a particular project put in
+> pseudo-headers.  Grepping the kernel history shows that most X-by
+> headers have a person on the right-hand side, though quite often it is
+> not a valid email address (on the other hand, quite a few s-o-b lines in
+> the kernel do not have a valid email).
+> 
+> And two, the existing options for enabling/disabling this code all
+> explicitly mention signed-off-by, which becomes awkward. You did not
+> update the documentation in your patch, but I think you would end up
+> having to explain that "--supress-cc=sob" and "--signed-off-by-cc"
+> really mean "all pseudo-header lines ending in -by".
+> 
+> So I think it might be a nicer approach to introduce a new "suppress-cc"
+> class that means "all pseudo-header tokens ending in -by" or similar.
+> We might even want the new behavior on by default, but it would at least
+> give the user an escape hatch if their project generates a lot of false
+> positives.
+> 
+> -Peff
 
-> I know I'm griping here, but I thought that part of the reward for
-> contributing to an open-source project was as a showcase of one's
-> work.  Commenting your code is what you learn first in programming.
+I guess there's always cccmd, no?
 
-You will find that the best comments in the git source code are those
-written in the commit messages. Learn to use "git blame" (or I recommend
-"tig blame" for interactive use), "git log -S", and the new "git log -L"
-for finding the commits that touched an area.
-
-It is also sometimes useful to look at the review and discussion that
-accompanied the original patches on the list, if you are looking for
-rationale or alternatives that did not make it into the commit message.
-You can simply search on gmane, but Thomas Rast also maintains a mapping
-of commits back to their original discussions. You can fetch his notes
-by doing:
-
-  git config remote.mailnotes.url git://github.com/trast/git.git
-  git config remote.mailnotes.fetch refs/heads/notes/*:refs/notes/*
-  git fetch mailnotes
-
-You can then use "git notes --ref=gmane show" to show notes for specific
-commits, or just "git log --notes=gmane" to view them along with the
-regular logs.
-
--Peff
+-- 
+MST
