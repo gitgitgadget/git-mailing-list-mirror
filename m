@@ -1,102 +1,65 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 6/8] refs: add update_refs for multiple simultaneous
- updates
-Date: Tue, 03 Sep 2013 06:43:05 +0200
-Message-ID: <522568D9.3080808@alum.mit.edu>
-References: <cover.1377784597.git.brad.king@kitware.com> <cover.1377885441.git.brad.king@kitware.com> <edaddbd4e303866f789f1a4f755a9da77590aeef.1377885441.git.brad.king@kitware.com> <xmqqob8dul99.fsf@gitster.dls.corp.google.com> <5224C8C6.4050500@kitware.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH v2] Document pack v4 format
+Date: Tue, 03 Sep 2013 02:00:10 -0400 (EDT)
+Message-ID: <alpine.LFD.2.03.1309030156410.14472@syhkavp.arg>
+References: <1377602225-30439-1-git-send-email-pclouds@gmail.com>
+ <1377917393-28460-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Brad King <brad.king@kitware.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 06:50:18 2013
+Content-Type: multipart/mixed; boundary="Boundary_(ID_te9bV7TKjq72LA8LJitInA)"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 03 08:00:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGiZG-0008Kg-0p
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 06:50:18 +0200
+	id 1VGjf8-00058y-KT
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 08:00:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759356Ab3ICEuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 00:50:12 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:64224 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759344Ab3ICEuL (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Sep 2013 00:50:11 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Sep 2013 00:50:10 EDT
-X-AuditID: 12074412-b7f656d00000102f-92-522568dcac2d
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 81.FB.04143.CD865225; Tue,  3 Sep 2013 00:43:08 -0400 (EDT)
-Received: from [192.168.69.9] (p57A2446A.dip0.t-ipconnect.de [87.162.68.106])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r834h6pQ008177
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 3 Sep 2013 00:43:07 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130804 Thunderbird/17.0.8
-In-Reply-To: <5224C8C6.4050500@kitware.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqHsnQzXI4MR7WYud6yQsuq50M1k0
-	9F5hdmD2+PhsObvHxUvKHp83yQUwR3HbJCWWlAVnpufp2yVwZzRcbWctaOeumNZxib2B8SlH
-	FyMHh4SAicTy825djJxAppjEhXvr2boYuTiEBC4zSsy+vp8RwjnDJPF4zlwWkCpeAW2J9Q8n
-	M4I0swioSqzaWwwSZhPQlVjU08wEYosKhEnsmD6RDaJcUOLkzCdgrSIg5esawOLMAtYSK14f
-	BqsXFgiVmPZ1IxPErmYmiR07noElOIF2fbrziQmiQUfiXd8DZghbXmL72znMExgFZiHZMQtJ
-	2SwkZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Zrp5WaW6KWmlG5ihASu0A7G9SflDjEK
-	cDAq8fBy7FUJEmJNLCuuzD3EKMnBpCTK6w4MeyG+pPyUyozE4oz4otKc1OJDjBIczEoivELf
-	gMp5UxIrq1KL8mFS0hwsSuK8Pxer+wkJpCeWpGanphakFsFkZTg4lCR4b6YDDRUsSk1PrUjL
-	zClBSDNxcIIM55ISKU7NS0ktSiwtyYgHRWp8MTBWQVI8QHs/g7TzFhck5gJFIVpPMRpz/Fk5
-	9xMjx7umeZ8YhVjy8vNSpcR51UHOFwApzSjNg1sES1mvGMWB/hbmNQep4gGmO7h5r4BWMQGt
-	ujZREWRVSSJCSqqBMUCGW58x/MBczSjvcyKTlveGNx8+WMB+x39r2vbs5AWLltZNM376gX3D
-	y5ndJTsiarfP17mVERTR17NcUptVo+pFHHNmyKy3uyw/Nopo74u/6sL8/VKwrthX 
+	id S1753503Ab3ICGAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 02:00:22 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:48620 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752755Ab3ICGAW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 02:00:22 -0400
+Received: from yoda.home ([70.83.209.44]) by VL-VM-MR006.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0MSJ00DFPCOKJ760@VL-VM-MR006.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 03 Sep 2013 02:00:20 -0400 (EDT)
+Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
+ with ESMTPSA id 994842DA0547; Tue, 03 Sep 2013 02:00:20 -0400 (EDT)
+In-reply-to: <1377917393-28460-1-git-send-email-pclouds@gmail.com>
+User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233680>
 
-On 09/02/2013 07:20 PM, Brad King wrote:
-> On 09/01/2013 02:08 AM, Junio C Hamano wrote:
->>> Though the refs themeselves cannot be modified together in a single
->>
->> "themselves".
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--Boundary_(ID_te9bV7TKjq72LA8LJitInA)
+Content-type: TEXT/PLAIN; charset=UTF-8
+Content-transfer-encoding: 8BIT
+
+On Sat, 31 Aug 2013, Nguyễn Thái Ngọc Duy wrote:
+
 > 
-> Fixed.
-> 
->> I notice that we are using an array of structures and letting qsort
->> swap 50~64 bytes of data
-> 
-> Michael suggested this too, so fixed.
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  Incorporated suggestions by Nico and Junio. I went ahead and added
+>  escape hatches for converting thin packs to full ones so the document
+>  does not really match the code (I've been watching Nico's repository,
+>  commit reading is added, good stuff!)
 
-Hmmm, I see that you changed the signature of update_refs() to take an
-array of pointers.  My suggestion was unclear, but I didn't mean that
-the function signature had to be changed.  Rather, I meant that *within*
-the function, you could have created an array of pointers to the
-structures in the input array and thereafter accessed it via the pointers:
+Now tree reading is added.  multiple encoding bug fixes trickled down to 
+their originating commits as well.
 
-int update_refs(const char *action, const struct ref_update *updates_orig,
-		int n, enum action_on_err onerr)
-{
-	[...]
-	struct ref_update **updates;
+Something is still wrong with deltas though.
 
-	[...]
-	updates = xcalloc(n, sizeof(*updates));
-	for (i = 0; i < n; i++)
-		updates[i] = &updates_orig[i];
-	[...]
-}
 
-However, your approach is also fine.  It will typically involve more
-malloc()s but smaller memcpy()s (i.e., via ALLOC_GROW()) at the caller,
-and since usually the number of ref_updates being done at one time will
-be limited anyway, I don't see a reason to prefer one version over the
-other.
+Nicolas
 
-Thanks for making the change.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+--Boundary_(ID_te9bV7TKjq72LA8LJitInA)--
