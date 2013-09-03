@@ -1,381 +1,209 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] t: branch: improve test rollback
-Date: Tue, 03 Sep 2013 12:32:16 -0700
-Message-ID: <xmqqwqmxr9a7.fsf@gitster.dls.corp.google.com>
-References: <1377923511-20787-1-git-send-email-felipe.contreras@gmail.com>
-	<1377923511-20787-5-git-send-email-felipe.contreras@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v3 3/4] get rid of "git submodule summary --for-status"
+Date: Tue, 03 Sep 2013 21:32:23 +0200
+Message-ID: <52263947.6040400@web.de>
+References: <1377781536-31955-1-git-send-email-Matthieu.Moy@imag.fr> <1377781536-31955-4-git-send-email-Matthieu.Moy@imag.fr> <521FA6ED.9010005@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	gitster@pobox.com,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
 X-From: git-owner@vger.kernel.org Tue Sep 03 21:32:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGwLS-0005hd-GF
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 21:32:59 +0200
+	id 1VGwLR-0005hd-Vq
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 21:32:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933179Ab3ICTcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 15:32:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52020 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758549Ab3ICTcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 15:32:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C75A3EBEB;
-	Tue,  3 Sep 2013 19:32:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Xd0EEjyejkXdIYCJM8KiOc8JiYs=; b=puAeCE
-	ngA8pgFt4Qh1burJIdURBEfd5VkIkC4BOUCm6ymRGCXlCpqof6yx/7ruBpnTSjAn
-	zF/YBPzcaj5s+qtoX7cvuBVNBqqaptQff+jQnFte8GAY/7OokeU9GVtGtJnDE2h/
-	TRCx1lKj8Yx2QOkZgnNo3Uugu81ft1OsXRiB4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Dk2QDaqj61/Lw//PsSfACmLxMVqpxzw/
-	76S84SCD2Tb6BwiI+j7JsR4Ex1L+fY9zCes8FEZ9qePzgnFu5Ep8U+d3vK6wx3xJ
-	h3kTj1m0Vsp5++ru8xYvmrIukCannjmwUC56O1rdeq44BmmpnixYSOJxd5ODRK5E
-	PcI1p/OR9n0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5A213EBE5;
-	Tue,  3 Sep 2013 19:32:22 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E08D63EBDC;
-	Tue,  3 Sep 2013 19:32:20 +0000 (UTC)
-In-Reply-To: <1377923511-20787-5-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Fri, 30 Aug 2013 23:31:51 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8D36259E-14CF-11E3-96C3-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S933178Ab3ICTcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 15:32:47 -0400
+Received: from mout.web.de ([212.227.15.14]:60064 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933096Ab3ICTc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 15:32:26 -0400
+Received: from [192.168.178.41] ([91.3.162.32]) by smtp.web.de (mrweb003)
+ with ESMTPA (Nemesis) id 0LyDqv-1W2fcA3toL-015bCx for <git@vger.kernel.org>;
+ Tue, 03 Sep 2013 21:32:24 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <521FA6ED.9010005@web.de>
+X-Enigmail-Version: 1.5.2
+X-Provags-ID: V03:K0:t54JGsAnqLWv+QJpboBNGL0sWaHX0JxLQcKiwu1Iu2uLRFECNhI
+ W2qWqOnZsuKC73jv8TqaPPvvPCNDzI+ptvUXbeq2+iYD33dgA4DGj/gbT0c8rbKsLRPAvNg
+ 4UIi0EUBcgbWSpBRBGVtyk0ozID2nkr2nl+y2rjC0qx81fOr+lobk+FjB/7Cy828a9W9WbT
+ Mq85o4LaYA7kk9F5XGGjQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233764>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Am 29.08.2013 21:54, schrieb Jens Lehmann:
+> Am 29.08.2013 15:05, schrieb Matthieu Moy:
+>> The --for-status option was an undocumented option used only by
+>> wt-status.c, which inserted a header and commented out the output. We can
+>> achieve the same result within wt-status.c, without polluting the
+>> submodule command-line options.
+>>
+>> This will make it easier to disable the comments from wt-status.c later.
+> 
+> Cool, thanks for implementing this!
+> 
+> But unfortunately this change collides with bc/submodule-status-ignored
+> (I added Brian to the CC) which is currently on its way to next. Your
+> patch will break the fix in the second commit, because that's only
+> enabled when the submodule script sees the --for-status option.
+> 
+> A solution for that would be to rebase your patches on top of pu, drop
+> the first two hunks of the change to git-submodule.sh and still pass
+> the --for-status option to git-submodule.sh. This would move adding the
+> comment characters into wt-status.c but will still enable the script to
+> honor the ignore=all setting when called by status.
 
-> After every test the environment should be as close as to how it was
-> before as possible.
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
+I think we should go that route, --for-status is an internal option and
+nobody should rely on its behavior.
 
-Very good in general; a few points (not "the patch breaks things",
-but more like "tests after the patch are still depending on the
-previous state") below, though.
+>> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>> ---
+>>  git-submodule.sh             | 17 +----------------
+>>  t/t7401-submodule-summary.sh | 13 -------------
+>>  wt-status.c                  | 29 +++++++++++++++++++++++++++--
+>>  3 files changed, 28 insertions(+), 31 deletions(-)
+>>
+>> diff --git a/git-submodule.sh b/git-submodule.sh
+>> index 2979197..fccdec9 100755
+>> --- a/git-submodule.sh
+>> +++ b/git-submodule.sh
+>> @@ -965,7 +965,6 @@ set_name_rev () {
+>>  #
+>>  cmd_summary() {
+>>  	summary_limit=-1
+>> -	for_status=
+>>  	diff_cmd=diff-index
+>>  
+>>  	# parse $args after "submodule ... summary".
+>> @@ -978,9 +977,6 @@ cmd_summary() {
+>>  		--files)
+>>  			files="$1"
+>>  			;;
+>> -		--for-status)
+>> -			for_status="$1"
+>> -			;;
+>>  		-n|--summary-limit)
+>>  			summary_limit="$2"
+>>  			isnumber "$summary_limit" || usage
 
->  t/t3200-branch.sh | 71 +++++++++++++++++++++++++++----------------------------
->  1 file changed, 35 insertions(+), 36 deletions(-)
->
-> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> index d85306f..3d4f634 100755
-> --- a/t/t3200-branch.sh
-> +++ b/t/t3200-branch.sh
-> @@ -328,7 +328,7 @@ test_expect_success 'tracking setup fails on non-matching refspec' '
->  '
->  
->  test_expect_success 'test tracking setup via config' '
-> -	git config branch.autosetupmerge true &&
-> +	test_config branch.autosetupmerge true &&
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
-> @@ -338,20 +338,18 @@ test_expect_success 'test tracking setup via config' '
->  '
->  
->  test_expect_success 'test overriding tracking setup via --no-track' '
-> -	git config branch.autosetupmerge true &&
-> +	test_config branch.autosetupmerge true &&
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
->  	git branch --no-track my2 local/master &&
-> -	git config branch.autosetupmerge false &&
->  	! test "$(git config branch.my2.remote)" = local &&
->  	! test "$(git config branch.my2.merge)" = refs/heads/master
->  '
->  
->  test_expect_success 'no tracking without .fetch entries' '
-> -	git config branch.autosetupmerge true &&
-> +	test_config branch.autosetupmerge true &&
->  	git branch my6 s &&
-> -	git config branch.autosetupmerge false &&
->  	test -z "$(git config branch.my6.remote)" &&
->  	test -z "$(git config branch.my6.merge)"
->  '
+Please drop the two hunks above ...
 
-The four tests after this one used to expect to start with
-branch.autosetupmerge explicitly set to false, but this change
-leaves the variable unset---as a side effect we start testing a
-different thing.  As long as we do not introduce a bug that allows
-an exlicit branch.autosetupmerge=false defeat --track on the command
-line, this side effect does not hurt, but I think the 'test tracking
-setup via --track but deeper' was the only test that checks this
-interaction between 'false in config, --track on the command line'
-combination.
+>> @@ -1149,18 +1145,7 @@ cmd_summary() {
+>>  			echo
+>>  		fi
+>>  		echo
+>> -	done |
+>> -	if test -n "$for_status"; then
+>> -		if [ -n "$files" ]; then
+>> -			gettextln "Submodules changed but not updated:" | git stripspace -c
+>> -		else
+>> -			gettextln "Submodule changes to be committed:" | git stripspace -c
+>> -		fi
+>> -		printf "\n" | git stripspace -c
+>> -		git stripspace -c
+>> -	else
+>> -		cat
+>> -	fi
+>> +	done
+>>  }
+>>  #
+>>  # List all submodules, prefixed with:
+>> diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
+>> index ac2434c..b435d03 100755
+>> --- a/t/t7401-submodule-summary.sh
+>> +++ b/t/t7401-submodule-summary.sh
+>> @@ -262,19 +262,6 @@ EOF
+>>  	test_cmp expected actual
+>>  "
+>>  
+>> -test_expect_success '--for-status' "
+>> -	git submodule summary --for-status HEAD^ >actual &&
+>> -	test_i18ncmp actual - <<EOF
+>> -# Submodule changes to be committed:
+>> -#
+>> -# * sm1 $head6...0000000:
+>> -#
+>> -# * sm2 0000000...$head7 (2):
+>> -#   > Add foo9
+>> -#
+>> -EOF
+>> -"
+>> -
 
-> @@ -386,9 +384,8 @@ test_expect_success 'test --track without .fetch entries' '
->  '
->  
->  test_expect_success 'branch from non-branch HEAD w/autosetupmerge=always' '
-> -	git config branch.autosetupmerge always &&
-> -	git branch my9 HEAD^ &&
-> -	git config branch.autosetupmerge false
-> +	test_config branch.autosetupmerge always &&
-> +	git branch my9 HEAD^
->  '
+... and just remove the "# " from the expected output here. This
+test can be removed when we use
 
-Likewise for three subsequent tests but what they test are not
-primarily whether tracking is done, so it does not matter as much as
-the previous.
+>>  test_expect_success 'fail when using --files together with --cached' "
+>>  	test_must_fail git submodule summary --files --cached
+>>  "
+>> diff --git a/wt-status.c b/wt-status.c
+>> index 958a53c..d91661d 100644
+>> --- a/wt-status.c
+>> +++ b/wt-status.c
+>> @@ -665,6 +665,10 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
+>>  	char index[PATH_MAX];
+>>  	const char *env[] = { NULL, NULL };
+>>  	struct argv_array argv = ARGV_ARRAY_INIT;
+>> +	struct strbuf cmd_stdout = STRBUF_INIT;
+>> +	struct strbuf summary = STRBUF_INIT;
+>> +	char *summary_content;
+>> +	size_t len;
+>>  
+>>  	sprintf(summary_limit, "%d", s->submodule_summary);
+>>  	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", s->index_file);
+>> @@ -673,7 +677,6 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
+>>  	argv_array_push(&argv, "submodule");
+>>  	argv_array_push(&argv, "summary");
+>>  	argv_array_push(&argv, uncommitted ? "--files" : "--cached");
+>> -	argv_array_push(&argv, "--for-status");
 
->  test_expect_success 'branch from non-branch HEAD w/--track causes failure' '
-> @@ -405,9 +402,9 @@ test_expect_success '--set-upstream-to fails on multiple branches' '
->  '
->  
->  test_expect_success '--set-upstream-to fails on detached HEAD' '
-> +	test_when_finished "git checkout -" &&
->  	git checkout HEAD^{} &&
-> -	test_must_fail git branch --set-upstream-to master &&
-> -	git checkout -
-> +	test_must_fail git branch --set-upstream-to master
->  '
->  
->  test_expect_success '--set-upstream-to fails on a missing dst branch' '
-> @@ -459,9 +456,9 @@ test_expect_success '--unset-upstream should fail on multiple branches' '
->  '
->  
->  test_expect_success '--unset-upstream should fail on detached HEAD' '
-> +	test_when_finished "git checkout -" &&
->  	git checkout HEAD^{} &&
-> -	test_must_fail git branch --unset-upstream &&
-> -	git checkout -
-> +	test_must_fail git branch --unset-upstream
->  '
->  
->  test_expect_success 'test --unset-upstream on a particular branch' '
-> @@ -540,7 +537,8 @@ test_expect_success 'checkout -b with -l makes reflog when core.logAllRefUpdates
->  '
->  
->  test_expect_success 'avoid ambiguous track' '
-> -	git config branch.autosetupmerge true &&
-> +	test_when_finished "git remote rm ambi1 && git remote rm ambi2" &&
-> +	test_config branch.autosetupmerge true &&
->  	git config remote.ambi1.url lalala &&
->  	git config remote.ambi1.fetch refs/heads/lalala:refs/heads/master &&
->  	git config remote.ambi2.url lilili &&
-> @@ -552,7 +550,7 @@ test_expect_success 'avoid ambiguous track' '
->  test_expect_success 'autosetuprebase local on a tracked local branch' '
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-> -	git config branch.autosetuprebase local &&
-> +	test_config branch.autosetuprebase local &&
->  	(git show-ref -q refs/remotes/local/o || git fetch local) &&
->  	git branch mybase &&
->  	git branch --track myr1 mybase &&
-> @@ -564,7 +562,7 @@ test_expect_success 'autosetuprebase local on a tracked local branch' '
->  test_expect_success 'autosetuprebase always on a tracked local branch' '
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-> -	git config branch.autosetuprebase always &&
-> +	test_config branch.autosetuprebase always &&
->  	(git show-ref -q refs/remotes/local/o || git fetch local) &&
->  	git branch mybase2 &&
->  	git branch --track myr2 mybase &&
-> @@ -576,7 +574,7 @@ test_expect_success 'autosetuprebase always on a tracked local branch' '
->  test_expect_success 'autosetuprebase remote on a tracked local branch' '
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-> -	git config branch.autosetuprebase remote &&
-> +	test_config branch.autosetuprebase remote &&
->  	(git show-ref -q refs/remotes/local/o || git fetch local) &&
->  	git branch mybase3 &&
->  	git branch --track myr3 mybase2 &&
-> @@ -588,7 +586,7 @@ test_expect_success 'autosetuprebase remote on a tracked local branch' '
->  test_expect_success 'autosetuprebase never on a tracked local branch' '
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-> -	git config branch.autosetuprebase never &&
-> +	test_config branch.autosetuprebase never &&
->  	(git show-ref -q refs/remotes/local/o || git fetch local) &&
->  	git branch mybase4 &&
->  	git branch --track myr4 mybase2 &&
-> @@ -600,7 +598,7 @@ test_expect_success 'autosetuprebase never on a tracked local branch' '
->  test_expect_success 'autosetuprebase local on a tracked remote branch' '
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-> -	git config branch.autosetuprebase local &&
-> +	test_config branch.autosetuprebase local &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
->  	git branch --track myr5 local/master &&
->  	test "$(git config branch.myr5.remote)" = local &&
-> @@ -611,7 +609,7 @@ test_expect_success 'autosetuprebase local on a tracked remote branch' '
->  test_expect_success 'autosetuprebase never on a tracked remote branch' '
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-> -	git config branch.autosetuprebase never &&
-> +	test_config branch.autosetuprebase never &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
->  	git branch --track myr6 local/master &&
->  	test "$(git config branch.myr6.remote)" = local &&
-> @@ -622,7 +620,7 @@ test_expect_success 'autosetuprebase never on a tracked remote branch' '
->  test_expect_success 'autosetuprebase remote on a tracked remote branch' '
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-> -	git config branch.autosetuprebase remote &&
-> +	test_config branch.autosetuprebase remote &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
->  	git branch --track myr7 local/master &&
->  	test "$(git config branch.myr7.remote)" = local &&
-> @@ -633,7 +631,7 @@ test_expect_success 'autosetuprebase remote on a tracked remote branch' '
->  test_expect_success 'autosetuprebase always on a tracked remote branch' '
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-> -	git config branch.autosetuprebase remote &&
-> +	test_config branch.autosetuprebase remote &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
->  	git branch --track myr8 local/master &&
->  	test "$(git config branch.myr8.remote)" = local &&
-> @@ -642,7 +640,7 @@ test_expect_success 'autosetuprebase always on a tracked remote branch' '
->  '
->  
->  test_expect_success 'autosetuprebase unconfigured on a tracked remote branch' '
-> -	git config --unset branch.autosetuprebase &&
-> +	test_unconfig branch.autosetuprebase &&
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
-> @@ -684,7 +682,7 @@ test_expect_success 'autosetuprebase unconfigured on untracked remote branch' '
->  '
->  
->  test_expect_success 'autosetuprebase never on an untracked local branch' '
-> -	git config branch.autosetuprebase never &&
-> +	test_config branch.autosetuprebase never &&
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
-> @@ -695,7 +693,7 @@ test_expect_success 'autosetuprebase never on an untracked local branch' '
->  '
->  
->  test_expect_success 'autosetuprebase local on an untracked local branch' '
-> -	git config branch.autosetuprebase local &&
-> +	test_config branch.autosetuprebase local &&
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
-> @@ -706,7 +704,7 @@ test_expect_success 'autosetuprebase local on an untracked local branch' '
->  '
->  
->  test_expect_success 'autosetuprebase remote on an untracked local branch' '
-> -	git config branch.autosetuprebase remote &&
-> +	test_config branch.autosetuprebase remote &&
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
-> @@ -717,7 +715,7 @@ test_expect_success 'autosetuprebase remote on an untracked local branch' '
->  '
->  
->  test_expect_success 'autosetuprebase always on an untracked local branch' '
-> -	git config branch.autosetuprebase always &&
-> +	test_config branch.autosetuprebase always &&
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
-> @@ -728,7 +726,7 @@ test_expect_success 'autosetuprebase always on an untracked local branch' '
->  '
->  
->  test_expect_success 'autosetuprebase never on an untracked remote branch' '
-> -	git config branch.autosetuprebase never &&
-> +	test_config branch.autosetuprebase never &&
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
-> @@ -739,7 +737,7 @@ test_expect_success 'autosetuprebase never on an untracked remote branch' '
->  '
->  
->  test_expect_success 'autosetuprebase local on an untracked remote branch' '
-> -	git config branch.autosetuprebase local &&
-> +	test_config branch.autosetuprebase local &&
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
-> @@ -750,7 +748,7 @@ test_expect_success 'autosetuprebase local on an untracked remote branch' '
->  '
->  
->  test_expect_success 'autosetuprebase remote on an untracked remote branch' '
-> -	git config branch.autosetuprebase remote &&
-> +	test_config branch.autosetuprebase remote &&
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
-> @@ -761,7 +759,7 @@ test_expect_success 'autosetuprebase remote on an untracked remote branch' '
->  '
->  
->  test_expect_success 'autosetuprebase always on an untracked remote branch' '
-> -	git config branch.autosetuprebase always &&
-> +	test_config branch.autosetuprebase always &&
->  	git config remote.local.url . &&
->  	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
->  	(git show-ref -q refs/remotes/local/master || git fetch local) &&
-> @@ -772,8 +770,8 @@ test_expect_success 'autosetuprebase always on an untracked remote branch' '
->  '
->  
->  test_expect_success 'autosetuprebase always on detached HEAD' '
-> -	git config branch.autosetupmerge always &&
-> -	test_when_finished git checkout master &&
-> +	test_when_finished "git checkout -" &&
+And the line above has to stay.
 
-I think the explicit 'master' was better.  We are not in the
-business of checking @{-1} completion here, and depending on the
-outcome of the "git checkout" in the test, "checkout -" will take us
-to a different place, no?
+>>  	argv_array_push(&argv, "--summary-limit");
+>>  	argv_array_push(&argv, summary_limit);
+>>  	if (!uncommitted)
+>> @@ -685,9 +688,31 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
+>>  	sm_summary.git_cmd = 1;
+>>  	sm_summary.no_stdin = 1;
+>>  	fflush(s->fp);
+>> -	sm_summary.out = dup(fileno(s->fp));    /* run_command closes it */
+>> +	sm_summary.out = -1;
+>> +
+>>  	run_command(&sm_summary);
+>>  	argv_array_clear(&argv);
+>> +
+>> +	len = strbuf_read(&cmd_stdout, sm_summary.out, 1024);
+>> +
+>> +	/* prepend header, only if there's an actual output */
+>> +	if (len) {
+>> +		if (uncommitted)
+>> +			strbuf_addstr(&summary, _("Submodules changed but not updated:"));
+>> +		else
+>> +			strbuf_addstr(&summary, _("Submodule changes to be committed:"));
+>> +		strbuf_addstr(&summary, "\n\n");
+>> +	}
+>> +	strbuf_addbuf(&summary, &cmd_stdout);
+>> +	strbuf_release(&cmd_stdout);
+>> +
+>> +	summary_content = strbuf_detach(&summary, &len);
+>> +	strbuf_add_commented_lines(&summary, summary_content, len);
+>> +	free(summary_content);
+>> +
+>> +	summary_content = strbuf_detach(&summary, &len);
+>> +	fprintf(s->fp, summary_content);
+>> +	free(summary_content);
+>>  }
+>>  
+>>  static void wt_status_print_other(struct wt_status *s,
 
-> +	test_config branch.autosetupmerge always &&
-
-This used to be propagated down, but now branch.autosetupmerge is
-kept unset after this.  The tests after this one do not seem to
-newly create branches that need auto-setup-merge, so I think this
-change is very good.
-
->  	git checkout HEAD^0 &&
->  	git branch my11 &&
->  	test -z "$(git config branch.my11.remote)" &&
-> @@ -781,15 +779,15 @@ test_expect_success 'autosetuprebase always on detached HEAD' '
->  '
->  
->  test_expect_success 'detect misconfigured autosetuprebase (bad value)' '
-> -	git config branch.autosetuprebase garbage &&
-> +	test_config branch.autosetuprebase garbage &&
->  	test_must_fail git branch
->  '
->  
->  test_expect_success 'detect misconfigured autosetuprebase (no value)' '
-> -	git config --unset branch.autosetuprebase &&
-> +	test_when_finished "test_unconfig branch.autosetuprebase" &&
-> +	test_unconfig branch.autosetuprebase &&
->  	echo "[branch] autosetuprebase" >>.git/config &&
-> -	test_must_fail git branch &&
-> -	git config --unset branch.autosetuprebase
-> +	test_must_fail git branch
->  '
->  
->  test_expect_success 'attempt to delete a branch without base and unmerged to HEAD' '
-> @@ -856,6 +854,7 @@ test_expect_success 'detect typo in branch name when using --edit-description' '
->  '
->  
->  test_expect_success 'refuse --edit-description on unborn branch for now' '
-> +	test_when_finished "git checkout -" &&
-
-I am not sure if this is a good change.  Depending on the outcome of
-the "git checkout" in the test (it may succeed and set @{-1} to the
-branch we were on when we entered the test, or it may fail and leave
-@{-1} to the branch before we were on when we entered the test),
-this will take us to a different place, no?
-
->  	write_script editor <<-\EOF &&
->  		echo "New contents" >"$1"
->  	EOF
+Junio already commented on this part.
