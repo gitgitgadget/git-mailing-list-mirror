@@ -1,65 +1,67 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git fetch --reference
-Date: Tue, 03 Sep 2013 19:19:46 +0200
-Message-ID: <m2ppspkekt.fsf@linux-m68k.org>
-References: <ae657fa74373b58feba41615d335504e@meuh.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/4] Re: [PATCH 3/4] t: rev-parse-parents: avoid yoda
+ conditions
+Date: Tue, 3 Sep 2013 13:20:47 -0400
+Message-ID: <20130903172046.GA1050@sigill.intra.peff.net>
+References: <1378103439-3225-1-git-send-email-felipe.contreras@gmail.com>
+ <1378103439-3225-4-git-send-email-felipe.contreras@gmail.com>
+ <20130903071256.GD3608@sigill.intra.peff.net>
+ <20130903075107.GA25540@goldbirke>
+ <20130903080358.GA30158@sigill.intra.peff.net>
+ <CAMP44s112mwgs=8n0XCnTtPM2V-O5RYE2ns+fjCvgkxj+kEY8Q@mail.gmail.com>
+ <20130903111006.GJ29840@goldbirke>
+ <CAMP44s349-v6xtCvbDzycVj1wBwTdAgLmuGxB0pYn6CmHYkM1Q@mail.gmail.com>
+ <20130903150855.GK29840@goldbirke>
+ <20130903170419.GA29921@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Yann Droneaud <ydroneaud@opteya.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 19:19:59 2013
+Content-Type: text/plain; charset=utf-8
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 03 19:20:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGuGl-0001wy-23
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 19:19:59 +0200
+	id 1VGuHf-0002JO-Qi
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 19:20:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755841Ab3ICRTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 13:19:55 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:56253 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754332Ab3ICRTy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 13:19:54 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3cTvzr1CNwz3hhXN;
-	Tue,  3 Sep 2013 19:19:51 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3cTvzq6zWLzbbkn;
-	Tue,  3 Sep 2013 19:19:51 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id bp4yMMCLj376; Tue,  3 Sep 2013 19:19:50 +0200 (CEST)
-X-Auth-Info: dGefm2MATUEJeXcFmhzJFa1sRhbgAvz0z/6t3V2RM44=
-Received: from linux.local (pC19F5FE6.dip0.t-ipconnect.de [193.159.95.230])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Tue,  3 Sep 2013 19:19:50 +0200 (CEST)
-Received: by linux.local (Postfix, from userid 501)
-	id E12C41E579A; Tue,  3 Sep 2013 19:19:46 +0200 (CEST)
-X-Yow: MERYL STREEP is my obstetrician!
-In-Reply-To: <ae657fa74373b58feba41615d335504e@meuh.org> (Yann Droneaud's
-	message of "Tue, 03 Sep 2013 18:55:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1756228Ab3ICRUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 13:20:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:56859 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754332Ab3ICRUv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 13:20:51 -0400
+Received: (qmail 16674 invoked by uid 102); 3 Sep 2013 17:20:51 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Sep 2013 12:20:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Sep 2013 13:20:47 -0400
+Content-Disposition: inline
+In-Reply-To: <20130903170419.GA29921@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233745>
 
-Yann Droneaud <ydroneaud@opteya.com> writes:
+On Tue, Sep 03, 2013 at 10:04:19AM -0700, Jonathan Nieder wrote:
 
-> So what's the best way to do a git fetch <remote>, copying objects from
-> another local repository
-> to resolve delta ?
+> > It depends on the change, I suppose.  I agree, changing 3k+ lines just
+> > to avoid yoda conditions...  I doubt the gain worth the code churn.
+> 
+> Especially when the idiom being changed is not even being made better.
+> ;-)
 
-IMHO the best way is to add a remote for the local repository, fetch
-from it, then fetch from <remote>.
+Yes. IMHO it is not just "not worth the churn" but actively making the
+code less readable.
 
-Andreas.
+> While at it, I rerolled the other patches from the series to clarify
+> their commit messages (replacing "fix <something>" with a fuller
+> description).
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+The series looks fine to me, modulo the fix up in v2 of 4/4.
+
+-Peff
