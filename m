@@ -1,86 +1,72 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
-Date: Tue, 3 Sep 2013 16:50:46 -0500
-Message-ID: <CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com>
-References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 3/4] t: rev-parse-parents: avoid yoda conditions
+Date: Tue, 3 Sep 2013 16:52:19 -0500
+Message-ID: <CAMP44s0zRZDGwd6KcVi81JEDQv38THCJctA8zUZiYht-uqY4vA@mail.gmail.com>
+References: <1378103439-3225-1-git-send-email-felipe.contreras@gmail.com>
+	<1378103439-3225-4-git-send-email-felipe.contreras@gmail.com>
+	<20130903071256.GD3608@sigill.intra.peff.net>
+	<20130903075107.GA25540@goldbirke>
+	<20130903080358.GA30158@sigill.intra.peff.net>
+	<CAMP44s112mwgs=8n0XCnTtPM2V-O5RYE2ns+fjCvgkxj+kEY8Q@mail.gmail.com>
+	<20130903111006.GJ29840@goldbirke>
+	<CAMP44s349-v6xtCvbDzycVj1wBwTdAgLmuGxB0pYn6CmHYkM1Q@mail.gmail.com>
+	<xmqq8uzdu817.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>,
-	John Keeping <john@keeping.me.uk>
+Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 23:50:52 2013
+X-From: git-owner@vger.kernel.org Tue Sep 03 23:52:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGyUu-0007kS-5Y
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 23:50:52 +0200
+	id 1VGyWQ-0008Kw-HX
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 23:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757419Ab3ICVus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 17:50:48 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:59579 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754412Ab3ICVur (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 17:50:47 -0400
-Received: by mail-lb0-f169.google.com with SMTP id z5so4836439lbh.14
-        for <git@vger.kernel.org>; Tue, 03 Sep 2013 14:50:46 -0700 (PDT)
+	id S1760504Ab3ICVwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 17:52:22 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:53585 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760223Ab3ICVwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 17:52:21 -0400
+Received: by mail-lb0-f181.google.com with SMTP id u14so5586709lbd.12
+        for <git@vger.kernel.org>; Tue, 03 Sep 2013 14:52:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=dpF4EDRbvGiMfD/tfbyjEz+pYAzSMSsZdPLCUHnFB50=;
-        b=AQzxfa8j51/RAlofK9vSbzVhzXqaXoCSetSQw4rj6zQpirCH8L+PxbSM1YcqV67SQh
-         Q+qkgs7FIaaVNjwxWijrEFWOU68ypV9pOb5TeH3xAua2psGSAfY3umuDYtZBENmqfO5p
-         dodS97GFQjUxDU4wlSWa+rp0YOSRufAvbnS8LzLq5THBfasRyZw80BuUtBq5rNbZmPjn
-         LHSYhepyexHFgA0T6eRuW423mgODSCdV2x5cqNEYspuM5v1sXOButVFavRgrLC6dQf4X
-         ADrkefamWftcXXeLjm4+G9pAWuQjDYBO1SrZkhkJhYOPPCEo4QeAKdmaLRZYmxrke776
-         M50A==
-X-Received: by 10.112.28.109 with SMTP id a13mr27368945lbh.3.1378245046089;
- Tue, 03 Sep 2013 14:50:46 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Tue, 3 Sep 2013 14:50:46 -0700 (PDT)
-In-Reply-To: <xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
+        bh=2CBGqRClDAf7BShJnbckFs58YedUfyiy00TdaU7tSms=;
+        b=HBM85qlZ3A1cKHJ7UOUqXit2fcPqIJjmwbjjkFkQRBGhCtq6XMjdGzuoZU46lh2fnc
+         XGdFGC+aEKx45/Hnl/bWHAZU5sLlHv/PkuEYA1482/7NDY5iUqi7uGastwpq9lGV5nK/
+         xM7owyoLbNu9RPr+gjh5n1fUfiGTVbsRUNwVeytReq/iMA0u4Wv1oi9DquurF2zHFXxa
+         1YFS64BnncsHP+JNm95/YVRH87rwSdL+H5K49iQDAAmZqM+hRhhjqIx0JsQhvtXj8xmk
+         GDZafl/w75OJ04bKgiC+DzrOi2HectA8wKY5G45HbWGyDUdR7qfoOke0gU5aZCkATvJK
+         H9bQ==
+X-Received: by 10.112.64.36 with SMTP id l4mr15356002lbs.15.1378245139172;
+ Tue, 03 Sep 2013 14:52:19 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Tue, 3 Sep 2013 14:52:19 -0700 (PDT)
+In-Reply-To: <xmqq8uzdu817.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233785>
 
-On Tue, Sep 3, 2013 at 12:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Sep 3, 2013 at 12:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
->> Junio already sent a similar patch, but I think this is simpler.
+>> There are two ways to fix an inconsistency, the other way is to fix
+>> test_cmp. But that would be a change, and change is not welcome in
+>> Git.
 >
-> I agree that this is simpler, but I am not sure if the behaviour is
-> necessarily better (note that this is different from saying "I think
-> the behaviour of this patch is worse").  The motivation I read from
-> the original discussion was that new people did "git pull" (no other
-> parameters) to "sync my tree with the central repository" as if it
-> were SVN, and because we are not SVN, projects that prefer rebases
-> were unhappy, and the other one was to address *only* that use case.
-> I do not personally like that special casing (i.e. "only when no
-> 'integrate with what from where' is given"), and applying the "you
-> must be explicit between rebase and merge" like this series does
-> uniformly might (or might not) be a good thing.  I dunno.
+> If you want to do "test_cmp $actual $expect", you would have to
+> first "fix" people's expectation that "diff A B" produces a change
+> necessary to bring A to B, which would not likely to happen.  We do
+> the 'test_cmp expect actual' for a reason.
 
-As I already said; there's is essentially no difference between "git
-pull" and "git pull origin".
-
-> The difference in changes needed to the test suite is illustrative;
-> this series affects any use of "git pull" (with or without explicit
-> "what to integrate with and from where"), unlike the other one that
-> only affects the case where "git pull" was not given "what to
-> integrate with and from where".  I think an earlier draft I did for
-> the previous one did not special case "only when no 'integrate with
-> what from where' is given" and had to touch all the places in the
-> test in a similar way.
-
-Yeah, that version affects less, but it also doesn't achieve what we
-actually want.
-
-Either way, that's why I sent another version that doesn't need
-modifications on the tests.
+No, you just do "diff B A".
 
 -- 
 Felipe Contreras
