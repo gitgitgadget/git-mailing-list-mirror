@@ -1,68 +1,71 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] revision: introduce --exclude=<glob> to tame wildcards
-Date: Tue, 03 Sep 2013 22:02:56 +0200
-Message-ID: <52264070.3080909@kdbg.org>
-References: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com> <7vhae7k7t1.fsf@alter.siamese.dyndns.org> <CAMP44s1y2kvSnF3dKDMr9QtS40PNSW93DWCxFUoL658YkqYeVA@mail.gmail.com> <CAPc5daVSqoE74kmsobg7RpMtiL3vzKN+ckAcWEKU_Q_wF8HYuA@mail.gmail.com> <CAMP44s0P=XF5C8+fU2cJ-Xuq57iqcAn674Upub6N=+iiMpQK0g@mail.gmail.com> <xmqqeh9b15x6.fsf@gitster.dls.corp.google.com> <xmqq1u5aybri.fsf_-_@gitster.dls.corp.google.com> <5224F0EE.1080205@kdbg.org> <xmqq4na1vqng.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: gitweb patch, no response
+Date: Tue, 03 Sep 2013 13:04:45 -0700
+Message-ID: <xmqqfvtlr7s2.fsf@gitster.dls.corp.google.com>
+References: <CANzJMBWmE2YM5f8U-h3yL0=Npaobm4t_7beoNvLnwQr5QC+0fA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 22:03:09 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Christopher Durkin <cjdurkin@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 03 22:05:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGwoc-0001mm-Cb
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 22:03:06 +0200
+	id 1VGwqO-0002a9-9Y
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 22:04:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760199Ab3ICUDB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 16:03:01 -0400
-Received: from bsmtp5.bon.at ([195.3.86.187]:16054 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754063Ab3ICUDA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 16:03:00 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 32219CDF88;
-	Tue,  3 Sep 2013 22:02:57 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 2906019F3F8;
-	Tue,  3 Sep 2013 22:02:57 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <xmqq4na1vqng.fsf@gitster.dls.corp.google.com>
+	id S1754412Ab3ICUEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 16:04:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52038 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753644Ab3ICUEw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 16:04:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2E293F7B8;
+	Tue,  3 Sep 2013 20:04:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fhMgQO5fdh6T/8fespGied/Gn/4=; b=auSwMm
+	pQbGFX8XORCOlNINNk/AoMP8OQ5d1jr81CGxUYNZopJsHSWrUfVdFNEPBjhDhFKo
+	JwuxM4Eilpk6WyMh7r/2PrWi4GiHZuTejLnBquu9b4pwamD9ZoV7ISx7oQ2+N2x2
+	MsWzXpMHq90LejZ7MoEsCGVI6muvP2U8QHdZY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H/KJtnhu5/vFKi15sqMxSjjCr6Macx0U
+	UIYbhCIVzAJHNhiM9skj2wVHTWArgYJXwCtwqEuOvdlA8F31XBYSyO36aase/0W6
+	9aOQexxj+skfzUZbF2olrC9WjKgm6zXPk/IdieY8Nzqb7WBnQ8Pmzp5Q++kFTdh5
+	phXfgt1+oWM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DCF13F7B4;
+	Tue,  3 Sep 2013 20:04:50 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8EBE93F7A8;
+	Tue,  3 Sep 2013 20:04:48 +0000 (UTC)
+In-Reply-To: <CANzJMBWmE2YM5f8U-h3yL0=Npaobm4t_7beoNvLnwQr5QC+0fA@mail.gmail.com>
+	(Christopher Durkin's message of "Tue, 3 Sep 2013 15:24:55 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1603936C-14D4-11E3-AFAA-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233771>
 
-Am 03.09.2013 18:03, schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
->> So I like the relative simplicity of this approach. Here is a bit of
->> documentation.
-> 
-> Oh, thanks for helping.  An example or two may also help, and using
-> your original "I have branches and wip/" situation would be good.
-> 
->         git log --exclude='wip/*' --branches::
-> 
->                 Show history of local branches whose names do not
->                 match pattern `wip/*`.
-> 
-> 	git log --remotes --not --exclude='wip/*' --branches::
-> 
-> 		Show history of other people's work that are not
-> 		merged to local branches whose names do not match
-> 		pattern `wip/*`.
-> 
-> or something like that, perhaps?
+Christopher Durkin <cjdurkin@gmail.com> writes:
 
-Agreed and noted.
+> I submitted a small feature addition patch for gitweb (see
+> http://article.gmane.org/gmane.comp.version-control.git/232327/match=gitweb)
+> a couple of weeks ago.
+>
+> I didn't get any responses, good or bad. Was there something wrong
+> with my submission in terms of formatting? Something else that I
+> missed? Any suggestions are greatly appreciated.
 
-The new option must also be integrated in rev-parse. That will take a
-bit more work.
+It either fell through cracks, as this is a high traffic list, or
+nobody was interested in seeing the new feature.
 
-I'll pick up the topic when I find the time to do so.
-
--- Hannes
+Thanks for a pointer; I'll take a look at it soonish.
