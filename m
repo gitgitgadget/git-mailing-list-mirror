@@ -1,99 +1,64 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 01/11] replace: forbid replacing an object with one of a
- different type
-Date: Tue, 03 Sep 2013 09:10:15 +0200
-Message-ID: <20130903071026.29838.65139.chriscool@tuxfamily.org>
-References: <20130903070551.29838.43576.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
-	Thomas Rast <trast@inf.ethz.ch>, Johannes Sixt <j6t@kdbg.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 09:11:32 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/4] t: rev-parse-parents: avoid yoda conditions
+Date: Tue, 3 Sep 2013 03:12:56 -0400
+Message-ID: <20130903071256.GD3608@sigill.intra.peff.net>
+References: <1378103439-3225-1-git-send-email-felipe.contreras@gmail.com>
+ <1378103439-3225-4-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 03 09:13:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGklv-0004eS-8r
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 09:11:31 +0200
+	id 1VGknQ-0005ag-3I
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 09:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753265Ab3ICHLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 03:11:15 -0400
-Received: from [194.158.98.15] ([194.158.98.15]:42770 "EHLO mail-2y.bbox.fr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751968Ab3ICHLO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 03:11:14 -0400
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id A951F42;
-	Tue,  3 Sep 2013 09:10:52 +0200 (CEST)
-X-git-sha1: 30c2d43b884e5f80962f1b30f89d9104f31dad45 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20130903070551.29838.43576.chriscool@tuxfamily.org>
+	id S1759453Ab3ICHM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 03:12:59 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52850 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755160Ab3ICHM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 03:12:59 -0400
+Received: (qmail 20161 invoked by uid 102); 3 Sep 2013 07:12:59 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Sep 2013 02:12:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Sep 2013 03:12:56 -0400
+Content-Disposition: inline
+In-Reply-To: <1378103439-3225-4-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233689>
 
-Users replacing an object with one of a different type were not
-prevented to do so, even if it was obvious, and stated in the doc,
-that bad things would result from doing that.
+On Mon, Sep 02, 2013 at 01:30:38AM -0500, Felipe Contreras wrote:
 
-To avoid mistakes, it is better to just forbid that though.
+> Just as 5 == X is weird, so is comparing first the expected value, and
+> then the value we are testing. So switch them around.
 
-If one object is replaced with one of a different type, the only way
-to keep the history valid is to also replace all the other objects
-that point to the replaced object. That's because:
+Actually, our normal comparison order for test output is "test_cmp
+expect actual", as it shows a test failure as a diff with the expected
+output as the base (i.e., the diff shows what went wrong).
 
-* Annotated tags contain the type of the tagged object.
+That reasoning does not apply to "test a = b", which shows no output at
+all. However, if you want to clean up and modernize these tests, it
+would probably be better to simply convert them to use test_cmp.
 
-* The tree/parent lines in commits must be a tree and commits, resp.
+I wonder if we should have a:
 
-* The object types referred to by trees are specified in the 'mode'
-  field:
-    100644 and 100755    blob
-    160000               commit
-    040000               tree
-  (these are the only valid modes)
+  test_cmp_args () {
+          echo "$1" >expect &&
+          echo "$1" >actual &&
+          test_cmp expect actual
+  }
 
-* Blobs don't point at anything.
+to let these remain one-liners like:
 
-The doc will be updated in a later patch.
+  test_cmp_args "$(git rev-parse start)" "$(git rev-parse final^1^1^1)"
 
-Acked-by: Philip Oakley <philipoakley@iee.org>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/replace.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 59d3115..9a94769 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -85,6 +85,7 @@ static int replace_object(const char *object_ref, const char *replace_ref,
- 			  int force)
- {
- 	unsigned char object[20], prev[20], repl[20];
-+	enum object_type obj_type, repl_type;
- 	char ref[PATH_MAX];
- 	struct ref_lock *lock;
- 
-@@ -100,6 +101,15 @@ static int replace_object(const char *object_ref, const char *replace_ref,
- 	if (check_refname_format(ref, 0))
- 		die("'%s' is not a valid ref name.", ref);
- 
-+	obj_type = sha1_object_info(object, NULL);
-+	repl_type = sha1_object_info(repl, NULL);
-+	if (obj_type != repl_type)
-+		die("Objects must be of the same type.\n"
-+		    "'%s' points to a replaced object of type '%s'\n"
-+		    "while '%s' points to a replacement object of type '%s'.",
-+		    object_ref, typename(obj_type),
-+		    replace_ref, typename(repl_type));
-+
- 	if (read_ref(ref, prev))
- 		hashclr(prev);
- 	else if (!force)
--- 
-1.8.4.rc1.31.g530f5ce.dirty
+-Peff
