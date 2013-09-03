@@ -1,68 +1,109 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] {fetch,receive}-pack: drop unpack-objects, delay loosing
- objects until the end
-Date: Tue, 3 Sep 2013 02:49:38 -0400
-Message-ID: <20130903064938.GB3608@sigill.intra.peff.net>
-References: <1378091107-31682-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH v2] peel_onion(): add support for <rev>^{tag}
+Date: Tue, 3 Sep 2013 03:05:46 -0400
+Message-ID: <20130903070546.GC3608@sigill.intra.peff.net>
+References: <1378100551-892-1-git-send-email-rhansen@bbn.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 08:49:47 2013
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Tue Sep 03 09:05:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGkQr-0002YI-K2
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 08:49:45 +0200
+	id 1VGkgT-0001tw-0E
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 09:05:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932219Ab3ICGtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 02:49:41 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52692 "EHLO peff.net"
+	id S1759472Ab3ICHFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 03:05:49 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52796 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753749Ab3ICGtl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 02:49:41 -0400
-Received: (qmail 19102 invoked by uid 102); 3 Sep 2013 06:49:40 -0000
+	id S1759453Ab3ICHFs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 03:05:48 -0400
+Received: (qmail 19801 invoked by uid 102); 3 Sep 2013 07:05:48 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Sep 2013 01:49:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Sep 2013 02:49:38 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Sep 2013 02:05:48 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Sep 2013 03:05:46 -0400
 Content-Disposition: inline
-In-Reply-To: <1378091107-31682-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1378100551-892-1-git-send-email-rhansen@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233686>
 
-On Mon, Sep 02, 2013 at 10:05:07AM +0700, Nguyen Thai Ngoc Duy wrote:
+On Mon, Sep 02, 2013 at 01:42:31AM -0400, Richard Hansen wrote:
 
-> Current code peaks into the transfered pack's header, if the number of
-> objects is under a limit, unpack-objects is called to handle the rest,
-> otherwise index-pack is. This patch makes fetch-pack use index-pack
-> unconditionally, then turn objects loose and remove the pack at the
-> end. unpack-objects is deprecated and may be removed in future.
+> Complete the <rev>^{<type>} family of object specifiers by having
+> <rev>^{tag} dereference <rev> until a tag object is found (or fail if
+> unable).
+> 
+> At first glance this may not seem very useful, as commits, trees, and
+> blobs cannot be peeled to a tag, and a tag would just peel to itself.
+> However, this can be used to ensure that <rev> names a tag object:
+> 
+>     $ git rev-parse --verify v1.8.4^{tag}
+>     04f013dc38d7512eadb915eba22efc414f18b869
+>     $ git rev-parse --verify master^{tag}
+>     error: master^{tag}: expected tag type, but the object dereferences to tree type
+>     fatal: Needed a single revision
+> 
+> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+> ---
 
-I do like consolidating the object-receiving code paths, but there is a
-downside to this strategy: we increase the I/O in cases where we end up
-unpacking, as we spool the tmpfile to disk, and then force objects loose
-(whereas with the current code, unpack-objects reads straight from the
-network into loose objects). I think that is what you're saying here:
+FWIW, this makes sense to me. You can already accomplish the same thing
+by checking the output of $(git cat-file -t $name), but this is a
+natural extension of the other ^{} rules, and I can see making some
+callers more natural.
 
->  - by going through index-pack first, then unpack, we pay extra cost
->    for completing a thin pack into a full one. But compared to fetch's
->    total time, it should not be noticeable because unpack-objects is
->    only called when the pack contains a small number of objects.
+>  Documentation/revisions.txt | 3 +++
+>  sha1_name.c                 | 2 ++
 
-...but the cost is paid by total pack size, not number of objects. So if
-I am pushing up a commit with a large uncompressible blob, I've
-effectively doubled my disk I/O. It would make more sense to me for
-index-pack to learn command-line options specifying the limits, and then
-to operate on the pack as it streams in. E.g., to decide after seeing
-the header to unpack rather than index, or to drop large blobs from the
-pack (and put them in their own pack directly) as we are streaming into
-it (we do not know the blob size ahead of time, but we can make a good
-guess if it has a large on-disk size in the pack).
+Can you please add a test (probably in t1511) that checks the behavior,
+similar to what you wrote in the commit message?
+
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 65ad066..6dc496d 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -679,6 +679,8 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
+>  	sp++; /* beginning of type name, or closing brace for empty */
+>  	if (!strncmp(commit_type, sp, 6) && sp[6] == '}')
+>  		expected_type = OBJ_COMMIT;
+> +	else if (!strncmp(tag_type, sp, 3) && sp[3] == '}')
+> +		expected_type = OBJ_TAG;
+
+This is not a problem you are introducing to this code, but the use of
+opaque constants like commit_type along with the magic number "6"
+assuming that it contains "commit" seems like a maintenance nightmare
+(the only thing saving us is that it will almost certainly never change
+from "commit"; but then why do we have the opaque type in the first
+place?).
+
+I wonder if we could do better with:
+
+  #define COMMIT_TYPE "commit"
+  ...
+  if (!strncmp(COMMIT_TYPE, sp, strlen(COMMIT_TYPE))
+      && sp[strlen(COMMIT_TYPE)] == '}')
+
+Any compiler worth its salt will optimize the strlen on a string
+constant into a constant itself. The length makes it a bit less
+readable, though.
+
+I wonder if we could do even better with:
+
+  const char *x;
+  ...
+  if ((x = skip_prefix(sp, commit_type)) && *x == '}')
+
+which avoids the magic lengths altogether (though the compiler cannot
+optimize out the strlen call inside skip_prefix, because we declare
+commit_type and friends as an extern. It probably doesn't matter in
+peel_onion, though, which should not generally be performance critical
+anyway).
 
 -Peff
