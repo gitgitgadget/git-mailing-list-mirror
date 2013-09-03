@@ -1,159 +1,167 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v4 2/4] transport-helper: add no-private-update capability
-Date: Tue,  3 Sep 2013 17:45:14 +0200
-Message-ID: <1378223114-12523-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <1378107677-28741-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Sep 03 17:46:43 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] revision: introduce --exclude=<glob> to tame wildcards
+Date: Tue, 03 Sep 2013 09:03:31 -0700
+Message-ID: <xmqq4na1vqng.fsf@gitster.dls.corp.google.com>
+References: <1377838805-7693-1-git-send-email-felipe.contreras@gmail.com>
+	<7vhae7k7t1.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1y2kvSnF3dKDMr9QtS40PNSW93DWCxFUoL658YkqYeVA@mail.gmail.com>
+	<CAPc5daVSqoE74kmsobg7RpMtiL3vzKN+ckAcWEKU_Q_wF8HYuA@mail.gmail.com>
+	<CAMP44s0P=XF5C8+fU2cJ-Xuq57iqcAn674Upub6N=+iiMpQK0g@mail.gmail.com>
+	<xmqqeh9b15x6.fsf@gitster.dls.corp.google.com>
+	<xmqq1u5aybri.fsf_-_@gitster.dls.corp.google.com>
+	<5224F0EE.1080205@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Sep 03 18:03:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGsoU-0006Uy-Ja
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 17:46:42 +0200
+	id 1VGt52-00053L-RO
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 18:03:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756625Ab3ICPqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 11:46:39 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:36619 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756372Ab3ICPqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 11:46:38 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r83FjEBC002493
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 3 Sep 2013 17:45:14 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1VGsn6-0004lh-3X; Tue, 03 Sep 2013 17:45:16 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1VGsn5-0003Gy-Pn; Tue, 03 Sep 2013 17:45:15 +0200
-X-Mailer: git-send-email 1.8.4.12.g98a4f55.dirty
-In-Reply-To: <1378107677-28741-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 03 Sep 2013 17:45:14 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r83FjEBC002493
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1378827916.85526@iadAnfKQH/3tllJFoBvE0Q
+	id S1756707Ab3ICQDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 12:03:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61373 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756036Ab3ICQDn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 12:03:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94EEF3E88C;
+	Tue,  3 Sep 2013 16:03:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Jd9P/tOXv6UkHMTD8cAV+3X/XvM=; b=xhwjuM
+	JE8xo1nW8MUHhS5hZCKA93OBEFUJ4mbMV86IgVUn9bvYq2hrlQfFmQv9YKbP0Eqx
+	ZQ14kYYW03prwdeCEc2VVx1aLIA0pg8Rbtgxh2j53pHH3FUMscJ/AliWDEM0aD8t
+	Xrs+TgZa6tInrn7EXOxf97zU6nPAxpY0LTF3o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RVA77JkKAfr9mHJb+0B1qq25m26khv4k
+	K6lefbD8bxY7hfn6I1172efcyhVJ7WhYiMAkQ8WNQnFs1rNx1p2vOO5lHsSEXTk+
+	WbRv2SxMRLrzbYOHgOyT0hSZvf2Miwm8bMFOvnW4FHDu8xip4EdxGno2qou/TNQ4
+	gtigC9+qefY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AA0E3E88B;
+	Tue,  3 Sep 2013 16:03:42 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E267B3E87A;
+	Tue,  3 Sep 2013 16:03:39 +0000 (UTC)
+In-Reply-To: <5224F0EE.1080205@kdbg.org> (Johannes Sixt's message of "Mon, 02
+	Sep 2013 22:11:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6601B83E-14B2-11E3-A695-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233733>
 
-Since 664059fb62 (Felipe Contreras, Apr 17 2013, transport-helper: update
-remote helper namespace), a 'push' operation on a remote helper updates
-the private ref by default. This is often a good thing, but it can also
-be desirable to disable this update to force the next 'pull' to re-import
-the pushed revisions.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Allow remote-helpers to disable the automatic update by introducing a new
-capability.
+> Am 31.08.2013 01:55, schrieb Junio C Hamano:
+>> People often find "git log --branches" etc. that includes _all_
+>> branches is cumbersome to use when they want to grab most but except
+>> some.  The same applies to --tags, --all and --glob.
+>> 
+>> Teach the revision machinery to remember patterns, and then upon the
+>> next such a globbing option, exclude those that match the pattern.
+>> 
+>> With this, I can view only my integration branches (e.g. maint,
+>> master, etc.) without topic branches, which are named after two
+>> letters from primary authors' names, slash and topic name.
+>> 
+>>     git rev-list --no-walk --exclude=??/* --branches |
+>>     git name-rev --refs refs/heads/* --stdin
+>> 
+>> This one shows things reachable from local and remote branches that
+>> have not been merged to the integration branches.
+>> 
+>>     git log --remotes --branches --not --exclude=??/* --branches
+>> 
+>> It may be a bit rough around the edges, in that the pattern to give
+>> the exclude option depends on what globbing option follows.  In
+>> these examples, the pattern "??/*" is used, not "refs/heads/??/*",
+>> because the globbing option that follows the -"-exclude=<pattern>"
+>> is "--branches".  As each use of globbing option resets previously
+>> set "--exclude", this may not be such a bad thing, though.
+>
+> I argued "--except should trump everything" earlier, but the case
+> involving --not
+>
+>   --branches --except maint --not master
+>
+> to mean the same as
+>
+>   --branches --except maint master
+>
+> just does not make sense.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
+I'll have to mull the above two over to firmly grasp what you mean
+by "'except' trumping 'not'" before deciding if you are agreeing or
+disagreeing with the approach of taking it as a "taming wildcard"
+issue...
 
-I feel really stupid for sending so many versions now :-(. v3 was
-fixing a whitespace issue, but forgot to re-apply the change I did
-manually while sending v2, hence the commit message was wrong
-(dont-update-private -> no-private-update).
+> An alternative would be that --not would divide the command line
+> arguments into ranges within which one --except would subtract
+> subsequent refs from earlier globbing arguments in the same range.
+> That's not simpler to explain than your current proposal.
+>
+> So I like the relative simplicity of this approach. Here is a bit of
+> documentation.
 
-Not terribly important, but if it's still time, this one should be
-correct.
+Oh, thanks for helping.  An example or two may also help, and using
+your original "I have branches and wip/" situation would be good.
 
- Documentation/gitremote-helpers.txt |  5 +++++
- git-remote-testgit.sh               |  1 +
- t/t5801-remote-helpers.sh           | 11 +++++++++++
- transport-helper.c                  |  7 +++++--
- 4 files changed, 22 insertions(+), 2 deletions(-)
+        git log --exclude='wip/*' --branches::
 
-diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-index 0827f69..ee9e134 100644
---- a/Documentation/gitremote-helpers.txt
-+++ b/Documentation/gitremote-helpers.txt
-@@ -120,6 +120,11 @@ connecting (see the 'connect' command under COMMANDS).
- When choosing between 'push' and 'export', Git prefers 'push'.
- Other frontends may have some other order of preference.
- 
-+'no-private-update'::
-+	When using the 'refspec' capability, git normally updates the
-+	private ref on successful push. This update is disabled when
-+	the remote-helper declares the capability 'no-private-update'.
-+
- 
- Capabilities for Fetching
- ^^^^^^^^^^^^^^^^^^^^^^^^^
-diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
-index 2109070..6d2f282 100755
---- a/git-remote-testgit.sh
-+++ b/git-remote-testgit.sh
-@@ -38,6 +38,7 @@ do
- 			echo "*export-marks $gitmarks"
- 		fi
- 		test -n "$GIT_REMOTE_TESTGIT_SIGNED_TAGS" && echo "signed-tags"
-+		test -n "$GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE" && echo "no-private-update"
- 		echo
- 		;;
- 	list)
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 8c4c539..613f69a 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -182,6 +182,17 @@ test_expect_success 'push update refs' '
- 	)
- '
- 
-+test_expect_success 'push update refs disabled by no-private-update' '
-+	(cd local &&
-+	echo more-update >>file &&
-+	git commit -a -m more-update &&
-+	git rev-parse --verify testgit/origin/heads/update >expect &&
-+	GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE=t git push origin update &&
-+	git rev-parse --verify testgit/origin/heads/update >actual &&
-+	test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'push update refs failure' '
- 	(cd local &&
- 	git checkout update &&
-diff --git a/transport-helper.c b/transport-helper.c
-index 63cabc3..3328394 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -27,7 +27,8 @@ struct helper_data {
- 		push : 1,
- 		connect : 1,
- 		signed_tags : 1,
--		no_disconnect_req : 1;
-+		no_disconnect_req : 1,
-+		no_private_update : 1;
- 	char *export_marks;
- 	char *import_marks;
- 	/* These go from remote name (as in "list") to private name */
-@@ -205,6 +206,8 @@ static struct child_process *get_helper(struct transport *transport)
- 			strbuf_addstr(&arg, "--import-marks=");
- 			strbuf_addstr(&arg, capname + strlen("import-marks "));
- 			data->import_marks = strbuf_detach(&arg, NULL);
-+		} else if (!prefixcmp(capname, "no-private-update")) {
-+			data->no_private_update = 1;
- 		} else if (mandatory) {
- 			die("Unknown mandatory capability %s. This remote "
- 			    "helper probably needs newer version of Git.",
-@@ -723,7 +726,7 @@ static void push_update_refs_status(struct helper_data *data,
- 		if (push_update_ref_status(&buf, &ref, remote_refs))
- 			continue;
- 
--		if (!data->refspecs)
-+		if (!data->refspecs || data->no_private_update)
- 			continue;
- 
- 		/* propagate back the update to the remote namespace */
--- 
-1.8.4.12.g98a4f55.dirty
+                Show history of local branches whose names do not
+                match pattern `wip/*`.
+
+	git log --remotes --not --exclude='wip/*' --branches::
+
+		Show history of other people's work that are not
+		merged to local branches whose names do not match
+		pattern `wip/*`.
+
+or something like that, perhaps?
+
+> --- 8< ---
+> Subject: [PATCH] document --exclude option
+>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+>  Documentation/rev-list-options.txt | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+>
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index 5bdfb42..650c252 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -174,6 +174,21 @@ parents) and `--max-parents=-1` (negative numbers denote no upper limit).
+>  	is automatically prepended if missing. If pattern lacks '?', '{asterisk}',
+>  	or '[', '/{asterisk}' at the end is implied.
+>  
+> +--exclude=<glob-pattern>::
+> +
+> +	Do not include refs matching '<glob-pattern>' that the next `--all`,
+> +	`--branches`, `--tags`, `--remotes`, or `--glob` would otherwise
+> +	consider. Repetitions of this option accumulate exclusion patterns
+> +	up to the next `--all`, `--branches`, `--tags`, `--remotes`, or
+> +	`--glob` option (other options or arguments do not clear
+> +	accumlated patterns).
+> ++
+> +The patterns given should not begin with `refs/heads`, `refs/tags`, or
+> +`refs/remotes` when applied to `--branches`, `--tags`, or `--remotes`,
+> +restrictively, and they must begin with `refs/` when applied to `--glob`
+> +or `--all`. If a trailing '/{asterisk}' is intended, it must be given
+> +explicitly.
+> +
+>  --ignore-missing::
+>  
+>  	Upon seeing an invalid object name in the input, pretend as if
