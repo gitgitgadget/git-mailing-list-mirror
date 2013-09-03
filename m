@@ -1,61 +1,82 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 06/11] replace: bypass the type check if -f option is used
-Date: Tue, 03 Sep 2013 09:10:20 +0200
-Message-ID: <20130903071026.29838.76437.chriscool@tuxfamily.org>
+Subject: [PATCH v4 05/11] Documentation/replace: add Creating Replacement
+ Objects section
+Date: Tue, 03 Sep 2013 09:10:19 +0200
+Message-ID: <20130903071026.29838.56822.chriscool@tuxfamily.org>
 References: <20130903070551.29838.43576.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
 	Thomas Rast <trast@inf.ethz.ch>, Johannes Sixt <j6t@kdbg.org>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 09:17:57 2013
+X-From: git-owner@vger.kernel.org Tue Sep 03 09:18:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGks6-0008IL-1I
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 09:17:54 +0200
+	id 1VGksD-0008PD-79
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 09:18:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932561Ab3ICHRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 03:17:47 -0400
-Received: from mail-1y.bbox.fr ([194.158.98.14]:53243 "EHLO mail-1y.bbox.fr"
+	id S1759615Ab3ICHRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 03:17:53 -0400
+Received: from mail-2y.bbox.fr ([194.158.98.15]:45651 "EHLO mail-2y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932533Ab3ICHRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 03:17:20 -0400
+	id S932531Ab3ICHRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 03:17:19 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id D9A6C61;
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 6FB9A5E;
 	Tue,  3 Sep 2013 09:17:18 +0200 (CEST)
-X-git-sha1: a687c5f54eede130ee5a413565cf68dfb1f0626a 
+X-git-sha1: b252937ac8998e303c246644a37ea761ade3b82e 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20130903070551.29838.43576.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233699>
 
-If -f option, which means '--force', is used, we can allow an object
-to be replaced with one of a different type, as the user should know
-what (s)he is doing.
+There were no hints in the documentation about how to create
+replacement objects.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/replace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-replace.txt | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 9a94769..95736d9 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -103,7 +103,7 @@ static int replace_object(const char *object_ref, const char *replace_ref,
+diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
+index aa66d27..736b48c 100644
+--- a/Documentation/git-replace.txt
++++ b/Documentation/git-replace.txt
+@@ -64,6 +64,19 @@ OPTIONS
+ 	Typing "git replace" without arguments, also lists all replace
+ 	refs.
  
- 	obj_type = sha1_object_info(object, NULL);
- 	repl_type = sha1_object_info(repl, NULL);
--	if (obj_type != repl_type)
-+	if (!force && obj_type != repl_type)
- 		die("Objects must be of the same type.\n"
- 		    "'%s' points to a replaced object of type '%s'\n"
- 		    "while '%s' points to a replacement object of type '%s'.",
++CREATING REPLACEMENT OBJECTS
++----------------------------
++
++linkgit:git-filter-branch[1], linkgit:git-hash-object[1] and
++linkgit:git-rebase[1], among other git commands, can be used to create
++replacement objects from existing objects.
++
++If you want to replace many blobs, trees or commits that are part of a
++string of commits, you may just want to create a replacement string of
++commits and then only replace the commit at the tip of the target
++string of commits with the commit at the tip of the replacement string
++of commits.
++
+ BUGS
+ ----
+ Comparing blobs or trees that have been replaced with those that
+@@ -76,6 +89,9 @@ pending objects.
+ 
+ SEE ALSO
+ --------
++linkgit:git-hash-object[1]
++linkgit:git-filter-branch[1]
++linkgit:git-rebase[1]
+ linkgit:git-tag[1]
+ linkgit:git-branch[1]
+ linkgit:git[1]
 -- 
 1.8.4.rc1.31.g530f5ce.dirty
