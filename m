@@ -1,113 +1,64 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: [PATCH v4] peel_onion(): add support for <rev>^{tag}
-Date: Tue,  3 Sep 2013 15:50:16 -0400
-Message-ID: <1378237816-28671-1-git-send-email-rhansen@bbn.com>
-Cc: peff@peff.net, sunshine@sunshineco.com,
-	Richard Hansen <rhansen@bbn.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Sep 03 21:50:38 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/2] submodule: don't print status output with ignore=all
+Date: Tue, 03 Sep 2013 12:53:11 -0700
+Message-ID: <xmqqob89r8bc.fsf@gitster.dls.corp.google.com>
+References: <1378066009-1017855-1-git-send-email-sandals@crustytoothpaste.net>
+	<1378066009-1017855-3-git-send-email-sandals@crustytoothpaste.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jrnieder@gmail.com, judge.packham@gmail.com,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jens.Lehmann@web.de
+X-From: git-owner@vger.kernel.org Tue Sep 03 21:53:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGwcX-00049a-Mo
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 21:50:38 +0200
+	id 1VGwfB-0005cC-Pt
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 21:53:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757167Ab3ICTue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 15:50:34 -0400
-Received: from smtp.bbn.com ([128.33.1.81]:51956 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755173Ab3ICTud (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 15:50:33 -0400
-Received: from socket.bbn.com ([192.1.120.102]:59548)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1VGwcM-000KvJ-4B; Tue, 03 Sep 2013 15:50:26 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id CBD093FF72
-X-Mailer: git-send-email 1.8.4
+	id S1760521Ab3ICTxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 15:53:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60697 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755975Ab3ICTxR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 15:53:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BFC63E58E;
+	Tue,  3 Sep 2013 19:53:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JDtvqQu3zCz6RqbHL1cBiNo2wV8=; b=BhY4rw
+	YaPl5WbxVUQHVOj7BiT8+S6P2pQoGpckVRF4Ia59lXDKEVv+RXktm5EEy17TQB84
+	P3zukJayK3DwktbYdxSvzruB8gK8S+NSDuIUjNrWE3jdv4RgC81aS+kBpHt1C1YX
+	b144mNGCDy4zFBlePY6Vu4UFen9p4kdxpUMVA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=L3vBrFUp2wf+ggnGbuqhatDn+1sl9hzR
+	Op54po1kBKeqxKM6czVpnqb/ws/Zs0vEcGCcrcCLpzT8NuzhUF9XU7n4BvdRXTVa
+	jYoGvIIYPkBj3ws3Wrp64grswj2YZlEt2E/0zU6Wizx1ZE90fQ+t1koJCeEydLVg
+	ZHRkvEs8z1s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87A983E58B;
+	Tue,  3 Sep 2013 19:53:15 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 268943E576;
+	Tue,  3 Sep 2013 19:53:13 +0000 (UTC)
+In-Reply-To: <1378066009-1017855-3-git-send-email-sandals@crustytoothpaste.net>
+	(brian m. carlson's message of "Sun, 1 Sep 2013 20:06:49 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 782DE490-14D2-11E3-AE22-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233768>
 
-Complete the <rev>^{<type>} family of object descriptors by having
-<rev>^{tag} dereference <rev> until a tag object is found (or fail if
-unable).
+Jens, I see 1/2 is the same as the previous one you already acked.
+Does this update to 2/2 look good to you?  Sorry, but I lost track
+of the discussion that led to this reroll, hence a ping.
 
-At first glance this may not seem very useful, as commits, trees, and
-blobs cannot be peeled to a tag, and a tag would just peel to itself.
-However, this can be used to ensure that <rev> names a tag object:
-
-    $ git rev-parse --verify v1.8.4^{tag}
-    04f013dc38d7512eadb915eba22efc414f18b869
-    $ git rev-parse --verify master^{tag}
-    error: master^{tag}: expected tag type, but the object dereferences to tree type
-    fatal: Needed a single revision
-
-Users can already ensure that <rev> is a tag object by checking the
-output of 'git cat-file -t <rev>', but:
-  * users may expect <rev>^{tag} to exist given that <rev>^{commit},
-    <rev>^{tree}, and <rev>^{blob} all exist
-  * this syntax is more convenient/natural in some circumstances
-
-Signed-off-by: Richard Hansen <rhansen@bbn.com>
----
-Changes from v3 (2013-09-03, see
-<http://thread.gmane.org/gmane.comp.version-control.git/233752>):
-  * Use Peff's simpler test case.
-
- Documentation/revisions.txt | 3 +++
- sha1_name.c                 | 2 ++
- t/t1511-rev-parse-caret.sh  | 7 +++++++
- 3 files changed, 12 insertions(+)
-
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index d477b3f..b3322ad 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -121,6 +121,9 @@ some output processing may assume ref names in UTF-8.
- object that exists, without requiring 'rev' to be a tag, and
- without dereferencing 'rev'; because a tag is already an object,
- it does not have to be dereferenced even once to get to an object.
-++
-+'rev{caret}\{tag\}' can be used to ensure that 'rev' identifies an
-+existing tag object.
- 
- '<rev>{caret}\{\}', e.g. 'v0.99.8{caret}\{\}'::
-   A suffix '{caret}' followed by an empty brace pair
-diff --git a/sha1_name.c b/sha1_name.c
-index 65ad066..6dc496d 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -679,6 +679,8 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
- 	sp++; /* beginning of type name, or closing brace for empty */
- 	if (!strncmp(commit_type, sp, 6) && sp[6] == '}')
- 		expected_type = OBJ_COMMIT;
-+	else if (!strncmp(tag_type, sp, 3) && sp[3] == '}')
-+		expected_type = OBJ_TAG;
- 	else if (!strncmp(tree_type, sp, 4) && sp[4] == '}')
- 		expected_type = OBJ_TREE;
- 	else if (!strncmp(blob_type, sp, 4) && sp[4] == '}')
-diff --git a/t/t1511-rev-parse-caret.sh b/t/t1511-rev-parse-caret.sh
-index eaefc77..15973f2 100755
---- a/t/t1511-rev-parse-caret.sh
-+++ b/t/t1511-rev-parse-caret.sh
-@@ -54,6 +54,13 @@ test_expect_success 'ref^{tree}' '
- 	test_must_fail git rev-parse blob-tag^{tree}
- '
- 
-+test_expect_success 'ref^{tag}' '
-+	test_must_fail git rev-parse HEAD^{tag} &&
-+	git rev-parse commit-tag >expected &&
-+	git rev-parse commit-tag^{tag} >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'ref^{/.}' '
- 	git rev-parse master >expected &&
- 	git rev-parse master^{/.} >actual &&
--- 
-1.8.4
+Thanks.
