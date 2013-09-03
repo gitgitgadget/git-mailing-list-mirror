@@ -1,69 +1,76 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH 09/23] pack v4: commit object encoding
-Date: Tue, 03 Sep 2013 02:30:48 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309030225450.14472@syhkavp.arg>
-References: <1377577567-27655-1-git-send-email-nico@fluxnic.net>
- <1377577567-27655-10-git-send-email-nico@fluxnic.net>
- <CACsJy8CnSyw2ae5BS87S8Hid51JVFB3gyLzX+5czwio+C=-VRQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git send-email: include [anything]-by: signatures
+Date: Tue, 3 Sep 2013 02:35:35 -0400
+Message-ID: <20130903063535.GA3608@sigill.intra.peff.net>
+References: <20130826165747.GA30788@redhat.com>
+ <20130831192250.GA3823@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 03 08:30:54 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Sep 03 08:35:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VGk8b-0002DK-OY
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 08:30:54 +0200
+	id 1VGkDI-0004Vk-2M
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Sep 2013 08:35:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759422Ab3ICGat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 02:30:49 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:39768 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753749Ab3ICGas (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 02:30:48 -0400
-Received: from xanadu.home ([70.83.209.44]) by VL-VM-MR001.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MSJ00KEGE3CY700@VL-VM-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 03 Sep 2013 02:30:48 -0400 (EDT)
-In-reply-to: <CACsJy8CnSyw2ae5BS87S8Hid51JVFB3gyLzX+5czwio+C=-VRQ@mail.gmail.com>
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1759473Ab3ICGfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Sep 2013 02:35:40 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52600 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753749Ab3ICGfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Sep 2013 02:35:39 -0400
+Received: (qmail 18464 invoked by uid 102); 3 Sep 2013 06:35:39 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Sep 2013 01:35:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Sep 2013 02:35:35 -0400
+Content-Disposition: inline
+In-Reply-To: <20130831192250.GA3823@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233683>
 
-On Tue, 3 Sep 2013, Duy Nguyen wrote:
+On Sat, Aug 31, 2013 at 10:22:50PM +0300, Michael S. Tsirkin wrote:
 
-> On Tue, Aug 27, 2013 at 11:25 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
-> > This goes as follows:
-> >
-> > - Tree reference: either variable length encoding of the index
-> >   into the SHA1 table or the literal SHA1 prefixed by 0 (see
-> >   add_sha1_ref()).
-> >
-> > - Parent count: variable length encoding of the number of parents.
-> >   This is normally going to occupy a single byte but doesn't have to.
-> >
-> > - List of parent references: a list of add_sha1_ref() encoded references,
-> >   or nothing if the parent count was zero.
+> On Mon, Aug 26, 2013 at 07:57:47PM +0300, Michael S. Tsirkin wrote:
+> > Consider [anything]-by: a valid signature.
+> > This includes Tested-by: Acked-by: Reviewed-by: etc.
+> > 
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 > 
-> With .pack v3 it's impossible to create delta cycles (3b910d0 add
-> tests for indexing packs with delta cycles - 2013-08-23) but it is
-> possible with .pack v4 (and therefore at least index-pack needs to
-> detect and reject them), correct? Some malicious user can create
-> commit A with parent ref 1, then make the SHA-1 table so that ref 1 is
-> A. The same with the new tree representation.
+> Ping.
+> Any opinion on whether this change is acceptable?
 
-pack-index should validate the SHA1 of the object being pointed at.
+I was left confused by your commit message, as it wasn't clear to me
+what a "signature" is. But the point of it seems to be that people
+mention others in commit messages using "X-by:" pseudo-headers besides
+"signed-off-by", and you want to cc them along with the usual S-O-B.
 
-In that case I doubt you'll be able to actually construct an object 
-which contains a SHA1 parent reference and make the SHA1 of this very 
-object resolve to the same value.
+That seems like a reasonable goal, but I have two concerns.
 
+One, I would think the utility of this would be per-project, depending
+on what sorts of things people in a particular project put in
+pseudo-headers.  Grepping the kernel history shows that most X-by
+headers have a person on the right-hand side, though quite often it is
+not a valid email address (on the other hand, quite a few s-o-b lines in
+the kernel do not have a valid email).
 
-Nicolas
+And two, the existing options for enabling/disabling this code all
+explicitly mention signed-off-by, which becomes awkward. You did not
+update the documentation in your patch, but I think you would end up
+having to explain that "--supress-cc=sob" and "--signed-off-by-cc"
+really mean "all pseudo-header lines ending in -by".
+
+So I think it might be a nicer approach to introduce a new "suppress-cc"
+class that means "all pseudo-header tokens ending in -by" or similar.
+We might even want the new behavior on by default, but it would at least
+give the user an escape hatch if their project generates a lot of false
+positives.
+
+-Peff
