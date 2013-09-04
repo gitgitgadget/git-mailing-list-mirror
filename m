@@ -1,86 +1,77 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] git send-email: include [anything]-by: signatures
-Date: Wed, 4 Sep 2013 11:09:28 +0300
-Message-ID: <20130904080928.GA30491@redhat.com>
-References: <20130826165747.GA30788@redhat.com>
- <20130831192250.GA3823@redhat.com>
- <20130903063535.GA3608@sigill.intra.peff.net>
- <20130903084454.GC18901@redhat.com>
- <xmqqmwntu96c.fsf@gitster.dls.corp.google.com>
- <20130903210149.GA24480@redhat.com>
- <20130903210352.GA27344@sigill.intra.peff.net>
- <xmqqk3ixpoue.fsf@gitster.dls.corp.google.com>
+From: Andriy Gapon <avg@FreeBSD.org>
+Subject: Re: Bug in git rebase --continue in v1.8.4
+Date: Wed, 04 Sep 2013 11:02:04 +0300
+Message-ID: <5226E8FC.8070208@FreeBSD.org>
+References: <5221E661.1070200@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 04 10:07:46 2013
+Content-Type: text/plain; charset=X-VIET-VPS
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 04 10:09:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VH87t-00010f-Gh
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 10:07:45 +0200
+	id 1VH89C-0001SY-AC
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 10:09:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756321Ab3IDIHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 04:07:36 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:39360 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756051Ab3IDIHc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 04:07:32 -0400
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r8487Q3J003871
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Wed, 4 Sep 2013 04:07:27 -0400
-Received: from redhat.com (vpn1-7-190.ams2.redhat.com [10.36.7.190])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id r8487OC3026779;
-	Wed, 4 Sep 2013 04:07:25 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqk3ixpoue.fsf@gitster.dls.corp.google.com>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+	id S1762130Ab3IDIJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 04:09:01 -0400
+Received: from citadel.icyb.net.ua ([212.40.38.140]:3921 "EHLO
+	citadel.icyb.net.ua" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756610Ab3IDII7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 04:08:59 -0400
+X-Greylist: delayed 376 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Sep 2013 04:08:59 EDT
+Received: from porto.starpoint.kiev.ua (porto-e.starpoint.kiev.ua [212.40.38.100])
+	by citadel.icyb.net.ua (8.8.8p3/ICyb-2.3exp) with ESMTP id LAA22446
+	for <git@vger.kernel.org>; Wed, 04 Sep 2013 11:02:41 +0300 (EEST)
+	(envelope-from avg@FreeBSD.org)
+Received: from localhost ([127.0.0.1])
+	by porto.starpoint.kiev.ua with esmtp (Exim 4.34 (FreeBSD))
+	id 1VH82z-0006LB-Hh
+	for git@vger.kernel.org; Wed, 04 Sep 2013 11:02:41 +0300
+User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:17.0) Gecko/20130810 Thunderbird/17.0.8
+X-Enigmail-Version: 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233818>
 
-On Tue, Sep 03, 2013 at 02:39:05PM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+Christoph Mallon said:
+> if I run rebase --continue (e.g. after a conflict resolution), then the rebase always ends with this error message:
+> 	It seems that there is already a rebase-apply directory, and
+> 	I wonder if you are in the middle of another rebase.  If that is the
+> 	case, please try
+>         	git rebase (--continue | --abort | --skip)
+> 	If that is not the case, please
+>         	rm -fr "/home/tron/gitRebaseTest/test/.git/rebase-apply"
+> 	and run me again.  I am stopping in case you still have something
+> 	valuable there.
 > 
-> > On Wed, Sep 04, 2013 at 12:01:49AM +0300, Michael S. Tsirkin wrote:
-> >
-> >> > The question of course is the first point Peff raised.  I am not
-> >> > sure offhand what the right per-project customization interface
-> >> > would be.  A starting point might be something like:
-> >> > 
-> >> > 	--cc-trailer=signed-off-by,acked-by,reviewed-by
-> >> 
-> >> tested-by, reported-by ...
-> >
-> > Yeah, I think having the list customizable is nice, but not allowing
-> > some pattern matching seems unfriendly, as it requires the user to
-> > enumerate a potentially long list.
-> >
-> >> > 	--cc-trailer='*-by'
-> >> > 
-> >> > and an obvious configuration variable that gives the default for it.
-> >> > That would eventually allow us not to special case any fixed set of
-> >> > trailers like S-o-b like the current code does, which would be a big
-> >> > plus.
-> >> 
-> >> What bothers me is that git normally uses gawk based patterns,
-> >> but send-email is in perl so it has a different syntax for regexp.
-> >> What do you suggest?  Make a small binary to do the matching for us?
-> >
-> > Would fnmatch-style globbing (like "*-by") be enough? That should be
-> > easy to do in perl.
-> 
-> Web query finds File::FnMatch; I do not know if that is the most
-> commonly used, or if it comes with the base distribution, though.
+> This happens on git v1.8.4 on FreeBSD. It is fine with v1.8.3.4.
 
-It's also just a wrapper for the system's fnmatch - so I expect
-it doesn't work in the mingw environment.
+I observe exactly the same problem.
+I also use FreeBSD and the problem started with 1.8.4.
+
+Judging by the lack of followups, could this be a FreeBSD-specific problem?
+Any thoughts / suggestions?
+Thank you!
+
+> It seems to be caused by
+> a1549e1049439386b9fd643fae236ad3ba649650, specifically this hunk:
+> 	--- a/git-rebase--am.sh
+> 	+++ b/git-rebase--am.sh
+> 	 <at>  <at>  -7,12 +7,12  <at>  <at>  case "$action" in
+> 	 continue)
+> 	  git am --resolved --resolvemsg="$resolvemsg" &&
+> 	  move_to_original_branch
+> 	- exit
+> 	+ return
+> 	  ;;
+> 	 skip)
+> 	  git am --skip --resolvemsg="$resolvemsg" &&
 
 -- 
-MST
+Andriy Gapon
