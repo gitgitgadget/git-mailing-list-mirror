@@ -1,117 +1,81 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
-Date: Wed, 4 Sep 2013 11:16:43 +0100
-Message-ID: <20130904101643.GC2582@serenity.lan>
-References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com>
- <xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
- <CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com>
- <xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
- <20130904081047.GB2582@serenity.lan>
- <20130904092527.GB22348@sigill.intra.peff.net>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: German translation errors
+Date: Wed, 4 Sep 2013 13:11:39 +0200
+Message-ID: <CAN0XMOJn7_c51G=peUKJzNqkQpWu7JQ8Uv2TB+hpvUO1ztPEPw@mail.gmail.com>
+References: <2896292.CgjyIcF3NN@moria>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 04 12:17:00 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT <git@vger.kernel.org>
+To: Dirk Heinrichs <dirk.heinrichs@altum.de>
+X-From: git-owner@vger.kernel.org Wed Sep 04 13:11:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHA8y-0004lu-3T
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 12:17:00 +0200
+	id 1VHAzx-0005BM-Fw
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 13:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755805Ab3IDKQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 06:16:55 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:35147 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752866Ab3IDKQz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 06:16:55 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 4B168CDA5B7;
-	Wed,  4 Sep 2013 11:16:54 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2o8DSd7468vt; Wed,  4 Sep 2013 11:16:53 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id BB029CDA5BF;
-	Wed,  4 Sep 2013 11:16:45 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20130904092527.GB22348@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756996Ab3IDLLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 07:11:41 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:47145 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756514Ab3IDLLk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 07:11:40 -0400
+Received: by mail-wi0-f176.google.com with SMTP id cb5so3257792wib.9
+        for <git@vger.kernel.org>; Wed, 04 Sep 2013 04:11:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=sdQHmlbTNh/uWjTj+J4BMJKQMX5zjOELa3O1ZbwBbBU=;
+        b=SvvEJMGCdN51Zwb860Ggn3p6vh3z4iRtb3LVEPM8CctQe6K4T0fpVED229nJICNcNs
+         7c35lo9xv8Nsy0mbZNIEHkF7Y/H6xy+3ZU+vX38qjXmr1kM6BWr1g3/ldB5UxaoZ+A47
+         J1p43LHLk81FM6ga1Kgy2aTZZ4grzs7h02QEKFNJJLTEOWlqcPpRgDpVDAc6Jjhd8TAw
+         F/firLKlMN3ItjJBh7tJvlW3P16XhNxRHLBE2SmCIIsIjtMLGIox3Nwv5n+Q8RPAZmTp
+         aw3iFEsaSqMJGNUlNJUPhpHeTAyW48vPFFEDt89y6nARe3Z9qA2YLqpUA3EWbM2d+4zu
+         wY2g==
+X-Received: by 10.180.188.49 with SMTP id fx17mr1601542wic.49.1378293099469;
+ Wed, 04 Sep 2013 04:11:39 -0700 (PDT)
+Received: by 10.194.169.2 with HTTP; Wed, 4 Sep 2013 04:11:39 -0700 (PDT)
+In-Reply-To: <2896292.CgjyIcF3NN@moria>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233830>
 
-On Wed, Sep 04, 2013 at 05:25:27AM -0400, Jeff King wrote:
-> On Wed, Sep 04, 2013 at 09:10:47AM +0100, John Keeping wrote:
-> 
-> > I think there are two distinct uses for pull, which boil down to:
-> > 
-> >     (1) git pull
-> >     (2) git pull $remote $branch
-> > 
-> > For (1) a merge is almost always the wrong thing to do since it will be
-> > backwards and break --first-parent.
-> 
-> Is it always wrong? You are assuming a topic-branch workflow where
-> --first-parent is actually meaningful. What about a centralized workflow
-> where everyone works on "master"? The correct thing to do on a non-ff
-> push in that case is "git pull && git push". Some people would argue
-> that the pull should rebase there, but I think there are valid arguments
-> either way. We can discuss in that direction if you want.
+Hi,
 
-I'm one of the people who argues that it should rebase there ;-)  The
-point of jc/pull-training-wheel is to help users think about that.
+this is not an error but intention. From Git 1.8.4, the German translation
+switches from pure German to German+English. For me the most important
+reasons for that are that terms like "Branch" and "Tag" are well-known SCM/Git
+terms for many German people, and using "Zweig" and "Marke" could be more
+confusing than just use the english words. It's not just these two
+words, but also
+terms like "remote-tracking", "index" and some such. The second reason is to get
+closer to books. The books I know do not translate Git/SCM terms, e.g. the
+Pro Git book [1] and also books you can buy on a store. I think it's better to
+read the same terms in Git messages as you read in books.
 
-> I can perhaps buy the argument that it is better to help people who are
-> using a topic branch workflow (which we generally want to encourage) to
-> avoid making backwards merges, and the cost is that people with sloppy
-> workflows will have to do more work / configuration. But we should be
-> clear that this is a tradeoff we are making.
-> 
-> The patch in jc/pull-training-wheel talks about annoying old timers, but
-> I think you may also be annoying clueless new users who simply want an
-> svn-like workflow without thinking too hard about it.
+Ralf
 
-The scenario I have is a central repository where some developers use a
-topic branch workflow but others are less familiar with Git and don't
-really think about what they're doing.
+[1]
+http://git-scm.com/book/de
 
-> > > I do not think we know what we want is to affect "git pull origin".
-> > 
-> > I consider "git pull $remote" to be an artifact of the way git-pull is
-> > implemented on top of git-fetch; perhaps I'm missing something but I
-> > can't see a scenario where this is useful.
-> 
-> Imagine a workflow where each topic is in its own repository instead of
-> in its own branch inside a repository. Or where each developer has his
-> or her own repository, but everybody just works on the master branch of
-> their repository (or perhaps uses branches, but keeps master as a stable
-> base). Alice is the integration manager; Bob tells her that he has work
-> ready to integrate.  She runs "git pull ~bob/project", which will merge
-> Bob's HEAD.
-> 
-> This is not very different from the kernel workflow, where Linus may do
-> a "git pull $remote" to fetch a sub-system maintainer's work, except
-> that these days people typically mark the to-be-integrated work in a
-> "for-linus" branch or tag. However, you can find many "Merge git://"
-> entries even in recent kernel history.
-> 
-> I think this kind of pull would fall into the same situation as your (2)
-> above.
-
-OK - so I was missing this.  Given this, the jc/pull-training-wheel
-series is doing the right thing here.
+On Wed, Sep 4, 2013 at 8:24 AM, Dirk Heinrichs <dirk.heinrichs@altum.de> wrote:
+> Hi,
+>
+> when I fetch from remote repositories, git tells me about new branches and
+> tags by saying "[neuer Branch]" or "[neuer Tag]". While "Branch" translates to
+> "Zweig" in german, the german word "Tag" actually means "day", so git is
+> telling me something about a "new day" for every new tag. Should be "neue
+> Marke".
+>
+> Thanks...
+>
+>         Dirk
+> --
+> Dirk Heinrichs <dirk.heinrichs@altum.de>
+> Tel: +49 (0)2471 209385 | Mobil: +49 (0)176 34473913
+> GPG Public Key C2E467BB | Jabber: dirk.heinrichs@altum.de
