@@ -1,79 +1,66 @@
-From: Dirk Heinrichs <dirk.heinrichs@altum.de>
-Subject: German translation errors
-Date: Wed, 04 Sep 2013 08:24:49 +0200
-Organization: Privat
-Message-ID: <2896292.CgjyIcF3NN@moria>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 2/2] submodule: don't print status output with ignore=all
+Date: Wed, 04 Sep 2013 08:31:25 +0200
+Message-ID: <vpqa9jtayiq.fsf@anie.imag.fr>
+References: <1378066009-1017855-1-git-send-email-sandals@crustytoothpaste.net>
+	<1378066009-1017855-3-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart3384952.DKxUCUa4yX"; micalg="pgp-sha1"; protocol="application/pgp-signature"
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 04 08:25:01 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de,
+	judge.packham@gmail.com, gitster@pobox.com
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Wed Sep 04 08:35:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VH6WQ-0005V2-Rj
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 08:24:59 +0200
+	id 1VH6g7-0008TK-CQ
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 08:34:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761948Ab3IDGYx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 02:24:53 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:61406 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761388Ab3IDGYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 02:24:51 -0400
-Received: from rohan.altum.de (pD9FF88F6.dip0.t-ipconnect.de [217.255.136.246])
-	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
-	id 0M7Wnz-1WAhqH1NQt-00x4uS; Wed, 04 Sep 2013 08:24:50 +0200
-Received: from moria.localnet (moria.altum.de [192.168.1.2])
-	by rohan.altum.de (Postfix) with ESMTPS id 055B217C0E6
-	for <git@vger.kernel.org>; Wed,  4 Sep 2013 08:24:49 +0200 (CEST)
-User-Agent: KMail/4.11 (Linux/3.8.0-29-generic; KDE/4.11.0; x86_64; ; )
-X-Provags-ID: V02:K0:D2OA1X5YIh7tk5SJy5FRgju2ri+px2q5/yXNaO1caV/
- xnnD5AwvPz11e0SWxSXuARf+aJZEW7AF7n5+a3pA1Y9XzXHPAY
- 7AzoCKIIcgMz061t2+gwshA+vif7x5QRZ8KsNhA7HpC6y6qVaO
- SHskj3Fg5xqMGQZdBccLJvGAJnfjp1fkCQWGH/00jhgC6DqJ+N
- f5js5GGlQkeu9yEUBRQcTC2ny60852Yfjs6NwHk666xO6NTAOS
- JEpj/CS3gwOdG5UC4USEGLkdsdQ1gw/FA4S7enTiyzQXmZqBNv
- 5H+VoVDGY71vYU0Uyr5qBv63PcfzMkBEqJFTQzHAETkwtsbAq0
- oW/BwMcYwc+LY+Mf1xfs=
+	id S1761997Ab3IDGez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 02:34:55 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:52653 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761948Ab3IDGey (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 02:34:54 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r846VPkK026375
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 4 Sep 2013 08:31:25 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VH6cf-000233-Na; Wed, 04 Sep 2013 08:31:25 +0200
+In-Reply-To: <1378066009-1017855-3-git-send-email-sandals@crustytoothpaste.net>
+	(brian m. carlson's message of "Sun, 1 Sep 2013 20:06:49 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 04 Sep 2013 08:31:26 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r846VPkK026375
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1378881088.96075@72ybldKrjWZLGIGiOKN+GA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233808>
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---nextPart3384952.DKxUCUa4yX
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+> Tests are included which verify that this change has no effect on git submodule
+> summary without the --for-status option.
 
-Hi,
+I still don't understand why this is needed. Why do we want "git status"
+and "git submodule summary" to display different information? Wasn't it
+a nice property that the part of "git status" about submodule is the
+same as "git submodule summary"?
 
-when I fetch from remote repositories, git tells me about new branches and 
-tags by saying "[neuer Branch]" or "[neuer Tag]". While "Branch" translates to 
-"Zweig" in german, the german word "Tag" actually means "day", so git is 
-telling me something about a "new day" for every new tag. Should be "neue 
-Marke".
+This should at least be explained in the commit message IMHO.
 
-Thanks...
-
-	Dirk
 -- 
-Dirk Heinrichs <dirk.heinrichs@altum.de>
-Tel: +49 (0)2471 209385 | Mobil: +49 (0)176 34473913
-GPG Public Key C2E467BB | Jabber: dirk.heinrichs@altum.de
-
---nextPart3384952.DKxUCUa4yX
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iD8DBQBSJtIx8NVtnsLkZ7sRAr1MAJ9GB/N/8TURmnlDtbf5AWxL+DCw4gCfSPFZ
-3lX8SMgIwfVCKdVQ7yVWHcQ=
-=/xJM
------END PGP SIGNATURE-----
-
---nextPart3384952.DKxUCUa4yX--
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
