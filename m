@@ -1,97 +1,94 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Bug in git rebase --continue in v1.8.4
-Date: Wed, 04 Sep 2013 10:18:35 +0200
-Message-ID: <vpqsixl9ezo.fsf@anie.imag.fr>
-References: <5221E661.1070200@gmx.de> <5226E8FC.8070208@FreeBSD.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Transfer notes when rebasing
+Date: Wed, 4 Sep 2013 04:28:03 -0400
+Message-ID: <20130904082803.GA17308@sigill.intra.peff.net>
+References: <CAC9WiBiSLMO+JM3aEHZ8xdwKE=jh+mDuo4REQ7rnQ-rTDNb9qA@mail.gmail.com>
+ <20130904075310.GB9637@sigill.intra.peff.net>
+ <20130904075941.GA2582@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Andriy Gapon <avg@FreeBSD.org>
-X-From: git-owner@vger.kernel.org Wed Sep 04 10:18:57 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Francis Moreau <francis.moro@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Sep 04 10:28:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VH8Ii-0005P2-Hj
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 10:18:56 +0200
+	id 1VH8Ri-0001Gp-Vf
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 10:28:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756275Ab3IDISr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 04:18:47 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:56246 "EHLO rominette.imag.fr"
+	id S934343Ab3IDI2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 04:28:08 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34613 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754478Ab3IDISp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 04:18:45 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r848IY6Y019301
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 4 Sep 2013 10:18:34 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VH8IN-0003JH-ML; Wed, 04 Sep 2013 10:18:35 +0200
-In-Reply-To: <5226E8FC.8070208@FreeBSD.org> (Andriy Gapon's message of "Wed,
-	04 Sep 2013 11:02:04 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 04 Sep 2013 10:18:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r848IY6Y019301
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1378887518.25178@Y0x8UzIR8bExYdsUrA1vtQ
+	id S1756051Ab3IDI2H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 04:28:07 -0400
+Received: (qmail 30085 invoked by uid 102); 4 Sep 2013 08:28:06 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Sep 2013 03:28:06 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Sep 2013 04:28:03 -0400
+Content-Disposition: inline
+In-Reply-To: <20130904075941.GA2582@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233821>
 
-[ Cc-ing Ram, as he is the author of the possibly guilty commit. ]
+On Wed, Sep 04, 2013 at 08:59:41AM +0100, John Keeping wrote:
 
-Andriy Gapon <avg@FreeBSD.org> writes:
+> On Wed, Sep 04, 2013 at 03:53:10AM -0400, Jeff King wrote:
+> > On Wed, Sep 04, 2013 at 09:51:26AM +0200, Francis Moreau wrote:
+> > 
+> > > When rebasing a branch which contains commits with notes onto another
+> > > branch it happens that some commits are already presents in the target
+> > > branch.
+> > > 
+> > > In that case git-rebase correctly drops those (already present)
+> > > commits but it also drops the notes associated with them.
+> > > 
+> > > Can the notes be transfered somehow in the target branch on the
+> > > already present commits ?
+> > 
+> > Yes, see the notes.rewriteRef config option to enable this.
+> 
+> Does that actually work for this case?  It sounds like Francis has the
+> notes copying correctly when commits are rewritten but the notes are not
+> copied anywhere if the commit becomes empty.
 
-> Christoph Mallon said:
->> if I run rebase --continue (e.g. after a conflict resolution), then the rebase always ends with this error message:
->> 	It seems that there is already a rebase-apply directory, and
->> 	I wonder if you are in the middle of another rebase.  If that is the
->> 	case, please try
->>         	git rebase (--continue | --abort | --skip)
->> 	If that is not the case, please
->>         	rm -fr "/home/tron/gitRebaseTest/test/.git/rebase-apply"
->> 	and run me again.  I am stopping in case you still have something
->> 	valuable there.
->> 
->> This happens on git v1.8.4 on FreeBSD. It is fine with v1.8.3.4.
->
-> I observe exactly the same problem.
-> I also use FreeBSD and the problem started with 1.8.4.
->
-> Judging by the lack of followups, could this be a FreeBSD-specific problem?
+Ah, I misunderstood. If we are dropping commits from the rebase because
+their counterpart is already applied upstream, then no, there isn't an
+automatic way to do this.
 
-I can't reproduce here (Debian GNU/Linux). Do the testsuite pass for
-you?
+If the commits are dropped because a commit with the same patch-id
+already exists upstream, you could match them up by patch-id and copy
+the notes. Annoyingly, while we have things like "log --cherry-mark" to
+show which commits are already present on each side, I do not think
+there is a way to correlate them commit for commit. So I think you are
+stuck doing something in the shell like:
 
-If not, can you write a failing test? A minimalist script outside the
-testsuite may help too if you're not familiar with Git's testsuite.
+  patch_ids() {
+    git rev-list "$1" |
+    git diff-tree --stdin -p |
+    git patch-id |
+    sort
+  }
 
-> Any thoughts / suggestions?
-> Thank you!
->
->> It seems to be caused by
->> a1549e1049439386b9fd643fae236ad3ba649650, specifically this hunk:
->> 	--- a/git-rebase--am.sh
->> 	+++ b/git-rebase--am.sh
->> 	 <at>  <at>  -7,12 +7,12  <at>  <at>  case "$action" in
->> 	 continue)
->> 	  git am --resolved --resolvemsg="$resolvemsg" &&
->> 	  move_to_original_branch
->> 	- exit
->> 	+ return
->> 	  ;;
->> 	 skip)
->> 	  git am --skip --resolvemsg="$resolvemsg" &&
+  patch_ids $upstream..HEAD >us
+  patch_ids HEAD..$upstream >them
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+  join us them |
+  cut -d' ' -f2-3 |
+  git notes copy --stdin
+
+However, if the commit is dropped because we find while applying that it
+becomes empty, there is not much we can do. It may have been obsoleted
+by its counterpart patch that had a different patch-id, or it may even
+have been obsoleted by unrelated patches. In the latter case, there is
+nothing to copy to. In the former, you would have to trying to match up
+the commit messages or similar to guess that the two commits correspond.
+
+-Peff
