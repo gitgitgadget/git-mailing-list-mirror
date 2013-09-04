@@ -1,77 +1,109 @@
-From: Andriy Gapon <avg@FreeBSD.org>
-Subject: Re: Bug in git rebase --continue in v1.8.4
-Date: Wed, 04 Sep 2013 11:02:04 +0300
-Message-ID: <5226E8FC.8070208@FreeBSD.org>
-References: <5221E661.1070200@gmx.de>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
+Date: Wed, 4 Sep 2013 09:10:47 +0100
+Message-ID: <20130904081047.GB2582@serenity.lan>
+References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com>
+ <xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
+ <CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com>
+ <xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=X-VIET-VPS
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 04 10:09:09 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Andreas Krey <a.krey@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 04 10:11:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VH89C-0001SY-AC
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 10:09:06 +0200
+	id 1VH8Ba-0002L1-4W
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 10:11:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762130Ab3IDIJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 04:09:01 -0400
-Received: from citadel.icyb.net.ua ([212.40.38.140]:3921 "EHLO
-	citadel.icyb.net.ua" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756610Ab3IDII7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 04:08:59 -0400
-X-Greylist: delayed 376 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Sep 2013 04:08:59 EDT
-Received: from porto.starpoint.kiev.ua (porto-e.starpoint.kiev.ua [212.40.38.100])
-	by citadel.icyb.net.ua (8.8.8p3/ICyb-2.3exp) with ESMTP id LAA22446
-	for <git@vger.kernel.org>; Wed, 04 Sep 2013 11:02:41 +0300 (EEST)
-	(envelope-from avg@FreeBSD.org)
-Received: from localhost ([127.0.0.1])
-	by porto.starpoint.kiev.ua with esmtp (Exim 4.34 (FreeBSD))
-	id 1VH82z-0006LB-Hh
-	for git@vger.kernel.org; Wed, 04 Sep 2013 11:02:41 +0300
-User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:17.0) Gecko/20130810 Thunderbird/17.0.8
-X-Enigmail-Version: 1.5.1
+	id S934370Ab3IDIL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 04:11:28 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:34711 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934321Ab3IDILA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 04:11:00 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 56E3FCDA5EE;
+	Wed,  4 Sep 2013 09:10:59 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id fzMaL-0TWy7X; Wed,  4 Sep 2013 09:10:56 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id A499ECDA5B9;
+	Wed,  4 Sep 2013 09:10:49 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233819>
 
-Christoph Mallon said:
-> if I run rebase --continue (e.g. after a conflict resolution), then the rebase always ends with this error message:
-> 	It seems that there is already a rebase-apply directory, and
-> 	I wonder if you are in the middle of another rebase.  If that is the
-> 	case, please try
->         	git rebase (--continue | --abort | --skip)
-> 	If that is not the case, please
->         	rm -fr "/home/tron/gitRebaseTest/test/.git/rebase-apply"
-> 	and run me again.  I am stopping in case you still have something
-> 	valuable there.
+On Tue, Sep 03, 2013 at 03:38:58PM -0700, Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> This happens on git v1.8.4 on FreeBSD. It is fine with v1.8.3.4.
+> > On Tue, Sep 3, 2013 at 12:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >>
+> >>> Junio already sent a similar patch, but I think this is simpler.
+> >>
+> >> I agree that this is simpler, but I am not sure if the behaviour is
+> >> necessarily better (note that this is different from saying "I think
+> >> the behaviour of this patch is worse").  The motivation I read from
+> >> the original discussion was that new people did "git pull" (no other
+> >> parameters) to "sync my tree with the central repository" as if it
+> >> were SVN, and because we are not SVN, projects that prefer rebases
+> >> were unhappy, and the other one was to address *only* that use case.
+> >> I do not personally like that special casing (i.e. "only when no
+> >> 'integrate with what from where' is given"), and applying the "you
+> >> must be explicit between rebase and merge" like this series does
+> >> uniformly might (or might not) be a good thing.  I dunno.
+> >
+> > As I already said; there's is essentially no difference between "git
+> > pull" and "git pull origin".
+> 
+> We know what you said earlier. That does not make it right or wrong,
+> but I do not think it is in line with the original discussion (that
+> is why John Keeping is kept on the Cc: line).
 
-I observe exactly the same problem.
-I also use FreeBSD and the problem started with 1.8.4.
+I think there are two distinct uses for pull, which boil down to:
 
-Judging by the lack of followups, could this be a FreeBSD-specific problem?
-Any thoughts / suggestions?
-Thank you!
+    (1) git pull
+    (2) git pull $remote $branch
 
-> It seems to be caused by
-> a1549e1049439386b9fd643fae236ad3ba649650, specifically this hunk:
-> 	--- a/git-rebase--am.sh
-> 	+++ b/git-rebase--am.sh
-> 	 <at>  <at>  -7,12 +7,12  <at>  <at>  case "$action" in
-> 	 continue)
-> 	  git am --resolved --resolvemsg="$resolvemsg" &&
-> 	  move_to_original_branch
-> 	- exit
-> 	+ return
-> 	  ;;
-> 	 skip)
-> 	  git am --skip --resolvemsg="$resolvemsg" &&
+For (1) a merge is almost always the wrong thing to do since it will be
+backwards and break --first-parent.
 
--- 
-Andriy Gapon
+But for (2) a merge is almost always the correct thing to do (in fact it
+may even be correct to create a merge commit even when this fast
+forwards) because this most likely comes for a pull request workflow.
+
+> I do not think we know what we want is to affect "git pull origin".
+
+I consider "git pull $remote" to be an artifact of the way git-pull is
+implemented on top of git-fetch; perhaps I'm missing something but I
+can't see a scenario where this is useful.  In the series currently in
+"next", we treat this as (2) above but that's primarily because it is
+difficult to differentiate these in git-pull.sh without adding code to
+understand all of the options to git-fetch (or at least those that can
+accept unstuck arguments).
+
+Changing this so that "git pull $remote" is treated as (1) would be
+better, but I think it is more important to avoid catching case (1) in
+the same net which is why jc/pull-training-wheel simply checks if "$#"
+is zero; the cost of getting this completely right outweighed the
+benefit of getting code in that will catch 99% of users.
