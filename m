@@ -1,98 +1,99 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
-Date: Wed, 4 Sep 2013 23:08:46 +0100
-Organization: OPDS
-Message-ID: <7DC052455C7C4B50A4EAFC1EF63D006C@PhilipOakley>
-References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com><xmqqd2opu8hr.fsf@gitster.dls.corp.google.com><CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com><xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com><20130904081047.GB2582@serenity.lan> <xmqqa9jso69u.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/7] documentation cleanups for <rev>^{<type>}
+Date: Wed, 04 Sep 2013 15:27:26 -0700
+Message-ID: <xmqq8uzckysx.fsf@gitster.dls.corp.google.com>
+References: <xmqq1u55plqe.fsf@gitster.dls.corp.google.com>
+	<1378321474-7125-1-git-send-email-rhansen@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Felipe Contreras" <felipe.contreras@gmail.com>,
-	<git@vger.kernel.org>, "Andreas Krey" <a.krey@gmx.de>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"John Keeping" <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu Sep 05 00:08:46 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Thu Sep 05 00:27:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHLFl-0001Ex-SQ
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 00:08:46 +0200
+	id 1VHLXy-0000ay-Ja
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 00:27:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756339Ab3IDWIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 18:08:42 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:26540 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753023Ab3IDWIl (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Sep 2013 18:08:41 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AiwMANauJ1JOl3GZ/2dsb2JhbABbgweJbLhVBAQBgSgXdGgBAYEfAQEUAQQBAQQBCAEBLh4BASELAgMFAgEDFQwlFAEEGgYHFwYBEggCAQIDAQuFLQcBghIZCro4jiGBP4MkgQADiH2GEppMgTqBZzuBLA
-X-IPAS-Result: AiwMANauJ1JOl3GZ/2dsb2JhbABbgweJbLhVBAQBgSgXdGgBAYEfAQEUAQQBAQQBCAEBLh4BASELAgMFAgEDFQwlFAEEGgYHFwYBEggCAQIDAQuFLQcBghIZCro4jiGBP4MkgQADiH2GEppMgTqBZzuBLA
-X-IronPort-AV: E=Sophos;i="4.90,1023,1371078000"; 
-   d="scan'208";a="436093885"
-Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 04 Sep 2013 23:08:39 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1758867Ab3IDW1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 18:27:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46940 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753825Ab3IDW13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 18:27:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F6583F092;
+	Wed,  4 Sep 2013 22:27:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=i0HN16tRGkjAr/mMmgALrdmvnbA=; b=BCjxvF
+	Ey8RuGDQWXkgNKQUTIEjwH8yW5XDfe2J8zmI4BT4bZHfvr94BtLYiPSjxbvviAy6
+	4mdXXbHMD8N/wqrw89qZceoYfRLV6VpFJtr8P3rQVM/R5uRB6msY9HTrip2ajJ/k
+	64XtLiGU2aDE0099X4xUvAlmA2g/mbMG09QAc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b9XLWvyUovCBjDTnmFpud0SjQYz6raUV
+	h1KTSVDZVEz6EycHb6HXg63xGO3S81x93oug+QiS/ZnuiJbTCIAgqnw09173LibE
+	WXZdpLmApHRSECi0OJjc0JMsAAYVZNM0XF4xKE/XwT4yNCIowkAlKS7O5nVZLwEH
+	Pp6D1lmZgug=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07B683F091;
+	Wed,  4 Sep 2013 22:27:29 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4F9123F08C;
+	Wed,  4 Sep 2013 22:27:28 +0000 (UTC)
+In-Reply-To: <1378321474-7125-1-git-send-email-rhansen@bbn.com> (Richard
+	Hansen's message of "Wed, 4 Sep 2013 15:04:27 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 2E6A7730-15B1-11E3-A356-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233881>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> John Keeping <john@keeping.me.uk> writes:
->
->> I think there are two distinct uses for pull, which boil down to:
->>
->>     (1) git pull
->>     (2) git pull $remote $branch
->>
->> For (1) a merge is almost always the wrong thing to do since it will 
->> be
->> backwards and break --first-parent.
->>
->> But for (2) a merge is almost always the correct thing to do (in fact 
->> it
->> may even be correct to create a merge commit even when this fast
->> forwards) because this most likely comes for a pull request workflow.
->
-> Peff already covered (1)---it is highly doubtful that a merge is
-> "almost always wrong".  In fact, if that _were_ the case, we should
-> simply be defaulting to rebase, not failing the command and asking
-> between merge and rebase like jc/pull-training-wheel topic did.
->
-> We simply do not know what the user wants, as it heavily depends on
-> the project, so we ask the user to choose one (and stick to it).
+Richard Hansen <rhansen@bbn.com> writes:
 
-We only offer a limited list. It won't be sufficient for all use cases. 
-It wasn't for me.
-
-The ability to say 'stop' if it doen't match expectations, as 
-the --no-ff option would give, would be a help, as the user can then 
-decide what to do (read the manual or `google` the problem perhaps ;-). 
-the option of having a hook (if suggested), while suitable for advanced 
-users won't help those that need that help, rather a few simple safe 
-options are needed.
-
-I generally support the ability to set an option to reject non-ff pulls.
-
+> On 2013-09-03 18:46, Junio C Hamano wrote:
+>> I hate to say this after seeing you doing a thorough job in this
+>> series, but because "tree-ish" and "commit-ish" are both made-up
+>> words, I have a feeling that we are better off unifying to the
+>> dashed form, which unfortunately is the other way around from what
+>> your series does.
 >
-> I am not sure about (2), either.  Is it really "almost always the
-> correct thing to do"?  I tend to think myself that (2) is a lot more
-> likely to prefer merging than (1) would, but I certainly wouldn't
-> say "almost always".  Again if "almost always" were the case,
-> wouldn't it make sense for that mode of invocation of the command to
-> even defeat "pull.rebase" configuration and default to merge, unless
-> explicitly told to "pull --rebase" from the command line?
+> I thought you might say that so I held on to the commits that
+> standardize on tree-ish and commit-ish in my local repo.  :)
 >
-> (the last question is rhetoric, if anybody is wondering).
-> --
-Philip 
+> This series still says "tree-ish (also treeish)" and "commit-ish (also
+> committish)" in gitglossary(7).  Would you like me to eliminate the
+> "(also ...)"  part?
+>
+> I'm not 100% confident that these don't break translations, although
+> it still builds and "make test" passes.
+
+We will find out ;-)
+
+> Changes since v2:
+>   * standardize on 'tree-ish' instead of 'treeish'
+>   * standardize on 'commit-ish' instead of 'committish'
+>
+> Richard Hansen (7):
+>   glossary: mention 'treeish' as an alternative to 'tree-ish'
+>   glossary: define commit-ish (a.k.a. committish)
+>   use 'tree-ish' instead of 'treeish'
+>   use 'commit-ish' instead of 'committish'
+>   glossary: more precise definition of tree-ish (a.k.a. treeish)
+>   revisions.txt: fix and clarify <rev>^{<type>}
+>   glossary: fix and clarify the definition of 'ref'
+>
+>  Documentation/RelNotes/1.7.11.2.txt          |  2 +-
+>  Documentation/howto/revert-branch-rebase.txt |  2 +-
+
+I generally prefer not to touch historical documents but the change
+in this series is small enough that I think it is OK.
+
+Thanks, will queue.
