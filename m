@@ -1,74 +1,94 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v3 2/2] submodule: don't print status output with ignore=all
-Date: Wed, 04 Sep 2013 22:40:44 +0200
-Message-ID: <52279ACC.2070308@web.de>
-References: <1378066009-1017855-1-git-send-email-sandals@crustytoothpaste.net> <1378066009-1017855-3-git-send-email-sandals@crustytoothpaste.net> <vpqa9jtayiq.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 06/11] replace: bypass the type check if -f option is used
+Date: Wed, 04 Sep 2013 13:44:26 -0700
+Message-ID: <xmqq4na0mi51.fsf@gitster.dls.corp.google.com>
+References: <20130903070551.29838.43576.chriscool@tuxfamily.org>
+	<20130903071026.29838.76437.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, jrnieder@gmail.com, judge.packham@gmail.com,
-	gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 04 22:40:55 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+	Thomas Rast <trast@inf.ethz.ch>, Johannes Sixt <j6t@kdbg.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Sep 04 22:44:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHJsj-0004sG-NM
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 22:40:54 +0200
+	id 1VHJwM-0006XO-MF
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 22:44:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755606Ab3IDUku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 16:40:50 -0400
-Received: from mout.web.de ([212.227.15.3]:60107 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753097Ab3IDUks (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 16:40:48 -0400
-Received: from [192.168.178.41] ([91.3.170.120]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0MgwZQ-1VdMya2Ljc-00M2Gg for <git@vger.kernel.org>;
- Wed, 04 Sep 2013 22:40:45 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <vpqa9jtayiq.fsf@anie.imag.fr>
-X-Enigmail-Version: 1.5.2
-X-Provags-ID: V03:K0:+SGKEsi9OwNLh8du95eDn6X4Z8Ct1mfCZkasYZZv9GFiGTBkYYl
- vMQl/1ks0e/6eNePC8DoF5P2zaGoGpeUV/PSi3VrmJz5XtPXgCQeyDBiq5wkbvtXDFTnbo3
- 50dnViG7JEAsQAMTBQS/eKK14+Jt2y+Nwc82Ma7RXQIFTFzMdflvyPKDAiQTkqYcmMtONok
- 4tG7geylHFKMEF7n88I2Q==
+	id S1757001Ab3IDUoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 16:44:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49584 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756576Ab3IDUod (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 16:44:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0A793E731;
+	Wed,  4 Sep 2013 20:44:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=b3lkr0bZgItuDYPag2kIxiVjXnM=; b=IIBEQf
+	YvrvZYtDxsLvzBs9HQGbuE6Y/eZYBquTlBtuYSQfBoLLlQg9ZEsJOzIC4Ak5bkNG
+	vWVI2mimkeB1bBiKJABysE5U7Cou/aP3SJt7ST4HRJtxtZMXT3hPUZ9/tAy97KcI
+	UM/qJECa4bm39ZogefKBVxLB0oHCWZd2L3k6U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Se1pXnY4qtT0STfHqNUy/CXkSLXf4c2s
+	Go9Hyrk07mRZtiBBb8Cmu26TnGTPhq61dxW43phxLJgiFbHZs5GnqfV9xaOZ/mTY
+	Gwcv8TM83GFZfyHILv6Cw28DRvp8C+8Rr5j670iI69rjK2ZwMkHPCKt9Kt2SzUQF
+	ZbGp2CV/S5o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 883A73E72C;
+	Wed,  4 Sep 2013 20:44:32 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A1BA83E714;
+	Wed,  4 Sep 2013 20:44:29 +0000 (UTC)
+In-Reply-To: <20130903071026.29838.76437.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Tue, 03 Sep 2013 09:10:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CC1E46A0-15A2-11E3-9430-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233872>
 
-Am 04.09.2013 08:31, schrieb Matthieu Moy:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> 
->> Tests are included which verify that this change has no effect on git submodule
->> summary without the --for-status option.
-> 
-> I still don't understand why this is needed.
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-To avoid a change in behavior for "git submodule summary", as that
-never honored the submodule.*.ignore nor the diff.ignoreSubmodules
-setting (and I don't think it ever should).
+> If -f option, which means '--force', is used, we can allow an object
+> to be replaced with one of a different type, as the user should know
+> what (s)he is doing.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
 
-> Why do we want "git status"
-> and "git submodule summary" to display different information? Wasn't it
-> a nice property that the part of "git status" about submodule is the
-> same as "git submodule summary"?
+This does not matter in a larger picture, but between 1/11 and this
+patch, there is a window where an operation that has been useful in
+some workflows becomes unavailable to the user.
 
-I changed that in 2010 (1.7.3) to make the output of status consistent,
-meaning that submodules that didn't show up in the regular status output
-don't appear in the summary part either. And I still believe it is the
-right thing to do for the target audience of the ignore settings, as
-they want to hide any changes in submodules that are either expensive to
-traverse or uninteresting for the developer until they explicitly use
-the submodule commands, which still behave as they always did (I might
-be wrong here as I'm not in that group myself, but so far no one spoke
-up).
+For future reference, it would be better to do this as a part of
+1/11, to make sure that there always is an escape hatch available to
+the users.
 
-> This should at least be explained in the commit message IMHO.
-
-Fine by me, what would you propose to clarify that? (Though I have the
-suspicion that the explanation will be three years late ;-)
+>  builtin/replace.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/replace.c b/builtin/replace.c
+> index 9a94769..95736d9 100644
+> --- a/builtin/replace.c
+> +++ b/builtin/replace.c
+> @@ -103,7 +103,7 @@ static int replace_object(const char *object_ref, const char *replace_ref,
+>  
+>  	obj_type = sha1_object_info(object, NULL);
+>  	repl_type = sha1_object_info(repl, NULL);
+> -	if (obj_type != repl_type)
+> +	if (!force && obj_type != repl_type)
+>  		die("Objects must be of the same type.\n"
+>  		    "'%s' points to a replaced object of type '%s'\n"
+>  		    "while '%s' points to a replacement object of type '%s'.",
