@@ -1,329 +1,495 @@
-From: Joergen Edelbo <jed@napatech.com>
-Subject: [PATCH] git-gui: Modify push dialog to support Gerrit review
-Date: Mon, 2 Sep 2013 10:54:19 +0200
-Message-ID: <20130904150853.52EC4121B7E@jed-dev-01.labnet>
-Cc: spearce@spearce.org, hvoigt@hvoigt.net, jed@napatech.com
+From: Brad King <brad.king@kitware.com>
+Subject: [PATCH v4 8/8] update-ref: add test cases covering --stdin signature
+Date: Wed,  4 Sep 2013 11:22:45 -0400
+Message-ID: <80fd3ec9c847a0dbf505da3a539d690d524972e2.1378307529.git.brad.king@kitware.com>
+References: <cover.1378142795.git.brad.king@kitware.com> <cover.1378307529.git.brad.king@kitware.com>
+Cc: gitster@pobox.com, mhagger@alum.mit.edu
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 04 17:16:59 2013
+X-From: git-owner@vger.kernel.org Wed Sep 04 17:24:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHEpA-0003tC-P9
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 17:16:53 +0200
+	id 1VHEwn-00085z-Fz
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 17:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762957Ab3IDPQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 11:16:48 -0400
-Received: from nat.napatech.com ([188.120.77.114]:2202 "EHLO jed-dev-01.labnet"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756587Ab3IDPQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 11:16:47 -0400
-X-Greylist: delayed 469 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Sep 2013 11:16:46 EDT
-Received: by jed-dev-01.labnet (Postfix, from userid 1000)
-	id 52EC4121B7E; Wed,  4 Sep 2013 17:08:53 +0200 (CEST)
+	id S935096Ab3IDPYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 11:24:41 -0400
+Received: from tripoint.kitware.com ([66.194.253.20]:60257 "EHLO
+	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S935083Ab3IDPYj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 11:24:39 -0400
+Received: by vesper.kitware.com (Postfix, from userid 1000)
+	id 905879FB98; Wed,  4 Sep 2013 11:22:45 -0400 (EDT)
+X-Mailer: git-send-email 1.8.4.rc3
+In-Reply-To: <cover.1378307529.git.brad.king@kitware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233838>
 
-Problem: It is not possible to push for Gerrit review
-as you will always try to push to /refs/heads/... on
-the remote. As you should not be forced to work on a
-branch with the same name as some branch on the remote,
-some more flexibility in the selection of destination
-branch is also needed.
+Extend t/t1400-update-ref.sh to cover cases using the --stdin option.
 
-Changes done:
-
-Remove selection of branches to push - push always HEAD.
-This can be justified by the fact that this far the most
-common thing to do.
-Specify both the remote repository to push to as well as
-the specific branch on that remote. This gives the flexibility.
-
-Add option to specify "Gerrit review". If selected, replace
-the traditional "heads" with the artificial "for" in the
-destination ref spec. This is what actually solved the trigger
-problem.
-
-Limit the branches to select from to the known branches
-for currently selected remote. This is motivated in better
-usability. Works only when "usettk" is true - it is left for
-further study how to change the values in tk_optionMenu on the
-fly.
-
-Signed-off-by: Joergen Edelbo <jed@napatech.com>
+Signed-off-by: Brad King <brad.king@kitware.com>
 ---
-Hi there,
+ t/t1400-update-ref.sh | 445 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 445 insertions(+)
 
-We are at Napatech A/S just about to roll out a Git/Gerrit/Jenkins
-solution. It will really help the gui oriented people in pushing
-commits if this can be done directly in git-gui.
-
-BR
-Joergen Edelbo
-Napatech A/S
-
- lib/transport.tcl |  184 +++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 142 insertions(+), 42 deletions(-)
-
-diff --git a/lib/transport.tcl b/lib/transport.tcl
-index e5d211e..4c20ef7 100644
---- a/lib/transport.tcl
-+++ b/lib/transport.tcl
-@@ -59,20 +59,42 @@ proc push_to {remote} {
- 	console::exec $w $cmd
- }
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index e415ee0..e8ba0d2 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -302,4 +302,449 @@ test_expect_success \
+ 	'git cat-file blob master@{2005-05-26 23:42}:F (expect OTHER)' \
+ 	'test OTHER = $(git cat-file blob "master@{2005-05-26 23:42}:F")'
  
--proc start_push_anywhere_action {w} {
--	global push_urltype push_remote push_url push_thin push_tags
--	global push_force
--	global repo_config
--
--	set is_mirror 0
--	set r_url {}
-+proc get_remote_rep {} {
-+	global push_urltype push_remote push_url
-+	set rep {}
- 	switch -- $push_urltype {
--	remote {
--		set r_url $push_remote
--		catch {set is_mirror $repo_config(remote.$push_remote.mirror)}
-+	remote { set rep $push_remote }
-+	url    { set rep $push_url }
- 	}
--	url {set r_url $push_url}
-+	return $rep
++a=refs/heads/a
++b=refs/heads/b
++c=refs/heads/c
++E='""'
++pws='path with space'
++
++print_nul() {
++	while test $# -gt 0; do
++		printf -- "$1" &&
++		printf -- "Q" | q_to_nul &&
++		shift || return
++	done
 +}
 +
-+proc get_remote_branch {} {
-+	global push_branchtype push_branch push_new
-+	set branch {}
-+	switch -- $push_branchtype {
-+	existing { set branch $push_branch }
-+	create   { set branch $push_new }
-+	}
-+   return $branch
-+}
++test_expect_success '-z fails without --stdin' '
++	test_must_fail git update-ref -z $m $m $m 2>err &&
++	grep "usage: git update-ref" err
++'
 +
-+proc get_remote_ref_spec {} {
-+	global gerrit_review
-+	set push_branch [get_remote_branch]
-+	if {$gerrit_review} {
-+		return "refs/for/$push_branch"
-+	} else {
-+		return "refs/heads/$push_branch"
- 	}
-+}
++test_expect_success 'stdin test setup' '
++	echo "$pws" >"$pws" &&
++	git add -- "$pws" &&
++	git commit -m "$pws"
++'
 +
-+proc start_push_anywhere_action {w} {
-+	global push_thin push_tags push_force
-+	global repo_config current_branch is_detached
++test_expect_success 'stdin works with no input' '
++	>stdin &&
++	git update-ref --stdin <stdin &&
++	git rev-parse --verify -q $m
++'
 +
-+	set is_mirror 0
-+	set r_url [get_remote_rep]
- 	if {$r_url eq {}} return
- 
- 	set cmd [list git push]
-@@ -87,28 +109,25 @@ proc start_push_anywhere_action {w} {
- 		lappend cmd --tags
- 	}
- 	lappend cmd $r_url
++test_expect_success 'stdin works with whitespace-only input' '
++	echo " " >stdin &&
++	git update-ref --stdin <stdin 2>err &&
++	git rev-parse --verify -q $m
++'
 +
-+	catch {set is_mirror $repo_config(remote.$r_url.mirror)}
- 	if {$is_mirror} {
- 		set cons [console::new \
- 			[mc "push %s" $r_url] \
- 			[mc "Mirroring to %s" $r_url]]
- 	} else {
--		set cnt 0
--		foreach i [$w.source.l curselection] {
--			set b [$w.source.l get $i]
--			lappend cmd "refs/heads/$b:refs/heads/$b"
--			incr cnt
--		}
--		if {$cnt == 0} {
--			return
--		} elseif {$cnt == 1} {
--			set unit branch
-+		if {$is_detached} {
-+			set src HEAD
- 		} else {
--			set unit branches
-+			set src $current_branch
- 		}
-+		set dest [get_remote_ref_spec]
++test_expect_success 'stdin fails on bad input line with only --' '
++	echo "--" >stdin &&
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: input line with no ref" err
++'
 +
-+		lappend cmd "$src:$dest"
- 
- 		set cons [console::new \
- 			[mc "push %s" $r_url] \
--			[mc "Pushing %s %s to %s" $cnt $unit $r_url]]
-+			[mc "Pushing %s to %s" $src $dest]]
- 	}
- 	console::exec $cons $cmd
- 	destroy $w
-@@ -117,10 +136,58 @@ proc start_push_anywhere_action {w} {
- trace add variable push_remote write \
- 	[list radio_selector push_urltype remote]
- 
-+proc update_branchtype {br} {
-+	global current_branch push_branch push_branchtype
-+	if {$br eq {}} {
-+		set push_branchtype create
-+		set push_branch {}
-+	} else {
-+		set push_branchtype existing
-+		if {[lsearch -sorted -exact $br $current_branch] != -1} {
-+			set push_branch $current_branch
-+		} elseif {[lsearch -sorted -exact $br master] != -1} {
-+			set push_branch master
-+		} else {
-+			set push_branch [lindex $br 0]
-+		}
-+	}
-+}
++test_expect_success 'stdin fails on bad input line with only --bad-option' '
++	echo "--bad-option" >stdin &&
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: unknown option --bad-option" err
++'
 +
-+proc all_branches_combined {} {
-+	set branches [list]
-+	foreach spec [all_tracking_branches] {
-+		set refn [lindex $spec 2]
-+		regsub ^refs/heads/ $refn {} name
-+		if { $name ne {HEAD} && [lsearch $branches $name] eq -1} {
-+			lappend branches $name
-+		}
-+	}
-+	update_branchtype  $branches
-+	return $branches
-+}
++test_expect_success 'stdin fails on bad ref name' '
++	echo "~a $m" >stdin &&
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: invalid ref format: ~a" err
++'
 +
-+proc update_branches {} {
-+	global push_remote branch_combo
-+	set branches [list]
-+	foreach spec [all_tracking_branches] {
-+		if {[lindex $spec 1] eq $push_remote} {
-+			set refn [lindex $spec 0]
-+			regsub ^refs/(heads|remotes)/$push_remote/ $refn {} name
-+			if {$name ne {HEAD}} {
-+				lappend branches $name
-+			}
-+		}
-+	}
-+	update_branchtype  $branches
-+	$branch_combo configure -values $branches
-+	return $branches
-+}
++test_expect_success 'stdin fails on badly quoted input' '
++	echo "$a \"master" >stdin &&
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: badly quoted argument: \\\"master" err
++'
 +
- proc do_push_anywhere {} {
--	global all_remotes current_branch
--	global push_urltype push_remote push_url push_thin push_tags
--	global push_force use_ttk NS
-+	global all_remotes use_ttk branch_combo
-+	global push_urltype push_remote push_url
-+	global push_branchtype push_branch push_new
-+	global push_thin push_tags push_force NS gerrit_review
- 
- 	set w .push_setup
- 	toplevel $w
-@@ -129,7 +196,7 @@ proc do_push_anywhere {} {
- 	wm geometry $w "+[winfo rootx .]+[winfo rooty .]"
- 	pave_toplevel $w
- 
--	${NS}::label $w.header -text [mc "Push Branches"] \
-+	${NS}::label $w.header -text [mc "Push current HEAD"] \
- 		-font font_uibold -anchor center
- 	pack $w.header -side top -fill x
- 
-@@ -144,21 +211,6 @@ proc do_push_anywhere {} {
- 	pack $w.buttons.cancel -side right -padx 5
- 	pack $w.buttons -side bottom -fill x -pady 10 -padx 10
- 
--	${NS}::labelframe $w.source -text [mc "Source Branches"]
--	slistbox $w.source.l \
--		-height 10 \
--		-width 70 \
--		-selectmode extended
--	foreach h [load_all_heads] {
--		$w.source.l insert end $h
--		if {$h eq $current_branch} {
--			$w.source.l select set end
--			$w.source.l yview end
--		}
--	}
--	pack $w.source.l -side left -fill both -expand 1
--	pack $w.source -fill both -expand 1 -pady 5 -padx 5
--
- 	${NS}::labelframe $w.dest -text [mc "Destination Repository"]
- 	if {$all_remotes ne {}} {
- 		${NS}::radiobutton $w.dest.remote_r \
-@@ -202,7 +254,51 @@ proc do_push_anywhere {} {
- 	grid columnconfigure $w.dest 1 -weight 1
- 	pack $w.dest -anchor nw -fill x -pady 5 -padx 5
- 
-+	${NS}::labelframe $w.destbr -text [mc "Destination Branches"]
-+	set all_branches [all_branches_combined]
-+	if {$all_branches ne {}} {
-+		${NS}::radiobutton $w.destbr.remote_b \
-+			-text [mc "Known Branch:        "] \
-+			-value existing \
-+			-variable push_branchtype
-+		if {$use_ttk} {
-+			ttk::combobox $w.destbr.remote_n -state readonly \
-+				-exportselection false \
-+				-textvariable push_branch
-+			set branch_combo $w.destbr.remote_n
-+			update_branches
-+		} else {
-+			eval tk_optionMenu $w.destbr.remote_n push_branch $all_branches
-+		}
-+		grid $w.destbr.remote_b $w.destbr.remote_n -sticky w
-+	}
++test_expect_success 'stdin fails on bad input line with too many arguments' '
++	echo "$a $m $m $m" >stdin &&
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: too many arguments for ref $a" err
++'
 +
-+	${NS}::radiobutton $w.destbr.branch_r \
-+		-text [mc "Arbitrary Branch:"] \
-+		-value create \
-+		-variable push_branchtype
-+	${NS}::entry $w.destbr.branch_t \
-+		-width 50 \
-+		-textvariable push_new \
-+		-validate key \
-+		-validatecommand {
-+			if {%d == 1 && [regexp {\s} %S]} {return 0}
-+			if {%d == 1 && [string length %S] > 0} {
-+				set push_branchtype create
-+			}
-+			return 1
-+		}
-+	grid $w.destbr.branch_r $w.destbr.branch_t -sticky we -padx {0 5}
-+	${NS}::checkbutton $w.destbr.gerrit \
-+		-text [mc "Push for Gerrit review (refs/for/...)"] \
-+		-variable gerrit_review
-+	grid $w.destbr.gerrit -columnspan 2 -sticky w
++test_expect_success 'stdin fails on bad input line with too few arguments' '
++	echo "$a" >stdin &&
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: missing new value for ref $a" err
++'
 +
-+	grid columnconfigure $w.destbr 1 -weight 1
-+	pack $w.destbr -anchor nw -fill x -pady 5 -padx 5
++test_expect_success 'stdin fails with duplicate refs' '
++	cat >stdin <<-EOF &&
++	$a $m
++	$b $m
++	$a $m
++	EOF
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: Multiple updates for ref '"'"'$a'"'"' not allowed." err
++'
 +
- 	${NS}::labelframe $w.options -text [mc "Transfer Options"]
++test_expect_success 'stdin create ref works with no old value' '
++	echo "$a $m" >stdin &&
++	git update-ref --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual
++'
 +
- 	${NS}::checkbutton $w.options.force \
- 		-text [mc "Force overwrite existing branch (may discard changes)"] \
- 		-variable push_force
-@@ -222,10 +318,14 @@ proc do_push_anywhere {} {
- 	set push_force 0
- 	set push_thin 0
- 	set push_tags 0
-+	set gerrit_review 0
- 
- 	bind $w <Visibility> "grab $w; focus $w.buttons.create"
- 	bind $w <Key-Escape> "destroy $w"
- 	bind $w <Key-Return> [list start_push_anywhere_action $w]
-+	if {$all_remotes ne {}} {
-+		bind $w.dest.remote_m <<ComboboxSelected>> { update_branches }
-+	}
- 	wm title $w [append "[appname] ([reponame]): " [mc "Push"]]
- 	wm deiconify $w
- 	tkwait window $w
++test_expect_success 'stdin create ref works with zero old value' '
++	echo "$b $m $Z" >stdin &&
++	git update-ref --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual &&
++	git update-ref -d $b
++'
++
++test_expect_success 'stdin create ref works with empty old value' '
++	echo "$b $m $E" >stdin &&
++	git update-ref --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin create ref works with path with space to blob' '
++	echo "refs/blobs/pws \"$m:$pws\"" >stdin &&
++	git update-ref --stdin <stdin &&
++	git rev-parse "$m:$pws" >expect &&
++	git rev-parse refs/blobs/pws >actual &&
++	test_cmp expect actual &&
++	git update-ref -d refs/blobs/pws
++'
++
++test_expect_success 'stdin create ref fails with wrong old value' '
++	echo "$c $m $m~1" >stdin &&
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: Cannot lock the ref '"'"'$c'"'"'" err &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin create ref fails with bad old value' '
++	echo "$c $m does-not-exist" >stdin &&
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: invalid old value for ref $c: does-not-exist" err &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin create ref fails with bad new value' '
++	echo "$c does-not-exist" >stdin &&
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: invalid new value for ref $c: does-not-exist" err &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin update ref works with right old value' '
++	echo "$b $m~1 $m" >stdin &&
++	git update-ref --stdin <stdin &&
++	git rev-parse $m~1 >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin update ref fails with wrong old value' '
++	echo "$b $m~1 $m" >stdin &&
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: Cannot lock the ref '"'"'$b'"'"'" err &&
++	git rev-parse $m~1 >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin delete ref fails with wrong old value' '
++	echo "$a $E $m~1" >stdin &&
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: Cannot lock the ref '"'"'$a'"'"'" err &&
++	git rev-parse $m >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin update symref works with --no-deref' '
++	git symbolic-ref TESTSYMREF $b &&
++	echo "--no-deref TESTSYMREF $a $b" >stdin &&
++	git update-ref --stdin <stdin &&
++	git rev-parse TESTSYMREF >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual &&
++	git rev-parse $m~1 >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin delete symref works with --no-deref' '
++	git symbolic-ref TESTSYMREF $b &&
++	echo "--no-deref TESTSYMREF $E $b" >stdin &&
++	git update-ref --stdin <stdin &&
++	test_must_fail git rev-parse --verify -q TESTSYMREF &&
++	git rev-parse $m~1 >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin delete ref works with right old value' '
++	echo "$b $E $m~1" >stdin &&
++	git update-ref --stdin <stdin &&
++	test_must_fail git rev-parse --verify -q $b
++'
++
++test_expect_success 'stdin create refs works with some old values' '
++	cat >stdin <<-EOF &&
++	$a $m
++	$b $m $Z
++	$c $Z $Z
++	EOF
++	git update-ref --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin update refs works with identity updates' '
++	cat >stdin <<-EOF &&
++	$a $m $m
++	$b $m $m
++	$c $Z $E
++	EOF
++	git update-ref --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin update refs works with extra whitespace' '
++	cat >stdin <<-EOF &&
++	''
++	$a $m $m
++	''
++	 "$b"  $m $m ''
++	''
++	-- $c  $Z  $E  ''
++	EOF
++	git update-ref --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin update refs fails with wrong old value' '
++	git update-ref $c $m &&
++	cat >stdin <<-EOF &&
++	$a $m $m
++	$b $m $m
++	$c $E $E
++	EOF
++	test_must_fail git update-ref --stdin <stdin 2>err &&
++	grep "fatal: Cannot lock the ref '"'"'$c'"'"'" err &&
++	git rev-parse $m >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual &&
++	git rev-parse $c >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin delete refs works with packed and loose refs' '
++	git pack-refs --all &&
++	git update-ref $c $m~1 &&
++	cat >stdin <<-EOF &&
++	$a $Z $m
++	$b $Z $m
++	$c $E $m~1
++	EOF
++	git update-ref --stdin <stdin &&
++	test_must_fail git rev-parse --verify -q $a &&
++	test_must_fail git rev-parse --verify -q $b &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin -z works on empty input' '
++	>stdin &&
++	git update-ref -z --stdin <stdin &&
++	git rev-parse --verify -q $m
++'
++
++test_expect_success 'stdin -z works on empty input sequence' '
++	print_nul "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	git rev-parse --verify -q $m
++'
++
++test_expect_success 'stdin -z fails on unterminated input sequence' '
++	print_nul "$a" "$m" >stdin &&
++	test_must_fail git update-ref -z --stdin <stdin 2>err &&
++	grep "fatal: unterminated -z input sequence" err
++'
++
++test_expect_success 'stdin -z create ref works with no old value' '
++	print_nul "$a" "$m" "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin -z create ref works with zero old value' '
++	print_nul "$b" "$m" "$Z" "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual &&
++	git update-ref -d $b
++'
++
++test_expect_success 'stdin -z create ref works with empty old value' '
++	print_nul "$b" "$m" "" "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin -z create ref works with path with space to blob' '
++	print_nul "refs/blobs/pws" "$m:$pws" "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	git rev-parse "$m:$pws" >expect &&
++	git rev-parse refs/blobs/pws >actual &&
++	test_cmp expect actual &&
++	git update-ref -d refs/blobs/pws
++'
++
++test_expect_success 'stdin -z create ref fails with wrong old value' '
++	print_nul "$c" "$m" "$m~1" "\n" >stdin &&
++	test_must_fail git update-ref -z --stdin <stdin 2>err &&
++	grep "fatal: Cannot lock the ref '"'"'$c'"'"'" err &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin -z create ref fails with bad old value' '
++	print_nul "$c" "$m" "does-not-exist" "\n" >stdin &&
++	test_must_fail git update-ref -z --stdin <stdin 2>err &&
++	grep "fatal: invalid old value for ref $c: does-not-exist" err &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin -z create ref fails with bad new value' '
++	print_nul "$c" "does-not-exist" "\n" >stdin &&
++	test_must_fail git update-ref -z --stdin <stdin 2>err &&
++	grep "fatal: invalid new value for ref $c: does-not-exist" err &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin -z update ref works with right old value' '
++	print_nul "$b" "$m~1" "$m" "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	git rev-parse $m~1 >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin -z update ref fails with wrong old value' '
++	print_nul "$b" "$m~1" "$m" "\n" >stdin &&
++	test_must_fail git update-ref -z --stdin <stdin 2>err &&
++	grep "fatal: Cannot lock the ref '"'"'$b'"'"'" err &&
++	git rev-parse $m~1 >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin -z delete ref fails with wrong old value' '
++	print_nul "$a" "" "$m~1" "\n" >stdin &&
++	test_must_fail git update-ref -z --stdin <stdin 2>err &&
++	grep "fatal: Cannot lock the ref '"'"'$a'"'"'" err &&
++	git rev-parse $m >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin -z update symref works with --no-deref' '
++	git symbolic-ref TESTSYMREF $b &&
++	print_nul "--no-deref" "TESTSYMREF" "$a" "$b" "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	git rev-parse TESTSYMREF >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual &&
++	git rev-parse $m~1 >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin -z delete symref works with --no-deref' '
++	git symbolic-ref TESTSYMREF $b &&
++	print_nul "--no-deref" "TESTSYMREF" "" "$b" "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	test_must_fail git rev-parse --verify -q TESTSYMREF &&
++	git rev-parse $m~1 >expect &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin -z delete ref works with right old value' '
++	print_nul "$b" "" "$m~1" "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	test_must_fail git rev-parse --verify -q $b
++'
++
++test_expect_success 'stdin -z create refs works with some old values' '
++	print_nul "$a" "$m" "\n" "$b" "$m" "$Z" "\n" "$c" "$Z" "$Z" "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin -z update refs works with identity updates' '
++	print_nul "$a" "$m" "$m" "\n" "$b" "$m" "$m" "\n" "$c" "$Z" "" "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	git rev-parse $m >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
++test_expect_success 'stdin -z update refs fails with wrong old value' '
++	git update-ref $c $m &&
++	print_nul "$a" "$m" "$m" "\n" "$b" "$m" "$m" "\n" "$c" "" "" "\n" >stdin &&
++	test_must_fail git update-ref -z --stdin <stdin 2>err &&
++	grep "fatal: Cannot lock the ref '"'"'$c'"'"'" err &&
++	git rev-parse $m >expect &&
++	git rev-parse $a >actual &&
++	test_cmp expect actual &&
++	git rev-parse $b >actual &&
++	test_cmp expect actual &&
++	git rev-parse $c >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'stdin -z delete refs works with packed and loose refs' '
++	git pack-refs --all &&
++	git update-ref $c $m~1 &&
++	print_nul "$a" "$Z" "$m" "\n" "$b" "$Z" "$m" "\n" "$c" "" "$m~1" "\n" >stdin &&
++	git update-ref -z --stdin <stdin &&
++	test_must_fail git rev-parse --verify -q $a &&
++	test_must_fail git rev-parse --verify -q $b &&
++	test_must_fail git rev-parse --verify -q $c
++'
++
+ test_done
 -- 
-1.7.9.5
+1.8.4.rc3
