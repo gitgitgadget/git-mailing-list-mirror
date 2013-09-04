@@ -1,92 +1,205 @@
 From: Brad King <brad.king@kitware.com>
-Subject: [PATCH v4 0/8] Multiple simultaneously locked ref updates
-Date: Wed,  4 Sep 2013 11:22:37 -0400
-Message-ID: <cover.1378307529.git.brad.king@kitware.com>
-References: <cover.1378142795.git.brad.king@kitware.com>
+Subject: [PATCH v4 6/8] refs: add update_refs for multiple simultaneous updates
+Date: Wed,  4 Sep 2013 11:22:43 -0400
+Message-ID: <c613338b545a9759ffc69558e08445ea32059b7d.1378307529.git.brad.king@kitware.com>
+References: <cover.1378142795.git.brad.king@kitware.com> <cover.1378307529.git.brad.king@kitware.com>
 Cc: gitster@pobox.com, mhagger@alum.mit.edu
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 04 17:25:03 2013
+X-From: git-owner@vger.kernel.org Wed Sep 04 17:25:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHEx3-0008E7-J5
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 17:25:01 +0200
+	id 1VHEx6-0008E7-C3
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 17:25:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935085Ab3IDPYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 11:24:39 -0400
-Received: from tripoint.kitware.com ([66.194.253.20]:60240 "EHLO
+	id S935132Ab3IDPYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 11:24:52 -0400
+Received: from tripoint.kitware.com ([66.194.253.20]:60255 "EHLO
 	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934761Ab3IDPYh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 11:24:37 -0400
+	with ESMTP id S935081Ab3IDPYj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 11:24:39 -0400
 Received: by vesper.kitware.com (Postfix, from userid 1000)
-	id 6FD819FB8C; Wed,  4 Sep 2013 11:22:45 -0400 (EDT)
+	id 883FD9FB96; Wed,  4 Sep 2013 11:22:45 -0400 (EDT)
 X-Mailer: git-send-email 1.8.4.rc3
-In-Reply-To: <cover.1378142795.git.brad.king@kitware.com>
+In-Reply-To: <cover.1378307529.git.brad.king@kitware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233841>
 
-Hi Folks,
+Add 'struct ref_update' to encode the information needed to update or
+delete a ref (name, new sha1, optional old sha1, no-deref flag).  Add
+function 'update_refs' accepting an array of updates to perform.  First
+sort the input array to order locks consistently everywhere and reject
+multiple updates to the same ref.  Then acquire locks on all refs with
+verified old values.  Then update or delete all refs accordingly.  Fail
+if any one lock cannot be obtained or any one old value does not match.
 
-Here is the fourth revision of a series to support locking multiple
-refs at the same time to update all of them consistently.  The
-previous revisions of the series can be found at $gmane/233260,
-$gmane/233458, and $gmane/233647.
+Though the refs themselves cannot be modified together in a single
+atomic transaction, this function does enable some useful semantics.
+For example, a caller may create a new branch starting from the head of
+another branch and rewind the original branch at the same time.  This
+transfers ownership of commits between branches without risk of losing
+commits added to the original branch by a concurrent process, or risk of
+a concurrent process creating the new branch first.
 
-Updates since the previous revision of the series:
+Signed-off-by: Brad King <brad.king@kitware.com>
+---
+ refs.c | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs.h |  20 +++++++++++++
+ 2 files changed, 120 insertions(+)
 
-* Patches 1-4 are identical
-
-* Patches 5-7 no longer have ":" at the end of comments, a style I
-  "learned" from the context of patch 5 but that I saw Junio squash
-  out of patch 5 v2 when he queued it as 53237ae4.
-
-* Patch 7 has a re-organized parser and now defines a -z format for
-  stdin that terminates arguments with NUL and lines with LF NUL:
-
-   ... <ref> NUL <newvalue> NUL [ <oldvalue> NUL ] LF NUL
-
-* Patch 8 now has test cases for -z mode and updated error cases for
-  the re-organized parser.
-
-Note to maintainer:
-
-* Patch 4 needs to be re-queued to replace c7c80f49 due to the
-  tweak suggested in $gmane/233521 and made in v3 and kept in v4.
-
-Thanks,
--Brad
-
-Brad King (8):
-  reset: rename update_refs to reset_refs
-  refs: report ref type from lock_any_ref_for_update
-  refs: factor update_ref steps into helpers
-  refs: factor delete_ref loose ref step into a helper
-  refs: add function to repack without multiple refs
-  refs: add update_refs for multiple simultaneous updates
-  update-ref: support multiple simultaneous updates
-  update-ref: add test cases covering --stdin signature
-
- Documentation/git-update-ref.txt |  22 +-
- branch.c                         |   2 +-
- builtin/commit.c                 |   2 +-
- builtin/fetch.c                  |   3 +-
- builtin/receive-pack.c           |   3 +-
- builtin/reflog.c                 |   2 +-
- builtin/replace.c                |   2 +-
- builtin/reset.c                  |   4 +-
- builtin/tag.c                    |   2 +-
- builtin/update-ref.c             | 144 ++++++++++++-
- fast-import.c                    |   2 +-
- refs.c                           | 195 ++++++++++++++---
- refs.h                           |  22 +-
- sequencer.c                      |   3 +-
- t/t1400-update-ref.sh            | 445 +++++++++++++++++++++++++++++++++++++++
- 15 files changed, 812 insertions(+), 41 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index 92d801c..46177ad 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3237,6 +3237,106 @@ int update_ref(const char *action, const char *refname,
+ 	return update_ref_write(action, refname, sha1, lock, onerr);
+ }
+ 
++static int ref_update_compare(const void *r1, const void *r2)
++{
++	const struct ref_update * const *u1 = r1;
++	const struct ref_update * const *u2 = r2;
++	return strcmp((*u1)->ref_name, (*u2)->ref_name);
++}
++
++static int ref_update_reject_duplicates(struct ref_update **updates, int n,
++					enum action_on_err onerr)
++{
++	int i;
++	for (i = 1; i < n; i++)
++		if (!strcmp(updates[i - 1]->ref_name, updates[i]->ref_name)) {
++			const char *str =
++				"Multiple updates for ref '%s' not allowed.";
++			switch (onerr) {
++			case MSG_ON_ERR:
++				error(str, updates[i]->ref_name); break;
++			case DIE_ON_ERR:
++				die(str, updates[i]->ref_name); break;
++			case QUIET_ON_ERR:
++				break;
++			}
++			return 1;
++		}
++	return 0;
++}
++
++int update_refs(const char *action, const struct ref_update **updates_orig,
++		int n, enum action_on_err onerr)
++{
++	int ret = 0, delnum = 0, i;
++	struct ref_update **updates;
++	int *types;
++	struct ref_lock **locks;
++	const char **delnames;
++
++	if (!updates_orig || !n)
++		return 0;
++
++	/* Allocate work space */
++	updates = xmalloc(sizeof(*updates) * n);
++	types = xmalloc(sizeof(*types) * n);
++	locks = xcalloc(n, sizeof(*locks));
++	delnames = xmalloc(sizeof(*delnames) * n);
++
++	/* Copy, sort, and reject duplicate refs */
++	memcpy(updates, updates_orig, sizeof(*updates) * n);
++	qsort(updates, n, sizeof(*updates), ref_update_compare);
++	ret = ref_update_reject_duplicates(updates, n, onerr);
++	if (ret)
++		goto cleanup;
++
++	/* Acquire all locks while verifying old values */
++	for (i = 0; i < n; i++) {
++		locks[i] = update_ref_lock(updates[i]->ref_name,
++					   (updates[i]->have_old ?
++					    updates[i]->old_sha1 : NULL),
++					   updates[i]->flags,
++					   &types[i], onerr);
++		if (!locks[i]) {
++			ret = 1;
++			goto cleanup;
++		}
++	}
++
++	/* Perform updates first so live commits remain referenced */
++	for (i = 0; i < n; i++)
++		if (!is_null_sha1(updates[i]->new_sha1)) {
++			ret = update_ref_write(action,
++					       updates[i]->ref_name,
++					       updates[i]->new_sha1,
++					       locks[i], onerr);
++			locks[i] = NULL; /* freed by update_ref_write */
++			if (ret)
++				goto cleanup;
++		}
++
++	/* Perform deletes now that updates are safely completed */
++	for (i = 0; i < n; i++)
++		if (locks[i]) {
++			delnames[delnum++] = locks[i]->ref_name;
++			ret |= delete_ref_loose(locks[i], types[i]);
++		}
++	ret |= repack_without_refs(delnames, delnum);
++	for (i = 0; i < delnum; i++)
++		unlink_or_warn(git_path("logs/%s", delnames[i]));
++	clear_loose_ref_cache(&ref_cache);
++
++cleanup:
++	for (i = 0; i < n; i++)
++		if (locks[i])
++			unlock_ref(locks[i]);
++	free(updates);
++	free(types);
++	free(locks);
++	free(delnames);
++	return ret;
++}
++
+ struct ref *find_ref_by_name(const struct ref *list, const char *name)
+ {
+ 	for ( ; list; list = list->next)
+diff --git a/refs.h b/refs.h
+index 2cd307a..b113377 100644
+--- a/refs.h
++++ b/refs.h
+@@ -10,6 +10,20 @@ struct ref_lock {
+ 	int force_write;
+ };
+ 
++/**
++ * Information needed for a single ref update.  Set new_sha1 to the
++ * new value or to zero to delete the ref.  To check the old value
++ * while locking the ref, set have_old to 1 and set old_sha1 to the
++ * value or to zero to ensure the ref does not exist before update.
++ */
++struct ref_update {
++	const char *ref_name;
++	unsigned char new_sha1[20];
++	unsigned char old_sha1[20];
++	int flags; /* REF_NODEREF? */
++	int have_old; /* 1 if old_sha1 is valid, 0 otherwise */
++};
++
+ /*
+  * Bit values set in the flags argument passed to each_ref_fn():
+  */
+@@ -214,6 +228,12 @@ int update_ref(const char *action, const char *refname,
+ 		const unsigned char *sha1, const unsigned char *oldval,
+ 		int flags, enum action_on_err onerr);
+ 
++/**
++ * Lock all refs and then perform all modifications.
++ */
++int update_refs(const char *action, const struct ref_update **updates,
++		int n, enum action_on_err onerr);
++
+ extern int parse_hide_refs_config(const char *var, const char *value, const char *);
+ extern int ref_is_hidden(const char *);
+ 
 -- 
 1.8.4.rc3
