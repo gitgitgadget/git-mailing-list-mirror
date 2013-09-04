@@ -1,80 +1,99 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] Teach git to change to a given directory using -C option
-Date: Wed, 4 Sep 2013 02:45:07 -0400
-Message-ID: <CAPig+cTmVfrRWNfoqUGbZnf=GhozSnBB+rm1uuKAZRiRYHr7Xg@mail.gmail.com>
-References: <20130903115944.GA29542@gmail.com>
-	<xmqq8uzdplqv.fsf@gitster.dls.corp.google.com>
-	<CAEY4ZpN4xgt+gJSVeTfDNC--xt3N+M7vVLFBC7FTWBQtjvN8tw@mail.gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: Officially start moving to the term 'staging area'
+Date: Wed, 4 Sep 2013 09:13:55 +0200
+Message-ID: <CAA01CsqNKMqExq1PYanotzQ-wTcf=7c5BQ_49xGu4QasXSCoeQ@mail.gmail.com>
+References: <20130829180129.GA4880@nysa>
+	<xmqqeh9c4a2t.fsf@gitster.dls.corp.google.com>
+	<CAM9Z-nmXPgfbXezbORb=NCqQuW4p3Dka+bHVdt_n7Sh=jehY7A@mail.gmail.com>
+	<b677f1ae-662f-4728-b625-189bc392c74d@email.android.com>
+	<CAM9Z-nmLQUrJk73pi_0a1_ccGMnqU_t=uOZze622_GEtWfMvQQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-To: Nazri Ramliy <ayiehere@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 04 08:45:18 2013
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Miles Bader <miles@gnu.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Scott Chacon <schacon@gmail.com>
+To: Drew Northup <n1xim.email@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 04 09:14:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VH6q4-0003Tu-41
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 08:45:16 +0200
+	id 1VH7Ht-0006vF-Uw
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 09:14:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762057Ab3IDGpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 02:45:10 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:37937 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761963Ab3IDGpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 02:45:09 -0400
-Received: by mail-lb0-f182.google.com with SMTP id c11so16889lbj.13
-        for <git@vger.kernel.org>; Tue, 03 Sep 2013 23:45:07 -0700 (PDT)
+	id S1762034Ab3IDHN5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Sep 2013 03:13:57 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:42141 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756366Ab3IDHN4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Sep 2013 03:13:56 -0400
+Received: by mail-ee0-f46.google.com with SMTP id c13so3464408eek.5
+        for <git@vger.kernel.org>; Wed, 04 Sep 2013 00:13:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ipaDoUEJyknjoyuLm9ifPJFySzYouyuVpcqBq+eXBmI=;
-        b=KH7C5qVaL2RtMxYaG5Km6Npmx3YeqcprEMeWEUo6O/x/e4RDAzpQVnpDs+jaBmwC+Z
-         +5bTkLaezjwQfRl099muBtZj2NThFXJxDL6IS76A4eE3iJsPsCFpvjZOGyye0adUk0m5
-         Al+qUFpIK2fwszQX9XwKSuFHDD/cyPk1a4qOCMAy1dmo14wlmxpN6KAegtj5GuRqHeD/
-         meNvgbkSfdkfXTQktdb83Mtk8xiAI49vtR6brQCnBYT387Qk81jTpv1EKohxacNeGbMU
-         LGm3ED6s1irgUuR6yq+8bF0qZPuGAOCRthLaHymi+xdU+f7ToQgh5QbhhH2Spe0jpyxe
-         mF/g==
-X-Received: by 10.112.156.166 with SMTP id wf6mr1175245lbb.13.1378277107436;
- Tue, 03 Sep 2013 23:45:07 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Tue, 3 Sep 2013 23:45:07 -0700 (PDT)
-In-Reply-To: <CAEY4ZpN4xgt+gJSVeTfDNC--xt3N+M7vVLFBC7FTWBQtjvN8tw@mail.gmail.com>
-X-Google-Sender-Auth: 5RECnIFJqYmIXAeXxcqubZl49YI
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=DfbPFwEytoWAFv9+rFrsAMxtoslB3UTEEjR+hlrv01E=;
+        b=vRxXfFYZ4y16ruBsJRYtwB5TPC6PIK+AzLs5lS/Pa9gvmpN+OAGJ2Ehpq1bNWngukM
+         Uu7yBNMxpC/UmCQA4g4B4w+p/nCyXmzgLNLs15SD120IIcD2juF1FpG4cdX8Zzm2yXuX
+         AbrIdU4XyOeHaff7il1jl+RiIp9bECHdCwvIP6dsv2ILMCWMVvFMVpNV75rToEqbEJCA
+         h2GDEpQ0HttHhBg4iB+OSjCz7RJmXF6B1Kh71o6O0LbASe8Hd9wUCWod9WzGLtK3n8p+
+         4OytDXd4Q88TlvyjD4TZhjEyyO5ydOFGoZHYFZ9IbWnYKZe2h+n7mD8n9D9IJrUR+l6/
+         cOQg==
+X-Received: by 10.15.74.197 with SMTP id j45mr2428822eey.40.1378278835384;
+ Wed, 04 Sep 2013 00:13:55 -0700 (PDT)
+Received: by 10.223.198.71 with HTTP; Wed, 4 Sep 2013 00:13:55 -0700 (PDT)
+In-Reply-To: <CAM9Z-nmLQUrJk73pi_0a1_ccGMnqU_t=uOZze622_GEtWfMvQQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233811>
 
-On Wed, Sep 4, 2013 at 2:36 AM, Nazri Ramliy <ayiehere@gmail.com> wrote:
-> On Wed, Sep 4, 2013 at 6:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> I do not care too deeply either way, but I am curious if there was a
->> reason why you changed the earlier <directory> to <path>?  Somehow,
->> when we _know_ a path has to be a directory, I find it easier on the
->> readers to spell that out, instead of saying "this is a path",
->> implying that it could be a directory, a regular file, or even
->> non-existent.
->
-> Eric made me do it :). Personally I prefer the non-ambiguous "directory"
-> over "path". In fact, "directory" is used in the error message spat out
-> by git:
->
->     $ git --work-tree
->     No directory given for --work-tree.
->     ...
->
->     $ git --git-dir
->     No directory given for --git-dir.
->     ...
->     $
->
-> I think changing "<path>" to "<directory>" wherever appropriate in
-> git.txt would be an improvement. Tangent: <dir> is shorter but that
-> might not be easy on the translators.
+Just wanted to point to a Dr. Dobb's article from Monday:
+http://www.drdobbs.com/tools/getting-started-with-git-the-fundamental/2=
+40160261?pgno=3D2
 
-Such a terminology change is orthogonal to the patch adding -C
-support, so if you do pursue it, the terminology change should be a
-separate patch (either preparatory or follow-up to the -C patch).
+The author does not use the use the word "index" at all. Instead he
+writes in following way:
+
+-----------------------------------------------------------------------=
+----------------
+Staging Changes
+
+One of Git's best features is that it offers a staging process. You
+can stage the modified files that you want to commit. Other version
+control systems await your one command before your files are changed
+in the repository =97 generally the remote repository for the entire
+team. When you commit files in Git, files are held in a staging area.
+You will later commit all the files from the staging area to the
+larger repository.
+
+So, let's say you wanted to make a change involving files A and B. You
+changed file A. You then remembered something unrelated to do with
+file Z and you modified that. Then you went back to your initial
+change, modifying file B. Git allows you to add files A and B to
+staging, while leaving file Z "unstaged." Then you can push only the
+staged files to your repository. But you don't! You realize you need
+to make a change to file C as well. You "add" it. Now files A,B, and C
+are staged, and Z is still unstaged. You commit the staged changes
+only.
+
+[...]
+-----------------------------------------------------------------------=
+----------------
+
+
+Sorry for not responding to your comments Drew, no time at the moment.
+
+--=20
+Piotr Krukowiecki
