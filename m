@@ -1,96 +1,99 @@
-From: Andriy Gapon <avg@FreeBSD.org>
-Subject: Re: Bug in git rebase --continue in v1.8.4
-Date: Wed, 04 Sep 2013 11:53:12 +0300
-Message-ID: <5226F4F8.7090304@FreeBSD.org>
-References: <5221E661.1070200@gmx.de> <5226E8FC.8070208@FreeBSD.org> <vpqsixl9ezo.fsf@anie.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Sep 2013, #01; Tue, 3)
+Date: Wed, 4 Sep 2013 05:01:53 -0400
+Message-ID: <20130904090153.GA22348@sigill.intra.peff.net>
+References: <xmqqppspo6i7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 04 10:54:21 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 04 11:02:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VH8qx-00036y-LX
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 10:54:20 +0200
+	id 1VH8yQ-0006Sv-Gw
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 11:02:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934512Ab3IDIyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 04:54:14 -0400
-Received: from citadel.icyb.net.ua ([212.40.38.140]:4118 "EHLO
-	citadel.icyb.net.ua" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934416Ab3IDIyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 04:54:12 -0400
-Received: from porto.starpoint.kiev.ua (porto-e.starpoint.kiev.ua [212.40.38.100])
-	by citadel.icyb.net.ua (8.8.8p3/ICyb-2.3exp) with ESMTP id LAA23227;
-	Wed, 04 Sep 2013 11:54:09 +0300 (EEST)
-	(envelope-from avg@FreeBSD.org)
-Received: from localhost ([127.0.0.1])
-	by porto.starpoint.kiev.ua with esmtp (Exim 4.34 (FreeBSD))
-	id 1VH8qn-0006QG-1H; Wed, 04 Sep 2013 11:54:09 +0300
-User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:17.0) Gecko/20130810 Thunderbird/17.0.8
-In-Reply-To: <vpqsixl9ezo.fsf@anie.imag.fr>
-X-Enigmail-Version: 1.5.1
+	id S934451Ab3IDJB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 05:01:58 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34840 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934416Ab3IDJB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 05:01:57 -0400
+Received: (qmail 31813 invoked by uid 102); 4 Sep 2013 09:01:57 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Sep 2013 04:01:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Sep 2013 05:01:53 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqppspo6i7.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233825>
 
-on 04/09/2013 11:18 Matthieu Moy said the following:
-> [ Cc-ing Ram, as he is the author of the possibly guilty commit. ]
+On Tue, Sep 03, 2013 at 04:00:32PM -0700, Junio C Hamano wrote:
+
+> * jk/duplicate-objects-in-packs (2013-08-24) 6 commits
+>  - default pack.indexDuplicates to false
+>  - index-pack: optionally reject packs with duplicate objects
+>  - test index-pack on packs with recoverable delta cycles
+>  - add tests for indexing packs with delta cycles
+>  - sha1-lookup: handle duplicate keys with GIT_USE_LOOKUP
+>  - test-sha1: add a binary output mode
 > 
-> Andriy Gapon <avg@FreeBSD.org> writes:
->> Judging by the lack of followups, could this be a FreeBSD-specific problem?
+>  A packfile that stores the same object more than once is broken and
+>  will be rejected.
 > 
-> I can't reproduce here (Debian GNU/Linux). Do the testsuite pass for
-> you?
-> 
-> If not, can you write a failing test? A minimalist script outside the
-> testsuite may help too if you're not familiar with Git's testsuite.
+>  Will merge to 'next'.
 
-Thank you for the suggestion.
-I've just tried it and it failed here:
+Hmph. I happened to be looking at the write_idx_file code a few minutes
+ago, and noticed the results of commit 68be2fe (receive-pack,
+fetch-pack: reject bogus pack that records objects twice, 2011-11-16).
 
-*** t3403-rebase-skip.sh ***
-ok 1 - setup
-ok 2 - rebase with git am -3 (default)
-ok 3 - rebase --skip can not be used with other options
-not ok 4 - rebase --skip with am -3
-#
-#               git rebase --skip
-#
-not ok 5 - rebase moves back to skip-reference
-#
-#               test refs/heads/skip-reference = $(git symbolic-ref HEAD) &&
-#               git branch post-rebase &&
-#               git reset --hard pre-rebase &&
-#               test_must_fail git rebase master &&
-#               echo "hello" > hello &&
-#               git add hello &&
-#               git rebase --continue &&
-#               test refs/heads/skip-reference = $(git symbolic-ref HEAD) &&
-#               git reset --hard post-rebase
-#
-ok 6 - checkout skip-merge
-ok 7 - rebase with --merge
-not ok 8 - rebase --skip with --merge
-#
-#               git rebase --skip
-#
-ok 9 - merge and reference trees equal
-not ok 10 - moved back to branch correctly
-#
-#               test refs/heads/skip-merge = $(git symbolic-ref HEAD)
-#
-# failed 4 among 10 test(s)
+Now I feel like a dunce for reimplementing the same thing a few lines
+above (and the reason I did not catch it in my tests is that "index-pack
+--strict" is not enabled by default).
 
+We should probably drop the two top commits. We may want to keep the
+test from the second-to-last, though, but change it to use "index-pack
+--strict". Like this:
 
-Christoph has also suggested a small test script in his original email that
-started this thread:
-http://thread.gmane.org/gmane.comp.version-control.git/233516
+-- >8 --
+Subject: t5308: check that index-pack --strict detects duplicate objects
 
+Commit 68be2fe long ago taught index-pack to notice and
+reject duplicate objects if --strict is given (which it is
+for incoming packs, if transfer.fsckObjects is set).
+However, it never tested the code, because we did not have
+an easy way of generating such a bogus pack.
+
+Now that we have test infrastructure to handle this, let's
+confirm that it works.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t5308-pack-detect-duplicates.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
+index 04fe242..9c5a876 100755
+--- a/t/t5308-pack-detect-duplicates.sh
++++ b/t/t5308-pack-detect-duplicates.sh
+@@ -70,4 +70,11 @@ test_expect_success 'lookup in duplicated pack (GIT_USE_LOOKUP)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'index-pack can reject packs with duplicates' '
++	clear_packs &&
++	create_pack dups.pack 2 &&
++	test_must_fail git index-pack --strict --stdin <dups.pack &&
++	test_expect_code 1 git cat-file -e $LO_SHA1
++'
++
+ test_done
 -- 
-Andriy Gapon
+1.8.4.2.g87d4a77
