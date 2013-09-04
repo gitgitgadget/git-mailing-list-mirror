@@ -1,137 +1,138 @@
-From: "V.Krishn" <vkrishn4@gmail.com>
-Subject: Re: Stalled git cloning and possible solutions
-Date: Wed, 4 Sep 2013 06:36:48 +0530
-Message-ID: <201309040636.48290.vkrishn4@gmail.com>
-References: <201308300118.19166.vkrishn4@gmail.com> <201308300305.10440.vkrishn4@gmail.com> <xmqqvc2o16pn.fsf@gitster.dls.corp.google.com>
-Reply-To: vkrishn4@gmail.com
+From: Drew Northup <n1xim.email@gmail.com>
+Subject: Re: Officially start moving to the term 'staging area'
+Date: Wed, 4 Sep 2013 00:23:46 -0400
+Message-ID: <CAM9Z-nmLQUrJk73pi_0a1_ccGMnqU_t=uOZze622_GEtWfMvQQ@mail.gmail.com>
+References: <20130829180129.GA4880@nysa>
+	<xmqqeh9c4a2t.fsf@gitster.dls.corp.google.com>
+	<CAM9Z-nmXPgfbXezbORb=NCqQuW4p3Dka+bHVdt_n7Sh=jehY7A@mail.gmail.com>
+	<b677f1ae-662f-4728-b625-189bc392c74d@email.android.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 04 03:19:59 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Miles Bader <miles@gnu.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Scott Chacon <schacon@gmail.com>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 04 06:24:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VH1lH-000846-4s
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 03:19:59 +0200
+	id 1VH4dQ-0001zr-9w
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 06:24:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755998Ab3IDBTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Sep 2013 21:19:55 -0400
-Received: from mail-qe0-f45.google.com ([209.85.128.45]:61838 "EHLO
-	mail-qe0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754747Ab3IDBTy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Sep 2013 21:19:54 -0400
-Received: by mail-qe0-f45.google.com with SMTP id 6so1996281qea.32
-        for <git@vger.kernel.org>; Tue, 03 Sep 2013 18:19:53 -0700 (PDT)
+	id S1756320Ab3IDEXv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Sep 2013 00:23:51 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:52988 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753183Ab3IDEXr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Sep 2013 00:23:47 -0400
+Received: by mail-ie0-f181.google.com with SMTP id a14so12004833iee.40
+        for <git@vger.kernel.org>; Tue, 03 Sep 2013 21:23:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:reply-to:to:subject:date:user-agent:references:in-reply-to
-         :mime-version:cc:content-type:content-transfer-encoding:message-id;
-        bh=uhuWrFrNAA4Yk06qbfDf5gAPfzCWpQvaUrCDo0BKM4o=;
-        b=ZJqWWNHe+nuMRpkIO33keDMoQlubIcMK715rMWDrQ0LAsCQagr5+/Im06//snhr49d
-         BpWQ8NqefYRUsLcQZB3I0p/MY5EZIfkO1EUpN2nB7hcrjgyTevOT9zgo5PZ+woBhezrI
-         8nfS+lN8E0TokqFsBtHDznn5YF0eZHebG+54ryfkGEOvjHjjXAz8OAQhpPzJ0XNmyLvB
-         M1wtmtldbSriSpTsNhp5gGG/RXSKJTTdCn9WDbw+yri7uuP/YsoUIaR1p/3DuM7u6SYJ
-         MYqnHBZVTHbrK3VQtVEq3uebFFDfCecdsLJTlov84hSJTzYnw6RlQ7VzwFCzKfdOix8s
-         +ueQ==
-X-Received: by 10.49.24.178 with SMTP id v18mr409184qef.12.1378257593725;
-        Tue, 03 Sep 2013 18:19:53 -0700 (PDT)
-Received: from microknoppix.localnet ([117.226.181.166])
-        by mx.google.com with ESMTPSA id u8sm34030327qef.3.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 03 Sep 2013 18:19:53 -0700 (PDT)
-User-Agent: KMail/1.13.7 (Linux/3.3.7-64; KDE/4.7.4; x86_64; ; )
-In-Reply-To: <xmqqvc2o16pn.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ZgsEIFk3BS8kky8pBM06IAmEehxcDYvmP9Qge3d/EnI=;
+        b=GCbsO6qi51Zt4z0nlCEcflwZMNMcxX4jBjnhkZmhPkdn3U4BlsOIeMVj/HB+D1aKG7
+         evu/l1NU9ImyPmX5xrrwmEXGdC0DbmRR8m87Y2ZXywFamJBEmg3Lk+Vv1JuxjnrHoKEF
+         9eimn/6/XIBtlpTo2XYkGvNZotmIPPkAfmiQOqDzzSag3kidRvKosvXh/ktBOIVfE4ZW
+         gTY0HMKy2yWNUnmzua+nOct/kq6zgl88yP4WE8YNiJfNz3SHq7H8AHYoXTcNE7fgyGVW
+         7VjvPoiQGGCND8HteLLNXDnG8vo0wsozDajTkTM+o5x1hey7JuKW99F6eyDveX+VxudU
+         ejeA==
+X-Received: by 10.50.23.76 with SMTP id k12mr371700igf.37.1378268626573; Tue,
+ 03 Sep 2013 21:23:46 -0700 (PDT)
+Received: by 10.43.111.72 with HTTP; Tue, 3 Sep 2013 21:23:46 -0700 (PDT)
+In-Reply-To: <b677f1ae-662f-4728-b625-189bc392c74d@email.android.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233802>
 
-On Friday, August 30, 2013 03:48:44 AM you wrote:
-> "V.Krishn" <vkrishn4@gmail.com> writes:
-> > On Friday, August 30, 2013 02:40:34 AM you wrote:
-> >> V.Krishn wrote:
-> >> > Quite sometimes when cloning a large repo stalls, hitting Ctrl+c
-> >> > cleans what been downloaded, and process needs re-start.
-> >> > 
-> >> > Is there a way to recover or continue from already downloaded files
-> >> > during cloning ?
-> >> 
-> >> No, sadly.  The pack sent for a clone is generated dynamically, so
-> >> there's no easy way to support the equivalent of an HTTP Range request
-> >> to resume.  Someone might implement an appropriate protocol extension
-> >> to tackle this (e.g., peff's seed-with-clone.bundle hack) some day,
-> >> but for now it doesn't exist.
-> > 
-> > This is what I tried but then realized something more is needed:
-> > 
-> > During stalled clone avoid  Ctrl+c.
-> > 1. Copy the content .i.e .git folder some other place.
-> > 2. cd <new dir>
-> > 3. git config fetch.unpackLimit 999999
-> > 4. git config transfer.unpackLimit 999999
-> 
-> These two steps will not help, as negotiation between the sender and
-> the receiver is based on the commits that are known to be complete,
-> and an earlier failed "fetch" will not (and should not) update refs
-> on the receiver's side.
-> 
-> >> What you *can* do today is create a bundle from the large repo
-> >> somewhere with a reliable connection and then grab that using a
-> >> resumable transport such as HTTP.
-> 
-> Yes.
-> 
-> Another possibility is, if the project being cloned has a tag (or a
-> branch) that points at a commit back when it was smaller, do this
-> 
-> 	git init x &&
->         cd x &&
->         git fetch $that_repository
-> $that_tag:refs/tags/back_then_i_was_small
-> 
-> to prime the object store of a temporary repository 'x' with a
-> hopefully smaller transfer, and then use it as a "--reference"
-> repository to the real clone.
+On Fri, Aug 30, 2013 at 1:16 AM, Piotr Krukowiecki
+<piotr.krukowiecki@gmail.com> wrote:
+> Drew Northup <n1xim.email@gmail.com> napisa=C5=82:
+>>I agree with Junio. This effort is better spent making the
+>>documentation clearer and more succinct. The reality is that a user
+>>needs to build a model in their mind of what they are doing which map=
+s
+>>enough (completely is not required) to what is actually going on to
+>>get work done. If the documentation or the instruction is getting in
+>>the way of that in the name of simplifying the presentation then the
+>>presentation is wrong.
+>
+> Why do you think the "stage"  model do not map enough?
 
-What more files/info would be needed.
-I noticed the tmp_pack_xxxxxx may not have object type commit/tree.
-Do I need to manually create .git/refs..
+When I try to explain how to use git to complete VCS newbies in
+general they find the "snapshot" model more mentally sensible than the
+"staging area" model. (In other words, the user doesn't care how, if,
+or where the program is maintaining state.) The "snapshot" model does
+not require knowledge of the index and does not get in the way of
+later on learning more advanced concepts which benefit from the index
+being explained as what it is--explanations which quite frequently
+bring up the "staging area" model (but in that case as a portion of
+the index used to store snapshot state information).
 
-I was wondering the following would further help in recovering.
+>>We add content snapshots to the index of content (creating
+>>"temporary"--they will be garbage collected eventually if they become
+>>orphans--objects into the store at the same time). We build commits
+>>from those snapshots (in whole or in part, typically only using the
+>>most recent snapshots of new things added to the index) and save thos=
+e
+>>in the object store with the content and tree objects. Sometimes we
+>>create tag objects to record something special about commits, trees,
+>>and content blobs.
+>
+> The above can be rewritten to use the 'staging area' concept just
+> fine. And I don't think you should say to inexperienced users things
+> like 'tree objects'.
 
-A
-1. If pack file was created in sequence to commit history(date), i.e 
-blob+commit+tree....tags...+blob+commit+tree. 
-also if in parallel idx was also created or atleast a tmp idx.
-2. Update other files in .git dir before pack process.
-    (as stated in previous email).
-3. Objects are named like datestamp(epoch)+sha1 
-     and stored in epoch directory. (date fmt can be yymmdd).
-     (this might break back-compat)
-4. Add "git fsck --defrag [1..4]" 
-   #this can take another parameter like level, 
-     applying various heuristic optimization.
+At what time did I say specifically what I tell newbies? I did not do
+so. Please refrain from making that sort of assumption. In any case,
+no, you cannot rewrite that to use "staging area" in place of "index"
+without introducing a different mental model and new concept into the
+text (a model which happens to be incomplete, but not incorrect). That
+minimalist summary was written for the technically-minded people here
+on this list debating the issue of communications with the users--the
+bane of all programmers' lives.
 
-B
-Another option would be:
-git clone <url> --use-method=rsync
-this would transfer files as is in .git dir (ones necessary).
-And run `git gc` or any other housekeeping upon completion.
-This method would allow resuming.
-Cons:
-  Any change in pack file on server during download becomes a potential issue.
+> A good exercise would be to take documentation of some command
+> and show that it can or can't be rewritten to use the other term.
 
-The clone resume may not be a priority but if a minor changes can help in 
-recovery, this would be nice. 
+That may be a good exercise in matters of philosophy, but you will
+find few outside of the world of programming who would agree with that
+characterization of the optimization of technical writing. (In the
+English language in particular it is folly due to the extreme
+variation of available terms and metaphors with nearly identical
+denotations and greatly varying connotations.)
 
-I still like the bundle method if git services made this easy.
+> Instead of 'indexing' or 'staging' content you could also use term 'm=
+ark'.
+> You mark content to add, for removal, you can diff it or revert.
 
--- 
-Regards.
-V.Krishn
+So far as I am concerned the introduction of a specific "staging area"
+(as if it has a distinct physical presence) is superfluous to that.
+
+>>That's the real model (with some rough edges). Explaining what that
+>>has to do with distributed version control is the hard part.
+
+Again, let us keep our argument focused on communications with users.
+Renaming core objects is just going to sow confusion without fixing
+the user communication issue. That's what I meant the first time I
+wrote what I quote directly above and I'm sticking to it.
+
+--=20
+-Drew Northup
+--------------------------------------------------------------
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
