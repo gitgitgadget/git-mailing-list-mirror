@@ -1,90 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Re: [PATCH 3/4] t: rev-parse-parents: avoid yoda conditions
-Date: Wed, 04 Sep 2013 10:38:03 -0700
-Message-ID: <xmqq1u54o5c4.fsf@gitster.dls.corp.google.com>
-References: <1378103439-3225-4-git-send-email-felipe.contreras@gmail.com>
-	<20130903071256.GD3608@sigill.intra.peff.net>
-	<20130903075107.GA25540@goldbirke>
-	<20130903080358.GA30158@sigill.intra.peff.net>
-	<CAMP44s112mwgs=8n0XCnTtPM2V-O5RYE2ns+fjCvgkxj+kEY8Q@mail.gmail.com>
-	<20130903111006.GJ29840@goldbirke>
-	<CAMP44s349-v6xtCvbDzycVj1wBwTdAgLmuGxB0pYn6CmHYkM1Q@mail.gmail.com>
-	<20130903150855.GK29840@goldbirke> <20130903170419.GA29921@google.com>
-	<xmqqli3co7ov.fsf@gitster.dls.corp.google.com>
-	<20130904171356.GD2582@serenity.lan>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: German translation errors
+Date: Wed, 4 Sep 2013 20:14:31 +0200
+Message-ID: <CAN0XMOJ=Mxxq03Oitkhhr63mtu-XvqM30YVNscfPrqH8mYo8mg@mail.gmail.com>
+References: <2896292.CgjyIcF3NN@moria>
+	<CAN0XMOJn7_c51G=peUKJzNqkQpWu7JQ8Uv2TB+hpvUO1ztPEPw@mail.gmail.com>
+	<2330938.lTaCDyZdrQ@gondor>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Sep 04 19:38:18 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT <git@vger.kernel.org>
+To: Dirk Heinrichs <dirk.heinrichs@altum.de>
+X-From: git-owner@vger.kernel.org Wed Sep 04 20:14:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHH20-0003gg-Ak
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 19:38:16 +0200
+	id 1VHHbB-0004SC-Cv
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 20:14:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763093Ab3IDRiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 13:38:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48121 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756540Ab3IDRiG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 13:38:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 011113E1AF;
-	Wed,  4 Sep 2013 17:38:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DCjdXoFjrUboh+wGWsfaitX+RGo=; b=Oe17rj
-	/V+wDUGGfMQ+JBknHwuVBkoFHIcLBMZ48C1I0LkcOJqpH96OXzou/Q/QeHfO0kfz
-	66CDLl8/Y5cZohBu9wr3T5bWCwdcYKMkUncWJxZAIJtt27QjW7DTlV4m6nK81mJr
-	gpiKFmpPszLja/s5GNaWgDFYVDFBOWqWwARAE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jy/F5qHL+rL5D3v1mEgdS7/3c4lh78mO
-	BV/DS/+vCiq19jDv5hMWNxbbnJY26m514mQrhhdJ/ti9njKcKKiJoBfmOrUkHmfM
-	PdbevPnH1sOoUCYc0SNo9HvsdpTLoiLAiY6TQKlkRmfB9s1+XwHKkIIXXXzorXjT
-	CZQVf8ARUks=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E457F3E1AE;
-	Wed,  4 Sep 2013 17:38:05 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 259B63E1AA;
-	Wed,  4 Sep 2013 17:38:05 +0000 (UTC)
-In-Reply-To: <20130904171356.GD2582@serenity.lan> (John Keeping's message of
-	"Wed, 4 Sep 2013 18:13:57 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C136B8C2-1588-11E3-BA8F-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755712Ab3IDSOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 14:14:33 -0400
+Received: from mail-we0-f181.google.com ([74.125.82.181]:37740 "EHLO
+	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752987Ab3IDSOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 14:14:32 -0400
+Received: by mail-we0-f181.google.com with SMTP id p60so756556wes.12
+        for <git@vger.kernel.org>; Wed, 04 Sep 2013 11:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=gvxOBZ4zxLoQsGZsPGevuigZ5rbj4o7D9TWrs0Gcs9A=;
+        b=J+FLzraAznUO3MKRqh+ki0MZ76qfDdMdsYW/+K1rgNOGH8HdhPDaKtsJjF/UfJy8uX
+         VloYlM1rKd+/lK/ecbpfbA/Ss4cFj7ZdOp7kEtp3gYmbWUnFDgPNpzE5vPSXmSYhwhRl
+         GFuPY2gCOVTZ2Wrsdov/Gglu5Ku8jRPCxeye4KCCiBWuuECdN3erR520PD8QpMuTQizM
+         JlIagX4UjmUIdkicOS/YmtkAsxjQlQOHXMFdLzWNnw981hU416Z7HhG/2vnrP4rj0XDd
+         CSJQdRPRJ7H1Yz0FNenbZWUYypUAfXLWIzrU+u5mtHoM0sCcPstBUM67E5U1LS/kL5gp
+         M6/A==
+X-Received: by 10.180.188.49 with SMTP id fx17mr3114662wic.49.1378318471120;
+ Wed, 04 Sep 2013 11:14:31 -0700 (PDT)
+Received: by 10.194.169.2 with HTTP; Wed, 4 Sep 2013 11:14:31 -0700 (PDT)
+In-Reply-To: <2330938.lTaCDyZdrQ@gondor>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233853>
 
-John Keeping <john@keeping.me.uk> writes:
-
-> On Wed, Sep 04, 2013 at 09:47:12AM -0700, Junio C Hamano wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->> 
->> > test_cmp_rev follows the same order of arguments a "diff -u" and
->> > produces the same output as plain "git diff".  It's perfectly readable
->> > and normal.
->> 
->> This is way off tangent, but I am somewhat sympathetic to Felipe's
->> "compare actual with expect", with reservations.
+On Wed, Sep 4, 2013 at 3:20 PM, Dirk Heinrichs <dirk.heinrichs@altum.de> wrote:
+> Am Mittwoch, 4. September 2013, 13:11:39 schrieben Sie:
 >
-> This isn't an argument either way, but note that JUnit (and NUnit and
-> PHPUnit) all have assertEquals methods that take the arguments in the
-> order "expect, actual".  I've always assumed that Git's test framework
-> was imitating that,...
+>> this is not an error but intention. From Git 1.8.4, the German translation
+>> switches from pure German to German+English. For me the most important
+>> reasons for that are that terms like "Branch" and "Tag" are well-known
+>> SCM/Git terms for many German people, and using "Zweig" and "Marke" could
+>> be more confusing than just use the english words.
+>
+> Ah, OK. I must admit I also use the english words in day-to-day (german)
+> conversations. However, in case of tags, when spoken, you have the ability to
+> pronounce tag differently (long "a" when you mean day, short "a" for a git
+> tag), which is not the case in a written conversation. How about using "neues
+> Tag" instead of "neuer Tag"?
+>
 
-No.  See 82ebb0b6 (add test_cmp function for test scripts,
-2008-03-12).  The "test_cmp" was a replacement for "diff -u", and
-the same order we fed "diff -u", i.e. expect then actual, was
-carried over.
+I've looked at books and blogs to see what others use and both versions are
+used. Personally I prefer "der Tag" than "das Tag" because it feels more
+natural to me. But I agree that using "das Tag" is less confusing. I'm going
+to work on a patch for this.
+
+Thanks,
+
+Ralf
+
+> Bye...
+>
+>         Dirk
+> --
+> Dirk Heinrichs <dirk.heinrichs@altum.de>
+> Tel: +49 (0)2471 209385 | Mobil: +49 (0)176 34473913
+> GPG Public Key C2E467BB | Jabber: dirk.heinrichs@altum.de
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
