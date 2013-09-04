@@ -1,118 +1,79 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: [Bug?] MERGE_HEAD lost with git checkout master
-Date: Wed, 4 Sep 2013 18:17:26 +1200
-Message-ID: <CAFOYHZD0reLWt-wYrcKy=LVKD3q0uJjgVLVYSAzU+zWMgtWguQ@mail.gmail.com>
+From: Dirk Heinrichs <dirk.heinrichs@altum.de>
+Subject: German translation errors
+Date: Wed, 04 Sep 2013 08:24:49 +0200
+Organization: Privat
+Message-ID: <2896292.CgjyIcF3NN@moria>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; boundary="nextPart3384952.DKxUCUa4yX"; micalg="pgp-sha1"; protocol="application/pgp-signature"
 To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 04 08:17:32 2013
+X-From: git-owner@vger.kernel.org Wed Sep 04 08:25:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VH6PE-0003KM-8O
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 08:17:32 +0200
+	id 1VH6WQ-0005V2-Rj
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Sep 2013 08:24:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755947Ab3IDGR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Sep 2013 02:17:28 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:52895 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754040Ab3IDGR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 02:17:27 -0400
-Received: by mail-pa0-f42.google.com with SMTP id lj1so7488673pab.29
-        for <git@vger.kernel.org>; Tue, 03 Sep 2013 23:17:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=4pWPbiUXz9xUjdntXAqBrZzO3fREm5/avLmxk+1TY5c=;
-        b=jMysEQ65/vIlttcVyBASh7XUdy/1Lb00vV/GJGPYu+QosBla3TMbLimNtVr8FSEw6B
-         NRq5ivsOnTtq28XigEKZCF07QHSLWy4qpznjTE/NulgU0PnOu5LMrK3f4rHV2NZR106i
-         nWGDq9LsXco6nvaBZO9rzyCnZIDpsQ+ohkuE7P1W8ci4mBU5Dkrc6JjVW1mri9L0MI4U
-         48ar2M3KVznWH8L/xcuRdRUNZKc2MeNtLkJ8FsAj1KCLWxHlXAmkxhg54bcv4S3ZzPEj
-         v8YY/vgvsasYMLBQdy/RnOa5+l6u+1uNisTYu+7maQA89CdJXBrRpz1+YW6sp+kZWO/O
-         D9qQ==
-X-Received: by 10.66.231.42 with SMTP id td10mr1384184pac.144.1378275446799;
- Tue, 03 Sep 2013 23:17:26 -0700 (PDT)
-Received: by 10.70.35.205 with HTTP; Tue, 3 Sep 2013 23:17:26 -0700 (PDT)
+	id S1761948Ab3IDGYx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 02:24:53 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:61406 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761388Ab3IDGYv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 02:24:51 -0400
+Received: from rohan.altum.de (pD9FF88F6.dip0.t-ipconnect.de [217.255.136.246])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0M7Wnz-1WAhqH1NQt-00x4uS; Wed, 04 Sep 2013 08:24:50 +0200
+Received: from moria.localnet (moria.altum.de [192.168.1.2])
+	by rohan.altum.de (Postfix) with ESMTPS id 055B217C0E6
+	for <git@vger.kernel.org>; Wed,  4 Sep 2013 08:24:49 +0200 (CEST)
+User-Agent: KMail/4.11 (Linux/3.8.0-29-generic; KDE/4.11.0; x86_64; ; )
+X-Provags-ID: V02:K0:D2OA1X5YIh7tk5SJy5FRgju2ri+px2q5/yXNaO1caV/
+ xnnD5AwvPz11e0SWxSXuARf+aJZEW7AF7n5+a3pA1Y9XzXHPAY
+ 7AzoCKIIcgMz061t2+gwshA+vif7x5QRZ8KsNhA7HpC6y6qVaO
+ SHskj3Fg5xqMGQZdBccLJvGAJnfjp1fkCQWGH/00jhgC6DqJ+N
+ f5js5GGlQkeu9yEUBRQcTC2ny60852Yfjs6NwHk666xO6NTAOS
+ JEpj/CS3gwOdG5UC4USEGLkdsdQ1gw/FA4S7enTiyzQXmZqBNv
+ 5H+VoVDGY71vYU0Uyr5qBv63PcfzMkBEqJFTQzHAETkwtsbAq0
+ oW/BwMcYwc+LY+Mf1xfs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233807>
+
+
+--nextPart3384952.DKxUCUa4yX
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
 Hi,
 
-At $dayjob we have some simple "code quality" checks that we run to
-make sure that things are heading in the right direction. These are
-usually run as part of our automated builds but people occasionally
-run them when merging updates from other teams or preparing to merge
-to the integration branch.
+when I fetch from remote repositories, git tells me about new branches and 
+tags by saying "[neuer Branch]" or "[neuer Tag]". While "Branch" translates to 
+"Zweig" in german, the german word "Tag" actually means "day", so git is 
+telling me something about a "new day" for every new tag. Should be "neue 
+Marke".
 
-The typical invocation is something like
-  git checkout HEAD^
-  score1=$(script.sh)
-  git checkout master
-  score2=$(script.sh)
-  # compare scores ...
+Thanks...
 
-The problem is that if this is run after resolving merge conflicts but
-before committing the changes (i.e. the merge resolution is in the
-index) the fact that a merge was in progress is lost. I have modified
-script.sh to check for a clean work tree but I'm wondering if this is
-actually a bug worth fixing.
+	Dirk
+-- 
+Dirk Heinrichs <dirk.heinrichs@altum.de>
+Tel: +49 (0)2471 209385 | Mobil: +49 (0)176 34473913
+GPG Public Key C2E467BB | Jabber: dirk.heinrichs@altum.de
 
-Here's a simple reproduction (apologies in advance for gmails wrapping)
+--nextPart3384952.DKxUCUa4yX
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
 
-  $ git --version
-  git version 1.8.4.rc2
-  $ git init
-  $ for x in a b c d e f; do echo "$x" >"${x}.txt"; git add
-"${x}.txt"; git commit -m"Add ${x}.txt"; done
-  $ git checkout -b foo HEAD^^^
-  $ for x in d e f; do echo "x" >"${x}.txt"; git add "${x}.txt"; git
-commit -m"Add ${x}.txt"; done
-  $ git checkout master
-  $ git merge foo
-  $ git mergetool
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-  # At this point the conflict resolution is in the index as expected
+iD8DBQBSJtIx8NVtnsLkZ7sRAr1MAJ9GB/N/8TURmnlDtbf5AWxL+DCw4gCfSPFZ
+3lX8SMgIwfVCKdVQ7yVWHcQ=
+=/xJM
+-----END PGP SIGNATURE-----
 
-  $ git checkout HEAD^
-  error: Your local changes to the following files would be
-overwritten by checkout:
-        f.txt
-  Please, commit your changes or stash them before you can switch branches.
-  Aborting
-
-  # OK so far so good. Checkout failed and we're still in a mergey state
-
-  $ ll .git
-  drwxr-xr-x  2 chrisp swdept 4096 Sep  4 17:47 info/
-  drwxr-xr-x  3 chrisp swdept 4096 Sep  4 17:49 logs/
-  -rw-r--r--  1 chrisp swdept   41 Sep  4 17:51 MERGE_HEAD
-  -rw-r--r--  1 chrisp swdept    0 Sep  4 17:51 MERGE_MODE
-  -rw-r--r--  1 chrisp swdept   52 Sep  4 17:51 MERGE_MSG
-  -rw-r--r--  1 chrisp swdept  141 Sep  4 17:51 MERGE_RR
-  drwxr-xr-x 40 chrisp swdept 4096 Sep  4 17:52 objects/
-  -rw-r--r--  1 chrisp swdept   41 Sep  4 17:51 ORIG_HEAD
-
-  $ git checkout master
-  M       d.txt
-  M       e.txt
-  M       f.txt
-  Already on 'master'
-
-  # Hmm, that kind of indicates that it did something but "Already on
-'master'" makes me think it was a noop
-
-  $ ll .git
-  drwxr-xr-x  2 chrisp swdept 4096 Sep  4 17:47 info/
-  drwxr-xr-x  3 chrisp swdept 4096 Sep  4 17:49 logs/
-  drwxr-xr-x 40 chrisp swdept 4096 Sep  4 17:52 objects/
-  -rw-r--r--  1 chrisp swdept   41 Sep  4 17:51 ORIG_HEAD
-
-  # mergey state is lost but the changes are still in the index.
-
-Cheers,
-Chris
+--nextPart3384952.DKxUCUa4yX--
