@@ -1,89 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Zero padded file modes...
-Date: Thu, 5 Sep 2013 15:35:08 -0400
-Message-ID: <20130905193507.GB15910@sigill.intra.peff.net>
-References: <CAEBDL5W3DL0v=TusuB7Vg-4bWdAJh5d2Psc1N0Qe+KK3bZH3=Q@mail.gmail.com>
- <20130905153646.GA12372@sigill.intra.peff.net>
- <CAEBDL5UiEurFeZg1AuNUKEvBMDs3K3D5ZiF5rB-dYWjp5nvrEA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4 0/5] Disable "git status" comment prefix
+Date: Thu, 05 Sep 2013 21:36:47 +0200
+Message-ID: <vpqioyfukkw.fsf@anie.imag.fr>
+References: <1378374618-31439-1-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqhadzhyjb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Thu Sep 05 21:35:25 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 05 21:37:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHfKv-00053a-67
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 21:35:25 +0200
+	id 1VHfMX-0005om-IB
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 21:37:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757126Ab3IETfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 15:35:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48344 "EHLO peff.net"
+	id S1757171Ab3IEThA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 15:37:00 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:59697 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757119Ab3IETfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 15:35:11 -0400
-Received: (qmail 31518 invoked by uid 102); 5 Sep 2013 19:35:11 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 Sep 2013 14:35:11 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Sep 2013 15:35:08 -0400
-Content-Disposition: inline
-In-Reply-To: <CAEBDL5UiEurFeZg1AuNUKEvBMDs3K3D5ZiF5rB-dYWjp5nvrEA@mail.gmail.com>
+	id S1756278Ab3IETg7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 15:36:59 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r85Jajo6016850
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 5 Sep 2013 21:36:45 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VHfMG-0004iz-1a; Thu, 05 Sep 2013 21:36:48 +0200
+In-Reply-To: <xmqqhadzhyjb.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 05 Sep 2013 12:13:44 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 05 Sep 2013 21:36:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r85Jajo6016850
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1379014608.44101@YNG9Axt7PmlfcuV2IJo3xg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233988>
 
-On Thu, Sep 05, 2013 at 01:13:40PM -0400, John Szakmeister wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > Yep. These were mostly caused by a bug in Grit that is long-fixed.  But
-> > the objects remain in many histories. It would have painful to rewrite
-> > them back then, and it would be even more painful now.
-> 
-> I guess there's still the other side of the question though.  Are
-> these repositories busted in the sense that something no longer works?
+> One caveat, though.  The name "oldStyle" will become problematic,
+> when we want to remove some wart in the output format long after
+> this "no comment prefix by default" series lands.  Some people may
+> expect setting oldStyle=true would give output from 1.8.4 era, while
+> some others would expect that it would give output from 1.8.5 era
+> that does not have comment prefix but still has that wart we will
+> remove down the line.
 
-No, as far as I know, everything still works fine. However, some diffs
-may be suboptimal, because we may have two different sha1s for the same
-subtree (so we may descend into the tree unnecessarily only to find that
-they are equivalent). And by the same token, any scripts doing
-non-recursive diffs may erroneously mark the trees as differing, even
-though they do not contain any differing files.
+I'm fine with any name actually (since it is enabled by default, people
+don't need to know the name to benefit from the new output). Maybe
+status.displayCommentPrefix was the best name after all.
 
-But neither is a big problem in practice. If you had two clients in
-active use which were flip-flopping a sub-tree back and forth between
-representations, it would be a problem. But we are talking about a few
-isolated incidents far back in history.
-
-> I doesn't appear to be the case, but I've not used it extensively say
-> I can't say for certain one way or another.  In the sense that the
-> content is not strictly compliant, transfer.fsckObjects did its job,
-> but I wonder if fsck needs to be a little more tolerant now (at least
-> with respect to transfer objects)?
-
-Fsck actually treats this as a warning, not an error. It is
-transfer.fsckObjects (via "index-pack --strict") that actually treats
-warnings as errors.
-
-It's possible that this should be loosened to allow through problems
-marked as FSCK_WARN (with a message, kind of like...a warning). Though
-it may also make sense to revisit some of the classifications in fsck
-(e.g., many of the warnings are indicative of seriously broken objects).
-
-GitHub uses transfer.fsckObjects, rejecting all warnings[1]. In practice
-it is not usually a big deal, as people are happy to fix up their
-objects _before_ they get widely published. The biggest push-back we get
-is when somebody tries to re-push history they got from another GitHub
-repo, and then says "But why are you complaining? You served this crappy
-broken history?" And it's a fair point. If you are forking (but not
-joining the existing fork network) of an existing project with
-irregularities in the history, it's not really an option to simply
-rewrite the history you are basing on.
-
--Peff
-
-[1] Actually, we do let through 0-padded modes with a warning,
-    explicitly because of the problem mentioned above.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
