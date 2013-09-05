@@ -1,91 +1,76 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
-Date: Thu, 5 Sep 2013 09:06:06 +0100
-Message-ID: <20130905080606.GE2582@serenity.lan>
-References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com>
- <xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
- <CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com>
- <xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
- <20130904081047.GB2582@serenity.lan>
- <xmqqa9jso69u.fsf@gitster.dls.corp.google.com>
- <7DC052455C7C4B50A4EAFC1EF63D006C@PhilipOakley>
- <xmqqr4d4jird.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 2/2] submodule: don't print status output with ignore=all
+Date: Thu, 05 Sep 2013 10:05:41 +0200
+Message-ID: <vpqob87zoa2.fsf@anie.imag.fr>
+References: <1378066009-1017855-1-git-send-email-sandals@crustytoothpaste.net>
+	<1378066009-1017855-3-git-send-email-sandals@crustytoothpaste.net>
+	<vpqa9jtayiq.fsf@anie.imag.fr> <52279ACC.2070308@web.de>
+	<vpqioyf231e.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 05 10:06:31 2013
+Content-Type: text/plain
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, jrnieder@gmail.com, judge.packham@gmail.com,
+	gitster@pobox.com
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Sep 05 10:10:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHUaB-0002yM-QT
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 10:06:28 +0200
+	id 1VHUeD-0004mq-Ue
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 10:10:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763471Ab3IEIGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 04:06:23 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:55202 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757216Ab3IEIGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 04:06:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 773FECDA5BA;
-	Thu,  5 Sep 2013 09:06:19 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7UlnMu6u9fDs; Thu,  5 Sep 2013 09:06:17 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by jackal.aluminati.org (Postfix) with ESMTP id 9CC80CDA58C;
-	Thu,  5 Sep 2013 09:06:16 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 8FEEB161E1B0;
-	Thu,  5 Sep 2013 09:06:16 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ma5i62CwGgXW; Thu,  5 Sep 2013 09:06:16 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 77A02161E46B;
-	Thu,  5 Sep 2013 09:06:08 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <xmqqr4d4jird.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757468Ab3IEIJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 04:09:20 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:40732 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763483Ab3IEIJC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 04:09:02 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r8585ern008070
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 5 Sep 2013 10:05:40 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VHUZR-0005Nu-C0; Thu, 05 Sep 2013 10:05:41 +0200
+In-Reply-To: <vpqioyf231e.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	05 Sep 2013 08:30:53 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 05 Sep 2013 10:05:41 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r8585ern008070
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1378973142.16963@AEozhSZOD35wYDxFFtqjiw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233940>
 
-On Wed, Sep 04, 2013 at 03:59:18PM -0700, Junio C Hamano wrote:
-> Are there cases where you do not want to either rebase nor merge?
-> If so what do you want to do after "git pull" fetches from the other
-> side?  Nothing?
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-One other thing that I can see being useful occasionally is:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>
+>> Fine by me, what would you propose to clarify that? (Though I have the
+>> suspicion that the explanation will be three years late ;-)
+>
+> I have no idea, as I do not understand the reason myself yet. I'm not a
+> frequent user of submodules and not a user of the ignore option at all,
+> so I can't tell what's best. I'd just like the new behavior to be
+> justified somewhere.
 
-    git rebase @{u}@{1} --onto @{u}
+I also think that the documentation in Documentation/config.txt could be
+updated. Perhaps adding something like
 
-which allows local commits to be replayed onto a rewritten upstream
-branch.
+	To view the summary for submodules ignored by 'git status', one
+	can use 'git submodules summary' which shows a similar output
+	but does not honor this option.
 
-Although I agree with your side note below that people doing this may be
-better off fetching and then updating their local branch, particularly
-if @{1} is not the correct reflog entry for the upstream when they
-created the branch.
-
-> 	Side note: a knee-jerk response to a "yes" answer to the
-> 	last question from me has always been "then why are you
-> 	running 'git pull' in the first place. The next paragraph is
-> 	my attempt to extend my imagination a bit, stepping outside
-> 	that reaction.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
