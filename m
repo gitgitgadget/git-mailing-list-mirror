@@ -1,96 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn: Fix termination issues for remote svn connections
-Date: Thu, 05 Sep 2013 16:14:52 -0700
-Message-ID: <xmqqk3iug8sz.fsf@gitster.dls.corp.google.com>
-References: <6970c0cab40c60195c8f042a3b930a0a.squirrel@83.236.132.106>
-	<xmqqli3bhzop.fsf@gitster.dls.corp.google.com>
-	<20130905190249.GA1532@dcvr.yhbt.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 0/5] Disable "git status" comment prefix
+Date: Thu, 5 Sep 2013 19:23:22 -0400
+Message-ID: <20130905232322.GB29351@sigill.intra.peff.net>
+References: <1378374618-31439-1-git-send-email-Matthieu.Moy@imag.fr>
+ <xmqqhadzhyjb.fsf@gitster.dls.corp.google.com>
+ <vpqioyfukkw.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Uli Heller <uli.heller@daemons-point.com>, git@vger.kernel.org,
-	"Kyle J. McKay" <mackyle@gmail.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Sep 06 01:15:04 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Sep 06 01:23:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHilT-0001WE-Jm
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 01:15:03 +0200
+	id 1VHite-0004X2-Qa
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 01:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758022Ab3IEXO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 19:14:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61836 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753029Ab3IEXO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 19:14:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5BA93FF84;
-	Thu,  5 Sep 2013 23:14:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EYhvmIf0xCV7FCgNd4A0UmL7068=; b=mljcdC
-	/YK2gDuvF8l+AH91Qo57uQAmXNN6HOmF/u9O7K58ei+Cp5nunH69VC6bY6tRlI5+
-	Iy8E9t2/u2J7DOXosYHT8gyoUVyaKAogzqbQ8/TTTyacMpe98li6EOQW/xrTuTPe
-	e9SOMgb+YkSAKvzjg2ACS5r5rELAZQga9Bi+Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s+nMNMdQkbAVHxWpvZZnMNerHbDiPuw9
-	TEmXC+tuw4D5LXng1WrDrVlMI/MX45S0K03SlZiZDSeSOa9CHxtQFKyLLR84hSQl
-	AdFlCE5beJd4wl0md8xObe81lWqpWY+fSL2B02nQ7QasUccFfTgpHDymtOo8843O
-	Fa307M+LHcg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7ABBE3FF83;
-	Thu,  5 Sep 2013 23:14:57 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5E7913FF75;
-	Thu,  5 Sep 2013 23:14:55 +0000 (UTC)
-In-Reply-To: <20130905190249.GA1532@dcvr.yhbt.net> (Eric Wong's message of
-	"Thu, 5 Sep 2013 19:02:49 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F9E9DF48-1680-11E3-A6E5-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753966Ab3IEXX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 19:23:27 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49867 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753920Ab3IEXX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 19:23:26 -0400
+Received: (qmail 10709 invoked by uid 102); 5 Sep 2013 23:23:26 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 Sep 2013 18:23:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Sep 2013 19:23:22 -0400
+Content-Disposition: inline
+In-Reply-To: <vpqioyfukkw.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234003>
 
-Eric Wong <normalperson@yhbt.net> writes:
+On Thu, Sep 05, 2013 at 09:36:47PM +0200, Matthieu Moy wrote:
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->> "Uli Heller" <uli.heller@daemons-point.com> writes:
->> > Nevertheless, I think it makes sense to fix the issue within the
->> > git perl module Ra.pm, too. The change frees the private copy of
->> > the remote access object on termination which prevents the error
->> > from happening.
->
->> Thanks.  Please sign-off your patch.
->> 
->> I am Cc'ing Kyle McKay who apparently had some experience working
->> with git-svn with newer svn that can only use serf, hoping that we
->> can get an independent opinion/test just to be sure.  Also Cc'ed is
->> Eric Wong who has been the official git-svn area expert, but I
->> understand that Eric hasn't needed to use git-svn for quite a while,
->> so it is perfectly fine if he does not have any comment on this one.
->> 
->> We may want to find a volunteer to move "git svn" forward as a new
->> area expert (aka subsystem maintainer), by the way.
->
-> Correct, git-svn has the effect of being self-obsoleting.
->
-> I agree with adding a workaround for broken things, however
-> I suggest a code comment explaining why it is necessary.
-> The commit message is important, too, but might get harder to track
-> down if there's code movement/refactoring in the future.
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > One caveat, though.  The name "oldStyle" will become problematic,
+> > when we want to remove some wart in the output format long after
+> > this "no comment prefix by default" series lands.  Some people may
+> > expect setting oldStyle=true would give output from 1.8.4 era, while
+> > some others would expect that it would give output from 1.8.5 era
+> > that does not have comment prefix but still has that wart we will
+> > remove down the line.
+> 
+> I'm fine with any name actually (since it is enabled by default, people
+> don't need to know the name to benefit from the new output). Maybe
+> status.displayCommentPrefix was the best name after all.
 
-Thanks for a good suggestion.  I agree that this addition is a good
-example where in-code comment would really help the future readers.
+FWIW, I had the same thought as Junio. I much prefer something like
+status.displayCommentPrefix for clarity and future-proofing.
 
->
->> > +END {
->> > +	$RA = undef;
->> > +	$ra_invalid = 1;
->> > +}
+As for the feature itself, I am still undecided whether I like it. I've
+tried looking at the output of the series, and it feels weird to me.
+
+Part of it is undoubtedly that my brain is simply used to the other way.
+But it also seems to drop some of the vertical whitespace, which makes
+things feel very crowded. E.g., before:
+
+  # On branch private
+  # Your branch and 'origin/next' have diverged,
+  # and have 472 and 59 different commits each, respectively.
+  #
+  # Untracked files:
+  #       t/foo
+  #       test-obj-pool
+  #       test-string-pool
+  #       test-treap
+  #       test-url-normalize
+  nothing added to commit but untracked files present
+
+after:
+
+  On branch private
+  Your branch and 'origin/next' have diverged,
+  and have 472 and 59 different commits each, respectively.
+  Untracked files:
+          t/foo
+          test-obj-pool
+          test-string-pool
+          test-treap
+          test-url-normalize
+  nothing added to commit but untracked files present
+
+The blank before "Untracked files" was dropped (was this intentional? I
+didn't see any note of it in the discussion), and the bottom "nothing
+added" line butts against the untracked list more obviously, because
+they now all have the same comment indentation.
+
+I wonder if it would look a little nicer as:
+
+  On branch private
+  Your branch and 'origin/next' have diverged,
+  and have 472 and 59 different commits each, respectively.
+
+  Untracked files:
+          t/foo
+          test-obj-pool
+          test-string-pool
+          test-treap
+          test-url-normalize
+
+  nothing added to commit but untracked files present
+
+As an orthogonal thing to your patch, I feel like the first two items
+(branch and ahead/behind) are kind of squished and oddly formatted (in
+both the original and yours). Could we do something like:
+
+  Your branch 'private' and its upstream 'origin/next' have diverged,
+  and have 472 and 59 different commits each, respectively.
+
+when we are going to print both?  That's 69 characters, which might
+overrun 80 if you have long branch names, but we could also line-break
+it differently.
+
+That doesn't need to be part of your topic, but while we are talking
+about the format of the message, maybe it is worth thinking about.
+
+-Peff
