@@ -1,115 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] pathspec: catch prepending :(prefix) on pathspec with short magic
-Date: Thu, 05 Sep 2013 11:39:56 -0700
-Message-ID: <xmqqppsni03n.fsf@gitster.dls.corp.google.com>
-References: <1378352440-25410-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH] git-svn: Fix termination issues for remote svn connections
+Date: Thu, 05 Sep 2013 11:48:54 -0700
+Message-ID: <xmqqli3bhzop.fsf@gitster.dls.corp.google.com>
+References: <6970c0cab40c60195c8f042a3b930a0a.squirrel@83.236.132.106>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 05 20:40:35 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Kyle J. McKay" <mackyle@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>
+To: "Uli Heller" <uli.heller@daemons-point.com>
+X-From: git-owner@vger.kernel.org Thu Sep 05 20:49:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHeTY-0005Dv-33
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 20:40:16 +0200
+	id 1VHec5-0007Qn-GA
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 20:49:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756579Ab3IESkK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Sep 2013 14:40:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44633 "EHLO
+	id S1755366Ab3IEStA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 14:49:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34299 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756490Ab3IESkB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Sep 2013 14:40:01 -0400
+	id S1753354Ab3IESs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 14:48:59 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2A003F1DF;
-	Thu,  5 Sep 2013 18:40:00 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 053B33FA7C;
+	Thu,  5 Sep 2013 18:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=5XcZkuYwc40+
-	gq+twOHLcLVNghk=; b=Da5tj4d3vlrtU8UkO7eAm7/lIsFvGshQnnD7WZNhm+v7
-	dekiO273qEk2CKBMicuB5Xy1kmPKT32zODkA6te4Pz8VTVtL2DEmaCrFzpPUPdn8
-	2hNWA76Pno+nhttHkhbEf9w5nNi+QynOG4LHaReJCbaZqJH1jhz/+/szmFGdXJM=
+	:content-type; s=sasl; bh=rplDnIv4ROe2itlw9JS/k0M0dZ0=; b=tpVHx4
+	Nz8Oep37FSevw47gPq6dVgY8iNB9bQA6zuYOiaO8dXrB8kU2zH5+U2yKFCn35VjC
+	VDT9a7sgg8ReZ5cKT1YynRTeQUt0dXyQUCQShze1YjtOaF4Aq0FH+OeeJNzXfBaC
+	PRMpFfOjUULRw+Mu/TvEyfaK4uGOnqBX6aGjw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=S5naox
-	8xjMpICgE/rLw0XL+Kn04QKloxgAUvvtELpmt1yux7e00EqZWNSLS6XPZkd0wxYH
-	AhpS0JWRhCzerudl1jo65udLikAL0Sgl1IQsfnBNvNCXKp39Mx+mW1u4nxll/iO6
-	8GFPPKpnFX4c8pVQJQlg7B6CqpD4LkndpBFh0=
+	:content-type; q=dns; s=sasl; b=TeNmuY1G998IZkadKO4TgWW/EMrPY+pN
+	9G8+siKfBwA1Vb+lc4iCvHuLNJ7Bh57VIs4Sznn0KJFflYmuPJuB1wLkqIcYUd31
+	OmyC4Z3hhm5lGkadMGZhmWX68VDMjwVE1Gj5g71W2PJk69x2qtoClmNUeSaP7icq
+	qxbAJ+9/TMo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D24B43F1DD;
-	Thu,  5 Sep 2013 18:40:00 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA5403FA7B;
+	Thu,  5 Sep 2013 18:48:58 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12E4A3F1D6;
-	Thu,  5 Sep 2013 18:39:58 +0000 (UTC)
-In-Reply-To: <1378352440-25410-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 5 Sep
- 2013 10:40:38 +0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F34B3FA71;
+	Thu,  5 Sep 2013 18:48:56 +0000 (UTC)
+In-Reply-To: <6970c0cab40c60195c8f042a3b930a0a.squirrel@83.236.132.106> (Uli
+	Heller's message of "Tue, 3 Sep 2013 09:35:29 +0200 (CEST)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9150A730-165A-11E3-941F-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D1EF2D92-165B-11E3-89A7-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233979>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+"Uli Heller" <uli.heller@daemons-point.com> writes:
 
-> :(prefix) is in the long form. Suppose people pass :!foo with '!'
-> being the short form of magic 'bar', the code will happily turn it to
-> :(prefix..)!foo, which makes '!' part of the path and no longer a mag=
-ic.
+> When using git-svn in combination with serf-1.2.1 core dumps are
+> created on termination. This is caused by a bug in serf, a fix for
+> the bug exists (see https://code.google.com/p/serf/source/detail?r=2146).
+> Nevertheless, I think it makes sense to fix the issue within the
+> git perl module Ra.pm, too. The change frees the private copy of
+> the remote access object on termination which prevents the error
+> from happening.
 >
-> The correct form must be ':(prefix..,bar)foo', but as so far we
-> haven't had any magic in short form yet (*), the code to convert from
-> short form to long one will be inactive anyway. Let's postpone it
-> until a real short form magic appears.
+> Note: Since subversion-1.8.0 and later do require serf-1.2.1 or later,
+> the core dumps typically do show up when upgrading to a recent version
+> of subversion.
 >
-> (*) The short form magic '/' is a special case and won't be caught by
-> this die(), which is correct. When '/' magic is detected, prefixlen i=
-s
-> set back to 0 and the whole "if (prefixlen..)" block is skipped.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+> Credits: Jonathan Lambrechts for proposing a fix to Ra.pm.
+> Evgeny Kotkov and Ivan Zhakov for fixing the issue in serf and
+> pointing me to that fix.
 > ---
->  fixes on top of nd/magic-pathspec.
+
+Thanks.  Please sign-off your patch.
+
+I am Cc'ing Kyle McKay who apparently had some experience working
+with git-svn with newer svn that can only use serf, hoping that we
+can get an independent opinion/test just to be sure.  Also Cc'ed is
+Eric Wong who has been the official git-svn area expert, but I
+understand that Eric hasn't needed to use git-svn for quite a while,
+so it is perfectly fine if he does not have any comment on this one.
+
+We may want to find a volunteer to move "git svn" forward as a new
+area expert (aka subsystem maintainer), by the way.
+
+
+
+>  perl/Git/SVN/Ra.pm | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
->  pathspec.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
+> index 75ecc42..78dd346 100644
+> --- a/perl/Git/SVN/Ra.pm
+> +++ b/perl/Git/SVN/Ra.pm
+> @@ -32,6 +32,11 @@ BEGIN {
+>  	}
+>  }
 >
-> diff --git a/pathspec.c b/pathspec.c
-> index d9f4143..62fde50 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -231,7 +231,9 @@ static unsigned prefix_pathspec(struct pathspec_i=
-tem *item,
->  		const char *start =3D elt;
->  		if (prefixlen && !literal_global) {
->  			/* Preserve the actual prefix length of each pattern */
-> -			if (long_magic_end) {
-> +			if (short_magic)
-> +				die("BUG: prefixing on short magic is not supported");
-> +			else if (long_magic_end) {
->  				strbuf_add(&sb, start, long_magic_end - start);
->  				strbuf_addf(&sb, ",prefix:%d", prefixlen);
->  				start =3D long_magic_end;
-
-Good.
-
-I wonder if we should start thinking about removing the big
-"NEEDSWORK" comment in front of this function.
-
-Also the pathspec_magic[] array was the table-driven way that was
-meant to be enhanced to fit future needs to parse all supported
-types of pathspec magic, but it seems that "prefix:12" magic is
-implemented using a custom/special case code.  We may want to see if
-we want to enrich the parser to fold this to match the table-driven
-approach better someday---this is not urgent as we are not adding
-any new pathspec magic now.
-
-Will queue.  Thanks.
+> +END {
+> +	$RA = undef;
+> +	$ra_invalid = 1;
+> +}
+> +
+>  sub _auth_providers () {
+>  	my @rv = (
+>  	  SVN::Client::get_simple_provider(),
