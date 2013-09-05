@@ -1,147 +1,150 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: RE: [PATCH] git-gui: Modify push dialog to support Gerrit review
-Date: Thu, 5 Sep 2013 23:04:02 +0200
-Message-ID: <20130905210402.GA2939@sandbox-ub>
-References: <20130904150853.52EC4121B7E@jed-dev-01.labnet>
- <522827CE.5040303@viscovery.net>
- <F8C23E99F5C6884EB99E2A1966D743637F3619A6@cph-gen-exch01.napatech.com>
- <5228476A.2070505@viscovery.net>
- <F8C23E99F5C6884EB99E2A1966D743637F3619CB@cph-gen-exch01.napatech.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 7/8] update-ref: support multiple simultaneous updates
+Date: Thu, 05 Sep 2013 14:23:52 -0700
+Message-ID: <xmqqk3ivgdxz.fsf@gitster.dls.corp.google.com>
+References: <cover.1378142795.git.brad.king@kitware.com>
+	<cover.1378307529.git.brad.king@kitware.com>
+	<ad27a96b70198e837ac61995a1328960e10072bc.1378307529.git.brad.king@kitware.com>
+	<xmqqsixkmonq.fsf@gitster.dls.corp.google.com>
+	<52279107.2070205@kitware.com>
+	<xmqqd2ool1ks.fsf@gitster.dls.corp.google.com>
+	<5228EA62.7030606@kitware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"spearce@spearce.org" <spearce@spearce.org>,
-	Pat Thoyts <patthoyts@gmail.com>
-To: =?iso-8859-1?Q?J=F8rgen?= Edelbo <jed@napatech.com>
-X-From: git-owner@vger.kernel.org Thu Sep 05 23:04:21 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Brad King <brad.king@kitware.com>
+X-From: git-owner@vger.kernel.org Thu Sep 05 23:24:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHgiy-00041G-0Y
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 23:04:20 +0200
+	id 1VHh2M-0003uk-6S
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 23:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755028Ab3IEVEP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Sep 2013 17:04:15 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.31.94]:46529 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754584Ab3IEVEK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 17:04:10 -0400
-Received: from [77.20.34.36] (helo=sandbox-ub)
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1VHgil-0005xe-3H; Thu, 05 Sep 2013 23:04:07 +0200
-Content-Disposition: inline
-In-Reply-To: <F8C23E99F5C6884EB99E2A1966D743637F3619CB@cph-gen-exch01.napatech.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1753720Ab3IEVYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 17:24:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39139 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752124Ab3IEVYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 17:24:01 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B564A3F831;
+	Thu,  5 Sep 2013 21:24:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HWuyHiraS7a5KXRinZFezyoUSHw=; b=qQBIn8
+	yGzxIRwF9TgnIgV0TUi8w2bZHRWvSgmNFlBEJ+Gf11/6Y7vOQxB1IFSUhacpFk41
+	N4pg8gVXL6rJsVVTaVpNE264Ixm1UTl3PsswdPOW8eMlSY+tPuBH3exdESm3fjtN
+	7iJF0L5o41G+NUJQ0kHfHE0lAlKbatyUITl2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r9nvD8cwRcKxz4rSzsZl0g9Sz/smzxrL
+	/VDpfRs2nnYAeHTvV45ptj//K6E0nz79t8WDFX9RHtlqyEWcBS7+P59f4/MkPPRk
+	BEluYiJeCnEIn3PiFfAKKNv4IkmXDt4xLWsg8VjJ4BGRV2tACciMX1Hq7Jj5AZJ3
+	BTR6/wPyKEk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 922F93F830;
+	Thu,  5 Sep 2013 21:24:00 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 537B63F82A;
+	Thu,  5 Sep 2013 21:23:58 +0000 (UTC)
+In-Reply-To: <5228EA62.7030606@kitware.com> (Brad King's message of "Thu, 05
+	Sep 2013 16:32:34 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7A47C728-1671-11E3-91AF-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233993>
 
-On Thu, Sep 05, 2013 at 09:18:25AM +0000, J=F8rgen Edelbo wrote:
-> > -----Original Message-----
-> > From: Johannes Sixt [mailto:j.sixt@viscovery.net]
-> > Sent: 5. september 2013 10:57
-> >=20
-> > Please do not top-post.
-> >=20
-> > Am 9/5/2013 10:29, schrieb J=F8rgen Edelbo:
-> > > -----Original Message----- From: Johannes Sixt
-> > >> Am 9/2/2013 10:54, schrieb Joergen Edelbo:
-> > >>> Changes done:
-> > >>>
-> > >>> Remove selection of branches to push - push always HEAD. This c=
-an be
-> > >>> justified by the fact that this far the most common thing to do=
-=2E
-> > >>
-> > >> What are your plans to support a topic-based workflow? "Far the =
-most
-> > >> common thing to happen" is that someone forgets to push complete=
-d
-> > >> topics. With this change, aren't those people forced to relingui=
-sh
-> > >> their current work because they have to checkout the completed t=
-opics
-> > >> to push them?
-> > >
-> > > I am not quite sure what your concern is.
-> >=20
-> > When I have completed topics A and B, but forgot to push them, and =
-now I
-> > am working on topic C, how do I push topics A and B?
-> >=20
-> > You say I can only push HEAD. I understand this that I have to stop=
- work on C
-> > (perhaps commit or stash any unfinished work), then checkout A, pus=
-h it,
-> > checkout B, push it, checkout C and unstash the unfinished work. If=
- my
-> > understanding is correct, the new restriction is a no-go.
->=20
-> Ok, this way of working is not supported. It just never occurred to m=
-e that
-> you would work this way. Forgetting to push something that you have j=
-ust=20
-> completed is very far from what I am used to. I think it comes most n=
-atural
-> to push what you have done before changing topic. The reason I make a=
- commit
-> is to get it out of the door.
+Brad King <brad.king@kitware.com> writes:
 
-=46WIW, I also think that we should keep the box which allows you to
-select the branch to push. I did not realize that you were removing it
-when I first glanced at your patch.
+> On 09/04/2013 05:27 PM, Junio C Hamano wrote:
+>> I am not saying the above is the best format, but the point is that
+>> the mode of the operation defines the structure
+>
+> Great, thanks for your comments.  Based on that I've prototyped a
+> new format.  Rather than jumping straight to the patch, here is my
+> proposed format documentation for review:
+>
+> -------------------------------------------------------------------------
+> With `--stdin`, update-ref reads instructions from standard input and
+> performs all modifications together.  Specify commands of the form:
+>
+> 	create SP <ref> SP <newvalue> LF
+> 	update SP <ref> SP <newvalue> [SP <oldvalue>] LF
+> 	delete SP <ref> [SP <oldvalue>] LF
+> 	verify SP <ref> [SP <oldvalue>] LF
+> 	option SP <opt> LF
+>
+> Quote fields containing whitespace as if they were strings in C source
+> code.  Alternatively, use `-z` to specify commands without quoting:
+>
+> 	create SP <ref> NUL <newvalue> NUL
+> 	update SP <ref> NUL <newvalue> NUL [<oldvalue>] NUL
+> 	delete SP <ref> NUL [<oldvalue>] NUL
+> 	verify SP <ref> NUL [<oldvalue>] NUL
+> 	option SP <opt> NUL
 
-Even if your reasoning that pushing the currently checked out branch is
-correct: This box has been around for too long, so it will annoy people
-that got used to the fact that they can select the branch to push.
+That SP in '-z' format looks strange.  Was there a reason why NUL
+was inappropriate?
 
-Another problem: It is not very intuitive to only select the branch to
-push to. You can do that on the command line but IMO using
+> Lines of any other format or a repeated <ref> produce an error.
+> Command meanings are:
+>
+> create::
+> 	Create <ref> with <newvalue> only if it does not exist.
+>
+> update::
+> 	Update <ref> to be <newvalue>, verifying <oldvalue> if given.
+> 	Specify a zero <newvalue> to delete a ref and/or a zero
+> 	<oldvalue> to make sure that a ref does not exist.
+>
+> delete::
+> 	Delete <ref>, verifying <oldvalue> if given.
+>
+> verify::
+> 	Verify <ref> against <oldvalue> but do not change it.  If
+> 	<oldvalue> zero or missing, the ref must not exist.
+>
+> option::
+> 	Specify an option to take effect for following commands.
+> 	Valid options are `deref` and `no-deref` to specify whether
+> 	to dereference symbolic refs.
 
-	git push origin HEAD:refs/heads/<branchname>
+This last one is somewhat peculiar, especially because it says
+"following command*s*".
 
-is way less common than
+How would I request to update refs HEAD and next in an all-or-none
+fashion, while applying 'no-deref' only to HEAD but not next?
 
-	git push origin <branchname>
+	update refs/heads/next <newvalue>
+	option --no-deref
+        update HEAD <newvalue>
 
-and I think that should also be reflected in the gui. It might be more
-common for a gerrit user but for the typical git user without gerrit it
-is not.
+sounds somewhat convoluted.
 
-So to make it easy for the user to transition from gui to commandline
-and back with your patch I would expect: The user selects a branch
-to push. The new "Destination Branches" section automatically selects/s=
-hows
-the same name for the default case as destination (like the cli). So
-if I only select the branch to push it behaves the same as before.
+When I said "create or update" in the message you are responding to,
+I did not mean that we should have two separate commands.  The
+regular command line does create-or-update; if it exists already, it
+is an update, and if it does not, it is a create.
 
-If you detect (I assume that is possible somehow) that the remote is a
-gerrit remote: "Push for Gerrit review" would automatically be ticked a=
-nd
-the branch a git pull would merge (e.g. the one from branch.<name>.merg=
-e)
-is selected as the destination branch under refs/for/... . If there is
-no config for that, fallback to "master".
+If we were to have two, I would say we should have:
 
-This is what I would expect with no further extension of the current gi=
-t
-command line behavior and config options. So that way your patch will b=
-e
-an *extension* and not a change of behavior.
+	create-or-update <ref> <newvalue> [<oldvalue>]
+	create-or-update-no-deref <ref> <newvalue> [<oldvalue>]
+        
+An old value of 0{40} would mean "I should be the one creating; if
+somebody else created it while I was preparing this request, please
+fail".
 
-Another unrelated thing that is currently left out: You can transport
-the local branchname when pushing to the magical gerrit refs/for/... . =
-I
-would like to see that appended as well. But opposed to the branch
-selection that is not a show stopper for the patch more a side note.
+Similarly for delete:
 
-Cheers Heiko
+	delete <ref> [<oldvalue>]
+        delete-no-deref <ref> [<oldvalue>]
+
+Also how would one set the reflog message for the proposed update?
