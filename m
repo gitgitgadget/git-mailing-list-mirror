@@ -1,121 +1,135 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH v4 7/8] update-ref: support multiple simultaneous updates
-Date: Thu, 05 Sep 2013 16:32:34 -0400
-Message-ID: <5228EA62.7030606@kitware.com>
-References: <cover.1378142795.git.brad.king@kitware.com> <cover.1378307529.git.brad.king@kitware.com> <ad27a96b70198e837ac61995a1328960e10072bc.1378307529.git.brad.king@kitware.com> <xmqqsixkmonq.fsf@gitster.dls.corp.google.com> <52279107.2070205@kitware.com> <xmqqd2ool1ks.fsf@gitster.dls.corp.google.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH v2] Document pack v4 format
+Date: Thu, 05 Sep 2013 17:04:03 -0400 (EDT)
+Message-ID: <alpine.LFD.2.03.1309051655310.14472@syhkavp.arg>
+References: <1377602225-30439-1-git-send-email-pclouds@gmail.com>
+ <1377917393-28460-1-git-send-email-pclouds@gmail.com>
+ <alpine.LFD.2.03.1309030156410.14472@syhkavp.arg>
+ <alpine.LFD.2.03.1309030231350.14472@syhkavp.arg>
+ <CACsJy8CZP+55nhfEbgRGa9=y0PyExyHt_seiSc23kB31-_c1Hg@mail.gmail.com>
+ <CACsJy8CzpW_xsoxU=+OE6ssbnPu9tyAqRten0=Q5cxPUZ4aeMw@mail.gmail.com>
+ <alpine.LFD.2.03.1309042350560.14472@syhkavp.arg>
+ <CACsJy8BeU_01c0f5RJExcYo7xGETnduKOw-_shszHd0ZFgZDXw@mail.gmail.com>
+ <alpine.LFD.2.03.1309050024090.14472@syhkavp.arg>
+ <CACsJy8CX=4Oz_h2NtS3FRdK6_zdFksa+JR5C6Z-z3Y70PLAsyQ@mail.gmail.com>
+ <alpine.LFD.2.03.1309050131000.14472@syhkavp.arg>
+ <CACsJy8DKL9KnPAXcf+NPU_Y5J1Dz_pYxSpONN4LxcQVi1JOBYw@mail.gmail.com>
+ <alpine.LFD.2.03.1309051311070.14472@syhkavp.arg>
+ <xmqq1u53hv6l.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 05 22:34:49 2013
+X-From: git-owner@vger.kernel.org Thu Sep 05 23:04:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHgGO-00070A-IC
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 22:34:48 +0200
+	id 1VHgiq-0003z4-Di
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 23:04:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757678Ab3IEUee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 16:34:34 -0400
-Received: from na3sys009aog131.obsmtp.com ([74.125.149.247]:54192 "HELO
-	na3sys009aog131.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1757640Ab3IEUeb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Sep 2013 16:34:31 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]) (using TLSv1) by na3sys009aob131.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUijq1w4CIXplV6V/DqBS4U6Nh9GkOizE@postini.com; Thu, 05 Sep 2013 13:34:31 PDT
-Received: by mail-oa0-f43.google.com with SMTP id i10so2995354oag.30
-        for <git@vger.kernel.org>; Thu, 05 Sep 2013 13:34:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=z35wsUu6CekmLoT+OiqTNRv/Awg+c6Ias2WPjGVhtUY=;
-        b=mCK0UI5MvJ5AnGouvZwuguHOKh1SeMrjtBGxIAgDEmmx6CVVUGdgz4QZAfhwS0rfN7
-         qH+N7C7KgvVRslZ0/UlRyYAWmkutPGBNGeQv03GkA+BRN8QMBMlYotIx7p1Yfn5KVWPt
-         qPDnhnojG/kS7N2WcosfvOz9J65I9RAfx8ns779Du8nPjdEPwCuP1qRYmJe8gqNs3sI8
-         /+ApFgpcnkvA++WrMMsftHEF0LSfJb9jeCa2EJ2NGkydf7mARf/9m6Fn3hzx+IsuaMeE
-         pimoM7NTna020BrZfOhGLTWGdy1sTeER4otqFNXjQlwbQK2KU2XaHKcX81caqNUB0Xcn
-         whjw==
-X-Gm-Message-State: ALoCoQl46sE3iy5PmAqOtCE0iWgEp0KedfiRbnDVsBMiBccsHwCOl0MgB8x7u9v9TxsyecOLMpbYWmXfxR/yYNp404GteY6dmpLv1xtWtvdS7esP7UHp/y7U87QgU9AIlgn1k7vT6b4ZqQF425Li6AnmoObvzlVOdA==
-X-Received: by 10.60.45.102 with SMTP id l6mr7866660oem.36.1378413270701;
-        Thu, 05 Sep 2013 13:34:30 -0700 (PDT)
-X-Received: by 10.60.45.102 with SMTP id l6mr7866655oem.36.1378413270603;
-        Thu, 05 Sep 2013 13:34:30 -0700 (PDT)
-Received: from [192.168.1.225] (tripoint.kitware.com. [66.194.253.20])
-        by mx.google.com with ESMTPSA id r3sm32870110oep.2.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 05 Sep 2013 13:34:29 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
-In-Reply-To: <xmqqd2ool1ks.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.4
+	id S1754519Ab3IEVEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 17:04:07 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:30720 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752124Ab3IEVEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 17:04:06 -0400
+Received: from yoda.home ([70.83.209.44]) by VL-VM-MR001.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0MSO001AO7URLTC0@VL-VM-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 05 Sep 2013 17:04:03 -0400 (EDT)
+Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
+ with ESMTPSA id 5DAC92DA0547; Thu, 05 Sep 2013 17:04:03 -0400 (EDT)
+In-reply-to: <xmqq1u53hv6l.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233991>
 
-On 09/04/2013 05:27 PM, Junio C Hamano wrote:
-> I am not saying the above is the best format, but the point is that
-> the mode of the operation defines the structure
+On Thu, 5 Sep 2013, Junio C Hamano wrote:
 
-Great, thanks for your comments.  Based on that I've prototyped a
-new format.  Rather than jumping straight to the patch, here is my
-proposed format documentation for review:
+> Nicolas Pitre <nico@fluxnic.net> writes:
+> 
+> > On Thu, 5 Sep 2013, Duy Nguyen wrote:
+> >
+> >> On Thu, Sep 5, 2013 at 12:39 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> >> > Now the pack index v3 probably needs to be improved a little, again to
+> >> > accommodate completion of thin packs.  Given that the main SHA1 table is
+> >> > now in the main pack file, it should be possible to still carry a small
+> >> > SHA1 table in the index file that corresponds to the appended objects
+> >> > only. This means that a SHA1 search will have to first use the main SHA1
+> >> > table in the pack file as it is done now, and if not found then use the
+> >> > SHA1 table in the index file if it exists.  And of course
+> >> > nth_packed_object_sha1() will have to be adjusted accordingly.
+> >> 
+> >> What if the sender prepares the sha-1 table to contain missing objects
+> >> in advance? The sender should know what base objects are missing. Then
+> >> we only need to append objects at the receiving end and verify that
+> >> all new objects are also present in the sha-1 table.
+> >
+> > I do like this idea very much.  And that doesn't increase the thin pack 
+> > size as the larger SHA1 table will be compensated by a smaller sha1ref 
+> > encoding in those objects referring to the missing ones.
+> 
+> Let me see if I understand the proposal correctly.  Compared to a
+> normal pack-v4 stream, a thin pack-v4 stream:
+> 
+>  - has all the SHA-1 object names involved in the stream in its main
+>    object name table---most importantly, names of objects that
+>    "thin" optimization omits from the pack data body are included;
+> 
+>  - uses the SHA-1 object name table offset to refer to other
+>    objects, even to ones that thin stream will not transfer in the
+>    pack data body;
+> 
+>  - is completed at the receiving end by appending the data for the
+>    objects that were not transferred due to the "thin" optimization.
+> 
+> So the invariant "all objects contained in the pack" in:
+> 
+>  - A table of sorted SHA-1 object names for all objects contained in
+>    the pack.
+> 
+> that appears in Documentation/technical/pack-format.txt is still
+> kept at the end, and more importantly, any object that is mentioned
+> in this table can be reconstructed by using pack data in the same
+> packfile without referencing anything else.  Most importantly, if we
+> were to build a v2 .idx file for the resulting .pack, the list of
+> object names in the .idx file would be identical to the object names
+> in this table in the .pack file.
 
--------------------------------------------------------------------------
-With `--stdin`, update-ref reads instructions from standard input and
-performs all modifications together.  Specify commands of the form:
+That is right.
 
-	create SP <ref> SP <newvalue> LF
-	update SP <ref> SP <newvalue> [SP <oldvalue>] LF
-	delete SP <ref> [SP <oldvalue>] LF
-	verify SP <ref> [SP <oldvalue>] LF
-	option SP <opt> LF
+> If that is the case, I too like this.
+> 
+> I briefly wondered if it makes sense to mention objects that are
+> often referred to that do not exist in the pack in this table
+> (e.g. new commits included in this pack refer to a tree object that
+> has not changed for ages---their trees mention this subtree using a
+> "SHA-1 reference encoding" and being able to name the old,
+> unchanging tree with an index to the object table may save space),
+> but that would break the above invariant in a big way---some objects
+> mentioned in the table may not exist in the packfile itself---and it
+> probably is not a good idea.
 
-Quote fields containing whitespace as if they were strings in C source
-code.  Alternatively, use `-z` to specify commands without quoting:
+Yet, if an old tree that doesn't change is often referred to, it should 
+be possible to have only one such reference in the whole pack and all 
+the other trees can use a delta copy sequence to refer to it.  At this 
+point whether or not the tree being referred to is listed inline or in 
+the SHA1 table doesn't make a big difference.
 
-	create SP <ref> NUL <newvalue> NUL
-	update SP <ref> NUL <newvalue> NUL [<oldvalue>] NUL
-	delete SP <ref> NUL [<oldvalue>] NUL
-	verify SP <ref> NUL [<oldvalue>] NUL
-	option SP <opt> NUL
-
-Lines of any other format or a repeated <ref> produce an error.
-Command meanings are:
-
-create::
-	Create <ref> with <newvalue> only if it does not exist.
-
-update::
-	Update <ref> to be <newvalue>, verifying <oldvalue> if given.
-	Specify a zero <newvalue> to delete a ref and/or a zero
-	<oldvalue> to make sure that a ref does not exist.
-
-delete::
-	Delete <ref>, verifying <oldvalue> if given.
-
-verify::
-	Verify <ref> against <oldvalue> but do not change it.  If
-	<oldvalue> zero or missing, the ref must not exist.
-
-option::
-	Specify an option to take effect for following commands.
-	Valid options are `deref` and `no-deref` to specify whether
-	to dereference symbolic refs.
-
-Use 40 "0" or the empty string to specify a zero value, except that
-with `-z` an empty <oldvalue> is considered missing.
-
-If all <ref>s can be locked with matching <oldvalue>s
-simultaneously, all modifications are performed.  Otherwise, no
-modifications are performed.  Note that while each individual
-<ref> is updated or deleted atomically, a concurrent reader may
-still see a subset of the modifications.
--------------------------------------------------------------------------
-
-Thanks,
--Brad
+> Unlike that broken idea, "include
+> names of the objects that will be appended anyway" approach to help
+> fattening a thin-pack makes very good sense to me.
+> 
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
