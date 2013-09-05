@@ -1,105 +1,104 @@
 From: Nicolas Pitre <nico@fluxnic.net>
-Subject: [PATCH 29/38] pack v4: code to retrieve a name
-Date: Thu, 05 Sep 2013 02:19:52 -0400
-Message-ID: <1378362001-1738-30-git-send-email-nico@fluxnic.net>
+Subject: [PATCH 36/38] pack v4: get tree objects
+Date: Thu, 05 Sep 2013 02:19:59 -0400
+Message-ID: <1378362001-1738-37-git-send-email-nico@fluxnic.net>
 References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
 Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 05 08:20:36 2013
+X-From: git-owner@vger.kernel.org Thu Sep 05 08:20:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHSvj-0007oz-Mk
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 08:20:36 +0200
+	id 1VHSvl-0007oz-9k
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 08:20:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757442Ab3IEGUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 02:20:23 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:21517 "EHLO
+	id S1757499Ab3IEGUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 02:20:34 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:53284 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757380Ab3IEGUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 02:20:21 -0400
+	with ESMTP id S1757402Ab3IEGUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 02:20:22 -0400
 Received: from yoda.home ([70.83.209.44]) by VL-VM-MR006.ip.videotron.ca
  (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MSN00G3W2XQD3A0@VL-VM-MR006.ip.videotron.ca> for
+ 2011)) with ESMTP id <0MSN00G422XQD3A0@VL-VM-MR006.ip.videotron.ca> for
  git@vger.kernel.org; Thu, 05 Sep 2013 02:20:16 -0400 (EDT)
 Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTP id EE4D82DA05F2	for <git@vger.kernel.org>; Thu,
- 05 Sep 2013 02:20:15 -0400 (EDT)
+ with ESMTP id 54A572DA05D6	for <git@vger.kernel.org>; Thu,
+ 05 Sep 2013 02:20:16 -0400 (EDT)
 X-Mailer: git-send-email 1.8.4.38.g317e65b
 In-reply-to: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233897>
-
-The name dictionary is loaded if not already done.  We know it is
-located right after the SHA1 table (20 bytes per object) which is
-itself right after the 12-byte header.
-
-Then the index is parsed from the input buffer and a pointer to the
-corresponding entry is returned.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233898>
 
 Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
 ---
- cache.h        |  3 +++
- packv4-parse.c | 24 ++++++++++++++++++++++++
- 2 files changed, 27 insertions(+)
+ packv4-parse.c | 25 +++++++++++++++++++++++++
+ packv4-parse.h |  2 ++
+ sha1_file.c    |  2 +-
+ 3 files changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 59d9ba7..6ce327e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1015,6 +1015,8 @@ struct pack_window {
- 	unsigned int inuse_cnt;
- };
- 
-+struct packv4_dict;
-+
- extern struct packed_git {
- 	struct packed_git *next;
- 	struct pack_window *windows;
-@@ -1027,6 +1029,7 @@ extern struct packed_git {
- 	unsigned char *bad_object_sha1;
- 	int version;
- 	int index_version;
-+	struct packv4_dict *name_dict;
- 	time_t mtime;
- 	int pack_fd;
- 	unsigned pack_local:1,
 diff --git a/packv4-parse.c b/packv4-parse.c
-index 26894bc..074e107 100644
+index 04eab46..4c218d2 100644
 --- a/packv4-parse.c
 +++ b/packv4-parse.c
-@@ -105,3 +105,27 @@ static struct packv4_dict *load_dict(struct packed_git *p, off_t *offset)
- 	*offset = curpos;
- 	return dict;
+@@ -365,3 +365,28 @@ static int decode_entries(struct packed_git *p, struct pack_window **w_curs,
+ 
+ 	return 0;
  }
 +
-+static void load_name_dict(struct packed_git *p)
++void *pv4_get_tree(struct packed_git *p, struct pack_window **w_curs,
++		   off_t offset, unsigned long size)
 +{
-+	off_t offset = 12 + p->num_objects * 20;
-+	struct packv4_dict *names = load_dict(p, &offset);
-+	if (!names)
-+		die("bad pack name dictionary in %s", p->pack_name);
-+	p->name_dict = names;
-+}
++	unsigned long avail;
++	unsigned int nb_entries;
++	unsigned char *dst, *dcp;
++	const unsigned char *src, *scp;
++	int ret;
 +
-+const unsigned char *get_nameref(struct packed_git *p, const unsigned char **srcp)
-+{
-+	unsigned int index;
++	src = use_pack(p, w_curs, offset, &avail);
++	scp = src;
++	nb_entries = decode_varint(&scp);
++	if (scp == src)
++		return NULL;
 +
-+	if (!p->name_dict)
-+		load_name_dict(p);
-+
-+	index = decode_varint(srcp);
-+	if (index >= p->name_dict->nb_entries) {
-+		error("%s: index overflow", __func__);
++	dst = xmallocz(size);
++	dcp = dst;
++	ret = decode_entries(p, w_curs, offset, 0, nb_entries, &dcp, &size, 0);
++	if (ret < 0 || size != 0) {
++		free(dst);
 +		return NULL;
 +	}
-+	return p->name_dict->data + p->name_dict->offsets[index];
++	return dst;
 +}
+diff --git a/packv4-parse.h b/packv4-parse.h
+index 40aa75a..5f9d809 100644
+--- a/packv4-parse.h
++++ b/packv4-parse.h
+@@ -3,5 +3,7 @@
+ 
+ void *pv4_get_commit(struct packed_git *p, struct pack_window **w_curs,
+ 		     off_t offset, unsigned long size);
++void *pv4_get_tree(struct packed_git *p, struct pack_window **w_curs,
++		   off_t offset, unsigned long size);
+ 
+ #endif
+diff --git a/sha1_file.c b/sha1_file.c
+index b57d9f8..79e1293 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2177,7 +2177,7 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
+ 			if (type == OBJ_COMMIT) {
+ 				data = pv4_get_commit(p, &w_curs, curpos, size);
+ 			} else {
+-				die("no pack v4 tree parsing yet");
++				data = pv4_get_tree(p, &w_curs, curpos, size);
+ 			}
+ 			break;
+ 		}
 -- 
 1.8.4.38.g317e65b
