@@ -1,299 +1,103 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 05/38] pack v4: add commit object parsing
-Date: Thu, 5 Sep 2013 12:30:11 +0200
-Message-ID: <20130905103011.GA20919@goldbirke>
-References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
- <1378362001-1738-6-git-send-email-nico@fluxnic.net>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
+Date: Thu, 5 Sep 2013 07:01:03 -0400
+Message-ID: <CAEBDL5VfHObeWZWvj0bnv5x+QF1_DACdU+Ehds6fHUioziHWrQ@mail.gmail.com>
+References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com>
+	<xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
+	<CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com>
+	<xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
+	<20130904081047.GB2582@serenity.lan>
+	<xmqqa9jso69u.fsf@gitster.dls.corp.google.com>
+	<7DC052455C7C4B50A4EAFC1EF63D006C@PhilipOakley>
+	<xmqqr4d4jird.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Sep 05 12:30:36 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Philip Oakley <philipoakley@iee.org>,
+	John Keeping <john@keeping.me.uk>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 05 13:01:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHWpf-000769-2e
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 12:30:35 +0200
+	id 1VHXJP-0003nP-9G
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 13:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965238Ab3IEKa1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Sep 2013 06:30:27 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:55777 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965234Ab3IEKaY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 06:30:24 -0400
-Received: from localhost6.localdomain6 (84-236-67-158.pool.digikabel.hu [84.236.67.158])
-	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
-	id 0MRSY4-1VO5LX3c7s-00StLu; Thu, 05 Sep 2013 12:30:12 +0200
-Content-Disposition: inline
-In-Reply-To: <1378362001-1738-6-git-send-email-nico@fluxnic.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:aEqEo7ivZ13G8vZ/2Zsur3N7QgRCQu4a8NK7WTgHG4s
- 5y1Fu7Huk/+8vOBHKTjLxBNt/JeFFaDSo7e8n5h+EmBU5L8iBC
- zQGGI1EN58d1Uracoo++I8ZwJw5U73LlCrSjHEHjSuEVkP1j+A
- M8U1iaHrgWQzfkjnr7fekC8qKibKaMH7VPkiR4VrfwItdQpCZJ
- cSeKC5+TO6xgB9tKWlFqySS/hM7Wc7rvwNFRkbLtVutrH85s8V
- ta9xdsd/Gxt6MRSOeovbLgOLi/CWER/VXoCEr750VgJMBTDjSJ
- 3utKWf3ubi5QH/chvDCYUo3L9sSLOIaIQRZJptVSkRxdFjRSFg
- SVd32+XCw/AZ47xEAfYP+dN4ub+VSCAa/esIx5YCi
+	id S965170Ab3IELBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 07:01:08 -0400
+Received: from mail-we0-f172.google.com ([74.125.82.172]:62851 "EHLO
+	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964843Ab3IELBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 07:01:05 -0400
+Received: by mail-we0-f172.google.com with SMTP id w61so495564wes.31
+        for <git@vger.kernel.org>; Thu, 05 Sep 2013 04:01:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=+SDdAeo3PfVUuMMBMCAmUJ+XxganN+RAMZbAY0zqKZM=;
+        b=LvqYxdznvaLdIJ4wo6nUhPVovpL+9ugl5woWryBZV+mTv4yijVezhpWnEk096QjeT4
+         U8hrxf8u7EMHl6N1qukWrx5obb/H0jNFrdU0PEYsUPYZmvOOBFaTqIfpLoNXSy51AlY7
+         SYWCFzNa0AfoN6Mr0uLwftHr4M6Fswsw+sN8QYkDEAvXzSjqed1CffZalrMcNbQ5Lned
+         aXsjtQx7oaYr9SDFoj/w4vJEYN9h4uqWi7AiidHLoW4L4uzQsvdHeZyLIM45EHEneA6b
+         HGO7bpwNBQOerY2VSMeXv7zJXRW1IjcEwWdO7vnoE31suTQIqMzJGtcYwqZrlqLR3WE3
+         kl5Q==
+X-Received: by 10.180.38.98 with SMTP id f2mr5865258wik.39.1378378863986; Thu,
+ 05 Sep 2013 04:01:03 -0700 (PDT)
+Received: by 10.180.90.105 with HTTP; Thu, 5 Sep 2013 04:01:03 -0700 (PDT)
+In-Reply-To: <xmqqr4d4jird.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: rpNVo2WSQ-gKjez1zOx45ZmVw5o
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233952>
 
-Hi,
+On Wed, Sep 4, 2013 at 6:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+[snip]
+> When "git pull" stops because what was fetched in FETCH_HEAD does
+> not fast-forward, then what did _you_ do (and with the knowledge you
+> currently have, what would you do)?  In a single project, would you
+> choose to sometimes rebase and sometimes merge, and if so, what is
+> the choice depend on?  "When I am on these selected branches, I want
+> to merge, but on other branches I want to rebase?"
 
+Our team isn't quite proficient enough yet to have a completely rebase
+workflow... though we might have less of a problem if we did.  So,
+several interesting points.  Most of the time, `git pull` would be a
+fast-forward merge.  We typically perform the merges of topic branches
+server-side--we have a build server who checks to make sure the result
+would be successful--and we just hit the big green button on the Merge
+button for the pull request (we use GitHub Enterprise at the moment).
 
-On Thu, Sep 05, 2013 at 02:19:28AM -0400, Nicolas Pitre wrote:
-> Let's create another dictionary table to hold the author and committe=
-r
-> entries.  We use the same table format used for tree entries where th=
-e
-> 16 bit data prefix is conveniently used to store the timezone value.
->=20
-> In order to copy straight from a commit object buffer, dict_add_entry=
-()
-> is modified to get the string length as the provided string pointer i=
-s
-> not always be null terminated.
->=20
-> Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
-> ---
->  packv4-create.c | 98 +++++++++++++++++++++++++++++++++++++++++++++++=
-++++------
->  1 file changed, 89 insertions(+), 9 deletions(-)
->=20
-> diff --git a/packv4-create.c b/packv4-create.c
-> index eccd9fc..5c08871 100644
-> --- a/packv4-create.c
-> +++ b/packv4-create.c
-> @@ -1,5 +1,5 @@
->  /*
-> - * packv4-create.c: management of dictionary tables used in pack v4
-> + * packv4-create.c: creation of dictionary tables and objects used i=
-n pack v4
->   *
->   * (C) Nicolas Pitre <nico@fluxnic.net>
->   *
-> @@ -80,9 +80,9 @@ static void rehash_entries(struct dict_table *t)
->  	}
->  }
-> =20
-> -int dict_add_entry(struct dict_table *t, int val, const char *str)
-> +int dict_add_entry(struct dict_table *t, int val, const char *str, i=
-nt str_len)
->  {
-> -	int i, val_len =3D 2, str_len =3D strlen(str) + 1;
-> +	int i, val_len =3D 2;
-> =20
->  	if (t->ptr + val_len + str_len > t->size) {
+However, nearly as often, we just merge the branch locally because
+someone on the team is doing some manual testing, and it's just
+convenient to finish the process on the command line.  What
+occasionally happens is that you merge the topic locally, but someone
+else has introduced a new commit to master.  We try to preserve the
+mainline ordering of commits, so `git pull` doing a merge underneath
+the hood is undesirable (it moves the newly introduced commit off to
+the side).  Rebasing your current master branch is not the answer
+either, because it picks up the commits introduced by the topic branch
+and rebases those to--at least with the -p option, and without it, the
+results are just as bad).  Instead, we want to unfold our work,
+fast-forward merge the upstream, and the replay our actions--namely
+remerge the topic branch.  It often ends up translating to this:
 
-We need a +1 here on the left side, i.e.
+   $ git reset --hard HEAD~1
+   $ git merge --ff-only @{u}
+   $ git merge topic
+   $ git push
 
-        if (t->ptr + val_len + str_len + 1 > t->size) {
+So what I really want isn't quite rebase.  I'm not sure any of the
+proposed solutions would work.  It'd be really nice to replay only the
+mainline commits, without affecting commits introduced from a topic
+branch.
 
-The str_len variable accounted for the terminating null character
-before, but this patch removes str_len =3D strlen(str) + 1; above, and
-callers specify the length of str without the terminating null in
-str_len.  Thus it can lead to memory corruption, when the new entry
-happens to end at 't->ptr + val_len + str_len' and the line added in
-the next hunk writes the terminating null beyond the end of the
-buffer.  I couldn't create a v4 pack from a current linux repo because
-of this; either glibc detected something or 'git packv4-create'
-crashed.
+At any rate, this preserves the ordering we desire, but feels like a
+less than optimal process.
 
-Sidenote: couldn't we call the 'ptr' field something else, like
-end_offset or end_idx?  It took me some headscratching to figure out
-why is it OK to compare a pointer to an integer above, or use a
-pointer without dereferencing as an index into an array below (because
-ptr is, well, not a pointer after all).
-
->  		t->size =3D (t->size + val_len + str_len + 1024) * 3 / 2;
-> @@ -92,6 +92,7 @@ int dict_add_entry(struct dict_table *t, int val, c=
-onst char *str)
->  	t->data[t->ptr] =3D val >> 8;
->  	t->data[t->ptr + 1] =3D val;
->  	memcpy(t->data + t->ptr + val_len, str, str_len);
-> +	t->data[t->ptr + val_len + str_len] =3D 0;
-> =20
->  	i =3D (t->nb_entries) ?
->  		locate_entry(t, t->data + t->ptr, val_len + str_len) : -1;
-> @@ -107,7 +108,7 @@ int dict_add_entry(struct dict_table *t, int val,=
- const char *str)
->  	t->entry[t->nb_entries].offset =3D t->ptr;
->  	t->entry[t->nb_entries].size =3D val_len + str_len;
->  	t->entry[t->nb_entries].hits =3D 1;
-> -	t->ptr +=3D val_len + str_len;
-> +	t->ptr +=3D val_len + str_len + 1;
-
-Good.
-
-
-Best,
-G=E1bor
-
-
->  	t->nb_entries++;
-> =20
->  	if (t->hash_size * 3 <=3D t->nb_entries * 4)
-> @@ -135,8 +136,73 @@ static void sort_dict_entries_by_hits(struct dic=
-t_table *t)
->  	rehash_entries(t);
->  }
-> =20
-> +static struct dict_table *commit_name_table;
->  static struct dict_table *tree_path_table;
-> =20
-> +/*
-> + * Parse the author/committer line from a canonical commit object.
-> + * The 'from' argument points right after the "author " or "committe=
-r "
-> + * string.  The time zone is parsed and stored in *tz_val.  The retu=
-rned
-> + * pointer is right after the end of the email address which is also=
- just
-> + * before the time value, or NULL if a parsing error is encountered.
-> + */
-> +static char *get_nameend_and_tz(char *from, int *tz_val)
-> +{
-> +	char *end, *tz;
-> +
-> +	tz =3D strchr(from, '\n');
-> +	/* let's assume the smallest possible string to be "x <x> 0 +0000\n=
-" */
-> +	if (!tz || tz - from < 13)
-> +		return NULL;
-> +	tz -=3D 4;
-> +	end =3D tz - 4;
-> +	while (end - from > 5 && *end !=3D ' ')
-> +		end--;
-> +	if (end[-1] !=3D '>' || end[0] !=3D ' ' || tz[-2] !=3D ' ')
-> +		return NULL;
-> +	*tz_val =3D (tz[0] - '0') * 1000 +
-> +		  (tz[1] - '0') * 100 +
-> +		  (tz[2] - '0') * 10 +
-> +		  (tz[3] - '0');
-> +	switch (tz[-1]) {
-> +	default:	return NULL;
-> +	case '+':	break;
-> +	case '-':	*tz_val =3D -*tz_val;
-> +	}
-> +	return end;
-> +}
-> +
-> +static int add_commit_dict_entries(void *buf, unsigned long size)
-> +{
-> +	char *name, *end =3D NULL;
-> +	int tz_val;
-> +
-> +	if (!commit_name_table)
-> +		commit_name_table =3D create_dict_table();
-> +
-> +	/* parse and add author info */
-> +	name =3D strstr(buf, "\nauthor ");
-> +	if (name) {
-> +		name +=3D 8;
-> +		end =3D get_nameend_and_tz(name, &tz_val);
-> +	}
-> +	if (!name || !end)
-> +		return -1;
-> +	dict_add_entry(commit_name_table, tz_val, name, end - name);
-> +
-> +	/* parse and add committer info */
-> +	name =3D strstr(end, "\ncommitter ");
-> +	if (name) {
-> +	       name +=3D 11;
-> +	       end =3D get_nameend_and_tz(name, &tz_val);
-> +	}
-> +	if (!name || !end)
-> +		return -1;
-> +	dict_add_entry(commit_name_table, tz_val, name, end - name);
-> +
-> +	return 0;
-> +}
-> +
->  static int add_tree_dict_entries(void *buf, unsigned long size)
->  {
->  	struct tree_desc desc;
-> @@ -146,13 +212,16 @@ static int add_tree_dict_entries(void *buf, uns=
-igned long size)
->  		tree_path_table =3D create_dict_table();
-> =20
->  	init_tree_desc(&desc, buf, size);
-> -	while (tree_entry(&desc, &name_entry))
-> +	while (tree_entry(&desc, &name_entry)) {
-> +		int pathlen =3D tree_entry_len(&name_entry);
->  		dict_add_entry(tree_path_table, name_entry.mode,
-> -			       name_entry.path);
-> +				name_entry.path, pathlen);
-> +	}
-> +
->  	return 0;
->  }
-> =20
-> -void dict_dump(struct dict_table *t)
-> +void dump_dict_table(struct dict_table *t)
->  {
->  	int i;
-> =20
-> @@ -169,6 +238,12 @@ void dict_dump(struct dict_table *t)
->  	}
->  }
-> =20
-> +static void dict_dump(void)
-> +{
-> +	dump_dict_table(commit_name_table);
-> +	dump_dict_table(tree_path_table);
-> +}
-> +
->  struct idx_entry
->  {
->  	off_t                offset;
-> @@ -205,6 +280,7 @@ static int create_pack_dictionaries(struct packed=
-_git *p)
->  		enum object_type type;
->  		unsigned long size;
->  		struct object_info oi =3D {};
-> +		int (*add_dict_entries)(void *, unsigned long);
-> =20
->  		oi.typep =3D &type;
->  		oi.sizep =3D &size;
-> @@ -213,7 +289,11 @@ static int create_pack_dictionaries(struct packe=
-d_git *p)
->  			    sha1_to_hex(objects[i].sha1), p->pack_name);
-> =20
->  		switch (type) {
-> +		case OBJ_COMMIT:
-> +			add_dict_entries =3D add_commit_dict_entries;
-> +			break;
->  		case OBJ_TREE:
-> +			add_dict_entries =3D add_tree_dict_entries;
->  			break;
->  		default:
->  			continue;
-> @@ -225,7 +305,7 @@ static int create_pack_dictionaries(struct packed=
-_git *p)
->  		if (check_sha1_signature(objects[i].sha1, data, size, typename(typ=
-e)))
->  			die("packed %s from %s is corrupt",
->  			    sha1_to_hex(objects[i].sha1), p->pack_name);
-> -		if (add_tree_dict_entries(data, size) < 0)
-> +		if (add_dict_entries(data, size) < 0)
->  			die("can't process %s object %s",
->  				typename(type), sha1_to_hex(objects[i].sha1));
->  		free(data);
-> @@ -285,6 +365,6 @@ int main(int argc, char *argv[])
->  		exit(1);
->  	}
->  	process_one_pack(argv[1]);
-> -	dict_dump(tree_path_table);
-> +	dict_dump();
->  	return 0;
->  }
-> --=20
-> 1.8.4.38.g317e65b
->=20
->=20
+-John
