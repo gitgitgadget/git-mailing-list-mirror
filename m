@@ -1,32 +1,31 @@
 From: Nicolas Pitre <nico@fluxnic.net>
-Subject: [PATCH 04/38] pack v4: add tree entry mode support to dictionary
- entries
-Date: Thu, 05 Sep 2013 02:19:27 -0400
-Message-ID: <1378362001-1738-5-git-send-email-nico@fluxnic.net>
+Subject: [PATCH 08/38] pack v4: basic SHA1 reference encoding
+Date: Thu, 05 Sep 2013 02:19:31 -0400
+Message-ID: <1378362001-1738-9-git-send-email-nico@fluxnic.net>
 References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
 Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 05 08:21:58 2013
+X-From: git-owner@vger.kernel.org Thu Sep 05 08:22:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHSx3-000050-Pt
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 08:21:58 +0200
+	id 1VHSxC-00009K-Qr
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 08:22:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762687Ab3IEGV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 02:21:56 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:43577 "EHLO
+	id S1762639Ab3IEGVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 02:21:54 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:53284 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755798Ab3IEGUQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 02:20:16 -0400
+	with ESMTP id S1756205Ab3IEGUR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 02:20:17 -0400
 Received: from yoda.home ([70.83.209.44]) by VL-VM-MR006.ip.videotron.ca
  (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MSN00G3Y2XQD3A0@VL-VM-MR006.ip.videotron.ca> for
+ 2011)) with ESMTP id <0MSN00G422XQD3A0@VL-VM-MR006.ip.videotron.ca> for
  git@vger.kernel.org; Thu, 05 Sep 2013 02:20:14 -0400 (EDT)
 Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTP id 9A9DE2DA05F2	for <git@vger.kernel.org>; Thu,
+ with ESMTP id C69942DA066B	for <git@vger.kernel.org>; Thu,
  05 Sep 2013 02:20:14 -0400 (EDT)
 X-Mailer: git-send-email 1.8.4.38.g317e65b
 In-reply-to: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
@@ -34,145 +33,65 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233927>
 
-Augment dict entries with a 16-bit prefix in order to store the file
-mode value of tree entries.
+The SHA1 reference is either an index into a SHA1 table using the variable
+length number encoding, or the literal 20 bytes SHA1 prefixed with a 0.
+
+The index 0 discriminates between an actual index value or the literal
+SHA1.  Therefore when the index is used its value must be increased by 1.
 
 Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
 ---
- packv4-create.c | 56 ++++++++++++++++++++++++++++++++++++--------------------
- 1 file changed, 36 insertions(+), 20 deletions(-)
+ packv4-create.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
 diff --git a/packv4-create.c b/packv4-create.c
-index 00762a5..eccd9fc 100644
+index 012129b..12527c0 100644
 --- a/packv4-create.c
 +++ b/packv4-create.c
-@@ -14,11 +14,12 @@
+@@ -12,6 +12,7 @@
+ #include "object.h"
+ #include "tree-walk.h"
+ #include "pack.h"
++#include "varint.h"
  
  struct data_entry {
  	unsigned offset;
-+	unsigned size;
- 	unsigned hits;
- };
- 
- struct dict_table {
--	char *data;
-+	unsigned char *data;
- 	unsigned ptr;
- 	unsigned size;
- 	struct data_entry *entry;
-@@ -41,18 +42,19 @@ void destroy_dict_table(struct dict_table *t)
- 	free(t);
+@@ -245,6 +246,34 @@ static void dict_dump(void)
+ 	dump_dict_table(tree_path_table);
  }
  
--static int locate_entry(struct dict_table *t, const char *str)
-+static int locate_entry(struct dict_table *t, const void *data, int size)
- {
--	int i = 0;
--	const unsigned char *s = (const unsigned char *) str;
-+	int i = 0, len = size;
-+	const unsigned char *p = data;
- 
--	while (*s)
--		i = i * 111 + *s++;
-+	while (len--)
-+		i = i * 111 + *p++;
- 	i = (unsigned)i % t->hash_size;
- 
- 	while (t->hash[i]) {
- 		unsigned n = t->hash[i] - 1;
--		if (!strcmp(str, t->data + t->entry[n].offset))
-+		if (t->entry[n].size == size &&
-+		    memcmp(t->data + t->entry[n].offset, data, size) == 0)
- 			return n;
- 		if (++i >= t->hash_size)
- 			i = 0;
-@@ -71,23 +73,28 @@ static void rehash_entries(struct dict_table *t)
- 	memset(t->hash, 0, t->hash_size * sizeof(*t->hash));
- 
- 	for (n = 0; n < t->nb_entries; n++) {
--		int i = locate_entry(t, t->data + t->entry[n].offset);
-+		int i = locate_entry(t, t->data + t->entry[n].offset,
-+					t->entry[n].size);
- 		if (i < 0)
- 			t->hash[-1 - i] = n + 1;
- 	}
- }
- 
--int dict_add_entry(struct dict_table *t, const char *str)
-+int dict_add_entry(struct dict_table *t, int val, const char *str)
- {
--	int i, len = strlen(str) + 1;
-+	int i, val_len = 2, str_len = strlen(str) + 1;
- 
--	if (t->ptr + len >= t->size) {
--		t->size = (t->size + len + 1024) * 3 / 2;
-+	if (t->ptr + val_len + str_len > t->size) {
-+		t->size = (t->size + val_len + str_len + 1024) * 3 / 2;
- 		t->data = xrealloc(t->data, t->size);
- 	}
--	memcpy(t->data + t->ptr, str, len);
- 
--	i = (t->nb_entries) ? locate_entry(t, t->data + t->ptr) : -1;
-+	t->data[t->ptr] = val >> 8;
-+	t->data[t->ptr + 1] = val;
-+	memcpy(t->data + t->ptr + val_len, str, str_len);
++/*
++ * Encode an object SHA1 reference with either an object index into the
++ * pack SHA1 table incremented by 1, or the literal SHA1 value prefixed
++ * with a zero byte if the needed SHA1 is not available in the table.
++ */
++static struct pack_idx_entry *all_objs;
++static unsigned all_objs_nr;
++static int encode_sha1ref(const unsigned char *sha1, unsigned char *buf)
++{
++	unsigned lo = 0, hi = all_objs_nr;
 +
-+	i = (t->nb_entries) ?
-+		locate_entry(t, t->data + t->ptr, val_len + str_len) : -1;
- 	if (i >= 0) {
- 		t->entry[i].hits++;
- 		return i;
-@@ -98,8 +105,9 @@ int dict_add_entry(struct dict_table *t, const char *str)
- 		t->entry = xrealloc(t->entry, t->max_entries * sizeof(*t->entry));
- 	}
- 	t->entry[t->nb_entries].offset = t->ptr;
-+	t->entry[t->nb_entries].size = val_len + str_len;
- 	t->entry[t->nb_entries].hits = 1;
--	t->ptr += len + 1;
-+	t->ptr += val_len + str_len;
- 	t->nb_entries++;
- 
- 	if (t->hash_size * 3 <= t->nb_entries * 4)
-@@ -139,7 +147,8 @@ static int add_tree_dict_entries(void *buf, unsigned long size)
- 
- 	init_tree_desc(&desc, buf, size);
- 	while (tree_entry(&desc, &name_entry))
--		dict_add_entry(tree_path_table, name_entry.path);
-+		dict_add_entry(tree_path_table, name_entry.mode,
-+			       name_entry.path);
- 	return 0;
- }
- 
-@@ -148,10 +157,16 @@ void dict_dump(struct dict_table *t)
- 	int i;
- 
- 	sort_dict_entries_by_hits(t);
--	for (i = 0; i < t->nb_entries; i++)
--		printf("%d\t%s\n",
--			t->entry[i].hits,
--			t->data + t->entry[i].offset);
-+	for (i = 0; i < t->nb_entries; i++) {
-+		int16_t val;
-+		uint16_t uval;
-+		val = t->data[t->entry[i].offset] << 8;
-+		val |= t->data[t->entry[i].offset + 1];
-+		uval = val;
-+		printf("%d\t%d\t%o\t%s\n",
-+			t->entry[i].hits, val, uval,
-+			t->data + t->entry[i].offset + 2);
-+	}
- }
- 
- struct idx_entry
-@@ -170,6 +185,7 @@ static int sort_by_offset(const void *e1, const void *e2)
- 		return 1;
- 	return 0;
- }
++	do {
++		unsigned mi = (lo + hi) / 2;
++		int cmp = hashcmp(all_objs[mi].sha1, sha1);
 +
- static int create_pack_dictionaries(struct packed_git *p)
++		if (cmp == 0)
++			return encode_varint(mi + 1, buf);
++		if (cmp > 0)
++			hi = mi;
++		else
++			lo = mi+1;
++	} while (lo < hi);
++
++	*buf++ = 0;
++	hashcpy(buf, sha1);
++	return 1 + 20;
++}
++
+ static struct pack_idx_entry *get_packed_object_list(struct packed_git *p)
  {
- 	uint32_t nr_objects, i;
+ 	unsigned i, nr_objects = p->num_objects;
 -- 
 1.8.4.38.g317e65b
