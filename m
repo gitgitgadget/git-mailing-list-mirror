@@ -1,72 +1,85 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: [PATCH 02/38] export packed_object_info()
-Date: Thu, 05 Sep 2013 02:19:25 -0400
-Message-ID: <1378362001-1738-3-git-send-email-nico@fluxnic.net>
-References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 05 08:22:19 2013
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH] git-gui: Modify push dialog to support Gerrit review
+Date: Thu, 5 Sep 2013 08:20:45 +0200
+Message-ID: <20130905062045.GA4197@sandbox-ub>
+References: <20130904150853.52EC4121B7E@jed-dev-01.labnet>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, spearce@spearce.org,
+	Pat Thoyts <patthoyts@gmail.com>
+To: Joergen Edelbo <jed@napatech.com>
+X-From: git-owner@vger.kernel.org Thu Sep 05 08:27:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHSxL-0000D7-VP
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 08:22:16 +0200
+	id 1VHT2D-00029v-BV
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 08:27:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763202Ab3IEGWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 02:22:07 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:53284 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756970Ab3IEGUQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 02:20:16 -0400
-Received: from yoda.home ([70.83.209.44]) by VL-VM-MR006.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MSN00ANT2XQCY00@VL-VM-MR006.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 05 Sep 2013 02:20:14 -0400 (EDT)
-Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTP id 6C3BF2DA05D6	for <git@vger.kernel.org>; Thu,
- 05 Sep 2013 02:20:14 -0400 (EDT)
-X-Mailer: git-send-email 1.8.4.38.g317e65b
-In-reply-to: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
+	id S1757164Ab3IEG1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 02:27:13 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.42]:57600 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756452Ab3IEG1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 02:27:12 -0400
+X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Sep 2013 02:27:12 EDT
+Received: from [77.20.34.36] (helo=sandbox-ub)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1VHSvz-0007Tq-3u; Thu, 05 Sep 2013 08:20:51 +0200
+Content-Disposition: inline
+In-Reply-To: <20130904150853.52EC4121B7E@jed-dev-01.labnet>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233933>
 
-Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
----
- cache.h     | 1 +
- sha1_file.c | 4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+Hi,
 
-diff --git a/cache.h b/cache.h
-index 85b544f..b6634c4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1160,6 +1160,7 @@ struct object_info {
- 	} u;
- };
- extern int sha1_object_info_extended(const unsigned char *, struct object_info *);
-+extern int packed_object_info(struct packed_git *, off_t, struct object_info *);
- 
- /* Dumb servers support */
- extern int update_server_info(int);
-diff --git a/sha1_file.c b/sha1_file.c
-index 8e27db1..c2020d0 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1782,8 +1782,8 @@ unwind:
- 	goto out;
- }
- 
--static int packed_object_info(struct packed_git *p, off_t obj_offset,
--			      struct object_info *oi)
-+int packed_object_info(struct packed_git *p, off_t obj_offset,
-+		       struct object_info *oi)
- {
- 	struct pack_window *w_curs = NULL;
- 	unsigned long size;
--- 
-1.8.4.38.g317e65b
+On Mon, Sep 02, 2013 at 10:54:19AM +0200, Joergen Edelbo wrote:
+> Problem: It is not possible to push for Gerrit review
+> as you will always try to push to /refs/heads/... on
+> the remote. As you should not be forced to work on a
+> branch with the same name as some branch on the remote,
+> some more flexibility in the selection of destination
+> branch is also needed.
+> 
+> Changes done:
+> 
+> Remove selection of branches to push - push always HEAD.
+> This can be justified by the fact that this far the most
+> common thing to do.
+> Specify both the remote repository to push to as well as
+> the specific branch on that remote. This gives the flexibility.
+> 
+> Add option to specify "Gerrit review". If selected, replace
+> the traditional "heads" with the artificial "for" in the
+> destination ref spec. This is what actually solved the trigger
+> problem.
+> 
+> Limit the branches to select from to the known branches
+> for currently selected remote. This is motivated in better
+> usability. Works only when "usettk" is true - it is left for
+> further study how to change the values in tk_optionMenu on the
+> fly.
+> 
+> Signed-off-by: Joergen Edelbo <jed@napatech.com>
+> ---
+> Hi there,
+> 
+> We are at Napatech A/S just about to roll out a Git/Gerrit/Jenkins
+> solution. It will really help the gui oriented people in pushing
+> commits if this can be done directly in git-gui.
+
+I like where this is heading. I myself was thinking about this some time
+ago. Lets include Pat in the CC, since he is the current maintainer of
+git-gui.
+
+Give me some time to review/testdrive the patch.
+
+Cheers Heiko
