@@ -1,83 +1,89 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
-Date: Thu, 5 Sep 2013 20:26:47 +0100
-Message-ID: <20130905192646.GG2582@serenity.lan>
-References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com>
- <xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
- <CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com>
- <xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
- <20130904081047.GB2582@serenity.lan>
- <xmqqa9jso69u.fsf@gitster.dls.corp.google.com>
- <7DC052455C7C4B50A4EAFC1EF63D006C@PhilipOakley>
- <xmqqr4d4jird.fsf@gitster.dls.corp.google.com>
- <20130905080606.GE2582@serenity.lan>
- <xmqqd2onhyay.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Zero padded file modes...
+Date: Thu, 5 Sep 2013 15:35:08 -0400
+Message-ID: <20130905193507.GB15910@sigill.intra.peff.net>
+References: <CAEBDL5W3DL0v=TusuB7Vg-4bWdAJh5d2Psc1N0Qe+KK3bZH3=Q@mail.gmail.com>
+ <20130905153646.GA12372@sigill.intra.peff.net>
+ <CAEBDL5UiEurFeZg1AuNUKEvBMDs3K3D5ZiF5rB-dYWjp5nvrEA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 05 21:27:03 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Thu Sep 05 21:35:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHfCp-0001Sw-4J
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 21:27:03 +0200
+	id 1VHfKv-00053a-67
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 21:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756891Ab3IET07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 15:26:59 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:52628 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756861Ab3IET06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 15:26:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 1735B6064D1;
-	Thu,  5 Sep 2013 20:26:58 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 60OGPwpwiebB; Thu,  5 Sep 2013 20:26:57 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 75B576064E1;
-	Thu,  5 Sep 2013 20:26:48 +0100 (BST)
+	id S1757126Ab3IETfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 15:35:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48344 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757119Ab3IETfL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 15:35:11 -0400
+Received: (qmail 31518 invoked by uid 102); 5 Sep 2013 19:35:11 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 Sep 2013 14:35:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Sep 2013 15:35:08 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqd2onhyay.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAEBDL5UiEurFeZg1AuNUKEvBMDs3K3D5ZiF5rB-dYWjp5nvrEA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233987>
 
-On Thu, Sep 05, 2013 at 12:18:45PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > On Wed, Sep 04, 2013 at 03:59:18PM -0700, Junio C Hamano wrote:
-> >> Are there cases where you do not want to either rebase nor merge?
-> >> If so what do you want to do after "git pull" fetches from the other
-> >> side?  Nothing?
-> >
-> > One other thing that I can see being useful occasionally is:
-> >
-> >     git rebase @{u}@{1} --onto @{u}
-> >
-> > which allows local commits to be replayed onto a rewritten upstream
-> > branch.
-> 
-> Sure, that would make sense.
-> 
-> I somehow thought that rebase by default looked in the reflog to do
-> exactly that. Perhaps I am not remembering correctly.
+On Thu, Sep 05, 2013 at 01:13:40PM -0400, John Szakmeister wrote:
 
-It just does @{upstream} by default, which tends to get messy if the
-upstream has been rewritten.
+> > Yep. These were mostly caused by a bug in Grit that is long-fixed.  But
+> > the objects remain in many histories. It would have painful to rewrite
+> > them back then, and it would be even more painful now.
+> 
+> I guess there's still the other side of the question though.  Are
+> these repositories busted in the sense that something no longer works?
+
+No, as far as I know, everything still works fine. However, some diffs
+may be suboptimal, because we may have two different sha1s for the same
+subtree (so we may descend into the tree unnecessarily only to find that
+they are equivalent). And by the same token, any scripts doing
+non-recursive diffs may erroneously mark the trees as differing, even
+though they do not contain any differing files.
+
+But neither is a big problem in practice. If you had two clients in
+active use which were flip-flopping a sub-tree back and forth between
+representations, it would be a problem. But we are talking about a few
+isolated incidents far back in history.
+
+> I doesn't appear to be the case, but I've not used it extensively say
+> I can't say for certain one way or another.  In the sense that the
+> content is not strictly compliant, transfer.fsckObjects did its job,
+> but I wonder if fsck needs to be a little more tolerant now (at least
+> with respect to transfer objects)?
+
+Fsck actually treats this as a warning, not an error. It is
+transfer.fsckObjects (via "index-pack --strict") that actually treats
+warnings as errors.
+
+It's possible that this should be loosened to allow through problems
+marked as FSCK_WARN (with a message, kind of like...a warning). Though
+it may also make sense to revisit some of the classifications in fsck
+(e.g., many of the warnings are indicative of seriously broken objects).
+
+GitHub uses transfer.fsckObjects, rejecting all warnings[1]. In practice
+it is not usually a big deal, as people are happy to fix up their
+objects _before_ they get widely published. The biggest push-back we get
+is when somebody tries to re-push history they got from another GitHub
+repo, and then says "But why are you complaining? You served this crappy
+broken history?" And it's a fair point. If you are forking (but not
+joining the existing fork network) of an existing project with
+irregularities in the history, it's not really an option to simply
+rewrite the history you are basing on.
+
+-Peff
+
+[1] Actually, we do let through 0-padded modes with a warning,
+    explicitly because of the problem mentioned above.
