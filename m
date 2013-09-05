@@ -1,90 +1,89 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 3/3] add--interactive: fix external command invocation on Windows
-Date: Thu,  5 Sep 2013 10:40:40 +0700
-Message-ID: <1378352440-25410-3-git-send-email-pclouds@gmail.com>
-References: <1378352440-25410-1-git-send-email-pclouds@gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH 09/23] pack v4: commit object encoding
+Date: Wed, 04 Sep 2013 23:50:21 -0400 (EDT)
+Message-ID: <alpine.LFD.2.03.1309030831540.14472@syhkavp.arg>
+References: <1377577567-27655-1-git-send-email-nico@fluxnic.net>
+ <1377577567-27655-10-git-send-email-nico@fluxnic.net>
+ <CACsJy8CnSyw2ae5BS87S8Hid51JVFB3gyLzX+5czwio+C=-VRQ@mail.gmail.com>
+ <alpine.LFD.2.03.1309030225450.14472@syhkavp.arg>
+ <CACsJy8B0XGAoxYBNoaYt5PP=kA3dfgFpdnMj8DCCX65UeOJ=ug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 05 05:37:53 2013
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 05 05:50:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHQOG-0007hC-73
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 05:37:52 +0200
+	id 1VHQaS-0004NR-N7
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 05:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753181Ab3IEDhs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Sep 2013 23:37:48 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:45903 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753010Ab3IEDhr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Sep 2013 23:37:47 -0400
-Received: by mail-pa0-f42.google.com with SMTP id lj1so1323799pab.29
-        for <git@vger.kernel.org>; Wed, 04 Sep 2013 20:37:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=SU5Es7LwIRrm80/l7d71S2CwTI2/MFHYdP7KQI6rZeg=;
-        b=pKIGZgMwMhggVITY5JLIJcCnAILabAt0Axua3Y212ke3fQnOrFraWk6YEBoGGkFg9H
-         W8pqvkrI//0sc/nwlOOqU85vTG/XDSwZtgv0y+5WZsrfE9ycjIF+9yiI2vr/y6yZzYDh
-         nHNV1dZcj4sHJ+6cj+D36z5lg4maUQuvTH77oc0KaWfKnsQZaXPYMqHLgwdJA1sgkGIi
-         fSxciSQsDRYYpNAAemD/ADQ/+bcferKnZy1/AjsbYcTwokVXL3Re2UknzzEiJ0ijaTNZ
-         nM+7qcuat6vF2vWHN1VD0YxWSkZazKv1k7DVnJAjGYWu1vjNjUgRKfhItIWuggVs3D4W
-         X/AA==
-X-Received: by 10.66.171.204 with SMTP id aw12mr6889113pac.7.1378352267159;
-        Wed, 04 Sep 2013 20:37:47 -0700 (PDT)
-Received: from lanh ([115.73.237.243])
-        by mx.google.com with ESMTPSA id qp10sm34555015pab.13.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 04 Sep 2013 20:37:46 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Thu, 05 Sep 2013 10:40:53 +0700
-X-Mailer: git-send-email 1.8.2.83.gc99314b
-In-Reply-To: <1378352440-25410-1-git-send-email-pclouds@gmail.com>
+	id S1752785Ab3IEDuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Sep 2013 23:50:24 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:29969 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752738Ab3IEDuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Sep 2013 23:50:23 -0400
+Received: from yoda.home ([70.83.209.44]) by VL-VM-MR004.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0MSM007FFVZYCD10@VL-VM-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 04 Sep 2013 23:50:22 -0400 (EDT)
+Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
+ with ESMTPSA id 452692DA0547; Wed, 04 Sep 2013 23:50:22 -0400 (EDT)
+In-reply-to: <CACsJy8B0XGAoxYBNoaYt5PP=kA3dfgFpdnMj8DCCX65UeOJ=ug@mail.gmail.com>
+User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233888>
 
-=46rom: Johannes Sixt <j6t@kdbg.org>
+On Tue, 3 Sep 2013, Duy Nguyen wrote:
 
-Back in 21e9757e (Hack git-add--interactive to make it work with
-ActiveState Perl, 2007-08-01), the invocation of external commands was
-changed to use qx{} on Windows. The rationale was that the command
-interpreter on Windows is not a POSIX shell, but rather Windows's CMD.
-That patch was wrong to include 'msys' in the check whether to use qx{}
-or not: 'msys' identifies MSYS perl as shipped with Git for Windows,
-which does not need the special treatment; qx{} should be used only wit=
-h
-ActiveState perl, which is identified by 'MSWin32'.
+> On Tue, Sep 3, 2013 at 1:30 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> > On Tue, 3 Sep 2013, Duy Nguyen wrote:
+> >
+> >> On Tue, Aug 27, 2013 at 11:25 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> >> > This goes as follows:
+> >> >
+> >> > - Tree reference: either variable length encoding of the index
+> >> >   into the SHA1 table or the literal SHA1 prefixed by 0 (see
+> >> >   add_sha1_ref()).
+> >> >
+> >> > - Parent count: variable length encoding of the number of parents.
+> >> >   This is normally going to occupy a single byte but doesn't have to.
+> >> >
+> >> > - List of parent references: a list of add_sha1_ref() encoded references,
+> >> >   or nothing if the parent count was zero.
+> >>
+> >> With .pack v3 it's impossible to create delta cycles (3b910d0 add
+> >> tests for indexing packs with delta cycles - 2013-08-23) but it is
+> >> possible with .pack v4 (and therefore at least index-pack needs to
+> >> detect and reject them), correct? Some malicious user can create
+> >> commit A with parent ref 1, then make the SHA-1 table so that ref 1 is
+> >> A. The same with the new tree representation.
+> >
+> > pack-index should validate the SHA1 of the object being pointed at.
+> >
+> > In that case I doubt you'll be able to actually construct an object
+> > which contains a SHA1 parent reference and make the SHA1 of this very
+> > object resolve to the same value.
+> 
+> We could do that for commits. For trees, we need to look at the base's
+> content to construct the current tree and cycles could happen. I think
+> we could make a rule that base trees must appear in the pack before
+> the tree being constructed (similar to delta-ofs). The exception is
+> objects appended for fixing thin pack.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- git-add--interactive.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I don't really like such artificial constraints.  You never know when 
+such constraints are going to prevent future legitimate pack layout 
+optimizations or the like.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 75a991f..5156384 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -169,7 +169,7 @@ my %patch_modes =3D (
- my %patch_mode_flavour =3D %{$patch_modes{stage}};
-=20
- sub run_cmd_pipe {
--	if ($^O eq 'MSWin32' || $^O eq 'msys') {
-+	if ($^O eq 'MSWin32') {
- 		my @invalid =3D grep {m/[":*]/} @_;
- 		die "$^O does not support: @invalid\n" if @invalid;
- 		my @args =3D map { m/ /o ? "\"$_\"": $_ } @_;
---=20
-1.8.2.83.gc99314b
+It is simple enough to detect cycles during delta validation in 
+index-pack anyway.
+
+
+Nicolas
