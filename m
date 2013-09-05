@@ -1,227 +1,178 @@
 From: Nicolas Pitre <nico@fluxnic.net>
-Subject: [PATCH 17/38] pack v4: tree object delta encoding
-Date: Thu, 05 Sep 2013 02:19:40 -0400
-Message-ID: <1378362001-1738-18-git-send-email-nico@fluxnic.net>
+Subject: [PATCH 04/38] pack v4: add tree entry mode support to dictionary
+ entries
+Date: Thu, 05 Sep 2013 02:19:27 -0400
+Message-ID: <1378362001-1738-5-git-send-email-nico@fluxnic.net>
 References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
 Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 05 08:21:57 2013
+X-From: git-owner@vger.kernel.org Thu Sep 05 08:21:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHSx3-000050-2J
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 08:21:57 +0200
+	id 1VHSx3-000050-Pt
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 08:21:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757790Ab3IEGVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 02:21:39 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:22894 "EHLO
+	id S1762687Ab3IEGV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 02:21:56 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:43577 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757289Ab3IEGUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 02:20:18 -0400
+	with ESMTP id S1755798Ab3IEGUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 02:20:16 -0400
 Received: from yoda.home ([70.83.209.44]) by VL-VM-MR006.ip.videotron.ca
  (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
  2011)) with ESMTP id <0MSN00G3Y2XQD3A0@VL-VM-MR006.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 05 Sep 2013 02:20:15 -0400 (EDT)
+ git@vger.kernel.org; Thu, 05 Sep 2013 02:20:14 -0400 (EDT)
 Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTP id 42C112DA0547	for <git@vger.kernel.org>; Thu,
- 05 Sep 2013 02:20:15 -0400 (EDT)
+ with ESMTP id 9A9DE2DA05F2	for <git@vger.kernel.org>; Thu,
+ 05 Sep 2013 02:20:14 -0400 (EDT)
 X-Mailer: git-send-email 1.8.4.38.g317e65b
 In-reply-to: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233926>
 
-In order to be able to quickly walk tree objects, let's encode their
-"delta" as a range of entries into another tree object.
-
-In order to discriminate between a copy sequence from a regular entry,
-the entry index LSB is reserved to indicate a copy sequence.  Therefore
-the actual index of a path component is shifted left one bit.
-
-The encoding allows for the base object to change so multiple base
-objects can be borrowed from.  The code doesn't try to exploit this
-possibility at the moment though.
-
-The code isn't optimal at the moment as it doesn't consider the case
-where a copy sequence could be larger than the local sequence it
-means to replace.
+Augment dict entries with a 16-bit prefix in order to store the file
+mode value of tree entries.
 
 Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
 ---
- packv4-create.c | 108 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 103 insertions(+), 5 deletions(-)
+ packv4-create.c | 56 ++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 36 insertions(+), 20 deletions(-)
 
 diff --git a/packv4-create.c b/packv4-create.c
-index 5d76234..6830a0a 100644
+index 00762a5..eccd9fc 100644
 --- a/packv4-create.c
 +++ b/packv4-create.c
-@@ -394,24 +394,53 @@ bad:
- 	return NULL;
+@@ -14,11 +14,12 @@
+ 
+ struct data_entry {
+ 	unsigned offset;
++	unsigned size;
+ 	unsigned hits;
+ };
+ 
+ struct dict_table {
+-	char *data;
++	unsigned char *data;
+ 	unsigned ptr;
+ 	unsigned size;
+ 	struct data_entry *entry;
+@@ -41,18 +42,19 @@ void destroy_dict_table(struct dict_table *t)
+ 	free(t);
  }
  
-+static int compare_tree_entries(struct name_entry *e1, struct name_entry *e2)
-+{
-+	int len1 = tree_entry_len(e1);
-+	int len2 = tree_entry_len(e2);
-+	int len = len1 < len2 ? len1 : len2;
-+	unsigned char c1, c2;
-+	int cmp;
-+
-+	cmp = memcmp(e1->path, e2->path, len);
-+	if (cmp)
-+		return cmp;
-+	c1 = e1->path[len];
-+	c2 = e2->path[len];
-+	if (!c1 && S_ISDIR(e1->mode))
-+		c1 = '/';
-+	if (!c2 && S_ISDIR(e2->mode))
-+		c2 = '/';
-+	return c1 - c2;
-+}
-+
- /*
-  * This converts a canonical tree object buffer into its
-  * tightly packed representation using the already populated
-  * and sorted tree_path_table dictionary.  The parsing is
-  * strict so to ensure the canonical version may always be
-  * regenerated and produce the same hash.
-+ *
-+ * If a delta buffer is provided, we may encode multiple ranges of tree
-+ * entries against that buffer.
-  */
--void *pv4_encode_tree(void *_buffer, unsigned long *sizep)
-+void *pv4_encode_tree(void *_buffer, unsigned long *sizep,
-+		      void *delta, unsigned long delta_size,
-+		      const unsigned char *delta_sha1)
+-static int locate_entry(struct dict_table *t, const char *str)
++static int locate_entry(struct dict_table *t, const void *data, int size)
  {
- 	unsigned long size = *sizep;
- 	unsigned char *in, *out, *end, *buffer = _buffer;
--	struct tree_desc desc;
--	struct name_entry name_entry;
-+	struct tree_desc desc, delta_desc;
-+	struct name_entry name_entry, delta_entry;
- 	int nb_entries;
-+	unsigned int copy_start, copy_count = 0, delta_pos = 0, first_delta = 1;
+-	int i = 0;
+-	const unsigned char *s = (const unsigned char *) str;
++	int i = 0, len = size;
++	const unsigned char *p = data;
  
- 	if (!size)
- 		return NULL;
+-	while (*s)
+-		i = i * 111 + *s++;
++	while (len--)
++		i = i * 111 + *p++;
+ 	i = (unsigned)i % t->hash_size;
  
-+	if (!delta_size)
-+		delta = NULL;
-+
- 	/*
- 	 * We can't make sure the result will always be smaller than the
- 	 * input. The smallest possible entry is "0 x\0<40 byte SHA1>"
-@@ -434,9 +463,42 @@ void *pv4_encode_tree(void *_buffer, unsigned long *sizep)
- 	out += encode_varint(nb_entries, out);
+ 	while (t->hash[i]) {
+ 		unsigned n = t->hash[i] - 1;
+-		if (!strcmp(str, t->data + t->entry[n].offset))
++		if (t->entry[n].size == size &&
++		    memcmp(t->data + t->entry[n].offset, data, size) == 0)
+ 			return n;
+ 		if (++i >= t->hash_size)
+ 			i = 0;
+@@ -71,23 +73,28 @@ static void rehash_entries(struct dict_table *t)
+ 	memset(t->hash, 0, t->hash_size * sizeof(*t->hash));
  
- 	init_tree_desc(&desc, in, size);
-+	if (delta) {
-+		init_tree_desc(&delta_desc, delta, delta_size);
-+		if (!tree_entry(&delta_desc, &delta_entry))
-+			delta = NULL;
-+	}
-+
- 	while (tree_entry(&desc, &name_entry)) {
- 		int pathlen, index;
- 
-+		/*
-+		 * Try to match entries against our delta object.
-+		 */
-+		if (delta) {
-+			int ret;
-+
-+			do {
-+				ret = compare_tree_entries(&name_entry, &delta_entry);
-+				if (ret <= 0 || copy_count != 0)
-+					break;
-+				delta_pos++;
-+				if (!tree_entry(&delta_desc, &delta_entry))
-+					delta = NULL;
-+			} while (delta);
-+
-+			if (ret == 0 && name_entry.mode == delta_entry.mode &&
-+			    hashcmp(name_entry.sha1, delta_entry.sha1) == 0) {
-+				if (!copy_count)
-+					copy_start = delta_pos;
-+				copy_count++;
-+				delta_pos++;
-+				if (!tree_entry(&delta_desc, &delta_entry))
-+					delta = NULL;
-+				continue;
-+			}
-+		}
-+
- 		if (end - out < 48) {
- 			unsigned long sofar = out - buffer;
- 			buffer = xrealloc(buffer, (sofar + 48)*2);
-@@ -444,6 +506,32 @@ void *pv4_encode_tree(void *_buffer, unsigned long *sizep)
- 			out = buffer + sofar;
- 		}
- 
-+		if (copy_count) {
-+			/*
-+			 * Let's write a sequence indicating we're copying
-+			 * entries from another object:
-+			 *
-+			 * entry_start + entry_count + object_ref
-+			 *
-+			 * To distinguish between 'entry_start' and an actual
-+			 * entry index, we use the LSB = 1.
-+			 *
-+			 * Furthermore, if object_ref is the same as the
-+			 * preceding one, we can omit it and save some
-+			 * more space, especially if that ends up being a
-+			 * full sha1 reference.  Let's steal the LSB
-+			 * of entry_count for that purpose.
-+			 */
-+			copy_start = (copy_start << 1) | 1;
-+			copy_count = (copy_count << 1) | first_delta;
-+			out += encode_varint(copy_start, out);
-+			out += encode_varint(copy_count, out);
-+			if (first_delta)
-+				out += encode_sha1ref(delta_sha1, out);
-+			copy_count = 0;
-+			first_delta = 0;
-+		}
-+
- 		pathlen = tree_entry_len(&name_entry);
- 		index = dict_add_entry(tree_path_table, name_entry.mode,
- 				       name_entry.path, pathlen);
-@@ -452,10 +540,20 @@ void *pv4_encode_tree(void *_buffer, unsigned long *sizep)
- 			free(buffer);
- 			return NULL;
- 		}
--		out += encode_varint(index, out);
-+		out += encode_varint(index << 1, out);
- 		out += encode_sha1ref(name_entry.sha1, out);
+ 	for (n = 0; n < t->nb_entries; n++) {
+-		int i = locate_entry(t, t->data + t->entry[n].offset);
++		int i = locate_entry(t, t->data + t->entry[n].offset,
++					t->entry[n].size);
+ 		if (i < 0)
+ 			t->hash[-1 - i] = n + 1;
  	}
- 
-+	if (copy_count) {
-+		/* flush the trailing copy */
-+		copy_start = (copy_start << 1) | 1;
-+		copy_count = (copy_count << 1) | first_delta;
-+		out += encode_varint(copy_start, out);
-+		out += encode_varint(copy_count, out);
-+		if (first_delta)
-+			out += encode_sha1ref(delta_sha1, out);
-+	}
-+
- 	*sizep = out - buffer;
- 	return buffer;
  }
-@@ -761,7 +859,7 @@ static off_t packv4_write_object(struct sha1file *f, struct packed_git *p,
- 		result = pv4_encode_commit(src, &size);
- 		break;
- 	case OBJ_TREE:
--		result = pv4_encode_tree(src, &size);
-+		result = pv4_encode_tree(src, &size, NULL, 0, NULL);
- 		break;
- 	default:
- 		die("unexpected object type %d", type);
+ 
+-int dict_add_entry(struct dict_table *t, const char *str)
++int dict_add_entry(struct dict_table *t, int val, const char *str)
+ {
+-	int i, len = strlen(str) + 1;
++	int i, val_len = 2, str_len = strlen(str) + 1;
+ 
+-	if (t->ptr + len >= t->size) {
+-		t->size = (t->size + len + 1024) * 3 / 2;
++	if (t->ptr + val_len + str_len > t->size) {
++		t->size = (t->size + val_len + str_len + 1024) * 3 / 2;
+ 		t->data = xrealloc(t->data, t->size);
+ 	}
+-	memcpy(t->data + t->ptr, str, len);
+ 
+-	i = (t->nb_entries) ? locate_entry(t, t->data + t->ptr) : -1;
++	t->data[t->ptr] = val >> 8;
++	t->data[t->ptr + 1] = val;
++	memcpy(t->data + t->ptr + val_len, str, str_len);
++
++	i = (t->nb_entries) ?
++		locate_entry(t, t->data + t->ptr, val_len + str_len) : -1;
+ 	if (i >= 0) {
+ 		t->entry[i].hits++;
+ 		return i;
+@@ -98,8 +105,9 @@ int dict_add_entry(struct dict_table *t, const char *str)
+ 		t->entry = xrealloc(t->entry, t->max_entries * sizeof(*t->entry));
+ 	}
+ 	t->entry[t->nb_entries].offset = t->ptr;
++	t->entry[t->nb_entries].size = val_len + str_len;
+ 	t->entry[t->nb_entries].hits = 1;
+-	t->ptr += len + 1;
++	t->ptr += val_len + str_len;
+ 	t->nb_entries++;
+ 
+ 	if (t->hash_size * 3 <= t->nb_entries * 4)
+@@ -139,7 +147,8 @@ static int add_tree_dict_entries(void *buf, unsigned long size)
+ 
+ 	init_tree_desc(&desc, buf, size);
+ 	while (tree_entry(&desc, &name_entry))
+-		dict_add_entry(tree_path_table, name_entry.path);
++		dict_add_entry(tree_path_table, name_entry.mode,
++			       name_entry.path);
+ 	return 0;
+ }
+ 
+@@ -148,10 +157,16 @@ void dict_dump(struct dict_table *t)
+ 	int i;
+ 
+ 	sort_dict_entries_by_hits(t);
+-	for (i = 0; i < t->nb_entries; i++)
+-		printf("%d\t%s\n",
+-			t->entry[i].hits,
+-			t->data + t->entry[i].offset);
++	for (i = 0; i < t->nb_entries; i++) {
++		int16_t val;
++		uint16_t uval;
++		val = t->data[t->entry[i].offset] << 8;
++		val |= t->data[t->entry[i].offset + 1];
++		uval = val;
++		printf("%d\t%d\t%o\t%s\n",
++			t->entry[i].hits, val, uval,
++			t->data + t->entry[i].offset + 2);
++	}
+ }
+ 
+ struct idx_entry
+@@ -170,6 +185,7 @@ static int sort_by_offset(const void *e1, const void *e2)
+ 		return 1;
+ 	return 0;
+ }
++
+ static int create_pack_dictionaries(struct packed_git *p)
+ {
+ 	uint32_t nr_objects, i;
 -- 
 1.8.4.38.g317e65b
