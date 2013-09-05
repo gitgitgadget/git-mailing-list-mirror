@@ -1,95 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
-Date: Thu, 05 Sep 2013 16:45:39 -0700
-Message-ID: <xmqqzjrqest8.fsf@gitster.dls.corp.google.com>
-References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
-	<CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com>
-	<xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
-	<20130904081047.GB2582@serenity.lan>
-	<xmqqa9jso69u.fsf@gitster.dls.corp.google.com>
-	<7DC052455C7C4B50A4EAFC1EF63D006C@PhilipOakley>
-	<xmqqr4d4jird.fsf@gitster.dls.corp.google.com>
-	<BC4EB62C5077409384A225ECD96D04E1@PhilipOakley>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 37/38] pack v4: introduce "escape hatches" in the name and
+ path indexes
+Date: Fri, 6 Sep 2013 06:57:02 +0700
+Message-ID: <CACsJy8CyXNEc113U1cDbS3uR18sbALU4Uu_ULf_+EpYhwVdCmg@mail.gmail.com>
+References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
+ <1378362001-1738-38-git-send-email-nico@fluxnic.net> <alpine.LFD.2.03.1309051445140.14472@syhkavp.arg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "John Keeping" <john@keeping.me.uk>,
-	"Felipe Contreras" <felipe.contreras@gmail.com>,
-	"Git List" <git@vger.kernel.org>, "Andreas Krey" <a.krey@gmx.de>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Sep 06 01:45:47 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Sep 06 01:57:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHjFD-0004PJ-3z
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 01:45:47 +0200
+	id 1VHjQf-0000HY-57
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 01:57:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753722Ab3IEXpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 19:45:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56978 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753096Ab3IEXpm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 19:45:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4B263F6F1;
-	Thu,  5 Sep 2013 23:45:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=IUy79aoV/g+CXjEQys3ood4QuqU=; b=yc3r6sRYZZhhmBFa3lJi
-	5E7QXPs1QmnUlkEzGU7tmnX4ky67LIxUVAM6eDCU8A6uVjYRMnNXVn+nHtalXYE9
-	OmsZgt+1bw9NITlC9DZg/Rok08zzeC80xUY+II3VWi3OkN7+Z6q904Jp97NDZgDa
-	b2oDRYcYkH2aBXqOKgZudJ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=GZoHjUAT04lAO1W0e4P3F3Qg+ffbvoK9RvbKeXV1QADSka
-	SOMTlpyHEiv8ZIfrWmS3pVAm4XkO+rD7NiHEB0+cjHYSbenrhq4x0RJOFwk6PM34
-	odTAzh8AczOdZkT6IoLVhGG1HI5c3sT1CSRlzx+5R0HjUtmKibXdrJdJuD7Mg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9F433F6EE;
-	Thu,  5 Sep 2013 23:45:41 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 518943F6E6;
-	Thu,  5 Sep 2013 23:45:41 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4614138A-1685-11E3-AF80-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753246Ab3IEX5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 19:57:33 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:49734 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753097Ab3IEX5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 19:57:32 -0400
+Received: by mail-oa0-f42.google.com with SMTP id n12so3211361oag.15
+        for <git@vger.kernel.org>; Thu, 05 Sep 2013 16:57:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=6Tzw/WRzhZOv3SfuMlA8L1jjDI5aeWiRvjZJS0mQldk=;
+        b=SN7xPCyDkhdbexym0OAnLttzh+JWfiN8scnM1Ftx34Ley+SgZ05Nv8M+sDN1thhgaj
+         zG6Ij9IcKEV4iE+PLmD3mlpTOFqAQKmv4LX5l4orYlSh2Ku4zu28XHTSU42YhYww07TG
+         wbvX3FGIWop57MhaGA0RLQhgs/1mFLw/fzQzu28Fh1mRU2eoDVHvGpbef9oZp4LVsZZq
+         0nAtH6oR14zAfdAI0E3sr+TdqVRaN9Us/VIpZMcqnlcg5pQQ4DpAl2b/QVW7YProhDZa
+         y/4okCrnSm77TNYVuNIx4PtGpT8VhhweoGx//LXqeD2GDQgRI0UAtaBTnc0zIhfzHj4n
+         P+RQ==
+X-Received: by 10.182.134.229 with SMTP id pn5mr8033131obb.88.1378425452089;
+ Thu, 05 Sep 2013 16:57:32 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Thu, 5 Sep 2013 16:57:02 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.03.1309051445140.14472@syhkavp.arg>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234007>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
-
-> It's not clear to me that a single default that uses a merge or
-> rebase, without a 'stop if' criteria would be of any help in my
-> situation.
+On Fri, Sep 6, 2013 at 2:02 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> I think that we've found a way to better support thin packs.
 >
-> My thoughts are that the options on a fetch-pull are for the branch to
-> be:
-> * Overwritte (--force) (i.e. a conflict scenario)
-> * Stop if not-ff (conflict scenario, this patch series)
-> * rebase existing onto tracked [not a conflict in terms of initiation]
-> * merge existing into tracked [not a conflict in terms of initiation]
-> * fast-forward (bring tracked onto existing) [desired]
+> You said:
+>
+>> What if the sender prepares the sha-1 table to contain missing objects
+>> in advance? The sender should know what base objects are missing. Then
+>> we only need to append objects at the receiving end and verify that
+>> all new objects are also present in the sha-1 table.
+>
+> So the SHA1 table is covered.
+>
+> Missing objects in a thin pack cannot themselves be deltas.  We had
+> their undeltified form at the end of a pack for the pack to be complete.
+> Therefore those missing objects serve only as base objects for other
+> deltas.
+>
+> Although this is possible to have deltified commit objects in pack v2, I
+> don't think this happens very often. There is no deltified commit
+> objects in pack v4.
+>
+> Blob objects are the same in pack v2 and pack v4.  No dictionary
+> references are needed.
+>
+> That leaves only tree objects.  And because we've also discussed the
+> need to have non transcoded object representations for those odd cases
+> such as zero padded file modes, we might as well simply use that for the
+> appended tree objects already needed to complete a thin pack.  At least
+> the strings in tree entries will be compressed that way.
+>
+> Problem solved, and one less special case in the code.
+>
+> What do you think?
 
-In short, it sounds to me like that the answer to my question is
-"what I do depends too much on what I did on my other machine that
-is not even directly connected to this matchine, so there is no way
-to formulate it as a concrete workflow---I need to inspect what I
-get from the central repository and decide the next step anyway, so
-I just want 'git pull' not to do anything".
+Agreed.
 
-Among the things that were suggested so far (the 'pull' update that
-has been cooking in the 'next' branch, Felipe's tightening to apply
-the same logic to 'git pull $there $that' as well as 'git pull', and
-being able to set "pull.rebase = fail" and renaming the variable to
-something like "pull.integrate = fail"), only the last one seems to
-be the solution to your particular case.  The other two would not
-help such an ad-hoc (non)workflow very much either way.
+>  Please also remove this from your documentation patch.
 
-Am I reading you correctly?  If so, I sent out the first (or zeroth)
-step to add something like that separately.
+Will do.
+-- 
+Duy
