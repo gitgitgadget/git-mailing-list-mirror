@@ -1,50 +1,164 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-gui: Modify push dialog to support Gerrit review
-Date: Thu, 05 Sep 2013 11:31:00 +0200
-Message-ID: <52284F54.4080405@viscovery.net>
-References: <20130904150853.52EC4121B7E@jed-dev-01.labnet> <522827CE.5040303@viscovery.net> <F8C23E99F5C6884EB99E2A1966D743637F3619A6@cph-gen-exch01.napatech.com> <5228476A.2070505@viscovery.net> <F8C23E99F5C6884EB99E2A1966D743637F3619CB@cph-gen-exch01.napatech.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"spearce@spearce.org" <spearce@spearce.org>,
-	"hvoigt@hvoigt.net" <hvoigt@hvoigt.net>,
-	Pat Thoyts <patthoyts@gmail.com>
-To: =?ISO-8859-1?Q?J=F8rgen_Edelbo?= <jed@napatech.com>
-X-From: git-owner@vger.kernel.org Thu Sep 05 11:31:13 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v4 3/5] submodule summary: ignore --for-status option
+Date: Thu,  5 Sep 2013 11:50:16 +0200
+Message-ID: <1378374618-31439-4-git-send-email-Matthieu.Moy@imag.fr>
+References: <1378374618-31439-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Sep 05 11:50:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHVuC-0006Tr-Ar
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 11:31:12 +0200
+	id 1VHWCz-0006cU-4l
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 11:50:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763535Ab3IEJbG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Sep 2013 05:31:06 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254]:54223 "EHLO
-	theia.linz.viscovery" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1763397Ab3IEJbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 05:31:05 -0400
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id A877416613;
-	Thu,  5 Sep 2013 11:31:00 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <F8C23E99F5C6884EB99E2A1966D743637F3619CB@cph-gen-exch01.napatech.com>
-X-Enigmail-Version: 1.5.2
+	id S965030Ab3IEJud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 05:50:33 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35584 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935439Ab3IEJub (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 05:50:31 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r859oOUX006938
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 5 Sep 2013 11:50:24 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1VHWCn-0006W1-FX; Thu, 05 Sep 2013 11:50:25 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1VHWCn-0008CP-62; Thu, 05 Sep 2013 11:50:25 +0200
+X-Mailer: git-send-email 1.8.4.4.g70bf5e8.dirty
+In-Reply-To: <1378374618-31439-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 05 Sep 2013 11:50:24 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r859oOUX006938
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1378979427.48522@KbfeYk4UptPBSaxlXKgmEA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233945>
 
-Am 9/5/2013 11:18, schrieb J=F8rgen Edelbo:
-> Forgetting to push something that you have just=20
-> completed is very far from what I am used to.
+The --for-status option was an undocumented option used only by
+wt-status.c, which inserted a header and commented out the output. We can
+achieve the same result within wt-status.c, without polluting the
+submodule command-line options.
 
-"Forgetting to push" is just one of many reasons why a branch that is n=
-ot
-equal to HEAD is not yet pushed... The new restriction is just too tigh=
-t.
+This will make it easier to disable the comments from wt-status.c later.
 
--- Hannes
+The --for-status is kept so that another topic in flight
+(bc/submodule-status-ignored) can continue relying on it, although it is
+currently a no-op.
+
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git-submodule.sh             | 13 +------------
+ t/t7401-submodule-summary.sh | 12 +++++-------
+ wt-status.c                  | 27 ++++++++++++++++++++++++++-
+ 3 files changed, 32 insertions(+), 20 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 2979197..c17bef1 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -1149,18 +1149,7 @@ cmd_summary() {
+ 			echo
+ 		fi
+ 		echo
+-	done |
+-	if test -n "$for_status"; then
+-		if [ -n "$files" ]; then
+-			gettextln "Submodules changed but not updated:" | git stripspace -c
+-		else
+-			gettextln "Submodule changes to be committed:" | git stripspace -c
+-		fi
+-		printf "\n" | git stripspace -c
+-		git stripspace -c
+-	else
+-		cat
+-	fi
++	done
+ }
+ #
+ # List all submodules, prefixed with:
+diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
+index ac2434c..5a6d6d6 100755
+--- a/t/t7401-submodule-summary.sh
++++ b/t/t7401-submodule-summary.sh
+@@ -265,13 +265,11 @@ EOF
+ test_expect_success '--for-status' "
+ 	git submodule summary --for-status HEAD^ >actual &&
+ 	test_i18ncmp actual - <<EOF
+-# Submodule changes to be committed:
+-#
+-# * sm1 $head6...0000000:
+-#
+-# * sm2 0000000...$head7 (2):
+-#   > Add foo9
+-#
++* sm1 $head6...0000000:
++
++* sm2 0000000...$head7 (2):
++  > Add foo9
++
+ EOF
+ "
+ 
+diff --git a/wt-status.c b/wt-status.c
+index 958a53c..853813f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -665,6 +665,10 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
+ 	char index[PATH_MAX];
+ 	const char *env[] = { NULL, NULL };
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
++	struct strbuf cmd_stdout = STRBUF_INIT;
++	struct strbuf summary = STRBUF_INIT;
++	char *summary_content;
++	size_t len;
+ 
+ 	sprintf(summary_limit, "%d", s->submodule_summary);
+ 	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", s->index_file);
+@@ -685,9 +689,30 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
+ 	sm_summary.git_cmd = 1;
+ 	sm_summary.no_stdin = 1;
+ 	fflush(s->fp);
+-	sm_summary.out = dup(fileno(s->fp));    /* run_command closes it */
++	sm_summary.out = -1;
++
+ 	run_command(&sm_summary);
+ 	argv_array_clear(&argv);
++
++	len = strbuf_read(&cmd_stdout, sm_summary.out, 1024);
++
++	/* prepend header, only if there's an actual output */
++	if (len) {
++		if (uncommitted)
++			strbuf_addstr(&summary, _("Submodules changed but not updated:"));
++		else
++			strbuf_addstr(&summary, _("Submodule changes to be committed:"));
++		strbuf_addstr(&summary, "\n\n");
++	}
++	strbuf_addbuf(&summary, &cmd_stdout);
++	strbuf_release(&cmd_stdout);
++
++	summary_content = strbuf_detach(&summary, &len);
++	strbuf_add_commented_lines(&summary, summary_content, len);
++	free(summary_content);
++
++	fputs(summary.buf, s->fp);
++	strbuf_release(&summary);
+ }
+ 
+ static void wt_status_print_other(struct wt_status *s,
+-- 
+1.8.4.4.g70bf5e8.dirty
