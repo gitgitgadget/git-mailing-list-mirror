@@ -1,93 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Zero padded file modes...
-Date: Thu, 5 Sep 2013 12:33:18 -0400
-Message-ID: <20130905163318.GA14338@sigill.intra.peff.net>
-References: <CAEBDL5W3DL0v=TusuB7Vg-4bWdAJh5d2Psc1N0Qe+KK3bZH3=Q@mail.gmail.com>
- <20130905153646.GA12372@sigill.intra.peff.net>
- <CACsJy8C4PN4n1W71ajnoyFjaWCsxQjbXMbT-tcfgpXeoJKyXyA@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2] Document pack v4 format
+Date: Thu, 5 Sep 2013 23:52:22 +0700
+Message-ID: <CACsJy8DKL9KnPAXcf+NPU_Y5J1Dz_pYxSpONN4LxcQVi1JOBYw@mail.gmail.com>
+References: <1377602225-30439-1-git-send-email-pclouds@gmail.com>
+ <1377917393-28460-1-git-send-email-pclouds@gmail.com> <alpine.LFD.2.03.1309030156410.14472@syhkavp.arg>
+ <alpine.LFD.2.03.1309030231350.14472@syhkavp.arg> <CACsJy8CZP+55nhfEbgRGa9=y0PyExyHt_seiSc23kB31-_c1Hg@mail.gmail.com>
+ <CACsJy8CzpW_xsoxU=+OE6ssbnPu9tyAqRten0=Q5cxPUZ4aeMw@mail.gmail.com>
+ <alpine.LFD.2.03.1309042350560.14472@syhkavp.arg> <CACsJy8BeU_01c0f5RJExcYo7xGETnduKOw-_shszHd0ZFgZDXw@mail.gmail.com>
+ <alpine.LFD.2.03.1309050024090.14472@syhkavp.arg> <CACsJy8CX=4Oz_h2NtS3FRdK6_zdFksa+JR5C6Z-z3Y70PLAsyQ@mail.gmail.com>
+ <alpine.LFD.2.03.1309050131000.14472@syhkavp.arg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: John Szakmeister <john@szakmeister.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 05 18:33:29 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Sep 05 18:52:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHcUo-0005Rm-N3
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 18:33:27 +0200
+	id 1VHcnh-0006TS-VY
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 18:52:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753604Ab3IEQdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 12:33:22 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47118 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753584Ab3IEQdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 12:33:21 -0400
-Received: (qmail 22365 invoked by uid 102); 5 Sep 2013 16:33:21 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 Sep 2013 11:33:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Sep 2013 12:33:18 -0400
-Content-Disposition: inline
-In-Reply-To: <CACsJy8C4PN4n1W71ajnoyFjaWCsxQjbXMbT-tcfgpXeoJKyXyA@mail.gmail.com>
+	id S1753994Ab3IEQwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 12:52:53 -0400
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:45295 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753937Ab3IEQww (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 12:52:52 -0400
+Received: by mail-oa0-f47.google.com with SMTP id g12so2581226oah.34
+        for <git@vger.kernel.org>; Thu, 05 Sep 2013 09:52:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Yz/Fzx4dL89JXK6b07qdedCMN1He6c5TerXrkxXsZeA=;
+        b=tcOvwyQxzGQB07qJKEiC5CLmusQKXm3T3NGdWkvsB6EbifU0iCJKLzcwB7rywho/ja
+         nkd5XB6ELssQKESfo0qSHw2s6NXUlEnNkSJlwzuugr2nnt1+GoK44ww7FydRSCXOT5Jf
+         JXV/jzb8Rwt/amdr2SGJBUP+q23YQYpZn3Yx+du5RzadpXMsaamwQAFqqgMU7trkytXN
+         9h5XIjBac/0ZV7p33Q9R66JKSEsy+dwPE3hJd3AnGTfBxvG0GLRF8tjcswqB9N6r0IL0
+         zUuCOpUBdldXSwiNtFpbRn54T2AHGULm/K76PaF95gPgBUAaMceIaHHEdn5I7VWsNYXa
+         S8Pw==
+X-Received: by 10.182.96.169 with SMTP id dt9mr7039859obb.76.1378399972407;
+ Thu, 05 Sep 2013 09:52:52 -0700 (PDT)
+Received: by 10.182.87.105 with HTTP; Thu, 5 Sep 2013 09:52:22 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.03.1309050131000.14472@syhkavp.arg>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233968>
 
-On Thu, Sep 05, 2013 at 11:18:24PM +0700, Nguyen Thai Ngoc Duy wrote:
+On Thu, Sep 5, 2013 at 12:39 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> Now the pack index v3 probably needs to be improved a little, again to
+> accommodate completion of thin packs.  Given that the main SHA1 table is
+> now in the main pack file, it should be possible to still carry a small
+> SHA1 table in the index file that corresponds to the appended objects
+> only. This means that a SHA1 search will have to first use the main SHA1
+> table in the pack file as it is done now, and if not found then use the
+> SHA1 table in the index file if it exists.  And of course
+> nth_packed_object_sha1() will have to be adjusted accordingly.
 
-> > There are basically two solutions:
-> >
-> >   1. Add a single-bit flag for "I am 0-padded in the real data". We
-> >      could probably even squeeze it into the same integer.
-> >
-> >   2. Have a "classic" section of the pack that stores the raw object
-> >      bytes. For objects which do not match our expectations, store them
-> >      raw instead of in v4 format. They will not get the benefit of v4
-> >      optimizations, but if they are the minority of objects, that will
-> >      only end up with a slight slow-down.
-> 
-> 3. Detect this situation and fall back to v2.
-> 
-> 4. Update v4 to allow storing raw tree entries mixing with v4-encoded
-> tree entries. This is something between (1) and (2)
-
-I wouldn't want to do (3). At some point pack v4 may become the standard
-format, but there will be some repositories which will never be allowed
-to adopt it.
-
-For (4), yes, that could work. But like (1), it only solves problems in
-tree entries. What happens if we have a quirky commit object that needs
-the same treatment (e.g., a timezone that does not fit into the commit
-name dictionary properly)?
-
-> I think (4) fits better in v4 design and probably not hard to do. Nico
-> recently added a code to embed a tree entry inline, but the mode must
-> be encoded (and can't contain leading zeros). We could have another
-> code to store mode in ascii. This also makes me wonder if we might
-> have similar problems with timezones, which are also specially encoded
-> in v4..
-
-Yeah, that might be more elegant.
-
-> (3) is probably easiest. We need to scan through all tree entries
-> first when creating v4 anyway. If we detect any anomalies, just switch
-> back to v2 generation. The user will be force to rewrite history in
-> order to take full advantage of v4 (they can have a pack of weird
-> trees in v2 and the rest in v4 pack, but that's not optimal).
-
-Splitting across two packs isn't great, though. What if v4 eventually
-becomes the normal on-the-wire format? I'd rather have some method for
-just embedding what are essentially v2 objects into the v4 pack, which
-would give us future room for handling these sorts of things.
-
-But like I said, I haven't looked closely yet, so maybe there are
-complications with that. In the meantime, I'll defer to the judgement of
-people who know what they are talking about. :)
-
--Peff
+What if the sender prepares the sha-1 table to contain missing objects
+in advance? The sender should know what base objects are missing. Then
+we only need to append objects at the receiving end and verify that
+all new objects are also present in the sha-1 table.
+-- 
+Duy
