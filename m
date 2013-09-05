@@ -1,104 +1,124 @@
-From: Eyal Zinder <ezinder@yahoo.com>
-Subject: Problem setting up a shared git repository
-Date: Thu, 5 Sep 2013 14:43:52 -0700 (PDT)
-Message-ID: <1378417432.91149.YahooMailNeo@web161803.mail.bf1.yahoo.com>
-Reply-To: Eyal Zinder <ezinder@yahoo.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v3 07/11] Documentation/replace: tell that -f option bypasses the type check
+Date: Thu, 5 Sep 2013 23:20:51 +0100
+Organization: OPDS
+Message-ID: <926222C46F2240BDA71A004633E8DB7E@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 05 23:53:35 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=response
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, "Thomas Rast" <trast@inf.ethz.ch>,
+	"Johannes Sixt" <j6t@kdbg.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Christian Couder" <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Sep 06 00:20:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHhUc-0007I9-HK
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 23:53:34 +0200
+	id 1VHhuw-0001Bl-TE
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 00:20:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752785Ab3IEVxa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Sep 2013 17:53:30 -0400
-Received: from nm40.bullet.mail.ne1.yahoo.com ([98.138.229.33]:25860 "EHLO
-	nm40.bullet.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752738Ab3IEVx3 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 5 Sep 2013 17:53:29 -0400
-X-Greylist: delayed 414 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Sep 2013 17:53:29 EDT
-Received: from [127.0.0.1] by nm40.bullet.mail.ne1.yahoo.com with NNFMP; 05 Sep 2013 21:46:35 -0000
-Received: from [98.138.90.51] by nm40.bullet.mail.ne1.yahoo.com with NNFMP; 05 Sep 2013 21:43:53 -0000
-Received: from [66.196.81.171] by tm4.bullet.mail.ne1.yahoo.com with NNFMP; 05 Sep 2013 21:43:53 -0000
-Received: from [98.139.212.193] by tm17.bullet.mail.bf1.yahoo.com with NNFMP; 05 Sep 2013 21:43:53 -0000
-Received: from [127.0.0.1] by omp1002.mail.bf1.yahoo.com with NNFMP; 05 Sep 2013 21:43:53 -0000
-X-Yahoo-Newman-Property: ymail-4
-X-Yahoo-Newman-Id: 332142.41568.bm@omp1002.mail.bf1.yahoo.com
-Received: (qmail 91246 invoked by uid 60001); 5 Sep 2013 21:43:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1378417433; bh=TK865DqXiwya+4AJQuYhvbCuoNC9LzNQ5Sf1VPoFPJ4=; h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=Iv6OWZDDKpMW2A5meu5FkfxSNgOPfEOky7EPMC3p0NkkG+yopYAZ8Ye+oLRjLp8oVo38onkDYQsO+QyV///4Zan9QdtbIrOdy6yUEENnTeZQOw/45A7vqoQoVgmAN/X7SL9srsEhVu940PLcHdmVGp0OAtXNnkRik+CNXOEoKqY=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=LJGdawlV3mNZ34Pbxg9gUIFuLJDoO9cmzBU+5KvBCJoh3OKd9SLBkGyLpRpd5nJD60QcboZ/tiu1eQTI38FBwutqhWqek7yP7n+0nREryfU86Gyzg85ki4KSqghiwO2dGW2cAO7tj2DtRmiZ294oyik2StopsoUY5FRWvHIXrW4=;
-X-YMail-OSG: cm1WS6UVM1kc96O6lutvXa15xGgBd9rOln0hue12XjIShQP
- aJeX5Lx7zQftAe0KDC9a_n9CdkFpeXErXctw2hSgNJFxfQZs_urx4D5v2nkg
- 0tVkMQCkUdl.YqOSVjWaBKVR69OSYNOpTrjPkPsanZOTJ9rs7xZ7BcnCVCZH
- IT2rCoobwPqUaZSvfTZDatXrOveTFzOPP5dKWkuxUk25T8b4EAyZIPfpV8pZ
- 98xV9VNvf87IFHrzj_EVEobloaDWs7T0bHO9TXhc_4jK6hjHupBTVzSpMG8r
- 2Gl2DCBGJbrSON6JGR9gWle.NmnvjdYH8.7KQWw1neLIYyx_BgmYt0tLt4zY
- rvx8JzjCDaxmizMit9V5k7.Rg_NCfDTtRYFyyZz6LOuj65eUmCJC_U0IWh5K
- XbMINrcPQOnUcepAkImqtiDEg1eKCLbnjjzCMAknyKkr4qusfryI.sV60iw8
- k.L_sWNYV7eIL_Fe_mRuWsEL1_.xfoxvC53CGwR1hFXnmNdyxGYdJRudThU2
- db0_hvEc6EqrW625SnknzAD9fwOgVYsuEN_.DObb4OLufzGbKSJULp8cCGmI
- 9Ro6zm7X_avyViMKMdVjzWiA-
-Received: from [216.133.6.252] by web161803.mail.bf1.yahoo.com via HTTP; Thu, 05 Sep 2013 14:43:52 PDT
-X-Rocket-MIMEInfo: 002.001,SSBob3BlIGl0J3Mgbm90IHRvbyBpbmFwcHJvcHJpYXRlIHRvIHNlbmQgYSByYW5kb20gcXVlc3Rpb24geW91ciB3YXksIGJ1dCBJJ3ZlIGV4aGF1c3RlZCBhbGwgb3RoZXIgbWVhbnMgYW5kIGFtIHF1aXRlIGxvc3QgYXQgdGhlIG1vbWVudC4uwqAKCkknbSB0cnlpbmcgdG8gc2V0dXAgYSBkaXN0cmlidXRlZCBkZXZlbG9wbWVudCByZXBvc2l0b3J5IHdpdGggYSBjZW50cmFsIHJlcG9zaXRvcnkgYWN0aW5nIGFzIHRoZSBwcm9kdWN0aW9uIGNvcHkuIMKgSSdtIGRvaW5nIHNvIG9uIGEgV2luZG93cyBmaWxlIHMBMAEBAQE-
-X-Mailer: YahooMailWebService/0.8.156.576
+	id S1753618Ab3IEWUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Sep 2013 18:20:41 -0400
+Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:24269 "EHLO
+	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753588Ab3IEWUk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Sep 2013 18:20:40 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0LAGwCKVJOl3GZ/2dsb2JhbABbgweJbrhbBAQBgSoXdGgBAYEfAQEUAQQBAQ0BAR0RHgEBIQsCCAIBAw4DAwEBAQo5AQQaBgcPDgoJCAIBAgMBhTgHAYISI6B9mXOOFYFLgySBAAOIfYYSmkyBY4E+O4Es
+X-IPAS-Result: Av0LAGwCKVJOl3GZ/2dsb2JhbABbgweJbrhbBAQBgSoXdGgBAYEfAQEUAQQBAQ0BAR0RHgEBIQsCCAIBAw4DAwEBAQo5AQQaBgcPDgoJCAIBAgMBhTgHAYISI6B9mXOOFYFLgySBAAOIfYYSmkyBY4E+O4Es
+X-IronPort-AV: E=Sophos;i="4.90,849,1371078000"; 
+   d="scan'208";a="84369057"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip07ir2.opaltelecom.net with SMTP; 05 Sep 2013 23:20:38 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233997>
 
-I hope it's not too inappropriate to send a random question your way, b=
-ut I've exhausted all other means and am quite lost at the moment..=A0
+From: "Philip Oakley" <philipoakley@iee.org>
+Sent: Saturday, August 31, 2013 11:16 PM
+> From: "Christian Couder" <chriscool@tuxfamily.org>
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>> Documentation/git-replace.txt | 4 +++-
+>> 1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/git-replace.txt 
+>> b/Documentation/git-replace.txt
+>> index 736b48c..a2bd2ee 100644
+>> --- a/Documentation/git-replace.txt
+>> +++ b/Documentation/git-replace.txt
+>> @@ -21,10 +21,12 @@ replaced. The content of the 'replace' reference 
+>> is the SHA-1 of the
+>> replacement object.
+>>
+>> The replaced object and the replacement object must be of the same 
+>> type.
+>> -There is no other restriction on them.
+>> +This restriction can be bypassed using `-f`.
+>>
+>> Unless `-f` is given, the 'replace' reference must not yet exist.
+>>
+>> +There is no other restriction on the replaced and replacement 
+>> objects.
+>
+> Is this trying to allude to the fact that merge commits may be 
+> exchanged with non-merge commits? I strongly believe that this ability 
+> to exchange merge and non-merge commits should be stated _explicitly_ 
+> to counteract the false beliefs that are listed out on the internet.
+>
+> It's probably better stated in a separate patch for that explicit 
+> purpose to avoid mixed messages within this commit.
+>
 
-I'm trying to setup a distributed development repository with a central=
- repository acting as the production copy. =A0I'm doing so on a Windows=
- file share with no SSH / HTTP accessibility. =A0Basically each develop=
-er will have their own copy of the project, and the shared drive should=
- have a copy of the master copy (prod/master branch), along with the wo=
-rk-tree files. =A0
+Not sure how this method of preparing a comment patch will pan out..
 
-The idea is that any developer should be able to do independent develop=
-ment, staged commits, etc.. then push to the central (origin) repositor=
-y, and production scripts will reflect these changes upon a push. =A0
+--->8----
+From a0c0e765cfd969c9c8a6ff3a2cb6b2f1391d2e7d Mon Sep 17 00:00:00 2001
+From: Philip Oakley <philipoakley@iee.org>
+Date: Thu, 5 Sep 2013 22:54:04 +0100
+Subject: [PATCH] Doc: 'replace' merge and non-merge commits
 
-I got pretty close to this setup by creating a bare repository on the f=
-ile share server (f:\GitDBs\foo.git), then cloning the bare repository =
-onto the production path like so:=A0
-git clone f:\GitDBs\foo.git foo =A0
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
 
-I cloned the bare repository just the same onto my local dev path.. and=
- proceeded with development. This worked fine, and I was able to push /=
- pull changes into "origin" (bare repo), and then I would go to my prod=
- (f:\foo) repository (clone of bare f:\GitDBs\foo.git), then pull the c=
-hanges..=A0
+This is supplemental to Christian Couder's 'replace' patch series
+(2013-09-03 69dada4 (Christian Couder): t6050-replace: use some long
+option names).
 
-The problem I faced later on was in parallel development, when changes =
-were made to a file in one repository, and at the same time other chang=
-es made to the same file in another repository.. =A0I couldh't push cha=
-nges from the dev\foo to prod\foo or to origin..=A0
+It adds the clarification that merge and non-merge commits are
+replaceable.
 
-I'm completely lost at the moment.. I try to set --git-dir or --work-tr=
-ee and I get mixed results.. either the setting is not allowed when wor=
-king in bare repositories, or I can't run certain operations from the w=
-ork-tree and git-dir.. like "git status", which in a split git-dir / wo=
-rk-tree environment (on windows), returns an error which specifies the =
-operation is invalid in a bare repository, or specifies that the work-t=
-ree is not recognized as a repository... :(=A0
+Merges are often treated as special case objects so tell users that they 
+are not special here.
 
-Please help me..=A0
-I'm new to Git, but love it already.. I would hate it if I had to work =
-without it..=A0
+---
+ Documentation/git-replace.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thank you in advance for all your help!
+diff --git a/Documentation/git-replace.txt 
+b/Documentation/git-replace.txt
+index 414000e..f373ab4 100644
+--- a/Documentation/git-replace.txt
++++ b/Documentation/git-replace.txt
+@@ -26,6 +26,7 @@ This restriction can be bypassed using `-f`.
+ Unless `-f` is given, the 'replace' reference must not yet exist.
 
+ There is no other restriction on the replaced and replacement objects.
++Merge commits can be replaced by non-merge commits and vice versa.
 
-- Eyal
+ Replacement references will be used by default by all Git commands
+ except those doing reachability traversal (prune, pack transfer and
+-- 
+1.8.1.msysgit.1
