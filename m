@@ -1,135 +1,147 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH v2] Document pack v4 format
-Date: Thu, 05 Sep 2013 17:04:03 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309051655310.14472@syhkavp.arg>
-References: <1377602225-30439-1-git-send-email-pclouds@gmail.com>
- <1377917393-28460-1-git-send-email-pclouds@gmail.com>
- <alpine.LFD.2.03.1309030156410.14472@syhkavp.arg>
- <alpine.LFD.2.03.1309030231350.14472@syhkavp.arg>
- <CACsJy8CZP+55nhfEbgRGa9=y0PyExyHt_seiSc23kB31-_c1Hg@mail.gmail.com>
- <CACsJy8CzpW_xsoxU=+OE6ssbnPu9tyAqRten0=Q5cxPUZ4aeMw@mail.gmail.com>
- <alpine.LFD.2.03.1309042350560.14472@syhkavp.arg>
- <CACsJy8BeU_01c0f5RJExcYo7xGETnduKOw-_shszHd0ZFgZDXw@mail.gmail.com>
- <alpine.LFD.2.03.1309050024090.14472@syhkavp.arg>
- <CACsJy8CX=4Oz_h2NtS3FRdK6_zdFksa+JR5C6Z-z3Y70PLAsyQ@mail.gmail.com>
- <alpine.LFD.2.03.1309050131000.14472@syhkavp.arg>
- <CACsJy8DKL9KnPAXcf+NPU_Y5J1Dz_pYxSpONN4LxcQVi1JOBYw@mail.gmail.com>
- <alpine.LFD.2.03.1309051311070.14472@syhkavp.arg>
- <xmqq1u53hv6l.fsf@gitster.dls.corp.google.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: RE: [PATCH] git-gui: Modify push dialog to support Gerrit review
+Date: Thu, 5 Sep 2013 23:04:02 +0200
+Message-ID: <20130905210402.GA2939@sandbox-ub>
+References: <20130904150853.52EC4121B7E@jed-dev-01.labnet>
+ <522827CE.5040303@viscovery.net>
+ <F8C23E99F5C6884EB99E2A1966D743637F3619A6@cph-gen-exch01.napatech.com>
+ <5228476A.2070505@viscovery.net>
+ <F8C23E99F5C6884EB99E2A1966D743637F3619CB@cph-gen-exch01.napatech.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 05 23:04:13 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"spearce@spearce.org" <spearce@spearce.org>,
+	Pat Thoyts <patthoyts@gmail.com>
+To: =?iso-8859-1?Q?J=F8rgen?= Edelbo <jed@napatech.com>
+X-From: git-owner@vger.kernel.org Thu Sep 05 23:04:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHgiq-0003z4-Di
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 23:04:12 +0200
+	id 1VHgiy-00041G-0Y
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Sep 2013 23:04:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754519Ab3IEVEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Sep 2013 17:04:07 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:30720 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752124Ab3IEVEG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Sep 2013 17:04:06 -0400
-Received: from yoda.home ([70.83.209.44]) by VL-VM-MR001.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MSO001AO7URLTC0@VL-VM-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 05 Sep 2013 17:04:03 -0400 (EDT)
-Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTPSA id 5DAC92DA0547; Thu, 05 Sep 2013 17:04:03 -0400 (EDT)
-In-reply-to: <xmqq1u53hv6l.fsf@gitster.dls.corp.google.com>
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1755028Ab3IEVEP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Sep 2013 17:04:15 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.94]:46529 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754584Ab3IEVEK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Sep 2013 17:04:10 -0400
+Received: from [77.20.34.36] (helo=sandbox-ub)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1VHgil-0005xe-3H; Thu, 05 Sep 2013 23:04:07 +0200
+Content-Disposition: inline
+In-Reply-To: <F8C23E99F5C6884EB99E2A1966D743637F3619CB@cph-gen-exch01.napatech.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/233992>
 
-On Thu, 5 Sep 2013, Junio C Hamano wrote:
+On Thu, Sep 05, 2013 at 09:18:25AM +0000, J=F8rgen Edelbo wrote:
+> > -----Original Message-----
+> > From: Johannes Sixt [mailto:j.sixt@viscovery.net]
+> > Sent: 5. september 2013 10:57
+> >=20
+> > Please do not top-post.
+> >=20
+> > Am 9/5/2013 10:29, schrieb J=F8rgen Edelbo:
+> > > -----Original Message----- From: Johannes Sixt
+> > >> Am 9/2/2013 10:54, schrieb Joergen Edelbo:
+> > >>> Changes done:
+> > >>>
+> > >>> Remove selection of branches to push - push always HEAD. This c=
+an be
+> > >>> justified by the fact that this far the most common thing to do=
+=2E
+> > >>
+> > >> What are your plans to support a topic-based workflow? "Far the =
+most
+> > >> common thing to happen" is that someone forgets to push complete=
+d
+> > >> topics. With this change, aren't those people forced to relingui=
+sh
+> > >> their current work because they have to checkout the completed t=
+opics
+> > >> to push them?
+> > >
+> > > I am not quite sure what your concern is.
+> >=20
+> > When I have completed topics A and B, but forgot to push them, and =
+now I
+> > am working on topic C, how do I push topics A and B?
+> >=20
+> > You say I can only push HEAD. I understand this that I have to stop=
+ work on C
+> > (perhaps commit or stash any unfinished work), then checkout A, pus=
+h it,
+> > checkout B, push it, checkout C and unstash the unfinished work. If=
+ my
+> > understanding is correct, the new restriction is a no-go.
+>=20
+> Ok, this way of working is not supported. It just never occurred to m=
+e that
+> you would work this way. Forgetting to push something that you have j=
+ust=20
+> completed is very far from what I am used to. I think it comes most n=
+atural
+> to push what you have done before changing topic. The reason I make a=
+ commit
+> is to get it out of the door.
 
-> Nicolas Pitre <nico@fluxnic.net> writes:
-> 
-> > On Thu, 5 Sep 2013, Duy Nguyen wrote:
-> >
-> >> On Thu, Sep 5, 2013 at 12:39 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
-> >> > Now the pack index v3 probably needs to be improved a little, again to
-> >> > accommodate completion of thin packs.  Given that the main SHA1 table is
-> >> > now in the main pack file, it should be possible to still carry a small
-> >> > SHA1 table in the index file that corresponds to the appended objects
-> >> > only. This means that a SHA1 search will have to first use the main SHA1
-> >> > table in the pack file as it is done now, and if not found then use the
-> >> > SHA1 table in the index file if it exists.  And of course
-> >> > nth_packed_object_sha1() will have to be adjusted accordingly.
-> >> 
-> >> What if the sender prepares the sha-1 table to contain missing objects
-> >> in advance? The sender should know what base objects are missing. Then
-> >> we only need to append objects at the receiving end and verify that
-> >> all new objects are also present in the sha-1 table.
-> >
-> > I do like this idea very much.  And that doesn't increase the thin pack 
-> > size as the larger SHA1 table will be compensated by a smaller sha1ref 
-> > encoding in those objects referring to the missing ones.
-> 
-> Let me see if I understand the proposal correctly.  Compared to a
-> normal pack-v4 stream, a thin pack-v4 stream:
-> 
->  - has all the SHA-1 object names involved in the stream in its main
->    object name table---most importantly, names of objects that
->    "thin" optimization omits from the pack data body are included;
-> 
->  - uses the SHA-1 object name table offset to refer to other
->    objects, even to ones that thin stream will not transfer in the
->    pack data body;
-> 
->  - is completed at the receiving end by appending the data for the
->    objects that were not transferred due to the "thin" optimization.
-> 
-> So the invariant "all objects contained in the pack" in:
-> 
->  - A table of sorted SHA-1 object names for all objects contained in
->    the pack.
-> 
-> that appears in Documentation/technical/pack-format.txt is still
-> kept at the end, and more importantly, any object that is mentioned
-> in this table can be reconstructed by using pack data in the same
-> packfile without referencing anything else.  Most importantly, if we
-> were to build a v2 .idx file for the resulting .pack, the list of
-> object names in the .idx file would be identical to the object names
-> in this table in the .pack file.
+=46WIW, I also think that we should keep the box which allows you to
+select the branch to push. I did not realize that you were removing it
+when I first glanced at your patch.
 
-That is right.
+Even if your reasoning that pushing the currently checked out branch is
+correct: This box has been around for too long, so it will annoy people
+that got used to the fact that they can select the branch to push.
 
-> If that is the case, I too like this.
-> 
-> I briefly wondered if it makes sense to mention objects that are
-> often referred to that do not exist in the pack in this table
-> (e.g. new commits included in this pack refer to a tree object that
-> has not changed for ages---their trees mention this subtree using a
-> "SHA-1 reference encoding" and being able to name the old,
-> unchanging tree with an index to the object table may save space),
-> but that would break the above invariant in a big way---some objects
-> mentioned in the table may not exist in the packfile itself---and it
-> probably is not a good idea.
+Another problem: It is not very intuitive to only select the branch to
+push to. You can do that on the command line but IMO using
 
-Yet, if an old tree that doesn't change is often referred to, it should 
-be possible to have only one such reference in the whole pack and all 
-the other trees can use a delta copy sequence to refer to it.  At this 
-point whether or not the tree being referred to is listed inline or in 
-the SHA1 table doesn't make a big difference.
+	git push origin HEAD:refs/heads/<branchname>
 
-> Unlike that broken idea, "include
-> names of the objects that will be appended anyway" approach to help
-> fattening a thin-pack makes very good sense to me.
-> 
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+is way less common than
+
+	git push origin <branchname>
+
+and I think that should also be reflected in the gui. It might be more
+common for a gerrit user but for the typical git user without gerrit it
+is not.
+
+So to make it easy for the user to transition from gui to commandline
+and back with your patch I would expect: The user selects a branch
+to push. The new "Destination Branches" section automatically selects/s=
+hows
+the same name for the default case as destination (like the cli). So
+if I only select the branch to push it behaves the same as before.
+
+If you detect (I assume that is possible somehow) that the remote is a
+gerrit remote: "Push for Gerrit review" would automatically be ticked a=
+nd
+the branch a git pull would merge (e.g. the one from branch.<name>.merg=
+e)
+is selected as the destination branch under refs/for/... . If there is
+no config for that, fallback to "master".
+
+This is what I would expect with no further extension of the current gi=
+t
+command line behavior and config options. So that way your patch will b=
+e
+an *extension* and not a change of behavior.
+
+Another unrelated thing that is currently left out: You can transport
+the local branchname when pushing to the magical gerrit refs/for/... . =
+I
+would like to see that appended as well. But opposed to the branch
+selection that is not a show stopper for the patch more a side note.
+
+Cheers Heiko
