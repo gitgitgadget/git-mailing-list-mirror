@@ -1,117 +1,117 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] upload-pack: send the HEAD information
-Date: Fri, 06 Sep 2013 10:46:24 -0700
-Message-ID: <xmqqsixhyhan.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 2/3] connect.c: save symref info from server capabilities
+Date: Fri, 06 Sep 2013 10:56:51 -0700
+Message-ID: <xmqqob85ygt8.fsf@gitster.dls.corp.google.com>
 References: <20130906155204.GE12966@inner.h.apk.li>
-	<20130906155608.GF12966@inner.h.apk.li>
+	<20130906155655.GG12966@inner.h.apk.li>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 06 19:46:38 2013
+X-From: git-owner@vger.kernel.org Fri Sep 06 19:59:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VI079-0002X6-WA
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 19:46:36 +0200
+	id 1VI0JB-0000sV-3L
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 19:59:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750754Ab3IFRqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 13:46:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47780 "EHLO
+	id S1751625Ab3IFR5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 13:57:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43995 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750727Ab3IFRqb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Sep 2013 13:46:31 -0400
+	id S1752668Ab3IFR44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Sep 2013 13:56:56 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 647FA3D632;
-	Fri,  6 Sep 2013 17:46:30 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF6413F22C;
+	Fri,  6 Sep 2013 17:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JjLfgz8bYsg8rD1u3s/10hPLBOE=; b=nK9Baa
-	YrQpJ1K837xlZWwd5vZ+eyfZ2mhhF/Hjo1Rk3btLGHG2O8D6Yeoi1FEW6F1CxyrU
-	8rdATWpLg2QY0hXhI4gORw/bhUgulU57HyT6GXnmBeu0cXM1DGRW2mARlm7yndfj
-	h0QwGNppHhArqaOizMhOJdVaEcB8dec/ddR9A=
+	:content-type; s=sasl; bh=jP596n71scbZ54bzg2e+qRjI57g=; b=iomwQa
+	pJ2xdLktj/jE/JLxXZo5KDb4FC4duj3oGxAinMpAJFa44VxWgUdYcq4yf+seBydg
+	tBxVNKcSYIwmJpvT6vpono80F1SIFLaPM1+07iSVshstzIhfK+g2iE1R020WWimz
+	nw7C3ILG0ZwliCEjafb77YKO1yC7lbISq7xCc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XNYNf20lUvih2NA4vfVW4drDZm0gY1kQ
-	YCpa2OlJHak1bUTVsF29HoW6RQoGaSlCvQ5r9Q/23p1MW/6+1nPuP6WUd3aUE2E6
-	1ux1nbJpFTVRcs7GeHNGnJoIMd5FOl/teJo2qQSh59Uj07gcBTuvh4s3CrRLeiY9
-	7zxN5pWT23w=
+	:content-type; q=dns; s=sasl; b=pHTBQaJYrCyFVIjG0pLYr2wPGK3DHz8X
+	LJL5iQpsQFZOYBXimaAzAwl36D85620+SrPHP1g3sGEGp/NcquoO1i2D88II2dW7
+	vS0xyhMdW2h+jw1Ghg2Z3pqAE24/tZ1Sk5Xt5CHWqaIkRnMjMk7xU8e0z5NzFSY8
+	+mA9fmK1AQ4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4C943D62E;
-	Fri,  6 Sep 2013 17:46:29 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6FD0E3F229;
+	Fri,  6 Sep 2013 17:56:55 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7553B3D622;
-	Fri,  6 Sep 2013 17:46:26 +0000 (UTC)
-In-Reply-To: <20130906155608.GF12966@inner.h.apk.li> (Andreas Krey's message
-	of "Fri, 6 Sep 2013 17:56:08 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95A313F225;
+	Fri,  6 Sep 2013 17:56:53 +0000 (UTC)
+In-Reply-To: <20130906155655.GG12966@inner.h.apk.li> (Andreas Krey's message
+	of "Fri, 6 Sep 2013 17:56:55 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 40E610E2-171C-11E3-AF13-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B699533E-171D-11E3-98BE-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234078>
 
 Andreas Krey <a.krey@gmx.de> writes:
 
-> From: Junio C Hamano <gitster@pobox.com>
->
-> This implements the server side of protocol extension to show which branch
-> the HEAD points at.  The information is sent as a capability symref=<target>.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > Signed-off-by: Andreas Krey <a.krey@gmx.de>
 > ---
->  upload-pack.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
+>  connect.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
 >
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 127e59a..390d1ec 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -745,13 +745,17 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
->  	if (mark_our_ref(refname, sha1, flag, cb_data))
->  		return 0;
+> diff --git a/connect.c b/connect.c
+> index a0783d4..98c4868 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -72,8 +72,8 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+>  	for (;;) {
+>  		struct ref *ref;
+>  		unsigned char old_sha1[20];
+> -		char *name;
+> -		int len, name_len;
+> +		char *name, *symref;
+> +		int len, name_len, symref_len;
+>  		char *buffer = packet_buffer;
 >  
-> -	if (capabilities)
-> -		packet_write(1, "%s %s%c%s%s%s agent=%s\n",
-> +	if (capabilities) {
-> +		unsigned char dummy[20];
-> +		const char *target = resolve_ref_unsafe("HEAD", dummy, 0, NULL);
-> +		packet_write(1, "%s %s%c%s%s%s%s%s agent=%s\n",
->  			     sha1_to_hex(sha1), refname_nons,
->  			     0, capabilities,
->  			     allow_tip_sha1_in_want ? " allow-tip-sha1-in-want" : "",
->  			     stateless_rpc ? " no-done" : "",
-> +			     target ? " symref=" : "", target ? target : 0,
->  			     git_user_agent_sanitized());
-> +	}
->  	else
->  		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname_nons);
->  	capabilities = NULL;
+>  		len = packet_read(in, &src_buf, &src_len,
+> @@ -94,9 +94,12 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+>  		name = buffer + 41;
+>  
+>  		name_len = strlen(name);
+> +		symref = 0;
+>  		if (len != name_len + 41) {
+>  			free(server_capabilities);
+>  			server_capabilities = xstrdup(name + name_len + 1);
+> +			symref = parse_feature_value(server_capabilities,
+> +						     "symref", &symref_len);
+>  		}
+>  		if (extra_have &&
+> @@ -108,6 +111,10 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+>  		if (!check_ref(name, name_len, flags))
+>  			continue;
+>  		ref = alloc_ref(buffer + 41);
+> +		if (symref) {
+> +			ref->symref = xcalloc(symref_len + 1, 1);
+> +			strncpy(ref->symref, symref, symref_len);
+> +		}
+>  		hashcpy(ref->old_sha1, old_sha1);
+>  		*list = ref;
+>  		list = &ref->next;
 
-I think it is perfectly fine to expose _only_ HEAD now, and wait
-until we find a good reason that we should send this information for
-other symbolic refs in the repository.
 
-However, because we already anticipate that we may find such a good
-reason later, on-the-wire format should be prepared to support such
-later enhancement.  I think sending
+This looks utterly wrong.  HEAD may happen to be the first ref that
+is advertised and hence capability list typically comes on it, but
+that does not necessarily have to be the case from the protocol's
+correctness point of view.
 
-	symref=HEAD:refs/heads/master
+I think this function should do this instead.
 
-is probably one good way to do so, as Peff suggested in that old
-thread ($gmane/102070; note that back then this wasn't suggested as
-a proper capability so the exact format he suggests in the message
-is different).  Then we could later add advertisements for other
-symbolic refs if we find it necessary to do so, e.g.
+    - inside the loop, collect the "symref=..." capabilities;
 
-	symref=HEAD:refs/heads/master
-        symref=refs/remotes/origin/HEAD:refs/remotes/origin/master
-
-(all on one line together with other capabilities separated with a
-SP in between).
+    - after the loop, look at the "symref=..." capabilities, and
+      among the refs the loop added to the *list, find the "HEAD"
+      ref and set its ->symref to point at an appropirate ref.
