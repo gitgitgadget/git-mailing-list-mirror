@@ -1,82 +1,57 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 5/7] Documentation/replace: add Creating Replacement
- Objects section
-Date: Fri, 06 Sep 2013 07:10:57 +0200
-Message-ID: <20130906051100.6657.16629.chriscool@tuxfamily.org>
-References: <20130906050702.6657.25651.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
-	Thomas Rast <trast@inf.ethz.ch>, Johannes Sixt <j6t@kdbg.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
+From: Dave Williams <dave@opensourcesolutions.co.uk>
+Subject: Re: [PATCH V3] check-ignore: Add option to ignore index contents
+Date: Fri, 6 Sep 2013 06:59:55 +0100
+Message-ID: <20130906055955.GA12622@opensourcesolutions.co.uk>
+References: <20130905160801.GA22710@opensourcesolutions.co.uk>
+ <xmqqbo46hpk7.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Adam Spiers <git@adamspiers.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 06 07:12:29 2013
+X-From: git-owner@vger.kernel.org Fri Sep 06 08:00:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHoLK-0005O4-8Q
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 07:12:26 +0200
+	id 1VHp5Y-0006pN-56
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 08:00:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750776Ab3IFFMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 01:12:17 -0400
-Received: from [194.158.98.14] ([194.158.98.14]:38064 "EHLO mail-1y.bbox.fr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750754Ab3IFFL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Sep 2013 01:11:56 -0400
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 9B97450;
-	Fri,  6 Sep 2013 07:11:35 +0200 (CEST)
-X-git-sha1: dbb64178b79908a93fe18c9b09bb5192220c3363 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20130906050702.6657.25651.chriscool@tuxfamily.org>
+	id S1751046Ab3IFGAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 02:00:05 -0400
+Received: from 46-65-59-139.zone16.bethere.co.uk ([46.65.59.139]:62550 "EHLO
+	loganberry.opensourcesolutions.co.uk" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751038Ab3IFGAE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Sep 2013 02:00:04 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by loganberry.opensourcesolutions.co.uk (Postfix) with ESMTP id 12360EEC189;
+	Fri,  6 Sep 2013 07:00:02 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at loganberry.opensourcesolutions.co.uk
+Received: from loganberry.opensourcesolutions.co.uk ([127.0.0.1])
+	by localhost (loganberry.opensourcesolutions.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id vufl+xpJXs7v; Fri,  6 Sep 2013 06:59:55 +0100 (BST)
+Received: from tangerine (tangerine.opensourcesolutions.co.uk [192.168.149.59])
+	by loganberry.opensourcesolutions.co.uk (Postfix) with ESMTP id A7D78EEC0C4;
+	Fri,  6 Sep 2013 06:59:55 +0100 (BST)
+Received: by tangerine (Postfix, from userid 1000)
+	id 8A7C4100449; Fri,  6 Sep 2013 06:59:55 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <xmqqbo46hpk7.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234027>
 
-There were no hints in the documentation about how to create
-replacement objects.
+On 15:27, Thu 05 Sep 13, Junio C Hamano wrote:
+> Now the long option name is "--no-index", it makes me wonder if "-i"
+> is a good synonym for it, and the longer I stare at it, the more
+> certain I become convinced that it is a bad choice.
+> 
+I had originally called it "--ignore-index" at which point "-i" made
+more sense!
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-replace.txt | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
-index d198006..a2bd2ee 100644
---- a/Documentation/git-replace.txt
-+++ b/Documentation/git-replace.txt
-@@ -66,6 +66,19 @@ OPTIONS
- 	Typing "git replace" without arguments, also lists all replace
- 	refs.
- 
-+CREATING REPLACEMENT OBJECTS
-+----------------------------
-+
-+linkgit:git-filter-branch[1], linkgit:git-hash-object[1] and
-+linkgit:git-rebase[1], among other git commands, can be used to create
-+replacement objects from existing objects.
-+
-+If you want to replace many blobs, trees or commits that are part of a
-+string of commits, you may just want to create a replacement string of
-+commits and then only replace the commit at the tip of the target
-+string of commits with the commit at the tip of the replacement string
-+of commits.
-+
- BUGS
- ----
- Comparing blobs or trees that have been replaced with those that
-@@ -78,6 +91,9 @@ pending objects.
- 
- SEE ALSO
- --------
-+linkgit:git-hash-object[1]
-+linkgit:git-filter-branch[1]
-+linkgit:git-rebase[1]
- linkgit:git-tag[1]
- linkgit:git-branch[1]
- linkgit:git[1]
--- 
-1.8.4.rc1.28.ge2684af
+Dave
