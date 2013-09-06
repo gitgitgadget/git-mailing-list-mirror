@@ -1,89 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
-Date: Fri, 06 Sep 2013 15:14:25 -0700
-Message-ID: <xmqq1u51wqbi.fsf@gitster.dls.corp.google.com>
-References: <xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
-	<CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com>
-	<xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
-	<20130904081047.GB2582@serenity.lan>
-	<xmqqa9jso69u.fsf@gitster.dls.corp.google.com>
-	<7DC052455C7C4B50A4EAFC1EF63D006C@PhilipOakley>
-	<xmqqr4d4jird.fsf@gitster.dls.corp.google.com>
-	<20130905080606.GE2582@serenity.lan>
-	<xmqqd2onhyay.fsf@gitster.dls.corp.google.com>
-	<20130905192646.GG2582@serenity.lan>
-	<20130906214138.GA7470@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>,
-	Philip Oakley <philipoakley@iee.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 07 00:14:40 2013
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH] GIT-VERSION-GEN: Do not require tags to be annotated
+Date: Fri, 6 Sep 2013 15:34:08 -0700
+Message-ID: <4065B5CE-7E81-41F3-B9DE-FDA05C43AAB0@gmail.com>
+References: <522A36AA.3050701@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 07 00:34:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VI4IY-0004Ck-8P
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 00:14:38 +0200
+	id 1VI4bY-0000Fe-0U
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 00:34:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753095Ab3IFWOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 18:14:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40106 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752832Ab3IFWOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Sep 2013 18:14:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 464793D78C;
-	Fri,  6 Sep 2013 22:14:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PAvi1KQdg7RLOckQHi23jCqxMVc=; b=XyS++9
-	rNvQ16himJ2sr1knTp6u97ym1u9Hdtpz6NntiRxsCdNdTK2z/aivLmySJS1jNhEr
-	/mTYsFgbTuKt3c3DkHbIwWrhRv1EvrUdiR+iTRpg6PlwsVepWfYQJTK8I2Ls1MUJ
-	R36rgTB8yiiAOV2xUxHO7Txg63RZdZnKFlEX0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J3camKG/CW9IUawhX29lWXhhD5UheVLm
-	6r6a8TK0xo3QjrRkLTmJIZ3lCTF4Aww4dbF1i6CpS0p1WQurWFS0gVer4dJTB7Xz
-	YuwNbxjF0roxlvJJLs68ca3S0fpbP6JxRR18IwuJD1ILokm2dFyzN6LK1PNceP8Z
-	BxN1iD/8Z8s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC3D93D78B;
-	Fri,  6 Sep 2013 22:14:30 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 49AF03D781;
-	Fri,  6 Sep 2013 22:14:29 +0000 (UTC)
-In-Reply-To: <20130906214138.GA7470@google.com> (Jonathan Nieder's message of
-	"Fri, 6 Sep 2013 14:41:38 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B2E86F3A-1741-11E3-B762-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753557Ab3IFWeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 18:34:12 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:54495 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751225Ab3IFWeL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Sep 2013 18:34:11 -0400
+Received: by mail-pa0-f50.google.com with SMTP id fb10so3917569pad.37
+        for <git@vger.kernel.org>; Fri, 06 Sep 2013 15:34:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=rIIQtPIE8YMgWGc2X7hL9zj2qZHpJ5FIhEQTT9cRW4k=;
+        b=xuhGWfjgLXR9dvMH3IZvU1n4ANy94F4hK7fLlokuTd8OJEwNEOpNg12PBh8iqXDAuX
+         lY+fQ3LBcLt9O1dAdObwmg2AFya/hERmbTL3Tvp0rpu73l7koZBnvPOqSZxpKHyklc67
+         CUhUsgnK2auwdD43y2ZTle4Lh+PC8jQZfkwASXlle1PLT3OPFc40VgXJ3a8iPH3JR4LC
+         mJp5o6fKXgQgJodT5ib//7F+3UraJCSkvuQtlFHoU/MDnpkE8Qn7XLhXE8EZgy+ApHY8
+         mg8pgzi06CnunfMvr4tWVJKFHmOLA7IJ/8tuhN/fMv2USjGEBXkGAbhE3rcsOVyLd15G
+         Fg7w==
+X-Received: by 10.68.76.101 with SMTP id j5mr5353919pbw.67.1378506850795;
+        Fri, 06 Sep 2013 15:34:10 -0700 (PDT)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id gg10sm6128004pbc.46.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 06 Sep 2013 15:34:10 -0700 (PDT)
+In-Reply-To: <522A36AA.3050701@gmail.com>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234108>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Sep 6, 2013, at 13:10, Sebastian Schuberth wrote:
+> For custom builds of Git it sometimes is inconvenient to annotate tags
+> because there simply is nothing to say, so do not require an  
+> annotation.
 
-> John Keeping wrote:
->> On Thu, Sep 05, 2013 at 12:18:45PM -0700, Junio C Hamano wrote:
->
->>> I somehow thought that rebase by default looked in the reflog to do
->>> exactly that. Perhaps I am not remembering correctly.
->>
->> It just does @{upstream} by default, which tends to get messy if the
->> upstream has been rewritten.
->
-> Maybe Junio is thinking of 'git pull --rebase', which walks the reflog
-> until it finds an ancestor of the current branch and uses that as the
-> <upstream> parameter to rebase.
+It's not that hard to add -m "" to the command line:
 
-You're right.
+   git tag -a -m "" new-annotated-tag
 
-It makes me wonder why we did that one inside pull and not in
-rebase, though.
+if you're just trying to avoid the editor or thinking up a message.   
+Is `-m ""` really that inconvenient?
