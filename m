@@ -1,96 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: A naive proposal for preventing loose object explosions
-Date: Fri, 06 Sep 2013 10:19:02 -0700
-Message-ID: <xmqq61udzx4p.fsf@gitster.dls.corp.google.com>
-References: <54d0a7f13b53e15ad485e212057b85a3.squirrel@www.codeaurora.org>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 0/3] Unconfuse git clone when two branches at are HEAD.
+Date: Fri, 6 Sep 2013 18:29:16 +0100
+Organization: OPDS
+Message-ID: <6649DD0E3B6B4CE59D330217786B6B05@PhilipOakley>
+References: <20130906155204.GE12966@inner.h.apk.li>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, nasserg@codeaurora.org
-To: mfick@codeaurora.org
-X-From: git-owner@vger.kernel.org Fri Sep 06 19:19:18 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Andreas Krey" <a.krey@gmx.de>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 06 19:28:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHzgi-0006Fi-St
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 19:19:17 +0200
+	id 1VHzpV-00029Y-8p
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 19:28:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753581Ab3IFRTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 13:19:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59918 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752963Ab3IFRTM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Sep 2013 13:19:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D0C43DF70;
-	Fri,  6 Sep 2013 17:19:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ro/vuMu94SL6qetTLV69t1Bjo+w=; b=WV7Om3
-	L+hxYLEsdzkRXafPHkWCtsEH+50F14YIrT8xd05ovqVuZstGdBDJ2tY7RkpJFKKv
-	9sk+al42f+/tW5nMCIam9rcD+WJm20W8RYmiXfCt6ttJQ4VsAdc3CBEz5TkwFa/a
-	5tUX0a/Bay/gnLlWkWo5NnUv9G+0lnccQOTTg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MdKixfLNDFR4ti7kN7UcDvWVPP0CDDeu
-	QLatVHt8MrzA9UC5XNmOZTWimgMzURT5G1FmUH5oeOkpFlTUjLmhFxDraLFvrNzY
-	aStqKdUsmRi+ZqmCKz4OV9W0D3JA3MNk7Bu9x/b27jOxlqoggjngGPPXZQ7GjhF6
-	QWYpwpTBN/U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB6C53DF6D;
-	Fri,  6 Sep 2013 17:19:09 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D95B83DF63;
-	Fri,  6 Sep 2013 17:19:07 +0000 (UTC)
-In-Reply-To: <54d0a7f13b53e15ad485e212057b85a3.squirrel@www.codeaurora.org>
-	(mfick@codeaurora.org's message of "Fri, 6 Sep 2013 03:42:50 -0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 701F6BFA-1718-11E3-B811-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750727Ab3IFR2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 13:28:16 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:59069 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750721Ab3IFR2P (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Sep 2013 13:28:15 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av4LAMoPKlJOl3GZ/2dsb2JhbABbgweJbrhkBAQBgSUXdGgBAYEfAQEUAQQBAQUIAQEuHgEBIQsCAwUCAQMOBwwlFAEEGgYHFwYBEggCAQIDAYU4BwGCEg0DE74PjQ6CboMkgQADiH2GEppMgTqBZzs
+X-IPAS-Result: Av4LAMoPKlJOl3GZ/2dsb2JhbABbgweJbrhkBAQBgSUXdGgBAYEfAQEUAQQBAQUIAQEuHgEBIQsCAwUCAQMOBwwlFAEEGgYHFwYBEggCAQIDAYU4BwGCEg0DE74PjQ6CboMkgQADiH2GEppMgTqBZzs
+X-IronPort-AV: E=Sophos;i="4.90,855,1371078000"; 
+   d="scan'208";a="441276541"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 06 Sep 2013 18:28:13 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234066>
 
-mfick@codeaurora.org writes:
+From: "Andreas Krey" <a.krey@gmx.de>
+> Ok, here are some patches that make git actually
+> check out the current remote branch when cloning.
+>
+> Up to now this failed when there were two branches that pointed to
+> the HEAD commit of the remote repo, and git clone would sometimes
+> choose the wrong one as the HEAD ref isn't transmitted in all
+> transport.
+>
+> Stuff the HEAD ref into the capability list (assuming refs are clean
+> enough to do that w/o escaping), and read them out on the other
+> side. All other things were thankfully already in place.
+>
+> Two of the patches have Junio in the From as they are essentially his.
+>
+> Andreas
+> --
 
-> Object lookups should likely not get any slower than if
-> repack were not run, and the extra new pack might actually help
-> find some objects quicker.
+Does this have any impact on the alleged bug in `git bundle --all` 
+(which can then be cloned from) where the current HEAD ref wasn't 
+included in the bundle? Or am I mis-remembering?
 
-In general, having an extra pack, only to keep objects that you know
-are available in other packs, will make _all_ object accesses, not
-just the ones that are contained in that extra pack, slower.
-
-Instead of mmapping all the .idx files for all the available
-packfiles, we could build a table that records, for each packed
-object, from which packfile at what offset the data is available to
-optimize the access, but obviously building that in-core table will
-take time, so it may not be a good trade-off to do so at runtime (a
-precomputed super-.idx that we can mmap at runtime might be a good
-way forward if that turns out to be the case).
-
-> Does this sound like it would work?
-
-Sorry, but it is unclear what problem you are trying to solve.
-
-Is it that you do not like that "repack -A" ejects unreferenced
-objects and makes it loose, which you may have many?
-
-The loosen_unused_packed_objects() function used by "repack -A"
-calls the force_object_loose() function (actually, it is the sole
-caller of the function).  If you tweak the latter to stream to a
-single new "graveyard" packfile and mark it as "kept until expiry",
-would it solve the issue the same way but with much smaller impact?
-
-There already is an infrastructure available to open a single output
-packfile and send multiple objects to it in bulk-checkin.c, and I am
-wondering if you can take advantage of the framework.  The existing
-interface to it assumes that the object data is coming from a file
-descriptor (the interface was built to support bulk-checkin of many
-objects in an empty repository), and it needs refactoring to allow
-stream_to_pack() to take different kind of data sources in the form
-of stateful callback function, though.
+Philip 
