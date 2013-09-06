@@ -1,106 +1,71 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4 0/5] Disable "git status" comment prefix
-Date: Fri, 06 Sep 2013 19:28:43 +0200
-Message-ID: <vpq38phsvuc.fsf@anie.imag.fr>
-References: <1378374618-31439-1-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqqhadzhyjb.fsf@gitster.dls.corp.google.com>
-	<vpqioyfukkw.fsf@anie.imag.fr>
-	<20130905232322.GB29351@sigill.intra.peff.net>
-	<20130906165330.GA6462@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] branch: Fix --track on a remote-tracking non-branch
+Date: Fri, 06 Sep 2013 10:29:34 -0700
+Message-ID: <xmqq1u51zwn5.fsf@gitster.dls.corp.google.com>
+References: <1378464042-17476-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 06 19:29:32 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Sep 06 19:29:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHzqc-0002c1-EU
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 19:29:30 +0200
+	id 1VHzqr-0002ir-BZ
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 19:29:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750799Ab3IFR3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 13:29:23 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:43880 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750779Ab3IFR3W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Sep 2013 13:29:22 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r86HSfrH029999
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 6 Sep 2013 19:28:41 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VHzpr-0000WY-GL; Fri, 06 Sep 2013 19:28:43 +0200
-In-Reply-To: <20130906165330.GA6462@google.com> (Jonathan Nieder's message of
-	"Fri, 6 Sep 2013 09:53:30 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 06 Sep 2013 19:28:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r86HSfrH029999
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1379093326.58342@fP85srWjnKQfhwHmqAqanw
+	id S1750800Ab3IFR3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 13:29:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55776 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750762Ab3IFR3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Sep 2013 13:29:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E2743E705;
+	Fri,  6 Sep 2013 17:29:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pRvHgrUgM/DlCCfbSa7XVKFOFQo=; b=BE/Ow8
+	AfCGgPEeI8veYlzEBao0VX4Javbmfu92NZ2WjsIYE8v0QiRY630LddmhmMoiSWXv
+	Rcr+K/wz8CkaqhiN94vIqLCG5NcM0MrAF01mYrGxFC9xWplB87oJOVHCm9ufm387
+	RHL37hiI9sDZ4X7axKbKW3KMfBpO2W2MNRuTw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eGGQyqZi8ckUqedqwaTUVZiYa2Da2GZX
+	2mkJkWi4Na175eChVJJkQSyvHjfl9kfFzPKcRGA/+o4RSDwS/bRVhyg34E1rETg0
+	pGYXjQbRXSZD1X9qBVGz3gD7v6GxpfNFFYXjAXA9HEN2DjX9uzxiNL0rRGbON66X
+	rfNMEzPD9zY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6FEC23E703;
+	Fri,  6 Sep 2013 17:29:36 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3ABB3E702;
+	Fri,  6 Sep 2013 17:29:35 +0000 (UTC)
+In-Reply-To: <1378464042-17476-1-git-send-email-johan@herland.net> (Johan
+	Herland's message of "Fri, 6 Sep 2013 12:40:37 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E6630FBE-1719-11E3-A5EA-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234068>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Johan Herland <johan@herland.net> writes:
 
-> Jeff King wrote:
->> On Thu, Sep 05, 2013 at 09:36:47PM +0200, Matthieu Moy wrote:
+> However, in addition to requiring a matching remote/refspec, I also
+> (for reasons that are still unclear to me) added a requirement that
+> the resulting remote ref name (to be stored into branch.<name>.merge)
+> must start with "refs/heads/" (see the last line of
+> branch.c:check_tracking_branch()).
 >
->>> I'm fine with any name actually (since it is enabled by default, people
->>> don't need to know the name to benefit from the new output). Maybe
->>> status.displayCommentPrefix was the best name after all.
->>
->> FWIW, I had the same thought as Junio. I much prefer something like
->> status.displayCommentPrefix for clarity and future-proofing.
->
-> Sounds fine, but I don't understand why we'd want this to be an option
-> with a future in the first place.  Why not just fix the remaining bugs
-> before merging to master and make it unconditional?
+> Although it is typically the case that an upstream branch is a proper
+> (refs/heads/*) branch in the remote repo (which explains why we have
+> not noticed this until now), I think it is _wrong_ of Git to _require_
+> this when configuring the upstream.
 
-I think some old-time users may appreciate to have a
-backward-compatibility option. It doesn't cost much for us, as we need
-the variable internally (to use the prefix in COMMIT_EDITMSG, and not on
-stdout), and it actually makes it easier to test.
-
->>                                               and the bottom "nothing
->> added" line butts against the untracked list more obviously, because
->> they now all have the same comment indentation.
->>
->> I wonder if it would look a little nicer as:
->>
->>   On branch private
->>   Your branch and 'origin/next' have diverged,
->>   and have 472 and 59 different commits each, respectively.
->>
->>   Untracked files:
->>           t/foo
->>           test-obj-pool
->>           test-string-pool
->>           test-treap
->>           test-url-normalize
->>
->>   nothing added to commit but untracked files present
->
-> The added blank line before "nothing added" sounds like a good idea.
-
-I won't change the header part in this topic (no time, sorry), but the
-missing newline before "nothing added" actually sounds like a bug, as
-there is normally a newline after each list of file in `git status`,
-except untracked and ignored.
-
-I'll fix it as a separate patch in the next round.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Yeah, I agree.
