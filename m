@@ -1,80 +1,84 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] Document pack v4 format
-Date: Fri, 6 Sep 2013 11:18:34 +0700
-Message-ID: <CACsJy8BbxKfX_Ho8Nu2fvTp1xWYcaGPgwf6=iq0bZ4KSE+r6bw@mail.gmail.com>
-References: <1377602225-30439-1-git-send-email-pclouds@gmail.com>
- <1377917393-28460-1-git-send-email-pclouds@gmail.com> <alpine.LFD.2.03.1309030156410.14472@syhkavp.arg>
- <alpine.LFD.2.03.1309030231350.14472@syhkavp.arg> <CACsJy8CZP+55nhfEbgRGa9=y0PyExyHt_seiSc23kB31-_c1Hg@mail.gmail.com>
- <CACsJy8CzpW_xsoxU=+OE6ssbnPu9tyAqRten0=Q5cxPUZ4aeMw@mail.gmail.com>
- <alpine.LFD.2.03.1309042350560.14472@syhkavp.arg> <CACsJy8BeU_01c0f5RJExcYo7xGETnduKOw-_shszHd0ZFgZDXw@mail.gmail.com>
- <alpine.LFD.2.03.1309050024090.14472@syhkavp.arg> <CACsJy8CX=4Oz_h2NtS3FRdK6_zdFksa+JR5C6Z-z3Y70PLAsyQ@mail.gmail.com>
- <alpine.LFD.2.03.1309050131000.14472@syhkavp.arg> <CACsJy8DKL9KnPAXcf+NPU_Y5J1Dz_pYxSpONN4LxcQVi1JOBYw@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: coming from git, understanding mercurial branching
+Date: Fri, 6 Sep 2013 12:39:59 +0800
+Message-ID: <CALUzUxoa7Lw-_sj3LRj-9=hSh17hi+j4JhfAPKaDfhuE8PnKCA@mail.gmail.com>
+References: <20130905212714.636db4c4@bigbox.christie.dr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Sep 06 06:19:28 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tim Chase <git@tim.thechases.com>
+X-From: git-owner@vger.kernel.org Fri Sep 06 06:40:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHnW1-00034v-Es
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 06:19:25 +0200
+	id 1VHnqL-0002Bo-BH
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 06:40:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750718Ab3IFETH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 00:19:07 -0400
-Received: from mail-oa0-f42.google.com ([209.85.219.42]:56058 "EHLO
-	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750702Ab3IFETG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Sep 2013 00:19:06 -0400
-Received: by mail-oa0-f42.google.com with SMTP id n12so3420385oag.15
-        for <git@vger.kernel.org>; Thu, 05 Sep 2013 21:19:04 -0700 (PDT)
+	id S1750773Ab3IFEkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 00:40:21 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:39028 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750753Ab3IFEkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Sep 2013 00:40:20 -0400
+Received: by mail-ie0-f170.google.com with SMTP id 16so4997590iea.29
+        for <git@vger.kernel.org>; Thu, 05 Sep 2013 21:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=tGsLz8iCANonyNaUX1KJ5T23fNgZlNRWwj7RHf4JdZc=;
-        b=RgW/9TMPL4IIpzxGEZQsbxa+SE+bQuqMlkpLGZf1pMXM50ohFuxoe3wWJeQ/lwMC2S
-         WhWhnc1M6aD9DfCXDj7Hpihol4b22fKmCxQ9xNMlpdETJ6iZyPflc3wAhgkUmCHa3hW8
-         kfRir7RGMVXg+kXILU85zdP2At95cON6NCxzJDGpLIjwNIqrGYQ+46OCSFXluFunEqCJ
-         K0tGVbqpDTHNpejYKP0dstD8xEvriubUZUCfVRRvEPGjYuCI/NEQeqgd4KbE0UaiGpdH
-         1sJMpviTi72iTSnwXnsyeGtg/eSXEQ54ZJUwPCjJzbwdeUqdrZIeNJYIfoVJxuh9aX0Z
-         Tb8w==
-X-Received: by 10.60.76.72 with SMTP id i8mr336886oew.11.1378441144647; Thu,
- 05 Sep 2013 21:19:04 -0700 (PDT)
-Received: by 10.182.87.105 with HTTP; Thu, 5 Sep 2013 21:18:34 -0700 (PDT)
-In-Reply-To: <CACsJy8DKL9KnPAXcf+NPU_Y5J1Dz_pYxSpONN4LxcQVi1JOBYw@mail.gmail.com>
+        bh=Ivz6NtTrpaGNYWJRIvphEcJ3XHlUcSXp1dQ4UoAXJAA=;
+        b=rn1DXemLYo77v3MJwvsL2rl6L6xsQhtF0PuyhoDW1BhYHJTjq4IwCyJ1+1Gy+DTDO7
+         YM3p85Qh4EyraBn0/wWrigMGghypn/s6iXGCn9niCQeyCfJU32r9DMvwFKXTLmrt8MNI
+         ZEKxhXbHu8Y+M/xIbnb3i2O8MOziLkifRjcodMS3vC4Z2mIzRFkHyFu30wqVCRv973JB
+         WB/5EqgmfXRHDqC0WJkRU77zzBBoPcyIB/CddzErOHTwpxPuzYSwzYSkjsAFB71h6TIR
+         06UVrllMvPF0PE67mBhPC182l7wggkNfcl4aRdaGBkQhdOCBQk+xq9nD+7fO8LS/FJeb
+         qdGg==
+X-Received: by 10.50.83.70 with SMTP id o6mr330168igy.60.1378442420051; Thu,
+ 05 Sep 2013 21:40:20 -0700 (PDT)
+Received: by 10.64.31.133 with HTTP; Thu, 5 Sep 2013 21:39:59 -0700 (PDT)
+In-Reply-To: <20130905212714.636db4c4@bigbox.christie.dr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234018>
 
-On Thu, Sep 5, 2013 at 11:52 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Sep 5, 2013 at 12:39 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
->> Now the pack index v3 probably needs to be improved a little, again to
->> accommodate completion of thin packs.  Given that the main SHA1 table is
->> now in the main pack file, it should be possible to still carry a small
->> SHA1 table in the index file that corresponds to the appended objects
->> only. This means that a SHA1 search will have to first use the main SHA1
->> table in the pack file as it is done now, and if not found then use the
->> SHA1 table in the index file if it exists.  And of course
->> nth_packed_object_sha1() will have to be adjusted accordingly.
->
-> What if the sender prepares the sha-1 table to contain missing objects
-> in advance? The sender should know what base objects are missing. Then
-> we only need to append objects at the receiving end and verify that
-> all new objects are also present in the sha-1 table.
+On Fri, Sep 6, 2013 at 10:27 AM, Tim Chase <git@tim.thechases.com> wrote:
+> I've got a pretty good grasp on git's rather straightforward
+> branching, but am trying to wrap my head around Mercurial's
+> branching.  There seem to be several flavors, some default to
+> push-public, while others are private; some are tracked in history,
+> while others seem more ephemeral;
 
-One minor detail to sort out: the size of sha-1 table. Previously it's
-the number of objects in the pack. Now it's not true because the table
-may have more entries. So how should we record the table size? We
-could use null sha-1 as the end of table marker. Or we could make
-pack-objects to write nr_objects as the number of entries _after_ pack
-completion, not the true number of objects in thin pack. I like the
-latter (no more rehashing the entire pack after completion) but then
-we need a cue to know that we have reached the end of the pack..
+First: recognize Mercurial's branches are entirely different beasts
+from Git's. They just happen to be given a same sequence of
+characters, b-r-a-n-c-h. The similarities end there!
+
+> often the docs suggest cloning
+> instead of branching; detached heads seem more normal in the
+> Mercurial world.
+
+Are you referring to this?
+
+  $ hg clone https://... master
+  $ cd master
+  # hack...
+
+  $ cd ..
+  $ hg clone https://... fix1
+  $ cd fix1
+  # hack...
+
+  $ cd../master
+  $ hg pull ../fix1
+  $ hg merge ...
+
+In git, you would have your master branch, checkout -b fix1, then
+merge them back to master when you're done. The above describes how
+one would do this in mercurial.
+
 -- 
-Duy
+Cheers,
+Ray Chuan
