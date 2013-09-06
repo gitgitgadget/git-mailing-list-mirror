@@ -1,58 +1,69 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: [PATCH 1/3] upload-pack: send the HEAD information
-Date: Fri, 6 Sep 2013 21:29:18 +0200
-Message-ID: <20130906192918.GJ12966@inner.h.apk.li>
-References: <20130906155204.GE12966@inner.h.apk.li> <20130906155608.GF12966@inner.h.apk.li> <xmqqsixhyhan.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] connect.c: save symref info from server capabilities
+Date: Fri, 06 Sep 2013 12:46:27 -0700
+Message-ID: <xmqqvc2dwx64.fsf@gitster.dls.corp.google.com>
+References: <20130906155204.GE12966@inner.h.apk.li>
+	<20130906155655.GG12966@inner.h.apk.li>
+	<xmqqob85ygt8.fsf@gitster.dls.corp.google.com>
+	<20130906192515.GI12966@inner.h.apk.li>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 06 21:29:37 2013
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Sep 06 21:46:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VI1iq-0003X8-Hd
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 21:29:36 +0200
+	id 1VI1zN-000324-CU
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 21:46:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751120Ab3IFT3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 15:29:33 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:51804 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750862Ab3IFT3c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Sep 2013 15:29:32 -0400
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id r86JTI208847;
-	Fri, 6 Sep 2013 21:29:18 +0200
-Content-Disposition: inline
-In-Reply-To: <xmqqsixhyhan.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S1750838Ab3IFTqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 15:46:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36469 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750750Ab3IFTqg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Sep 2013 15:46:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6DE03F472;
+	Fri,  6 Sep 2013 19:46:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8GWyCGUV6O2aIUTTuEDJ8jxgF1U=; b=bVombV
+	GTerve9Y3MxfZGYhSLBk57Re4gUJT6TYlMJEkIUPZ2/5nvBHmPwlavfyQki+3Jjt
+	Eg3Ps2RL7484SmfTxfo85zXhdaes10k0OLgMkUd93BIsTAnqwkDje3G46gnISL+C
+	pNheqtCvkqMwW6WWKFPTjPyD6hy8cgVgiLHfg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QMTMSp66QpMj+2YtPmluL9d42U9Ww8Au
+	42vujioZw3zfSBxRIXRRvdLTjGrg4TR1EPNj1vM+5Vk1Nex6rAwWMCeyqX/VzLoP
+	gJldkO856hq5IgP/t9YPQZ6MHsZDGUxNRow3Ok6HwMHPz3GXvMmQ1FEq9Noh3gye
+	OAVrTeYrJMY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 800EC3F46B;
+	Fri,  6 Sep 2013 19:46:33 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 466433F45C;
+	Fri,  6 Sep 2013 19:46:31 +0000 (UTC)
+In-Reply-To: <20130906192515.GI12966@inner.h.apk.li> (Andreas Krey's message
+	of "Fri, 6 Sep 2013 21:25:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0767E0D2-172D-11E3-BC40-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234091>
 
-On Fri, 06 Sep 2013 10:46:24 +0000, Junio C Hamano wrote:
-> Andreas Krey <a.krey@gmx.de> writes:
-> 
-...
-> reason later, on-the-wire format should be prepared to support such
-> later enhancement.  I think sending
-> 
-> 	symref=HEAD:refs/heads/master
+Andreas Krey <a.krey@gmx.de> writes:
 
-Mirco-bikeshed: Should that possibly be
+> Can I assume that the only capability list is always on the
+> first ref sent (as it is now)?
 
-  symref:HEAD=refs/heads/master
-
-as then 'symref:HEAD' is a regular capability key?
-
-Andreas
-
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+The capability list _could_ be sent more than once, and the
+receiving end is prepared to accept such a stream.  Everything
+learned from an older capability list needs to be forgot and only
+the last one is honored, I think.
