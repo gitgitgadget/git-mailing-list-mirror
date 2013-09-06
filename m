@@ -1,71 +1,106 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 0/3] Unconfuse git clone when two branches at are HEAD.
-Date: Fri, 6 Sep 2013 18:29:16 +0100
-Organization: OPDS
-Message-ID: <6649DD0E3B6B4CE59D330217786B6B05@PhilipOakley>
-References: <20130906155204.GE12966@inner.h.apk.li>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4 0/5] Disable "git status" comment prefix
+Date: Fri, 06 Sep 2013 19:28:43 +0200
+Message-ID: <vpq38phsvuc.fsf@anie.imag.fr>
+References: <1378374618-31439-1-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqhadzhyjb.fsf@gitster.dls.corp.google.com>
+	<vpqioyfukkw.fsf@anie.imag.fr>
+	<20130905232322.GB29351@sigill.intra.peff.net>
+	<20130906165330.GA6462@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Andreas Krey" <a.krey@gmx.de>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 06 19:28:23 2013
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 06 19:29:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VHzpV-00029Y-8p
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 19:28:21 +0200
+	id 1VHzqc-0002c1-EU
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 19:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750727Ab3IFR2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 13:28:16 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:59069 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750721Ab3IFR2P (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Sep 2013 13:28:15 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av4LAMoPKlJOl3GZ/2dsb2JhbABbgweJbrhkBAQBgSUXdGgBAYEfAQEUAQQBAQUIAQEuHgEBIQsCAwUCAQMOBwwlFAEEGgYHFwYBEggCAQIDAYU4BwGCEg0DE74PjQ6CboMkgQADiH2GEppMgTqBZzs
-X-IPAS-Result: Av4LAMoPKlJOl3GZ/2dsb2JhbABbgweJbrhkBAQBgSUXdGgBAYEfAQEUAQQBAQUIAQEuHgEBIQsCAwUCAQMOBwwlFAEEGgYHFwYBEggCAQIDAYU4BwGCEg0DE74PjQ6CboMkgQADiH2GEppMgTqBZzs
-X-IronPort-AV: E=Sophos;i="4.90,855,1371078000"; 
-   d="scan'208";a="441276541"
-Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 06 Sep 2013 18:28:13 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1750799Ab3IFR3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 13:29:23 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43880 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750779Ab3IFR3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Sep 2013 13:29:22 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r86HSfrH029999
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 6 Sep 2013 19:28:41 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VHzpr-0000WY-GL; Fri, 06 Sep 2013 19:28:43 +0200
+In-Reply-To: <20130906165330.GA6462@google.com> (Jonathan Nieder's message of
+	"Fri, 6 Sep 2013 09:53:30 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 06 Sep 2013 19:28:42 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r86HSfrH029999
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1379093326.58342@fP85srWjnKQfhwHmqAqanw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234067>
 
-From: "Andreas Krey" <a.krey@gmx.de>
-> Ok, here are some patches that make git actually
-> check out the current remote branch when cloning.
->
-> Up to now this failed when there were two branches that pointed to
-> the HEAD commit of the remote repo, and git clone would sometimes
-> choose the wrong one as the HEAD ref isn't transmitted in all
-> transport.
->
-> Stuff the HEAD ref into the capability list (assuming refs are clean
-> enough to do that w/o escaping), and read them out on the other
-> side. All other things were thankfully already in place.
->
-> Two of the patches have Junio in the From as they are essentially his.
->
-> Andreas
-> --
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Does this have any impact on the alleged bug in `git bundle --all` 
-(which can then be cloned from) where the current HEAD ref wasn't 
-included in the bundle? Or am I mis-remembering?
+> Jeff King wrote:
+>> On Thu, Sep 05, 2013 at 09:36:47PM +0200, Matthieu Moy wrote:
+>
+>>> I'm fine with any name actually (since it is enabled by default, people
+>>> don't need to know the name to benefit from the new output). Maybe
+>>> status.displayCommentPrefix was the best name after all.
+>>
+>> FWIW, I had the same thought as Junio. I much prefer something like
+>> status.displayCommentPrefix for clarity and future-proofing.
+>
+> Sounds fine, but I don't understand why we'd want this to be an option
+> with a future in the first place.  Why not just fix the remaining bugs
+> before merging to master and make it unconditional?
 
-Philip 
+I think some old-time users may appreciate to have a
+backward-compatibility option. It doesn't cost much for us, as we need
+the variable internally (to use the prefix in COMMIT_EDITMSG, and not on
+stdout), and it actually makes it easier to test.
+
+>>                                               and the bottom "nothing
+>> added" line butts against the untracked list more obviously, because
+>> they now all have the same comment indentation.
+>>
+>> I wonder if it would look a little nicer as:
+>>
+>>   On branch private
+>>   Your branch and 'origin/next' have diverged,
+>>   and have 472 and 59 different commits each, respectively.
+>>
+>>   Untracked files:
+>>           t/foo
+>>           test-obj-pool
+>>           test-string-pool
+>>           test-treap
+>>           test-url-normalize
+>>
+>>   nothing added to commit but untracked files present
+>
+> The added blank line before "nothing added" sounds like a good idea.
+
+I won't change the header part in this topic (no time, sorry), but the
+missing newline before "nothing added" actually sounds like a bug, as
+there is normally a newline after each list of file in `git status`,
+except untracked and ignored.
+
+I'll fix it as a separate patch in the next round.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
