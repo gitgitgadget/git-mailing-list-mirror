@@ -1,85 +1,109 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 1/5] t2024: Fix inconsequential typos
-Date: Fri, 6 Sep 2013 22:53:04 +0200
-Message-ID: <CALKQrgeyWzV_BxceHL9+NP9nnJXRbTYM1GuuW8aTPpZk-7MEJw@mail.gmail.com>
-References: <1378464042-17476-1-git-send-email-johan@herland.net>
-	<1378464042-17476-2-git-send-email-johan@herland.net>
-	<xmqqwqmtyhxs.fsf@gitster.dls.corp.google.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH 10/38] pack v4: commit object encoding
+Date: Fri, 06 Sep 2013 17:28:04 -0400 (EDT)
+Message-ID: <alpine.LFD.2.03.1309061720330.20709@syhkavp.arg>
+References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
+ <1378362001-1738-11-git-send-email-nico@fluxnic.net>
+ <xmqqvc2ezbbi.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>,
-	Per Cederqvist <cederp@opera.com>
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 06 22:53:24 2013
+X-From: git-owner@vger.kernel.org Fri Sep 06 23:28:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VI31p-0000ey-3x
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 22:53:17 +0200
+	id 1VI3Zc-0007De-C7
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 23:28:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754036Ab3IFUxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 16:53:12 -0400
-Received: from mail12.copyleft.no ([188.94.218.224]:49950 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751496Ab3IFUxL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Sep 2013 16:53:11 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1VI31g-0007Ev-Pj
-	for git@vger.kernel.org; Fri, 06 Sep 2013 22:53:08 +0200
-Received: from mail-pd0-f176.google.com ([209.85.192.176])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1VI31g-000HgR-Bw
-	for git@vger.kernel.org; Fri, 06 Sep 2013 22:53:08 +0200
-Received: by mail-pd0-f176.google.com with SMTP id q10so3729355pdj.35
-        for <git@vger.kernel.org>; Fri, 06 Sep 2013 13:53:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=0dNsQzKeDX6FMDhXzQqAhZHA5F3IYTR3k2VhtTHH4yA=;
-        b=QkiMxJjZsgQH1efE7QZaNk8iSr061DBEx+K5UteIxWaAHrpTP1pOyBvMoQDkGIruTk
-         QnG3efQEceHLkh5LDjLvd/Eci6vMLxqaJYJy5kjSp8HQ4Ku7ARa772t2miDlRnPGzXCq
-         sG+3pMhcrLuRDUDvFKgiNyCClcij0GgdkGEk4D8+PfgjNiZSoMagbUB3WaQkED/E9otN
-         8Gq6OqPqjnBY5TGv+20cYCtFIafhKR58lcYKi1g8+xyR67fCWFPFt1v+/VL8AmGc7ear
-         pVyUcQsAFYYoL+5DsTOys+/H55kqLFMlvM+4RLn2mUeO/8uWhBxbhlcoT7YPUllR0dfN
-         hBWQ==
-X-Received: by 10.68.189.98 with SMTP id gh2mr4990830pbc.181.1378500784516;
- Fri, 06 Sep 2013 13:53:04 -0700 (PDT)
-Received: by 10.70.126.67 with HTTP; Fri, 6 Sep 2013 13:53:04 -0700 (PDT)
-In-Reply-To: <xmqqwqmtyhxs.fsf@gitster.dls.corp.google.com>
+	id S1750900Ab3IFV2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 17:28:07 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:24615 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750715Ab3IFV2G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Sep 2013 17:28:06 -0400
+Received: from yoda.home ([70.83.209.44]) by VL-VM-MR006.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0MSQ00JDH3MTWN50@VL-VM-MR006.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 06 Sep 2013 17:28:05 -0400 (EDT)
+Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
+ with ESMTPSA id DB17B2DA0547; Fri, 06 Sep 2013 17:28:04 -0400 (EDT)
+In-reply-to: <xmqqvc2ezbbi.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234097>
 
-On Fri, Sep 6, 2013 at 7:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johan Herland <johan@herland.net> writes:
->> diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
->> index dee55e4..6c78fba 100755
->> --- a/t/t2024-checkout-dwim.sh
->> +++ b/t/t2024-checkout-dwim.sh
->> @@ -113,9 +113,9 @@ test_expect_success 'setup more remotes with unconventional refspecs' '
->>               cd repo_d &&
->>               test_commit d_master &&
->>               git checkout -b baz &&
->> -             test_commit f_baz
->> +             test_commit d_baz
->
-> Not limited to this hunk but there seems to be a breakage in the &&
-> chain here.
+On Thu, 5 Sep 2013, Junio C Hamano wrote:
 
-Thanks, found 2 instances in the file (both in that test). Will be
-fixed in the next iteration.
+> Nicolas Pitre <nico@fluxnic.net> writes:
+> 
+> > This goes as follows:
+> >
+> > - Tree reference: either variable length encoding of the index
+> >   into the SHA1 table or the literal SHA1 prefixed by 0 (see
+> >   encode_sha1ref()).
+> >
+> > - Parent count: variable length encoding of the number of parents.
+> >   This is normally going to occupy a single byte but doesn't have to.
+> >
+> > - List of parent references: a list of encode_sha1ref() encoded
+> >   references, or nothing if the parent count was zero.
+> >
+> > - Author reference: variable length encoding of an index into the author
+> >   identifier dictionary table which also covers the time zone.  To make
+> >   the overall encoding efficient, the author table is sorted by usage
+> >   frequency so the most used names are first and require the shortest
+> >   index encoding.
+> >
+> > - Author time stamp: variable length encoded.  Year 2038 ready!
+> >
+> > - Committer reference: same as author reference.
+> >
+> > - Committer time stamp: same as author time stamp.
+> >
+> > The remainder of the canonical commit object content is then zlib
+> > compressed and appended to the above.
+> >
+> > Rationale: The most important commit object data is densely encoded while
+> > requiring no zlib inflate processing on access, and all SHA1 references
+> > are most likely to be direct indices into the pack index file requiring
+> > no SHA1 search into the pack index file.
+> 
+> May I suggest a small change to the above, though.
+> 
+> Reorder the entries so that Parent count, list of parents and
+> committer time stamp come first in this order, and then the rest.
+> 
+> That way, commit.c::parse_commit() could populate its field lazily
+> with parsing only the very minimum set of fields, and then the
+> revision walker, revision.c::add_parents_to_list(), can find where
+> in the priority queue to add the parents to the list of commits to
+> be processed while still keeping the object partially parsed.  If a
+> commit is UNINTERESTING, no further parsing needs to be done.
 
-...Johan
+OK.  If I understand correctly, the committer time stamp is more 
+important than the author's, right?  Because my latest change in the 
+format was to make the former as a difference against the later and that 
+would obviously have to be reversed.
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Also, to keep some kind of estetic symetry (if such thing may exist in a 
+raw byte format) may I suggest keeping the tree reference first.  That 
+is easy to skip over if you don't need it, something like:
+
+	if (!*ptr)
+		ptr += 1 + 20;
+	else
+		while (*ptr++ & 128);
+
+Whereas, for a checkout where only the tree info is needed, if it is 
+located after the list of parents, then the above needs to be done for 
+all those parents and the committer time.
+
+
+Nicolas
