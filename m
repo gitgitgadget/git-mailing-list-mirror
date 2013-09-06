@@ -1,73 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 0/5] Disable "git status" comment prefix
-Date: Fri, 6 Sep 2013 17:55:10 -0400
-Message-ID: <20130906215509.GA13319@sigill.intra.peff.net>
-References: <1378374618-31439-1-git-send-email-Matthieu.Moy@imag.fr>
- <xmqqhadzhyjb.fsf@gitster.dls.corp.google.com>
- <vpqioyfukkw.fsf@anie.imag.fr>
- <20130905232322.GB29351@sigill.intra.peff.net>
- <20130906165330.GA6462@google.com>
- <vpq38phsvuc.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/38] pack v4: commit object encoding
+Date: Fri, 06 Sep 2013 15:08:08 -0700
+Message-ID: <xmqq61udwqlz.fsf@gitster.dls.corp.google.com>
+References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
+	<1378362001-1738-11-git-send-email-nico@fluxnic.net>
+	<xmqqvc2ezbbi.fsf@gitster.dls.corp.google.com>
+	<alpine.LFD.2.03.1309061720330.20709@syhkavp.arg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Sep 06 23:55:23 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sat Sep 07 00:08:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VI3zu-0007vp-Pu
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Sep 2013 23:55:23 +0200
+	id 1VI4Ch-0008Gl-F7
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 00:08:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751089Ab3IFVzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 17:55:17 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58591 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750946Ab3IFVzP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Sep 2013 17:55:15 -0400
-Received: (qmail 9402 invoked by uid 102); 6 Sep 2013 21:55:15 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 06 Sep 2013 16:55:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Sep 2013 17:55:10 -0400
-Content-Disposition: inline
-In-Reply-To: <vpq38phsvuc.fsf@anie.imag.fr>
+	id S1752753Ab3IFWIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 18:08:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43351 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751477Ab3IFWIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Sep 2013 18:08:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1AF93D365;
+	Fri,  6 Sep 2013 22:08:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1zW0OGQEvuhBGU8O3zauSk/r0I8=; b=MlC2Mz
+	0IvY1Umrfa2msLLpCR3QxZlqI/GPfI9HMU7UzumbefB4m3uh2UZ3ke8Qng8Qn6Ru
+	Vtfxrpikrtk7DeBYigcTuokjbdcOfjIJo2cMWGQ6n+gttvVxUbTaL9SAdPbPq6Lu
+	XFLJOYT7Jg7CBv82JJyq1haD7JbkcC0OssE7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YOK+LLQtXWJgRzKr9ulLZjYb1Gl2VreR
+	H5JGfYPVkDdw/58MV4thaGv708U6en6fFZfXGSZ/98C85w5EdKmjjFK2G68PTiJ2
+	RT/x8ByIoreSdPKt8olfmz+px4wd12p23ALSV4MYAi8+NgA0ZPntzO7eXNgknhgW
+	yYi87fH9IOM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 338F33D363;
+	Fri,  6 Sep 2013 22:08:29 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4074F3D351;
+	Fri,  6 Sep 2013 22:08:26 +0000 (UTC)
+In-Reply-To: <alpine.LFD.2.03.1309061720330.20709@syhkavp.arg> (Nicolas
+	Pitre's message of "Fri, 06 Sep 2013 17:28:04 -0400 (EDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DA962F5A-1740-11E3-971E-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234104>
 
-On Fri, Sep 06, 2013 at 07:28:43PM +0200, Matthieu Moy wrote:
+Nicolas Pitre <nico@fluxnic.net> writes:
 
-> >> FWIW, I had the same thought as Junio. I much prefer something like
-> >> status.displayCommentPrefix for clarity and future-proofing.
-> >
-> > Sounds fine, but I don't understand why we'd want this to be an option
-> > with a future in the first place.  Why not just fix the remaining bugs
-> > before merging to master and make it unconditional?
-> 
-> I think some old-time users may appreciate to have a
-> backward-compatibility option. It doesn't cost much for us, as we need
-> the variable internally (to use the prefix in COMMIT_EDITMSG, and not on
-> stdout), and it actually makes it easier to test.
+> OK.  If I understand correctly, the committer time stamp is more 
+> important than the author's, right?
 
-Exactly. I kind of prefer the old output, though it is probably just
-having my brain rotted from seeing it so much. I'm going to give the new
-behavior a try for a while to see if I adjust, but ultimately I'd like
-to have the escape hatch. And as you say, it doesn't cost much, since we
-have to keep both code paths anyway.
+Yeah, it matters a lot more when doing timestamp based traversal
+without the reachability bitmaps.
 
-> I won't change the header part in this topic (no time, sorry), but the
-> missing newline before "nothing added" actually sounds like a bug, as
-> there is normally a newline after each list of file in `git status`,
-> except untracked and ignored.
-> 
-> I'll fix it as a separate patch in the next round.
+> ... may I suggest keeping the tree reference first.  That 
+> is easy to skip over if you don't need it,...
+> ... Whereas, for a checkout where only the tree info is needed, if it is 
+> located after the list of parents, then the above needs to be done for 
+> all those parents and the committer time.
 
-Thanks for looking into it.
+Hmm.  I wonder if that is a really good trade-off.
 
--Peff
+"checkout" is to parse a single commit object and grab the "tree"
+field, while "log" is to parse millions of commit objects to grab
+their "parents" and "committer timestamp" fields ("log path/spec"
+needs to grab "tree", too, so that does not make "tree" extremely
+uncommon compared to the other two fields, though).
+
+I dunno.
