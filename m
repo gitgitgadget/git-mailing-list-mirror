@@ -1,63 +1,70 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH] GIT-VERSION-GEN: Do not require tags to be annotated
-Date: Fri, 6 Sep 2013 15:34:08 -0700
-Message-ID: <4065B5CE-7E81-41F3-B9DE-FDA05C43AAB0@gmail.com>
-References: <522A36AA.3050701@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 0/3] Unconfuse git clone when two branches at are HEAD.
+Date: Sat, 7 Sep 2013 00:19:39 +0100
+Organization: OPDS
+Message-ID: <94A71512041A4F9BB402474DB385E310@PhilipOakley>
+References: <20130906155204.GE12966@inner.h.apk.li><6649DD0E3B6B4CE59D330217786B6B05@PhilipOakley> <xmqqfvthyfui.fsf@gitster.dls.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 07 00:34:16 2013
+Cc: "Andreas Krey" <a.krey@gmx.de>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 07 01:17:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VI4bY-0000Fe-0U
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 00:34:16 +0200
+	id 1VI5Hc-0001kD-QZ
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 01:17:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753557Ab3IFWeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 18:34:12 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:54495 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751225Ab3IFWeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Sep 2013 18:34:11 -0400
-Received: by mail-pa0-f50.google.com with SMTP id fb10so3917569pad.37
-        for <git@vger.kernel.org>; Fri, 06 Sep 2013 15:34:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=rIIQtPIE8YMgWGc2X7hL9zj2qZHpJ5FIhEQTT9cRW4k=;
-        b=xuhGWfjgLXR9dvMH3IZvU1n4ANy94F4hK7fLlokuTd8OJEwNEOpNg12PBh8iqXDAuX
-         lY+fQ3LBcLt9O1dAdObwmg2AFya/hERmbTL3Tvp0rpu73l7koZBnvPOqSZxpKHyklc67
-         CUhUsgnK2auwdD43y2ZTle4Lh+PC8jQZfkwASXlle1PLT3OPFc40VgXJ3a8iPH3JR4LC
-         mJp5o6fKXgQgJodT5ib//7F+3UraJCSkvuQtlFHoU/MDnpkE8Qn7XLhXE8EZgy+ApHY8
-         mg8pgzi06CnunfMvr4tWVJKFHmOLA7IJ/8tuhN/fMv2USjGEBXkGAbhE3rcsOVyLd15G
-         Fg7w==
-X-Received: by 10.68.76.101 with SMTP id j5mr5353919pbw.67.1378506850795;
-        Fri, 06 Sep 2013 15:34:10 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id gg10sm6128004pbc.46.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 06 Sep 2013 15:34:10 -0700 (PDT)
-In-Reply-To: <522A36AA.3050701@gmail.com>
-X-Mauler: Craptastic (2.936)
+	id S1750889Ab3IFXRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 19:17:35 -0400
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:44520 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750867Ab3IFXRe (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Sep 2013 19:17:34 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ak4MAANiKlJOl3GZ/2dsb2JhbABbgweJbrhvBAQBgSYXdGgBAYEfAQEUAQQBAQUIAQEuHgEBIQsCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGFOAcBghIjwTePfIMkgQADiH2GEppMgTqBZzs
+X-IPAS-Result: Ak4MAANiKlJOl3GZ/2dsb2JhbABbgweJbrhvBAQBgSYXdGgBAYEfAQEUAQQBAQUIAQEuHgEBIQsCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGFOAcBghIjwTePfIMkgQADiH2GEppMgTqBZzs
+X-IronPort-AV: E=Sophos;i="4.90,857,1371078000"; 
+   d="scan'208";a="587701596"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 07 Sep 2013 00:17:31 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234109>
 
-On Sep 6, 2013, at 13:10, Sebastian Schuberth wrote:
-> For custom builds of Git it sometimes is inconvenient to annotate tags
-> because there simply is nothing to say, so do not require an  
-> annotation.
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> Does this have any impact on the alleged bug in `git bundle --all`
+>> (which can then be cloned from) where the current HEAD ref wasn't
+>> included in the bundle? Or am I mis-remembering?
+>
+> Not "current HEAD ref", but "git clone" will fail to check out from
+> a bundle that does not include HEAD ref (it is easy to just say
+> "reset --hard master" or whatever after it, though).
+>
+> I think I suggested to update "git bundle" to include HEAD when
+> there is no HEAD specified some time ago, but I do not think anybody
+> was interested, so this may be a non-issue.
+>
+Just had a quick look at a very quick test repo (10 objects, 2 branches) 
+and the bundle file does contain the HEAD ref, but again it has the two 
+ref/heads/* are better than one problem, in that the clone from the 
+bundle checks out master, whilst the source repo has feature checked 
+out.
 
-It's not that hard to add -m "" to the command line:
-
-   git tag -a -m "" new-annotated-tag
-
-if you're just trying to avoid the editor or thinking up a message.   
-Is `-m ""` really that inconvenient?
+Philip 
