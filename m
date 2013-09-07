@@ -1,59 +1,94 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] git_remote_helpers: remove little used Python library
-Date: Sat, 7 Sep 2013 22:14:07 +0200
-Message-ID: <CAGdFq_jkFMz4a_jnt3kzyWLO-ZOwLxAMTdJN-6T2R7NeHQxnyA@mail.gmail.com>
-References: <23afa908bb2e21779ea96da8c149dcc43aa72eda.1378570768.git.john@keeping.me.uk>
+From: Lee Carver <Lee.Carver@servicenow.com>
+Subject: PATCH] Allow git-filter-branch to process large repositories with
+ lots of branches.
+Date: Sat, 7 Sep 2013 20:22:33 +0000
+Message-ID: <CE50D917.191A5%lee.carver@corp.service-now.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sat Sep 07 22:14:53 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Lee Carver <leeca@pnambic.com>
+To: "gitster@pobox.com" <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 07 22:23:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIOuC-0000Hh-Kh
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 22:14:52 +0200
+	id 1VIP2j-0006T7-V4
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 22:23:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751940Ab3IGUOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Sep 2013 16:14:48 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:60525 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751834Ab3IGUOs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Sep 2013 16:14:48 -0400
-Received: by mail-ie0-f170.google.com with SMTP id 17so756977iea.15
-        for <git@vger.kernel.org>; Sat, 07 Sep 2013 13:14:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=j+SeuiXrmyYgP9dMOX3eBvuBnKa5IIBqKwjxtrt15KE=;
-        b=WLCMJ8lEGzeqnxHlNQqlrD8hcqwr9wDGvciRq2IUxa11U1H3XmbfuEBRXUU5vInciE
-         ma63TRT8gban+hRmG4REEz73Ncp5AjZTr8ySETpAY81ceBOJ+GQ47HD1nUsgS2LTC+WR
-         EvUeIh+YTZzOhDTheqvq1OH6ZNqPUoNWlWXwVnelUXSMks9uazPMM++Dk46i8CrAL1na
-         5hoeqyrn6eYcO7mSiUt6v9ZuizeY6LqgnBalR8QnF65rz+PclJBbEAkHqcvqsKXy0Gxc
-         JmaJfdmgjII8rz6f1peXPNirGYJ9X7u3mplRTA8KUHYKb67dsLCOINV4cGh6ZDVE3zIB
-         z38w==
-X-Received: by 10.50.128.49 with SMTP id nl17mr3051757igb.38.1378584887447;
- Sat, 07 Sep 2013 13:14:47 -0700 (PDT)
-Received: by 10.50.230.37 with HTTP; Sat, 7 Sep 2013 13:14:07 -0700 (PDT)
-In-Reply-To: <23afa908bb2e21779ea96da8c149dcc43aa72eda.1378570768.git.john@keeping.me.uk>
+	id S1751880Ab3IGUXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Sep 2013 16:23:37 -0400
+Received: from na3sys009aog135.obsmtp.com ([74.125.149.84]:52664 "EHLO
+	na3sys009aog135.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751834Ab3IGUXg convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Sep 2013 16:23:36 -0400
+Received: from smtprelay.corp.service-now.com ([4.71.115.101]) (using TLSv1) by na3sys009aob135.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKUiuLSIpluKX2y58/XzSEQ+O3xhqnpWOh@postini.com; Sat, 07 Sep 2013 13:23:36 PDT
+Received: from SJC4EXDAG01-01.corp.service-now.com
+ ([fe80::9d9c:f9e1:ea7b:618c]) by SJC4EXHTCAS02.corp.service-now.com ([::1])
+ with mapi id 14.02.0347.000; Sat, 7 Sep 2013 13:22:33 -0700
+Thread-Topic: PATCH] Allow git-filter-branch to process large repositories
+ with lots of branches.
+Thread-Index: AQHOrAf7PaTuVgvf1EmGYHtpFR3jZw==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.15.239.100]
+Content-ID: <96C6359EA8B16343B02A6134D178B8EB@corp.service-now.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234143>
 
-On Sat, Sep 7, 2013 at 6:19 PM, John Keeping <john@keeping.me.uk> wrote:
-> When it was originally added, the git_remote_helpers library was used as
-> part of the tests of the remote-helper interface, but since commit
-> fc407f9 (Add new simplified git-remote-testgit, 2012-11-28) a simple
-> shell script is used for this.
+As noted in several forums, a recommended way to move trees between
+repositories is to use git-filter-branch to revise the history for a
+single tree 
+(http://gbayer.com/development/moving-files-from-one-git-repository-to-anot
+her-preserving-history/,
+http://stackoverflow.com/questions/1365541/how-to-move-files-from-one-git-r
+epo-to-another-not-a-clone-preserving-history).
 
-Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
+However, this can lead to argument list too long errors when the original
+repository has many retained branches (>6k)
 
+/usr/local/git/libexec/git-core/git-filter-branch: line 270:
+/usr/local/git/libexec/git-core/git: Argument list too long
+Could not get the commits
+
+Piping the output from git rev-parse directly into git rev-list avoids
+this problem, since the rev-parse output is not processed as a command
+line argument.
+---
+ git-filter-branch.sh | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index ac2a005..d7e0fae 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -255,8 +255,6 @@ else
+ 	remap_to_ancestor=t
+ fi
+ 
+-rev_args=$(git rev-parse --revs-only "$@")
+-
+ case "$filter_subdir" in
+ "")
+ 	eval set -- "$(git rev-parse --sq --no-revs "$@")"
+@@ -267,8 +265,9 @@ case "$filter_subdir" in
+ 	;;
+ esac
+ 
++git rev-parse --revs-only "$@" | \
+ git rev-list --reverse --topo-order --default HEAD \
+-	--parents --simplify-merges $rev_args "$@" > ../revs ||
++	--parents --simplify-merges --stdin "$@" > ../revs ||
+ 	die "Could not get the commits"
+ commits=$(wc -l <../revs | tr -d " ")
+ 
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.8.3.2
