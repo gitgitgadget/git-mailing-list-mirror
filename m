@@ -1,84 +1,95 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: PATCH] Allow git-filter-branch to process large repositories with lots of branches.
-Date: Sat, 07 Sep 2013 22:29:28 +0200
-Message-ID: <87ppskgytz.fsf@igel.home>
-References: <CE50D917.191A5%lee.carver@corp.service-now.com>
+From: Lee Carver <Lee.Carver@servicenow.com>
+Subject: Re: PATCH] Allow git-filter-branch to process large repositories
+ with lots of branches.
+Date: Sat, 7 Sep 2013 20:37:54 +0000
+Message-ID: <CE50DC35.191A8%lee.carver@corp.service-now.com>
+References: <87ppskgytz.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "gitster\@pobox.com" <gitster@pobox.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain; charset=Windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "gitster@pobox.com" <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Lee Carver <leeca@pnambic.com>
-To: Lee Carver <Lee.Carver@servicenow.com>
-X-From: git-owner@vger.kernel.org Sat Sep 07 22:29:44 2013
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sat Sep 07 22:38:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIP8Z-0002GJ-QU
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 22:29:44 +0200
+	id 1VIPGo-0008Ha-RF
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 22:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751880Ab3IGU3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Sep 2013 16:29:40 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:40116 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751834Ab3IGU3j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Sep 2013 16:29:39 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3cXS0r34RZz3hhY2;
-	Sat,  7 Sep 2013 22:29:32 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3cXS0r1P4yzbbg0;
-	Sat,  7 Sep 2013 22:29:32 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id 0fLWIypo_HJg; Sat,  7 Sep 2013 22:29:28 +0200 (CEST)
-X-Auth-Info: cDrnjjkfFpFYJZIpAuPCqE7QjOyYrbsnVjMDOFpRPGI=
-Received: from igel.home (ppp-88-217-97-230.dynamic.mnet-online.de [88.217.97.230])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sat,  7 Sep 2013 22:29:28 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 3C3842C0FC6; Sat,  7 Sep 2013 22:29:28 +0200 (CEST)
-X-Yow: If our behavior is strict, we do not need fun!
-In-Reply-To: <CE50D917.191A5%lee.carver@corp.service-now.com> (Lee Carver's
-	message of "Sat, 7 Sep 2013 20:22:33 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751889Ab3IGUh5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Sep 2013 16:37:57 -0400
+Received: from na3sys009aog109.obsmtp.com ([74.125.149.201]:50980 "EHLO
+	na3sys009aog109.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751834Ab3IGUh4 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Sep 2013 16:37:56 -0400
+Received: from smtprelay.corp.service-now.com ([4.71.115.101]) (using TLSv1) by na3sys009aob109.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKUiuOpGT+bi7ov3wFigvDP+qWqjNTRUlF@postini.com; Sat, 07 Sep 2013 13:37:56 PDT
+Received: from SJC4EXDAG01-01.corp.service-now.com
+ ([fe80::9d9c:f9e1:ea7b:618c]) by SJC4EXHTCAS02.corp.service-now.com ([::1])
+ with mapi id 14.02.0347.000; Sat, 7 Sep 2013 13:37:55 -0700
+Thread-Topic: PATCH] Allow git-filter-branch to process large repositories
+ with lots of branches.
+Thread-Index: AQHOrAf7PaTuVgvf1EmGYHtpFR3jZ5m6ueXugAACSgA=
+In-Reply-To: <87ppskgytz.fsf@igel.home>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.15.239.100]
+Content-ID: <9CCB4231B0D0F745A283DF15B3A32BC0@corp.service-now.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234145>
 
-Lee Carver <Lee.Carver@servicenow.com> writes:
+Andreas -
 
-> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> index ac2a005..d7e0fae 100755
-> --- a/git-filter-branch.sh
-> +++ b/git-filter-branch.sh
-> @@ -255,8 +255,6 @@ else
->  	remap_to_ancestor=t
->  fi
->  
-> -rev_args=$(git rev-parse --revs-only "$@")
-> -
->  case "$filter_subdir" in
->  "")
->  	eval set -- "$(git rev-parse --sq --no-revs "$@")"
+So that's what the "eval set -- " does!
 
-Here the arguments are reset.
+We actually got it to work with a temporary file =8A I'll send that pat=
+ch in
+a minute.
 
-> @@ -267,8 +265,9 @@ case "$filter_subdir" in
->  	;;
->  esac
->  
-> +git rev-parse --revs-only "$@" | \
+Thanks
+   Lee
 
-So this is using a different argument list than before.
+On 9/7/13 1:29 PM, "Andreas Schwab" <schwab@linux-m68k.org> wrote:
 
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+>Lee Carver <Lee.Carver@servicenow.com> writes:
+>
+>> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+>> index ac2a005..d7e0fae 100755
+>> --- a/git-filter-branch.sh
+>> +++ b/git-filter-branch.sh
+>> @@ -255,8 +255,6 @@ else
+>>  	remap_to_ancestor=3Dt
+>>  fi
+>> =20
+>> -rev_args=3D$(git rev-parse --revs-only "$@")
+>> -
+>>  case "$filter_subdir" in
+>>  "")
+>>  	eval set -- "$(git rev-parse --sq --no-revs "$@")"
+>
+>Here the arguments are reset.
+>
+>> @@ -267,8 +265,9 @@ case "$filter_subdir" in
+>>  	;;
+>>  esac
+>> =20
+>> +git rev-parse --revs-only "$@" | \
+>
+>So this is using a different argument list than before.
+>
+>Andreas.
+>
+>--=20
+>Andreas Schwab, schwab@linux-m68k.org
+>GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 =
+4ED5
+>"And now for something completely different."
