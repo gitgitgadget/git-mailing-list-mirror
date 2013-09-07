@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 01/12] pack v4: split pv4_create_dict() out of load_dict()
-Date: Sat,  7 Sep 2013 17:43:08 +0700
-Message-ID: <1378550599-25365-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 02/12] index-pack: split out varint decoding code
+Date: Sat,  7 Sep 2013 17:43:09 +0700
+Message-ID: <1378550599-25365-3-git-send-email-pclouds@gmail.com>
 References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
  <1378550599-25365-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -11,177 +11,185 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 07 12:40:49 2013
+X-From: git-owner@vger.kernel.org Sat Sep 07 12:40:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIFwd-0002W8-OH
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 12:40:48 +0200
+	id 1VIFwi-0002aH-Eb
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 12:40:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213Ab3IGKkn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Sep 2013 06:40:43 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:42103 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750979Ab3IGKkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Sep 2013 06:40:42 -0400
-Received: by mail-pd0-f172.google.com with SMTP id z10so4286686pdj.3
-        for <git@vger.kernel.org>; Sat, 07 Sep 2013 03:40:41 -0700 (PDT)
+	id S1751221Ab3IGKks convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Sep 2013 06:40:48 -0400
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:44298 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751139Ab3IGKkr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Sep 2013 06:40:47 -0400
+Received: by mail-pb0-f50.google.com with SMTP id uo5so4200655pbc.23
+        for <git@vger.kernel.org>; Sat, 07 Sep 2013 03:40:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=+mmf+PF6xMm6/xVHZ02eBIWl7T9P9MVvBL3ot3TBd6A=;
-        b=xX1tIIXWW3QpvscS9tx0NCzeTNnAgbgEyoUv3G3zKGDQBWZOqsNX0I0oZVqmONWyeq
-         ljRh5q3OgqDMaqfUroahm0/n2c4O97egmewjWYOduWbVAPLrPKztPg685CGxA12Zg35k
-         7K7YaCWlhxScoxYYyslHvaOUC8TUzoNDiIRnIosqEo0WhwJMLfx77ySeUN24TuNl2wNz
-         BshlYnqMJlFfqPoQhZTP5LbhhYANA0vwrrSk7c8/FHfVn6aesEI77+FmlwFqWUP/L3CV
-         AZRP0sRe1Po9RB3NuyaVGfWpHQVK1zXdfEmpa/O2ppQ4fKQVFNSzv/IdoPDRYHPLISj9
-         sHZw==
-X-Received: by 10.66.146.199 with SMTP id te7mr9024784pab.106.1378550441534;
-        Sat, 07 Sep 2013 03:40:41 -0700 (PDT)
+        bh=D5CPhICQ2XdQloAro7gW4gmM2P5xUq/Ls4f9oCsTU64=;
+        b=YpNwB1BxU92qa8BXwlBGuA67l+nndXnwSTFmPPsebZOqTighl5qsbbzOoS0W4czw4S
+         117j/32i/iTu23/uZM0nca3BNO/4LkMJ+DJUePglqWzkfzI9B8ik5ym5Sm0etaB4T5me
+         T3qjD0q8el8QfA8HxEEwTYq0mnX1W5ar4gevtXgpUfBrURMMnJJ6Tv4RbYrgkIWcdj5R
+         V+UYWDT53UsAh0IK5r4MYX+d3l5Uhi6qKS/0IN0sCONDcUK39Zz5arOAN6udUxT3beaO
+         My1uE5MSLMA0uJ2ZFfrCeYi8+XugZloWWh0rYjnJY4NIrCfUBY2hSMXDFu1VHfNZHvJS
+         1F+A==
+X-Received: by 10.68.21.66 with SMTP id t2mr7843742pbe.151.1378550447259;
+        Sat, 07 Sep 2013 03:40:47 -0700 (PDT)
 Received: from lanh ([115.73.241.111])
-        by mx.google.com with ESMTPSA id ry4sm3958535pab.4.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id ha10sm3391079pbc.23.1969.12.31.16.00.00
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 07 Sep 2013 03:40:40 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 07 Sep 2013 17:43:49 +0700
+        Sat, 07 Sep 2013 03:40:46 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 07 Sep 2013 17:43:55 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1378550599-25365-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234120>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- packv4-parse.c | 63 ++++++++++++++++++++++++++++++++------------------=
+ builtin/index-pack.c | 82 ++++++++++++++++++++++++++++----------------=
 --------
- packv4-parse.h |  8 ++++++++
- 2 files changed, 43 insertions(+), 28 deletions(-)
+ 1 file changed, 45 insertions(+), 37 deletions(-)
 
-diff --git a/packv4-parse.c b/packv4-parse.c
-index 63bba03..82661ba 100644
---- a/packv4-parse.c
-+++ b/packv4-parse.c
-@@ -30,11 +30,38 @@ const unsigned char *get_sha1ref(struct packed_git =
-*p,
- 	return sha1;
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 9c1cfac..5b1395d 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -275,6 +275,31 @@ static void use(int bytes)
+ 	consumed_bytes +=3D bytes;
  }
 =20
--struct packv4_dict {
--	const unsigned char *data;
--	unsigned int nb_entries;
--	unsigned int offsets[FLEX_ARRAY];
--};
-+struct packv4_dict *pv4_create_dict(const unsigned char *data, int dic=
-t_size)
++static inline void *fill_and_use(int bytes)
 +{
-+	struct packv4_dict *dict;
-+	int i;
-+
-+	/* count number of entries */
-+	int nb_entries =3D 0;
-+	const unsigned char *cp =3D data;
-+	while (cp < data + dict_size - 3) {
-+		cp +=3D 2;  /* prefix bytes */
-+		cp +=3D strlen((const char *)cp);  /* entry string */
-+		cp +=3D 1;  /* terminating NUL */
-+		nb_entries++;
-+	}
-+	if (cp - data !=3D dict_size) {
-+		error("dict size mismatch");
-+		return NULL;
-+	}
-+
-+	dict =3D xmalloc(sizeof(*dict) + nb_entries * sizeof(dict->offsets[0]=
-));
-+	dict->data =3D data;
-+	dict->nb_entries =3D nb_entries;
-+
-+	cp =3D data;
-+	for (i =3D 0; i < nb_entries; i++) {
-+		dict->offsets[i] =3D cp - data;
-+		cp +=3D 2;
-+		cp +=3D strlen((const char *)cp) + 1;
-+	}
-+
-+	return dict;
++	void *p =3D fill(bytes);
++	use(bytes);
++	return p;
 +}
-=20
- static struct packv4_dict *load_dict(struct packed_git *p, off_t *offs=
-et)
++
++static NORETURN void bad_object(unsigned long offset, const char *form=
+at,
++		       ...) __attribute__((format (printf, 2, 3)));
++
++static uintmax_t read_varint(void)
++{
++	unsigned char c =3D *(char*)fill_and_use(1);
++	uintmax_t val =3D c & 127;
++	while (c & 128) {
++		val +=3D 1;
++		if (!val || MSB(val, 7))
++			bad_object(consumed_bytes,
++				   _("offset overflow in read_varint"));
++		c =3D *(char*)fill_and_use(1);
++		val =3D (val << 7) + (c & 127);
++	}
++	return val;
++}
++
+ static const char *open_pack_file(const char *pack_name)
  {
-@@ -45,7 +72,7 @@ static struct packv4_dict *load_dict(struct packed_gi=
-t *p, off_t *offset)
- 	const unsigned char *cp;
- 	git_zstream stream;
- 	struct packv4_dict *dict;
--	int nb_entries, i, st;
-+	int st;
-=20
- 	/* get uncompressed dictionary data size */
- 	src =3D use_pack(p, &w_curs, curpos, &avail);
-@@ -77,32 +104,12 @@ static struct packv4_dict *load_dict(struct packed=
-_git *p, off_t *offset)
- 		return NULL;
- 	}
-=20
--	/* count number of entries */
--	nb_entries =3D 0;
--	cp =3D data;
--	while (cp < data + dict_size - 3) {
--		cp +=3D 2;  /* prefix bytes */
--		cp +=3D strlen((const char *)cp);  /* entry string */
--		cp +=3D 1;  /* terminating NUL */
--		nb_entries++;
--	}
--	if (cp - data !=3D dict_size) {
--		error("dict size mismatch");
-+	dict =3D pv4_create_dict(data, dict_size);
-+	if (!dict) {
- 		free(data);
- 		return NULL;
- 	}
-=20
--	dict =3D xmalloc(sizeof(*dict) + nb_entries * sizeof(dict->offsets[0]=
-));
--	dict->data =3D data;
--	dict->nb_entries =3D nb_entries;
--
--	cp =3D data;
--	for (i =3D 0; i < nb_entries; i++) {
--		dict->offsets[i] =3D cp - data;
--		cp +=3D 2;
--		cp +=3D strlen((const char *)cp) + 1;
--	}
--
- 	*offset =3D curpos;
- 	return dict;
+ 	if (from_stdin) {
+@@ -315,9 +340,6 @@ static void parse_pack_header(void)
+ 	use(sizeof(struct pack_header));
  }
-diff --git a/packv4-parse.h b/packv4-parse.h
-index 5f9d809..0b2405a 100644
---- a/packv4-parse.h
-+++ b/packv4-parse.h
-@@ -1,6 +1,14 @@
- #ifndef PACKV4_PARSE_H
- #define PACKV4_PARSE_H
 =20
-+struct packv4_dict {
-+	const unsigned char *data;
-+	unsigned int nb_entries;
-+	unsigned int offsets[FLEX_ARRAY];
-+};
+-static NORETURN void bad_object(unsigned long offset, const char *form=
+at,
+-		       ...) __attribute__((format (printf, 2, 3)));
+-
+ static NORETURN void bad_object(unsigned long offset, const char *form=
+at, ...)
+ {
+ 	va_list params;
+@@ -455,55 +477,41 @@ static void *unpack_entry_data(unsigned long offs=
+et, unsigned long size,
+ 	return buf =3D=3D fixed_buf ? NULL : buf;
+ }
+=20
++static void read_typesize_v2(struct object_entry *obj)
++{
++	unsigned char c =3D *(char*)fill_and_use(1);
++	unsigned shift;
 +
-+struct packv4_dict *pv4_create_dict(const unsigned char *data, int dic=
-t_size);
++	obj->type =3D (c >> 4) & 7;
++	obj->size =3D (c & 15);
++	shift =3D 4;
++	while (c & 128) {
++		c =3D *(char*)fill_and_use(1);
++		obj->size +=3D (c & 0x7f) << shift;
++		shift +=3D 7;
++	}
++}
 +
- void *pv4_get_commit(struct packed_git *p, struct pack_window **w_curs=
-,
- 		     off_t offset, unsigned long size);
- void *pv4_get_tree(struct packed_git *p, struct pack_window **w_curs,
+ static void *unpack_raw_entry(struct object_entry *obj,
+ 			      union delta_base *delta_base,
+ 			      unsigned char *sha1)
+ {
+-	unsigned char *p;
+-	unsigned long size, c;
+-	off_t base_offset;
+-	unsigned shift;
+ 	void *data;
++	uintmax_t val;
+=20
+ 	obj->idx.offset =3D consumed_bytes;
+ 	input_crc32 =3D crc32(0, NULL, 0);
+=20
+-	p =3D fill(1);
+-	c =3D *p;
+-	use(1);
+-	obj->type =3D (c >> 4) & 7;
+-	size =3D (c & 15);
+-	shift =3D 4;
+-	while (c & 0x80) {
+-		p =3D fill(1);
+-		c =3D *p;
+-		use(1);
+-		size +=3D (c & 0x7f) << shift;
+-		shift +=3D 7;
+-	}
+-	obj->size =3D size;
++	read_typesize_v2(obj);
+=20
+ 	switch (obj->type) {
+ 	case OBJ_REF_DELTA:
+-		hashcpy(delta_base->sha1, fill(20));
+-		use(20);
++		hashcpy(delta_base->sha1, fill_and_use(20));
+ 		break;
+ 	case OBJ_OFS_DELTA:
+ 		memset(delta_base, 0, sizeof(*delta_base));
+-		p =3D fill(1);
+-		c =3D *p;
+-		use(1);
+-		base_offset =3D c & 127;
+-		while (c & 128) {
+-			base_offset +=3D 1;
+-			if (!base_offset || MSB(base_offset, 7))
+-				bad_object(obj->idx.offset, _("offset value overflow for delta bas=
+e object"));
+-			p =3D fill(1);
+-			c =3D *p;
+-			use(1);
+-			base_offset =3D (base_offset << 7) + (c & 127);
+-		}
+-		delta_base->offset =3D obj->idx.offset - base_offset;
++		val =3D read_varint();
++		delta_base->offset =3D obj->idx.offset - val;
+ 		if (delta_base->offset <=3D 0 || delta_base->offset >=3D obj->idx.of=
+fset)
+ 			bad_object(obj->idx.offset, _("delta base offset is out of bound"))=
+;
+ 		break;
 --=20
 1.8.2.83.gc99314b
