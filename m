@@ -1,70 +1,77 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 0/3] Unconfuse git clone when two branches at are HEAD.
-Date: Sat, 7 Sep 2013 00:19:39 +0100
-Organization: OPDS
-Message-ID: <94A71512041A4F9BB402474DB385E310@PhilipOakley>
-References: <20130906155204.GE12966@inner.h.apk.li><6649DD0E3B6B4CE59D330217786B6B05@PhilipOakley> <xmqqfvthyfui.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] GIT-VERSION-GEN: Do not require tags to be annotated
+Date: Fri, 06 Sep 2013 19:37:32 -0500
+Message-ID: <522a754cee731_382e8cde804656@nysa.mail>
+References: <522A36AA.3050701@gmail.com>
+ <xmqqeh91wrvq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: "Andreas Krey" <a.krey@gmx.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 07 01:17:45 2013
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 07 02:47:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VI5Hc-0001kD-QZ
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 01:17:45 +0200
+	id 1VI6gH-00071w-26
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 02:47:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750889Ab3IFXRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Sep 2013 19:17:35 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:44520 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750867Ab3IFXRe (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Sep 2013 19:17:34 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ak4MAANiKlJOl3GZ/2dsb2JhbABbgweJbrhvBAQBgSYXdGgBAYEfAQEUAQQBAQUIAQEuHgEBIQsCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGFOAcBghIjwTePfIMkgQADiH2GEppMgTqBZzs
-X-IPAS-Result: Ak4MAANiKlJOl3GZ/2dsb2JhbABbgweJbrhvBAQBgSYXdGgBAYEfAQEUAQQBAQUIAQEuHgEBIQsCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGFOAcBghIjwTePfIMkgQADiH2GEppMgTqBZzs
-X-IronPort-AV: E=Sophos;i="4.90,857,1371078000"; 
-   d="scan'208";a="587701596"
-Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 07 Sep 2013 00:17:31 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1750897Ab3IGArB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Sep 2013 20:47:01 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:55081 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750890Ab3IGAqv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Sep 2013 20:46:51 -0400
+Received: by mail-ob0-f174.google.com with SMTP id wd6so4171676obb.33
+        for <git@vger.kernel.org>; Fri, 06 Sep 2013 17:46:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=kBFLCBvTqFL7kX+F8QznwsL9xmi+tMAm7MpzeAPD/BA=;
+        b=pd6yviPzA1VR7GQ8gEXHj9eV70IhNO5f0FQ4NqVkp36h6vsi70Jb36+S3KpCy0UrQO
+         IkDBzrejU1DwhPf/wMahVtEGENAGcgnnE7MA5VpZTXA9xlaRTnPL5m5QgTKnowWokI+z
+         OesluQEvwTY9B5Eag5bdTJQgeWUdHZxGWMpi16wj/0egLslWFNNhkl8pnEtVr3RY5/2p
+         mdhzV60l7RHI9tj4FU42Yy9nFWSyUw4H8GaolH4fG2jR42qHU3a88554+XexkRQ2x/X+
+         9nlN38wx6+VGqODZPvP0ViutiP8gpJBeXZ9iYEh9cy2orQEgn/ppJOxWs/Rh0LqPsU6s
+         t+IQ==
+X-Received: by 10.182.237.44 with SMTP id uz12mr3904372obc.11.1378514810385;
+        Fri, 06 Sep 2013 17:46:50 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id nw5sm576352obc.9.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 06 Sep 2013 17:46:49 -0700 (PDT)
+In-Reply-To: <xmqqeh91wrvq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234110>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> Does this have any impact on the alleged bug in `git bundle --all`
->> (which can then be cloned from) where the current HEAD ref wasn't
->> included in the bundle? Or am I mis-remembering?
->
-> Not "current HEAD ref", but "git clone" will fail to check out from
-> a bundle that does not include HEAD ref (it is easy to just say
-> "reset --hard master" or whatever after it, though).
->
-> I think I suggested to update "git bundle" to include HEAD when
-> there is no HEAD specified some time ago, but I do not think anybody
-> was interested, so this may be a non-issue.
->
-Just had a quick look at a very quick test repo (10 objects, 2 branches) 
-and the bundle file does contain the HEAD ref, but again it has the two 
-ref/heads/* are better than one problem, in that the clone from the 
-bundle checks out master, whilst the source repo has feature checked 
-out.
+Junio C Hamano wrote:
+> Sebastian Schuberth <sschuberth@gmail.com> writes:
+> 
+> > For custom builds of Git it sometimes is inconvenient to annotate tags
+> > because there simply is nothing to say, so do not require an annotation.
+> >
+> > Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+> > ---
+> 
+> Hmmmm, personally I'd actually want this to stay the way it is, or
+> even require a valid signed tag, in order to make sure I won't
+> mistakenly creating a lightweight tag.
 
-Philip 
+So the only user Git should care about is you? If Git can make _you_ more
+confortable not making certain mistakes, then that's the way it should be?
+
+What's the point of lightweight tags anyway? 'git describe' doesn't use them,
+GIT-VERSION-GEN neither, just remove them already.
+
+For the vast majority of the people out there, a tag is a tag. Period.
+
+-- 
+Felipe Contreras
