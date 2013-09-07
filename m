@@ -1,68 +1,76 @@
 From: Sebastian Schuberth <sschuberth@gmail.com>
 Subject: Re: [PATCH] GIT-VERSION-GEN: Do not require tags to be annotated
-Date: Sat, 7 Sep 2013 14:26:17 +0200
-Message-ID: <CAHGBnuMmm=tHdpcBpcY6Vro-un3g2JR1N6C=J-jSX8f-1b0UOw@mail.gmail.com>
+Date: Sat, 7 Sep 2013 14:28:09 +0200
+Message-ID: <CAHGBnuP6w8rvoz+h2Xase1ApY_kpZh4X=VF6LY4O0r7RS0UayA@mail.gmail.com>
 References: <522A36AA.3050701@gmail.com>
-	<4065B5CE-7E81-41F3-B9DE-FDA05C43AAB0@gmail.com>
+	<xmqqeh91wrvq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 07 14:26:34 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 07 14:28:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIHay-0001SU-8g
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 14:26:32 +0200
+	id 1VIHcd-0002j9-8Y
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 14:28:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750881Ab3IGM0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Sep 2013 08:26:20 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:42983 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750853Ab3IGM0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Sep 2013 08:26:19 -0400
-Received: by mail-lb0-f178.google.com with SMTP id z5so3696371lbh.37
-        for <git@vger.kernel.org>; Sat, 07 Sep 2013 05:26:17 -0700 (PDT)
+	id S1751059Ab3IGM2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Sep 2013 08:28:11 -0400
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:46651 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750998Ab3IGM2K (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Sep 2013 08:28:10 -0400
+Received: by mail-lb0-f182.google.com with SMTP id c11so3688933lbj.13
+        for <git@vger.kernel.org>; Sat, 07 Sep 2013 05:28:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=f96WLFrJOa/BOnj7/rzfjyWYLwVvwAOxgqQ5VszVP5w=;
-        b=QYX82T/3D+Blbf7wopETrkZYBuUVq070l5KaFuuhZQ+u+5ABZLdRDRhT5rz6wPW5hn
-         s3aVBitQ5cXnS/0zQzgfIbV74pO95qvabii6OxbslGN6O0Fh5V/+KlXtGDWyrBQHiuhB
-         0bvCq6j78HkDQKsw7kFmWq/tNBkP0H27EBRX5u1VlfXs52TfyJ+fArwNk3ZZKZBBPtmP
-         zl1TS0h55nvBI7/eOgP5GlcArOY9g76U+aVplJAV2CNoPO5mF+oLloDlvhOjifDTnURG
-         tjSJUeUZKOnTUuWvXUUoN9j4CxnGjspKtiuvU6dxMoZQTz1xxeS41ZpxOE/ymoxHb8IW
-         //GQ==
-X-Received: by 10.112.167.230 with SMTP id zr6mr8591lbb.35.1378556777864; Sat,
- 07 Sep 2013 05:26:17 -0700 (PDT)
-Received: by 10.114.5.161 with HTTP; Sat, 7 Sep 2013 05:26:17 -0700 (PDT)
-In-Reply-To: <4065B5CE-7E81-41F3-B9DE-FDA05C43AAB0@gmail.com>
+        bh=zIW2g2pUek4FnjEu3pqP3KuXY25aTBgRIvGoPaolJ8E=;
+        b=V3XNRqJpvcAmF0WYwN91f+exHC3fCWoBa0Zqc+ASCai+dBS71t3FxFHZT28JmK8XOi
+         Yc5ghGIuhY9edeQjS9G6zqcvYTVN4E13gFglzkC0QmPhQZ17d18AqQWo1h8YDgjDV3v1
+         x54La4Y9tV5NsPrHGzdySei2rKw9lZL8cP/STcv+StaU0ghP4FCQQBV22WWFmXFeh962
+         3a5ys/2HEhfNeiBTZLCbzSzmjADsGShFGE3nnaIp5f36Yp3yeIB6/MUWH0uvdmurNSDS
+         stBGco/dtzFU6jWc7icfIfLdKQsTvykfpsck4Rsiy06VU6XwZRiMs/9ZAdPntAB5oi5D
+         4IKA==
+X-Received: by 10.152.170.166 with SMTP id an6mr6857840lac.20.1378556889210;
+ Sat, 07 Sep 2013 05:28:09 -0700 (PDT)
+Received: by 10.114.5.161 with HTTP; Sat, 7 Sep 2013 05:28:09 -0700 (PDT)
+In-Reply-To: <xmqqeh91wrvq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234133>
 
-On Sat, Sep 7, 2013 at 12:34 AM, Kyle J. McKay <mackyle@gmail.com> wrote:
+On Fri, Sep 6, 2013 at 11:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
 >> For custom builds of Git it sometimes is inconvenient to annotate tags
 >> because there simply is nothing to say, so do not require an annotation.
+>>
+>> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+>> ---
 >
-> It's not that hard to add -m "" to the command line:
+> Hmmmm, personally I'd actually want this to stay the way it is, or
+> even require a valid signed tag, in order to make sure I won't
+> mistakenly creating a lightweight tag.
+>
+> If you want to give build a custom name,
+>
+>     echo buildname >version
+>
+> should be sufficient, no?
 
-It's not hard to type those characters, but (for me) it's hard to
-remember that I have to do it.
+That's not sufficient if you care about a proper (automated) release
+workflow with your releases tagged.
 
-> if you're just trying to avoid the editor or thinking up a message.  Is `-m
-> ""` really that inconvenient?
+> I dunno.
 
-Yes, to me it's inconvenient, but not that much. And I think passing
-an empty annotation like you suggest is even worse than not setting an
-annotation at all, because I would assume if an annotation is set it's
-not empty, and if it is, I would expect this to be a user error.
+That's fine, I do not care too deeply about this. I just wanted to
+give this patch a try and see what others think. Feel free to drop it.
 
 -- 
 Sebastian Schuberth
