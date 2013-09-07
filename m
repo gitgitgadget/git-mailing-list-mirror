@@ -1,96 +1,95 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: git-p4 out of memory for very large repository
-Date: Sat, 7 Sep 2013 04:19:05 -0400
-Message-ID: <20130907081905.GA4377@padd.com>
-References: <20130823011245.GA7693@jerec>
- <52170C6A.4080708@diamand.org>
- <20130823114856.GA8182@jerec>
- <20130825155001.GA875@padd.com>
- <20130826134756.GA1335@jerec>
- <20130828154135.GA16921@jerec>
- <20130829224609.GB25879@padd.com>
- <5224EA2C.7090001@diamand.org>
- <20130906190345.GA3239@jerec>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 00/12] pack v4 support in index-pack
+Date: Sat,  7 Sep 2013 17:43:07 +0700
+Message-ID: <1378550599-25365-1-git-send-email-pclouds@gmail.com>
+References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
-To: Corey Thompson <cmtptr@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 07 10:13:56 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 07 12:40:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIDeW-0002Ou-6y
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 10:13:56 +0200
+	id 1VIFwY-0002T1-O7
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Sep 2013 12:40:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751039Ab3IGINi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Sep 2013 04:13:38 -0400
-Received: from honk.padd.com ([74.3.171.149]:46252 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751032Ab3IGINf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Sep 2013 04:13:35 -0400
-Received: from tic.padd.com (82-69-2-221.dsl.in-addr.zen.co.uk [82.69.2.221])
-	by honk.padd.com (Postfix) with ESMTPSA id 278711E1D;
-	Sat,  7 Sep 2013 01:13:34 -0700 (PDT)
-Received: by tic.padd.com (Postfix, from userid 1000)
-	id AF5561011FE; Sat,  7 Sep 2013 04:19:05 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20130906190345.GA3239@jerec>
+	id S1751169Ab3IGKkh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Sep 2013 06:40:37 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:44098 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750979Ab3IGKkg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Sep 2013 06:40:36 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rq2so4251603pbb.33
+        for <git@vger.kernel.org>; Sat, 07 Sep 2013 03:40:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=wVO0ocxiyKxIyADThVIl8QiltwGMuqZ78CCnDY8feBM=;
+        b=d51UAtuXgYxTqS/fXJRVmN2h4P2c6jl02A3o9Eg8/r1DMrSjUcf4jM0w+czgvJHpUY
+         P0VnehPEBlORFiGcKkumQ8tPi4MG6g1HNJZKD5Jjz763ul1Gzz3dsO/NT5cRXYHUvVUv
+         trf0CR3f3dMVSlcHEhqNHhKnZH77tXqcaZ8UMWpCNMoQv6DA+mUwylRHbWiB63onNhSk
+         D7+PZHir/UuZcjQgJfmMc+ic4SLoSgsvygSadmXdcVFWC4S1O1JiFJzjHrwlJIWOr3my
+         RO8mkhm7iLyXbBap5JYuzOPrlLNeiBJmC9FTpLC7DVIXF4zHLoaUGPN6nnEZncln0sse
+         7Y6w==
+X-Received: by 10.68.178.35 with SMTP id cv3mr1156472pbc.160.1378550436037;
+        Sat, 07 Sep 2013 03:40:36 -0700 (PDT)
+Received: from lanh ([115.73.241.111])
+        by mx.google.com with ESMTPSA id fl3sm3944904pad.10.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 07 Sep 2013 03:40:35 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 07 Sep 2013 17:43:43 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
+In-Reply-To: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234118>
 
-cmtptr@gmail.com wrote on Fri, 06 Sep 2013 15:03 -0400:
-> Finally, I claim success!  Unfortunately I did not try either of the OOM
-> score or strace suggestions - sorry!  After spending so much time on
-> this, I've gotten to the point that I'm more interested in getting it to
-> work than in figuring out why the direct approach isn't working; it
-> sounds like you're both pretty confident that git is working as it
-> should, and I don't maintain the system I'm doing this on so I don't
-> doubt that there might be some artificial limit or other quirk here that
-> we just aren't seeing.
-> 
-> Anyway, what I found is that Pete's incremental method does work, I just
-> have to know how to do it properly!  This is what I WAS doing to
-> generate the error message I pasted several posts ago:
-> 
-> git clone //path/to/branch@<begin>,<stage1>
-> cd branch
-> git sync //path/to/branch@<stage2>
-> # ERROR!
-> # (I also tried //path/to/branch@<stage1+1>,<stage2>, same error)
-> 
-> Eventually what happened is that I downloaded the free 20-user p4d, set
-> up a very small repository with only 4 changes, and started some old
-> fashioned trial-and-error.  Here's what I should have been doing all
-> along:
-> 
-> git clone //path/to/branch@<begin>,<stage1>
-> cd branch
-> git sync //path/to/branch@<begin>,<stage2>
-> git sync //path/to/branch@<begin>,<stage3>
-> # and so on...
-> 
-> And syncing a few thousand changes every day over the course of the past
-> week, my git repo is finally up to the Perforce HEAD.  So I suppose
-> ultimately this was my own misunderstanding, partly because when you
-> begin your range at the original first change number the output looks
-> suspiciously like it's importing changes again that it's already
-> imported.  Maybe this is all documented somewhere, and if it is I just
-> failed to find it.
-> 
-> Thanks to both of you for all your help!
+This makes index-pack recognize pack v4. It still lacks:
 
-That you got it to work is the most important thing.  Amazing all
-the effort you put into it; a lesser hacker would have walked
-away much earlier.
+ - the ability to walk through multi-base trees
+ - thin pack support
 
-The changes don't overlap.  If you give it a range that includes
-changes already synced, git-p4 makes sure to start only at the
-lowest change it has not yet seen.  I'll see if I can update the
-docs somewhere.
+The first is not easy to solve imo and but does not impact us in short
+term because pack-objects probably will not learn to produce such
+trees any time soon.
 
-		-- Pete
+The second should be done after pack-objects can produce thin packs,
+else it's hard to verify that the code works as expected.
+
+This bases on Nico's tree, which does not really match the series this
+post is replied to due to some format changes. I don't know, maybe we
+could share more code with packv4-parse.c. Right now I just need
+something that works and somewhat maintainable.
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (12):
+  pack v4: split pv4_create_dict() out of load_dict()
+  index-pack: split out varint decoding code
+  index-pack: do not allocate buffer for unpacking deltas in the first =
+pass
+  index-pack: split inflate/digest code out of unpack_entry_data
+  index-pack: parse v4 header and dictionaries
+  index-pack: make sure all objects are registered in v4's SHA-1 table
+  index-pack: parse v4 commit format
+  index-pack: parse v4 tree format
+  index-pack: move delta base queuing code to unpack_raw_entry
+  index-pack: record all delta bases in v4 (tree and ref-delta)
+  index-pack: skip looking for ofs-deltas in v4 as they are not allowed
+  index-pack: resolve v4 one-base trees
+
+ builtin/index-pack.c | 679 +++++++++++++++++++++++++++++++++++++++++++=
++-------
+ packv4-parse.c       |  63 ++---
+ packv4-parse.h       |   8 +
+ 3 files changed, 627 insertions(+), 123 deletions(-)
+
+--=20
+1.8.2.83.gc99314b
