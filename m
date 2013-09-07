@@ -1,115 +1,164 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [PATCH-v2] Allow git-filter-branch to process large repositories
- with lots of branches.
-Date: Sun, 08 Sep 2013 00:06:24 +0100
-Message-ID: <522BB170.8040507@gmail.com>
-References: <CE50E29B.191B8%lee.carver@corp.service-now.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	"gitster@pobox.com" <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Lee Carver <leeca@pnambic.com>
-To: Lee Carver <Lee.Carver@servicenow.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 01:06:34 2013
+From: Richard Hansen <rhansen@bbn.com>
+Subject: [PATCH] remote-bzr: reuse bzrlib transports when possible
+Date: Sat,  7 Sep 2013 19:58:20 -0400
+Message-ID: <1378598300-22737-1-git-send-email-rhansen@bbn.com>
+Cc: Richard Hansen <rhansen@bbn.com>
+To: git@vger.kernel.org, gitster@pobox.com, felipe.contreras@gmail.com
+X-From: git-owner@vger.kernel.org Sun Sep 08 01:59:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIRaL-00024v-AB
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 01:06:33 +0200
+	id 1VISP4-0002q2-Hi
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 01:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750796Ab3IGXG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Sep 2013 19:06:29 -0400
-Received: from mail-ee0-f51.google.com ([74.125.83.51]:39155 "EHLO
-	mail-ee0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750758Ab3IGXG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Sep 2013 19:06:28 -0400
-Received: by mail-ee0-f51.google.com with SMTP id c1so2316681eek.24
-        for <git@vger.kernel.org>; Sat, 07 Sep 2013 16:06:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=yUcv/90qFgcySwNLSPEF+Yg3vtl+Hz9A/GlGFWFoOr4=;
-        b=LgEyz3CIvWjMWPQNkzHJqW9rL01Vp25nImUDAmib9mXyla/h8P9MnE/SSylGKJ0um2
-         oDYR+gV2QGbArkSf8YrDonemkman6KHFmwe96pHZ/nwsV7Rz/IeF3XoY52nxeI2CTZQZ
-         urYBPiHORNJfsfxowylnmYB9t/x+4Fq90j/f4CrPzqDHernjbdiLbiFSZYBqI2cjZ+Dc
-         5ffHq/ushHu21onw/XOafvWmg51VJy6JwsVnE9q+IFtcJ5kJEs+vHp5R5i2l/52hv0G9
-         XzgctEmcz3UesjXeF/E3ZUxYC8TkoqN977s5NXZWPM/RKb0FrIQ5QXXeEe6dGsTz3MVl
-         OXfw==
-X-Received: by 10.14.241.74 with SMTP id f50mr16799562eer.29.1378595187005;
-        Sat, 07 Sep 2013 16:06:27 -0700 (PDT)
-Received: from [192.168.1.10] ([79.97.144.61])
-        by mx.google.com with ESMTPSA id i1sm8821083eeg.0.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 07 Sep 2013 16:06:26 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130804 Thunderbird/17.0.8
-In-Reply-To: <CE50E29B.191B8%lee.carver@corp.service-now.com>
+	id S1750835Ab3IGX6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Sep 2013 19:58:48 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:36190 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750770Ab3IGX6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Sep 2013 19:58:47 -0400
+Received: from socket.bbn.com ([192.1.120.102]:59749)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1VISOo-000OdT-On; Sat, 07 Sep 2013 19:58:42 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id E7E713FF4D
+X-Mailer: git-send-email 1.8.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234148>
 
-On 07/09/13 22:03, Lee Carver wrote:
-> As noted in several forums, a recommended way to move trees between
-> repositories
-> is to use git-filter-branch to revise the history for a single tree:
->
-> http://gbayer.com/development/moving-files-from-one-git-repository-to-anoth
-> er-preserving-history/
-> http://stackoverflow.com/questions/1365541/how-to-move-files-from-one-git-r
-> epo-to-another-not-a-clone-preserving-history
->
-> However, this can lead to argument list too long errors when the original
-> repository has many retained branches (>6k)
->
-> /usr/local/git/libexec/git-core/git-filter-branch: line 270:
-> /usr/local/git/libexec/git-core/git: Argument list too long
-> Could not get the commits
->
-> Piping the saved output from git rev-parse into git rev-list avoids this
-> problem, since the rev-parse output is not processed as a command line
-> argument.
-> ---
->   git-filter-branch.sh | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> index ac2a005..60d239b 100755
-> --- a/git-filter-branch.sh
-> +++ b/git-filter-branch.sh
-> @@ -255,7 +255,7 @@ else
->   	remap_to_ancestor=t
->   fi
->
-> -rev_args=$(git rev-parse --revs-only "$@")
-> +git rev-parse --revs-only "$@" > ../parse
->
->   case "$filter_subdir" in
->   "")
-> @@ -267,8 +267,9 @@ case "$filter_subdir" in
->   	;;
->   esac
->
-> +cat ../parse | \
->   git rev-list --reverse --topo-order --default HEAD \
-> -	--parents --simplify-merges $rev_args "$@" > ../revs ||
-> +	--parents --simplify-merges --stdin "$@" > ../revs ||
- >
-Useless use of cat IMO.  I'd suggest using a redirection instead:
+Pass a list of open bzrlib.transport.Transport objects to each bzrlib
+function that might create a transport.  This enables bzrlib to reuse
+existing transports when possible, avoiding multiple concurrent
+connections to the same remote server.
 
-   git rev-list --reverse --topo-order --default HEAD \
--	--parents --simplify-merges $rev_args "$@" > ../revs ||
-+	--parents --simplify-merges --stdin "$@" > ../revs < ../parse ||
+If the remote server is accessed via ssh, this fixes a couple of
+problems:
+  * If the user does not have keys loaded into an ssh agent, the user
+    may be prompted for a password multiple times.
+  * If the user is using OpenSSH and the ControlMaster setting is set
+    to auto, git-remote-bzr might hang.  This is because bzrlib closes
+    the multiple ssh sessions in an undefined order and might try to
+    close the master ssh session before the other sessions.  The
+    master ssh process will not exit until the other sessions have
+    exited, causing a deadlock.  (The ssh sessions are closed in an
+    undefined order because bzrlib relies on the Python garbage
+    collector to trigger ssh session termination.)
+---
+ contrib/remote-helpers/git-remote-bzr | 33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
->   	die "Could not get the commits"
->   commits=$(wc -l <../revs | tr -d " ")
->
->
-
-Regards,
-   Stefano
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+index c3a3cac..1e0044b 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -674,7 +674,7 @@ def parse_reset(parser):
+     parsed_refs[ref] = mark_to_rev(from_mark)
+ 
+ def do_export(parser):
+-    global parsed_refs, dirname
++    global parsed_refs, dirname, transports
+ 
+     parser.next()
+ 
+@@ -699,7 +699,8 @@ def do_export(parser):
+             branch.generate_revision_history(revid, marks.get_tip(name))
+ 
+             if name in peers:
+-                peer = bzrlib.branch.Branch.open(peers[name])
++                peer = bzrlib.branch.Branch.open(peers[name],
++                                                 possible_transports=transports)
+                 try:
+                     peer.bzrdir.push_branch(branch, revision_id=revid)
+                 except bzrlib.errors.DivergedBranches:
+@@ -769,25 +770,28 @@ def do_list(parser):
+     print
+ 
+ def clone(path, remote_branch):
++    global transports
+     try:
+-        bdir = bzrlib.bzrdir.BzrDir.create(path)
++        bdir = bzrlib.bzrdir.BzrDir.create(path, possible_transports=transports)
+     except bzrlib.errors.AlreadyControlDirError:
+-        bdir = bzrlib.bzrdir.BzrDir.open(path)
++        bdir = bzrlib.bzrdir.BzrDir.open(path, possible_transports=transports)
+     repo = bdir.find_repository()
+     repo.fetch(remote_branch.repository)
+     return remote_branch.sprout(bdir, repository=repo)
+ 
+ def get_remote_branch(name):
+-    global dirname, branches
++    global dirname, branches, transports
+ 
+-    remote_branch = bzrlib.branch.Branch.open(branches[name])
++    remote_branch = bzrlib.branch.Branch.open(branches[name],
++                                              possible_transports=transports)
+     if isinstance(remote_branch.user_transport, bzrlib.transport.local.LocalTransport):
+         return remote_branch
+ 
+     branch_path = os.path.join(dirname, 'clone', name)
+ 
+     try:
+-        branch = bzrlib.branch.Branch.open(branch_path)
++        branch = bzrlib.branch.Branch.open(branch_path,
++                                           possible_transports=transports)
+     except bzrlib.errors.NotBranchError:
+         # clone
+         branch = clone(branch_path, remote_branch)
+@@ -821,17 +825,19 @@ def find_branches(repo):
+             yield name, branch.base
+ 
+ def get_repo(url, alias):
+-    global dirname, peer, branches
++    global dirname, peer, branches, transports
+ 
+     normal_url = bzrlib.urlutils.normalize_url(url)
+-    origin = bzrlib.bzrdir.BzrDir.open(url)
++    origin = bzrlib.bzrdir.BzrDir.open(url, possible_transports=transports)
+     is_local = isinstance(origin.transport, bzrlib.transport.local.LocalTransport)
+ 
+     shared_path = os.path.join(gitdir, 'bzr')
+     try:
+-        shared_dir = bzrlib.bzrdir.BzrDir.open(shared_path)
++        shared_dir = bzrlib.bzrdir.BzrDir.open(shared_path,
++                                               possible_transports=transports)
+     except bzrlib.errors.NotBranchError:
+-        shared_dir = bzrlib.bzrdir.BzrDir.create(shared_path)
++        shared_dir = bzrlib.bzrdir.BzrDir.create(shared_path,
++                                                 possible_transports=transports)
+     try:
+         shared_repo = shared_dir.open_repository()
+     except bzrlib.errors.NoRepositoryPresent:
+@@ -844,7 +850,8 @@ def get_repo(url, alias):
+         else:
+             # check and remove old organization
+             try:
+-                bdir = bzrlib.bzrdir.BzrDir.open(clone_path)
++                bdir = bzrlib.bzrdir.BzrDir.open(clone_path,
++                                                 possible_transports=transports)
+                 bdir.destroy_repository()
+             except bzrlib.errors.NotBranchError:
+                 pass
+@@ -897,6 +904,7 @@ def main(args):
+     global files_cache
+     global is_tmp
+     global branches, peers
++    global transports
+ 
+     alias = args[1]
+     url = args[2]
+@@ -909,6 +917,7 @@ def main(args):
+     marks = None
+     branches = {}
+     peers = {}
++    transports = []
+ 
+     if alias[5:] == url:
+         is_tmp = True
+-- 
+1.8.4
