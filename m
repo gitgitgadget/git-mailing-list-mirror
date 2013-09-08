@@ -1,77 +1,90 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] remote-bzr: reuse bzrlib transports when possible
-Date: Sat, 7 Sep 2013 19:30:10 -0500
-Message-ID: <CAMP44s0uHs8=r1eh2D-jdj563co5y7Rr1_6u=xoZDC52A6CPTQ@mail.gmail.com>
-References: <1378598300-22737-1-git-send-email-rhansen@bbn.com>
-	<522BBE87.10206@bbn.com>
+Subject: Re: coming from git, understanding mercurial branching
+Date: Sat, 7 Sep 2013 19:42:46 -0500
+Message-ID: <CAMP44s3ypvEBWnsfN5c73wT8cvGhpTnd3vbmpPfn8GMb4FVLvQ@mail.gmail.com>
+References: <20130905212714.636db4c4@bigbox.christie.dr>
+	<20130906175124.7d08947410503681449642ad@domain007.com>
+	<20130906142927.279a994a@bigbox.christie.dr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 02:30:19 2013
+Cc: git@vger.kernel.org
+To: Tim Chase <git@tim.thechases.com>
+X-From: git-owner@vger.kernel.org Sun Sep 08 02:43:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIStN-0006uK-Db
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 02:30:17 +0200
+	id 1VIT5i-00077K-PA
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 02:43:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751099Ab3IHAaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Sep 2013 20:30:13 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:37778 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751040Ab3IHAaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Sep 2013 20:30:12 -0400
-Received: by mail-la0-f45.google.com with SMTP id eh20so3928273lab.32
-        for <git@vger.kernel.org>; Sat, 07 Sep 2013 17:30:10 -0700 (PDT)
+	id S1751113Ab3IHAms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Sep 2013 20:42:48 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:54953 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750952Ab3IHAmr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Sep 2013 20:42:47 -0400
+Received: by mail-la0-f54.google.com with SMTP id ea20so3903598lab.13
+        for <git@vger.kernel.org>; Sat, 07 Sep 2013 17:42:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=2VwqdyUXv8Iu6t/gtqZdMvJwURai10WdUXfz65TTZ5s=;
-        b=B8LsWBi9tueeIVhDz7p7wleJg9JkjZOhSKudMicrh8sKwalc0xeo5J10sOkuI+biHC
-         xu9Oed13S9V/8Z2opV9o04Mw+VTdpaRL3s2bYq6qjCMWuaBmCNN9CsVxHJO4d+rkhKqJ
-         lIzXFpxmytGH/lNJ+FhSs3MhiOMVT/JYiPfyGXMQ5HHrBhePdjIgP6FeLBX0M+qiOhEl
-         DcpTYcSsCIYmCdteqt9aNUTRVzXdK6cbvjZqY57LSDuvdTGoa85cTf//vGhuLV+r4BJg
-         743FEdp6e6TdgbtMfLwH0EEtmDVT7tCN803LI9AXlLjSJM/f/nDJe0i+dWIyTDudvLrT
-         zl3w==
-X-Received: by 10.112.64.36 with SMTP id l4mr9359913lbs.15.1378600210704; Sat,
- 07 Sep 2013 17:30:10 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Sat, 7 Sep 2013 17:30:10 -0700 (PDT)
-In-Reply-To: <522BBE87.10206@bbn.com>
+        bh=9GGjz0hkzFIoVYxVdrJ3a2Ppt06FUlA1gTZ+81NC5pQ=;
+        b=MxFkYjfl1wabSpEhrvPljJ5lFL/l8CdD1hfpLb5PuA5Uc4wvZfTmx4TFkYEcVCqXBl
+         lkOmMlea0uScrAKGQv3M5veJxj6x3aVJ6rs4hYSoP7/bpf3YPnZhUQit7NEtltl62wdZ
+         VkZV50Vh6Ue1SUkZinEltsazxFqyXK4kJC1/6TVK0kSPi0ssxT8eh36CcL82dhkzFyKG
+         RH9YNsb3ILyO8wMXXZFj8ElMimF9W0FdDhBFWQmYXZQC7l+2gFR0b4X+ovuMyyNr98pS
+         rsGTc8Z0Pg703xrEmlYas/KeQV4A6qm0qak7GheEqud+IQUKqGIxU2l9BYzTqTHa9uFx
+         b22Q==
+X-Received: by 10.112.168.170 with SMTP id zx10mr9489426lbb.0.1378600966274;
+ Sat, 07 Sep 2013 17:42:46 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Sat, 7 Sep 2013 17:42:46 -0700 (PDT)
+In-Reply-To: <20130906142927.279a994a@bigbox.christie.dr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234152>
 
-On Sat, Sep 7, 2013 at 7:02 PM, Richard Hansen <rhansen@bbn.com> wrote:
-> On 2013-09-07 19:58, Richard Hansen wrote:
->> Pass a list of open bzrlib.transport.Transport objects to each bzrlib
->> function that might create a transport.  This enables bzrlib to reuse
->> existing transports when possible, avoiding multiple concurrent
->> connections to the same remote server.
+On Fri, Sep 6, 2013 at 2:29 PM, Tim Chase <git@tim.thechases.com> wrote:
+> On 2013-09-06 17:51, Konstantin Khomoutov wrote:
+>> I found this guide [1] very useful back in the time I tried to grok
+>> Mercurial.
 >>
->> If the remote server is accessed via ssh, this fixes a couple of
->> problems:
->>   * If the user does not have keys loaded into an ssh agent, the user
->>     may be prompted for a password multiple times.
->>   * If the user is using OpenSSH and the ControlMaster setting is set
->>     to auto, git-remote-bzr might hang.  This is because bzrlib closes
->>     the multiple ssh sessions in an undefined order and might try to
->>     close the master ssh session before the other sessions.  The
->>     master ssh process will not exit until the other sessions have
->>     exited, causing a deadlock.  (The ssh sessions are closed in an
->>     undefined order because bzrlib relies on the Python garbage
->>     collector to trigger ssh session termination.)
->
-> I forgot to mention:  I didn't add a Signed-off-by line because there is
-> no mention of a copyright license at the top of git-remote-bzr.
+>> 1.
+>> http://stevelosh.com/blog/2009/08/a-guide-to-branching-in-mercurial/
 
-And why is that relevant? A signed-off-by line means you wrote the
-code and you are fine with the patch being applied, or you are
-responsible somehow.
+I've written various blog posts about the subject:
+
+http://felipec.wordpress.com/2011/01/16/mercurial-vs-git-its-all-in-the-branches/
+http://felipec.wordpress.com/2012/05/26/no-mercurial-branches-are-still-not-better-than-git-ones-response-to-jhws-more-on-mercurial-vs-git-with-graphs/
+http://felipec.wordpress.com/2013/08/27/analysis-of-hg-and-git-branches/
+
+> Indeed, after reading it, that's the most sense I've been able to make
+> of Mercurial's strange branching.  I guess it boils down to the
+> following rough heuristic:
+>
+> - if you want to dink around locally, but don't want to publish your
+>   branches (yet), default to bookmarks using "hg bookmark"
+
+Kind of, but then they added support to push bookmarks, so now you can
+fetch and push them, so not exactly local.
+
+In addition, they are starting to think on adding remote namespaces,
+like in Git, except that jon/devel becomes jon@devel.
+
+> - once you want a branch to be public, consider making a "real"
+>   branch using "hg branch"
+
+Not necessarily. You can merge or rebase, so "the public" doesn't see
+the bookmark.
+
+> - if you want complete isolation in case you screw up something like
+>   merging, use a clone
+
+I guess so. There's also the option of using the 'mq' extension, which
+I guess it's similar to quilt.
 
 -- 
 Felipe Contreras
