@@ -1,117 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Re: [PATCH 3/4] t: rev-parse-parents: avoid yoda conditions
-Date: Sun, 08 Sep 2013 11:33:19 -0700
-Message-ID: <xmqqvc2b5fkg.fsf@gitster.dls.corp.google.com>
-References: <CAMP44s349-v6xtCvbDzycVj1wBwTdAgLmuGxB0pYn6CmHYkM1Q@mail.gmail.com>
-	<20130903150855.GK29840@goldbirke> <20130903170419.GA29921@google.com>
-	<xmqqli3co7ov.fsf@gitster.dls.corp.google.com>
-	<20130904171356.GD2582@serenity.lan>
-	<xmqq1u54o5c4.fsf@gitster.dls.corp.google.com>
-	<20130904183559.GA3465@sigill.intra.peff.net>
-	<CAMP44s3O=cHAtHOj41MccBDOausukb49MV-E6jib6n6czs+p3Q@mail.gmail.com>
-	<20130908040615.GA14019@sigill.intra.peff.net>
-	<CAMP44s16RZ9JguL=NPcD8TE-gdG7vGEa5KLHzv4bf_VLLEhPRw@mail.gmail.com>
-	<20130908042649.GC14019@sigill.intra.peff.net>
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
+Date: Sun, 08 Sep 2013 16:05:30 -0400
+Message-ID: <522CD88A.3060708@bbn.com>
+References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com> <xmqqd2opu8hr.fsf@gitster.dls.corp.google.com> <CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com> <xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com> <20130904081047.GB2582@serenity.lan> <xmqqa9jso69u.fsf@gitster.dls.corp.google.com> <7DC052455C7C4B50A4EAFC1EF63D006C@PhilipOakley> <xmqqr4d4jird.fsf@gitster.dls.corp.google.com> <CAMP44s0kMbXvcJbWvJDu=8A5iOeH4fsMGUdT-ehXKNXiV1FQ1Q@mail.gmail.com> <522C168B.7050300@bbn.com> <xmqqa9jn6v6q.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	John Keeping <john@keeping.me.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Sep 08 20:33:39 2013
+	Philip Oakley <philipoakley@iee.org>,
+	John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Andreas Krey <a.krey@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 08 22:06:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIjnm-0007Gm-Ls
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 20:33:39 +0200
+	id 1VIlFC-0005D5-3K
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 22:06:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750977Ab3IHSdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 14:33:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54629 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750891Ab3IHSdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 14:33:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7C1C3F9A6;
-	Sun,  8 Sep 2013 18:33:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w4Xn/4e1zJ9ypb/jxhYFFcH/vZg=; b=PU8pnC
-	fqAQC/x8h3wXtYFw03jZyRR+6qMgA8Sb+ePV78giksaoSPC+T3f0EbRzNeBm1VTq
-	kQUsrFaYU/xqVWn9LkqnSHcQXn4itlO1xzRibIlIsqLokEh+5gsdSTqbm6844WY0
-	Jk6t4/Tlrw5vb7HGIfk++kRdeIQzaRYMgSMvY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CRZXFq2blwE8mTqA7NR50+5n9mOofCsU
-	cH1PZ1ls4NuNK9Jtg6Zwj/IKK8Per+KjVPTLEZWwypmOy80U16DZ/gJzssLrxUpm
-	9b/ZSPnRDpvO9/vmpd6cUETnodf0fc6RapNfZtu/01tZ2D/DaSKMdC1nKu4u1Am9
-	e2fgfyMMIsg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D7B53F9A5;
-	Sun,  8 Sep 2013 18:33:21 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2D353F9A4;
-	Sun,  8 Sep 2013 18:33:20 +0000 (UTC)
-In-Reply-To: <20130908042649.GC14019@sigill.intra.peff.net> (Jeff King's
-	message of "Sun, 8 Sep 2013 00:26:49 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 23417046-18B5-11E3-AC6A-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751171Ab3IHUFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 16:05:47 -0400
+Received: from smtp.bbn.com ([128.33.0.80]:55385 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751133Ab3IHUFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 16:05:47 -0400
+Received: from socket.bbn.com ([192.1.120.102]:55382)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1VIlEl-00045i-5g; Sun, 08 Sep 2013 16:05:35 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 0141F3FF85
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
+In-Reply-To: <xmqqa9jn6v6q.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234260>
 
-Jeff King <peff@peff.net> writes:
+On 2013-09-08 14:10, Junio C Hamano wrote:
+> Richard Hansen <rhansen@bbn.com> writes:
+>> What about something like:
+>>
+>>     pull.mergeoptions (defaults to --ff-only)
+>>     pull.rebaseoptions (defaults to empty?  --preserve-merges?)
+>>     branch.<name>.pull.mergeoptions (defaults to pull.mergeoptions)
+>>     branch.<name>.pull.rebaseoptions (defaults to pull.rebaseoptions)
+> 
+[snip]
+> But it does not help Philip's case, if I understand correctly, where
+> running "git pull" on some branches is always a mistake and the user
+> wants it to stop at "fetch the history and objects needed to
+> complete the history from the other side" phase without proceeding
+> to the "then integrate the history from the other side and the
+> history of your branch into one" step, which may be done with either
+> merge or rebase.
 
->> A(ny) sanely defined "compare A with B" function should yield the
->> result of subtracting B from A, i.e. cmp(A,B) should be like (A-B).
->> That is what you feed qsort() and bsearch() (it is not limited to C;
->> you see the same in "sort { $a <=> $b }").  The definition naturally
->> makes "cmp(A,B) < 0" like "A < B" and "cmp(A,B) > 0" like "A > B".
->> ---
->
-> Ah, you mean "if you think that the compare function should behave like
-> C *_cmp functions, it should be A-B". Perhaps it is simply that I do not
-> think of the function in those terms, but more like "show me the
-> differences from B to A".
+How about:
 
+    branch.<name>.pull.defaultIntegrationMode = merge | rebase | none
+        If 'merge', pull acts like 'git pull --merge' by default,
+        merging the other commits into this branch.
+        If 'rebase', pull acts like 'git pull --rebase' by default,
+        rebasing this branch onto the other commits.
+        If 'none', pull acts like 'git fetch' by default.
+        Default: whatever pull.defaultIntegrationMode is set to.
 
+    branch.<name>.pull.mergeoptions
+        Arguments to pass to 'git merge' during the merge phase of
+        'git pull --merge'.
+        Default: whatever pull.mergeoptions is set to.
 
->
->> > Otherwise why would so many
->> > existing test frameworks do it the other way?
->> 
->> Which many existing frameworks do it the other way?
->
-> John mentioned JUnit, NUnit, and PHPUnit earlier in the thread. I
-> believe that Ruby's Test::Unit::Assertions also has
-> assert_equal(expected, actual).
+    branch.<name>.pull.rebaseoptions
+        Arguments to pass to 'git rebase' during the rebase phase of
+        'git pull --rebase'.
+        Default: whatever pull.rebaseoptions is set to.
 
-Especially the last one can be excused.  "is A and B equal" is a
-binary between "yes" and "no".  If A and B are equal, B and A are
-equal, and it becomes more like "which endianness is correct?" as
-you mentioned earlier.
+    pull.defaultIntegrationMode = rebase | merge | none
+        See branch.<name>.pull.defaultIntegrationMode.
+        Default: merge
 
-I think the real cause of confusion is that "cmp(1)" is not a
-comparison in that sense but is an equality check; "test_cmp" has a
-dual purpose in that its primary use as "did the previous step
-produce correct result?" is an equality check and the order does not
-really matter, but its secondary purpose, to show how the actual
-output deviated from the norm, has to be done by subtracting the
-expected result from the actual result.
+    pull.mergeoptions
+        See branch.<name>.pull.mergeoptions.
+        Default: empty, but warn that a future version will change
+        this to --ff-only.
 
-As I said, I am somewhat sympathetic to those who want to see such
-subtraction spelled as cmp(Actual,Expect), but we are so used to the
-order "diff(1)" takes expect and actual to do that subtraction in
-that order, so using diff(Expect,Actual) order is not that wrong.
+    pull.rebaseoptions
+        See branch.<name>.pull.rebaseoptions.
+        Default: empty, but warn that a future version will change
+        this to --preserve-merges?
 
-Calling the abstraction "test_diff" might have avoided the wasted
-brain bandwidth in this thread, but I do not think renaming it in
-test-lib-functions.sh is worth the trouble, either ;-)
+There's probably a better alternative to the term 'defaultIntegrationMode'.
+
+We could even add a defaultIntegrationMode = merge-there that
+reverses the parent order (the other commits become the first parent,
+the current branch becomes the second parent).
+
+-Richard
