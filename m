@@ -1,79 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git tag output order is incorrect (IMHO)
-Date: Sun, 8 Sep 2013 04:03:11 -0400
-Message-ID: <20130908080311.GA25498@sigill.intra.peff.net>
-References: <840FACA0-7E13-41DB-A0F8-124FAB53BFBD@rtcamp.com>
- <87wqon7ok4.fsf@igel.home>
- <7vli52uym0.fsf@alter.siamese.dyndns.org>
- <20130720002241.GA22143@sigill.intra.peff.net>
- <CALWbr2w7XCuD5tUSwR+Cwv4wyXLk8MHDGyU2Dr+jA9vOfDYqig@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 0/4] Re: [PATCH 3/4] t: rev-parse-parents: avoid yoda conditions
+Date: Sun, 8 Sep 2013 09:11:43 +0100
+Organization: OPDS
+Message-ID: <28ED017444BF442D84F8003247E2DDDC@PhilipOakley>
+References: <CAMP44s112mwgs=8n0XCnTtPM2V-O5RYE2ns+fjCvgkxj+kEY8Q@mail.gmail.com> <20130903111006.GJ29840@goldbirke> <CAMP44s349-v6xtCvbDzycVj1wBwTdAgLmuGxB0pYn6CmHYkM1Q@mail.gmail.com> <20130903150855.GK29840@goldbirke> <20130903170419.GA29921@google.com> <xmqqli3co7ov.fsf@gitster.dls.corp.google.com> <20130904171356.GD2582@serenity.lan> <xmqq1u54o5c4.fsf@gitster.dls.corp.google.com> <20130904183559.GA3465@sigill.intra.peff.net> <CAMP44s3O=cHAtHOj41MccBDOausukb49MV-E6jib6n6czs+p3Q@mail.gmail.com> <20130908040615.GA14019@sigill.intra.peff.net>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 10:03:32 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"John Keeping" <john@keeping.me.uk>,
+	"Jonathan Nieder" <jrnieder@gmail.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	<git@vger.kernel.org>
+To: "Jeff King" <peff@peff.net>,
+	"Felipe Contreras" <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 08 10:12:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIZxu-0003v8-Ny
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 10:03:27 +0200
+	id 1VIa6i-0000fd-RW
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 10:12:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751788Ab3IHIDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 04:03:21 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43535 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751690Ab3IHIDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 04:03:15 -0400
-Received: (qmail 9742 invoked by uid 102); 8 Sep 2013 08:03:15 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 08 Sep 2013 03:03:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Sep 2013 04:03:11 -0400
-Content-Disposition: inline
-In-Reply-To: <CALWbr2w7XCuD5tUSwR+Cwv4wyXLk8MHDGyU2Dr+jA9vOfDYqig@mail.gmail.com>
+	id S1751955Ab3IHIMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 04:12:19 -0400
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:44405 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751550Ab3IHILk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Sep 2013 04:11:40 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ag4MAHEwLFJOl3GZ/2dsb2JhbABagweEM4U+uRgEBAGBIhd0gSIBZwEBARMBBAEBBQgBARkVHgEBIQsCAwUCAQMOBwEEAgUhAgIUAQQaBgcXBgESCAIBAgMBhTgHAYISI7YFkQCBKY5XgnA0gQADjw+aTIMhOw
+X-IPAS-Result: Ag4MAHEwLFJOl3GZ/2dsb2JhbABagweEM4U+uRgEBAGBIhd0gSIBZwEBARMBBAEBBQgBARkVHgEBIQsCAwUCAQMOBwEEAgUhAgIUAQQaBgcXBgESCAIBAgMBhTgHAYISI7YFkQCBKY5XgnA0gQADjw+aTIMhOw
+X-IronPort-AV: E=Sophos;i="4.90,863,1371078000"; 
+   d="scan'208";a="587795513"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 08 Sep 2013 09:11:39 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234217>
 
-On Tue, Aug 20, 2013 at 05:12:47PM +0200, Antoine Pelisse wrote:
-
-> On Sat, Jul 20, 2013 at 2:22 AM, Jeff King <peff@peff.net> wrote:
-> > I do plan to finish it eventually, but if anyone else feels like picking
-> > it up, I'd be glad to review patches and/or share my work-in-progress as
-> > a starting point.
+From: "Jeff King" <peff@peff.net>
+Sent: Sunday, September 08, 2013 5:06 AM
+> Was there some objective argument made that I missed?
 > 
-> I have some free time to come, and would like to work on that feature.
-> Does the offer still hold ?
-> If it does, I would be interested in your patches.
+>> Here's more; human semantics:
+>> 
 
-I'm sorry I have taken so long to get back to you on this. I was hoping
-to revisit the topic and make sure the patches were in a sensible state
-for showing to somebody. But it took me some time to get around to it,
-and now that I have, they're really not looking very good.
+Isn't this one of those "pick any two from three" tasks:
+     'human', 'objective', 'argument'.
 
-My general strategy was to factor out all of the "which refs to select"
-code from git-tag (which knows --contains and --points-at) and
-git-branch (which knows --merged, --no-merged, and --contains), and then
-make them all available in a library-ish way to both commands, as well
-as for-each-ref (which also knows name matching, which all 3 should
-know, too). You can see my messy in-progress commit (that does not even
-compile) at:
+Only 1/6 of the time is an 'objective' answer the result. 
 
-  git://github.com/peff/git.git jk/contains-wip
+Philip
+"Between thee and me there's nowt so queer as fowk,
+and I ain't so sure about thee." old Yorkshire saying.
 
-Part of the complication is that the filters have to happen at different
-times (you can efficiently ask "--contains" for each ref as you see it,
-but asking "--merged" must happen after you have collected each one).
-
-I do not recall at this point what other issues led me to stop working
-on it (it may simply have been time for dinner, and I never came back to
-it). So the patches there may or may not actually be helpful to you.
-
-Sorry I can't be more helpful. I'd be happy to discuss or review if you
-want to work on it.
-
--Peff
+ 
