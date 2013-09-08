@@ -1,150 +1,91 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
-Date: Sun, 8 Sep 2013 02:54:20 -0400
-Message-ID: <20130908065420.GI14019@sigill.intra.peff.net>
-References: <xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
- <20130904081047.GB2582@serenity.lan>
- <20130904092527.GB22348@sigill.intra.peff.net>
- <CAMP44s3Vaqe-POwQb30AGdarf=ObdPUay3QEMqxHV3NKiPAouA@mail.gmail.com>
- <20130908041805.GB14019@sigill.intra.peff.net>
- <CAMP44s01LL2JCKzqa0Qc5MfBz9zfMXR4H8jZdauLOi-D0JVHpw@mail.gmail.com>
- <20130908044329.GA15087@sigill.intra.peff.net>
- <CAMP44s3kow9dooPzK6iD8p2LAgt1mtFuaNsVhkJHrqe4D+8xLQ@mail.gmail.com>
- <20130908052107.GA15610@sigill.intra.peff.net>
- <CAMP44s3U2rJsqTj4cAOpY1ntum53bEy2cP5XRNaMu5vwnYVoww@mail.gmail.com>
+Subject: Re: [PATCH 1/3] upload-pack: send the HEAD information
+Date: Sun, 8 Sep 2013 03:13:59 -0400
+Message-ID: <20130908071359.GJ14019@sigill.intra.peff.net>
+References: <20130906155204.GE12966@inner.h.apk.li>
+ <20130906155608.GF12966@inner.h.apk.li>
+ <xmqqsixhyhan.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: John Keeping <john@keeping.me.uk>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Andreas Krey <a.krey@gmx.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 08:54:42 2013
+Cc: Andreas Krey <a.krey@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 08 09:14:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIYtN-0004x1-2x
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 08:54:41 +0200
+	id 1VIZCD-00007F-PH
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 09:14:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751573Ab3IHGyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 02:54:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43058 "EHLO peff.net"
+	id S1751762Ab3IHHOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 03:14:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43193 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751473Ab3IHGyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 02:54:24 -0400
-Received: (qmail 6211 invoked by uid 102); 8 Sep 2013 06:54:24 -0000
+	id S1751679Ab3IHHOD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 03:14:03 -0400
+Received: (qmail 7146 invoked by uid 102); 8 Sep 2013 07:14:03 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 08 Sep 2013 01:54:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Sep 2013 02:54:20 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 08 Sep 2013 02:14:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Sep 2013 03:13:59 -0400
 Content-Disposition: inline
-In-Reply-To: <CAMP44s3U2rJsqTj4cAOpY1ntum53bEy2cP5XRNaMu5vwnYVoww@mail.gmail.com>
+In-Reply-To: <xmqqsixhyhan.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234195>
 
-On Sun, Sep 08, 2013 at 01:17:42AM -0500, Felipe Contreras wrote:
+On Fri, Sep 06, 2013 at 10:46:24AM -0700, Junio C Hamano wrote:
 
-> > I think it's fine to tell them to do "git pull --merge". What I'd worry
-> > more about is somebody who is suddenly presented with the choice between
-> > "--rebase" and "--merge" and doesn't know which to choose. We've created a
-> > cognitive load on the user, and even more load if they choose --rebase
-> > and don't quite understand what it means.
+> I think it is perfectly fine to expose _only_ HEAD now, and wait
+> until we find a good reason that we should send this information for
+> other symbolic refs in the repository.
+
+Yeah, I agree with that.
+
+> However, because we already anticipate that we may find such a good
+> reason later, on-the-wire format should be prepared to support such
+> later enhancement.  I think sending
 > 
-> If that happens they will go back to the guy that told them to run
-> those commands.
-
-I think "the guy" may be git itself. For example, here is a possible
-session with jc/pull-training-wheel:
-
-  $ git push
-  To ...
-   ! [rejected]        master -> master (non-fast-forward)
-  error: failed to push some refs to '...'
-  hint: Updates were rejected because the tip of your current branch is behind
-  hint: its remote counterpart. Integrate the remote changes (e.g.
-  hint: 'git pull ...') before pushing again.
-  hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-
-  $ git pull
-  The pull does not fast-forward; please specify
-  if you want to merge or rebase.
-
-  Use either
-
-      git pull --rebase
-      git pull --merge
-
-  You can also use 'git config pull.rebase true' (if you want --rebase) or
-  'git config pull.rebase false' (if you want --merge) to set this once for
-  this project and forget about it.
-
-The user is pointed at "pull" from "push", and then gets presented with
-the "merge or rebase" choice. It may be that the advice you can find by
-googling "merge vs rebase" is enough to then help the person along
-(and/or we may need to improve the manpages in that respect).
-
-I am genuinely curious what people in favor of this feature would want
-to say in the documentation to a user encountering this choice for the
-first time. In my experience, rebasing introduces more complications,
-specifically:
-
-  1. the merge is "backwards" with respect to ours/theirs
-
-  2. you may end up with difficult conflict resolution due to repeated
-     changes over the same section of code. E.g., you write some buggy
-     code and then fix it, but upstream has changed the same area.
-     Rebasing involves first resolving your buggy version with the
-     upstream code, and then resolving the fix on top of the previous
-     resolution.
-
-  3. rewriting of commits found in other branches, which then need
-     rebased on top of the branch you just rebased
-
-  4. a previously bug-free commit can show a bug after the rebase if
-     other parts of the project changed (whereas with a merge, the bug
-     would be attributable to the merge)
-
-I know those are all balanced by some advantages of rebasing, but I also
-think they are things that can be troublesome for a user who does not
-fully grok the rebase process. I'm just wondering if we should mention
-both, but steer people towards merging as the safer alternative (you
-might have ugly history, but you are less likely to create a mess with
-duplicate commits or badly-resolved conflicts).
-
-> Fortunately there probably are very few of these users.
-
-Maybe. I am not sure how one would measure.
-
-If you are interested, I can ask the opinion of some of the GitHub
-trainers. They see a lot of new users and have a sense of what kinds of
-confusion come up most frequently, what kinds of workflows they tend to
-see, etc. Their experience may be biased towards corporate-ish users,
-though, because those are the people who pay for training.
-
-> > The current warning message in jc/pull-training-wheel is quite neutral
-> > between the two options. Perhaps we should lean more towards merging?
+> 	symref=HEAD:refs/heads/master
 > 
-> I don't like that message. I would like this for the deprecation period:
+> is probably one good way to do so, as Peff suggested in that old
+> thread ($gmane/102070; note that back then this wasn't suggested as
+> a proper capability so the exact format he suggests in the message
+> is different).  Then we could later add advertisements for other
+> symbolic refs if we find it necessary to do so, e.g.
 > 
-> "The pull was not fast-forward, in the future you would have to choose
-> a merge or a rebase, merging automatically for now. Read 'man git
-> pull' for more help."
+> 	symref=HEAD:refs/heads/master
+>         symref=refs/remotes/origin/HEAD:refs/remotes/origin/master
 > 
-> Then when obsolete:
-> 
-> The pull was not fast-forward, please either merge or rebase.
+> (all on one line together with other capabilities separated with a
+> SP in between).
 
-A deprecation message helps people who are making the transition from an
-older behavior to a newer one. It cannot help new users who start with a
-git version after the deprecation period.
+It somehow feels a little weird to me that we would output the
+information about refs/foo on the HEAD line. A few possible issues (and
+I am playing devil's advocate to some degree here):
 
-> "Any more babysitting with essay long messages is counter-productive
-> to the vast majority of Git users."
+  1. What if we have a large number of symrefs? Would we run afoul of
+     pkt-line length limits?
 
-I think that is what we have advice.* for.
+  2. What's the impact of having to display all symrefs on the first
+     line, before we output other refs? Right now we can just stream out
+     refs as we read them, but we would have to make two passes (and/or
+     cache them all) to find all of the symrefs before we start
+     outputting. Will the extra latency ever matter?
+
+What do you think about teaching git to read extra data after "\0" for
+_every_ ref line? And then ref advertisement might look something like:
+
+  <sha1> HEAD\0multi_ack thin-pack ... symref=refs/heads/master\n
+  <sha1> refs/heads/master\n
+  <sha1> refs/heads/my-alias\0symref=refs/heads/master
+
+That would leave us future room for more ref annotations if we should
+want them, and I think (but haven't tested) that existing receivers
+should ignore everything after the NUL.
 
 -Peff
