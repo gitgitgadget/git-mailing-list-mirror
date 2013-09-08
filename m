@@ -1,123 +1,104 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH] dir: remove dead code
-Date: Sun, 08 Sep 2013 14:30:50 +0200
-Message-ID: <522C6DFA.10204@web.de>
-References: <1378620563-32709-1-git-send-email-artagnon@gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 00/11] pack v4 support in pack-objects
+Date: Sun,  8 Sep 2013 22:04:09 +0700
+Message-ID: <1378652660-6731-1-git-send-email-pclouds@gmail.com>
+References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 14:31:13 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sun Sep 08 17:01:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIe93-0003Hs-6l
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 14:31:13 +0200
+	id 1VIgUZ-00033p-Qb
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 17:01:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751826Ab3IHMbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 08:31:08 -0400
-Received: from mout.web.de ([212.227.15.3]:62695 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751383Ab3IHMbG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 08:31:06 -0400
-Received: from [192.168.2.102] ([79.253.173.109]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0MV4tp-1VSivC3429-00YSSr for <git@vger.kernel.org>;
- Sun, 08 Sep 2013 14:31:03 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <1378620563-32709-1-git-send-email-artagnon@gmail.com>
-X-Provags-ID: V03:K0:X8SgylBHDgxfUY6JNRvFInzKVdV+SafvQM9s+S2fV3QL+ZfEXo/
- DntEW8BJ+hegsq0mVDVfa5PoeBrfkRsAe8Sw3l6xoZ8ecAFkWvTbO6w7t5zEEl42WNRxwyE
- aZmqj9Cbl2sNKFsmimCEDtb1Pn33MvYcEeClkI+igp7C8npI1PacLzUyH3oEDOJFDGre7Mz
- wsrXw/2wX1+kkkli4TRkA==
+	id S1752045Ab3IHPBX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Sep 2013 11:01:23 -0400
+Received: from mail-pb0-f47.google.com ([209.85.160.47]:42734 "EHLO
+	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751202Ab3IHPBX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 11:01:23 -0400
+Received: by mail-pb0-f47.google.com with SMTP id rr4so5085484pbb.20
+        for <git@vger.kernel.org>; Sun, 08 Sep 2013 08:01:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=P2/mKczg2omtekgXph2qlIkdQV5b4o2knvVA9TDbBE4=;
+        b=Geftr6E+sqbYjXT1bqzMEpvhLwmxTZXH436dHzOL6IVs9YE8AuVcEY0VUDGJ0bqqrv
+         zhhSweBDkTvMgdd4+TNCvKAwgawKPS7u6tPHE8oGT3rBGgkFftBLBgQFaGBMRz9h2cmV
+         MsOLw3LaQLTMyq9NSBpsJpI8VxrPGWYcwor2APjzzEAGp8SBtg5G6p7U/1a8rm3CIVRA
+         1GzzI8UQR1LRqR1YqFIPy4adtGOrOK+1oNVOuWjOOATx/R2eHN2WVXBgEvwq6B/kameU
+         8JRdAW71sCsNaVUzztGcd2fzqWRyYJ0mugomBTRQfAKLqHPs6VWpA4H7mALESD1hYdlT
+         +z9A==
+X-Received: by 10.68.130.104 with SMTP id od8mr14022671pbb.29.1378652482642;
+        Sun, 08 Sep 2013 08:01:22 -0700 (PDT)
+Received: from lanh ([115.73.228.17])
+        by mx.google.com with ESMTPSA id lm2sm11472807pab.2.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 08 Sep 2013 08:01:21 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 08 Sep 2013 22:04:30 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
+In-Reply-To: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234239>
 
-Am 08.09.2013 08:09, schrieb Ramkumar Ramachandra:
-> Remove dead code around remove_dir_recursively().
+I can produce pack v4 on git.git with this and verify it with
+index-pack. I'm not familiar with pack-objects code and not really
+confident with my changes. Suggestions are welcome.
 
-This basically reverts ae2f203e (clean: preserve nested git worktree in 
-subdirectories).  t7300 still seems to pass, though.  I wonder why.
+Also I chose to keep packv4-create.c in libgit.a and move test code
+out to test-packv4.c. Not sure if it's good decision. The other option
+is to copy necessary code to pack-objects.c, then delete
+packv4-create.c in the end. Either way we have the same amount of code
+move.
 
->
-> Signed-off-by: Ramkumar Ramachandra<artagnon@gmail.com>
-> ---
->   dir.c | 21 ++++-----------------
->   1 file changed, 4 insertions(+), 17 deletions(-)
->
-> diff --git a/dir.c b/dir.c
-> index 910bfcd..2b31241 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1464,11 +1464,11 @@ int is_empty_dir(const char *path)
->   	return ret;
->   }
->
-> -static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
-> +int remove_dir_recursively(struct strbuf *path, int flag)
->   {
->   	DIR *dir;
->   	struct dirent *e;
-> -	int ret = 0, original_len = path->len, len, kept_down = 0;
-> +	int ret = 0, original_len = path->len, len;
->   	int only_empty = (flag & REMOVE_DIR_EMPTY_ONLY);
->   	int keep_toplevel = (flag & REMOVE_DIR_KEEP_TOPLEVEL);
->   	unsigned char submodule_head[20];
-> @@ -1476,8 +1476,6 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
->   	if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
->   	    !resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
->   		/* Do not descend and nuke a nested git work tree. */
-> -		if (kept_up)
-> -			*kept_up = 1;
->   		return 0;
->   	}
->
-> @@ -1504,7 +1502,7 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
->   		if (lstat(path->buf, &st))
->   			; /* fall thru */
->   		else if (S_ISDIR(st.st_mode)) {
-> -			if (!remove_dir_recurse(path, flag, &kept_down))
-> +			if (!remove_dir_recursively(path, flag))
+Thin pack support is not there yet, but it should be simple on
+pack-objects' end. Like the compatibility layer you added to
+sha1_file.c, this code does not take advantage of v4 as source packs
+(performance regressions entail) A lot of rooms for improvements.
 
-kept_down could have been set to 1 here...
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (11):
+  pack v4: allocate dicts from the beginning
+  pack v4: stop using static/global variables in packv4-create.c
+  pack v4: move packv4-create.c to libgit.a
+  pack v4: add version argument to write_pack_header
+  pack-write.c: add pv4_encode_in_pack_object_header
+  pack-objects: add --version to specify written pack version
+  list-objects.c: add show_tree_entry callback to traverse_commit_list
+  pack-objects: create pack v4 tables
+  pack-objects: do not cache delta for v4 trees
+  pack-objects: exclude commits out of delta objects in v4
+  pack-objects: support writing pack v4
 
->   				continue; /* happy */
->   		} else if (!only_empty && !unlink(path->buf))
->   			continue; /* happy, too */
-> @@ -1516,22 +1514,11 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
->   	closedir(dir);
->
->   	strbuf_setlen(path, original_len);
-> -	if (!ret && !keep_toplevel && !kept_down)
-> +	if (!ret && !keep_toplevel)
->   		ret = rmdir(path->buf);
+ Makefile               |   4 +-
+ builtin/pack-objects.c | 187 +++++++++++++++--
+ builtin/rev-list.c     |   4 +-
+ bulk-checkin.c         |   2 +-
+ list-objects.c         |   9 +-
+ list-objects.h         |   3 +-
+ pack-write.c           |  36 +++-
+ pack.h                 |   6 +-
+ packv4-create.c        | 534 ++++-------------------------------------=
+--------
+ packv4-create.h (new)  |  50 +++++
+ test-packv4.c (new)    | 476 +++++++++++++++++++++++++++++++++++++++++=
+++
+ upload-pack.c          |   2 +-
+ 12 files changed, 789 insertions(+), 524 deletions(-)
+ create mode 100644 packv4-create.h
+ create mode 100644 test-packv4.c
 
-... and would have prevented the rmdir() call here.
-
-Is the removed code really dead?  And if not, why does t7300 still pass?
-
-> -	else if (kept_up)
-> -		/*
-> -		 * report the uplevel that it is not an error that we
-> -		 * did not rmdir() our directory.
-> -		 */
-> -		*kept_up = !ret;
->   	return ret;
->   }
->
-> -int remove_dir_recursively(struct strbuf *path, int flag)
-> -{
-> -	return remove_dir_recurse(path, flag, NULL);
-> -}
-> -
->   void setup_standard_excludes(struct dir_struct *dir)
->   {
->   	const char *path;
-> -- 1.8.4.100.gde18f6d.dirty
->
+--=20
+1.8.2.83.gc99314b
