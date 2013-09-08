@@ -1,177 +1,138 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] git-config: always treat --int as 64-bit internally
-Date: Sun, 8 Sep 2013 04:40:02 -0400
-Message-ID: <20130908084002.GE29554@sigill.intra.peff.net>
-References: <20130908082724.GA27184@sigill.intra.peff.net>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
+Date: Sun, 8 Sep 2013 09:42:03 +0100
+Organization: OPDS
+Message-ID: <01BEC88E9B724BA4986F2678A4D9F4E6@PhilipOakley>
+References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com><xmqqd2opu8hr.fsf@gitster.dls.corp.google.com><CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com><xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com><20130904081047.GB2582@serenity.lan><xmqqa9jso69u.fsf@gitster.dls.corp.google.com><7DC052455C7C4B50A4EAFC1EF63D006C@PhilipOakley><xmqqr4d4jird.fsf@gitster.dls.corp.google.com><20130905080606.GE2582@serenity.lan><CAMP44s1Rb2WKGD-QfNh055099R+9FHv9W8TA8Gfjp=qZh_7p7Q@mail.gmail.com><8B7F235220624B259BB32B293BCB3E96@PhilipOakley> <CAMP44s2pw2TZSZ6pL-kx_QQCkjKrprERyvddCT-HTeo7uRNENA@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 08 10:40:23 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "John Keeping" <john@keeping.me.uk>,
+	"Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>,
+	"Andreas Krey" <a.krey@gmx.de>
+To: "Felipe Contreras" <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 08 10:42:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIaXc-00080g-P5
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 10:40:21 +0200
+	id 1VIaZL-0000bp-FQ
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 10:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751960Ab3IHIkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 04:40:15 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43808 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751837Ab3IHIkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 04:40:07 -0400
-Received: (qmail 11650 invoked by uid 102); 8 Sep 2013 08:40:06 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 08 Sep 2013 03:40:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Sep 2013 04:40:02 -0400
-Content-Disposition: inline
-In-Reply-To: <20130908082724.GA27184@sigill.intra.peff.net>
+	id S1751980Ab3IHImD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 04:42:03 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:51817 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751837Ab3IHImA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Sep 2013 04:42:00 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgMMADo3LFJOl3GZ/2dsb2JhbABbgwc4g3uFPrkYBAQBgSIXdIIgBQEBBAEIAQEZFR4BASEFBgIDBQIBAxEEAQEBAgIFIQICFAEECBIGBw8IBhMIAgECAwEKh1UDCQoItgWHdw2IdwSBKYtpgm6CcDSBAAOPD4UMgXGOIIUvgyE7
+X-IPAS-Result: AgMMADo3LFJOl3GZ/2dsb2JhbABbgwc4g3uFPrkYBAQBgSIXdIIgBQEBBAEIAQEZFR4BASEFBgIDBQIBAxEEAQEBAgIFIQICFAEECBIGBw8IBhMIAgECAwEKh1UDCQoItgWHdw2IdwSBKYtpgm6CcDSBAAOPD4UMgXGOIIUvgyE7
+X-IronPort-AV: E=Sophos;i="4.90,863,1371078000"; 
+   d="scan'208";a="441403184"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 08 Sep 2013 09:41:59 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234225>
 
-When you run "git config --int", the maximum size of integer
-you get depends on how git was compiled, and what it
-considers to be an "int".
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+To: "Philip Oakley" <philipoakley@iee.org>
+Cc: "John Keeping" <john@keeping.me.uk>; "Junio C Hamano" 
+<gitster@pobox.com>; <git@vger.kernel.org>; "Andreas Krey" 
+<a.krey@gmx.de>
+Sent: Sunday, September 08, 2013 9:16 AM
+Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
 
-This is almost useful, because your scripts calling "git
-config" will behave similarly to git internally. But relying
-on this is dubious; you have to actually know how git treats
-each value internally (e.g., int versus unsigned long),
-which is not documented and is subject to change. And even
-if you know it is "unsigned long", we do not have a
-git-config option to match that behavior.
 
-Furthermore, you may simply be asking git to store a value
-on your behalf (e.g., configuration for a hook). In that
-case, the relevant range check has nothing at all to do with
-git, but rather with whatever scripting tools you are using
-(and git has no way of knowing what the appropriate range is
-there).
+> On Sun, Sep 8, 2013 at 3:01 AM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
+>> From: "Felipe Contreras" <felipe.contreras@gmail.com>
+>> Sent: Sunday, September 08, 2013 3:34 AM
+>>
+>>> On Thu, Sep 5, 2013 at 3:06 AM, John Keeping <john@keeping.me.uk> 
+>>> wrote:
+>>>>
+>>>> On Wed, Sep 04, 2013 at 03:59:18PM -0700, Junio C Hamano wrote:
+>>>>>
+>>>>> Are there cases where you do not want to either rebase nor merge?
+>>>>> If so what do you want to do after "git pull" fetches from the 
+>>>>> other
+>>>>> side?  Nothing?
+>>>>
+>>>>
+>>>> One other thing that I can see being useful occasionally is:
+>>>>
+>>>>     git rebase @{u}@{1} --onto @{u}
+>>>>
+>>>> which allows local commits to be replayed onto a rewritten upstream
+>>>> branch.
+>>>>
+>>>> Although I agree with your side note below that people doing this 
+>>>> may be
+>>>> better off fetching and then updating their local branch, 
+>>>> particularly
+>>>> if @{1} is not the correct reflog entry for the upstream when they
+>>>> created the branch.
+>>>
+>>>
+>>> That's why after recognizing the fact the you can't find the branch
+>>> point of a branch in Git, I decided to write patches to support the
+>>> @{tail} shorthand, which is basically the point where the branch was
+>>> created, or rebased to:
+>>>
+>>> https://github.com/felipec/git/commits/fc/base
+>>>
+>>> And if 'git rebase' was fixed to ignore the commits already in the
+>>> rebased onto branch, almost always what you would want to do is 'git
+>>> rebase @{tail} --onto @{upstream}'.
+>>>
+>> The use case that trips me up (i.e. doesn't fit the above) is when I 
+>> have a
+>> branch that may need rebasing on (onto) pu, or may need rebasing on 
+>> master,
+>> or next, depending on what others have been doing.
+>
+> Yes, so you would do:
+>
+> % git rebase --onto pu
+>
+> Which would be translated to:
+>
+> % git rebase @{tail} --onto pu
+>
+> What's the problem?
+>
+The 'problem' is (would be) that I don't yet know that I would need 
+the --onto pu until I discover (how?) that the default rebase would 
+result in conflicts.
 
-Not only is the range check useless, but it is actively
-harmful, as there is no way at all for scripts to look
-at config variables with large values. For instance, one
-cannot reliably get the value of pack.packSizeLimit via
-git-config. On an LP64 system, git happily uses a 64-bit
-"unsigned long" internally to represent the value, but the
-script cannot read any value over 2G.
+>> As a Distributed VCS (i.e. others doing work independently), a rebase 
+>> always
+>> has the possibility that the world has moved on and one has to adapt 
+>> to the
+>> new world order by moving location (--onto somewhere new), not just 
+>> fixing
+>> up the house (patch conflicts). When the update order is unknown 
+>> there is no
+>> guaranteed solution (IIUC).
+>
+> Yeah, but almost always you want to rebase onto @{upstream}.
 
-Ideally, the "--int" option would simply represent an
-arbitrarily large integer. For practical purposes, however,
-a 64-bit integer is large enough, and is much easier to
-implement (and if somebody overflows it, we will still
-notice the problem, and not simply return garbage).
+Yeah, but almost always you want to "check" first *before* starting. 
+That is, 'git rebase --abort' should not be required from the (user's 
+selected /git's) default invocation.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I kind of picked 64-bit as "big enough". But I suppose we could also go
-with intmax_t. The only thing we can't do is an unsigned value.
-
-Also, this is the first use of PRId64. I notice we have compatibility
-macros for PRIu*, but I'm not sure what to put in one for PRId64.
-
- builtin/config.c       |  7 ++++---
- cache.h                |  1 +
- config.c               | 17 +++++++++++++++++
- t/t1300-repo-config.sh |  7 +++++++
- 4 files changed, 29 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/config.c b/builtin/config.c
-index 4010c43..8b182d2 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -128,7 +128,8 @@ static int collect_config(const char *key_, const char *value_, void *cb)
- 		must_print_delim = 1;
- 	}
- 	if (types == TYPE_INT)
--		sprintf(value, "%d", git_config_int(key_, value_?value_:""));
-+		sprintf(value, "%"PRId64,
-+			git_config_int64(key_, value_ ? value_ : ""));
- 	else if (types == TYPE_BOOL)
- 		vptr = git_config_bool(key_, value_) ? "true" : "false";
- 	else if (types == TYPE_BOOL_OR_INT) {
-@@ -265,8 +266,8 @@ static char *normalize_value(const char *key, const char *value)
- 	else {
- 		normalized = xmalloc(64);
- 		if (types == TYPE_INT) {
--			int v = git_config_int(key, value);
--			sprintf(normalized, "%d", v);
-+			int64_t v = git_config_int64(key, value);
-+			sprintf(normalized, "%"PRId64, v);
- 		}
- 		else if (types == TYPE_BOOL)
- 			sprintf(normalized, "%s",
-diff --git a/cache.h b/cache.h
-index 85b544f..ac4525a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1190,6 +1190,7 @@ extern int git_config_int(const char *, const char *);
- extern int git_config_early(config_fn_t fn, void *, const char *repo_config);
- extern int git_parse_ulong(const char *, unsigned long *);
- extern int git_config_int(const char *, const char *);
-+extern int64_t git_config_int64(const char *, const char *);
- extern unsigned long git_config_ulong(const char *, const char *);
- extern int git_config_bool_or_int(const char *, const char *, int *);
- extern int git_config_bool(const char *, const char *);
-diff --git a/config.c b/config.c
-index 87f87ba..6588cf5 100644
---- a/config.c
-+++ b/config.c
-@@ -534,6 +534,15 @@ static int git_parse_int(const char *value, int *ret)
- 	return 1;
- }
- 
-+static int git_parse_int64(const char *value, int64_t *ret)
-+{
-+	intmax_t tmp;
-+	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(int64_t)))
-+		return 0;
-+	*ret = tmp;
-+	return 1;
-+}
-+
- int git_parse_ulong(const char *value, unsigned long *ret)
- {
- 	uintmax_t tmp;
-@@ -565,6 +574,14 @@ int git_config_int(const char *name, const char *value)
- 	return ret;
- }
- 
-+int64_t git_config_int64(const char *name, const char *value)
-+{
-+	int64_t ret;
-+	if (!git_parse_int64(value, &ret))
-+		die_bad_number(name, value);
-+	return ret;
-+}
-+
- unsigned long git_config_ulong(const char *name, const char *value)
- {
- 	unsigned long ret;
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 20aee6e..b66c632 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -652,6 +652,13 @@ test_expect_success numbers '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--int is at least 64 bits' '
-+	git config giga.watts 121g &&
-+	echo 129922760704 >expect &&
-+	git config --int --get giga.watts >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'invalid unit' '
- 	git config aninvalid.unit "1auto" &&
- 	echo 1auto >expect &&
--- 
-1.8.4.2.g87d4a77
+--
+Philip Oakley 
