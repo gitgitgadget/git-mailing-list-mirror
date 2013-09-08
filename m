@@ -1,90 +1,145 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: coming from git, understanding mercurial branching
-Date: Sat, 7 Sep 2013 19:42:46 -0500
-Message-ID: <CAMP44s3ypvEBWnsfN5c73wT8cvGhpTnd3vbmpPfn8GMb4FVLvQ@mail.gmail.com>
-References: <20130905212714.636db4c4@bigbox.christie.dr>
-	<20130906175124.7d08947410503681449642ad@domain007.com>
-	<20130906142927.279a994a@bigbox.christie.dr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Tim Chase <git@tim.thechases.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 02:43:04 2013
+From: Chris Torek <chris.torek@gmail.com>
+Subject: git stash doesn't always save work dir as-is: bug?
+Date: Sat, 07 Sep 2013 18:40:25 -0600
+Message-ID: <201309080040.r880ePlr094459@elf.torek.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 08 02:48:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIT5i-00077K-PA
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 02:43:03 +0200
+	id 1VITAt-0002Co-Rq
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 02:48:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751113Ab3IHAms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Sep 2013 20:42:48 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:54953 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750952Ab3IHAmr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Sep 2013 20:42:47 -0400
-Received: by mail-la0-f54.google.com with SMTP id ea20so3903598lab.13
-        for <git@vger.kernel.org>; Sat, 07 Sep 2013 17:42:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=9GGjz0hkzFIoVYxVdrJ3a2Ppt06FUlA1gTZ+81NC5pQ=;
-        b=MxFkYjfl1wabSpEhrvPljJ5lFL/l8CdD1hfpLb5PuA5Uc4wvZfTmx4TFkYEcVCqXBl
-         lkOmMlea0uScrAKGQv3M5veJxj6x3aVJ6rs4hYSoP7/bpf3YPnZhUQit7NEtltl62wdZ
-         VkZV50Vh6Ue1SUkZinEltsazxFqyXK4kJC1/6TVK0kSPi0ssxT8eh36CcL82dhkzFyKG
-         RH9YNsb3ILyO8wMXXZFj8ElMimF9W0FdDhBFWQmYXZQC7l+2gFR0b4X+ovuMyyNr98pS
-         rsGTc8Z0Pg703xrEmlYas/KeQV4A6qm0qak7GheEqud+IQUKqGIxU2l9BYzTqTHa9uFx
-         b22Q==
-X-Received: by 10.112.168.170 with SMTP id zx10mr9489426lbb.0.1378600966274;
- Sat, 07 Sep 2013 17:42:46 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Sat, 7 Sep 2013 17:42:46 -0700 (PDT)
-In-Reply-To: <20130906142927.279a994a@bigbox.christie.dr>
+	id S1751094Ab3IHAsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Sep 2013 20:48:21 -0400
+Received: from 50-73-42-1-utah.hfc.comcastbusiness.net ([50.73.42.1]:19924
+	"EHLO elf.torek.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750998Ab3IHAsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Sep 2013 20:48:19 -0400
+X-Greylist: delayed 473 seconds by postgrey-1.27 at vger.kernel.org; Sat, 07 Sep 2013 20:48:19 EDT
+Received: from elf.torek.net (localhost [127.0.0.1])
+	by elf.torek.net (8.14.5/8.14.5) with ESMTP id r880ePlr094459
+	for <git@vger.kernel.org>; Sat, 7 Sep 2013 18:40:25 -0600 (MDT)
+	(envelope-from chris.torek@gmail.com)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.4.3 (elf.torek.net [127.0.0.1]); Sat, 07 Sep 2013 18:40:25 -0600 (MDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234153>
 
-On Fri, Sep 6, 2013 at 2:29 PM, Tim Chase <git@tim.thechases.com> wrote:
-> On 2013-09-06 17:51, Konstantin Khomoutov wrote:
->> I found this guide [1] very useful back in the time I tried to grok
->> Mercurial.
->>
->> 1.
->> http://stevelosh.com/blog/2009/08/a-guide-to-branching-in-mercurial/
+When "git stash" does its work, if the index and the work
+directory are out of sync, but the work directory is in sync with
+the HEAD commit, the work directory commit does not contain the
+file in its work-directory state, but rather in its index-state.
 
-I've written various blog posts about the subject:
+This seems wrong.  For instance, "git stash branch recover"
+gets you the wrong work-directory state in the new branch.
 
-http://felipec.wordpress.com/2011/01/16/mercurial-vs-git-its-all-in-the-branches/
-http://felipec.wordpress.com/2012/05/26/no-mercurial-branches-are-still-not-better-than-git-ones-response-to-jhws-more-on-mercurial-vs-git-with-graphs/
-http://felipec.wordpress.com/2013/08/27/analysis-of-hg-and-git-branches/
+Here's a simple test-case, its output (before and after ?fix?),
+and a possible fix, although I'm not at all sure this doesn't
+break other cases; I don't properly understand the code here.
+(I did not touch the "$patch_mode" logic either as it's entirely
+different, and looks correct at first blush.)
 
-> Indeed, after reading it, that's the most sense I've been able to make
-> of Mercurial's strange branching.  I guess it boils down to the
-> following rough heuristic:
->
-> - if you want to dink around locally, but don't want to publish your
->   branches (yet), default to bookmarks using "hg bookmark"
+(Also, not that I have a patch for this, the man page DISCUSSION
+section needs to add that there's a third parent holding unstaged
+files when doing "git stash save -u".)
 
-Kind of, but then they added support to push bookmarks, so now you can
-fetch and push them, so not exactly local.
+Chris
 
-In addition, they are starting to think on adding remote namespaces,
-like in Git, except that jon/devel becomes jon@devel.
+----snip---- test-stash.sh
+#! /bin/sh
 
-> - once you want a branch to be public, consider making a "real"
->   branch using "hg branch"
+fatal()
+{
+	echo "$@" >&2
+	exit 1
+}
 
-Not necessarily. You can merge or rebase, so "the public" doesn't see
-the bookmark.
+cd /tmp || fatal "can't cd to /tmp"
+rm -rf test_stash || fatal "can't remove old test_stash"
+mkdir test_stash &&
+cd test_stash &&
+git init -q || fatal "can't make test_stash"
 
-> - if you want complete isolation in case you screw up something like
->   merging, use a clone
+echo base > basefile &&
+git add basefile &&
+git commit -q -m initial || fatal "can't create initial commit"
 
-I guess so. There's also the option of using the 'mq' extension, which
-I guess it's similar to quilt.
+echo add to basefile >> basefile &&
+git add basefile &&
+sed -i .bak -e '2d' basefile || fatal "can't set up the problem"
+rm -f basefile.bak
 
--- 
-Felipe Contreras
+echo "status before stash:"
+git status --short
+
+git stash save || fatal "stash failed"
+
+echo "stash created"
+echo "in the index, basefile contains:"
+git show stash^2:basefile | cat -n
+echo
+echo "in the WIP, basefile contains:"
+git show stash:basefile | cat -n
+echo
+echo "in the actual basefile:"
+cat -n basefile
+----snip---- ./test-stash.sh (with original stash script)
+status before stash:
+MM basefile
+Saved working directory and index state WIP on master: c334d9e initial
+HEAD is now at c334d9e initial
+stash created
+in the index, basefile contains:
+     1	base
+     2	add to basefile
+
+in the WIP, basefile contains:
+     1	base
+     2	add to basefile
+
+in the actual basefile:
+     1	base
+----snip---- ./test-stash.sh (after ?fix?)
+status before stash:
+MM basefile
+Saved working directory and index state WIP on master: 3097b8b initial
+HEAD is now at 3097b8b initial
+stash created
+in the index, basefile contains:
+     1	base
+     2	add to basefile
+
+in the WIP, basefile contains:
+     1	base
+
+in the actual basefile:
+     1	base
+----snip---- possible fix
+commit 5288ca30b9425a8c3fd1eb179706275cda3eb717
+Author: Chris Torek <chris.torek@gmail.com>
+Date:   Sat Sep 7 18:13:31 2013 -0600
+
+    stash: diff work dir against index
+    
+    When saving a full stash, compare the work directory against the
+    already-saved index tree, rather than the HEAD commit, in case
+    the work tree reverts things back to the HEAD.
+
+diff --git a/git-stash.sh b/git-stash.sh
+index 1e541a2..02818ae 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -115,7 +115,7 @@ create_stash () {
+ 			git read-tree --index-output="$TMPindex" -m $i_tree &&
+ 			GIT_INDEX_FILE="$TMPindex" &&
+ 			export GIT_INDEX_FILE &&
+-			git diff --name-only -z HEAD -- >"$TMP-stagenames" &&
++			git diff --name-only -z $i_tree -- >"$TMP-stagenames" &&
+ 			git update-index -z --add --remove --stdin <"$TMP-stagenames" &&
+ 			git write-tree &&
+ 			rm -f "$TMPindex"
