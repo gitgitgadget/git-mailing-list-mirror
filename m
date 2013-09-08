@@ -1,108 +1,97 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
-Date: Sun, 8 Sep 2013 00:18:05 -0400
-Message-ID: <20130908041805.GB14019@sigill.intra.peff.net>
-References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com>
- <xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
- <CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com>
- <xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
- <20130904081047.GB2582@serenity.lan>
- <20130904092527.GB22348@sigill.intra.peff.net>
- <CAMP44s3Vaqe-POwQb30AGdarf=ObdPUay3QEMqxHV3NKiPAouA@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Re: [PATCH 3/4] t: rev-parse-parents: avoid yoda
+ conditions
+Date: Sun, 8 Sep 2013 00:26:49 -0400
+Message-ID: <20130908042649.GC14019@sigill.intra.peff.net>
+References: <CAMP44s349-v6xtCvbDzycVj1wBwTdAgLmuGxB0pYn6CmHYkM1Q@mail.gmail.com>
+ <20130903150855.GK29840@goldbirke>
+ <20130903170419.GA29921@google.com>
+ <xmqqli3co7ov.fsf@gitster.dls.corp.google.com>
+ <20130904171356.GD2582@serenity.lan>
+ <xmqq1u54o5c4.fsf@gitster.dls.corp.google.com>
+ <20130904183559.GA3465@sigill.intra.peff.net>
+ <CAMP44s3O=cHAtHOj41MccBDOausukb49MV-E6jib6n6czs+p3Q@mail.gmail.com>
+ <20130908040615.GA14019@sigill.intra.peff.net>
+ <CAMP44s16RZ9JguL=NPcD8TE-gdG7vGEa5KLHzv4bf_VLLEhPRw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: John Keeping <john@keeping.me.uk>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Andreas Krey <a.krey@gmx.de>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 06:18:16 2013
+X-From: git-owner@vger.kernel.org Sun Sep 08 06:27:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIWS0-0002tu-2t
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 06:18:16 +0200
+	id 1VIWad-0008Pl-40
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 06:27:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751285Ab3IHESK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 00:18:10 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42009 "EHLO peff.net"
+	id S1751159Ab3IHE0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 00:26:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42070 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750987Ab3IHESJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 00:18:09 -0400
-Received: (qmail 30849 invoked by uid 102); 8 Sep 2013 04:18:08 -0000
+	id S1750933Ab3IHE0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 00:26:53 -0400
+Received: (qmail 31286 invoked by uid 102); 8 Sep 2013 04:26:53 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 07 Sep 2013 23:18:08 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Sep 2013 00:18:05 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 07 Sep 2013 23:26:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Sep 2013 00:26:49 -0400
 Content-Disposition: inline
-In-Reply-To: <CAMP44s3Vaqe-POwQb30AGdarf=ObdPUay3QEMqxHV3NKiPAouA@mail.gmail.com>
+In-Reply-To: <CAMP44s16RZ9JguL=NPcD8TE-gdG7vGEa5KLHzv4bf_VLLEhPRw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234175>
 
-On Sat, Sep 07, 2013 at 09:52:16PM -0500, Felipe Contreras wrote:
+On Sat, Sep 07, 2013 at 11:13:10PM -0500, Felipe Contreras wrote:
 
-> On Wed, Sep 4, 2013 at 4:25 AM, Jeff King <peff@peff.net> wrote:
+> > If the reasoning is "cmp(actual, expect) makes more sense to humans"
+> > then I do not think it is universal.
 > 
-> > The patch in jc/pull-training-wheel talks about annoying old timers, but
-> > I think you may also be annoying clueless new users who simply want an
-> > svn-like workflow without thinking too hard about it.
+> No.
 > 
-> How? Subversion would complain if you have local changes when you do
-> 'svn pull', there's no notion of remotes, branches and merges are
-> rare, and forget about rebases.
+> ---
+> A(ny) sanely defined "compare A with B" function should yield the
+> result of subtracting B from A, i.e. cmp(A,B) should be like (A-B).
+> That is what you feed qsort() and bsearch() (it is not limited to C;
+> you see the same in "sort { $a <=> $b }").  The definition naturally
+> makes "cmp(A,B) < 0" like "A < B" and "cmp(A,B) > 0" like "A > B".
+> ---
 
-By "svn-like", I mean the people whose workflow is:
+Ah, you mean "if you think that the compare function should behave like
+C *_cmp functions, it should be A-B". Perhaps it is simply that I do not
+think of the function in those terms, but more like "show me the
+differences from B to A".
 
-  $ hack hack hack
-  $ git commit
-  $ git push ;# oops, somebody else pushed in the meantime
-  $ git pull
-  $ git push
-
-without using branches or worrying about the shape of history. I do not
-know what you mean by "svn pull", since that command does not exist
-(unless you are talking about svk?). In subversion, that workflow would
-be:
-
-  $ hack hack hack
-  $ svn commit ;# oops, somebody else committed in the meantime
-  $ svn update
-  $ svn commit
-
-Those people would now have to learn enough to choose between merge and
-rebase when running the "git pull".
-
-It may be OK to say "we do not care about that case, and it is a good
-thing that they learn enough to make the choice consciously." But I do
-think they exist.
-
-> >> > I do not think we know what we want is to affect "git pull origin".
-> >>
-> >> I consider "git pull $remote" to be an artifact of the way git-pull is
-> >> implemented on top of git-fetch; perhaps I'm missing something but I
-> >> can't see a scenario where this is useful.
-> >
-> > Imagine a workflow where each topic is in its own repository instead of
-> > in its own branch inside a repository. Or where each developer has his
-> > or her own repository, but everybody just works on the master branch of
-> > their repository (or perhaps uses branches, but keeps master as a stable
-> > base). Alice is the integration manager; Bob tells her that he has work
-> > ready to integrate.  She runs "git pull ~bob/project", which will merge
-> > Bob's HEAD.
+> > Otherwise why would so many
+> > existing test frameworks do it the other way?
 > 
-> These integrators should know what they are doing, so they can do 'git
-> pull --merge', or better 'git config pull.mode merge', as Linus
-> himself suggested (or something like that).
-> 
-> The defaults should care most about the clueless users.
+> Which many existing frameworks do it the other way?
 
-In this part of the email you are quoting I was not intending to say
-anything about clueless users at all, nor even about what defaults there
-are. John indicated that he could not imagine a scenario of "git pull
-$remote", so I gave an example.
+John mentioned JUnit, NUnit, and PHPUnit earlier in the thread. I
+believe that Ruby's Test::Unit::Assertions also has
+assert_equal(expected, actual).
+
+> > Or any number of variations. I'm sure you will say "but those seem
+> > awkward and unlike how I think about it". But that was my point; it
+> > seems to be a matter of preference.
+> 
+> Really? You think any sane human being would prefer:
+> 
+> Computer, given that we expect B, how does A differ?
+> 
+> To:
+> 
+> Computer, compare A with B
+
+I already said that is how I think about it. If you want to call me not
+sane, feel free. But I do not see that this line of discussion is going
+anywhere productive.
 
 -Peff
