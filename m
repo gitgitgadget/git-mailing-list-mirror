@@ -1,67 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] upload-pack: send the HEAD information
-Date: Sun, 8 Sep 2013 03:22:43 -0400
-Message-ID: <20130908072243.GK14019@sigill.intra.peff.net>
-References: <20130906155204.GE12966@inner.h.apk.li>
- <20130906155608.GF12966@inner.h.apk.li>
- <xmqqsixhyhan.fsf@gitster.dls.corp.google.com>
- <20130908071359.GJ14019@sigill.intra.peff.net>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Officially start moving to the term 'staging area'
+Date: Sun, 8 Sep 2013 08:49:12 +0100
+Organization: OPDS
+Message-ID: <B771340AAC04409CB0EF716FE6FC1C88@PhilipOakley>
+References: <20130829180129.GA4880@nysa><xmqqeh9c4a2t.fsf@gitster.dls.corp.google.com><CAM9Z-nmXPgfbXezbORb=NCqQuW4p3Dka+bHVdt_n7Sh=jehY7A@mail.gmail.com><b677f1ae-662f-4728-b625-189bc392c74d@email.android.com><CAM9Z-nmLQUrJk73pi_0a1_ccGMnqU_t=uOZze622_GEtWfMvQQ@mail.gmail.com> <CAMP44s1j+ayX=cy7QJ7WXdiD9P1M6n7NgNk=oGuv1XC=dqMXVA@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andreas Krey <a.krey@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 09:22:53 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Piotr Krukowiecki" <piotr.krukowiecki@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>,
+	"Piotr Krukowiecki" <piotr.krukowiecki.news@gmail.com>,
+	"Jay Soffian" <jaysoffian@gmail.com>,
+	"Miles Bader" <miles@gnu.org>,
+	"Jonathan Nieder" <jrnieder@gmail.com>,
+	"Matthieu Moy" <matthieu.moy@grenoble-inp.fr>,
+	"Ramkumar Ramachandra" <artagnon@gmail.com>,
+	"Scott Chacon" <schacon@gmail.com>
+To: "Felipe Contreras" <felipe.contreras@gmail.com>,
+	"Drew Northup" <n1xim.email@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 08 09:49:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIZKd-0005WG-BU
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 09:22:51 +0200
+	id 1VIZkK-0004Qr-UA
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 09:49:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751646Ab3IHHWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 03:22:47 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43269 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751613Ab3IHHWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 03:22:47 -0400
-Received: (qmail 7845 invoked by uid 102); 8 Sep 2013 07:22:47 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 08 Sep 2013 02:22:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Sep 2013 03:22:43 -0400
-Content-Disposition: inline
-In-Reply-To: <20130908071359.GJ14019@sigill.intra.peff.net>
+	id S1751773Ab3IHHtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 03:49:11 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:2872 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751637Ab3IHHtK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Sep 2013 03:49:10 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AkAMAM4qLFJOl3GZ/2dsb2JhbABagweEM4U+uRgEBAGBIhd0aQEBgR8BARQBBAEBBQgBARkVHgEBGgcLAgMFAgEDFQEEAgUhAgIUAQQIEgYHFwYBEggCAQIDAYU4BwGCEg0DE7V7h3kNiHuBKYtpgm6CcDSBAAOPD4Z9jiCFL4MhOw
+X-IPAS-Result: AkAMAM4qLFJOl3GZ/2dsb2JhbABagweEM4U+uRgEBAGBIhd0aQEBgR8BARQBBAEBBQgBARkVHgEBGgcLAgMFAgEDFQEEAgUhAgIUAQQIEgYHFwYBEggCAQIDAYU4BwGCEg0DE7V7h3kNiHuBKYtpgm6CcDSBAAOPD4Z9jiCFL4MhOw
+X-IronPort-AV: E=Sophos;i="4.90,863,1371078000"; 
+   d="scan'208";a="422196729"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 08 Sep 2013 08:49:07 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234213>
 
-On Sun, Sep 08, 2013 at 03:13:59AM -0400, Jeff King wrote:
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Sent: Sunday, September 08, 2013 2:33 AM
+[snip...]
+> The snapshot concept is totally orthogonal from the staging area
+> concept. Git works in snapshots, which are frozen images of how the
+> content tree was at a certain point in time; IOW; a commit.
 
-> What do you think about teaching git to read extra data after "\0" for
-> _every_ ref line? And then ref advertisement might look something like:
-> 
->   <sha1> HEAD\0multi_ack thin-pack ... symref=refs/heads/master\n
->   <sha1> refs/heads/master\n
->   <sha1> refs/heads/my-alias\0symref=refs/heads/master
-> 
-> That would leave us future room for more ref annotations if we should
-> want them, and I think (but haven't tested) that existing receivers
-> should ignore everything after the NUL.
+(I feel that) In most peoples minds the need for a staging area, and the 
+use of snapshots, are related. Part of that relationship, often not 
+noticed by those folks, is that they are 'orthogonal' to *each other*. 
+Thus orthogonality means both un-related, and related at the same time 
+(aren't we humans peculiar!). They are cleaved to each other.
 
-Meh, elsewhere you said:
+When trying to explain staging/index I tend to use the analogy of an old 
+style office (I am almost that old) where one has an In tray and an Out 
+tray on one's desk (and one parked WIP for lunch time desk tidy), and 
+the staging area is the basket at the end marked 'For Filing'. When the 
+'For Filing' basket is ready, one called the filing clerk to dictate the 
+cover note and away it went, commited to some remote filing repository. 
+Oh how things have changed ;-)
 
-  The capability list _could_ be sent more than once, and the
-  receiving end is prepared to accept such a stream.  Everything
-  learned from an older capability list needs to be forgot and only
-  the last one is honored, I think.
+>
+> _How_ that snapshot is created is an entirely different topic, and the
+> staging area is a tool to create the desired snapshots. The user might
+> decide to never use that tool (i.e. always run git commit -a), but the
+> concept of snapshots remain. So, clearly, one concept has absolutely
+> nothing to do with the other.
+>
 
-and I think you are right. We simply keep a copy of the string the
-server sent, and when we see a new one, we free the old and replace it.
-So each subsequent ref would have to re-send the whole capability string
-(only if it is a symref, but still, it is somewhat ugly).
-
--Peff
+The point would be that we allow a particular snapshot to be selected, 
+and that the git commit -a is but one (common) method. Commit -a is like 
+jumping in the car for a quick trip to the shops, while the selective 
+staging of content is like packing for a holiday.
