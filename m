@@ -1,85 +1,93 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCHv2 3/5] Refer to branch.<name>.remote/merge when documenting --track
-Date: Sun,  8 Sep 2013 22:58:13 +0200
-Message-ID: <1378673895-23127-4-git-send-email-johan@herland.net>
-References: <1378464042-17476-1-git-send-email-johan@herland.net>
- <1378673895-23127-1-git-send-email-johan@herland.net>
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Per Cederqvist <cederp@opera.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Sep 08 22:58:46 2013
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 0/3] Unconfuse git clone when two branches at are HEAD.
+Date: Sun, 8 Sep 2013 22:00:24 +0100
+Organization: OPDS
+Message-ID: <5425F66B510F423EA685BCEF40EF8FA7@PhilipOakley>
+References: <20130906155204.GE12966@inner.h.apk.li><6649DD0E3B6B4CE59D330217786B6B05@PhilipOakley><xmqqfvthyfui.fsf@gitster.dls.corp.google.com><94A71512041A4F9BB402474DB385E310@PhilipOakley><xmqqwqmsvdfh.fsf@gitster.dls.corp.google.com><531DBE1FF66D4356AEE6AEE5C2FE9389@PhilipOakley> <xmqqk3ir6wu3.fsf@gitster.dls.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Andreas Krey" <a.krey@gmx.de>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 08 23:00:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIm4D-0003Eo-Pi
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 22:58:46 +0200
+	id 1VIm5P-0004g9-CY
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 22:59:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751290Ab3IHU6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 16:58:31 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:53795 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751270Ab3IHU6a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 16:58:30 -0400
-Received: by mail-la0-f48.google.com with SMTP id er20so4285301lab.35
-        for <git@vger.kernel.org>; Sun, 08 Sep 2013 13:58:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6DTmG30EmsUm/DmOTS+PQlfE0BoBrB82Jsm94nGzOMc=;
-        b=fduekhczA5FrGroaLkV/5YGiKxMJ9fCAwCOmSBG1ZORUuVoJtRhAoG0IU24K6147ZH
-         D4lEsyBERvFx7dq3beLAwmkzqfU+tsKFrI6oDDkPe2NlRIwVNNXN8G/mAJkBz46UXHbD
-         A8pH4IbDKG/IYUX18De3xFeJrr7SPUvR+ohgpxv6DyODeszdAeprnXG3/kNAyLGoQQ5M
-         TSrL5rRc/7jjfeEKsO7hjqlPJkdent6W6pL+Tvw1PYaRF/LM4vT+UWC91/5/hnCeHMuf
-         X+b4zpZR4T9UkqWpylJeESPamwQSj2MS0/Nl45OYPW5H4/VPq/cxY2VcQyAEvBO9ubz1
-         RPfw==
-X-Received: by 10.152.5.162 with SMTP id t2mr13148751lat.1.1378673909119;
-        Sun, 08 Sep 2013 13:58:29 -0700 (PDT)
-Received: from beta.herland (cm-84.208.177.71.getinternet.no. [84.208.177.71])
-        by mx.google.com with ESMTPSA id vo1sm4292384lbb.1.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 08 Sep 2013 13:58:28 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.GIT
-In-Reply-To: <1378673895-23127-1-git-send-email-johan@herland.net>
+	id S1751326Ab3IHU7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 16:59:55 -0400
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:52725 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751244Ab3IHU7y (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Sep 2013 16:59:54 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AtULAHrkLFJOl3GZ/2dsb2JhbABZgweJcbkbBAQBgSMXdGkBAYEfAQEUAQQBAQUIAQEuHgEBGgcLAgMFAgEDFQELJRQBBBoGBxcGEwgCAQIDAYU4BwGCEiPGBJAAgySBAAOIfYYSmkyDITs
+X-IPAS-Result: AtULAHrkLFJOl3GZ/2dsb2JhbABZgweJcbkbBAQBgSMXdGkBAYEfAQEUAQQBAQUIAQEuHgEBGgcLAgMFAgEDFQELJRQBBBoGBxcGEwgCAQIDAYU4BwGCEiPGBJAAgySBAAOIfYYSmkyDITs
+X-IronPort-AV: E=Sophos;i="4.90,865,1371078000"; 
+   d="scan'208";a="431205487"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip05ir2.opaltelecom.net with SMTP; 08 Sep 2013 21:59:53 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234271>
 
-Make it easier for readers to find the actual config variables that
-implement the "upstream" relationship.
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Sunday, September 08, 2013 6:35 PM
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> What I observed was that all the clones had the same HEAD problem,
+>> which I think comes from clone.c: guess_remote_head().
+>
+> Yes.  They share "having to guess" property because their data
+> source does not tell them.
+>
+>> My quick look at clone.c suggested to me that there would be a lot of
+>> commonality between the bundle data stream and the transport streams
+>> (identical?), and it was just a case of adding into the bundle data
+>> the same HEAD symref indication that would solve the normal clone
+>> problem (including backward compatibility). Is that a reasonable
+>> assesssment?
+>
+> You need to find a hole in the existing readers to stick the new
+> information in a way that do not break existing readers but allow
+> updated readers to extract that information.  That is exactly what
+> we did when we added the protocol capability.  I do not offhand
+> think an equivalent hole exists in the bundle file format.
+> --
 
-Suggested-by: Per Cederqvist <cederp@opera.com>
-Signed-off-by: Johan Herland <johan@herland.net>
----
- Documentation/git-branch.txt | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+I've been rummaging about as to options.
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index b7cb625..311b336 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -48,7 +48,8 @@ working tree to it; use "git checkout <newbranch>" to switch to the
- new branch.
- 
- When a local branch is started off a remote-tracking branch, Git sets up the
--branch so that 'git pull' will appropriately merge from
-+branch (specifically the `branch.<name>.remote` and `branch.<name>.merge`
-+configuration entries) so that 'git pull' will appropriately merge from
- the remote-tracking branch. This behavior may be changed via the global
- `branch.autosetupmerge` configuration flag. That setting can be
- overridden by using the `--track` and `--no-track` options, and
-@@ -156,7 +157,8 @@ This option is only applicable in non-verbose mode.
- 
- -t::
- --track::
--	When creating a new branch, set up configuration to mark the
-+	When creating a new branch, set up `branch.<name>.remote` and
-+	`branch.<name>.merge` configuration entries to mark the
- 	start-point branch as "upstream" from the new branch. This
- 	configuration will tell git to show the relationship between the
- 	two branches in `git status` and `git branch -v`. Furthermore,
--- 
-1.8.3.GIT
+One is to extend the ref format such that
+  <sha1> refs/heads/Test:HEAD
+would be considered a valid indicator of a symref relationship (i.e. 
+using the typical 'colon' style). It would be appended after the regular 
+refs, so all the existing refs are still transported.
+
+The point is that while it produces an error, it doesn't stop the 
+cloning, and the error message
+ "error: * Ignoring funny ref 'refs/remotes/origin/Test:HEAD' locally"
+gives a pretty clear statement of intent to those with older versions of 
+git.
+
+Another alternative is to add an additional name space (e.g.)
+   <sha1> refs/remotes/origin/HEAD/Test
+which would simply be an extra directory layer that reflects where the 
+HEAD should have been. Though this namespace example has the D/F 
+conflict.
+
+Philip
