@@ -1,70 +1,123 @@
-From: Isaac Levy <ilevy@google.com>
-Subject: Bash completion doing full tree traversal?
-Date: Sun, 8 Sep 2013 05:12:48 -0700
-Message-ID: <CADHXV5kfaMm3nAEK_uR0McoAahj6pVtm=11Ei0_Y_teDJixWTQ@mail.gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH] dir: remove dead code
+Date: Sun, 08 Sep 2013 14:30:50 +0200
+Message-ID: <522C6DFA.10204@web.de>
+References: <1378620563-32709-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 08 14:13:25 2013
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 08 14:31:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIdro-0006Al-Hb
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 14:13:24 +0200
+	id 1VIe93-0003Hs-6l
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 14:31:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271Ab3IHMNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 08:13:21 -0400
-Received: from mail-qe0-f48.google.com ([209.85.128.48]:37367 "EHLO
-	mail-qe0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751044Ab3IHMNU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 08:13:20 -0400
-Received: by mail-qe0-f48.google.com with SMTP id nd7so1668793qeb.21
-        for <git@vger.kernel.org>; Sun, 08 Sep 2013 05:13:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=+7kirb2KLNBIu7stX8hgudR4ztZUQvG1c0LOn5MZP/E=;
-        b=bWU4Kpy75oGEuwNLbqi3RjK2Lkap1GVmZcpZMYUsu0k+9B2cieHFGsvdEcfSiv6g0X
-         qM2ZN2JDSZh4lKexiu9SXB7eSt1McHXcEchfcQF2lS8lVYMpwU8+6CGxtRJ9W4qqDDPB
-         GwEHwaEFqVndwWrzaoMATPrSotrrJMJ/bYMzatRq/ltlzvNzw0nTJJlpUdjdqP4yIS8r
-         R2ZjlPTFfyfb0V5aaeNeDNI+ae7HUZlvIYLqVa3gCqn+Cj01+UIT8NxBzIDhsJ7RfyCi
-         tY0FBXJmrk2C6UqwDe7BJ6ENHPpdvojEM6IB0oInvlIHOLxTaURQurJ5H0qoeqRLeb+t
-         ELdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=+7kirb2KLNBIu7stX8hgudR4ztZUQvG1c0LOn5MZP/E=;
-        b=CMYYsYiYNGFnS/Db+nwqpOBftwyXElCOqGMCH0caebK/hSkfXhc0sJfEpMYJQS54kT
-         yHRLw2Ec9i4hB0zn19fHiUgW0fsPIHri4yu6slpDpwakA6K7gquM/znzlWZwyDIcJEr7
-         kZyynEiufWtrhJCvjkUZTNy+nWYdKKPYuGbqfNCDIJkDI7Zv6mLX7+Qd0q1+4NgF1fB4
-         y8IOd62Z8J45Pat1UZk3VPZwhh9451OCfbtFrIqvPCj1kOcohILcUTscjGsaucJgC6lI
-         CKqKjtF3p4iOT+Hkc997c6kCeKcRgotpRIytdlN4XtH7ZTR62tPNkjyAxKG+DwVT67R4
-         PFfA==
-X-Gm-Message-State: ALoCoQk/Q1QI+TpyWotWYksfWtmkTDl9xQ+VOV5v6dy1yQGAQSo7i/KnGWj7ExCbIIdieyJYCJwfnfBu7d0oxcRcc3dny2ZNKBdBi1KaJnpL32zOkoNvDBK6PMQ5dH9JNcmp5EiT2PEBNC2FN2eUbFbSQbhBIGtevmHz+aoMEJR1zIRraiTcxTMJCa7/DB19zSssYamy+yZx
-X-Received: by 10.49.59.44 with SMTP id w12mr14755703qeq.57.1378642399038;
- Sun, 08 Sep 2013 05:13:19 -0700 (PDT)
-Received: by 10.229.65.70 with HTTP; Sun, 8 Sep 2013 05:12:48 -0700 (PDT)
+	id S1751826Ab3IHMbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 08:31:08 -0400
+Received: from mout.web.de ([212.227.15.3]:62695 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751383Ab3IHMbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 08:31:06 -0400
+Received: from [192.168.2.102] ([79.253.173.109]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0MV4tp-1VSivC3429-00YSSr for <git@vger.kernel.org>;
+ Sun, 08 Sep 2013 14:31:03 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <1378620563-32709-1-git-send-email-artagnon@gmail.com>
+X-Provags-ID: V03:K0:X8SgylBHDgxfUY6JNRvFInzKVdV+SafvQM9s+S2fV3QL+ZfEXo/
+ DntEW8BJ+hegsq0mVDVfa5PoeBrfkRsAe8Sw3l6xoZ8ecAFkWvTbO6w7t5zEEl42WNRxwyE
+ aZmqj9Cbl2sNKFsmimCEDtb1Pn33MvYcEeClkI+igp7C8npI1PacLzUyH3oEDOJFDGre7Mz
+ wsrXw/2wX1+kkkli4TRkA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234238>
 
-I experienced a weird stall from git bash completion:
-$ git add p<TAB>
+Am 08.09.2013 08:09, schrieb Ramkumar Ramachandra:
+> Remove dead code around remove_dir_recursively().
 
-I did some investigation and found this call trace:
+This basically reverts ae2f203e (clean: preserve nested git worktree in 
+subdirectories).  t7300 still seems to pass, though.  I wonder why.
 
-+ __git_index_files '--others --modified' ''
-   ---> git ls-files --exclude-standard --others --modified
+>
+> Signed-off-by: Ramkumar Ramachandra<artagnon@gmail.com>
+> ---
+>   dir.c | 21 ++++-----------------
+>   1 file changed, 4 insertions(+), 17 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index 910bfcd..2b31241 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1464,11 +1464,11 @@ int is_empty_dir(const char *path)
+>   	return ret;
+>   }
+>
+> -static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
+> +int remove_dir_recursively(struct strbuf *path, int flag)
+>   {
+>   	DIR *dir;
+>   	struct dirent *e;
+> -	int ret = 0, original_len = path->len, len, kept_down = 0;
+> +	int ret = 0, original_len = path->len, len;
+>   	int only_empty = (flag & REMOVE_DIR_EMPTY_ONLY);
+>   	int keep_toplevel = (flag & REMOVE_DIR_KEEP_TOPLEVEL);
+>   	unsigned char submodule_head[20];
+> @@ -1476,8 +1476,6 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
+>   	if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
+>   	    !resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
+>   		/* Do not descend and nuke a nested git work tree. */
+> -		if (kept_up)
+> -			*kept_up = 1;
+>   		return 0;
+>   	}
+>
+> @@ -1504,7 +1502,7 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
+>   		if (lstat(path->buf, &st))
+>   			; /* fall thru */
+>   		else if (S_ISDIR(st.st_mode)) {
+> -			if (!remove_dir_recurse(path, flag, &kept_down))
+> +			if (!remove_dir_recursively(path, flag))
 
-This bash function captures output of the git call and strips all but
-the base directory or base filename.  The results are limited to
-entries in the current directory.
+kept_down could have been set to 1 here...
 
-Appears to be from fea16b47b603e and first released in v1.8.2 (I have 1.8.4).
+>   				continue; /* happy */
+>   		} else if (!only_empty && !unlink(path->buf))
+>   			continue; /* happy, too */
+> @@ -1516,22 +1514,11 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
+>   	closedir(dir);
+>
+>   	strbuf_setlen(path, original_len);
+> -	if (!ret && !keep_toplevel && !kept_down)
+> +	if (!ret && !keep_toplevel)
+>   		ret = rmdir(path->buf);
 
-Isaac
+... and would have prevented the rmdir() call here.
+
+Is the removed code really dead?  And if not, why does t7300 still pass?
+
+> -	else if (kept_up)
+> -		/*
+> -		 * report the uplevel that it is not an error that we
+> -		 * did not rmdir() our directory.
+> -		 */
+> -		*kept_up = !ret;
+>   	return ret;
+>   }
+>
+> -int remove_dir_recursively(struct strbuf *path, int flag)
+> -{
+> -	return remove_dir_recurse(path, flag, NULL);
+> -}
+> -
+>   void setup_standard_excludes(struct dir_struct *dir)
+>   {
+>   	const char *path;
+> -- 1.8.4.100.gde18f6d.dirty
+>
