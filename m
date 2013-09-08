@@ -1,72 +1,70 @@
-From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH] Doc: 'replace' merge and non-merge commits
-Date: Sun,  8 Sep 2013 13:10:44 +0100
-Message-ID: <1378642244-3572-1-git-send-email-philipoakley@iee.org>
-References: <xmqqob86g8v4.fsf@gitster.dls.corp.google.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@inf.ethz.ch>, Johannes Sixt <j6t@kdbg.org>
-To: GitList <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 08 14:10:33 2013
+From: Isaac Levy <ilevy@google.com>
+Subject: Bash completion doing full tree traversal?
+Date: Sun, 8 Sep 2013 05:12:48 -0700
+Message-ID: <CADHXV5kfaMm3nAEK_uR0McoAahj6pVtm=11Ei0_Y_teDJixWTQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 08 14:13:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIdp2-0003o7-7K
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 14:10:32 +0200
+	id 1VIdro-0006Al-Hb
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 14:13:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359Ab3IHMK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 08:10:28 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:18625 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751259Ab3IHMK1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Sep 2013 08:10:27 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AscIAPtnLFJOl3GZ/2dsb2JhbABbgweDSqtRk3aBIxd0giYBBVYjEAhJOR4GCgmIBsZmkAAHhB0DqVuDITs
-X-IPAS-Result: AscIAPtnLFJOl3GZ/2dsb2JhbABbgweDSqtRk3aBIxd0giYBBVYjEAhJOR4GCgmIBsZmkAAHhB0DqVuDITs
-X-IronPort-AV: E=Sophos;i="4.90,864,1371078000"; 
-   d="scan'208";a="436400145"
-Received: from host-78-151-113-153.as13285.net (HELO localhost) ([78.151.113.153])
-  by out1.ip03ir2.opaltelecom.net with ESMTP; 08 Sep 2013 13:10:25 +0100
-X-Mailer: git-send-email 1.8.1.msysgit.1
-In-Reply-To: <xmqqob86g8v4.fsf@gitster.dls.corp.google.com>
+	id S1751271Ab3IHMNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 08:13:21 -0400
+Received: from mail-qe0-f48.google.com ([209.85.128.48]:37367 "EHLO
+	mail-qe0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751044Ab3IHMNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 08:13:20 -0400
+Received: by mail-qe0-f48.google.com with SMTP id nd7so1668793qeb.21
+        for <git@vger.kernel.org>; Sun, 08 Sep 2013 05:13:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=+7kirb2KLNBIu7stX8hgudR4ztZUQvG1c0LOn5MZP/E=;
+        b=bWU4Kpy75oGEuwNLbqi3RjK2Lkap1GVmZcpZMYUsu0k+9B2cieHFGsvdEcfSiv6g0X
+         qM2ZN2JDSZh4lKexiu9SXB7eSt1McHXcEchfcQF2lS8lVYMpwU8+6CGxtRJ9W4qqDDPB
+         GwEHwaEFqVndwWrzaoMATPrSotrrJMJ/bYMzatRq/ltlzvNzw0nTJJlpUdjdqP4yIS8r
+         R2ZjlPTFfyfb0V5aaeNeDNI+ae7HUZlvIYLqVa3gCqn+Cj01+UIT8NxBzIDhsJ7RfyCi
+         tY0FBXJmrk2C6UqwDe7BJ6ENHPpdvojEM6IB0oInvlIHOLxTaURQurJ5H0qoeqRLeb+t
+         ELdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=+7kirb2KLNBIu7stX8hgudR4ztZUQvG1c0LOn5MZP/E=;
+        b=CMYYsYiYNGFnS/Db+nwqpOBftwyXElCOqGMCH0caebK/hSkfXhc0sJfEpMYJQS54kT
+         yHRLw2Ec9i4hB0zn19fHiUgW0fsPIHri4yu6slpDpwakA6K7gquM/znzlWZwyDIcJEr7
+         kZyynEiufWtrhJCvjkUZTNy+nWYdKKPYuGbqfNCDIJkDI7Zv6mLX7+Qd0q1+4NgF1fB4
+         y8IOd62Z8J45Pat1UZk3VPZwhh9451OCfbtFrIqvPCj1kOcohILcUTscjGsaucJgC6lI
+         CKqKjtF3p4iOT+Hkc997c6kCeKcRgotpRIytdlN4XtH7ZTR62tPNkjyAxKG+DwVT67R4
+         PFfA==
+X-Gm-Message-State: ALoCoQk/Q1QI+TpyWotWYksfWtmkTDl9xQ+VOV5v6dy1yQGAQSo7i/KnGWj7ExCbIIdieyJYCJwfnfBu7d0oxcRcc3dny2ZNKBdBi1KaJnpL32zOkoNvDBK6PMQ5dH9JNcmp5EiT2PEBNC2FN2eUbFbSQbhBIGtevmHz+aoMEJR1zIRraiTcxTMJCa7/DB19zSssYamy+yZx
+X-Received: by 10.49.59.44 with SMTP id w12mr14755703qeq.57.1378642399038;
+ Sun, 08 Sep 2013 05:13:19 -0700 (PDT)
+Received: by 10.229.65.70 with HTTP; Sun, 8 Sep 2013 05:12:48 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234237>
 
-Merges are often treated as special case objects so tell users that
-they are not special here.
+I experienced a weird stall from git bash completion:
+$ git add p<TAB>
 
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
+I did some investigation and found this call trace:
 
-This updates my in-line patch given in [PATCH v3 07/11]
-Documentation/replace: tell that -f option bypasses the type check
-($gmane/233997 05 September 2013 23:20) and Junio's comments
-($gmane/234001 06 September 2013 00:13) 
++ __git_index_files '--others --modified' ''
+   ---> git ls-files --exclude-standard --others --modified
 
-Applies on top of pu and Christian Couder's series.
+This bash function captures output of the git call and strips all but
+the base directory or base filename.  The results are limited to
+entries in the current directory.
 
-Philip
+Appears to be from fea16b47b603e and first released in v1.8.2 (I have 1.8.4).
 
----
- Documentation/git-replace.txt | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
-index 414000e..f373ab4 100644
---- a/Documentation/git-replace.txt
-+++ b/Documentation/git-replace.txt
-@@ -26,6 +26,7 @@ This restriction can be bypassed using `-f`.
- Unless `-f` is given, the 'replace' reference must not yet exist.
- 
- There is no other restriction on the replaced and replacement objects.
-+Merge commits can be replaced by non-merge commits and vice versa.
- 
- Replacement references will be used by default by all Git commands
- except those doing reachability traversal (prune, pack transfer and
--- 
-1.8.1.msysgit.1
+Isaac
