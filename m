@@ -1,114 +1,107 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] dir: remove dead code
-Date: Sun,  8 Sep 2013 11:39:23 +0530
-Message-ID: <1378620563-32709-1-git-send-email-artagnon@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 08 08:15:36 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
+Date: Sun, 8 Sep 2013 01:17:42 -0500
+Message-ID: <CAMP44s3U2rJsqTj4cAOpY1ntum53bEy2cP5XRNaMu5vwnYVoww@mail.gmail.com>
+References: <xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
+	<CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com>
+	<xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
+	<20130904081047.GB2582@serenity.lan>
+	<20130904092527.GB22348@sigill.intra.peff.net>
+	<CAMP44s3Vaqe-POwQb30AGdarf=ObdPUay3QEMqxHV3NKiPAouA@mail.gmail.com>
+	<20130908041805.GB14019@sigill.intra.peff.net>
+	<CAMP44s01LL2JCKzqa0Qc5MfBz9zfMXR4H8jZdauLOi-D0JVHpw@mail.gmail.com>
+	<20130908044329.GA15087@sigill.intra.peff.net>
+	<CAMP44s3kow9dooPzK6iD8p2LAgt1mtFuaNsVhkJHrqe4D+8xLQ@mail.gmail.com>
+	<20130908052107.GA15610@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: John Keeping <john@keeping.me.uk>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Andreas Krey <a.krey@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 08 08:17:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIYHW-0006PF-US
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 08:15:35 +0200
+	id 1VIYJf-0007j0-OO
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 08:17:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751595Ab3IHGPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 02:15:31 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:55773 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751444Ab3IHGPa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 02:15:30 -0400
-Received: by mail-pd0-f180.google.com with SMTP id y10so4907700pdj.11
-        for <git@vger.kernel.org>; Sat, 07 Sep 2013 23:15:30 -0700 (PDT)
+	id S1751510Ab3IHGRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 02:17:44 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:63339 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751473Ab3IHGRn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 02:17:43 -0400
+Received: by mail-lb0-f180.google.com with SMTP id q8so4011590lbi.39
+        for <git@vger.kernel.org>; Sat, 07 Sep 2013 23:17:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id;
-        bh=wnzlsKmSsgwi6JhE7Y7XD8Arggqjv57xxHVsASqiNjA=;
-        b=NQDPFjGZtOpm/wUM6QdxUjmW9/ZL1ig7h+DxhMVjwrrefZfR4TedDMAquD8TMSLs+I
-         u55sOQ8r90cOuQCjg50sf5d7i1H5mk0JZ3oaQRZyG7Rqggza/q83OZrnb6dpopEb32Sg
-         Oo4plhuS0jKtUmacNRrMIOG4HAlEi/lQkSCFIJTmII+MqwW6o6LjxHTrKVqNqYvAnCCJ
-         PH/MdaWD3u45pd/+COw8dAEM1ltOOqmnv9OUV3gIXmbC4u6bRgCXYZwXh+Vh53vDELbI
-         EWZYC5Hq26n4tsbAHS4ZIk9ejTlld8WOQFwOVr6UVAfTIIZn0IHfYT3SfXxCDD3zQk72
-         s3EA==
-X-Received: by 10.66.121.131 with SMTP id lk3mr13102018pab.61.1378620930341;
-        Sat, 07 Sep 2013 23:15:30 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.84.79])
-        by mx.google.com with ESMTPSA id j9sm8977474paj.18.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 07 Sep 2013 23:15:29 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.100.gde18f6d.dirty
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=YVpsmh6hHQ46oWkNguq7uuhi8GIat61M9hPo46ug7j0=;
+        b=KqV9BNzBYCShXPNloQS1mIgkI2VFKrB6OO702rBFOF/92bJaC5AuK0jOaP3CeQnMRV
+         JiAr1n3k0sAg4TCT98lYgmXjT8twKSqR1EDPIQVcWZ5K+xO7EtpCba+3XuqdTkqhzcx3
+         TSTHowUuzOxpQQ96bJUSLYiDRyYOR4jlnWEz7sSjHcxB1BL2TA0raAfnz2ya8yhB+w78
+         CL06Cq/qKKA8U1LbwsDk9lQrGKvoaN0mPWs2Ta6vmgvC+vU/mLxuMNLhy69EIC/gLdjk
+         Y6VklbfAAo5jTsKOgXH1NxrYd9ZYlqlGVA930x03+hktQVBOfwNvP1bysa8QHCQrP5qv
+         QGXQ==
+X-Received: by 10.112.149.197 with SMTP id uc5mr10342277lbb.19.1378621062255;
+ Sat, 07 Sep 2013 23:17:42 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Sat, 7 Sep 2013 23:17:42 -0700 (PDT)
+In-Reply-To: <20130908052107.GA15610@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234189>
 
-Remove dead code around remove_dir_recursively().
+On Sun, Sep 8, 2013 at 12:21 AM, Jeff King <peff@peff.net> wrote:
+> On Sun, Sep 08, 2013 at 12:09:34AM -0500, Felipe Contreras wrote:
+>
+>> > It's not if you understand the difference between merge-then-commit and
+>> > commit-then-merge. But for a clueless user who has been told "replace
+>> > svn commit" with "git commit && git push" and replace "svn update" with
+>> > "git pull", it is quite similar.
+>>
+>> Well, yeah, but if they are so clueless they have to be told what to
+>> do, they can be told to do 'git pull --merge' instead, no?
+>
+> I think it's fine to tell them to do "git pull --merge". What I'd worry
+> more about is somebody who is suddenly presented with the choice between
+> "--rebase" and "--merge" and doesn't know which to choose. We've created a
+> cognitive load on the user, and even more load if they choose --rebase
+> and don't quite understand what it means.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- dir.c | 21 ++++-----------------
- 1 file changed, 4 insertions(+), 17 deletions(-)
+If that happens they will go back to the guy that told them to run
+those commands.
 
-diff --git a/dir.c b/dir.c
-index 910bfcd..2b31241 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1464,11 +1464,11 @@ int is_empty_dir(const char *path)
- 	return ret;
- }
- 
--static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
-+int remove_dir_recursively(struct strbuf *path, int flag)
- {
- 	DIR *dir;
- 	struct dirent *e;
--	int ret = 0, original_len = path->len, len, kept_down = 0;
-+	int ret = 0, original_len = path->len, len;
- 	int only_empty = (flag & REMOVE_DIR_EMPTY_ONLY);
- 	int keep_toplevel = (flag & REMOVE_DIR_KEEP_TOPLEVEL);
- 	unsigned char submodule_head[20];
-@@ -1476,8 +1476,6 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
- 	if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
- 	    !resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
- 		/* Do not descend and nuke a nested git work tree. */
--		if (kept_up)
--			*kept_up = 1;
- 		return 0;
- 	}
- 
-@@ -1504,7 +1502,7 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
- 		if (lstat(path->buf, &st))
- 			; /* fall thru */
- 		else if (S_ISDIR(st.st_mode)) {
--			if (!remove_dir_recurse(path, flag, &kept_down))
-+			if (!remove_dir_recursively(path, flag))
- 				continue; /* happy */
- 		} else if (!only_empty && !unlink(path->buf))
- 			continue; /* happy, too */
-@@ -1516,22 +1514,11 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
- 	closedir(dir);
- 
- 	strbuf_setlen(path, original_len);
--	if (!ret && !keep_toplevel && !kept_down)
-+	if (!ret && !keep_toplevel)
- 		ret = rmdir(path->buf);
--	else if (kept_up)
--		/*
--		 * report the uplevel that it is not an error that we
--		 * did not rmdir() our directory.
--		 */
--		*kept_up = !ret;
- 	return ret;
- }
- 
--int remove_dir_recursively(struct strbuf *path, int flag)
--{
--	return remove_dir_recurse(path, flag, NULL);
--}
--
- void setup_standard_excludes(struct dir_struct *dir)
- {
- 	const char *path;
+Fortunately there probably are very few of these users.
+
+> The current warning message in jc/pull-training-wheel is quite neutral
+> between the two options. Perhaps we should lean more towards merging?
+
+I don't like that message. I would like this for the deprecation period:
+
+"The pull was not fast-forward, in the future you would have to choose
+a merge or a rebase, merging automatically for now. Read 'man git
+pull' for more help."
+
+Then when obsolete:
+
+The pull was not fast-forward, please either merge or rebase.
+
+"Any more babysitting with essay long messages is counter-productive
+to the vast majority of Git users."
+
+> I guess that works against John's case, though, which is clueless people
+> working on a project that _does_ care about the shape of history. At
+> least they would have to stop and think for a moment, though, which
+> might help (and maybe convince them to ask more clueful project
+> members). I don't know.
+
+Or google 'git pull' 'git merge' 'git rebase' or 'git non-fast-forward'.
+
 -- 
-1.8.4.100.gde18f6d.dirty
+Felipe Contreras
