@@ -1,19 +1,18 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: Officially start moving to the term 'staging area'
-Date: Sat, 7 Sep 2013 20:27:04 -0500
-Message-ID: <CAMP44s2+nHEOupOa79EpDSLZeZhwQrT380r4KzVL9xAb1hzvMg@mail.gmail.com>
+Date: Sat, 7 Sep 2013 20:33:03 -0500
+Message-ID: <CAMP44s1j+ayX=cy7QJ7WXdiD9P1M6n7NgNk=oGuv1XC=dqMXVA@mail.gmail.com>
 References: <20130829180129.GA4880@nysa>
 	<xmqqeh9c4a2t.fsf@gitster.dls.corp.google.com>
 	<CAM9Z-nmXPgfbXezbORb=NCqQuW4p3Dka+bHVdt_n7Sh=jehY7A@mail.gmail.com>
 	<b677f1ae-662f-4728-b625-189bc392c74d@email.android.com>
 	<CAM9Z-nmLQUrJk73pi_0a1_ccGMnqU_t=uOZze622_GEtWfMvQQ@mail.gmail.com>
-	<CAA01CsqNKMqExq1PYanotzQ-wTcf=7c5BQ_49xGu4QasXSCoeQ@mail.gmail.com>
-	<CAM9Z-nnGV4hMG1bAY9u+U+qU5vwi95RWFLj2-75AQUZc5mQDtw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>,
 	Miles Bader <miles@gnu.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -22,95 +21,121 @@ Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Scott Chacon <schacon@gmail.com>
 To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 03:27:12 2013
+X-From: git-owner@vger.kernel.org Sun Sep 08 03:33:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VITmS-0002xY-DZ
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 03:27:12 +0200
+	id 1VITsG-0006qs-B6
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 03:33:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130Ab3IHB1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Sep 2013 21:27:08 -0400
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:36988 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751064Ab3IHB1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Sep 2013 21:27:06 -0400
-Received: by mail-lb0-f180.google.com with SMTP id q8so4001815lbi.11
-        for <git@vger.kernel.org>; Sat, 07 Sep 2013 18:27:04 -0700 (PDT)
+	id S1751214Ab3IHBdH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Sep 2013 21:33:07 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:39648 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751107Ab3IHBdG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Sep 2013 21:33:06 -0400
+Received: by mail-la0-f44.google.com with SMTP id eo20so3964249lab.3
+        for <git@vger.kernel.org>; Sat, 07 Sep 2013 18:33:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=80fT7tCTunDGJ0yn/STQkCaK0aljiBUldr9VSc+v2cs=;
-        b=QPln8AUzW3IIWiQX74E/O8OgQv4ppykQBxjtp2GY81MiO8XumxAWcSP7OLK+Lv8+tk
-         tdjdATyL6cxxQy9du2hIZmCiWU847F+/XcI5+Q/2HYXG3nb798O09H9WfbP43ZJ3Ui48
-         3P0MgBAV3c54L4Y/jY/WVh6y9Qp5dncB2bWOf3dtmowo9yQU2mmqu5K1Kk9ww6HkJdzz
-         e1L1NL7hYK+g0gph2YknmKt/n8ultMMZnd5m2WTfhICTJMnq8XLLVMG42asc1lw129vb
-         +pE3jyb+XxkbJgbBXh8qybGiR2nNFRmhHghBrm7AQNCmrSwwBRiabMHcHFiX0BJA0jit
-         6+mw==
-X-Received: by 10.112.128.166 with SMTP id np6mr9715751lbb.7.1378603624462;
- Sat, 07 Sep 2013 18:27:04 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Sat, 7 Sep 2013 18:27:04 -0700 (PDT)
-In-Reply-To: <CAM9Z-nnGV4hMG1bAY9u+U+qU5vwi95RWFLj2-75AQUZc5mQDtw@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=M7zqsYMeT9gqwzs1CYsfgpF1QqIkoUUbc3U+s6YxbRc=;
+        b=zQ1LGygKoN0lAmJpIevGTbm3wkDSZPmWJrTnR9wIEDcGQGbwsc3X9DfnnDawguHEMY
+         6MqEXSjvLKDWrS3VVt4OpDFBn2UUR9lxxo056grs+lQNS30zvI0HceeJGzlie3gU0arM
+         dAItN630DonEOYZ57Xydpip2beaj5d7ioasAeYQZ3VjAkTUP7rhA+Uw3woK3ygqwpBAs
+         qUB2802xGnJjEOH9ftp3QiKVs7oLOzgXIKYQ2d+7HmhLVcF3Cd95YJsZu4soXFQCzVd8
+         E++MKaOh9M5WZ7bkIfBpTpQPHArU3R/QeHK69H2Wq1Xpnse0amSpPu6uDYgaFYt4SeiU
+         WspQ==
+X-Received: by 10.112.64.36 with SMTP id l4mr9544166lbs.15.1378603983954; Sat,
+ 07 Sep 2013 18:33:03 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Sat, 7 Sep 2013 18:33:03 -0700 (PDT)
+In-Reply-To: <CAM9Z-nmLQUrJk73pi_0a1_ccGMnqU_t=uOZze622_GEtWfMvQQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234159>
 
-On Wed, Sep 4, 2013 at 8:36 AM, Drew Northup <n1xim.email@gmail.com> wrote:
-> On Wed, Sep 4, 2013 at 3:13 AM, Piotr Krukowiecki
+On Tue, Sep 3, 2013 at 11:23 PM, Drew Northup <n1xim.email@gmail.com> w=
+rote:
+> On Fri, Aug 30, 2013 at 1:16 AM, Piotr Krukowiecki
 > <piotr.krukowiecki@gmail.com> wrote:
->> Just wanted to point to a Dr. Dobb's article from Monday:
->> http://www.drdobbs.com/tools/getting-started-with-git-the-fundamental/240160261?pgno=2
+>> Drew Northup <n1xim.email@gmail.com> napisa=C5=82:
+>>>I agree with Junio. This effort is better spent making the
+>>>documentation clearer and more succinct. The reality is that a user
+>>>needs to build a model in their mind of what they are doing which ma=
+ps
+>>>enough (completely is not required) to what is actually going on to
+>>>get work done. If the documentation or the instruction is getting in
+>>>the way of that in the name of simplifying the presentation then the
+>>>presentation is wrong.
 >>
->> The author does not use the use the word "index" at all. Instead he
->> writes in following way:
->>
->> ---------------------------------------------------------------------------------------
-> <DR DOBBS QUOTE>
->> ---------------------------------------------------------------------------------------
->>
->>
->> Sorry for not responding to your comments Drew, no time at the moment.
+>> Why do you think the "stage"  model do not map enough?
 >
-> NP. What he writes [in that quote at least] is entirely reasonable. In
-> fact, oddly enough (as I presume you meant it as a refutation), it can
-> be seen to support my argument: don't mess with the core code much (if
-> at all) but fix the documentation. That's all that I've been arguing
-> since day one. We don't need to make big huge changes in every part of
-> the Git metaphor set to better explain what is going on to newbies and
-> casual users.
+> When I try to explain how to use git to complete VCS newbies in
+> general they find the "snapshot" model more mentally sensible than th=
+e
+> "staging area" model. (In other words, the user doesn't care how, if,
+> or where the program is maintaining state.)
 
-But he is using the term "staging area", forget about my patches to
-the code, are you agreeing we should fix the documentation to use the
-term "staging area" as Dr. Dobb did?
+The snapshot concept is totally orthogonal from the staging area
+concept. Git works in snapshots, which are frozen images of how the
+content tree was at a certain point in time; IOW; a commit.
 
-> (Aside from the fact that there's a huge body of
-> existing documentation, tools, and usage patterns that depends on the
-> currently predominant model.)
+_How_ that snapshot is created is an entirely different topic, and the
+staging area is a tool to create the desired snapshots. The user might
+decide to never use that tool (i.e. always run git commit -a), but the
+concept of snapshots remain. So, clearly, one concept has absolutely
+nothing to do with the other.
 
-Most of the online documentation doesn't use the term "index", they
-use "staging area", as the link just described above.
+>>>We add content snapshots to the index of content (creating
+>>>"temporary"--they will be garbage collected eventually if they becom=
+e
+>>>orphans--objects into the store at the same time). We build commits
+>>>from those snapshots (in whole or in part, typically only using the
+>>>most recent snapshots of new things added to the index) and save tho=
+se
+>>>in the object store with the content and tree objects. Sometimes we
+>>>create tag objects to record something special about commits, trees,
+>>>and content blobs.
+>>
+>> The above can be rewritten to use the 'staging area' concept just
+>> fine. And I don't think you should say to inexperienced users things
+>> like 'tree objects'.
+>
+> At what time did I say specifically what I tell newbies? I did not do
+> so. Please refrain from making that sort of assumption. In any case,
+> no, you cannot rewrite that to use "staging area" in place of "index"
+> without introducing a different mental model and new concept into the
+> text (a model which happens to be incomplete, but not incorrect). Tha=
+t
+> minimalist summary was written for the technically-minded people here
+> on this list debating the issue of communications with the users--the
+> bane of all programmers' lives.
 
-> I still argue that for a not insignificant group of users--people who
-> are happy with the current paradigm and therefore aren't making a lot
-> of noise--the current core metaphor is actually useful despite the
-> name being more than just a tad bit unfortunate. Alas, for dealing
-> with some of the advanced usage explanations it can be argued that the
-> "staging area" metaphor (it implies _completed_ bundles ready to
-> package into commits and ship--I envision shipping trailers being
-> filled with _immutable_ boxes and attached to trucks) is actually
-> harmful, but we can talk about that if there's a need.
+You are mixing useful mental models for the majority of Git users, and
+technical implementation details.
 
-Nobody thinks of the staging area that way, just you.
+You say what you wrote is for technically-minded people, and those
+people are not relevant for this discussion, because we are not
+talking about the implementation details, we are talking about the
+vast majority of Git users, so stop with the red herrings.
 
-The staging area is an area that contains the preparation for the next
-commit to be made. There's no ships, or trailers, or bundles.
-Everybody understands that, and find the term "staging area" fit for
-that description. Except you.
+The "mental model" of staging area is an area that is used for
+preparation for something, and that's *exactly* what the vast majority
+of users think of the index as a high-level concept.
 
--- 
-Felipe Contreras
+> Again, let us keep our argument focused on communications with users.
+> Renaming core objects is just going to sow confusion without fixing
+> the user communication issue. That's what I meant the first time I
+> wrote what I quote directly above and I'm sticking to it.
+
+The vast majority of Git users have absolutely no clue about what's
+the index. That's why online documentation uses the term "staging
+area", so in fact we would be reducing confusion, by a lot.
+
+--=20
+=46elipe Contreras
