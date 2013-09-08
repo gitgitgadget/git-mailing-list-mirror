@@ -1,116 +1,171 @@
 From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH] remote-bzr: reuse bzrlib transports when possible
-Date: Sun, 08 Sep 2013 01:30:14 -0400
-Message-ID: <522C0B66.1080707@bbn.com>
-References: <1378598300-22737-1-git-send-email-rhansen@bbn.com> <522BBE87.10206@bbn.com> <CAMP44s0uHs8=r1eh2D-jdj563co5y7Rr1_6u=xoZDC52A6CPTQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 07:30:26 2013
+Subject: [PATCH v2] remote-bzr: reuse bzrlib transports when possible
+Date: Sun,  8 Sep 2013 01:47:49 -0400
+Message-ID: <1378619269-21991-1-git-send-email-rhansen@bbn.com>
+References: <522C0B66.1080707@bbn.com>
+Cc: Richard Hansen <rhansen@bbn.com>
+To: git@vger.kernel.org, gitster@pobox.com, felipe.contreras@gmail.com
+X-From: git-owner@vger.kernel.org Sun Sep 08 07:48:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIXZq-0004KI-IQ
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 07:30:26 +0200
+	id 1VIXrY-0006xi-Ho
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 07:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751490Ab3IHFaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 01:30:23 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:50121 "EHLO smtp.bbn.com"
+	id S1751456Ab3IHFs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 01:48:28 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:18763 "EHLO smtp.bbn.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751365Ab3IHFaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 01:30:22 -0400
-Received: from socket.bbn.com ([192.1.120.102]:55358)
+	id S1751365Ab3IHFs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 01:48:28 -0400
+Received: from socket.bbn.com ([192.1.120.102]:42474)
 	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
 	(Exim 4.77 (FreeBSD))
 	(envelope-from <rhansen@bbn.com>)
-	id 1VIXZg-0000SJ-J4; Sun, 08 Sep 2013 01:30:16 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id E347A3FF85
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
-In-Reply-To: <CAMP44s0uHs8=r1eh2D-jdj563co5y7Rr1_6u=xoZDC52A6CPTQ@mail.gmail.com>
-X-Enigmail-Version: 1.5.2
+	id 1VIXrE-000PSo-ID; Sun, 08 Sep 2013 01:48:24 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id CB6D63FF85
+X-Mailer: git-send-email 1.8.4
+In-Reply-To: <522C0B66.1080707@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234187>
 
-On 2013-09-07 20:30, Felipe Contreras wrote:
-> On Sat, Sep 7, 2013 at 7:02 PM, Richard Hansen <rhansen@bbn.com> wrote:
->> On 2013-09-07 19:58, Richard Hansen wrote:
->>> Pass a list of open bzrlib.transport.Transport objects to each bzrlib
->>> function that might create a transport.  This enables bzrlib to reuse
->>> existing transports when possible, avoiding multiple concurrent
->>> connections to the same remote server.
->>>
->>> If the remote server is accessed via ssh, this fixes a couple of
->>> problems:
->>>   * If the user does not have keys loaded into an ssh agent, the user
->>>     may be prompted for a password multiple times.
->>>   * If the user is using OpenSSH and the ControlMaster setting is set
->>>     to auto, git-remote-bzr might hang.  This is because bzrlib closes
->>>     the multiple ssh sessions in an undefined order and might try to
->>>     close the master ssh session before the other sessions.  The
->>>     master ssh process will not exit until the other sessions have
->>>     exited, causing a deadlock.  (The ssh sessions are closed in an
->>>     undefined order because bzrlib relies on the Python garbage
->>>     collector to trigger ssh session termination.)
->>
->> I forgot to mention:  I didn't add a Signed-off-by line because there is
->> no mention of a copyright license at the top of git-remote-bzr.
-> 
-> And why is that relevant? A signed-off-by line means you wrote the
-> code and you are fine with the patch being applied, or you are
-> responsible somehow.
+Pass a list of open bzrlib.transport.Transport objects to each bzrlib
+function that might create a transport.  This enables bzrlib to reuse
+existing transports when possible, avoiding multiple concurrent
+connections to the same remote server.
 
-The "Developer's Certificate of Origin 1.1" in
-Documentation/SubmittingPatches refers to "the open source license
-indicated in the file", but there is no such indication.
+If the remote server is accessed via ssh, this fixes a couple of
+problems:
+  * If the user does not have keys loaded into an ssh agent, the user
+    may be prompted for a password multiple times.
+  * If the user is using OpenSSH and the ControlMaster setting is set
+    to auto, git-remote-bzr might hang.  This is because bzrlib closes
+    the multiple ssh sessions in an undefined order and might try to
+    close the master ssh session before the other sessions.  The
+    master ssh process will not exit until the other sessions have
+    exited, causing a deadlock.  (The ssh sessions are closed in an
+    undefined order because bzrlib relies on the Python garbage
+    collector to trigger ssh session termination.)
 
-However, it looks like most of the files in the repository don't
-indicate which license applies.  So I guess the license in the COPYING
-file (GPLv2) applies by default?  I'll re-send with the Signed-off-by
-line.
+Signed-off-by: Richard Hansen <rhansen@bbn.com>
+---
+Changes from v1:
+  * add Signed-off-by line
 
-Perhaps SubmittingPatches should be updated to clarify what happens if
-the file doesn't indicate which license applies to the file (see
-example below).
+ contrib/remote-helpers/git-remote-bzr | 33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
--Richard
-
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 7055576..c5ff744 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -227,13 +227,15 @@ the patch, which certifies that you wrote it or otherwise have
- the right to pass it on as a open-source patch.  The rules are
- pretty simple: if you can certify the below:
-
--        Developer's Certificate of Origin 1.1
-+        Developer's Certificate of Origin 1.2
-
-         By making a contribution to this project, I certify that:
-
-         (a) The contribution was created in whole or in part by me and I
-             have the right to submit it under the open source license
--            indicated in the file; or
-+            indicated in the file (or, if no license is indicated in
-+            the file, the license in COPYING that accompanies the
-+            file); or
-
-         (b) The contribution is based upon previous work that, to the best
-             of my knowledge, is covered under an appropriate open source
-@@ -241,7 +243,8 @@ pretty simple: if you can certify the below:
-             work with modifications, whether created in whole or in part
-             by me, under the same open source license (unless I am
-             permitted to submit under a different license), as indicated
--            in the file; or
-+            in the file (or, if no license is indicated in the file,
-+            the license in COPYING that accompanies the file); or
-
-         (c) The contribution was provided directly to me by some other
-             person who certified (a), (b) or (c) and I have not modified
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+index c3a3cac..1e0044b 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -674,7 +674,7 @@ def parse_reset(parser):
+     parsed_refs[ref] = mark_to_rev(from_mark)
+ 
+ def do_export(parser):
+-    global parsed_refs, dirname
++    global parsed_refs, dirname, transports
+ 
+     parser.next()
+ 
+@@ -699,7 +699,8 @@ def do_export(parser):
+             branch.generate_revision_history(revid, marks.get_tip(name))
+ 
+             if name in peers:
+-                peer = bzrlib.branch.Branch.open(peers[name])
++                peer = bzrlib.branch.Branch.open(peers[name],
++                                                 possible_transports=transports)
+                 try:
+                     peer.bzrdir.push_branch(branch, revision_id=revid)
+                 except bzrlib.errors.DivergedBranches:
+@@ -769,25 +770,28 @@ def do_list(parser):
+     print
+ 
+ def clone(path, remote_branch):
++    global transports
+     try:
+-        bdir = bzrlib.bzrdir.BzrDir.create(path)
++        bdir = bzrlib.bzrdir.BzrDir.create(path, possible_transports=transports)
+     except bzrlib.errors.AlreadyControlDirError:
+-        bdir = bzrlib.bzrdir.BzrDir.open(path)
++        bdir = bzrlib.bzrdir.BzrDir.open(path, possible_transports=transports)
+     repo = bdir.find_repository()
+     repo.fetch(remote_branch.repository)
+     return remote_branch.sprout(bdir, repository=repo)
+ 
+ def get_remote_branch(name):
+-    global dirname, branches
++    global dirname, branches, transports
+ 
+-    remote_branch = bzrlib.branch.Branch.open(branches[name])
++    remote_branch = bzrlib.branch.Branch.open(branches[name],
++                                              possible_transports=transports)
+     if isinstance(remote_branch.user_transport, bzrlib.transport.local.LocalTransport):
+         return remote_branch
+ 
+     branch_path = os.path.join(dirname, 'clone', name)
+ 
+     try:
+-        branch = bzrlib.branch.Branch.open(branch_path)
++        branch = bzrlib.branch.Branch.open(branch_path,
++                                           possible_transports=transports)
+     except bzrlib.errors.NotBranchError:
+         # clone
+         branch = clone(branch_path, remote_branch)
+@@ -821,17 +825,19 @@ def find_branches(repo):
+             yield name, branch.base
+ 
+ def get_repo(url, alias):
+-    global dirname, peer, branches
++    global dirname, peer, branches, transports
+ 
+     normal_url = bzrlib.urlutils.normalize_url(url)
+-    origin = bzrlib.bzrdir.BzrDir.open(url)
++    origin = bzrlib.bzrdir.BzrDir.open(url, possible_transports=transports)
+     is_local = isinstance(origin.transport, bzrlib.transport.local.LocalTransport)
+ 
+     shared_path = os.path.join(gitdir, 'bzr')
+     try:
+-        shared_dir = bzrlib.bzrdir.BzrDir.open(shared_path)
++        shared_dir = bzrlib.bzrdir.BzrDir.open(shared_path,
++                                               possible_transports=transports)
+     except bzrlib.errors.NotBranchError:
+-        shared_dir = bzrlib.bzrdir.BzrDir.create(shared_path)
++        shared_dir = bzrlib.bzrdir.BzrDir.create(shared_path,
++                                                 possible_transports=transports)
+     try:
+         shared_repo = shared_dir.open_repository()
+     except bzrlib.errors.NoRepositoryPresent:
+@@ -844,7 +850,8 @@ def get_repo(url, alias):
+         else:
+             # check and remove old organization
+             try:
+-                bdir = bzrlib.bzrdir.BzrDir.open(clone_path)
++                bdir = bzrlib.bzrdir.BzrDir.open(clone_path,
++                                                 possible_transports=transports)
+                 bdir.destroy_repository()
+             except bzrlib.errors.NotBranchError:
+                 pass
+@@ -897,6 +904,7 @@ def main(args):
+     global files_cache
+     global is_tmp
+     global branches, peers
++    global transports
+ 
+     alias = args[1]
+     url = args[2]
+@@ -909,6 +917,7 @@ def main(args):
+     marks = None
+     branches = {}
+     peers = {}
++    transports = []
+ 
+     if alias[5:] == url:
+         is_tmp = True
+-- 
+1.8.4
