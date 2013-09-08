@@ -1,141 +1,92 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Officially start moving to the term 'staging area'
-Date: Sun, 8 Sep 2013 04:27:50 -0500
-Message-ID: <CAMP44s2ANuLL_gPrn8Od3nwQimd+JQASW4wF-xVJRF0eA+WkRA@mail.gmail.com>
-References: <20130829180129.GA4880@nysa>
-	<xmqqeh9c4a2t.fsf@gitster.dls.corp.google.com>
-	<CAM9Z-nmXPgfbXezbORb=NCqQuW4p3Dka+bHVdt_n7Sh=jehY7A@mail.gmail.com>
-	<b677f1ae-662f-4728-b625-189bc392c74d@email.android.com>
-	<CAM9Z-nmLQUrJk73pi_0a1_ccGMnqU_t=uOZze622_GEtWfMvQQ@mail.gmail.com>
-	<CAMP44s1j+ayX=cy7QJ7WXdiD9P1M6n7NgNk=oGuv1XC=dqMXVA@mail.gmail.com>
-	<B771340AAC04409CB0EF716FE6FC1C88@PhilipOakley>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
+Date: Sun, 8 Sep 2013 11:02:59 +0100
+Organization: OPDS
+Message-ID: <5E98A1684FFB4A7D93A17A609F92A1B3@PhilipOakley>
+References: <1377988690-23460-1-git-send-email-felipe.contreras@gmail.com><xmqqd2opu8hr.fsf@gitster.dls.corp.google.com><CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com><xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com><20130904081047.GB2582@serenity.lan><xmqqa9jso69u.fsf@gitster.dls.corp.google.com><7DC052455C7C4B50A4EAFC1EF63D006C@PhilipOakley><xmqqr4d4jird.fsf@gitster.dls.corp.google.com><20130905080606.GE2582@serenity.lan><CAMP44s1Rb2WKGD-QfNh055099R+9FHv9W8TA8Gfjp=qZh_7p7Q@mail.gmail.com><8B7F235220624B259BB32B293BCB3E96@PhilipOakley><CAMP44s2pw2TZSZ6pL-kx_QQCkjKrprERyvddCT-HTeo7uRNENA@mail.gmail.com><01BEC88E9B724BA4986F2678A4D9F4E6@PhilipOakley> <CAMP44s1ZjtVdj1wys_7VkBrmvGAkh9cfOpZ_22aVONMH3GdcRg@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Drew Northup <n1xim.email@gmail.com>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Scott Chacon <schacon@gmail.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Sun Sep 08 11:27:59 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "John Keeping" <john@keeping.me.uk>,
+	"Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>,
+	"Andreas Krey" <a.krey@gmx.de>
+To: "Felipe Contreras" <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 08 12:03:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIbHi-0002uL-Vf
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 11:27:59 +0200
+	id 1VIbpm-0002AC-R8
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 12:03:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100Ab3IHJ1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 05:27:53 -0400
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:58391 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752054Ab3IHJ1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 05:27:52 -0400
-Received: by mail-lb0-f180.google.com with SMTP id q8so4139945lbi.11
-        for <git@vger.kernel.org>; Sun, 08 Sep 2013 02:27:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=QJa+t1EYTl1vpnDQHfkwELlSRcjxCALZ0J3TP+KJ1CM=;
-        b=jI6JWaRduQAGEVlRYD/s/wJa9H4fUSVKx/AOdv72RpPKuay+kFeeWDmeXwx8Km1hvd
-         88bB5AjXDR2kX8t5R/LIrpYLOPanpmmHmf62ApRB4Qd0siil5PSNH+Y8qF7c59N/ssK4
-         qmNiWDoDmkMQxUeqe/8b1q2kG2b9jNzgfCFqaYwDyOO7p2Fa8aM2dD5ox5+ttwJea3U6
-         B6uEyWNAB/1jNJoinxoiivFE3mtAjp7iARRdgxp0wT5cWdHOfphp+29mg08FRv7pZmFm
-         QkhQn0eewzOL5zevslo0ai95HyjDF3mdXo55Ng+4h2/ZIt37Zi47rPhnR+19ly3Yh6UJ
-         ocjQ==
-X-Received: by 10.112.155.39 with SMTP id vt7mr647926lbb.29.1378632470409;
- Sun, 08 Sep 2013 02:27:50 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Sun, 8 Sep 2013 02:27:50 -0700 (PDT)
-In-Reply-To: <B771340AAC04409CB0EF716FE6FC1C88@PhilipOakley>
+	id S1752171Ab3IHKCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 06:02:55 -0400
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:38476 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752155Ab3IHKCy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Sep 2013 06:02:54 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgIMALBKLFJOl3GZ/2dsb2JhbABbgwc4g3uFPrkXBAQBgSIXdIIgBQEBBAEIAQEZFR4BASEFBgIDBQIBAxUBAgICBSECAhQBBAgSBgcXBhMIAgECAwGHXwMJCgi1cId3DYh7gSmLaYJugnA0gQADjw+GfY4ghS+DITs
+X-IPAS-Result: AgIMALBKLFJOl3GZ/2dsb2JhbABbgwc4g3uFPrkXBAQBgSIXdIIgBQEBBAEIAQEZFR4BASEFBgIDBQIBAxUBAgICBSECAhQBBAgSBgcXBhMIAgECAwGHXwMJCgi1cId3DYh7gSmLaYJugnA0gQADjw+GfY4ghS+DITs
+X-IronPort-AV: E=Sophos;i="4.90,863,1371078000"; 
+   d="scan'208";a="440590607"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 08 Sep 2013 11:02:52 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234232>
 
-On Sun, Sep 8, 2013 at 2:49 AM, Philip Oakley <philipoakley@iee.org> wrote:
-> From: "Felipe Contreras" <felipe.contreras@gmail.com>
-> Sent: Sunday, September 08, 2013 2:33 AM
-> [snip...]
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Sent: Sunday, September 08, 2013 9:49 AM
+> On Sun, Sep 8, 2013 at 3:42 AM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
 >
->> The snapshot concept is totally orthogonal from the staging area
->> concept. Git works in snapshots, which are frozen images of how the
->> content tree was at a certain point in time; IOW; a commit.
+>> The 'problem' is (would be) that I don't yet know that I would need 
+>> the
+>> --onto pu until I discover (how?) that the default rebase would 
+>> result in
+>> conflicts.
 >
+> I don't see what that has to do with an invocation of 'git rebase'
+> without arguments, and @{tail}.
+
+>         There's absolutely no way Git can
+> figure out for you which is the appropriate place for you to rebase
+> onto.
+.. which was my point. I may not have explained it that well.
+
+Given that Git can't figure it out, we should stop trying in such cases.
+
 >
-> (I feel that) In most peoples minds the need for a staging area, and the use
-> of snapshots, are related. Part of that relationship, often not noticed by
-> those folks, is that they are 'orthogonal' to *each other*. Thus
-> orthogonality means both un-related, and related at the same time (aren't we
-> humans peculiar!). They are cleaved to each other.
+> However, it shouldn't be too difficult to write a tool that checks
+> multiple commits and tells you on top of which ones a rebase could
+> work, but I don't think 'git rebase' is the right place.
 
-Not really. You can argue that a movie is a sequence of snapshots, 24
-of them per second, but most people don't think of it that way. You
-can also argue that every change you do on a file is a snapshot, but
-again, people don't think of it that way. Yes, you can argue that the
-index is a snapshot, but it doesn't help to think of it that way. And
-if you try to argue that way, then every waking moment is a snapshot,
-what is NOT a snapshot?
+That's an SOS approach (Success Oriented Script)[1] that presumes the 
+user is already better than they are - The Kruger Dunning paper [2] 
+offers some insight into capability misconceptions (at all levels).
 
-The useful concept of snapshot is a moment in time stored for
-posterity, in that sense a photo is a snapshot, a backup is a
-snapshot, and a commit is a snapshot, but the staging area is not,
-because it will be gone.
+--
+regards
 
-In fact, I just thought of another concept; a draft.
-
-> When trying to explain staging/index I tend to use the analogy of an old
-> style office (I am almost that old) where one has an In tray and an Out tray
-> on one's desk (and one parked WIP for lunch time desk tidy), and the staging
-> area is the basket at the end marked 'For Filing'. When the 'For Filing'
-> basket is ready, one called the filing clerk to dictate the cover note and
-> away it went, commited to some remote filing repository. Oh how things have
-> changed ;-)
-
-But that doesn't work well. You didn't add and remove things for the
-'For Filing' as you worked, did you? Even if it did work, I don't
-think it would be particularly useful to most people today.
-
-I think a much more fitting analogy is a mail draft; you add and
-remove things, change them, review, you can take as much time as you
-want, and at the end of the day you can discard the whole thing.
-Nothing gets done until you press 'send', which is analogous to
-'commit'.
-
->> _How_ that snapshot is created is an entirely different topic, and the
->> staging area is a tool to create the desired snapshots. The user might
->> decide to never use that tool (i.e. always run git commit -a), but the
->> concept of snapshots remain. So, clearly, one concept has absolutely
->> nothing to do with the other.
->>
->
-> The point would be that we allow a particular snapshot to be selected, and
-> that the git commit -a is but one (common) method. Commit -a is like jumping
-> in the car for a quick trip to the shops, while the selective staging of
-> content is like packing for a holiday.
-
-I still don't see it. When you do 'git commit' you don't have an array
-of snapshots to choose from, you just have one, and it's not
-particularly static, as you can add and remove things from it, so it's
-not really a snapshot of your working directory even, because you can
-add things that where never there.
-
-And then if the staging area is a snapshot, then what is a commit?
-Another snapshot? Then what is the difference between the two? One is
-permanent and the other temporary? Well, then saying "snapshot"
-wouldn't be enough to describe the staging area, you would need to say
-"preliminary snapshot", which doesn't really make sense, as those are
-called previews, not snapshots. But why bother with "snapshot", we can
-use "preliminary commit". But again, it sounds weird using the word
-commit to something that can and is meant to change, unlike git
-commits, and incidentally, unlike snapshots.
-
--- 
-Felipe Contreras
+Philip
+--
+[1] in the original it was a "Success Oriented Schedule" - one of those 
+plans that hopeful managers put together on late running projects that 
+amount to wishful thinking that hopefully garners them enough time to 
+make a little progress and update their 'success stories'.
+[2] http://dx.doi.org/10.1111%2F1467-8721.01235 "Why People Fail to 
+Recognize Their Own Incompetence". Though the corollaries (People fail 
+to recognise their own skills, and hence they/we mishandle our 
+communications) are just as (IMHO more) important. 
