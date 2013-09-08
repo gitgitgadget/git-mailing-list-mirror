@@ -1,151 +1,159 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: [PATCH] dir: remove dead code
-Date: Sun, 08 Sep 2013 18:03:36 +0200
-Message-ID: <522C9FD8.9000804@web.de>
-References: <1378620563-32709-1-git-send-email-artagnon@gmail.com> <522C6DFA.10204@web.de> <CALkWK0kYq8nxUVg7bOr-93+WFRSVp4YcpVsJ+3wKcveRV8As2A@mail.gmail.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: use "das Tag" instead of "der Tag"
+Date: Sun,  8 Sep 2013 18:43:57 +0200
+Message-ID: <1378658637-5885-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 18:03:52 2013
+Cc: dirk.heinrichs@altum.de, trast@student.ethz.ch, jk@jk.gs,
+	stimming@tuhh.de, Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 08 18:44:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIhSo-0002h4-Vz
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 18:03:51 +0200
+	id 1VIi5r-0000jT-9j
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 18:44:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758693Ab3IHQDq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Sep 2013 12:03:46 -0400
-Received: from mout.web.de ([212.227.17.11]:56308 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753853Ab3IHQDp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 12:03:45 -0400
-Received: from [192.168.2.102] ([79.253.173.109]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0Lm4lR-1Vs2982qRt-00ZdP6 for <git@vger.kernel.org>;
- Sun, 08 Sep 2013 18:03:44 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <CALkWK0kYq8nxUVg7bOr-93+WFRSVp4YcpVsJ+3wKcveRV8As2A@mail.gmail.com>
-X-Provags-ID: V03:K0:lDiE7cmQByRFhraqjXIW/UiozcewUhUWAjNylIo5Oa64oh76OYh
- FuLeglI9o1SxBLZhsNASsWPjobye2Ug+fxLi5pToAIJ2C3a1XPZQhhbbDhCawCirgp2O7Bq
- gmiw6k5k1MGjN9JCIC0rYhrcXhvwQx7taK53UO/S8Tn2aCvc2q0gKZ9K1AvxuWK7SOj7DME
- AjQka/mEsVJjZN+H2ek1A==
+	id S1755547Ab3IHQoG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Sep 2013 12:44:06 -0400
+Received: from mail-bk0-f52.google.com ([209.85.214.52]:42238 "EHLO
+	mail-bk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753849Ab3IHQoF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 12:44:05 -0400
+Received: by mail-bk0-f52.google.com with SMTP id e11so1872441bkh.25
+        for <git@vger.kernel.org>; Sun, 08 Sep 2013 09:44:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=ELtclSRtzbPRXQd7x1ZOMxWw6gVaNVvDtbCtmCwZczU=;
+        b=iSPI+CTc9xB6jF5gR7H5HJkHFnoaIqpl/8/FTBSeGqGj9LtJcWv0UO/PR3Lz28cof5
+         V1sEXANe2p/JJbiKgpQGyXmUSeOqzdkTXi/gDeXK6EhjReZT9VgUfN6SJgtBatLojMTt
+         dSmZRFOTRZDdTYSg3bP/UYzJZ6yacVv9QfBVn3ey442DbLZLTP0fBWKK+0Q3CFx9lofu
+         7YapP3ZqQWYYsXBsnvM2o3gEwJDFHLR4lYK6Ni/I6tYjBoynbmb9UIMXPS+2kcWJAfzi
+         DSPqeKdQSmF0vAmaKF4oThZj5S7P9C7iAOHfhPTqHkXbEqGhzhxR6P8yPu8Xyypr543l
+         66MQ==
+X-Received: by 10.205.20.133 with SMTP id qo5mr10864010bkb.6.1378658643904;
+        Sun, 08 Sep 2013 09:44:03 -0700 (PDT)
+Received: from localhost (dslb-178-005-189-036.pools.arcor-ip.net. [178.5.189.36])
+        by mx.google.com with ESMTPSA id no2sm1450304bkb.15.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 08 Sep 2013 09:44:03 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.325.g5deb81b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234254>
 
-Am 08.09.2013 16:42, schrieb Ramkumar Ramachandra:
-> On Sun, Sep 8, 2013 at 6:00 PM, Ren=C3=A9 Scharfe <l.s.r@web.de
-> <mailto:l.s.r@web.de>> wrote:
->
->     Am 08.09.2013 08:09, schrieb Ramkumar Ramachandra:
->
->         Remove dead code around remove_dir_recursively().
->
->
->     This basically reverts ae2f203e (clean: preserve nested git workt=
-ree
->     in subdirectories).  t7300 still seems to pass, though.  I wonder=
- why.
->
->
-> t7300 has nothing to do with ae2f203e.
+Use "das Tag" to avoid confusion with the German word "Tag" (day).
 
-ae2f203e modified t/t7300-clean.sh.
+Reported-by: Dirk Heinrichs <dirk.heinrichs@altum.de>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
->
->            dir.c | 21 ++++-----------------
->            1 file changed, 4 insertions(+), 17 deletions(-)
->
->         diff --git a/dir.c b/dir.c
->         index 910bfcd..2b31241 100644
->         --- a/dir.c
->         +++ b/dir.c
->         @@ -1464,11 +1464,11 @@ int is_empty_dir(const char *path)
->                  return ret;
->            }
->
->         -static int remove_dir_recurse(struct strbuf *path, int flag,
->         int *kept_up)
->         +int remove_dir_recursively(struct strbuf *path, int flag)
->            {
->                  DIR *dir;
->                  struct dirent *e;
->         -       int ret =3D 0, original_len =3D path->len, len, kept_=
-down =3D 0;
->         +       int ret =3D 0, original_len =3D path->len, len;
->                  int only_empty =3D (flag & REMOVE_DIR_EMPTY_ONLY);
->                  int keep_toplevel =3D (flag & REMOVE_DIR_KEEP_TOPLEV=
-EL);
->                  unsigned char submodule_head[20];
->         @@ -1476,8 +1476,6 @@ static int remove_dir_recurse(struct
->         strbuf *path, int flag, int *kept_up)
->                  if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
->                      !resolve_gitlink_ref(path->__buf, "HEAD",
->         submodule_head)) {
->                          /* Do not descend and nuke a nested git work
->         tree. */
->         -               if (kept_up)
->         -                       *kept_up =3D 1;
->                          return 0;
->                  }
->
->         @@ -1504,7 +1502,7 @@ static int remove_dir_recurse(struct
->         strbuf *path, int flag, int *kept_up)
->                          if (lstat(path->buf, &st))
->                                  ; /* fall thru */
->                          else if (S_ISDIR(st.st_mode)) {
->         -                       if (!remove_dir_recurse(path, flag,
->         &kept_down))
->         +                       if (!remove_dir_recursively(path, fla=
-g))
->
->
->     kept_down could have been set to 1 here...
->
->
-> Not possible.
-
-Why?
-
-I guess the answer is that kept_down could have only been set if the=20
-flag REMOVE_DIR_KEEP_NESTED_GIT is given, which only git clean uses,=20
-which in turn has its own implementation of remove_dir_recursively()=20
-named remove_dirs() since f538a91e (git-clean: Display more accurate=20
-delete messages).
-
-That probably means you can remove even more code from=20
-remove_dir_recursively().
-
->
->                                          continue; /* happy */
->                          } else if (!only_empty && !unlink(path->buf)=
-)
->                                  continue; /* happy, too */
->         @@ -1516,22 +1514,11 @@ static int remove_dir_recurse(struct
->         strbuf *path, int flag, int *kept_up)
->                  closedir(dir);
->
->                  strbuf_setlen(path, original_len);
->         -       if (!ret && !keep_toplevel && !kept_down)
->         +       if (!ret && !keep_toplevel)
->                          ret =3D rmdir(path->buf);
->
->
->     ... and would have prevented the rmdir() call here.
->
->     Is the removed code really dead?  And if not, why does t7300 stil=
-l pass?
->
->
-> Yes, it clearly is. Shared secret.
-
-What is the secret and who shares it?
-
-Thanks,
-Ren=C3=A9
+diff --git a/po/de.po b/po/de.po
+index 11dde11..f4076fb 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -4694,12 +4694,12 @@ msgstr "git describe [Optionen] --dirty"
+ #: builtin/describe.c:237
+ #, c-format
+ msgid "annotated tag %s not available"
+-msgstr "annotierter Tag %s ist nicht verf=C3=BCgbar"
++msgstr "annotiertes Tag %s ist nicht verf=C3=BCgbar"
+=20
+ #: builtin/describe.c:241
+ #, c-format
+ msgid "annotated tag %s has no embedded name"
+-msgstr "annotierter Tag %s hat keinen eingebetteten Namen"
++msgstr "annotiertes Tag %s hat keinen eingebetteten Namen"
+=20
+ #: builtin/describe.c:243
+ #, c-format
+@@ -4765,7 +4765,7 @@ msgstr ""
+=20
+ #: builtin/describe.c:409
+ msgid "find the tag that comes after the commit"
+-msgstr "findet den Tag, die nach Commit kommt"
++msgstr "findet das Tag, das nach Commit kommt"
+=20
+ #: builtin/describe.c:410
+ msgid "debug search strategy on stderr"
+@@ -4777,7 +4777,7 @@ msgstr "verwendet alle Referenzen"
+=20
+ #: builtin/describe.c:412
+ msgid "use any tag, even unannotated"
+-msgstr "verwendet jeden Tag, auch nicht-annotierte"
++msgstr "verwendet jedes Tag, auch nicht-annotierte"
+=20
+ #: builtin/describe.c:413
+ msgid "always use long format"
+@@ -4880,7 +4880,7 @@ msgstr "Importiert Kennzeichen von dieser Datei"
+=20
+ #: builtin/fast-export.c:678
+ msgid "Fake a tagger when tags lack one"
+-msgstr "erzeugt k=C3=BCnstlich einen Tag-Ersteller, wenn der Tag keine=
+n hat"
++msgstr "erzeugt k=C3=BCnstlich einen Tag-Ersteller, wenn das Tag keine=
+n hat"
+=20
+ #: builtin/fast-export.c:680
+ msgid "Output full tree for each commit"
+@@ -5013,7 +5013,7 @@ msgstr "  (kann lokale Referenz nicht aktualisier=
+en)"
+=20
+ #: builtin/fetch.c:324
+ msgid "[new tag]"
+-msgstr "[neuer Tag]"
++msgstr "[neues Tag]"
+=20
+ #: builtin/fetch.c:327
+ msgid "[new branch]"
+@@ -7831,7 +7831,7 @@ msgstr ""
+ #: builtin/push.c:257
+ msgid "Updates were rejected because the tag already exists in the rem=
+ote."
+ msgstr ""
+-"Aktualisierungen wurden zur=C3=BCckgewiesen, weil der Tag bereits\n"
++"Aktualisierungen wurden zur=C3=BCckgewiesen, weil das Tag bereits\n"
+ "im Remote-Repository existiert."
+=20
+ #: builtin/push.c:260
+@@ -9244,7 +9244,7 @@ msgstr "Optionen f=C3=BCr Erstellung von Tags"
+=20
+ #: builtin/tag.c:454
+ msgid "annotated tag, needs a message"
+-msgstr "annotierter Tag, ben=C3=B6tigt eine Beschreibung"
++msgstr "annotiertes Tag, ben=C3=B6tigt eine Beschreibung"
+=20
+ #: builtin/tag.c:456
+ msgid "tag message"
+@@ -9252,15 +9252,15 @@ msgstr "Tag-Beschreibung"
+=20
+ #: builtin/tag.c:458
+ msgid "annotated and GPG-signed tag"
+-msgstr "annotierter und GPG-signierter Tag"
++msgstr "annotiertes und GPG-signiertes Tag"
+=20
+ #: builtin/tag.c:462
+ msgid "use another key to sign the tag"
+-msgstr "verwendet einen anderen Schl=C3=BCssel um den Tag zu signieren=
+"
++msgstr "verwendet einen anderen Schl=C3=BCssel um das Tag zu signieren=
+"
+=20
+ #: builtin/tag.c:463
+ msgid "replace the tag if exists"
+-msgstr "ersetzt den Tag, wenn er existiert"
++msgstr "ersetzt das Tag, wenn es existiert"
+=20
+ #: builtin/tag.c:464
+ msgid "show tag list in columns"
+--=20
+1.8.4.325.g5deb81b
