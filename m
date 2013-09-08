@@ -1,186 +1,428 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
-Date: Sun, 8 Sep 2013 02:15:17 -0500
-Message-ID: <CAMP44s3LLHL=oP2PFr4b7VD0dL4yGBOL00O_GWj8eZLrYNM3kg@mail.gmail.com>
-References: <xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
-	<20130904081047.GB2582@serenity.lan>
-	<20130904092527.GB22348@sigill.intra.peff.net>
-	<CAMP44s3Vaqe-POwQb30AGdarf=ObdPUay3QEMqxHV3NKiPAouA@mail.gmail.com>
-	<20130908041805.GB14019@sigill.intra.peff.net>
-	<CAMP44s01LL2JCKzqa0Qc5MfBz9zfMXR4H8jZdauLOi-D0JVHpw@mail.gmail.com>
-	<20130908044329.GA15087@sigill.intra.peff.net>
-	<CAMP44s3kow9dooPzK6iD8p2LAgt1mtFuaNsVhkJHrqe4D+8xLQ@mail.gmail.com>
-	<20130908052107.GA15610@sigill.intra.peff.net>
-	<CAMP44s3U2rJsqTj4cAOpY1ntum53bEy2cP5XRNaMu5vwnYVoww@mail.gmail.com>
-	<20130908065420.GI14019@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 00/14] pack v4 support in index-pack
+Date: Sun,  8 Sep 2013 14:22:26 +0700
+Message-ID: <1378624960-8919-1-git-send-email-pclouds@gmail.com>
+References: <1378550599-25365-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: John Keeping <john@keeping.me.uk>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Andreas Krey <a.krey@gmx.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Sep 08 09:15:24 2013
+Content-Transfer-Encoding: 8bit
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 08 09:19:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIZDQ-0000qJ-0u
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 09:15:24 +0200
+	id 1VIZHY-0003Wn-C7
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 09:19:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751648Ab3IHHPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 03:15:20 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:50435 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751619Ab3IHHPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 03:15:19 -0400
-Received: by mail-lb0-f175.google.com with SMTP id y6so4076160lbh.34
-        for <git@vger.kernel.org>; Sun, 08 Sep 2013 00:15:17 -0700 (PDT)
+	id S1751638Ab3IHHTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 03:19:36 -0400
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:48126 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751613Ab3IHHTf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 03:19:35 -0400
+Received: by mail-pb0-f48.google.com with SMTP id ma3so4836555pbc.7
+        for <git@vger.kernel.org>; Sun, 08 Sep 2013 00:19:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=x5rzyCkSgtMFZF1SS7KpBM/WNEhvh2IxltaDSat3BoI=;
-        b=cGL7WKuHOUYIhoar90gRZVni1Hxz7dfBJnmoR/u4Yukq3+xY2exWaZB/WrBXWiq4vW
-         XCN+7SHFks4m4vDIjXbxh9lPG8+nikb2+D3XK+lVWiCAdba/zPaOPJhFjrjzGvKJIDzd
-         GS4Gb+jQY17epzvFu1THm6IiFcLyXXE7RmDb+t4iLMioELOQf4KJwDtSmiQS/vRmUCen
-         O/xaX7MhrrPfgxl9lRpWPW3N4I6h43JpFpuDu+jo/p9YXgKnd0E13vWgH05AO5lQjiey
-         /Ra3i2sAMwXR/XSyVR5aFUaVDFGVnnseaMA/IA9hGdW0jcvCYJ/2xd65gAm018ZSxXEL
-         IzJA==
-X-Received: by 10.112.89.100 with SMTP id bn4mr10736245lbb.16.1378624517755;
- Sun, 08 Sep 2013 00:15:17 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Sun, 8 Sep 2013 00:15:17 -0700 (PDT)
-In-Reply-To: <20130908065420.GI14019@sigill.intra.peff.net>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=OecbLIcR570yCbFWOF3LL2ILSO96CfYRO/w5E0T4ql8=;
+        b=VP3LvE81MHZefGAAqfYfVkt2CgwCyR7Kg489pfXaXwzX/ZT7+pAi/B8DMevEfzfMkr
+         dqYOXID8tJMqCSX6FcuzYJY88JCZmmihq3mscSTy5ftN4jdPtww+MCvTsUpLflVGzLlq
+         8jH9TajE57SrIPkrUNZU0abxN1aruplfP+iAtZCXts96QpNdF+85ndqjTP6kqDUaPbdF
+         L37wzIeBoG9ncTSIVYDSYVNiCFyJIIgreFthsMZQFzK50XrSwi1KZTrLmUBMY8CmCtVK
+         kI04hvYzNafHR3IrN2iANFySH9uCloM8MM5h17UCuh5FdtoODSnib2w3Z2FqrWLa8MC+
+         m3Mg==
+X-Received: by 10.67.22.106 with SMTP id hr10mr50995pad.155.1378624775311;
+        Sun, 08 Sep 2013 00:19:35 -0700 (PDT)
+Received: from lanh ([115.73.228.17])
+        by mx.google.com with ESMTPSA id ta10sm9322034pab.5.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 08 Sep 2013 00:19:34 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 08 Sep 2013 14:22:43 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
+In-Reply-To: <1378550599-25365-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234197>
 
-On Sun, Sep 8, 2013 at 1:54 AM, Jeff King <peff@peff.net> wrote:
-> On Sun, Sep 08, 2013 at 01:17:42AM -0500, Felipe Contreras wrote:
->
->> > I think it's fine to tell them to do "git pull --merge". What I'd worry
->> > more about is somebody who is suddenly presented with the choice between
->> > "--rebase" and "--merge" and doesn't know which to choose. We've created a
->> > cognitive load on the user, and even more load if they choose --rebase
->> > and don't quite understand what it means.
->>
->> If that happens they will go back to the guy that told them to run
->> those commands.
->
-> I think "the guy" may be git itself. For example, here is a possible
-> session with jc/pull-training-wheel:
->
->   $ git push
+Mostly cleanups after Nico's comments. The diff against v2 is
 
-Who told him to use 'git push'? Certainly not git.
-
->   To ...
->    ! [rejected]        master -> master (non-fast-forward)
->   error: failed to push some refs to '...'
->   hint: Updates were rejected because the tip of your current branch is behind
->   hint: its remote counterpart. Integrate the remote changes (e.g.
->   hint: 'git pull ...') before pushing again.
->   hint: See the 'Note about fast-forwards' in 'git push --help' for details.
->
->   $ git pull
-
->   The pull does not fast-forward; please specify
->   if you want to merge or rebase.
->
->   Use either
->
->       git pull --rebase
->       git pull --merge
->
->   You can also use 'git config pull.rebase true' (if you want --rebase) or
->   'git config pull.rebase false' (if you want --merge) to set this once for
->   this project and forget about it.
-
-Why stop there? Post the whole man page already.
-
-Moreover, it's overly verbose on all the wrong and irrelevant
-information. If you are going to waste precious screen state, explain
-wth a "non fast-forward" is; people can figure out what a merge is,
-and maybe a rebase, but a "non fast-forward" definitely not.
-
-> The user is pointed at "pull" from "push", and then gets presented with
-> the "merge or rebase" choice. It may be that the advice you can find by
-> googling "merge vs rebase" is enough to then help the person along
-> (and/or we may need to improve the manpages in that respect).
-
-Yes, but that's not the use-case we are talking about. You mentioned
-specifically a "svn-like" worfklow where the guy was told by somebody
-else to replace the svn commands with git ones.
-
-If we are talking about a guy that is learning git, that's and
-entirely different case.
-
-> I am genuinely curious what people in favor of this feature would want
-> to say in the documentation to a user encountering this choice for the
-> first time. In my experience, rebasing introduces more complications,
-> specifically:
-
-Yes, but it's what the user might want.
-
-> I know those are all balanced by some advantages of rebasing, but I also
-> think they are things that can be troublesome for a user who does not
-> fully grok the rebase process. I'm just wondering if we should mention
-> both, but steer people towards merging as the safer alternative (you
-> might have ugly history, but you are less likely to create a mess with
-> duplicate commits or badly-resolved conflicts).
-
-The purpose of this change in the code is not to change the user
-behavior. The choice of merge vs. rebase is entirely up to the user,
-and we are not changing that.
-
-The purpose of this change is to avoid doing a merge when the user
-wanted a rebase, or maybe something more complicated. So a rebase
-being complicated is not an issue, because we know that's what the
-user wants, that's the whole reason we are trying to avoid the
-automated merge.
-
->> Fortunately there probably are very few of these users.
->
-> Maybe. I am not sure how one would measure.
->
-> If you are interested, I can ask the opinion of some of the GitHub
-> trainers. They see a lot of new users and have a sense of what kinds of
-> confusion come up most frequently, what kinds of workflows they tend to
-> see, etc. Their experience may be biased towards corporate-ish users,
-> though, because those are the people who pay for training.
-
-Ask. I'm sure they will tell you doing merges by mistake with 'git
-pull' is an issue.
-
->> > The current warning message in jc/pull-training-wheel is quite neutral
->> > between the two options. Perhaps we should lean more towards merging?
->>
->> I don't like that message. I would like this for the deprecation period:
->>
->> "The pull was not fast-forward, in the future you would have to choose
->> a merge or a rebase, merging automatically for now. Read 'man git
->> pull' for more help."
->>
->> Then when obsolete:
->>
->> The pull was not fast-forward, please either merge or rebase.
->
-> A deprecation message helps people who are making the transition from an
-> older behavior to a newer one. It cannot help new users who start with a
-> git version after the deprecation period.
-
-The new users are told to either merge or rebase, if they don't know
-what that means, they will go on look it up, just like they looked up
-the 'git pull' command in the first place.
-
->> "Any more babysitting with essay long messages is counter-productive
->> to the vast majority of Git users."
->
-> I think that is what we have advice.* for.
-
-I don't understand what that means.
-
--- 
-Felipe Contreras
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 4a24bc3..88340b5 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -22,8 +22,8 @@ struct object_entry {
+ 	struct pack_idx_entry idx;
+ 	unsigned long size;
+ 	unsigned int hdr_size;
+-	enum object_type type;
+-	enum object_type real_type;
++	enum object_type type;	/* type as written in pack */
++	enum object_type real_type; /* type after delta resolving */
+ 	unsigned delta_depth;
+ 	int base_object_no;
+ 	int nr_bases;		/* only valid for v4 trees */
+@@ -194,8 +194,10 @@ static int mark_link(struct object *obj, int type, void *data)
+ 	return 0;
+ }
+ 
+-/* The content of each linked object must have been checked
+-   or it must be already present in the object database */
++/*
++ * The content of each linked object must have been checked or it must
++ * be already present in the object database
++ */
+ static unsigned check_object(struct object *obj)
+ {
+ 	if (!obj)
+@@ -289,6 +291,19 @@ static inline void *fill_and_use(int bytes)
+ 	return p;
+ }
+ 
++static void check_against_sha1table(const unsigned char *sha1)
++{
++	const unsigned char *found;
++	if (!packv4)
++		return;
++
++	found = bsearch(sha1, sha1_table, nr_objects, 20,
++			(int (*)(const void *, const void *))hashcmp);
++	if (!found)
++		die(_("object %s not found in SHA-1 table"),
++		    sha1_to_hex(sha1));
++}
++
+ static NORETURN void bad_object(unsigned long offset, const char *format,
+ 		       ...) __attribute__((format (printf, 2, 3)));
+ 
+@@ -325,15 +340,8 @@ static const unsigned char *read_sha1ref(void)
+ static const unsigned char *read_sha1table_ref(void)
+ {
+ 	const unsigned char *sha1 = read_sha1ref();
+-	if (sha1 < sha1_table || sha1 >= sha1_table + nr_objects * 20) {
+-		unsigned char *found;
+-		found = bsearch(sha1, sha1_table, nr_objects, 20,
+-				(int (*)(const void *, const void *))hashcmp);
+-		if (!found)
+-			bad_object(consumed_bytes,
+-				   _("SHA-1 %s not found in SHA-1 table"),
+-				   sha1_to_hex(sha1));
+-	}
++	if (sha1 < sha1_table || sha1 >= sha1_table + nr_objects * 20)
++		check_against_sha1table(sha1);
+ 	return sha1;
+ }
+ 
+@@ -346,21 +354,6 @@ static const unsigned char *read_dictref(struct packv4_dict *dict)
+ 	return  dict->data + dict->offsets[index];
+ }
+ 
+-static void *read_data(int size)
+-{
+-	const int max = sizeof(input_buffer);
+-	void *buf;
+-	char *p;
+-	p = buf = xmalloc(size);
+-	while (size) {
+-		int to_fill = size > max ? max : size;
+-		memcpy(p, fill_and_use(to_fill), to_fill);
+-		p += to_fill;
+-		size -= to_fill;
+-	}
+-	return buf;
+-}
+-
+ static const char *open_pack_file(const char *pack_name)
+ {
+ 	if (from_stdin) {
+@@ -532,8 +525,7 @@ static void read_and_inflate(unsigned long offset,
+ 		git_SHA1_Final(sha1, ctx);
+ }
+ 
+-static void *unpack_commit_v4(unsigned int offset,
+-			      unsigned long size,
++static void *unpack_commit_v4(unsigned int offset, unsigned long size,
+ 			      unsigned char *sha1)
+ {
+ 	unsigned int nb_parents;
+@@ -622,7 +614,8 @@ static void add_tree_delta_base(struct object_entry *obj,
+  * v4 trees are actually kind of deltas and we don't do delta in the
+  * first pass. This function only walks through a tree object to find
+  * the end offset, register object dependencies and performs limited
+- * validation.
++ * validation. For v4 trees that have no dependencies, we do
++ * uncompress and calculate their SHA-1.
+  */
+ static void *unpack_tree_v4(struct object_entry *obj,
+ 			    unsigned int offset, unsigned long size,
+@@ -641,9 +634,9 @@ static void *unpack_tree_v4(struct object_entry *obj,
+ 				add_tree_delta_base(obj, last_base, delta_start);
+ 			} else if (!last_base)
+ 				bad_object(offset,
+-					   _("bad copy count index in unpack_tree_v4"));
++					   _("missing delta base unpack_tree_v4"));
+ 			copy_count >>= 1;
+-			if (!copy_count)
++			if (!copy_count || copy_count > nr)
+ 				bad_object(offset,
+ 					   _("bad copy count index in unpack_tree_v4"));
+ 			nr -= copy_count;
+@@ -657,6 +650,13 @@ static void *unpack_tree_v4(struct object_entry *obj,
+ 			entry_sha1 = read_sha1ref();
+ 			nr--;
+ 
++			/*
++			 * Attempt to rebuild a canonical (base) tree.
++			 * If last_base is set, this tree depends on
++			 * another tree, which we have no access at this
++			 * stage, so reconstruction must be delayed until
++			 * the second pass.
++			 */
+ 			if (!last_base) {
+ 				const unsigned char *path;
+ 				unsigned mode;
+@@ -694,6 +694,11 @@ static void *unpack_tree_v4(struct object_entry *obj,
+ 	}
+ }
+ 
++/*
++ * Unpack an entry data in the streamed pack, calculate the object
++ * SHA-1 if it's not a large blob. Otherwise just try to inflate the
++ * object to /dev/null to determine the end of the entry in the pack.
++ */
+ static void *unpack_entry_data(struct object_entry *obj, unsigned char *sha1)
+ {
+ 	static char fixed_buf[8192];
+@@ -799,19 +804,23 @@ static void *unpack_raw_entry(struct object_entry *obj,
+ 	return data;
+ }
+ 
++/*
++ * Some checks are skipped because they are already done by
++ * unpack_tree_v4() in the first pass.
++ */
+ static void *patch_one_base_tree(const struct object_entry *src,
+ 				 const unsigned char *src_buf,
+ 				 const unsigned char *delta_buf,
+ 				 unsigned long delta_size,
+ 				 unsigned long *dst_size)
+ {
+-	unsigned int nr;
++	int nr;
+ 	const unsigned char *last_base = NULL;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const unsigned char *p = delta_buf;
+ 
+ 	nr = decode_varint(&p);
+-	while (nr && p < delta_buf + delta_size) {
++	while (nr > 0 && p < delta_buf + delta_size) {
+ 		unsigned int copy_start_or_path = decode_varint(&p);
+ 		if (copy_start_or_path & 1) { /* copy_start */
+ 			struct tree_desc desc;
+@@ -829,11 +838,9 @@ static void *patch_one_base_tree(const struct object_entry *src,
+ 					last_base = sha1_table + (id - 1) * 20;
+ 				if (hashcmp(last_base, src->idx.sha1))
+ 					die(_("bad tree base in patch_one_base_tree"));
+-			} else if (!last_base)
+-				die(_("bad copy count index in patch_one_base_tree"));
++			}
++
+ 			copy_count >>= 1;
+-			if (!copy_count)
+-				die(_("bad copy count index in patch_one_base_tree"));
+ 			nr -= copy_count;
+ 
+ 			init_tree_desc(&desc, src_buf, src->size);
+@@ -841,7 +848,8 @@ static void *patch_one_base_tree(const struct object_entry *src,
+ 				if (copy_start)
+ 					copy_start--;
+ 				else if (copy_count) {
+-					strbuf_addf(&sb, "%o %s%c", entry.mode, entry.path, '\0');
++					strbuf_addf(&sb, "%o %s%c",
++						    entry.mode, entry.path, '\0');
+ 					strbuf_add(&sb, entry.sha1, 20);
+ 					copy_count--;
+ 				} else
+@@ -854,8 +862,6 @@ static void *patch_one_base_tree(const struct object_entry *src,
+ 			unsigned int id;
+ 			const unsigned char *entry_sha1;
+ 
+-			if (path_idx >= path_dict->nb_entries)
+-				die(_("bad path index in unpack_tree_v4"));
+ 			id = decode_varint(&p);
+ 			if (!id) {
+ 				entry_sha1 = p;
+@@ -876,6 +882,11 @@ static void *patch_one_base_tree(const struct object_entry *src,
+ 	return sb.buf;
+ }
+ 
++/*
++ * Unpack entry data in the second pass when the pack is already
++ * stored on disk. consume call back is used for large-blob case. Must
++ * be thread safe.
++ */
+ static void *unpack_data(struct object_entry *obj,
+ 			 int (*consume)(const unsigned char *, unsigned long, void *),
+ 			 void *cb_data)
+@@ -1079,19 +1090,6 @@ static int check_collison(struct object_entry *entry)
+ 	return 0;
+ }
+ 
+-static void check_against_sha1table(struct object_entry *obj)
+-{
+-	const unsigned char *found;
+-	if (!packv4)
+-		return;
+-
+-	found = bsearch(obj->idx.sha1, sha1_table, nr_objects, 20,
+-			(int (*)(const void *, const void *))hashcmp);
+-	if (!found)
+-		die(_("object %s not found in SHA-1 table"),
+-		    sha1_to_hex(obj->idx.sha1));
+-}
+-
+ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ 			unsigned long size, enum object_type type,
+ 			const unsigned char *sha1)
+@@ -1288,7 +1286,7 @@ static void resolve_delta(struct object_entry *delta_obj,
+ 		bad_object(delta_obj->idx.offset, _("failed to apply delta"));
+ 	hash_sha1_file(result->data, result->size,
+ 		       typename(delta_obj->real_type), delta_obj->idx.sha1);
+-	check_against_sha1table(delta_obj);
++	check_against_sha1table(delta_obj->idx.sha1);
+ 	sha1_object(result->data, NULL, result->size, delta_obj->real_type,
+ 		    delta_obj->idx.sha1);
+ 	counter_lock();
+@@ -1296,6 +1294,11 @@ static void resolve_delta(struct object_entry *delta_obj,
+ 	counter_unlock();
+ }
+ 
++/*
++ * Given a base object, search for all objects depending on the base,
++ * try to unpack one of those object. The function will be called
++ * repeatedly until all objects are unpacked.
++ */
+ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
+ 						  struct base_data *prev_base)
+ {
+@@ -1408,6 +1411,10 @@ static int compare_delta_entry(const void *a, const void *b)
+ 				   objects[delta_b->obj_no].type);
+ }
+ 
++/*
++ * Unpack all objects depending directly or indirectly on the given
++ * object
++ */
+ static void resolve_base(struct object_entry *obj)
+ {
+ 	struct base_data *base_obj = alloc_base_data();
+@@ -1417,6 +1424,7 @@ static void resolve_base(struct object_entry *obj)
+ }
+ 
+ #ifndef NO_PTHREADS
++/* Call resolve_base() in multiple threads */
+ static void *threaded_second_pass(void *data)
+ {
+ 	set_thread_data(data);
+@@ -1460,10 +1468,19 @@ static struct packv4_dict *read_dict(void)
+ 
+ static void parse_dictionaries(void)
+ {
++	int i;
+ 	if (!packv4)
+ 		return;
+ 
+-	sha1_table = read_data(20 * nr_objects);
++	sha1_table = xmalloc(20 * nr_objects);
++	hashcpy(sha1_table, fill_and_use(20));
++	for (i = 1; i < nr_objects; i++) {
++		unsigned char *p = sha1_table + i * 20;
++		hashcpy(p, fill_and_use(20));
++		if (hashcmp(p - 20, p) >= 0)
++			die(_("wrong order in SHA-1 table at entry %d"), i);
++	}
++
+ 	name_dict = read_dict();
+ 	path_dict = read_dict();
+ }
+@@ -1492,9 +1509,9 @@ static void parse_pack_objects(unsigned char *sha1)
+ 			/* large blobs, check later */
+ 			obj->real_type = OBJ_BAD;
+ 			nr_delays++;
+-			check_against_sha1table(obj);
++			check_against_sha1table(obj->idx.sha1);
+ 		} else {
+-			check_against_sha1table(obj);
++			check_against_sha1table(obj->idx.sha1);
+ 			sha1_object(data, NULL, obj->size, obj->real_type,
+ 				    obj->idx.sha1);
+ 		}
+@@ -2137,14 +2154,8 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 	free(index_name_buf);
+ 	free(keep_name_buf);
+ 	free(sha1_table);
+-	if (name_dict) {
+-		free((void*)name_dict->data);
+-		free(name_dict);
+-	}
+-	if (path_dict) {
+-		free((void*)path_dict->data);
+-		free(path_dict);
+-	}
++	pv4_free_dict(name_dict);
++	pv4_free_dict(path_dict);
+ 	if (pack_name == NULL)
+ 		free((void *) curr_pack);
+ 	if (index_name == NULL)
+diff --git a/packv4-parse.c b/packv4-parse.c
+index 82661ba..d515bb9 100644
+--- a/packv4-parse.c
++++ b/packv4-parse.c
+@@ -63,6 +63,14 @@ struct packv4_dict *pv4_create_dict(const unsigned char *data, int dict_size)
+ 	return dict;
+ }
+ 
++void pv4_free_dict(struct packv4_dict *dict)
++{
++	if (dict) {
++		free((void*)dict->data);
++		free(dict);
++	}
++}
++
+ static struct packv4_dict *load_dict(struct packed_git *p, off_t *offset)
+ {
+ 	struct pack_window *w_curs = NULL;
+diff --git a/packv4-parse.h b/packv4-parse.h
+index 0b2405a..e6719f6 100644
+--- a/packv4-parse.h
++++ b/packv4-parse.h
+@@ -8,6 +8,7 @@ struct packv4_dict {
+ };
+ 
+ struct packv4_dict *pv4_create_dict(const unsigned char *data, int dict_size);
++void pv4_free_dict(struct packv4_dict *dict);
+ 
+ void *pv4_get_commit(struct packed_git *p, struct pack_window **w_curs,
+ 		     off_t offset, unsigned long size);
+diff --git a/sha1_file.c b/sha1_file.c
+index c7bf677..1528e28 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -763,6 +763,8 @@ void free_pack_by_name(const char *pack_name)
+ 			}
+ 			close_pack_index(p);
+ 			free(p->bad_object_sha1);
++			pv4_free_dict(p->ident_dict);
++			pv4_free_dict(p->path_dict);
+ 			*pp = p->next;
+ 			if (last_found_pack == p)
+ 				last_found_pack = NULL;
