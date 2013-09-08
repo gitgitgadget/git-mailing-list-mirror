@@ -1,89 +1,151 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Officially start moving to the term 'staging area'
-Date: Sun, 8 Sep 2013 08:49:12 +0100
-Organization: OPDS
-Message-ID: <B771340AAC04409CB0EF716FE6FC1C88@PhilipOakley>
-References: <20130829180129.GA4880@nysa><xmqqeh9c4a2t.fsf@gitster.dls.corp.google.com><CAM9Z-nmXPgfbXezbORb=NCqQuW4p3Dka+bHVdt_n7Sh=jehY7A@mail.gmail.com><b677f1ae-662f-4728-b625-189bc392c74d@email.android.com><CAM9Z-nmLQUrJk73pi_0a1_ccGMnqU_t=uOZze622_GEtWfMvQQ@mail.gmail.com> <CAMP44s1j+ayX=cy7QJ7WXdiD9P1M6n7NgNk=oGuv1XC=dqMXVA@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
+Date: Sun, 8 Sep 2013 03:50:46 -0400
+Message-ID: <20130908075046.GL14019@sigill.intra.peff.net>
+References: <20130904092527.GB22348@sigill.intra.peff.net>
+ <CAMP44s3Vaqe-POwQb30AGdarf=ObdPUay3QEMqxHV3NKiPAouA@mail.gmail.com>
+ <20130908041805.GB14019@sigill.intra.peff.net>
+ <CAMP44s01LL2JCKzqa0Qc5MfBz9zfMXR4H8jZdauLOi-D0JVHpw@mail.gmail.com>
+ <20130908044329.GA15087@sigill.intra.peff.net>
+ <CAMP44s3kow9dooPzK6iD8p2LAgt1mtFuaNsVhkJHrqe4D+8xLQ@mail.gmail.com>
+ <20130908052107.GA15610@sigill.intra.peff.net>
+ <CAMP44s3U2rJsqTj4cAOpY1ntum53bEy2cP5XRNaMu5vwnYVoww@mail.gmail.com>
+ <20130908065420.GI14019@sigill.intra.peff.net>
+ <CAMP44s3LLHL=oP2PFr4b7VD0dL4yGBOL00O_GWj8eZLrYNM3kg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Piotr Krukowiecki" <piotr.krukowiecki@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>,
-	"Piotr Krukowiecki" <piotr.krukowiecki.news@gmail.com>,
-	"Jay Soffian" <jaysoffian@gmail.com>,
-	"Miles Bader" <miles@gnu.org>,
-	"Jonathan Nieder" <jrnieder@gmail.com>,
-	"Matthieu Moy" <matthieu.moy@grenoble-inp.fr>,
-	"Ramkumar Ramachandra" <artagnon@gmail.com>,
-	"Scott Chacon" <schacon@gmail.com>
-To: "Felipe Contreras" <felipe.contreras@gmail.com>,
-	"Drew Northup" <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 08 09:49:26 2013
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Andreas Krey <a.krey@gmx.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 08 09:50:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIZkK-0004Qr-UA
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 09:49:25 +0200
+	id 1VIZlm-0005Fg-S6
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Sep 2013 09:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751773Ab3IHHtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 03:49:11 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:2872 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751637Ab3IHHtK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Sep 2013 03:49:10 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AkAMAM4qLFJOl3GZ/2dsb2JhbABagweEM4U+uRgEBAGBIhd0aQEBgR8BARQBBAEBBQgBARkVHgEBGgcLAgMFAgEDFQEEAgUhAgIUAQQIEgYHFwYBEggCAQIDAYU4BwGCEg0DE7V7h3kNiHuBKYtpgm6CcDSBAAOPD4Z9jiCFL4MhOw
-X-IPAS-Result: AkAMAM4qLFJOl3GZ/2dsb2JhbABagweEM4U+uRgEBAGBIhd0aQEBgR8BARQBBAEBBQgBARkVHgEBGgcLAgMFAgEDFQEEAgUhAgIUAQQIEgYHFwYBEggCAQIDAYU4BwGCEg0DE7V7h3kNiHuBKYtpgm6CcDSBAAOPD4Z9jiCFL4MhOw
-X-IronPort-AV: E=Sophos;i="4.90,863,1371078000"; 
-   d="scan'208";a="422196729"
-Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 08 Sep 2013 08:49:07 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751797Ab3IHHuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 03:50:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43452 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751673Ab3IHHuu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 03:50:50 -0400
+Received: (qmail 9116 invoked by uid 102); 8 Sep 2013 07:50:50 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 08 Sep 2013 02:50:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Sep 2013 03:50:46 -0400
+Content-Disposition: inline
+In-Reply-To: <CAMP44s3LLHL=oP2PFr4b7VD0dL4yGBOL00O_GWj8eZLrYNM3kg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234214>
 
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Sent: Sunday, September 08, 2013 2:33 AM
-[snip...]
-> The snapshot concept is totally orthogonal from the staging area
-> concept. Git works in snapshots, which are frozen images of how the
-> content tree was at a certain point in time; IOW; a commit.
+On Sun, Sep 08, 2013 at 02:15:17AM -0500, Felipe Contreras wrote:
 
-(I feel that) In most peoples minds the need for a staging area, and the 
-use of snapshots, are related. Part of that relationship, often not 
-noticed by those folks, is that they are 'orthogonal' to *each other*. 
-Thus orthogonality means both un-related, and related at the same time 
-(aren't we humans peculiar!). They are cleaved to each other.
+> > I think "the guy" may be git itself. For example, here is a possible
+> > session with jc/pull-training-wheel:
+> >
+> >   $ git push
+> 
+> Who told him to use 'git push'? Certainly not git.
 
-When trying to explain staging/index I tend to use the analogy of an old 
-style office (I am almost that old) where one has an In tray and an Out 
-tray on one's desk (and one parked WIP for lunch time desk tidy), and 
-the staging area is the basket at the end marked 'For Filing'. When the 
-'For Filing' basket is ready, one called the filing clerk to dictate the 
-cover note and away it went, commited to some remote filing repository. 
-Oh how things have changed ;-)
+Any of the hundreds of existing tutorials that teach basic git commands
+like "push"?
 
->
-> _How_ that snapshot is created is an entirely different topic, and the
-> staging area is a tool to create the desired snapshots. The user might
-> decide to never use that tool (i.e. always run git commit -a), but the
-> concept of snapshots remain. So, clearly, one concept has absolutely
-> nothing to do with the other.
->
+> >   To ...
+> >    ! [rejected]        master -> master (non-fast-forward)
+> >   error: failed to push some refs to '...'
+> >   hint: Updates were rejected because the tip of your current branch is behind
+> >   hint: its remote counterpart. Integrate the remote changes (e.g.
+> >   hint: 'git pull ...') before pushing again.
+> >   hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+> [...]
+> 
+> Why stop there? Post the whole man page already.
+> 
+> Moreover, it's overly verbose on all the wrong and irrelevant
+> information. If you are going to waste precious screen state, explain
+> wth a "non fast-forward" is; people can figure out what a merge is,
+> and maybe a rebase, but a "non fast-forward" definitely not.
 
-The point would be that we allow a particular snapshot to be selected, 
-and that the git commit -a is but one (common) method. Commit -a is like 
-jumping in the car for a quick trip to the shops, while the selective 
-staging of content is like packing for a holiday.
+Note that I was not trying to defend any of the messages, but only
+showing a plausible mechanism by which a user with basic knowledge that
+he wants to push may arrive at the question "what is the difference
+between merge and rebase?".
+
+If you want to suggest revisions for the push message, go ahead. The
+push advice _is_ an attempt to define non-fast-forwards in plain
+language without taking up too much space, but perhaps you can do
+better. You could even suggest omitting it entirely, but I'm not sure if
+that is a good idea. It was not added in a vacuum; we lacked that advice
+for many years, and people complained about it quite a bit until it was
+added.
+
+> > The user is pointed at "pull" from "push", and then gets presented with
+> > the "merge or rebase" choice. It may be that the advice you can find by
+> > googling "merge vs rebase" is enough to then help the person along
+> > (and/or we may need to improve the manpages in that respect).
+> 
+> Yes, but that's not the use-case we are talking about. You mentioned
+> specifically a "svn-like" worfklow where the guy was told by somebody
+> else to replace the svn commands with git ones.
+
+No, I mentioned an "svn-like" workflow. I didn't say anything about how
+they were told. They might have been told by a co-worker, or read a
+brief tutorial on git, or read something like "Git-SVN Crash Course".
+
+> If we are talking about a guy that is learning git, that's and
+> entirely different case.
+
+That is certainly what I meant to be talking about.
+
+> The purpose of this change in the code is not to change the user
+> behavior. The choice of merge vs. rebase is entirely up to the user,
+> and we are not changing that.
+
+Right, but by not doing anything by default, you are forcing the user to
+make a decision. Right now, we strongly encourage merging by making it
+the default, and you have to learn about rebasing separately. But a
+message that mentions them both as equals is going to lead to extra work
+for the user; they have to figure out which one is most appropriate. My
+concern is that this is non-trivial for new users, and that they may end
+up arbitrarily picking rebase, which is probably not doing them any
+favors if they do not understand it.
+
+For clueful users, choosing between the two is not hard. But some people
+seem to have trouble understanding the DAG. I don't know how large a
+group that is, and how any pain caused by this change might compare to
+the times it will help.
+
+> > If you are interested, I can ask the opinion of some of the GitHub
+> > trainers. They see a lot of new users and have a sense of what kinds of
+> > confusion come up most frequently, what kinds of workflows they tend to
+> > see, etc. Their experience may be biased towards corporate-ish users,
+> > though, because those are the people who pay for training.
+> 
+> Ask. I'm sure they will tell you doing merges by mistake with 'git
+> pull' is an issue.
+
+I've sent an email. I'll post the response when I get it.
+
+> >> "Any more babysitting with essay long messages is counter-productive
+> >> to the vast majority of Git users."
+> >
+> > I think that is what we have advice.* for.
+> 
+> I don't understand what that means.
+
+It means that some time ago, after many people complained that git did
+not give enough hints, we added many hints. Some people who did not need
+these hints would want to disable them, and we have the "advice.*"
+config options to do so. So we can have a longer message for new users,
+and a shorter one for people who do not want to be bothered with the
+long advice.
+
+-Peff
