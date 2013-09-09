@@ -1,128 +1,83 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH v3 1/5] pull: rename pull.rename to pull.mode
-Date: Mon, 09 Sep 2013 17:23:54 -0400
-Message-ID: <522E3C6A.3070409@bbn.com>
-References: <1378689796-19305-1-git-send-email-felipe.contreras@gmail.com> <1378689796-19305-2-git-send-email-felipe.contreras@gmail.com>
+From: THILLOSEN Andreas <thillosen@free.fr>
+Subject: Git: Having trouble merging two repositories by interweaving their
+ histories
+Date: Mon, 09 Sep 2013 23:26:42 +0200
+Message-ID: <522E3D12.4090004@free.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>,
-	John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
-	Philip Oakley <philipoakley@iee.org>,
-	sandals@crustytoothpaste.net
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 09 23:24:13 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 09 23:26:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJ8wM-0003RL-3K
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 23:24:10 +0200
+	id 1VJ8yz-0007ja-Hq
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 23:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755606Ab3IIVYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 17:24:05 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:53498 "EHLO smtp.bbn.com"
+	id S1755575Ab3IIV0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Sep 2013 17:26:50 -0400
+Received: from smtp4-g21.free.fr ([212.27.42.4]:47847 "EHLO smtp4-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755557Ab3IIVYE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 17:24:04 -0400
-Received: from socket.bbn.com ([192.1.120.102]:55424)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1VJ8w7-000Kmt-6r; Mon, 09 Sep 2013 17:23:55 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id ED8363FFAE
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
-In-Reply-To: <1378689796-19305-2-git-send-email-felipe.contreras@gmail.com>
-X-Enigmail-Version: 1.5.2
+	id S1755426Ab3IIV0t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Sep 2013 17:26:49 -0400
+X-Greylist: delayed 393 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Sep 2013 17:26:48 EDT
+Received: from [192.168.1.100] (unknown [88.178.152.236])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 161364C80A5
+	for <git@vger.kernel.org>; Mon,  9 Sep 2013 23:26:42 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130901 Thunderbird/17.0.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234380>
 
-On 2013-09-08 21:23, Felipe Contreras wrote:
-> The old configurations still work, but get deprecated.
+Hi,
 
-Should some tests for the deprecated configs be added?  We wouldn't want
-to accidentally break those.
+I recently stumbled over problems, while trying to merge two
+repositories (RepA and RepB) into a single one (RepM).
+I must mention that indexed files in RepA are totally distinct from
+indexed files in RepB, thus no conflict shall appear.
+The problem is that I never manage to get the exact result I'm hoping for:
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index ec57a15..9489a59 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -760,11 +760,11 @@ branch.<name>.mergeoptions::
->  	option values containing whitespace characters are currently not
->  	supported.
->  
-> -branch.<name>.rebase::
-> -	When true, rebase the branch <name> on top of the fetched branch,
-> -	instead of merging the default branch from the default remote when
-> -	"git pull" is run. See "pull.rebase" for doing this in a non
-> -	branch-specific manner.
-> +branch.<name>.pullmode::
-> +	When "git pull" is run, this determines if it would either merge or
-> +	rebase the fetched branch. The possible values are 'merge' and
-> +	'rebase'. See "pull.mode" for doing this in a non branch-specific
-> +	manner.
->  +
->  *NOTE*: this is a possibly dangerous operation; do *not* use
->  it unless you understand the implications (see linkgit:git-rebase[1]
-> @@ -1820,11 +1820,11 @@ pretty.<name>::
->  	Note that an alias with the same name as a built-in format
->  	will be silently ignored.
->  
-> -pull.rebase::
-> -	When true, rebase branches on top of the fetched branch, instead
-> -	of merging the default branch from the default remote when "git
-> -	pull" is run. See "branch.<name>.rebase" for setting this on a
-> -	per-branch basis.
-> +pull.mode::
-> +	When "git pull" is run, this determines if it would either merge or
-> +	rebase the fetched branch. The possible values are 'merge' and
-> +	'rebase'. See "branch.<name>.pullmode" for doing this in a non
-> +	branch-specific manner.
->  +
->  *NOTE*: this is a possibly dangerous operation; do *not* use
->  it unless you understand the implications (see linkgit:git-rebase[1]
+1] RepM should have the entire commit histories of both RepA and RepB.
+2] In RepM, indexed files should be separated in two directories:  DirA
+(for files associated to RepA), and DirB (for files associated to RepB).
+3] I should be able to bissect easily within the history of RepM, even
+for old commits. It implies that if I checkout a particular commit
+(initially associated to RepA), indexed files initially associated to
+RepA and RepB should get updated (and not only files associed to RepA).
+It implies "interweaving" their histories, so that I can get a "state"
+of both RepA and RepB around a same time period of time.
 
-Somewhere something should mention what the default values are
-(branch.<name>.pullmode defaults to pull.mode and pull.mode defaults to
-merge).
+For my scenario, I used these kinds of commands (from a git bash
+launched within an initialized repository RepM):
 
-> diff --git a/git-pull.sh b/git-pull.sh
-> index f0df41c..de57c1d 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -43,10 +43,24 @@ log_arg= verbosity= progress= recurse_submodules= verify_signatures=
->  merge_args= edit=
->  curr_branch=$(git symbolic-ref -q HEAD)
->  curr_branch_short="${curr_branch#refs/heads/}"
-> -rebase=$(git config --bool branch.$curr_branch_short.rebase)
-> +mode=$(git config branch.${curr_branch_short}.pullmode)
-> +if test -z "$mode"
-> +then
-> +	mode=$(git config pull.mode)
-> +fi
-> +test "$mode" == 'rebase' && rebase="true"
->  if test -z "$rebase"
->  then
-> -	rebase=$(git config --bool pull.rebase)
-> +	rebase=$(git config --bool branch.$curr_branch_short.rebase)
-> +	if test -z "$rebase"
-> +	then
-> +		rebase=$(git config --bool pull.rebase)
-> +	fi
-> +	if test "$rebase" = 'true'
-> +	then
-> +		echo "The configurations pull.rebase and branch.<name>.rebase are deprecated."
-> +		echo "Please use pull.mode and branch.<name>.pullmode instead."
-> +	fi
->  fi
->  dry_run=
->  while :
+git remote add RepA /path/RepA
+git fetch RepA
+git checkout -b RepA/master
+git merge -s recursive -Xsubtree=DirA RepA/master
 
-These deprecation warning messages should be written to stderr, and
-should probably be prefixed with "WARNING: ".
+git remote add RepB /path/RepB
+git fetch RepB
+git checkout -b RepB/master
+git merge -s recursive -Xsubtree=DirB RepB/master
 
--Richard
+With these commands, only my first point 1] is satisfied (I can see the
+full history associated to RepA and RepB).
+
+If I checkout RepM to an old commit, the files indexed by RepA or RepB
+are updated by ignoring the directories DirA and DirB (point 2] is not
+satisfied).
+
+Moreover, only files associated to either RepA or RepB (depending on the
+origin of the commit) get updated (point 3] is not satisfied).
+In history, commits from RepA are all appearing at the beginning, and
+commits from RepB are appearing at the end (they are clearly being
+separated).
+Should "rebase" help me to solve this? With what kind of parameters?
+
+Greetings,
+
+Andreas THILLOSEN.
