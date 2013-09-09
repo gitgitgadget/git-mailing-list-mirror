@@ -1,143 +1,101 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 1/5] pull: rename pull.rename to pull.mode
-Date: Mon, 9 Sep 2013 17:49:36 -0500
-Message-ID: <CAMP44s1OyST3S1HEdS38WPsjq6w9SekuwT4DRUgVvduATox9tw@mail.gmail.com>
-References: <1378689796-19305-1-git-send-email-felipe.contreras@gmail.com>
-	<1378689796-19305-2-git-send-email-felipe.contreras@gmail.com>
-	<522E3C6A.3070409@bbn.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] send-email: don't call methods on undefined values
+Date: Mon, 9 Sep 2013 22:49:50 +0000
+Message-ID: <20130909224950.GA101065@vauxhall.crustytoothpaste.net>
+References: <1378673674-97212-1-git-send-email-sandals@crustytoothpaste.net>
+ <xmqqli363pwp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>,
-	John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
-	Philip Oakley <philipoakley@iee.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Tue Sep 10 00:49:52 2013
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7JfCtLOvnd9MIVvH"
+Cc: git@vger.kernel.org, artagnon@gmail.com, mst@redhat.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 10 00:50:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJAHH-0004W0-6u
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 00:49:51 +0200
+	id 1VJAHQ-0004jj-QW
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 00:50:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755879Ab3IIWtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 18:49:41 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:53983 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755807Ab3IIWtk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 18:49:40 -0400
-Received: by mail-la0-f48.google.com with SMTP id er20so5412978lab.7
-        for <git@vger.kernel.org>; Mon, 09 Sep 2013 15:49:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4syL24o7LAQpvGH/rrDALWMLISzGNKp1ATTY0RF8tZY=;
-        b=AmR/wvK+KhOmdyFYwPRngYJucxoH+OqAE+VEHX1Xfn3IQaSLkUBuoacSJgqs/4xUsX
-         QWVPZZyNUYk0Fea1dprlulIy5YaMVuR6ZS2t7GGkbolQM0cOVp/zdFSWPCJXW6bXBTIZ
-         wwRA3sOwjUilrnoWlXskkWNTvAqqJHOrM8SF2+5jZXkWe6Q5X+AF//NOkTizHnh5YMr1
-         e7MICFdYAGVivdRwJ1n2f9wlSuHDBnwTeL6+xh+OsJtCxk72doeuk02Ty0ps6FIvGRBk
-         aVZdaPOfaIvPYe/H6gTR7D0Z9jAZN8bzpEYWSHbiawvVO5cVw5Kic8bqKGvmEtkw0OYO
-         Q7sA==
-X-Received: by 10.152.37.41 with SMTP id v9mr18614434laj.9.1378766976445; Mon,
- 09 Sep 2013 15:49:36 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Mon, 9 Sep 2013 15:49:36 -0700 (PDT)
-In-Reply-To: <522E3C6A.3070409@bbn.com>
+	id S1755964Ab3IIWt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Sep 2013 18:49:56 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:60189 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755807Ab3IIWt4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Sep 2013 18:49:56 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 91FF928074;
+	Mon,  9 Sep 2013 22:49:54 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <xmqqli363pwp.fsf@gitster.dls.corp.google.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.11-rc7-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234389>
 
-On Mon, Sep 9, 2013 at 4:23 PM, Richard Hansen <rhansen@bbn.com> wrote:
-> On 2013-09-08 21:23, Felipe Contreras wrote:
->> The old configurations still work, but get deprecated.
->
-> Should some tests for the deprecated configs be added?  We wouldn't want
-> to accidentally break those.
 
-Probably, but Junio is not picking this patch anyway.
+--7JfCtLOvnd9MIVvH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index ec57a15..9489a59 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -760,11 +760,11 @@ branch.<name>.mergeoptions::
->>       option values containing whitespace characters are currently not
->>       supported.
->>
->> -branch.<name>.rebase::
->> -     When true, rebase the branch <name> on top of the fetched branch,
->> -     instead of merging the default branch from the default remote when
->> -     "git pull" is run. See "pull.rebase" for doing this in a non
->> -     branch-specific manner.
->> +branch.<name>.pullmode::
->> +     When "git pull" is run, this determines if it would either merge or
->> +     rebase the fetched branch. The possible values are 'merge' and
->> +     'rebase'. See "pull.mode" for doing this in a non branch-specific
->> +     manner.
->>  +
->>  *NOTE*: this is a possibly dangerous operation; do *not* use
->>  it unless you understand the implications (see linkgit:git-rebase[1]
->> @@ -1820,11 +1820,11 @@ pretty.<name>::
->>       Note that an alias with the same name as a built-in format
->>       will be silently ignored.
->>
->> -pull.rebase::
->> -     When true, rebase branches on top of the fetched branch, instead
->> -     of merging the default branch from the default remote when "git
->> -     pull" is run. See "branch.<name>.rebase" for setting this on a
->> -     per-branch basis.
->> +pull.mode::
->> +     When "git pull" is run, this determines if it would either merge or
->> +     rebase the fetched branch. The possible values are 'merge' and
->> +     'rebase'. See "branch.<name>.pullmode" for doing this in a non
->> +     branch-specific manner.
->>  +
->>  *NOTE*: this is a possibly dangerous operation; do *not* use
->>  it unless you understand the implications (see linkgit:git-rebase[1]
->
-> Somewhere something should mention what the default values are
-> (branch.<name>.pullmode defaults to pull.mode and pull.mode defaults to
-> merge).
->
->> diff --git a/git-pull.sh b/git-pull.sh
->> index f0df41c..de57c1d 100755
->> --- a/git-pull.sh
->> +++ b/git-pull.sh
->> @@ -43,10 +43,24 @@ log_arg= verbosity= progress= recurse_submodules= verify_signatures=
->>  merge_args= edit=
->>  curr_branch=$(git symbolic-ref -q HEAD)
->>  curr_branch_short="${curr_branch#refs/heads/}"
->> -rebase=$(git config --bool branch.$curr_branch_short.rebase)
->> +mode=$(git config branch.${curr_branch_short}.pullmode)
->> +if test -z "$mode"
->> +then
->> +     mode=$(git config pull.mode)
->> +fi
->> +test "$mode" == 'rebase' && rebase="true"
->>  if test -z "$rebase"
->>  then
->> -     rebase=$(git config --bool pull.rebase)
->> +     rebase=$(git config --bool branch.$curr_branch_short.rebase)
->> +     if test -z "$rebase"
->> +     then
->> +             rebase=$(git config --bool pull.rebase)
->> +     fi
->> +     if test "$rebase" = 'true'
->> +     then
->> +             echo "The configurations pull.rebase and branch.<name>.rebase are deprecated."
->> +             echo "Please use pull.mode and branch.<name>.pullmode instead."
->> +     fi
->>  fi
->>  dry_run=
->>  while :
->
-> These deprecation warning messages should be written to stderr, and
-> should probably be prefixed with "WARNING: ".
+On Mon, Sep 09, 2013 at 09:45:10AM -0700, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -1234,7 +1234,7 @@ X-Mailer: git-send-email $gitversion
+> >  				if ($smtp->code =3D=3D 220) {
+> >  					$smtp =3D Net::SMTP::SSL->start_SSL($smtp,
+> >  									  ssl_verify_params())
+> > -						or die "STARTTLS failed! ".$smtp->message;
+> > +						or die "STARTTLS failed! ".IO::Socket::SSL::errstr();
+>=20
+> I agree that $smtp->message may be bogus at this point, but could
+> "require IO::Socket::SSL" have failed on us in ssl_verify_params?
+> In that degraded mode, we do not do SSL peer verification, but
+> otherwise we would still attempt to talk with the peer, and in such
+> a case, IO::Socket::SSL would not be available to us at this point,
+> no?
 
-Is there any deprecation warning that works this way?
+Since Net::SMTP::SSL uses IO::Socket::SSL (in fact, it is an
+IO::Socket::SSL), we can be guaranteed that it is, in fact, available at
+this point.  I guess strictly we don't need that require in
+IO::Socket::SSL since we'll already be guaranteed that it exists by the
+require of Net::SMTP::SSL.
 
--- 
-Felipe Contreras
+I tried using Net::SMTP::SSL::errstr() instead, but that didn't seem to
+produce useful output.
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--7JfCtLOvnd9MIVvH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBCgAGBQJSLlCOAAoJEL9TXYEfUvaLy88P/jge3GopoVI6VTHJbfwP538B
+/RzXqcLpdN1D3Ft6lNthi/LFAZeTCCtu3unqd+Vf1XZsJ1S6cTz5AmfShQ6kWD8W
+Y7U8G3WijaKRAvZHiYH0zHDId//5JSGrKuPTCYb7vb2v9LAjp6kE1aFISPkxXtxK
+6tN95H86lgd2ekk0lQv+qBZRrV6iONBzACGFhDUy4M4qfMuXrFBfr8ZcH88aatp8
+R1r+0rdoM7KKeRat/92yfDRA0Bx/s4ZeTBYUgHFPb7yQQj1YUBSI8ckUJXlW9lO/
+bYA6/5DpnLVtctlPhF5AdM6y6edoV7FkGzoTxj6OH6+WhJgXHS4ixQPOtNkBwrQd
+PaqZKcoKmCIOn+PMOxGWhunOv35NY5sElJMEsO8n3glkuXbUwBGhCgS+ImgbpBgP
+Pmtb8AuGDl7ATiNeLxpkNjEdQOOPU4g7Eo0SD8h5DZNqIkHqX9xBYGN4q1eIY94L
+TddhrvZxq9szHGfwCgo7EOHLUsRifbMfN10wyqG4QrcPZcuhizBehtzy7azCU8eS
+iX2pS3FdbZA58eqjn0EfwGwQ7JUeJb/jWWFIPgU2ogL9llHAvX/0Xtlc6QlDKiNf
+9eTYfvqNt2tRKILWd9TgmSsbwvsGSZN69N8pAXk3CBZlktyeHl+f70ozF8Z7p72g
+1vsJmMmrF02vZ3iRyOeQ
+=H63L
+-----END PGP SIGNATURE-----
+
+--7JfCtLOvnd9MIVvH--
