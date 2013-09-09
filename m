@@ -1,110 +1,103 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: [PATCH v3] Teach git to change to a given directory using -C option
-Date: Mon, 9 Sep 2013 09:49:41 +0800
-Message-ID: <CAEY4ZpNEae1UprRcpC8XUPP4XBQ89bDXP1A7yVcFdW405HZr0w@mail.gmail.com>
-References: <20130903115944.GA29542@gmail.com>
-	<xmqq8uzdplqv.fsf@gitster.dls.corp.google.com>
-	<CAEY4ZpN4xgt+gJSVeTfDNC--xt3N+M7vVLFBC7FTWBQtjvN8tw@mail.gmail.com>
-	<20130904122020.GA25538@gmail.com>
-	<CAPig+cRt9o=6Amhx6qTkzfk5R9aQfRZ=357BOVELm_hPsWE3WQ@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v5 2/2] Add new @ shortcut for HEAD
+Date: Sun, 8 Sep 2013 21:09:49 -0500
+Message-ID: <CAMP44s1-+i30CuTH5uRpu4Qi_hWhHmygc2-quYkTrrBV+4hZXQ@mail.gmail.com>
+References: <1378103670-3394-1-git-send-email-felipe.contreras@gmail.com>
+	<1378103670-3394-3-git-send-email-felipe.contreras@gmail.com>
+	<xmqqd2opsprq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Sep 09 03:49:49 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	Stefano Lattarini <stefano.lattarini@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 09 04:09:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIqbr-00049c-3v
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 03:49:47 +0200
+	id 1VIqvL-0004XA-8P
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 04:09:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751366Ab3IIBtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Sep 2013 21:49:43 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:59998 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751147Ab3IIBtm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Sep 2013 21:49:42 -0400
-Received: by mail-la0-f54.google.com with SMTP id ea20so4357009lab.41
-        for <git@vger.kernel.org>; Sun, 08 Sep 2013 18:49:41 -0700 (PDT)
+	id S1751494Ab3IICJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Sep 2013 22:09:51 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:54874 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751240Ab3IICJu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Sep 2013 22:09:50 -0400
+Received: by mail-lb0-f181.google.com with SMTP id u14so4556502lbd.12
+        for <git@vger.kernel.org>; Sun, 08 Sep 2013 19:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=pIq9xpbm+JhMMmk+5vyz8I9DqgDruNp1C0ai9hO10lA=;
-        b=uWaB7JXjdQT0hYMQ+t2nYwV2p6SB4joalgKNcmsOhvnOjQHzZ88F1qht3zCF7SGmfa
-         u5UbPmQMTLVTmSsNuevytSWyAjD7wxFz9XYWVsB4o1K34YPi1kL/ube19gLoP8oD6bwu
-         cqWW3u1hYCXvkNMn1apvkNniH1HSlnvudlp1L8fv6oSFeF+onNPhg6+oz9N8jWym8Gx+
-         FVmTLbJT8ybuBWLri9DtJw96VmKzxPzwy7ULIXJ4IuczBDnmBDi9CYLZR5AO5G31PkmX
-         1A9cyPe20OBVBj1K8HaYEtyouNzorwmSLoRGoD/4qAFXkGs1uelNjOYDGPEBIttquNn5
-         Jblg==
-X-Received: by 10.152.8.12 with SMTP id n12mr14194758laa.10.1378691381314;
- Sun, 08 Sep 2013 18:49:41 -0700 (PDT)
-Received: by 10.112.150.162 with HTTP; Sun, 8 Sep 2013 18:49:41 -0700 (PDT)
-In-Reply-To: <CAPig+cRt9o=6Amhx6qTkzfk5R9aQfRZ=357BOVELm_hPsWE3WQ@mail.gmail.com>
+        bh=gfOCJ+n9vwvo2Qp63i+IqgplMS+HEJuWOW1TnGyA9UQ=;
+        b=IALkdDbQw7ydZ4H2vENBikyRw3M7wVlAJdVX3AJIV6fglg1XSrtW4901jwtA0s7nbd
+         ta35Nei26ojsNfW0sekLiTlvANuvomPgSfyraHif9HVHO5IzhO13ftsfs8UEme554/zC
+         jKVTVIxCcd3Yw2rCu+f8wcSkYCCHr6W044zV3Yxwb9Oz/R1XKVozQn8M9CUNWCZzcjXO
+         /iluq5OZzugKPI8vOxuKg3okxbEZnqvmvi/wtSPSwbCoYQd3WQv7YtzrIA9BC3MeLmQr
+         Dmks9lobAJwszswLjjvXo9KX5GwqpVn/J/PeM1TsYXCa9f7mvdyauNn/0W+12MAB7l+r
+         e1mg==
+X-Received: by 10.152.9.37 with SMTP id w5mr4495870laa.23.1378692589474; Sun,
+ 08 Sep 2013 19:09:49 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Sun, 8 Sep 2013 19:09:49 -0700 (PDT)
+In-Reply-To: <xmqqd2opsprq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234303>
 
-On Sun, Sep 8, 2013 at 6:32 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> For consistency with existing formatting in git.txt, you may want to
-> squash in the following fixes (sans gmail whitespace damage):
+On Tue, Sep 3, 2013 at 1:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> --- >8 ---
-[ diff snipped ]
-> --- >8 ---
-
-Thanks. I'll submit a reroll later.
-
->> +This option affects options that expect path name like --git-dir and
->> +--work-tree in that their interpretations of the path names would be
->> +made relative to the working directory caused by the -C option. For
->> +example the following invocations are equivalent:
->> +
->> +    git --git-dir=a.git --work-tree=b -C c status
->> +    git --git-dir=c/a.git --work-tree=c/b status
->
-> Is the interaction of -C with --work-tree and --git-dir desirable or
-> useful? (I'm genuinely curious.) Do you have use-cases in mind? Would
-> mentioning them in the commit message help to justify the interaction?
-
-The example is meant to clarify the effect of the -C option, rather than a
-proposed usage with the --work-tree and --git-dir options. The example came out
-due to the following discussions from an earlier version of this patch [1]:
-
-On Sat, Apr 20, 2013 at 12:12 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Apr 19, 2013 at 08:21:48PM +0800, Nazri Ramliy wrote:
->> diff --git a/Documentation/git.txt b/Documentation/git.txt
->> index 6a875f2..20bba86 100644
->> --- a/Documentation/git.txt
->> +++ b/Documentation/git.txt
->> @@ -379,6 +379,9 @@ displayed. See linkgit:git-help[1] for more information,
->>  because `git --help ...` is converted internally into `git
->>  help ...`.
+>> diff --git a/sha1_name.c b/sha1_name.c
+>> index 93197b9..b8ece6e 100644
+>> --- a/sha1_name.c
+>> +++ b/sha1_name.c
+>> @@ -1004,6 +1004,26 @@ int get_sha1_mb(const char *name, unsigned char *sha1)
+>>       return st;
+>>  }
 >>
->> +-C <directory>::
->> +     Change to given directory before doing anything else.
+>> +/* parse @something syntax, when 'something' is not {.*} */
+>> +static int interpret_empty_at(const char *name, int namelen, int len, struct strbuf *buf)
+>> +{
+>> +     const char *next;
 >> +
+>> +     if (len || name[1] == '{')
+>> +             return -1;
+>> +
+>> +     /* make sure it's a single @, or @@{.*}, not @foo */
+>> +     next = strchr(name + len + 1, '@');
+>> +     if (!next)
+>> +             next = name + namelen;
+>> +     if (next != name + 1)
+>> +             return -1;
+>> +
+>> +     strbuf_reset(buf);
+>> +     strbuf_add(buf, "HEAD", 4);
+>> +     return 1;
+>> +}
 >
-> It might make sense to clarify this as "...anything else, including
-> determining the location of the git repository directory". If you think
-> hard about it, doing anything else would not really make much sense, but
-> spelling it out makes it clear what the option can be used for.
+> Hmph, is the above sufficient?  I added a case that mimics Stefano's
+> original regression report (which is handled) and another that uses
+> doubled "@" for the same purpose of introducing a "funny" hierarchy,
+> and it appears that "checkout -b" chokes on it.
 
-and [2]:
+This fixes it:
 
-On Sun, Apr 21, 2013 at 6:18 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> All that said, I don't mind -C terribly as long as it can maintain
-> itself, which means including thorough documentation that covers the
-> purpose and how pathname parameters and envvars interact with the new
-> option and including tests under t/ to ensure it continues to work
-> correctly in the future.
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1014,6 +1014,8 @@ static int interpret_empty_at(const char *name,
+int namelen, int len, struct str
 
-nazri
+        /* make sure it's a single @, or @@{.*}, not @foo */
+        next = strchr(name + len + 1, '@');
++       if (next && next[1] != '{')
++               return -1;
+        if (!next)
+                next = name + namelen;
+        if (next != name + 1)
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/221766
-[2] http://article.gmane.org/gmane.comp.version-control.git/221878
+-- 
+Felipe Contreras
