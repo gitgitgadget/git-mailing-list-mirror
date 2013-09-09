@@ -1,89 +1,59 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH 08/11] pack-objects: create pack v4 tables
-Date: Mon, 09 Sep 2013 09:07:08 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309090900210.20709@syhkavp.arg>
-References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
- <1378652660-6731-1-git-send-email-pclouds@gmail.com>
- <1378652660-6731-9-git-send-email-pclouds@gmail.com>
- <CACsJy8DbMnr9Y8NyGTNd6r8hSg3zbgaLa1h-e1X7FFVHHahwpg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_MdvbNK4wzuOIbbDQ4WcfKQ)"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 09 15:07:20 2013
+From: Brad King <brad.king@kitware.com>
+Subject: [PATCH v5 0/8] Multiple simultaneously locked ref updates
+Date: Mon,  9 Sep 2013 09:22:31 -0400
+Message-ID: <cover.1378732710.git.brad.king@kitware.com>
+References: <cover.1378307529.git.brad.king@kitware.com>
+Cc: gitster@pobox.com, mhagger@alum.mit.edu
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 09 15:24:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJ1BV-0000ck-Ej
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 15:07:17 +0200
+	id 1VJ1SN-0003iv-ME
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 15:24:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212Ab3IINHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 09:07:10 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:60091 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751177Ab3IINHJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 09:07:09 -0400
-Received: from yoda.home ([70.83.209.44]) by VL-VM-MR003.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MSV00KIV0FWV880@VL-VM-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Sep 2013 09:07:08 -0400 (EDT)
-Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTPSA id 6BF982DA0625; Mon, 09 Sep 2013 09:07:08 -0400 (EDT)
-In-reply-to: <CACsJy8DbMnr9Y8NyGTNd6r8hSg3zbgaLa1h-e1X7FFVHHahwpg@mail.gmail.com>
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1752898Ab3IINYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Sep 2013 09:24:39 -0400
+Received: from tripoint.kitware.com ([66.194.253.20]:40306 "EHLO
+	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752195Ab3IINYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Sep 2013 09:24:38 -0400
+Received: by vesper.kitware.com (Postfix, from userid 1000)
+	id 7F44F9FB8C; Mon,  9 Sep 2013 09:22:33 -0400 (EDT)
+X-Mailer: git-send-email 1.8.4.rc3
+In-Reply-To: <cover.1378307529.git.brad.king@kitware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234324>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Folks,
 
---Boundary_(ID_MdvbNK4wzuOIbbDQ4WcfKQ)
-Content-type: TEXT/PLAIN; charset=UTF-8
-Content-transfer-encoding: 8BIT
+Here is the fifth revision of a series to support locking multiple
+refs at the same time to update all of them consistently.  The
+previous revisions of the series can be found at $gmane/233260,
+$gmane/233458, $gmane/233647, and $gmane/233840.
 
-On Mon, 9 Sep 2013, Duy Nguyen wrote:
+Updates since the previous revision of the series:
 
-> On Sun, Sep 8, 2013 at 10:04 PM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> > +static void prepare_sha1_table(void)
-> > +{
-> > +       unsigned i;
-> > +       /*
-> > +        * This table includes SHA-1s that may not be present in the
-> > +        * pack. One of the use of such SHA-1 is for completing thin
-> > +        * packs, where index-pack does not need to add SHA-1 to the
-> > +        * table at completion time.
-> > +        */
-> > +       v4.all_objs = xmalloc(nr_objects * sizeof(*v4.all_objs));
-> > +       v4.all_objs_nr = nr_objects;
-> > +       for (i = 0; i < nr_objects; i++)
-> > +               v4.all_objs[i] = objects[i].idx;
-> > +       qsort(v4.all_objs, nr_objects, sizeof(*v4.all_objs),
-> > +             sha1_idx_sort);
-> > +}
-> > +
-> 
-> fwiw this is wrong. Even in the non-thin pack case, pack-objects could
-> write multiple packs to disk and we need different sha-1 table for
-> each one. The situation is worse for thin pack because not all
-> preferred_base entries end up a real dependency in the final pack. I'm
-> working on it..
+* Patches 1-6 are identical to v4 so are not re-sent here.
 
-Is anyone still using --max-pack-size ?
+* Patch 7 and 8 now implement and test the input format proposed and
+  discussed at $gmane/233990.
 
-I'm wondering if producing multiple packs from pack-objects is really 
-useful these days.  If I remember correctly, this was created to allow 
-the archiving of large packs onto CDROMs or the like.
+-Brad
 
-I'd be tempted to simply ignore this facility and get rid of its 
-complexity if no one uses it.  Or assume that split packs will have 
-inter dependencies.  Or they will be pack v2 only.
+Brad King (2):
+  update-ref: support multiple simultaneous updates
+  update-ref: add test cases covering --stdin signature
 
+ Documentation/git-update-ref.txt |  54 +++-
+ builtin/update-ref.c             | 252 ++++++++++++++-
+ t/t1400-update-ref.sh            | 639 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 943 insertions(+), 2 deletions(-)
 
-Nicolas
-
---Boundary_(ID_MdvbNK4wzuOIbbDQ4WcfKQ)--
+-- 
+1.8.4.rc3
