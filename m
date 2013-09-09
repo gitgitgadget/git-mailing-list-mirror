@@ -1,82 +1,113 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/11] pack-objects: create pack v4 tables
-Date: Mon, 09 Sep 2013 08:21:30 -0700
-Message-ID: <xmqqioya58cl.fsf@gitster.dls.corp.google.com>
-References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
-	<1378652660-6731-1-git-send-email-pclouds@gmail.com>
-	<1378652660-6731-9-git-send-email-pclouds@gmail.com>
-	<CACsJy8DbMnr9Y8NyGTNd6r8hSg3zbgaLa1h-e1X7FFVHHahwpg@mail.gmail.com>
-	<alpine.LFD.2.03.1309090900210.20709@syhkavp.arg>
+Subject: Re: [PATCH] rebase: fix run_specific_rebase's use of "return" on FreeBSD
+Date: Mon, 09 Sep 2013 08:44:59 -0700
+Message-ID: <xmqqzjrm3sp0.fsf@gitster.dls.corp.google.com>
+References: <1378716795-5420-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Mon Sep 09 17:21:49 2013
+Cc: git@vger.kernel.org, avg@FreeBSD.org, christoph.mallon@gmx.de,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Sep 09 17:45:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJ3Hb-0000zL-6k
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 17:21:43 +0200
+	id 1VJ3eX-0004Ds-1w
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 17:45:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754334Ab3IIPVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 11:21:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49895 "EHLO
+	id S1752497Ab3IIPpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Sep 2013 11:45:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62116 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754319Ab3IIPVg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 11:21:36 -0400
+	id S1751196Ab3IIPpU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Sep 2013 11:45:20 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D55123FCCF;
-	Mon,  9 Sep 2013 15:21:34 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7788D3EAAB;
+	Mon,  9 Sep 2013 15:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4RxWfktmEPQN7VMzpRIPxj9umJw=; b=M7uJ3W
-	Jq/+ohhK/KgGVsP4OqI529e0b3kOZWwnDsGB38YysJbDhLgaA96pVVbpYwhFTKoR
-	KY4Q7+K90j6/FS/mvi1HJSqLugmv0s12fEGCms98s6tA7vf+U0/j7jgjhhn3wmX4
-	ZsjhDH/I/g1TENpeQobjMAZp3K1bP6VdVxCeg=
+	:content-type; s=sasl; bh=nt61FUMf5q/fkhcw4AUFsWIEIuE=; b=C+keZX
+	/PtnPThBnk5hEWzCtRdHpXBpNJ/rtHIjef+owFaLdWGe4FQj4aroGVZEPG5ul5u5
+	aMEUrgcTd72LzmI9F48VSTah/43yUyBGRsh7+y/4RD88ErP9qe4r84KV0TDxME1y
+	RUgLNN9ufrrnnHhJPw3JtjD0gwDzxIzaKgHGo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XTkk3Q76AW4RVbi8TLIOiaw5cB2cCPx+
-	faDF36inWr89dv9SMGxujy5/RqmJXIjzH1ufkcDuRTzOgonkyjCzbL/dZoPYIBkJ
-	WIz4FjrlrS6eVf/B3CjXMDF6shZZueHn+Oeh+Mrjfro47lV3kn5ZoiKrHk/WVs/J
-	bX5DQqrCo9U=
+	:content-type; q=dns; s=sasl; b=NYOiulnUDW1Bb35AE39Cfjk3UZui4Zau
+	oa9cGwY2Jv7S/YrJqnYIi/fj9ztL830838vsxhojqJZbmhzbgHMIxIgfy6X44/1I
+	SAL2x2MA9G1Ws37Bl7w99spLvmgPqQhpf4VOqOgdHi0psM+bVdgtLeUyuxw23nIY
+	8KfcS56m0t0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89BD53FCCA;
-	Mon,  9 Sep 2013 15:21:33 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 514E83EAAA;
+	Mon,  9 Sep 2013 15:45:19 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34A763FCC0;
-	Mon,  9 Sep 2013 15:21:32 +0000 (UTC)
-In-Reply-To: <alpine.LFD.2.03.1309090900210.20709@syhkavp.arg> (Nicolas
-	Pitre's message of "Mon, 09 Sep 2013 09:07:08 -0400 (EDT)")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D92983EA9A;
+	Mon,  9 Sep 2013 15:45:16 +0000 (UTC)
+In-Reply-To: <1378716795-5420-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
+	Moy's message of "Mon, 9 Sep 2013 10:53:15 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 81EAEC54-1963-11E3-81D1-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D31F57BA-1966-11E3-9A8C-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234348>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> Is anyone still using --max-pack-size ?
+> Since a1549e10, git-rebase--am.sh uses the shell's "return" statement, to
+> mean "return from the current file inclusion", which is POSIXly correct,
+> but badly interpreted on FreeBSD, which returns from the current
+> function, hence skips the finish_rebase statement that follows the file
+> inclusion.
 >
-> I'm wondering if producing multiple packs from pack-objects is really 
-> useful these days.  If I remember correctly, this was created to allow 
-> the archiving of large packs onto CDROMs or the like.
+> Make the use of "return" portable by using the file inclusion as the last
+> statement of a function.
+>
+> Reported-by: Christoph Mallon <christoph.mallon@gmx.de>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> I sent the patch inline in a conversation and got no feedback.
+> Resending as a proper patch.
 
-I thought this was more about using a packfile on smaller
-(e.g. 32-bit) systems, but I may be mistaken.  2b84b5a8 (Introduce
-the config variable pack.packSizeLimit, 2008-02-05) mentions
-"filesystem constraints":
+I'll replace mm/rebase-continue-freebsd-WB with this version, but it
+would be nice to hear from FreeBSD folks that this is sufficient for
+their platform to work around the issue (e.g. there could be other
+"return"s unfixed outside the codepath this patch fixes).
 
-    Introduce the config variable pack.packSizeLimit
-    
-    "git pack-objects" has the option --max-pack-size to limit the
-    file size of the packs to a certain amount of bytes.  On
-    platforms where the pack file size is limited by filesystem
-    constraints, it is easy to forget this option, and this option
-    does not exist for "git gc" to begin with.
+Thanks.
+
+>  git-rebase.sh | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-rebase.sh b/git-rebase.sh
+> index 8d7659a..226752f 100755
+> --- a/git-rebase.sh
+> +++ b/git-rebase.sh
+> @@ -167,13 +167,22 @@ You can run "git stash pop" or "git stash drop" at any time.
+>  	rm -rf "$state_dir"
+>  }
+>  
+> -run_specific_rebase () {
+> +run_specific_rebase_internal () {
+>  	if [ "$interactive_rebase" = implied ]; then
+>  		GIT_EDITOR=:
+>  		export GIT_EDITOR
+>  		autosquash=
+>  	fi
+> +	# On FreeBSD, the shell's "return" returns from the current
+> +	# function, not from the current file inclusion.
+> +	# run_specific_rebase_internal has the file inclusion as a
+> +	# last statement, so POSIX and FreeBSD's return will do the
+> +	# same thing.
+>  	. git-rebase--$type
+> +}
+> +
+> +run_specific_rebase () {
+> +	run_specific_rebase_internal
+>  	ret=$?
+>  	if test $ret -eq 0
+>  	then
