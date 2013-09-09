@@ -1,83 +1,106 @@
-From: THILLOSEN Andreas <thillosen@free.fr>
-Subject: Git: Having trouble merging two repositories by interweaving their
- histories
-Date: Mon, 09 Sep 2013 23:26:42 +0200
-Message-ID: <522E3D12.4090004@free.fr>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
+Date: Mon, 9 Sep 2013 22:34:29 +0100
+Organization: OPDS
+Message-ID: <FE7D06F70ABF477DA271A6A596C1F1E9@PhilipOakley>
+References: <CAMP44s01LL2JCKzqa0Qc5MfBz9zfMXR4H8jZdauLOi-D0JVHpw@mail.gmail.com> <20130908172605.GF5359@vauxhall.crustytoothpaste.net> <CAMP44s0SLoD7ptgiYOg_vq+Jpo5uhWvzFC8Bd76JHo5zbjf8fg@mail.gmail.com> <20130909000153.GG5359@vauxhall.crustytoothpaste.net> <CAMP44s2seqO_0o=G2PjoL77HNSNcjTe4s6ZYj90_wsUT30pW8A@mail.gmail.com> <vpqr4cy4g5q.fsf@anie.imag.fr> <xmqq1u4x4yst.fsf@gitster.dls.corp.google.com> <20130909195231.GA14021@sigill.intra.peff.net> <20130909202435.GJ2582@serenity.lan> <vpq38pdlnxk.fsf@anie.imag.fr> <20130909205349.GA15506@sigill.intra.peff.net>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+	format=flowed;
+	charset="utf-8";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 09 23:26:54 2013
+Cc: "John Keeping" <john@keeping.me.uk>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Felipe Contreras" <felipe.contreras@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	<git@vger.kernel.org>, "Andreas Krey" <a.krey@gmx.de>
+To: "Jeff King" <peff@peff.net>,
+	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Sep 09 23:34:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJ8yz-0007ja-Hq
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 23:26:53 +0200
+	id 1VJ96N-00031q-92
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 23:34:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755575Ab3IIV0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 17:26:50 -0400
-Received: from smtp4-g21.free.fr ([212.27.42.4]:47847 "EHLO smtp4-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755426Ab3IIV0t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 17:26:49 -0400
-X-Greylist: delayed 393 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Sep 2013 17:26:48 EDT
-Received: from [192.168.1.100] (unknown [88.178.152.236])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 161364C80A5
-	for <git@vger.kernel.org>; Mon,  9 Sep 2013 23:26:42 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130901 Thunderbird/17.0.8
+	id S1755978Ab3IIVeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Sep 2013 17:34:25 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:5028 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755539Ab3IIVeX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Sep 2013 17:34:23 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoGAJ0+LlJOl3GZ/2dsb2JhbABbgweEM4U+uS0JgSYXdGmBIRYBBAEBBQgBARkVHgEBIQsCAwUCAQMOBwECAgIFIQICFAEEGgYHFwYBEggCAQIDAYU4B4ITI7E1kXuBKY5CgnA0gQADjw+aTIMhOw
+X-IPAS-Result: ApoGAJ0+LlJOl3GZ/2dsb2JhbABbgweEM4U+uS0JgSYXdGmBIRYBBAEBBQgBARkVHgEBIQsCAwUCAQMOBwECAgIFIQICFAEEGgYHFwYBEggCAQIDAYU4B4ITI7E1kXuBKY5CgnA0gQADjw+aTIMhOw
+X-IronPort-AV: E=Sophos;i="4.90,873,1371078000"; 
+   d="scan'208";a="422341977"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 09 Sep 2013 22:34:20 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234381>
 
-Hi,
+From: "Jeff King" <peff@peff.net>
+Sent: Monday, September 09, 2013 9:53 PM
+> On Mon, Sep 09, 2013 at 10:50:31PM +0200, Matthieu Moy wrote:
+>
+>> John Keeping <john@keeping.me.uk> writes:
+>>
+>> > I think we need to make sure that we give instructions for how to 
+>> > go
+>> > back if the default hasn't done what you wanted.  Something like 
+>> > this:
+>> >
+>> >     Your pull did not fast-forward, so Git has merged '$upstream' 
+>> > into
+>> >     your branch, which may not be correct for your project.  If you
+>> >     would rather rebase your changes, run
+>> >
+>> >         git rebase
+>> >
+>> >     See "pull.mode" in git-config(1) to suppress this message in 
+>> > the
+>> >     future.
+>>
+>> Sounds good to me. One option is to display the warning on the
+>> command-line, and another option is to show it in COMMIT_EDITMSG 
+>> (since
+>> we now default to showing it even for non-conflicted merges).
+>
+> I hadn't though of that, but showing it in COMMIT_EDITMSG is a great
+> moment, because you are notifying the user _before_ they create a 
+> merge
+> commit. So the backout/switch procedure is "cancel this by giving an
+> empty message, then re-run git pull --rebase".
+>
+> On the other hand, if we run into conflicts, you'd probably want to 
+> let
+> them know before asking them to resolve them all. So perhaps a 
+> separate
+> message would be needed for that case (to suggest "reset --merge && 
+> git
+> pull --rebase").
 
-I recently stumbled over problems, while trying to merge two
-repositories (RepA and RepB) into a single one (RepM).
-I must mention that indexed files in RepA are totally distinct from
-indexed files in RepB, thus no conflict shall appear.
-The problem is that I never manage to get the exact result I'm hoping for:
+In fact this [running into conflicts unexpectedly] is usually my use 
+case, which I mis-described as a no-ff in an earlier reply.
 
-1] RepM should have the entire commit histories of both RepA and RepB.
-2] In RepM, indexed files should be separated in two directories:  DirA
-(for files associated to RepA), and DirB (for files associated to RepB).
-3] I should be able to bissect easily within the history of RepM, even
-for old commits. It implies that if I checkout a particular commit
-(initially associated to RepA), indexed files initially associated to
-RepA and RepB should get updated (and not only files associed to RepA).
-It implies "interweaving" their histories, so that I can get a "state"
-of both RepA and RepB around a same time period of time.
+Usually I'd want a clean rebase before submitting patches, but I can see 
+other uses cases where there is a desire that branches show where they 
+started so rebase wouldn't be appropriate.
 
-For my scenario, I used these kinds of commands (from a git bash
-launched within an initialized repository RepM):
+It should not be necessary to give prescriptions about how to backout of 
+a difficult corner, rather give details about how to go forward after 
+stopping safely and early. The urge to press on (various proposals)  may 
+not be the right thing.
 
-git remote add RepA /path/RepA
-git fetch RepA
-git checkout -b RepA/master
-git merge -s recursive -Xsubtree=DirA RepA/master
-
-git remote add RepB /path/RepB
-git fetch RepB
-git checkout -b RepB/master
-git merge -s recursive -Xsubtree=DirB RepB/master
-
-With these commands, only my first point 1] is satisfied (I can see the
-full history associated to RepA and RepB).
-
-If I checkout RepM to an old commit, the files indexed by RepA or RepB
-are updated by ignoring the directories DirA and DirB (point 2] is not
-satisfied).
-
-Moreover, only files associated to either RepA or RepB (depending on the
-origin of the commit) get updated (point 3] is not satisfied).
-In history, commits from RepA are all appearing at the beginning, and
-commits from RepB are appearing at the end (they are clearly being
-separated).
-Should "rebase" help me to solve this? With what kind of parameters?
-
-Greetings,
-
-Andreas THILLOSEN.
+Philip 
