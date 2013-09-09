@@ -1,45 +1,78 @@
-From: Leonard Rose <leonard_0813@icloud.com>
-Subject: Janier
-Date: Mon, 09 Sep 2013 03:39:04 -0500
-Message-ID: <611BA57F-64CB-450B-AE63-88603199BB3E@icloud.com>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 09 11:39:19 2013
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 08/11] pack-objects: create pack v4 tables
+Date: Mon, 9 Sep 2013 17:40:45 +0700
+Message-ID: <CACsJy8DbMnr9Y8NyGTNd6r8hSg3zbgaLa1h-e1X7FFVHHahwpg@mail.gmail.com>
+References: <1378362001-1738-1-git-send-email-nico@fluxnic.net>
+ <1378652660-6731-1-git-send-email-pclouds@gmail.com> <1378652660-6731-9-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Mon Sep 09 12:41:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIxwE-0005wR-D2
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 11:39:18 +0200
+	id 1VIyuH-0006wV-29
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 12:41:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510Ab3IIJjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 05:39:14 -0400
-Received: from nk11p20im-asmtp001.me.com ([17.158.216.160]:57245 "EHLO
-	nk11p20im-asmtp001.me.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751195Ab3IIJjO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 05:39:14 -0400
-X-Greylist: delayed 3606 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Sep 2013 05:39:14 EDT
-Received: from [10.239.101.68] (236.sub-174-253-80.myvzw.com [174.253.80.236])
- by nk11p20im-asmtp001.mac.com
- (Oracle Communications Messaging Server 7u4-27.07(7.0.4.27.6) 64bit (built Jun
- 21 2013)) with ESMTPSA id <0MSU003R8O15LR60@nk11p20im-asmtp001.mac.com> for
- git@vger.kernel.org; Mon, 09 Sep 2013 08:39:08 +0000 (GMT)
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.10.8794,1.0.431,0.0.0000
- definitions=2013-09-09_02:2013-09-09,2013-09-08,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 phishscore=0 adultscore=0 bulkscore=2 classifier=spam adjust=0
- reason=mlx scancount=1 engine=7.0.1-1305240000 definitions=main-1309090016
-X-Mailer: iPhone Mail (10A403)
+	id S1751811Ab3IIKlQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Sep 2013 06:41:16 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:42519 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751252Ab3IIKlP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Sep 2013 06:41:15 -0400
+Received: by mail-oa0-f49.google.com with SMTP id i7so6263405oag.22
+        for <git@vger.kernel.org>; Mon, 09 Sep 2013 03:41:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=cGI4GNkNNgQE0N/lcie1q3GdY3cNl6lxOgP9bWwU9+U=;
+        b=iV4j2uAPCK50DdQYwUyv65Zzr7w3dZZTH24f5TcjasNlJE7bZhB0LhYQey3pAU1SMa
+         3qoD/+8wThAcXDW7wN+4fvSjuFyKTu/eFOelO/NRTtQBE+gTq7RupIEG4eycPf8TMcYK
+         IDiWKQMzG6VjqtA9EujwsNVHL4R9QafaV0HRCpyZJCT2tmYrRJJktMQTCjGEjqSoXqzt
+         DJA5U/TpzYPYdQdqRm1VCYlRzhaozsbnVUHc/jErKv9NhgQQxTzSh5bJVPbiul6Ft+NR
+         MwJGzFHRrCFnWhk4xh6leuLb4OB5jJ8nq/G0vi7yhMKhhQLtZGk3HOKmWifkqZoqOz+S
+         j4Sg==
+X-Received: by 10.182.98.162 with SMTP id ej2mr10930767obb.61.1378723275391;
+ Mon, 09 Sep 2013 03:41:15 -0700 (PDT)
+Received: by 10.182.49.233 with HTTP; Mon, 9 Sep 2013 03:40:45 -0700 (PDT)
+In-Reply-To: <1378652660-6731-9-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234322>
 
+On Sun, Sep 8, 2013 at 10:04 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> +static void prepare_sha1_table(void)
+> +{
+> +       unsigned i;
+> +       /*
+> +        * This table includes SHA-1s that may not be present in the
+> +        * pack. One of the use of such SHA-1 is for completing thin
+> +        * packs, where index-pack does not need to add SHA-1 to the
+> +        * table at completion time.
+> +        */
+> +       v4.all_objs =3D xmalloc(nr_objects * sizeof(*v4.all_objs));
+> +       v4.all_objs_nr =3D nr_objects;
+> +       for (i =3D 0; i < nr_objects; i++)
+> +               v4.all_objs[i] =3D objects[i].idx;
+> +       qsort(v4.all_objs, nr_objects, sizeof(*v4.all_objs),
+> +             sha1_idx_sort);
+> +}
+> +
 
-
-Sent from my iPhone
+fwiw this is wrong. Even in the non-thin pack case, pack-objects could
+write multiple packs to disk and we need different sha-1 table for
+each one. The situation is worse for thin pack because not all
+preferred_base entries end up a real dependency in the final pack. I'm
+working on it..
+--=20
+Duy
