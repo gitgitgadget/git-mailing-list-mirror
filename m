@@ -1,125 +1,80 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: pack v4 trees with a canonical base
-Date: Mon, 09 Sep 2013 15:25:35 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309091517380.20709@syhkavp.arg>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 15/16] index-pack: use nr_objects_final as sha1_table size
+Date: Mon, 09 Sep 2013 12:30:23 -0700
+Message-ID: <xmqqob813i9c.fsf@gitster.dls.corp.google.com>
+References: <1378652660-6731-1-git-send-email-pclouds@gmail.com>
+	<1378735087-4813-1-git-send-email-pclouds@gmail.com>
+	<1378735087-4813-16-git-send-email-pclouds@gmail.com>
+	<alpine.LFD.2.03.1309091047510.20709@syhkavp.arg>
+	<xmqq61u94zew.fsf@gitster.dls.corp.google.com>
+	<alpine.LFD.2.03.1309091441540.20709@syhkavp.arg>
+	<xmqqwqmp3jtj.fsf@gitster.dls.corp.google.com>
+	<alpine.LFD.2.03.1309091507290.20709@syhkavp.arg>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: =?ISO-8859-15?Q?Nguyn_Th=E1i_Ngc_Duy?= <pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 09 21:25:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Mon Sep 09 21:30:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJ75h-0005Vk-36
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 21:25:41 +0200
+	id 1VJ7AT-0004TK-GU
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 21:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752622Ab3IITZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 15:25:37 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:13129 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751859Ab3IITZg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 15:25:36 -0400
-Received: from xanadu.home ([70.83.209.44]) by VL-VM-MR003.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MSV00EJHHYN9D80@VL-VM-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Sep 2013 15:25:36 -0400 (EDT)
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1755328Ab3IITae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Sep 2013 15:30:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54053 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754466Ab3IITad (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Sep 2013 15:30:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 539DB3E4BD;
+	Mon,  9 Sep 2013 19:30:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+pBUVZO76+JLLIB9FHXAN6AXOsE=; b=TQ70ki
+	/x9aGjPPfMv/O6HGEwxNvnXA59Gcwia6FBzk5o+2JOzDoRqIWgrw1c9dqbNy4htG
+	Eh9b7qxOFLCTOwtrR966315B0TVXGzargyV18z1wnRNaAbbO8Z6CjhPL3yyY8KsL
+	zVmd5Ik7hSdYO46ZVr+ChgBgjZ1ketap00KVw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=buJmvhnCrZnCMBRW1j+/tLjjOlMJowC1
+	ad5QBCBQbnnlEQGgwSyVbn0l2wRTjn1XIuP5wu56s7fKyf7wqJgFBcQ5jzYrNxgV
+	ybrqL8/MtmF5lm0U8AZEKaF4wg8a32mLy3cg7f+32zTn2ow+lGJzsn8ySWIu/5FB
+	XdXIutNmdWM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21DAF3E4BB;
+	Mon,  9 Sep 2013 19:30:30 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 977093E4B4;
+	Mon,  9 Sep 2013 19:30:27 +0000 (UTC)
+In-Reply-To: <alpine.LFD.2.03.1309091507290.20709@syhkavp.arg> (Nicolas
+	Pitre's message of "Mon, 09 Sep 2013 15:11:38 -0400 (EDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 480C016C-1986-11E3-AE39-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234363>
 
-While reviewing the pack v4 thin support Ive realized that some base 
-tree objects appended to a thin pack won't be in pack v4 format.  Hence 
-the patch below to deal with that possibility.
+Nicolas Pitre <nico@fluxnic.net> writes:
 
-An eventual optimization to index-pack when completing a pack would be 
-to attempt the encoding of appended tree objects into the packv4 format 
-using the existing dictionary table in the pack, and fall back to the 
-canonical format if that table doesn't have all the necessary elements.
+> Do we know the actual number of objects to send during the capability 
+> negociation?
 
-    packv4-parse.c: allow tree entry copying from a canonical tree object
-    
-    It is possible for a base tree object to be in the canonical
-    representation.  This may happen if the encoder detected an irregularity
-    preventing a loss free encoding to the pack v4 format, or if a thin pack
-    was completed with such tree objects.
-    
-    Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
+No, and that is not what I meant.  We know upfront after capability
+negotiation (by seeing a request to give them a thin-pack) that we
+will send, in addition to the usual packfile, the prefix that
+carries that information and that is the important part.  That lets
+the receiver decide whether to _expect_ to see the prefix or no
+prefix.  Without such, there needs some clue in the prefix part
+itself if there are prefixes that carry information computed after
+capability negotiation finished (i.e. after "object enumeration").
 
-diff --git a/packv4-parse.c b/packv4-parse.c
-index c62c4ae..36942bb 100644
---- a/packv4-parse.c
-+++ b/packv4-parse.c
-@@ -10,6 +10,7 @@
- 
- #include "cache.h"
- #include "packv4-parse.h"
-+#include "tree-walk.h"
- #include "varint.h"
- 
- const unsigned char *get_sha1ref(struct packed_git *p,
-@@ -321,6 +322,45 @@ void *pv4_get_commit(struct packed_git *p, struct pack_window **w_curs,
- 	return dst;
- }
- 
-+static int copy_canonical_tree_entries(struct packed_git *p, off_t offset,
-+				       unsigned int start, unsigned int count,
-+				       unsigned char **dstp, unsigned long *sizep)
-+{
-+	void *data;
-+	const void *from, *end;
-+	enum object_type type;
-+	unsigned long size;
-+	struct tree_desc desc;
-+
-+	data = unpack_entry(p, offset, &type, &size);
-+	if (!data)
-+		return -1;
-+	if (type != OBJ_TREE) {
-+		free(data);
-+		return -1;
-+	}
-+
-+	init_tree_desc(&desc, data, size);
-+
-+	while (start--)
-+		update_tree_entry(&desc);
-+
-+	from = desc.buffer;
-+	while (count--)
-+		update_tree_entry(&desc);
-+	end = desc.buffer;
-+
-+	if (end - from > *sizep) {
-+		free(data);
-+		return -1;
-+	}
-+	memcpy(*dstp, from, end - from);
-+	*dstp += end - from;
-+	*sizep -= end - from;
-+	free(data);
-+	return 0;
-+}
-+
- static int tree_entry_prefix(unsigned char *buf, unsigned long size,
- 			     const unsigned char *path, unsigned mode)
- {
-@@ -364,7 +404,12 @@ static int decode_entries(struct packed_git *p, struct pack_window **w_curs,
- 		while (*scp & 128)
- 			if (++scp - src >= avail - 20)
- 				return -1;
--		/* let's still make sure this is actually a tree */
-+		/* is this a canonical tree object? */
-+		if ((*scp & 0xf) == OBJ_TREE)
-+			return copy_canonical_tree_entries(p, offset,
-+							   start, count,
-+							   dstp, sizep);
-+		/* let's still make sure this is actually a pv4 tree */
- 		if ((*scp++ & 0xf) != OBJ_PV4_TREE)
- 			return -1;
- 	}
+Sorry if I was unclear.
