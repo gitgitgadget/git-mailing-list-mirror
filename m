@@ -1,70 +1,85 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH v2 15/16] index-pack: use nr_objects_final as sha1_table
- size
-Date: Mon, 09 Sep 2013 15:56:20 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309091553540.20709@syhkavp.arg>
-References: <1378652660-6731-1-git-send-email-pclouds@gmail.com>
- <1378735087-4813-1-git-send-email-pclouds@gmail.com>
- <1378735087-4813-16-git-send-email-pclouds@gmail.com>
- <alpine.LFD.2.03.1309091047510.20709@syhkavp.arg>
- <xmqq61u94zew.fsf@gitster.dls.corp.google.com>
- <alpine.LFD.2.03.1309091441540.20709@syhkavp.arg>
- <xmqqwqmp3jtj.fsf@gitster.dls.corp.google.com>
- <alpine.LFD.2.03.1309091507290.20709@syhkavp.arg>
- <xmqqob813i9c.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
+Date: Mon, 9 Sep 2013 16:04:39 -0400
+Message-ID: <20130909200438.GD14021@sigill.intra.peff.net>
+References: <20130904092527.GB22348@sigill.intra.peff.net>
+ <CAMP44s3Vaqe-POwQb30AGdarf=ObdPUay3QEMqxHV3NKiPAouA@mail.gmail.com>
+ <20130908041805.GB14019@sigill.intra.peff.net>
+ <CAMP44s01LL2JCKzqa0Qc5MfBz9zfMXR4H8jZdauLOi-D0JVHpw@mail.gmail.com>
+ <20130908044329.GA15087@sigill.intra.peff.net>
+ <CAMP44s3kow9dooPzK6iD8p2LAgt1mtFuaNsVhkJHrqe4D+8xLQ@mail.gmail.com>
+ <20130908052107.GA15610@sigill.intra.peff.net>
+ <CAMP44s3U2rJsqTj4cAOpY1ntum53bEy2cP5XRNaMu5vwnYVoww@mail.gmail.com>
+ <20130908065420.GI14019@sigill.intra.peff.net>
+ <20130908100351.GI2582@serenity.lan>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 09 21:56:28 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Andreas Krey <a.krey@gmx.de>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Mon Sep 09 22:04:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJ7ZS-0002yr-HK
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 21:56:26 +0200
+	id 1VJ7hV-0007lM-M5
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 22:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754645Ab3IIT4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 15:56:22 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:21531 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751255Ab3IIT4V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 15:56:21 -0400
-Received: from yoda.home ([70.83.209.44]) by VL-VM-MR002.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MSV007RYJDXXT50@VL-VM-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Sep 2013 15:56:21 -0400 (EDT)
-Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTPSA id CCE922DA0625; Mon, 09 Sep 2013 15:56:20 -0400 (EDT)
-In-reply-to: <xmqqob813i9c.fsf@gitster.dls.corp.google.com>
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1755085Ab3IIUEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Sep 2013 16:04:42 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57568 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752571Ab3IIUEl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Sep 2013 16:04:41 -0400
+Received: (qmail 22861 invoked by uid 102); 9 Sep 2013 20:04:41 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 09 Sep 2013 15:04:41 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Sep 2013 16:04:39 -0400
+Content-Disposition: inline
+In-Reply-To: <20130908100351.GI2582@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234368>
 
-On Mon, 9 Sep 2013, Junio C Hamano wrote:
+On Sun, Sep 08, 2013 at 11:03:52AM +0100, John Keeping wrote:
 
-> Nicolas Pitre <nico@fluxnic.net> writes:
+> > I know those are all balanced by some advantages of rebasing, but I also
+> > think they are things that can be troublesome for a user who does not
+> > fully grok the rebase process. I'm just wondering if we should mention
+> > both, but steer people towards merging as the safer alternative (you
+> > might have ugly history, but you are less likely to create a mess with
+> > duplicate commits or badly-resolved conflicts).
 > 
-> > Do we know the actual number of objects to send during the capability 
-> > negociation?
+> The really correct thing to do here is to encourage a feature branch
+> workflow, but in my experience people are happier to walk through a
+> rebase than to switch over to feature branches completely.
 > 
-> No, and that is not what I meant.  We know upfront after capability
-> negotiation (by seeing a request to give them a thin-pack) that we
-> will send, in addition to the usual packfile, the prefix that
-> carries that information and that is the important part.  That lets
-> the receiver decide whether to _expect_ to see the prefix or no
-> prefix.  Without such, there needs some clue in the prefix part
-> itself if there are prefixes that carry information computed after
-> capability negotiation finished (i.e. after "object enumeration").
+> An alternative pull mode would be:
+> 
+>     git reset --keep @{u} &&
+>     git merge @{-1}
+> 
+> which gets a sensible history shape without any of your disadvantages
+> above.  But that didn't go anywhere last time it came up [1] [2].
 
-In this case, if negociation concludes on "thin" and "pack-version=4" 
-then that could mean there is a prefix to be expected.
+FWIW, that approach makes some sense to me. De-coupling for a moment the
+idea of "what is the default" from "what are the options", it seems like
+doing a reverse-merge would be a good option to have in the toolbox.
 
+It would also have other uses beyond "git pull". For example, in
+development of GitHub itself, we use topic branches. But before merging
+them to master, we often test-deploy the topic to the live site. Before
+doing so, you have to merge the topic with the latest master to make
+sure you are not un-deploying anybody else's recently graduated topics.
 
-Nicolas
+You can do so by creating a temporary merge branch and deploying that,
+or you can simply merge master back into the topic. We generally choose
+the latter, because it leaves any conflict resolution in an obvious
+place (and doesn't need repeating).
+
+-Peff
