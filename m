@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 01/16] pack v4: allocate dicts from the beginning
-Date: Mon,  9 Sep 2013 20:57:52 +0700
-Message-ID: <1378735087-4813-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 06/16] pack-write.c: add pv4_encode_object_header
+Date: Mon,  9 Sep 2013 20:57:57 +0700
+Message-ID: <1378735087-4813-7-git-send-email-pclouds@gmail.com>
 References: <1378652660-6731-1-git-send-email-pclouds@gmail.com>
  <1378735087-4813-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,144 +12,124 @@ Cc: git@vger.kernel.org,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Mon Sep 09 15:55:53 2013
+X-From: git-owner@vger.kernel.org Mon Sep 09 15:56:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJ1wU-0002kL-Vb
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 15:55:51 +0200
+	id 1VJ1we-0002xd-68
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 15:56:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753364Ab3IINzs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Sep 2013 09:55:48 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:46433 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752673Ab3IINzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 09:55:16 -0400
-Received: by mail-pd0-f179.google.com with SMTP id v10so6198502pde.24
-        for <git@vger.kernel.org>; Mon, 09 Sep 2013 06:55:16 -0700 (PDT)
+	id S1752819Ab3IINzu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Sep 2013 09:55:50 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:37618 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751891Ab3IINzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Sep 2013 09:55:48 -0400
+Received: by mail-pb0-f43.google.com with SMTP id md4so6129768pbc.30
+        for <git@vger.kernel.org>; Mon, 09 Sep 2013 06:55:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=NRq57kqydQqkmerOy/Z8WbiSvKUHpiPUhMLS31Kw61Y=;
-        b=q9ysc7wcw7NenqmD/HqoT5E9VQndnp1oOkMXauI878njhWsGuGZKv5a+zRxR3AaRQf
-         botJaLX792IIyRU05dG7vhpT824uUearDhoiKEpBzQ+rsd88y9Vl1ec90u2s/bTQ7ZrN
-         h8LoLok6xCuueimD3T0ux2i8usv84RBBSDH4loWtGtM81+JLLjs7hGLEOEdx36ZkqiPi
-         eZMqjiPetX9n9lb9/yK/LiaBSDgECyec8+NM9nfnUbjt/g250rtd6y91JR7Gm6EKgEOX
-         RHVqIsfOd+Ek3e5Bzsc82A6qrqyCZp6qx+J0pzRhZLFUYyYMlviiBVW31rIwj2n8QxYw
-         fvbA==
-X-Received: by 10.67.14.231 with SMTP id fj7mr8752841pad.115.1378734916423;
-        Mon, 09 Sep 2013 06:55:16 -0700 (PDT)
+        bh=CPk+0b9RqmOdAW5weLuYPfiWtRX6XN/87pj2Ju+tUik=;
+        b=MdTlc3h1NO7TYQdNt+a0yTx5fVbwyaRoD5klcJ+q54LTbt1WHOuMUveSIc1H42xntq
+         FTkY9LqiKwqcnUHM3DJbEBochF+I87py1R/f4J51AgBRU9VAy7o+yrZqxb927OY0qiEY
+         7cieSHsK9a2bf6FInW4MUL89U+497oLEXku1vLc2Q+LlCg6GNczLvM9x7nRLX+DwYnMW
+         ZlEg7YOVjjCphb3MQUjjMnBHrF6lqwNrbvyKJa9qgjZCA0C3WZUp/QGMMt4zHi124xOx
+         c/NorPQgS92vmmIcIuXKIsKFykPzB6+K7d6Kx4try1KLpkx/fN+8hRWngTY41sqOikXz
+         UtbQ==
+X-Received: by 10.66.221.8 with SMTP id qa8mr1910841pac.188.1378734947099;
+        Mon, 09 Sep 2013 06:55:47 -0700 (PDT)
 Received: from lanh ([115.73.228.17])
-        by mx.google.com with ESMTPSA id f2sm15471200pbg.44.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id kd1sm17770384pab.20.1969.12.31.16.00.00
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 09 Sep 2013 06:55:15 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 09 Sep 2013 20:58:25 +0700
+        Mon, 09 Sep 2013 06:55:46 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 09 Sep 2013 20:58:56 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1378735087-4813-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234334>
 
-commit_ident_table and tree_path_table are local to packv4-create.c
-and test-packv4.c. Move them out of add_*_dict_entries so
-add_*_dict_entries can be exported to pack-objects.c
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- packv4-create.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ pack-write.c | 33 +++++++++++++++++++++++++++++++++
+ pack.h       |  1 +
+ 2 files changed, 34 insertions(+)
 
-diff --git a/packv4-create.c b/packv4-create.c
-index 38fa594..dbc2a03 100644
---- a/packv4-create.c
-+++ b/packv4-create.c
-@@ -181,14 +181,12 @@ static char *get_nameend_and_tz(char *from, int *=
-tz_val)
- 	return end;
+diff --git a/pack-write.c b/pack-write.c
+index 36b88a3..c1e9da4 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "pack.h"
+ #include "csum-file.h"
++#include "varint.h"
+=20
+ void reset_pack_idx_option(struct pack_idx_option *opts)
+ {
+@@ -349,6 +350,38 @@ int encode_in_pack_object_header(enum object_type =
+type, uintmax_t size, unsigned
+ 	return n;
  }
 =20
--static int add_commit_dict_entries(void *buf, unsigned long size)
-+int add_commit_dict_entries(struct dict_table *commit_ident_table,
-+			    void *buf, unsigned long size)
- {
- 	char *name, *end =3D NULL;
- 	int tz_val;
-=20
--	if (!commit_ident_table)
--		commit_ident_table =3D create_dict_table();
--
- 	/* parse and add author info */
- 	name =3D strstr(buf, "\nauthor ");
- 	if (name) {
-@@ -212,14 +210,12 @@ static int add_commit_dict_entries(void *buf, uns=
-igned long size)
- 	return 0;
- }
-=20
--static int add_tree_dict_entries(void *buf, unsigned long size)
-+static int add_tree_dict_entries(struct dict_table *tree_path_table,
-+				 void *buf, unsigned long size)
- {
- 	struct tree_desc desc;
- 	struct name_entry name_entry;
-=20
--	if (!tree_path_table)
--		tree_path_table =3D create_dict_table();
--
- 	init_tree_desc(&desc, buf, size);
- 	while (tree_entry(&desc, &name_entry)) {
- 		int pathlen =3D tree_entry_len(&name_entry);
-@@ -659,6 +655,9 @@ static int create_pack_dictionaries(struct packed_g=
-it *p,
- 	struct progress *progress_state;
- 	unsigned int i;
-=20
-+	commit_ident_table =3D create_dict_table();
-+	tree_path_table =3D create_dict_table();
++int pv4_encode_object_header(enum object_type type,
++			     uintmax_t size, unsigned char *hdr)
++{
++	uintmax_t val;
 +
- 	progress_state =3D start_progress("Scanning objects", p->num_objects)=
-;
- 	for (i =3D 0; i < p->num_objects; i++) {
- 		struct pack_idx_entry *obj =3D obj_list[i];
-@@ -666,7 +665,8 @@ static int create_pack_dictionaries(struct packed_g=
-it *p,
- 		enum object_type type;
- 		unsigned long size;
- 		struct object_info oi =3D {};
--		int (*add_dict_entries)(void *, unsigned long);
-+		int (*add_dict_entries)(struct dict_table *, void *, unsigned long);
-+		struct dict_table *dict;
++	switch (type) {
++	case OBJ_COMMIT:
++	case OBJ_TREE:
++	case OBJ_BLOB:
++	case OBJ_TAG:
++	case OBJ_REF_DELTA:
++	case OBJ_PV4_COMMIT:
++	case OBJ_PV4_TREE:
++		break;
++	default:
++		die("bad type %d", type);
++	}
++
++	/*
++	 * We allocate 4 bits in the LSB for the object type which
++	 * should be good for quite a while, given that we effectively
++	 * encodes only 5 object types: commit, tree, blob, delta,
++	 * tag.
++	 */
++	val =3D size;
++	if (MSB(val, 4))
++		die("fixme: the code doesn't currently cope with big sizes");
++	val <<=3D 4;
++	val |=3D type;
++	return encode_varint(val, hdr);
++}
++
+ struct sha1file *create_tmp_packfile(char **pack_tmp_name)
+ {
+ 	char tmpname[PATH_MAX];
+diff --git a/pack.h b/pack.h
+index 855f6c6..4f10fa4 100644
+--- a/pack.h
++++ b/pack.h
+@@ -83,6 +83,7 @@ extern off_t write_pack_header(struct sha1file *f, in=
+t, uint32_t);
+ extern void fixup_pack_header_footer(int, unsigned char *, const char =
+*, uint32_t, unsigned char *, off_t);
+ extern char *index_pack_lockfile(int fd);
+ extern int encode_in_pack_object_header(enum object_type, uintmax_t, u=
+nsigned char *);
++extern int pv4_encode_object_header(enum object_type, uintmax_t, unsig=
+ned char *);
 =20
- 		display_progress(progress_state, i+1);
-=20
-@@ -679,9 +679,11 @@ static int create_pack_dictionaries(struct packed_=
-git *p,
- 		switch (type) {
- 		case OBJ_COMMIT:
- 			add_dict_entries =3D add_commit_dict_entries;
-+			dict =3D commit_ident_table;
- 			break;
- 		case OBJ_TREE:
- 			add_dict_entries =3D add_tree_dict_entries;
-+			dict =3D tree_path_table;
- 			break;
- 		default:
- 			continue;
-@@ -693,7 +695,7 @@ static int create_pack_dictionaries(struct packed_g=
-it *p,
- 		if (check_sha1_signature(obj->sha1, data, size, typename(type)))
- 			die("packed %s from %s is corrupt",
- 			    sha1_to_hex(obj->sha1), p->pack_name);
--		if (add_dict_entries(data, size) < 0)
-+		if (add_dict_entries(dict, data, size) < 0)
- 			die("can't process %s object %s",
- 				typename(type), sha1_to_hex(obj->sha1));
- 		free(data);
+ #define PH_ERROR_EOF		(-1)
+ #define PH_ERROR_PACK_SIGNATURE	(-2)
 --=20
 1.8.2.83.gc99314b
