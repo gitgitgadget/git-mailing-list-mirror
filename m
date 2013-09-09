@@ -1,73 +1,45 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] rebase: fix run_specific_rebase's use of "return" on FreeBSD
-Date: Mon, 9 Sep 2013 14:30:17 +0530
-Message-ID: <CALkWK0nbcCuEfhagT4aUzqX8iynbhUvkRO9asmRHSGmEPRYZiA@mail.gmail.com>
-References: <1378716795-5420-1-git-send-email-Matthieu.Moy@imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	avg@freebsd.org, christoph.mallon@gmx.de
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 09 11:01:05 2013
+From: Leonard Rose <leonard_0813@icloud.com>
+Subject: Janier
+Date: Mon, 09 Sep 2013 03:39:04 -0500
+Message-ID: <611BA57F-64CB-450B-AE63-88603199BB3E@icloud.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 09 11:39:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VIxLC-0007As-7G
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 11:01:02 +0200
+	id 1VIxwE-0005wR-D2
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Sep 2013 11:39:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751709Ab3IIJA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 05:00:58 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:42986 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751113Ab3IIJA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 05:00:57 -0400
-Received: by mail-ie0-f169.google.com with SMTP id tp5so12408149ieb.0
-        for <git@vger.kernel.org>; Mon, 09 Sep 2013 02:00:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=oNW+HETteGz5aJKCTFgJ2ETUApuCs2n4OwvhfnU0Axk=;
-        b=qqdjLoaRHMYv13LYBV2IgVpAYaorwZog7m7akvAkhQZ0XW4BsCahgRmhbE4qhpKOob
-         swxJLoyeztsPPgMH/8v4fkgBIHXWjX1DU9dwE6OpTLHQxP3JszYfqjRwyO/DRZJXNF9o
-         ShySiq8Yda3DzLzATj9N0nDOQ9SLff62SY5GkQGVlCXQK+AZgsBsVaiE3GsFCocvcw2e
-         /RmeIvMWnAbGC5IZSpAxMYDcM/DcuX3YaL/J3jh1JkUKbNZCxJh5bZ0ewWRCpWmaFSaJ
-         uFAfWT03jVHlYN6lawfckARqwpL+iLo76hhV0F9hG39FB5N92Cc7sJlZNeR1XA1rUXKm
-         RHcA==
-X-Received: by 10.50.23.16 with SMTP id i16mr7133256igf.50.1378717257415; Mon,
- 09 Sep 2013 02:00:57 -0700 (PDT)
-Received: by 10.64.73.5 with HTTP; Mon, 9 Sep 2013 02:00:17 -0700 (PDT)
-In-Reply-To: <1378716795-5420-1-git-send-email-Matthieu.Moy@imag.fr>
+	id S1751510Ab3IIJjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Sep 2013 05:39:14 -0400
+Received: from nk11p20im-asmtp001.me.com ([17.158.216.160]:57245 "EHLO
+	nk11p20im-asmtp001.me.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751195Ab3IIJjO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Sep 2013 05:39:14 -0400
+X-Greylist: delayed 3606 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Sep 2013 05:39:14 EDT
+Received: from [10.239.101.68] (236.sub-174-253-80.myvzw.com [174.253.80.236])
+ by nk11p20im-asmtp001.mac.com
+ (Oracle Communications Messaging Server 7u4-27.07(7.0.4.27.6) 64bit (built Jun
+ 21 2013)) with ESMTPSA id <0MSU003R8O15LR60@nk11p20im-asmtp001.mac.com> for
+ git@vger.kernel.org; Mon, 09 Sep 2013 08:39:08 +0000 (GMT)
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.10.8794,1.0.431,0.0.0000
+ definitions=2013-09-09_02:2013-09-09,2013-09-08,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 bulkscore=2 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=7.0.1-1305240000 definitions=main-1309090016
+X-Mailer: iPhone Mail (10A403)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234320>
 
-Matthieu Moy wrote:
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index 8d7659a..226752f 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -167,13 +167,22 @@ You can run "git stash pop" or "git stash drop" at any time.
->         rm -rf "$state_dir"
->  }
->
-> -run_specific_rebase () {
-> +run_specific_rebase_internal () {
->         if [ "$interactive_rebase" = implied ]; then
->                 GIT_EDITOR=:
->                 export GIT_EDITOR
->                 autosquash=
->         fi
-> +       # On FreeBSD, the shell's "return" returns from the current
-> +       # function, not from the current file inclusion.
-> +       # run_specific_rebase_internal has the file inclusion as a
-> +       # last statement, so POSIX and FreeBSD's return will do the
-> +       # same thing.
->         . git-rebase--$type
-> +}
 
-Most excellent. Thanks for fixing this.
+
+Sent from my iPhone
