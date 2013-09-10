@@ -1,70 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/5] pull: rename pull.rename to pull.mode
-Date: Tue, 10 Sep 2013 02:52:27 -0400
-Message-ID: <20130910065227.GA25084@sigill.intra.peff.net>
-References: <1378689796-19305-1-git-send-email-felipe.contreras@gmail.com>
- <1378689796-19305-2-git-send-email-felipe.contreras@gmail.com>
- <522E3C6A.3070409@bbn.com>
- <CAMP44s1OyST3S1HEdS38WPsjq6w9SekuwT4DRUgVvduATox9tw@mail.gmail.com>
- <20130910022152.GA17154@sigill.intra.peff.net>
- <CAMP44s1FfQ-1pAK8T1cmiZk4i17HnpvzPwuZrzHiiXSmGzbrRw@mail.gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] GIT-VERSION-GEN: Do not require tags to be annotated
+Date: Tue, 10 Sep 2013 10:06:37 +0200
+Message-ID: <CAHGBnuN=vpJPXgd78aLohW3Awe+Y+0J7Bxwr4Fmn2NijMK1Z5g@mail.gmail.com>
+References: <522A36AA.3050701@gmail.com>
+	<xmqqeh91wrvq.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuP6w8rvoz+h2Xase1ApY_kpZh4X=VF6LY4O0r7RS0UayA@mail.gmail.com>
+	<xmqqsixgvci1.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuNKrtGSoOYS1T0VH=tGvKUW0XKFnWf_WNvZkOriGurgpg@mail.gmail.com>
+	<xmqqr4cx1u7u.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org,
-	Andreas Krey <a.krey@gmx.de>,
-	John Keeping <john@keeping.me.uk>,
-	Philip Oakley <philipoakley@iee.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 10 08:52:40 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 10 10:06:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJHoT-0001Hf-6d
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 08:52:37 +0200
+	id 1VJIyE-0001hV-3b
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 10:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754697Ab3IJGwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 02:52:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33591 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754054Ab3IJGwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 02:52:30 -0400
-Received: (qmail 22029 invoked by uid 102); 10 Sep 2013 06:52:30 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Sep 2013 01:52:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Sep 2013 02:52:27 -0400
-Content-Disposition: inline
-In-Reply-To: <CAMP44s1FfQ-1pAK8T1cmiZk4i17HnpvzPwuZrzHiiXSmGzbrRw@mail.gmail.com>
+	id S1755078Ab3IJIGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 04:06:41 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:46029 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754778Ab3IJIGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 04:06:39 -0400
+Received: by mail-la0-f50.google.com with SMTP id es20so5848831lab.37
+        for <git@vger.kernel.org>; Tue, 10 Sep 2013 01:06:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=AYY0cotoK+7/yucxGS8aHHatHySWKhSfOszL9u69l9g=;
+        b=jSrI6KlV6O6wkeloJ0gzrtfIpkdPaxWpd1Z12N7uMA6bBNBAL470cQbj66w8ZFeYln
+         mVIyJD6Jt5zbZ/G5xCZDmROA3tWrWZJQAOx/vhifzHC0bH/uOuMm68YPelEvYACmLEp7
+         P4uwiz1iMzhikD6i5KGgSGNRmQ7+dZKNbNoS0E44S7ddJIfxfc5BwulCj82D9krSyEiI
+         SVvJ9suljO+AJYdDHK3fD1yyxrjbq2pwbGT2Ot2+thGfII2cUG8WSroG8H6L0zbcOrI0
+         h+W66CWGC/0zyKWm4WG6bbzVpPo84j8W5xCMGJtKDm59+lOIX5qPMoSXTSSSlTxsLOap
+         8/Bw==
+X-Received: by 10.112.167.66 with SMTP id zm2mr195771lbb.46.1378800397566;
+ Tue, 10 Sep 2013 01:06:37 -0700 (PDT)
+Received: by 10.114.5.161 with HTTP; Tue, 10 Sep 2013 01:06:37 -0700 (PDT)
+In-Reply-To: <xmqqr4cx1u7u.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234421>
 
-On Tue, Sep 10, 2013 at 01:46:27AM -0500, Felipe Contreras wrote:
+On Sun, Sep 8, 2013 at 7:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> On Mon, Sep 9, 2013 at 9:21 PM, Jeff King <peff@peff.net> wrote:
-> > On Mon, Sep 09, 2013 at 05:49:36PM -0500, Felipe Contreras wrote:
-> >
-> >> > These deprecation warning messages should be written to stderr, and
-> >> > should probably be prefixed with "WARNING: ".
-> >>
-> >> Is there any deprecation warning that works this way?
-> >
-> > The ones in C code typically use warning(), which will prefix with
-> > "warning:" and write to stderr. They do not use all-caps, though.
-> >
-> > Try "git log --grep=deprecate -Swarning" for some examples.
-> 
-> I'm asking about the ones in shell, because this is a shell script.
+>> Which raises another question on my side: Isn't it tedious for you to
+>> both update DEF_VER *and* tag a version? Wouldn't it probably be less
+>> error prove (in the sense of keeping DEF_VER and tagged version in
+>> sync) to remove DEF_VER completely and just die if all ways to derive
+>> a Git version fail?
+>
+> I do not see how it will fly well.  Some people want to build out of
+> tarballs without having any "describe", and DEF_VER and version were
+> added for that specific purpose.
 
-Why would we want a deprecation warning to behave any differently if it
-is written in shell versus in C? It cannot use the warning() function,
-but you can easily emulate it with "echo".
+Right, but do we really need DEF_VER *and* version? Couldn't we just
+package official source tarballs in a way that they already contain an
+auto-generated version file?
 
-Do you have some reason for not wanting the warning to go to stderr?
+>>> a case where you have your own tag that points at the exact version
+>>> as I tagged?  In such a case, do you have a preference on which tag
+>>
+>> No. I always carry patches on top.
+>
+> That answer sidesteps the real issue; which one would you prefer if
+> there are two or more tags?  "describe" updated with your patch
+> would consider both and I think it favours the annotated one over
+> lightweight.  If it matches the preferred order then G-V-N with you
+> patch would help your workflow; otherwise you would still need a
+> different way, e.g. making sure what you want it to use is always
+> used by doing the ">version" thing.
 
--Peff
+My answer sidesteps the issue because you were explicitly offering the
+sidestep in you original question ;-) Anyway, in such a scenario I
+would probably prefer my own tag instead of upstream's tag, to be
+honest. So you're right that in this case my patch won't help. But
+like I said, the case is not valid for me as I will always carry
+patches on top, and other people might feel differently about which
+tag (annotated vs. lightweight) they prefer if both point to the same
+commit.
+
+-- 
+Sebastian Schuberth
