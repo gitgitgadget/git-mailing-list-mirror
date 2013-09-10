@@ -1,205 +1,113 @@
 From: Brad King <brad.king@kitware.com>
-Subject: [PATCH v6 6/8] refs: add update_refs for multiple simultaneous updates
-Date: Mon,  9 Sep 2013 20:57:44 -0400
-Message-ID: <016681d5c6c9c1c0905b1836e7374dad4db5d326.1378773895.git.brad.king@kitware.com>
+Subject: [PATCH v6 5/8] refs: add function to repack without multiple refs
+Date: Mon,  9 Sep 2013 20:57:43 -0400
+Message-ID: <451f8c9ea63078b75a759cb825a1826242672632.1378773895.git.brad.king@kitware.com>
 References: <cover.1378732710.git.brad.king@kitware.com> <cover.1378773895.git.brad.king@kitware.com>
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 10 03:00:28 2013
+X-From: git-owner@vger.kernel.org Tue Sep 10 03:00:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJCJf-0007qJ-GC
+	id 1VJCJe-0007qJ-UH
 	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 03:00:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756438Ab3IJA7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 20:59:55 -0400
-Received: from tripoint.kitware.com ([66.194.253.20]:41671 "EHLO
+	id S1756442Ab3IJA74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Sep 2013 20:59:56 -0400
+Received: from tripoint.kitware.com ([66.194.253.20]:41670 "EHLO
 	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756335Ab3IJA7x (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1756306Ab3IJA7x (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 9 Sep 2013 20:59:53 -0400
 Received: by vesper.kitware.com (Postfix, from userid 1000)
-	id 9D65A9FB96; Mon,  9 Sep 2013 20:57:46 -0400 (EDT)
+	id 998C39FB95; Mon,  9 Sep 2013 20:57:46 -0400 (EDT)
 X-Mailer: git-send-email 1.8.4.rc3
 In-Reply-To: <cover.1378773895.git.brad.king@kitware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234414>
 
-Add 'struct ref_update' to encode the information needed to update or
-delete a ref (name, new sha1, optional old sha1, no-deref flag).  Add
-function 'update_refs' accepting an array of updates to perform.  First
-sort the input array to order locks consistently everywhere and reject
-multiple updates to the same ref.  Then acquire locks on all refs with
-verified old values.  Then update or delete all refs accordingly.  Fail
-if any one lock cannot be obtained or any one old value does not match.
-
-Though the refs themselves cannot be modified together in a single
-atomic transaction, this function does enable some useful semantics.
-For example, a caller may create a new branch starting from the head of
-another branch and rewind the original branch at the same time.  This
-transfers ownership of commits between branches without risk of losing
-commits added to the original branch by a concurrent process, or risk of
-a concurrent process creating the new branch first.
+Generalize repack_without_ref as repack_without_refs to support a list
+of refs and implement the former in terms of the latter.
 
 Signed-off-by: Brad King <brad.king@kitware.com>
 ---
- refs.c | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- refs.h |  20 +++++++++++++
- 2 files changed, 120 insertions(+)
+ refs.c | 33 ++++++++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 9 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 4a63404..6383813 100644
+index b14f59b..4a63404 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3237,6 +3237,106 @@ int update_ref(const char *action, const char *refname,
- 	return update_ref_write(action, refname, sha1, lock, onerr);
+@@ -2414,42 +2414,57 @@ static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
+ 	return 0;
  }
  
-+static int ref_update_compare(const void *r1, const void *r2)
+-static int repack_without_ref(const char *refname)
++static int repack_without_refs(const char **refnames, int n)
+ {
+ 	struct ref_dir *packed;
+ 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *ref_to_delete;
++	int i, removed = 0;
++
++	/* Look for a packed ref */
++	for (i = 0; i < n; i++)
++		if (get_packed_ref(refnames[i]))
++			break;
+ 
+-	if (!get_packed_ref(refname))
+-		return 0; /* refname does not exist in packed refs */
++	/* Avoid locking if we have nothing to do */
++	if (i == n)
++		return 0; /* no refname exists in packed refs */
+ 
+ 	if (lock_packed_refs(0)) {
+ 		unable_to_lock_error(git_path("packed-refs"), errno);
+-		return error("cannot delete '%s' from packed refs", refname);
++		return error("cannot delete '%s' from packed refs", refnames[i]);
+ 	}
+ 	packed = get_packed_refs(&ref_cache);
+ 
+-	/* Remove refname from the cache: */
+-	if (remove_entry(packed, refname) == -1) {
++	/* Remove refnames from the cache */
++	for (i = 0; i < n; i++)
++		if (remove_entry(packed, refnames[i]) != -1)
++			removed = 1;
++	if (!removed) {
+ 		/*
+-		 * The packed entry disappeared while we were
++		 * All packed entries disappeared while we were
+ 		 * acquiring the lock.
+ 		 */
+ 		rollback_packed_refs();
+ 		return 0;
+ 	}
+ 
+-	/* Remove any other accumulated cruft: */
++	/* Remove any other accumulated cruft */
+ 	do_for_each_entry_in_dir(packed, 0, curate_packed_ref_fn, &refs_to_delete);
+ 	for_each_string_list_item(ref_to_delete, &refs_to_delete) {
+ 		if (remove_entry(packed, ref_to_delete->string) == -1)
+ 			die("internal error");
+ 	}
+ 
+-	/* Write what remains: */
++	/* Write what remains */
+ 	return commit_packed_refs();
+ }
+ 
++static int repack_without_ref(const char *refname)
 +{
-+	const struct ref_update * const *u1 = r1;
-+	const struct ref_update * const *u2 = r2;
-+	return strcmp((*u1)->ref_name, (*u2)->ref_name);
++	return repack_without_refs(&refname, 1);
 +}
 +
-+static int ref_update_reject_duplicates(struct ref_update **updates, int n,
-+					enum action_on_err onerr)
-+{
-+	int i;
-+	for (i = 1; i < n; i++)
-+		if (!strcmp(updates[i - 1]->ref_name, updates[i]->ref_name)) {
-+			const char *str =
-+				"Multiple updates for ref '%s' not allowed.";
-+			switch (onerr) {
-+			case MSG_ON_ERR:
-+				error(str, updates[i]->ref_name); break;
-+			case DIE_ON_ERR:
-+				die(str, updates[i]->ref_name); break;
-+			case QUIET_ON_ERR:
-+				break;
-+			}
-+			return 1;
-+		}
-+	return 0;
-+}
-+
-+int update_refs(const char *action, const struct ref_update **updates_orig,
-+		int n, enum action_on_err onerr)
-+{
-+	int ret = 0, delnum = 0, i;
-+	struct ref_update **updates;
-+	int *types;
-+	struct ref_lock **locks;
-+	const char **delnames;
-+
-+	if (!updates_orig || !n)
-+		return 0;
-+
-+	/* Allocate work space */
-+	updates = xmalloc(sizeof(*updates) * n);
-+	types = xmalloc(sizeof(*types) * n);
-+	locks = xcalloc(n, sizeof(*locks));
-+	delnames = xmalloc(sizeof(*delnames) * n);
-+
-+	/* Copy, sort, and reject duplicate refs */
-+	memcpy(updates, updates_orig, sizeof(*updates) * n);
-+	qsort(updates, n, sizeof(*updates), ref_update_compare);
-+	ret = ref_update_reject_duplicates(updates, n, onerr);
-+	if (ret)
-+		goto cleanup;
-+
-+	/* Acquire all locks while verifying old values */
-+	for (i = 0; i < n; i++) {
-+		locks[i] = update_ref_lock(updates[i]->ref_name,
-+					   (updates[i]->have_old ?
-+					    updates[i]->old_sha1 : NULL),
-+					   updates[i]->flags,
-+					   &types[i], onerr);
-+		if (!locks[i]) {
-+			ret = 1;
-+			goto cleanup;
-+		}
-+	}
-+
-+	/* Perform updates first so live commits remain referenced */
-+	for (i = 0; i < n; i++)
-+		if (!is_null_sha1(updates[i]->new_sha1)) {
-+			ret = update_ref_write(action,
-+					       updates[i]->ref_name,
-+					       updates[i]->new_sha1,
-+					       locks[i], onerr);
-+			locks[i] = NULL; /* freed by update_ref_write */
-+			if (ret)
-+				goto cleanup;
-+		}
-+
-+	/* Perform deletes now that updates are safely completed */
-+	for (i = 0; i < n; i++)
-+		if (locks[i]) {
-+			delnames[delnum++] = locks[i]->ref_name;
-+			ret |= delete_ref_loose(locks[i], types[i]);
-+		}
-+	ret |= repack_without_refs(delnames, delnum);
-+	for (i = 0; i < delnum; i++)
-+		unlink_or_warn(git_path("logs/%s", delnames[i]));
-+	clear_loose_ref_cache(&ref_cache);
-+
-+cleanup:
-+	for (i = 0; i < n; i++)
-+		if (locks[i])
-+			unlock_ref(locks[i]);
-+	free(updates);
-+	free(types);
-+	free(locks);
-+	free(delnames);
-+	return ret;
-+}
-+
- /*
-  * generate a format suitable for scanf from a ref_rev_parse_rules
-  * rule, that is replace the "%.*s" spec with a "%s" spec
-diff --git a/refs.h b/refs.h
-index 2cd307a..b113377 100644
---- a/refs.h
-+++ b/refs.h
-@@ -10,6 +10,20 @@ struct ref_lock {
- 	int force_write;
- };
- 
-+/**
-+ * Information needed for a single ref update.  Set new_sha1 to the
-+ * new value or to zero to delete the ref.  To check the old value
-+ * while locking the ref, set have_old to 1 and set old_sha1 to the
-+ * value or to zero to ensure the ref does not exist before update.
-+ */
-+struct ref_update {
-+	const char *ref_name;
-+	unsigned char new_sha1[20];
-+	unsigned char old_sha1[20];
-+	int flags; /* REF_NODEREF? */
-+	int have_old; /* 1 if old_sha1 is valid, 0 otherwise */
-+};
-+
- /*
-  * Bit values set in the flags argument passed to each_ref_fn():
-  */
-@@ -214,6 +228,12 @@ int update_ref(const char *action, const char *refname,
- 		const unsigned char *sha1, const unsigned char *oldval,
- 		int flags, enum action_on_err onerr);
- 
-+/**
-+ * Lock all refs and then perform all modifications.
-+ */
-+int update_refs(const char *action, const struct ref_update **updates,
-+		int n, enum action_on_err onerr);
-+
- extern int parse_hide_refs_config(const char *var, const char *value, const char *);
- extern int ref_is_hidden(const char *);
- 
+ static int delete_ref_loose(struct ref_lock *lock, int flag)
+ {
+ 	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
 -- 
 1.8.4.rc3
