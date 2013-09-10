@@ -1,111 +1,61 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: Regression in e02ca72: git svn rebase is broken on Windows
-Date: Tue, 10 Sep 2013 22:17:17 +0000 (UTC)
-Message-ID: <loom.20130911T001650-550@post.gmane.org>
-References: <17231378818848@web5m.yandex.ru> <xmqq38pczjw6.fsf@gitster.dls.corp.google.com>
+From: Michael Cronenworth <mike@cchtml.com>
+Subject: Re: git-cvsserver strips exec bit
+Date: Tue, 10 Sep 2013 17:20:13 -0500
+Message-ID: <522F9B1D.3070100@cchtml.com>
+References: <522F397E.6080709@cchtml.com> <xmqqa9jkzk2l.fsf@gitster.dls.corp.google.com> <xmqqfvtcxwqp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 11 00:20:19 2013
+Cc: git@vger.kernel.org, Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 11 00:20:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJWIA-00080g-VE
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 00:20:15 +0200
+	id 1VJWIL-0008Ep-FT
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 00:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752706Ab3IJWUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 18:20:09 -0400
-Received: from plane.gmane.org ([80.91.229.3]:47299 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751145Ab3IJWUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 18:20:08 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1VJWHz-0007jt-HG
-	for git@vger.kernel.org; Wed, 11 Sep 2013 00:20:03 +0200
-Received: from ns.dcon.de ([77.244.111.149])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Sep 2013 00:20:03 +0200
-Received: from karsten.blees by ns.dcon.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Sep 2013 00:20:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 77.244.111.149 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0)
+	id S1752740Ab3IJWUS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 18:20:18 -0400
+Received: from mta31.charter.net ([216.33.127.82]:35369 "EHLO
+	mta31.charter.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752559Ab3IJWUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 18:20:16 -0400
+X-Greylist: delayed 24990 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Sep 2013 18:20:16 EDT
+Received: from imp10 ([10.20.200.15]) by mta31.charter.net
+          (InterMail vM.8.01.05.02 201-2260-151-103-20110920) with ESMTP
+          id <20130910222015.VDSO24708.mta31.charter.net@imp10>
+          for <git@vger.kernel.org>; Tue, 10 Sep 2013 18:20:15 -0400
+Received: from cchtml.com ([97.93.199.156])
+	by imp10 with smtp.charter.net
+	id PaLE1m00h3NxN1505aLFfA; Tue, 10 Sep 2013 18:20:15 -0400
+X-Authority-Analysis: v=2.0 cv=brYUnzmi c=1 sm=1
+ a=lo8auXNu6Mom74z6dLD8eg==:17 a=7E2d2x4H2BEA:10 a=I_qP6JxhQSIA:10
+ a=qYDZOxW1f6MA:10 a=8nJEP1OIZ-IA:10 a=XT0ipqFZAAAA:8 a=iglDd2-_o8YA:10
+ a=iSzC3_11aGYC067Up_cA:9 a=wPNLvfGTeEIA:10 a=47ZmYQJ84zMA:10
+ a=amCFM8iG8_MA:10 a=lo8auXNu6Mom74z6dLD8eg==:117
+Received: by cchtml.com (Postfix, from userid 500)
+	id ACD3B154029F; Tue, 10 Sep 2013 17:20:14 -0500 (CDT)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on balthasar.cchtml.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=unavailable version=3.3.2
+Received: from mcronenworth.nhsrx.com (unknown [67.130.187.94])
+	by cchtml.com (Postfix) with ESMTPSA id EAAB015400E8;
+	Tue, 10 Sep 2013 17:20:13 -0500 (CDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130805 Thunderbird/17.0.8
+In-Reply-To: <xmqqfvtcxwqp.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234493>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+Junio C Hamano wrote:
+> I stopped interacting with CVS quite a long time ago, so I do not
+> have any way of verifying, but the fix may be just the matter of
+> something like this.
 
-> 
-> Tvangeste <i.4m.l33t <at> yandex.ru> writes:
-> 
-> > Hi,
-> >
-> > After bisecting this problem I ended up with the mentioned commit that
-completely breaks git-svn for me on
-> Windows (mingw/msys version).
-> >
-> > ==========
-> > #> git svn rebase
-> > warning: unable to access '': Invalid argument
-> > warning: unable to access '': Invalid argument
-> > fatal: unable to access '../../../../w:/work/my/repo.git/.git/config':
-Invalid argument
-> > fatal: index file open failed: Invalid argument
-> > Cannot rebase: You have unstaged changes.
-> > Please commit or stash them.
-> > rebase refs/remotes/trunk: command returned error: 1
-> > ==========
-> >
-> > Please note that I use the official git repository as-is, this one (no
-additional patches):
-> > git://git.kernel.org/pub/scm/git/git.git
-> >
-> > e02ca72f70ed8f0268a81f72cb3230c72e538e77 is the first bad commit
-> > commit e02ca72f70ed8f0268a81f72cb3230c72e538e77
-> > Author: Jiang Xin
-> > Date:   Tue Jun 25 23:53:43 2013 +0800
-> >
-> >     path.c: refactor relative_path(), not only strip prefix
-> >
-> > Thanks,
-> >   --Tvangeste
-> 
-> The suspect commit and symptom look consistent.  You started from a
-> directory whose absolute path is "w:/work/..." and the updated code
-> mistakenly thoguht that something that begins with "w" (not '/') is
-> not an absolute, so added a series of ../ to make it relative, or
-> something silly like that.
-> 
-> Jiang?
-> 
-
-Indeed, this patch seems to change relative_path in a way that breaks git
-initialization, not just on Windows.
-
-Previously, relative_path was always called with two absolute paths, and it
-only returned a relative path if the first was a subdir of the second (so a
-better name would probably have been 'relative_path_if_subdir'). The purpose
-was to improve performance by making GIT_DIR shorter if it was a subdir of
-GIT_WORK_TREE.
-
-After this patch, relative_path always tries to return a relative path, even
-if both absolute paths are completely disjunct. This not only defeats the
-purpose (by making GIT_DIR longer, thus hurting performance), it is also not
-possible in general. POSIX explicitly allows for '//hostname' notation
-referring to network resources that are not explicitly mounted under '/'.
-I.e. given two absolute paths '//hostname1/a' and '//hostname2/b', there is
-no relative path from a to b or vice versa.
-
-Additionally, GIT_DIR now may or may not have a trailing slash, which gives
-me a slightly uneasy feeling...
+This fix is close. Now all files are checked out with a mask of 555.
