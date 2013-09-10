@@ -1,129 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re-Transmission of blobs?
-Date: Tue, 10 Sep 2013 10:51:02 -0700
-Message-ID: <xmqqsixcy395.fsf@gitster.dls.corp.google.com>
-References: <20130910130837.GA14259@raven.wolf.lan>
+From: Tvangeste <i.4m.l33t@yandex.ru>
+Subject: Re: Regression in e02ca72: git svn rebase is broken on Windows
+Date: Tue, 10 Sep 2013 19:44:25 +0200
+Message-ID: <94251378835065@web20j.yandex.ru>
+References: <17231378818848@web5m.yandex.ru> <522F4E69.5070501@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Josef Wolf <jw@raven.inka.de>
-X-From: git-owner@vger.kernel.org Tue Sep 10 19:51:14 2013
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Sep 10 19:53:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJS5p-0005X8-8E
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 19:51:13 +0200
+	id 1VJS7X-0008O8-UY
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 19:53:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030Ab3IJRvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 13:51:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52743 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752932Ab3IJRvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 13:51:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FAC840E04;
-	Tue, 10 Sep 2013 17:51:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=46nwm/91IaGY0J7ONiYwSAFwgas=; b=jpS7TN
-	Ni2XQECDVTsrNnuxx0JHzJVKZ6miHxe8UO+3mL/32bkVkhztWTFvJdJ1NzSch5V+
-	C5rqCIA0TBTApEz7BjpqRwErWTqe7ICjK93Bkv9zThujlQg2NygcC2pcf0NZKRgN
-	60PqeAFTlFLb+//nQ9cmosiynb/aW4t2gjihM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cRKH3pSX4XbXnVhP1A8EG10d+pBvEkoJ
-	/pIptUCe8glFvfiGVL+Jcj4onYgeBZ+kqTS+4dg6jxIMKiM5DGNoCeFsSxCEmR6G
-	m6BDrTklyNS3xA5kPhbL25mKcLK7JDmGIKnOS1VK5r0M7e7iDesgu3JJaMkeks9/
-	48C5m9s1IAU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F91340E03;
-	Tue, 10 Sep 2013 17:51:06 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E70340DFF;
-	Tue, 10 Sep 2013 17:51:05 +0000 (UTC)
-In-Reply-To: <20130910130837.GA14259@raven.wolf.lan> (Josef Wolf's message of
-	"Tue, 10 Sep 2013 15:08:38 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 90935A64-1A41-11E3-9328-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753093Ab3IJRw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 13:52:56 -0400
+Received: from forward13.mail.yandex.net ([95.108.130.120]:59505 "EHLO
+	forward13.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752395Ab3IJRwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 13:52:55 -0400
+Received: from web20j.yandex.ru (web20j.yandex.ru [5.45.198.61])
+	by forward13.mail.yandex.net (Yandex) with ESMTP id C39491414F6;
+	Tue, 10 Sep 2013 21:44:25 +0400 (MSK)
+Received: from 127.0.0.1 (localhost [127.0.0.1])
+	by web20j.yandex.ru (Yandex) with ESMTP id 682CF21C113D;
+	Tue, 10 Sep 2013 21:44:25 +0400 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1378835065; bh=+nkklE9OV3rEhEhEVNd1pPxDuFYfqnF2N+9GTwGH9iQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=NI3QjFD2EJsLd7Yi8Ff5HSb3cMzdAECShJMe3k1VWeU9KHnOknecP8VCt95LJyiE7
+	 AdqF4rsEGreXCyOeen6RHl3E0UgVgxM2MNgz9ePElrcoDAYlGY69m3HQ/n1cH21Kl7
+	 XK39ZKDVUYnQRsM50CHB1mCHMBRvYcoDKJwPY5dU=
+Received: from agsb-5d87fcb4.pool.mediaWays.net (agsb-5d87fcb4.pool.mediaWays.net [93.135.252.180]) by web20j.yandex.ru with HTTP;
+	Tue, 10 Sep 2013 21:44:25 +0400
+Envelope-From: i-4m-l33t@yandex.ru
+In-Reply-To: <522F4E69.5070501@kdbg.org>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234465>
 
-Josef Wolf <jw@raven.inka.de> writes:
+10.09.2013, 18:53, "Johannes Sixt" <j6t@kdbg.org>:
+> Can you please run the command with GIT_TRACE=2?
 
-> as we all know, files are identified by their SHA. Thus I had the impression
-> that when transfering files, git would know by the SHA whether a given file is
-> already available in the destination repository and the transfer would be of
-> no use.
+Sure:
+#> git --version
+trace: built-in: git 'version'
+git version 1.8.4.242.gbb80ee0
 
-That is unfortunately not how things work.  It is not like the
-receiving end sends the names of all objects it has, and the sending
-end excludes these objects from what it is going to send.
+#> git svn rebase -l
+trace: exec: 'git-svn' 'rebase' '-l'
+trace: run_command: 'git-svn' 'rebase' '-l'
+trace: built-in: git 'rev-parse' '--git-dir'
+trace: built-in: git 'rev-parse' '--show-cdup'
+trace: built-in: git 'config' '--bool' '--get' 'svn.fetchall'
+trace: built-in: git 'config' '--bool' '--get' 'svn.noauthcache'
+trace: built-in: git 'config' '--bool' '--get' 'svn.nocheckout'
+trace: built-in: git 'config' '--get' 'svn.authorsprog'
+trace: built-in: git 'config' '--bool' '--get' 'svn.dryrun'
+trace: built-in: git 'config' '--bool' '--get' 'svn.preservemerges'
+trace: built-in: git 'config' '--bool' '--get' 'svn.followparent'
+trace: built-in: git 'config' '--bool' '--get' 'svn.useSvmProps'
+trace: built-in: git 'config' '--get' 'svn.authorsfile'
+trace: built-in: git 'config' '--get' 'svn.username'
+trace: built-in: git 'config' '--get' 'svn.repackflags'
+trace: built-in: git 'config' '--bool' '--get' 'svn.localtime'
+trace: built-in: git 'config' '--int' '--get' 'svn.repack'
+trace: built-in: git 'config' '--get' 'svn.ignorepaths'
+trace: built-in: git 'config' '--bool' '--get' 'svn.verbose'
+trace: built-in: git 'config' '--bool' '--get' 'svn.quiet'
+trace: built-in: git 'config' '--int' '--get' 'svn.logwindowsize'
+trace: built-in: git 'config' '--get' 'svn.ignorerefs'
+trace: built-in: git 'config' '--get' 'svn.configdir'
+trace: built-in: git 'config' '--bool' '--get' 'svn.merge'
+trace: built-in: git 'config' '--bool' '--get' 'svn.addauthorfrom'
+trace: built-in: git 'config' '--bool' '--get' 'svn.useSvnsyncProps'
+trace: built-in: git 'config' '--bool' '--get' 'svn.noMetadata'
+trace: built-in: git 'config' '--bool' '--get' 'svn.local'
+trace: built-in: git 'config' '--get' 'svn.strategy'
+trace: built-in: git 'config' '--get' 'svn.includepaths'
+trace: built-in: git 'config' '--bool' '--get' 'svn.uselogauthor'
+trace: built-in: git 'rev-parse' '--symbolic' '--all'
+trace: built-in: git 'config' '-l'
+trace: built-in: git 'config' '-l'
+trace: built-in: git 'update-index' '--refresh'
+trace: built-in: git 'rev-list' '--first-parent' '--pretty=medium' 'HEAD' '--'
+trace: built-in: git 'config' '--bool' 'svn.useSvmProps'
+trace: built-in: git 'config' '-l'
+trace: built-in: git 'for-each-ref' '--format=%(refname)' 'refs/'
+trace: built-in: git 'for-each-ref' '--format=%(refname)' 'refs/'
+trace: built-in: git 'for-each-ref' '--format=%(refname)' 'refs/'
+trace: built-in: git 'for-each-ref' '--format=%(refname)' 'refs/'
+trace: built-in: git 'for-each-ref' '--format=%(refname)' 'refs/'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.rewriteRoot'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.url'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.pushurl'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.uuid'
+trace: built-in: git 'rev-list' '--pretty=raw' '--reverse' 'cdc459d7cedcec6bb26812e24661c7318f031be4..refs/remotes/trunk' '--'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.rewriteRoot'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.rewriteUUID'
+trace: built-in: git 'diff-index' 'HEAD' '--'
+trace: exec: 'git-rebase' 'refs/remotes/trunk'
+trace: run_command: 'git-rebase' 'refs/remotes/trunk'
+trace: built-in: git 'rev-parse' '--parseopt' '--' 'refs/remotes/trunk'
+trace: built-in: git 'rev-parse' '--git-dir'
+trace: built-in: git 'rev-parse' '--is-bare-repository'
+trace: built-in: git 'rev-parse' '--show-toplevel'
+trace: built-in: git 'config' '--bool' 'rebase.stat'
+trace: built-in: git 'config' '--bool' 'rebase.autostash'
+trace: built-in: git 'config' '--bool' 'rebase.autosquash'
+trace: built-in: git 'rev-parse' '--verify' 'refs/remotes/trunk^0'
+trace: built-in: git 'rev-parse' '--verify' 'refs/remotes/trunk^0'
+trace: built-in: git 'symbolic-ref' '-q' 'HEAD'
+trace: built-in: git 'rev-parse' '--verify' 'HEAD'
+trace: built-in: git 'rev-parse' '--verify' 'HEAD'
+trace: built-in: git 'update-index' '-q' '--ignore-submodules' '--refresh'
+fatal: unable to access '../../../../w:/work/xxx/xxx-xxx-OSS.git.new/.git/config': Invalid argument
+trace: built-in: git 'diff-files' '--quiet' '--ignore-submodules'
+fatal: index file open failed: Invalid argument
+Cannot rebase: You have unstaged changes.
+trace: built-in: git 'diff-index' '--cached' '--quiet' '--ignore-submodules' 'HEAD' '--'
+Please commit or stash them.
+rebase refs/remotes/trunk: command returned error: 1
 
-Consider this simple history with only a handful of commits (as
-usual, time flows from left to right):
-
-              E
-             /   
-    A---B---C---D
-
-where D is at the tip of the sending side, E is at the tip of the
-receiving side.  The exchange goes roughly like this:
-
-    (receiving side): what do you have?
-
-    (sending side): my tip is at D.
-
-    (receiving side): D?  I've never heard of it --- please give it
-                      to me.  I have E.
-
-    (sending side): E?  I don't know about it; must be something you
-                    created since you forked from me.  Tell me about
-                    its ancestors.
-
-    (receiving side): OK, I have C.
-
-    (sending side): Oh, C I know about. You do not have to tell me
-                    anything more.  A packfile to bring you up to
-                    date will follow.
-
-At this point, the sender knows that the receiver needs the commit
-D, and trees and blobs in D.  It does also know it has the commit C
-and trees and blobs in C.  It does the best thing it can do using
-these (and only these) information, namely, to send the commit D,
-and send trees and blobs in D that are not in the commit C.
-
-You may happen to have something in E that match what is in D but
-not in C.  Because the sender does not know anything about E at all
-in the first place, that information cannot be used to reduce the
-transfer.
-
-The sender theoretically _could_ also exploit the fact that any
-receiver that has C must have B and A and all trees and blobs
-associated with these ancestor commits [*1*], but that information
-is not currently discovered nor used during the object transfer.
-
-There may happen to be a tree or a blob in A that matches a tree or
-a blob in D.  But because the common ancestor discovery exchange
-above stops at C, the sender does not bother enumerating all the
-objects that are in the ancestor commits of C when figuring out what
-objects to send to ensure that the receiving end has all the objects
-necessary to complete D.  If you modified a blob at B (or C) and
-then resurrected the old version of the blob at D, it is likely that
-the blob is going to be sent again when the receiving end asks for
-D.
-
-There are some work being done to optimize this further using
-various techniques, but they are not ready yet.
-
-
-[Footnote]
-
-*1* only down to the shallow boundary, if the receiving end is a
-shallow clone.
+Thanks,
+  --Tvangeste
