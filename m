@@ -1,113 +1,71 @@
-From: Brad King <brad.king@kitware.com>
-Subject: [PATCH v6 5/8] refs: add function to repack without multiple refs
-Date: Mon,  9 Sep 2013 20:57:43 -0400
-Message-ID: <451f8c9ea63078b75a759cb825a1826242672632.1378773895.git.brad.king@kitware.com>
-References: <cover.1378732710.git.brad.king@kitware.com> <cover.1378773895.git.brad.king@kitware.com>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 10 03:00:29 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/2] version-gen: avoid messing the version
+Date: Mon, 9 Sep 2013 20:13:14 -0500
+Message-ID: <CAMP44s28ZVRTRj+2cX1q0SaGyY16TZKmJtCscPUgF_hY=KJiwA@mail.gmail.com>
+References: <1378702889-21638-1-git-send-email-felipe.contreras@gmail.com>
+	<1378702889-21638-3-git-send-email-felipe.contreras@gmail.com>
+	<7vtxhuilv1.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1B4F8k_TEgXT8reatCw9UKATDAH=D31v=79QA6voEKOw@mail.gmail.com>
+	<20130909233028.GB101065@vauxhall.crustytoothpaste.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Tue Sep 10 03:13:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJCJe-0007qJ-UH
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 03:00:27 +0200
+	id 1VJCW8-0002tZ-Va
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 03:13:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756442Ab3IJA74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 20:59:56 -0400
-Received: from tripoint.kitware.com ([66.194.253.20]:41670 "EHLO
-	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756306Ab3IJA7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 20:59:53 -0400
-Received: by vesper.kitware.com (Postfix, from userid 1000)
-	id 998C39FB95; Mon,  9 Sep 2013 20:57:46 -0400 (EDT)
-X-Mailer: git-send-email 1.8.4.rc3
-In-Reply-To: <cover.1378773895.git.brad.king@kitware.com>
+	id S1756229Ab3IJBNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Sep 2013 21:13:17 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:57411 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756168Ab3IJBNQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Sep 2013 21:13:16 -0400
+Received: by mail-la0-f46.google.com with SMTP id eh20so5502764lab.19
+        for <git@vger.kernel.org>; Mon, 09 Sep 2013 18:13:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dE0k/Y/qN375ouDXKhieT2mMR3OB5osPEKWBohNUbQc=;
+        b=aZGmTQekGe4Sf3iGceqfsHghW6mjIZL/3nOgHtml4MjoqNq78SBiS6r/zpCtvj3FeD
+         13FWhkcqQ7WWG+f8PGGyxOpfams2ErXAzISBEoAn32YxNRPttUPlBfkU3vn59j/EqSld
+         8I1San7/jRNYrXn/6q4m/8pL/0kLsAX7BwmenNN/g4VD7XiU/Y8bjv+OKlRhqF8GHt3q
+         oMs+/L4IU/I5n/Hvr8kE5JEQnAEvV1LaEeW3DZK2q5Qz9yhkaG05/De1VZM7cS5Ap2Am
+         Awn94peOVNGfv5LW4uVH9i4rkWz/5pliNl0e1hk5+DoZXPpBNa/DiuBRVQ7yZz078Oe3
+         dA9A==
+X-Received: by 10.112.14.102 with SMTP id o6mr4425849lbc.28.1378775594982;
+ Mon, 09 Sep 2013 18:13:14 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Mon, 9 Sep 2013 18:13:14 -0700 (PDT)
+In-Reply-To: <20130909233028.GB101065@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234415>
 
-Generalize repack_without_ref as repack_without_refs to support a list
-of refs and implement the former in terms of the latter.
+On Mon, Sep 9, 2013 at 6:30 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Mon, Sep 09, 2013 at 02:00:55AM -0500, Felipe Contreras wrote:
+>> Of course not. First of all, who exactly is packaging release
+>> candidates nowadays? And second, why they can't they use the existing
+>> tools, like the 'version' file?
+>
+> Debian unstable, for one.  However, they don't use RPMs and the version
+> would be rewritten to use ~ anyway.  Fedora rawhide might.
 
-Signed-off-by: Brad King <brad.king@kitware.com>
----
- refs.c | 33 ++++++++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 9 deletions(-)
+Debian uses their own version; 1:1.8.4~rc3-1, it doesn't use Git's
+version 1.8.4.rc3, so if we change it to 1.8.4-rc3, that doesn't
+affect them one bit because they are not using it anyway.
 
-diff --git a/refs.c b/refs.c
-index b14f59b..4a63404 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2414,42 +2414,57 @@ static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
- 	return 0;
- }
- 
--static int repack_without_ref(const char *refname)
-+static int repack_without_refs(const char **refnames, int n)
- {
- 	struct ref_dir *packed;
- 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
- 	struct string_list_item *ref_to_delete;
-+	int i, removed = 0;
-+
-+	/* Look for a packed ref */
-+	for (i = 0; i < n; i++)
-+		if (get_packed_ref(refnames[i]))
-+			break;
- 
--	if (!get_packed_ref(refname))
--		return 0; /* refname does not exist in packed refs */
-+	/* Avoid locking if we have nothing to do */
-+	if (i == n)
-+		return 0; /* no refname exists in packed refs */
- 
- 	if (lock_packed_refs(0)) {
- 		unable_to_lock_error(git_path("packed-refs"), errno);
--		return error("cannot delete '%s' from packed refs", refname);
-+		return error("cannot delete '%s' from packed refs", refnames[i]);
- 	}
- 	packed = get_packed_refs(&ref_cache);
- 
--	/* Remove refname from the cache: */
--	if (remove_entry(packed, refname) == -1) {
-+	/* Remove refnames from the cache */
-+	for (i = 0; i < n; i++)
-+		if (remove_entry(packed, refnames[i]) != -1)
-+			removed = 1;
-+	if (!removed) {
- 		/*
--		 * The packed entry disappeared while we were
-+		 * All packed entries disappeared while we were
- 		 * acquiring the lock.
- 		 */
- 		rollback_packed_refs();
- 		return 0;
- 	}
- 
--	/* Remove any other accumulated cruft: */
-+	/* Remove any other accumulated cruft */
- 	do_for_each_entry_in_dir(packed, 0, curate_packed_ref_fn, &refs_to_delete);
- 	for_each_string_list_item(ref_to_delete, &refs_to_delete) {
- 		if (remove_entry(packed, ref_to_delete->string) == -1)
- 			die("internal error");
- 	}
- 
--	/* Write what remains: */
-+	/* Write what remains */
- 	return commit_packed_refs();
- }
- 
-+static int repack_without_ref(const char *refname)
-+{
-+	return repack_without_refs(&refname, 1);
-+}
-+
- static int delete_ref_loose(struct ref_lock *lock, int flag)
- {
- 	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+As for Fedora rawhide, they don't even use rc versions:
+
+http://koji.fedoraproject.org/koji/packageinfo?packageID=1864
+
 -- 
-1.8.4.rc3
+Felipe Contreras
