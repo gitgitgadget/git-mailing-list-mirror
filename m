@@ -1,137 +1,64 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re-Transmission of blobs?
-Date: Tue, 10 Sep 2013 15:08:38 +0200
-Message-ID: <20130910130837.GA14259@raven.wolf.lan>
+From: Michael Cronenworth <mike@cchtml.com>
+Subject: git-cvsserver strips exec bit
+Date: Tue, 10 Sep 2013 10:23:42 -0500
+Message-ID: <522F397E.6080709@cchtml.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 10 15:32:45 2013
+X-From: git-owner@vger.kernel.org Tue Sep 10 17:58:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJO3g-0005zO-01
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 15:32:44 +0200
+	id 1VJQKL-0001hS-3K
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 17:58:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751831Ab3IJNcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 09:32:39 -0400
-Received: from quechua.inka.de ([193.197.184.2]:47925 "EHLO mail.inka.de"
+	id S1751630Ab3IJP6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 11:58:00 -0400
+Received: from que21.charter.net ([209.225.8.22]:51137 "EHLO que21.charter.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751401Ab3IJNci (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 09:32:38 -0400
-X-Greylist: delayed 1337 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Sep 2013 09:32:37 EDT
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1VJNhz-0000CQ-FV; Tue, 10 Sep 2013 15:10:19 +0200
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 37C8B76184; Tue, 10 Sep 2013 15:08:38 +0200 (CEST)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751345Ab3IJP57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 11:57:59 -0400
+X-Greylist: delayed 1894 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Sep 2013 11:57:59 EDT
+Received: from imp09 ([10.20.200.9]) by mta31.charter.net
+          (InterMail vM.8.01.05.02 201-2260-151-103-20110920) with ESMTP
+          id <20130910152344.NSSR24708.mta31.charter.net@imp09>
+          for <git@vger.kernel.org>; Tue, 10 Sep 2013 11:23:44 -0400
+Received: from cchtml.com ([97.93.199.156])
+	by imp09 with smtp.charter.net
+	id PTPk1m00F3NxN1505TPkkS; Tue, 10 Sep 2013 11:23:44 -0400
+X-Authority-Analysis: v=2.0 cv=ZL6PAgHb c=1 sm=1
+ a=lo8auXNu6Mom74z6dLD8eg==:17 a=7E2d2x4H2BEA:10 a=qUy_l7r3NdoA:10
+ a=qYDZOxW1f6MA:10 a=8nJEP1OIZ-IA:10 a=XT0ipqFZAAAA:8 a=Ly8dnpfblpIA:10
+ a=mI2T93aJBIhPBygY_2oA:9 a=wPNLvfGTeEIA:10 a=lo8auXNu6Mom74z6dLD8eg==:117
+Received: by cchtml.com (Postfix, from userid 500)
+	id 26C1F15402A0; Tue, 10 Sep 2013 10:23:44 -0500 (CDT)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on balthasar.cchtml.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.3.2
+Received: from mcronenworth.nhsrx.com (unknown [67.130.187.94])
+	by cchtml.com (Postfix) with ESMTPSA id 4F92315400E8
+	for <git@vger.kernel.org>; Tue, 10 Sep 2013 10:23:43 -0500 (CDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130805 Thunderbird/17.0.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234436>
 
 Hello,
 
-as we all know, files are identified by their SHA. Thus I had the impression
-that when transfering files, git would know by the SHA whether a given file is
-already available in the destination repository and the transfer would be of
-no use. But this don't seem to be tha case. Lets see this example:
+On git 1.8.1.x (Fedora 18) I was able to use the git-cvsserver to checkout code
+to package into a tarball. Script files that were in git with 755 masks were
+checked-out with the same mask. After upgrading the git repository machine to
+Fedora 19 (1.8.3.1) the behaviour has changed. When I checkout the same script
+files their mask is now 644. The mask has not changed in git.
 
-  $ cat t.sh
-  #! /bin/sh -ex
-  
-  LANG=
-  
-  rm -rf 1 2
-  git init 1
-  git clone 1 2
-  
-  cd 1
-  git commit --allow-empty -m "initial structure"
-  git co -b somebranch
-  dd if=/dev/urandom count=10 bs=1024k >t
-  git add t
-  git commit -m "blah"
-  
-  cd ../2
-  git pull
-  git cherry-pick origin/somebranch
-  git push -v
-  
-  $ ./t.sh
-  + LANG=
-  + rm -rf 1 2
-  + git init 1
-  Initialized empty Git repository in /home/jw/test/1/.git/
-  + git clone 1 2
-  Cloning into '2'...
-  warning: You appear to have cloned an empty repository.
-  done.
-  + cd 1
-  + git commit --allow-empty -m 'initial structure'
-  [master (root-commit) 97e52e2] initial structure
-  + git co -b somebranch
-  Switched to a new branch 'somebranch'
-  + dd if=/dev/urandom count=10 bs=1024k
-  10+0 records in
-  10+0 records out
-  10485760 bytes (10 MB) copied, 1.3202 s, 7.9 MB/s
-  + git add t
-  + git commit -m blah
-  [somebranch b11cf51] blah
-   1 file changed, 0 insertions(+), 0 deletions(-)
-   create mode 100644 t
-  + cd ../2
-  + git pull
-  remote: Counting objects: 5, done.
-  remote: Compressing objects: 100% (3/3), done.
-  remote: Total 5 (delta 0), reused 0 (delta 0)
-  Unpacking objects: 100% (5/5), done.
-  From /home/jw/test/1
-   * [new branch]      master     -> origin/master
-   * [new branch]      somebranch -> origin/somebranch
-  + git cherry-pick origin/somebranch
-  [master 9e8f1c6] blah
-   1 file changed, 0 insertions(+), 0 deletions(-)
-   create mode 100644 t
-  + git push -v
-  warning: push.default is unset; its implicit value is changing in
-  Git 2.0 from 'matching' to 'simple'. To squelch this message
-  and maintain the current behavior after the default changes, use:
-  
-    git config --global push.default matching
-  
-  To squelch this message and adopt the new behavior now, use:
-  
-    git config --global push.default simple
-  
-  See 'git help config' and search for 'push.default' for further information.
-  (the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
-  'current' instead of 'simple' if you sometimes use older versions of Git)
-  
-  Pushing to /home/jw/test/1
-  Counting objects: 4, done.
-  Delta compression using up to 2 threads.
-  Compressing objects: 100% (2/2), done.
-  Writing objects: 100% (3/3), 10.00 MiB, done.
-  Total 3 (delta 0), reused 0 (delta 0)
-  To /home/jw/test/1
-     97e52e2..9e8f1c6  master -> master
-  updating local tracking ref 'refs/remotes/origin/master'
-  $
+I understand I can use git-archive to perform the same functionality, but I'd
+like to report this issue here.
 
-
-As we can see in this example, the big file is tranferred back to the first
-repository, although it is already available there. This is very annoying if
-you have a very slow connection.
-
-Am I missing some important point here?
-
--- 
-Josef Wolf
-jw@raven.inka.de
+Thanks,
+Michael
