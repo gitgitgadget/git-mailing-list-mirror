@@ -1,64 +1,100 @@
-From: Michael Cronenworth <mike@cchtml.com>
-Subject: Re: git-cvsserver strips exec bit
-Date: Tue, 10 Sep 2013 17:22:54 -0500
-Message-ID: <522F9BBE.404@cchtml.com>
-References: <522F397E.6080709@cchtml.com> <xmqqa9jkzk2l.fsf@gitster.dls.corp.google.com> <xmqqfvtcxwqp.fsf@gitster.dls.corp.google.com> <522F9B1D.3070100@cchtml.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: breakage in revision traversal with pathspec
+Date: Tue, 10 Sep 2013 15:23:50 -0700
+Message-ID: <xmqq38pcwc21.fsf@gitster.dls.corp.google.com>
+References: <xmqqy574y4pz.fsf@gitster.dls.corp.google.com>
+	<522F8ED2.9000408@bracey.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 11 00:23:02 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Kevin Bracey <kevin@bracey.fi>
+X-From: git-owner@vger.kernel.org Wed Sep 11 00:24:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJWKr-0003LV-Ho
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 00:23:01 +0200
+	id 1VJWLp-0004lI-HG
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 00:24:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523Ab3IJWW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 18:22:57 -0400
-Received: from mta31.charter.net ([216.33.127.82]:38050 "EHLO
-	mta31.charter.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750983Ab3IJWW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 18:22:57 -0400
-Received: from imp11 ([10.20.200.11]) by mta31.charter.net
-          (InterMail vM.8.01.05.02 201-2260-151-103-20110920) with ESMTP
-          id <20130910222256.VESR24708.mta31.charter.net@imp11>
-          for <git@vger.kernel.org>; Tue, 10 Sep 2013 18:22:56 -0400
-Received: from cchtml.com ([97.93.199.156])
-	by imp11 with smtp.charter.net
-	id PaNw1m00C3NxN1505aNwl3; Tue, 10 Sep 2013 18:22:56 -0400
-X-Authority-Analysis: v=2.0 cv=KYGKKnkD c=1 sm=1
- a=lo8auXNu6Mom74z6dLD8eg==:17 a=7E2d2x4H2BEA:10 a=I_qP6JxhQSIA:10
- a=qYDZOxW1f6MA:10 a=8nJEP1OIZ-IA:10 a=XT0ipqFZAAAA:8 a=iglDd2-_o8YA:10
- a=ijTWprrPGZSKuHzZIjkA:9 a=wPNLvfGTeEIA:10 a=moN3lsw9FiQA:10
- a=WfG7X66XhFoA:10 a=lo8auXNu6Mom74z6dLD8eg==:117
-Received: by cchtml.com (Postfix, from userid 500)
-	id 0AAC4154029F; Tue, 10 Sep 2013 17:22:55 -0500 (CDT)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on balthasar.cchtml.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=unavailable version=3.3.2
-Received: from mcronenworth.nhsrx.com (unknown [67.130.187.94])
-	by cchtml.com (Postfix) with ESMTPSA id 5271C15400E8;
-	Tue, 10 Sep 2013 17:22:55 -0500 (CDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130805 Thunderbird/17.0.8
-In-Reply-To: <522F9B1D.3070100@cchtml.com>
+	id S1751534Ab3IJWX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 18:23:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36817 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751213Ab3IJWX4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 18:23:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 130B640346;
+	Tue, 10 Sep 2013 22:23:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FcqJLHHuRWp4VHQxN1zmaVAIi20=; b=Z7hZh0
+	EPsW0YID5t0s+hLdDaCRr2bt59boZ72wYyfuWDJaekL4nH8xYe/CD5thiYP8nlyI
+	i1RYxhHdwU9QFPaU4SjjjAzoy4bv78EjeAczWNAP5/twEpimJXmDYeblb7oY/w8b
+	WyMD1QTciORiMnB7LBOxELITBT126WynZe2Nk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=A/LnkVaRqnOks6EcD5TuCqz8vRIZu5bo
+	JW+B76fwM4phy7AyJWZWToPsWXZA+alLjVHdp2McDH0NyG4X0dEOhyA1MfVyI6UT
+	Takrl5cy62w5I/PKDC+9cHvPWFa8WuqMOJCIsP+VS9NkKCHAHPKxU2ejsRJtCZfz
+	NSSClB3sJIM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD0BE4033E;
+	Tue, 10 Sep 2013 22:23:54 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA9674033A;
+	Tue, 10 Sep 2013 22:23:53 +0000 (UTC)
+In-Reply-To: <522F8ED2.9000408@bracey.fi> (Kevin Bracey's message of "Wed, 11
+	Sep 2013 00:27:46 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: AD293952-1A67-11E3-8FBA-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234495>
 
-Michael Cronenworth wrote:
-> This fix is close. Now all files are checked out with a mask of 555.
+Kevin Bracey <kevin@bracey.fi> writes:
 
-Let me clarify.
+> On 10/09/2013 20:19, Junio C Hamano wrote:
+>> I am grumpy X-<.
+>>
+>> It appears that we introduced a large breakage during 1.8.4 cycle to
+>> the revision traversal machinery and made pathspec-limited "git log"
+>> pretty much useless.
+>>
+>> This command
+>>
+>>      $ git log v1.8.3.1..v1.8.4 -- git-cvsserver.perl
+>>
+>> reports that a merge 766f0f8ef7 (which did not touch the specified
+>> path at all) touches it.
+>>
+>> Bisecting points at d0af663e (revision.c: Make --full-history
+>> consider more merges, 2013-05-16).
+>>
+> That merge appearing *with* --full-history would seem like correct
+> behaviour to me. Or at least it's what I intended.
 
-Git mask 755 => CVS mask 555
-Git mask 644 => CVS mask 444
+Oh, of course.  "--full-history" is about showing any pointless
+change, "the mainline was a lot more up-to-date and there were
+changes relative to a fork based on an older baseline", so your
+updated "log" should show that in the mainline git-cvsserver.perl
+has been more fresh when that merge happened.  But it shouldn't
+appear if the user does not ask for "--full-history".
 
-Thanks,
-Michael
+> However, your particular example occurs *without*--full-history, which
+> suggests a problem.
+
+Yes.
+
+> I note that "gitk v1.8.3^0..v1.8.4" and "git log --parents
+> v1.8.3..v1.8.4" show that merge in Git 1.8.3, but not in Git 1.8.4. So
+> we're going partially forwards, at least.
+
+With the testcases demonstrating the cases your series fixed that
+all look sensible, I think it is not really an option for us to
+revert them; you do not have to defend it with "we are going
+partially forwards" ;-).
