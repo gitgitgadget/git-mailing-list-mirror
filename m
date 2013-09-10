@@ -1,73 +1,137 @@
-From: Tvangeste <i.4m.l33t@yandex.ru>
-Subject: Regression in e02ca72: git svn rebase is broken on Windows
-Date: Tue, 10 Sep 2013 15:14:08 +0200
-Message-ID: <17231378818848@web5m.yandex.ru>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: Re-Transmission of blobs?
+Date: Tue, 10 Sep 2013 15:08:38 +0200
+Message-ID: <20130910130837.GA14259@raven.wolf.lan>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 10 15:20:44 2013
+X-From: git-owner@vger.kernel.org Tue Sep 10 15:32:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJNry-0003mp-PC
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 15:20:39 +0200
+	id 1VJO3g-0005zO-01
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 15:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751323Ab3IJNUf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 09:20:35 -0400
-Received: from forward9.mail.yandex.net ([77.88.61.48]:48641 "EHLO
-	forward9.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750974Ab3IJNUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 09:20:34 -0400
-X-Greylist: delayed 383 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Sep 2013 09:20:34 EDT
-Received: from web5m.yandex.ru (web5m.yandex.ru [37.140.138.96])
-	by forward9.mail.yandex.net (Yandex) with ESMTP id 70555CE0DB8
-	for <git@vger.kernel.org>; Tue, 10 Sep 2013 17:14:09 +0400 (MSK)
-Received: from 127.0.0.1 (localhost [127.0.0.1])
-	by web5m.yandex.ru (Yandex) with ESMTP id 28BCE2C60092;
-	Tue, 10 Sep 2013 17:14:08 +0400 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1378818849; bh=WK9R/NQWnvT2kkkbBVOoEsxDCW01GQpyNlV8NOo1nfs=;
-	h=From:To:Subject:Date;
-	b=ic8BKFqs/5uca+dc4QcZtKX6j//00Z2iGG4HSUzbx4tbJySqVbrWQXZg2m2Yn40H3
-	 HXVzEwvCgVOsJe3ZxB/NFFkkayLOa/BQfiDIe+OZQNwfT1ECclhZ6pC0T8vGNkOvb2
-	 lfxrUr2KM3+Rsjrxdp4Qx231yGUiytIsDREYil54=
-Received: from agsb-5d87fcb4.pool.mediaWays.net (agsb-5d87fcb4.pool.mediaWays.net [93.135.252.180]) by web5m.yandex.ru with HTTP;
-	Tue, 10 Sep 2013 17:14:08 +0400
-Envelope-From: i-4m-l33t@yandex.ru
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
+	id S1751831Ab3IJNcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 09:32:39 -0400
+Received: from quechua.inka.de ([193.197.184.2]:47925 "EHLO mail.inka.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751401Ab3IJNci (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 09:32:38 -0400
+X-Greylist: delayed 1337 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Sep 2013 09:32:37 EDT
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1VJNhz-0000CQ-FV; Tue, 10 Sep 2013 15:10:19 +0200
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 37C8B76184; Tue, 10 Sep 2013 15:08:38 +0200 (CEST)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234435>
 
-Hi,
+Hello,
 
-After bisecting this problem I ended up with the mentioned commit that completely breaks git-svn for me on Windows (mingw/msys version).
+as we all know, files are identified by their SHA. Thus I had the impression
+that when transfering files, git would know by the SHA whether a given file is
+already available in the destination repository and the transfer would be of
+no use. But this don't seem to be tha case. Lets see this example:
 
-==========
-#> git svn rebase
-warning: unable to access '': Invalid argument
-warning: unable to access '': Invalid argument
-fatal: unable to access '../../../../w:/work/my/repo.git/.git/config': Invalid argument
-fatal: index file open failed: Invalid argument
-Cannot rebase: You have unstaged changes.
-Please commit or stash them.
-rebase refs/remotes/trunk: command returned error: 1
-==========
+  $ cat t.sh
+  #! /bin/sh -ex
+  
+  LANG=
+  
+  rm -rf 1 2
+  git init 1
+  git clone 1 2
+  
+  cd 1
+  git commit --allow-empty -m "initial structure"
+  git co -b somebranch
+  dd if=/dev/urandom count=10 bs=1024k >t
+  git add t
+  git commit -m "blah"
+  
+  cd ../2
+  git pull
+  git cherry-pick origin/somebranch
+  git push -v
+  
+  $ ./t.sh
+  + LANG=
+  + rm -rf 1 2
+  + git init 1
+  Initialized empty Git repository in /home/jw/test/1/.git/
+  + git clone 1 2
+  Cloning into '2'...
+  warning: You appear to have cloned an empty repository.
+  done.
+  + cd 1
+  + git commit --allow-empty -m 'initial structure'
+  [master (root-commit) 97e52e2] initial structure
+  + git co -b somebranch
+  Switched to a new branch 'somebranch'
+  + dd if=/dev/urandom count=10 bs=1024k
+  10+0 records in
+  10+0 records out
+  10485760 bytes (10 MB) copied, 1.3202 s, 7.9 MB/s
+  + git add t
+  + git commit -m blah
+  [somebranch b11cf51] blah
+   1 file changed, 0 insertions(+), 0 deletions(-)
+   create mode 100644 t
+  + cd ../2
+  + git pull
+  remote: Counting objects: 5, done.
+  remote: Compressing objects: 100% (3/3), done.
+  remote: Total 5 (delta 0), reused 0 (delta 0)
+  Unpacking objects: 100% (5/5), done.
+  From /home/jw/test/1
+   * [new branch]      master     -> origin/master
+   * [new branch]      somebranch -> origin/somebranch
+  + git cherry-pick origin/somebranch
+  [master 9e8f1c6] blah
+   1 file changed, 0 insertions(+), 0 deletions(-)
+   create mode 100644 t
+  + git push -v
+  warning: push.default is unset; its implicit value is changing in
+  Git 2.0 from 'matching' to 'simple'. To squelch this message
+  and maintain the current behavior after the default changes, use:
+  
+    git config --global push.default matching
+  
+  To squelch this message and adopt the new behavior now, use:
+  
+    git config --global push.default simple
+  
+  See 'git help config' and search for 'push.default' for further information.
+  (the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+  'current' instead of 'simple' if you sometimes use older versions of Git)
+  
+  Pushing to /home/jw/test/1
+  Counting objects: 4, done.
+  Delta compression using up to 2 threads.
+  Compressing objects: 100% (2/2), done.
+  Writing objects: 100% (3/3), 10.00 MiB, done.
+  Total 3 (delta 0), reused 0 (delta 0)
+  To /home/jw/test/1
+     97e52e2..9e8f1c6  master -> master
+  updating local tracking ref 'refs/remotes/origin/master'
+  $
 
-Please note that I use the official git repository as-is, this one (no additional patches):
-git://git.kernel.org/pub/scm/git/git.git
 
-e02ca72f70ed8f0268a81f72cb3230c72e538e77 is the first bad commit
-commit e02ca72f70ed8f0268a81f72cb3230c72e538e77
-Author: Jiang Xin
-Date:   Tue Jun 25 23:53:43 2013 +0800
+As we can see in this example, the big file is tranferred back to the first
+repository, although it is already available there. This is very annoying if
+you have a very slow connection.
 
-    path.c: refactor relative_path(), not only strip prefix
+Am I missing some important point here?
 
-Thanks,
-  --Tvangeste
+-- 
+Josef Wolf
+jw@raven.inka.de
