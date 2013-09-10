@@ -1,71 +1,104 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH v6 0/8] Multiple simultaneously locked ref updates
-Date: Tue, 10 Sep 2013 12:54:54 -0400
-Message-ID: <522F4EDE.1010104@kitware.com>
-References: <cover.1378732710.git.brad.king@kitware.com> <cover.1378773895.git.brad.king@kitware.com> <xmqqob80zlju.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-cvsserver strips exec bit
+Date: Tue, 10 Sep 2013 10:02:26 -0700
+Message-ID: <xmqqa9jkzk2l.fsf@gitster.dls.corp.google.com>
+References: <522F397E.6080709@cchtml.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 10 18:57:12 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Cronenworth <mike@cchtml.com>
+To: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+X-From: git-owner@vger.kernel.org Tue Sep 10 19:02:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJRFW-0001Ik-Of
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 18:57:11 +0200
+	id 1VJRKo-0001lA-D3
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 19:02:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731Ab3IJQ5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 12:57:06 -0400
-Received: from na3sys009aog113.obsmtp.com ([74.125.149.209]:57002 "HELO
-	na3sys009aog113.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752546Ab3IJQ5E (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Sep 2013 12:57:04 -0400
-Received: from mail-ob0-f180.google.com ([209.85.214.180]) (using TLSv1) by na3sys009aob113.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUi9PX8AtAjMHlbloCYONPAqlATwTEXKq@postini.com; Tue, 10 Sep 2013 09:57:04 PDT
-Received: by mail-ob0-f180.google.com with SMTP id va7so2454159obc.39
-        for <git@vger.kernel.org>; Tue, 10 Sep 2013 09:57:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=h88MLcs2y3NVXvrLLAvRzAoc+tL72OW+6hrBLw5xyxU=;
-        b=FKe/w4SEhuppvJd8tSQrShbL6WtoRG6SkegW3cFUNG7djg+xgpT6Mt6Q+GGE7Ortul
-         NCbILbU6KAmR+mokhowYZdMDStCMAsofP9CYDOZSf0607iOyMMVAWfCm+2Xk/J+qKh6g
-         kbFcmWqg0H/UfkvqhV+kKegiRaRyUTtjOUYptZD08sLP7EU5S6LZbd55dmgnKkwQTLa0
-         YJQs0n1ibm1Diiab1pTuXBl7O4ptgYTMEnHjH6l6pvHK2JYItZxNUFh1MEX04D9mIJbg
-         G2dpG59ycz125u4UjII/G7rGdGS2sq9EdJ86ozXWPDLP1QJwVwYzUyYP6EVihd3c1qRO
-         WYNw==
-X-Gm-Message-State: ALoCoQnJ//2YvdzmDwmwrzCCYum7IX4dgXJmot56FOF8TEfgTZSzbM+DnR0K/TPvyzZMPVp8pNWhom4yvls1pYya+m0VZodSeaxbYYjhAet27JKXwbgWMWPYPuK27DC2fcDmlZSH+39Ps84B+vkdWHgO++r8P/7DBg==
-X-Received: by 10.182.213.97 with SMTP id nr1mr16377215obc.48.1378832223250;
-        Tue, 10 Sep 2013 09:57:03 -0700 (PDT)
-X-Received: by 10.182.213.97 with SMTP id nr1mr16377204obc.48.1378832223169;
-        Tue, 10 Sep 2013 09:57:03 -0700 (PDT)
-Received: from [192.168.1.225] (tripoint.kitware.com. [66.194.253.20])
-        by mx.google.com with ESMTPSA id tz10sm21429380obc.10.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 10 Sep 2013 09:57:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.12) Gecko/20130116 Icedove/10.0.12
-In-Reply-To: <xmqqob80zlju.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.4
+	id S1753653Ab3IJRCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 13:02:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48337 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752901Ab3IJRCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 13:02:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F9E5404B4;
+	Tue, 10 Sep 2013 17:02:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6jny51SV21sPNluWpvE5jXHk6tM=; b=pd72Lj
+	L89LQ32TUDrlvFNcFoNuwUPgj37PB1yppmBVfDyK++jwrP9q1B3VHEMIV2gHQiD7
+	bEwhBDK36jTywxl1WHf5RM4l6UI5yI2Vu842muvVWj6Z6DEb3aMpO571zkAxLnNp
+	j5p1DzYoLFru3n+S0jxXhd96p6uJsVA8NfgLA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=U4rZAjTmUUsQoY0Uam6RbH5i/OVmTf2E
+	WlS5fskOqbzm19f8knMgeRLl5QEqKHSsb5cydPydCD4kvM/pnHDtsAV6YRTHB71y
+	TWw/bihQNlAlx8bR/Ub33CqxAFAQF5exFFTkIoOH/ZQtYzKks9v3TDbPE2y1cXgp
+	Egqzzyj0cOM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4853D404AD;
+	Tue, 10 Sep 2013 17:02:30 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 967C84049F;
+	Tue, 10 Sep 2013 17:02:28 +0000 (UTC)
+In-Reply-To: <522F397E.6080709@cchtml.com> (Michael Cronenworth's message of
+	"Tue, 10 Sep 2013 10:23:42 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C664DA48-1A3A-11E3-A434-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234445>
 
-On 09/10/2013 12:30 PM, Junio C Hamano wrote:
-> Thanks.  I am not sure if I should rewind and rebuild the series
-> with these patches, though.  This is a new feature and does not have
-> to be merged to 'maint', so rebasing is perfectly fine, but it is
-> not strictly necessary, either.
+Michael Cronenworth <mike@cchtml.com> writes:
 
-I just thought I'd help out with the conflict resolution.  If you're
-happy with resolving the conflicts in v5 then there is no reason to
-use v6.
+> On git 1.8.1.x (Fedora 18) I was able to use the git-cvsserver to checkout code
+> to package into a tarball. Script files that were in git with 755 masks were
+> checked-out with the same mask. After upgrading the git repository machine to
+> Fedora 19 (1.8.3.1) the behaviour has changed. When I checkout the same script
+> files their mask is now 644. The mask has not changed in git.
 
-Thanks,
--Brad
+Matthew, I do not know if you are still using the git-cvsserver, but
+it seems that the only substantial change to that subsystem between
+the 1.8.1.x and 1.8.3.x is your update.
+
+Especially 2c3af7e7 (cvsserver: factor out git-log parsing logic,
+2012-10-13) looks interesting.  It has a hunk like this:
+
+-                my $git_perms = "";
+-                $git_perms .= "r" if ( $mode & 4 );
+-                $git_perms .= "w" if ( $mode & 2 );
+-                $git_perms .= "x" if ( $mode & 1 );
+-                $git_perms = "rw" if ( $git_perms eq "" );
++                my $dbMode = convertToDbMode($mode);
+
+with the definition of convertToDbMode being:
+
++sub convertToDbMode
++{
++    my $mode = shift;
++    ...
++    $mode=~/^\d\d(\d)\d{3}$/;
++    my $userBits=$1;
++
++    my $dbMode = "";
++    $dbMode .= "r" if ( $userBits & 4 );
++    $dbMode .= "w" if ( $userBits & 2 );
++    $dbMode .= "x" if ( $userBits & 1 );
++    $dbMode = "rw" if ( $dbMode eq "" );
++
++    return $dbMode;
+
+The $mode in the caller comes from diff-tree output (the post-change
+side of the mode string, like "100755").
+
+Picking the third digit from the left (i.e. "10'0'755"), instead of
+the tail digit (i.e. "10075'5'"), looks strange.
+
+Side note: now I look at it, the original does not make much sense
+for that matter.  "100755" & 4 is different from oct("100755") & 4.
