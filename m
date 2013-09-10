@@ -1,78 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Sep 2013, #02; Mon, 9)
-Date: Tue, 10 Sep 2013 11:31:55 -0700
-Message-ID: <xmqqk3ioy1d0.fsf@gitster.dls.corp.google.com>
-References: <xmqqa9jl38ve.fsf@gitster.dls.corp.google.com>
-	<522F486A.1000705@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Sep 10 20:32:08 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 0/2] reset: handle submodule with trailing slash
+Date: Tue, 10 Sep 2013 20:13:16 +0100
+Message-ID: <cover.1378840318.git.john@keeping.me.uk>
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 10 21:13:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJSjP-0001rH-0B
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 20:32:07 +0200
+	id 1VJTNe-0000Gz-3L
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 21:13:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751223Ab3IJScC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 14:32:02 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45856 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751159Ab3IJScB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 14:32:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83F3440CC2;
-	Tue, 10 Sep 2013 18:32:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f97r/zH0uqW8d87qZO7KfRKCL4E=; b=XywEbm
-	NT4H/JKPgfa8CkXu7d8EGNuH4fITlkuga9z8JFQuFTNYX+bXRAmovPk9g2HhlEix
-	Qg7gK1dPW9cVbI9JQgDBJ3H8puZgZMpDltLSHdlsOhRHS4KFFcgABSCH8g83H4NS
-	1JYW05bx2fviPMnwhWXVwzqBzR2tpTWX7jMXQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NxnY7QYUeL5FhTNBNdo/Ifj5aWzAPWHr
-	N93LPyy57/GxQ+xEYEPfSIjIFivvy6Uxw1TguEEwQm7xh5Jh/hhuEyNUIfYzqkVP
-	7E9B4qT6hCCx3IW93GPjUEVEz8619DLH04gzimMcWJLmhGZxknr6nJONpBaKZAC0
-	3c0mS/dafhk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 29EB940CC0;
-	Tue, 10 Sep 2013 18:32:00 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1751380Ab3IJTNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 15:13:36 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:46561 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751028Ab3IJTNe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 15:13:34 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id D3C3E6064EC;
+	Tue, 10 Sep 2013 20:13:33 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.999
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0hbbSL8ulC+B; Tue, 10 Sep 2013 20:13:33 +0100 (BST)
+Received: from river.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 49BD340CBA;
-	Tue, 10 Sep 2013 18:31:58 +0000 (UTC)
-In-Reply-To: <522F486A.1000705@web.de> (Jens Lehmann's message of "Tue, 10 Sep
-	2013 18:27:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 46C468E6-1A47-11E3-BDFC-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	by coyote.aluminati.org (Postfix) with ESMTPSA id AF0C36064FA;
+	Tue, 10 Sep 2013 20:13:27 +0100 (BST)
+X-Mailer: git-send-email 1.8.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234470>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+The first patch is the important one here, the second one I noticed
+while checking if any other commands fail to handle submodule paths with
+a trailing slash and is just a simplification.
 
-> Am 10.09.2013 00:53, schrieb Junio C Hamano:
->> * bc/submodule-status-ignored (2013-09-04) 2 commits
->>  - submodule: don't print status output with ignore=all
->>  - submodule: fix confusing variable name
->> 
->>  Originally merged to 'next' on 2013-08-22
->> 
->>  Will merge to 'next'.
->
-> I propose to cook this some time in next to give submodule
-> users who have configured ignore=all the opportunity to test
-> and comment on that. And as Matthieu noticed the documentation
-> is not terribly clear here, I'll prepare one or two patches to
-> fix that which should go in together with these changes.
+John Keeping (2):
+  reset: handle submodule with trailing slash
+  rm: re-use parse_pathspec's trailing-slash removal
 
-OK.
+ builtin/reset.c            |  5 +++++
+ builtin/rm.c               | 20 ++++----------------
+ t/t7400-submodule-basic.sh |  6 ++++--
+ 3 files changed, 13 insertions(+), 18 deletions(-)
 
-Thanks.
+-- 
+1.8.2
