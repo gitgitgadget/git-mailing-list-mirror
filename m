@@ -1,54 +1,65 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v6 1/8] reset: rename update_refs to reset_refs
-Date: Tue, 10 Sep 2013 09:13:16 +0530
-Message-ID: <CALkWK0kC-jwONA2iZ+KYSe7iJAEq=SFNdUEmuxWUpKuJ+r_AKQ@mail.gmail.com>
-References: <cover.1378732710.git.brad.king@kitware.com> <cover.1378773895.git.brad.king@kitware.com>
- <caa29a576f30be135956073ccab6534d0877a418.1378773895.git.brad.king@kitware.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] http-backend: provide Allow header for 405
+Date: Tue, 10 Sep 2013 02:24:00 -0400
+Message-ID: <20130910062359.GA19638@sigill.intra.peff.net>
+References: <1378664106-95936-1-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Brad King <brad.king@kitware.com>
-X-From: git-owner@vger.kernel.org Tue Sep 10 05:44:03 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, jkoleszar@google.com,
+	gitster@pobox.com
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Tue Sep 10 08:24:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJErz-0004ZX-CN
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 05:44:03 +0200
+	id 1VJHMv-0006qz-M8
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 08:24:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697Ab3IJDn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Sep 2013 23:43:59 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:36485 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751561Ab3IJDn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Sep 2013 23:43:58 -0400
-Received: by mail-ie0-f182.google.com with SMTP id aq17so15230563iec.27
-        for <git@vger.kernel.org>; Mon, 09 Sep 2013 20:43:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=z0MGI4mFJ+DCvGVL1TSgGTNOgWMZaGDuCX2pu9s4hBc=;
-        b=Udc3z0ILspyxtF083B5rRsSESunABJWT7z9C8fgnsHh5O8pIDes6fmDJOZxksr8rxf
-         DSOQlqaa17+m/TBqhgU56r24IIe6YbaHPqli+7RRri5x38V1mpjbV94ASwQ4ffJA3+KB
-         oBy2lvYZd13OSgITEisQp6PY6ZlUitXpLaG7ylG86nznweiZkLkqMmtPj1qVEpwDxo/Q
-         ZIp3XAojWMbgZgk3C1KPuyyY+XMbD9B/csbWcXeBgDTzldS1YMeTDq+TT2+k5vk1RQbc
-         xxRH20ORPnH9dFl0FoRiV0iuAjow+/U+VYpCox9xs+y+O2wK0OAE9Uk1hkN2AgKSKvb0
-         xxxA==
-X-Received: by 10.50.97.35 with SMTP id dx3mr10070569igb.55.1378784638007;
- Mon, 09 Sep 2013 20:43:58 -0700 (PDT)
-Received: by 10.64.73.5 with HTTP; Mon, 9 Sep 2013 20:43:16 -0700 (PDT)
-In-Reply-To: <caa29a576f30be135956073ccab6534d0877a418.1378773895.git.brad.king@kitware.com>
+	id S1754180Ab3IJGYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 02:24:04 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33406 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754132Ab3IJGYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 02:24:03 -0400
+Received: (qmail 20748 invoked by uid 102); 10 Sep 2013 06:24:02 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Sep 2013 01:24:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Sep 2013 02:24:00 -0400
+Content-Disposition: inline
+In-Reply-To: <1378664106-95936-1-git-send-email-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234418>
 
-Brad King wrote:
-> The function resets refs rather than doing arbitrary updates.
-> Rename it to allow a future general-purpose update_refs function
-> to be added.
+On Sun, Sep 08, 2013 at 06:15:06PM +0000, brian m. carlson wrote:
 
-Makes sense; thanks.
+> The HTTP 1.1 standard requires an Allow header for 405 Method Not Allowed:
+> 
+>   The response MUST include an Allow header containing a list of valid methods
+>   for the requested resource.
+> 
+> So provide such a header when we return a 405 to the user agent.
+
+Makes sense.
+
+>  			if (strcmp(method, c->method)) {
+>  				const char *proto = getenv("SERVER_PROTOCOL");
+> -				if (proto && !strcmp(proto, "HTTP/1.1"))
+> +				if (proto && !strcmp(proto, "HTTP/1.1")) {
+>  					http_status(405, "Method Not Allowed");
+> +					hdr_str("Allow", !strcmp("GET", c->method) ?
+> +						"GET, HEAD" : c->method);
+> +				}
+
+It took me a minute to figure out what is going on here. But we seem to
+convert HEAD requests into GETs elsewhere, so any "GET" service should
+be able to do either.
+
+Looks OK to me.
+
+-Peff
