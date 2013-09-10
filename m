@@ -1,79 +1,80 @@
-From: Tvangeste <i.4m.l33t@yandex.ru>
-Subject: Re: Regression in e02ca72: git svn rebase is broken on Windows
-Date: Tue, 10 Sep 2013 22:53:21 +0200
-Message-ID: <6821378846401@web12g.yandex.ru>
-References: <17231378818848@web5m.yandex.ru> <alpine.DEB.1.00.1309101812450.1191@s15462909.onlinehome-server.info> <93421378835002@web20j.yandex.ru> <alpine.DEB.1.00.1309101958480.1191@s15462909.onlinehome-server.info>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: pack v4 trees with a canonical base
+Date: Tue, 10 Sep 2013 17:03:31 -0400 (EDT)
+Message-ID: <alpine.LFD.2.03.1309101652240.20709@syhkavp.arg>
+References: <alpine.LFD.2.03.1309091517380.20709@syhkavp.arg>
+ <CACsJy8C+SFBRD1czeeK5VBDYT4xA6K+61HgLRnjB+CYJ-2g+uA@mail.gmail.com>
+ <xmqqbo40xwnv.fsf@gitster.dls.corp.google.com>
+ <alpine.LFD.2.03.1309101615080.20709@syhkavp.arg>
+ <xmqq38pcxv5z.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"msysgit@googlegroups.com" <msysgit@googlegroups.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Sep 10 22:59:55 2013
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 10 23:04:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJV2Q-0008OW-L3
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 22:59:54 +0200
+	id 1VJV6Y-0005s2-Pc
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 23:04:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752259Ab3IJU7u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Sep 2013 16:59:50 -0400
-Received: from forward17.mail.yandex.net ([95.108.253.142]:60335 "EHLO
-	forward17.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752254Ab3IJU7t (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 16:59:49 -0400
-X-Greylist: delayed 385 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Sep 2013 16:59:49 EDT
-Received: from web12g.yandex.ru (web12g.yandex.ru [95.108.252.112])
-	by forward17.mail.yandex.net (Yandex) with ESMTP id 11FE110615A7;
-	Wed, 11 Sep 2013 00:53:22 +0400 (MSK)
-Received: from 127.0.0.1 (localhost [127.0.0.1])
-	by web12g.yandex.ru (Yandex) with ESMTP id 94345A81633;
-	Wed, 11 Sep 2013 00:53:21 +0400 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1378846401; bh=gGdVNnl7j2iV+vD8s7xPkee75QjhwaLQb8PWpUgk/Tg=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=Y/PvA4m2e+iqHGI/5uBszCgbksAf+8En5EK/2UJQHhhwXCihcevBXaA1d6iwEzTC/
-	 XYYakodbBSnOT9JRLw90pxiCC4cxwXjshKvQiduofjZSaEI3ZMdDpDdpw81PuDPldo
-	 0ew3lqn4n4CTbwmnU798/p9Y7bSe4NlTLQNfTPCo=
-Received: from agsb-5d87fcb4.pool.mediaWays.net (agsb-5d87fcb4.pool.mediaWays.net [93.135.252.180]) by web12g.yandex.ru with HTTP;
-	Wed, 11 Sep 2013 00:53:21 +0400
-Envelope-From: i-4m-l33t@yandex.ru
-In-Reply-To: <alpine.DEB.1.00.1309101958480.1191@s15462909.onlinehome-server.info>
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
+	id S1751665Ab3IJVEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 17:04:06 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:35771 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751265Ab3IJVEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 17:04:04 -0400
+Received: from yoda.home ([70.83.209.44]) by VL-VM-MR005.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0MSX00534H60VEA0@VL-VM-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 10 Sep 2013 17:03:36 -0400 (EDT)
+Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
+ with ESMTPSA id 8A6092DA0625; Tue, 10 Sep 2013 17:03:36 -0400 (EDT)
+In-reply-to: <xmqq38pcxv5z.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234482>
 
-10.09.2013, 20:02, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>:
-> =9AGiven the explanation what msysGit is, you might suspect that I'd =
-like you
-> =9Ato try to fix this in the msysGit context: After installing
->
-> =9A=9A=9A=9A=9A=9A=9A=9A=9Ahttps://code.google.com/p/msysgit/download=
-s/list?q=3Dnet+installer
+On Tue, 10 Sep 2013, Junio C Hamano wrote:
 
-No problem. Here's what I have so far:
+> Nicolas Pitre <nico@fluxnic.net> writes:
+> 
+> > On Tue, 10 Sep 2013, Junio C Hamano wrote:
+> >
+> >> There may be trees in the wild that record 100775 or 100777 in the
+> >> mode field for executable blobs, which also need to be special
+> >> cased.
+> >
+> > All the file mode bits are always preserved.  So this is not really a 
+> > special case as far as the pack v4 encoding is concerned.
+> 
+> Ahh. OK.  It can theoretically be argued that you could further
+> squeeze 13 bits out per tree entry because you would need only 5
+> possible values (100644, 100755 120000, 40000, and 160000, all
+> octal) for the modes, but we will never know what other modes we
+> would want to use in the future, so not being over-tight and using
+> 16-bit for this purpose is probably a good trade-off
 
-1. Installed the latest msysgit from the URL you've provided. Tried the=
- git that comes out of the box that comes with the installer (1.8.3.msy=
-sgit):
+Absolutely.  I tried not to lose any of the currently available 
+extension possibilities in the canonical object format.
 
-1a. On CMD: everything is fine.
-1b. On msys shell: everything is fine.
+> (squeezing 8 bits out per tree entry would make the shape of ident 
+> table entry and tree path entry different and may hurt reusing the 
+> code to parse these tables).
 
-2. Checked out the branch you've suggested to try (pt/tentative-1.8.4) =
-and installed it. Tried the new version:
+One could argue that 16 bits is much more than sufficient to encode a 
+time zone offset too.  but again this didn't seem worth painting 
+ourselves in a corner if ever some creative time zones are used.
 
-2a. On CMD: got the problem that is being discussed in this thread.
-2b. On msys shell: everything is fine.
+Those table are also compressed.  So any repetition of the same mode bit 
+pattern or sparseness in the tz bits is likely to be compressed well.
 
-So, in summary. That commit e02ca72, somewhere between 1.8.3 and 1.8.4 =
-introduced the regression in git/git-svn on Windows, when executed in C=
-MD.
 
-Thanks,
-  --Tvangeste
+Nicolas
