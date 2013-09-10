@@ -1,99 +1,111 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: [PATCH] lookup_object: remove hashtable_index() and optimize hash_obj()
-Date: Tue, 10 Sep 2013 18:17:12 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309101811510.20709@syhkavp.arg>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: Regression in e02ca72: git svn rebase is broken on Windows
+Date: Tue, 10 Sep 2013 22:17:17 +0000 (UTC)
+Message-ID: <loom.20130911T001650-550@post.gmane.org>
+References: <17231378818848@web5m.yandex.ru> <xmqq38pczjw6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 11 00:17:19 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 11 00:20:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJWFJ-0003zg-5r
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 00:17:17 +0200
+	id 1VJWIA-00080g-VE
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 00:20:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752250Ab3IJWRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 18:17:13 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:44263 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751640Ab3IJWRM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 18:17:12 -0400
-Received: from xanadu.home ([70.83.209.44]) by VL-VM-MR006.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MSX00IUNKKO4600@VL-VM-MR006.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 10 Sep 2013 18:17:12 -0400 (EDT)
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1752706Ab3IJWUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 18:20:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:47299 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751145Ab3IJWUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 18:20:08 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1VJWHz-0007jt-HG
+	for git@vger.kernel.org; Wed, 11 Sep 2013 00:20:03 +0200
+Received: from ns.dcon.de ([77.244.111.149])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Sep 2013 00:20:03 +0200
+Received: from karsten.blees by ns.dcon.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Sep 2013 00:20:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 77.244.111.149 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234492>
 
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-hashtable_index() appears to be a close duplicate of hash_obj().
-Keep only the later and make it usable for all cases.
+> 
+> Tvangeste <i.4m.l33t <at> yandex.ru> writes:
+> 
+> > Hi,
+> >
+> > After bisecting this problem I ended up with the mentioned commit that
+completely breaks git-svn for me on
+> Windows (mingw/msys version).
+> >
+> > ==========
+> > #> git svn rebase
+> > warning: unable to access '': Invalid argument
+> > warning: unable to access '': Invalid argument
+> > fatal: unable to access '../../../../w:/work/my/repo.git/.git/config':
+Invalid argument
+> > fatal: index file open failed: Invalid argument
+> > Cannot rebase: You have unstaged changes.
+> > Please commit or stash them.
+> > rebase refs/remotes/trunk: command returned error: 1
+> > ==========
+> >
+> > Please note that I use the official git repository as-is, this one (no
+additional patches):
+> > git://git.kernel.org/pub/scm/git/git.git
+> >
+> > e02ca72f70ed8f0268a81f72cb3230c72e538e77 is the first bad commit
+> > commit e02ca72f70ed8f0268a81f72cb3230c72e538e77
+> > Author: Jiang Xin
+> > Date:   Tue Jun 25 23:53:43 2013 +0800
+> >
+> >     path.c: refactor relative_path(), not only strip prefix
+> >
+> > Thanks,
+> >   --Tvangeste
+> 
+> The suspect commit and symptom look consistent.  You started from a
+> directory whose absolute path is "w:/work/..." and the updated code
+> mistakenly thoguht that something that begins with "w" (not '/') is
+> not an absolute, so added a series of ../ to make it relative, or
+> something silly like that.
+> 
+> Jiang?
+> 
 
-Also remove the modulus as this is an expansive operation.
-The size argument is always a power of 2 anyway, so a simple
-mask operation provides the same result.
+Indeed, this patch seems to change relative_path in a way that breaks git
+initialization, not just on Windows.
 
-On a 'git rev-list --all --objects' run this decreased the time spent
-in lookup_object from 27.5% to 24.1%.
+Previously, relative_path was always called with two absolute paths, and it
+only returned a relative path if the first was a subdir of the second (so a
+better name would probably have been 'relative_path_if_subdir'). The purpose
+was to improve performance by making GIT_DIR shorter if it was a subdir of
+GIT_WORK_TREE.
 
-Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
----
+After this patch, relative_path always tries to return a relative path, even
+if both absolute paths are completely disjunct. This not only defeats the
+purpose (by making GIT_DIR longer, thus hurting performance), it is also not
+possible in general. POSIX explicitly allows for '//hostname' notation
+referring to network resources that are not explicitly mounted under '/'.
+I.e. given two absolute paths '//hostname1/a' and '//hostname2/b', there is
+no relative path from a to b or vice versa.
 
-I discovered this patch in my git work tree dating from 2 years ago.
-
-diff --git a/object.c b/object.c
-index d8a4b1f..e2dae22 100644
---- a/object.c
-+++ b/object.c
-@@ -43,16 +43,16 @@ int type_from_string(const char *str)
- 	die("invalid object type \"%s\"", str);
- }
- 
--static unsigned int hash_obj(struct object *obj, unsigned int n)
-+static unsigned int hash_obj(const unsigned char *sha1, unsigned int n)
- {
- 	unsigned int hash;
--	memcpy(&hash, obj->sha1, sizeof(unsigned int));
--	return hash % n;
-+	memcpy(&hash, sha1, sizeof(unsigned int));
-+	return hash & (n - 1);
- }
- 
- static void insert_obj_hash(struct object *obj, struct object **hash, unsigned int size)
- {
--	unsigned int j = hash_obj(obj, size);
-+	unsigned int j = hash_obj(obj->sha1, size);
- 
- 	while (hash[j]) {
- 		j++;
-@@ -62,13 +62,6 @@ static void insert_obj_hash(struct object *obj, struct object **hash, unsigned i
- 	hash[j] = obj;
- }
- 
--static unsigned int hashtable_index(const unsigned char *sha1)
--{
--	unsigned int i;
--	memcpy(&i, sha1, sizeof(unsigned int));
--	return i % obj_hash_size;
--}
--
- struct object *lookup_object(const unsigned char *sha1)
- {
- 	unsigned int i, first;
-@@ -77,7 +70,7 @@ struct object *lookup_object(const unsigned char *sha1)
- 	if (!obj_hash)
- 		return NULL;
- 
--	first = i = hashtable_index(sha1);
-+	first = i = hash_obj(sha1, obj_hash_size);
- 	while ((obj = obj_hash[i]) != NULL) {
- 		if (!hashcmp(sha1, obj->sha1))
- 			break;
+Additionally, GIT_DIR now may or may not have a trailing slash, which gives
+me a slightly uneasy feeling...
