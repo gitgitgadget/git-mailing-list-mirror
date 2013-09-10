@@ -1,107 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC] Disabling status hints in COMMIT_EDITMSG
-Date: Tue, 10 Sep 2013 13:04:18 +0200
-Message-ID: <vpqtxhtey4t.fsf@anie.imag.fr>
-References: <vpq4n9tghk5.fsf@anie.imag.fr> <522EEC28.6020405@gmail.com>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: [Proposal] Clonable scripts
+Date: Tue, 10 Sep 2013 14:55:14 +0200
+Message-ID: <20130910125514.GA22078@inner.h.apk.li>
+References: <CADoiZqpec6rPOgPLPQFFfLdE+Cc4ZKtWs0Q0VSfKGm3b1Lai2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 10 13:04:29 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Niels Basjes <Niels@basjes.nl>
+X-From: git-owner@vger.kernel.org Tue Sep 10 14:55:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJLkB-0002JT-Vr
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 13:04:28 +0200
+	id 1VJNTc-0006NR-64
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 14:55:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247Ab3IJLEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 07:04:24 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:45564 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751075Ab3IJLEX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 07:04:23 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8AB4H4w014873
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 10 Sep 2013 13:04:17 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VJLk2-0002Zp-Jr; Tue, 10 Sep 2013 13:04:18 +0200
-In-Reply-To: <522EEC28.6020405@gmail.com> (Chris Packham's message of "Tue, 10
-	Sep 2013 21:53:44 +1200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 10 Sep 2013 13:04:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r8AB4H4w014873
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1379415859.05549@rWrJbH2f8h0KpgqYyvTf2g
+	id S1753928Ab3IJMzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 08:55:19 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:55091 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751335Ab3IJMzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 08:55:18 -0400
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id r8ACtEf23297;
+	Tue, 10 Sep 2013 14:55:14 +0200
+Content-Disposition: inline
+In-Reply-To: <CADoiZqpec6rPOgPLPQFFfLdE+Cc4ZKtWs0Q0VSfKGm3b1Lai2g@mail.gmail.com>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234432>
 
-Chris Packham <judge.packham@gmail.com> writes:
+On Mon, 09 Sep 2013 22:48:42 +0000, Niels Basjes wrote:
+...
+> However I can imagine that a malicious opensource coder can create a
+> github repo and try to hack the computer of a contributer via those
+> scripts. So having such scripts is a 'bad idea'.
 
-> On 10/09/13 21:19, Matthieu Moy wrote:
->> Hi,
->> 
->> I just noticed that the template COMMIT_EDITMSG was containing status
->> hints, and that they were not particularty helpfull _during_ a commit. I
->> think it would be sensible to ignore advice.statusHints and disable
->> hints unconditionally when writting to COMMIT_EDITMSG.
->> 
->> Any objection?
->> 
->
-> I did recently find them useful/reassuring when I was committing a
-> merge. But I wouldn't consider that a strong objection.
+Given that half the repos out there are cloned to 'make install' in
+them...it's still a bad idea.
 
-Just to make sure we're talking about the same thing: when commiting a
-merge, the template currently looks like:
+> If those scripts were how ever written in a language that is build
+> into the git program and the script are run in such a way that they
+> can only interact with the files in the local git (and _nothing_
+> outside of that) this would be solved.
 
-  Merge branch 'master' of /tmp/git
-  
-  Conflicts:
-  	foo.txt
-  #
-  # It looks like you may be committing a merge.
-  # If this is not correct, please remove the file
-  #	.git/MERGE_HEAD
-  # and try again.
-  
-  
-  # Please enter the commit message for your changes. Lines starting
-  # with '#' will be ignored, and an empty message aborts the commit.
-  # On branch master
-  # Your branch and 'origin/master' have diverged,
-  # and have 3 and 1 different commit each, respectively.
-  #   (use "git pull" to merge the remote branch into yours)
-  #
-  # All conflicts fixed but you are still merging.
-  #   (use "git commit" to conclude merge)
-  #
-  # Changes to be committed:
-  #
-  #	modified:   foo.txt
-  #
+I still think this is a nightmare of maintenance. You'd need a restricted
+version of a language that doesn't allow access outside the repo (and
+no TCP either), and someone will always miss some module...
 
-What I'd like to remove are the parts between parenthesis :
+Not that it wouldn't be cool, yet.
 
-  (use "git commit" to conclude merge)
-  (use "git pull" to merge the remote branch into yours)
+...
+> Like I said, this is just a proposal and I would like to know what you
+> guys think.
 
-The first part (It looks like [...]) would remain, of course.
+I think there are generally two use cases:
 
-Actually, even the "All conflicts fixed but you are still merging." part
-is not really accurate when the commit is already started.
+- Many people working on repos in an organization. Give them a wrapper
+  script that does the clone (and also knows the clone URL already),
+  that will set up hooks and configuration as needed.
+
+- github-style cooperation. Add a make hooks to your Makefile that sets
+  up the hooks your project seems to want. After all, this is for the
+  developers to pre-check what they will submit, so it is in their own
+  interest to have (and cross-read) the hooks.
+
+Andreas
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
