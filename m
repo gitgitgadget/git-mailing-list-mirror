@@ -1,85 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 0/8] Multiple simultaneously locked ref updates
-Date: Tue, 10 Sep 2013 09:30:29 -0700
-Message-ID: <xmqqob80zlju.fsf@gitster.dls.corp.google.com>
-References: <cover.1378732710.git.brad.king@kitware.com>
-	<cover.1378773895.git.brad.king@kitware.com>
+Subject: Re: [RFC] Disabling status hints in COMMIT_EDITMSG
+Date: Tue, 10 Sep 2013 09:42:06 -0700
+Message-ID: <xmqqeh8wzl0h.fsf@gitster.dls.corp.google.com>
+References: <vpq4n9tghk5.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brad King <brad.king@kitware.com>
-X-From: git-owner@vger.kernel.org Tue Sep 10 18:30:43 2013
+Cc: git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Sep 10 18:42:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJQpt-0006zQ-Gt
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 18:30:41 +0200
+	id 1VJR1C-0001za-No
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Sep 2013 18:42:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232Ab3IJQah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 12:30:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41591 "EHLO
+	id S1753176Ab3IJQmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 12:42:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58463 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752203Ab3IJQah (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 12:30:37 -0400
+	id S1753070Ab3IJQmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 12:42:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C59A4019A;
-	Tue, 10 Sep 2013 16:30:35 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA46C40EC4;
+	Tue, 10 Sep 2013 16:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oFB6IzwetmO963iSSUmTCqsi3ow=; b=X4w83V
-	tiXjjPGopoBpTuNXPDmvT/aB+dikR12zTbW6sWexgLxlJX/t2ztoOegjYCSkKBWe
-	AKu5pkmhnjW8kKGmO/SCI37WRjeEPlCKYJLvQ2k9BPklTQ0N0M2NoPiAOICCgLXD
-	ryxcrvguljJqoHeT5e8B2v6Cda+ksyVZJkZ88=
+	:content-type; s=sasl; bh=Mc0ekKA9jVip/txd21jUbHK4TYk=; b=rS9qX1
+	qzsE5e6ykM8baQaggMdDIV2ZZ5RcsoCjLYx05eKfk1r+OwFjSU6JjTSG0BnDxlnJ
+	rt3fuWTfGnZIY7FQIy/0Tpsw1M/BF7gBcqAb7bm9JRkLJggLnK/y2MfWxrKR8MYP
+	ApVOCvgy0vGeGMsGgGNiWm5dvucgHiZP8UpC8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G86o31N/48y98lihE1j6f1DtCy8t7Iad
-	K1b8YnFfzIWgqpLcXkqfme8Lq6PvB0v2CnmqG3bYKPeFpLxcIWkL9wGazPZilg6k
-	2jDkXNm04hLFRbEKOwZlXlZOW8qyrQo556Wa3/E8ghpg+nZdZ04bMY1dVCSujopC
-	XfogdF/hMXA=
+	:content-type; q=dns; s=sasl; b=m34JFhBgysXMOZ8NkKCbeYd6nbUX5jMd
+	tLhC3ZFSRl1Alg6X+5PhKzOFXTOskLEMkmn02LzZEyxTS2i9uAhFGWBZuI/U+0k1
+	8HFHpDWnl1CQlc2JTNjbyTip/eMgSVMPnb7Tb4PTpPFJefvd4Dkwr7U0goE5fFZy
+	Wv22uagYlH8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B177140197;
-	Tue, 10 Sep 2013 16:30:34 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A391940EC3;
+	Tue, 10 Sep 2013 16:42:12 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BAC664017D;
-	Tue, 10 Sep 2013 16:30:31 +0000 (UTC)
-In-Reply-To: <cover.1378773895.git.brad.king@kitware.com> (Brad King's message
-	of "Mon, 9 Sep 2013 20:57:38 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BCB3B40EBA;
+	Tue, 10 Sep 2013 16:42:09 +0000 (UTC)
+In-Reply-To: <vpq4n9tghk5.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	10 Sep 2013 11:19:22 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4FFCA682-1A36-11E3-8D15-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F009F17E-1A37-11E3-87C1-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234442>
 
-Brad King <brad.king@kitware.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Updates since the previous revision of the series:
+> Hi,
 >
-> * The entire series was rebased on master at bb80ee09; it was
->   previously based on v1.8.4.
+> I just noticed that the template COMMIT_EDITMSG was containing status
+> hints, and that they were not particularty helpfull _during_ a commit. I
+> think it would be sensible to ignore advice.statusHints and disable
+> hints unconditionally when writting to COMMIT_EDITMSG.
 >
-> * A conflict in refs.c with 47a59185 was resolved by preserving
->   the elimination of find_ref_by_name while adding our new content.
->
-> * A conflict in builtin/update-ref.c with d5d09d47 (Replace deprecated
->   OPT_BOOLEAN by OPT_BOOL, 2013-08-03) was resolved by integrating
->   both changes.  The new options added in patch 7 now use OPT_BOOL.
+> Any objection?
 
-I just test-applied these on top of bb80ee09 (Update draft release
-notes to 1.8.5 for the second batch of topics, 2013-09-09), and
-compared the result with the result of merging the tip of the
-previous round 511910e1 (update-ref: add test cases covering --stdin
-signature, 2013-09-09) with bb80ee09, and they more-or-less match
-(the order of options[] array elements may differ in
-update-index.c), which validates that existing merge conflict
-resolution matches your expectation.
+I agree that the extra "this is how you may rectify the situation"
+lines like these look useless at the first glance.
 
-Thanks.  I am not sure if I should rewind and rebuild the series
-with these patches, though.  This is a new feature and does not have
-to be merged to 'maint', so rebasing is perfectly fine, but it is
-not strictly necessary, either.
+    # Changes to be committed:
+    #   (use "git reset HEAD <file>..." to unstage)
+    #
+    #       new file:   foo
+    #
+    # Untracked files:
+    #  (use "git add <file>..." to include in what will be committed)
+    #
+    #       bar
+    #
+
+The whole point of showing the list is to give the user a chance to
+notice mistakes, and after noticing a mistake, what the user does is
+to abort the commit, not "git reset HEAD <file>" nor "git add <file>".
+
+But at the same time, I feel that these redundant lines, especially
+the latter one, would give the users a stronger cue than just saying
+that "bar is Untracked"; "do X to include" reminds that bar will not
+be included if nothing is done.
+
+So I am on the fence on this one.  No strong objection, but I
+suspect those who do not have any voice in this discussion
+(i.e. those who are about to start using Git) may be helped by
+keeping these lines.
