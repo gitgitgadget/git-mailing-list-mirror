@@ -1,86 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH-v3] Allow git-filter-branch to process large repositories with lots of branches.
-Date: Wed, 11 Sep 2013 09:06:59 -0700
-Message-ID: <xmqqhadruyu4.fsf@gitster.dls.corp.google.com>
-References: <xmqqli34uuvy.fsf@gitster.dls.corp.google.com>
-	<CE550501.19691%lee.carver@corp.service-now.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v6 7/8] update-ref: support multiple simultaneous updates
+Date: Wed, 11 Sep 2013 12:07:56 -0400
+Message-ID: <CAPig+cT6XmcpQLQWyC_mU0sHRGNb87QUVpzNG2HBhmOCx12KTg@mail.gmail.com>
+References: <cover.1378732710.git.brad.king@kitware.com>
+	<cover.1378773895.git.brad.king@kitware.com>
+	<74c081c4004f3a8afb38ab15aff7d3178de4a1f8.1378773895.git.brad.king@kitware.com>
+	<CAPig+cQ=PSQbF4+YfZC-Ps2Te47VNTRm_yDTVY48vGh4G2UFgQ@mail.gmail.com>
+	<523063D7.7000305@kitware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Lee Carver <leeca@pnambic.com>,
-	Stefano Lattarini <stefano.lattarini@gmail.com>
-To: Lee Carver <Lee.Carver@servicenow.com>
-X-From: git-owner@vger.kernel.org Wed Sep 11 18:07:18 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Brad King <brad.king@kitware.com>
+X-From: git-owner@vger.kernel.org Wed Sep 11 18:08:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJmwj-0000lD-Nd
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 18:07:14 +0200
+	id 1VJmxa-0001qx-BT
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 18:08:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755539Ab3IKQHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Sep 2013 12:07:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58055 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754959Ab3IKQHE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 12:07:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8BEF241037;
-	Wed, 11 Sep 2013 16:07:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=H0NaB1yjZneKV9ZARbWjsZ+7xKo=; b=x2ZNdo
-	YRZbrTjS3uJq3y5uxmGnrpk3R+e89/toiylL/OlT9IXy7mwChQdli5HXXnc5NdIh
-	OdWRSBEfTvvkKCJzCPqAS8ow9aiOlklxnWv29oU0aS6dCXudUs2KXeNzzTmYajKU
-	uGFhgdKcrMsx+l6pJCPBAKmxJkWgYLJofjrPo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y3P4qJ04Hj4BfKEDNz9sy1JXisjP3IuW
-	XcHatov43kr9T3uvVUN25FRQpu7BwCesJk6gCmbUUsvxa01mAWee07i0s1MrjZ8a
-	s8533xcJ9GmtdNl12Aj5eW5MzWPbT12aJz2+nzuSa2K4eoFhKKOYpUE68zQtR3x1
-	YgtJZycbVuo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D2DF41036;
-	Wed, 11 Sep 2013 16:07:03 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9FFE41032;
-	Wed, 11 Sep 2013 16:07:01 +0000 (UTC)
-In-Reply-To: <CE550501.19691%lee.carver@corp.service-now.com> (Lee Carver's
-	message of "Wed, 11 Sep 2013 00:21:15 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3232CCB4-1AFC-11E3-927D-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756141Ab3IKQH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 12:07:59 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:41032 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754840Ab3IKQH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 12:07:58 -0400
+Received: by mail-la0-f43.google.com with SMTP id ep20so7542219lab.2
+        for <git@vger.kernel.org>; Wed, 11 Sep 2013 09:07:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=iGInVN1xZDVO47jyH51SmUYBIFwUrlwJSObjbtFswb0=;
+        b=Lw1K8eeVQbhsh+xT2OCMXM7hpVLLflGXgAfiZGA12YMSWBmXtYF97zvfItpLBRg86l
+         D/2Lqxcv55ZdSd9grPbajii/6h2p45YUxliB6ctFyIJLGR5UBAoYQS/crLpiW2sWuQOO
+         pB2/eCIxI9wunHsxlk319i/eGr657Q0vu9UB9xbfbq+/QBX2bc5KF19NDfQ8zB9JrHOh
+         xAXwZRLv2KoK7gnHqmXh6vSOpm1W9xZld+VAr0pMMSdArM/czJBUVfoVrdOogE36v5f/
+         SdSzQ+VstNBRJ0GDlltskrh2Cxl1cRPWUmYqL8iHulKf1Q/C1tTJti568D0CPR9uInp/
+         1eZQ==
+X-Received: by 10.112.51.166 with SMTP id l6mr3288315lbo.5.1378915676587; Wed,
+ 11 Sep 2013 09:07:56 -0700 (PDT)
+Received: by 10.114.182.236 with HTTP; Wed, 11 Sep 2013 09:07:56 -0700 (PDT)
+In-Reply-To: <523063D7.7000305@kitware.com>
+X-Google-Sender-Auth: q-3EH-pnpWsVIuvGtDUvIa3SpHE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234572>
 
-Lee Carver <Lee.Carver@servicenow.com> writes:
-
-> It is using the same ${tempdir} working directory that git rev-list uses
-> below for the ../revs file
-
-Ah, I missed that; then that should be safe.  The patch looks sane.
-
-Can we have your sign-off, too, please?
-
->
-> It's normally .git-rewrite/t, following the normal working directory setup
-> near line 205.
->
+On Wed, Sep 11, 2013 at 8:36 AM, Brad King <brad.king@kitware.com> wrote:
+> On 09/10/2013 06:51 PM, Eric Sunshine wrote:
+>> On Mon, Sep 9, 2013 at 8:57 PM, Brad King <brad.king@kitware.com> wrote:
+>>> +Use 40 "0" or the empty string to specify a zero value, except that
 >>
->>>  
->>>  case "$filter_subdir" in
->>>  "")
->>> @@ -268,7 +268,7 @@ case "$filter_subdir" in
->>>  esac
->>>  
->>>  git rev-list --reverse --topo-order --default HEAD \
->>> -	--parents --simplify-merges $rev_args "$@" > ../revs ||
->>> +	--parents --simplify-merges --stdin "$@" < ../parse > ../revs ||
->>>  	die "Could not get the commits"
->>>  commits=$(wc -l <../revs | tr -d " ")
+>> Did you want an 's' after the "0"?
+>
+> The same description without 's' already appears in git-update-ref.txt
+> above this location in the existing documentation of the command-line
+
+Thanks for the explanation. (I could have checked the surrounding text
+but didn't think to do so.)
+
+> option behavior.  I see 0{40} in git-receive-pack.txt and also in
+> howto/update-hook-example.txt.  Perhaps a follow-up change can be made
+> to choose a consistent way to describe 40 0s.
+>
+> -Brad
