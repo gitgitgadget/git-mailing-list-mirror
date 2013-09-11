@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 16/21] unpack-objects: decode v4 commits
-Date: Wed, 11 Sep 2013 13:06:17 +0700
-Message-ID: <1378879582-15372-17-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 17/21] unpack-objects: allow to save processed bytes to a buffer
+Date: Wed, 11 Sep 2013 13:06:18 +0700
+Message-ID: <1378879582-15372-18-git-send-email-pclouds@gmail.com>
 References: <xmqqtxhswexg.fsf@gitster.dls.corp.google.com>
  <1378879582-15372-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,143 +13,99 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 11 08:08:58 2013
+X-From: git-owner@vger.kernel.org Wed Sep 11 08:09:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJdbl-00078b-TQ
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 08:08:58 +0200
+	id 1VJdbv-0007O4-1Y
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 08:09:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754787Ab3IKGIx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Sep 2013 02:08:53 -0400
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:59893 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753106Ab3IKGIw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 02:08:52 -0400
-Received: by mail-pd0-f177.google.com with SMTP id y10so8644796pdj.8
-        for <git@vger.kernel.org>; Tue, 10 Sep 2013 23:08:52 -0700 (PDT)
+	id S1753946Ab3IKGJB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Sep 2013 02:09:01 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:44337 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752251Ab3IKGJA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 02:09:00 -0400
+Received: by mail-pa0-f47.google.com with SMTP id kl13so8800480pab.34
+        for <git@vger.kernel.org>; Tue, 10 Sep 2013 23:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=0P9J7xJZAobn3/MRWRhnAcoPf2Sxiyn/ISpo+jhccHE=;
-        b=QuLIxfDiIeabxjo5qkXF/UpuMUyt2dNBMQC2M44VX69DdR2tLdeMu4mj7fd77qjKNs
-         OGMMwxIN8nH8M4LXmYk9AX/nc+y4+Vr7zW7QFAm7pgO59EQ71542J2emNryniKsrT0X9
-         KP8Fs4bRQTxO4bHf+346solnGimfl5+biatHEGPwqHCStf4HN1yR0PhQiCayFEqa+stg
-         ouhlP2ZudbEiX9WoJC+wSYivHynKsWvYIhMut5/Q6vDkb3izjhNo6uYXRXl00LpMfdNz
-         hl3HL3M/DEiHhZgGIQrmwCLt9Ja3VCCc4HbP+9M3d9YNJt5g0Mbh7GWD+f0xsSgji3Iv
-         zUmA==
-X-Received: by 10.66.25.232 with SMTP id f8mr1762679pag.25.1378879732355;
-        Tue, 10 Sep 2013 23:08:52 -0700 (PDT)
+        bh=+Ts+zVB+cmHhTOFl8l3BFd7k9fGBCkoOasNSB7GsivQ=;
+        b=gwBDUz/NrnFH0eAiPqK3hec33fa0TiaQd3gxnO4Xhrl7WYW/cwt51VXt8hbdCbezOo
+         51w5jmtnclg0feqo3rgafCdArdhALXfXOVwbFXCeWDs0q1ut12XpRIfcbEh+WguW5lkl
+         +3ewg/3djKUC/J+SL6nQSzJrSdiOUw9r6fbh748rh0N2IwlZNoiXuAALlHIRdpi1pBkj
+         6CeRfdW9O1puK/5NKAfjV41Fl1vMg3fiQlvIrOhHdjunnhOr/lMOrAD6/lu65PxwtvAw
+         4gEI3FrR1EL2290KP7PNbgWCcPRFHZMPwPkRjQY5pQ7JbLqJBXljd0SKaDpRHFD4p065
+         joqA==
+X-Received: by 10.66.251.1 with SMTP id zg1mr1736732pac.160.1378879740010;
+        Tue, 10 Sep 2013 23:09:00 -0700 (PDT)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPSA id os4sm27448596pbb.25.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id ht5sm27444238pbb.29.1969.12.31.16.00.00
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 10 Sep 2013 23:08:51 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 11 Sep 2013 13:08:45 +0700
+        Tue, 10 Sep 2013 23:08:59 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 11 Sep 2013 13:08:52 +0700
 X-Mailer: git-send-email 1.8.2.82.gc24b958
 In-Reply-To: <1378879582-15372-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234541>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/unpack-objects.c | 60 ++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 file changed, 60 insertions(+)
+ builtin/unpack-objects.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
 diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index f8442f4..6fc72c1 100644
+index 6fc72c1..044a087 100644
 --- a/builtin/unpack-objects.c
 +++ b/builtin/unpack-objects.c
-@@ -131,6 +131,15 @@ static const unsigned char *read_sha1ref(void)
- 	return sha1_table + index * 20;
+@@ -54,6 +54,9 @@ static void add_object_buffer(struct object *object, =
+char *buffer, unsigned long
+ 		die("object %s tried to add buffer twice!", sha1_to_hex(object->sha1=
+));
  }
 =20
-+static const unsigned char *read_dictref(struct packv4_dict *dict)
-+{
-+	unsigned int index =3D read_varint();
-+	if (index >=3D dict->nb_entries)
-+		die("bad index in read_dictref at %lu",
-+		    (unsigned long)consumed_bytes);
-+	return  dict->data + dict->offsets[index];
-+}
++static struct strbuf back_buffer =3D STRBUF_INIT;
++static int save_to_back_buffer;
 +
- static void *get_data(unsigned long size)
- {
- 	git_zstream stream;
-@@ -467,6 +476,54 @@ static void unpack_delta_entry(enum object_type ty=
-pe, unsigned long delta_size,
- 	free(base);
+ /*
+  * Make sure at least "min" bytes are available in the buffer, and
+  * return the pointer to the buffer.
+@@ -66,6 +69,8 @@ static void *fill(int min)
+ 		die("cannot fill %d bytes", min);
+ 	if (offset) {
+ 		git_SHA1_Update(&ctx, buffer, offset);
++		if (save_to_back_buffer)
++			strbuf_add(&back_buffer, buffer, offset);
+ 		memmove(buffer, buffer + offset, len);
+ 		offset =3D 0;
+ 	}
+@@ -81,6 +86,18 @@ static void *fill(int min)
+ 	return buffer;
  }
 =20
-+static void unpack_commit_v4(unsigned long size, unsigned long nr)
++static void copy_back_buffer(int set)
 +{
-+	unsigned int nb_parents;
-+	const unsigned char *committer, *author, *ident;
-+	unsigned long author_time, committer_time;
-+	int16_t committer_tz, author_tz;
-+	struct strbuf dst;
-+	char *remaining;
-+
-+	strbuf_init(&dst, size);
-+
-+	strbuf_addf(&dst, "tree %s\n", sha1_to_hex(read_sha1ref()));
-+	nb_parents =3D read_varint();
-+	while (nb_parents--)
-+		strbuf_addf(&dst, "parent %s\n", sha1_to_hex(read_sha1ref()));
-+
-+	committer_time =3D read_varint();
-+	ident =3D read_dictref(name_dict);
-+	committer_tz =3D (ident[0] << 8) | ident[1];
-+	committer =3D ident + 2;
-+
-+	author_time =3D read_varint();
-+	ident =3D read_dictref(name_dict);
-+	author_tz =3D (ident[0] << 8) | ident[1];
-+	author =3D ident + 2;
-+
-+	if (author_time & 1)
-+		author_time =3D committer_time + (author_time >> 1);
-+	else
-+		author_time =3D committer_time - (author_time >> 1);
-+
-+	strbuf_addf(&dst,
-+		    "author %s %lu %+05d\n"
-+		    "committer %s %lu %+05d\n",
-+		    author, author_time, author_tz,
-+		    committer, committer_time, committer_tz);
-+
-+	if (dst.len > size)
-+		die("bad commit");
-+
-+	remaining =3D get_data(size - dst.len);
-+	strbuf_add(&dst, remaining, size - dst.len);
-+	if (!dry_run)
-+		write_object(nr, OBJ_COMMIT, dst.buf, dst.len);
-+	else
-+		strbuf_release(&dst);
++	if (offset) {
++		git_SHA1_Update(&ctx, buffer, offset);
++		if (save_to_back_buffer)
++			strbuf_add(&back_buffer, buffer, offset);
++		memmove(buffer, buffer + offset, len);
++		offset =3D 0;
++	}
++	save_to_back_buffer =3D set;
 +}
 +
- static void read_typesize_v2(enum object_type *type, unsigned long *si=
-ze)
+ static void use(int bytes)
  {
- 	unsigned char c =3D *(char*)fill_and_use(1);
-@@ -511,6 +568,9 @@ static int unpack_one(unsigned nr)
- 	case OBJ_OFS_DELTA:
- 		unpack_delta_entry(type, size, nr);
- 		break;
-+	case OBJ_PV4_COMMIT:
-+		unpack_commit_v4(size, nr);
-+		break;
- 	default:
- 		error("bad object type %d", type);
- 		has_errors =3D 1;
+ 	if (bytes > len)
 --=20
 1.8.2.82.gc24b958
