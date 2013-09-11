@@ -1,73 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: breakage in revision traversal with pathspec
-Date: Wed, 11 Sep 2013 14:15:20 -0700
-Message-ID: <xmqqa9jjrrfb.fsf@gitster.dls.corp.google.com>
-References: <xmqqy574y4pz.fsf@gitster.dls.corp.google.com>
-	<522F8ED2.9000408@bracey.fi>
-	<xmqq38pcwc21.fsf@gitster.dls.corp.google.com>
-	<5230AD23.2050009@bracey.fi> <20130911182444.GD4326@google.com>
-	<5230C6E3.3080406@bracey.fi>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: What's cooking in git.git (Sep 2013, #02; Mon, 9)
+Date: Wed, 11 Sep 2013 23:33:17 +0200
+Message-ID: <5230E19D.3050802@googlemail.com>
+References: <xmqqa9jl38ve.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Kevin Bracey <kevin@bracey.fi>
-X-From: git-owner@vger.kernel.org Wed Sep 11 23:15:32 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig8F816A059814A906DACF9B47"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 11 23:34:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJrl6-0001Ij-0L
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 23:15:32 +0200
+	id 1VJs3H-0001qi-LO
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 23:34:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757306Ab3IKVP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Sep 2013 17:15:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60116 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755492Ab3IKVP1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 17:15:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 91CF541341;
-	Wed, 11 Sep 2013 21:15:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6lFAKuRsQY0iKenS1w/rWjVHWlE=; b=GUOsJl
-	uU2jIypSkZGLFrvJtuPe7iASaoNzAzOfYUAJuoQVm3fC8Ae3AlMYAzf/8nkehU4D
-	nHEsOWz0f1jmHnjcNBy0ZF18RN888LsCleT2KRsFQ4NpP9JCM7PHp7dNfyHndP9U
-	PbApze1rz6lZslAjcLgps96KSP0UeW+f8QIFE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T3l/IPtQ2KticWISaaXx9/zouY6TBCuK
-	8wUgby69iU8Dd0uIQOJtFCHOT3A3VzysvZY0U59kaE+Z3rruXbpGYyIVR8wrZwgq
-	9gkd/ZZO2McHxY+b2otEPmFgFEAgHscldNl6zeo575zNuwf2Bum7LsCWaEbjMCSs
-	z76GOseZpc0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E83641340;
-	Wed, 11 Sep 2013 21:15:25 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8417F4133A;
-	Wed, 11 Sep 2013 21:15:22 +0000 (UTC)
-In-Reply-To: <5230C6E3.3080406@bracey.fi> (Kevin Bracey's message of "Wed, 11
-	Sep 2013 22:39:15 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4555520A-1B27-11E3-BADF-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755385Ab3IKVeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 17:34:05 -0400
+Received: from mail-ee0-f54.google.com ([74.125.83.54]:64668 "EHLO
+	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753696Ab3IKVeD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 17:34:03 -0400
+Received: by mail-ee0-f54.google.com with SMTP id e53so4930206eek.13
+        for <git@vger.kernel.org>; Wed, 11 Sep 2013 14:34:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type;
+        bh=WgHuq/R6hL7TmrYZRLjRkXyjOgDjO5sGN9M6FFiH3nQ=;
+        b=T/JIRto5bt+tLrpcwssbAaeav4eRK7wDpVOjAeC5nzaPwkHaTlf0AW59JFdGoH03qm
+         hYnlmzgsjYJc5qmjCD3FEzrb/DlM7ZIf2+1y4YO9kHfvAjSPGCRZ7j+s1qtcvzT1L72V
+         zPyXWI0JWgkTmVrzSfjvwJLE1Rn51Mrjn1FGuWCK2bUzE4dU1boGrGdzJIEQqrPllDoF
+         WMusWa5+ku6DIRriCZLBz0ilv6JLl8Em0IvUFj74UqH9ET6LAAhxj+EyQJ1LWiOa5JtB
+         viX3Jr7fb6wpqWLpftF8znKBzXI4ZtY7wQkwKkNLV7MF2pjiq08mbRsq9FBs3ELAB6IJ
+         Cgdw==
+X-Received: by 10.14.184.132 with SMTP id s4mr5427760eem.13.1378935242313;
+        Wed, 11 Sep 2013 14:34:02 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id x47sm201361eea.16.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 11 Sep 2013 14:34:01 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
+In-Reply-To: <xmqqa9jl38ve.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234609>
 
-Kevin Bracey <kevin@bracey.fi> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig8F816A059814A906DACF9B47
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-> To see the effect at the command line: "git log v1.8.3..v.1.8.4" hides
-> the merge, but "git log ^v1.8.3 v1.8.4" shows it. Whoops. A new
-> example of a dotty shorthand not being exactly equivalent.
->
-> In the ".." case the v1.8.3 tag gets peeled before being sent to
-> add_rev_cmdline , and the "mark bottom commits" logic works. But in
-> the "^" case, the v1.8.3 doesn't get peeled.
+On 09/10/2013 12:53 AM, Junio C Hamano wrote:
+> * sb/repack-in-c (2013-08-30) 2 commits
+>  - repack: retain the return value of pack-objects
+>  - repack: rewrite the shell script in C
+>=20
+>  Any further reviews?
 
-That sounds like a bug.  ^v1.8.3 should mark v1.8.3^0 as
-uninteresting.
+Just came home from holiday (with no internet ;)
+but I'll review my code now that I have quite
+a mental distance to that code I wrote earlier.
+
+Stefan
+
+
+--------------enig8F816A059814A906DACF9B47
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with undefined - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJSMOGlAAoJEJQCPTzLflhqFK0P/iEsJzrPUfs0YD8XSQuZ0WH6
+UcXRUhtWG6+LYlO1bHjZcMCtgc34ieixMX5tL8elDl/0/CVWY4yfOBXlHySELhmI
+PZ8UMoiHGco78KzBsh0o8FuCuq474LiMHhBgii5+7WCbV0RHkjS+gpnm+WIs9IW0
+742uDbR2cMf/Vv1HHurulQHVv8F1hWGwndc5k8Vals7ltMTLgkojgXT+gaCW5iYv
+RMJ/HVsopCrYwSCbF3xbwAbOBPBPBUQFv+s205Z8UOw6wRMRyCqcmQQr69e4O0bg
+qCm73Vj9ldFLnksJal25Fs6g1FGS6azsqcJBY65+fRf/45nWO4F6uuKnbwCcINUb
+1V2L36YPtPTIoLOk74ZCw3rdePAyqHALq0j2yMQnzDf4DVluiLMCHWPoQgBCau4x
+1Ph4+q4DsrIZ3XVxWKEkn/NSglLWTpYjK99iEZ6vhIavNuTiHGutFNrmKcIUN25y
+ScsBpf1vqF4+2Y5mGybw3KUKAKflCDE2sK688gR5i4mkYDuVeghdqPgmnipmjTst
+96i6EFIhgQlHm4+8CQYEU6r95q5okH+M6Sq0ulX8UAhzTkSoSEG7PwBM246jcQR9
+BPXdL5guoqLzGi7Zq6hoULzuk164m+lq4MmVcckDtNa2e7BqC8DDCnNtUC8FxR7B
+X54ratwF1THYOXhBG9xd
+=dWht
+-----END PGP SIGNATURE-----
+
+--------------enig8F816A059814A906DACF9B47--
