@@ -1,111 +1,118 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 2/2] rm: re-use parse_pathspec's trailing-slash removal
-Date: Wed, 11 Sep 2013 09:24:41 +0100
-Message-ID: <20130911082441.GS2582@serenity.lan>
-References: <cover.1378840318.git.john@keeping.me.uk>
- <b16901cdc3d433a8e0f7078475cb06f90b4590dd.1378840318.git.john@keeping.me.uk>
- <CACsJy8Dw+RJor-XfjFQC5U5Pt39TZ656fEnkFxpDnx=kTqvADQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 11 10:25:01 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 2/2] commit: disable status hints when writing to COMMIT_EDITMSG
+Date: Wed, 11 Sep 2013 11:08:59 +0200
+Message-ID: <1378890539-1966-2-git-send-email-Matthieu.Moy@imag.fr>
+References: <1378890539-1966-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: javierdo1@gmail.com, jrnieder@gmail.com, judge.packham@gmail.com,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Sep 11 11:09:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJfjO-0004BD-5V
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 10:24:58 +0200
+	id 1VJgQM-0002zk-17
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 11:09:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751416Ab3IKIYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Sep 2013 04:24:51 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:59076 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751166Ab3IKIYu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 04:24:50 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id CD8E122F15;
-	Wed, 11 Sep 2013 09:24:49 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EWaF+XvEYKHo; Wed, 11 Sep 2013 09:24:49 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 709D022B56;
-	Wed, 11 Sep 2013 09:24:43 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8Dw+RJor-XfjFQC5U5Pt39TZ656fEnkFxpDnx=kTqvADQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753184Ab3IKJJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 05:09:16 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:47976 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753108Ab3IKJJP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 05:09:15 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8B997Jq007012
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 11 Sep 2013 11:09:07 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1VJgQ8-0005H2-Ld; Wed, 11 Sep 2013 11:09:08 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1VJgQ8-0000Wi-Bc; Wed, 11 Sep 2013 11:09:08 +0200
+X-Mailer: git-send-email 1.8.4.8.g834017f
+In-Reply-To: <1378890539-1966-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 11 Sep 2013 11:09:07 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r8B997Jq007012
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1379495348.59775@KMf7hjtR59gvUAUp5JsX1g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234552>
 
-On Wed, Sep 11, 2013 at 02:48:51PM +0700, Duy Nguyen wrote:
-> On Wed, Sep 11, 2013 at 2:13 AM, John Keeping <john@keeping.me.uk> wrote:
-> > Instead of re-implementing the "remove trailing slashes" loop in
-> > builtin/rm.c just pass PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP to
-> > parse_pathspec.
-> >
-> > Signed-off-by: John Keeping <john@keeping.me.uk>
-> > ---
-> >  builtin/rm.c | 20 ++++----------------
-> >  1 file changed, 4 insertions(+), 16 deletions(-)
-> >
-> > diff --git a/builtin/rm.c b/builtin/rm.c
-> > index 9b59ab3..3a0e0ea 100644
-> > --- a/builtin/rm.c
-> > +++ b/builtin/rm.c
-> > @@ -298,22 +298,10 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
-> >         if (read_cache() < 0)
-> >                 die(_("index file corrupt"));
-> >
-> > -       /*
-> > -        * Drop trailing directory separators from directories so we'll find
-> > -        * submodules in the index.
-> > -        */
-> > -       for (i = 0; i < argc; i++) {
-> > -               size_t pathlen = strlen(argv[i]);
-> > -               if (pathlen && is_dir_sep(argv[i][pathlen - 1]) &&
-> > -                   is_directory(argv[i])) {
-> > -                       do {
-> > -                               pathlen--;
-> > -                       } while (pathlen && is_dir_sep(argv[i][pathlen - 1]));
-> > -                       argv[i] = xmemdupz(argv[i], pathlen);
-> > -               }
-> > -       }
-> > -
-> > -       parse_pathspec(&pathspec, 0, PATHSPEC_PREFER_CWD, prefix, argv);
-> > +       parse_pathspec(&pathspec, 0,
-> > +                      PATHSPEC_PREFER_CWD |
-> > +                      PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
-> 
-> I notice that _CHEAP implementation and the removed code are not
-> exactly the same. But I think they have the same purpose so it's
-> probably ok even there are some subtle behavioral changes.
+This turns the template COMMIT_EDITMSG from e.g
 
-Providing that there's only one trailing slash, the user-visible effect
-should be the same since the only case affected by that is submodules.
-In fact _CHEAP does better in the case where the submodule does not
-exist in the working tree.
+  # [...]
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #	modified:   builtin/commit.c
+  #
+  # Untracked files:
+  #   (use "git add <file>..." to include in what will be committed)
+  #
+  #	t/foo
+  #
 
-> You may want to improve _CHEAP to remove consecutive trailing slashes
-> (i.e. foo//// -> foo) too. And maybe is is_dir_sep() instead of
-> explicit == '/' comparison in there.
+to
 
-Sounds good, I'll try to look at that tonight.
+  # [...]
+  # Changes to be committed:
+  #	modified:   builtin/commit.c
+  #
+  # Untracked files:
+  #	t/foo
+  #
 
-> > +                      prefix, argv);
-> >         refresh_index(&the_index, REFRESH_QUIET, &pathspec, NULL, NULL);
-> >
-> >         seen = xcalloc(pathspec.nr, 1);
+Most status hints were written to be accurate when running "git status"
+before running a commit. Many of them are not applicable when the commit
+has already been started, and should not be shown in COMMIT_EDITMSG. The
+most obvious are hints advising to run "git commit",
+"git rebase/am/cherry-pick --continue", which do not make sense when the
+command has already been ran.
+
+Other messages become slightly inaccurate (e.g. hint to use "git add" to
+add untracked files), as the suggested commands are not immediately
+applicable during the edition of COMMIT_EDITMSG, but would be applicable
+if the commit is aborted. These messages are both potentially helpful and
+slightly misleading. This patch chose to remove them too, to avoid
+introducing too much complexity in the status code.
+
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Junio, you'll get a trivial merge conflict with my other status
+series, as they both add a few lines of code at the same location.
+There should be no semantic conflict so I didn't consider the branches
+as dependant.
+
+
+ builtin/commit.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 388acde..6251d29 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -702,6 +702,12 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	if (s->fp == NULL)
+ 		die_errno(_("could not open '%s'"), git_path(commit_editmsg));
+ 
++	/*
++	 * Most hints are counter-productive when the commit has
++	 * already started.
++	 */
++	s->hints = 0;
++
+ 	if (clean_message_contents)
+ 		stripspace(&sb, 0);
+ 
+-- 
+1.8.4.8.g834017f
