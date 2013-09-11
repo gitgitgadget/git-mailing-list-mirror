@@ -1,117 +1,81 @@
-From: Lee Carver <Lee.Carver@servicenow.com>
-Subject: Re: [PATCH-v3] Allow git-filter-branch to process large
- repositories with lots of branches.
-Date: Wed, 11 Sep 2013 00:21:15 +0000
-Message-ID: <CE550501.19691%lee.carver@corp.service-now.com>
-References: <xmqqli34uuvy.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/3] MSVC: fix stat definition hell
+Date: Tue, 10 Sep 2013 20:35:41 -0400
+Message-ID: <CAPig+cTU6iuv84QH+Y+u4UJ9b-aHQo7zzTv6umnG1tZ9v7+nvw@mail.gmail.com>
+References: <522FA959.80108@gmail.com>
+	<522FA9E1.7010705@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Lee Carver <leeca@pnambic.com>,
-	Stefano Lattarini <stefano.lattarini@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 11 02:21:48 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 11 02:35:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJYBn-00049M-8H
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 02:21:47 +0200
+	id 1VJYPM-0006Vv-Mt
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 02:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751533Ab3IKAVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Sep 2013 20:21:32 -0400
-Received: from na3sys009aog105.obsmtp.com ([74.125.149.75]:39391 "EHLO
-	na3sys009aog105.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751044Ab3IKAVb convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Sep 2013 20:21:31 -0400
-Received: from smtprelay.corp.service-now.com ([4.71.115.101]) (using TLSv1) by na3sys009aob105.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUi+3h/rM4VM3OksxSdzWN4cuGyY0kjWK@postini.com; Tue, 10 Sep 2013 17:21:31 PDT
-Received: from SJC4EXDAG01-01.corp.service-now.com
- ([fe80::9d9c:f9e1:ea7b:618c]) by SJC4EXHTCAS01.corp.service-now.com ([::1])
- with mapi id 14.02.0347.000; Tue, 10 Sep 2013 17:21:16 -0700
-Thread-Topic: [PATCH-v3] Allow git-filter-branch to process large
- repositories with lots of branches.
-Thread-Index: AQHOrnxFXsM3E9YpfkOwgb6VhXl7tJm/rK0A
-In-Reply-To: <xmqqli34uuvy.fsf@gitster.dls.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.15.40.100]
-Content-ID: <C48EC824C73AEF42B75A4503C28D584F@corp.service-now.com>
+	id S1753413Ab3IKAfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Sep 2013 20:35:44 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:41999 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751815Ab3IKAfn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Sep 2013 20:35:43 -0400
+Received: by mail-la0-f51.google.com with SMTP id es20so6706897lab.24
+        for <git@vger.kernel.org>; Tue, 10 Sep 2013 17:35:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=iqHAo5FiM0S6yJ3MI/+RN57JMGujU5Z9GPj0BV7dp/0=;
+        b=N8ENE8YhTYd8ca0vdyQ8gQBGoDu5xyJBFwj7Utdw2cekbGAtrhehVN1jzrK8J17B+h
+         yNNYeM/2hTXKtbS/W7bw6SkEnr3u+S4SrCC8RQ0si/TzoyQOfmUgbBaJWTTCVP4Rv6OT
+         hZai2IkVn3b4H1aHHOM76BxVycDNZMc5AK8j73foQO6B+5yIdXzUbNRqOW+xXDfEgTYG
+         gSMLZSGXMaBC5sf5mx7ZCTtAYUVN15yg+q7Jjy3DqhKc//RQuZY7MDtRgQv+KuFUZrmj
+         V59vqXJCt03pS7V/WjkO1Q45IFA6MYtbHYHxNW8XrOSoa/8ljPdCAHA27yPcNu2+RvuR
+         gBug==
+X-Received: by 10.112.89.100 with SMTP id bn4mr428117lbb.16.1378859742046;
+ Tue, 10 Sep 2013 17:35:42 -0700 (PDT)
+Received: by 10.114.182.236 with HTTP; Tue, 10 Sep 2013 17:35:41 -0700 (PDT)
+In-Reply-To: <522FA9E1.7010705@gmail.com>
+X-Google-Sender-Auth: YmTIkrmRhl2IA7XVVGcXmZUymvU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234516>
 
+On Tue, Sep 10, 2013 at 7:23 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
+> In msvc.h, there's a couple of stat related functions defined diffently
 
+s/diffently/differently/
 
-On 9/10/13 4:20 PM, "Junio C Hamano" <gitster@pobox.com> wrote:
-
->Lee Carver <Lee.Carver@servicenow.com> writes:
+> from mingw.h. When we remove these definitions, the only problem we get is
+> "warning C4005: '_stati64' : macro redefinition" for this line in mingw.h:
 >
->> As noted in several forums, a recommended way to move trees between
->> repositories
->> is to use git-filter-branch to revise the history for a single tree:
->>
->> 
->>http://gbayer.com/development/moving-files-from-one-git-repository-to-ano
->>th
->> er-preserving-history/
->> 
->>http://stackoverflow.com/questions/1365541/how-to-move-files-from-one-git
->>-r
->> epo-to-another-not-a-clone-preserving-history
->>
->> However, this can lead to argument list too long errors when the
->>original
->> repository has many retained branches (>6k)
->>
->> /usr/local/git/libexec/git-core/git-filter-branch: line 270:
->> /usr/local/git/libexec/git-core/git: Argument list too long
->> Could not get the commits
->>
->> Piping the saved output from git rev-parse into git rev-list avoids this
->> problem, since the rev-parse output is not processed as a command line
->> argument.
->> ---
->>  git-filter-branch.sh | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
->> index ac2a005..2091885 100755
->> --- a/git-filter-branch.shgit
->> +++ b/git-filter-branch.sh
->> @@ -255,7 +255,7 @@ else
->>  	remap_to_ancestor=t
->>  fi
->>  
->> -rev_args=$(git rev-parse --revs-only "$@")
->> +git rev-parse --revs-only "$@" > ../parse
+> #define _stati64(x,y) mingw_stat(x,y)
 >
->Where is this "rev-parse" command running?  Is it always safe to
->clobber the file "../parse" like this?
-
-It is using the same ${tempdir} working directory that git rev-list uses
-below for the ../revs file
-
-It's normally .git-rewrite/t, following the normal working directory setup
-near line 205.
-
+> The reason is that as of MSVCR80.dll (distributed with MSVC 2005), the
+> original _stati64 family of functions was renamed to _stat32i64, and the
+> former function names became macros (pointing to the appropriate function
+> based on the definition of _USE_32BIT_TIME_T).
 >
->>  
->>  case "$filter_subdir" in
->>  "")
->> @@ -268,7 +268,7 @@ case "$filter_subdir" in
->>  esac
->>  
->>  git rev-list --reverse --topo-order --default HEAD \
->> -	--parents --simplify-merges $rev_args "$@" > ../revs ||
->> +	--parents --simplify-merges --stdin "$@" < ../parse > ../revs ||
->>  	die "Could not get the commits"
->>  commits=$(wc -l <../revs | tr -d " ")
+> Defining _stati64 works on MinGW because MinGW by default compiles against
+> the MSVCRT.DLL that is part of Windows (i.e. _stati64 is a function rather
+> than a macro).
+>
+> Note: MinGW *can* compile for newer MSVC runtime versions, and MSVC
+> apparently can also compile for the Windows MSVCRT.DLL via the DDK (see
+> http://www.syndicateofideas.com/posts/fighting-the-msvcrt-dll-hell ).
+>
+> Remove the stat definitions from msvc.h, as they are not compiler related.
+>
+> In mingw.h, determine the runtime version in use from the definitions of
+> _stati64 and _USE_32BIT_TIME_T, and define stat() accordingly.
+>
+> This also fixes that stat() in MSVC builds still resolves to mingw_lstat()
+> instead of mingw_stat().
+>
+> Signed-off-by: Karsten Blees <blees@dcon.de>
