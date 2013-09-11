@@ -1,118 +1,117 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 0/3] Reject non-ff pulls by default
-Date: Wed, 11 Sep 2013 05:53:44 -0500
-Message-ID: <CAMP44s2dmn48T=c6aSLrWeTY=CKf5AYnAv7gA8bLjLMyb9-MTA@mail.gmail.com>
-References: <xmqqd2opu8hr.fsf@gitster.dls.corp.google.com>
-	<CAMP44s2NzzS48BBpD_oQ24t2SYETte7_U4+O+32SOo5qhooQew@mail.gmail.com>
-	<xmqqfvtlpm2l.fsf@gitster.dls.corp.google.com>
-	<20130904081047.GB2582@serenity.lan>
-	<20130904092527.GB22348@sigill.intra.peff.net>
-	<CAMP44s3Vaqe-POwQb30AGdarf=ObdPUay3QEMqxHV3NKiPAouA@mail.gmail.com>
-	<20130908041805.GB14019@sigill.intra.peff.net>
-	<CAMP44s01LL2JCKzqa0Qc5MfBz9zfMXR4H8jZdauLOi-D0JVHpw@mail.gmail.com>
-	<20130908172605.GF5359@vauxhall.crustytoothpaste.net>
-	<CAMP44s0SLoD7ptgiYOg_vq+Jpo5uhWvzFC8Bd76JHo5zbjf8fg@mail.gmail.com>
-	<20130909000153.GG5359@vauxhall.crustytoothpaste.net>
-	<CAMP44s2seqO_0o=G2PjoL77HNSNcjTe4s6ZYj90_wsUT30pW8A@mail.gmail.com>
-	<vpqr4cy4g5q.fsf@anie.imag.fr>
-	<CAMP44s0YaQo7xAkPcV3xVTcYQStUVuyY=we-=KMgtZ-xgZzz1Q@mail.gmail.com>
-	<vpq4n9tjd5z.fsf@anie.imag.fr>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 1/2] reset: handle submodule with trailing slash
+Date: Wed, 11 Sep 2013 17:54:48 +0700
+Message-ID: <CACsJy8BgEM3eEDo8wOgkqYTL1fkh9azZNqbogxBubp9g5KRNbQ@mail.gmail.com>
+References: <cover.1378840318.git.john@keeping.me.uk> <c7e026f44f9ccbf5736b72e728a360b31887a50f.1378840318.git.john@keeping.me.uk>
+ <52300838.5040703@kdbg.org> <20130911082042.GR2582@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, John Keeping <john@keeping.me.uk>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Andreas Krey <a.krey@gmx.de>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 11 12:54:05 2013
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Sep 11 12:55:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJi3f-0007rV-Vc
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 12:54:04 +0200
+	id 1VJi4x-0001IW-HY
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 12:55:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753581Ab3IKKxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Sep 2013 06:53:47 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:38997 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751051Ab3IKKxp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 06:53:45 -0400
-Received: by mail-la0-f44.google.com with SMTP id eo20so7418362lab.3
-        for <git@vger.kernel.org>; Wed, 11 Sep 2013 03:53:44 -0700 (PDT)
+	id S1753050Ab3IKKzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 06:55:20 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:36127 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750988Ab3IKKzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 06:55:19 -0400
+Received: by mail-ob0-f170.google.com with SMTP id eh20so8339642obb.1
+        for <git@vger.kernel.org>; Wed, 11 Sep 2013 03:55:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=Bdnz35RQghQTCz5Uh81XAiu+VGZUzPzWkzgRJTFwixI=;
-        b=SCqrVcoVsfPtoEyT6A0TWsOD0ySmzHRuO/Dg9L3Nc4ighmGkm9l3vDWoO9Ei3qWImm
-         J8uBkL8qWyn+a1Pu84LUdpHFGqY0Y9HfgukCYPUkahhDUPmH73ZMI0X0LG4Qvf68jU9Z
-         bXtm/qwVBRNWzJgBoJ2ASV9gXXxorEOt7FhrtE305VpvQ5gVsxiXq0qH4hZ8zdJYcX0W
-         ifQyPWzXyv0El6jZL/KaC9q1fD+s8K+k0qEK7qC0TvFa/rrqCdHLtzIHo42O0x2xZgEk
-         LpxIllg3a8NV/GSFPCQgmOFPatm9IL45rBvm96tSQtJgXSsDEeo8qc+Z0GBLDnG1ADuK
-         Oz4w==
-X-Received: by 10.152.37.41 with SMTP id v9mr780507laj.9.1378896824620; Wed,
- 11 Sep 2013 03:53:44 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Wed, 11 Sep 2013 03:53:44 -0700 (PDT)
-In-Reply-To: <vpq4n9tjd5z.fsf@anie.imag.fr>
+        bh=bN2Z5h2wSMjvPclDeYOweE/TJAtH5e079pZP6SaVPuQ=;
+        b=gZo2/txGfM3rM/yskzbOHZUufY4mqCtTMHLCjOJ5K5ZyNC2aN1UWabjNElK69+x0zk
+         +r6XNKfpYr5w7XSWFQEBhtkfWUsbk56bx4hlmrX6C7cRlKVkXApX1tSUHyC9OL7FCQDC
+         xICVuzfeRmgCCTWVnrPSLsf5rvcahGD2n8lezJHC/75n46WV0T82ee1vNCcyCGVIU1ni
+         QhySwECU0Ufek25H9haAl5dRkNOxHBPz53XIK88rfrZltlpOH91e9I5Ie8aDbZtXn3I5
+         Zs0rSkN/QDa2AFQewRgercxmzLW8geEoOcCHz5jPjiMM+Ur4+yUH8IKxo2SBiCAB3bPY
+         D6vA==
+X-Received: by 10.182.181.34 with SMTP id dt2mr857006obc.30.1378896918443;
+ Wed, 11 Sep 2013 03:55:18 -0700 (PDT)
+Received: by 10.182.49.233 with HTTP; Wed, 11 Sep 2013 03:54:48 -0700 (PDT)
+In-Reply-To: <20130911082042.GR2582@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234557>
 
-On Tue, Sep 10, 2013 at 3:26 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Wed, Sep 11, 2013 at 3:20 PM, John Keeping <john@keeping.me.uk> wrote:
+> On Wed, Sep 11, 2013 at 08:05:44AM +0200, Johannes Sixt wrote:
+>> Am 10.09.2013 21:13, schrieb John Keeping:
+>> > When using tab-completion, a directory path will often end with a
+>> > trailing slash which currently confuses "git rm" when dealing with
+>> > submodules.  Now that we have parse_pathspec we can easily handle this
+>> > by simply adding the PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP flag.
+>> >
+>> > Signed-off-by: John Keeping <john@keeping.me.uk>
+>> > ---
+>> >  builtin/reset.c            | 5 +++++
+>> >  t/t7400-submodule-basic.sh | 6 ++++--
+>> >  2 files changed, 9 insertions(+), 2 deletions(-)
+>> >
+>> > diff --git a/builtin/reset.c b/builtin/reset.c
+>> > index 5e4c551..9efac0f 100644
+>> > --- a/builtin/reset.c
+>> > +++ b/builtin/reset.c
+>> > @@ -220,8 +220,13 @@ static void parse_args(struct pathspec *pathspec,
+>> >             }
+>> >     }
+>> >     *rev_ret = rev;
+>> > +
+>> > +   if (read_cache() < 0)
+>> > +           die(_("index file corrupt"));
+>>
+>> When the index is now read here, I would have expected hunk in this
+>> patch that removes a read_cache() invocation.
 >
->> The problem is the newcomers, and the newcomers will most definitely
->> not activate a configuration option to tell them that they are doing
->> something potentially undesirable.
+> I think that needs to look like this on top - there's also a
+> read_cache_unmerged() around line 68 but I don't think we can remove
+> that one.
 >
-> I teach Git to 200 newcommers each year. All of them run "git pull" the
-> first day, but believe me, very few of them want to know what a rebase
-> is at that time.
-
-And who says they have to? This is a straw man argument.
-
-May of them don't want to know what the staging area is, that's why
-they run 'git commit --all', and just like that they can run 'git pull
---merge'.
-
->> By the time they learn about pull.mode, they probably already know
->> what a rebase is. So what is the point of the configuration in the
->> first place?
-> [...]
->> That doesn't mean anything, you are assuming the user will do 'git
->> pull --rebase', and there's no rationale as to why they would end up
->> doing that.
+> -- >8 --
+> diff --git a/builtin/reset.c b/builtin/reset.c
+> index 9efac0f..800117f 100644
+> --- a/builtin/reset.c
+> +++ b/builtin/reset.c
+> @@ -143,7 +143,6 @@ static int read_from_tree(const struct pathspec *pathspec,
+>         opt.output_format = DIFF_FORMAT_CALLBACK;
+>         opt.format_callback = update_index_from_diff;
 >
-> So, you insist in asking the user to chose between rebase and merge, but
-> you also insist that they will not chose rebase? So, why ask?
-
-Because as you said, they don't know what that is.
-
->> 'git commit' by default "prevents" users from creating commits without
->> first adding changes to the staging area, and since it's a concept
->> unique to Git, it's fair to say that none of the newcomers understand
->> why 'git commit' is failing, the error messages is not particularly
->> useful either.
+> -       read_cache();
+>         if (do_diff_cache(tree_sha1, &opt))
+>                 return 1;
+>         diffcore_std(&opt);
+> @@ -169,7 +168,7 @@ static void set_reflog_message(struct strbuf *sb, const char *action,
 >
-> I don't particularly agree that not defaulting to --all was a good idea,
-> but that's another topic.
+>  static void die_if_unmerged_cache(int reset_type)
+>  {
+> -       if (is_merge() || read_cache() < 0 || unmerged_cache())
+> +       if (is_merge() || unmerged_cache())
+>                 die(_("Cannot do a %s reset in the middle of a merge."),
+>                     _(reset_type_names[reset_type]));
 
-It the same topic, the project already made a choice, and precisely
-because of the same reasoning that 'git commit --all' is required,
-'git pull --merge' should be required.
+reset --soft does not go through these code paths (i.e. it does not
+need index at all). If we fail to load index index in "reset --soft" I
+think it's ok to die(). Corrupt index is fatal anyway. But "reset
+--soft" now has to pay the cost to load index, which could be slow
+when the index is big. Assuming nobody does "reset --soft" that often
+I think this is OK.
 
-> But the error message is rather clear:
->
->   no changes added to commit (use "git add" and/or "git commit -a")
-
-And we can do the same:
-
-"Read more with 'git pull --help' or do 'git pull --merge'."
-
+Alternatively we could load index lazily in _CHEAP code only when we
+see trailing slashes, then replace these read_cache() with
+read_cache_unless_its_already_loaded_earlier() or something.
 -- 
-Felipe Contreras
+Duy
