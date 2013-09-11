@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 18/21] unpack-objects: decode v4 trees
-Date: Wed, 11 Sep 2013 13:06:19 +0700
-Message-ID: <1378879582-15372-19-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 19/21] index-pack, pack-objects: allow creating .idx v2 with .pack v4
+Date: Wed, 11 Sep 2013 13:06:20 +0700
+Message-ID: <1378879582-15372-20-git-send-email-pclouds@gmail.com>
 References: <xmqqtxhswexg.fsf@gitster.dls.corp.google.com>
  <1378879582-15372-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -19,293 +19,190 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJdc5-0007ca-EX
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 08:09:17 +0200
+	id 1VJdcC-0007iD-5g
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 08:09:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754664Ab3IKGJM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Sep 2013 02:09:12 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:59732 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752281Ab3IKGJL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 02:09:11 -0400
-Received: by mail-pb0-f49.google.com with SMTP id xb4so8507962pbc.8
-        for <git@vger.kernel.org>; Tue, 10 Sep 2013 23:09:11 -0700 (PDT)
+	id S1755266Ab3IKGJU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Sep 2013 02:09:20 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:39398 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754701Ab3IKGJT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 02:09:19 -0400
+Received: by mail-pd0-f173.google.com with SMTP id p10so8737072pdj.32
+        for <git@vger.kernel.org>; Tue, 10 Sep 2013 23:09:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=cUqG7tJ/UW/MwreZIBkzrpFvRFAXHeihY7XxUongGXQ=;
-        b=igMdYG7vm6ue8NxlcBGfC6c+DMf7PRwQDr2KqpEWtBRVlYR2IsPs4AxI34dahIP9af
-         fiRs4hO+IHMIbwhmyQRREfpfn0AK0rnneeEm7uAvQDXxVs/KioVKkJymD/K+1D7SsQ+L
-         OiLXW0sp5vGZrGvbrK5umaaJ2f3TjS2TTbjy2g+TmhKY/X7oA77Hc1Il8BmRXXIvO2Po
-         /zRK3uGW3UaETX2HvfXDV449lC2Xc9iC/6BPgScK9tfjmgQ3HVgJgG3HmzBR4I6crSD+
-         KfsdHwFaFPGcjpOYWpWNdXbxuqaNuQObjSmxkKUdiP48ZFsIYkMD3QOiLawe918P497C
-         Yw8w==
-X-Received: by 10.66.171.204 with SMTP id aw12mr1733568pac.7.1378879751085;
-        Tue, 10 Sep 2013 23:09:11 -0700 (PDT)
+        bh=2AKK3Xr61ukNSSUEAV7d5R975SA5jF0ONDYEGJlY0tM=;
+        b=X8S44IhjNJyai5GhtZHDwBxd7D+2fljfkW/lsYANMlGKapKHTm1KMuPgIB2zCoZnB3
+         wYOhjgbRtyy1ApcMkRPva4eV6gNmBsiTGqEJjHHCTgHWo06UCY4QHAgo7NEmhTaGMgWq
+         4IdfM68nzM3nmQQfeEqxbRg4VhdlbzxKrcIERteocQMK0So7Czb1vFIsiqlmtu2ED7Mb
+         ezL8btYCUZ3e1WaXHJMOrCy/eCFJ69G+itkIoszXgWlsx1nXU3fb4LqjDNfLqdBPj6Vo
+         MTF9jcbpvhe4NZdRt+vjqdFNxYLoD6F+BgXOd0395pMORMHrhxxhRnFe6Ay/n0ycTn3B
+         R09A==
+X-Received: by 10.68.36.132 with SMTP id q4mr18837848pbj.118.1378879758750;
+        Tue, 10 Sep 2013 23:09:18 -0700 (PDT)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPSA id in2sm27432945pbc.37.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id zq10sm1119772pab.6.1969.12.31.16.00.00
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 10 Sep 2013 23:09:10 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 11 Sep 2013 13:09:00 +0700
+        Tue, 10 Sep 2013 23:09:18 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 11 Sep 2013 13:09:11 +0700
 X-Mailer: git-send-email 1.8.2.82.gc24b958
 In-Reply-To: <1378879582-15372-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234543>
 
+While .idx v3 is recommended because it's smaller, there is no reason
+why .idx v2 can't use with .pack v4. Enable it, at least for the test
+suite as some tests need to this kind of information from show-index
+and show-index does not support .idx v3.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/unpack-objects.c | 191 +++++++++++++++++++++++++++++++++++++++=
-+++++++-
- 1 file changed, 189 insertions(+), 2 deletions(-)
+ builtin/index-pack.c   | 14 ++++++++++----
+ builtin/pack-objects.c | 14 ++++++++++----
+ 2 files changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 044a087..9fd5640 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -12,6 +12,7 @@
- #include "decorate.h"
- #include "packv4-parse.h"
- #include "fsck.h"
-+#include "varint.h"
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 1895adf..4607dc6 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -89,7 +89,7 @@ static int verbose;
+ static int show_stat;
+ static int check_self_contained_and_connected;
+ static int packv4;
+-
++static int idx_version_set;
+ static struct progress *progress;
 =20
- static int dry_run, quiet, recover, has_errors, strict;
- static const char unpack_usage[] =3D "git unpack-objects [-n] [-q] [-r=
-] [--strict] < pack-file";
-@@ -148,6 +149,27 @@ static const unsigned char *read_sha1ref(void)
- 	return sha1_table + index * 20;
- }
+ /* We always read in 4kB chunks. */
+@@ -1892,8 +1892,9 @@ static int git_index_pack_config(const char *k, c=
+onst char *v, void *cb)
 =20
-+static void check_against_sha1table(const unsigned char *sha1)
-+{
-+	const unsigned char *found;
-+	if (!packv4)
-+		return;
-+
-+	found =3D bsearch(sha1, sha1_table, nr_objects, 20,
-+			(int (*)(const void *, const void *))hashcmp);
-+	if (!found)
-+		die(_("object %s not found in SHA-1 table"),
-+		    sha1_to_hex(sha1));
-+}
-+
-+static const unsigned char *read_sha1table_ref(void)
-+{
-+	const unsigned char *sha1 =3D read_sha1ref();
-+	if (sha1 < sha1_table || sha1 >=3D sha1_table + nr_objects * 20)
-+		check_against_sha1table(sha1);
-+	return sha1;
-+}
-+
- static const unsigned char *read_dictref(struct packv4_dict *dict)
- {
- 	unsigned int index =3D read_varint();
-@@ -327,6 +349,84 @@ static void write_object(unsigned nr, enum object_=
-type type,
+ 	if (!strcmp(k, "pack.indexversion")) {
+ 		opts->version =3D git_config_int(k, v);
+-		if (opts->version > 2)
++		if (opts->version > 3)
+ 			die(_("bad pack.indexversion=3D%"PRIu32), opts->version);
++		idx_version_set =3D 1;
+ 		return 0;
  	}
- }
-=20
-+static void resolve_tree_v4(unsigned long nr_obj,
-+			    const void *tree,
-+			    unsigned long tree_len,
-+			    const unsigned char *base_sha1,
-+			    const void *base,
-+			    unsigned long base_size)
-+{
-+	int nr;
-+	struct strbuf sb =3D STRBUF_INIT;
-+	const unsigned char *p =3D tree;
-+	const unsigned char *end =3D p + tree_len;
-+
-+	nr =3D decode_varint(&p);
-+	while (nr > 0 && p < end) {
-+		unsigned int copy_start_or_path =3D decode_varint(&p);
-+		if (copy_start_or_path & 1) { /* copy_start */
-+			struct tree_desc desc;
-+			struct name_entry entry;
-+			unsigned int copy_count =3D decode_varint(&p);
-+			unsigned int copy_start =3D copy_start_or_path >> 1;
-+			if (!base_sha1)
-+				die("we are not supposed to copy from another tree!");
-+			if (copy_count & 1) { /* first delta */
-+				unsigned int id =3D decode_varint(&p);
-+				const unsigned char *last_base;
-+				if (!id) {
-+					last_base =3D p;
-+					p +=3D 20;
-+				} else
-+					last_base =3D sha1_table + (id - 1) * 20;
-+				if (hashcmp(last_base, base_sha1))
-+					die("bad base tree in resolve_tree_v4");
-+			}
-+
-+			copy_count >>=3D 1;
-+			nr -=3D copy_count;
-+
-+			init_tree_desc(&desc, base, base_size);
-+			while (tree_entry(&desc, &entry)) {
-+				if (copy_start)
-+					copy_start--;
-+				else if (copy_count) {
-+					strbuf_addf(&sb, "%o %s%c",
-+						    entry.mode, entry.path, '\0');
-+					strbuf_add(&sb, entry.sha1, 20);
-+					copy_count--;
-+				} else
-+					break;
-+			}
-+		} else {	/* path */
-+			unsigned int path_idx =3D copy_start_or_path >> 1;
-+			const unsigned char *path;
-+			unsigned mode;
-+			unsigned int id;
-+			const unsigned char *entry_sha1;
-+
-+			id =3D decode_varint(&p);
-+			if (!id) {
-+				entry_sha1 =3D p;
-+				p +=3D 20;
-+			} else
-+				entry_sha1 =3D sha1_table + (id - 1) * 20;
-+			nr--;
-+
-+			path =3D path_dict->data + path_dict->offsets[path_idx];
-+			mode =3D (path[0] << 8) | path[1];
-+			strbuf_addf(&sb, "%o %s%c", mode, path+2, '\0');
-+			strbuf_add(&sb, entry_sha1, 20);
-+		}
-+	}
-+	if (nr !=3D 0 || p !=3D end)
-+		die(_("bad delta tree"));
-+	if (!dry_run)
-+		write_object(nr_obj, OBJ_TREE, sb.buf, sb.len);
-+	else
-+		strbuf_release(&sb);
-+}
-+
- static void resolve_delta(unsigned nr, enum object_type type,
- 			  void *base, unsigned long base_size,
- 			  void *delta, unsigned long delta_size)
-@@ -358,8 +458,13 @@ static void added_object(unsigned nr, enum object_=
-type type,
- 		    info->base_offset =3D=3D obj_list[nr].offset) {
- 			*p =3D info->next;
- 			p =3D &delta_list;
--			resolve_delta(info->nr, type, data, size,
--				      info->delta, info->size);
-+			if (type =3D=3D OBJ_TREE && packv4)
-+				resolve_tree_v4(info->nr, info->delta,
-+						info->size, info->base_sha1,
-+						data, size);
-+			else
-+				resolve_delta(info->nr, type, data, size,
-+					      info->delta, info->size);
- 			free(info);
+ 	if (!strcmp(k, "pack.threads")) {
+@@ -2107,12 +2108,13 @@ int cmd_index_pack(int argc, const char **argv,=
+ const char *prefix)
+ 			} else if (!prefixcmp(arg, "--index-version=3D")) {
+ 				char *c;
+ 				opts.version =3D strtoul(arg + 16, &c, 10);
+-				if (opts.version > 2)
++				if (opts.version > 3)
+ 					die(_("bad %s"), arg);
+ 				if (*c =3D=3D ',')
+ 					opts.off32_limit =3D strtoul(c+1, &c, 0);
+ 				if (*c || opts.off32_limit & 0x80000000)
+ 					die(_("bad %s"), arg);
++				idx_version_set =3D 1;
+ 			} else
+ 				usage(index_pack_usage);
  			continue;
- 		}
-@@ -493,6 +598,85 @@ static void unpack_delta_entry(enum object_type ty=
-pe, unsigned long delta_size,
- 	free(base);
+@@ -2151,6 +2153,7 @@ int cmd_index_pack(int argc, const char **argv, c=
+onst char *prefix)
+ 		if (!index_name)
+ 			die(_("--verify with no packfile name given"));
+ 		read_idx_option(&opts, index_name);
++		idx_version_set =3D 1;
+ 		opts.flags |=3D WRITE_IDX_VERIFY | WRITE_IDX_STRICT;
+ 	}
+ 	if (strict)
+@@ -2167,6 +2170,9 @@ int cmd_index_pack(int argc, const char **argv, c=
+onst char *prefix)
+=20
+ 	curr_pack =3D open_pack_file(pack_name);
+ 	parse_pack_header();
++	if (!packv4 && opts.version >=3D 3)
++		die(_("pack idx version %d does not work with pack version %d"),
++		    opts.version, 4);
+ 	objects =3D xcalloc(nr_objects + 1, sizeof(struct object_entry));
+ 	deltas =3D xcalloc(nr_objects, sizeof(struct delta_entry));
+ 	parse_dictionaries();
+@@ -2180,7 +2186,7 @@ int cmd_index_pack(int argc, const char **argv, c=
+onst char *prefix)
+ 	if (show_stat)
+ 		show_pack_info(stat_only);
+=20
+-	if (packv4)
++	if (packv4 && !idx_version_set)
+ 		opts.version =3D 3;
+=20
+ 	idx_objects =3D xmalloc((nr_objects) * sizeof(struct pack_idx_entry *=
+));
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index ac25973..f604fa5 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -66,7 +66,7 @@ static uint32_t nr_objects, nr_alloc, nr_result, nr_w=
+ritten;
+=20
+ static struct packv4_tables v4;
+=20
+-static int non_empty;
++static int non_empty, idx_version_set;
+ static int reuse_delta =3D 1, reuse_object =3D 1;
+ static int keep_unreachable, unpack_unreachable, include_tag;
+ static unsigned long unpack_unreachable_expiration;
+@@ -2205,7 +2205,8 @@ static void prepare_pack(int window, int depth)
+ 		sort_dict_entries_by_hits(v4.commit_ident_table);
+ 		sort_dict_entries_by_hits(v4.tree_path_table);
+ 		v4.all_objs =3D xmalloc(nr_objects * sizeof(*v4.all_objs));
+-		pack_idx_opts.version =3D 3;
++		if (!idx_version_set)
++			pack_idx_opts.version =3D 3;
+ 		allow_ofs_delta =3D 0;
+ 	}
+=20
+@@ -2319,9 +2320,10 @@ static int git_pack_config(const char *k, const =
+char *v, void *cb)
+ 	}
+ 	if (!strcmp(k, "pack.indexversion")) {
+ 		pack_idx_opts.version =3D git_config_int(k, v);
+-		if (pack_idx_opts.version > 2)
++		if (pack_idx_opts.version > 3)
+ 			die("bad pack.indexversion=3D%"PRIu32,
+ 			    pack_idx_opts.version);
++		idx_version_set =3D 1;
+ 		return 0;
+ 	}
+ 	return git_default_config(k, v, cb);
+@@ -2604,12 +2606,13 @@ static int option_parse_index_version(const str=
+uct option *opt,
+ 	char *c;
+ 	const char *val =3D arg;
+ 	pack_idx_opts.version =3D strtoul(val, &c, 10);
+-	if (pack_idx_opts.version > 2)
++	if (pack_idx_opts.version > 3)
+ 		die(_("unsupported index version %s"), val);
+ 	if (*c =3D=3D ',' && c[1])
+ 		pack_idx_opts.off32_limit =3D strtoul(c+1, &c, 0);
+ 	if (*c || pack_idx_opts.off32_limit & 0x80000000)
+ 		die(_("bad index version '%s'"), val);
++	idx_version_set =3D 1;
+ 	return 0;
  }
 =20
-+static int resolve_tree_against_held(unsigned nr, const unsigned char =
-*base,
-+				     void *delta_data, unsigned long delta_size)
-+{
-+	struct object *obj;
-+	struct obj_buffer *obj_buffer;
-+	obj =3D lookup_object(base);
-+	if (!obj || obj->type !=3D OBJ_TREE)
-+		return 0;
-+	obj_buffer =3D lookup_object_buffer(obj);
-+	if (!obj_buffer)
-+		return 0;
-+	resolve_tree_v4(nr, delta_data, delta_size,
-+			base, obj_buffer->buffer, obj_buffer->size);
-+	return 1;
-+}
-+
-+static void unpack_tree_v4(unsigned long size, unsigned long nr_obj)
-+{
-+	unsigned int nr;
-+	const unsigned char *last_base =3D NULL;
-+
-+	copy_back_buffer(1);
-+	strbuf_reset(&back_buffer);
-+	nr =3D read_varint();
-+	while (nr) {
-+		unsigned int copy_start_or_path =3D read_varint();
-+		if (copy_start_or_path & 1) { /* copy_start */
-+			unsigned int copy_count =3D read_varint();
-+			if (copy_count & 1) { /* first delta */
-+				const unsigned char *old_base =3D last_base;
-+				last_base =3D read_sha1table_ref();
-+				if (old_base && hashcmp(last_base, old_base))
-+					die("multi-base trees are not supported");
-+			} else if (!last_base)
-+				die("missing delta base unpack_tree_v4 at %lu",
-+				    (unsigned long)consumed_bytes);
-+			copy_count >>=3D 1;
-+			if (!copy_count || copy_count > nr)
-+				die("bad copy count index in unpack_tree_v4 at %lu",
-+				    (unsigned long)consumed_bytes);
-+			nr -=3D copy_count;
-+		} else {	/* path */
-+			unsigned int path_idx =3D copy_start_or_path >> 1;
-+			if (path_idx >=3D path_dict->nb_entries)
-+				die("bad path index in unpack_tree_v4 at %lu",
-+				    (unsigned long)consumed_bytes);
-+			read_sha1ref();
-+			nr--;
-+		}
-+	}
-+	copy_back_buffer(0);
-+
-+	if (last_base) {
-+		if (has_sha1_file(last_base)) {
-+			enum object_type type;
-+			unsigned long base_size;
-+			void *base =3D read_sha1_file(last_base, &type, &base_size);
-+			if (type !=3D OBJ_TREE) {
-+				die("base tree %s is not a tree", sha1_to_hex(last_base));
-+				last_base =3D NULL;
-+			}
-+			resolve_tree_v4(nr_obj, back_buffer.buf, back_buffer.len,
-+					last_base, base, base_size);
-+			free(base);
-+		} else if (resolve_tree_against_held(nr_obj, last_base,
-+						     back_buffer.buf, back_buffer.len))
-+			   ; /* resolved */
-+		else {
-+			unsigned long delta_size =3D back_buffer.len;
-+			char *delta =3D strbuf_detach(&back_buffer, NULL);
-+			/* cannot resolve yet --- queue it */
-+			hashcpy(obj_list[nr].sha1, null_sha1);
-+			add_delta_to_list(nr, last_base, 0, delta, delta_size);
-+		}
-+	} else
-+		resolve_tree_v4(nr_obj, back_buffer.buf, back_buffer.len, NULL, NULL=
-, 0);
-+	strbuf_release(&back_buffer);
-+}
-+
- static void unpack_commit_v4(unsigned long size, unsigned long nr)
- {
- 	unsigned int nb_parents;
-@@ -588,6 +772,9 @@ static int unpack_one(unsigned nr)
- 	case OBJ_PV4_COMMIT:
- 		unpack_commit_v4(size, nr);
- 		break;
-+	case OBJ_PV4_TREE:
-+		unpack_tree_v4(size, nr);
-+		break;
- 	default:
- 		error("bad object type %d", type);
- 		has_errors =3D 1;
+@@ -2739,6 +2742,9 @@ int cmd_pack_objects(int argc, const char **argv,=
+ const char *prefix)
+ 		usage_with_options(pack_usage, pack_objects_options);
+ 	if (pack_version !=3D 2 && pack_version !=3D 4)
+ 		die(_("pack version %d is not supported"), pack_version);
++	if (pack_version < 4 && pack_idx_opts.version >=3D 3)
++		die(_("pack idx version %d cannot be used with pack version %d"),
++		    pack_idx_opts.version, pack_version);
+=20
+ 	rp_av[rp_ac++] =3D "pack-objects";
+ 	if (thin) {
 --=20
 1.8.2.82.gc24b958
