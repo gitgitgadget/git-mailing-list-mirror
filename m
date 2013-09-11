@@ -1,82 +1,94 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 1/2] reset: handle submodule with trailing slash
-Date: Wed, 11 Sep 2013 18:27:05 +0100
-Message-ID: <20130911172705.GV2582@serenity.lan>
-References: <cover.1378840318.git.john@keeping.me.uk>
- <c7e026f44f9ccbf5736b72e728a360b31887a50f.1378840318.git.john@keeping.me.uk>
- <52300838.5040703@kdbg.org>
- <20130911082042.GR2582@serenity.lan>
- <CACsJy8BgEM3eEDo8wOgkqYTL1fkh9azZNqbogxBubp9g5KRNbQ@mail.gmail.com>
- <xmqqwqmnthfh.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] Disabling status hints in COMMIT_EDITMSG
+Date: Wed, 11 Sep 2013 19:40:41 +0200
+Message-ID: <vpqfvtb5k9y.fsf@anie.imag.fr>
+References: <vpq4n9tghk5.fsf@anie.imag.fr>
+	<xmqqeh8wzl0h.fsf@gitster.dls.corp.google.com>
+	<vpq61u7akin.fsf@anie.imag.fr>
+	<xmqqob7ztgpb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 11 19:27:27 2013
+X-From: git-owner@vger.kernel.org Wed Sep 11 19:43:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJoCH-0001DS-NG
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 19:27:22 +0200
+	id 1VJoRg-000625-9a
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 19:43:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755757Ab3IKR1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Sep 2013 13:27:17 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:56330 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754015Ab3IKR1R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 13:27:17 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id A23E5CDA5E2;
-	Wed, 11 Sep 2013 18:27:16 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hIS+BL6AlHsc; Wed, 11 Sep 2013 18:27:15 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 3025ECDA566;
-	Wed, 11 Sep 2013 18:27:07 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <xmqqwqmnthfh.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755836Ab3IKRnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 13:43:06 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35606 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755686Ab3IKRnD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 13:43:03 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8BHedQI025480
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 11 Sep 2013 19:40:39 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VJoPB-0003Cj-TF; Wed, 11 Sep 2013 19:40:41 +0200
+In-Reply-To: <xmqqob7ztgpb.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 11 Sep 2013 10:24:00 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 11 Sep 2013 19:40:40 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r8BHedQI025480
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1379526041.50369@rEp/ruJZZyku0o3gBG/0nA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234585>
 
-On Wed, Sep 11, 2013 at 10:08:18AM -0700, Junio C Hamano wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
-> 
-> > reset --soft does not go through these code paths (i.e. it does not
-> > need index at all). If we fail to load index index in "reset --soft" I
-> > think it's ok to die(). Corrupt index is fatal anyway.
-> 
-> Do I smell a breakage here?  Isn't "reset --soft HEAD" (or some
-> known good commit) a way to recover from a corrupt index?
-> 
-> If that is the case, I do not think it is OK at all.  What do we
-> suggest as an alternative?  "rm .git/index && read-tree"?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Duy's suggestion below is necessary to avoid this then I think - we'll
-die if the user has a corrupt index and gives a path with a trailing
-slash, but without that path we won't try to load the index.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> But at the same time, I feel that these redundant lines, especially
+>>> the latter one, would give the users a stronger cue than just saying
+>>> that "bar is Untracked"; "do X to include" reminds that bar will not
+>>> be included if nothing is done.
+>>
+>> The one which draw my attention was "(use "git commit" to conclude
+>> merge)" which is particularly counter-productive when you are already
+>> doing a "git commit".
+>
+> Oh, no question about that.  Nobody would object to the removal of
+> that one; it is clearly nonsense.
+>
+> I was commented on the value of keeping "hints" like this:
+>
+>       # Untracked files:
+>       #   (use "git add <file>..." to include in what will be committed)
 
-> > But "reset
-> > --soft" now has to pay the cost to load index, which could be slow
-> > when the index is big. Assuming nobody does "reset --soft" that often
-> > I think this is OK.
-> >
-> > Alternatively we could load index lazily in _CHEAP code only when we
-> > see trailing slashes, then replace these read_cache() with
-> > read_cache_unless_its_already_loaded_earlier() or something.
+Yes, I understood your argument.
+
+I have no strong opinion on whether they should be removed either, but I
+went for the removal essentially because it keeps the code simple.
+
+If we want to keep the advices, and if we want them to be really sound,
+then for example the advice for "Changes to be committed:" should be
+changed when running "git commit --amend" (we currently hint "git reset"
+even for files which are not in the index in this case). Same for
+--only/--include. So, giving accurate hints in all cases seems
+non-trivial.
+
+I think the value of these messages is smaller than the potential
+confusion and/or the code complexity to select and possibly modify the
+hints.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
