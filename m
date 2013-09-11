@@ -1,131 +1,90 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: Re: breakage in revision traversal with pathspec
-Date: Wed, 11 Sep 2013 20:49:23 +0300
-Message-ID: <5230AD23.2050009@bracey.fi>
-References: <xmqqy574y4pz.fsf@gitster.dls.corp.google.com> <522F8ED2.9000408@bracey.fi> <xmqq38pcwc21.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git tag output order is incorrect (IMHO)
+Date: Wed, 11 Sep 2013 10:54:01 -0700
+Message-ID: <xmqqioy7tfba.fsf@gitster.dls.corp.google.com>
+References: <840FACA0-7E13-41DB-A0F8-124FAB53BFBD@rtcamp.com>
+	<CAMP44s3p_DRTvBhKbM0ejKgea9hauSCzahPux4jCWL7JP4nxKw@mail.gmail.com>
+	<CABURp0o5tOswiv_avfAQOZwGREpX3v7MwcdVzt7dkubY2Y0O6g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 11 19:49:38 2013
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 11 19:54:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJoXp-0006PB-Mk
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 19:49:38 +0200
+	id 1VJocP-0004f3-VG
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 19:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756593Ab3IKRtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Sep 2013 13:49:33 -0400
-Received: from 1.mo2.mail-out.ovh.net ([46.105.63.121]:55529 "EHLO
-	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756552Ab3IKRtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 13:49:31 -0400
-Received: from mail195.ha.ovh.net (b6.ovh.net [213.186.33.56])
-	by mo2.mail-out.ovh.net (Postfix) with SMTP id 0B758DC94B7
-	for <git@vger.kernel.org>; Wed, 11 Sep 2013 19:49:28 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 11 Sep 2013 19:56:00 +0200
-Received: from 62-183-157-30.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@62.183.157.30)
-  by ns0.ovh.net with SMTP; 11 Sep 2013 19:55:57 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-X-Ovh-Mailout: 178.32.228.2 (mo2.mail-out.ovh.net)
-In-Reply-To: <xmqq38pcwc21.fsf@gitster.dls.corp.google.com>
-X-Ovh-Tracer-Id: 12586716535077507288
-X-Ovh-Remote: 62.183.157.30 (62-183-157-30.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 0
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeikedrledvucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
-X-Spam-Check: DONE|U 0.500436/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeikedrledvucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+	id S1755513Ab3IKRyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 13:54:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48154 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755363Ab3IKRyR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 13:54:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6D8441E03;
+	Wed, 11 Sep 2013 17:54:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xgB09/kZITXbl8mbUWP+cLhXuew=; b=wFKd9O
+	ZXdAXf/5iCGWjhJUQvrL7bsjBLFps/Oa32q1yOJuaeuhxSYlwZW9xx6+nUlyTWhI
+	w213hvgmY4htb/1knnVjC/U1w5jz6nRpSYikAKqdAJfvMrwXZjsiF14cPE1fyx4y
+	uPN6i8EceXa0FaTPphVcWcb+ESGN0Mnwh5bGQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YYd5yqlASLlv2n1idCclJ7Mw3vTXi9OP
+	+RuNBd844aZFbFIVSo28bJ4mGjRPYydFlZvsayABPekV2O37dOOgnEvPzTC4j/Ra
+	OJooKkWdviwAn09s+ffn+8Uy/NQ1t3YaEyXywDnYhFcCloXBtfY3xwjD2sF3WlfR
+	LVbW/3+Flds=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AFDBD41E01;
+	Wed, 11 Sep 2013 17:54:13 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5600441DEE;
+	Wed, 11 Sep 2013 17:54:10 +0000 (UTC)
+In-Reply-To: <CABURp0o5tOswiv_avfAQOZwGREpX3v7MwcdVzt7dkubY2Y0O6g@mail.gmail.com>
+	(Phil Hord's message of "Wed, 11 Sep 2013 09:42:27 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 29EF6A62-1B0B-11E3-809E-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234587>
 
-On 11/09/2013 01:23, Junio C Hamano wrote:
-> Kevin Bracey <kevin@bracey.fi> writes:
+Phil Hord <phil.hord@gmail.com> writes:
+
+> Someone at $work asked me this week how to find the current and
+> previous tags on his branch so he could generate release notes.  I
+> just need "last two tags on head in topo-order". I was surprised by
+> how complicated this turned out to be. I ended up with this:
 >
->> On 10/09/2013 20:19, Junio C Hamano wrote:
->>> This command
->>>
->>>       $ git log v1.8.3.1..v1.8.4 -- git-cvsserver.perl
->>>
->>> reports that a merge 766f0f8ef7 (which did not touch the specified
->>> path at all) touches it.
->>>
->>> Bisecting points at d0af663e (revision.c: Make --full-history
->>> consider more merges, 2013-05-16).
->>>
->> That merge appearing *with* --full-history would seem like correct
->> behaviour to me. Or at least it's what I intended.
-> ... But it shouldn't
-> appear if the user does not ask for "--full-history".
+>   git log --decorate=full --pretty=format:'%d' HEAD |
+>     sed -n -e 's-^.* refs/tags/\(.*\)[ )].*$-\1-p' |
+>     head -2
+>
+> Surely there's a cleaner way, right?
 
-Well, there is a functioning semi-work-around for now: avoid difficult 
-non-linear questions like "v1.8.3.1..v1.8.4". A question like 
-"v1.8.3..v1.8.4" is a lot easier to visualise, and it does already omit 
-the merge.
+That looks clean enough (I would have used "head -n 2" though) and
+in line with the way how you can exercise the flexibility of the
+system, at least to me ;-).
 
-On reflection I'm not sure what we should for the "simple history" view 
-of v1.8.3.1..v1.8.4. We're not rewriting parents, so we don't get a 
-chance to reconsider the merge as being zero-parent, and we do have this 
-little section of graph to traverse at the bottom:
+Joking aside, I agree that a "--merged X" primitive, i.e. "what refs
+can be reachable from commit X?", in the listing mode of "git tag"
+or "git for-each-ref" would have helped.  As the sorting and
+formatting primitives are already there in for-each-ref, it would
+have been
 
-           1.8.3
-             o----x----x----x----x---x---     (x = included, o = 
-excluded, *=!treesame)
-                 /
-                /*
-   o--x--x--x--x
+	git for-each-ref \
+            --format='%(refname:short)' \
+            --sort='-*committerdate' \
+            --count=2 \
+            --merged my-branch \
+            refs/tags/
 
-In effect, we do have a linear section of history to follow, and the 
-file does change in the middle of that line. It may be quite hard to 
-come up with a solid rule to hide the merge that doesn't go wrong 
-somewhere else.
-
-The current rules for this are
-
-1) if identical to any on-graph parent, follow that one, and rewrite the 
-merge as a non-merge. We currently do not follow to an identical 
-off-graph parent. This long-standing comment in try_to_simplify_commit 
-applies: "Even if a merge with an uninteresting side branch brought the 
-entire change we are interested in, we do not want to lose the other 
-branches of this merge, so we just keep going." For this query, the 
-mainline link to 1.8.3 is the "uninteresting side branch"! If you do 
-specify v1.8.3..v1.8.4, then v1.8.3 becomes "on-graph" thanks to other 
-new rules, and this rule does kick in, hiding the merge.
-
-2) If rule 1 doesn't activate, and it remains as a merge, hide it if 
-treesame to all on-graph parents. Previously this rule was "hide if 
-treesame to any parent", and so that would have hidden the merge.
-
-Now, when I changed rule 2, I did not think this would affect the 
-default log. See my commit message:
-
-     "Now redefine a commit's TREESAME flag to be true only if a commit is
-     TREESAME to _all_ of its [later: on-graph] parent. This doesn't 
-affect ... the default
-     simplify_history behaviour (because partially TREESAME merges are 
-turned
-     into normal commits)..."
-
-Whoops - partially TREESAME merges are not always turned into normal 
-commits.
-
-Maybe the fix is to define TREESAME differently for simplify_history - 
-to use the old definition of "identical to any parent" in that case. I'm 
-not sure that's right though.
-
-I currently feel instinctively more disposed to dropping the older 
-"don't follow off-graph identical parents" rule. Let the default history 
-go straight to v1.8.3 even though it goes off the graph, stopping us 
-traversing the topic branch.
-
-Kevin
+or something like that.
