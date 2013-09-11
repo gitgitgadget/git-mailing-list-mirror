@@ -1,114 +1,66 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 21/21] t1050, t5500: replace the use of "show-index|wc -l" with verify-pack
-Date: Wed, 11 Sep 2013 13:06:22 +0700
-Message-ID: <1378879582-15372-22-git-send-email-pclouds@gmail.com>
-References: <xmqqtxhswexg.fsf@gitster.dls.corp.google.com>
- <1378879582-15372-1-git-send-email-pclouds@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] Disabling status hints in COMMIT_EDITMSG
+Date: Wed, 11 Sep 2013 09:24:16 +0200
+Message-ID: <vpq61u7akin.fsf@anie.imag.fr>
+References: <vpq4n9tghk5.fsf@anie.imag.fr>
+	<xmqqeh8wzl0h.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 11 08:09:41 2013
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 11 09:24:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJdcS-00085T-Bx
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 08:09:40 +0200
+	id 1VJemr-00077u-77
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 09:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754394Ab3IKGJg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Sep 2013 02:09:36 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:36415 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753861Ab3IKGJf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 02:09:35 -0400
-Received: by mail-pd0-f176.google.com with SMTP id q10so8722223pdj.35
-        for <git@vger.kernel.org>; Tue, 10 Sep 2013 23:09:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=H/yhF7whrk3zgqIjpm7zo8Qz+2Z5RHFqrLLWU6aZEQ4=;
-        b=YMSTFK6b7iNfAPwtUkmcI6L5NxxTyVQZN7vzTiwXofqzaeIsRgTkahvPiLceMHFazM
-         8FQS+kZc8Idv2FVcrctiVuDjowefuplWPxdok6QTzInx1b9PSU/XcqA6FBorQ6R0D6Hd
-         xw7WP6n+zv4toIGx2dlao6H4ADR+nZnsBCJ4741KvE+5y2QkqGXM2YJlZEhMCyxFu6yN
-         b1qgmHIYUKoyskWt25ZH/HbXEcONHFsrI1TunHkDxXcKR4LzYu/4E+jcs+FtINpwhu/p
-         aXwUAax6/eqkXVr5+nVFoqASnkuOmrlU/QmYAMmfMxOQzX7+nfRvga61dPdAnq69nub+
-         AURQ==
-X-Received: by 10.68.217.196 with SMTP id pa4mr18996265pbc.117.1378879775228;
-        Tue, 10 Sep 2013 23:09:35 -0700 (PDT)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPSA id ye1sm1082647pab.19.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 10 Sep 2013 23:09:34 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 11 Sep 2013 13:09:28 +0700
-X-Mailer: git-send-email 1.8.2.82.gc24b958
-In-Reply-To: <1378879582-15372-1-git-send-email-pclouds@gmail.com>
+	id S1751517Ab3IKHYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 03:24:25 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:44474 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751398Ab3IKHYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 03:24:24 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8B7OF6M011240
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 11 Sep 2013 09:24:15 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VJeme-0003ko-EV; Wed, 11 Sep 2013 09:24:16 +0200
+In-Reply-To: <xmqqeh8wzl0h.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 10 Sep 2013 09:42:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 11 Sep 2013 09:24:17 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r8B7OF6M011240
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1379489059.65361@OCFjRmSCNoJng2BcbYym3w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234546>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- t/t1050-large.sh      | 9 +++++----
- t/t5500-fetch-pack.sh | 4 ++--
- 2 files changed, 7 insertions(+), 6 deletions(-)
+> But at the same time, I feel that these redundant lines, especially
+> the latter one, would give the users a stronger cue than just saying
+> that "bar is Untracked"; "do X to include" reminds that bar will not
+> be included if nothing is done.
 
-diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index fd10528..829030b 100755
---- a/t/t1050-large.sh
-+++ b/t/t1050-large.sh
-@@ -32,7 +32,7 @@ test_expect_success 'add a large file or two' '
- 	done &&
- 	test -z "$bad" &&
- 	test $count =3D 1 &&
--	cnt=3D$(git show-index <"$idx" | wc -l) &&
-+	cnt=3D$(git verify-pack -v "${idx/idx/pack}" | grep "^[0-9a-f]\{40\}"=
- | wc -l) &&
- 	test $cnt =3D 2 &&
- 	for l in .git/objects/??/??????????????????????????????????????
- 	do
-@@ -93,11 +93,12 @@ test_expect_success 'packsize limit' '
- 		) |
- 		sort >expect &&
-=20
--		for pi in .git/objects/pack/pack-*.idx
-+		for pi in .git/objects/pack/pack-*.pack
- 		do
--			git show-index <"$pi"
-+			git verify-pack -v "$pi"
- 		done |
--		sed -e "s/^[0-9]* \([0-9a-f]*\) .*/\1/" |
-+		grep "^[0-9a-f]\{40\}" |
-+		sed -e "s/^\([0-9a-f]\{40\}\) .*/\1/" |
- 		sort >actual &&
-=20
- 		test_cmp expect actual
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index fd2598e..f99cd14 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -60,8 +60,8 @@ pull_to_client () {
- 			git unpack-objects <$p &&
- 			git fsck --full &&
-=20
--			idx=3D`echo pack-*.idx` &&
--			pack_count=3D`git show-index <$idx | wc -l` &&
-+			pack=3D`echo pack-*.pack` &&
-+			pack_count=3D`git verify-pack -v $pack | grep "^[0-9a-f]\{40\}" | w=
-c -l` &&
- 			test $pack_count =3D $count &&
- 			rm -f pack-*
- 		)
---=20
-1.8.2.82.gc24b958
+The one which draw my attention was "(use "git commit" to conclude
+merge)" which is particularly counter-productive when you are already
+doing a "git commit". The advice for untracked files is less
+counter-productive, but while we're removing the non-sensical ones, I
+think it makes sense to remove the essentially-useless ones too.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
