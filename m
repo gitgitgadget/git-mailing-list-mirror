@@ -1,59 +1,100 @@
-From: Javier Domingo <javierdo1@gmail.com>
-Subject: Re: [RFC] Disabling status hints in COMMIT_EDITMSG
-Date: Wed, 11 Sep 2013 09:42:32 +0200
-Message-ID: <CALZVapmYzKO=fvVgSd+3fzAhdGrawU0C=iETkoJ5fxG87o4KtA@mail.gmail.com>
-References: <vpq4n9tghk5.fsf@anie.imag.fr> <xmqqeh8wzl0h.fsf@gitster.dls.corp.google.com>
- <vpq61u7akin.fsf@anie.imag.fr>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 2/2] rm: re-use parse_pathspec's trailing-slash removal
+Date: Wed, 11 Sep 2013 14:48:51 +0700
+Message-ID: <CACsJy8Dw+RJor-XfjFQC5U5Pt39TZ656fEnkFxpDnx=kTqvADQ@mail.gmail.com>
+References: <cover.1378840318.git.john@keeping.me.uk> <b16901cdc3d433a8e0f7078475cb06f90b4590dd.1378840318.git.john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 11 09:42:58 2013
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Sep 11 09:49:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJf4j-0006af-Cu
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 09:42:57 +0200
+	id 1VJfB1-0006z8-4s
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 09:49:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906Ab3IKHmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Sep 2013 03:42:53 -0400
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:37338 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750954Ab3IKHmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 03:42:53 -0400
-Received: by mail-vc0-f169.google.com with SMTP id ib11so6048094vcb.0
-        for <git@vger.kernel.org>; Wed, 11 Sep 2013 00:42:52 -0700 (PDT)
+	id S1752380Ab3IKHtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 03:49:23 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:51028 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751797Ab3IKHtW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 03:49:22 -0400
+Received: by mail-oa0-f49.google.com with SMTP id i7so8943645oag.8
+        for <git@vger.kernel.org>; Wed, 11 Sep 2013 00:49:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=KTL+ZWFin5F04aUv366A+Ig1Qp4/unbYGltCP1ybnO0=;
-        b=rcdp0gtPDPqAmLxbNYDdXAg3mtmLKup0FT1xA1AuB7z3KCpX5r4j9LIvPsSTlqpB5u
-         2sxfWcZNTQg4ezxWfNEeXUuw0B62J43D009N5Hml8pzHLykn8b/+s/IL/tEawFpF1oXG
-         raie35lDiQePgDjRVTjO8FkrNug8arJl0Av/57GPQx2tPd6OCXkc3SnxbzfpYWdU5+og
-         HkUfkFMMU5fCFq6Od+ImUuA2H9v8kxMJUarCUKA9XuawsP3/yRZfHBD7CwIzZ0F4jRiM
-         hIRNEZ0m3YWEtkDnzEQ8OecupUoKCnoW5IIGkg5xw0pimmE/a54fLYPm/Nzy1ELxXQIT
-         2Erg==
-X-Received: by 10.58.169.101 with SMTP id ad5mr65761vec.88.1378885372392; Wed,
- 11 Sep 2013 00:42:52 -0700 (PDT)
-Received: by 10.58.200.74 with HTTP; Wed, 11 Sep 2013 00:42:32 -0700 (PDT)
-In-Reply-To: <vpq61u7akin.fsf@anie.imag.fr>
+        bh=hNHIYce7cXZmqLhaEwJAgkK23Qrp4eAN/PJda9vJCq4=;
+        b=bOGxzDxbLAf9ayrsoyYNzjqWj1+ucTknF92LoM2C4Kzga8lebNKWpfhPMb8r/vhszh
+         bVV6P7S6ffGKhdc/ONRzcUgmDIqk9HpT4aDmJ7OOlIk6S+H1jDTOM9EikW15N8WPthZC
+         51rAXt7MUYtFUhhzVuQ/u205Kl+FcNyVtbe0SwwWpnyeWaQUACUJCC5V/CvDyyeaxHCA
+         e0c802xEZyyViRiIeKpMVbV59ZMBHJc8UKm4b9+BS6VRboxfFFDaWX3rerlh/Ng2q7xJ
+         ABwU7o6HD1hPUEi35mqhk46eddM8xhv+U2KPFzgD3UzQsJ1oAD/c66bLXr2hejLJTmMr
+         Bmbw==
+X-Received: by 10.182.233.198 with SMTP id ty6mr160938obc.31.1378885762054;
+ Wed, 11 Sep 2013 00:49:22 -0700 (PDT)
+Received: by 10.182.49.233 with HTTP; Wed, 11 Sep 2013 00:48:51 -0700 (PDT)
+In-Reply-To: <b16901cdc3d433a8e0f7078475cb06f90b4590dd.1378840318.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234548>
 
-IMHO, It is alright as it is.
+On Wed, Sep 11, 2013 at 2:13 AM, John Keeping <john@keeping.me.uk> wrote:
+> Instead of re-implementing the "remove trailing slashes" loop in
+> builtin/rm.c just pass PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP to
+> parse_pathspec.
+>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>  builtin/rm.c | 20 ++++----------------
+>  1 file changed, 4 insertions(+), 16 deletions(-)
+>
+> diff --git a/builtin/rm.c b/builtin/rm.c
+> index 9b59ab3..3a0e0ea 100644
+> --- a/builtin/rm.c
+> +++ b/builtin/rm.c
+> @@ -298,22 +298,10 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+>         if (read_cache() < 0)
+>                 die(_("index file corrupt"));
+>
+> -       /*
+> -        * Drop trailing directory separators from directories so we'll find
+> -        * submodules in the index.
+> -        */
+> -       for (i = 0; i < argc; i++) {
+> -               size_t pathlen = strlen(argv[i]);
+> -               if (pathlen && is_dir_sep(argv[i][pathlen - 1]) &&
+> -                   is_directory(argv[i])) {
+> -                       do {
+> -                               pathlen--;
+> -                       } while (pathlen && is_dir_sep(argv[i][pathlen - 1]));
+> -                       argv[i] = xmemdupz(argv[i], pathlen);
+> -               }
+> -       }
+> -
+> -       parse_pathspec(&pathspec, 0, PATHSPEC_PREFER_CWD, prefix, argv);
+> +       parse_pathspec(&pathspec, 0,
+> +                      PATHSPEC_PREFER_CWD |
+> +                      PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
 
-I have been using git for 4~ years now, and I still find very useful
-those lines. They are like a git status while committing, and it's the
-key to avoid accidental commits of objects or forgetting files in a
-commit. Between that and that the commit message can't be empty, I can
-abort a commit and correct the staging area.
+I notice that _CHEAP implementation and the removed code are not
+exactly the same. But I think they have the same purpose so it's
+probably ok even there are some subtle behavioral changes.
 
-Cheers,
+You may want to improve _CHEAP to remove consecutive trailing slashes
+(i.e. foo//// -> foo) too. And maybe is is_dir_sep() instead of
+explicit == '/' comparison in there.
 
-Javier Domingo
+> +                      prefix, argv);
+>         refresh_index(&the_index, REFRESH_QUIET, &pathspec, NULL, NULL);
+>
+>         seen = xcalloc(pathspec.nr, 1);
+-- 
+Duy
