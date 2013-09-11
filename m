@@ -1,109 +1,121 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 1/2] reset: handle submodule with trailing slash
-Date: Wed, 11 Sep 2013 19:22:33 +0100
-Message-ID: <20130911182233.GW2582@serenity.lan>
-References: <cover.1378840318.git.john@keeping.me.uk>
- <c7e026f44f9ccbf5736b72e728a360b31887a50f.1378840318.git.john@keeping.me.uk>
- <52300838.5040703@kdbg.org>
- <20130911082042.GR2582@serenity.lan>
- <CACsJy8BgEM3eEDo8wOgkqYTL1fkh9azZNqbogxBubp9g5KRNbQ@mail.gmail.com>
- <xmqqwqmnthfh.fsf@gitster.dls.corp.google.com>
- <20130911172705.GV2582@serenity.lan>
- <xmqq8uz3tece.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: breakage in revision traversal with pathspec
+Date: Wed, 11 Sep 2013 11:24:44 -0700
+Message-ID: <20130911182444.GD4326@google.com>
+References: <xmqqy574y4pz.fsf@gitster.dls.corp.google.com>
+ <522F8ED2.9000408@bracey.fi>
+ <xmqq38pcwc21.fsf@gitster.dls.corp.google.com>
+ <5230AD23.2050009@bracey.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 11 20:22:53 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kevin Bracey <kevin@bracey.fi>
+X-From: git-owner@vger.kernel.org Wed Sep 11 20:25:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJp3x-0001iD-77
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 20:22:49 +0200
+	id 1VJp62-0004g9-EZ
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 20:24:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755300Ab3IKSWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Sep 2013 14:22:45 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:38105 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752543Ab3IKSWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 14:22:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 4317A6064CC;
-	Wed, 11 Sep 2013 19:22:44 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lBMvNIMnG+eO; Wed, 11 Sep 2013 19:22:43 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 43BA26064F3;
-	Wed, 11 Sep 2013 19:22:43 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 37A50161E0AD;
-	Wed, 11 Sep 2013 19:22:43 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WrGgaPBgC5oq; Wed, 11 Sep 2013 19:22:42 +0100 (BST)
-Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 7DC78161E4A0;
-	Wed, 11 Sep 2013 19:22:35 +0100 (BST)
+	id S1755261Ab3IKSYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 14:24:54 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:50190 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753911Ab3IKSYx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 14:24:53 -0400
+Received: by mail-pd0-f182.google.com with SMTP id r10so9619520pdi.27
+        for <git@vger.kernel.org>; Wed, 11 Sep 2013 11:24:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=X6BVKTgLTMxNldryQwWEteFIc229fn2It1KZOCfuX6U=;
+        b=0fkmuop8UP4jMKTESdMl9nF/g5I8hhmnf52V51J2TB8+eGAVeHq1Hm8LyHFyPlmwCK
+         FO6bL3jceael/PA+XKzAaX2g7D00/VZcaHZ8dsEWqgj7CzyiqSXYEp4EW3M5GLeLq4Ah
+         gVTBX82eK+KvXJwl9pid6uPoIjEQN0ieUufiMSGEbuJhT6m74ons8QdHbejE6rOIEQLB
+         L9L0rkIHNdZNMH3hlWiazGItAD7+K1B58I+ikcMYFz7vynxAzrSCyd9dHrbGNKFw+9WP
+         D+Ft79JrxhmWQ9/HGO9hSORZNkWA0SIc8EVNLFmAAvCVIVyLPOlD5T41aZJWh9HfjCvF
+         zSxA==
+X-Received: by 10.68.130.1 with SMTP id oa1mr3346964pbb.35.1378923893145;
+        Wed, 11 Sep 2013 11:24:53 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id fa4sm5126082pab.17.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 11 Sep 2013 11:24:52 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <xmqq8uz3tece.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <5230AD23.2050009@bracey.fi>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234592>
 
-On Wed, Sep 11, 2013 at 11:14:57AM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > On Wed, Sep 11, 2013 at 10:08:18AM -0700, Junio C Hamano wrote:
-> >> Duy Nguyen <pclouds@gmail.com> writes:
-> >> 
-> >> > reset --soft does not go through these code paths (i.e. it does not
-> >> > need index at all). If we fail to load index index in "reset --soft" I
-> >> > think it's ok to die(). Corrupt index is fatal anyway.
-> >> 
-> >> Do I smell a breakage here?  Isn't "reset --soft HEAD" (or some
-> >> known good commit) a way to recover from a corrupt index?
-> >> 
-> >> If that is the case, I do not think it is OK at all.  What do we
-> >> suggest as an alternative?  "rm .git/index && read-tree"?
-> >
-> > Duy's suggestion below is necessary to avoid this then I think - we'll
-> > die if the user has a corrupt index and gives a path with a trailing
-> > slash, but without that path we won't try to load the index.
-> 
-> Sorry, but I don't quite follow.  Isn't "git reset --soft <path>" a
-> nonsense, with or without a trailing slash at the end of <path>?
+Kevin Bracey wrote:
 
-Yes, but my point was that providing the user doesn't give a path with a
-trailing slash we will get past the option parser if we take the
-approach below.
+> On reflection I'm not sure what we should for the "simple history"
+> view of v1.8.3.1..v1.8.4. We're not rewriting parents, so we don't
+> get a chance to reconsider the merge as being zero-parent, and we do
+> have this little section of graph to traverse at the bottom:
+>
+>           1.8.3
+>             o----x----x----x----x---x---     (x = included, o = excluded, *=!treesame)
+>                 /
+>                /*
+>   o--x--x--x--x
+[...]
+> 1) if identical to any on-graph parent, follow that one, and rewrite
+> the merge as a non-merge. We currently do not follow to an identical
+> off-graph parent. This long-standing comment in try_to_simplify_commit
+> applies: "Even if a merge with an uninteresting side branch brought
+> the entire change we are interested in, we do not want to lose the
+> other branches of this merge, so we just keep going."
+[...]
+> 2) If rule 1 doesn't activate, and it remains as a merge, hide it if
+> treesame to all on-graph parents. Previously this rule was "hide if
+> treesame to any parent", and so that would have hidden the merge.
+>
+> Now, when I changed rule 2, I did not think this would affect the
+> default log. See my commit message:
+[...]
+> I currently feel instinctively more disposed to dropping the older
+> "don't follow off-graph identical parents" rule. Let the default
+> history go straight to v1.8.3 even though it goes off the graph,
+> stopping us traversing the topic branch.
 
-However, I think we do do a read_cache when using "reset --soft" since
-we go through builtin/reset.c::die_if_unmerged_cache() which dies if
-read_cache fails.  So I don't think we are losing anything by moving
-this check earlier.
+Thanks for this analysis.  Interesting.
 
-> >> > But "reset
-> >> > --soft" now has to pay the cost to load index, which could be slow
-> >> > when the index is big. Assuming nobody does "reset --soft" that often
-> >> > I think this is OK.
-> >> >
-> >> > Alternatively we could load index lazily in _CHEAP code only when we
-> >> > see trailing slashes, then replace these read_cache() with
-> >> > read_cache_unless_its_already_loaded_earlier() or something.
+The rule (1) comes from v1.3.0-rc1~13^2~6:
+
+	commit f3219fbbba32b5100430c17468524b776eb869d6
+	Author: Junio C Hamano <junkio@cox.net>
+	Date:   Fri Mar 10 21:59:37 2006 -0800
+
+	    try_to_simplify_commit(): do not skip inspecting tree change at boundary.
+	    
+	    When git-rev-list (and git-log) collapsed ancestry chain to
+	    commits that touch specified paths, we failed to inspect and
+	    notice tree changes when we are about to hit uninteresting
+	    parent.  This resulted in "git rev-list since.. -- file" to
+	    always show the child commit after the lower bound, even if it
+	    does not touch the file.  This commit fixes it.
+	    
+	    Thanks for Catalin for reporting this.
+	    
+	    See also:
+		461cf59f8924f174d7a0dcc3d77f576d93ed29a4
+	    
+	    Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+I think you're right that dropping the "don't follow off-graph
+treesame parents" rule would be a sensible change.  The usual point of
+the "follow the treesame parent" rule is to avoid drawing undue
+attention to merges of ancient history where some of the parents are
+side-branches with an old version of the files being tracked and did
+not actually change those files.  That rationale applies just as much
+for a merge on top of an UNINTERESTING rev as any other merge.
+
+Thanks,
+Jonathan
