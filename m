@@ -1,99 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Disabling status hints in COMMIT_EDITMSG
-Date: Wed, 11 Sep 2013 10:24:00 -0700
-Message-ID: <xmqqob7ztgpb.fsf@gitster.dls.corp.google.com>
-References: <vpq4n9tghk5.fsf@anie.imag.fr>
-	<xmqqeh8wzl0h.fsf@gitster.dls.corp.google.com>
-	<vpq61u7akin.fsf@anie.imag.fr>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 1/2] reset: handle submodule with trailing slash
+Date: Wed, 11 Sep 2013 18:27:05 +0100
+Message-ID: <20130911172705.GV2582@serenity.lan>
+References: <cover.1378840318.git.john@keeping.me.uk>
+ <c7e026f44f9ccbf5736b72e728a360b31887a50f.1378840318.git.john@keeping.me.uk>
+ <52300838.5040703@kdbg.org>
+ <20130911082042.GR2582@serenity.lan>
+ <CACsJy8BgEM3eEDo8wOgkqYTL1fkh9azZNqbogxBubp9g5KRNbQ@mail.gmail.com>
+ <xmqqwqmnthfh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 11 19:24:09 2013
+Cc: Duy Nguyen <pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 11 19:27:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJo9A-0005Aw-MC
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 19:24:09 +0200
+	id 1VJoCH-0001DS-NG
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 19:27:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755982Ab3IKRYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Sep 2013 13:24:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47039 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755684Ab3IKRYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 13:24:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17DEF412E5;
-	Wed, 11 Sep 2013 17:24:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qcsl0di8/MmkNUitocESZLONLig=; b=YqzJmN
-	dj0tEQ9EI8yRMJwTB4CS0e45C1pV6TZHt4qlq4cmTXqsrSC7OUCeM2SaU3i42uLX
-	sUymQ3bTTAnIXtRrg0SU+6+s4khKSyL6LgWsSbZIODZjMSU1SfZWg/gkdkCiIT4o
-	PjvnVEVi9qQRAt4NFnL2GkHWgGZ9n+aMTrqPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r97LIb+/22JcG53xy8VF3eKbvX/zVXLD
-	n4Re4mMG1Fn3lZUndgoGb6y0R4czhkV4ZSD0DaronlceI17MEm5n1lqVAo3XE9gB
-	+b5jS/NsX2QEvfABRxm/0S/03NEjRS6/j2heYX7VLnCMy7QnMOy5E5TcHFrFSP3H
-	grd65bBbBRM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 04940412E4;
-	Wed, 11 Sep 2013 17:24:03 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1755757Ab3IKR1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 13:27:17 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:56330 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754015Ab3IKR1R (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 13:27:17 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id A23E5CDA5E2;
+	Wed, 11 Sep 2013 18:27:16 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hIS+BL6AlHsc; Wed, 11 Sep 2013 18:27:15 +0100 (BST)
+Received: from serenity.lan (tg2.aluminati.org [10.0.7.178])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE880412E1;
-	Wed, 11 Sep 2013 17:24:01 +0000 (UTC)
-In-Reply-To: <vpq61u7akin.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	11 Sep 2013 09:24:16 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F37A97A8-1B06-11E3-8644-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 3025ECDA566;
+	Wed, 11 Sep 2013 18:27:07 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <xmqqwqmnthfh.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234584>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Wed, Sep 11, 2013 at 10:08:18AM -0700, Junio C Hamano wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+> > reset --soft does not go through these code paths (i.e. it does not
+> > need index at all). If we fail to load index index in "reset --soft" I
+> > think it's ok to die(). Corrupt index is fatal anyway.
+> 
+> Do I smell a breakage here?  Isn't "reset --soft HEAD" (or some
+> known good commit) a way to recover from a corrupt index?
+> 
+> If that is the case, I do not think it is OK at all.  What do we
+> suggest as an alternative?  "rm .git/index && read-tree"?
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> But at the same time, I feel that these redundant lines, especially
->> the latter one, would give the users a stronger cue than just saying
->> that "bar is Untracked"; "do X to include" reminds that bar will not
->> be included if nothing is done.
->
-> The one which draw my attention was "(use "git commit" to conclude
-> merge)" which is particularly counter-productive when you are already
-> doing a "git commit".
+Duy's suggestion below is necessary to avoid this then I think - we'll
+die if the user has a corrupt index and gives a path with a trailing
+slash, but without that path we won't try to load the index.
 
-Oh, no question about that.  Nobody would object to the removal of
-that one; it is clearly nonsense.
-
-I was commented on the value of keeping "hints" like this:
-
-      # Untracked files:
-      #   (use "git add <file>..." to include in what will be committed)
-
-The primary value of the hint in the context of commit message
-buffer *NOT* being "what exactly do I need to do after I abort this
-commit?", but being "Ahh, this 'Untracked' section is showing me
-files that I may have forgotten to 'git add'".  If new users do not
-benefit from the latter, I am perfectly fine with the removal, but I
-suspect it may not be the case, hence my earlier comment.
-
-And "the user can see these hints by running another 'git status'
-after aborting the commit anyway" is an irrelevant counter-argument,
-exactly because my point is that I suspect having them in the commit
-template comment may help the users to *decide* if they want to
-continue with or abort the commit.
-
-But as I said already, I do not have a strong preference either way.
-
-Will queue the two patches (but I see there are already some obvious
-fixes suggested).
-
-Thanks.
+> > But "reset
+> > --soft" now has to pay the cost to load index, which could be slow
+> > when the index is big. Assuming nobody does "reset --soft" that often
+> > I think this is OK.
+> >
+> > Alternatively we could load index lazily in _CHEAP code only when we
+> > see trailing slashes, then replace these read_cache() with
+> > read_cache_unless_its_already_loaded_earlier() or something.
