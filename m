@@ -1,66 +1,59 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Javier Domingo <javierdo1@gmail.com>
 Subject: Re: [RFC] Disabling status hints in COMMIT_EDITMSG
-Date: Wed, 11 Sep 2013 09:24:16 +0200
-Message-ID: <vpq61u7akin.fsf@anie.imag.fr>
-References: <vpq4n9tghk5.fsf@anie.imag.fr>
-	<xmqqeh8wzl0h.fsf@gitster.dls.corp.google.com>
+Date: Wed, 11 Sep 2013 09:42:32 +0200
+Message-ID: <CALZVapmYzKO=fvVgSd+3fzAhdGrawU0C=iETkoJ5fxG87o4KtA@mail.gmail.com>
+References: <vpq4n9tghk5.fsf@anie.imag.fr> <xmqqeh8wzl0h.fsf@gitster.dls.corp.google.com>
+ <vpq61u7akin.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 11 09:24:30 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 11 09:42:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJemr-00077u-77
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 09:24:29 +0200
+	id 1VJf4j-0006af-Cu
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Sep 2013 09:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751517Ab3IKHYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Sep 2013 03:24:25 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:44474 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751398Ab3IKHYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 03:24:24 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8B7OF6M011240
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 11 Sep 2013 09:24:15 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VJeme-0003ko-EV; Wed, 11 Sep 2013 09:24:16 +0200
-In-Reply-To: <xmqqeh8wzl0h.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 10 Sep 2013 09:42:06 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 11 Sep 2013 09:24:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r8B7OF6M011240
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1379489059.65361@OCFjRmSCNoJng2BcbYym3w
+	id S1751906Ab3IKHmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 03:42:53 -0400
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:37338 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954Ab3IKHmx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 03:42:53 -0400
+Received: by mail-vc0-f169.google.com with SMTP id ib11so6048094vcb.0
+        for <git@vger.kernel.org>; Wed, 11 Sep 2013 00:42:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=KTL+ZWFin5F04aUv366A+Ig1Qp4/unbYGltCP1ybnO0=;
+        b=rcdp0gtPDPqAmLxbNYDdXAg3mtmLKup0FT1xA1AuB7z3KCpX5r4j9LIvPsSTlqpB5u
+         2sxfWcZNTQg4ezxWfNEeXUuw0B62J43D009N5Hml8pzHLykn8b/+s/IL/tEawFpF1oXG
+         raie35lDiQePgDjRVTjO8FkrNug8arJl0Av/57GPQx2tPd6OCXkc3SnxbzfpYWdU5+og
+         HkUfkFMMU5fCFq6Od+ImUuA2H9v8kxMJUarCUKA9XuawsP3/yRZfHBD7CwIzZ0F4jRiM
+         hIRNEZ0m3YWEtkDnzEQ8OecupUoKCnoW5IIGkg5xw0pimmE/a54fLYPm/Nzy1ELxXQIT
+         2Erg==
+X-Received: by 10.58.169.101 with SMTP id ad5mr65761vec.88.1378885372392; Wed,
+ 11 Sep 2013 00:42:52 -0700 (PDT)
+Received: by 10.58.200.74 with HTTP; Wed, 11 Sep 2013 00:42:32 -0700 (PDT)
+In-Reply-To: <vpq61u7akin.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234547>
 
-Junio C Hamano <gitster@pobox.com> writes:
+IMHO, It is alright as it is.
 
-> But at the same time, I feel that these redundant lines, especially
-> the latter one, would give the users a stronger cue than just saying
-> that "bar is Untracked"; "do X to include" reminds that bar will not
-> be included if nothing is done.
+I have been using git for 4~ years now, and I still find very useful
+those lines. They are like a git status while committing, and it's the
+key to avoid accidental commits of objects or forgetting files in a
+commit. Between that and that the commit message can't be empty, I can
+abort a commit and correct the staging area.
 
-The one which draw my attention was "(use "git commit" to conclude
-merge)" which is particularly counter-productive when you are already
-doing a "git commit". The advice for untracked files is less
-counter-productive, but while we're removing the non-sensical ones, I
-think it makes sense to remove the essentially-useless ones too.
+Cheers,
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Javier Domingo
