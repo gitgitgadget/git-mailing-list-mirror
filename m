@@ -1,86 +1,70 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH 00/21] np/pack-v4 updates
-Date: Thu, 12 Sep 2013 12:20:14 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309121214550.20709@syhkavp.arg>
-References: <xmqqtxhswexg.fsf@gitster.dls.corp.google.com>
- <1378879582-15372-1-git-send-email-pclouds@gmail.com>
- <CACsJy8C87k7K6dnr5N_mqz9w7YtdHzjB+jPwrwtMk1oeXxWYGQ@mail.gmail.com>
- <alpine.LFD.2.03.1309111224460.20709@syhkavp.arg>
- <CACsJy8B7WAz4eB88gJCWc3Z0fpSrop8f_Xex1tkmykYuSYUFUQ@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 1/2] relative_path should honor dos_drive_prefix
+Date: Thu, 12 Sep 2013 19:22:01 +0200
+Message-ID: <5231F839.3080208@kdbg.org>
+References: <xmqq38pczjw6.fsf@gitster.dls.corp.google.com> <0688d5a5bd194ff5808c555e8e75132e2c687368.1378977052.git.worldhello.net@gmail.com> <5231CBFA.3070806@web.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 12 18:20:39 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Tvangeste <i.4m.l33t@yandex.ru>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Sep 12 19:23:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VK9d8-00069a-Bw
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 18:20:30 +0200
+	id 1VKAaz-0006iF-PG
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 19:22:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754574Ab3ILQU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 12:20:26 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:10596 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754218Ab3ILQUZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 12:20:25 -0400
-Received: from yoda.home ([70.83.209.44]) by VL-VM-MR001.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MT00055OTE1FVN0@VL-VM-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 12 Sep 2013 12:20:25 -0400 (EDT)
-Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTPSA id CAB612DA0625; Thu, 12 Sep 2013 12:20:24 -0400 (EDT)
-In-reply-to: <CACsJy8B7WAz4eB88gJCWc3Z0fpSrop8f_Xex1tkmykYuSYUFUQ@mail.gmail.com>
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1754366Ab3ILRWI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Sep 2013 13:22:08 -0400
+Received: from bsmtp5.bon.at ([195.3.86.187]:32034 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754130Ab3ILRWH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 13:22:07 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id ABBEEA7EC2;
+	Thu, 12 Sep 2013 19:22:02 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 2D89019F601;
+	Thu, 12 Sep 2013 19:22:02 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <5231CBFA.3070806@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234661>
 
-On Thu, 12 Sep 2013, Duy Nguyen wrote:
+Am 12.09.2013 16:13, schrieb Torsten B=F6gershausen:
+> On 2013-09-12 11.12, Jiang Xin wrote:
+>> +static int have_same_root(const char *path1, const char *path2)
+>> +{
+>> +	int is_abs1, is_abs2;
+>> +
+>> +	is_abs1 =3D is_absolute_path(path1);
+>> +	is_abs2 =3D is_absolute_path(path2);
+>> +	return (is_abs1 && is_abs2 && !strncasecmp(path1, path2, 1)) ||
+>                                        ^^^^^^^^^^^
+> I wonder: should strncasecmp() be replaced with strncmp_icase() ?
 
-> On Wed, Sep 11, 2013 at 11:25 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
-> > On Wed, 11 Sep 2013, Duy Nguyen wrote:
-> >
-> >> Nico, if you have time you may want to look into this. The result v4
-> >> pack from pack-objects on git.git for me is 35MB (one branch) while
-> >> packv4-create produces 30MB (v2 is 40MB). I don't know why there is
-> >> such a big difference in size. I compared. Ident dict is identical.
-> >> Tree dict is a bit different (some that have same hits are ordered
-> >> differently). Delta chains do not differ much. Many groups of entries
-> >> in the pack are displaced though. I guess I turned a wrong knob or
-> >> something in pack-objects in v4 code..
-> >
-> > Will try to have a closer look.
-> 
-> Problem found. I encoded some trees as ref-delta instead of pv4-tree
-> :( Something like this brings the size back to packv4-create output
-> 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index f604fa5..3d9ab0e 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -1490,7 +1490,8 @@ static void check_object(struct object_entry *entry)
->   * deltify other objects against, in order to avoid
->   * circular deltas.
->   */
-> - entry->type = entry->in_pack_type;
-> + if (pack_version < 4)
-> + entry->type = entry->in_pack_type;
->   entry->delta = base_entry;
->   entry->delta_size = entry->size;
->   entry->delta_sibling = base_entry->delta_child;
+I don't think so: On POSIX, it is irrelevant, because the call will onl=
+y
+compare a slash to a slash. On Windows, it compares the drive letters
+(or a slash); it is *always* case-insensitive, even if the volume
+mounted is NTFS with case-sensitivity enabled and core.ignorecase is fa=
+lse.
 
-Hmmm... I've folded this fix into your patch touching this area.
+> See dir.c:=20
+> int strncmp_icase(const char *a, const char *b, size_t count)
+> {
+> 	return ignore_case ? strncasecmp(a, b, count) : strncmp(a, b, count)=
+;
+> }
 
-This code is becoming rather subtle and messy though.  We'll have to 
-find a way to better abstract things.  Especially since object data 
-reuse will work only for blobs and tags with packv4.  Commits and trees 
-will need adjustments to their indices.
-
-
-Nicolas
+-- Hannes
