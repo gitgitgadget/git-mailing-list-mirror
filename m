@@ -1,73 +1,61 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] urlmatch.c: recompute ptr after
- append_normalized_escapes
-Date: Thu, 12 Sep 2013 15:05:05 -0700
-Message-ID: <20130912220505.GM4326@google.com>
-References: <75d702a744eb33a456622dd2ff901abef83e51d8.1378979451.git.trast@inf.ethz.ch>
- <c8915eaaf877abe0e69864ffdc6c50f@f74d39fa044aa309eaea14b9f57fe79>
- <xmqqioy5q4dd.fsf@gitster.dls.corp.google.com>
- <85CEBFAA-8905-46EC-88C5-5DDE629B73F9@gmail.com>
+From: John Gietzen <jgietzen@woot.com>
+Subject: Converting repo from HG, `git filter-branch --prune-empty -- --all`
+ is extremely slow and errors out.
+Date: Thu, 12 Sep 2013 17:01:02 -0500
+Message-ID: <D4C9DBA5F955904683C89B4A96DA7759EA78D60FDF@synapsemail>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 13 00:05:16 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 13 00:06:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKF0l-0006vw-Dy
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 00:05:15 +0200
+	id 1VKF1t-000843-Si
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 00:06:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754781Ab3ILWFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 18:05:11 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:59381 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751229Ab3ILWFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 18:05:10 -0400
-Received: by mail-pa0-f45.google.com with SMTP id bg4so1680878pad.18
-        for <git@vger.kernel.org>; Thu, 12 Sep 2013 15:05:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=K6JR6aLDyf/87A6cEtIPfnUrrGDqo3VLjasTp0Co2Ew=;
-        b=Fa92T7YYCsPjFTo6MDUNj2HA2O9cfdlEXD6ub3y0TcpR+Didrp1DxFPaBAj8BymIaf
-         J7c7g2Ozkbt2PO8aUFBcpD5ny5+KiZQk7o4Mk9KnL50tusbXyRvaMg/ujCOj/rDZG9v/
-         FGBccKq2xxsFFPjf50WiRzDT6UV3PP4rFVMGehJmbXLr53JdLnvvaYFXjtAnVx8XySrB
-         h5kRUSXmXns7AnnxzheHLIbQ6LSM7rsi5ffJfumNTcIl1QCXIfjHcCg+4CRCL/4Ut1l+
-         94UGG9+Z/lFSswWFvUVMkkbfT++8dxt3g5YAtiPDrqwS1WXdbQ7kwI2Ek2v+IB2YO8xl
-         J4ow==
-X-Received: by 10.67.3.103 with SMTP id bv7mr11645322pad.15.1379023509716;
-        Thu, 12 Sep 2013 15:05:09 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id xv2sm1086595pbb.39.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 12 Sep 2013 15:05:08 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <85CEBFAA-8905-46EC-88C5-5DDE629B73F9@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756020Ab3ILWGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 18:06:21 -0400
+Received: from mail1.news.woot.com ([209.12.104.152]:6582 "EHLO
+	corpmail.woot.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756002Ab3ILWGT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Sep 2013 18:06:19 -0400
+X-Greylist: delayed 316 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Sep 2013 18:06:19 EDT
+Received: from synapsemail.synmicro.com ([192.168.1.249]) by synapsemail
+ ([192.168.1.249]) with mapi; Thu, 12 Sep 2013 17:01:01 -0500
+Thread-Topic: Converting repo from HG, `git filter-branch --prune-empty --
+ --all` is extremely slow and errors out.
+Thread-Index: Ac6wAQElNCPMCRBPShyis00RXVo5zg==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234704>
 
-Kyle J. McKay wrote:
+Background:
+Windows, git version 1.8.3.msysgit.0
+bare repo, 54k commits after migration from HG
+git filter-branch --prune-empty -- --all
 
-> The longer comment looks good to me.  If you think the code will be safe from
-> simplification patches without a comment, that works for me too.
+I'm trying to clean up our repository after migrating it from HG.  I'm running the filter-branch command listed above in an effort to clean up all of garbage commits that HG required ("closing branch" commits and their ilk).
 
-I think if we can't trust reviewers to catch this kind of thing, we're
-in trouble (i.e., moving too fast). :)
+>From my past experience, "git filter-branch" is extremely quick when using simple filters, like env-filter, since it doesn't have to touch the working dir.  However, in our case each revision is taking 1-3 seconds; our entire repo will take 30 hours to clean up at this rate.  Normally, this wouldn't be a problem, except that we are getting "sh.exe couldn't start" errors after anywhere between the 5000th and 6000th rewritten commit.  Filter-branch doesn't have support for picking up where it left off, so we are entirely unable to clean up our repo. 
 
-So FWIW my instinct is to leave the comment out, since I actually find
-it more readable that way (otherwise I would wonder, "Why am I being
-told that a strbuf's buffer has a nonconstant address?  Do some other
-strbufs have a constant address or something?")
+All that being said, I have 3 questions:
+  1.  Is there anything I can do to speed up the filter-branch command? (Alternatively, is there a way I can profile git-filter-branch.sh on msysgit?)
+  2.  Any idea why sh.exe would fail?
+  3.  Is there a way I can resume the filter-branch command when/if it fails?  (Alternatively, is there a way I can do the filter-branch in pieces and efficiently rebase... or something?)
 
-Thanks,
-Jonathan
+I have already had to modify git-filter-branch.sh myself (to support the immense number of refs we are rewriting), so I'm comfortable with that.
+
+Any help you can offer would be appreciated.
+ 
+Thanks in advance,
+John Gietzen
