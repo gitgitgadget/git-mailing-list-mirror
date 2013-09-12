@@ -1,81 +1,118 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
-Date: Thu, 12 Sep 2013 14:36:33 -0700
-Message-ID: <20130912213633.GL4326@google.com>
-References: <20130911182921.GE4326@google.com>
- <CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
- <20130911214116.GA12235@sigill.intra.peff.net>
- <CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
- <20130912101419.GY2582@serenity.lan>
- <xmqq61u6qcez.fsf@gitster.dls.corp.google.com>
- <20130912182057.GB32069@sigill.intra.peff.net>
- <xmqqd2odq45y.fsf@gitster.dls.corp.google.com>
- <20130912183849.GI4326@google.com>
- <CAHGBnuPejvs_zTdV52GWVCF35+Bdih2c1zNuBdHJRd_2ShcnKQ@mail.gmail.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: Fwd: Fwd: git-daemon access-hook race condition
+Date: Thu, 12 Sep 2013 18:01:03 -0400
+Message-ID: <CAPZPVFZHyzPZnyg5gjhL0tP6Kgd=XFLc6o8ZKsmPXLUSdcc5mA@mail.gmail.com>
+References: <CAPZPVFa=gqJ26iA6eQ1B6pcbTcQmmnXHYz6OQLtMORnAa5ec2w@mail.gmail.com>
+	<CAPZPVFbJqbRGQZ+m3-EfahcYegPvVcS-jNTsCXxBqWUsLqyHkg@mail.gmail.com>
+	<xmqq4n9pq2av.fsf@gitster.dls.corp.google.com>
+	<CAPZPVFZLPV=JVR+SSqfX-=aLyFWZBkof+yCkivcLoKNnv6f__Q@mail.gmail.com>
+	<CAPZPVFZpYJnQY4BpjaPxU8NnBmPZ9Fp6UpovoQEvkKzRnLa=KA@mail.gmail.com>
+	<xmqqioy5oiif.fsf@gitster.dls.corp.google.com>
+	<CAPZPVFYtVsPrFEMcx9UBQzJffi9tRduDqLfUF1vGR=WSKL95aQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	John Keeping <john@keeping.me.uk>,
-	Git Mailing List <git@vger.kernel.org>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 12 23:36:45 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 13 00:01:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKEZ8-000358-8p
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 23:36:42 +0200
+	id 1VKEwn-0002mF-Nb
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 00:01:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754963Ab3ILVgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 17:36:38 -0400
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:53421 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753768Ab3ILVgh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 17:36:37 -0400
-Received: by mail-pd0-f173.google.com with SMTP id p10so357415pdj.32
-        for <git@vger.kernel.org>; Thu, 12 Sep 2013 14:36:37 -0700 (PDT)
+	id S1755687Ab3ILWBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 18:01:06 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:47351 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753793Ab3ILWBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 18:01:04 -0400
+Received: by mail-wi0-f172.google.com with SMTP id c10so3785wiw.17
+        for <git@vger.kernel.org>; Thu, 12 Sep 2013 15:01:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=HJyi+RddOFtEgEBKh3773+iNO1lqesH8QCVKbdeWe0k=;
-        b=sx0UTlM2f+4U3XoKUOVwYtlsPa9soDfbu+HpO2E5LHYVT76yXO4RVxo76O9czj1uWC
-         6Ku+bEp3l7kCyxp5KHjlK4QflvwWmW6VcCGSSkzdANE1sFbzrs7fDdYV3U5y3y09kCHN
-         urRo3PMcPJdo42XTAhnm0GBAPFUsRNWqdah3J3SCOjOwAQY77FAHKmOLs+SS44ri3UVa
-         ZkXSX3TXAWyi0S+pCOqGnIrjJqXJYKazxI4wSkosGRupAhuzuWUGLOYkuYOIdsZHokIu
-         n1JBhc7z03RpMsOtFzqIuJHJ8n55iBPe0QJv6Fy6auCJ9SCV+V/tEju/NA3iwy7ewaC4
-         rEwQ==
-X-Received: by 10.66.27.175 with SMTP id u15mr11479134pag.146.1379021797347;
-        Thu, 12 Sep 2013 14:36:37 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id u7sm7045939pbf.12.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 12 Sep 2013 14:36:36 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAHGBnuPejvs_zTdV52GWVCF35+Bdih2c1zNuBdHJRd_2ShcnKQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=qnLIsAA6zNDLHpzoZkQ6qVnFb29FBkUR38klK6dAUPk=;
+        b=ttrRTeH6QKk5Lu5EjE1cnh0RQh7cQTWYfNXXdAAyCbHAVbrGHTImLZuxjjuf0YDniV
+         6oauy9Ct1cSpXEpx7CdwToVZtxwv37T+KqHE2az22XztE8D85Gub+bAeRNF9ZDICYfwv
+         F0bNlYRgRsevdUsCEj+c5VaDUvvzOdzxjgcEaUVInRuTYkl6sX8krNEfR+szNoHgN9oO
+         MeaRV7YWkv+Ur7raZcKdiIDlH5SECAJbj90GkkcDsgka8qtdA9YY+afyb9tKsgDTNM9C
+         8k9TTOttp9vSwefbh54QxzwQRMvguOpt6K6jA5vmB9c3lgPkZW0L97pVHqDhrep3lAZl
+         b3AQ==
+X-Received: by 10.194.123.227 with SMTP id md3mr8110314wjb.17.1379023263816;
+ Thu, 12 Sep 2013 15:01:03 -0700 (PDT)
+Received: by 10.216.218.197 with HTTP; Thu, 12 Sep 2013 15:01:03 -0700 (PDT)
+In-Reply-To: <CAPZPVFYtVsPrFEMcx9UBQzJffi9tRduDqLfUF1vGR=WSKL95aQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234702>
 
-Sebastian Schuberth wrote:
+On Thu, Sep 12, 2013 at 5:16 PM, Eugene Sajine <euguess@gmail.com> wrote:
+> Junio,
+>
+> Thanks for the clarification! Your solution does look better.
+>
+> For now though i think i will have to delay the notification somehow
+> and let the service finish first then notify the server.
+>
+> Thanks again!
+>
+> Eugene
+>
+>
+> On Thu, Sep 12, 2013 at 5:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Eugene Sajine <euguess@gmail.com> writes:
+>>
+>>> So are you really sure that it is a non-starter to have
+>>> --before-service/--after-service options for access-hook?
+>>
+>> Given the definition of "--access-hook" in "git help daemon":
+>>
+>>     --access-hook=<path>::
+>>             Every time a client connects, first run an external command
+>>             specified by the <path> ... The external command can decide
+>>             to decline the service by exiting with a non-zero status (or
+>>             to allow it by exiting with a zero status)....
+>>
+>> There is *NO* way in anywhere --after-service makes any sense (and
+>> by definition --before-service is redundant).
+>>
+>> What you _could_ propose is to define a *new* hook that is run when
+>> the spawned service has returned, with the same information that is
+>> fed to the access hook (possibly with its exit status).
+>>
+>> I do not offhand know if we retain the original service information
+>> that long after the main daemon process has spawned the service
+>> process, though.  With the current system, the only thing it needs
+>> to know is the PID of the service processes that are to be culled by
+>> calls to waitpid().  So you may have to extend existing bookkeeping
+>> data structures a bit to keep those pieces of information around if
+>> you wanted to add such a new hook.
+>>
+>>
 
-> I'm not too happy with the wording either. As I see it, even on MinGW
-> runtime version 4.0 it's not true that "string.h has _only_ inline
-> definition of strcasecmp"; there's also "#define strncasecmp
-> _strnicmp"
+For now I'm trying to do the following:
 
-I assume you mean "#define strcasecmp _stricmp", which is guarded by
-defined(__NO_INLINE__).  I think what Junio meant is that by default
-(i.e., in the !defined(__NO_INLINE__) case) string.h uses
-__CRT_INLINE, defined as
+access-hook.bash has:
 
-	extern inline __attribute__((__gnu_inline__))
+delayed-notify.bash $@ &
 
-to suppress the non-inline function definition.
+delayed-notify.bash has:
 
-Jonathan
+sleep 10
+...
+curl ...
+
+I'm expecting access-hook to spawn new process and return without
+waiting for it to finish to let the service to do its job. But when i
+do push - it sleeps for 10 seconds anyway. Am i missing something
+obvious here?
+
+Any help is much appreciated!
+
+Thanks,
+Eugene
