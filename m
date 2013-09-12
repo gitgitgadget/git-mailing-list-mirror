@@ -1,61 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] http-backend: provide Allow header for 405
-Date: Wed, 11 Sep 2013 17:33:43 -0700
-Message-ID: <20130912003343.GH4326@google.com>
-References: <1378945801-122021-1-git-send-email-sandals@crustytoothpaste.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 00/21] np/pack-v4 updates
+Date: Thu, 12 Sep 2013 10:38:49 +0700
+Message-ID: <CACsJy8B7WAz4eB88gJCWc3Z0fpSrop8f_Xex1tkmykYuSYUFUQ@mail.gmail.com>
+References: <xmqqtxhswexg.fsf@gitster.dls.corp.google.com> <1378879582-15372-1-git-send-email-pclouds@gmail.com>
+ <CACsJy8C87k7K6dnr5N_mqz9w7YtdHzjB+jPwrwtMk1oeXxWYGQ@mail.gmail.com> <alpine.LFD.2.03.1309111224460.20709@syhkavp.arg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, jkoleszar@google.com,
-	gitster@pobox.com, peff@peff.net
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Thu Sep 12 02:33:52 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Sep 12 05:39:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VJur1-0004xE-SC
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 02:33:52 +0200
+	id 1VJxka-0006ht-Hl
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 05:39:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359Ab3ILAds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Sep 2013 20:33:48 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:38142 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751238Ab3ILAdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Sep 2013 20:33:47 -0400
-Received: by mail-pb0-f49.google.com with SMTP id xb4so9697585pbc.8
-        for <git@vger.kernel.org>; Wed, 11 Sep 2013 17:33:47 -0700 (PDT)
+	id S1752118Ab3ILDjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Sep 2013 23:39:20 -0400
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:46422 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751392Ab3ILDjU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Sep 2013 23:39:20 -0400
+Received: by mail-pb0-f53.google.com with SMTP id up15so9931410pbc.40
+        for <git@vger.kernel.org>; Wed, 11 Sep 2013 20:39:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=No8jOoPL4Nmc9cdl1dGdMD8go6HJPBaAVx2I4xI79Ek=;
-        b=Fb2rYvNcsnQI04ybyX0tCIc4eTgHn5WKA5pmQZKAcEymIUUQW8OxUAAF0RzkVm1uYX
-         Gw7TE8nAorKga+LL0YoUFWUce5mKWqf2+DF5N90vhsfOJRj7tHCeFpPqaxG7omJrfgHF
-         TeHEX9NhusFvHOY3jCEZAYrz4yqADButgYJAiToLHPTkSHb/yhD7gGmrwUsgZyTXsM2g
-         PHP+LPmQ36K6gO4qKd9+DKl8pciCKBiuU6JZmy6hXXP4ulSyfV4Hos2Xy27OIt9I7fYk
-         JpzyzV5weskhd4NCWeBNYvNd5KgGAlfMSOv9LsZddilwoceNZEXdfj5gstvcEfTIl3zj
-         t+PA==
-X-Received: by 10.66.145.166 with SMTP id sv6mr6439093pab.31.1378946027402;
-        Wed, 11 Sep 2013 17:33:47 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id f2sm722479pbg.44.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 11 Sep 2013 17:33:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1378945801-122021-1-git-send-email-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=WZaHUdC67apfZ3LCHohwKvVXPgJ3VK31Xruq9rZP8Bc=;
+        b=xJevn6iU5XBQGMU1tJyNw/vEbVpB2Fb5GXraDXF0IOosWxZD0iiiHx2/aOU3Mnxrkb
+         3ACsbsbSDJSxmioOIE8Gzu8kvvNcbxYQacmptawYzeBKz0+4iPMt84cN6NgIQyiOLF6G
+         BXfTJNCZFeeqH2W7eLhVa8tY/bmYVaqJ2oONLpedBeiqz2AElx4xuGaxXJOjkc3EGXHL
+         4myfK/H1vtlFcgImF0BtIW+wNsdJc6iTWsiWkAKcHEwx3O9M9h5oWeY0ThsjdVXRNNVd
+         yo95b/ooOtIYRgGZQYOMNTGNp8HnlNTbFKKWPLKu2EkdXGFhRp0gGh6peD9VKOk+Jsf9
+         QcDQ==
+X-Received: by 10.68.64.201 with SMTP id q9mr5347400pbs.15.1378957159527; Wed,
+ 11 Sep 2013 20:39:19 -0700 (PDT)
+Received: by 10.70.131.167 with HTTP; Wed, 11 Sep 2013 20:38:49 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.03.1309111224460.20709@syhkavp.arg>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234617>
 
-brian m. carlson wrote:
+On Wed, Sep 11, 2013 at 11:25 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> On Wed, 11 Sep 2013, Duy Nguyen wrote:
+>
+>> Nico, if you have time you may want to look into this. The result v4
+>> pack from pack-objects on git.git for me is 35MB (one branch) while
+>> packv4-create produces 30MB (v2 is 40MB). I don't know why there is
+>> such a big difference in size. I compared. Ident dict is identical.
+>> Tree dict is a bit different (some that have same hits are ordered
+>> differently). Delta chains do not differ much. Many groups of entries
+>> in the pack are displaced though. I guess I turned a wrong knob or
+>> something in pack-objects in v4 code..
+>
+> Will try to have a closer look.
 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+Problem found. I encoded some trees as ref-delta instead of pv4-tree
+:( Something like this brings the size back to packv4-create output
 
-Thanks again for noticing.
-
-For what it's worth,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index f604fa5..3d9ab0e 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1490,7 +1490,8 @@ static void check_object(struct object_entry *entry)
+  * deltify other objects against, in order to avoid
+  * circular deltas.
+  */
+- entry->type = entry->in_pack_type;
++ if (pack_version < 4)
++ entry->type = entry->in_pack_type;
+  entry->delta = base_entry;
+  entry->delta_size = entry->size;
+  entry->delta_sibling = base_entry->delta_child;
+-- 
+Duy
