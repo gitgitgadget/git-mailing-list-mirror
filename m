@@ -1,89 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
-Date: Thu, 12 Sep 2013 13:08:52 -0700
-Message-ID: <xmqqvc25ol9n.fsf@gitster.dls.corp.google.com>
-References: <523094F0.9000509@gmail.com> <20130911182921.GE4326@google.com>
-	<CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
-	<20130911214116.GA12235@sigill.intra.peff.net>
-	<CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
-	<20130912101419.GY2582@serenity.lan>
-	<xmqq61u6qcez.fsf@gitster.dls.corp.google.com>
-	<20130912182057.GB32069@sigill.intra.peff.net>
-	<xmqqd2odq45y.fsf@gitster.dls.corp.google.com>
-	<20130912183849.GI4326@google.com>
-	<CAHGBnuPejvs_zTdV52GWVCF35+Bdih2c1zNuBdHJRd_2ShcnKQ@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 1/4] pathspec: use is_dir_sep() to check for trailing
+ slashes
+Date: Thu, 12 Sep 2013 22:17:13 +0200
+Message-ID: <52322149.7050201@kdbg.org>
+References: <cover.1379013786.git.john@keeping.me.uk> <88455dac2dce36135c070cff01215e9ae0259635.1379013786.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-	John Keeping <john@keeping.me.uk>,
-	Git Mailing List <git@vger.kernel.org>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 12 22:09:04 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Sep 12 22:17:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKDCH-0006MH-H6
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 22:09:01 +0200
+	id 1VKDKN-00075u-PN
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 22:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755554Ab3ILUI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 16:08:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53059 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752693Ab3ILUI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 16:08:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AEB141845;
-	Thu, 12 Sep 2013 20:08:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=warXmSYIkOU0lyfvoVWlwoLNAso=; b=xHzwsr
-	5tYNXSYFXdZjMqkKpyQubrqyfwj0skWHEIPykv+art5BWJLh97Gb9tPgYJ34sf7B
-	UJytTxIR6y+C7Z5bszP8UitMjMZYJy+y9epCyTtmB3EfCc3i6fNccVqumoK6QX7V
-	GOh7ym66zycI4xE1/cLHjC3iK58XE8j3+pf1E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LwTNX5fgCxQmPhIRfApXQo8onCH1Cf1p
-	pgu5f3Yhds+I7qprgcJT18Tnk2FiU54JGdnX3FgKM/9b0HFdfrzawtyvdBtpFakl
-	h+TgSD7ezGx1npNyRuDt26O2zOvL9sIdN2V767x4auMvSPFfddqsqV2VO03qUR8D
-	zZoNad3gY18=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 04A5E41840;
-	Thu, 12 Sep 2013 20:08:56 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C7E6141837;
-	Thu, 12 Sep 2013 20:08:54 +0000 (UTC)
-In-Reply-To: <CAHGBnuPejvs_zTdV52GWVCF35+Bdih2c1zNuBdHJRd_2ShcnKQ@mail.gmail.com>
-	(Sebastian Schuberth's message of "Thu, 12 Sep 2013 21:51:31 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 26A90804-1BE7-11E3-AF2B-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755489Ab3ILURT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 16:17:19 -0400
+Received: from bsmtp5.bon.at ([195.3.86.187]:13589 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753803Ab3ILURT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 16:17:19 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id DCAC11300A7;
+	Thu, 12 Sep 2013 22:17:13 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 8EA0819F601;
+	Thu, 12 Sep 2013 22:17:13 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <88455dac2dce36135c070cff01215e9ae0259635.1379013786.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234689>
 
-Sebastian Schuberth <sschuberth@gmail.com> writes:
+Am 12.09.2013 21:24, schrieb John Keeping:
+> This allows us to correctly removing trailing backslashes on Windows
+> when checking for submodules.
+> 
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>  pathspec.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/pathspec.c b/pathspec.c
+> index ad1a9f5..7c6963b 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -252,7 +252,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+>  	item->prefix = prefixlen;
+>  
+>  	if ((flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) &&
+> -	    (item->len >= 1 && item->match[item->len - 1] == '/') &&
+> +	    (item->len >= 1 && is_dir_sep(item->match[item->len - 1])) &&
+>  	    (i = cache_name_pos(item->match, item->len - 1)) >= 0 &&
+>  	    S_ISGITLINK(active_cache[i]->ce_mode)) {
+>  		item->len--;
+> @@ -267,7 +267,8 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+>  			if (!S_ISGITLINK(ce->ce_mode))
+>  				continue;
+>  
+> -			if (item->len <= ce_len || match[ce_len] != '/' ||
+> +			if (item->len <= ce_len ||
+> +			    !is_dir_sep(match[ce_len]) ||
+>  			    memcmp(ce->name, match, ce_len))
+>  				continue;
+>  			if (item->len == ce_len + 1) {
 
-> I'm not too happy with the wording either. As I see it, even on MinGW
-> runtime version 4.0 it's not true that "string.h has _only_ inline
-> definition of strcasecmp"; there's also "#define strncasecmp
-> _strnicmp" which effectively provides a non-inline definition of
-> strncasecmp aka _strnicmp.
+A design decisions to keep in mind:
 
-I do not get this part.  Sure, string.h would have definitions of
-things other than strcasecmp, such as strncasecmp.  So what?
+Paths in the index *ALWAYS* use the slash, even on Windows. On Windows,
+pathspec that are user input must undergo backslash-to-slash
+transformation at a very early stage so that later processing that
+compares the user input to index contents need not do it on the fly. The
+backslash-to-slash transformation used to happen in get_pathspec() via
+prefix_path() and normalize_path_copy().
 
-Does it "effectively" provide a non-inline definition of strcasecmp?
+If, at this point, the contents of 'match' is still being parsed for
+pathspec magic, then it is likely correct to use is_dir_sep().
 
-Perhaps the real issue is that the header file does not give an
-equivalent "those who want to take the address of strcasecmp will
-get the address of _stricmp instead" macro, e.g.
+On the other hand, if at this point the contents of 'match' are used to
+execute pathspec magic, then it is not correct to use is_dir_sep(); the
+conversion of backslash to slash should have happened earlier, and no
+backslashes should be present anymore.
 
-	#define strcasecmp _stricmp
+(Yes, this means that on Windows we cannot escape glob characters
+because, e.g., 'a\*.c' was turned into 'a/*.c'.)
 
-or something?
+-- Hannes
