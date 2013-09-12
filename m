@@ -1,92 +1,134 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
-Date: Thu, 12 Sep 2013 21:46:51 +0200
-Message-ID: <CAHGBnuPzzokV7YMrx0gAL1VACcmaLwFoaB3n6bX8Y-UDHs7S8A@mail.gmail.com>
-References: <523094F0.9000509@gmail.com>
-	<20130911182921.GE4326@google.com>
-	<CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
-	<20130911214116.GA12235@sigill.intra.peff.net>
-	<CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
-	<20130912101419.GY2582@serenity.lan>
-	<xmqq61u6qcez.fsf@gitster.dls.corp.google.com>
-	<20130912182057.GB32069@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/4] pathspec: strip multiple trailing slashes from submodules
+Date: Thu, 12 Sep 2013 12:48:10 -0700
+Message-ID: <xmqqzjrhom85.fsf@gitster.dls.corp.google.com>
+References: <cover.1379013786.git.john@keeping.me.uk>
+	<cover.1378840318.git.john@keeping.me.uk>
+	<cover.1379013786.git.john@keeping.me.uk>
+	<7c478c19da6ee3322ca87e77a90358a30178c286.1379013786.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 12 21:47:11 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Johannes Sixt <j6t@kdbg.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Sep 12 21:48:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKCqv-0007Qo-Bq
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 21:46:57 +0200
+	id 1VKCsE-0000NO-9I
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 21:48:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756546Ab3ILTqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 15:46:53 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:43561 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756541Ab3ILTqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 15:46:52 -0400
-Received: by mail-la0-f46.google.com with SMTP id eh20so244053lab.19
-        for <git@vger.kernel.org>; Thu, 12 Sep 2013 12:46:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=9ihX3vOGvA8oZQarcGXSRNt3aNIjCMzeuTNffxpZ/Bs=;
-        b=nYQzPnMV7aigkU12+4F6tgcStQrzz6755qYVdnTJQMjZIjOmXHR0E11BsPrBqUJZru
-         JakKy8Jophxz0bMlm0w+jFa0p8rNkViORHofspd0/rHPK21pW2GfnuN4Bj9VgU3oD6AJ
-         hd0/qExZYEKMAHLAtEbEE5rYygP7IaxlqlBCGuj1TikF2ry66Vn7LECrZupvlHrh8Smf
-         2Ly7UUN3CwQqDSiVykMojXoN1LKFGMVMQZ5NM6QJRtWag1t5p+Iy4Skc/vOUzGVmtjUP
-         WtEmgVmOxZmezNk9Ok3rUMeytTjaKQv67DtK4DAuKrvu9DEPN4hMoEbUdPZBUF5qjeTg
-         88EQ==
-X-Received: by 10.152.37.103 with SMTP id x7mr3452913laj.28.1379015211187;
- Thu, 12 Sep 2013 12:46:51 -0700 (PDT)
-Received: by 10.114.5.161 with HTTP; Thu, 12 Sep 2013 12:46:51 -0700 (PDT)
-In-Reply-To: <20130912182057.GB32069@sigill.intra.peff.net>
+	id S1756469Ab3ILTsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 15:48:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56726 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753526Ab3ILTsN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 15:48:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F304D40418;
+	Thu, 12 Sep 2013 19:48:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AyIs933LFv4DiL4NGKhwKzk2H44=; b=pCAtjr
+	vIh6JCRSzWQ0KO1jMIyraX81VPXCrdzfqa45j9sdjl8gsxAzR7ZXQ+0h0OMULs/a
+	SEKxKWNCIDPHwm9Su/Y/rIRiFirZtVIbK/15+PRp1X3k05E6x+GIIoJ1DvPacc8N
+	0j7lQNrOotUUr7V5DNnHMaP2IbhhzMWj63TlI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=V6eM1vYuhboyXbZDRuBwtGlVN6rlBnfQ
+	h8uZri3qYxM/vse9IL6z7l+u3cqVb+9AyUvxcWolOUNpMjM+kv1P01w1VHI4OFGu
+	qTyOQVszkxxY30wGsPl1EPjhRIvJlDsS+B64MSnSxK3VMw50cm7TfzbNvsl9xNyG
+	N3uL3vcLrs0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E82C540417;
+	Thu, 12 Sep 2013 19:48:12 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F9AB4040F;
+	Thu, 12 Sep 2013 19:48:12 +0000 (UTC)
+In-Reply-To: <7c478c19da6ee3322ca87e77a90358a30178c286.1379013786.git.john@keeping.me.uk>
+	(John Keeping's message of "Thu, 12 Sep 2013 20:24:59 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 41DC9B2A-1BE4-11E3-97ED-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234683>
 
-On Thu, Sep 12, 2013 at 8:20 PM, Jeff King <peff@peff.net> wrote:
+John Keeping <john@keeping.me.uk> writes:
 
->> > I wonder if GCC has changed it's behaviour to more closely match C99.
->> > Clang as a compatibility article about this sort of issue:
->> >
->> >     http://clang.llvm.org/compatibility.html#inline
->>
->> Interesting.  The ways the page suggests as fixes are
->>
->>  - change it to a "statis inline";
->>  - remove "inline" from the definition;
->>  - provide an external (non-inline) def somewhere else;
->>  - compile with gnu899 dialect.
+> This allows us to replace the submodule path trailing slash removal in
+> builtin/rm.c with the PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP flag to
+> parse_pathspec() without changing the behaviour with respect to multiple
+> trailing slashes.
+
+Where does prefix_pathspec()'s input, which could have an unwanted
+trailing slash, come from?
+
+If it is read from some of our internal data structure and known to
+have at most one, then this change makes me feel very uneasy to cope
+with potentially sloppy end-user input and data generated by ourselves
+with the same logic.  It will allow our internal to be sloppy without
+forcing us notice and fix that sloppiness.
+
+If it is coming from an end-user input, then I would not object to
+the change, though.
+
+Thanks.
+
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>  pathspec.c | 27 +++++++++++++++++----------
+>  1 file changed, 17 insertions(+), 10 deletions(-)
 >
-> Right, option 3 seems perfectly reasonable to me, as we must be prepared
-> to cope with a decision not to inline the function, and there has to be
-> _some_ linked implementation. But shouldn't libc be providing an
-> external, linkable strcasecmp in this case?
-
-MinGW / GCC is not linking against libc, but against MSVCRT, Visual
-Studio's C runtime. And in fact MSVCRT has a non-inline implementation
-of a "case-insensitive string comparison for up to the first n
-characters"; it just happens to be called "_strnicmp", not
-"strncasecmp". Which is why I still think just having a "#define
-strncasecmp _strnicmp" is the most elegant solution to the problem.
-And that's exactly what defining __NO_INLINE__ does. Granted, defining
-__NO_INLINE__ in the scope of string.h will also add a "#define
-strcasecmp _stricmp"; but despite it's name, defining __NO_INLINE__
-does not imply a performance hit due to functions not being inlined
-because it's just the "strncasecmp" wrapper around "_strnicmp" that's
-being inlined, not "_strnicmp" itself.
-
--- 
-Sebastian Schuberth
+> diff --git a/pathspec.c b/pathspec.c
+> index 7c6963b..11b031a 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -251,12 +251,16 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+>  	item->len = strlen(item->match);
+>  	item->prefix = prefixlen;
+>  
+> -	if ((flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) &&
+> -	    (item->len >= 1 && is_dir_sep(item->match[item->len - 1])) &&
+> -	    (i = cache_name_pos(item->match, item->len - 1)) >= 0 &&
+> -	    S_ISGITLINK(active_cache[i]->ce_mode)) {
+> -		item->len--;
+> -		match[item->len] = '\0';
+> +	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) {
+> +		size_t pathlen = item->len;
+> +		while (pathlen > 0 && is_dir_sep(item->match[pathlen - 1]))
+> +			pathlen--;
+> +
+> +		if ((i = cache_name_pos(item->match, pathlen)) >= 0 &&
+> +		    S_ISGITLINK(active_cache[i]->ce_mode)) {
+> +			item->len = pathlen;
+> +			match[item->len] = '\0';
+> +		}
+>  	}
+>  
+>  	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
+> @@ -271,11 +275,14 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+>  			    !is_dir_sep(match[ce_len]) ||
+>  			    memcmp(ce->name, match, ce_len))
+>  				continue;
+> -			if (item->len == ce_len + 1) {
+> -				/* strip trailing slash */
+> +
+> +			while (item->len > 0 && is_dir_sep(match[item->len - 1]))
+>  				item->len--;
+> -				match[item->len] = '\0';
+> -			} else
+> +
+> +			/* strip trailing slash */
+> +			match[item->len] = '\0';
+> +
+> +			if (item->len != ce_len)
+>  				die (_("Pathspec '%s' is in submodule '%.*s'"),
+>  				     elt, ce_len, ce->name);
+>  		}
