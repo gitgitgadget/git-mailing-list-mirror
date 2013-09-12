@@ -1,148 +1,114 @@
-From: Tvangeste <i.4m.l33t@yandex.ru>
-Subject: Re: [PATCH 1/2] relative_path should honor dos_drive_prefix
-Date: Thu, 12 Sep 2013 11:32:59 +0200
-Message-ID: <CAB9kjA4YdEa0RQvf9noDCr9GtBabvajBxgH=JF+Bd1ta=CxnyQ@mail.gmail.com>
-References: <xmqq38pczjw6.fsf@gitster.dls.corp.google.com>
-	<0688d5a5bd194ff5808c555e8e75132e2c687368.1378977052.git.worldhello.net@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] wt-status: turn advice_status_hints into a field of wt_status
+Date: Thu, 12 Sep 2013 11:44:30 +0200
+Message-ID: <vpqeh8u1iip.fsf@anie.imag.fr>
+References: <1378890539-1966-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20130911183519.GA24251@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Tvangeste <i.4m.l33t@yandex.ru>, Johannes Sixt <j6t@kdbg.org>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 12 11:38:57 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com, javierdo1@gmail.com,
+	jrnieder@gmail.com, judge.packham@gmail.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 12 11:44:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VK3MU-00011X-G4
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 11:38:54 +0200
+	id 1VK3SD-0006u3-1W
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 11:44:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753755Ab3ILJiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 05:38:51 -0400
-Received: from forward4h.mail.yandex.net ([84.201.186.22]:59389 "EHLO
-	forward4h.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751330Ab3ILJiu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 05:38:50 -0400
-X-Greylist: delayed 345 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Sep 2013 05:38:49 EDT
-Received: from smtp4h.mail.yandex.net (smtp4h.mail.yandex.net [84.201.186.21])
-	by forward4h.mail.yandex.net (Yandex) with ESMTP id 03F5F1B2241B
-	for <git@vger.kernel.org>; Thu, 12 Sep 2013 13:33:01 +0400 (MSK)
-Received: from smtp4h.mail.yandex.net (localhost [127.0.0.1])
-	by smtp4h.mail.yandex.net (Yandex) with ESMTP id AFE732C1838
-	for <git@vger.kernel.org>; Thu, 12 Sep 2013 13:33:01 +0400 (MSK)
-Received: from mail-ee0-f46.google.com (mail-ee0-f46.google.com [74.125.83.46])
-	by smtp4h.mail.yandex.net (nwsmtp/Yandex) with ESMTP id RBtHX71Rxm-X1CintxU;
-	Thu, 12 Sep 2013 13:33:01 +0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1378978381;
-	bh=+osEeQLSZqw0KnxcB6mpI1X8cAIB6D/NocgvTuy4moQ=;
-	h=Received:X-Google-DKIM-Signature:MIME-Version:X-Received:Received:
-	 In-Reply-To:References:Date:Message-ID:Subject:From:To:Cc:
-	 Content-Type;
-	b=C9gQXpyniOvlm7jU9ur6KL/BaoD6B9czrXtYZmnTN1JkbXmiqN77Glc7BmS5/HKsp
-	 CDj2GuuUejmc31ktt0khVb80WLDJGyZf7Q0XfifphQVR56P0ANJkgH9nuVJdelG84B
-	 xXALoh6Ube1c5UCFureELed/ielO+OLW6z2X5mWI=
-Authentication-Results: smtp4h.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by mail-ee0-f46.google.com with SMTP id c13so4784093eek.33
-        for <git@vger.kernel.org>; Thu, 12 Sep 2013 02:33:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=+osEeQLSZqw0KnxcB6mpI1X8cAIB6D/NocgvTuy4moQ=;
-        b=H+bvDFbK1kBdAvQbQ1Q2iDYckhn0dJCmOipDhhgZFDSCtWjWIDcz5Njpp5p67599MA
-         6Gklz/6yaF3hpFPSwLekHFCff9StRcdAQbXsk6h/BXT8B0FKyPnuBTZ1MtC3MV75weRM
-         kN3ierwXrShWHQQ3SqXBvAWXh/nTpPJbLPjlEIs7+T1SXLEzzjvFFOgf/2GhlRILnukX
-         Bidh40M2En+T8bS5KC9qRIBmZ7PYVufvP2lpaJ/vQSqPaG+PTB79yw8JrIB3r3XuunDP
-         MNtms8SSG69m4wK21APF/ysGKeP1ld7U+A1N70H/WziLDw1YLGIu1tB/Ac/ks44vPtOL
-         orag==
-X-Received: by 10.15.74.197 with SMTP id j45mr9472371eey.40.1378978380419;
- Thu, 12 Sep 2013 02:33:00 -0700 (PDT)
-Received: by 10.15.44.69 with HTTP; Thu, 12 Sep 2013 02:32:59 -0700 (PDT)
-In-Reply-To: <0688d5a5bd194ff5808c555e8e75132e2c687368.1378977052.git.worldhello.net@gmail.com>
+	id S1757876Ab3ILJop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 05:44:45 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:48907 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751306Ab3ILJoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 05:44:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r8C9iUiK029084
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 12 Sep 2013 11:44:30 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VK3Rv-0001RN-5P; Thu, 12 Sep 2013 11:44:31 +0200
+In-Reply-To: <20130911183519.GA24251@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 11 Sep 2013 14:35:20 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 12 Sep 2013 11:44:30 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r8C9iUiK029084
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1379583871.76931@3543DVdb7rhTVi9hI8XN4A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234636>
 
-Thank you, this fixes the problem with `git svn rebase` on Windows for me.
+Jeff King <peff@peff.net> writes:
 
---Tvangeste
+> On Wed, Sep 11, 2013 at 11:08:58AM +0200, Matthieu Moy wrote:
+>
+>> No behavior change in this patch, but this makes the display of status
+>> hints more flexible as they can be enabled or disabled for individual
+>> calls to commit.c:run_status().
+>> [...]
+>> +static void status_finalize(struct wt_status *s)
+>> +{
+>> +	determine_whence(s);
+>> +	s->hints = advice_status_hints;
+>> +}
+>
+> Is a "finalize" the right place to put the status hint tweak? I would
+> expect the order for callers to be:
+>
+>   wt_status_prepare(&s);
+>   /* manual tweaks of fields in "s" */
+>   wt_status_finalize(&s);
+>
+> but the finalize would overwrite any tweak of the hints field. So it
+> would make more sense to me for it to go in prepare().
 
-On Thu, Sep 12, 2013 at 11:12 AM, Jiang Xin <worldhello.net@gmail.com> wrote:
-> Tvangeste found that the "relative_path" function could not work
-> properly on Windows if "in" and "prefix" have dos driver prefix.
-> ($gmane/234434)
+"finalize" is indeed not the right name. I made a separate function to
+avoid too much code duplication between status and commit, and looked
+for a name comlementary to "prepare" for a function that is ran later to
+fill-in some fields.
+
+> The problem is that we are doing two things in that git_config call:
 >
-> e.g., When execute: test-path-utils relative_path "C:/a/b" "D:/x/y",
-> should return "C:/a/b", but returns "../../C:/a/b", which is wrong.
+>   1. Loading basic git-wide core config.
+
+(Yes. This includes the advice section, so I need it for
+advice_status_hints)
+
+> So the "cleanest" thing would be something like:
 >
-> So make relative_path honor dos_drive_prefix, and add test cases
-> for it in t0060.
->
-> Reported-by: Tvangeste <i.4m.l33t@yandex.ru>
-> Helped-by: Johannes Sixt <j6t@kdbg.org>
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> ---
->  path.c                | 20 ++++++++++++++++++++
->  t/t0060-path-utils.sh |  4 ++++
->  2 files changed, 24 insertions(+)
->
-> diff --git a/path.c b/path.c
-> index 7f3324a..ffcdea1 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -441,6 +441,16 @@ int adjust_shared_perm(const char *path)
->         return 0;
->  }
->
-> +static int have_same_root(const char *path1, const char *path2)
-> +{
-> +       int is_abs1, is_abs2;
-> +
-> +       is_abs1 = is_absolute_path(path1);
-> +       is_abs2 = is_absolute_path(path2);
-> +       return (is_abs1 && is_abs2 && !strncasecmp(path1, path2, 1)) ||
-> +              (!is_abs1 && !is_abs2);
-> +}
-> +
->  /*
->   * Give path as relative to prefix.
->   *
-> @@ -461,6 +471,16 @@ const char *relative_path(const char *in, const char *prefix,
->         else if (!prefix_len)
->                 return in;
->
-> +       if (have_same_root(in, prefix)) {
-> +               /* bypass dos_drive, for "c:" is identical to "C:" */
-> +               if (has_dos_drive_prefix(in)) {
-> +                       i = 2;
-> +                       j = 2;
-> +               }
-> +       } else {
-> +               return in;
-> +       }
-> +
->         while (i < prefix_len && j < in_len && prefix[i] == in[j]) {
->                 if (is_dir_sep(prefix[i])) {
->                         while (is_dir_sep(prefix[i]))
-> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-> index 76c7792..c3c3b33 100755
-> --- a/t/t0060-path-utils.sh
-> +++ b/t/t0060-path-utils.sh
-> @@ -208,6 +208,10 @@ relative_path a/b/ a/b             ./
->  relative_path a                a/b             ../
->  relative_path x/y      a/b             ../../x/y
->  relative_path a/c      a/b             ../c
-> +relative_path a/b      /x/y            a/b
-> +relative_path /a/b     x/y             /a/b    POSIX
-> +relative_path d:/a/b   D:/a/c          ../b    MINGW
-> +relative_path C:/a/b   D:/a/c          C:/a/b  MINGW
->  relative_path a/b      "<empty>"       a/b
->  relative_path a/b      "<null>"        a/b
->  relative_path "<empty>"        /a/b            ./
-> --
-> 1.8.3.rc2.14.g5ac1b82
->
+>   git_config(git_diff_ui_config, NULL);
+>   wt_status_prepare(&s);
+
+[...]
+
+That is clean, but a bit long and it is essentially duplicated between
+status and commit. I went another way: put all the similar code in a
+common function status_init_config:
+
+static void status_init_config(struct wt_status *s, config_fn_t fn)
+{
+	wt_status_prepare(s);
+	gitmodules_config();
+	git_config(git_status_config, s);
+	determine_whence(s);
+	s->hints = advice_status_hints; /* must come after git_config() */
+}
+
+We could split the git_config call, but that would not bring much
+benefit IMHO. In any case, it can be done very simply on top of my patch
+if needed later, as there is now only one call site for git_config.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
