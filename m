@@ -1,141 +1,78 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: [PATCH v2] urlmatch.c: recompute ptr after append_normalized_escapes
-Date: Thu, 12 Sep 2013 07:15:40 -0700
-Message-ID: <c8915eaaf877abe0e69864ffdc6c50f@f74d39fa044aa309eaea14b9f57fe79>
-References: <75d702a744eb33a456622dd2ff901abef83e51d8.1378979451.git.trast@inf.ethz.ch>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 12 16:15:57 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Sep 2013, #03; Wed, 11)
+Date: Thu, 12 Sep 2013 08:24:21 -0700
+Message-ID: <xmqqa9jiqd0a.fsf@gitster.dls.corp.google.com>
+References: <xmqqzjrjq6ig.fsf@gitster.dls.corp.google.com>
+	<52315D02.9060206@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Sep 12 17:24:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VK7gW-00054G-DV
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 16:15:52 +0200
+	id 1VK8ku-00037E-Lb
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 17:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475Ab3ILOPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 10:15:48 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:33979 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751359Ab3ILOPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 10:15:47 -0400
-Received: by mail-pa0-f53.google.com with SMTP id lb1so1160274pab.12
-        for <git@vger.kernel.org>; Thu, 12 Sep 2013 07:15:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to;
-        bh=+8foOixWPqnfe99GSx3SUaf8nwKW8BUmQbmZ4UgHVSA=;
-        b=wIvzAPXh9Po053uIQ6tmkLx3yQIDzDa0U/quqjj1S6Pv+tV1ltMGiwLWIEw68i0xdc
-         Ec4uJfsLxdGqiQQxbrV4FGWEkZeVbJrZV/Y5KvaYavAWfwVtDUu8xv0K3bfFcGSgCDUr
-         17HQFvEWYgLjzlspY4bjiaYTAHDLkIl4yq2f4MgI+O4HfL9pLd5Y06DCv9tABqaTZw0D
-         MQ1xpO8CKvrRnL4GLCeNAAllfVVEzC8Zeg5bUWmTM5Ro9P6GYpLzkHjfyD6e6sKyEA18
-         YyBoX/PuypMq8slhdzs6lATOwwLK5y3Xd+foD/FYz/9sBw6zZHyDxb7zzpP6AGk5Kt02
-         EK9A==
-X-Received: by 10.66.168.7 with SMTP id zs7mr9879862pab.152.1378995347027;
-        Thu, 12 Sep 2013 07:15:47 -0700 (PDT)
-Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id kz4sm5111421pbc.39.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 12 Sep 2013 07:15:46 -0700 (PDT)
-In-Reply-To: <75d702a744eb33a456622dd2ff901abef83e51d8.1378979451.git.trast@inf.ethz.ch>
+	id S1753306Ab3ILPYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 11:24:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47783 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752077Ab3ILPYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 11:24:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B18541227;
+	Thu, 12 Sep 2013 15:24:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tzUuUn6zo439CaKL+XEL27kjzaw=; b=GsfB7i
+	+LPA5FsmPJjCH3alD8w7VB56OcXTxDd8HMt5F1Ab8bLSvPxCGSG2cmaVYihtOrVt
+	nWviAtOxc1ejlEkQVsL/TOzqIiIbRrg8ZeLKbPlHIxVUVsTvEhgnmkOfjQX4sXWW
+	cRF3hvsBKl6gR4Tzwp2BvGVVh7VXVAtHg2MS4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eLFdEfbf7Xxopfg1h72uwNpodJK1LYxp
+	0UWnmOSlhFYl+skHa3mImadCKzJ7+xHZKixN7O8trOeIB6C8VQiD8su7t+VLTkFD
+	qWqbFFsOCMMhBqRYjHWps6yC+kPeWBoesy+fRnrI0D9LpaSAxF/RRV2mkFJmi2J7
+	J9W/q7T3pA8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E2EC41226;
+	Thu, 12 Sep 2013 15:24:23 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC4464121E;
+	Thu, 12 Sep 2013 15:24:22 +0000 (UTC)
+In-Reply-To: <52315D02.9060206@viscovery.net> (Johannes Sixt's message of
+	"Thu, 12 Sep 2013 08:19:46 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 66B5D67A-1BBF-11E3-BA4E-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234653>
 
-On Sep 12, 2013, at 02:57, Thomas Rast wrote:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> The calls to strbuf_add* within append_normalized_escapes() can
-> reallocate the buffer passed to it.  Therefore, the seg_start pointer
-> into the string cannot be kept across such calls.
+> Am 9/12/2013 1:32, schrieb Junio C Hamano:
+>> * jc/ref-excludes (2013-09-03) 2 commits
+>>  - document --exclude option
+>>  - revision: introduce --exclude=<glob> to tame wildcards
+>> 
+>>  People often wished a way to tell "git log --branches" (and "git
+>>  log --remotes --not --branches") to exclude some local branches
+>>  from the expansion of "--branches" (similarly for "--tags", "--all"
+>>  and "--glob=<pattern>").  Now they have one.
+>> 
+>>  Will merge to 'next'.
+>
+> Please don't. This is by far not ready. It needs a different approach to
+> support --exclude= in rev-parse.
 
-Thanks for finding this.
-
-> It went undetected for a while because it does not fail the test: the
-> calls to test-urlmatch-normalization happen inside a $() substitution.
-> 
-> I checked the other call sites to append_normalized_escapes() for the
-> same type of problem, and they seem to be okay.
-
-> diff --git a/urlmatch.c b/urlmatch.c
-> index 1db76c8..59abc80 100644
-> --- a/urlmatch.c
-> +++ b/urlmatch.c
-> @@ -281,7 +281,8 @@ char *url_normalize(const char *url, struct url_info *out_info)
-> 		url_len--;
-> 	}
-> 	for (;;) {
-> -		const char *seg_start = norm.buf + norm.len;
-> +		const char *seg_start;
-> +		size_t prev_len = norm.len;
-
-How about a more descriptive name for what prev_len is?  It's actually the
-segment start offset.
-
-> 		const char *next_slash = url + strcspn(url, "/?#");
-> 		int skip_add_slash = 0;
-> 		/*
-> @@ -297,6 +298,7 @@ char *url_normalize(const char *url, struct url_info *out_info)
-> 			strbuf_release(&norm);
-> 			return NULL;
-> 		}
-> +		seg_start = norm.buf + prev_len;
-
-A comment would be nice here to remind folks who might be tempted to
-revert this to the previous version why it's being done this way.
-
-I'm sure at some point someone will propose a "simplification" patch
-otherwise.
-
-Also some nits.  The patch description should be imperative mood
-(cf. Documentation/SubmittingPatches).  And instead of mentioning the seg_start
-pointer in the description (which will be meaningless to just about everyone and
-it's clear from the diff), mention the bad thing the code was doing in more
-general terms that will be clear to anyone familiar with a strbuf.
-
-So how about this patch instead...
-
--- 8< --
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: urlmatch.c: recompute pointer after append_normalized_escapes
-
-When append_normalized_escapes is called, its internal strbuf_add* calls can
-cause the strbuf's buf to be reallocated changing the value of the buf pointer.
-
-Do not use the strbuf buf pointer from before any append_normalized_escapes
-calls afterwards.  Instead recompute the needed pointer.
-
-Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
-Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
----
- urlmatch.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/urlmatch.c b/urlmatch.c
-index 1db76c89..01c67467 100644
---- a/urlmatch.c
-+++ b/urlmatch.c
-@@ -281,8 +281,9 @@ char *url_normalize(const char *url, struct url_info *out_info)
- 		url_len--;
- 	}
- 	for (;;) {
--		const char *seg_start = norm.buf + norm.len;
-+		const char *seg_start;
-+		size_t seg_start_off = norm.len;
- 		const char *next_slash = url + strcspn(url, "/?#");
- 		int skip_add_slash = 0;
- 		/*
- 		 * RFC 3689 indicates that any . or .. segments should be
-@@ -297,6 +298,8 @@ char *url_normalize(const char *url, struct url_info *out_info)
- 			strbuf_release(&norm);
- 			return NULL;
- 		}
-+		/* append_normalized_escapes can cause norm.buf to change */
-+		seg_start = norm.buf + seg_start_off;
- 		if (!strcmp(seg_start, ".")) {
- 			/* ignore a . segment; be careful not to remove initial '/' */
- 			if (seg_start == path_start + 1) {
--- 
-1.8.3
+Thanks for a dose of sanity. I didn't look at rev-parse. I vaguely
+recall somebody offered follow-ups (was it you?) and at that point
+I placed this on the back-burner.
