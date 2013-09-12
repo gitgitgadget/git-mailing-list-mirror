@@ -1,71 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] lookup_object: remove hashtable_index() and optimize hash_obj()
-Date: Thu, 12 Sep 2013 13:30:57 -0700
-Message-ID: <xmqqmwnhok8u.fsf@gitster.dls.corp.google.com>
-References: <alpine.LFD.2.03.1309101811510.20709@syhkavp.arg>
-	<20130911184845.GA25386@sigill.intra.peff.net>
-	<alpine.LFD.2.03.1309121606130.20709@syhkavp.arg>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Fwd: Fwd: git-daemon access-hook race condition
+Date: Thu, 12 Sep 2013 16:30:06 -0400
+Message-ID: <CAPZPVFZpYJnQY4BpjaPxU8NnBmPZ9Fp6UpovoQEvkKzRnLa=KA@mail.gmail.com>
+References: <CAPZPVFa=gqJ26iA6eQ1B6pcbTcQmmnXHYz6OQLtMORnAa5ec2w@mail.gmail.com>
+	<CAPZPVFbJqbRGQZ+m3-EfahcYegPvVcS-jNTsCXxBqWUsLqyHkg@mail.gmail.com>
+	<xmqq4n9pq2av.fsf@gitster.dls.corp.google.com>
+	<CAPZPVFZLPV=JVR+SSqfX-=aLyFWZBkof+yCkivcLoKNnv6f__Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Sep 12 22:31:13 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 12 22:31:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKDXg-0004Ph-OV
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 22:31:09 +0200
+	id 1VKDYH-00056b-0d
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 22:31:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756890Ab3ILUbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 16:31:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55328 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755956Ab3ILUbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 16:31:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDC1741D77;
-	Thu, 12 Sep 2013 20:30:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KDgrVJiA0YZ0qHHOGBlWhAWRIAs=; b=EnCPqC
-	AcpBjs3Xp93+JeymHtXFuICpLBgTBLoeO0U/K/x704n4/VucAnB5UPW6Ael1c+og
-	LtcZpIKdv6yWRGcaOxCe3PkH9jE7lYOviqEZaIMeyD4nPQo9H20sMqK1W5e+IRO6
-	u/Iw10WB6ail9T9u/yk9K8X7JrfMUlTqeSAyc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BKAOFR9xOPzQPdFu3lAsma38AJuPkgM2
-	VjoPYzb9/jNx2EyTp+hYXRm898Hmagt38GIrAxHbMmH9cjl+Punp0oZ8DfTHwiZL
-	BS5LAcQmqaQOj2z/wyd/m3Xztwu7j23Hg0WM+anec1I3M182+XtQnmtmZa2PQ7hx
-	AU0Zlx+s1ZM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1D1341D76;
-	Thu, 12 Sep 2013 20:30:59 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 22FBB41D6E;
-	Thu, 12 Sep 2013 20:30:59 +0000 (UTC)
-In-Reply-To: <alpine.LFD.2.03.1309121606130.20709@syhkavp.arg> (Nicolas
-	Pitre's message of "Thu, 12 Sep 2013 16:08:04 -0400 (EDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3BD8499E-1BEA-11E3-AA2F-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757037Ab3ILUbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 16:31:41 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:48726 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756659Ab3ILUaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 16:30:08 -0400
+Received: by mail-wi0-f173.google.com with SMTP id hq15so4117487wib.6
+        for <git@vger.kernel.org>; Thu, 12 Sep 2013 13:30:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=koiIxDNc+iq/v2TU3VN/6W1UEh9S2B7g38gyJfHuagY=;
+        b=zkSvxQd0rVrLgA2baT+RPHNgiw4YDawa5OyXL9iJ1x6ymUOq5ZucOyVexzuuS7YfVl
+         TO9Be0P8Mjbg+i24AG9SR8fuKmM4rAvVRk0gXR0t+5OJXQ8jN08+OUPEA8f2BD0lAibM
+         dpZbzyTG/Zxh1Nrly0FAyB4stkFmkmeB6YBtFm55rStF3sfOUCRn6f2g8/gCXYnaos9e
+         We5D3lyZap7Fd5FL5T+WhfJTHzOVUFFLKYWhrqGIXkdWhsToCz/Xio0pHvdsEjGnGASC
+         /GNwDUG8ijBWtmUFWenMR7cpzl+1FB/PzIwXFtYM8B4CdeQmGXWkZiwenByNvOEjAGo2
+         z9VA==
+X-Received: by 10.180.75.239 with SMTP id f15mr7442199wiw.43.1379017806973;
+ Thu, 12 Sep 2013 13:30:06 -0700 (PDT)
+Received: by 10.216.218.197 with HTTP; Thu, 12 Sep 2013 13:30:06 -0700 (PDT)
+In-Reply-To: <CAPZPVFZLPV=JVR+SSqfX-=aLyFWZBkof+yCkivcLoKNnv6f__Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234694>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
-
->> Maybe it's worth squashing in one or both of the comments below as a
->> warning to anybody who tries to tweak it.
+On Thu, Sep 12, 2013 at 3:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eugene Sajine <euguess@gmail.com> writes:
 >
-> Agreed.
+>> Is it possible to have access-hook to be executed after receive?
 >
-> @Junio: are you willing to squash those in, or do you prefer a resent?
+> The whole point of access-hook is to allow it to decide whether the
+> access is allowed or not, so that is a non-starter.
+>
+> A notification _after_ successful push update is usually done via
+> the post-receive hook in the receiving repository, I think.
 
-I think I've queued it ready to be squashed.  No need for resend.
 
-Thanks.
+Junio,
+
+Thanks for the reply!
+
+This is interesting: i always thought about the access-hook as
+something to be executed when the repo is accessed, not just
+verification if access is allowed - your definition is much more
+limiting.
+
+we have about 1400 bare repos - so i would like to avoid the
+configuration of each one of them. I could probably find a way to
+automate it, but already having access-hook in current implementation
+makes me reluctant to go this way, because it is so much easier to use
+centralized manager.
+
+So are you really sure that it is a non-starter to have
+--before-service/--after-service options for access-hook?
+
+Thanks,
+Eugene
