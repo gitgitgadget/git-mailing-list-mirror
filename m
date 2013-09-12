@@ -1,143 +1,97 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH v2 4/4] reset: handle submodule with trailing slash
-Date: Thu, 12 Sep 2013 20:25:01 +0100
-Message-ID: <46340e653ef24dec3dcb51e4d88c5ec46f197d82.1379013786.git.john@keeping.me.uk>
-References: <cover.1379013786.git.john@keeping.me.uk>
-Cc: John Keeping <john@keeping.me.uk>, Duy Nguyen <pclouds@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 12 21:26:23 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: Re-Transmission of blobs?
+Date: Thu, 12 Sep 2013 15:44:53 -0400
+Message-ID: <20130912194453.GD32069@sigill.intra.peff.net>
+References: <20130910130837.GA14259@raven.wolf.lan>
+ <xmqqsixcy395.fsf@gitster.dls.corp.google.com>
+ <20130911112758.GB14259@raven.wolf.lan>
+ <xmqqsixbth4h.fsf@gitster.dls.corp.google.com>
+ <20130912074241.GC14259@raven.wolf.lan>
+ <20130912092339.GA30702@sigill.intra.peff.net>
+ <20130912103531.GD14259@raven.wolf.lan>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 12 21:45:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKCWz-0002GT-6W
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 21:26:21 +0200
+	id 1VKCpD-0005aY-JF
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 21:45:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755704Ab3ILT0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 15:26:17 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:42793 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754612Ab3ILT0Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 15:26:16 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 5D4BB606516;
-	Thu, 12 Sep 2013 20:26:16 +0100 (BST)
-X-Quarantine-ID: <IsxtL3CNokWN>
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-X-Spam-Flag: NO
-X-Spam-Score: -0.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IsxtL3CNokWN; Thu, 12 Sep 2013 20:26:15 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id DFF5960651D;
-	Thu, 12 Sep 2013 20:26:15 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 6E11B161E4EE;
-	Thu, 12 Sep 2013 20:26:15 +0100 (BST)
-X-Quarantine-ID: <aHNi4bD5uhkK>
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aHNi4bD5uhkK; Thu, 12 Sep 2013 20:26:14 +0100 (BST)
-Received: from river.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 2F1E3161E4AA;
-	Thu, 12 Sep 2013 20:26:04 +0100 (BST)
-X-Mailer: git-send-email 1.8.4.277.gfbd6843.dirty
-In-Reply-To: <cover.1379013786.git.john@keeping.me.uk>
-In-Reply-To: <cover.1379013786.git.john@keeping.me.uk>
-References: <cover.1378840318.git.john@keeping.me.uk> <cover.1379013786.git.john@keeping.me.uk>
+	id S1756102Ab3ILTo5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 15:44:57 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57473 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756012Ab3ILTo4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 15:44:56 -0400
+Received: (qmail 6763 invoked by uid 102); 12 Sep 2013 19:44:56 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Sep 2013 14:44:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Sep 2013 15:44:53 -0400
+Content-Disposition: inline
+In-Reply-To: <20130912103531.GD14259@raven.wolf.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234681>
 
-When using tab-completion, a directory path will often end with a
-trailing slash which currently confuses "git reset" when dealing with
-submodules.  Now that we have parse_pathspec we can easily handle this
-by simply adding the PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP flag.
+On Thu, Sep 12, 2013 at 12:35:32PM +0200, Josef Wolf wrote:
 
-To do this, we need to move the read_cache() call before the
-parse_pathspec() call.  All of the existing paths through cmd_reset()
-that do not die early already call read_cache() at some point, so there
-is no performance impact to doing this in the common case.
+> I'm not sure I understand correctly. I see that bitmaps can be used to
+> implement set operations. But how comes that walking the graph requires a lot
+> of CPU? Isn't it O(n)?
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- builtin/reset.c            | 8 ++++++--
- t/t7400-submodule-basic.sh | 6 ++++--
- 2 files changed, 10 insertions(+), 4 deletions(-)
+Yes and no. Your "n" there is the entirety of history. Whereas a simple
+"git push" generally only has to look at the recent history. So even
+though you are looking at each commit and tree only once, it's still a
+large number of them (and each one needs to be pulled off of the disk,
+decompressed, and reconstructed from deltas).
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 5e4c551..800117f 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -143,7 +143,6 @@ static int read_from_tree(const struct pathspec *pathspec,
- 	opt.output_format = DIFF_FORMAT_CALLBACK;
- 	opt.format_callback = update_index_from_diff;
- 
--	read_cache();
- 	if (do_diff_cache(tree_sha1, &opt))
- 		return 1;
- 	diffcore_std(&opt);
-@@ -169,7 +168,7 @@ static void set_reflog_message(struct strbuf *sb, const char *action,
- 
- static void die_if_unmerged_cache(int reset_type)
- {
--	if (is_merge() || read_cache() < 0 || unmerged_cache())
-+	if (is_merge() || unmerged_cache())
- 		die(_("Cannot do a %s reset in the middle of a merge."),
- 		    _(reset_type_names[reset_type]));
- 
-@@ -220,8 +219,13 @@ static void parse_args(struct pathspec *pathspec,
- 		}
- 	}
- 	*rev_ret = rev;
-+
-+	if (read_cache() < 0)
-+		die(_("index file corrupt"));
-+
- 	parse_pathspec(pathspec, 0,
- 		       PATHSPEC_PREFER_FULL |
-+		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP |
- 		       (patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0),
- 		       prefix, argv);
- }
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 4192fe0..c268d3c 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -481,7 +481,7 @@ test_expect_success 'do not add files from a submodule' '
- 
- '
- 
--test_expect_success 'gracefully add submodule with a trailing slash' '
-+test_expect_success 'gracefully add/reset submodule with a trailing slash' '
- 
- 	git reset --hard &&
- 	git commit -m "commit subproject" init &&
-@@ -495,7 +495,9 @@ test_expect_success 'gracefully add submodule with a trailing slash' '
- 	git add init/ &&
- 	test_must_fail git diff --exit-code --cached init &&
- 	test $commit = $(git ls-files --stage |
--		sed -n "s/^160000 \([^ ]*\).*/\1/p")
-+		sed -n "s/^160000 \([^ ]*\).*/\1/p") &&
-+	git reset init/ &&
-+	git diff --exit-code --cached init
- 
- '
- 
--- 
-1.8.4.277.gfbd6843.dirty
+Secondly, the graph traversal ends up seeing the same sha1s over and
+over again in tree entries (because most entries in the tree don't
+change from commit to commit). We spend a non-trivial amount of time
+looking those up in a hash table.
+
+Just try "git rev-list --objects --all" in your favorite repository to
+get a sense. It takes something like 30 seconds in the kernel repo. You
+would probably not want to add 30 seconds of CPU time to a trivial push.
+
+> Those bitmaps would be stored in the git metadata? Is it worth it? Storing a
+> bitmap for every commit just to be used once-in-a-while seems to be a pretty
+> big overhead to me. Not to mention the interoperability problems you mentioned
+> below.
+
+There are tricks to make them smaller (run-length compression,
+bitmapping a subset of commits and traversing to the nearest one,
+storing bitmaps as deltas against nearby bitmaps). And how often it is
+used depends on your git workload. For a repository serving git clones
+and fetches, it speeds up every operation.
+
+Try starting a clone of:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+
+versus
+
+  git://github.com/torvalds/linux.git
+
+and see which one starts sending you data more quickly.
+
+> Sounds like you're already almost done and don't really need help
+> anymore. Just out of curiosity, I'd be interested in a pointer anyway
+> ;-)
+
+Shawn gave a talk on JGit here:
+
+  http://www.eclipsecon.org/2013/sites/eclipsecon.org.2013/files/Scaling%20Up%20JGit%20-%20EclipseCon%202013.pdf
+
+and the scrapped patches for git are here:
+
+  http://article.gmane.org/gmane.comp.version-control.git/228918
+
+-Peff
