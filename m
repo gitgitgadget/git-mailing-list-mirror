@@ -1,141 +1,99 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 2/4] pathspec: strip multiple trailing slashes from
- submodules
-Date: Thu, 12 Sep 2013 21:21:28 +0100
-Message-ID: <20130912202128.GB2582@serenity.lan>
-References: <cover.1379013786.git.john@keeping.me.uk>
- <cover.1378840318.git.john@keeping.me.uk>
- <cover.1379013786.git.john@keeping.me.uk>
- <7c478c19da6ee3322ca87e77a90358a30178c286.1379013786.git.john@keeping.me.uk>
- <xmqqzjrhom85.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
+Date: Thu, 12 Sep 2013 16:22:46 -0400
+Message-ID: <20130912202246.GF32069@sigill.intra.peff.net>
+References: <523094F0.9000509@gmail.com>
+ <20130911182921.GE4326@google.com>
+ <CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
+ <20130911214116.GA12235@sigill.intra.peff.net>
+ <CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
+ <20130912101419.GY2582@serenity.lan>
+ <xmqq61u6qcez.fsf@gitster.dls.corp.google.com>
+ <20130912182057.GB32069@sigill.intra.peff.net>
+ <CAHGBnuPzzokV7YMrx0gAL1VACcmaLwFoaB3n6bX8Y-UDHs7S8A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 12 22:21:44 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 12 22:23:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKDOZ-00037v-Pp
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 22:21:44 +0200
+	id 1VKDPi-0004KX-5U
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 22:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756831Ab3ILUVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 16:21:39 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:59803 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754247Ab3ILUVj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 16:21:39 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 6756419800B;
-	Thu, 12 Sep 2013 21:21:38 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id y466co9-ZruT; Thu, 12 Sep 2013 21:21:38 +0100 (BST)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 97F90198007;
-	Thu, 12 Sep 2013 21:21:30 +0100 (BST)
+	id S1754785Ab3ILUWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 16:22:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57740 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752753Ab3ILUWt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 16:22:49 -0400
+Received: (qmail 9052 invoked by uid 102); 12 Sep 2013 20:22:50 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Sep 2013 15:22:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Sep 2013 16:22:46 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqzjrhom85.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAHGBnuPzzokV7YMrx0gAL1VACcmaLwFoaB3n6bX8Y-UDHs7S8A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234691>
 
-On Thu, Sep 12, 2013 at 12:48:10PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
+On Thu, Sep 12, 2013 at 09:46:51PM +0200, Sebastian Schuberth wrote:
+
+> > Right, option 3 seems perfectly reasonable to me, as we must be prepared
+> > to cope with a decision not to inline the function, and there has to be
+> > _some_ linked implementation. But shouldn't libc be providing an
+> > external, linkable strcasecmp in this case?
 > 
-> > This allows us to replace the submodule path trailing slash removal in
-> > builtin/rm.c with the PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP flag to
-> > parse_pathspec() without changing the behaviour with respect to multiple
-> > trailing slashes.
-> 
-> Where does prefix_pathspec()'s input, which could have an unwanted
-> trailing slash, come from?
-> 
-> If it is read from some of our internal data structure and known to
-> have at most one, then this change makes me feel very uneasy to cope
-> with potentially sloppy end-user input and data generated by ourselves
-> with the same logic.  It will allow our internal to be sloppy without
-> forcing us notice and fix that sloppiness.
-> 
-> If it is coming from an end-user input, then I would not object to
-> the change, though.
+> MinGW / GCC is not linking against libc, but against MSVCRT, Visual
+> Studio's C runtime. And in fact MSVCRT has a non-inline implementation
+> of a "case-insensitive string comparison for up to the first n
+> characters"; it just happens to be called "_strnicmp", not
+> "strncasecmp". Which is why I still think just having a "#define
+> strncasecmp _strnicmp" is the most elegant solution to the problem.
+> And that's exactly what defining __NO_INLINE__ does. Granted, defining
+> __NO_INLINE__ in the scope of string.h will also add a "#define
+> strcasecmp _stricmp"; but despite it's name, defining __NO_INLINE__
+> does not imply a performance hit due to functions not being inlined
+> because it's just the "strncasecmp" wrapper around "_strnicmp" that's
+> being inlined, not "_strnicmp" itself.
 
-I added this in response to Duy's comment on v1 [1].
+Ah, thanks, that explains what is going on. I do think the environment
+is probably in violation of C99, but I dug in the mingw history, and it
+looks like it has been this way for over 10 years.
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/234548
+So it is probably worth working around, but it would be nice if the
+damage could be contained to just the affected platform.
 
-Looking more closely, this does come from user input (via the argv
-passed into parse_pathspec) but does (some of the time) go through
-prefix_path_gently which calls normalize_path_copy_len.
+I think there are basically three classes of solution:
 
-It's not immediately clear to me when prefix_pathspec goes through this
-particular code path, but I think we may be able to drop this (and the
-previous patch) without affecting the user.
+  1. Declare __NO_INLINE__ everywhere. I'd worry this might affect other
+     environments, who would then not inline and lose performance (but
+     since it's a non-standard macro, we don't really know what it will
+     do in other places; possibly nothing).
 
-> > Signed-off-by: John Keeping <john@keeping.me.uk>
-> > ---
-> >  pathspec.c | 27 +++++++++++++++++----------
-> >  1 file changed, 17 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/pathspec.c b/pathspec.c
-> > index 7c6963b..11b031a 100644
-> > --- a/pathspec.c
-> > +++ b/pathspec.c
-> > @@ -251,12 +251,16 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
-> >  	item->len = strlen(item->match);
-> >  	item->prefix = prefixlen;
-> >  
-> > -	if ((flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) &&
-> > -	    (item->len >= 1 && is_dir_sep(item->match[item->len - 1])) &&
-> > -	    (i = cache_name_pos(item->match, item->len - 1)) >= 0 &&
-> > -	    S_ISGITLINK(active_cache[i]->ce_mode)) {
-> > -		item->len--;
-> > -		match[item->len] = '\0';
-> > +	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) {
-> > +		size_t pathlen = item->len;
-> > +		while (pathlen > 0 && is_dir_sep(item->match[pathlen - 1]))
-> > +			pathlen--;
-> > +
-> > +		if ((i = cache_name_pos(item->match, pathlen)) >= 0 &&
-> > +		    S_ISGITLINK(active_cache[i]->ce_mode)) {
-> > +			item->len = pathlen;
-> > +			match[item->len] = '\0';
-> > +		}
-> >  	}
-> >  
-> >  	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
-> > @@ -271,11 +275,14 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
-> >  			    !is_dir_sep(match[ce_len]) ||
-> >  			    memcmp(ce->name, match, ce_len))
-> >  				continue;
-> > -			if (item->len == ce_len + 1) {
-> > -				/* strip trailing slash */
-> > +
-> > +			while (item->len > 0 && is_dir_sep(match[item->len - 1]))
-> >  				item->len--;
-> > -				match[item->len] = '\0';
-> > -			} else
-> > +
-> > +			/* strip trailing slash */
-> > +			match[item->len] = '\0';
-> > +
-> > +			if (item->len != ce_len)
-> >  				die (_("Pathspec '%s' is in submodule '%.*s'"),
-> >  				     elt, ce_len, ce->name);
-> >  		}
+  2. Declare __NO_INLINE__ on mingw. Similar to above, but we know it
+     only affects mingw, and we know the meaning of NO_INLINE there.
+
+  3. Try to impact only the uses as a function pointer (e.g., by using
+     a wrapper function as suggested in the thread).
+
+Your patch does (1), I believe. Junio's patch does (3), but is a
+maintenance burden in that any new callsites will need to remember to do
+the same trick.
+
+But your argument (and reading the mingw header, I agree) is that there
+is no performance difference at all between (2) and (3). And (2) does
+not have the maintenance burden. So it does seem like the right path to
+me.
+
+-Peff
