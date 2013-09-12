@@ -1,96 +1,141 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 1/4] pathspec: use is_dir_sep() to check for trailing
- slashes
-Date: Thu, 12 Sep 2013 22:17:13 +0200
-Message-ID: <52322149.7050201@kdbg.org>
-References: <cover.1379013786.git.john@keeping.me.uk> <88455dac2dce36135c070cff01215e9ae0259635.1379013786.git.john@keeping.me.uk>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v2 2/4] pathspec: strip multiple trailing slashes from
+ submodules
+Date: Thu, 12 Sep 2013 21:21:28 +0100
+Message-ID: <20130912202128.GB2582@serenity.lan>
+References: <cover.1379013786.git.john@keeping.me.uk>
+ <cover.1378840318.git.john@keeping.me.uk>
+ <cover.1379013786.git.john@keeping.me.uk>
+ <7c478c19da6ee3322ca87e77a90358a30178c286.1379013786.git.john@keeping.me.uk>
+ <xmqqzjrhom85.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu Sep 12 22:17:24 2013
+	Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 12 22:21:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKDKN-00075u-PN
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 22:17:24 +0200
+	id 1VKDOZ-00037v-Pp
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 22:21:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755489Ab3ILURT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 16:17:19 -0400
-Received: from bsmtp5.bon.at ([195.3.86.187]:13589 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753803Ab3ILURT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 16:17:19 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id DCAC11300A7;
-	Thu, 12 Sep 2013 22:17:13 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 8EA0819F601;
-	Thu, 12 Sep 2013 22:17:13 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <88455dac2dce36135c070cff01215e9ae0259635.1379013786.git.john@keeping.me.uk>
+	id S1756831Ab3ILUVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 16:21:39 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:59803 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754247Ab3ILUVj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 16:21:39 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 6756419800B;
+	Thu, 12 Sep 2013 21:21:38 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id y466co9-ZruT; Thu, 12 Sep 2013 21:21:38 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 97F90198007;
+	Thu, 12 Sep 2013 21:21:30 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <xmqqzjrhom85.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234690>
 
-Am 12.09.2013 21:24, schrieb John Keeping:
-> This allows us to correctly removing trailing backslashes on Windows
-> when checking for submodules.
+On Thu, Sep 12, 2013 at 12:48:10PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
 > 
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> ---
->  pathspec.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+> > This allows us to replace the submodule path trailing slash removal in
+> > builtin/rm.c with the PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP flag to
+> > parse_pathspec() without changing the behaviour with respect to multiple
+> > trailing slashes.
 > 
-> diff --git a/pathspec.c b/pathspec.c
-> index ad1a9f5..7c6963b 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -252,7 +252,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
->  	item->prefix = prefixlen;
->  
->  	if ((flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) &&
-> -	    (item->len >= 1 && item->match[item->len - 1] == '/') &&
-> +	    (item->len >= 1 && is_dir_sep(item->match[item->len - 1])) &&
->  	    (i = cache_name_pos(item->match, item->len - 1)) >= 0 &&
->  	    S_ISGITLINK(active_cache[i]->ce_mode)) {
->  		item->len--;
-> @@ -267,7 +267,8 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
->  			if (!S_ISGITLINK(ce->ce_mode))
->  				continue;
->  
-> -			if (item->len <= ce_len || match[ce_len] != '/' ||
-> +			if (item->len <= ce_len ||
-> +			    !is_dir_sep(match[ce_len]) ||
->  			    memcmp(ce->name, match, ce_len))
->  				continue;
->  			if (item->len == ce_len + 1) {
+> Where does prefix_pathspec()'s input, which could have an unwanted
+> trailing slash, come from?
+> 
+> If it is read from some of our internal data structure and known to
+> have at most one, then this change makes me feel very uneasy to cope
+> with potentially sloppy end-user input and data generated by ourselves
+> with the same logic.  It will allow our internal to be sloppy without
+> forcing us notice and fix that sloppiness.
+> 
+> If it is coming from an end-user input, then I would not object to
+> the change, though.
 
-A design decisions to keep in mind:
+I added this in response to Duy's comment on v1 [1].
 
-Paths in the index *ALWAYS* use the slash, even on Windows. On Windows,
-pathspec that are user input must undergo backslash-to-slash
-transformation at a very early stage so that later processing that
-compares the user input to index contents need not do it on the fly. The
-backslash-to-slash transformation used to happen in get_pathspec() via
-prefix_path() and normalize_path_copy().
+[1] http://article.gmane.org/gmane.comp.version-control.git/234548
 
-If, at this point, the contents of 'match' is still being parsed for
-pathspec magic, then it is likely correct to use is_dir_sep().
+Looking more closely, this does come from user input (via the argv
+passed into parse_pathspec) but does (some of the time) go through
+prefix_path_gently which calls normalize_path_copy_len.
 
-On the other hand, if at this point the contents of 'match' are used to
-execute pathspec magic, then it is not correct to use is_dir_sep(); the
-conversion of backslash to slash should have happened earlier, and no
-backslashes should be present anymore.
+It's not immediately clear to me when prefix_pathspec goes through this
+particular code path, but I think we may be able to drop this (and the
+previous patch) without affecting the user.
 
-(Yes, this means that on Windows we cannot escape glob characters
-because, e.g., 'a\*.c' was turned into 'a/*.c'.)
-
--- Hannes
+> > Signed-off-by: John Keeping <john@keeping.me.uk>
+> > ---
+> >  pathspec.c | 27 +++++++++++++++++----------
+> >  1 file changed, 17 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/pathspec.c b/pathspec.c
+> > index 7c6963b..11b031a 100644
+> > --- a/pathspec.c
+> > +++ b/pathspec.c
+> > @@ -251,12 +251,16 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+> >  	item->len = strlen(item->match);
+> >  	item->prefix = prefixlen;
+> >  
+> > -	if ((flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) &&
+> > -	    (item->len >= 1 && is_dir_sep(item->match[item->len - 1])) &&
+> > -	    (i = cache_name_pos(item->match, item->len - 1)) >= 0 &&
+> > -	    S_ISGITLINK(active_cache[i]->ce_mode)) {
+> > -		item->len--;
+> > -		match[item->len] = '\0';
+> > +	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) {
+> > +		size_t pathlen = item->len;
+> > +		while (pathlen > 0 && is_dir_sep(item->match[pathlen - 1]))
+> > +			pathlen--;
+> > +
+> > +		if ((i = cache_name_pos(item->match, pathlen)) >= 0 &&
+> > +		    S_ISGITLINK(active_cache[i]->ce_mode)) {
+> > +			item->len = pathlen;
+> > +			match[item->len] = '\0';
+> > +		}
+> >  	}
+> >  
+> >  	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
+> > @@ -271,11 +275,14 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+> >  			    !is_dir_sep(match[ce_len]) ||
+> >  			    memcmp(ce->name, match, ce_len))
+> >  				continue;
+> > -			if (item->len == ce_len + 1) {
+> > -				/* strip trailing slash */
+> > +
+> > +			while (item->len > 0 && is_dir_sep(match[item->len - 1]))
+> >  				item->len--;
+> > -				match[item->len] = '\0';
+> > -			} else
+> > +
+> > +			/* strip trailing slash */
+> > +			match[item->len] = '\0';
+> > +
+> > +			if (item->len != ce_len)
+> >  				die (_("Pathspec '%s' is in submodule '%.*s'"),
+> >  				     elt, ce_len, ce->name);
+> >  		}
