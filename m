@@ -1,79 +1,78 @@
-From: Marc-Antoine Ruel <maruel@google.com>
-Subject: git-svn fails to initialize with submodule setup, when '.git' is a
- file and not a directory
-Date: Thu, 12 Sep 2013 14:45:26 -0400
-Message-ID: <CANAQWOXT2pwF2tds3FK1bE6_cPYw_niB8O_nmxCs8_9GXuiF9g@mail.gmail.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Fwd: git-daemon access-hook race condition
+Date: Thu, 12 Sep 2013 14:51:41 -0400
+Message-ID: <CAPZPVFbJqbRGQZ+m3-EfahcYegPvVcS-jNTsCXxBqWUsLqyHkg@mail.gmail.com>
+References: <CAPZPVFa=gqJ26iA6eQ1B6pcbTcQmmnXHYz6OQLtMORnAa5ec2w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 12 20:45:53 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 12 20:51:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKBto-0007N9-G6
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 20:45:52 +0200
+	id 1VKBzV-0005Ry-MB
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 20:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756204Ab3ILSps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 14:45:48 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:39639 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755754Ab3ILSpr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 14:45:47 -0400
-Received: by mail-oa0-f45.google.com with SMTP id m6so218644oag.4
-        for <git@vger.kernel.org>; Thu, 12 Sep 2013 11:45:46 -0700 (PDT)
+	id S1755330Ab3ILSvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 14:51:43 -0400
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:50904 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753406Ab3ILSvm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 14:51:42 -0400
+Received: by mail-wg0-f47.google.com with SMTP id f12so211935wgh.14
+        for <git@vger.kernel.org>; Thu, 12 Sep 2013 11:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=Iq94Js7LxH6V5ELffXN1T2GzmAaqqXlaiRvFVMaVQSE=;
-        b=ayKVg1VR10mFWoMQRIeqHwaGSLLFSZGz5nnjpc38aFux9hH+YpBVI245tNmb0wHDJ6
-         5OnzqA2WprJ1vEVdloi0n9ZzR1WgeZpZAthEzDB51SLbiKCoQod+r2IhrcrC8uzJrhud
-         ISBh+Kc9CwkINEYivtMtC6XKLPQctCCMMo4tRxwTejp+xUckCe7KSJSFgSTqd16j4yyu
-         mgVaRNGFGlN60c5vEvqW4GNZjmbZwSAZCJbLbOdpII/pRaqpk+JYo4WTyO49+1AYUD/w
-         3YcpXmpnMtogpArUxuCjyzuRGRlrvVAMd1w5BDwTRjTJord6Hre8PsnEEnkuojQmF6ES
-         tnYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :content-type;
-        bh=Iq94Js7LxH6V5ELffXN1T2GzmAaqqXlaiRvFVMaVQSE=;
-        b=AdDublZYaEt8EPfAf2eueWNqonhPfvEur4EKBgJSWfQuhinqEcp4KdwN+4pO0iyds1
-         Fzw472RMeHU2utz7en9Ou+BbUxWDfFTCZiLx5J1zu/ZUtszdyeTBzAUE+KUD/bDkmGX+
-         PsEERrDU+d2ZdjJYz65NgZgM85O3vcEAESnSJrqtBerChSXtLA7u7RmRxW0qhlVfofd8
-         jhCPqmA4cRUVx0ffGRNub1qRcBQCBOSIMuGdRzAjhcfNGcsJSCVDZWweF1Q/ZmMfSSam
-         ZhwWIn1Qu/nccQTnMrWP5km/GACrEBosEO0EY4LrKXHMdsHCDDS4/yj5/OC+acWeGbPY
-         AiLQ==
-X-Gm-Message-State: ALoCoQklWpXIG/vfYmLTi+ZUh548i7tOp3vRDdIOIIWRDT0P4UBPfm+6upQ9I0n1uEnx0L7V+Fs9JXTQuvBk2/XItBcgWnLv2uQKCtaRrwlrc4twYH6xshjmwywPXn9j4pTVBFCfewD34ZLyosadaI/Sd4P+v/bEq1KXmpcLTgk/EzHdCzsfbM3qSzNsNJnxu8/HHsTyBp3j
-X-Received: by 10.182.71.82 with SMTP id s18mr8211985obu.9.1379011546426; Thu,
- 12 Sep 2013 11:45:46 -0700 (PDT)
-Received: by 10.182.104.8 with HTTP; Thu, 12 Sep 2013 11:45:26 -0700 (PDT)
+        bh=tfFAY/fxOCgNPcqAyQoc2OzKKkhs2fm9+qsGPwVvd3M=;
+        b=NSfpX1Fts3xXJl+XjJbDhMHgjaQ0UPE2QNXv6sCuXgnLnNJPULd/u+/O4XoRVcaF3M
+         0mJFi3qHrejpC8chXOkdTiG/MBckjegcQ05ESZKykF9ThauLy8C+iGuhOcvnDv7ZKbaD
+         mcBZeFyRFp8339gfsOG//N0rVMh1lfK98W5x6G7GgFRvNrvkUA7bFx7B6Z4RzCZJDHmW
+         dA3hQEfgMD3hlrmJKq+KmyKA7bAZNgJZRcqrS/FP9HqoOSBUYsq5GESwm3sQ8m6qC429
+         i9PLPXFr+DforR5+XGH+JcwvC1k9QLXI0bMrRGAO+cC/VlPXMLSfhN6tip6v/PCPtOGK
+         lG6w==
+X-Received: by 10.180.90.197 with SMTP id by5mr23118423wib.43.1379011901115;
+ Thu, 12 Sep 2013 11:51:41 -0700 (PDT)
+Received: by 10.216.218.197 with HTTP; Thu, 12 Sep 2013 11:51:41 -0700 (PDT)
+In-Reply-To: <CAPZPVFa=gqJ26iA6eQ1B6pcbTcQmmnXHYz6OQLtMORnAa5ec2w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234672>
 
-Repro:
-1. git clone --recursive a repository with submodules.
-2. cd checkout/submoduleA
-3. git svn init svn://host/repo
+Hi,
 
-Expected:
-Works as usual
 
-Actual:
-/path/to/checkout/submoduleA/.git/refs: Not a directory
-init: command returned error: 1
+We are serving repos in closed netwrok via git protocol. We are using
+git-daemon access hook (thank you very much for such a great feature)
+in order to create push notifications for Jenkins.
+I.e. upon the push the access-hook is called and then the curl command
+is created and executed. As we have several instances of Jenkins, that
+we need to notify (three), the execution of the access-hook can take
+some time.
 
-Why:
-submoduleA/.git is a file, not a directory.
-$ cat /path/to/checkout/submoduleA/.git
-gitdir: ../.git/modules/submoduleA
+Sometimes we have a situation when the whole chain works fine but
+Jenkins git plugin doesn't recognize the changes. I think it happens
+because we hit a kind of race condition:
 
-$ git --version
-git version 1.8.4
+1. Incoming push triggers access-hook
+2. notify jenkins 1
+3. notify jenkins 2
+4. jenkins 1 polls repo but sees no changes
+5. notify Jenkins 3
+6. the push data transfer finishes - consequent pushes will find
+changes w/o any problem
+
+The question is:
+
+Is there a way to avoid that?
+Is it possible to have access-hook to be executed after receive?
+Is it possible to introduce a parameter that would specify if it needs
+to be executed before receive or after?
 
 Thanks,
-
-M-A
+Eugene
