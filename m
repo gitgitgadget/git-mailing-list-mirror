@@ -1,102 +1,72 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH] urlmatch: append_normalized_escapes can reallocate norm.buf
-Date: Thu, 12 Sep 2013 11:57:31 +0200
-Message-ID: <75d702a744eb33a456622dd2ff901abef83e51d8.1378979451.git.trast@inf.ethz.ch>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
+Date: Thu, 12 Sep 2013 11:14:19 +0100
+Message-ID: <20130912101419.GY2582@serenity.lan>
+References: <523094F0.9000509@gmail.com>
+ <20130911182921.GE4326@google.com>
+ <CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
+ <20130911214116.GA12235@sigill.intra.peff.net>
+ <CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Kyle J. McKay" <mackyle@gmail.com>, Jeff King <peff@peff.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 12 11:57:47 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 12 12:14:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VK3ej-0002lc-R4
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 11:57:46 +0200
+	id 1VK3v6-0002VZ-Jd
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 12:14:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752497Ab3ILJ5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 05:57:42 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:23375 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751168Ab3ILJ5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 05:57:41 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 12 Sep
- 2013 11:57:39 +0200
-Received: from linux-k42r.v.cablecom.net (129.132.210.212) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 12 Sep
- 2013 11:57:38 +0200
-X-Mailer: git-send-email 1.8.4.609.g4395a4f
-X-Originating-IP: [129.132.210.212]
+	id S1752473Ab3ILKOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 06:14:36 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:42183 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751811Ab3ILKOf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 06:14:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 350F9CDA608;
+	Thu, 12 Sep 2013 11:14:35 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8Lz6BvuYtxL5; Thu, 12 Sep 2013 11:14:28 +0100 (BST)
+Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id CA006CDA615;
+	Thu, 12 Sep 2013 11:14:21 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234639>
 
-The calls to strbuf_add* within append_normalized_escapes() can
-reallocate the buffer passed to it.  Therefore, the seg_start pointer
-into the string cannot be kept across such calls.
+On Thu, Sep 12, 2013 at 11:36:56AM +0200, Sebastian Schuberth wrote:
+> > Just wondering if that is the root of the problem, or if maybe there is
+> > something else subtle going on. Also, does __CRT_INLINE just turn into
+> > "inline", or is there perhaps some other pre-processor magic going on?
+> 
+> This is the function definition from string.h after preprocessing:
+> 
+> extern __inline__ int __attribute__((__cdecl__)) __attribute__ ((__nothrow__))
+> strncasecmp (const char * __sz1, const char * __sz2, size_t __sizeMaxCompare)
+>   {return _strnicmp (__sz1, __sz2, __sizeMaxCompare);}
 
-The actual bug is from 3402a8d (config: add helper to normalize and
-match URLs, 2013-07-31).  It can first be detected by valgrind after
-6a56993 (config: parse http.<url>.<variable> using urlmatch,
-2013-08-05) introduced tests covering url_normalize().
+I wonder if GCC has changed it's behaviour to more closely match C99.
+Clang as a compatibility article about this sort of issue:
 
-Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
----
-
-My apologies if this is redundant; I didn't have time to watch the
-list over the last two weeks.  However it seems today's pu is still
-broken.
-
-The valgrind error looks like this:
-
-  ==4607== Invalid read of size 1
-  ==4607==    at 0x4C2D3A1: __GI_strcmp (mc_replace_strmem.c:731)
-  ==4607==    by 0x404C68: url_normalize (urlmatch.c:300)
-  ==4607==    by 0x403F33: main (test-urlmatch-normalization.c:34)
-  ==4607==  Address 0x5be9046 is 6 bytes inside a block of size 24 free'd
-  ==4607==    at 0x4C2BFC6: realloc (vg_replace_malloc.c:687)
-  ==4607==    by 0x405F6B: xrealloc (wrapper.c:100)
-  ==4607==    by 0x40794E: strbuf_grow (strbuf.c:74)
-  ==4607==    by 0x40854D: strbuf_vaddf (strbuf.c:268)
-  ==4607==    by 0x40817E: strbuf_addf (strbuf.c:203)
-  ==4607==    by 0x404300: append_normalized_escapes (urlmatch.c:58)
-  ==4607==    by 0x404C0A: url_normalize (urlmatch.c:291)
-  ==4607==    by 0x403F33: main (test-urlmatch-normalization.c:34)
-
-It went undetected for a while because it does not fail the test: the
-calls to test-urlmatch-normalization happen inside a $() substitution.
-
-I checked the other call sites to append_normalized_escapes() for the
-same type of problem, and they seem to be okay.
-
- urlmatch.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/urlmatch.c b/urlmatch.c
-index 1db76c8..59abc80 100644
---- a/urlmatch.c
-+++ b/urlmatch.c
-@@ -281,7 +281,8 @@ char *url_normalize(const char *url, struct url_info *out_info)
- 		url_len--;
- 	}
- 	for (;;) {
--		const char *seg_start = norm.buf + norm.len;
-+		const char *seg_start;
-+		size_t prev_len = norm.len;
- 		const char *next_slash = url + strcspn(url, "/?#");
- 		int skip_add_slash = 0;
- 		/*
-@@ -297,6 +298,7 @@ char *url_normalize(const char *url, struct url_info *out_info)
- 			strbuf_release(&norm);
- 			return NULL;
- 		}
-+		seg_start = norm.buf + prev_len;
- 		if (!strcmp(seg_start, ".")) {
- 			/* ignore a . segment; be careful not to remove initial '/' */
- 			if (seg_start == path_start + 1) {
--- 
-1.8.4.609.g4395a4f
+    http://clang.llvm.org/compatibility.html#inline
