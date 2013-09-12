@@ -1,90 +1,89 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] lookup_object: remove hashtable_index() and optimize
- hash_obj()
-Date: Thu, 12 Sep 2013 16:08:04 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309121606130.20709@syhkavp.arg>
-References: <alpine.LFD.2.03.1309101811510.20709@syhkavp.arg>
- <20130911184845.GA25386@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
+Date: Thu, 12 Sep 2013 13:08:52 -0700
+Message-ID: <xmqqvc25ol9n.fsf@gitster.dls.corp.google.com>
+References: <523094F0.9000509@gmail.com> <20130911182921.GE4326@google.com>
+	<CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
+	<20130911214116.GA12235@sigill.intra.peff.net>
+	<CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
+	<20130912101419.GY2582@serenity.lan>
+	<xmqq61u6qcez.fsf@gitster.dls.corp.google.com>
+	<20130912182057.GB32069@sigill.intra.peff.net>
+	<xmqqd2odq45y.fsf@gitster.dls.corp.google.com>
+	<20130912183849.GI4326@google.com>
+	<CAHGBnuPejvs_zTdV52GWVCF35+Bdih2c1zNuBdHJRd_2ShcnKQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 12 22:08:15 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	John Keeping <john@keeping.me.uk>,
+	Git Mailing List <git@vger.kernel.org>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 12 22:09:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKDBT-0005Tg-Ir
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 22:08:11 +0200
+	id 1VKDCH-0006MH-H6
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 22:09:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753590Ab3ILUII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 16:08:08 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:18206 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753198Ab3ILUIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 16:08:06 -0400
-Received: from xanadu.home ([70.83.209.44]) by VL-VM-MR005.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MT10010W3XGT470@VL-VM-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 12 Sep 2013 16:08:04 -0400 (EDT)
-In-reply-to: <20130911184845.GA25386@sigill.intra.peff.net>
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1755554Ab3ILUI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 16:08:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53059 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752693Ab3ILUI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 16:08:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AEB141845;
+	Thu, 12 Sep 2013 20:08:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=warXmSYIkOU0lyfvoVWlwoLNAso=; b=xHzwsr
+	5tYNXSYFXdZjMqkKpyQubrqyfwj0skWHEIPykv+art5BWJLh97Gb9tPgYJ34sf7B
+	UJytTxIR6y+C7Z5bszP8UitMjMZYJy+y9epCyTtmB3EfCc3i6fNccVqumoK6QX7V
+	GOh7ym66zycI4xE1/cLHjC3iK58XE8j3+pf1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LwTNX5fgCxQmPhIRfApXQo8onCH1Cf1p
+	pgu5f3Yhds+I7qprgcJT18Tnk2FiU54JGdnX3FgKM/9b0HFdfrzawtyvdBtpFakl
+	h+TgSD7ezGx1npNyRuDt26O2zOvL9sIdN2V767x4auMvSPFfddqsqV2VO03qUR8D
+	zZoNad3gY18=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 04A5E41840;
+	Thu, 12 Sep 2013 20:08:56 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C7E6141837;
+	Thu, 12 Sep 2013 20:08:54 +0000 (UTC)
+In-Reply-To: <CAHGBnuPejvs_zTdV52GWVCF35+Bdih2c1zNuBdHJRd_2ShcnKQ@mail.gmail.com>
+	(Sebastian Schuberth's message of "Thu, 12 Sep 2013 21:51:31 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 26A90804-1BE7-11E3-AF2B-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234688>
 
-On Wed, 11 Sep 2013, Jeff King wrote:
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-> On Tue, Sep 10, 2013 at 06:17:12PM -0400, Nicolas Pitre wrote:
-> 
-> > Also remove the modulus as this is an expansive operation.
-> > The size argument is always a power of 2 anyway, so a simple
-> > mask operation provides the same result.
-> > 
-> > On a 'git rev-list --all --objects' run this decreased the time spent
-> > in lookup_object from 27.5% to 24.1%.
-> 
-> Nice. This is a tiny bit subtle, though, as the power-of-2 growth
-> happens elsewhere, and we may want to tweak it later (the decorate.c
-> hash, for example, grows by 3/2).
-> 
-> Maybe it's worth squashing in one or both of the comments below as a
-> warning to anybody who tries to tweak it.
+> I'm not too happy with the wording either. As I see it, even on MinGW
+> runtime version 4.0 it's not true that "string.h has _only_ inline
+> definition of strcasecmp"; there's also "#define strncasecmp
+> _strnicmp" which effectively provides a non-inline definition of
+> strncasecmp aka _strnicmp.
 
-Agreed.
+I do not get this part.  Sure, string.h would have definitions of
+things other than strcasecmp, such as strncasecmp.  So what?
 
-@Junio: are you willing to squash those in, or do you prefer a resent?
+Does it "effectively" provide a non-inline definition of strcasecmp?
 
-> ---
-> diff --git a/object.c b/object.c
-> index e2dae22..5f792cb 100644
-> --- a/object.c
-> +++ b/object.c
-> @@ -47,6 +47,7 @@ static unsigned int hash_obj(const unsigned char *sha1, unsigned int n)
->  {
->  	unsigned int hash;
->  	memcpy(&hash, sha1, sizeof(unsigned int));
-> +	/* Assumes power-of-2 hash sizes in grow_object_hash */
->  	return hash & (n - 1);
->  }
->  
-> @@ -94,6 +95,10 @@ static void grow_object_hash(void)
->  static void grow_object_hash(void)
->  {
->  	int i;
-> +	/*
-> +	 * Note that this size must always be power-of-2 to match hash_obj
-> +	 * above.
-> +	 */
->  	int new_hash_size = obj_hash_size < 32 ? 32 : 2 * obj_hash_size;
->  	struct object **new_hash;
->  
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Perhaps the real issue is that the header file does not give an
+equivalent "those who want to take the address of strcasecmp will
+get the address of _stricmp instead" macro, e.g.
+
+	#define strcasecmp _stricmp
+
+or something?
