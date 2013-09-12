@@ -1,78 +1,74 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Fwd: git-daemon access-hook race condition
-Date: Thu, 12 Sep 2013 14:51:41 -0400
-Message-ID: <CAPZPVFbJqbRGQZ+m3-EfahcYegPvVcS-jNTsCXxBqWUsLqyHkg@mail.gmail.com>
-References: <CAPZPVFa=gqJ26iA6eQ1B6pcbTcQmmnXHYz6OQLtMORnAa5ec2w@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
+Date: Thu, 12 Sep 2013 15:00:19 -0400
+Message-ID: <20130912190019.GB636@sigill.intra.peff.net>
+References: <523094F0.9000509@gmail.com>
+ <20130911182921.GE4326@google.com>
+ <CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
+ <20130911214116.GA12235@sigill.intra.peff.net>
+ <CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
+ <20130912101419.GY2582@serenity.lan>
+ <xmqq61u6qcez.fsf@gitster.dls.corp.google.com>
+ <20130912182057.GB32069@sigill.intra.peff.net>
+ <xmqqd2odq45y.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 12 20:51:46 2013
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 12 21:00:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKBzV-0005Ry-MB
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 20:51:46 +0200
+	id 1VKC7w-0006nQ-7R
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Sep 2013 21:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755330Ab3ILSvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 14:51:43 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:50904 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753406Ab3ILSvm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 14:51:42 -0400
-Received: by mail-wg0-f47.google.com with SMTP id f12so211935wgh.14
-        for <git@vger.kernel.org>; Thu, 12 Sep 2013 11:51:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=tfFAY/fxOCgNPcqAyQoc2OzKKkhs2fm9+qsGPwVvd3M=;
-        b=NSfpX1Fts3xXJl+XjJbDhMHgjaQ0UPE2QNXv6sCuXgnLnNJPULd/u+/O4XoRVcaF3M
-         0mJFi3qHrejpC8chXOkdTiG/MBckjegcQ05ESZKykF9ThauLy8C+iGuhOcvnDv7ZKbaD
-         mcBZeFyRFp8339gfsOG//N0rVMh1lfK98W5x6G7GgFRvNrvkUA7bFx7B6Z4RzCZJDHmW
-         dA3hQEfgMD3hlrmJKq+KmyKA7bAZNgJZRcqrS/FP9HqoOSBUYsq5GESwm3sQ8m6qC429
-         i9PLPXFr+DforR5+XGH+JcwvC1k9QLXI0bMrRGAO+cC/VlPXMLSfhN6tip6v/PCPtOGK
-         lG6w==
-X-Received: by 10.180.90.197 with SMTP id by5mr23118423wib.43.1379011901115;
- Thu, 12 Sep 2013 11:51:41 -0700 (PDT)
-Received: by 10.216.218.197 with HTTP; Thu, 12 Sep 2013 11:51:41 -0700 (PDT)
-In-Reply-To: <CAPZPVFa=gqJ26iA6eQ1B6pcbTcQmmnXHYz6OQLtMORnAa5ec2w@mail.gmail.com>
+	id S1755242Ab3ILTAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 15:00:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57175 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753359Ab3ILTAX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Sep 2013 15:00:23 -0400
+Received: (qmail 4416 invoked by uid 102); 12 Sep 2013 19:00:23 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Sep 2013 14:00:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Sep 2013 15:00:19 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqd2odq45y.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234673>
 
-Hi,
+On Thu, Sep 12, 2013 at 11:35:21AM -0700, Junio C Hamano wrote:
 
+> >>  - change it to a "statis inline";
+> >>  - remove "inline" from the definition;
+> >>  - provide an external (non-inline) def somewhere else;
+> >>  - compile with gnu899 dialect.
+> >
+> > Right, option 3 seems perfectly reasonable to me, as we must be prepared
+> > to cope with a decision not to inline the function, and there has to be
+> > _some_ linked implementation. But shouldn't libc be providing an
+> > external, linkable strcasecmp in this case?
+> 
+> That is exactly my point when I said that the third one is nonsense
+> for a definition in the standard header file.
 
-We are serving repos in closed netwrok via git protocol. We are using
-git-daemon access hook (thank you very much for such a great feature)
-in order to create push notifications for Jenkins.
-I.e. upon the push the access-hook is called and then the curl command
-is created and executed. As we have several instances of Jenkins, that
-we need to notify (three), the execution of the access-hook can take
-some time.
+Yes, but I am saying it is the responsibility of libc. IOW, I am
+wondering if this particular mingw environment is simply broken, and if
+so, what is the status on the fix?  Could another option be to declare
+the environment unworkable and tell people to upgrade?
 
-Sometimes we have a situation when the whole chain works fine but
-Jenkins git plugin doesn't recognize the changes. I think it happens
-because we hit a kind of race condition:
+I am not even sure if we are right to call it broken, but talking to the
+mingw people might be a good next step, as they will surely have an
+opinion. :)
 
-1. Incoming push triggers access-hook
-2. notify jenkins 1
-3. notify jenkins 2
-4. jenkins 1 polls repo but sees no changes
-5. notify Jenkins 3
-6. the push data transfer finishes - consequent pushes will find
-changes w/o any problem
-
-The question is:
-
-Is there a way to avoid that?
-Is it possible to have access-hook to be executed after receive?
-Is it possible to introduce a parameter that would specify if it needs
-to be executed before receive or after?
-
-Thanks,
-Eugene
+-Peff
