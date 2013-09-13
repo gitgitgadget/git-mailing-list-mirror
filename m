@@ -1,7 +1,7 @@
 From: Sebastian Schuberth <sschuberth@gmail.com>
 Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
-Date: Fri, 13 Sep 2013 14:33:01 +0200
-Message-ID: <CAHGBnuN+HkZt48Pg2sHnYAhYW7EufWhO6rfgKpgaSOGeGA0Z4w@mail.gmail.com>
+Date: Fri, 13 Sep 2013 14:47:52 +0200
+Message-ID: <CAHGBnuOQ-y1beD_X_jiH+FrhPvLOVJqT0J=Wk988Q4NeCs1-9Q@mail.gmail.com>
 References: <523094F0.9000509@gmail.com>
 	<20130911182921.GE4326@google.com>
 	<CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
@@ -10,87 +10,112 @@ References: <523094F0.9000509@gmail.com>
 	<20130912101419.GY2582@serenity.lan>
 	<xmqq61u6qcez.fsf@gitster.dls.corp.google.com>
 	<20130912182057.GB32069@sigill.intra.peff.net>
-	<xmqqd2odq45y.fsf@gitster.dls.corp.google.com>
-	<20130912183849.GI4326@google.com>
-	<CAHGBnuPejvs_zTdV52GWVCF35+Bdih2c1zNuBdHJRd_2ShcnKQ@mail.gmail.com>
-	<xmqqvc25ol9n.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuPzzokV7YMrx0gAL1VACcmaLwFoaB3n6bX8Y-UDHs7S8A@mail.gmail.com>
+	<20130912202246.GF32069@sigill.intra.peff.net>
+	<xmqqr4ctokat.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-	John Keeping <john@keeping.me.uk>,
+Cc: Jeff King <peff@peff.net>, John Keeping <john@keeping.me.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Karsten Blees <karsten.blees@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 13 14:33:09 2013
+X-From: git-owner@vger.kernel.org Fri Sep 13 14:47:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKSYe-0000RR-VY
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 14:33:09 +0200
+	id 1VKSn0-0001KV-HR
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 14:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046Ab3IMMdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Sep 2013 08:33:05 -0400
-Received: from mail-la0-f49.google.com ([209.85.215.49]:54371 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750842Ab3IMMdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Sep 2013 08:33:03 -0400
-Received: by mail-la0-f49.google.com with SMTP id ev20so930623lab.36
-        for <git@vger.kernel.org>; Fri, 13 Sep 2013 05:33:01 -0700 (PDT)
+	id S1753772Ab3IMMry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Sep 2013 08:47:54 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:63217 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751513Ab3IMMrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Sep 2013 08:47:53 -0400
+Received: by mail-la0-f51.google.com with SMTP id lv10so981002lab.10
+        for <git@vger.kernel.org>; Fri, 13 Sep 2013 05:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=dKmLurPA/gzDoM7nbmL2CTE1umQtul5b3eCaGZ0adEs=;
-        b=S3VvamoOQnyQ3GEOZl4wU3j+s+4xAOojRgEN/74RtH2qyw5P3wFW1WkuSuQ00krm9J
-         /kUZinDmMTAHETHWEXW4Qjnwy3/bmvHfy+7/GN/gE6O1JlA1y3Kjs5lsul9FNFxd188h
-         pDGjeh1a4XZmw+TVpP3+wFBA/EWtkLsIv6Z2a1n5ZORyrpIjhM2ed3iSoEUHribJc8Sy
-         cuLcDfMoKJWff95ITbVS6U/CvfLfBEDBbWuT6jWYcLfKPQYweNudI/vAw+Otm7qU1wmj
-         Pknq8Z/mJl6WeQJnIMi2XjKfUHmw7GQS1eMIkdnUrLBlJuJpalv39w7j8t5DocBc89NQ
-         oIZg==
-X-Received: by 10.112.167.3 with SMTP id zk3mr11646211lbb.23.1379075581381;
- Fri, 13 Sep 2013 05:33:01 -0700 (PDT)
-Received: by 10.114.5.161 with HTTP; Fri, 13 Sep 2013 05:33:01 -0700 (PDT)
-In-Reply-To: <xmqqvc25ol9n.fsf@gitster.dls.corp.google.com>
+        bh=mUvYeKiFpyKRgqdkVldZylUw+Y5xOR80B7tZnVd+vRY=;
+        b=qxyD8KDu3X/H++u04DjHJMLHHQSEAHjznjUlN7idqaNueCkxDG79EkILc+mUJ5TFTJ
+         xPze+uW8TkiOj7ZUwrd4etofM91yo6FdWjZbYmrHCC4cze9PEZ6+QuAua7+LyJD7NDuA
+         nFt+2JumcO0s3/0sdE3QVWlCsPDds6yeoYzRhSuISsnh6teu0fzj3EEXZ8lQWEJSYmqZ
+         7BUKnQ4D119k3/sGsHo1pO2snHDlyUuTsErXDlZP7ACU0mFrOY1NHP+hma1D9yAdyz3E
+         dKpWXw3rOt50wvxk4sTRM+az/Wxk2MeJsZJaY4ujjt5qFntP08nfW9YE6GT1iT4Jmoa2
+         PJSA==
+X-Received: by 10.152.19.1 with SMTP id a1mr10618371lae.8.1379076472492; Fri,
+ 13 Sep 2013 05:47:52 -0700 (PDT)
+Received: by 10.114.5.161 with HTTP; Fri, 13 Sep 2013 05:47:52 -0700 (PDT)
+In-Reply-To: <xmqqr4ctokat.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234751>
 
-On Thu, Sep 12, 2013 at 10:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Sep 12, 2013 at 10:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
->> I'm not too happy with the wording either. As I see it, even on MinGW
->> runtime version 4.0 it's not true that "string.h has _only_ inline
->> definition of strcasecmp"; there's also "#define strncasecmp
->> _strnicmp" which effectively provides a non-inline definition of
->> strncasecmp aka _strnicmp.
+> Jeff King <peff@peff.net> writes:
 >
-> I do not get this part.  Sure, string.h would have definitions of
-> things other than strcasecmp, such as strncasecmp.  So what?
+>> I think there are basically three classes of solution:
+>>
+>>   1. Declare __NO_INLINE__ everywhere. I'd worry this might affect other
+>>      environments, who would then not inline and lose performance (but
+>>      since it's a non-standard macro, we don't really know what it will
+>>      do in other places; possibly nothing).
+>>
+>>   2. Declare __NO_INLINE__ on mingw. Similar to above, but we know it
+>>      only affects mingw, and we know the meaning of NO_INLINE there.
+>>
+>>   3. Try to impact only the uses as a function pointer (e.g., by using
+>>      a wrapper function as suggested in the thread).
+>>
+>> Your patch does (1), I believe. Junio's patch does (3), but is a
+>> maintenance burden in that any new callsites will need to remember to do
+>> the same trick.
 
-Sorry, I mixed up "strcasecmp" and "strncasecmp".
+Well, if by "everywhere" in (1) you mean "on all platforms" then
+you're right. But my patch does not define __NO_INLINE__ globally, but
+only at the time string.h / strings.h is included. Afterwards
+__NO_INLINE__ is undefined. In that sense, __NO_INLINE__ is not
+defined "everywhere".
 
-> Does it "effectively" provide a non-inline definition of strcasecmp?
+> Agreed.  If that #define __NO_INLINE__ does not appear in the common
+> part of our header files like git-compat-util.h but is limited to
+> somewhere in compat/, that would be the perfect outcome.
 
-Yes, if __NO_INLINE__ is defined string.h provides non-inline
-definition of both "strcasecmp" and "strncasecmp" by defining them to
-"_stricmp" and "_strnicmp" respectively.
+It's not that easy to move the definition of __NO_INLINE__ into
+compat/ because git-compat-util.h includes string.h / strings.h before
+anything of compat/. More over, defining __NO_INLINE__ in somewhere in
+compat/ would not limit its definition to the string.h / strings.h
+headers only. So how about something like this on top of my original
+patch:
 
-> Perhaps the real issue is that the header file does not give an
-> equivalent "those who want to take the address of strcasecmp will
-> get the address of _stricmp instead" macro, e.g.
->
->         #define strcasecmp _stricmp
->
-> or something?
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -85,12 +85,16 @@
+ #define _NETBSD_SOURCE 1
+ #define _SGI_SOURCE 1
 
-Now it's you who puzzles me, because the header file *does* have
-exactly the macro that you suggest.
++#ifdef __MINGW32__
+ #define __NO_INLINE__ /* do not inline strcasecmp() */
++#endif
+ #include <string.h>
++#ifdef __MINGW32__
++#undef __NO_INLINE__
++#endif
+ #ifdef HAVE_STRINGS_H
+ #include <strings.h> /* for strcasecmp() */
+ #endif
+-#undef __NO_INLINE__
 
-Anyway, I think Peff's reply to my other mail summed it up nicely. I
-will come up with another patch.
+ #ifdef WIN32 /* Both MinGW and MSVC */
+ #ifndef _WIN32_WINNT
 
 -- 
 Sebastian Schuberth
