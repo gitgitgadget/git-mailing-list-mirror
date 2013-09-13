@@ -1,85 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fwd: Fwd: git-daemon access-hook race condition
-Date: Thu, 12 Sep 2013 16:27:19 -0700
-Message-ID: <xmqqppsdmxig.fsf@gitster.dls.corp.google.com>
-References: <CAPZPVFa=gqJ26iA6eQ1B6pcbTcQmmnXHYz6OQLtMORnAa5ec2w@mail.gmail.com>
-	<CAPZPVFbJqbRGQZ+m3-EfahcYegPvVcS-jNTsCXxBqWUsLqyHkg@mail.gmail.com>
-	<xmqq4n9pq2av.fsf@gitster.dls.corp.google.com>
-	<CAPZPVFZLPV=JVR+SSqfX-=aLyFWZBkof+yCkivcLoKNnv6f__Q@mail.gmail.com>
-	<CAPZPVFZpYJnQY4BpjaPxU8NnBmPZ9Fp6UpovoQEvkKzRnLa=KA@mail.gmail.com>
-	<xmqqioy5oiif.fsf@gitster.dls.corp.google.com>
-	<xmqqa9jhof6k.fsf@gitster.dls.corp.google.com>
-	<CAPZPVFYY6Q=zZ62mY6uGi6O7KaOO8NhUEH0YUgcQE3NBvHQEpg@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Converting repo from HG, `git filter-branch --prune-empty --
+ --all` is extremely slow and errors out.
+Date: Thu, 12 Sep 2013 19:47:49 -0500
+Message-ID: <CAMP44s1cmcfSuB-TnFL+-57i5W=EA8v322rVDoUELCPF948jPw@mail.gmail.com>
+References: <D4C9DBA5F955904683C89B4A96DA7759EA78D60FDF@synapsemail>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 13 01:27:34 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: John Gietzen <jgietzen@woot.com>
+X-From: git-owner@vger.kernel.org Fri Sep 13 02:48:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKGIM-00023z-7r
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 01:27:30 +0200
+	id 1VKHYB-0000pR-Q7
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 02:47:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756737Ab3ILX1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 19:27:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51826 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756080Ab3ILX1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 19:27:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 456FF415A6;
-	Thu, 12 Sep 2013 23:27:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JvWjm9ChAZYl4BMzDrtbb8HrJOE=; b=rSE2Ej
-	9lYuhXW4nMbIriy9dFtf23wuPpD3Vq1aT9piqYsF+/GgyTEa0TfkXiizXpuJyMc1
-	39SekCr2uWpE9+5FlONNOYwDWTDVwdeDnLSoyPPJkEem2s3nLmzL/CH7pPxyne2X
-	70ib8mXAfl+Njqa0bdXR8DjqFbApYkf3L2G5Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZVtqRDwPvG6fU0zCSUex864jq9bla903
-	Tk8cEfRpQZUrPIv9tZBwXfOBR14QwJj4KCO1cR+zvC22qjEZ7ClBxlgUGLHRjEin
-	hNM7US9s+inTdJt3wojwETStAg4fkVvCNTu1Lt0SELxkDu7KUqEzSK/dx1PbY8rK
-	kHzRpJTaRr8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B55A415A5;
-	Thu, 12 Sep 2013 23:27:24 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A1839415A1;
-	Thu, 12 Sep 2013 23:27:23 +0000 (UTC)
-In-Reply-To: <CAPZPVFYY6Q=zZ62mY6uGi6O7KaOO8NhUEH0YUgcQE3NBvHQEpg@mail.gmail.com>
-	(Eugene Sajine's message of "Thu, 12 Sep 2013 19:17:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E0B4B93A-1C02-11E3-93DF-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755469Ab3IMArv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 20:47:51 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:38917 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755232Ab3IMArv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Sep 2013 20:47:51 -0400
+Received: by mail-lb0-f174.google.com with SMTP id w6so1517086lbh.5
+        for <git@vger.kernel.org>; Thu, 12 Sep 2013 17:47:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=gwuBW6yDtXJkV8SGuF3CA3BCeAtDwWgGs9CSqCDy644=;
+        b=VhtRdNf2VezJ87vdaB045YEJ1jBV462PQRwxbrS/I4k6vV5u9wRYnxG2ZADQQQFCid
+         kZcHmUQzUZq8sR6Jqpvj0n/ab6TGSEwQ+TsHgEOW/tMXYt7TtmxHtCbc/QLBKlbi2323
+         2bR+zr8aWnQUTJ2Jm20syEA2QivI2Fe3MO1S5TvlGDbpOezNyw/Vna9AzqsxdXzpWAHj
+         QEq/D5yRQlsTAQTPocI3ob/rqg8rJ/DIMaeTPCGkXt81SOxxJhU4Z7kxwgWO7UDmj4h5
+         IlzDyV0Q2x2ucXEBID9HdBGOuVqgXYU+yerhY5BMuNCbRMUoaj2we+NZpwSgYzoNnIS3
+         hPjg==
+X-Received: by 10.152.45.106 with SMTP id l10mr8614484lam.12.1379033269662;
+ Thu, 12 Sep 2013 17:47:49 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Thu, 12 Sep 2013 17:47:49 -0700 (PDT)
+In-Reply-To: <D4C9DBA5F955904683C89B4A96DA7759EA78D60FDF@synapsemail>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234715>
 
-Eugene Sajine <euguess@gmail.com> writes:
-
->> So even if we feed the exit status of the service process to the
->> hook script specified by the --post-service-hook, it does not tell
->> the script if the service "succeeded" in that sense.
+On Thu, Sep 12, 2013 at 5:01 PM, John Gietzen <jgietzen@woot.com> wrote:
+> Background:
+> Windows, git version 1.8.3.msysgit.0
+> bare repo, 54k commits after migration from HG
+> git filter-branch --prune-empty -- --all
 >
-> I see what you're saying.
-> In my particular use case I can work around that service status
-> because even if it failed it will just trigger Jenkins to poll and in
-> case of failure to transfer data there will be no new changes for
-> Jenkins to work with. If we would want the --post-service-hook to know
-> that data transfer succeeded or failed, then may be there should be
-> some difference between "service status" and "service process status"?
-> In this case the existing logic works with "service process status"
-> while the --post-service-hook is fed with the "service status" (or
-> name it "data transfer status")
+> I'm trying to clean up our repository after migrating it from HG.  I'm running the filter-branch command listed above in an effort to clean up all of garbage commits that HG required ("closing branch" commits and their ilk).
 >
-> Do i make any sense?
+> From my past experience, "git filter-branch" is extremely quick when using simple filters, like env-filter, since it doesn't have to touch the working dir.  However, in our case each revision is taking 1-3 seconds; our entire repo will take 30 hours to clean up at this rate.  Normally, this wouldn't be a problem, except that we are getting "sh.exe couldn't start" errors after anywhere between the 5000th and 6000th rewritten commit.  Filter-branch doesn't have support for picking up where it left off, so we are entirely unable to clean up our repo.
 
-Almost; you missed that there is no channel to pass "data transfer
-status" from the service back to the daemon.
+Indeed, I remember writing my own simplified version of 'git
+filter-branch' that was much faster. If I recall correctly, the trick
+was avoiding 'git write-tree' which can be done if you are not using
+any tree filter, but 'git filter-branch' is not that smart.
+
+If all you want to do is prune empty commits, it should be easy to
+write a script that simply does 'git commit-tree'. I might decide to
+do that based on my script if I have time today.
+
+-- 
+Felipe Contreras
