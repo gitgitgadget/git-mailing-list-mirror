@@ -1,77 +1,102 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v2] sequencer: trivial cleanup
-Date: Sat, 14 Sep 2013 03:45:06 +0530
-Message-ID: <1379110506-21721-1-git-send-email-artagnon@gmail.com>
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 14 00:21:07 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH V2 1/3] Doc URLs: relative paths imply the dot-respository
+Date: Fri, 13 Sep 2013 15:21:49 -0700
+Message-ID: <xmqq7gekicqq.fsf@gitster.dls.corp.google.com>
+References: <1368964449-2724-1-git-send-email-philipoakley@iee.org>
+	<1379107397-964-1-git-send-email-philipoakley@iee.org>
+	<1379107397-964-2-git-send-email-philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: GitList <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sat Sep 14 00:21:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKbje-000347-8r
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 00:21:06 +0200
+	id 1VKbkS-0003xm-4l
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 00:21:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755455Ab3IMWVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Sep 2013 18:21:01 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:45637 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754990Ab3IMWVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Sep 2013 18:21:00 -0400
-Received: by mail-pa0-f52.google.com with SMTP id kq13so3047544pab.39
-        for <git@vger.kernel.org>; Fri, 13 Sep 2013 15:21:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=KO0Qpk0euPgtm7UWZNwQuLRZpdUL8jGn9uNEeHfRuqQ=;
-        b=sCD1KEPNlC0KJYNJ/lNj4xsfWCmlaV35T4XDaWNf+CS/pD/wpdjP/ePLv/mR0zORhj
-         E0Ik8fkE6w6C55R0nmx2Y6BOlIeXyiaE6F75+cIkFTOI3SSd7TaBGkjNlmxOt21eLE5N
-         KG3wKMsZtxO2s97h9XbDdkk2z+S0Jb79zioypzyGy9lRIfL0UHpzZZzgFFWCBjxYjYo6
-         WM/Qrqw4b7cIRIbluszoXMWNBcSIE4iwi27MFdRr1jCUp1z6bF5FiljhZQA2RYezvU6w
-         UkhL5xjk0D4qDnbjrmka6yrhvLUQeaOhzoof9hVHijX/LbaEgqjE2A+PSdl6BowauWvG
-         aP0w==
-X-Received: by 10.66.161.229 with SMTP id xv5mr17876064pab.87.1379110860290;
-        Fri, 13 Sep 2013 15:21:00 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.41.186])
-        by mx.google.com with ESMTPSA id mr3sm14078813pbb.27.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 13 Sep 2013 15:20:59 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.299.gb3e7d24.dirty
+	id S1755468Ab3IMWVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Sep 2013 18:21:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55150 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754990Ab3IMWVv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Sep 2013 18:21:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D46B41D36;
+	Fri, 13 Sep 2013 22:21:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=v9l+1jfViuOKjvOa8wiu3ZkvIVU=; b=no/wT5
+	oSjV+1O9podLzhrUIMpNJl+XkXgTddeSni2VMJIEXJeL6WptyM6b5jKgDmJ1uxPp
+	8qdeIlNrIHrS6r4FVMqDrdJUzqQeXjsINVu0vS7NO2YAS70WNGfPGwvxFI1E2iab
+	AFNAEwA7I5R4cfDliLzw1qenPXYfnLPLBCRoE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Mqg6JN6LCM8f6Qmy+ZXlgWOuFPEC2zPk
+	maiGT2r9djOCpdMXAAN2DgFAawCohfr9H5YpkG5h9j2GankS4gt/cth35ch/ao1y
+	wWt93lOyB9YfKMskj7g1HB6Mw8gSYrBy5rjxZXUPgmVoGm1Zq8HGQjxARUQzQYDv
+	sb53gmGbrI4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5316A41D35;
+	Fri, 13 Sep 2013 22:21:51 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD89A41D31;
+	Fri, 13 Sep 2013 22:21:50 +0000 (UTC)
+In-Reply-To: <1379107397-964-2-git-send-email-philipoakley@iee.org> (Philip
+	Oakley's message of "Fri, 13 Sep 2013 22:23:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E2EFF6D6-1CC2-11E3-8302-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234781>
 
-Consider that the return values of allow_empty() could either be
-negative, zero, or one. However, there is no reason to be overtly
-conservative about it: we might as well return positive values as well
-since the callsite has no problems with it.
+Philip Oakley <philipoakley@iee.org> writes:
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- sequencer.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> ---
+>  Documentation/urls.txt | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/Documentation/urls.txt b/Documentation/urls.txt
+> index 9ccb246..5350a63 100644
+> --- a/Documentation/urls.txt
+> +++ b/Documentation/urls.txt
+> @@ -55,6 +55,13 @@ These two syntaxes are mostly equivalent, except the former implies
+>  --local option.
+>  endif::git-clone[]
+>  
+> +Relative paths are relative to the `$GIT_DIR`, thus the path:
 
-diff --git a/sequencer.c b/sequencer.c
-index 351548f..ae25b5b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -463,13 +463,7 @@ static int allow_empty(struct replay_opts *opts, struct commit *commit)
- 	if (opts->keep_redundant_commits)
- 		return 1;
- 
--	empty_commit = is_original_commit_empty(commit);
--	if (empty_commit < 0)
--		return empty_commit;
--	if (!empty_commit)
--		return 0;
--	else
--		return 1;
-+	return is_original_commit_empty(commit);
- }
- 
- static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
--- 
-1.8.4.299.gb3e7d24.dirty
+Is it?
+
+	git init src dst
+        cd src
+        git commit --allow-empty -m initial
+        cd ../dst
+        git fetch ../src HEAD:refs/heads/copy
+
+would work, but if it is relative to $GIT_DIR, the last one would
+need to be written as
+
+	git fetch ../../src HEAD:refs/heads/copy
+
+wouldn't it?
+
+> +
+> +- '.'
+> +
+> +is the current repository and acts as if it were a repository
+> +named `'.'`.
+> +
+>  When Git doesn't know how to handle a certain transport protocol, it
+>  attempts to use the 'remote-<transport>' remote helper, if one
+>  exists. To explicitly request a remote helper, the following syntax
