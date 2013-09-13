@@ -1,114 +1,122 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 2/4] pathspec: strip multiple trailing slashes from
- submodules
-Date: Fri, 13 Sep 2013 09:48:34 +0100
-Message-ID: <20130913084833.GD2582@serenity.lan>
-References: <cover.1378840318.git.john@keeping.me.uk>
- <cover.1379013786.git.john@keeping.me.uk>
- <7c478c19da6ee3322ca87e77a90358a30178c286.1379013786.git.john@keeping.me.uk>
- <xmqqzjrhom85.fsf@gitster.dls.corp.google.com>
- <20130912202128.GB2582@serenity.lan>
- <CACsJy8DX_v9r0QYQMH=697LGeGsCaE80oCo0ppd2LFZk-Os+TA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Converting repo from HG, `git filter-branch --prune-empty --
+ --all` is extremely slow and errors out.
+Date: Fri, 13 Sep 2013 04:15:19 -0500
+Message-ID: <CAMP44s0gHKTgw3xm6qRnvJk9S=p7ndMU6cwt3Ju38pBWbO_Syg@mail.gmail.com>
+References: <D4C9DBA5F955904683C89B4A96DA7759EA78D60FDF@synapsemail>
+	<CAMP44s1cmcfSuB-TnFL+-57i5W=EA8v322rVDoUELCPF948jPw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 13 10:48:53 2013
+Content-Type: multipart/mixed; boundary=001a1133f3d02624ff04e6404b96
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: John Gietzen <jgietzen@woot.com>
+X-From: git-owner@vger.kernel.org Fri Sep 13 11:15:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKP3d-0001Qo-BS
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 10:48:53 +0200
+	id 1VKPTK-0002ZD-3N
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 11:15:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830Ab3IMIsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Sep 2013 04:48:50 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:33130 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751487Ab3IMIsq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Sep 2013 04:48:46 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 7C1AF198002;
-	Fri, 13 Sep 2013 09:48:45 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id olN0iTwCIl2b; Fri, 13 Sep 2013 09:48:44 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 7BC12606538;
-	Fri, 13 Sep 2013 09:48:44 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 6E3D9161E4BF;
-	Fri, 13 Sep 2013 09:48:44 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id MTUN+5kiWP5A; Fri, 13 Sep 2013 09:48:43 +0100 (BST)
-Received: from serenity.lan (tg1.aluminati.org [10.0.16.53])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 3A971161E189;
-	Fri, 13 Sep 2013 09:48:35 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8DX_v9r0QYQMH=697LGeGsCaE80oCo0ppd2LFZk-Os+TA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752932Ab3IMJPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Sep 2013 05:15:22 -0400
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:41610 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752769Ab3IMJPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Sep 2013 05:15:21 -0400
+Received: by mail-lb0-f178.google.com with SMTP id z5so1854004lbh.37
+        for <git@vger.kernel.org>; Fri, 13 Sep 2013 02:15:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Sk9wdEox2snPVB5lccrMIr0qpnk9cb++O/vQq1Ctpqk=;
+        b=Z91TfhuYFxIzzo8IzgykvQ/j384ToBihMo23bB9xo8x5anDtusyTjV/p/Ql6VWeHnG
+         uM36juq7agYdFfhxhvbcH2Zy0lnIQEpAQa5xgZFfquZ4jgS3AgluHqXJX3ORST0IVOlf
+         DKmlQLJWI6lwYqW2KyL9n5IvWflygQNkICAGpTr89csj9utXfYFG7LHbnEtkk9Wunz0h
+         /R3lu3jGSmZ+UeGjd6tn/IIdo3jii6gT7iYPYcjEmDv/cmI3WNDWaSJefL+QU1pOiAEj
+         zp87UNOhws4e8LvUHofPsupb3jMlEyeEMUAPsSGu0lRIjCVz2jvAVzcSkiHmiZTR3VDL
+         mCbQ==
+X-Received: by 10.152.228.130 with SMTP id si2mr821508lac.32.1379063719923;
+ Fri, 13 Sep 2013 02:15:19 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Fri, 13 Sep 2013 02:15:19 -0700 (PDT)
+In-Reply-To: <CAMP44s1cmcfSuB-TnFL+-57i5W=EA8v322rVDoUELCPF948jPw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234738>
 
-On Fri, Sep 13, 2013 at 08:28:24AM +0700, Duy Nguyen wrote:
-> On Fri, Sep 13, 2013 at 3:21 AM, John Keeping <john@keeping.me.uk> wrote:
-> > On Thu, Sep 12, 2013 at 12:48:10PM -0700, Junio C Hamano wrote:
-> >> John Keeping <john@keeping.me.uk> writes:
-> >>
-> >> > This allows us to replace the submodule path trailing slash removal in
-> >> > builtin/rm.c with the PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP flag to
-> >> > parse_pathspec() without changing the behaviour with respect to multiple
-> >> > trailing slashes.
-> >>
-> >> Where does prefix_pathspec()'s input, which could have an unwanted
-> >> trailing slash, come from?
-> >>
-> >> If it is read from some of our internal data structure and known to
-> >> have at most one, then this change makes me feel very uneasy to cope
-> >> with potentially sloppy end-user input and data generated by ourselves
-> >> with the same logic.  It will allow our internal to be sloppy without
-> >> forcing us notice and fix that sloppiness.
-> >>
-> >> If it is coming from an end-user input, then I would not object to
-> >> the change, though.
-> >
-> > I added this in response to Duy's comment on v1 [1].
-> >
-> > [1] http://article.gmane.org/gmane.comp.version-control.git/234548
-> 
-> Looks like I add more noise to this thread than anything valuable.
-> Yes, once argv goes through parse_pathspec it's normalized so we do
-> not need to strip consecutive slashes any more. I'm not entirely sure
-> if it also converts Windows '\\' to '/'..
+--001a1133f3d02624ff04e6404b96
+Content-Type: text/plain; charset=UTF-8
 
-If it goes through normalize_path_copy_len then it does.
+On Thu, Sep 12, 2013 at 7:47 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
 
-Junio, can you please drop the first two patches in this series?  I can
-resend the final two unmodified if necessary, but I suspect it's easier
-for you to just drop the commits.
+> Indeed, I remember writing my own simplified version of 'git
+> filter-branch' that was much faster. If I recall correctly, the trick
+> was avoiding 'git write-tree' which can be done if you are not using
+> any tree filter, but 'git filter-branch' is not that smart.
+>
+> If all you want to do is prune empty commits, it should be easy to
+> write a script that simply does 'git commit-tree'. I might decide to
+> do that based on my script if I have time today.
 
-> > Looking more closely, this does come from user input (via the argv
-> > passed into parse_pathspec) but does (some of the time) go through
-> > prefix_path_gently which calls normalize_path_copy_len.
-> >
-> > It's not immediately clear to me when prefix_pathspec goes through this
-> > particular code path, but I think we may be able to drop this (and the
-> > previous patch) without affecting the user.
+Here it is, it's straightforward and should be easy to understand.
+
+-- 
+Felipe Contreras
+
+--001a1133f3d02624ff04e6404b96
+Content-Type: application/octet-stream; name=filter-branch
+Content-Disposition: attachment; filename=filter-branch
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_hlj6qr4l0
+
+IyEvdXNyL2Jpbi9lbnYgcnVieQoKcmVxdWlyZSAnZGF0ZScKCmNsYXNzIENvbW1pdAoKICBhdHRy
+X3JlYWRlciA6aWQsIDpwYXJlbnRzLCA6bXNnCgogIGRlZiBpbml0aWFsaXplKGRhdGEpCiAgICBA
+cGFyZW50cyA9IFtdCiAgICBtc2cgPSBuaWwKCiAgICBkYXRhLmVhY2hfbGluZSBkbyB8bHwKICAg
+ICAgbC5lbmNvZGUhKCd1dGYtOCcsICdpc28tODg1OS0xJykgaWYgbm90IGwudmFsaWRfZW5jb2Rp
+bmc/CgogICAgICBpZiBub3QgbXNnCiAgICAgICAgY2FzZSBsCiAgICAgICAgd2hlbiAvXmNvbW1p
+dCAoLispJC8KICAgICAgICAgIEBpZCA9ICQxCiAgICAgICAgd2hlbiAvXnRyZWUgKC4rKSQvCiAg
+ICAgICAgICBAdHJlZSA9ICQxCiAgICAgICAgd2hlbiAvXmF1dGhvciAoLispIDwoLispPiAoLisp
+JC8KICAgICAgICAgIEBhdXRob3IgPSBbJDEsICQyXQogICAgICAgICAgQGF1dGhvcl9kYXRlID0g
+RGF0ZVRpbWUuc3RycHRpbWUoJDMsICclcyAleicpCiAgICAgICAgd2hlbiAvXmNvbW1pdHRlciAo
+LispIDwoLispPiAoLispJC8KICAgICAgICAgIEBjb21taXR0ZXIgPSBbJDEsICQyXQogICAgICAg
+ICAgQGNvbW1pdHRlcl9kYXRlID0gRGF0ZVRpbWUuc3RycHRpbWUoJDMsICclcyAleicpCiAgICAg
+ICAgd2hlbiAvXnBhcmVudHMgKC4rKSQvCiAgICAgICAgICBAcGFyZW50cyA9ICQxLnNwbGl0KCIg
+IikKICAgICAgICB3aGVuIC9eJC8KICAgICAgICAgIG1zZyA9ICIiCiAgICAgICAgZW5kCiAgICAg
+IGVsc2UKICAgICAgICBtc2cgPDwgbAogICAgICBlbmQKICAgIGVuZAoKICAgIEBtc2cgPSBtc2cK
+ICBlbmQKCiAgZGVmIGV4cG9ydCgpCiAgICBFTlZbJ0dJVF9BVVRIT1JfTkFNRSddID0gQGF1dGhv
+clswXQogICAgRU5WWydHSVRfQVVUSE9SX0VNQUlMJ10gPSBAYXV0aG9yWzFdCiAgICBFTlZbJ0dJ
+VF9BVVRIT1JfREFURSddID0gQGF1dGhvcl9kYXRlLnN0cmZ0aW1lKCclcyAleicpCiAgICBFTlZb
+J0dJVF9DT01NSVRURVJfTkFNRSddID0gQGNvbW1pdHRlclswXQogICAgRU5WWydHSVRfQ09NTUlU
+VEVSX0VNQUlMJ10gPSBAY29tbWl0dGVyWzFdCiAgICBFTlZbJ0dJVF9DT01NSVRURVJfREFURSdd
+ID0gQGNvbW1pdHRlcl9kYXRlLnN0cmZ0aW1lKCclcyAleicpCgogICAgbmV3X2lkID0gbmlsCgog
+ICAgIyBza2lwIGVtcHR5CiAgICBpZiBAcGFyZW50cy5zaXplID09IDEKICAgICAgb2xkX3RyZWUg
+PSBgZ2l0IHJldi1wYXJzZSAje0BwYXJlbnRzLmZpcnN0fV57dHJlZX1gLmNob21wCiAgICAgIGlm
+IG9sZF90cmVlID09IEB0cmVlCiAgICAgICAgJGNvbW1pdF9tYXBbQGlkXSA9IEBwYXJlbnRzLmZp
+cnN0CiAgICAgICAgcmV0dXJuCiAgICAgIGVuZAogICAgZW5kCgogICAgcGFyZW50cyA9IEBwYXJl
+bnRzLm1hcCB7IHxlfCBbJy1wJywgJGNvbW1pdF9tYXBbZV1dIH0uZmxhdHRlbgogICAgSU8ucG9w
+ZW4oWydnaXQnLCAnY29tbWl0LXRyZWUnLCBAdHJlZV0gKyBwYXJlbnRzLCAidysiKSBkbyB8cGlw
+ZXwKICAgICAgcGlwZS53cml0ZShAbXNnKQogICAgICBwaXBlLmNsb3NlX3dyaXRlCiAgICAgIG5l
+d19pZCA9IHBpcGUucmVhZCgpLmNob21wKCkKICAgIGVuZAoKICAgICRjb21taXRfbWFwW0BpZF0g
+PSBuZXdfaWQKICBlbmQKCmVuZAoKJGNvbW1pdF9tYXAgPSB7fQoKc3RhY2sgPSBbXQpoZWFkcyA9
+IHt9CgpJTy5wb3Blbigld1tnaXQgZm9yLWVhY2gtcmVmIC0tZm9ybWF0PSUocmVmbmFtZSk6JShv
+YmplY3RuYW1lKV0pLmVhY2ggZG8gfGx8CiAgcmVmLCBpZCA9IGwuY2hvbXAuc3BsaXQoJzonKQog
+IGhlYWRzW3JlZl0gPSBpZAplbmQKCmZvcm1hdCA9IFsKICAnY29tbWl0ICVIJywKICAndHJlZSAl
+VCcsCiAgJ2F1dGhvciAlYW4gPCVhZT4gJWFkJywKICAnY29tbWl0dGVyICVjbiA8JWNlPiAlY2Qn
+LAogICdwYXJlbnRzICVQJywKICAnJywgJyVCJyBdLmpvaW4oJyVuJykKYXJncyA9ICV3Wy0tcmV2
+ZXJzZSAtLXRvcG8tb3JkZXIgLS1wYXJlbnRzIC0tc2ltcGxpZnktbWVyZ2VzIC0tYWxsXQpjb21t
+YW5kID0gJVdbZ2l0IGxvZyAteiAtcyAtLWRhdGU9cmF3IC0tZm9ybWF0PWZvcm1hdDoje2Zvcm1h
+dH1dICsgYXJncwpJTy5wb3Blbihjb21tYW5kKS5lYWNoKCJcMCIpIGRvIHxkYXRhfAogIGMgPSBD
+b21taXQubmV3KGRhdGEuY2hvbXAoIlwwIikpCiAgc3RhY2sgPDwgYwplbmQKCmRlZiBzaG93KHN0
+cikKICAkc3Rkb3V0LnByaW50KHN0cikgaWYgJHN0ZG91dC5pc2F0dHkKZW5kCgpjb3VudCA9IDAK
+dG90YWwgPSBzdGFjay5zaXplCgp1bnRpbCBzdGFjay5lbXB0eT8gZG8KICBjID0gc3RhY2suc2hp
+ZnQKCiAgbmV4dCBpZiAkY29tbWl0X21hcFtjLmlkXQoKICBjLmV4cG9ydAogIHNob3cgIlxyUmV3
+cml0ZSAje2MuaWR9ICgje2NvdW50ICs9IDF9LyN7dG90YWx9KSIKZW5kCgpzaG93ICJcbiIKCmhl
+YWRzLmVhY2ggZG8gfHJlZiwgaWR8CiAgbmV3X2lkID0gJGNvbW1pdF9tYXBbaWRdCiAgbmV4dCBp
+ZiBub3QgaWQgb3Igbm90IG5ld19pZCBvciBpZCA9PSBuZXdfaWQKICBzeXN0ZW0oJ2dpdCcsICd1
+cGRhdGUtcmVmJywgcmVmLCBuZXdfaWQsIGlkKQogIHB1dHMgJyVzICVzIC0+ICVzJyAlIFtyZWYs
+IGlkLCBuZXdfaWRdCmVuZAo=
+--001a1133f3d02624ff04e6404b96--
