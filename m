@@ -1,87 +1,77 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/3] name-hash: refactor polymorphic index_name_exists()
-Date: Fri, 13 Sep 2013 18:20:17 -0400
-Message-ID: <CAPig+cR8oYcp1ERUtW7wUvjFN0j0921iBOUjYKor59gTOb+Zcw@mail.gmail.com>
-References: <1379070943-36595-1-git-send-email-sunshine@sunshineco.com>
-	<1379070943-36595-2-git-send-email-sunshine@sunshineco.com>
-	<xmqq38p8k1kf.fsf@gitster.dls.corp.google.com>
-	<CAPig+cQxvHPbxy9YE7qYTVEXy1JCXkmBi48QrkL=bvhKRgryuQ@mail.gmail.com>
-	<CAPc5daVtDByrA6yakk_1fq9g5Hv3naNDzEho5G4Ghxc6jzpawg@mail.gmail.com>
-	<CAPig+cS4x1h3v2=0T95+g2_08_7qZj7fUsSiLgDtFyRSbFE0bA@mail.gmail.com>
-	<xmqqfvt8iczh.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 14 00:20:24 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2] sequencer: trivial cleanup
+Date: Sat, 14 Sep 2013 03:45:06 +0530
+Message-ID: <1379110506-21721-1-git-send-email-artagnon@gmail.com>
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 14 00:21:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKbix-0002Cw-CF
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 00:20:23 +0200
+	id 1VKbje-000347-8r
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 00:21:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755321Ab3IMWUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Sep 2013 18:20:20 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:39902 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754761Ab3IMWUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Sep 2013 18:20:18 -0400
-Received: by mail-la0-f41.google.com with SMTP id ec20so1560250lab.28
-        for <git@vger.kernel.org>; Fri, 13 Sep 2013 15:20:17 -0700 (PDT)
+	id S1755455Ab3IMWVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Sep 2013 18:21:01 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:45637 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754990Ab3IMWVA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Sep 2013 18:21:00 -0400
+Received: by mail-pa0-f52.google.com with SMTP id kq13so3047544pab.39
+        for <git@vger.kernel.org>; Fri, 13 Sep 2013 15:21:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=O6czu1HL6QtEbkCXBO72gIm/dolO96bKW+EB2GABYSA=;
-        b=CISmBiis10oWdZ4DCO3PaxcwThQJUmexQbfQhjFiLUqNSff/GFYM9qGQ6tokjGUKwY
-         YOH6FJdfDx8y06lZEnTUdnDOlOKgWF+XsOGQiRLrHeRkiwRIhaeSujscu/atV6vNBZKo
-         pg3VeH1xn7bsNWKtl7ywFELkV1wgszy4SQ95zNCztLNdWcO2e0+3FuASnjxCe9UiiBa3
-         dnFTa5nEKOdBbs2nxJDKNrWyKSeHrss3lrdm6AjnqMKUEG40MiTLW5EAFYv7pebVtQNW
-         drZpEpmnNTqyn4oKxjxCJpM2rkYzLV6s26GnSA0zlU/INOzk7IDUqDXwdSuMoEeDcoO9
-         sT4A==
-X-Received: by 10.112.167.3 with SMTP id zk3mr13497787lbb.23.1379110817534;
- Fri, 13 Sep 2013 15:20:17 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Fri, 13 Sep 2013 15:20:17 -0700 (PDT)
-In-Reply-To: <xmqqfvt8iczh.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: xviuMKsTF9u0D2JiaozYH1hiQNY
+        h=from:to:cc:subject:date:message-id;
+        bh=KO0Qpk0euPgtm7UWZNwQuLRZpdUL8jGn9uNEeHfRuqQ=;
+        b=sCD1KEPNlC0KJYNJ/lNj4xsfWCmlaV35T4XDaWNf+CS/pD/wpdjP/ePLv/mR0zORhj
+         E0Ik8fkE6w6C55R0nmx2Y6BOlIeXyiaE6F75+cIkFTOI3SSd7TaBGkjNlmxOt21eLE5N
+         KG3wKMsZtxO2s97h9XbDdkk2z+S0Jb79zioypzyGy9lRIfL0UHpzZZzgFFWCBjxYjYo6
+         WM/Qrqw4b7cIRIbluszoXMWNBcSIE4iwi27MFdRr1jCUp1z6bF5FiljhZQA2RYezvU6w
+         UkhL5xjk0D4qDnbjrmka6yrhvLUQeaOhzoof9hVHijX/LbaEgqjE2A+PSdl6BowauWvG
+         aP0w==
+X-Received: by 10.66.161.229 with SMTP id xv5mr17876064pab.87.1379110860290;
+        Fri, 13 Sep 2013 15:21:00 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.41.186])
+        by mx.google.com with ESMTPSA id mr3sm14078813pbb.27.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 13 Sep 2013 15:20:59 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.299.gb3e7d24.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234780>
 
-On Fri, Sep 13, 2013 at 6:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> Given the above. How should I proceed? Do you still feel that it is
->> advisable to keep an index_name_exists() around for compatibility
->> reasons in case any new callers are introduced? Regardless of that
->> answer, do you want index_name_exists() renamed to
->> index_file_exists()?
->
-> Renaming *_name_exists() to *_file_exists() without keeping a
-> compatibility one will force new topics to be rebased on this
-> series.  Alternatively we could merge them to 'pu' (and later 'next'
-> and 'master') with evil merges to adjust the change in the semantics
-> of the called function.  That increases the risk of accidental
-> breakages, I think.
->
-> It is safer to keep index_name_exists() around with the older
-> semantics, if we can, and rename your "file only" one to a different
-> name.  That way, even if a new topic still uses index_name_exists()
-> expecting the traditional behaviour, it will not break immediately
-> and we do not need to risk evil merges making mistakes.
->
-> Later, we can "git grep _name_exists" to spot them and convert such
-> old-style calls to either "directory only" or "file only" variants
-> after this series and these follow-on topics hit 'master' (and we do
-> not know at this point in what order that happens).
+Consider that the return values of allow_empty() could either be
+negative, zero, or one. However, there is no reason to be overtly
+conservative about it: we might as well return positive values as well
+since the callsite has no problems with it.
 
-Thanks. That's what I needed to know. I'll re-roll with the suggested changes.
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ sequencer.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-(And, I'm looking into the Mac-only test breakages not related to this
-patch series.)
+diff --git a/sequencer.c b/sequencer.c
+index 351548f..ae25b5b 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -463,13 +463,7 @@ static int allow_empty(struct replay_opts *opts, struct commit *commit)
+ 	if (opts->keep_redundant_commits)
+ 		return 1;
+ 
+-	empty_commit = is_original_commit_empty(commit);
+-	if (empty_commit < 0)
+-		return empty_commit;
+-	if (!empty_commit)
+-		return 0;
+-	else
+-		return 1;
++	return is_original_commit_empty(commit);
+ }
+ 
+ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+-- 
+1.8.4.299.gb3e7d24.dirty
