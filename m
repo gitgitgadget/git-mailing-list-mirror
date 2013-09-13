@@ -1,104 +1,111 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 2/4] pack v4: add v4_size to struct delta_base_cache_entry
-Date: Fri, 13 Sep 2013 20:59:50 +0700
-Message-ID: <CACsJy8DrxQqvKyAH0trd1nDbFTL2Gq7k5O-shK4j8W6PMirNYw@mail.gmail.com>
-References: <1378982284-7848-1-git-send-email-pclouds@gmail.com>
- <1378982284-7848-2-git-send-email-pclouds@gmail.com> <alpine.LFD.2.03.1309130913510.20709@syhkavp.arg>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
+Date: Fri, 13 Sep 2013 07:26:55 -0700
+Message-ID: <xmqqtxhokdao.fsf@gitster.dls.corp.google.com>
+References: <523094F0.9000509@gmail.com> <20130911182921.GE4326@google.com>
+	<CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
+	<20130911214116.GA12235@sigill.intra.peff.net>
+	<CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
+	<20130912101419.GY2582@serenity.lan>
+	<xmqq61u6qcez.fsf@gitster.dls.corp.google.com>
+	<20130912182057.GB32069@sigill.intra.peff.net>
+	<xmqqd2odq45y.fsf@gitster.dls.corp.google.com>
+	<20130912183849.GI4326@google.com>
+	<CAHGBnuPejvs_zTdV52GWVCF35+Bdih2c1zNuBdHJRd_2ShcnKQ@mail.gmail.com>
+	<xmqqvc25ol9n.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuN+HkZt48Pg2sHnYAhYW7EufWhO6rfgKpgaSOGeGA0Z4w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Sep 13 16:00:34 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	John Keeping <john@keeping.me.uk>,
+	Git Mailing List <git@vger.kernel.org>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 13 16:27:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKTvF-0007eY-Cv
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 16:00:33 +0200
+	id 1VKUKv-0008Nb-Ed
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 16:27:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932780Ab3IMOA0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Sep 2013 10:00:26 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:38733 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757246Ab3IMOAV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Sep 2013 10:00:21 -0400
-Received: by mail-ob0-f176.google.com with SMTP id uy5so1100487obc.7
-        for <git@vger.kernel.org>; Fri, 13 Sep 2013 07:00:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=PovoPWVI68ONHf/pSD2hu9JLQWpbGWxyv0zrznXDlQk=;
-        b=aHCf7bHvwGLWPXHPOe6Hg1s5xwXsE6LrZe4hQmIVyn2YBxBd7bmQowxbjKpazZNxx4
-         MERL9UIHJgB2yQBQ7+RmWGBure7gIyihU/Ex8StyTWtEdMYczwg9nzmHzwbXz3K6DkOR
-         qR0OuYCJ+8YqvOACTcR10VQCFhWz/jF6YZmSr59fKUfnC+nLnRVEz1NiresHsbrEeKH5
-         4rzTE34hImVJD6U5LnoeMxCsduAyf1DOT6NoJvnfljeK2qbePWT7lVgLRCbggdq6vH8V
-         IgYVmQI4wNvednRQx0HW+M4CzfMKWrU2qP4/HhWl1ORShvqlbfouKX+fXWnqSQG0GbM+
-         0/Rg==
-X-Received: by 10.182.98.162 with SMTP id ej2mr7278240obb.61.1379080821087;
- Fri, 13 Sep 2013 07:00:21 -0700 (PDT)
-Received: by 10.182.49.233 with HTTP; Fri, 13 Sep 2013 06:59:50 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.03.1309130913510.20709@syhkavp.arg>
+	id S932279Ab3IMO1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Sep 2013 10:27:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47382 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932070Ab3IMO07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Sep 2013 10:26:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E50F13FF24;
+	Fri, 13 Sep 2013 14:26:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sSizCr6G/nl9A5AvZiu3PmbvBhI=; b=Dkqh/M
+	F6iVvtkU2o0yaGK1hHOgKN3nUVhYfob7TfeS2BlfHWbZQ0xCsXgH34xUj+2oqN4d
+	zKmmuLu86qlFhAU2idG001QZrtOMkO3YV2qmhi141hbmKc05N8ZeWARjzdUBE3mf
+	l2SuFc9kW6meekNhtTt7Osqy43Oo3uSL8Ntz4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qrHoXkMPUAykGQLumKOHMVrSg53oPpRD
+	w8yAFyIeJ5UcZvEj98D87T7Ftuypqp0ryKbZmUkLwuPAIw3gKd1YbTb9liveFgUj
+	C2dTSycvLRnRfdvZVJvAukBuS1ETziVfBP12YkQbev3tmPu+tCZsL9X6E/lMP7cA
+	IvuagF1HM7U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7EA63FF23;
+	Fri, 13 Sep 2013 14:26:58 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4DBB13FF1E;
+	Fri, 13 Sep 2013 14:26:58 +0000 (UTC)
+In-Reply-To: <CAHGBnuN+HkZt48Pg2sHnYAhYW7EufWhO6rfgKpgaSOGeGA0Z4w@mail.gmail.com>
+	(Sebastian Schuberth's message of "Fri, 13 Sep 2013 14:33:01 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 8C1C554E-1C80-11E3-AE7B-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234755>
 
-On Fri, Sep 13, 2013 at 8:27 PM, Nicolas Pitre <nico@fluxnic.net> wrote=
-:
-> On Thu, 12 Sep 2013, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Sebastian Schuberth <sschuberth@gmail.com> writes:
+
+> On Thu, Sep 12, 2013 at 10:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
->> The intention is to store flat v4 trees in delta base cache to avoid
->> repeatedly expanding copy sequences in v4 trees. When the user needs
->> to unpack a v4 tree and the tree is found in the cache, the tree wil=
-l
->> be converted back to canonical format. Future tree_desc interface ma=
-y
->> skip canonical format and read v4 trees directly.
+>>> I'm not too happy with the wording either. As I see it, even on MinGW
+>>> runtime version 4.0 it's not true that "string.h has _only_ inline
+>>> definition of strcasecmp"; there's also "#define strncasecmp
+>>> _strnicmp" which effectively provides a non-inline definition of
+>>> strncasecmp aka _strnicmp.
 >>
->> For that to work we need to keep track of v4 tree size after all cop=
-y
->> sequences are expanded, which is the purpose of this new field.
+>> I do not get this part.  Sure, string.h would have definitions of
+>> things other than strcasecmp, such as strncasecmp.  So what?
 >
-> Hmmm.... I think this is going in a wrong direction.
+> Sorry, I mixed up "strcasecmp" and "strncasecmp".
 
-Good thing you caught me early. I was planning to implement a better
-version of this on the weekend. And you are not wrong about code
-maintainability, unpack_entry() so far looks very close to a real
-mess.
+OK.
 
-> Yet, pavkv4 tree walking shouldn't need a cache since there is nothin=
-g
-> to expand in the end.  Entries should be advanced one by one as they =
-are
-> needed.  Granted when converting back to a canonical object we need a=
-ll
-> of them, but eventually this shouldn't be the main mode of operation.
-
-There's another case where one of the base tree is not v4 (the packer
-is inefficient, like my index-pack --fix-thin). For trees with leading
-zeros in entry mode, we can just do a lossy conversion to v4, but I
-wonder if there is a case where we can't even convert to v4 and the v4
-treewalk interface has to fall back to canonical format.. I guess that
-can't happen.
-
-> However I can see that, as you say, the same base object is repeatedl=
-y
-> referenced.  This means that we need to parse it over and over again
-> just to find the right offset where the needed entries start.  We
-> probably end up skipping over the first entries in a tree object
-> multiple times.  And that would be true even when the core code learn=
-s
-> to walk pv4 trees directly.
+>> Does it "effectively" provide a non-inline definition of strcasecmp?
 >
-> So here's the beginning of a tree offset cache to mitigate this probl=
-em.
-> It is incomplete as the cache function is not implemented, etc.  But
-> that should give you the idea.
+> Yes, if __NO_INLINE__ is defined string.h provides non-inline
+> definition of both "strcasecmp" and "strncasecmp" by defining them to
+> "_stricmp" and "_strnicmp" respectively.
+>
+>> Perhaps the real issue is that the header file does not give an
+>> equivalent "those who want to take the address of strcasecmp will
+>> get the address of _stricmp instead" macro, e.g.
+>>
+>>         #define strcasecmp _stricmp
+>>
+>> or something?
+>
+> Now it's you who puzzles me, because the header file *does* have
+> exactly the macro that you suggest.
 
-Thanks. I'll have a closer look and maybe complete your patch.
---=20
-Duy
+Then why does your platform have problem with the code that takes
+the address of strcasecmp and stores it in the variable?  It is not
+me, but your platform that is puzzling us.
+
+There is something else going on, like you do not have that #define
+"enabled" under some condition, or something silly like that.
