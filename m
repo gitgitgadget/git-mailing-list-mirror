@@ -1,105 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] version-gen: cleanup
-Date: Thu, 12 Sep 2013 23:10:32 -0700
-Message-ID: <xmqqy571j7t6.fsf@gitster.dls.corp.google.com>
-References: <1379035046-6688-1-git-send-email-felipe.contreras@gmail.com>
-	<1379035046-6688-2-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 13 13:10:55 2013
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 0/3] stop storing trailing slash in dir-hash
+Date: Fri, 13 Sep 2013 07:15:40 -0400
+Message-ID: <1379070943-36595-1-git-send-email-sunshine@sunshineco.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 13 13:16:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKRH3-0005UL-BS
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 13:10:53 +0200
+	id 1VKRML-0000jY-Sk
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 13:16:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753604Ab3IMLKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Sep 2013 07:10:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59170 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751842Ab3IMLKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Sep 2013 07:10:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 370063F182;
-	Fri, 13 Sep 2013 11:10:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:references:message-id:mime-version:content-type;
-	 s=sasl; bh=53Hwv3fVrD5fQB8nK62FKhiTCwg=; b=YWbyybkfV7dTXg0N8cbY
-	Gw2XlLKP5w+mBwtnVvwEARdzLHynORlJwn5v42t8L4Tih2gcBHSeZll5Z6VsKF86
-	kYmiR4pViF8lBhfu/7gdLk/xEcEq5wd66JwFDLdvzupr+dICMnObqNXHFNlw+Uc6
-	xIp1SIOHnUtsXQegJ3Zye0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:references:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=IiiMXQROl5aGaYRPHdAsvnnsi0yYFFVgtE6hU+l/anYGB5
-	AfJSnxtWlxRrlAerhoSPF2M7m7pG5fuaLXGgKheKrAID8+4AH2DPpvdhq2uIDwN/
-	b/sZ1UfKjxgGqo/iWhKPnZm3AZvkhKyOG1PZSgKjZMREsxP04920n7381jl88=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E25D3F181;
-	Fri, 13 Sep 2013 11:10:48 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 886F03F17A;
-	Fri, 13 Sep 2013 11:10:47 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 24307CC8-1C65-11E3-9CF0-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755114Ab3IMLQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Sep 2013 07:16:18 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:59384 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753376Ab3IMLQR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Sep 2013 07:16:17 -0400
+Received: by mail-ob0-f169.google.com with SMTP id wp4so961448obc.0
+        for <git@vger.kernel.org>; Fri, 13 Sep 2013 04:16:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=2erT4PEw86phnOoxKM+dulP3W8fp7erQrE41tlnaylM=;
+        b=ZkJnHmekHsceGtjT98zXc6fgZGjbVc55JIEJ0aaHApfx9FPb1Li6Kw/gGkirUmq40X
+         L7uznVObz2/9vmsRTu9fLi9cwV19sxo57UEETDJ9cvSPphENFkWAEc8Z22s3jlGsfngC
+         qgi1vjS6w2rVaeHB4tbjdVnaARHbDN5TLw7ClyLIDh4WldB+HJjsE00XyJ5gU2IqB1ht
+         sTvLdXjefS3L8nzJtj/IrzMWB8qR2EO+JjEyAYFW9id5AC9eSYW/iIBvfxYrLro4lSBG
+         hDr7pZDqgaRE56/xws195g1dch/gABiaQaKHrn8gmXhlBZrXPvd6TWiHwdnfj4vqNbNF
+         vwjA==
+X-Received: by 10.182.80.196 with SMTP id t4mr11732157obx.1.1379070976661;
+        Fri, 13 Sep 2013 04:16:16 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3dr8.cable.mindspring.com. [69.81.183.104])
+        by mx.google.com with ESMTPSA id it7sm13049040obb.11.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 13 Sep 2013 04:16:15 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.457.g424cb08
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234743>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+This series alters name-hash so that it no longer stores the (redundant)
+trailing slash with index_state.dir_hash entries. As an intentional
+side-effect, the series fixes [1] in a cleaner way (suggested by Junio
+[2]) than either [3] (680be044 in master) or [4].
 
-> +describe () {
-> +	VN=$(git describe --match "v[0-9]*" --abbrev=7 HEAD 2>/dev/null) || return 1
->  	case "$VN" in
-> +	*$LF*)
-> +		return 1
-> +		;;
->  	v[0-9]*)
->  		git update-index -q --refresh
->  		test -z "$(git diff-index --name-only HEAD --)" ||
-> +		VN="$VN-dirty"
-> +		return 0
-> +		;;
->  	esac
-> +}
-> +
-> +# First see if there is a version file (included in release tarballs),
-> +# then try 'git describe', then default.
-> +if test -f version
-> +then
-> +	VN=$(cat version) || VN="$DEF_VER"
-> +elif test -d ${GIT_DIR:-.git} -o -f .git && describe
->  then
+As noted by Peff [5], this change is at a fairly fundamental level, so
+care has been taken to ensure that all tests still pass (thus it at
+least does not break anything covered by the tests).
 
-Makes sense; using a helper function makes the primary logic easier
-to read.
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/232727
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/232727/focus=232813
+[3]: http://thread.gmane.org/gmane.comp.version-control.git/232796
+[4]: http://thread.gmane.org/gmane.comp.version-control.git/232833
+[5]: http://thread.gmane.org/gmane.comp.version-control.git/232727/focus=232822
 
-> -test "$VN" = "$VC" || {
-> -	echo >&2 "GIT_VERSION = $VN"
-> -	echo "GIT_VERSION = $VN" >$GVF
-> -}
-> -
-> -
-> +test "$VN" = "$VC" && exit
-> +echo >&2 "GIT_VERSION = $VN"
-> +echo "GIT_VERSION = $VN" >$GVF
+Eric Sunshine (3):
+  name-hash: refactor polymorphic index_name_exists()
+  name-hash: stop storing trailing '/' on paths in index_state.dir_hash
+  dir: revert work-around for retired dangerous behavior
 
-The point of this part is "if the version file is already up to
-date, do not rewrite it only to smudge the mtime to confuse make",
-so it would be much easier to read to write it like so:
+ cache.h      |  2 ++
+ dir.c        | 25 +++++++------------------
+ name-hash.c  | 54 ++++++++++++++++++++++++++++--------------------------
+ read-cache.c |  2 +-
+ 4 files changed, 38 insertions(+), 45 deletions(-)
 
-	if test "$VN" != "$VC"
-        then
-		... two echoes ...
-	fi
-
-compared to "exiting in the middle" which is harder to follow,
-especially if we consider that we may have to grow the remaining two
-lines in the future.
+-- 
+1.8.4.457.g424cb08
