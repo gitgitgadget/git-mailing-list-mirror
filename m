@@ -1,9 +1,8 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
-Date: Fri, 13 Sep 2013 12:56:50 -0700
-Message-ID: <CA+55aFws7iNGRpu6wKBkKj_5bw3vu_E+q+1__Aw4kmhkaUMRGw@mail.gmail.com>
-References: <523094F0.9000509@gmail.com>
-	<20130911182921.GE4326@google.com>
+Date: Fri, 13 Sep 2013 13:01:41 -0700
+Message-ID: <xmqqppscij8a.fsf@gitster.dls.corp.google.com>
+References: <523094F0.9000509@gmail.com> <20130911182921.GE4326@google.com>
 	<CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
 	<20130911214116.GA12235@sigill.intra.peff.net>
 	<CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
@@ -17,72 +16,69 @@ References: <523094F0.9000509@gmail.com>
 	<xmqqppsckcsd.fsf@gitster.dls.corp.google.com>
 	<CAHGBnuMNDJhAqNfgVRHRE-7R=UZbd+fMExYeKDWWCFjyQJYYTQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	John Keeping <john@keeping.me.uk>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, John Keeping <john@keeping.me.uk>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Karsten Blees <karsten.blees@gmail.com>
 To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 13 21:56:57 2013
+X-From: git-owner@vger.kernel.org Fri Sep 13 22:01:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKZU7-0001Se-8B
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 21:56:55 +0200
+	id 1VKZYr-0006eq-AZ
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 22:01:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753996Ab3IMT4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Sep 2013 15:56:51 -0400
-Received: from mail-vb0-f54.google.com ([209.85.212.54]:50481 "EHLO
-	mail-vb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753777Ab3IMT4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Sep 2013 15:56:50 -0400
-Received: by mail-vb0-f54.google.com with SMTP id q14so1350570vbe.27
-        for <git@vger.kernel.org>; Fri, 13 Sep 2013 12:56:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=/x54xvYfGQHDnsnQnkfUcZhpvK5bLOCL7+cs5IhKelc=;
-        b=fkGLCfkPxJFf6SZeujZthYAe6RGpIzxhCES4apbkuFAGnLXFTaNIH9SgSpmEqK2j4U
-         iq4RPX0E46WlMM/zjTZxSyUhnysGpep6QdCGuaA8nUWj/h21ONc2IhHLlERkFEK93BJm
-         QF7yphS3KiVtbis7j7NvBAVA8ARs7pT8VXwj6FveOLrmw63G3BIe9fwt3GUjwFliY4bE
-         Gvcd/Gb/NZGwyEE4xGE0uyUabfL91FdvsNIo1A/Z4AB/2+buvVBaNhpgwxQ6nwwv93kP
-         +DmIn+mBEFoqSi+97xMMUv98hz2y1E9JX1XgN1zuym2+3ZbSqMxuMt4mgIgYnbDHJ6vz
-         +26g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=/x54xvYfGQHDnsnQnkfUcZhpvK5bLOCL7+cs5IhKelc=;
-        b=C60q09lTZ+ABoklcUorjyv9LGB0bNsMLx8yTQPEK+yyidZIulRt/uQtDYAYbR6Fe8T
-         5HSgB4lB8JvI9Z/qn9UBQzlkOpcdtDH+uSWe98n3VS64UzfEy5NHxEt9aQxkeN/ZC6LL
-         Trem+9QXLA+JbUsdCR0odP6yO6ftAwaC+lxJw=
-X-Received: by 10.52.230.233 with SMTP id tb9mr11169172vdc.17.1379102210317;
- Fri, 13 Sep 2013 12:56:50 -0700 (PDT)
-Received: by 10.220.3.137 with HTTP; Fri, 13 Sep 2013 12:56:50 -0700 (PDT)
+	id S1755102Ab3IMUBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Sep 2013 16:01:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63290 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754173Ab3IMUBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Sep 2013 16:01:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A84341634;
+	Fri, 13 Sep 2013 20:01:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g1cTVrGWYq/r7WotZh9SorOBV5Y=; b=n+xuEI
+	l32cege4nWq0TIM9Xhg//Zg5nbxCDvlAftrd3Vl9FW4hjgdGitQxqj2jHqUmnj9C
+	a8DK/IGPVIHDZXpqcvSp0wSm8U5VYonjIWxrXTknNkOrAd4fjP2U1hWPE2Jzo4m2
+	A+0PkLUTj802DYpGK0OVg//P3TurHEBHbK79A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fyCtNhIjPQ+Kuhgm5472+lhwX8xkiLAH
+	/ADbKY4vPZ1XNoD3RQiYET657kGNtapl9waZ9k/87IK+6m1k2vuqD0Zbzwf+61ug
+	zI1GZr4Wx7CWgrn8/PM+04eMx11OKIsXiq2Ar/9Zb+NHWWs1oUD4nhsF4m3n7H0I
+	tM6rLsl+thE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BA8141633;
+	Fri, 13 Sep 2013 20:01:44 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6D6D541632;
+	Fri, 13 Sep 2013 20:01:43 +0000 (UTC)
 In-Reply-To: <CAHGBnuMNDJhAqNfgVRHRE-7R=UZbd+fMExYeKDWWCFjyQJYYTQ@mail.gmail.com>
-X-Google-Sender-Auth: Zm5h6SRPboPYGRKABrNH7oaAd9Q
+	(Sebastian Schuberth's message of "Fri, 13 Sep 2013 21:53:04 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4FC7F574-1CAF-11E3-B9BD-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234767>
 
-On Fri, Sep 13, 2013 at 12:53 PM, Sebastian Schuberth
-<sschuberth@gmail.com> wrote:
->
-> +#ifdef __MINGW32__
-> +#ifdef __NO_INLINE__
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-Why do you want to push this insane workaround for a clear Mingw bug?
+> I don't like the idea of introducing a compat/mingw/string.h because
+> of two reasons: You would have to add a conditional to include that
+> string.h instead of the system one anyway,
 
-Please have mingw just fix the nasty bug, and the git patch with the
-trivial wrapper looks much simpler than just saying "don't inline
-anything" and that crazy block of nasty mingw magic #defines/.
+With -Icompat/mingw passed to the compiler, which is a bog-standard
+technique we already use to supply headers the system forgot to
+supply or override buggy headers the system is shipped with, you do
+not have to change any "#include <string.h>".
 
-And then document loudly that the wrapper is due to the mingw bug.
-
-               Linus
+Am I mistaken?
