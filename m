@@ -1,91 +1,117 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/4] pathspec: strip multiple trailing slashes from submodules
-Date: Fri, 13 Sep 2013 08:28:24 +0700
-Message-ID: <CACsJy8DX_v9r0QYQMH=697LGeGsCaE80oCo0ppd2LFZk-Os+TA@mail.gmail.com>
-References: <cover.1378840318.git.john@keeping.me.uk> <cover.1379013786.git.john@keeping.me.uk>
- <7c478c19da6ee3322ca87e77a90358a30178c286.1379013786.git.john@keeping.me.uk>
- <xmqqzjrhom85.fsf@gitster.dls.corp.google.com> <20130912202128.GB2582@serenity.lan>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Local tag killer
+Date: Fri, 13 Sep 2013 04:54:26 +0200
+Message-ID: <52327E62.2040301@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johannes Sixt <j6t@kdbg.org>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri Sep 13 03:28:59 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git discussion list <git@vger.kernel.org>,
+	=?ISO-8859-1?Q?Carlos_Ma?= =?ISO-8859-1?Q?rt=EDn_Nieto?= 
+	<cmn@elego.de>
+X-From: git-owner@vger.kernel.org Fri Sep 13 05:01:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKIBv-00042v-4S
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 03:28:59 +0200
+	id 1VKJda-0000ZC-9u
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Sep 2013 05:01:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756267Ab3IMB2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Sep 2013 21:28:55 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:38412 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754538Ab3IMB2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Sep 2013 21:28:54 -0400
-Received: by mail-ob0-f177.google.com with SMTP id wp18so559393obc.22
-        for <git@vger.kernel.org>; Thu, 12 Sep 2013 18:28:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=fTMdw+lbTlvZ+w1/c9q4A9JEpeY35auBpIF3zRkzfeg=;
-        b=cYqtFKQwvLqDugQtmerVuoYc0Ci/5eFU/R1Xf7ImTAh81onZFU5bQtCoYYxLYI3E+t
-         1Z2c5UuKGr29N5q2S2sx+rSPOoHROwtCUbKIzUGcr6lR5J/uGMc9jD/A/3L78aWbrSwl
-         jy54phMUW46D+WrGY8HXo9nOPzpCjFh7PO4CfEBrAGJTrgfr/8eRikmUsGzqLjTo2t17
-         bI9TXI6XNuBA9onJ+pLxzGp3xvaHIfInrcjYE2Tp9qCLYGI9+xRDQJTYggCVc9dllmQj
-         L5a6d2nc9umXgecBp7oJL23VPsVOpExqtmk5510NThCN8uW9sRtiQ5wXz+rOFMXR4y2H
-         Pjpg==
-X-Received: by 10.182.48.130 with SMTP id l2mr9674849obn.44.1379035734165;
- Thu, 12 Sep 2013 18:28:54 -0700 (PDT)
-Received: by 10.182.49.233 with HTTP; Thu, 12 Sep 2013 18:28:24 -0700 (PDT)
-In-Reply-To: <20130912202128.GB2582@serenity.lan>
+	id S1753119Ab3IMDBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Sep 2013 23:01:34 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:42507 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750968Ab3IMDBd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Sep 2013 23:01:33 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Sep 2013 23:01:33 EDT
+X-AuditID: 12074412-b7f026d0000010c7-e1-52327e667e4b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id A5.05.04295.66E72325; Thu, 12 Sep 2013 22:54:30 -0400 (EDT)
+Received: from [192.168.69.9] (p57A24B1E.dip0.t-ipconnect.de [87.162.75.30])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r8D2sRVA009748
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 12 Sep 2013 22:54:29 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130804 Thunderbird/17.0.8
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrGIsWRmVeSWpSXmKPExsUixO6iqJtWZxRksPiklMX0rtUsFl1Xupkc
+	mDwurXvJ5PF5k1wAUxS3TVJiSVlwZnqevl0Cd8bN023MBa8EK1bOuczYwLiOr4uRk0NCwERi
+	0sfvTBC2mMSFe+vZuhi5OIQELjNKTDo6iQXCOcMkce3lChaQKl4BbYk3f/+CdbAIqEr8Obke
+	zGYT0JVY1NMMZosKhEnsmD6RDaJeUOLkzCdgg0QEGhkl9hzZBZTg4BAWkJToWKILUsMsoCPx
+	ru8BM4QtL7H97RzmCYy8s5C0z0JSNgtJ2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFumZ6
+	uZkleqkppZsYISEmtINx/Um5Q4wCHIxKPLwGUUZBQqyJZcWVuYcYJTmYlER5WUqBQnxJ+SmV
+	GYnFGfFFpTmpxYcYJTiYlUR4Zf4bBgnxpiRWVqUW5cOkpDlYlMR5fy5W9xMSSE8sSc1OTS1I
+	LYLJynBwKEnwHq4BGipYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPirH4YmCUgaR4
+	gPZ61gK18xYXJOYCRSFaTzEac7xrmveJkeNC74JPjEIsefl5qVLivIogpQIgpRmleXCLYMnl
+	FaM40N/CvHNB7uEBJia4ea+AVjEBrfruqw+yqiQRISXVwDg1jTHYvyraJCxm0fYrKfsvuv/n
+	2PmXycvTpsrR7Vn65f83inbdvn5cL/b7gu8CT7Otlzhc578/dUOlvVlpTLTKCdaXp279m3au
+	e2Vwwv342LnJ1j+untJsP2ErmLy1wNHrZ/7WpOWO4X8iH6Upn+IvLwoIecp2rHuR 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234723>
 
-On Fri, Sep 13, 2013 at 3:21 AM, John Keeping <john@keeping.me.uk> wrote:
-> On Thu, Sep 12, 2013 at 12:48:10PM -0700, Junio C Hamano wrote:
->> John Keeping <john@keeping.me.uk> writes:
->>
->> > This allows us to replace the submodule path trailing slash removal in
->> > builtin/rm.c with the PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP flag to
->> > parse_pathspec() without changing the behaviour with respect to multiple
->> > trailing slashes.
->>
->> Where does prefix_pathspec()'s input, which could have an unwanted
->> trailing slash, come from?
->>
->> If it is read from some of our internal data structure and known to
->> have at most one, then this change makes me feel very uneasy to cope
->> with potentially sloppy end-user input and data generated by ourselves
->> with the same logic.  It will allow our internal to be sloppy without
->> forcing us notice and fix that sloppiness.
->>
->> If it is coming from an end-user input, then I would not object to
->> the change, though.
->
-> I added this in response to Duy's comment on v1 [1].
->
-> [1] http://article.gmane.org/gmane.comp.version-control.git/234548
+A colleague of mine discovered, the hard way, that
 
-Looks like I add more noise to this thread than anything valuable.
-Yes, once argv goes through parse_pathspec it's normalized so we do
-not need to strip consecutive slashes any more. I'm not entirely sure
-if it also converts Windows '\\' to '/'..
+    git fetch --tags --prune $REMOTE
 
-> Looking more closely, this does come from user input (via the argv
-> passed into parse_pathspec) but does (some of the time) go through
-> prefix_path_gently which calls normalize_path_copy_len.
->
-> It's not immediately clear to me when prefix_pathspec goes through this
-> particular code path, but I think we may be able to drop this (and the
-> previous patch) without affecting the user.
+deletes all local tags that are not present on that particular remote.
+To me this seems a dangerous and poorly-documented interaction of
+features and arguably a bug.
+
+Granted, it might not be such a good idea to use local tags, as it is
+all to easy to push them inadvertently and then it is difficult to
+remove them permanently from a shared upstream repository because other
+people might have fetched them and in turn inadvertently re-push them.
+
+But the fact that combining two options, each of which seems safe and
+reasonable for daily use, results in the death of local tags unrelated
+to the remote is unexpected [1].  Also remember that the "--prune"
+feature can be turned on permanently via "git config" using
+"fetch.prune" or "remote.$REMOTE.prune".
+
+Moreover, the documentation is misleading on this point:
+
+> -p::
+> --prune::
+> 	After fetching, remove any remote-tracking branches which
+> 	no longer exist	on the remote.
+
+It is a stretch for references under refs/tags/ to be called
+"remote-tracking branches", even if they exist as the target of the
+refspec "refs/tags/*:refs/tags/*" that is implicitly added by the --tags
+option.
+
+I suggest that --prune should not touch references under refs/tags/
+regardless of whether they appear on the right side of explicit or
+implicit refspecs.  If pruning tags is deemed to be essential, then
+there should be a specific option ("--prune-tags"?) to request it.
+
+
+When looking into this, I found a test in t5510 that appears to want to
+verify this very behavior:
+
+> test_expect_success 'fetch --prune --tags does not delete the remote-tracking branches' '
+> 	cd "$D" &&
+> 	git clone . prune-tags &&
+> 	cd prune-tags &&
+> 	git fetch origin refs/heads/master:refs/tags/sometag &&
+> 
+> 	git fetch --prune --tags origin &&
+> 	git rev-parse origin/master &&
+> 	test_must_fail git rev-parse somebranch
+> '
+
+However, the last line seems to contain a copy-paste error and should
+presumably have s/somebranch/sometag/.
+
+Michael
+
+[1] It would be as if "git clean" had two options "--ammonia" and
+"--bleach" :-)
+
 -- 
-Duy
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
