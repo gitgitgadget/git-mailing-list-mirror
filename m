@@ -1,105 +1,114 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2 2/3] relative_path should honor dos_drive_prefix
-Date: Sat, 14 Sep 2013 08:11:31 +0200
-Message-ID: <5233FE13.4070006@web.de>
-References: <cover.1379048276.git.worldhello.net@gmail.com> <79cfcc0c66eb19e3621fff2dafefdddbcbc824cf.1379048276.git.worldhello.net@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Tvangeste <i.4m.l33t@yandex.ru>, Johannes Sixt <j6t@kdbg.org>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 14 08:11:46 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3 1/3] version-gen: cleanup
+Date: Sat, 14 Sep 2013 01:28:46 -0500
+Message-ID: <1379140128-12397-2-git-send-email-felipe.contreras@gmail.com>
+References: <1379140128-12397-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 14 08:34:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKj57-00068V-I4
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 08:11:45 +0200
+	id 1VKjQn-0008Ee-8E
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 08:34:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752776Ab3INGLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Sep 2013 02:11:39 -0400
-Received: from mout.web.de ([212.227.17.11]:63293 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751978Ab3INGLi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Sep 2013 02:11:38 -0400
-Received: from [192.168.209.26] ([217.208.218.204]) by smtp.web.de (mrweb003)
- with ESMTPA (Nemesis) id 0M5OaF-1W9MSF3EmV-00zavG for <git@vger.kernel.org>;
- Sat, 14 Sep 2013 08:11:37 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <79cfcc0c66eb19e3621fff2dafefdddbcbc824cf.1379048276.git.worldhello.net@gmail.com>
-X-Provags-ID: V03:K0:m4zuISwPqz33qDhW+l1uFeC1PQAvVcJ63FLQGWA+oFxuyV882Up
- T98aQX9iFX0kY1YYWZwqk0Ie0YhUgztJM2u1kVJl7HHHSMNnp65qjFwA31EaUIBtRd8taQo
- fGL2iIf5QikDoxrZaxLKvSSfdzZ4uUeBmbOs0i2H25WL4/ypi2VN4+CwdcpyCjd+opVBwvV
- LFyfg90UzFdAxZbcM02Zg==
+	id S1752907Ab3INGeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Sep 2013 02:34:05 -0400
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:39661 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752765Ab3INGeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Sep 2013 02:34:04 -0400
+Received: by mail-oa0-f47.google.com with SMTP id g12so1980690oah.20
+        for <git@vger.kernel.org>; Fri, 13 Sep 2013 23:34:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Z5hXx1uJw7571Z0CF16F+4kb0M6dW1byheT0uAqgOho=;
+        b=IHPHOJhIE7thDdkNS4w4v7gltNr78GH0MEdyUJRyoU08AaIuU1dc2yNwv5gJhsBu00
+         /JMr8xormbhyVq9wfO4BGaXuCnl3hfGojawmSOU8Iop4sOt1is78a3jPR40SYG5m1YXM
+         1uBk55n62wqW03WMTJ9AAvWHNsKrwDC3gpy7+4wIKpAUTxjvNyfPu+Ry2nvDCThrhip3
+         36SlulqZq1JUjwnzo3YdhmJAHFzwE4ZG0AY04Ax1j/O6xVc6AlAjejRs4Ds12jWq7tKp
+         lp21kzU9UWURFg4eNJ9oAWGGBpgCxIGCa1LYF58BHBS1L3JPJe7J6w3pQyLXUTRGQS9F
+         kKRQ==
+X-Received: by 10.60.51.196 with SMTP id m4mr15716834oeo.1.1379140443525;
+        Fri, 13 Sep 2013 23:34:03 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id hl3sm20260501obb.0.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 13 Sep 2013 23:34:02 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4-fc
+In-Reply-To: <1379140128-12397-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234792>
 
-On 13.09.13 07:08, Jiang Xin wrote:
-> Tvangeste found that the "relative_path" function could not work
-> properly on Windows if "in" and "prefix" have dos driver prefix.
-> ($gmane/234434)
->
-> e.g., When execute: test-path-utils relative_path "C:/a/b" "D:/x/y",
-> should return "C:/a/b", but returns "../../C:/a/b", which is wrong.
->
-> So make relative_path honor dos_drive_prefix, and add test cases
-> for it in t0060.
->
-> Reported-by: Tvangeste <i.4m.l33t@yandex.ru>
-> Helped-by: Johannes Sixt <j6t@kdbg.org>
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> ---
->  path.c                | 20 ++++++++++++++++++++
->  t/t0060-path-utils.sh |  4 ++++
->  2 files changed, 24 insertions(+)
->
-> diff --git a/path.c b/path.c
-> index 9fd28bcd..65d376d 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -434,6 +434,16 @@ int adjust_shared_perm(const char *path)
->  	return 0;
->  }
->  
-> +static int have_same_root(const char *path1, const char *path2)
-> +{
-> +	int is_abs1, is_abs2;
-> +
-> +	is_abs1 = is_absolute_path(path1);
-> +	is_abs2 = is_absolute_path(path2);
-> +	return (is_abs1 && is_abs2 && tolower(path1[0]) == tolower(path2[0])) ||
-> +	       (!is_abs1 && !is_abs2);
-> +}
-> +
-I think the name of the fuction is somewhat misleading, as we are not sure if
-they really have the same root.
-And that is investigated further down.
+No functional changes.
 
-may_have_same_root() could be a better name.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ GIT-VERSION-GEN | 36 ++++++++++++++++++++----------------
+ 1 file changed, 20 insertions(+), 16 deletions(-)
 
-[snip]
-
->  	while (i < prefix_len && j < in_len && prefix[i] == in[j]) {
->  		if (is_dir_sep(prefix[i])) {
->  			while (is_dir_sep(prefix[i]))
-> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-> index 82a6f21..0187d11 100755
-> --- a/t/t0060-path-utils.sh
-> +++ b/t/t0060-path-utils.sh
-> @@ -210,6 +210,10 @@ relative_path foo/a/b/		foo/a/b		./
->  relative_path foo/a		foo/a/b		../
->  relative_path foo/x/y		foo/a/b		../../x/y
->  relative_path foo/a/c		foo/a/b		../c
-> +relative_path foo/a/b		/foo/x/y	foo/a/b
-> +relative_path /foo/a/b		foo/x/y		/foo/a/b
-> +relative_path d:/a/b		D:/a/c		../b		MINGW
-> +relative_path C:/a/b		D:/a/c		C:/a/b		MINGW
-Side question:
-What happens if we feed in a relative path with a dos drive?
-like "c:foo" which is different from c:/foo.
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index 06026ea..e96538d 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -6,22 +6,29 @@ DEF_VER=v1.8.4
+ LF='
+ '
+ 
+-# First see if there is a version file (included in release tarballs),
+-# then try git-describe, then default.
+-if test -f version
+-then
+-	VN=$(cat version) || VN="$DEF_VER"
+-elif test -d ${GIT_DIR:-.git} -o -f .git &&
+-	VN=$(git describe --match "v[0-9]*" --abbrev=7 HEAD 2>/dev/null) &&
++describe () {
++	VN=$(git describe --match "v[0-9]*" --abbrev=7 HEAD 2>/dev/null) || return 1
+ 	case "$VN" in
+-	*$LF*) (exit 1) ;;
++	*$LF*)
++		return 1
++		;;
+ 	v[0-9]*)
+ 		git update-index -q --refresh
+ 		test -z "$(git diff-index --name-only HEAD --)" ||
+-		VN="$VN-dirty" ;;
++		VN="$VN-dirty"
++		return 0
++		;;
+ 	esac
++}
++
++# First see if there is a version file (included in release tarballs),
++# then try 'git describe', then default.
++if test -f version
++then
++	VN=$(cat version) || VN="$DEF_VER"
++elif test -d ${GIT_DIR:-.git} -o -f .git && describe
+ then
+-	VN=$(echo "$VN" | sed -e 's/-/./g');
++	VN=$(echo "$VN" | sed -e 's/-/./g')
+ else
+ 	VN="$DEF_VER"
+ fi
+@@ -34,9 +41,6 @@ then
+ else
+ 	VC=unset
+ fi
+-test "$VN" = "$VC" || {
+-	echo >&2 "GIT_VERSION = $VN"
+-	echo "GIT_VERSION = $VN" >$GVF
+-}
+-
+-
++test "$VN" = "$VC" && exit
++echo >&2 "GIT_VERSION = $VN"
++echo "GIT_VERSION = $VN" >$GVF
+-- 
+1.8.4-fc
