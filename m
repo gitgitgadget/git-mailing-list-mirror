@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 3/3] build: fix rpm versioning
-Date: Sat, 14 Sep 2013 01:28:48 -0500
-Message-ID: <1379140128-12397-4-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v3 2/3] version-gen: avoid messing the version
+Date: Sat, 14 Sep 2013 01:28:47 -0500
+Message-ID: <1379140128-12397-3-git-send-email-felipe.contreras@gmail.com>
 References: <1379140128-12397-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
@@ -11,70 +11,67 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKjQu-0008M6-U4
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 08:34:17 +0200
+	id 1VKjQu-0008M6-C6
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 08:34:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753112Ab3INGeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Sep 2013 02:34:12 -0400
-Received: from mail-oa0-f51.google.com ([209.85.219.51]:32950 "EHLO
-	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752925Ab3INGeI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Sep 2013 02:34:08 -0400
-Received: by mail-oa0-f51.google.com with SMTP id h1so2023275oag.10
-        for <git@vger.kernel.org>; Fri, 13 Sep 2013 23:34:08 -0700 (PDT)
+	id S1752993Ab3INGeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Sep 2013 02:34:09 -0400
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:58344 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752765Ab3INGeG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Sep 2013 02:34:06 -0400
+Received: by mail-oa0-f47.google.com with SMTP id g12so1988510oah.6
+        for <git@vger.kernel.org>; Fri, 13 Sep 2013 23:34:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IB68oUKZxhtj0IWAtApbf6a42asmrdfEmpg9tIeaXjc=;
-        b=aZsT7VxKGviRNaJPgJnffuFdV3oRo7D+Lw4xZdyP1i3IzRcnFIoqaCOzPi1OUygRvA
-         lBgsZY5ewwGO8DLW/ooJnG9L39ODqGvYHKT3A3zct48Id+U2nKi2bSxtE12ajceMwIhA
-         FtxoWzzY6IjBgKt8HAarbWtd06cv33vlWdhghiIaJk1wKcofkQTsEbdJI4P8/k2GbCZR
-         BeekWhEC1TRhaV/ZQ01qYO6oXT5hYUHSgw92iKGcZJ21AidMNvnhBWVjRqSIuuptO8jT
-         WAuuMolBrHe+C9Rh9/9uEUVqMSkEv3eFJJU2oxXbQ4+6s5Ql/c5hIHLodvfGduU/sryB
-         F7+g==
-X-Received: by 10.182.181.34 with SMTP id dt2mr15660949obc.30.1379140448192;
-        Fri, 13 Sep 2013 23:34:08 -0700 (PDT)
+        bh=iAs49giqNHdJ7j3zja2rL9roYMrCDzzBL2b/6u+41vY=;
+        b=DbdWfS2jrhByjprw00AfpguDRIpG65FCmAUkYF1M3Vt8s3rJaHR2tdJlv5boBYL5DQ
+         mws8ZIqYSk/bWjP3K3AhyzhS8IWnmrT/kMa981+ybqtnjk5r+il98oUOgaaMhEsWF+hI
+         MJS4zg8txEsGu1c9zTqUHtOJBLP/78LydKe50Ak4ALFCWerKhKU3EYpuj/kYU4ZQvm2V
+         Bkr8H3RpWaoByUHKqP2fhFoyB52HWy0VG7hedj4N2jvdcUMmOfrF3PCw5LTDL8DNHcQ3
+         DPaEEKtXdZJjsdQ+0eSqSl0ypNOn82/pbWIVfZHRj3dF8A54b3hezWCQkPKax0MKu0sk
+         23PQ==
+X-Received: by 10.182.181.34 with SMTP id dt2mr15660826obc.30.1379140445853;
+        Fri, 13 Sep 2013 23:34:05 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id xx9sm20288279obc.6.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id u3sm20972909oeq.3.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 13 Sep 2013 23:34:07 -0700 (PDT)
+        Fri, 13 Sep 2013 23:34:05 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1379140128-12397-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234795>
 
-The current versioning scheme doesn't work properly:
+If the version is 'v1.8.4-rc1' that is the version, and there's no need
+to change it to anything else, like 'v1.8.4.rc1'.
 
-  git-1.8.4 < git-1.8.4.rc1
-  git-1.8.4 < git-1.8.4-rc1
-  git-1.8.4 > git-1.8.4~rc1
-
-Since v1.8.4 final is obviously greater than v1.8.4-rc1, we need to use
-a tilde so RPM detects it properly as a greater version number.
-
-This works in rpm-4.10, in older versions, a tilde would work as bad as
-anything else.
+If RedHat, or somebody else, needs a specific version, they can use the
+'version' file, like everybody else.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ GIT-VERSION-GEN | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 3588ca1..7a8bee7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2426,7 +2426,7 @@ quick-install-html:
- ### Maintainer's dist rules
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index e96538d..19902e9 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -26,10 +26,8 @@ describe () {
+ if test -f version
+ then
+ 	VN=$(cat version) || VN="$DEF_VER"
+-elif test -d ${GIT_DIR:-.git} -o -f .git && describe
++elif test ! -d ${GIT_DIR:-.git} -a ! -f .git || ! describe
+ then
+-	VN=$(echo "$VN" | sed -e 's/-/./g')
+-else
+ 	VN="$DEF_VER"
+ fi
  
- git.spec: git.spec.in GIT-VERSION-FILE
--	sed -e 's/@@VERSION@@/$(GIT_VERSION)/g' < $< > $@+
-+	sed -e 's/@@VERSION@@/$(subst -,~,$(GIT_VERSION))/g' < $< > $@+
- 	mv $@+ $@
- 
- GIT_TARNAME = git-$(GIT_VERSION)
 -- 
 1.8.4-fc
