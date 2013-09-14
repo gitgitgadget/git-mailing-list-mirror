@@ -1,9 +1,9 @@
 From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH V2 1/3] Doc URLs: relative paths imply the dot-respository
-Date: Sat, 14 Sep 2013 21:47:14 +0100
+Subject: Re: [PATCH V2 2/3] config doc: update dot-repository notes
+Date: Sat, 14 Sep 2013 21:47:40 +0100
 Organization: OPDS
-Message-ID: <1ADD7BEB330F4246983C461C9B1018FF@PhilipOakley>
-References: <1368964449-2724-1-git-send-email-philipoakley@iee.org><1379107397-964-1-git-send-email-philipoakley@iee.org><1379107397-964-2-git-send-email-philipoakley@iee.org> <xmqq7gekicqq.fsf@gitster.dls.corp.google.com>
+Message-ID: <001CC3ED329149C1B6BB9E3F271768C2@PhilipOakley>
+References: <1368964449-2724-1-git-send-email-philipoakley@iee.org><1379107397-964-1-git-send-email-philipoakley@iee.org><1379107397-964-3-git-send-email-philipoakley@iee.org> <xmqq38p8icf3.fsf@gitster.dls.corp.google.com>
 Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -15,28 +15,28 @@ Cc: "GitList" <git@vger.kernel.org>,
 	"Jonathan Nieder" <jrnieder@gmail.com>,
 	"Felipe Contreras" <felipe.contreras@gmail.com>
 To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 14 22:47:20 2013
+X-From: git-owner@vger.kernel.org Sat Sep 14 22:47:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKwkR-00032H-MH
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 22:47:20 +0200
+	id 1VKwkq-0003bs-6C
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 22:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756690Ab3INUrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Sep 2013 16:47:15 -0400
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:44150 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753374Ab3INUrO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Sep 2013 16:47:14 -0400
+	id S932369Ab3INUrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Sep 2013 16:47:40 -0400
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:64378 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756730Ab3INUrk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Sep 2013 16:47:40 -0400
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ArMGAGTKNFJOl3GZ/2dsb2JhbABagweJcrgMCoEcF3SCIAUBAQQBCAEBLh4BASEFBgIDBQIBAxUBCyUUAQQaBgcXBhMIAgECAwGHbAq5YI9zgyWBAAOJAIYSml2DJTs
-X-IPAS-Result: ArMGAGTKNFJOl3GZ/2dsb2JhbABagweJcrgMCoEcF3SCIAUBAQQBCAEBLh4BASEFBgIDBQIBAxUBCyUUAQQaBgcXBhMIAgECAwGHbAq5YI9zgyWBAAOJAIYSml2DJTs
+X-IronPort-Anti-Spam-Result: ArUGAKjKNFJOl3GZ/2dsb2JhbABagwc4iTq4DAqBHBd0giAFAQEEAQgBAS4WCAEBIQUGAgMFAgEDEQQBAQolFAEEGAIGBw8IBggLCAIBAgMBDASHXAoIuVmPcw2DGIEAA4kAhhKKGJBFgyU7
+X-IPAS-Result: ArUGAKjKNFJOl3GZ/2dsb2JhbABagwc4iTq4DAqBHBd0giAFAQEEAQgBAS4WCAEBIQUGAgMFAgEDEQQBAQolFAEEGAIGBw8IBggLCAIBAgMBDASHXAoIuVmPcw2DGIEAA4kAhhKKGJBFgyU7
 X-IronPort-AV: E=Sophos;i="4.90,904,1371078000"; 
-   d="scan'208";a="441209359"
+   d="scan'208";a="431774616"
 Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 14 Sep 2013 21:47:12 +0100
+  by out1.ip05ir2.opaltelecom.net with SMTP; 14 Sep 2013 21:47:39 +0100
 X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2900.5931
@@ -45,62 +45,75 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234808>
 
 From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Friday, September 13, 2013 11:21 PM
+Sent: Friday, September 13, 2013 11:28 PM
+Subject: Re: [PATCH V2 2/3] config doc: update dot-repository notes
+
+
 > Philip Oakley <philipoakley@iee.org> writes:
 >
+>> branch.<name>.remote can be set to '.' (period) as the repository
+>> path (URL) as part of the remote name dwimmery. Tell the reader.
+>>
+>> Such relative paths are not 'special'. Correct the 
+>> branch.<name>.merge
+>> note.
+>
+> Looks good.
+>
+> It naturally follows that this is also valid:
+>
+> [branch "master"]
+>        merge = refs/heads/master
+>         remote = git://git.kernel.org/pub/scm/git/git.git
+>
+> and running "git pull" while on your 'master'.
+>
+> This is because branch.<name>.remote usually is spelled with a
+> nickname that refers to the [remote <nickname>] section, but it does
+> not have to be; it can use a URL to refer to the remote repository.
+>
+>>
 >> Signed-off-by: Philip Oakley <philipoakley@iee.org>
 >> ---
->>  Documentation/urls.txt | 7 +++++++
->>  1 file changed, 7 insertions(+)
+>>  Documentation/config.txt | 6 ++++--
+>>  1 file changed, 4 insertions(+), 2 deletions(-)
 >>
->> diff --git a/Documentation/urls.txt b/Documentation/urls.txt
->> index 9ccb246..5350a63 100644
->> --- a/Documentation/urls.txt
->> +++ b/Documentation/urls.txt
->> @@ -55,6 +55,13 @@ These two syntaxes are mostly equivalent, except 
->> the former implies
->>  --local option.
->>  endif::git-clone[]
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index 599ca52..da63043 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -718,6 +718,8 @@ branch.<name>.remote::
+>>  overridden by `branch.<name>.pushremote`.  If no remote is
+>>  configured, or if you are not on any branch, it defaults to
+>>  `origin` for fetching and `remote.pushdefault` for pushing.
+>> + Additionally, `.` (a period) is the current local repository
+>> + (a dot-repository), see `branch.<name>.merge`'s final note below.
 >>
->> +Relative paths are relative to the `$GIT_DIR`, thus the path:
->
-> Is it?
->
-> git init src dst
+>>  branch.<name>.pushremote::
+>>  When on branch <name>, it overrides `branch.<name>.remote` for
+>> @@ -743,8 +745,8 @@ branch.<name>.merge::
+>>  Specify multiple values to get an octopus merge.
+>>  If you wish to setup 'git pull' so that it merges into <name> from
+>>  another branch in the local repository, you can point
+>> - branch.<name>.merge to the desired branch, and use the special 
+>> setting
+>> - `.` (a period) for branch.<name>.remote.
+>> + branch.<name>.merge to the desired branch, and use the relative 
+>> path
+>> + setting `.` (a period) for branch.<name>.remote.
 
-I didn't think you could do that. It's not documented (initialise 
-multiple dirctories with the same command) and on msysgit if fails with 
-`usage:`. But I know what you mean.
+This may need something extra because it doesn't say where it is 
+relative to, nor comment on git_dir discovery (see patch 1 comments, 
+likewise patch 3)
 
->        cd src
->        git commit --allow-empty -m initial
->        cd ../dst
->        git fetch ../src HEAD:refs/heads/copy
->
-> would work, but if it is relative to $GIT_DIR, the last one would
-> need to be written as
->
-> git fetch ../../src HEAD:refs/heads/copy
->
-> wouldn't it?
-
-Ah but... we are specifying a repository here, not a file path, so the 
-`$GIT_DIR` / '.git'  discovery comes into it, I think. It's the 
-discovery of the relevant  repository that I now realise I've not 
-included, which can be confusing in the various special cases. So the 
-relative paths comment will be incomplete [your point], and needs 
-something extra between "relative to" and "the $GIT_DIR".
-
->
->> +
->> +- '.'
->> +
->> +is the current repository and acts as if it were a repository
->> +named `'.'`.
->> +
->>  When Git doesn't know how to handle a certain transport protocol, it
->>  attempts to use the 'remote-<transport>' remote helper, if one
->>  exists. To explicitly request a remote helper, the following syntax
+>>
+>>  branch.<name>.mergeoptions::
+>>  Sets default options for merging into branch <name>. The syntax and
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
