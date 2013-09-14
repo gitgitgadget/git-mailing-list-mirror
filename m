@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 4/5] t: replace pulls with merges
-Date: Sat, 14 Sep 2013 01:38:36 -0500
-Message-ID: <1379140717-12940-5-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 5/5] pull: cleanup documentation
+Date: Sat, 14 Sep 2013 01:38:37 -0500
+Message-ID: <1379140717-12940-6-git-send-email-felipe.contreras@gmail.com>
 References: <1379140717-12940-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
@@ -11,104 +11,70 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKjaV-0003fX-D5
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 08:44:11 +0200
+	id 1VKjaV-0003fX-U3
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 08:44:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752847Ab3INGoD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Sep 2013 02:44:03 -0400
-Received: from mail-oa0-f51.google.com ([209.85.219.51]:35756 "EHLO
-	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752469Ab3INGoB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Sep 2013 02:44:01 -0400
-Received: by mail-oa0-f51.google.com with SMTP id h1so2027126oag.10
-        for <git@vger.kernel.org>; Fri, 13 Sep 2013 23:44:00 -0700 (PDT)
+	id S1752881Ab3INGoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Sep 2013 02:44:04 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:57621 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752692Ab3INGoC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Sep 2013 02:44:02 -0400
+Received: by mail-ob0-f170.google.com with SMTP id va2so1922638obc.1
+        for <git@vger.kernel.org>; Fri, 13 Sep 2013 23:44:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=F+6jThMxroON527oGDpf7r+8bQmCQhUke6Zp1rNYy4w=;
-        b=QDAfqjVBKshb29MtrEAx/zJSgFWf4gmT1JPjOLR5GJjI0krlK9jDj1oCpazPeuN/ei
-         ZEb8bT1dGKLwtPA7qQh2QIwFx02CjKiOt5OnusCoUSrJM8U7hHPb0KfiJhafO+cpnRWE
-         yiUJamZ7ivffYj93GdTcff09aeGe5etMK20+shK1a+v35rp8qOdF3p1eKwKUivfgZsDx
-         DqJHG9jtk2EpNt1HqgahuF5mToF7c3ey3Rdg58jkOI5weaPmU3OH/erwezT9QJTjdyKo
-         NJ3D0MvR3HiEtDszop0k0C4lJShmFqulf5XTQ7GDnFsvDygakVrpSxJbQyk1aaRP5FiJ
-         xgzA==
-X-Received: by 10.60.133.71 with SMTP id pa7mr15875484oeb.44.1379141040073;
-        Fri, 13 Sep 2013 23:44:00 -0700 (PDT)
+        bh=Me6rgfCB3z3u1jVDfvKYHfODI5bNGTvO2s+GNE7pwgU=;
+        b=p2xUSs7aY1fL055V3yx3Yl8CMpXZ5rFsPgOs1Cz6zux9vn1jC7kd0lOkOwDttJcNr7
+         r5Vu3mEyAedR9s7wToJnSXejPPAaBCxQDAZAMNRYdfKSqd+Grx+whSvWAIC9WIxGpeX6
+         wkN0djuDVLQgRLn3hB0JA463K3K1x71UccRTukehpAjhCpFFfK6iKUxxSpZK7RwBBmsq
+         vcgHBB0GoNxSg8u/EJmak3RsIFRCOm9bfbVgEEPWELQvGGPIoR7bO5PTiBVuggipk2vY
+         SjWGaqwdENlhNcjIV+8FReEao9kDWUA85SuVephnFr2LL6jU4R0x5j2AFAb4SHYl9anN
+         umDg==
+X-Received: by 10.60.63.167 with SMTP id h7mr15713239oes.43.1379141042284;
+        Fri, 13 Sep 2013 23:44:02 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id z5sm20426667obg.13.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id ru3sm20326797obc.2.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 13 Sep 2013 23:43:59 -0700 (PDT)
+        Fri, 13 Sep 2013 23:44:01 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1379140717-12940-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234801>
 
-This is what the code intended.
-
-No functional changes.
+'origin/master' is very clear, no need to specify the 'remotes/' prefix,
+or babysit the user.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/annotate-tests.sh                    | 2 +-
- t/t4200-rerere.sh                      | 2 +-
- t/t9114-git-svn-dcommit-merge.sh       | 2 +-
- t/t9500-gitweb-standalone-no-errors.sh | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ Documentation/git-pull.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index d4e7f47..01deece 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -92,7 +92,7 @@ test_expect_success 'blame 2 authors + 1 branch2 author' '
- '
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index 6ef8d59..4dd941d 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -39,7 +39,7 @@ Assume the following history exists and the current branch is
+ "`master`":
  
- test_expect_success 'merge branch1 & branch2' '
--	git pull . branch1
-+	git merge branch1
- '
+ ------------
+-	  A---B---C master on origin
++	  A---B---C origin/master
+ 	 /
+     D---E---F---G master
+ ------------
+@@ -51,7 +51,7 @@ result in a new commit along with the names of the two parent commits
+ and a log message from the user describing the changes.
  
- test_expect_success 'blame 2 authors + 2 merged-in authors' '
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index 7f6666f..cf19eb7 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -172,7 +172,7 @@ test_expect_success 'first postimage wins' '
- 	git show second^:a1 | sed "s/To die: t/To die! T/" >a1 &&
- 	git commit -q -a -m third &&
- 
--	test_must_fail git pull . first &&
-+	test_must_fail git merge first &&
- 	# rerere kicked in
- 	! grep "^=======\$" a1 &&
- 	test_cmp expect a1
-diff --git a/t/t9114-git-svn-dcommit-merge.sh b/t/t9114-git-svn-dcommit-merge.sh
-index f524d2f..d33d714 100755
---- a/t/t9114-git-svn-dcommit-merge.sh
-+++ b/t/t9114-git-svn-dcommit-merge.sh
-@@ -62,7 +62,7 @@ test_expect_success 'setup git mirror and merge' '
- 	echo friend > README &&
- 	cat tmp >> README &&
- 	git commit -a -m "friend" &&
--	git pull . merge
-+	git merge merge
- 	'
- 
- test_debug 'gitk --all & sleep 1'
-diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
-index 6fca193..3864388 100755
---- a/t/t9500-gitweb-standalone-no-errors.sh
-+++ b/t/t9500-gitweb-standalone-no-errors.sh
-@@ -328,7 +328,7 @@ test_expect_success \
- 	 git add b &&
- 	 git commit -a -m "On branch" &&
- 	 git checkout master &&
--	 git pull . b &&
-+	 git merge b &&
- 	 git tag merge_commit'
- 
- test_expect_success \
+ ------------
+-	  A---B---C remotes/origin/master
++	  A---B---C origin/master
+ 	 /         \
+     D---E---F---G---H master
+ ------------
 -- 
 1.8.4-fc
