@@ -1,78 +1,68 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH 3/3] repack: improve warnings about failure of renaming and removing files
-Date: Sun, 15 Sep 2013 17:33:22 +0200
-Message-ID: <1379259202-5042-3-git-send-email-stefanbeller@googlemail.com>
-References: <1379259202-5042-1-git-send-email-stefanbeller@googlemail.com>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 15 17:33:28 2013
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH 1/3] t7406-submodule-update: add missing &&
+Date: Mon, 16 Sep 2013 01:38:21 +0800
+Message-ID: <1379266703-29808-1-git-send-email-rctay89@gmail.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 15 19:39:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VLEKD-0006cc-EF
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Sep 2013 17:33:25 +0200
+	id 1VLGHn-0007yb-M6
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Sep 2013 19:39:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757101Ab3IOPdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Sep 2013 11:33:18 -0400
-Received: from mail-ea0-f180.google.com ([209.85.215.180]:38714 "EHLO
-	mail-ea0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757089Ab3IOPdR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Sep 2013 11:33:17 -0400
-Received: by mail-ea0-f180.google.com with SMTP id h10so1497178eaj.25
-        for <git@vger.kernel.org>; Sun, 15 Sep 2013 08:33:15 -0700 (PDT)
+	id S932216Ab3IORiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Sep 2013 13:38:50 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:57095 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932164Ab3IORiu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Sep 2013 13:38:50 -0400
+Received: by mail-pd0-f175.google.com with SMTP id q10so3212366pdj.34
+        for <git@vger.kernel.org>; Sun, 15 Sep 2013 10:38:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zHYDFH3HjqyxN0n3yQu8FgCIkZ3tkCK3QG9SUVp5nLk=;
-        b=yUu6Ebq6jJU2jt0L0/rlhYgGqfnkDFs/OLQP7+2zSxhN54JKhtMrySxHoEfiQzNXMA
-         bJtdYFP1kuf5AMF6oAX6wzy5/hQ9VERhwelL36KeBvJZjs4Qyhza9WQoCzFEBnBl0/Cp
-         cRwlG0l5y8EXIAPwpBgXDDmSMvkM0GkcPtJ2cYfAYjqR2/FVRGfl+ePf/KQNcRtD7Dj2
-         lNL/3jjjQpJIImqBnHj1s1JS67xPAHbC8ErWaZVFS4Byu68YE3JAZu2cNY0aeedPgPyj
-         H1faBDXPpt3lv8i7/zEfgtpoxn2IEwzm6EKwg7HafOBzVvXdR66b4PSgXgZi3ONd7DgB
-         HW6w==
-X-Received: by 10.14.183.130 with SMTP id q2mr35998873eem.5.1379259195280;
-        Sun, 15 Sep 2013 08:33:15 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id k7sm33695854eeg.13.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 15 Sep 2013 08:33:14 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.273.ga194ead
-In-Reply-To: <1379259202-5042-1-git-send-email-stefanbeller@googlemail.com>
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:message-id;
+        bh=KkvpWJ69w77Onu01c2jW4WM2Vvm16Bm4zvMiNLTjkQw=;
+        b=XvlxPmTa7tNCAFo+0JypAWmc0d5IIAAya3ClqRRoUp5Bg04BWIyx3njRR718/M1t05
+         wSX+eFHjskH+BNWZUZfRiTMk50SLFUl8vsdcFeT6Fra+cbPYr854zMV/1r662GCtALPg
+         TCvt2GOrdYpnJmtHan6ZiXiMhd+Z5m2YHIIH6X6GCTyqqk6ofW8XwJ9mCjAcU/ZC8bRF
+         e70Hh2CfTsZWFFLJwvk4k4KT4hpW5mamt5NjO1jdpdKzCOFQX/OcjV8xMsA6lSXeFGum
+         qLz3+IpmU8xk442ENxqU7tNE6Mkccuxve3wOiWNzwuhiIFmSf0m2yTcv3Ai1eOA1zcKW
+         ZjjQ==
+X-Received: by 10.66.88.3 with SMTP id bc3mr26243771pab.48.1379266729779;
+        Sun, 15 Sep 2013 10:38:49 -0700 (PDT)
+Received: from ubu-01-asus.nus.edu.sg ([42.60.190.192])
+        by mx.google.com with ESMTPSA id uw6sm25617621pbc.8.1969.12.31.16.00.00
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 15 Sep 2013 10:38:49 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.rc4.527.g303b16c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234821>
 
-Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+322bb6e (2011 Aug 11) introduced a new subshell at the end of a test
+case but omitted a '&&' to join the two; fix this.
+
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- builtin/repack.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ t/t7406-submodule-update.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index d345d16..f7e91bf 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -327,7 +327,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				chmod(fname_old, statbuffer.st_mode);
- 			}
- 			if (rename(fname_old, fname))
--				exit(errno);
-+				die_errno(_("renaming '%s' failed"), fname_old);
- 			free(fname);
- 			free(fname_old);
- 		}
-@@ -341,7 +341,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 					packdir,
- 					item->string,
- 					exts[ext]);
--			remove_path(fname);
-+			if (remove_path(fname))
-+				warning(_("removing '%s' failed"), fname);
- 		}
- 	}
- 
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index b192f93..f0b3305 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -58,7 +58,7 @@ test_expect_success 'setup a submodule tree' '
+ 	 git submodule add ../merging merging &&
+ 	 test_tick &&
+ 	 git commit -m "rebasing"
+-	)
++	) &&
+ 	(cd super &&
+ 	 git submodule add ../none none &&
+ 	 test_tick &&
 -- 
-1.8.4.273.ga194ead
+1.8.4.rc4.527.g303b16c
