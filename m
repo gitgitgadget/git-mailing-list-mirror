@@ -1,138 +1,250 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 3/3] git submodule update should give notice when run without init beforehand
-Date: Mon, 16 Sep 2013 01:38:23 +0800
-Message-ID: <1379266703-29808-3-git-send-email-rctay89@gmail.com>
-References: <1379266703-29808-1-git-send-email-rctay89@gmail.com>
- <1379266703-29808-2-git-send-email-rctay89@gmail.com>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 15 19:39:11 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/3] repack: rewrite the shell script in C
+Date: Sun, 15 Sep 2013 23:24:34 +0530
+Message-ID: <CALkWK0nG4+pdSEEUhHrN=+kXEetJ4sJxVOc0VWSweRuJUL-jsA@mail.gmail.com>
+References: <1379259202-5042-1-git-send-email-stefanbeller@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 15 19:55:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VLGHu-00089h-Nl
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Sep 2013 19:39:11 +0200
+	id 1VLGXj-0000cq-Ep
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Sep 2013 19:55:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932445Ab3IORjD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Sep 2013 13:39:03 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:61865 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932164Ab3IORix (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Sep 2013 13:38:53 -0400
-Received: by mail-pd0-f180.google.com with SMTP id y10so3186420pdj.39
-        for <git@vger.kernel.org>; Sun, 15 Sep 2013 10:38:52 -0700 (PDT)
+	id S1752322Ab3IORzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Sep 2013 13:55:18 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:61856 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751179Ab3IORzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Sep 2013 13:55:17 -0400
+Received: by mail-ie0-f181.google.com with SMTP id tp5so6082500ieb.12
+        for <git@vger.kernel.org>; Sun, 15 Sep 2013 10:55:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=4s2FC/ZFxAE7ZkHqeU4jsu7TxUMnnklpa3I8CKu+fJ8=;
-        b=LkRFOBlHcHZM4v292oricsJdaoRtUbxvmE0LG25aNpMZtyDiv5rp2pRmAVV81xo9NK
-         Nsu0WNkkxd5qsKNc4ZtiRv6BSfUueSzxzOlBK3nvQv6hKZhWKHMWBuRuf/GJJpi8GZPu
-         nFV90Zbic6PwjVTProVSvYdT7mLRxLbMucZNRNx6jmCiyV827Pn66yuA4kHwGiH5EQJp
-         5GdRZNZdOA2Rmv/l470U32cE5Z3HrxlmAXt3tqoLcaLwuEYiPIVv2luZQXkyINTbU0D6
-         OFgC+n5L/OkuctOn8W7Ar3zaXQB/ktMizPb1O2t3C7YgRvRfRdS/KY9KmnwpKwVbEeP/
-         OdJQ==
-X-Received: by 10.68.228.201 with SMTP id sk9mr24961119pbc.4.1379266732693;
-        Sun, 15 Sep 2013 10:38:52 -0700 (PDT)
-Received: from ubu-01-asus.nus.edu.sg ([42.60.190.192])
-        by mx.google.com with ESMTPSA id uw6sm25617621pbc.8.1969.12.31.16.00.00
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 15 Sep 2013 10:38:52 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.rc4.527.g303b16c
-In-Reply-To: <1379266703-29808-2-git-send-email-rctay89@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=uzbS4hGmy5/03uNiix1+FQ0XS67yg0b8nT8WtofteUk=;
+        b=TPuM9f5OKktLn7zDp94lFpaqodxBIKgTIA0pPT7H8N66KrYhFTsNKeKpEV68zwpduy
+         I1UB0xYSVErNpr1QK1GGswFms2+8yCFToSPZybT+hPYeaG9CTETq0jEq/gsCNXgJS5CZ
+         ORXdEheW0JbJJRBCr1AEPY+Fo5emaYCqhTijzu4KuUvK4UFGFVOZGQ0cQt9w55igGcqC
+         fWpDsYlhcYUOIMhQc8Y6nXv/YJwWKaGs7Wo7h1btpFX+a1ZyzrWQEI5l91WxPfG22ivt
+         UgGQnUNjDNHLMm0420baJ8w9diM+khQ+jLDVRCFv2X3pk8kXojoJKSzBpk4/qp+W6roJ
+         1How==
+X-Received: by 10.50.23.16 with SMTP id i16mr4912068igf.50.1379267714909; Sun,
+ 15 Sep 2013 10:55:14 -0700 (PDT)
+Received: by 10.64.73.5 with HTTP; Sun, 15 Sep 2013 10:54:34 -0700 (PDT)
+In-Reply-To: <1379259202-5042-1-git-send-email-stefanbeller@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234824>
 
-When 'update' is run with no path in a repository with uninitialized
-submodules, the program terminates with no output, and zero status code.
-Be more helpful to users by mentioning this.
+Stefan Beller wrote:
+>  Makefile                       |   2 +-
+>  builtin.h                      |   1 +
+>  builtin/repack.c               | 387 +++++++++++++++++++++++++++++++++++++++++
+>  contrib/examples/git-repack.sh | 194 +++++++++++++++++++++
+>  git-repack.sh                  | 194 ---------------------
+>  git.c                          |   1 +
+>  6 files changed, 584 insertions(+), 195 deletions(-)
+>  create mode 100644 builtin/repack.c
+>  create mode 100755 contrib/examples/git-repack.sh
+>  delete mode 100755 git-repack.sh
 
-This may be controlled by an advice.* option.
+Looks like repack.c is significantly larger than git-repack.sh. I look
+forward to reading the code.
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
- Documentation/config.txt    |  5 +++++
- git-submodule.sh            | 16 ++++++++++++++--
- t/t7406-submodule-update.sh |  5 ++++-
- 3 files changed, 23 insertions(+), 3 deletions(-)
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> new file mode 100644
+> index 0000000..a15bd9b
+> --- /dev/null
+> +++ b/builtin/repack.c
+> @@ -0,0 +1,387 @@
+> +#include "builtin.h"
+> +#include "cache.h"
+> +#include "dir.h"
+> +#include "parse-options.h"
+> +#include "run-command.h"
+> +#include "sigchain.h"
+> +#include "strbuf.h"
+> +#include "string-list.h"
+> +#include "argv-array.h"
+> +
+> +static int delta_base_offset = 1;
+> +static char *packdir, *packtmp;
+> +
+> +static const char *const git_repack_usage[] = {
+> +       N_("git repack [options]"),
+> +       NULL
+> +};
+> +
+> +static int repack_config(const char *var, const char *value, void *cb)
+> +{
+> +       if (!strcmp(var, "repack.usedeltabaseoffset")) {
+> +               delta_base_offset = git_config_bool(var, value);
+> +               return 0;
+> +       }
+> +       return git_default_config(var, value, cb);
+> +}
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ec57a15..79313f9 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -202,6 +202,11 @@ advice.*::
- 	rmHints::
- 		In case of failure in the output of linkgit:git-rm[1],
- 		show directions on how to proceed from the current state.
-+	submoduleUpdateUninit::
-+		When linkgit:git-submodule[1] `update` is run with no `path`
-+		arguments in a repository with uninitialized submodules,
-+		mention that uninitalized submodules are indeed present, and
-+		that they may be initialized with the `--init` option.
- --
- 
- core.fileMode::
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 2979197..56f3dc2 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -777,6 +777,7 @@ cmd_update()
- 	cloned_modules=
- 	module_list "$@" | {
- 	err=
-+	has_uninit=
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-@@ -807,9 +808,13 @@ cmd_update()
- 		then
- 			# Only mention uninitialized submodules when its
- 			# path have been specified
--			test "$#" != "0" &&
--			say "$(eval_gettext "Submodule path '\$displaypath' not initialized
-+			if test "$#" != "0"
-+			then
-+				say "$(eval_gettext "Submodule path '\$displaypath' not initialized
- Maybe you want to use 'update --init'?")"
-+			else
-+				has_uninit=1
-+			fi
- 			continue
- 		fi
- 
-@@ -940,6 +945,13 @@ Maybe you want to use 'update --init'?")"
- 		IFS=$OIFS
- 		exit 1
- 	fi
-+
-+	if test -n "$has_uninit" \
-+		-a "$(git config --bool --get advice.submoduleUpdateUninit)" != "false"
-+	then
-+		say "$(eval_gettext "Uninitialized submodules were detected;
-+Maybe you want to use 'update --init'?")"
-+	fi
- 	}
- }
- 
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 00475eb..8dbe410 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -76,8 +76,11 @@ test_expect_success 'submodule update <path> warns without init beforehand' '
- 	)
- '
- 
--test_expect_success 'submodule update is silent without init beforehand' '
-+test_expect_success 'submodule update warns without init beforehand' '
- 	(cd super2 &&
-+	 test_must_fail git config --get advice.submoduleUpdateUninit &&
-+	 test -n "$(git submodule update)" &&
-+	 git config advice.submoduleUpdateUninit false &&
- 	 test -z "$(git submodule update)"
- 	)
- '
--- 
-1.8.4.rc4.527.g303b16c
+Configuration option: one bool. I wonder what other configuration
+options the future will bring in.
+
+> +/*
+> + * Remove temporary $GIT_OBJECT_DIRECTORY/pack/.tmp-$$-pack-* files.
+> + */
+
+Is $GIT_OBJECT_DIRECTORY a standard variable, or should it be
+$GIT_DIR/objects? A quick grep tells me that there are a few
+references to it, but I'm yet to be convinced that it can be something
+other than $GIT_DIR/objects.
+
+> +static void remove_temporary_files(void)
+> +{
+> +       struct strbuf buf = STRBUF_INIT;
+> +       size_t dirlen, prefixlen;
+> +       DIR *dir;
+> +       struct dirent *e;
+> +
+> +       dir = opendir(packdir);
+> +       if (!dir)
+> +               return;
+
+Wait a minute: where did we initalize packdir? Ah, it's static, so it
+must have been initalized before the function was called (in some sort
+of setup function), right? Why don't you return an int from the
+function so it's possible to differentiate between success and
+failure?
+
+> +       /* Point at the slash at the end of ".../objects/pack/" */
+
+Is packdir a relative or absolute path? The ... isn't helping.
+
+> +       dirlen = strlen(packdir) + 1;
+> +       strbuf_addstr(&buf, packtmp);
+
+Mysterious initalization of packtmp.
+
+> +       /* Hold the length of  ".tmp-%d-pack-" */
+> +       prefixlen = buf.len - dirlen;
+
+Okay, so that's what packtmp contains: a reading of repack.sh told me
+that you didn't even change the variable names.
+
+> +       while ((e = readdir(dir))) {
+> +               if (strncmp(e->d_name, buf.buf + dirlen, prefixlen))
+> +                       continue;
+
+Skip the dentry that points to the .tmp-* thing.
+
+> +               strbuf_setlen(&buf, dirlen);
+> +               strbuf_addstr(&buf, e->d_name);
+> +               unlink(buf.buf);
+> +       }
+> +       closedir(dir);
+> +       strbuf_release(&buf);
+> +}
+
+Okay.
+
+> +static void remove_pack_on_signal(int signo)
+> +{
+> +       remove_temporary_files();
+> +       sigchain_pop(signo);
+> +       raise(signo);
+> +}
+
+Okay, although I'd have named the variable "signal", not "signo".
+
+> +/*
+> + * Adds all packs hex strings to the fname list, which do not
+> + * have a corresponding .keep file.
+> + */
+
+The packs which don't have a corresponding .keep file must be removed/
+repacked. Okay.
+
+> +static void get_non_kept_pack_filenames(struct string_list *fname_list)
+> +{
+> +       DIR *dir;
+> +       struct dirent *e;
+> +       char *fname;
+
+Filename, I assume.
+
+> +       size_t len;
+> +
+> +       if (!(dir = opendir(packdir)))
+> +               return;
+
+An int return, please.
+
+> +       while ((e = readdir(dir)) != NULL) {
+> +               if (suffixcmp(e->d_name, ".pack"))
+> +                       continue;
+
+If we didn't find a .pack file, skip over?
+
+> +               len = strlen(e->d_name) - strlen(".pack");
+> +               fname = xmemdupz(e->d_name, len);
+
+You can probably use the pathbufs to save some memory here, but I
+wouldn't worry about it at this stage.
+
+> +               if (!file_exists(mkpath("%s/%s.keep", packdir, fname)))
+> +                       string_list_append_nodup(fname_list, fname);
+> +               else
+> +                       free(fname);
+> +       }
+> +       closedir(dir);
+> +}
+
+Okay.
+
+> +static void remove_redundant_pack(const char *path_prefix, const char *hex)
+> +{
+> +       const char *exts[] = {".pack", ".idx", ".keep"};
+> +       int i;
+> +       struct strbuf buf = STRBUF_INIT;
+> +       size_t plen;
+> +
+> +       strbuf_addf(&buf, "%s/%s", path_prefix, hex);
+
+hex is the sha1-hex written out to the full 40 characters?
+
+> +       plen = buf.len;
+> +
+> +       for (i = 0; i < ARRAY_SIZE(exts); i++) {
+> +               strbuf_setlen(&buf, plen);
+> +               strbuf_addstr(&buf, exts[i]);
+> +               unlink(buf.buf);
+> +       }
+> +       strbuf_release(&buf);
+> +}
+
+So you find the redundant sha1-hexes and unlink the corresponding
+.pack, .idx and .keep files. Okay.
+
+> +#define ALL_INTO_ONE 1
+> +#define LOOSEN_UNREACHABLE 2
+
+Wait, isn't all_into_one supposed to be configurable? What is
+loosen_unreachable?
+
+> +int cmd_repack(int argc, const char **argv, const char *prefix)
+> +{
+> [...]
+
+So argument parsing and spawning pack-objects appropriately is what
+blew up the size of this file. I'll review this monolith in another
+sitting.
+
+Thanks for the enjoyable read.
+
+Ram
