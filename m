@@ -1,119 +1,84 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH V2 2/3] config doc: update dot-repository notes
-Date: Sat, 14 Sep 2013 21:47:40 +0100
-Organization: OPDS
-Message-ID: <001CC3ED329149C1B6BB9E3F271768C2@PhilipOakley>
-References: <1368964449-2724-1-git-send-email-philipoakley@iee.org><1379107397-964-1-git-send-email-philipoakley@iee.org><1379107397-964-3-git-send-email-philipoakley@iee.org> <xmqq38p8icf3.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 2/4] pack v4: add v4_size to struct delta_base_cache_entry
+Date: Sun, 15 Sep 2013 14:35:57 +0700
+Message-ID: <CACsJy8CrEwt+WiE9_0CU-TqMCJtNgzouc3e=ifQR=5r+GRXUPQ@mail.gmail.com>
+References: <1378982284-7848-1-git-send-email-pclouds@gmail.com>
+ <1378982284-7848-2-git-send-email-pclouds@gmail.com> <alpine.LFD.2.03.1309130913510.20709@syhkavp.arg>
+ <CACsJy8DrxQqvKyAH0trd1nDbFTL2Gq7k5O-shK4j8W6PMirNYw@mail.gmail.com>
+ <alpine.LFD.2.03.1309132155540.20709@syhkavp.arg> <alpine.LFD.2.03.1309132351310.20709@syhkavp.arg>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>,
-	"Jonathan Nieder" <jrnieder@gmail.com>,
-	"Felipe Contreras" <felipe.contreras@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 14 22:47:49 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sun Sep 15 09:36:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VKwkq-0003bs-6C
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Sep 2013 22:47:44 +0200
+	id 1VL6sv-0004wF-91
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Sep 2013 09:36:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932369Ab3INUrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Sep 2013 16:47:40 -0400
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:64378 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756730Ab3INUrk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Sep 2013 16:47:40 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ArUGAKjKNFJOl3GZ/2dsb2JhbABagwc4iTq4DAqBHBd0giAFAQEEAQgBAS4WCAEBIQUGAgMFAgEDEQQBAQolFAEEGAIGBw8IBggLCAIBAgMBDASHXAoIuVmPcw2DGIEAA4kAhhKKGJBFgyU7
-X-IPAS-Result: ArUGAKjKNFJOl3GZ/2dsb2JhbABagwc4iTq4DAqBHBd0giAFAQEEAQgBAS4WCAEBIQUGAgMFAgEDEQQBAQolFAEEGAIGBw8IBggLCAIBAgMBDASHXAoIuVmPcw2DGIEAA4kAhhKKGJBFgyU7
-X-IronPort-AV: E=Sophos;i="4.90,904,1371078000"; 
-   d="scan'208";a="431774616"
-Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 14 Sep 2013 21:47:39 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752877Ab3IOHg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Sep 2013 03:36:29 -0400
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:43178 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752712Ab3IOHg2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Sep 2013 03:36:28 -0400
+Received: by mail-oa0-f48.google.com with SMTP id o17so2650133oag.35
+        for <git@vger.kernel.org>; Sun, 15 Sep 2013 00:36:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=J1nhiZG/9oyomVScY3HIm5/3HF/iBRY6HluvAevEAoc=;
+        b=uq5ZD6ucALzgX5/JAh/abARffkOWtWMp15Tz+LU3bkiFiFbySMv1c/Xw0pynTBTpyA
+         X2GgTPB12XN4oYWF3BBdYZeC0GU28Fc7Hkfj6FZ9PcMULB4QXzVGqqPzFiQkbYFd6loS
+         PuMttZHFKYS7N5ugQ7k6/HikC2nSoT/QfGkMjWTyoxV7cdbxXwkBcxGb1+bCWd5kS/L0
+         AuUQ1UFqUOR20HWg7no93ZKaSJEqAsc8NY9vjppO2/grETbobdfkeQqe8RbStiiZ2F7M
+         IYhzcSQDpk/owTpxK2GfYzSG+x261LmKm0OX59HyfNxzsKnAmm3amkNjwOkwmX9nSQXI
+         uYYg==
+X-Received: by 10.60.42.203 with SMTP id q11mr102085oel.54.1379230587695; Sun,
+ 15 Sep 2013 00:36:27 -0700 (PDT)
+Received: by 10.182.49.233 with HTTP; Sun, 15 Sep 2013 00:35:57 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.03.1309132351310.20709@syhkavp.arg>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234809>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Friday, September 13, 2013 11:28 PM
-Subject: Re: [PATCH V2 2/3] config doc: update dot-repository notes
+On Sat, Sep 14, 2013 at 11:22 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> The cache is currently updated by the caller.  The caller may ask for a
+> copy of 2 entries from a base object, but that base object may itself
+> copy those objects from somewhere else in a larger chunk.
+>
+> Let's consider this example:
+>
+> tree A
+> ------
+> 0 (0) copy 2 entries from tree B starting at entry 0
+> 1 (2) copy 1 entry from tree B starting at entry 3
+>
+> tree B
+> ------
+> 0 (0) copy 6 entries from tree C starting at entry 0
+> 1 (6) entry "foo.txt"
+> 2 (7) entry "bar.txt"
+>
+> Right now, the code calls decode_entries() to decode 2 entries from tree
+> B but those entries are part of a copy from tree C.  When that call
+> returns, the cache is updated as if tree B entry #2 would start at
+> offset 1 but this is wrong because offset 0 in tree B covers 6 entries
+> and therefore offset 1 is for entry #6.
+>
+> So this needs a rethink.
 
-
-> Philip Oakley <philipoakley@iee.org> writes:
->
->> branch.<name>.remote can be set to '.' (period) as the repository
->> path (URL) as part of the remote name dwimmery. Tell the reader.
->>
->> Such relative paths are not 'special'. Correct the 
->> branch.<name>.merge
->> note.
->
-> Looks good.
->
-> It naturally follows that this is also valid:
->
-> [branch "master"]
->        merge = refs/heads/master
->         remote = git://git.kernel.org/pub/scm/git/git.git
->
-> and running "git pull" while on your 'master'.
->
-> This is because branch.<name>.remote usually is spelled with a
-> nickname that refers to the [remote <nickname>] section, but it does
-> not have to be; it can use a URL to refer to the remote repository.
->
->>
->> Signed-off-by: Philip Oakley <philipoakley@iee.org>
->> ---
->>  Documentation/config.txt | 6 ++++--
->>  1 file changed, 4 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index 599ca52..da63043 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -718,6 +718,8 @@ branch.<name>.remote::
->>  overridden by `branch.<name>.pushremote`.  If no remote is
->>  configured, or if you are not on any branch, it defaults to
->>  `origin` for fetching and `remote.pushdefault` for pushing.
->> + Additionally, `.` (a period) is the current local repository
->> + (a dot-repository), see `branch.<name>.merge`'s final note below.
->>
->>  branch.<name>.pushremote::
->>  When on branch <name>, it overrides `branch.<name>.remote` for
->> @@ -743,8 +745,8 @@ branch.<name>.merge::
->>  Specify multiple values to get an octopus merge.
->>  If you wish to setup 'git pull' so that it merges into <name> from
->>  another branch in the local repository, you can point
->> - branch.<name>.merge to the desired branch, and use the special 
->> setting
->> - `.` (a period) for branch.<name>.remote.
->> + branch.<name>.merge to the desired branch, and use the relative 
->> path
->> + setting `.` (a period) for branch.<name>.remote.
-
-This may need something extra because it doesn't say where it is 
-relative to, nor comment on git_dir discovery (see patch 1 comments, 
-likewise patch 3)
-
->>
->>  branch.<name>.mergeoptions::
->>  Sets default options for merging into branch <name>. The syntax and
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+I've given it some thought and see no simple/efficient way do it when
+2+ depth is involved. Ideally tree A should refer to tree C directly
+for the first two entries, but in general we can't enforce that a copy
+sequence must refer to non-copy sequences only. Caching flattened tree
+B up until the 6th entry may help, but then there's no need to cache
+offsets anymore because we could just cache tree A..
+--
+Duy
