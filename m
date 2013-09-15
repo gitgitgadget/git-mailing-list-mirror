@@ -1,96 +1,551 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] diff: add a config option to control orderfile
-Date: Sun, 15 Sep 2013 11:08:30 +0300
-Message-ID: <20130915080830.GA30465@redhat.com>
-References: <20130831194425.GA14706@redhat.com>
- <xmqqioyhu8wd.fsf@gitster.dls.corp.google.com>
- <20130903210815.GB24480@redhat.com>
- <20130915074900.GA30438@redhat.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH 1/2] repack: rewrite the shell script in C
+Date: Sun, 15 Sep 2013 13:42:08 +0200
+Message-ID: <52359D10.1060901@web.de>
+References: <1377808774-12505-1-git-send-email-stefanbeller@googlemail.com> <1377808774-12505-2-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 15 10:08:24 2013
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 15 13:43:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VL7NV-0007az-0i
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Sep 2013 10:08:21 +0200
+	id 1VLAjF-0002nx-To
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Sep 2013 13:43:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754372Ab3IOIIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Sep 2013 04:08:11 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:28068 "EHLO mx1.redhat.com"
+	id S1755320Ab3IOLmq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Sep 2013 07:42:46 -0400
+Received: from mout.web.de ([212.227.15.14]:53854 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752985Ab3IOIHY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Sep 2013 04:07:24 -0400
-Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r8F86LHh019502
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Sun, 15 Sep 2013 04:06:22 -0400
-Received: from redhat.com (vpn1-4-98.ams2.redhat.com [10.36.4.98])
-	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id r8F86JI4015420;
-	Sun, 15 Sep 2013 04:06:20 -0400
-Content-Disposition: inline
-In-Reply-To: <20130915074900.GA30438@redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+	id S1753838Ab3IOLmo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Sep 2013 07:42:44 -0400
+Received: from [192.168.2.102] ([79.253.143.104]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0MA5tp-1VEK1h2olF-00BHby for <git@vger.kernel.org>;
+ Sun, 15 Sep 2013 13:42:42 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <1377808774-12505-2-git-send-email-stefanbeller@googlemail.com>
+X-Provags-ID: V03:K0:wZ4wKyBUOBBdITfKTZq/E7of3oaaRfYOHtAlpAAI8BdHa0F02EW
+ MbYytyvahaiNhobNRcarhAvB7ejGuTT/VEr6j86btnl016MkuteqBsyR7hfYs2HmZuvyVWy
+ wdtecRSSjJ3V5nuoYJUlY/Vs+ALGagcNFBKs3Ak8aLJhN8jMsaJlZeguQH6wTZhWOmZmqqn
+ 6cHYOF+2xW2/wISOeIciQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234812>
 
-On Sun, Sep 15, 2013 at 10:49:00AM +0300, Michael S. Tsirkin wrote:
-> On Wed, Sep 04, 2013 at 12:08:15AM +0300, Michael S. Tsirkin wrote:
-> > On Tue, Sep 03, 2013 at 10:12:18AM -0700, Junio C Hamano wrote:
-> > > "Michael S. Tsirkin" <mst@redhat.com> writes:
-> > > 
-> > > > I always want my diffs to show header files first,
-> > > > then .c files, then the rest. Make it possible to
-> > > > set orderfile though a config option to achieve this.
-> > > >
-> > > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > > > ---
-> > > 
-> > > I admit that I was the guilty one who introduced the orderfile, but
-> > > I think the feature was misguided (for one thing, it breaks the
-> > > patch-id, I think).
-> > 
-> > This should be easy to fix - just sort before applying the ID, no?
-> 
-> Ping. Any comment on this idea?
+Am 29.08.2013 22:39, schrieb Stefan Beller:
+> The motivation of this patch is to get closer to a goal of being
+> able to have a core subset of git functionality built in to git.
+> That would mean
+>
+>  * people on Windows could get a copy of at least the core parts
+>    of Git without having to install a Unix-style shell
+>
+>  * people using git in on servers with chrooted environments
+>    do not need to worry about standard tools lacking for shell
+>    scripts.
+>
+> This patch is meant to be mostly a literal translation of the
+> git-repack script; the intent is that later patches would start using
+> more library facilities, but this patch is meant to be as close to a
+> no-op as possible so it doesn't do that kind of thing.
+>
+> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+> ---
+>  Makefile                                        |   2 +-
+>  builtin.h                                       |   1 +
+>  builtin/repack.c                                | 379 ++++++++++++++++++++++++
+>  git-repack.sh => contrib/examples/git-repack.sh |   0
+>  git.c                                           |   1 +
+>  5 files changed, 382 insertions(+), 1 deletion(-)
+>  create mode 100644 builtin/repack.c
+>  rename git-repack.sh => contrib/examples/git-repack.sh (100%)
+>
+> diff --git a/Makefile b/Makefile
+> index 3588ca1..69e5267 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -464,7 +464,6 @@ SCRIPT_SH += git-pull.sh
+>  SCRIPT_SH += git-quiltimport.sh
+>  SCRIPT_SH += git-rebase.sh
+>  SCRIPT_SH += git-remote-testgit.sh
+> -SCRIPT_SH += git-repack.sh
+>  SCRIPT_SH += git-request-pull.sh
+>  SCRIPT_SH += git-stash.sh
+>  SCRIPT_SH += git-submodule.sh
+> @@ -971,6 +970,7 @@ BUILTIN_OBJS += builtin/reflog.o
+>  BUILTIN_OBJS += builtin/remote.o
+>  BUILTIN_OBJS += builtin/remote-ext.o
+>  BUILTIN_OBJS += builtin/remote-fd.o
+> +BUILTIN_OBJS += builtin/repack.o
+>  BUILTIN_OBJS += builtin/replace.o
+>  BUILTIN_OBJS += builtin/rerere.o
+>  BUILTIN_OBJS += builtin/reset.o
+> diff --git a/builtin.h b/builtin.h
+> index 8afa2de..b56cf07 100644
+> --- a/builtin.h
+> +++ b/builtin.h
+> @@ -102,6 +102,7 @@ extern int cmd_reflog(int argc, const char **argv, const char *prefix);
+>  extern int cmd_remote(int argc, const char **argv, const char *prefix);
+>  extern int cmd_remote_ext(int argc, const char **argv, const char *prefix);
+>  extern int cmd_remote_fd(int argc, const char **argv, const char *prefix);
+> +extern int cmd_repack(int argc, const char **argv, const char *prefix);
+>  extern int cmd_repo_config(int argc, const char **argv, const char *prefix);
+>  extern int cmd_rerere(int argc, const char **argv, const char *prefix);
+>  extern int cmd_reset(int argc, const char **argv, const char *prefix);
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> new file mode 100644
+> index 0000000..0cc823d
+> --- /dev/null
+> +++ b/builtin/repack.c
+> @@ -0,0 +1,379 @@
+> +#include "builtin.h"
+> +#include "cache.h"
+> +#include "dir.h"
+> +#include "parse-options.h"
+> +#include "run-command.h"
+> +#include "sigchain.h"
+> +#include "strbuf.h"
+> +#include "string-list.h"
+> +#include "argv-array.h"
+> +
+> +static int delta_base_offset = 1;
+> +static char *packdir, *packtmp;
+> +
+> +static const char *const git_repack_usage[] = {
+> +	N_("git repack [options]"),
+> +	NULL
+> +};
+> +
+> +static int repack_config(const char *var, const char *value, void *cb)
+> +{
+> +	if (!strcmp(var, "repack.usedeltabaseoffset")) {
+> +		delta_base_offset = git_config_bool(var, value);
+> +		return 0;
+> +	}
+> +	return git_default_config(var, value, cb);
+> +}
+> +
+> +/*
+> + * Remove temporary $GIT_OBJECT_DIRECTORY/pack/.tmp-$$-pack-* files.
+> + */
+> +static void remove_temporary_files(void)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +	size_t dirlen, prefixlen;
+> +	DIR *dir;
+> +	struct dirent *e;
+> +
+> +	dir = opendir(packdir);
+> +	if (!dir)
+> +		return;
+> +
+> +	strbuf_addstr(&buf, packdir);
 
-Actually, after I've looked at the code,
-diffcore_order is already already called for patch-id.
-So patch-id shouldn't be broken by specifying the orderfile.
-Why then is the feature misguided?
+Let's say packdir is ".git/objects/pack" (no trailing slash).  Then buf 
+is ".git/objects/pack" now as well.
 
-> > > So I am moderately hesitant to promote its use
-> > > with an addition like this.
-> > 
-> > The status quo just makes people insist on using a script to generate patches for
-> > mail.  Some projects put interface documentation in the header files, in
-> > that case it makes sense to put .h before .c in the patch as it makes
-> > review easier.
-> > 
-> > In fact I sometimes reorder chunks in the patch manually for readability -
-> > it's probably worth finding a way to support this.
-> > 
-> > 
-> > > >  diff.c | 3 +++
-> > > >  1 file changed, 3 insertions(+)
-> > > >
-> > > > diff --git a/diff.c b/diff.c
-> > > > index 208094f..cca0767 100644
-> > > > --- a/diff.c
-> > > > +++ b/diff.c
-> > > > @@ -264,6 +264,9 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
-> > > >  		return 0;
-> > > >  	}
-> > > >  
-> > > > +        if (!strcmp(var, "diff.orderfile"))
-> > > > +                return git_config_string(&default_diff_options.orderfile, var, value);
-> > > > +
-> > > >  	if (!prefixcmp(var, "submodule."))
-> > > >  		return parse_submodule_config_option(var, value);
+> +
+> +	/* Point at the slash at the end of ".../objects/pack/" */
+> +	dirlen = buf.len + 1;
+> +	strbuf_addf(&buf, "%s", packtmp);
+
+packtmp starts with packdir, so by adding it here we have it twice.  buf 
+is now ".git/objects/pack.git/objects/pack/.tmp-123-pack" (if our pid is 
+123), no?
+
+Perhaps don't add the packdir to the strbuf in the first place and 
+calculate dirlen as strlen(packdir) + 1?
+
+Besided, strbuf_addstr(x, y) is better for adding a string than 
+strbuf_addf(x, "%s", y).
+
+> +	/* Point at the dash at the end of ".../.tmp-%d-pack-" */
+> +	prefixlen = buf.len - dirlen;
+
+This is the length of "git/objects/pack/.tmp-123-pack" now.
+
+> +
+> +	while ((e = readdir(dir))) {
+> +		if (strncmp(e->d_name, buf.buf + dirlen, prefixlen))
+> +			continue;
+> +		strbuf_setlen(&buf, dirlen);
+> +		strbuf_addstr(&buf, e->d_name);
+> +		unlink(buf.buf);
+> +	}
+> +	closedir(dir);
+> +	strbuf_release(&buf);
+> +}
+> +
+> +static void remove_pack_on_signal(int signo)
+> +{
+> +	remove_temporary_files();
+> +	sigchain_pop(signo);
+> +	raise(signo);
+> +}
+> +
+> +/*
+> + * Adds all packs hex strings to the fname list, which do not
+> + * have a corresponding .keep file.
+> + */
+> +static void get_non_kept_pack_filenames(struct string_list *fname_list)
+> +{
+> +	DIR *dir;
+> +	struct dirent *e;
+> +	char *fname;
+> +	size_t len;
+> +
+> +	if (!(dir = opendir(packdir)))
+> +		return;
+> +
+> +	while ((e = readdir(dir)) != NULL) {
+> +		if (suffixcmp(e->d_name, ".pack"))
+> +			continue;
+> +
+> +		len = strlen(e->d_name) - strlen(".pack");
+> +		fname = xmemdupz(e->d_name, len);
+> +
+> +		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)))
+> +			string_list_append_nodup(fname_list, fname);
+
+This leaks fname for packs with .keep files.
+
+> +	}
+> +	closedir(dir);
+> +}
+> +
+> +static void remove_redundant_pack(const char *path_prefix, const char *hex)
+> +{
+> +	const char *exts[] = {".pack", ".idx", ".keep"};
+> +	int i;
+> +	struct strbuf buf = STRBUF_INIT;
+> +	size_t plen;
+> +
+> +	strbuf_addf(&buf, "%s/%s", path_prefix, hex);
+> +	plen = buf.len;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(exts); i++) {
+> +		strbuf_setlen(&buf, plen);
+> +		strbuf_addstr(&buf, exts[i]);
+> +		unlink(buf.buf);
+> +	}
+> +}
+
+hex must also include the "pack-" prefix and path_prefix must be a 
+directory name.  Perhaps call them base_name and dir_name or similar to 
+make that clearer?
+
+buf is leaked.
+
+> +
+> +#define ALL_INTO_ONE 1
+> +#define LOOSE_UNREACHABLE 2
+> +
+> +int cmd_repack(int argc, const char **argv, const char *prefix)
+> +{
+> +	const char *exts[2] = {".pack", ".idx"};
+> +	struct child_process cmd;
+> +	struct string_list_item *item;
+> +	struct argv_array cmd_args = ARGV_ARRAY_INIT;
+> +	struct string_list names = STRING_LIST_INIT_DUP;
+> +	struct string_list rollback = STRING_LIST_INIT_NODUP;
+> +	struct string_list existing_packs = STRING_LIST_INIT_DUP;
+> +	struct strbuf line = STRBUF_INIT;
+> +	int nr_packs, ext, ret, failed;
+> +	FILE *out;
+> +
+> +	/* variables to be filled by option parsing */
+> +	int pack_everything = 0;
+> +	int delete_redundant = 0;
+> +	char *unpack_unreachable = NULL;
+> +	int window = 0, window_memory = 0;
+> +	int depth = 0;
+> +	int max_pack_size = 0;
+> +	int no_reuse_delta = 0, no_reuse_object = 0;
+> +	int no_update_server_info = 0;
+> +	int quiet = 0;
+> +	int local = 0;
+> +
+> +	struct option builtin_repack_options[] = {
+> +		OPT_BIT('a', NULL, &pack_everything,
+> +				N_("pack everything in a single pack"), ALL_INTO_ONE),
+> +		OPT_BIT('A', NULL, &pack_everything,
+> +				N_("same as -a, and turn unreachable objects loose"), LOOSE_UNREACHABLE),
+> +		OPT_BOOL('d', NULL, &delete_redundant,
+> +				N_("remove redundant packs, and run git-prune-packed")),
+> +		OPT_BOOL('f', NULL, &no_reuse_delta,
+> +				N_("pass --no-reuse-delta to git-pack-objects")),
+> +		OPT_BOOL('F', NULL, &no_reuse_object,
+> +				N_("pass --no-reuse-object to git-pack-objects")),
+> +		OPT_BOOL('n', NULL, &no_update_server_info,
+> +				N_("do not run git-update-server-info")),
+> +		OPT__QUIET(&quiet, N_("be quiet")),
+> +		OPT_BOOL('l', "local", &local,
+> +				N_("pass --local to git-pack-objects")),
+> +		OPT_STRING(0, "unpack-unreachable", &unpack_unreachable, N_("approxidate"),
+> +				N_("with -A, do not loosen objects older than this")),
+> +		OPT_INTEGER(0, "window", &window,
+> +				N_("size of the window used for delta compression")),
+> +		OPT_INTEGER(0, "window-memory", &window_memory,
+> +				N_("same as the above, but limit memory size instead of entries count")),
+> +		OPT_INTEGER(0, "depth", &depth,
+> +				N_("limits the maximum delta depth")),
+> +		OPT_INTEGER(0, "max-pack-size", &max_pack_size,
+> +				N_("maximum size of each packfile")),
+> +		OPT_END()
+> +	};
+> +
+> +	git_config(repack_config, NULL);
+> +
+> +	argc = parse_options(argc, argv, prefix, builtin_repack_options,
+> +				git_repack_usage, 0);
+> +
+> +	packdir = mkpathdup("%s/pack", get_object_directory());
+> +	packtmp = mkpathdup("%s/.tmp-%d-pack", packdir, (int)getpid());
+> +
+> +	sigchain_push_common(remove_pack_on_signal);
+> +
+> +	argv_array_push(&cmd_args, "pack-objects");
+> +	argv_array_push(&cmd_args, "--keep-true-parents");
+> +	argv_array_push(&cmd_args, "--honor-pack-keep");
+> +	argv_array_push(&cmd_args, "--non-empty");
+> +	argv_array_push(&cmd_args, "--all");
+> +	argv_array_push(&cmd_args, "--reflog");
+> +	if (window)
+> +		argv_array_pushf(&cmd_args, "--window=%u", window);
+> +	if (window_memory)
+> +		argv_array_pushf(&cmd_args, "--window-memory=%u", window_memory);
+> +	if (depth)
+> +		argv_array_pushf(&cmd_args, "--depth=%u", depth);
+> +	if (max_pack_size)
+> +		argv_array_pushf(&cmd_args, "--max_pack_size=%u", max_pack_size);
+> +	if (no_reuse_delta)
+> +		argv_array_pushf(&cmd_args, "--no-reuse-delta");
+> +	if (no_reuse_object)
+> +		argv_array_pushf(&cmd_args, "--no-reuse-object");
+> +
+> +	if (!pack_everything) {
+> +		argv_array_push(&cmd_args, "--unpacked");
+> +		argv_array_push(&cmd_args, "--incremental");
+> +	} else {
+> +		get_non_kept_pack_filenames(&existing_packs);
+> +
+> +		if (existing_packs.nr && delete_redundant) {
+> +			if (unpack_unreachable)
+> +				argv_array_pushf(&cmd_args,
+> +						"--unpack-unreachable=%s",
+> +						unpack_unreachable);
+> +			else if (pack_everything & LOOSE_UNREACHABLE)
+> +				argv_array_push(&cmd_args,
+> +						"--unpack-unreachable");
+> +		}
+> +	}
+> +
+> +	if (local)
+> +		argv_array_push(&cmd_args,  "--local");
+> +	if (quiet)
+> +		argv_array_push(&cmd_args,  "--quiet");
+> +	if (delta_base_offset)
+> +		argv_array_push(&cmd_args,  "--delta-base-offset");
+> +
+> +	argv_array_push(&cmd_args, packtmp);
+> +
+> +	memset(&cmd, 0, sizeof(cmd));
+> +	cmd.argv = cmd_args.argv;
+> +	cmd.git_cmd = 1;
+> +	cmd.out = -1;
+> +	cmd.no_stdin = 1;
+> +
+> +	ret = start_command(&cmd);
+> +	if (ret)
+> +		return 1;
+> +
+> +	nr_packs = 0;
+> +	out = xfdopen(cmd.out, "r");
+> +	while (strbuf_getline(&line, out, '\n') != EOF) {
+> +		if (line.len != 40)
+> +			die("repack: Expecting 40 character sha1 lines only from pack-objects.");
+> +		string_list_append(&names, line.buf);
+> +		nr_packs++;
+> +	}
+> +	fclose(out);
+> +	ret = finish_command(&cmd);
+> +	if (ret)
+> +		return 1;
+> +	argv_array_clear(&cmd_args);
+> +
+> +	if (!nr_packs && !quiet)
+> +		printf("Nothing new to pack.\n");
+> +
+> +	/*
+> +	 * Ok we have prepared all new packfiles.
+> +	 * First see if there are packs of the same name and if so
+> +	 * if we can move them out of the way (this can happen if we
+> +	 * repacked immediately after packing fully.
+> +	 */
+> +	failed = 0;
+> +	for_each_string_list_item(item, &names) {
+> +		for (ext = 0; ext < 2; ext++) {
+> +			char *fname, *fname_old;
+> +			fname = mkpathdup("%s/%s%s", packdir,
+> +						item->string, exts[ext]);
+> +			if (!file_exists(fname)) {
+> +				free(fname);
+> +				continue;
+> +			}
+> +
+> +			fname_old = mkpath("%s/old-%s%s", packdir,
+> +						item->string, exts[ext]);
+> +			if (file_exists(fname_old))
+> +				if (unlink(fname_old))
+> +					failed = 1;
+> +
+> +			if (!failed && rename(fname, fname_old)) {
+> +				failed = 1;
+> +				break;
+
+This leaks fname.
+
+> +			}
+> +			string_list_append(&rollback, fname);
+
+Mental note: This is effectively string_list_append_nodup because 
+rollback is initialized with STRING_LIST_INIT_NODUP, so there's no leak 
+here.
+
+> +		}
+> +		if (failed)
+> +			break;
+> +	}
+> +	if (failed) {
+> +		struct string_list rollback_failure = STRING_LIST_INIT_DUP;
+> +		for_each_string_list_item(item, &rollback) {
+> +			char *fname, *fname_old;
+> +			fname = mkpathdup("%s/%s", packdir, item->string);
+> +			fname_old = mkpath("%s/old-%s", packdir, item->string);
+> +			if (rename(fname_old, fname))
+> +				string_list_append(&rollback_failure, fname);
+> +			free(fname);
+> +		}
+> +
+> +		if (rollback_failure.nr) {
+> +			int i;
+> +			fprintf(stderr,
+> +				"WARNING: Some packs in use have been renamed by\n"
+> +				"WARNING: prefixing old- to their name, in order to\n"
+> +				"WARNING: replace them with the new version of the\n"
+> +				"WARNING: file.  But the operation failed, and the\n"
+> +				"WARNING: attempt to rename them back to their\n"
+> +				"WARNING: original names also failed.\n"
+> +				"WARNING: Please rename them in %s manually:\n", packdir);
+> +			for (i = 0; i < rollback_failure.nr; i++)
+> +				fprintf(stderr, "WARNING:   old-%s -> %s\n",
+> +					rollback_failure.items[i].string,
+> +					rollback_failure.items[i].string);
+> +		}
+> +		exit(1);
+> +	}
+> +
+> +	/* Now the ones with the same name are out of the way... */
+> +	for_each_string_list_item(item, &names) {
+> +		for (ext = 0; ext < 2; ext++) {
+> +			char *fname, *fname_old;
+> +			struct stat statbuffer;
+> +			fname = mkpathdup("%s/pack-%s%s",
+> +					packdir, item->string, exts[ext]);
+> +			fname_old = mkpathdup("%s-%s%s",
+> +					packtmp, item->string, exts[ext]);
+> +			if (!stat(fname_old, &statbuffer)) {
+> +				statbuffer.st_mode &= ~(S_IWUSR | S_IWGRP | S_IWOTH);
+> +				chmod(fname_old, statbuffer.st_mode);
+> +			}
+> +			if (rename(fname_old, fname))
+> +				die_errno(_("renaming '%s' failed"), fname_old);
+
+The Shell script exits silently in that case.  How about improving error 
+reporting in a separate patch?
+
+> +			free(fname);
+> +			free(fname_old);
+> +		}
+> +	}
+> +
+> +	/* Remove the "old-" files */
+> +	for_each_string_list_item(item, &names) {
+> +		for (ext = 0; ext < 2; ext++) {
+> +			char *fname;
+> +			fname = mkpath("%s/old-pack-%s%s",
+> +					packdir,
+> +					item->string,
+> +					exts[ext]);
+> +			if (remove_path(fname))
+> +				warning(_("removing '%s' failed"), fname);
+
+Similar case here: The Shell script continues silently.
+
+> +		}
+> +	}
+> +
+> +	/* End of pack replacement. */
+> +
+> +	if (delete_redundant) {
+> +		sort_string_list(&names);
+> +		for_each_string_list_item(item, &existing_packs) {
+> +			char *sha1;
+> +			size_t len = strlen(item->string);
+> +			if (len < 40)
+> +				continue;
+> +			sha1 = item->string + len - 40;
+> +			if (!string_list_has_string(&names, sha1))
+> +				remove_redundant_pack(packdir, item->string);
+> +		}
+> +		argv_array_push(&cmd_args, "prune-packed");
+> +		if (quiet)
+> +			argv_array_push(&cmd_args, "--quiet");
+> +
+> +		memset(&cmd, 0, sizeof(cmd));
+> +		cmd.argv = cmd_args.argv;
+> +		cmd.git_cmd = 1;
+> +		run_command(&cmd);
+> +		argv_array_clear(&cmd_args);
+> +	}
+> +
+> +	if (!no_update_server_info) {
+> +		argv_array_push(&cmd_args, "update-server-info");
+> +		memset(&cmd, 0, sizeof(cmd));
+> +		cmd.argv = cmd_args.argv;
+> +		cmd.git_cmd = 1;
+> +		run_command(&cmd);
+> +		argv_array_clear(&cmd_args);
+> +	}
+> +	remove_temporary_files();
+
+If you take care to clear the argv_arrays then perhaps do the same for 
+the string_lists?  The OS cleans up after us anyway, but calming 
+Valgrind or similar leak checkers is a good practice nevertheless.
+
+> +	return 0;
+> +}
+> diff --git a/git-repack.sh b/contrib/examples/git-repack.sh
+> similarity index 100%
+> rename from git-repack.sh
+> rename to contrib/examples/git-repack.sh
+> diff --git a/git.c b/git.c
+> index 2025f77..03510be 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -396,6 +396,7 @@ static void handle_internal_command(int argc, const char **argv)
+>  		{ "remote", cmd_remote, RUN_SETUP },
+>  		{ "remote-ext", cmd_remote_ext },
+>  		{ "remote-fd", cmd_remote_fd },
+> +		{ "repack", cmd_repack, RUN_SETUP },
+>  		{ "replace", cmd_replace, RUN_SETUP },
+>  		{ "repo-config", cmd_repo_config, RUN_SETUP_GENTLY },
+>  		{ "rerere", cmd_rerere, RUN_SETUP },
+> -- 1.8.4
+>
