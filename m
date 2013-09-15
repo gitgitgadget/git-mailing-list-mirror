@@ -1,108 +1,238 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
-Date: Sun, 15 Sep 2013 14:44:03 +0200
-Message-ID: <CAHGBnuOfYoosgWQdfF+L3=YCqO-MYEx-TpNzBAD-Zt0kqeR_Hw@mail.gmail.com>
-References: <523094F0.9000509@gmail.com>
-	<20130911182921.GE4326@google.com>
-	<CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
-	<20130911214116.GA12235@sigill.intra.peff.net>
-	<CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
-	<20130912101419.GY2582@serenity.lan>
-	<xmqq61u6qcez.fsf@gitster.dls.corp.google.com>
-	<20130912182057.GB32069@sigill.intra.peff.net>
-	<CAHGBnuPzzokV7YMrx0gAL1VACcmaLwFoaB3n6bX8Y-UDHs7S8A@mail.gmail.com>
-	<20130912202246.GF32069@sigill.intra.peff.net>
-	<xmqqr4ctokat.fsf@gitster.dls.corp.google.com>
-	<CAHGBnuOQ-y1beD_X_jiH+FrhPvLOVJqT0J=Wk988Q4NeCs1-9Q@mail.gmail.com>
-	<xmqqppsckcsd.fsf@gitster.dls.corp.google.com>
-	<CAHGBnuMNDJhAqNfgVRHRE-7R=UZbd+fMExYeKDWWCFjyQJYYTQ@mail.gmail.com>
-	<xmqqppscij8a.fsf@gitster.dls.corp.google.com>
-	<CAHGBnuM=QqLxPNNZmoL1jG+oAm2y6o=AuBtkH+FRwZ_8ahGC+w@mail.gmail.com>
-	<xmqqli30idfx.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] branch: use $curr_branch_short more
+Date: Sun, 15 Sep 2013 08:02:31 -0500
+Message-ID: <CAMP44s3f=TzDGkMZawKm-KZozCfSvLQbhvQ83KrM9dqbNBm-pg@mail.gmail.com>
+References: <1377899810-1818-1-git-send-email-felipe.contreras@gmail.com>
+	<1377899810-1818-7-git-send-email-felipe.contreras@gmail.com>
+	<xmqq38pqwlyl.fsf@gitster.dls.corp.google.com>
+	<5221A510.2020206@web.de>
+	<CAMP44s1qyF70eSCM4L1Yr=U02AwFZ0TNqiDvag8Qdzzi9GS1Mw@mail.gmail.com>
+	<5221B324.7020908@web.de>
+	<CAMP44s0et9_e5XH-4aydrM-i_+ORampdsitJzK-rSj+4dwPUKw@mail.gmail.com>
+	<5221C533.1070109@web.de>
+	<CAMP44s39X2SsZC7f6=j=CX+9wky7YpiJUz3itCiqeLScD0TbNA@mail.gmail.com>
+	<522C95F3.5030308@web.de>
+	<CAMP44s0LOhGWpgy6iy==WC7tBtjUjG-CTJ6jXNm+Jumu-5OkXw@mail.gmail.com>
+	<52359D33.508@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, John Keeping <john@keeping.me.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 15 14:44:12 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Sun Sep 15 15:02:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VLBgR-0003vY-JE
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Sep 2013 14:44:11 +0200
+	id 1VLByK-0001Ep-Vw
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Sep 2013 15:02:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756837Ab3IOMoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Sep 2013 08:44:07 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:38679 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751374Ab3IOMoF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Sep 2013 08:44:05 -0400
-Received: by mail-la0-f46.google.com with SMTP id eh20so2298880lab.33
-        for <git@vger.kernel.org>; Sun, 15 Sep 2013 05:44:03 -0700 (PDT)
+	id S1756385Ab3IONCe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Sep 2013 09:02:34 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:52884 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756289Ab3IONCd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Sep 2013 09:02:33 -0400
+Received: by mail-lb0-f172.google.com with SMTP id x18so3355666lbi.17
+        for <git@vger.kernel.org>; Sun, 15 Sep 2013 06:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=GV4mFkSNLIUonl64MVLJ5mGZT0BtSAXPrfLOJkVeGoc=;
-        b=carR4Dohd5ufn1PddtvmLRqcltJYvDa3PA945Vp3aQVU3RkIzY2craDDfVKGmd9P78
-         mNaSecrdz8ez0+oVIHq2NkicRot6w93VG1wZ3F59kKrCSqZhlLPB89k6D+MbqbjDLN/c
-         mp7JAAmKRw/BzUtZU4ozyug9iLg5Jqe6f8lNCxuBowPnXNeV7okr+jbuvd8w/GOhrF49
-         hMD/DJopOmi35u2igl//osXRiYj+bVUbGBV1v7H5UMATaLNAOy53wcca6KJ5joH6n+xK
-         MaaaEWz1DtGIcNItOpbZQNab1lWzhoWQ9GzRbvczAkLuqD6wyOe237PkSBoF2+7EuhU+
-         F/ig==
-X-Received: by 10.112.149.197 with SMTP id uc5mr20266680lbb.19.1379249043564;
- Sun, 15 Sep 2013 05:44:03 -0700 (PDT)
-Received: by 10.114.5.161 with HTTP; Sun, 15 Sep 2013 05:44:03 -0700 (PDT)
-In-Reply-To: <xmqqli30idfx.fsf@gitster.dls.corp.google.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=2XxROZn6DEupJvSWrN8P9ouVu3hOuI+oD/5i6rHe2B0=;
+        b=nABBSB6yEvtQXJ3z/Q7zGuGMYTqt0CzTkw8BKpig+k018ww0RH0Dyek25PAYNTsT+6
+         6piCi4xH9TsMgcNLiI454EFk34ebmLA3u8x4Ow6i5rb6VmSjHrNYzbJyElqMGadt3vLE
+         9lRJI0bAUtJEV2J+RaZZ7JD7zkZTQoOCzNDq+tzTeF5IKaqPSiNx/hyQ5VykHc+E5kRK
+         re2m6g6kBK1YtFZcAPS+hubv6laSE+4c/2ZWdrrsCv0PaKob1e7BHbvf/Cpe6SNEroIt
+         WWHuIq+hn10JHPWWhlKnmjOHc9sMCP69tWFr6NVFSeachtMscbTdIDwKEunumOzlpjVT
+         5Q1A==
+X-Received: by 10.112.89.100 with SMTP id bn4mr20671543lbb.16.1379250152075;
+ Sun, 15 Sep 2013 06:02:32 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Sun, 15 Sep 2013 06:02:31 -0700 (PDT)
+In-Reply-To: <52359D33.508@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234816>
 
-On Sat, Sep 14, 2013 at 12:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
+On Sun, Sep 15, 2013 at 6:42 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote=
+:
+> Am 09.09.2013 01:13, schrieb Felipe Contreras:
+>
+>> On Sun, Sep 8, 2013 at 10:21 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
+ote:
+>>>
+>>> Am 31.08.2013 19:20, schrieb Felipe Contreras:
+>>>
+>>>> A summary should contain as much information that would allow me t=
+o
+>>>> skip the commit message as possible.
+>>>>
+>>>> If I can't tell from the summary if I can safely skip the commit
+>>>> message, the summary is not doing a good job.
+>>>>
+>>>> "trivial simplification" explains the "what", and the "why" at the
+>>>> same time, and allows most people to skip the commit message, thus=
+ is
+>>>> a good summary.
+>>>
+>>>
+>>>
+>>> No patch should be skipped on the mailing list.  As you wrote, triv=
+ial
+>>> patches can still be wrong.
+>>
+>>
+>> What patches each persons skips is each person's own decision, don't
+>> be patronizing, if I want to skip a trivial patch, I will, I can't
+>> read each and every patch from the dozens of mailing lists I'm
+>> subscribed to, and there's no way each and every reader is going to
+>> read each and every patch. They should be prioritized, and trivial
+>> ones can be safely skipped by most people.
+>
+>
+> Yes, of course; someone needs to review every patch in the end, but e=
+ach
+> reader decides for themselves which ones to skip.  I can't keep up wi=
+th the
+> traffic either.
+>
+> By the way, the bikeshedding phenomenon probably causes trivial patch=
+es to
+> receive the most attention. :)
 
-> You can explicitly include the system header from your compatibility
-> layer, i.e.
->
->         === compat/mingw/string.h ===
->
->         #define __NO_INLINE__
->
->         #ifdef SYSTEM_STRING_H_HEADER
->         #include SYSTEM_STRING_H_HEADER
->         #else
->         #include_next <string.h>
->         #endif
->
-> and then in config.mak.uname, do something like this:
->
->         ifneq (,$(findstring MINGW,$(uname_S)))
->         ifndef SYSTEM_STRING_H_HEADER
->         SYSTEM_STRING_H_HEADER = "C:\\llvm\include\string.h"
->         endif
->
->         COMPAT_CFLAGS += -DSYSTEM_STRING_H_HEADER=$(SYSTEM_STRING_H_HEADER)
->         endif
->
-> People who have the system header file at different paths can
-> further override SYSTEM_STRING_H_HEADER in their config.mak.
->
-> That would help compilers targetting mingw that do not support
-> "#include_next" without spreading the damage to other people's
-> systems, I think.
+Exactly, so if the summary of the commit message allows people to skip
+a patch, that is fine.
 
-I think this is less favorable compared to my last proposed solution.
-While my work-around in git-compat-util.h from [1] already is quite
-ugly, it's at least in a single place. You solution spreads the code
-it multiple place, making it even more ugly and less comprehensible,
-IMHO.
+>>> When going through the history I can see that quickly recognizing
+>>> insubstantial changes is useful, but if I see a summary twice then =
+in my
+>>> mind forms a big question mark -- why did the same thing had to be =
+done
+>>> yet
+>>> again?
+>>>
+>>> As an example, both 0d12e59f (pull: replace unnecessary sed invocat=
+ion)
+>>> and
+>>> bc2bbc45 (pull, rebase: simplify to use die()) could arguably have =
+had
+>>> the
+>>> summary "trivial simplification", but I'm glad the author went with
+>>> something a bit more specific.
+>>
+>>
+>> Well I wont. Because it takes long to read, and after reading I stil=
+l
+>> don't don't if they are trivial or not, I might actually have to rea=
+d
+>> the commit message, but to be honest, I would probably go right into
+>> the diff itself, because judging from Git's history, chances are tha=
+t
+>> somebody wrote a novel there with the important bit I'm looking for
+>> just at the end, to don't ruin the suspense.
+>
+>
+> Ha!  It's better to write it down at all than to miss it years later,=
+ when
+> even the original author has forgotten all about it.
 
-[1] http://www.spinics.net/lists/git/msg217546.html
+Yes, of course, but that still means the commit message summary failed
+it's purpose.
 
--- 
-Sebastian Schuberth
+>> In the first commit, it's saying it's a single invocation, so I take
+>> it it's trivial, but what is it replaced with? Is the code simpler, =
+is
+>> it more complex? I don't know, I'm still not being told *why* that
+>> patch is made. It says 'unnecessary' but why is it unnecessary?
+>
+>
+> The sed call is unnecessary because of the fact that it can be replac=
+ed. :)
+> I'm sure I would have understood it to mean a conversion to Shell bui=
+ltin
+> functionality in order to avoid forking and executing an external com=
+mand,
+> even if I hadn't read the patch.
+
+The problem is that the commit message is not for you, it's for every
+reader, so the fact that you would have understood it that way is
+irrelevant.
+
+Maybe this is an exercise in the lack of empathy, and an example of
+mono-culture.
+
+>> In the second commit, it's saying it's a simplification, but I don't
+>> know if it's just one instance, or a thousand, so I don't know what
+>> would be the impact of the patch.
+>>
+>> Either way I'm forced to read more just to know if it was safe for m=
+e
+>> to skip them, at which point the whole purpose of a summary is
+>> defeated.
+>
+>
+> I don't see how using "trivial simplification" as the summary for bot=
+h could
+> have improved matters.
+
+It would say "trivial", which allows me and a lot of other people to
+safely skip them, it's as simple as that.
+
+>>>> Again, triviality and correctness are two separate different thing=
+s.
+>>>> The patch is trivial even if you can't judge it's correctness.
+>>>
+>>>
+>>> Well, in terms of impact I agree.
+>>
+>>
+>> No, in all terms. A patch can be:
+>>
+>> Trivial and correct
+>> Trivial and incorrect
+>> Non-trivial and correct
+>> Non-trivial and incorrect
+>
+>
+> Well, yes, but I thought your statement that "The patch is trivial" w=
+as
+> referring to my actual patch which started this sub-thread.  And I me=
+ant
+> that the benefit of that patch to users and programmers was small.
+
+I don't understand what you are trying to say, the point remains; a
+patch being trivial says nothing about its correctness.
+
+>>>> To me, what you are describing is an obvious patch, not a trivial =
+one.
+>>>> An obvious patch is so obvious that you can judge it's correctness
+>>>> easily by looking at the diff, a trivial one is of little importan=
+ce.
+>>>
+>>>
+>>> That's one definition; I think I had the mathematical notion in min=
+d that
+>>> calls proofs trivial which are immediately evident.
+>>
+>>
+>> We are not talking about mathematics, we are talking about the Engli=
+sh
+>> human language.
+>
+>
+> Here we were talking about source code patches.  As formal descriptio=
+ns of
+> changes to (mostly) programming language text they are closer to math=
+ematics
+> than English.  Using math terms when talking about them is not too fa=
+r of a
+> stretch.
+
+No, we are not. Commit messages have nothing formal about them, they
+are human oriented and colloquial.
+
+--=20
+=46elipe Contreras
