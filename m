@@ -1,238 +1,321 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] branch: use $curr_branch_short more
-Date: Sun, 15 Sep 2013 08:02:31 -0500
-Message-ID: <CAMP44s3f=TzDGkMZawKm-KZozCfSvLQbhvQ83KrM9dqbNBm-pg@mail.gmail.com>
-References: <1377899810-1818-1-git-send-email-felipe.contreras@gmail.com>
-	<1377899810-1818-7-git-send-email-felipe.contreras@gmail.com>
-	<xmqq38pqwlyl.fsf@gitster.dls.corp.google.com>
-	<5221A510.2020206@web.de>
-	<CAMP44s1qyF70eSCM4L1Yr=U02AwFZ0TNqiDvag8Qdzzi9GS1Mw@mail.gmail.com>
-	<5221B324.7020908@web.de>
-	<CAMP44s0et9_e5XH-4aydrM-i_+ORampdsitJzK-rSj+4dwPUKw@mail.gmail.com>
-	<5221C533.1070109@web.de>
-	<CAMP44s39X2SsZC7f6=j=CX+9wky7YpiJUz3itCiqeLScD0TbNA@mail.gmail.com>
-	<522C95F3.5030308@web.de>
-	<CAMP44s0LOhGWpgy6iy==WC7tBtjUjG-CTJ6jXNm+Jumu-5OkXw@mail.gmail.com>
-	<52359D33.508@web.de>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH 1/2] repack: rewrite the shell script in C
+Date: Sun, 15 Sep 2013 17:31:28 +0200
+Message-ID: <5235D2D0.9030203@googlemail.com>
+References: <1377808774-12505-1-git-send-email-stefanbeller@googlemail.com> <1377808774-12505-2-git-send-email-stefanbeller@googlemail.com> <52359D10.1060901@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Sun Sep 15 15:02:43 2013
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Sun Sep 15 17:31:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VLByK-0001Ep-Vw
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Sep 2013 15:02:41 +0200
+	id 1VLEIE-0003NI-O7
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Sep 2013 17:31:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756385Ab3IONCe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Sep 2013 09:02:34 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:52884 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756289Ab3IONCd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Sep 2013 09:02:33 -0400
-Received: by mail-lb0-f172.google.com with SMTP id x18so3355666lbi.17
-        for <git@vger.kernel.org>; Sun, 15 Sep 2013 06:02:32 -0700 (PDT)
+	id S1756964Ab3IOPbS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Sep 2013 11:31:18 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:63879 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756894Ab3IOPbS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Sep 2013 11:31:18 -0400
+Received: by mail-ee0-f46.google.com with SMTP id c13so1513317eek.19
+        for <git@vger.kernel.org>; Sun, 15 Sep 2013 08:31:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=2XxROZn6DEupJvSWrN8P9ouVu3hOuI+oD/5i6rHe2B0=;
-        b=nABBSB6yEvtQXJ3z/Q7zGuGMYTqt0CzTkw8BKpig+k018ww0RH0Dyek25PAYNTsT+6
-         6piCi4xH9TsMgcNLiI454EFk34ebmLA3u8x4Ow6i5rb6VmSjHrNYzbJyElqMGadt3vLE
-         9lRJI0bAUtJEV2J+RaZZ7JD7zkZTQoOCzNDq+tzTeF5IKaqPSiNx/hyQ5VykHc+E5kRK
-         re2m6g6kBK1YtFZcAPS+hubv6laSE+4c/2ZWdrrsCv0PaKob1e7BHbvf/Cpe6SNEroIt
-         WWHuIq+hn10JHPWWhlKnmjOHc9sMCP69tWFr6NVFSeachtMscbTdIDwKEunumOzlpjVT
-         5Q1A==
-X-Received: by 10.112.89.100 with SMTP id bn4mr20671543lbb.16.1379250152075;
- Sun, 15 Sep 2013 06:02:32 -0700 (PDT)
-Received: by 10.114.91.169 with HTTP; Sun, 15 Sep 2013 06:02:31 -0700 (PDT)
-In-Reply-To: <52359D33.508@web.de>
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=wZV5nLrH3yQ5Ta1MgUOLUjVIcyQP8Q7doawMCMXvNnY=;
+        b=eCHj2nWqlBlDdtfVJvwQjvfZJRAnJy0B1PGA9GdWXt8As/gH4cYMoNZbZN3LApvWOU
+         yS6p0NBvNCFq6uOl60kpsepOm00XO91GzUb1EqYJqV7gtobUASobvWxluMxMSHZkwHSJ
+         HE8WKPwNgNACqdDDj6Dh0+brd1xDcjp1pZFQPzynyutF1qkYG96/BIQ+pK/WYvuLvXPz
+         FAdSp429iuXFXk90CcAVP0RThYiFpfyIH/RaerB61Wo9ZNwRsyD1luV7Xll3MGb8cAd+
+         EXX+Sz+IfjSDv0FzGvZZCZMuql0PcHEyWXtMRE6zorzONllKp74zvbyo73uV+JcRP2N0
+         4PKw==
+X-Received: by 10.14.177.199 with SMTP id d47mr35505026eem.14.1379259076439;
+        Sun, 15 Sep 2013 08:31:16 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id a43sm33709454eep.9.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 15 Sep 2013 08:31:15 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
+In-Reply-To: <52359D10.1060901@web.de>
+X-Enigmail-Version: 1.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234817>
 
-On Sun, Sep 15, 2013 at 6:42 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote=
-:
-> Am 09.09.2013 01:13, schrieb Felipe Contreras:
->
->> On Sun, Sep 8, 2013 at 10:21 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
-ote:
->>>
->>> Am 31.08.2013 19:20, schrieb Felipe Contreras:
->>>
->>>> A summary should contain as much information that would allow me t=
-o
->>>> skip the commit message as possible.
->>>>
->>>> If I can't tell from the summary if I can safely skip the commit
->>>> message, the summary is not doing a good job.
->>>>
->>>> "trivial simplification" explains the "what", and the "why" at the
->>>> same time, and allows most people to skip the commit message, thus=
+Rene, thank you very much for the review!
+
+On 09/15/2013 01:42 PM, Ren=E9 Scharfe wrote:
+
+>> +static void remove_temporary_files(void)
+>> +{
+>> +    struct strbuf buf =3D STRBUF_INIT;
+>> +    size_t dirlen, prefixlen;
+>> +    DIR *dir;
+>> +    struct dirent *e;
+>> +
+>> +    dir =3D opendir(packdir);
+>> +    if (!dir)
+>> +        return;
+>> +
+>> +    strbuf_addstr(&buf, packdir);
+>=20
+> Let's say packdir is ".git/objects/pack" (no trailing slash).  Then b=
+uf
+> is ".git/objects/pack" now as well.
+>=20
+>> +
+>> +    /* Point at the slash at the end of ".../objects/pack/" */
+>> +    dirlen =3D buf.len + 1;
+>> +    strbuf_addf(&buf, "%s", packtmp);
+>=20
+> packtmp starts with packdir, so by adding it here we have it twice.  =
+buf
+> is now ".git/objects/pack.git/objects/pack/.tmp-123-pack" (if our pid=
  is
->>>> a good summary.
->>>
->>>
->>>
->>> No patch should be skipped on the mailing list.  As you wrote, triv=
-ial
->>> patches can still be wrong.
->>
->>
->> What patches each persons skips is each person's own decision, don't
->> be patronizing, if I want to skip a trivial patch, I will, I can't
->> read each and every patch from the dozens of mailing lists I'm
->> subscribed to, and there's no way each and every reader is going to
->> read each and every patch. They should be prioritized, and trivial
->> ones can be safely skipped by most people.
->
->
-> Yes, of course; someone needs to review every patch in the end, but e=
-ach
-> reader decides for themselves which ones to skip.  I can't keep up wi=
-th the
-> traffic either.
->
-> By the way, the bikeshedding phenomenon probably causes trivial patch=
-es to
-> receive the most attention. :)
+> 123), no?
+>=20
+> Perhaps don't add the packdir to the strbuf in the first place and
+> calculate dirlen as strlen(packdir) + 1?
+>=20
+> Besided, strbuf_addstr(x, y) is better for adding a string than
+> strbuf_addf(x, "%s", y).
 
-Exactly, so if the summary of the commit message allows people to skip
-a patch, that is fine.
+Oops, thanks for catching that. I'll be sending a fixup commit.
 
->>> When going through the history I can see that quickly recognizing
->>> insubstantial changes is useful, but if I see a summary twice then =
-in my
->>> mind forms a big question mark -- why did the same thing had to be =
-done
->>> yet
->>> again?
->>>
->>> As an example, both 0d12e59f (pull: replace unnecessary sed invocat=
-ion)
->>> and
->>> bc2bbc45 (pull, rebase: simplify to use die()) could arguably have =
-had
->>> the
->>> summary "trivial simplification", but I'm glad the author went with
->>> something a bit more specific.
->>
->>
->> Well I wont. Because it takes long to read, and after reading I stil=
-l
->> don't don't if they are trivial or not, I might actually have to rea=
-d
->> the commit message, but to be honest, I would probably go right into
->> the diff itself, because judging from Git's history, chances are tha=
-t
->> somebody wrote a novel there with the important bit I'm looking for
->> just at the end, to don't ruin the suspense.
->
->
-> Ha!  It's better to write it down at all than to miss it years later,=
- when
-> even the original author has forgotten all about it.
+>=20
+>> +    /* Point at the dash at the end of ".../.tmp-%d-pack-" */
+>> +    prefixlen =3D buf.len - dirlen;
+>=20
+> This is the length of "git/objects/pack/.tmp-123-pack" now.
 
-Yes, of course, but that still means the commit message summary failed
-it's purpose.
+Also fixed.
 
->> In the first commit, it's saying it's a single invocation, so I take
->> it it's trivial, but what is it replaced with? Is the code simpler, =
-is
->> it more complex? I don't know, I'm still not being told *why* that
->> patch is made. It says 'unnecessary' but why is it unnecessary?
->
->
-> The sed call is unnecessary because of the fact that it can be replac=
-ed. :)
-> I'm sure I would have understood it to mean a conversion to Shell bui=
-ltin
-> functionality in order to avoid forking and executing an external com=
-mand,
-> even if I hadn't read the patch.
 
-The problem is that the commit message is not for you, it's for every
-reader, so the fact that you would have understood it that way is
-irrelevant.
+>> +static void get_non_kept_pack_filenames(struct string_list *fname_l=
+ist)
+>> +{
+>> +    DIR *dir;
+>> +    struct dirent *e;
+>> +    char *fname;
+>> +    size_t len;
+>> +
+>> +    if (!(dir =3D opendir(packdir)))
+>> +        return;
+>> +
+>> +    while ((e =3D readdir(dir)) !=3D NULL) {
+>> +        if (suffixcmp(e->d_name, ".pack"))
+>> +            continue;
+>> +
+>> +        len =3D strlen(e->d_name) - strlen(".pack");
+>> +        fname =3D xmemdupz(e->d_name, len);
+>> +
+>> +        if (!file_exists(mkpath("%s/%s.keep", packdir, fname)))
+>> +            string_list_append_nodup(fname_list, fname);
+>=20
+> This leaks fname for packs with .keep files.
+>=20
 
-Maybe this is an exercise in the lack of empathy, and an example of
-mono-culture.
+fixed.
 
->> In the second commit, it's saying it's a simplification, but I don't
->> know if it's just one instance, or a thousand, so I don't know what
->> would be the impact of the patch.
->>
->> Either way I'm forced to read more just to know if it was safe for m=
-e
->> to skip them, at which point the whole purpose of a summary is
->> defeated.
->
->
-> I don't see how using "trivial simplification" as the summary for bot=
-h could
-> have improved matters.
+>> +static void remove_redundant_pack(const char *path_prefix, const ch=
+ar
+>> *hex)
+>> +{
+>> +    const char *exts[] =3D {".pack", ".idx", ".keep"};
+>> +    int i;
+>> +    struct strbuf buf =3D STRBUF_INIT;
+>> +    size_t plen;
+>> +
+>> +    strbuf_addf(&buf, "%s/%s", path_prefix, hex);
+>> +    plen =3D buf.len;
+>> +
+>> +    for (i =3D 0; i < ARRAY_SIZE(exts); i++) {
+>> +        strbuf_setlen(&buf, plen);
+>> +        strbuf_addstr(&buf, exts[i]);
+>> +        unlink(buf.buf);
+>> +    }
+>> +}
+>=20
+> hex must also include the "pack-" prefix and path_prefix must be a
+> directory name.  Perhaps call them base_name and dir_name or similar =
+to
+> make that clearer?
+>=20
+> buf is leaked.
 
-It would say "trivial", which allows me and a lot of other people to
-safely skip them, it's as simple as that.
 
->>>> Again, triviality and correctness are two separate different thing=
-s.
->>>> The patch is trivial even if you can't judge it's correctness.
->>>
->>>
->>> Well, in terms of impact I agree.
->>
->>
->> No, in all terms. A patch can be:
->>
->> Trivial and correct
->> Trivial and incorrect
->> Non-trivial and correct
->> Non-trivial and incorrect
->
->
-> Well, yes, but I thought your statement that "The patch is trivial" w=
-as
-> referring to my actual patch which started this sub-thread.  And I me=
-ant
-> that the benefit of that patch to users and programmers was small.
+buf will be freed.
 
-I don't understand what you are trying to say, the point remains; a
-patch being trivial says nothing about its correctness.
+the parameter hex contains the "pack-" already.
+The remove_redundant_pack function is called in a loop iterating over
+elements of existing_packs, which is filled in get_non_kept_pack_filena=
+mes,
+which doesn't fill in the hex, but filenames without extension.
 
->>>> To me, what you are describing is an obvious patch, not a trivial =
-one.
->>>> An obvious patch is so obvious that you can judge it's correctness
->>>> easily by looking at the diff, a trivial one is of little importan=
-ce.
->>>
->>>
->>> That's one definition; I think I had the mathematical notion in min=
-d that
->>> calls proofs trivial which are immediately evident.
->>
->>
->> We are not talking about mathematics, we are talking about the Engli=
-sh
->> human language.
->
->
-> Here we were talking about source code patches.  As formal descriptio=
-ns of
-> changes to (mostly) programming language text they are closer to math=
-ematics
-> than English.  Using math terms when talking about them is not too fa=
-r of a
-> stretch.
+I'll rename the variables to base_name and dir_name as you suggested.
 
-No, we are not. Commit messages have nothing formal about them, they
-are human oriented and colloquial.
 
+>> +    failed =3D 0;
+>> +    for_each_string_list_item(item, &names) {
+>> +        for (ext =3D 0; ext < 2; ext++) {
+>> +            char *fname, *fname_old;
+>> +            fname =3D mkpathdup("%s/%s%s", packdir,
+>> +                        item->string, exts[ext]);
+>> +            if (!file_exists(fname)) {
+>> +                free(fname);
+>> +                continue;
+>> +            }
+>> +
+>> +            fname_old =3D mkpath("%s/old-%s%s", packdir,
+>> +                        item->string, exts[ext]);
+>> +            if (file_exists(fname_old))
+>> +                if (unlink(fname_old))
+>> +                    failed =3D 1;
+>> +
+>> +            if (!failed && rename(fname, fname_old)) {
+>> +                failed =3D 1;
+>> +                break;
+>=20
+> This leaks fname.
+
+will fix.
+
+>> +            if (rename(fname_old, fname))
+>> +                die_errno(_("renaming '%s' failed"), fname_old);
+>=20
+> The Shell script exits silently in that case.  How about 	improving e=
+rror
+> reporting in a separate patch?
+
+Moved out of the main patch.
+
+
+>> +            if (remove_path(fname))
+>> +                warning(_("removing '%s' failed"), fname);
+>=20
+> Similar case here: The Shell script continues silently.
+>=20
+
+here as well.
+
+>=20
+> If you take care to clear the argv_arrays then perhaps do the same fo=
+r
+> the string_lists?  The OS cleans up after us anyway, but calming
+> Valgrind or similar leak checkers is a good practice nevertheless.
+>=20
+
+I'll do it.
+
+
+So here are the changes, I'll resend the series as well.
+
+--8<--
+=46rom 63c94df8c74c6643d6291c324661a939b9945619 Mon Sep 17 00:00:00 200=
+1
+=46rom: Stefan Beller <stefanbeller@googlemail.com>
+Date: Sun, 15 Sep 2013 17:05:49 +0200
+Subject: [PATCH 1/2] Suggestions by Rene
+
+---
+ builtin/repack.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
+
+diff --git a/builtin/repack.c b/builtin/repack.c
+index a0314be..d345d16 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -39,12 +39,10 @@ static void remove_temporary_files(void)
+ 	if (!dir)
+ 		return;
+=20
+-	strbuf_addstr(&buf, packdir);
+-
+ 	/* Point at the slash at the end of ".../objects/pack/" */
+-	dirlen =3D buf.len + 1;
+-	strbuf_addf(&buf, "%s", packtmp);
+-	/* Point at the dash at the end of ".../.tmp-%d-pack-" */
++	dirlen =3D strlen(packdir) + 1;
++	strbuf_addstr(&buf, packtmp);
++	/* Hold the length of  ".tmp-%d-pack-" */
+ 	prefixlen =3D buf.len - dirlen;
+=20
+ 	while ((e =3D readdir(dir))) {
+@@ -88,6 +86,8 @@ static void get_non_kept_pack_filenames(struct string=
+_list *fname_list)
+=20
+ 		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)))
+ 			string_list_append_nodup(fname_list, fname);
++		else
++			free(fname);
+ 	}
+ 	closedir(dir);
+ }
+@@ -107,6 +107,7 @@ static void remove_redundant_pack(const char *path_=
+prefix, const char *hex)
+ 		strbuf_addstr(&buf, exts[i]);
+ 		unlink(buf.buf);
+ 	}
++	strbuf_release(&buf);
+ }
+=20
+ #define ALL_INTO_ONE 1
+@@ -273,10 +274,12 @@ int cmd_repack(int argc, const char **argv, const=
+ char *prefix)
+ 					failed =3D 1;
+=20
+ 			if (!failed && rename(fname, fname_old)) {
++				free(fname);
+ 				failed =3D 1;
+ 				break;
++			} else {
++				string_list_append(&rollback, fname);
+ 			}
+-			string_list_append(&rollback, fname);
+ 		}
+ 		if (failed)
+ 			break;
+@@ -324,7 +327,7 @@ int cmd_repack(int argc, const char **argv, const c=
+har *prefix)
+ 				chmod(fname_old, statbuffer.st_mode);
+ 			}
+ 			if (rename(fname_old, fname))
+-				die_errno(_("renaming '%s' failed"), fname_old);
++				exit(errno);
+ 			free(fname);
+ 			free(fname_old);
+ 		}
+@@ -338,8 +341,7 @@ int cmd_repack(int argc, const char **argv, const c=
+har *prefix)
+ 					packdir,
+ 					item->string,
+ 					exts[ext]);
+-			if (remove_path(fname))
+-				warning(_("removing '%s' failed"), fname);
++			remove_path(fname);
+ 		}
+ 	}
+=20
+@@ -376,5 +378,10 @@ int cmd_repack(int argc, const char **argv, const =
+char *prefix)
+ 		argv_array_clear(&cmd_args);
+ 	}
+ 	remove_temporary_files();
++	string_list_clear(&names, 0);
++	string_list_clear(&rollback, 0);
++	string_list_clear(&existing_packs, 0);
++	strbuf_release(&line);
++
+ 	return 0;
+ }
 --=20
-=46elipe Contreras
+1.8.4.273.ga194ead
