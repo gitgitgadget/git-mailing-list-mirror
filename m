@@ -1,146 +1,76 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 3/3] git submodule update should give notice when run
- without init beforehand
-Date: Mon, 16 Sep 2013 19:06:42 +0200
-Message-ID: <52373AA2.9050807@web.de>
-References: <1379266703-29808-1-git-send-email-rctay89@gmail.com> <1379266703-29808-2-git-send-email-rctay89@gmail.com> <1379266703-29808-3-git-send-email-rctay89@gmail.com>
+From: Jason Gunthorpe <jgunthorpe@obsidianresearch.com>
+Subject: Git rebase dies with fatal: Unable to create '.../.git/index.lock':
+ File exists.
+Date: Mon, 16 Sep 2013 12:28:52 -0600
+Message-ID: <20130916182852.GA14513@obsidianresearch.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 16 19:06:57 2013
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 16 20:29:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VLcGD-0003C5-2H
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Sep 2013 19:06:53 +0200
+	id 1VLdXe-0002gY-Li
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Sep 2013 20:28:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519Ab3IPRGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Sep 2013 13:06:49 -0400
-Received: from mout.web.de ([212.227.17.12]:62375 "EHLO mout.web.de"
+	id S1752043Ab3IPS2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Sep 2013 14:28:54 -0400
+Received: from quartz.orcorp.ca ([184.70.90.242]:47925 "EHLO quartz.orcorp.ca"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750982Ab3IPRGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Sep 2013 13:06:48 -0400
-Received: from [192.168.178.41] ([91.3.180.25]) by smtp.web.de (mrweb004)
- with ESMTPA (Nemesis) id 0LxJVq-1W10V20r8s-0171Bn for <git@vger.kernel.org>;
- Mon, 16 Sep 2013 19:06:46 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <1379266703-29808-3-git-send-email-rctay89@gmail.com>
-X-Enigmail-Version: 1.5.2
-X-Provags-ID: V03:K0:j7QCj8qEqsgD/fqwTXIkYvOPoI213WMhTzxBKON/e6+V/WjBnch
- T9bJkqWkATzD6JIIBQWr8rBuWk3gEOee+deBewNz+asYe7G3JQ1xipftIoyVk3Grlq1vD8F
- NSmXAFJcBs8j1xIJqRdRAX97rOdoeBBZ76alz3waoSvDbtzCcOap+CZv0/ed1g5cq8fsi9y
- U35kyoXgeQqNSSHBOzkMQ==
+	id S1752065Ab3IPS2x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Sep 2013 14:28:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=obsidianresearch.com; s=rsa1;
+	h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date; bh=aCh35uyJM0Z0sSq3Qvl7cSBPISm0GRF+79R/q0SXDFI=;
+	b=exnOrsE5Zmw+8DSkNzFuqQDoH1xQ9LYLUCenRaBVlUhRAqlVSIiSx2W8LJgmPu2AduZGQX4XwYFMbQbH38em3Dmk5UJ/2limd7/ufujsZ5pnc0IgWDDgBAd3ynmSgnejFwjelcXA/KCgS72ebEFOAGbUXs2lwEPwojpeTiLKYGU=;
+Received: from [10.0.0.161] (helo=jggl.edm.orcorp.ca)
+	by quartz.orcorp.ca with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <jgunthorpe@obsidianresearch.com>)
+	id 1VLdXY-0001BH-Dg
+	for git@vger.kernel.org; Mon, 16 Sep 2013 12:28:52 -0600
+Received: from jgg by jggl.edm.orcorp.ca with local (Exim 4.80)
+	(envelope-from <jgunthorpe@obsidianresearch.com>)
+	id 1VLdXY-0004za-2y
+	for git@vger.kernel.org; Mon, 16 Sep 2013 12:28:52 -0600
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Broken-Reverse-DNS: no host name found for IP address 10.0.0.161
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234839>
 
-Am 15.09.2013 19:38, schrieb Tay Ray Chuan:
-> When 'update' is run with no path in a repository with uninitialized
-> submodules, the program terminates with no output, and zero status code.
-> Be more helpful to users by mentioning this.
+Scenario, run:
 
-Hmm, this patch is changing the default behavior, right? I assume the
-motivation for this patch is to help people who tend to forget to init
-submodules they need to have checked out, which is a good idea. But I
-think this should not be enabled by default, as in a lot of use cases
-one or more uninitialized submodules are present on purpose. In those
-use cases it would be rather nasty to error out on every submodule
-update.
+ $ git rebase  v3.10.12 --autosquash  -i
 
-After the 'autoinit' configuration (which lets upstream hint that
-certain submodules should be initialized on clone) has materialzed we
-might want to enable this error for these specific submodules. But in
-any case the error message should contain a hint on how you can get
-rid of the error in case you know what you are doing ;-).
+And randomly get this:
 
-> This may be controlled by an advice.* option.
->
-> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-> ---
->  Documentation/config.txt    |  5 +++++
->  git-submodule.sh            | 16 ++++++++++++++--
->  t/t7406-submodule-update.sh |  5 ++++-
->  3 files changed, 23 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index ec57a15..79313f9 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -202,6 +202,11 @@ advice.*::
->  	rmHints::
->  		In case of failure in the output of linkgit:git-rm[1],
->  		show directions on how to proceed from the current state.
-> +	submoduleUpdateUninit::
-> +		When linkgit:git-submodule[1] `update` is run with no `path`
-> +		arguments in a repository with uninitialized submodules,
-> +		mention that uninitalized submodules are indeed present, and
-> +		that they may be initialized with the `--init` option.
->  --
->  
->  core.fileMode::
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 2979197..56f3dc2 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -777,6 +777,7 @@ cmd_update()
->  	cloned_modules=
->  	module_list "$@" | {
->  	err=
-> +	has_uninit=
->  	while read mode sha1 stage sm_path
->  	do
->  		die_if_unmatched "$mode"
-> @@ -807,9 +808,13 @@ cmd_update()
->  		then
->  			# Only mention uninitialized submodules when its
->  			# path have been specified
-> -			test "$#" != "0" &&
-> -			say "$(eval_gettext "Submodule path '\$displaypath' not initialized
-> +			if test "$#" != "0"
-> +			then
-> +				say "$(eval_gettext "Submodule path '\$displaypath' not initialized
->  Maybe you want to use 'update --init'?")"
-> +			else
-> +				has_uninit=1
-> +			fi
->  			continue
->  		fi
->  
-> @@ -940,6 +945,13 @@ Maybe you want to use 'update --init'?")"
->  		IFS=$OIFS
->  		exit 1
->  	fi
-> +
-> +	if test -n "$has_uninit" \
-> +		-a "$(git config --bool --get advice.submoduleUpdateUninit)" != "false"
-> +	then
-> +		say "$(eval_gettext "Uninitialized submodules were detected;
-> +Maybe you want to use 'update --init'?")"
-> +	fi
->  	}
->  }
->  
-> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> index 00475eb..8dbe410 100755
-> --- a/t/t7406-submodule-update.sh
-> +++ b/t/t7406-submodule-update.sh
-> @@ -76,8 +76,11 @@ test_expect_success 'submodule update <path> warns without init beforehand' '
->  	)
->  '
->  
-> -test_expect_success 'submodule update is silent without init beforehand' '
-> +test_expect_success 'submodule update warns without init beforehand' '
->  	(cd super2 &&
-> +	 test_must_fail git config --get advice.submoduleUpdateUninit &&
-> +	 test -n "$(git submodule update)" &&
-> +	 git config advice.submoduleUpdateUninit false &&
->  	 test -z "$(git submodule update)"
->  	)
->  '
-> 
+ fatal: Unable to create '.../linux/.git/index.lock': File exists.
+
+ If no other git process is currently running, this probably means a
+ git process crashed in this repository earlier. Make sure no other git
+ process is running and remove the file manually to continue.
+ Could not apply ....
+
+I've noticed this happening randomly for a few years now, and always
+chalked it up to NFS weirdness, but I figured out what is going on
+today (as I am not using NFS right now)..
+
+I have emacs windows open that have files within the git tree open in
+them. My emacs has vc-git mode loaded and global-auto-revert-mode set.
+
+During the rebase the files open in emacs are changed by git, when
+emacs notices this (which is random with respect to the ongoing
+rebase) it auto reverts and runs git commands (due to vc-git), which
+causes the rebase to randomly fail.
+
+Worse, I've noticed that this also randomly seems to cause the rebase
+to loose a commit if you --continue from that point.
+
+Can git have some retry in the locking so this doesn't happen?
+
+Jason
