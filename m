@@ -1,76 +1,72 @@
-From: Jason Gunthorpe <jgunthorpe@obsidianresearch.com>
-Subject: Git rebase dies with fatal: Unable to create '.../.git/index.lock':
- File exists.
-Date: Mon, 16 Sep 2013 12:28:52 -0600
-Message-ID: <20130916182852.GA14513@obsidianresearch.com>
+From: Thomas Koch <thomas-5j3myg3OO4w@public.gmane.org>
+Subject: cdgit: cd relative to git workdir root
+Date: Mon, 16 Sep 2013 21:01:14 +0200
+Message-ID: <201309162101.14879.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 16 20:29:01 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org" <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>,
+	"vcs-home" <vcs-home-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org>
+X-From: vcs-home-bounces+gcvh-vcs-home=m.gmane.org-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org Mon Sep 16 21:04:17 2013
+Return-path: <vcs-home-bounces+gcvh-vcs-home=m.gmane.org-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org>
+Envelope-to: gcvh-vcs-home@m.gmane.org
+Received: from domine.madduck.net ([77.109.139.90])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VLdXe-0002gY-Li
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Sep 2013 20:28:59 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752043Ab3IPS2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Sep 2013 14:28:54 -0400
-Received: from quartz.orcorp.ca ([184.70.90.242]:47925 "EHLO quartz.orcorp.ca"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752065Ab3IPS2x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Sep 2013 14:28:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=obsidianresearch.com; s=rsa1;
-	h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date; bh=aCh35uyJM0Z0sSq3Qvl7cSBPISm0GRF+79R/q0SXDFI=;
-	b=exnOrsE5Zmw+8DSkNzFuqQDoH1xQ9LYLUCenRaBVlUhRAqlVSIiSx2W8LJgmPu2AduZGQX4XwYFMbQbH38em3Dmk5UJ/2limd7/ufujsZ5pnc0IgWDDgBAd3ynmSgnejFwjelcXA/KCgS72ebEFOAGbUXs2lwEPwojpeTiLKYGU=;
-Received: from [10.0.0.161] (helo=jggl.edm.orcorp.ca)
-	by quartz.orcorp.ca with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <jgunthorpe@obsidianresearch.com>)
-	id 1VLdXY-0001BH-Dg
-	for git@vger.kernel.org; Mon, 16 Sep 2013 12:28:52 -0600
-Received: from jgg by jggl.edm.orcorp.ca with local (Exim 4.80)
-	(envelope-from <jgunthorpe@obsidianresearch.com>)
-	id 1VLdXY-0004za-2y
-	for git@vger.kernel.org; Mon, 16 Sep 2013 12:28:52 -0600
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Broken-Reverse-DNS: no host name found for IP address 10.0.0.161
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234839>
+	(envelope-from <vcs-home-bounces+gcvh-vcs-home=m.gmane.org-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org>)
+	id 1VLe5o-0006kX-Bu
+	for gcvh-vcs-home@m.gmane.org; Mon, 16 Sep 2013 21:04:16 +0200
+Received: from domine.madduck.net (localhost [IPv6:::1])
+	by domine.madduck.net (Postfix) with ESMTP id E0D2A20C74
+	for <gcvh-vcs-home@m.gmane.org>; Mon, 16 Sep 2013 21:04:13 +0200 (CEST)
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.97.8 at domine
+Received: from koch.ro (koch.ro [88.198.2.104])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(Client did not present a certificate)
+	by domine.madduck.net (Postfix) with ESMTPS id 2C0A42011F
+	for <vcs-home-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org>; Mon, 16 Sep 2013 21:01:25 +0200 (CEST)
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.97.8 at domine
+Received: from 44-25.106-92.cust.bluewin.ch ([92.106.25.44]
+	helo=x121eofhwr1202.localnet)
+	by koch.ro with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:256)
+	(Exim 4.80) (envelope-from <thomas-5j3myg3OO4w@public.gmane.org>)
+	id 1VLe2x-0006oj-Bz; Mon, 16 Sep 2013 21:01:19 +0200
+User-Agent: KMail/1.13.7 (Linux/3.10-0.bpo.2-amd64; KDE/4.8.4; x86_64; ; )
+X-BeenThere: vcs-home-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org
+X-Mailman-Version: 2.1.13
+Precedence: list
+List-Id: Discussion list for storing ~ under VCS control
+	<vcs-home.lists.madduck.net>
+List-Unsubscribe: <http://lists.madduck.net/options/vcs-home>,
+	<mailto:vcs-home-request-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.madduck.net/pipermail/vcs-home>
+List-Post: <mailto:vcs-home-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org>
+List-Help: <mailto:vcs-home-request-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.madduck.net/listinfo/vcs-home>,
+	<mailto:vcs-home-request-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org?subject=subscribe>
+Sender: vcs-home-bounces+gcvh-vcs-home=m.gmane.org-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org
+Errors-To: vcs-home-bounces+gcvh-vcs-home=m.gmane.org-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234840>
 
-Scenario, run:
+Hi,
 
- $ git rebase  v3.10.12 --autosquash  -i
+I frequently have the need to cd back to the root of the current git workdir 
+and created to alias for this:
 
-And randomly get this:
+git alias root = rev-parse --show-toplevel
 
- fatal: Unable to create '.../linux/.git/index.lock': File exists.
+shell alias cdgit = cd $(git root)
 
- If no other git process is currently running, this probably means a
- git process crashed in this repository earlier. Make sure no other git
- process is running and remove the file manually to continue.
- Could not apply ....
+Maybe somebody likes this.
 
-I've noticed this happening randomly for a few years now, and always
-chalked it up to NFS weirdness, but I figured out what is going on
-today (as I am not using NFS right now)..
+Now it would be cool, to have an alias to cd into a specific subdir of the git 
+worktree and have zsh (or bash) auto completion for this like
 
-I have emacs windows open that have files within the git tree open in
-them. My emacs has vc-git mode loaded and global-auto-revert-mode set.
+git clone git://git.kernel.org/pub/scm/git/git.git
+cd git/gitweb/static/js/lib (just to be somewhere deep)
+cdgit con<tab>/com<tab> (becomes: cdgit contrib/completion)
 
-During the rebase the files open in emacs are changed by git, when
-emacs notices this (which is random with respect to the ongoing
-rebase) it auto reverts and runs git commands (due to vc-git), which
-causes the rebase to randomly fail.
+Somebody with zsh/bash skills who already did this?
 
-Worse, I've noticed that this also randomly seems to cause the rebase
-to loose a commit if you --continue from that point.
-
-Can git have some retry in the locking so this doesn't happen?
-
-Jason
+Regards, Thomas Koch
