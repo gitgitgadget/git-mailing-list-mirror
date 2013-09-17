@@ -1,68 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/4] stop storing trailing slash in dir-hash
-Date: Tue, 17 Sep 2013 10:11:25 -0700
-Message-ID: <xmqqk3ifz83m.fsf@gitster.dls.corp.google.com>
-References: <1379401577-36799-1-git-send-email-sunshine@sunshineco.com>
+Subject: Re: [PATCH] diff: add a config option to control orderfile
+Date: Tue, 17 Sep 2013 10:24:19 -0700
+Message-ID: <xmqqfvt3z7i4.fsf@gitster.dls.corp.google.com>
+References: <20130831194425.GA14706@redhat.com>
+	<xmqqioyhu8wd.fsf@gitster.dls.corp.google.com>
+	<20130903210815.GB24480@redhat.com>
+	<20130915074900.GA30438@redhat.com>
+	<20130915080830.GA30465@redhat.com>
+	<xmqq8uyv1kka.fsf@gitster.dls.corp.google.com>
+	<20130917164226.GB20672@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Sep 17 19:11:33 2013
+Cc: git@vger.kernel.org
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Sep 17 19:24:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VLyoG-0004xv-GG
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 19:11:32 +0200
+	id 1VLz0m-0002pW-8o
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 19:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801Ab3IQRL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Sep 2013 13:11:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60292 "EHLO
+	id S1753447Ab3IQRYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Sep 2013 13:24:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51972 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753539Ab3IQRL2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Sep 2013 13:11:28 -0400
+	id S1752914Ab3IQRYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Sep 2013 13:24:23 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9300441273;
-	Tue, 17 Sep 2013 17:11:27 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 679524221D;
+	Tue, 17 Sep 2013 17:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VCG01+Sv+wy3jC0KxlAyDB359Is=; b=d93gOa
-	bToNQ/7CWzxYku5gQ32CE3a206zeu2Z5ji3drEWp6YO98NVUBdVIQsrJYOX2XquI
-	bvtP37M1lnBZqvXck+gwTxHggA9ktiawEIZ39XmOi+JaJmshV+TaE814ZigegUYb
-	Sp1cEAcbwnpfPIYSewWwG0ACOI/tqS3eU022k=
+	:content-type; s=sasl; bh=wfOF+I3yfst73LfzU/GAnRg8C6I=; b=nSdLVc
+	1e43O7hbQxNRC5WpcG3AAKLoHk8YZIgRVl7L+T1c3Iqo3JFn0x6mulOTxT6guviI
+	4aC19XbxRHw4UeGsgeNF9hZ5/BB05fXrL92yHG8nTSGIURFC6aIXW4il7bhdxWs2
+	dpqmPvL3qn/GaYeitg61szxs2XNw+gjz+OQ+w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AvRl8eHA1fxVk0NiHYCg0LTEiBMizu9W
-	yYw9ol71GVfbGvz33gBFyKh9PZzCMoioeDYx3Rw38bKUMiNUNVDa9KCHETBWbbP5
-	MD2Mgq5qqKZP2NLiMriVrzDE182k9pMbqamAQwhNN5Z4jZ3PeVnNsFVEli6C8Yh6
-	k5XhL21JaoY=
+	:content-type; q=dns; s=sasl; b=VYrUgWAldGg0484bCCjixkwknYIqAmu4
+	SST2gOg/R0qidwr7/rJj06MIpJjKpi2tfowaHC6BvJKio0T9wOp5MvuKZZvZEUzn
+	BUnqG0/Ui/m/gv5qnD/EglrwPHYRR2KyH0TxIWETRg2tyVDpeEwrv39iIVR4c4zw
+	UWsFnqWb16Y=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88F9C41272;
-	Tue, 17 Sep 2013 17:11:27 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DDB44221C;
+	Tue, 17 Sep 2013 17:24:22 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A59141270;
-	Tue, 17 Sep 2013 17:11:26 +0000 (UTC)
-In-Reply-To: <1379401577-36799-1-git-send-email-sunshine@sunshineco.com> (Eric
-	Sunshine's message of "Tue, 17 Sep 2013 03:06:13 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF44942207;
+	Tue, 17 Sep 2013 17:24:21 +0000 (UTC)
+In-Reply-To: <20130917164226.GB20672@redhat.com> (Michael S. Tsirkin's message
+	of "Tue, 17 Sep 2013 19:42:26 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2FFA92B4-1FBC-11E3-9E6C-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FDC2C8A0-1FBD-11E3-AD28-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234892>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-> * Split v1 patch 1 into v2 patches 1 & 2 to ease review. (This is
->   possible now that index_name_exists() retains its original behavior.)
+> So might it not be useful to tweak patch id to
+> sort the diff, making it a bit more stable?
 
-It really shows in [PATCH 2/4] that illustrates which callers were
-depending on the old calling convention; I like it.
+That is one thing that needs to be done, I think.  But it would be
+unfortunate if we have to do that unconditionally, though, as we may
+be "buffering" many hundred kilobytes of patch text in core.  If we
+can do so without regressing the streaming performance for the most
+common case of not using the orderfile on the generating side (hence
+not having to sort on the receiving end), it would be ideal.  I am
+not sure offhand how much code damage we are talking about, though.
 
-Thanks.
+> I'll be glad to help do this if you tell me what these parts are.
+> anything else besides fixing besides the stand-alone patch id?
+
+Off the top of my head I do not think of one (but that is not a
+guarantee that there isn't any).
