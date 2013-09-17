@@ -1,93 +1,82 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] diff: add a config option to control orderfile
-Date: Tue, 17 Sep 2013 23:41:59 +0300
-Message-ID: <20130917204159.GA22116@redhat.com>
-References: <20130915080830.GA30465@redhat.com>
- <xmqq8uyv1kka.fsf@gitster.dls.corp.google.com>
- <20130917164226.GB20672@redhat.com>
- <xmqqfvt3z7i4.fsf@gitster.dls.corp.google.com>
- <20130917172829.GA21121@redhat.com>
- <xmqq38p3z5kg.fsf@gitster.dls.corp.google.com>
- <20130917201401.GA22000@redhat.com>
- <20130917201604.GA22008@redhat.com>
- <20130917201828.GC16860@sigill.intra.peff.net>
- <20130917203807.GA22059@redhat.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: git bisect should accept "paths-to-be-excluded"
+Date: Tue, 17 Sep 2013 13:47:07 -0700
+Message-ID: <xmqqwqmfw4z8.fsf@gitster.dls.corp.google.com>
+References: <5236FBEA.80909@gmx.de>
+	<CAP8UFD0qC3UM3Dgt2dhpcBHt34yZ3HwNO6y7Z=EBtyRYpyc+Bw@mail.gmail.com>
+	<vpqvc1z6eoo.fsf@anie.imag.fr>
+	<CAP8UFD1u9hPFcbftpacDFdp27Jmp0YLGbpHPP12uEtjzEmnPQA@mail.gmail.com>
+	<CACsJy8AEoUUat-1smJ1BmDuDBLseWf8oZ+EJyuadSLncb1UMSw@mail.gmail.com>
+	<xmqqsix3z8ie.fsf@gitster.dls.corp.google.com>
+	<1496b663-6b6c-45a2-95d1-cbe634b0d160@email.android.com>
+	<xmqqpps7xoax.fsf@gitster.dls.corp.google.com>
+	<CAA01Csp6tjKJ9LqX+9qcJL4t3kfFJCagjZQ=QwddvscPori9Ow@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Sep 17 22:40:57 2013
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Toralf =?utf-8?Q?F=C3=B6rster?= <toralf.foerster@gmx.de>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 17 22:47:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VM24s-00043Y-50
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 22:40:54 +0200
+	id 1VM2B7-0003Cp-33
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 22:47:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753458Ab3IQUku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Sep 2013 16:40:50 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:28249 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753041Ab3IQUkt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Sep 2013 16:40:49 -0400
-Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r8HKdkoE019285
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 17 Sep 2013 16:39:47 -0400
-Received: from redhat.com (vpn1-4-197.ams2.redhat.com [10.36.4.197])
-	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id r8HKdiBZ018886;
-	Tue, 17 Sep 2013 16:39:45 -0400
-Content-Disposition: inline
-In-Reply-To: <20130917203807.GA22059@redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
+	id S1753343Ab3IQUrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Sep 2013 16:47:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60574 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752003Ab3IQUrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Sep 2013 16:47:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F41743E03;
+	Tue, 17 Sep 2013 20:47:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=D7w28MLMcY0PAjwB++Ms31vtYpk=; b=qcwh6M
+	Q/zl5BVtYz1Bmt7P20k5p07XX/hfxKzwZwxwieeY5x9F16TtUqdrZqPcgBY3IWXS
+	vnrh1uDE2oa2w8QuKBBC6CoUizha3asbJZMOU1Kpi7387GRF8cfpcpx7Myz400YZ
+	yM3LbdWCvapQ/AZWXt6Mr7BCbbQ6dbM3RH/MA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z52VwFQdpHqShCkIRdRfgcuFk15DtdXB
+	cwQKDSvVARwYi94ZaqO4B7l1Av3OwtylNLgw8+4NOOV6vkVJoQuzB2SYzB+7SCxt
+	iwJtsRlSNO8yRXsDTPh0oXuyw+AB0arMpdorU4ok/ZrLz++zltKz1z1lNDRAjh1w
+	B0Fg8jfhF2Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EBBE43E02;
+	Tue, 17 Sep 2013 20:47:09 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D71A43DFF;
+	Tue, 17 Sep 2013 20:47:08 +0000 (UTC)
+In-Reply-To: <CAA01Csp6tjKJ9LqX+9qcJL4t3kfFJCagjZQ=QwddvscPori9Ow@mail.gmail.com>
+	(Piotr Krukowiecki's message of "Tue, 17 Sep 2013 21:41:50 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 51C9545C-1FDA-11E3-972D-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234926>
 
-On Tue, Sep 17, 2013 at 11:38:07PM +0300, Michael S. Tsirkin wrote:
-> On Tue, Sep 17, 2013 at 04:18:28PM -0400, Jeff King wrote:
-> > On Tue, Sep 17, 2013 at 11:16:04PM +0300, Michael S. Tsirkin wrote:
-> > 
-> > > > Thinking about it some more, it's a best effort thing anyway,
-> > > > correct?
-> > > > 
-> > > > So how about, instead of doing a hash over the whole input,
-> > > > we hash each chunk and XOR them together?
-> > > > 
-> > > > This way it will be stable against chunk reordering, and
-> > > > no need to keep patch in memory.
-> > > > 
-> > > > Hmm?
-> > > 
-> > > ENOCOFFEE
-> > > 
-> > > That was a silly suggestion, two identical chunks aren't that unlikely :)
-> > 
-> > In a single patch, they should not be, as we should be taking into
-> > account the filenames, no?
-> 
-> Right.
-> 
-> > You could also do it hierarchically. Hash each chunk, store only the
-> > hashes, then sort them and hash the result. That still has O(chunks)
-> > storage, but it is only one hash per chunk, not the whole data.
-> 
-> Could be optional too :)
-> Or maybe just sum byte by byte instead.
+Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
 
-One's complement probably ...
+> Ignoring (possible) inconsistency thing, I think they are easy to
+> understand and use.
 
-> > A problem with both schemes, though, is that they are not
-> > backwards-compatible with existing git-patch-id implementations.
-> 
-> Could you clarify?
-> We never send patch IDs on the wire - how isn't this compatible?
-> 
-> > Whereas
-> > sorting the data itself is (kind of, at least with respect to people who
-> > are not using orderfile).
-> > 
-> > -Peff
+Probably you are right (in the sense that I do not offhand think of
+a confusing and ambiguous set of positive and negative pathspecs;
+others may find holes in my/our thinking).
+
+I am not sure if it will fit well to the current "struct pathspec"
+design, though.  We could start from "when there is any negative
+pathspec, disable the 'optimize away the common leading prefix'
+thing", I guess.
