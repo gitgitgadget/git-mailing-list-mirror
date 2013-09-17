@@ -1,71 +1,83 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: Delete branch during fast-import
-Date: Tue, 17 Sep 2013 14:54:32 -0500
-Message-ID: <5238b378b6616_1b88104fe74471e@nysa.mail>
-References: <20130917174954.GA28563@home.jasonmmiller.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG?] git checkout $commit -- somedir doesn't drop files
+Date: Tue, 17 Sep 2013 16:10:04 -0400
+Message-ID: <20130917201003.GA16860@sigill.intra.peff.net>
+References: <20130917190659.GA15588@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Jason Miller <jason@milr.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 17 22:00:38 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Tue Sep 17 22:10:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VM1Rs-0005XO-Qa
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 22:00:37 +0200
+	id 1VM1bh-0005Zh-4C
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 22:10:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753870Ab3IQUAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Sep 2013 16:00:30 -0400
-Received: from mail-qc0-f170.google.com ([209.85.216.170]:41239 "EHLO
-	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753859Ab3IQUA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Sep 2013 16:00:28 -0400
-Received: by mail-qc0-f170.google.com with SMTP id m20so3987615qcx.29
-        for <git@vger.kernel.org>; Tue, 17 Sep 2013 13:00:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-type:content-transfer-encoding;
-        bh=peMZndybIhROkPMiGaNi6gM5kluPnN2EX2PAx7OYUUY=;
-        b=cRmaxCgQqznew526Gg1Cxt9FFuo7KZX4D2OfXE9o8ml08ak0GKYJ+gaUB0SkNHhVQ0
-         R+mSHrx2rJfCZA7rPmoXcYi+4yXkO+AkLWNmMEu1fqWNi5yc4ZEZJcfYgEYtcujuFFQh
-         o1VxkGK2HjbHA+fIbdHrAWTVE+otwSAn6r99vhaSiDT5A11z6BFZfY945+tOxEUZ2AQV
-         sASbtvk23Ra+ZgJjHERA/WXH9L8OgdCepDrFI78iBNfvLyZMzrUXR8oWd35ZOodg3t57
-         YhbE6zgOtNVxSbrC1HTzo8OfS++yST13f7dQisAi88wK8lad1Sc4bOTy4P563PE/46tm
-         m3Rg==
-X-Received: by 10.49.128.68 with SMTP id nm4mr17871418qeb.68.1379448028131;
-        Tue, 17 Sep 2013 13:00:28 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id 5sm3678454qao.3.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 17 Sep 2013 13:00:26 -0700 (PDT)
-In-Reply-To: <20130917174954.GA28563@home.jasonmmiller.org>
+	id S1753709Ab3IQUKi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Sep 2013 16:10:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47539 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753254Ab3IQUKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Sep 2013 16:10:11 -0400
+Received: (qmail 20480 invoked by uid 102); 17 Sep 2013 20:10:11 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Sep 2013 15:10:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Sep 2013 16:10:04 -0400
+Content-Disposition: inline
+In-Reply-To: <20130917190659.GA15588@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234912>
 
-Jason Miller wrote:
-> I'm trying out a rather large subversion import, and am trying to
-> figure out if there is a way to delete branches during a fast-import.
-> 
-> Right now I can think of only 2 ways to handle this:
-> 
-> 1) End the import, do a git branch -D and then resume the import.
-> 
-> 2) Scan the entire repository history, identify
-> deleted branches and handle them upfront so that they never have
-> conflicting names.
-> 
-> Is there a better way?
+On Tue, Sep 17, 2013 at 09:06:59PM +0200, Uwe Kleine-K=C3=B6nig wrote:
 
-Yes, support branch deletion natively:
+> 	$ git checkout HEAD^ -- subdir
+>=20
+> I'd expect that subdir/b is removed from the index as this file didn'=
+t
+> exist in HEAD^ but git-status only reports:
 
-http://mid.gmane.org/1377789808-2213-7-git-send-email-felipe.contreras@gmail.com
+I'm not sure if this is intentional or not. The definition of "git
+checkout $tree $path" given in commit 0a1283b says:
 
--- 
-Felipe Contreras
+    Checking paths out of a tree is (currently) defined to do:
+
+     - Grab the paths from the named tree that match the given pathspec=
+,
+       and add them to the index;
+
+     - Check out the contents from the index for paths that match the
+       pathspec to the working tree; and while at it
+
+     - If the given pathspec did not match anything, suspect a typo fro=
+m the
+       command line and error out without updating the index nor the wo=
+rking
+       tree.
+
+So we are applying the pathspec to the named tree, and pulling anything
+that matches into the index. Which by definition cannot involve a
+deletion, because there is no comparison happening (so we either have
+it, or we do not). Whereas what you are expecting is to compare the tre=
+e
+and the index, limited by the pathspec, and pull any changes from the
+tree into the index.
+
+I tend to agree that the latter is more like how other git commands
+behave (e.g., if you tried to use "read-tree" to emulate what
+git-checkout was doing, I think you would end up with a two-way merge).
+But there may be implications I haven't thought of.
+
+Note also that "git checkout -p" does present "subdir/b" as a deletion.
+It works by doing a pathspec-limited diff between the two endpoints,
+which will notice deletions. So there is some inconsistency there with
+the baseline form.
+
+-Peff
