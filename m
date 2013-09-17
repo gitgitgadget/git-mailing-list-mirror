@@ -1,75 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: git bisect should accept "paths-to-be-excluded"
-Date: Tue, 17 Sep 2013 12:04:22 -0700
-Message-ID: <xmqqpps7xoax.fsf@gitster.dls.corp.google.com>
-References: <5236FBEA.80909@gmx.de>
-	<CAP8UFD0qC3UM3Dgt2dhpcBHt34yZ3HwNO6y7Z=EBtyRYpyc+Bw@mail.gmail.com>
-	<vpqvc1z6eoo.fsf@anie.imag.fr>
-	<CAP8UFD1u9hPFcbftpacDFdp27Jmp0YLGbpHPP12uEtjzEmnPQA@mail.gmail.com>
-	<CACsJy8AEoUUat-1smJ1BmDuDBLseWf8oZ+EJyuadSLncb1UMSw@mail.gmail.com>
-	<xmqqsix3z8ie.fsf@gitster.dls.corp.google.com>
-	<1496b663-6b6c-45a2-95d1-cbe634b0d160@email.android.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [BUG?] git checkout $commit -- somedir doesn't drop files
+Date: Tue, 17 Sep 2013 21:06:59 +0200
+Message-ID: <20130917190659.GA15588@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Toralf =?utf-8?Q?F=C3=B6rster?= <toralf.foerster@gmx.de>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 17 21:04:40 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 17 21:07:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VM0Zi-0002jg-AT
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 21:04:38 +0200
+	id 1VM0c8-0000G6-B6
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 21:07:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753726Ab3IQTE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Sep 2013 15:04:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34006 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753703Ab3IQTEZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Sep 2013 15:04:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DF4C42E7C;
-	Tue, 17 Sep 2013 19:04:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4Ev4fXC0mBzYNbvBwtgf7pOCLvY=; b=sIwGlX
-	cPi5RaKQKlsKEASKLJw02Jqa0wBF7zRYGTGA085+mOxFMTAcYYBtHU0+RWSkTrp2
-	m4KpWIqgBdp9qG3Zzc2zi86ArzSafT28nPQDL3XI3Rm98sQMLKjfoJ3D+q4sdEH7
-	7zzSD6Vkjo7L0heLDoqZTGpojnrKjDfC1p+eU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZasQO9crxAIAbJ05bbAnCDjP3FcDdtGS
-	UcvTH8kTp/ULSz58n2cOuOKSblsNMI3eajflev0pburf6MKFlFuRePJNdaLskBch
-	p9uJwdRh9+oRRJPUey7p43XcZkW8Mx4eDT8TVw7TxlFI6gqf74oqSAz46oihVyZy
-	ZXwUxqpV+k0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AB0442E7B;
-	Tue, 17 Sep 2013 19:04:25 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 47F8342E75;
-	Tue, 17 Sep 2013 19:04:24 +0000 (UTC)
-In-Reply-To: <1496b663-6b6c-45a2-95d1-cbe634b0d160@email.android.com> (Piotr
-	Krukowiecki's message of "Tue, 17 Sep 2013 20:12:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F79529E2-1FCB-11E3-A40B-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753371Ab3IQTHB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Sep 2013 15:07:01 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:51094 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753142Ab3IQTHA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Sep 2013 15:07:00 -0400
+Received: from dude.hi.pengutronix.de ([2001:6f8:1178:2:21e:67ff:fe11:9c5c])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1VM0bz-0002OE-Vz
+	for git@vger.kernel.org; Tue, 17 Sep 2013 21:06:59 +0200
+Received: from ukl by dude.hi.pengutronix.de with local (Exim 4.80)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1VM0bz-000520-Ur
+	for git@vger.kernel.org; Tue, 17 Sep 2013 21:06:59 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:21e:67ff:fe11:9c5c
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234903>
 
-Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+Hello,
 
->  What about simply iterating over options in order in which they
->  are specified and the last option that matches specifies the
->  result?
+after these commands:
 
-But isn't it very inconsistent from the way normal pathspec works?
-"git log -- A B" and "git log -- B A" would give the same result.
+	$ git init
+	$ mkdir subdir
+	$ echo a > subdir/a
+	$ git add subdir/a
+	$ git commit -m a
+	$ echo more a >> subdir/a
+	$ echo b > subdir/b
+	$ git add subdir/*
+	$ git commit -m b
+	$ git checkout HEAD^ -- subdir
+
+I'd expect that subdir/b is removed from the index as this file didn't
+exist in HEAD^ but git-status only reports:
+
+	# On branch master
+	# Changes to be committed:
+	#   (use "git reset HEAD <file>..." to unstage)
+	#
+	#	modified:   subdir/a
+	#
+
+Is this intended?
+
+(I'm using git 1.8.4.rc3 as shipped by Debian (package version
+1:1.8.4~rc3-1).)
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
