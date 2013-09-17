@@ -1,83 +1,86 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [BUG?] git checkout $commit -- somedir doesn't drop files
-Date: Tue, 17 Sep 2013 21:06:59 +0200
-Message-ID: <20130917190659.GA15588@pengutronix.de>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
+Date: Tue, 17 Sep 2013 21:16:13 +0200
+Message-ID: <CAHGBnuMgE1zO4=MnJJXcDLJSD2Vsjptk1x2Bc6CpF9GSxmFp8w@mail.gmail.com>
+References: <523094F0.9000509@gmail.com>
+	<20130911182921.GE4326@google.com>
+	<CAHGBnuN0pSmX7_mM6xpRqpF4qPVbP7oBK416NrTVM7tu=DZTjg@mail.gmail.com>
+	<20130911214116.GA12235@sigill.intra.peff.net>
+	<CAHGBnuP3iX9pqm5kK9_WjAXr5moDuJ1jxtUkXwKEt2jjLTcLkQ@mail.gmail.com>
+	<20130912101419.GY2582@serenity.lan>
+	<xmqq61u6qcez.fsf@gitster.dls.corp.google.com>
+	<20130912182057.GB32069@sigill.intra.peff.net>
+	<CAHGBnuPzzokV7YMrx0gAL1VACcmaLwFoaB3n6bX8Y-UDHs7S8A@mail.gmail.com>
+	<20130912202246.GF32069@sigill.intra.peff.net>
+	<xmqqr4ctokat.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuOQ-y1beD_X_jiH+FrhPvLOVJqT0J=Wk988Q4NeCs1-9Q@mail.gmail.com>
+	<xmqqppsckcsd.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuMNDJhAqNfgVRHRE-7R=UZbd+fMExYeKDWWCFjyQJYYTQ@mail.gmail.com>
+	<xmqqppscij8a.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuM=QqLxPNNZmoL1jG+oAm2y6o=AuBtkH+FRwZ_8ahGC+w@mail.gmail.com>
+	<xmqqli30idfx.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuOfYoosgWQdfF+L3=YCqO-MYEx-TpNzBAD-Zt0kqeR_Hw@mail.gmail.com>
+	<xmqqhadj1kyo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 17 21:07:09 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, John Keeping <john@keeping.me.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 17 21:16:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VM0c8-0000G6-B6
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 21:07:08 +0200
+	id 1VM0l2-0006Ac-0i
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 21:16:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753371Ab3IQTHB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Sep 2013 15:07:01 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:51094 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753142Ab3IQTHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Sep 2013 15:07:00 -0400
-Received: from dude.hi.pengutronix.de ([2001:6f8:1178:2:21e:67ff:fe11:9c5c])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1VM0bz-0002OE-Vz
-	for git@vger.kernel.org; Tue, 17 Sep 2013 21:06:59 +0200
-Received: from ukl by dude.hi.pengutronix.de with local (Exim 4.80)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1VM0bz-000520-Ur
-	for git@vger.kernel.org; Tue, 17 Sep 2013 21:06:59 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:21e:67ff:fe11:9c5c
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1753297Ab3IQTQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Sep 2013 15:16:16 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:61006 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752993Ab3IQTQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Sep 2013 15:16:15 -0400
+Received: by mail-lb0-f174.google.com with SMTP id w6so5713495lbh.5
+        for <git@vger.kernel.org>; Tue, 17 Sep 2013 12:16:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=2SUchiwm3h2vW5jWkGXs2RjPg1ACMK0h0VSen3LkX/k=;
+        b=h1vEII5mZg/31fz8vpZfOVjKee9bZifmskBT/gqYb6XdR0BADoodM16H2kGuRSI6e2
+         o83jJg1QG3FtW6qC5e1fwUoxcxDV+tAbATRoCbi2EczqCkzQLw3ymQxIEx3yZz2Y123P
+         gjTdqdykwOXLixGJa188A4T2xUEnQs3MldRjzna2yuGu7MufXI4hTyGNJ5qIG3hr7cU6
+         zbu+JYBI9Mvh08q/AWT5bcEf+OyXP/yD36091bTSn5jEykESaarLhnZpx427UTxALKET
+         EIUUkBVM05dzU5Ea9WGiO9QM02JUayjm9lWgEAEnOzf5vqP8HV/rkJ8r3vdhZ+ei6Up2
+         HRwA==
+X-Received: by 10.152.228.130 with SMTP id si2mr2951145lac.32.1379445373836;
+ Tue, 17 Sep 2013 12:16:13 -0700 (PDT)
+Received: by 10.114.5.161 with HTTP; Tue, 17 Sep 2013 12:16:13 -0700 (PDT)
+In-Reply-To: <xmqqhadj1kyo.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234904>
 
-Hello,
+On Tue, Sep 17, 2013 at 6:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-after these commands:
+> Keeping the ugliness to deal with the platform issue (i.e. broken
+> string.h) in one place (e.g. compat/mingw) is far more preferrable
+> than having a similar ugliness in git-compat-util.h for people on
+> all other platforms to see, no?
 
-	$ git init
-	$ mkdir subdir
-	$ echo a > subdir/a
-	$ git add subdir/a
-	$ git commit -m a
-	$ echo more a >> subdir/a
-	$ echo b > subdir/b
-	$ git add subdir/*
-	$ git commit -m b
-	$ git checkout HEAD^ -- subdir
+I don't think people on other platforms seeing the ugliness is really
+an issue. After all, the file is called git-*compat*-util.h; I sort of
+expect to see such things there, and I would expect only more complex
+compatibility stuff that requires multiple files in the compat/
+directory. Also, your solution does not really keep the ugliness in
+one place, you need the change in config.mak.uname, too (because yes,
+I do insist to avoid GCC-ism in C files, just like you probably would
+insist to avoid Bash-ism in shell scripts).
 
-I'd expect that subdir/b is removed from the index as this file didn't
-exist in HEAD^ but git-status only reports:
-
-	# On branch master
-	# Changes to be committed:
-	#   (use "git reset HEAD <file>..." to unstage)
-	#
-	#	modified:   subdir/a
-	#
-
-Is this intended?
-
-(I'm using git 1.8.4.rc3 as shipped by Debian (package version
-1:1.8.4~rc3-1).)
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+-- 
+Sebastian Schuberth
