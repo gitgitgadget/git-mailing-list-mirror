@@ -1,74 +1,82 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] diff: add a config option to control orderfile
-Date: Tue, 17 Sep 2013 17:06:26 -0400
-Message-ID: <20130917210626.GE16860@sigill.intra.peff.net>
-References: <20130917164226.GB20672@redhat.com>
- <xmqqfvt3z7i4.fsf@gitster.dls.corp.google.com>
- <20130917172829.GA21121@redhat.com>
- <xmqq38p3z5kg.fsf@gitster.dls.corp.google.com>
- <20130917201401.GA22000@redhat.com>
- <20130917201604.GA22008@redhat.com>
- <20130917201828.GC16860@sigill.intra.peff.net>
- <20130917203807.GA22059@redhat.com>
- <20130917205615.GA20178@sigill.intra.peff.net>
- <20130917210325.GA22511@redhat.com>
+Subject: Re: [BUG?] git checkout $commit -- somedir doesn't drop files
+Date: Tue, 17 Sep 2013 17:21:06 -0400
+Message-ID: <20130917212106.GB20178@sigill.intra.peff.net>
+References: <20130917190659.GA15588@pengutronix.de>
+ <xmqqeh8nxltc.fsf@gitster.dls.corp.google.com>
+ <20130917201259.GB16860@sigill.intra.peff.net>
+ <xmqq61tzxkgz.fsf@gitster.dls.corp.google.com>
+ <20130917202917.GA20020@sigill.intra.peff.net>
+ <xmqq1u4nxjv2.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Sep 17 23:06:39 2013
+Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 17 23:21:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VM2Tm-0007w1-Cq
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 23:06:38 +0200
+	id 1VM2hy-0002NQ-Gi
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 23:21:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753745Ab3IQVGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Sep 2013 17:06:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47942 "EHLO peff.net"
+	id S1753787Ab3IQVVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Sep 2013 17:21:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48046 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753569Ab3IQVGd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Sep 2013 17:06:33 -0400
-Received: (qmail 24085 invoked by uid 102); 17 Sep 2013 21:06:33 -0000
+	id S1753359Ab3IQVVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Sep 2013 17:21:13 -0400
+Received: (qmail 24772 invoked by uid 102); 17 Sep 2013 21:21:13 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Sep 2013 16:06:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Sep 2013 17:06:26 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Sep 2013 16:21:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Sep 2013 17:21:06 -0400
 Content-Disposition: inline
-In-Reply-To: <20130917210325.GA22511@redhat.com>
+In-Reply-To: <xmqq1u4nxjv2.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234931>
 
-On Wed, Sep 18, 2013 at 12:03:25AM +0300, Michael S. Tsirkin wrote:
+On Tue, Sep 17, 2013 at 01:40:17PM -0700, Junio C Hamano wrote:
 
-> > It may be esoteric enough not to worry about, though. By far the most
-> > common use of patch-ids is going to be in a single "rev-list
-> > --cherry-pick" situation where you are trying to omit commits during
-> > a rebase.
-> > 
-> > I am mostly thinking of the problems we had with the "kup" tool, which
-> > expected stability across diffs that would be signed by both kernel.org.
-> > But as far as I know, they do not use patch-id.
+> > Hrm. Probably not. It is almost a one-way merge going to the named tree
+> > (but limited by the pathspec), except that I think the current
+> > git-checkout code may provide some safety checks related to where we are
+> > coming from (e.g., do we unconditionally overwrite entries that are not
+> > uptodate?).
 > 
-> We can always do a compatibility option. --order-sensitive ?
-> --ignore-order ?
+> I think we do unconditionally overwrite and that has been very much
+> on purpose.
 
-That may make sense as an escape hatch in case somebody has a use we
-didn't foresee.
+I thought so, too, but I was thrown off by the code in checkout_paths()
+that warns/aborts if there are unmerged entries. But it looks like we
+will have thrown out those entries already during the read_tree_some
+call, which adds the new entries using OK_TO_REPLACE.
 
-If it is just about "consistent order" versus "whatever is in the diff",
-I do not know that we need to worry as much; only the minority using
-orderfile is affected, and they have _always_ been affected. IOW, we are
-fixing a bug, and they should be happier.
+> "git checkout tree-ish -- file.txt" has always been about replacing
+> whatever cruft is in paths in the worktree that match pathspec, just
+> like "cat content-created-elsewhere >file.txt" is.  "Oops, you have
+> a local change that do not match index" is the last thing we want to
+> say, because getting rid of that local change is the primary reason
+> why "checkout tree-ish -- file.txt" exists.
+> 
+> Taking the state of a subdirectory as a whole as "content", the
+> change we are discussing will make it more like "rm -fr dir && tar
+> xf some-content dir" to replace the directory wholesale, which I
+> personally think is a good thing in the longer term.
 
-But if it is changing the output entirely in all cases (e.g., the
-1s-complement sum), I think you would want to have a "classic" mode that
-tries to be compatible with the old style (with the caveat that of
-course it depends on patch ordering).
+Yeah, that makes sense. What about untracked files?
+
+Right now we overwrite them if the tree-ish has an entry at the same
+path; that is a bit more dangerous than the rest of git, but does match
+the "ignore local modifications" rule. I assume if we handled deletions,
+though, that we would simply leave them be.
+
+So given that, is it fair to say that a one-way "go here" merge, limited
+by pathspec, is the closest equivalent?
 
 -Peff
