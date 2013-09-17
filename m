@@ -1,128 +1,89 @@
-From: martin f krafft <madduck-JX/+c5DPh7vR7s880joybQ@public.gmane.org>
-Subject: Re: cdgit: cd relative to git workdir root
-Date: Tue, 17 Sep 2013 07:33:04 +0200
-Message-ID: <20130917053303.GF5390@fishbowl>
-References: <201309162101.14879.thomas@koch.ro>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="===============7372697505596608324=="
-To: "git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org" <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>,
-	vcs-home <vcs-home-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org>
-X-From: vcs-home-bounces+gcvh-vcs-home=m.gmane.org-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org Tue Sep 17 07:35:39 2013
-Return-path: <vcs-home-bounces+gcvh-vcs-home=m.gmane.org-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org>
-Envelope-to: gcvh-vcs-home@m.gmane.org
-Received: from domine.madduck.net ([77.109.139.90])
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 0/4] stop storing trailing slash in dir-hash
+Date: Tue, 17 Sep 2013 03:06:13 -0400
+Message-ID: <1379401577-36799-1-git-send-email-sunshine@sunshineco.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 17 09:06:46 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <vcs-home-bounces+gcvh-vcs-home=m.gmane.org-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org>)
-	id 1VLnwo-0001QB-IN
-	for gcvh-vcs-home@m.gmane.org; Tue, 17 Sep 2013 07:35:38 +0200
-Received: from domine.madduck.net (localhost [IPv6:::1])
-	by domine.madduck.net (Postfix) with ESMTP id B68FA20CA2
-	for <gcvh-vcs-home@m.gmane.org>; Tue, 17 Sep 2013 07:35:36 +0200 (CEST)
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.97.8 at domine
-Received: from fishbowl.rw.madduck.net (ip-109-43-3-223.web.vodafone.de
-	[109.43.3.223])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "fishbowl.rw.madduck.net",
-	Issuer "CAcert Class 3 Root" (verified OK))
-	by domine.madduck.net (Postfix-submission) with ESMTPS id B7DEE20C94;
-	Tue, 17 Sep 2013 07:33:05 +0200 (CEST)
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.97.8 at domine
-Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
-	id 28587204CA; Tue, 17 Sep 2013 07:33:04 +0200 (CEST)
-In-Reply-To: <201309162101.14879.thomas-5j3myg3OO4w@public.gmane.org>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux jessie/sid kernel 3.11-rc4-amd64 x86_64
-X-Spamtrap: madduck.bogus-JX/+c5DPh7vR7s880joybQ@public.gmane.org
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-BeenThere: vcs-home-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org
-X-Mailman-Version: 2.1.13
-Precedence: list
-List-Id: Discussion list for storing ~ under VCS control
-	<vcs-home.lists.madduck.net>
-List-Unsubscribe: <http://lists.madduck.net/options/vcs-home>,
-	<mailto:vcs-home-request-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://lists.madduck.net/pipermail/vcs-home>
-List-Post: <mailto:vcs-home-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org>
-List-Help: <mailto:vcs-home-request-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org?subject=help>
-List-Subscribe: <http://lists.madduck.net/listinfo/vcs-home>,
-	<mailto:vcs-home-request-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org?subject=subscribe>
-Sender: vcs-home-bounces+gcvh-vcs-home=m.gmane.org-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org
-Errors-To: vcs-home-bounces+gcvh-vcs-home=m.gmane.org-qhrM8SXbD5JdXEZaVTQqel6hYfS7NtTn@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234851>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VLpMz-0001y6-3k
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 09:06:45 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751853Ab3IQHGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Sep 2013 03:06:42 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:38342 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751434Ab3IQHGk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Sep 2013 03:06:40 -0400
+Received: by mail-ob0-f175.google.com with SMTP id uz6so4654259obc.20
+        for <git@vger.kernel.org>; Tue, 17 Sep 2013 00:06:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=bBlzioIQ9iBENc8raEJ04zjRZvx/NswjjIsnvGxJyds=;
+        b=OO1y0ydBgZv+PpdXjbgAOoTMADefmgiVQw9VPzG8yj9lyYpxhXZE9Xh9G9swOoPr4g
+         NbV1QiP70eK7pW6IUGUSm+3gyGDgiZWFoYxY8VZgstqJr5NvwDMCisXSTAkknNsypBVF
+         x8jVdt3FxNoSqb7YCPqRWHjIzHgUTwvT/BCDSKAheZ15vq/o2lt+GC+1XiGtmbL7iMu5
+         MLOWyXcFAMHeqVLshX/gLe/ohbWUlACTXQMFc9C64uJSAtEuOOdi4z14H2YTUeY+09GE
+         fRL+S4WBc+eemIcPJY4wzeQXzo22zXqG9dufnW2OzKjlnnrHpByb47LRxOa/DKNvJ8Yg
+         IfnQ==
+X-Received: by 10.182.233.137 with SMTP id tw9mr12413obc.87.1379401600186;
+        Tue, 17 Sep 2013 00:06:40 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3dr8.cable.mindspring.com. [69.81.183.104])
+        by mx.google.com with ESMTPSA id d8sm37304079oeu.6.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 17 Sep 2013 00:06:39 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.535.g7b94f8e
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234852>
 
+This series changes name-hash to stop storing the (redundant) trailing
+slash with index_state.dir_hash entries. As an intentional side-effect,
+the series fixes [1] in a cleaner way (suggested by Junio [2]) than
+either [3] (680be044 in master) or [4].
 
---===============7372697505596608324==
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="O98KdSgI27dgYlM5"
-Content-Disposition: inline
+Changes since v1 [5]:
 
+* Add index_file_exists() as complement of index_dir_exists() introduced
+  in v1 rather than changing the behavior of index_name_exists() to
+  check only for files. To avoid disturbing current or future in-flight
+  topics, index_name_exists() is retained (suggested by Junio [6]) as a
+  thin wrapper dispatching either to index_file_exists() or
+  index_dir_exists().
 
---O98KdSgI27dgYlM5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+* Split v1 patch 1 into v2 patches 1 & 2 to ease review. (This is
+  possible now that index_name_exists() retains its original behavior.)
 
-also sprach Thomas Koch <thomas-5j3myg3OO4w@public.gmane.org> [2013.09.16.2101 +0200]:
-> shell alias cdgit =3D cd $(git root)
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/232727
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/232727/focus=232813
+[3]: http://thread.gmane.org/gmane.comp.version-control.git/232796
+[4]: http://thread.gmane.org/gmane.comp.version-control.git/232833
+[5]: http://thread.gmane.org/gmane.comp.version-control.git/234743
+[6]: http://article.gmane.org/gmane.comp.version-control.git/234761
 
-I've tried to make this happen many years ago, but I never finished
-the ZLE widget that did it. The idea was to bind 'tab' to a function
-that would replace an occurrence of ~g in $LBUFFER with the output
-of rev-parse--show-toplevel and then delegate to normal tab
-expansion.
+Eric Sunshine (4):
+  name-hash: refactor polymorphic index_name_exists()
+  employ new explicit "exists in index?" API
+  name-hash: stop storing trailing '/' on paths in index_state.dir_hash
+  dir: revert work-around for retired dangerous behavior
 
-So now I just have
+ cache.h        |  4 ++++
+ dir.c          | 28 ++++++++-------------------
+ name-hash.c    | 61 ++++++++++++++++++++++++++++++++--------------------------
+ read-cache.c   |  4 ++--
+ unpack-trees.c |  4 ++--
+ 5 files changed, 50 insertions(+), 51 deletions(-)
 
-  hash -d g=3D$(git rev-parse --show-toplevel)
-
-in a pre-prompt function and get the same effect.
-
-  fishbowl:~/code/salt|develop|debian% ls ~g/debi<tab>
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"i am not in favour of long engagements. they give people the
- opportunity of finding out each other's character before marriage,
- which i think is never advisable."
-                                                        -- oscar wilde
-=20
-spamtraps: madduck.bogus-JX/+c5DPh7vR7s880joybQ@public.gmane.org
-
---O98KdSgI27dgYlM5
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/sig-policy/999bbcc4/current)
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQLvBAEBCgDZBQJSN+mPwBEaaHR0cDovL21hcnRpbi1rcmFmZnQubmV0L2dwZy9z
-aWctcG9saWN5LzU1Yzk4ODJkOTk5YmJjYzQvMjAxMTAxMjQxMTI1P3NoYTUxMnN1
-bT0xY2FkOTZmZDI3ZDMyMzNmNTNlMjI4NDk1MzM2NDgxMDdlNWVlOGQ1YmU2NTUy
-NTFkNzRjOGYxYzVjM2JjNDJmMjMwNGZhNTE1MTUwZjdiZDRkZDA1ZTk4MTk5MjRm
-MDQ5NTEzZWU5OTYyY2E3MTcwOWY4MWQ5NDUxNTg1MmJkOAAKCRBVyYgtmZu8xHdQ
-D/4gN7Iy2zW43+N7heT1caSd57IKKwT2l5+tv1i0sb7fMj/w4x2/Qp3Lmm8rARKD
-ytIipU4hzLPrKeDwhf+P/wO7DMhMQaMnuLo/ooPzC1rg9oS8JtHaC3Vl6pzQJG5b
-4DYEC4mStNN3L7FADjTG2jrOXV6ty76RfgjOQeJO0zcFofWh7M6wb1qyEEchc3gd
-EdcB+azJza/2btrOKqsBQc5CSZbEyYQiguiSM2KxwoDdGwnMJoblpCYnrtutJPO5
-2Rwe+kBS+z1Rq1exUHafa4Fyetq8fsL0JC/NlUaBU3SxoYNBLxrV+Y1EnPGoN1lC
-kbKZMW6u/t3Kk6gwFOy3ZFkbC+tW2N0VQ+atabhBRFcCCX3LuslG+XrdhL2GuM+6
-cBdyvqifwwJYrBOkl3QkH0p2jgU4RB1U4vN+MW130K+KtLcgOEmjNaFCACZV+7iq
-6aDVmjtjMAIcu1h7LPc6pBX1SmN7VVPZsVIsrlJ3tfhtJkpjua99ZTdAf4UgeRKv
-oEjWkZU/8iDsZeL/zfZMZfjs5BVlyfulUbgEAvTI30nD5RrI3JjzzNodNQ6zbcCn
-mHn3NhPayp7dngGVw8LbQ4nXvSUQ7VBxDwD5SsDrxuvvcwOb7V2h4NEFOk4aMpm0
-DgZAI5VB1www758ZNKAJVyGTukiWd9gR7fNjz4U4Aqowow==
-=upnh
------END PGP SIGNATURE-----
-
---O98KdSgI27dgYlM5--
-
-
---===============7372697505596608324==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+-- 
+1.8.4.535.g7b94f8e
