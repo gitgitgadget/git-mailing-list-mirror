@@ -1,102 +1,82 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 4/4] dir: revert work-around for retired dangerous behavior
-Date: Tue, 17 Sep 2013 03:06:17 -0400
-Message-ID: <1379401577-36799-5-git-send-email-sunshine@sunshineco.com>
-References: <1379401577-36799-1-git-send-email-sunshine@sunshineco.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 17 09:06:59 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: 1.8.4 rebase regression?
+Date: Tue, 17 Sep 2013 09:15:43 +0200
+Message-ID: <vpqd2o77wbk.fsf@anie.imag.fr>
+References: <20130915235739.GA712@quark> <vpqioy1815z.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Patrick Welche <prlw1@cam.ac.uk>
+X-From: git-owner@vger.kernel.org Tue Sep 17 09:15:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VLpNC-0002IA-KO
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 09:06:58 +0200
+	id 1VLpVt-0007TG-EK
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 09:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752123Ab3IQHGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Sep 2013 03:06:51 -0400
-Received: from mail-oa0-f48.google.com ([209.85.219.48]:46904 "EHLO
-	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751963Ab3IQHGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Sep 2013 03:06:48 -0400
-Received: by mail-oa0-f48.google.com with SMTP id i10so926289oag.35
-        for <git@vger.kernel.org>; Tue, 17 Sep 2013 00:06:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=owjBeqCIKutla1cdFmEirck4X7VzF+ajPyl/C+23PqY=;
-        b=Y5BrNIsHCsxno7nya+TaJs7cIVtss1ClyU7WdzcQdYucBuEsGdM+JLCPismoqamAjq
-         NvDzLaah7HQqRv4TxA1zph2kRbWu5gSe5N37Qfz1uShOtZFSZnQHF0D5wNZ6KoCctIbT
-         +P/UO/5Qz7kF97nTox8Lg+CVFZvEYIyTuVj1RvWtfhLHLwnFSzQcJa1f8pTswPF4nm4N
-         xUWbvEA4xPJ6u87pe5d6Z44gWrBrwk/zW/TxWWbps2Ol8wVeoGtwHGHP++jz6aivLbRq
-         eFDxeA/BL6p2bty4wnltEBaSI5H+xJ2KlAz7ituDgaLLZxGungkNnVphhAcqt7nw6t5+
-         f+4A==
-X-Received: by 10.60.131.232 with SMTP id op8mr205449oeb.75.1379401607370;
-        Tue, 17 Sep 2013 00:06:47 -0700 (PDT)
-Received: from localhost.localdomain (user-12l3dr8.cable.mindspring.com. [69.81.183.104])
-        by mx.google.com with ESMTPSA id d8sm37304079oeu.6.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 17 Sep 2013 00:06:46 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.535.g7b94f8e
-In-Reply-To: <1379401577-36799-1-git-send-email-sunshine@sunshineco.com>
+	id S1751739Ab3IQHPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Sep 2013 03:15:54 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41556 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751392Ab3IQHPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Sep 2013 03:15:53 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r8H7FgK1015210
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 17 Sep 2013 09:15:43 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VLpVf-0001VN-GK; Tue, 17 Sep 2013 09:15:43 +0200
+In-Reply-To: <vpqioy1815z.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	16 Sep 2013 13:18:48 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 17 Sep 2013 09:15:43 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r8H7FgK1015210
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1380006945.38455@FG6x/BpEBHABgKqzTSiNhQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234857>
 
-directory_exists_in_index_icase() dangerously assumed that it could
-access one character beyond the end of its directory argument, and that
-that character would unconditionally be '/'.  2eac2a4c (ls-files -k: a
-directory only can be killed if the index has a non-directory,
-2013-08-15) added a caller which did not respect this undocumented
-assumption, and 680be044 (dir.c::test_one_path(): work around
-directory_exists_in_index_icase() breakage, 2013-08-23) added a
-work-around which temporarily appends a '/' before invoking
-directory_exists_in_index_icase().
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Since the dangerous behavior of directory_exists_in_index_icase() has
-been eliminated, the work-around is now redundant, so retire it (but not
-the tests added by the same commit).
+> Patrick Welche <prlw1@cam.ac.uk> writes:
+>
+>> $ git diff
+>> ESC[1mdiff --cc glib/gmain.cESC[m
+>> ESC[1mindex 738e69c,5aaebd0..0000000ESC[m
+>> ESC[1m--- a/glib/gmain.cESC[m
+>> ESC[1m+++ b/glib/gmain.cESC[m
+>> ESC[36m@@@ -4953,32 -4921,32 +4953,48 @@@ESC[m ESC[mg_unix_signal_watch_dispatch (GSourcESC[m
+>>
+>>
+>> (same xterm, no change of TERM in both invocations above)
+>> git status in 1.8.4 does show red, so colour does work...
+>>
+>> Thoughts on how to help debug?
+>
+> Can you try:
+>
+> git -c color.ui=never diff
+> git -c color.ui=auto diff
+> git -c color.ui=always diff
+>
+> ?
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- dir.c | 18 +++---------------
- 1 file changed, 3 insertions(+), 15 deletions(-)
+... and Junio suggested offline to look for a broken pager, so, you can
+try this too:
 
-diff --git a/dir.c b/dir.c
-index fccd479..23b6de4 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1160,21 +1160,9 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
- 	 */
- 	if ((dir->flags & DIR_COLLECT_KILLED_ONLY) &&
- 	    (dtype == DT_DIR) &&
--	    !has_path_in_index) {
--		/*
--		 * NEEDSWORK: directory_exists_in_index_icase()
--		 * assumes that one byte past the given path is
--		 * readable and has '/', which needs to be fixed, but
--		 * until then, work it around in the caller.
--		 */
--		strbuf_addch(path, '/');
--		if (directory_exists_in_index(path->buf, path->len - 1) ==
--		    index_nonexistent) {
--			strbuf_setlen(path, path->len - 1);
--			return path_none;
--		}
--		strbuf_setlen(path, path->len - 1);
--	}
-+	    !has_path_in_index &&
-+	    (directory_exists_in_index(path->buf, path->len) == index_nonexistent))
-+		return path_none;
- 
- 	exclude = is_excluded(dir, path->buf, &dtype);
- 
+git --no-pager diff
+
 -- 
-1.8.4.535.g7b94f8e
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
