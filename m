@@ -1,62 +1,64 @@
-From: Lukas Fleischer <git@cryptocrack.de>
-Subject: Re: Bisect needing to be at repo top-level?
-Date: Tue, 17 Sep 2013 19:58:13 +0200
-Message-ID: <20130917175813.GA14173@blizzard>
-References: <CAJTo0LZ=bNNUc8O=bDDOp2vudsc_wL+-nqsXW5r1rq3H7M0e7Q@mail.gmail.com>
- <xmqqbo3rz7ca.fsf@gitster.dls.corp.google.com>
+From: Jason Miller <jason@milr.com>
+Subject: Delete branch during fast-import
+Date: Tue, 17 Sep 2013 10:49:55 -0700
+Message-ID: <20130917174954.GA28563@home.jasonmmiller.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Burton, Ross" <ross.burton@intel.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 17 19:58:26 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 17 20:03:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VLzXc-0001OK-HQ
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 19:58:24 +0200
+	id 1VLzcx-0005uY-RX
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Sep 2013 20:03:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753370Ab3IQR6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Sep 2013 13:58:20 -0400
-Received: from elnino.cryptocrack.de ([46.165.227.75]:20014 "EHLO
-	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753253Ab3IQR6T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Sep 2013 13:58:19 -0400
-Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTP id ff3a6d63;
-	TLS version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128 verify=NO;
-	Tue, 17 Sep 2013 19:58:15 +0200 (CEST)
+	id S1753301Ab3IQSDl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Sep 2013 14:03:41 -0400
+Received: from fed1rmfepi107.cox.net ([68.230.241.138]:47735 "EHLO
+	fed1rmfepi107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753269Ab3IQSDk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Sep 2013 14:03:40 -0400
+X-Greylist: delayed 646 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Sep 2013 14:03:40 EDT
+Received: from fed1rmimpo210 ([68.230.241.161]) by fed1rmfepo101.cox.net
+          (InterMail vM.8.01.05.09 201-2260-151-124-20120717) with ESMTP
+          id <20130917175253.XIPV3892.fed1rmfepo101.cox.net@fed1rmimpo210>
+          for <git@vger.kernel.org>; Tue, 17 Sep 2013 13:52:53 -0400
+Received: from localhost ([70.191.80.19])
+	by fed1rmimpo210 with cox
+	id SHst1m00D0R0GNW01HstgD; Tue, 17 Sep 2013 13:52:53 -0400
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020202.523896F5.0157,ss=1,re=0.000,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.0 cv=drIF/Sc4 c=1 sm=1
+ a=8Pu+u8o12PWZCfupdeghHQ==:17 a=wom5GMh1gUkA:10 a=TJnKmCqjyHAA:10
+ a=as2ii8JTC2oA:10 a=kj9zAlcOel0A:10 a=BswL-RFwAAAA:8 a=kM_2MJY8AAAA:8
+ a=svIbT7w5TVgA:10 a=bTV28HER_Yd_lZct8_gA:9 a=CjuIK1q_8ugA:10
+ a=kvx9ACX9JqAA:10 a=WOsSUt-DgwAA:10 a=8Pu+u8o12PWZCfupdeghHQ==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (CRAM-MD5)
+ smtp.auth=aidenn01@cox.net
 Content-Disposition: inline
-In-Reply-To: <xmqqbo3rz7ca.fsf@gitster.dls.corp.google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234897>
 
-On Tue, Sep 17, 2013 at 10:27:49AM -0700, Junio C Hamano wrote:
-> "Burton, Ross" <ross.burton@intel.com> writes:
-> 
-> > Why does git-bisect need to be ran from the top level of the working
-> > tree?  It sources git-sh-setup.sh which sets GIT_DIR, which
-> > git-bisect.sh then appears to consistently use.  Is there a reason for
-> > needing to be at the top-level, or is this an old and redundant
-> > message?
-> 
-> A wild guess.
-> 
-> Imagine if you start from a subdirectory foo/ but the directory did
-> not exist in the older part of the history of the project.  When
-> bisect needs to check out a revision that was older than the first
-> revision that introduced that subdirectory, what should happen?
-> Worse yet, if "foo" was a file in the older part of the history,
-> what should happen?
+I'm trying out a rather large subversion import, and am trying to
+figure out if there is a way to delete branches during a fast-import.
 
-If that is the real explanation, why do we allow running git-checkout(1)
-from a subdirectory?
+Right now I can think of only 2 ways to handle this:
 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+1) End the import, do a git branch -D and then resume the import.
+
+2) Scan the entire repository history, identify
+deleted branches and handle them upfront so that they never have
+conflicting names.
+
+Is there a better way?
+
+-Jason
