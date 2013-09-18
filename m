@@ -1,117 +1,88 @@
-From: Nicolas Adenis-Lamarre <nicolas.adenis.lamarre@gmail.com>
-Subject: Re: Locking files / git
-Date: Wed, 18 Sep 2013 12:12:50 +0200
-Message-ID: <CACPGbcv+w=p+Zk_+djL8ONEWN4LfDNbeVbxcpk-TJX=B3To=gg@mail.gmail.com>
-References: <CACPGbcsB-ieZnS5maQgtnRTifFON9fEFpCGGdHtQ2ZjySdxDYA@mail.gmail.com>
-	<20130917213619.GM28675@paksenarrion.iveqy.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 3/3] git submodule update should give notice when run
+ without init beforehand
+Date: Wed, 18 Sep 2013 18:12:42 +0800
+Message-ID: <CALUzUxoFLOP=-ub_VYr6LqRYQXOO7Tf1oP95mxuYZo-8_dxAZw@mail.gmail.com>
+References: <1379266703-29808-1-git-send-email-rctay89@gmail.com>
+ <1379266703-29808-2-git-send-email-rctay89@gmail.com> <1379266703-29808-3-git-send-email-rctay89@gmail.com>
+ <52373AA2.9050807@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Wed Sep 18 12:13:01 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Sep 18 12:13:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMEkn-00069s-6r
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 12:13:01 +0200
+	id 1VMEkv-0006Qe-8Z
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 12:13:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751666Ab3IRKMw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Sep 2013 06:12:52 -0400
-Received: from mail-vb0-f43.google.com ([209.85.212.43]:59039 "EHLO
-	mail-vb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751556Ab3IRKMv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Sep 2013 06:12:51 -0400
-Received: by mail-vb0-f43.google.com with SMTP id h11so4939701vbh.2
-        for <git@vger.kernel.org>; Wed, 18 Sep 2013 03:12:50 -0700 (PDT)
+	id S1751731Ab3IRKNE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Sep 2013 06:13:04 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:33566 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751698Ab3IRKND (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Sep 2013 06:13:03 -0400
+Received: by mail-ie0-f175.google.com with SMTP id e14so12521841iej.34
+        for <git@vger.kernel.org>; Wed, 18 Sep 2013 03:13:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=OBwMp2D+0LslU7IOjenRsSX8VFbfl0zyB+hyRBJ8slo=;
-        b=J/tFvG22q8gLNLlWXNOExF/X2KttPNWxBYw9tpc+C8BugeSG/9rIyhwWfMSyNOVump
-         jniXJ7rMt8j3ngQYpk2pQFWHRX4/g3MCYvF9j99yiOqGyPPTHWqAFYcnasMqEjD8m0cn
-         Xx5TS654xw4BZ2LXrx1tvDZzY0S8dXzfBX5vJ44UO6Y8OpGHOqvrRF4CbEWbsTBDzdBU
-         0FBCRadG+IB+6MrDw/M4Y/2U3WBKIU3c9n36HLwa4srw98+udukvW2c5IS89iV7IlLhU
-         8ycpzSafcrP4r5UE544vf9WWIArpyaNmtdeFVCAdw2kDZYfMfWUYKWLJz78pFqXNR7kY
-         A9rw==
-X-Received: by 10.52.161.231 with SMTP id xv7mr4407873vdb.1.1379499170803;
- Wed, 18 Sep 2013 03:12:50 -0700 (PDT)
-Received: by 10.220.194.132 with HTTP; Wed, 18 Sep 2013 03:12:50 -0700 (PDT)
-In-Reply-To: <20130917213619.GM28675@paksenarrion.iveqy.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=MnM0ld7gCHN2DSJQW8A5hTa4gLBYK+VlesgsirIlXKQ=;
+        b=TXjsCoorfLL4jTKy+f1Noht8thesQItVimcDVHXnOt/oHD1vMFzy/2eDLne23EuYlv
+         E3EDpN6sPQK4dSiQtC7NuR3JJb9TVfnvxu+Cr3kC3K/lDQIySv7IFFeyxUy5SOSokS5V
+         2S1h83H4VRcm7ZkUsz90F4QhlvAlFreH8XQJ9IOpDcbR/10PZX1sjKG780zog81likM3
+         Kz0GmcRXZg//HX2TbBZ8w94j0W3BmjuVuUhVBoZ83OCBilQdX8bJN3XWOXLUxs3RtAtM
+         ZQwgtzPJ1MfOiVhiNqnRxUEYfVWMD8zgzfzgs0o14+K6obBsfqSIPByUsWNA7iPkqaFX
+         86Ww==
+X-Received: by 10.50.118.105 with SMTP id kl9mr2914032igb.3.1379499182270;
+ Wed, 18 Sep 2013 03:13:02 -0700 (PDT)
+Received: by 10.64.93.34 with HTTP; Wed, 18 Sep 2013 03:12:42 -0700 (PDT)
+In-Reply-To: <52373AA2.9050807@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234961>
 
-Thanks a lot for your answer.
-That's really good arguments that i was waiting for and that i have
-not get until now.
+On Tue, Sep 17, 2013 at 1:06 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
 
-My comprehension now :
-- it's not easy to maintain several versions of a binary file in parall=
-el.
-So basically, it's not recommanded to have complex workflow for binary =
-files.
-In case the project has a low number of binary files, it can be handle
-by simple communication,
-In case the project has a lot of binary files, a simple workflow with
-a centralized workflow is recommanded
-- git doesn't hate locks, it's just that it's not the layer to
-implement it because git is workflow independant. Locks depend on a
-centralized server which is directly linked to the workflow.
+Thanks Jens for having a look!
 
-I'm not trying to implement a such workflow. I'm just curious, reading
-a lot of things about git, and trying to understand what is sometimes
-called a limitation of git.
-A simple line in the documentation to say that locking should be
-handled in the upper layer (and it's done for example in gitolite)
-because it's dependant of the workflow could help some people looking
-about that point.
+> Am 15.09.2013 19:38, schrieb Tay Ray Chuan:
+>> When 'update' is run with no path in a repository with uninitialized
+>> submodules, the program terminates with no output, and zero status code.
+>> Be more helpful to users by mentioning this.
+>
+> [snip] it would be rather nasty to error out on every submodule
+> update.
 
-Thanks a lot for git.
+Just to be sure we're on the right page, with this patch, the 'update'
+command still exits with status code zero (non-error), so this patch
+doesn't make it error out.
 
-2013/9/17 Fredrik Gustafsson <iveqy@iveqy.com>:
-> On Tue, Sep 17, 2013 at 09:45:26PM +0200, Nicolas Adenis-Lamarre wrot=
-e:
->> Ooops. It seems that each time somebody says these two words togethe=
-r,
->> people hate him, and he is scorned by friends and family.
->>
->> For the moment, i want a first feedback, an intermediate between
->> "locking is bad" and "ok", but i would prefer in the negativ answer
->> something with arguments ("Take CVS as an example of what not to do;
->> if in doubt, make the exact opposite decision." is one), and in the
->> positiv answer, good remarks about problems with my implementation
->> that could make it better.
->
-> So working with locks and text-files is generally stupid to do with g=
-it
-> since you don't use git merging capabilities. Working with binary fil=
-es
-> in git is stupid because git doesn't handle them very well because th=
-ey
-> the deltas can't be calculated very good.
->
-> It seems to me that if you need to do locking one of the above scenar=
-ios
-> is true for you and you should not use git at all.
->
-> However, there's always the case when you've a mixed project with bot=
-h
-> binary and text-files. In that case I believe Jeff gave an excellent =
-answer.
->
-> But think twice, are you using git in a sane way? Even a small binary
-> file will result in a huge git repo if it's updated often and the
-> project has a long history.
->
-> --
-> Med v=E4nliga h=E4lsningar
-> Fredrik Gustafsson
->
-> tel: 0733-608274
-> e-post: iveqy@iveqy.com
+> After the 'autoinit' configuration (which lets upstream hint that
+> certain submodules should be initialized on clone) has materialzed we
+> might want to enable this error for these specific submodules.
+
+That's cool, I'm looking forward to this. Could you point me to
+somewhere detailing this?
+
+But in the meantime, on top of the advice.* config, how about having a
+submodule.<name>.ignoreUninit config to disable the message on a
+per-submodule basis?
+
+> But in
+> any case the error message should contain a hint on how you can get
+> rid of the error in case you know what you are doing ;-).
+
+The message does mention that you can throw in an --init to fix the
+problem. This "hint" is similar to what git-submodule prints when a
+<path> is passed (see region at line 807).
+
+-- 
+Cheers,
+Ray Chuan
