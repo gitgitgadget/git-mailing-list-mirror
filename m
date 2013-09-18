@@ -1,168 +1,161 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Git pack v4: next step, help required
-Date: Wed, 18 Sep 2013 13:40:23 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309181120390.20709@syhkavp.arg>
+From: David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: [PATCH] build: add default configuration
+Date: Wed, 18 Sep 2013 13:13:54 -0500
+Message-ID: <e8ccfba3-5198-4986-9b9d-1d69b965386f.maildroid@localhost>
+References: <1379423650-1311-1-git-send-email-felipe.contreras@gmail.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Duy Nguyen <pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 18 19:40:43 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org,=?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: git-users+bncBD6J3AEPVABRBB6346IQKGQEUHJ6UNQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Wed Sep 18 20:14:34 2013
+Return-path: <git-users+bncBD6J3AEPVABRBB6346IQKGQEUHJ6UNQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-qc0-f186.google.com ([209.85.216.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMLk0-0003bJ-Dt
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 19:40:41 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753146Ab3IRRkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Sep 2013 13:40:36 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:53786 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751613Ab3IRRkf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Sep 2013 13:40:35 -0400
-Received: from xanadu.home ([70.83.209.44]) by VL-VM-MR001.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MTC005C813BIB30@VL-VM-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 18 Sep 2013 13:40:23 -0400 (EDT)
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234975>
+	(envelope-from <git-users+bncBD6J3AEPVABRBB6346IQKGQEUHJ6UNQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1VMMGo-0005yd-7F
+	for gcggu-git-users@m.gmane.org; Wed, 18 Sep 2013 20:14:34 +0200
+Received: by mail-qc0-f186.google.com with SMTP id v1sf2194340qcw.13
+        for <gcggu-git-users@m.gmane.org>; Wed, 18 Sep 2013 11:14:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:x-original-sender:x-original-authentication-results
+         :reply-to:precedence:mailing-list:list-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        bh=qBGHpxtN/07tMEWZptc8HgVcaEXWzcs/e4nKpVX3fdQ=;
+        b=DJG5wehWBELGzNx6Vo5rIdUhkIr9CSQqa/pDnT2QlmD6Ouo8zLL3cF5VLsbDXKg/0I
+         857BSVFyYC7ay49g4xshb6AsdAydbHLucFeTqhxNR3pK0btGnY3gE2nU5p1Yz/6EqBMg
+         S4bbYb/T5vD7pyQY+lw1Cp3jmAqGDu6tbA6Zv8DCheObsRTZph5wYpW1YrfoYUd/BYf3
+         mCM1A3Yo1PTppiU5DdEFRYoF6le6du3o+n+2rhofkQFNR6O7iZfALmpMkXmdRFUe7yJ7
+         F3WP8mYQ3HNqryCoxluTWW2vSsbsuEweGd8zQclSYIAaTSS9t1omGqutEyZzxdleJh1D
+         9T8Q==
+X-Received: by 10.49.127.177 with SMTP id nh17mr106977qeb.30.1379528073448;
+        Wed, 18 Sep 2013 11:14:33 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.49.86.161 with SMTP id q1ls3492092qez.13.gmail; Wed, 18 Sep
+ 2013 11:14:31 -0700 (PDT)
+X-Received: by 10.236.186.101 with SMTP id v65mr14293263yhm.12.1379528071119;
+        Wed, 18 Sep 2013 11:14:31 -0700 (PDT)
+Received: from mail-yh0-x235.google.com (mail-yh0-x235.google.com [2607:f8b0:4002:c01::235])
+        by gmr-mx.google.com with ESMTPS id z45si504407yha.7.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 18 Sep 2013 11:14:31 -0700 (PDT)
+Received-SPF: pass (google.com: domain of davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 2607:f8b0:4002:c01::235 as permitted sender) client-ip=2607:f8b0:4002:c01::235;
+Received: by mail-yh0-f53.google.com with SMTP id b20so3602668yha.26
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 18 Sep 2013 11:14:31 -0700 (PDT)
+X-Received: by 10.236.173.136 with SMTP id v8mr14544235yhl.33.1379528070948;
+        Wed, 18 Sep 2013 11:14:30 -0700 (PDT)
+Received: from com.flipdogsolutions ([200.10.66.132])
+        by mx.google.com with ESMTPSA id r1sm4555318yhf.17.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 18 Sep 2013 11:14:30 -0700 (PDT)
+In-Reply-To: <1379423650-1311-1-git-send-email-felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-Original-Sender: davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 2607:f8b0:4002:c01::235 as
+ permitted sender) smtp.mail=davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234976>
 
+Apologies for top post -- anybody have a recommendation for a better app th=
+en maildroid?
 
-I think the pack v4 format and compatibility code is pretty stable now, 
-and probably as optimal as it can reasonably be.
+Will this not conflict with folks that supply their own gitconfig?
 
-@Junio: might be a good idea to refresh your pu branch again.
+I like the idea. Docs?  Also, should this not be done in the C side so that=
+ we don't waste time reading the config, and also prevent users from overri=
+ding these?
 
-Now the biggest problem to solve is the actual tree 
-"deltification".  I don't have the time to spend on this otherwise very 
-interesting problem (IMHO at least) so I'm sending this request for help 
-in the hope that more people would be keen to contribute their computing 
-skills to solve this challenge.
+=20
 
-I'll make a quick description of the pv4 tree encoding first and explain 
-the problem to solve afterwards.
+-----Original Message-----
+From: Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+Cc: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, "Br=E1ulio Bhavamitra" <brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org=
+>, Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Sent: Tue, 17 Sep 2013 8:23 AM
+Subject: [PATCH] build: add default configuration
 
-A pv4 tree is comprised of two types of records: immediate tree entry 
-and tree sequence copy.
+For now simply add a few common aliases.
 
-1) Immediate Tree Entry
+  co =3D checkout
+  ci =3D commit
+  rb =3D rebase
+  st =3D status
 
-This is made of the following tuple:
+Signed-off-by: Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+---
+ Makefile  | 5 ++++-
+ gitconfig | 5 +++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+ create mode 100644 gitconfig
 
-	<path component index>,{SHA1 reference index>
+diff --git a/Makefile b/Makefile
+index 3588ca1..18081bf 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1010,7 +1010,7 @@ ifndef sysconfdir
+ ifeq ($(prefix),/usr)
+ sysconfdir =3D /etc
+ else
+-sysconfdir =3D etc
++sysconfdir =3D $(prefix)/etc
+ endif
+ endif
+=20
+@@ -1586,6 +1586,7 @@ template_dir_SQ =3D $(subst ','\'',$(template_dir))
+ htmldir_relative_SQ =3D $(subst ','\'',$(htmldir_relative))
+ prefix_SQ =3D $(subst ','\'',$(prefix))
+ gitwebdir_SQ =3D $(subst ','\'',$(gitwebdir))
++sysconfdir_SQ =3D $(subst ','\'',$(sysconfdir))
+=20
+ SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))
+ PERL_PATH_SQ =3D $(subst ','\'',$(PERL_PATH))
+@@ -2340,6 +2341,8 @@ install: all
+ 	$(MAKE) -C templates DESTDIR=3D'$(DESTDIR_SQ)' install
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
+ 	$(INSTALL) -m 644 mergetools/* '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
++	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(sysconfdir_SQ)'
++	$(INSTALL) -m 644 gitconfig '$(DESTDIR_SQ)$(ETC_GITCONFIG_SQ)'
+ ifndef NO_GETTEXT
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(localedir_SQ)'
+ 	(cd po/build/locale && $(TAR) cf - .) | \
+diff --git a/gitconfig b/gitconfig
+new file mode 100644
+index 0000000..c45d300
+--- /dev/null
++++ b/gitconfig
+@@ -0,0 +1,5 @@
++[alias]
++	co =3D checkout
++	ci =3D commit
++	rb =3D rebase
++	st =3D status
+--=20
+1.8.4-fc
 
-The path component index refers to the path dictionary table where path 
-strings and file modes are uniquely stored.  The SHA1 index refers to 
-the sorted SHA1 table as previously found in the pack index but which is 
-now part of the pack file itself.  So on average a single tree entry may 
-take between 1 to 2 bytes for the path component index and 1 to 3 bytes 
-for the SHA1 index.
+--
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-2) Tree Sequence Copy
-
-This is used to literally copy a contiguous list of tree entries from 
-another tree object.  This goes as follows:
-
-	<tree entry where to start>,<number of entries to copy>
-	[,<SHA1 index of the object to copy from>]
-
-So instead of having arbitrary copying of data like in delta objects, we 
-refer directly to tree entries in another object.  The big advantage 
-here is that the tree walker may directly jump to the copied object 
-without having to do any delta patching and caching. The SHA1 index is 
-optional if it refers to the same copied object as the previous tree 
-sequence copy record in this tree object.  And another possible 
-optimization for the tree walker when enumerating objects is to skip the 
-copy entry entirely if the object being copied from has already been 
-enumerated.
-
-The size of this entry is more variable and is typically between 1 to 2 
-bytes for the start index, 1 to 2 bytes for the copy size, and 0 to 3 
-bytes for the SHA1 index.
-
-So... what to do with this?
-
-Currently the "deltification" is achieved using a pretty dumb heuristic 
-which is to simply take each tree object in a pack v2 with their 
-corresponding base delta object and perform a straight conversion into 
-pack v4 tree format i.e. use copy records whenever possible as long as 
-they represent a space saving over the corresponding immediate tree 
-entries (which is normally the case).
-
-However this is rather sub-optimal for two reasons:
-
-1) This doesn't benefit from the ability to use multiple base objects to 
-   copy from and is potentially missing on additional opportunities for 
-   copy sequences which are not possible in the selected base object 
-   from the pack v2 delta base selection. Pack v4 is already quite 
-   smaller than pack v2 yet it might possibly be smaller still.
-
-2) This makes deep delta chains very inefficient at runtime when the 
-   pack is subsequently accessed.
-
-Let's consider this example to fully illustrate #2.
-
-	Tree A:
-	entry 0:	"foo.txt"
-	entry 1-3:	copy from tree B: start=2 count=3
-
-	Tree B:
-	entry 0-5:	copy from tree C: start=2 count=5
-	entry 6:	"bar.txt"
-
-	Tree C:
-	entry 0:	"file_a"
-	entry 1:	"file_b"
-	entry 2:	"file_c"
-	entry 3:	"file_D"
-	entry 4:	"file_E"
-	entry 5:	"file_F"
-	entry 6:	"file_G"
-
-This is a good example of what typically happens when the above heuristic 
-is applied.  And it is not uncommon to see a long indirection chain of 
-"copy those 2 entries from that other object" sometimes reaching 50 
-levels deep where the same 2 (or more) entries require up to 50 object 
-hops before they can be obtained.
-
-Obviously here the encoding should be optimized to reduce the chaining 
-effect simply by referring to the final object directly.  Hence tree A 
-could be encoded as follows:
-
-	Tree A:
-	entry 0:	"foo.txt"
-	entry 1-3:	copy from tree C: start=4 count=3
-
-The on-disk encoding is likely to be the same size but the runtime 
-access is greatly optimized.
-
-Now... instead of trying to do reference simplification by factoring out 
-the chain effect, I think a whole new approach to tree delta compression 
-for pack v4 should be developed which would also address issue #1 above.
-
-For example, we may try to make each canonical tree objects into 
-sequences of hashed tree entries in memory where each tree entry would 
-be reduced down to a single CRC32 value (or even Adler32 for speed).  
-Each tree object would then be represented by some kind of 32-bit 
-character "string".  Then it is just a matter of applying substring 
-matching algorithms to find the best copy sequences without creating 
-reference cycles, weighted by the number of indirections involved when 
-a referred object already has a copy sequence covering part or all of 
-the matched string. Etc.
-
-Or that can be something else entirely.  Certainly there are similar 
-problems already solved in the literature somewhere.
-
-And it has to be _fast_.
-
-So if someone is on the lookout for a nice algorithmic and coding 
-challenge then here's your opportunity!
-
-
-Nicolas
+--=20
+You received this message because you are subscribed to the Google Groups "=
+Git for human beings" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit https://groups.google.com/groups/opt_out.
