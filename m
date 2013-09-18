@@ -1,119 +1,122 @@
-From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: git clone silently aborts if stdout gets a broken pipe
-Date: Wed, 18 Sep 2013 18:52:13 +0200
-Message-ID: <A612847CFE53224C91B23E3A5B48BAC798CD91DB0B@xmail3.se.axis.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH] completion: improve untracked directory filtering for
+ filename completion
+Date: Wed, 18 Sep 2013 19:06:08 +0200
+Message-ID: <1379523968-20668-1-git-send-email-szeder@ira.uka.de>
+References: <CADHXV5=ZVif6xppJgOXRKmqG9bBmAF0=A-sS9TUkH1RHSX9k6g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="_002_A612847CFE53224C91B23E3A5B48BAC798CD91DB0Bxmail3seaxisc_"
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 18 18:58:25 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Manlio Perillo <manlio.perillo@gmail.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Isaac Levy <ilevy@google.com>
+X-From: git-owner@vger.kernel.org Wed Sep 18 19:06:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VML56-0002B7-6j
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 18:58:24 +0200
+	id 1VMLCt-0001v0-Rz
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 19:06:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752468Ab3IRQ6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Sep 2013 12:58:14 -0400
-Received: from anubis.se.axis.com ([195.60.68.12]:46953 "EHLO
-	anubis.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752340Ab3IRQ6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Sep 2013 12:58:12 -0400
-X-Greylist: delayed 356 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Sep 2013 12:58:12 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by anubis.se.axis.com (Postfix) with ESMTP id 84FB519E0F
-	for <git@vger.kernel.org>; Wed, 18 Sep 2013 18:52:14 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at anubis.se.axis.com
-Received: from anubis.se.axis.com ([127.0.0.1])
-	by localhost (anubis.se.axis.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id GGN43BTUhDeY for <git@vger.kernel.org>;
-	Wed, 18 Sep 2013 18:52:13 +0200 (CEST)
-Received: from boulder.se.axis.com (boulder.se.axis.com [10.0.2.104])
-	by anubis.se.axis.com (Postfix) with ESMTP id BE75B19E09
-	for <git@vger.kernel.org>; Wed, 18 Sep 2013 18:52:13 +0200 (CEST)
-Received: from boulder.se.axis.com (localhost [127.0.0.1])
-	by postfix.imss71 (Postfix) with ESMTP id A81618DA
-	for <git@vger.kernel.org>; Wed, 18 Sep 2013 18:52:13 +0200 (CEST)
-Received: from seth.se.axis.com (seth.se.axis.com [10.0.2.172])
-	by boulder.se.axis.com (Postfix) with ESMTP id 9D092789
-	for <git@vger.kernel.org>; Wed, 18 Sep 2013 18:52:13 +0200 (CEST)
-Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
-	by seth.se.axis.com (Postfix) with ESMTP id 9B52A3E06F
-	for <git@vger.kernel.org>; Wed, 18 Sep 2013 18:52:13 +0200 (CEST)
-Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
- ([10.0.5.75]) with mapi; Wed, 18 Sep 2013 18:52:13 +0200
-Thread-Topic: git clone silently aborts if stdout gets a broken pipe 
-Thread-Index: Ac60j12YFc43TbFEQA2ZRzFumfedkA==
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, sv-SE
+	id S1752417Ab3IRRGX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Sep 2013 13:06:23 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:64844 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751604Ab3IRRGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Sep 2013 13:06:22 -0400
+Received: from localhost6.localdomain6 (217-197-184-8.pool.digikabel.hu [217.197.184.8])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0MDU2z-1V7lp33sZ3-00GYod; Wed, 18 Sep 2013 19:06:21 +0200
+X-Mailer: git-send-email 1.8.4.366.g16e4e67
+In-Reply-To: <CADHXV5=ZVif6xppJgOXRKmqG9bBmAF0=A-sS9TUkH1RHSX9k6g@mail.gmail.com>
+X-Provags-ID: V02:K0:ADPXM5J5EcQGlE6ZNi8Bguib9wvj9NbL8safwr3TK/+
+ M6kONS7GdT3XVvoNqn1Xi4kw05ArjazSGcIuOVOccw+CMGTw/Z
+ hKgWggA+XjGSTnHFvFaz25WxxWbnVptAm7BpiFVdLobAsr3Zbw
+ t10do37ydSPBV9dFXFZujpWIAjYXpf+MJAMJiivpLt28gtfxzk
+ GMPqdkKJBTEcHLtXzKz0YRhcnakqky4r4Gb9n/WYZI9axZ7/UP
+ LRjnVSDvlRiqwIfqa1rzls+vrMoUM2lxvY76mbhHA9JhMpP+Dm
+ 4Q26fXx6Q7yEjmBLrYIXK4zM+F6UzniLcu6tMHfiFJUM8zlWHz
+ zOA9Rg0/N/z/VBpZ/KM10w3eUF3OwXvJFVDZ4Bn/DZrlY6kOUs
+ hH9zI4dxPThRQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234974>
 
---_002_A612847CFE53224C91B23E3A5B48BAC798CD91DB0Bxmail3seaxisc_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Similar to Bash's default filename completion, our git-aware filename
+completion stops at directory boundaries, i.e. it doesn't offer the
+full 'path/to/file' at first, but only 'path/'.  To achieve that the
+completion script runs 'git ls-files' with specific command line
+options to get the list of relevant paths under the current directory,
+and then processes each path to strip all but the base directory or
+filename (see __git_index_files()).
 
-One of our Perl scripts that does a git clone suddenly=20
-started to fail when I upgraded to git 1.8.4 from 1.8.3.1.
+To offer only modified and untracked files for 'git add' the
+completion script runs 'git ls-files --exclude-standard --others
+--modified'.  This command lists all non-ignored files in untracked
+directories, which leads to a noticeable delay caused by the
+processing mentioned above if there are a lot of such files
+(__git_index_files() specifies '--exclude-standard' internally):
 
-The failing Perl code used a construct like this:
+  $ mkdir untracked-dir
+  $ for i in {1..10000} ; do >untracked-dir/$i ; done
+  $ time __git_index_files "--others --modified"
+  untracked-dir
 
-	Git::command_oneline('clone', $url, $path);
+  real	0m0.537s
+  user	0m0.452s
+  sys	0m0.160s
 
-There is no error raised, but the directory specified by=20
-$path is not created. If I look at the process using strace=20
-I can see the clone taking place, but then it seems to get=20
-a broken pipe since the code above only cares about the=20
-first line from stdout (and with the addition of "Checking=20
-connectivity..." git clone now outputs two lines to stdout).
+Eliminate this delay by additionally passing the '--directory
+--no-empty-directory' options to 'git ls-files' to show only the
+directory name of non-empty untracked directories instead their whole
+content:
 
-If I change the code to:
+  $ time __git_index_files "--others --modified --directory --no-empty-=
+directory"
+  untracked-dir
 
-	my @foo =3D Git::command('clone', $url, $path);
+  real	0m0.029s
+  user	0m0.020s
+  sys	0m0.004s
 
-it works as expected.
+=46ilename completion for 'git clean' suffers from the same delay, as i=
+t
+offers untracked files, too.  The fix could be the same, but since it
+actually makes sense to 'git clean' empty directories, in this case we
+only pass the '--directory' option to 'git ls-files'.
 
-I have attached a simple Perl script that shows the problem.
-Run it as "clone_test.pl <git url>". With git 1.8.4 it will=20
-fail for the first two test cases, whereas with older git=20
-versions it succeeds for all four test cases.
+Reported-by: Isaac Levy <ilevy@google.com>
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+ contrib/completion/git-completion.bash | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I hope this is enough information for someone to look into=20
-this regression.
-
-Best regards,
-//Peter
-
-
---_002_A612847CFE53224C91B23E3A5B48BAC798CD91DB0Bxmail3seaxisc_
-Content-Type: application/octet-stream; name="clone_test.pl"
-Content-Description: clone_test.pl
-Content-Disposition: attachment; filename="clone_test.pl"; size=796;
-	creation-date="Wed, 18 Sep 2013 18:25:55 GMT";
-	modification-date="Wed, 18 Sep 2013 18:00:03 GMT"
-Content-Transfer-Encoding: base64
-
-IyEvYmluL3BlcmwKCnVzZSBHaXQ7CgpteSAkdXJsID0gJEFSR1ZbMF0gfHwgZGllKCJZb3UgbmVl
-ZCB0byBzcGVjaWZ5IGEgR2l0IFVSTCFcbiIpOwpteSAkcGF0aCA9ICdjbG9uZV90ZXN0JzsKCnN5
-c3RlbSgicm0gLXJmICR7cGF0aH0xIik7CkdpdDo6Y29tbWFuZF9vbmVsaW5lKCdjbG9uZScsICIk
-dXJsIiwgIiR7cGF0aH0xIik7Cndhcm4oIkZhaWxlZCB0byBjbG9uZSB0byAke3BhdGh9MSFcbiIp
-IHVubGVzcyAoLWQgIiR7cGF0aH0xIik7CgpzeXN0ZW0oInJtIC1yZiAke3BhdGh9MiIpOwpteSAk
-Zm9vID0gR2l0Ojpjb21tYW5kX29uZWxpbmUoJ2Nsb25lJywgJHVybCwgIiR7cGF0aH0yIik7Cndh
-cm4oIkZhaWxlZCB0byBjbG9uZSB0byAke3BhdGh9MiFcbiIpIHVubGVzcyAoLWQgIiR7cGF0aH0y
-Iik7CgpzeXN0ZW0oInJtIC1yZiAke3BhdGh9MyIpOwpteSAkZm9vID0gR2l0Ojpjb21tYW5kKCdj
-bG9uZScsICR1cmwsICIke3BhdGh9MyIpOwp3YXJuKCJGYWlsZWQgdG8gY2xvbmUgdG8gJHtwYXRo
-fTMhXG4iKSB1bmxlc3MgKC1kICIke3BhdGh9MyIpOwoKc3lzdGVtKCJybSAtcmYgJHtwYXRofTQi
-KTsKbXkgQGZvbyA9IEdpdDo6Y29tbWFuZCgnY2xvbmUnLCAkdXJsLCAiJHtwYXRofTQiKTsKd2Fy
-bigiRmFpbGVkIHRvIGNsb25lIHRvICR7cGF0aH00IVxuIikgdW5sZXNzICgtZCAiJHtwYXRofTQi
-KTsKCnN5c3RlbSgicm0gLXJmICR7cGF0aH0xIik7CnN5c3RlbSgicm0gLXJmICR7cGF0aH0yIik7
-CnN5c3RlbSgicm0gLXJmICR7cGF0aH0zIik7CnN5c3RlbSgicm0gLXJmICR7cGF0aH00Iik7Cg==
-
---_002_A612847CFE53224C91B23E3A5B48BAC798CD91DB0Bxmail3seaxisc_--
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index e1b7313072..86f77345fd 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -901,7 +901,7 @@ _git_add ()
+ 	esac
+=20
+ 	# XXX should we check for --update and --all options ?
+-	__git_complete_index_file "--others --modified"
++	__git_complete_index_file "--others --modified --directory --no-empty=
+-directory"
+ }
+=20
+ _git_archive ()
+@@ -1063,7 +1063,7 @@ _git_clean ()
+ 	esac
+=20
+ 	# XXX should we check for -x option ?
+-	__git_complete_index_file "--others"
++	__git_complete_index_file "--others --directory"
+ }
+=20
+ _git_clone ()
+--=20
+1.8.4.366.g16e4e67
