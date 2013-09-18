@@ -1,70 +1,70 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH np/pack-v4] index-pack: tighten object type check based on
- pack version
-Date: Wed, 18 Sep 2013 10:39:07 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309181024290.20709@syhkavp.arg>
-References: <1379507129-27151-1-git-send-email-pclouds@gmail.com>
+From: Madhu <enometh@meer.net>
+Subject: git/path.c - order of accessing ~/.gitconfig
+Date: Wed, 18 Sep 2013 20:10:06 +0530 (IST)
+Message-ID: <20130918.201006.407922449.enometh@meer.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_SLciwkvwZcAUhEsWGI6HhQ)"
-Cc: git@vger.kernel.org
-To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 18 16:39:53 2013
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 18 16:40:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMIv0-0001Do-0C
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 16:39:50 +0200
+	id 1VMIvd-0002ZJ-Js
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 16:40:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511Ab3IROjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Sep 2013 10:39:46 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:49165 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751344Ab3IROjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Sep 2013 10:39:45 -0400
-Received: from xanadu.home ([70.83.209.44]) by VL-VM-MR001.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MTB004I8SP7VAC0@VL-VM-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 18 Sep 2013 10:39:07 -0400 (EDT)
-In-reply-to: <1379507129-27151-1-git-send-email-pclouds@gmail.com>
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1751632Ab3IROk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Sep 2013 10:40:26 -0400
+Received: from vps4.hungerhost.com ([199.167.40.167]:37443 "EHLO
+	vps4.hungerhost.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751533Ab3IROkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Sep 2013 10:40:25 -0400
+Received: from [59.92.9.129] (port=34725 helo=localhost)
+	by vps4.hungerhost.com with esmtpsa (SSLv3:DHE-RSA-AES256-SHA:256)
+	(Exim 4.80.1)
+	(envelope-from <enometh@meer.net>)
+	id 1VMIvV-0006DA-U5; Wed, 18 Sep 2013 10:40:22 -0400
+X-Mailer: Mew version 6.5 on Emacs 24.3.50 / Mule 6.0 (HANACHIRUSATO)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - vps4.hungerhost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - meer.net
+X-Get-Message-Sender-Via: vps4.hungerhost.com: authenticated_id: enometh@secure.meer.net
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234967>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---Boundary_(ID_SLciwkvwZcAUhEsWGI6HhQ)
-Content-type: TEXT/PLAIN; charset=UTF-8
-Content-transfer-encoding: 8BIT
-
-On Wed, 18 Sep 2013, Nguyễn Thái Ngọc Duy wrote:
-
-> In pack version 4, ref-delta technically could be used to compress any
-> objects including commits and trees (both canonical and v4). But it
-> does not make sense to do so. It can only lead to performance
-> degradation. Catch those packers.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  I could now verify that pack-objects does not compress commits nor
->  trees using ref-delta in v4. But perhaps these are a bit too strict?
->  Maybe downgrade from die() to warning() and still accept the pack?
-
-Even then...  There is a difference between an "invalid" pack and a 
-"suboptimal" one.  I don't think we should complain when presented with 
-suboptimal encoding if it is still valid and there is no problem 
-actually processing the data correctly.  You never know when this 
-alternative encoding, even if suboptimal, might be handy.
-
-Robustness principle: Be conservative in what you send, be liberal in 
-what you accept.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234968>
 
 
-Nicolas
+* commit 21cf32279120799a766d22416be7d82d9ecfbd04
+|
+| Author: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+| Date:   Fri Jun 22 11:03:23 2012 +0200
+|
+|    config: read (but not write) from $XDG_CONFIG_HOME/git/config file
+|
+|    Teach git to read the "gitconfig" information from a new location,
+|    $XDG_CONFIG_HOME/git/config; this allows the user to avoid
+|    cluttering $HOME with many per-application configuration files.
+|
+|    In the order of reading, this file comes between the global
+|    configuration file (typically $HOME/.gitconfig) and the system wide
+|    configuration file (typically /etc/gitconfig).
 
---Boundary_(ID_SLciwkvwZcAUhEsWGI6HhQ)--
+
+However git/config.c (git_config_early) commit accesses xdg_config
+before user_config.  So the comments and documentation are
+inconsistent with the code.
+
+[This looks like an intentional bug, I spotted it when commenting out
+ the accesses to files under ~/.config.  (protip: chmod 000 ~/.config helps
+ identify and blacklist NWO "apps" and now git started complaining) ---Madhu
