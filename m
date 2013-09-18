@@ -1,71 +1,98 @@
-From: Madhu <enometh@meer.net>
-Subject: Re: git/path.c - order of accessing ~/.gitconfig
-Date: Wed, 18 Sep 2013 23:26:45 +0530 (IST)
-Message-ID: <20130918.232645.170158661.enometh@meer.net>
-References: <20130918.201006.407922449.enometh@meer.net>
-	<vpq8uyuxjfe.fsf@anie.imag.fr>
+From: Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: [PATCH] build: add default configuration
+Date: Wed, 18 Sep 2013 13:23:29 -0500
+Message-ID: <CAMP44s35_emnh9Kce433oy1JW66xB2vaN5f5OO7VF1XqoO=YGQ@mail.gmail.com>
+References: <1379423650-1311-1-git-send-email-felipe.contreras@gmail.com>
+	<e8ccfba3-5198-4986-9b9d-1d69b965386f.maildroid@localhost>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr
-To: Matthieu.Moy@grenoble-inp.fr
-X-From: git-owner@vger.kernel.org Wed Sep 18 20:22:52 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, 
+	=?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: git-users+bncBDBJVMGGZYNBBIO746IQKGQEQBZHMQA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Wed Sep 18 20:23:33 2013
+Return-path: <git-users+bncBDBJVMGGZYNBBIO746IQKGQEQBZHMQA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-ee0-f62.google.com ([74.125.83.62])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMMOn-0006rj-Qw
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 20:22:50 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752954Ab3IRSWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Sep 2013 14:22:45 -0400
-Received: from vps4.hungerhost.com ([199.167.40.167]:57955 "EHLO
-	vps4.hungerhost.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752147Ab3IRSWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Sep 2013 14:22:44 -0400
-Received: from [59.92.35.116] (port=41363 helo=localhost)
-	by vps4.hungerhost.com with esmtpsa (SSLv3:DHE-RSA-AES256-SHA:256)
-	(Exim 4.80.1)
-	(envelope-from <enometh@meer.net>)
-	id 1VMMOd-0007rM-Od
-	for git@vger.kernel.org; Wed, 18 Sep 2013 14:22:40 -0400
-In-Reply-To: <vpq8uyuxjfe.fsf@anie.imag.fr>
-X-Mailer: Mew version 6.5 on Emacs 24.3.50 / Mule 6.0 (HANACHIRUSATO)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - vps4.hungerhost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - meer.net
-X-Get-Message-Sender-Via: vps4.hungerhost.com: authenticated_id: enometh@secure.meer.net
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234980>
+	(envelope-from <git-users+bncBDBJVMGGZYNBBIO746IQKGQEQBZHMQA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1VMMPT-0008IA-Eq
+	for gcggu-git-users@m.gmane.org; Wed, 18 Sep 2013 20:23:31 +0200
+Received: by mail-ee0-f62.google.com with SMTP id c41sf755770eek.7
+        for <gcggu-git-users@m.gmane.org>; Wed, 18 Sep 2013 11:23:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:x-original-sender:x-original-authentication-results:reply-to
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=oJWWpx4d9PzI2gH37MI16/yYnhz0M59yH+r4IE5Iv54=;
+        b=UY5oqpNVGhxcYxpMQ1CHB/PgfPwN4x+Yd83TM2BwZTsYzQQfZFCfY7Z1xSkutJUMJj
+         mHHzk5lmv0egQiFXoSKRQebd/9wjcMaKwASQXC9uuV/NCxIJJ3pWd4iu646wu5IqSyMn
+         sstltVWwUadnegbwPvLXOhvQv3vv/9dQ9h3QNmsjO3fANT2BRcJWRm79Y/NUQGwFW40r
+         iLymZTVlP/6yi+mcUIobq0eKOMvSeCCopmO8ddZx8CIh4ck8z9bAAa93wQte5FByTj/i
+         vUYvugepQgfJFQpBPTeBVKgDnY3HaRB1Dz9izlfNUaOjb1iplMSTW6mH5Z7I10YdZVou
+         sDYQ==
+X-Received: by 10.180.206.205 with SMTP id lq13mr375873wic.14.1379528611160;
+        Wed, 18 Sep 2013 11:23:31 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.180.98.37 with SMTP id ef5ls1343098wib.35.canary; Wed, 18 Sep
+ 2013 11:23:29 -0700 (PDT)
+X-Received: by 10.205.5.202 with SMTP id oh10mr5320308bkb.3.1379528609463;
+        Wed, 18 Sep 2013 11:23:29 -0700 (PDT)
+Received: from mail-la0-x234.google.com (mail-la0-x234.google.com [2a00:1450:4010:c03::234])
+        by gmr-mx.google.com with ESMTPS id jt16si229900bkb.0.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 18 Sep 2013 11:23:29 -0700 (PDT)
+Received-SPF: pass (google.com: domain of felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 2a00:1450:4010:c03::234 as permitted sender) client-ip=2a00:1450:4010:c03::234;
+Received: by mail-la0-f52.google.com with SMTP id ev20so5913406lab.39
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 18 Sep 2013 11:23:29 -0700 (PDT)
+X-Received: by 10.152.26.72 with SMTP id j8mr35969868lag.19.1379528609146;
+ Wed, 18 Sep 2013 11:23:29 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Wed, 18 Sep 2013 11:23:29 -0700 (PDT)
+In-Reply-To: <e8ccfba3-5198-4986-9b9d-1d69b965386f.maildroid@localhost>
+X-Original-Sender: felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates
+ 2a00:1450:4010:c03::234 as permitted sender) smtp.mail=felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org;
+       dkim=pass header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234981>
 
-[I posted this via gmane (m3mwnac9ob.fsf@leonis4.robolove.meer.net)
- but the posting hasn't appeared, so I'm sending this by email..]
+On Wed, Sep 18, 2013 at 1:13 PM, David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+> Apologies for top post -- anybody have a recommendation for a better app then maildroid?
+>
+> Will this not conflict with folks that supply their own gitconfig?
 
-* Matthieu Moy <vpq8uyuxjfe.fsf@anie.imag.fr> :
-Wrote on Wed, 18 Sep 2013 17:01:57 +0200:
-|> * commit 21cf32279120799a766d22416be7d82d9ecfbd04
-|> |    In the order of reading, this file comes between the global
-|> |    configuration file (typically $HOME/.gitconfig) and the system wide
-|> |    configuration file (typically /etc/gitconfig).
-|>
-|> However git/config.c (git_config_early) commit accesses xdg_config
-|> before user_config.  So the comments and documentation are
-|> inconsistent with the code.
-|
-| It seems the commit message is wrong, indeed. But it's too late to fix
-| it. OTOH, the documentation seems right to me
-| (Documentation/git-config.txt). It says:
+You mean people that provide their own ETC_GITCONFIG? If you mean
+distributions, their packaging would override /etc/gitconfig, if you
+mean people that have already a /etc/gitconfig, packaging systems
+usually save the old one so they can solve the conflict manually (e.g.
+/etc/gitconfig.pacsave). So no, it would not conflict. If you mean
+people that have ~/.gitconfig, then absolutely not, because that one
+takes precedence.
 
-No, The commit message is also right.  xdg_config indeed comes betweeen
-git_etc_gitconfig and user_config, as the commit says, I misunderstood
-what the commit was saying because it says this in the reverse order.
-Sorry, (nothing to see here) ---Madhu
+Alternatively, we could have a higher level configuration file (e.g.
+/usr/share/git/config), but I think that's overkill.
+
+> I like the idea. Docs?  Also, should this not be done in the C side so that we don't waste time reading the config, and also prevent users from overriding these?
+
+But we want them to be easily readable, and possibly allow
+distributions to easily modify them.
+
+-- 
+Felipe Contreras
+
+-- 
+You received this message because you are subscribed to the Google Groups "Git for human beings" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit https://groups.google.com/groups/opt_out.
