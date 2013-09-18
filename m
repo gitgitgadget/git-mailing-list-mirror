@@ -1,108 +1,170 @@
-From: "Loyall, David" <david.loyall@nebraska.gov>
-Subject: suspected bug(s) in git-cvsexportcommit.perl
-Date: Wed, 18 Sep 2013 19:00:46 +0000
-Message-ID: <FCEE4469EE8B234199968ECA9B0661E230EB7623@STNEEX10MB01.stone.ne.gov>
+From: Jeff King <peff@peff.net>
+Subject: Re: git clone silently aborts if stdout gets a broken pipe
+Date: Wed, 18 Sep 2013 15:04:37 -0400
+Message-ID: <20130918190437.GD18821@sigill.intra.peff.net>
+References: <A612847CFE53224C91B23E3A5B48BAC798CD91DB0B@xmail3.se.axis.com>
+ <20130918184551.GC18821@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 18 21:00:54 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+X-From: git-owner@vger.kernel.org Wed Sep 18 21:04:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMMzb-0003r1-Va
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 21:00:52 +0200
+	id 1VMN3S-0003oo-IK
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 21:04:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751661Ab3IRTAs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Sep 2013 15:00:48 -0400
-Received: from mx01.ne.gov ([164.119.247.101]:30551 "EHLO mx01.ne.gov"
+	id S1752049Ab3IRTEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Sep 2013 15:04:46 -0400
+Received: from cloud.peff.net ([50.56.180.127]:56543 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751494Ab3IRTAr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Sep 2013 15:00:47 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvIEAIv3OVIKFNNv/2dsb2JhbABahBHBLIEybQeCJwWBCwEqViYBBBvBfo82g1aBAAOJAKQTgio
-X-IPAS-Result: AvIEAIv3OVIKFNNv/2dsb2JhbABahBHBLIEybQeCJwWBCwEqViYBBBvBfo82g1aBAAOJAKQTgio
-X-IronPort-AV: E=Sophos;i="4.90,930,1371099600"; 
-   d="scan'208";a="10402301"
-Received: from stneex103.stone.ne.gov ([10.20.211.111])
-  by mxout01.ne.gov with ESMTP; 18 Sep 2013 14:00:47 -0500
-Received: from STNEEX10MB01.stone.ne.gov ([fe80::582b:5914:1397:c3e]) by
- STNEEX103.stone.ne.gov ([::1]) with mapi id 14.02.0347.000; Wed, 18 Sep 2013
- 14:00:46 -0500
-Thread-Topic: suspected bug(s) in git-cvsexportcommit.perl
-Thread-Index: Ac60oWFMdyCnVn4fRIitg3ZlauVqcQ==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.20.24.158]
+	id S1751880Ab3IRTEq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Sep 2013 15:04:46 -0400
+Received: (qmail 22335 invoked by uid 102); 18 Sep 2013 19:04:46 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Sep 2013 14:04:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Sep 2013 15:04:37 -0400
+Content-Disposition: inline
+In-Reply-To: <20130918184551.GC18821@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234984>
 
-Hello.
+On Wed, Sep 18, 2013 at 02:45:51PM -0400, Jeff King wrote:
 
-I don't believe that git-cvsexportcommit.perl is working properly.
+> That being said, the new messages should almost certainly go to stderr.
+> 
+> -- >8 --
+> Subject: [PATCH] clone: write "checking connectivity" to stderr
+> 
+> In commit 0781aa4 (clone: let the user know when
+> check_everything_connected is run, 2013-05-03), we started
+> giving the user a progress report during clone. However,
+> since the actual work happens in a sub-process, we do not
+> use the usual progress code that counts the objects, but
+> rather just print a message ourselves.
+> 
+> This message goes to stdout via printf, which is unlike
+> other progress messages (both the eye candy within clone,
+> and the "checking connectivity" progress in other commands).
+> Let's send it to stderr for consistency.
 
-=46irst off, invocations of "git-apply" fail on my system.=A0 "git appl=
-y" works.=A0 (The aforementioned script uses the former.)
+Hrm, this actually breaks t5701, which expects "clone 2>err" to print
+nothing to stderr.
 
-Second, please have a look at this output (specific strings have been r=
-eplaced with 'foo')
+What should happen here? The message is emulating the usual progress
+messages, which are silent when stderr is redirected. So we could
+actually use isatty() in the usual way to suppress them. On the other
+hand, the point of that suppression is that the regular progress code
+produces long output that is not meant to be seen sequentially (i.e., it
+is overwritten in the terminal with "\r"). But this message does not do
+so. So we can just tweak t5701 to be more careful about what it is
+looking for.
 
-hobbes@metalbaby:~/src/foo$ git cvsexportcommit -v fecc8b4bb3d91d204f4e=
-b3ebd112f6cec6004819
-Applying to CVS commit fecc8b4bb3d91d204f4eb3ebd112f6cec6004819 from pa=
-rent 695a544fbdcf7e0614c35d1dab9a3eac0cc57b4c
-Checking if patch will apply
-cvs status: nothing known about `WebContent/WEB-INF/lib/commons-lang-2.=
-6.jar'
-cvs status: nothing known about `WebContent/WEB-INF/lib/commons-configu=
-ration-1.9.jar'
-cvs status: nothing known about `JavaSource/foo/ConfigManager.java'
-cvs status: nothing known about `JavaSource/config.xml'
-Huh? Status 'Unknown' reported for unexpected file 'no file commons-lan=
-g-2.6.jar'
-Huh? Status 'Unknown' reported for unexpected file 'no file commons-con=
-figuration-1.9.jar'
-Huh? Status 'Unknown' reported for unexpected file 'no file ConfigManag=
-er.java'
-Huh? Status 'Unknown' reported for unexpected file 'no file config.xml'
-Applying
-<stdin>:7: trailing whitespace.
-<?xml version=3D"1.0" encoding=3D"UTF-8" ?>
-<stdin>:8: trailing whitespace.
-<config>
-<stdin>:9: trailing whitespace.
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 <masterthread>
-<stdin>:10: trailing whitespace.
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0 <queuemappings>
-<stdin>:11: trailing whitespace.
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 <=
-mapping threadtype=3D"foo" service=3D"foo" action=3D"foo_test" />
-error: patch failed: JavaSource/foo/QueueMapping.java:67
-error: JavaSource/foo/QueueMapping.java: patch does not apply
-Context reduced to (2/2) to apply fragment at 43
-cannot patch at /usr/lib/git-core/git-cvsexportcommit line 333.
-hobbes@metalbaby:~/src/foo$=20
+Also, we should arguably give the "Cloning into..." message the same
+treatment. We have printed that to stdout for a very long time, so there
+is a slim chance that somebody actually tries to parse it. But I think
+they are wrong to do so; we already changed it once (in 28ba96a), and
+these days it is internationalized, anyway.
 
-Even after I altered my copy of the script to invoke 'git apply' in two=
- places, I still get the erroneous "unknown" lines.=A0 My suspicion is =
-that it has something to do with the $basename stuff, but, who am I kid=
-ding? I don't grok perl.
+In May of 2012 I posted this patch, but it got overlooked, and I forgot
+about it but carried it in my tree since then. Maybe we should apply it
+now (it fixes t5701; the "checking connectivity" patch can come on top,
+or even just be squashed in).
 
-I haven't yet explored the error lines after "Applying".
+-- >8 --
+Subject: [PATCH] clone: send diagnostic messages to stderr
 
-So, what do I want?=A0 I want somebody to test git-cvsexportcommit.perl=
-=2E=A0 If it passes tests, then I'd like help creating a test that it d=
-oes fail. (Perhaps my workspace can help.  Perhaps it is as simple as t=
-he presence of a new file in a subdirectory.)
+Putting messages like "Cloning into.." and "done" on stdout
+is un-Unix and uselessly clutters the stdout channel. Send
+them to stderr.
 
-Cheers, thanks,
---Dave
+We have to tweak two tests to accommodate this:
+
+  1. t5601 checks for doubled output due to forking, and
+     doesn't actually care where the output goes; adjust it
+     to check stderr.
+
+  2. t5702 is trying to test whether progress output was
+     sent to stderr, but naively does so by checking
+     whether stderr produced any output. Instead, have it
+     look for "%", a token found in progress output but not
+     elsewhere (and which lets us avoid hard-coding the
+     progress text in the test).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/clone.c          | 6 +++---
+ t/t5601-clone.sh         | 2 +-
+ t/t5702-clone-options.sh | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 3c91844..8723a3a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -379,7 +379,7 @@ static void clone_local(const char *src_repo, const char *dest_repo)
+ 	}
+ 
+ 	if (0 <= option_verbosity)
+-		printf(_("done.\n"));
++		fprintf(stderr, _("done.\n"));
+ }
+ 
+ static const char *junk_work_tree;
+@@ -849,9 +849,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 
+ 	if (0 <= option_verbosity) {
+ 		if (option_bare)
+-			printf(_("Cloning into bare repository '%s'...\n"), dir);
++			fprintf(stderr, _("Cloning into bare repository '%s'...\n"), dir);
+ 		else
+-			printf(_("Cloning into '%s'...\n"), dir);
++			fprintf(stderr, _("Cloning into '%s'...\n"), dir);
+ 	}
+ 	init_db(option_template, INIT_DB_QUIET);
+ 	write_config(&option_config);
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 0629149..b3b11e6 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -36,7 +36,7 @@ test_expect_success C_LOCALE_OUTPUT 'output from clone' '
+ 
+ test_expect_success C_LOCALE_OUTPUT 'output from clone' '
+ 	rm -fr dst &&
+-	git clone -n "file://$(pwd)/src" dst >output &&
++	git clone -n "file://$(pwd)/src" dst >output 2>&1 &&
+ 	test $(grep Clon output | wc -l) = 1
+ '
+ 
+diff --git a/t/t5702-clone-options.sh b/t/t5702-clone-options.sh
+index 85cadfa..67e170e 100755
+--- a/t/t5702-clone-options.sh
++++ b/t/t5702-clone-options.sh
+@@ -22,14 +22,14 @@ test_expect_success 'redirected clone -v' '
+ test_expect_success 'redirected clone' '
+ 
+ 	git clone "file://$(pwd)/parent" clone-redirected >out 2>err &&
+-	test_must_be_empty err
++	! grep % err
+ 
+ '
+ test_expect_success 'redirected clone -v' '
+ 
+ 	git clone --progress "file://$(pwd)/parent" clone-redirected-progress \
+ 		>out 2>err &&
+-	test -s err
++	grep % err
+ 
+ '
+ 
+-- 
+1.8.4.rc4.16.g228394f
