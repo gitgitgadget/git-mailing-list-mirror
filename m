@@ -1,86 +1,149 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git clone silently aborts if stdout gets a broken pipe
-Date: Wed, 18 Sep 2013 16:01:52 -0400
-Message-ID: <20130918200152.GA17074@sigill.intra.peff.net>
-References: <A612847CFE53224C91B23E3A5B48BAC798CD91DB0B@xmail3.se.axis.com>
- <20130918184551.GC18821@sigill.intra.peff.net>
- <20130918190437.GD18821@sigill.intra.peff.net>
- <xmqqmwnaudtg.fsf@gitster.dls.corp.google.com>
+Subject: [PATCH 1/2] clone: send diagnostic messages to stderr
+Date: Wed, 18 Sep 2013 16:05:13 -0400
+Message-ID: <20130918200513.GA731@sigill.intra.peff.net>
+References: <20130918200152.GA17074@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 18 22:02:10 2013
+X-From: git-owner@vger.kernel.org Wed Sep 18 22:05:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMNwt-0006hD-6A
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 22:02:07 +0200
+	id 1VMO06-0004V7-A0
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 22:05:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753371Ab3IRUCC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Sep 2013 16:02:02 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56918 "EHLO peff.net"
+	id S1753314Ab3IRUFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Sep 2013 16:05:22 -0400
+Received: from cloud.peff.net ([50.56.180.127]:56946 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752031Ab3IRUCB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Sep 2013 16:02:01 -0400
-Received: (qmail 25125 invoked by uid 102); 18 Sep 2013 20:02:01 -0000
+	id S1752119Ab3IRUFW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Sep 2013 16:05:22 -0400
+Received: (qmail 25334 invoked by uid 102); 18 Sep 2013 20:05:22 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Sep 2013 15:02:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Sep 2013 16:01:52 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Sep 2013 15:05:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Sep 2013 16:05:13 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqmwnaudtg.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <20130918200152.GA17074@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234990>
 
-On Wed, Sep 18, 2013 at 12:31:23PM -0700, Junio C Hamano wrote:
+Putting messages like "Cloning into.." and "done" on stdout
+is un-Unix and uselessly clutters the stdout channel. Send
+them to stderr.
 
-> > Hrm, this actually breaks t5701, which expects "clone 2>err" to print
-> > nothing to stderr.
-> 
-> Hmm, where in t5701?  Ah, you meant t5702 and possibly t5601.
+We have to tweak two tests to accommodate this:
 
-Yes, sorry, I meant t5702.
+  1. t5601 checks for doubled output due to forking, and
+     doesn't actually care where the output goes; adjust it
+     to check stderr.
 
-> I actually think "it is long and not meant to be seen sequentially"
-> is a bad classifier; these new messages are also progress report in
-> that it reports "we are now in this phase".  So if I were to vote, I
-> would say we should apply the same progress-silencing criteria,
-> preferrably by not checking isatty() again, but by recording the
-> decision we have already made when squelching the progress during
-> the transfer in order to make sure they stay consistent.
+  2. t5702 is trying to test whether progress output was
+     sent to stderr, but naively does so by checking
+     whether stderr produced any output. Instead, have it
+     look for "%", a token found in progress output but not
+     elsewhere (and which lets us avoid hard-coding the
+     progress text in the test).
 
-Unfortunately that decision is made in the transport code, not by clone
-itself. We can cheat and peek at "transport->progress" after
-initializing the transport. That would require some refactoring, though;
-we print "Cloning into" before setting up the transport. And we do not
-even tell the transport about our progress options if we are doing a
-local clone.
+This should not regress any scripts that try to parse the
+current output, as the output is already internationalized
+and therefore unstable.
 
-If we wanted to _just_ suppress "Checking connectivity" (and not
-"Cloning into..."), that's a bit easier. And I could see an argument
-that the former is the only one that falls into the "progress report"
-category.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/clone.c          | 10 +++++-----
+ t/t5601-clone.sh         |  2 +-
+ t/t5702-clone-options.sh |  9 +++++----
+ 3 files changed, 11 insertions(+), 10 deletions(-)
 
-> > Also, we should arguably give the "Cloning into..." message the same
-> > treatment. We have printed that to stdout for a very long time, so there
-> > is a slim chance that somebody actually tries to parse it. But I think
-> > they are wrong to do so; we already changed it once (in 28ba96a), and
-> > these days it is internationalized, anyway.
-> 
-> Good thinking.  Please make it so ;-)
-
-OK. I've squashed the "use stderr" patches into one, and added a patch
-on top to correctly check the progress flag.
-
-  [1/2]: clone: send diagnostic messages to stderr
-  [2/2]: clone: treat "checking connectivity" like other progress
-
--Peff
+diff --git a/builtin/clone.c b/builtin/clone.c
+index ca3eb68..8723a3a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -379,7 +379,7 @@ static void clone_local(const char *src_repo, const char *dest_repo)
+ 	}
+ 
+ 	if (0 <= option_verbosity)
+-		printf(_("done.\n"));
++		fprintf(stderr, _("done.\n"));
+ }
+ 
+ static const char *junk_work_tree;
+@@ -551,12 +551,12 @@ static void update_remote_refs(const struct ref *refs,
+ 
+ 	if (check_connectivity) {
+ 		if (0 <= option_verbosity)
+-			printf(_("Checking connectivity... "));
++			fprintf(stderr, _("Checking connectivity... "));
+ 		if (check_everything_connected_with_transport(iterate_ref_map,
+ 							      0, &rm, transport))
+ 			die(_("remote did not send all necessary objects"));
+ 		if (0 <= option_verbosity)
+-			printf(_("done\n"));
++			fprintf(stderr, _("done\n"));
+ 	}
+ 
+ 	if (refs) {
+@@ -849,9 +849,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 
+ 	if (0 <= option_verbosity) {
+ 		if (option_bare)
+-			printf(_("Cloning into bare repository '%s'...\n"), dir);
++			fprintf(stderr, _("Cloning into bare repository '%s'...\n"), dir);
+ 		else
+-			printf(_("Cloning into '%s'...\n"), dir);
++			fprintf(stderr, _("Cloning into '%s'...\n"), dir);
+ 	}
+ 	init_db(option_template, INIT_DB_QUIET);
+ 	write_config(&option_config);
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 0629149..b3b11e6 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -36,7 +36,7 @@ test_expect_success C_LOCALE_OUTPUT 'output from clone' '
+ 
+ test_expect_success C_LOCALE_OUTPUT 'output from clone' '
+ 	rm -fr dst &&
+-	git clone -n "file://$(pwd)/src" dst >output &&
++	git clone -n "file://$(pwd)/src" dst >output 2>&1 &&
+ 	test $(grep Clon output | wc -l) = 1
+ '
+ 
+diff --git a/t/t5702-clone-options.sh b/t/t5702-clone-options.sh
+index 85cadfa..d3dbdfe 100755
+--- a/t/t5702-clone-options.sh
++++ b/t/t5702-clone-options.sh
+@@ -19,17 +19,18 @@ test_expect_success 'redirected clone -v' '
+ 
+ '
+ 
+-test_expect_success 'redirected clone' '
++test_expect_success 'redirected clone does not show progress' '
+ 
+ 	git clone "file://$(pwd)/parent" clone-redirected >out 2>err &&
+-	test_must_be_empty err
++	! grep % err
+ 
+ '
+-test_expect_success 'redirected clone -v' '
++
++test_expect_success 'redirected clone -v does show progress' '
+ 
+ 	git clone --progress "file://$(pwd)/parent" clone-redirected-progress \
+ 		>out 2>err &&
+-	test -s err
++	grep % err
+ 
+ '
+ 
+-- 
+1.8.4.rc4.16.g228394f
