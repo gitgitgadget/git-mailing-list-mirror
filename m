@@ -1,122 +1,168 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] completion: improve untracked directory filtering for
- filename completion
-Date: Wed, 18 Sep 2013 19:06:08 +0200
-Message-ID: <1379523968-20668-1-git-send-email-szeder@ira.uka.de>
-References: <CADHXV5=ZVif6xppJgOXRKmqG9bBmAF0=A-sS9TUkH1RHSX9k6g@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Git pack v4: next step, help required
+Date: Wed, 18 Sep 2013 13:40:23 -0400 (EDT)
+Message-ID: <alpine.LFD.2.03.1309181120390.20709@syhkavp.arg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Manlio Perillo <manlio.perillo@gmail.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Isaac Levy <ilevy@google.com>
-X-From: git-owner@vger.kernel.org Wed Sep 18 19:06:28 2013
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Duy Nguyen <pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 18 19:40:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMLCt-0001v0-Rz
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 19:06:28 +0200
+	id 1VMLk0-0003bJ-Dt
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 19:40:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752417Ab3IRRGX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Sep 2013 13:06:23 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:64844 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751604Ab3IRRGW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Sep 2013 13:06:22 -0400
-Received: from localhost6.localdomain6 (217-197-184-8.pool.digikabel.hu [217.197.184.8])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0MDU2z-1V7lp33sZ3-00GYod; Wed, 18 Sep 2013 19:06:21 +0200
-X-Mailer: git-send-email 1.8.4.366.g16e4e67
-In-Reply-To: <CADHXV5=ZVif6xppJgOXRKmqG9bBmAF0=A-sS9TUkH1RHSX9k6g@mail.gmail.com>
-X-Provags-ID: V02:K0:ADPXM5J5EcQGlE6ZNi8Bguib9wvj9NbL8safwr3TK/+
- M6kONS7GdT3XVvoNqn1Xi4kw05ArjazSGcIuOVOccw+CMGTw/Z
- hKgWggA+XjGSTnHFvFaz25WxxWbnVptAm7BpiFVdLobAsr3Zbw
- t10do37ydSPBV9dFXFZujpWIAjYXpf+MJAMJiivpLt28gtfxzk
- GMPqdkKJBTEcHLtXzKz0YRhcnakqky4r4Gb9n/WYZI9axZ7/UP
- LRjnVSDvlRiqwIfqa1rzls+vrMoUM2lxvY76mbhHA9JhMpP+Dm
- 4Q26fXx6Q7yEjmBLrYIXK4zM+F6UzniLcu6tMHfiFJUM8zlWHz
- zOA9Rg0/N/z/VBpZ/KM10w3eUF3OwXvJFVDZ4Bn/DZrlY6kOUs
- hH9zI4dxPThRQ==
+	id S1753146Ab3IRRkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Sep 2013 13:40:36 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:53786 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751613Ab3IRRkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Sep 2013 13:40:35 -0400
+Received: from xanadu.home ([70.83.209.44]) by VL-VM-MR001.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0MTC005C813BIB30@VL-VM-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 18 Sep 2013 13:40:23 -0400 (EDT)
+User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234975>
 
-Similar to Bash's default filename completion, our git-aware filename
-completion stops at directory boundaries, i.e. it doesn't offer the
-full 'path/to/file' at first, but only 'path/'.  To achieve that the
-completion script runs 'git ls-files' with specific command line
-options to get the list of relevant paths under the current directory,
-and then processes each path to strip all but the base directory or
-filename (see __git_index_files()).
 
-To offer only modified and untracked files for 'git add' the
-completion script runs 'git ls-files --exclude-standard --others
---modified'.  This command lists all non-ignored files in untracked
-directories, which leads to a noticeable delay caused by the
-processing mentioned above if there are a lot of such files
-(__git_index_files() specifies '--exclude-standard' internally):
+I think the pack v4 format and compatibility code is pretty stable now, 
+and probably as optimal as it can reasonably be.
 
-  $ mkdir untracked-dir
-  $ for i in {1..10000} ; do >untracked-dir/$i ; done
-  $ time __git_index_files "--others --modified"
-  untracked-dir
+@Junio: might be a good idea to refresh your pu branch again.
 
-  real	0m0.537s
-  user	0m0.452s
-  sys	0m0.160s
+Now the biggest problem to solve is the actual tree 
+"deltification".  I don't have the time to spend on this otherwise very 
+interesting problem (IMHO at least) so I'm sending this request for help 
+in the hope that more people would be keen to contribute their computing 
+skills to solve this challenge.
 
-Eliminate this delay by additionally passing the '--directory
---no-empty-directory' options to 'git ls-files' to show only the
-directory name of non-empty untracked directories instead their whole
-content:
+I'll make a quick description of the pv4 tree encoding first and explain 
+the problem to solve afterwards.
 
-  $ time __git_index_files "--others --modified --directory --no-empty-=
-directory"
-  untracked-dir
+A pv4 tree is comprised of two types of records: immediate tree entry 
+and tree sequence copy.
 
-  real	0m0.029s
-  user	0m0.020s
-  sys	0m0.004s
+1) Immediate Tree Entry
 
-=46ilename completion for 'git clean' suffers from the same delay, as i=
-t
-offers untracked files, too.  The fix could be the same, but since it
-actually makes sense to 'git clean' empty directories, in this case we
-only pass the '--directory' option to 'git ls-files'.
+This is made of the following tuple:
 
-Reported-by: Isaac Levy <ilevy@google.com>
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- contrib/completion/git-completion.bash | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+	<path component index>,{SHA1 reference index>
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index e1b7313072..86f77345fd 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -901,7 +901,7 @@ _git_add ()
- 	esac
-=20
- 	# XXX should we check for --update and --all options ?
--	__git_complete_index_file "--others --modified"
-+	__git_complete_index_file "--others --modified --directory --no-empty=
--directory"
- }
-=20
- _git_archive ()
-@@ -1063,7 +1063,7 @@ _git_clean ()
- 	esac
-=20
- 	# XXX should we check for -x option ?
--	__git_complete_index_file "--others"
-+	__git_complete_index_file "--others --directory"
- }
-=20
- _git_clone ()
---=20
-1.8.4.366.g16e4e67
+The path component index refers to the path dictionary table where path 
+strings and file modes are uniquely stored.  The SHA1 index refers to 
+the sorted SHA1 table as previously found in the pack index but which is 
+now part of the pack file itself.  So on average a single tree entry may 
+take between 1 to 2 bytes for the path component index and 1 to 3 bytes 
+for the SHA1 index.
+
+2) Tree Sequence Copy
+
+This is used to literally copy a contiguous list of tree entries from 
+another tree object.  This goes as follows:
+
+	<tree entry where to start>,<number of entries to copy>
+	[,<SHA1 index of the object to copy from>]
+
+So instead of having arbitrary copying of data like in delta objects, we 
+refer directly to tree entries in another object.  The big advantage 
+here is that the tree walker may directly jump to the copied object 
+without having to do any delta patching and caching. The SHA1 index is 
+optional if it refers to the same copied object as the previous tree 
+sequence copy record in this tree object.  And another possible 
+optimization for the tree walker when enumerating objects is to skip the 
+copy entry entirely if the object being copied from has already been 
+enumerated.
+
+The size of this entry is more variable and is typically between 1 to 2 
+bytes for the start index, 1 to 2 bytes for the copy size, and 0 to 3 
+bytes for the SHA1 index.
+
+So... what to do with this?
+
+Currently the "deltification" is achieved using a pretty dumb heuristic 
+which is to simply take each tree object in a pack v2 with their 
+corresponding base delta object and perform a straight conversion into 
+pack v4 tree format i.e. use copy records whenever possible as long as 
+they represent a space saving over the corresponding immediate tree 
+entries (which is normally the case).
+
+However this is rather sub-optimal for two reasons:
+
+1) This doesn't benefit from the ability to use multiple base objects to 
+   copy from and is potentially missing on additional opportunities for 
+   copy sequences which are not possible in the selected base object 
+   from the pack v2 delta base selection. Pack v4 is already quite 
+   smaller than pack v2 yet it might possibly be smaller still.
+
+2) This makes deep delta chains very inefficient at runtime when the 
+   pack is subsequently accessed.
+
+Let's consider this example to fully illustrate #2.
+
+	Tree A:
+	entry 0:	"foo.txt"
+	entry 1-3:	copy from tree B: start=2 count=3
+
+	Tree B:
+	entry 0-5:	copy from tree C: start=2 count=5
+	entry 6:	"bar.txt"
+
+	Tree C:
+	entry 0:	"file_a"
+	entry 1:	"file_b"
+	entry 2:	"file_c"
+	entry 3:	"file_D"
+	entry 4:	"file_E"
+	entry 5:	"file_F"
+	entry 6:	"file_G"
+
+This is a good example of what typically happens when the above heuristic 
+is applied.  And it is not uncommon to see a long indirection chain of 
+"copy those 2 entries from that other object" sometimes reaching 50 
+levels deep where the same 2 (or more) entries require up to 50 object 
+hops before they can be obtained.
+
+Obviously here the encoding should be optimized to reduce the chaining 
+effect simply by referring to the final object directly.  Hence tree A 
+could be encoded as follows:
+
+	Tree A:
+	entry 0:	"foo.txt"
+	entry 1-3:	copy from tree C: start=4 count=3
+
+The on-disk encoding is likely to be the same size but the runtime 
+access is greatly optimized.
+
+Now... instead of trying to do reference simplification by factoring out 
+the chain effect, I think a whole new approach to tree delta compression 
+for pack v4 should be developed which would also address issue #1 above.
+
+For example, we may try to make each canonical tree objects into 
+sequences of hashed tree entries in memory where each tree entry would 
+be reduced down to a single CRC32 value (or even Adler32 for speed).  
+Each tree object would then be represented by some kind of 32-bit 
+character "string".  Then it is just a matter of applying substring 
+matching algorithms to find the best copy sequences without creating 
+reference cycles, weighted by the number of indirections involved when 
+a referred object already has a copy sequence covering part or all of 
+the matched string. Etc.
+
+Or that can be something else entirely.  Certainly there are similar 
+problems already solved in the literature somewhere.
+
+And it has to be _fast_.
+
+So if someone is on the lookout for a nice algorithmic and coding 
+challenge then here's your opportunity!
+
+
+Nicolas
