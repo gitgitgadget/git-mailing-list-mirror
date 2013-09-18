@@ -1,99 +1,99 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v3 2/3] relative_path should honor DOS and UNC paths
-Date: Wed, 18 Sep 2013 17:09:59 +0200
-Message-ID: <5239C247.4030909@web.de>
-References: <1c0d845aca9a9ca65a7e1d481a75a0f6f4220a89.1379406453.git.worldhello.net@gmail.com> <2c56935842ceef4d5933c299dd2d55286eb0ba3a.1379406453.git.worldhello.net@gmail.com> <xmqqli2v1l7f.fsf@gitster.dls.corp.google.com> <5239BA98.9000205@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git/path.c - order of accessing ~/.gitconfig
+Date: Wed, 18 Sep 2013 17:01:57 +0200
+Message-ID: <vpq8uyuxjfe.fsf@anie.imag.fr>
+References: <20130918.201006.407922449.enometh@meer.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Tvangeste <i.4m.l33t@yandex.ru>, Johannes Sixt <j6t@kdbg.org>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 18 17:10:14 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Madhu <enometh@meer.net>
+X-From: git-owner@vger.kernel.org Wed Sep 18 17:15:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMJOO-0005pz-9u
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 17:10:12 +0200
+	id 1VMJT2-0007Wl-AM
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 17:15:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752057Ab3IRPKG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Sep 2013 11:10:06 -0400
-Received: from mout.web.de ([212.227.15.14]:64298 "EHLO mout.web.de"
+	id S1751785Ab3IRPO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Sep 2013 11:14:57 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:33019 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751396Ab3IRPKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Sep 2013 11:10:04 -0400
-Received: from [192.168.209.26] ([217.208.218.204]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0Md4xS-1VeOCp280o-00ICUg for <git@vger.kernel.org>;
- Wed, 18 Sep 2013 17:10:02 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <5239BA98.9000205@gmail.com>
-X-Provags-ID: V03:K0:yTkGkNlsGH2U09GnN3sfZXv8C5OtLYzHU5nTRQa/sFHht1TDCty
- iD6sv+o/mZeKujztm00C2Gqq3DSaG7JLNZt2YwyIMetwxkiupmEqnW+0HTQXi5GC0NLhZjP
- iLZtlqepfuLDcGrDCVwQLRZOE4xNvtxMiIGa8iczmgtKZlt+W6c93gPOpB85/n5W0s/hV2q
- Et3mXhdIncNw8sGVB4HIw==
+	id S1751553Ab3IRPO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Sep 2013 11:14:56 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r8IF1u6A011922
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 18 Sep 2013 17:01:56 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VMJGQ-0003KE-3D; Wed, 18 Sep 2013 17:01:58 +0200
+In-Reply-To: <20130918.201006.407922449.enometh@meer.net> (Madhu's message of
+	"Wed, 18 Sep 2013 20:10:06 +0530 (IST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 18 Sep 2013 17:01:57 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r8IF1u6A011922
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1380121321.18781@9Qgw30mtIVueiCq42eFC/g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234970>
 
-On 2013-09-18 16.37, Torsten B=F6gershausen wrote:
-> On 2013-09-17 18.12, Junio C Hamano wrote:
->> Jiang Xin <worldhello.net@gmail.com> writes:
->>
->>> diff --git a/compat/mingw.h b/compat/mingw.h
->>> index bd0a88b..06e9f49 100644
->>> --- a/compat/mingw.h
->>> +++ b/compat/mingw.h
->>> @@ -311,6 +311,15 @@ int winansi_fprintf(FILE *stream, const char *=
-format, ...) __attribute__((format
->>> =20
->>>  #define has_dos_drive_prefix(path) (isalpha(*(path)) && (path)[1] =
-=3D=3D ':')
->>>  #define is_dir_sep(c) ((c) =3D=3D '/' || (c) =3D=3D '\\')
->>> +static inline int is_unc_path(const char *path)
->>> +{
->>> +	if (!is_dir_sep(*path) || !is_dir_sep(*(path+1)) || is_dir_sep(*(=
-path+2)))
->>> +		return 0;
->>
->> If path[1] =3D=3D '\0', it would be !is_dir_sep() and we end up
->> inspecting past the end of the string?
-Yes
-(If there was a previous mail, it was incomplete, sorry)
+Madhu <enometh@meer.net> writes:
 
-I think we want to catch "2 (back)slashes followed by a letter"
-<http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=3D=
-vs.85%29.aspx>
+> * commit 21cf32279120799a766d22416be7d82d9ecfbd04
+> |
+> | Author: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+> | Date:   Fri Jun 22 11:03:23 2012 +0200
+> |
+> |    config: read (but not write) from $XDG_CONFIG_HOME/git/config file
+> |
+> |    Teach git to read the "gitconfig" information from a new location,
+> |    $XDG_CONFIG_HOME/git/config; this allows the user to avoid
+> |    cluttering $HOME with many per-application configuration files.
+> |
+> |    In the order of reading, this file comes between the global
+> |    configuration file (typically $HOME/.gitconfig) and the system wide
+> |    configuration file (typically /etc/gitconfig).
+>
+>
+> However git/config.c (git_config_early) commit accesses xdg_config
+> before user_config.  So the comments and documentation are
+> inconsistent with the code.
 
-#define is_unc_path(path) ((is_dir_sep(path)[0]) && is_dir_sep((path)[1=
-]) && isalpha((path[2])))
+It seems the commit message is wrong, indeed. But it's too late to fix
+it. OTOH, the documentation seems right to me
+(Documentation/git-config.txt). It says:
 
-Then we need=20
-#define is_relative_path(path)  (((path)[0]) && !is_dir_sep((path)[1]))
+  $(prefix)/etc/gitconfig::
+  	System-wide configuration file.
+  
+  $XDG_CONFIG_HOME/git/config::
+  	Second user-specific configuration file. If $XDG_CONFIG_HOME is not set
+  	or empty, `$HOME/.config/git/config` will be used. Any single-valued
+  	variable set in this file will be overwritten by whatever is in
+  	`~/.gitconfig`.  It is a good idea not to create this file if
+  	you sometimes use older versions of Git, as support for this
+  	file was added fairly recently.
+  
+  ~/.gitconfig::
+  	User-specific configuration file. Also called "global"
+  	configuration file.
+  
+  $GIT_DIR/config::
+  	Repository specific configuration file.
 
-And may be like this:
 
-static int have_same_root(const char *path1, const char *path2)
-{
-	int is_abs1, is_abs2;
-
-	is_abs1 =3D is_absolute_path(path1);
-	is_abs2 =3D is_absolute_path(path2);
-	if (is_abs1 && is_abs2) {
-		if (is_unc_path(path1) && !is_relative_path(path2))
-			return 0;
-		if (!is_relative_path(path1) && is_unc_path(path2))
-			return 0;
-		return tolower(path1[0]) =3D=3D tolower(path2[0]);
-	} else {
-		return !is_abs1 && !is_abs2;
-	}
-}
-
-Could that work?
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
