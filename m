@@ -1,98 +1,111 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 3/3] git submodule update should give notice when run
- without init beforehand
-Date: Wed, 18 Sep 2013 21:13:34 +0200
-Message-ID: <5239FB5E.6060703@web.de>
-References: <1379266703-29808-1-git-send-email-rctay89@gmail.com> <1379266703-29808-2-git-send-email-rctay89@gmail.com> <1379266703-29808-3-git-send-email-rctay89@gmail.com> <52373AA2.9050807@web.de> <CALUzUxoFLOP=-ub_VYr6LqRYQXOO7Tf1oP95mxuYZo-8_dxAZw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git clone silently aborts if stdout gets a broken pipe
+Date: Wed, 18 Sep 2013 12:31:23 -0700
+Message-ID: <xmqqmwnaudtg.fsf@gitster.dls.corp.google.com>
+References: <A612847CFE53224C91B23E3A5B48BAC798CD91DB0B@xmail3.se.axis.com>
+	<20130918184551.GC18821@sigill.intra.peff.net>
+	<20130918190437.GD18821@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 18 21:13:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 18 21:31:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMNC1-0005uH-O8
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 21:13:42 +0200
+	id 1VMNTI-0001b1-ON
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 21:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072Ab3IRTNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Sep 2013 15:13:37 -0400
-Received: from mout.web.de ([212.227.17.11]:55791 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751807Ab3IRTNg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Sep 2013 15:13:36 -0400
-Received: from [192.168.178.41] ([79.193.82.99]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0MFLQi-1VAE703E0K-00EKG1 for <git@vger.kernel.org>;
- Wed, 18 Sep 2013 21:13:34 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <CALUzUxoFLOP=-ub_VYr6LqRYQXOO7Tf1oP95mxuYZo-8_dxAZw@mail.gmail.com>
-X-Enigmail-Version: 1.5.2
-X-Provags-ID: V03:K0:SxtpkwAfm94AqTmb5WtzAK9XVrw+JxY1mCHM3/hxhyPhu0BK4UL
- SHDADXZE/ago1bBqzq2Uh6gcXfa2iZLbIHsEMX/I5gP6CGQiJ+gHRYrEQa1LcE1hMEc829P
- 9s23OYXx3aBYsyj3BCCY0HvL8yESorVMSwYzoJP6j8I1u5i89ZixMvlReGUKc64wmCCXQqo
- CZrCwlKXYuPLpdWLPqvFA==
+	id S1751979Ab3IRTb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Sep 2013 15:31:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36583 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751880Ab3IRTb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Sep 2013 15:31:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CBCD42B8A;
+	Wed, 18 Sep 2013 19:31:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TCRIMnKXwxUYSs3mG1Hoq8TetdI=; b=fxMu5T
+	DD+ARK7OVJHVRKr7a0/q4zUkNaWAmVWZZOpr5UEWhhk5UvGfD5P0ptBHXIaZrmbh
+	P72IdgRp9sRWfRKAgFTsFC7iJsjL+P7cel+kBZpgPRKIVHsn0lIWh9UuoYpv63As
+	T/K2tUsm1PqOnvodMFCf2RhCYBbzY1KRo86Zc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=A/dD6b6+Q/aX5eb3MrItB5kut6vv+tnT
+	auHoEXC7+VAVZgDIfVlOiO0miJ+WXok5FVWhLQkSlFas3H+gw4uudmNW33XC9WNi
+	+GQ7YimoQYM7QGarAIqUE2xNobzKByovMHWJoVaZY4QWxZ6C6Y2xubs5tv+CvRTa
+	VyDusbIsdKM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F8B542B89;
+	Wed, 18 Sep 2013 19:31:26 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D551F42B86;
+	Wed, 18 Sep 2013 19:31:25 +0000 (UTC)
+In-Reply-To: <20130918190437.GD18821@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 18 Sep 2013 15:04:37 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E887007E-2098-11E3-B228-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234987>
 
-Am 18.09.2013 12:12, schrieb Tay Ray Chuan:
-> On Tue, Sep 17, 2013 at 1:06 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> 
-> Thanks Jens for having a look!
-> 
->> Am 15.09.2013 19:38, schrieb Tay Ray Chuan:
->>> When 'update' is run with no path in a repository with uninitialized
->>> submodules, the program terminates with no output, and zero status code.
->>> Be more helpful to users by mentioning this.
->>
->> [snip] it would be rather nasty to error out on every submodule
->> update.
-> 
-> Just to be sure we're on the right page, with this patch, the 'update'
-> command still exits with status code zero (non-error), so this patch
-> doesn't make it error out.
+Jeff King <peff@peff.net> writes:
 
-Ok, sorry for the confusion. But I still think we should not change
-the default to print these messages, but make it an opt-in. And the
-commit message (and maybe the documentation too) should talk about
-the use cases where this makes sense.
+> On Wed, Sep 18, 2013 at 02:45:51PM -0400, Jeff King wrote:
+>
+>> That being said, the new messages should almost certainly go to stderr.
+>> 
+>> -- >8 --
+>> Subject: [PATCH] clone: write "checking connectivity" to stderr
+>> 
+>> In commit 0781aa4 (clone: let the user know when
+>> check_everything_connected is run, 2013-05-03), we started
+>> giving the user a progress report during clone. However,
+>> since the actual work happens in a sub-process, we do not
+>> use the usual progress code that counts the objects, but
+>> rather just print a message ourselves.
+>> 
+>> This message goes to stdout via printf, which is unlike
+>> other progress messages (both the eye candy within clone,
+>> and the "checking connectivity" progress in other commands).
+>> Let's send it to stderr for consistency.
+>
+> Hrm, this actually breaks t5701, which expects "clone 2>err" to print
+> nothing to stderr.
 
->> After the 'autoinit' configuration (which lets upstream hint that
->> certain submodules should be initialized on clone) has materialzed we
->> might want to enable this error for these specific submodules.
-> 
-> That's cool, I'm looking forward to this. Could you point me to
-> somewhere detailing this?
+Hmm, where in t5701?  Ah, you meant t5702 and possibly t5601.
 
-Not yet. I'm still wrestling with the autoupdate series, which is
-the logical step before autoinit. autoupdate enables to configure
-that initialized submodules are updated on checkout, reset, merge
-and all the other work tree manipulating commands. autoinit then
-also clones the repos of submodules into .git/modules and inits
-them in .git/config, so that autoupdate will automagically populate
-them. Unfortunately autoupdate is a rather largish series touching
-lots of commands and needing tons of tests ...
+> What should happen here? The message is emulating the usual progress
+> messages, which are silent when stderr is redirected. So we could
+> actually use isatty() in the usual way to suppress them. On the other
+> hand, the point of that suppression is that the regular progress code
+> produces long output that is not meant to be seen sequentially (i.e., it
+> is overwritten in the terminal with "\r"). But this message does not do
+> so. So we can just tweak t5701 to be more careful about what it is
+> looking for.
 
-> But in the meantime, on top of the advice.* config, how about having a
-> submodule.<name>.ignoreUninit config to disable the message on a
-> per-submodule basis?
+I actually think "it is long and not meant to be seen sequentially"
+is a bad classifier; these new messages are also progress report in
+that it reports "we are now in this phase".  So if I were to vote, I
+would say we should apply the same progress-silencing criteria,
+preferrably by not checking isatty() again, but by recording the
+decision we have already made when squelching the progress during
+the transfer in order to make sure they stay consistent.
 
-I'd not add such an option unless users request it because it helps
-their not-so-terribly-specific use case.
+> Also, we should arguably give the "Cloning into..." message the same
+> treatment. We have printed that to stdout for a very long time, so there
+> is a slim chance that somebody actually tries to parse it. But I think
+> they are wrong to do so; we already changed it once (in 28ba96a), and
+> these days it is internationalized, anyway.
 
->> But in
->> any case the error message should contain a hint on how you can get
->> rid of the error in case you know what you are doing ;-).
-> 
-> The message does mention that you can throw in an --init to fix the
-> problem. This "hint" is similar to what git-submodule prints when a
-> <path> is passed (see region at line 807).
-
-But for a lot of users that isn't a solution, as they never want to
-init it, they want to ignore it. And if you explicitly ask to update
-a special submodule, that message is ok.
+Good thinking.  Please make it so ;-)
