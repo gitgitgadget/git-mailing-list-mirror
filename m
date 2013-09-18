@@ -1,94 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 5/7] connect.c: make parse_feature_value() static
-Date: Tue, 17 Sep 2013 22:14:21 -0700
-Message-ID: <1379481263-29903-6-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 4/7] upload-pack: send non-HEAD symbolic refs
+Date: Tue, 17 Sep 2013 22:14:20 -0700
+Message-ID: <1379481263-29903-5-git-send-email-gitster@pobox.com>
 References: <1379481263-29903-1-git-send-email-gitster@pobox.com>
 Cc: Andreas Krey <a.krey@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 18 07:14:56 2013
+X-From: git-owner@vger.kernel.org Wed Sep 18 07:14:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMA6J-0006Dp-7t
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 07:14:55 +0200
+	id 1VMA6K-0006Dp-C3
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Sep 2013 07:14:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751742Ab3IRFOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Sep 2013 01:14:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54238 "EHLO
+	id S1751738Ab3IRFOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Sep 2013 01:14:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49307 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751700Ab3IRFOg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Sep 2013 01:14:36 -0400
+	id S1751609Ab3IRFOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Sep 2013 01:14:34 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 372703C950;
-	Wed, 18 Sep 2013 05:14:36 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DD093C946;
+	Wed, 18 Sep 2013 05:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=QIDL
-	VAzU5nZ0KbRgghhTuq2vw28=; b=TUACZ/5Lu9Ye7IRf9rEgP5gZLrGVucathyW9
-	SDEmVHNY4YyFlphka/CZFMOa9BIwr6AswbQDVIWEtmwZGaZEA7RWDMr4ow5uG13Y
-	/70uE+WSxIYQWBbs8BZTUFtrHxx3Mh6IMhwtMfO5BOWiElvbDklbg5dLwMl9PuXB
-	jN3QR1c=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=APX6
+	iKJEruPzRnCmRZuW6ZUXBhU=; b=qPpUcV6FRwkCI3Kq/BBLLxDlysgw6Pmo8WvV
+	KTL5SDP0eUlK/1OzLUF2ms5C4LSVdHj2OHaxXxJ8MryO8miJ+rzsn8HLeJEknvpV
+	FIXl+NlHt/X8AkIByTQLN2JAh5nI8U4GP/j+iInsrk8U16T02O+18kaCPPipA5V7
+	59CrIpM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	U6iYmvKJETweSFQCjgOddVqcGlV4Cto8m0kSjQ8YnM/lyfF2sAQ/WrjqwF48PcpB
-	jGdrBeoo1gOzcdzhNCA+IDYDsiD6S2HUK2LcGgafKk6DB5BcyhOWZ6ZoZWTMicNb
-	noTxzwshTbTGgs08G0dB0bbB3WBnkPvorVq0Pf8dHIY=
+	MjBvF9SFRnqGPOZnYG1nRnzUGIUwtfWh/qcUHg0CSFe+Bgn7aamxUDgdMrZpJ/lx
+	xavsqORwZp3ap/oT00CWEJtMbjQlkQ5C9/evstVBLWDa5h4gG9kyy96EFTBxOKtF
+	lT+HanyGkkmUb0ZBtqpA2rnAIBTlsjAA+UO10gXb2ms=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AFF03C94F;
-	Wed, 18 Sep 2013 05:14:36 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60D083C945;
+	Wed, 18 Sep 2013 05:14:34 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 82DF33C949;
-	Wed, 18 Sep 2013 05:14:35 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CBF033C944;
+	Wed, 18 Sep 2013 05:14:33 +0000 (UTC)
 X-Mailer: git-send-email 1.8.4-585-g8d1dcaf
 In-Reply-To: <1379481263-29903-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 358976FE-2021-11E3-AB2B-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3485ECF6-2021-11E3-ADB5-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234953>
+
+With the same mechanism as used to tell where "HEAD" points at to
+the other end, we can tell the target of other symbolic refs as
+well.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- cache.h   | 1 -
- connect.c | 3 ++-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ upload-pack.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/cache.h b/cache.h
-index 85b544f..2c853ba 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1098,7 +1098,6 @@ extern struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- extern int server_supports(const char *feature);
- extern int parse_feature_request(const char *features, const char *feature);
- extern const char *server_feature_value(const char *feature, int *len_ret);
--extern const char *parse_feature_value(const char *feature_list, const char *feature, int *len_ret);
+diff --git a/upload-pack.c b/upload-pack.c
+index 979fc8e..2826909 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -798,6 +798,7 @@ static void upload_pack(void)
+ 	struct string_list symref = STRING_LIST_INIT_DUP;
  
- extern struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
+ 	head_ref_namespaced(find_symref, &symref);
++	for_each_namespaced_ref(find_symref, &symref);
  
-diff --git a/connect.c b/connect.c
-index a0783d4..e4c7ae6 100644
---- a/connect.c
-+++ b/connect.c
-@@ -8,6 +8,7 @@
- #include "url.h"
- 
- static char *server_capabilities;
-+static const char *parse_feature_value(const char *, const char *, int *);
- 
- static int check_ref(const char *name, int len, unsigned int flags)
- {
-@@ -116,7 +117,7 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 	return list;
- }
- 
--const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp)
-+static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp)
- {
- 	int len;
- 
+ 	if (advertise_refs || !stateless_rpc) {
+ 		reset_timeout();
 -- 
 1.8.4-585-g8d1dcaf
