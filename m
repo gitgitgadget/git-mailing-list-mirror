@@ -1,98 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git clone silently aborts if stdout gets a broken pipe
-Date: Thu, 19 Sep 2013 04:35:30 -0400
-Message-ID: <20130919083530.GA12597@sigill.intra.peff.net>
-References: <A612847CFE53224C91B23E3A5B48BAC798CD91DB0B@xmail3.se.axis.com>
- <20130918184551.GC18821@sigill.intra.peff.net>
- <A612847CFE53224C91B23E3A5B48BAC798CD91DBA7@xmail3.se.axis.com>
+From: r.ductor@gmail.com
+Subject: On the behavior of checkout <branch> with uncommitted local changes
+Date: Thu, 19 Sep 2013 02:23:11 -0700 (PDT)
+Message-ID: <8904036.vOg3y5OkbU@ipht-ia-004976>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-X-From: git-owner@vger.kernel.org Thu Sep 19 10:35:48 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 19 11:23:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMZiF-0002xV-72
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 10:35:48 +0200
+	id 1VMaSE-0001SN-1U
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 11:23:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048Ab3ISIfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 04:35:41 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33561 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751698Ab3ISIfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 04:35:39 -0400
-Received: (qmail 29096 invoked by uid 102); 19 Sep 2013 08:35:39 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 19 Sep 2013 03:35:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Sep 2013 04:35:30 -0400
-Content-Disposition: inline
-In-Reply-To: <A612847CFE53224C91B23E3A5B48BAC798CD91DBA7@xmail3.se.axis.com>
+	id S1752434Ab3ISJXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Sep 2013 05:23:14 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:42869 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752050Ab3ISJXN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 05:23:13 -0400
+Received: by mail-wi0-f173.google.com with SMTP id hq15so7635861wib.12
+        for <git@vger.kernel.org>; Thu, 19 Sep 2013 02:23:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:message-id:user-agent:mime-version
+         :content-transfer-encoding:content-type;
+        bh=B1UN6oyQWWKPTgKliU3UaQsBcuEY226aL/ZEYQXSNb0=;
+        b=Ykg8UBaQAqXOmettw9FUPPw5/SgcGaKv/E8yDKJNmpTpvpV0HEk0WBuY9+8cMSvQ6e
+         duLgEvJ3cgwVlj1ar5u/ey1+2U1Pvn50llRUzXG0rveHJeEgVnbYQD3wXc8ISfO1scwZ
+         XPd4gwPPPmK6Zan3qBXN/RIp0K6q9wSvGXI4SRnXEbNEb0iIRW5au8+SEZ1vRUgPhEoI
+         I/xmf5QV3NS0oev1wBMrqLn2OKFQsWPJ38QnRw11zgGlfpqJqnKfjpynUH4Ow8xYgfQG
+         Ts0yOVc99cBbeuQBt07iyX5/y2iwFDmAHW9HhwUUaFGX0+aWLhbH8Wna9pZxIlWZXS9u
+         h7wQ==
+X-Received: by 10.180.212.41 with SMTP id nh9mr10818594wic.9.1379582592102;
+        Thu, 19 Sep 2013 02:23:12 -0700 (PDT)
+Received: from ipht-ia-004976.localnet (ipht-ia-004976.extra.cea.fr. [132.166.22.90])
+        by mx.google.com with ESMTPSA id ey4sm8215066wic.11.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 19 Sep 2013 02:23:11 -0700 (PDT)
+User-Agent: KMail/4.10.5 (Linux/3.10-2-amd64; KDE/4.10.5; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235008>
 
-On Thu, Sep 19, 2013 at 09:54:38AM +0200, Peter Kjellerstedt wrote:
+Dear all
 
-> > I think your perl script is somewhat questionable, as it is making
-> > assumptions about the output of git-clone, and you would do better to
-> > accept arbitrary-sized output 
-> 
-> Well, the whole idea of using Git::command_oneline() is that we 
-> are only interested in the first line of output, similar to using 
-> "| head -1". If we had wanted all of the output we would have used 
-> Git::command() instead. Since the Git Perl module is released as a 
-> part of Git, I would expect it to work as documented regardless of 
-> which Git command is used with Git::command_oneline().
+I'm not a power git user but I profit of git every day and I like to fully understand what I do.
 
-I think command_oneline is exactly like "| head -1" in this case. Doing
-"git clone | head -1" would also fail, and should not be used. In
-general, you do not want to put a limiting pipe on a command with side
-effects beyond output. The design of unix pipes and SIGPIPE is such that
-you can do "generate_output | head", and "generate_output" will get
-SIGPIPE and die after realizing that its writer no longer cares about
-the output. But if your command is doing something besides output, that
-assumption doesn't hold.
+The man section for git checkout is too vague for my taste. In particular it is not clearly (unambiguously) stated what happens to index and worktree whenever local uncommitted changes are around. I've already rised a similar problem in this mail list [1], but I understand that a man page must be concise.
 
-Arguably, "git clone" should be taking the initiative to ignore SIGPIPE
-itself.  Its primary function is not output, but doing the clone. If
-output fails, we would want to continue the clone, not die.
+On the other hand, I couldn't find any complete information on this behavior: tutorials and books seem to avoid the problem, user posts seems confused ... 
 
-By the way, did you actually want to capture the stdout of git-clone, or
-were you just trying to suppress it? Because the eventual patch I posted
-sends it to stderr, under the assumption that what used to go to stdout
-should not be captured and parsed (because it is localized and subject
-to change).
+To grasp some more information,  I've spent some hours in trials (sorry I'm unable to grasp information browsing the code repository). That resulted in the algorithm below presented.
 
-> However, what surprised me most was that git clone failed silently 
-> when it got a broken pipe.
+Could anybody authoritative on that subject confirm/correct/discharge my statement? That could be of help for me and may others.
 
-It's not "git clone" that is doing this, I think, but rather the design
-of command_oneline. If I do:
+Nonetheless to say having this kind of pseudocodes available somewhere (e.g. for stash [2] and other tools modifing index and working tree) would make my git experience  (and that of many more people) happier.
 
-  (sleep 1; git clone ...; echo >&2 exit=$?) | false
+Thanks to all developers for their efforts.
 
-then I see:
+Regards
+ric
 
-  exit=141
 
-That is, clone dies from SIGPIPE trying to write "Cloning into...". But
-command_oneline is specifically designed to ignore SIGPIPE death,
-because you would want something like:
+Notations: let us fix a file and denote
+C0  = its version in the initial commit
+I0   = its version in the initial index
+W0 = its version in the working tree
+C1 = its version in the target commit
+W1= its version in working tree after checkout completed
+I1  = its version in index after checkout completed
 
-  command_oneline("git", "rev-list", "$A..$B");
 
-to give you the first line, and then you do not care if the rest of the
-rev-list dies due to SIGPIPE (it is a good thing, because by closing the
-pipe you are telling it that its output is not needed). It may be that
-the documentation for command_oneline can be improved to mention this
-subtlety.
+git checkout Branch
 
--Peff
+if C0=W0=I0,          then: W1=I1=C1;
+if C1=I0,                 then: W1=W0 and I1=C1=I0;
+if C1=C0,                then: W1=W0 and I1=I0;
+otherwise: abort
+
+
+Note: in particular, if W0=I0 !=C0 then (in general) abort
+
+Note: in particular, if C0=I0 and C1=W0 then abort  (...actually why that? no information is lost)
+
+
+REFS
+[1]http://thread.gmane.org/gmane.linux.debian.devel.bugs.general/782914/focus=164647
+[2]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=717088
