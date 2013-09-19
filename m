@@ -1,360 +1,111 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
-X-Spam-ASN: AS22107 204.16.104.0/24
-X-Spam-Status: No, score=0.3 required=3.0 tests=AWL,BAYES_00,
-	MSGID_FROM_MTA_HEADER shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Level: **
+X-Spam-ASN: AS15169 209.85.128.0/17
+X-Spam-Status: No, score=2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+	RCVD_IN_SORBS_WEB,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Path: news.gmane.org!not-for-mail
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Newsgroups: gmane.comp.version-control.subversion.cvs2svn.devel,gmane.comp.version-control.git
-Subject: Re: Some tips for doing a CVS importer
-Date: Thu, 30 Nov 2006 01:35:18 +0100
-Message-ID: <456E2746.4050707@alum.mit.edu>
-References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com> <456ACAF3.1050608@alum.mit.edu> <456AD137.8060209@bluegap.ch> <456B61FE.7060100@alum.mit.edu> <456C5363.6040409@bluegap.ch>
-NNTP-Posting-Host: main.gmane.org
+From: David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Newsgroups: gmane.comp.version-control.git.user,gmane.comp.version-control.git
+Subject: Re: [PATCH] build: add default configuration
+Date: Wed, 18 Sep 2013 21:30:28 -0500
+Message-ID: <ab38a1b5-e354-4e32-8ede-46a401ef8053.maildroid@localhost>
+References: <1379423650-1311-1-git-send-email-felipe.contreras@gmail.com>
+ <e8ccfba3-5198-4986-9b9d-1d69b965386f.maildroid@localhost>
+ <CAMP44s35_emnh9Kce433oy1JW66xB2vaN5f5OO7VF1XqoO=YGQ@mail.gmail.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+NNTP-Posting-Host: plane.gmane.org
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------060008090705040906010407"
-X-Trace: sea.gmane.org 1164846949 20409 80.91.229.2 (30 Nov 2006 00:35:49 GMT)
-X-Complaints-To: usenet@sea.gmane.org
-NNTP-Posting-Date: Thu, 30 Nov 2006 00:35:49 +0000 (UTC)
-Cc: Jon Smirl <jonsmirl@gmail.com>, Git Mailing List <git@vger.kernel.org>,
-        dev@cvs2svn.tigris.org, Shawn Pearce <spearce@spearce.org>
-Original-X-From: dev-return-1878-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Thu Nov 30 01:35:44 2006
-Return-path: <dev-return-1878-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
-Envelope-to: gcvscd-dev@gmane.org
-Received: from sc51.sjc.collab.net ([204.16.104.146] helo=tigris.org)
-	by ciao.gmane.org with smtp (Exim 4.43)
-	id 1GpZtj-0003fb-E8
-	for gcvscd-dev@gmane.org; Thu, 30 Nov 2006 01:35:32 +0100
-Received: (qmail 30971 invoked by uid 5000); 30 Nov 2006 00:35:29 -0000
-Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
-Precedence: bulk
-list-help: <mailto:dev-help@cvs2svn.tigris.org>
-list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
-list-post: <mailto:dev@cvs2svn.tigris.org>
-Received: (qmail 30961 invoked from network); 30 Nov 2006 00:35:28 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgAAAHq2bUXAbSoIh2dsb2JhbACMbQEBCQ4q
-X-IronPort-AV: i="4.09,476,1157353200"; 
-   d="sh'?scan'208"; a="37802536:sNHT24000424"
-X-IRONPORT: SCANNED
-X-Envelope-From: mhagger@alum.mit.edu
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.8) Gecko/20061117 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
-To: Markus Schiltknecht <markus@bluegap.ch>
-In-Reply-To: <456C5363.6040409@bluegap.ch>
-X-Enigmail-Version: 0.94.0.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-Xref: news.gmane.org gmane.comp.version-control.subversion.cvs2svn.devel:1843 gmane.comp.version-control.git:32689
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32689>
+Content-Type: text/plain; charset=ISO-8859-1
+X-Trace: ger.gmane.org 1379557834 11672 80.91.229.3 (19 Sep 2013 02:30:34 GMT)
+X-Complaints-To: usenet@ger.gmane.org
+NNTP-Posting-Date: Thu, 19 Sep 2013 02:30:34 +0000 (UTC)
+Cc: git@vger.kernel.org,git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org,=?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Original-X-From: git-users+bncBD6J3AEPVABRBSWD5GIQKGQE24WZAVY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Sep 19 04:30:37 2013
+Return-path: <git-users+bncBD6J3AEPVABRBSWD5GIQKGQE24WZAVY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-qc0-f184.google.com ([209.85.216.184])
+	by plane.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-users+bncBD6J3AEPVABRBSWD5GIQKGQE24WZAVY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1VMU0r-0007Bp-Ab
+	for gcggu-git-users@m.gmane.org; Thu, 19 Sep 2013 04:30:37 +0200
+Received: by mail-qc0-f184.google.com with SMTP id e20sf2300896qcy.21
+        for <gcggu-git-users@m.gmane.org>; Wed, 18 Sep 2013 19:30:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:x-original-sender:x-original-authentication-results
+         :reply-to:precedence:mailing-list:list-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
+        bh=QkeI4IrAhLBn9gNbUTC3jdPcc27r39DpAlArFOg7CxM=;
+        b=HRvHdQ9fgV5iJoR6JOjTIqu/GznUqcADlVHkb/67Yj1zqobu76OsoCXQp6M4EvTf3n
+         ZyI3OLpkZBAl1DJWFGNIGjfbGE8hoKxKRu2pjnJ5QJ9yRJwH//EmUkGB47ijMcdDZBA3
+         Wx0A+dtDJVsxDQLS36jc8whsBAFILQKP5lIZEJcLJawOj+Ct4M8JX01WJxhZyv1Huy6M
+         a8H5TcAhjMvYgJCcgkZsU9Z6G6L7+vfyVCehIbO1OG39hMk1+WKydJOcEK46odlsOH8j
+         u7qZioDyLgFCKM7zNAgTcNFMhMcrSgDW4rAQfFFNrjZ4rmdDyX3h2IjCOS4DbkPEBsST
+         OcEA==
+X-Received: by 10.49.74.234 with SMTP id x10mr239072qev.13.1379557836467;
+        Wed, 18 Sep 2013 19:30:36 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.49.58.148 with SMTP id r20ls3808716qeq.3.gmail; Wed, 18 Sep
+ 2013 19:30:34 -0700 (PDT)
+X-Received: by 10.236.209.103 with SMTP id r67mr17214918yho.35.1379557834678;
+        Wed, 18 Sep 2013 19:30:34 -0700 (PDT)
+Received: from mail-ye0-x22e.google.com (mail-ye0-x22e.google.com [2607:f8b0:4002:c04::22e])
+        by gmr-mx.google.com with ESMTPS id a49si776326yhc.5.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 18 Sep 2013 19:30:34 -0700 (PDT)
+Received-SPF: pass (google.com: domain of davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 2607:f8b0:4002:c04::22e as permitted sender) client-ip=2607:f8b0:4002:c04::22e;
+Received: by mail-ye0-f174.google.com with SMTP id q4so3202988yen.33
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 18 Sep 2013 19:30:34 -0700 (PDT)
+X-Received: by 10.236.139.198 with SMTP id c46mr87073yhj.78.1379557834420;
+        Wed, 18 Sep 2013 19:30:34 -0700 (PDT)
+Received: from com.flipdogsolutions ([200.10.66.132])
+        by mx.google.com with ESMTPSA id r1sm7560799yhf.17.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 18 Sep 2013 19:30:33 -0700 (PDT)
+In-Reply-To: <CAMP44s35_emnh9Kce433oy1JW66xB2vaN5f5OO7VF1XqoO=YGQ-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
+X-Original-Sender: davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 2607:f8b0:4002:c04::22e as
+ permitted sender) smtp.mail=davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users>
+Original-Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Xref: news.gmane.org gmane.comp.version-control.git.user:6118 gmane.comp.version-control.git:235000
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git.user/6118>
 X-Mailing-List: git@vger.kernel.org
 
---------------060008090705040906010407
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-
-Markus Schiltknecht wrote:
-> Michael Haggerty wrote:
->> This is the part that can get quite expensive for large repositories, as
->> there can be orders of magnitude more symbol creations than revisions.
->> According to Daniel Jacobowitz:
+>On Wed, Sep 18, 2013 at 1:13 PM, David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
 >>
->>> [...] at one point I believe the GCC repository was gaining up
->>> to four tags a day (head, two supported release branches, and one
->>> vendor branch).  I've been using the principal that the number of tags
->>> might be unworkable, but the number of branches generally is not.
->>
->> This means that the number of tag events is O(number-of-days *
->> total-number-of-files-in-repo), where the gcc repo has about 50000
->> files.  By contrast, only a small fraction of files is typically touched
->> in any day.
-> 
-> Yeah, 50'000 * 1825 (5 years) * say 100 bytes -> 8GB  sounds like a lot.
-> OTOH, I certainly don't need 100 bytes per tag and one tag per day over
-> five years is really a lot. Repositories that large are probably not
-> converted to CVS on an old Pentium III...
+>> Will this not conflict with folks that supply their own gitconfig?
 
-...times 4 (tags per day) -> 32GB.  If I understand correctly, the tags
-were created nightly by automated scripts.
+> You mean people that provide their own ETC_GITCONFIG? If you mean
+distributions, their packaging would override /etc/gitconfig, if you
+mean people that have already a /etc/gitconfig, packaging systems
+usually save the old one so they can solve the conflict manually (e.g.
+/etc/gitconfig.pacsave). So no, it would not conflict.
 
-I admit that this is an extreme example, but the philosophy of the
-cvs2svn project (a philosophy that I inherited from my predecessors, by
-the way) is to be able to handle the most absurd repositories out there.
+Yuck. Yes, that one. I package my own /etc/gitconfig (as we have long advertised as the "way to do it") and asking users to manually fix up thousands of machines is a bad idea. 
 
-> Well, almost. I meant a whole repository with these branches. If one
-> file included all the branches it's getting easy to resolve. But for my
-> example, I had something like that in mind:
+Yes, thousands.  We're much past 30,000 cores at the moment. 
 
-I am glad that we are getting into concrete examples.  But your example
-needs some clarifications (see below).
+>> I like the idea. Docs?  Also, should this not be done in the C side so that we don't waste time reading the config, and also prevent users from overriding these?
 
-> fileA:
-> 
-> A = 1.2.2
-> (no changes for branch B)
-> C = 1.2.4      --> makes A a possible parent of branch C
+> But we want them to be easily readable, and possibly allow
+distributions to easily modify them.
 
-In this case, ROOT can also be C's parent.
-
-> D = 1.2.2.5.2  --> makes A a possible parent of branch D
-
-This implies that A is *necessarily* the parent of D.  If there were a
-E=1.2.2.5.4, then the parent of E would be ambiguous but the parent of D
-would still unambiguously be A.
-
-> X = 1.2.4      --> makes C a possible parent of tag X
-
-Wait a minute.  A tag always has an even number of integers.  Do you
-mean X=1.2 or X=1.2.4.1?  The same below.
-
-> fileB:
-> 
-> A = 1.2.2
-> B = 1.2.4      --> makes A a possible parent of branch B
-
-or ROOT
-
-> C = 1.2.6      --> makes B a possible parent of branch C
-
-or A or ROOT
-
-> D = 1.2.2.5.2  --> makes A a possible parent of branch D
-
-A is unambiguously the parent of D
-
-> X = 1.2.2.5.2  --> makes D a possible parent of tag X
->
-> fileC:
-> A = 1.2.2
-> X = 1.2.2      --> makes A a possible parent of tag X
-> 
-> fileD:
-> A = 1.2.2
-> B = 1.2.4
-> X = 1.2.4      --> makes B a possible parent of tag X
-> 
->>> The symbol blob for branch A: has only one possible parent: ROOT. Thus I
->>> assign A->parent_branch = ROOT.
->>>
->>> Next comes the blob for branch C: it has two possible parents: branch B
->>> and branch A.
->>
->> Why is ROOT not considered as a possible parent of C?
-> 
-> Those were just examples. In my CVS-repository-in-mind, none of the
-> files were branching from ROOT directly into C.
-
-In your example, ROOT *is* a possible parent of C.
-
->>> At that point we know that A is derived from ROOT, but we
->>> don't have assigned a parent to B, yet. Thus we can not resolve C this
->>> time.
->>>
->>> Then comes branch B: one parent: A. Mark it.
-
-In your example, ROOT is also a possible parent of B.
-
->>> Next round, we process C again: this time, we know B is branched from A.
->>> Thus we can remove the possible parent A. Leaving only one possible
->>> parent branch: B.
->>
->> But the fact that B preceded C chronologically does not mean that C is
->> derived from B.
-> 
-> No. And I don't assume so in any place. Given the files above, I can
-> however clearly say that C got branched off from B, no?
-
-No.  C is nowhere unambiguously derived from B, therefore its parent
-could be ROOT, A, or B.  See my example below.
-
->> If I branch from ROOT or A after creating branch B, the
->> result as stored in CVS looks exactly the same as if I branch from B
->> (unless a file was modified between the creation of the parent branch
->> and the creation of the child branch).
-> 
-> Sure. That would result in an unresolvable symbol.
-> 
->>> Now, say we have a tag 'X', which ended up in a blob having A, B, C and
->>> D as possible parent branches. I currently remove A and B, as they are
->>> parents of C. But C and D still remain and conflict. I'm unable to
->>> resolve that symbol. I'm thinking about leaving such conflicts to the
->>> user to resolve.
-
-I don't know how to deal with tag X because the numbers that you
-assigned to it above can't be correct.
-
-
-Consider the attached script.  It unambiguously creates branches A1 and
-A2 from ROOT and branch B from A1, then adds tag X on branch B.  But in
-the files:
-
-fileA symbols
-        X:1.1
-        B:1.1.0.6
-        A2:1.1.0.4
-        A1:1.1.0.2;
-
-fileB symbols
-        X:1.1.2.1
-        B:1.1.2.1.0.2
-        A2:1.1.0.4
-        A1:1.1.0.2;
-
-fileC symbols
-        X:1.1.6.1
-        B:1.1.0.6
-        A2:1.1.0.4
-        A1:1.1.0.2;
-
-fileD symbols
-        X:1.1
-        B:1.1.0.4
-        A2:1.2.0.2
-        A1:1.1.0.2;
-
-Note that from looking at fileA alone, there is no way to tell whether
-A2 was created from ROOT or A1, or whether B was created from ROOT, A1,
-or A2.  And tag X is all over the place, even though for each file it
-was created from branch B.
-
-If only information from fileA,v is considered, any of the following
-branching topologies would give identical fileA,v contents:
-
-      ROOT
-      /|\
-     / | \
-    A1 A2 B
-
-
-      ROOT
-      / \
-     /   \
-    A1   A2
-    |
-    B
-
-
-      ROOT
-      / \
-     /   \
-    A1   A2
-          |
-          B
-
-
-      ROOT
-      / \
-     /   \
-    A1    B
-    |
-    A2
-
-
-      ROOT
-       |
-       A1
-      / \
-     /   \
-    A2    B
-
-
-      ROOT
-       |
-       A1
-       |
-       A2
-       |
-       B
-
-And from the information present in fileA,v, it is not possible to tell
-whether tag X was applied to ROOT, A1, A2, or B.
-
-(Some topologies *are* ruled out because the revision numbers are
-ordered incorrectly; for example:
-
-      ROOT
-       |
-       B
-      / \
-     /   \
-    A1   A2
-
-      ROOT
-       |
-       A2
-       |
-       A1
-       |
-       B
-
-are not consistent with fileA,v.)
-
-If we also consider the information in fileB, it is clear that branch
-B's parent is branch A1, but it is still not clear whether branch A2's
-parent is ROOT or A1, or whether tag X was applied to branch A1, A2, or B.
-
-Similarly, fileC,v tells us that tag X was applied to branch B, and
-fileD,v tells us that A2's parent is ROOT.
-
-Each file alone is quite ambiguous, but in this case putting the
-information from all files together (with the assumption that they have
-a mutually-consistent history) is enough to reconstruct the entire
-branching topology.
-
-What's worse in real life?  Each file rules out some possible histories
-and the goal is to find a history that is consistent with all files.  But...
-
-- There can easily be cases where even the total information from all
-files is still not enough to choose a unique history.  In such cases we
-need a way to select between the possible histories.
-
-- Since files in CVS don't necessarily *have* a globally consistent
-branching/tagging history, heuristics have to be used in such cases to
-find histories that apply to subsets of the repository in some
-reasonable way (i.e., the one that is most likely considering the way
-people typically work with CVS).
-
-- "Unlabeled branches": often users have removed the label from a
-branch, but the branch is still used as a source for other branches.
-Figuring out this situation is a real mess.
-
-I imagine that the best results (never mind whether it is practical)
-would be obtained by recording the topology constraints implied by each
-*,v file, then trying to map the topologies onto each other pair by pair
-to (1) combine the constraints and thereby limit the possible histories
-and (2) deduce which unlabeled branches correspond to one another.  But
-I still don't know how to deal with inconsistent histories.  I think a
-bottom-up approach would be the most sensible, given that people are
-probably more likely to tag a whole subdirectory rather than files
-scattered here and there.
-
-The second step is to decide at what point in time a branch or tag
-should be created, with the goal of being able to create it as a
-snapshot of the source branch at that moment.  This is not always
-possible, even if the branch topologies are compatible.
-
-Michael
-
-
---------------060008090705040906010407
-Content-Type: application/x-shellscript;
- name="makerepo.sh"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="makerepo.sh"
-
-IyEgL2Jpbi9zaAoKQ1ZTUk9PVD1gcHdkYC9jdnMKZXhwb3J0IENWU1JPT1QKCmN2cyBpbml0
-CgpjdnMgY28gLWQgd2MgLgpjZCB3YwoKbWtkaXIgZGlyCmN2cyBhZGQgZGlyCmN2cyBjb21t
-aXQgLW0gJ0FkZGluZyBkaXInCgpjZCBkaXIKCmVjaG8gJzEuMScgPmZpbGVBCmVjaG8gJzEu
-MScgPmZpbGVCCmVjaG8gJzEuMScgPmZpbGVDCmVjaG8gJzEuMScgPmZpbGVECgpjdnMgYWRk
-IGZpbGVBIGZpbGVCIGZpbGVDIGZpbGVECmN2cyBjb21taXQgLW0gJ2luaXRpYWwgdmVyc2lv
-bnMnCgpjdnMgdGFnIC1iIEExCgplY2hvICcxLjInID5maWxlRApjdnMgY29tbWl0IC1tICdy
-ZXZpc2lvbiAxLjIgb2YgZmlsZUEnCgpjdnMgdGFnIC1iIEEyCgojIFN3aXRjaCB0byBicmFu
-Y2ggIkExIjoKY3ZzIHVwZGF0ZSAtciBBMQoKZWNobyAnMS4xLjIuMScgPmZpbGVCCmN2cyBj
-b21taXQgLW0gJ3JldmlzaW9uIDEuMS4yLjEgb2YgZmlsZUInCgojIENyZWF0ZSBicmFuY2gg
-IkIiIGFuZCBzd2l0Y2ggdG8gYnJhbmNoOgpjdnMgdGFnIC1iIEIKY3ZzIHVwZGF0ZSAtciBC
-CgplY2hvICcxLjEuMi4xLjIuMScgPmZpbGVDCmN2cyBjb21taXQgLW0gJ3JldmlzaW9uIDEu
-MS4yLjEuMi4xIG9mIGZpbGVDJwoKY3ZzIHRhZyBYCgo=
-
---------------060008090705040906010407--
+In that case I take it back -- I dont like that approach.  We want consistency, not divergence. This encourages the former. 
+-- 
+David
 
