@@ -1,68 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bisect needing to be at repo top-level?
-Date: Thu, 19 Sep 2013 16:04:31 -0700
-Message-ID: <xmqqpps4qups.fsf@gitster.dls.corp.google.com>
-References: <CAJTo0LZ=bNNUc8O=bDDOp2vudsc_wL+-nqsXW5r1rq3H7M0e7Q@mail.gmail.com>
-	<xmqqbo3rz7ca.fsf@gitster.dls.corp.google.com>
-	<20130917175813.GA14173@blizzard>
-	<xmqqioxzxnjh.fsf@gitster.dls.corp.google.com>
-	<523AF8EA.6080307@optusnet.com.au> <523B7EB9.9050809@optusnet.com.au>
+From: =?UTF-8?B?c2hpcmlzaCDgpLbgpL/gpLDgpYDgpLc=?= 
+	<shirishag75@gmail.com>
+Subject: Has there been any discussion about resumable clones recently ?
+Date: Fri, 20 Sep 2013 04:48:33 +0530
+Message-ID: <CADdDZRmufDTYYxHeAuPbCUn5iQHruAOXXho5KVOQ6McfSFvPJw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Lukas Fleischer <git@cryptocrack.de>,
-	"Burton\, Ross" <ross.burton@intel.com>, git@vger.kernel.org
-To: Ben Aveling <bena.001@optusnet.com.au>
-X-From: git-owner@vger.kernel.org Fri Sep 20 01:04:39 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 20 01:18:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMnH4-0005p1-TQ
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Sep 2013 01:04:39 +0200
+	id 1VMnUn-0003Y3-4q
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Sep 2013 01:18:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754282Ab3ISXEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 19:04:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54783 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754214Ab3ISXEe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 19:04:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 213B643EAC;
-	Thu, 19 Sep 2013 23:04:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nrpfl+BYeu/praoDXb/kG4fcpCw=; b=lfozqc
-	qO8DMVsuLfIMcZ7/zJ3ANDA0/dcmLUE0nsyciaBVqwjz4OHz9a3T5HXVaKkJV8Ak
-	YYAYF0FORKoFtGcvM4BQ5/oRcGbsFTM+cvgnESoob8x0Axd5ZNK8oo4OW8EOzkB3
-	HgkPkt3zZHyq6NhmIBEnhDC5nRNUZszV5/dEo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f/jkIVJzggVX5i/I1+5aMD+aNKsE9fgL
-	MMfXv9m2GO1hSSb8jlpDEOCWhREo73me9XiAC+ahBN3a4OXc0sQiHqjELRsltskS
-	1+ogJl0jLYL/Oi7eQmf1iBu5cjCg3ZKOHcnEuhRvgQCC8TtVKIhhtYzEOQAEgDhQ
-	ZuOLGSw0QkI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 134EE43EAB;
-	Thu, 19 Sep 2013 23:04:34 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 735D443EA3;
-	Thu, 19 Sep 2013 23:04:33 +0000 (UTC)
-In-Reply-To: <523B7EB9.9050809@optusnet.com.au> (Ben Aveling's message of
-	"Fri, 20 Sep 2013 08:46:17 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D8E6F8DA-217F-11E3-BB10-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754025Ab3ISXSg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Sep 2013 19:18:36 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:38045 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753689Ab3ISXSg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Sep 2013 19:18:36 -0400
+Received: by mail-lb0-f171.google.com with SMTP id u14so105lbd.16
+        for <git@vger.kernel.org>; Thu, 19 Sep 2013 16:18:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=3lGcUynhRwVwHuZQx+ZkRJRqV5gr8aBWTl1/OpKQmKs=;
+        b=CODRt2FzRUJlPJiqI4EhZISGwlMOQp/eSEESsHSgPzJZA/706Ch4h00Du1IrTBlE82
+         k2lnZuZrgyTxBNynX83hLNpC3ZM5b70/B+ofu/40rqb+u8b3YvWoEj8ycslOV94UmSns
+         joBhxpAaDs1uafvunEtTKsgC0EEmaZl7nAat796oeOdylo16EnWdonOE0/m74oJjtJro
+         HxbQYY13HVNxD8COSthS2kKvV38FF+a6/TU36lQeY4NvzxjCmWXgFAa+242lwY3QdMMW
+         iXppM6gyMpMhdUbKGIJs9YXvFkUhEahLKz6JmdZwyKqLIQ2foofICUmz5dSwf/7g1Xiu
+         BCRw==
+X-Received: by 10.152.116.109 with SMTP id jv13mr3327261lab.30.1379632714504;
+ Thu, 19 Sep 2013 16:18:34 -0700 (PDT)
+Received: by 10.112.89.135 with HTTP; Thu, 19 Sep 2013 16:18:33 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235040>
 
-Ben Aveling <bena.001@optusnet.com.au> writes:
+Hi all,
+=46irst of all a big thank you to all for making git. With it being fas=
+t
+and cheap (in relation to bandwidth and sizes for subsequent checkouts
+as well as CPU usage) . Please CC me if somebody does answer this mail
+as I'm not subscribed to the list.
 
-> Probably also worth pointing out that whether or not the current shell
-> is at toplevel, there can be other processes active in subdirectories.
+The thing I have been failures number of times while trying to clone a
+large repo. The only solution it seems is to ask somebody to make a
+git-bundle and get that bundle via wget or rsync and then unbundle it
+and then hopefully just sync it. The other way is to pray and hope
+that somehow git clones ends in a success.
 
-That is not something we have control over anyway.
+Somebody told me that there is/was some recent discussion on getting
+something like :-
+
+$ git clone --continue
+
+which is/would be very similar to how wget works so you can continue
+the large file download if the server supports resuming.
+
+Is something similar being worked upon or discussed upon ? If yes,
+please point me out to the discussion as it would be very beneficial
+to people like me who have unstable network connection.
+
+If not, then sorry to take your time.
+
+in gratitude.
+--=20
+          Regards,
+          Shirish Agarwal  =E0=A4=B6=E0=A4=BF=E0=A4=B0=E0=A5=80=E0=A4=B7=
+ =E0=A4=85=E0=A4=97=E0=A5=8D=E0=A4=B0=E0=A4=B5=E0=A4=BE=E0=A4=B2
+  My quotes in this email licensed under CC 3.0
+http://creativecommons.org/licenses/by-nc/3.0/
+http://flossexperiences.wordpress.com
+065C 6D79 A68C E7EA 52B3  8D70 950D 53FB 729A 8B17
