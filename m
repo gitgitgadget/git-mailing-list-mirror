@@ -1,97 +1,73 @@
-From: Martin Gregory <marting@adelaideinterim.com.au>
-Subject: re[2]: sparse checkout file with windows line endings doesn't work
-Date: Thu, 19 Sep 2013 18:51:41 +0930
-Organization: AI
-Message-ID: <SDZWVEJZSSNSWDRKPVQvMTg5ODc3NzY1@IBMLT4>
-References: <CACsJy8CRoZYWExHMjwG3ZOv=eJ9irq_mM_bM78ss_DssSq7szw@mail.gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: [PATCH] git-compat-util: Avoid strcasecmp() being inlined
+Date: Thu, 19 Sep 2013 11:47:51 +0200
+Message-ID: <CAA01CspCWFMGxXs9M3A1mtTctiUCCeJ9pJjHt=auMjhHHJU3Dg@mail.gmail.com>
+References: <523094F0.9000509@gmail.com>
+	<20130911182921.GE4326@google.com>
+	<20130911191620.GB24251@sigill.intra.peff.net>
+	<CAA01CsrN+VLw4WQmObvh72_MoH1Lyh9dQbizJcVhqyJoRyms-Q@mail.gmail.com>
+	<CAPc5daVt4Q9twub5KyOQqZHx9CwOnkuwA97sXV44fF2j1e5HVg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="nqp=nb64=()OE2pTZ86C"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>,
-	Martin Gregory <marting@adelaideinterim.com.au>
-X-From: git-owner@vger.kernel.org Thu Sep 19 11:24:47 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 19 11:47:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMaTd-0004Z2-AV
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 11:24:45 +0200
+	id 1VMaq6-0003K0-1X
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 11:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752024Ab3ISJYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 05:24:38 -0400
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:64225 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751903Ab3ISJYi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 05:24:38 -0400
-Received: by mail-pb0-f47.google.com with SMTP id rr4so8163822pbb.34
-        for <git@vger.kernel.org>; Thu, 19 Sep 2013 02:24:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:subject:to:cc:message-id:in-reply-to
-         :mime-version:organization:content-type;
-        bh=Tp/fDgiWrDFbMW8uJt+HwUqBxifDwFp2b58u9yoeDIQ=;
-        b=QnJJhx8Mbbyn0/Kzbd3b67jvEIDL9Jpl0rhh2gfdTpkaljDqhfrF7aP079IfF0ShLK
-         PrcB7zbi6OFwvp1G1n9jBUMjdRWwcTak3OzZ+GQJe5IL+S0EmBTOaE+zlKk4zEcdF3wq
-         X10NeNVagOirBaelo8MmEm8sYniel5sc6f20+NcVdlWLb8hps+RkJhAbU13CuLS7YknH
-         MLK+sM5GQPIHz/qftDenBARAuMSRClGx6NbdlTyzoKsOh8GOXmnlNo98qOha1w4a3Qym
-         Ttx3f7LPCndHXhGE6hgI19Dl4+MbaFbv4tyxqeXvv8+nDX8Dxi5WBuxMzhm/7SrP7O4m
-         bq2Q==
-X-Gm-Message-State: ALoCoQnt/cZhfc9S21/FERZt0Z2WJ8Oi0pBUtopomiaroiuHG/EEu8AKNRCieicsnOe1Q6r8zab5
-X-Received: by 10.68.6.232 with SMTP id e8mr687836pba.132.1379582677425;
-        Thu, 19 Sep 2013 02:24:37 -0700 (PDT)
-Received: from IBMLT4 ([1.124.254.166])
-        by mx.google.com with ESMTPSA id t2sm7403585pbi.7.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 19 Sep 2013 02:24:36 -0700 (PDT)
-In-Reply-To: <CACsJy8CRoZYWExHMjwG3ZOv=eJ9irq_mM_bM78ss_DssSq7szw@mail.gmail.com>
-X-Mailer: GoldMine [9.2.1.92]
-X-GM-Attachments-Sync-Time: 20130919185427
+	id S1751700Ab3ISJry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Sep 2013 05:47:54 -0400
+Received: from mail-ee0-f44.google.com ([74.125.83.44]:45423 "EHLO
+	mail-ee0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750878Ab3ISJrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 05:47:53 -0400
+Received: by mail-ee0-f44.google.com with SMTP id b47so4073969eek.3
+        for <git@vger.kernel.org>; Thu, 19 Sep 2013 02:47:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=fcihXnvktHWriXhh1io2NB7ObFnoJK0neaGVGQJZMl8=;
+        b=uOvrIA5NLWRPXH5HjVkqZ8NEogM+YBC9QTQQOtdhWC/QuU2wt4McoqTYUuazY1NuYu
+         HcPUhwOL8Jocu59JEiTHTRSlWqsBcJf6xAl6/xVCJjNGDc9qVuXavLAuRxqYc2Tdz9Nk
+         Kcm++NJqrOJPYyeVRACDqDizjWpFw17tAPttyjNDRDNepXAIJjnhrXlCOQMQ/kwkZ+ny
+         aHvHCVwrFTF2IbCwW0q+ePsdLZ50iGazTMapu7UaAl6az1AmdoMpHxya0DJAbii45aoT
+         tNU/fz93Uv9w6dD5J3aAPXMo/nryOMPCh5GK7zuu+pCt00vCwBvyf9ttNzasTDGM/rBs
+         HH8Q==
+X-Received: by 10.14.42.3 with SMTP id i3mr919751eeb.95.1379584071991; Thu, 19
+ Sep 2013 02:47:51 -0700 (PDT)
+Received: by 10.223.193.4 with HTTP; Thu, 19 Sep 2013 02:47:51 -0700 (PDT)
+In-Reply-To: <CAPc5daVt4Q9twub5KyOQqZHx9CwOnkuwA97sXV44fF2j1e5HVg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235010>
 
---nqp=nb64=()OE2pTZ86C
-Content-Type: text/plain
+On Thu, Sep 19, 2013 at 9:37 AM, Junio C Hamano <junio@pobox.com> wrote:
+> On Sep 18, 2013 11:08 PM, "Piotr Krukowiecki" <piotr.krukowiecki@gmail.com>
+> wrote:
+>>
+>> On Wed, Sep 11, 2013 at 9:16 PM, Jeff King <peff@peff.net> wrote:
+>> > I would prefer the static wrapper solution you suggest, though. It
+[...]
+>> > it still ends up as a single function call). The downside is that it has
+>> > to be remembered at each site that uses strcasecmp, but we do not use
+>> > pointers to standard library functions very often.
+>>
+>> Is it possible to add a test which fails if wrapper is not used?
+>
+> No test needed for this, as compilation or linkage will fail, I think.
 
-Hi Duy,
+But only when someone compiles on MinGW, no?
 
->>  And it does work for me with CRLF endings (again tested on Linux). Can
->>  you send me your sparse-checkout file? Zip it if needed.
-
-sparse-checkout created with
-
-echo /CONFIGURATION > .git\info\sparse-checkout
-
-on Windows.
-
-Attached file created with
-
-tar cvzf sparsecheckout.tar.gz .git/info/sparse-checkout
-
-in gitbash shell on Windows.
-
-Regards,
-
-Martin
-
-
---
-Martin Gregory
-Senior Consultant, Adelaide Interim
-P:   +61 8 7200 5350
-M:   +61 402 410 971
-F:   +61 8 7200 3725
---nqp=nb64=()OE2pTZ86C
-Content-Type: application/octet-stream; name="sparsecheckout.tar.gz"
-Content-Disposition: attachment; filename="sparsecheckout.tar.gz"
-Content-Transfer-Encoding: base64
-
-H4sIAAAAAAAAC+3OwQqCQBSF4VkHvYMvUM6IjmsJEhcpRD2AmNUQacyM75+4F1qIbf6PC4cD
-d3H2D+ND09370H1q69pd82ybVz94sRw50nE8ZaqnVDKWU59ESqgoUjqJZaK1kCodTwRywQ2z
-BudrGwTiVFtvunz2L7u9TWect7XvrVtj2SrCQ1Uei/x6zi5FVQbbzb8HAQAAAAAAAAAAAAAA
-AAB+8gWfttSrACgAAC==
-
---nqp=nb64=()OE2pTZ86C--
+-- 
+Piotr Krukowiecki
