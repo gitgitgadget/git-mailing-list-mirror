@@ -1,69 +1,112 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Git pack v4: next step, help required
-Date: Thu, 19 Sep 2013 08:28:28 +0700
-Message-ID: <CACsJy8Cyg3Qdnx_eh4gVpeLLgHrTWRZbOnd3z57oqMVtJy9h8A@mail.gmail.com>
-References: <alpine.LFD.2.03.1309181120390.20709@syhkavp.arg>
+From: Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: [PATCH] build: add default configuration
+Date: Wed, 18 Sep 2013 22:49:06 -0500
+Message-ID: <CAMP44s3Q6ummNmLovw0BuGR=yNWfmRFmrg9xb50OawMwKznfBw@mail.gmail.com>
+References: <1379423650-1311-1-git-send-email-felipe.contreras@gmail.com>
+	<e8ccfba3-5198-4986-9b9d-1d69b965386f.maildroid@localhost>
+	<CAMP44s35_emnh9Kce433oy1JW66xB2vaN5f5OO7VF1XqoO=YGQ@mail.gmail.com>
+	<ab38a1b5-e354-4e32-8ede-46a401ef8053.maildroid@localhost>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Sep 19 03:29:05 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, 
+	=?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: git-users+bncBDBJVMGGZYNBBM7I5GIQKGQEZ5ZOJNI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Sep 19 05:49:11 2013
+Return-path: <git-users+bncBDBJVMGGZYNBBM7I5GIQKGQEZ5ZOJNI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-wi0-f190.google.com ([209.85.212.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMT3I-0001sf-Gc
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 03:29:04 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751984Ab3ISB3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Sep 2013 21:29:00 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:49034 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751760Ab3ISB27 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Sep 2013 21:28:59 -0400
-Received: by mail-ob0-f176.google.com with SMTP id uy5so8573579obc.7
-        for <git@vger.kernel.org>; Wed, 18 Sep 2013 18:28:59 -0700 (PDT)
+	(envelope-from <git-users+bncBDBJVMGGZYNBBM7I5GIQKGQEZ5ZOJNI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1VMVEr-0002Y8-Ez
+	for gcggu-git-users@m.gmane.org; Thu, 19 Sep 2013 05:49:09 +0200
+Received: by mail-wi0-f190.google.com with SMTP id ey11sf760036wid.7
+        for <gcggu-git-users@m.gmane.org>; Wed, 18 Sep 2013 20:49:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=6HlVsMr8auBc3i8ecCpho0nRTaUrsDLOSJUgRgy24Bk=;
-        b=onrfZvVuT0m3fYBK8F0nEMnW/vyugppWJ6bH2cgFbfWKnCxUYaWnnlmY8uxNqVWdAo
-         ErcSmiiJAP8szmLT1UtIViXjxvlR38y+y/Ur6dgUhZ8ZnEx9HU4/i5URoPzzGfxGF82I
-         EdblJL5kSTci4ovVY1cDSalSmoKjkydNq3XJYYZ9Zj8BiSTnWT0nqOZf+nSCKOZ8U+vi
-         DwtM3zH9ZTsdwQRQQuPl+3Dj6elh6TcRopMMhQUlIOk9bkta1OY7wG9hLPKo0BftQ3gq
-         HqWvetIf9N+qGaxvkfULQsJ67QkzrVOp+X/ux8zpVZ3Jw0sX9iWLyfko4+RaMjnSIAqZ
-         4TOg==
-X-Received: by 10.60.155.166 with SMTP id vx6mr320782oeb.28.1379554138889;
- Wed, 18 Sep 2013 18:28:58 -0700 (PDT)
-Received: by 10.182.49.233 with HTTP; Wed, 18 Sep 2013 18:28:28 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.03.1309181120390.20709@syhkavp.arg>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/234999>
+        d=googlegroups.com; s=20120806;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:x-original-sender:x-original-authentication-results:reply-to
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=bUsKkgaFPgIctDmMFvIWQINb2UrdCSm8eEl9nIt4mXw=;
+        b=U+N01UqrWGsYUKJgNDm0O1m2PZwCs1jrxonikq4juHgE4QPQcSUCHx3d6A/xXUXAxF
+         WmUbsqbHI6/H4+AtsWls2lEOesk+lMaqCu7OCOZkpTjn/UEGdPTmSm7oTGHWoTGPuUTp
+         Niy1xAa79WAD4dWphRqEkJZC1G1ZJwUqx91gAoPPsDNkTx7NhZflz8Lz2lEJhM3clMjA
+         VgKOcy8eSYEz0MKUW1h4KxjwqZHJmxLGOc+MkGwx7svqszRPcT6SUHJ9D0ZcCwn6RJpF
+         IzwxxYpqupsLOIsovLl2oEpQYoKwZrWiubcl9jTCiZLSVWFf+Zg1/kv3Wz1BIssERT30
+         CPEA==
+X-Received: by 10.180.39.177 with SMTP id q17mr440670wik.11.1379562549104;
+        Wed, 18 Sep 2013 20:49:09 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.180.82.106 with SMTP id h10ls64643wiy.23.canary; Wed, 18 Sep
+ 2013 20:49:07 -0700 (PDT)
+X-Received: by 10.205.86.131 with SMTP id as3mr5494534bkc.5.1379562547314;
+        Wed, 18 Sep 2013 20:49:07 -0700 (PDT)
+Received: from mail-la0-x22c.google.com (mail-la0-x22c.google.com [2a00:1450:4010:c03::22c])
+        by gmr-mx.google.com with ESMTPS id jt16si358478bkb.0.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 18 Sep 2013 20:49:07 -0700 (PDT)
+Received-SPF: pass (google.com: domain of felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 2a00:1450:4010:c03::22c as permitted sender) client-ip=2a00:1450:4010:c03::22c;
+Received: by mail-la0-f44.google.com with SMTP id eo20so6477247lab.31
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 18 Sep 2013 20:49:07 -0700 (PDT)
+X-Received: by 10.152.30.74 with SMTP id q10mr14771345lah.27.1379562547008;
+ Wed, 18 Sep 2013 20:49:07 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Wed, 18 Sep 2013 20:49:06 -0700 (PDT)
+In-Reply-To: <ab38a1b5-e354-4e32-8ede-46a401ef8053.maildroid@localhost>
+X-Original-Sender: felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates
+ 2a00:1450:4010:c03::22c as permitted sender) smtp.mail=felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org;
+       dkim=pass header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235001>
 
-On Thu, Sep 19, 2013 at 12:40 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
+On Wed, Sep 18, 2013 at 9:30 PM, David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+>>On Wed, Sep 18, 2013 at 1:13 PM, David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+>>>
+>>> Will this not conflict with folks that supply their own gitconfig?
 >
-> I think the pack v4 format and compatibility code is pretty stable now,
-> and probably as optimal as it can reasonably be.
+>> You mean people that provide their own ETC_GITCONFIG? If you mean
+> distributions, their packaging would override /etc/gitconfig, if you
+> mean people that have already a /etc/gitconfig, packaging systems
+> usually save the old one so they can solve the conflict manually (e.g.
+> /etc/gitconfig.pacsave). So no, it would not conflict.
 >
-> @Junio: might be a good idea to refresh your pu branch again.
->
-> Now the biggest problem to solve is the actual tree
-> "deltification".  I don't have the time to spend on this otherwise very
-> interesting problem (IMHO at least) so I'm sending this request for help
-> in the hope that more people would be keen to contribute their computing
-> skills to solve this challenge.
+> Yuck. Yes, that one. I package my own /etc/gitconfig (as we have long advertised as the "way to do it")
 
-Just so we're clear as I'm involved a bit in packv4 series. I plan to
-make the test suite fully pass, then add v4 support to git protocol.
-After that I may look into adding multi-base tree support to
-index-pack/unpack-objects, and only then either look into this
-challenge or continue to add v4-aware tree walker to git. In short,
-you you are intereted in Nico's challenge, go ahead, it will not
-overlap with my work, at least in the next one or two months.
+You package /etc/gitconfig *outside* the git package? I don't see how
+that could have been ever advertised as the way to do it.
+
+> and asking users to manually fix up thousands of machines is a bad idea.
+
+Users don't package /etc/gitconfig outside git.
+
+>>> I like the idea. Docs?  Also, should this not be done in the C side so that we don't waste time reading the config, and also prevent users from overriding these?
+>
+>> But we want them to be easily readable, and possibly allow
+> distributions to easily modify them.
+>
+> In that case I take it back -- I dont like that approach.  We want consistency, not divergence. This encourages the former.
+
+So you think we have more consistency right now? We don't even have a
+predefined /etc/gitconfig, that creates more inconsistency, as
+everybody's configs and aliases are very very different.
+
+This patch would definitely make things more consistent.
+
 -- 
-Duy
+Felipe Contreras
+
+-- 
+You received this message because you are subscribed to the Google Groups "Git for human beings" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit https://groups.google.com/groups/opt_out.
