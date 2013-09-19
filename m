@@ -1,92 +1,57 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] completion: improve untracked directory filtering for
- filename completion
-Date: Thu, 19 Sep 2013 12:31:10 -0700
-Message-ID: <20130919193109.GA9464@google.com>
-References: <CADHXV5=ZVif6xppJgOXRKmqG9bBmAF0=A-sS9TUkH1RHSX9k6g@mail.gmail.com>
- <1379523968-20668-1-git-send-email-szeder@ira.uka.de>
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Re: [PATCH v3 1/5] pull: rename pull.rename to pull.mode
+Date: Thu, 19 Sep 2013 15:33:53 -0400
+Message-ID: <523B51A1.7030409@bbn.com>
+References: <1378689796-19305-1-git-send-email-felipe.contreras@gmail.com>	<1378689796-19305-2-git-send-email-felipe.contreras@gmail.com>	<522E3C6A.3070409@bbn.com> <CAMP44s1OyST3S1HEdS38WPsjq6w9SekuwT4DRUgVvduATox9tw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Isaac Levy <ilevy@google.com>, git@vger.kernel.org,
-	Manlio Perillo <manlio.perillo@gmail.com>
-To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Sep 19 21:31:30 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>,
+	John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
+	Philip Oakley <philipoakley@iee.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 19 21:34:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMjwn-0006mI-Ax
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 21:31:29 +0200
+	id 1VMjzM-00040w-KT
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 21:34:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752417Ab3ISTbS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Sep 2013 15:31:18 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:59732 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751822Ab3ISTbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 15:31:17 -0400
-Received: by mail-pb0-f42.google.com with SMTP id un15so8825080pbc.1
-        for <git@vger.kernel.org>; Thu, 19 Sep 2013 12:31:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=jO/tBhfCU2Q2lDcOGVqRDvTfU2cYZ3JGkExUdfc9CGg=;
-        b=A5Bp37ZfbhRhAqitQII0FFYhjpvWaU9BdRQCara8jHPXDWFZj9cBFgzIuT1wSrsz0T
-         H5iE+TQs/pyn/wwEgv20VHYFb4A/UKjdeUSSUzH0AJv+iViuhvuA50tBsqRGYR5BQuZN
-         vzQHjnG7WJJDxUedTv6TMEhrehEzpC4AFeDJu9ZMxyJ0MKanOe5Q+8LjzVNil2FfcFe6
-         Os5dgOfYB5anaHG1V1XxDF4P/2TJ/9Jzc99DSI17znG8aHcKEmX5XhNxqF7oeheZS9Dw
-         07Nc2rGyfJgO7Khz61dZN2QYUsMXJ93P5vW9gW1Uv+837A4lR+nWgv3OsRZ1MoV08Qx0
-         CpcQ==
-X-Received: by 10.66.102.100 with SMTP id fn4mr4559492pab.71.1379619077055;
-        Thu, 19 Sep 2013 12:31:17 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id tz3sm10994699pbc.20.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 19 Sep 2013 12:31:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1379523968-20668-1-git-send-email-szeder@ira.uka.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752136Ab3ISTeE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Sep 2013 15:34:04 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:15095 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752035Ab3ISTeD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 15:34:03 -0400
+Received: from socket.bbn.com ([192.1.120.102]:42877)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1VMjz7-0008yr-Q8; Thu, 19 Sep 2013 15:33:53 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 7945840064
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <CAMP44s1OyST3S1HEdS38WPsjq6w9SekuwT4DRUgVvduATox9tw@mail.gmail.com>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235026>
 
-SZEDER G=E1bor wrote:
+On 2013-09-09 18:49, Felipe Contreras wrote:
+> On Mon, Sep 9, 2013 at 4:23 PM, Richard Hansen <rhansen@bbn.com> wrote:
+>> On 2013-09-08 21:23, Felipe Contreras wrote:
+>>> The old configurations still work, but get deprecated.
+>>
+>> Should some tests for the deprecated configs be added?  We wouldn't want
+>> to accidentally break those.
+> 
+> Probably, but Junio is not picking this patch anyway.
 
->   $ time __git_index_files "--others --modified"
->   untracked-dir
->
->   real	0m0.537s
->   user	0m0.452s
->   sys	0m0.160s
->
-> Eliminate this delay by additionally passing the '--directory
-> --no-empty-directory' options to 'git ls-files' to show only the
-> directory name of non-empty untracked directories instead their whole
-> content:
->
->   $ time __git_index_files "--others --modified --directory --no-empt=
-y-directory"
->   untracked-dir
->
->   real	0m0.029s
->   user	0m0.020s
->   sys	0m0.004s
+It sounds to me like he would with some mods:
+http://thread.gmane.org/gmane.comp.version-control.git/233554/focus=234488
 
-Nice.  This is what "git status" uses, too.
-
-> Filename completion for 'git clean' suffers from the same delay, as i=
-t
-> offers untracked files, too.  The fix could be the same, but since it
-> actually makes sense to 'git clean' empty directories, in this case w=
-e
-> only pass the '--directory' option to 'git ls-files'.
-
-Also sensible.
-
-=46or what it's worth,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+-Richard
