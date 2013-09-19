@@ -1,72 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: What's cooking in git.git (Sep 2013, #05; Wed, 18)
-Date: Thu, 19 Sep 2013 12:16:56 +0200
-Message-ID: <vpqob7pt8tj.fsf@anie.imag.fr>
-References: <xmqqwqmdu6rg.fsf@gitster.dls.corp.google.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCH 3/3] git submodule update should give notice when run
+ without init beforehand
+Date: Thu, 19 Sep 2013 22:25:27 +1200
+Message-ID: <523AD117.20109@gmail.com>
+References: <1379266703-29808-1-git-send-email-rctay89@gmail.com> <1379266703-29808-2-git-send-email-rctay89@gmail.com> <1379266703-29808-3-git-send-email-rctay89@gmail.com> <CALUzUxrf+ZGX8nQ0DVqYEyWto3Cos16VLTUfjsX99qnDLa=S6w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 19 12:17:13 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 19 12:24:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMbIP-00062y-1v
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 12:17:13 +0200
+	id 1VMbPP-0004jm-4a
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 12:24:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752432Ab3ISKRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 06:17:08 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:32824 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752132Ab3ISKRH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 06:17:07 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8JAGuHR026370
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 19 Sep 2013 12:16:56 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VMbI9-0003GL-8G; Thu, 19 Sep 2013 12:16:57 +0200
-In-Reply-To: <xmqqwqmdu6rg.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 18 Sep 2013 15:03:47 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 19 Sep 2013 12:16:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r8JAGuHR026370
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1380190616.48282@toXwa8L7MRDLn6pIU4iM+w
+	id S1752824Ab3ISKYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Sep 2013 06:24:23 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:38503 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751798Ab3ISKYW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 06:24:22 -0400
+Received: by mail-pd0-f178.google.com with SMTP id w10so8159425pde.23
+        for <git@vger.kernel.org>; Thu, 19 Sep 2013 03:24:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=0qObNIstoyYI+pajKQfAxSiL8ExMB/KMyWE1LX9KTKc=;
+        b=QpBwOOSn8gCNvUz+6hkBErubM81VzcQK97zHVRpaVPay4W6NPB7viKV5YyOYWM9zT3
+         +LdnVVnN4zkuE5YwCESwiZiFPVTGvemJNkOiigYEJor22bPX0ySnpFcMRQFDF7ku6lNW
+         kPyrFna5jhMv01N9TvDmvoMAOg74q+ILmI3PHQWIL9sOe1WAA9tVBkEJ08xOTFxKPv0C
+         cfhZ3gnoHnAu6enly++aH1+rlp6QJEagkqxN30NDQPhG6XWfq4mQPcucDAj5lo03P6Q4
+         BPvlOiXVaJjsUu7CqGQZGSH/eiV++v8bWvcLCV28pviMSswd0pnj2XHZlIb0vdNT5YJg
+         xLeA==
+X-Received: by 10.67.23.199 with SMTP id ic7mr1774023pad.73.1379586262033;
+        Thu, 19 Sep 2013 03:24:22 -0700 (PDT)
+Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPSA id ta10sm11165894pab.5.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 19 Sep 2013 03:24:21 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130510 Thunderbird/17.0.6
+In-Reply-To: <CALUzUxrf+ZGX8nQ0DVqYEyWto3Cos16VLTUfjsX99qnDLa=S6w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235012>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 18/09/13 22:22, Tay Ray Chuan wrote:
+> Hi Chris,
+> 
+> I think you mentioned usability issues with git-submodule before on
+> the git mailing list, so I thought you might be interested in taking a
+> look at this patch. It's attached below, you can also view it at
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/1379266703-29808-3-git-send-email-rctay89@gmail.com
+> 
+> I would be interested in hearing what you think.
+> 
 
-> * mm/rebase-continue-freebsd-WB (2013-09-09) 1 commit
->   (merged to 'next' on 2013-09-13 at 82e8b91)
->  + rebase: fix run_specific_rebase's use of "return" on FreeBSD
->
->  Work around a bug in FreeBSD shell that caused a regression to "git
->  rebase" in v1.8.4.  It would be lovely to hear from FreeBSD folks a
->  success report 
+The case I had was that an un-init'd submodule was still a directory on
+the file system so 'cd submodule' would work and it could go unnoticed
+that we hadn't entered the submodule.
 
-We just did:
+Your change might have helped somewhat but the bigger problem was that
+the work-tree representation of an un-init'd submodule is a directory.
+There was never any thought to actually run 'git submodule update'
+because the developer in question thought they already had.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/234825/focus=234870
-
->  Will merge to 'master' in the fifth batch.
-
-Don't forget maint, too.
-
-Thanks,
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I think Jens' autoinit may be the right direction. It certainly would be
+what we'd want for our use-case at $dayjob.
