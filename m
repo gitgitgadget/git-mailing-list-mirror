@@ -1,113 +1,350 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 2/2] perf-lib: add test_perf_cleanup target
-Date: Thu, 19 Sep 2013 13:42:23 +0200
-Message-ID: <87fvt1ghr4.fsf@gmail.com>
-References: <1379419842-32627-1-git-send-email-t.gummerer@gmail.com> <1379419842-32627-2-git-send-email-t.gummerer@gmail.com> <xmqq7gefz6m0.fsf@gitster.dls.corp.google.com>
+From: Nazri Ramliy <ayiehere@gmail.com>
+Subject: [PATCH v4] Teach git to change to a given directory using -C option
+Date: Thu, 19 Sep 2013 21:18:54 +0800
+Message-ID: <20130919131854.GA19790@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, trast@inf.ethz.ch
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 19 13:42:36 2013
+X-From: git-owner@vger.kernel.org Thu Sep 19 15:19:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMcd0-0003fX-LQ
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 13:42:35 +0200
+	id 1VMe8N-0008A2-Og
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 15:19:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753834Ab3ISLma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 07:42:30 -0400
-Received: from mail-bk0-f42.google.com ([209.85.214.42]:55759 "EHLO
-	mail-bk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753823Ab3ISLm2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 07:42:28 -0400
-Received: by mail-bk0-f42.google.com with SMTP id my10so3415161bkb.29
-        for <git@vger.kernel.org>; Thu, 19 Sep 2013 04:42:26 -0700 (PDT)
+	id S1753813Ab3ISNS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Sep 2013 09:18:59 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:45846 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018Ab3ISNS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 09:18:58 -0400
+Received: by mail-pb0-f43.google.com with SMTP id md4so8354056pbc.2
+        for <git@vger.kernel.org>; Thu, 19 Sep 2013 06:18:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type;
-        bh=r58KrOr9QiBkEd9cxgr8kh6yqeIS0ZgummcCOx2XwyQ=;
-        b=oft+EplRQCttGKsBPXH9zg7QNfTJ8zjHdFDxsqjA9U9y2xHMeaKnBuTDsKymXQRLOs
-         mdeXfrGiSwONFvMrAF90a+gxGDoMyKEIVSViaiN1Cr29wivnzA211LGizQiY+b4IiDdu
-         UCF8D2ksUSvdpxisxJ/lkiC6wej2w8lOh7tSSb4szCf1nHwSMewwPQTc8j6YA4mzrCPF
-         dl+Pv7sNm+PBMEEIGstF/Jqi6RQ5lmyfR8S2K8aJ/PPb+EjdkpwWjfUU033ezkzZYbxK
-         J+hUA3ZAOcqRk1tDclvO6gPWMODgsfTWrSFv90KeK3QD8xz2z2cVeYIvRI6ihDBNy7p8
-         esIg==
-X-Received: by 10.205.86.199 with SMTP id at7mr770925bkc.9.1379590946910;
-        Thu, 19 Sep 2013 04:42:26 -0700 (PDT)
-Received: from localhost ([2001:5c0:1400:a::bef])
-        by mx.google.com with ESMTPSA id nv4sm2776538bkb.3.1969.12.31.16.00.00
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=HdTxvKJFpKDrKHdUTwmRdrrlXji3Vuwc3sNvm1oI9l4=;
+        b=uVZYdbs9zwbntW9ADinZsKFhP/ER8GfXMWVz5cGtJosmYA68ETyAHYfBy245YvBs5g
+         QDxv5f4S+HzyUIjcsADRIzDHpDX7k2835W5ndODPuwOLRTbnZ8mfKHSbBBAvqxM/CzTD
+         otsnad6rIs5dbsAEGy23dnfFRnyrTeUK1Ji20lR++cRlox4dVcTJ8uVf4ZHEYF8sVSIg
+         ZTa+Xn2TYP3/ckoqzSMiUuuEJVLQ4azirgHfsABklWPvVoWILZVjzI0AL+yhv1tNJ8zD
+         K5F/d9GOz8yvYXMWNnQ1iTjWDA7FYt8/jK0J7yxZNbF/laeDIR0Tw5pi+gfj50VW/r4B
+         zybw==
+X-Received: by 10.66.142.193 with SMTP id ry1mr2758524pab.150.1379596738045;
+        Thu, 19 Sep 2013 06:18:58 -0700 (PDT)
+Received: from gmail.com ([175.142.220.107])
+        by mx.google.com with ESMTPSA id fk4sm12146663pab.23.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 19 Sep 2013 04:42:26 -0700 (PDT)
-In-Reply-To: <xmqq7gefz6m0.fsf@gitster.dls.corp.google.com>
-User-Agent: Notmuch/0.15.2+119~gf0dfda5 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+        Thu, 19 Sep 2013 06:18:56 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235014>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
+Sorry it took me a while to get back on this. Reroll at the bottom ...
+
+On Tue, Sep 10, 2013 at 12:32 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nazri Ramliy <ayiehere@gmail.com> writes:
 >
->> +For performance tests that need cleaning up after them that should not
->> +be timed, use
+>> Subject: git: run in a directory given with -C option
+>>
+>> This is similar in spirit to to "make -C dir ..." and "tar -C dir ...".
+>
+> The doubled-"to to" which I locally fixed when I queued the last one
+> (together with other rewording to make it more agreeable and easier
+> to read) somehow came back ;-) Will fix locally again.
+
+I must have mistakenly made the revision on top of my local changes
+instead of the one in next - I didn't notice the fix. Thanks for the
+fix.
+
+>> +-C <path>::
+>> +     Run as if git was started in '<path>' instead of the current working
+>> +     directory.  When multiple '-C' options are given, each subsequent
+>
+> I think this should be `-C` to typeset it as "typed literally".
+>
+>> +     non-absolute `-C <path>` is interpreted relative to the preceding `-C
+>> +     <path>`.
+>> ++
+>> +This option affects options that expect path name like '--git-dir' and
+>> +'--work-tree' in that their interpretations of the path names would be
+>
+> Likewise for `--git-dir` and `--work-tree`.
+>
+>> +made relative to the working directory caused by the '-C' option. For
+>
+> and here.
+
+Now I'm noticing that you've already made the above fixes in next ;)
+
+>> diff --git a/t/t0056-git-C.sh b/t/t0056-git-C.sh
+>> new file mode 100755
+>> index 0000000..c0006da
+>> --- /dev/null
+>> +++ b/t/t0056-git-C.sh
+>> @@ -0,0 +1,82 @@
+>> +#!/bin/sh
 >> +
->> +	test_perf_cleanup 'descriptive string' '
->> +		command1 &&
->> +		command2
->> +	' '
->> +		cleanupcommand1 &&
->> +		cleanupcommand2
->> +	'
+>> +test_description='"-C <path>" option and its effects on other path-related options'
 >> +
+>> +. ./test-lib.sh
+>> +
+>> +test_expect_success '"git -C <path>" runs git from the directory <path>' '
+>> +     test_create_repo dir1 &&
+>> +     echo 1 >dir1/a.txt &&
+>> +     (cd dir1 && git add a.txt && git commit -m "initial in dir1") &&
 >
-> Hmm, if "not timing the clean-up actions" is the primary goal, is it
-> an option to reuse test_when_finished for this (you may have to make
-> sure that the commands run inside it are not timed; I didn't check).
+> Curious why this does not use -C here.
 
-Maybe I wasn't clear enough.  The goal is to allow tests to have
-everything cleaned up after every run.  This can then be used for
-commands that change the index (or other things) and get back to the
-original state after that.  For example something like this:
+It didn't use -C there because it's in the "prepare the expected test
+output" stage and we want that to succeed, whether -C works or not - we
+haven't reached the part where we are actually testing the -C option,
+which is right after that:
 
-file=$(git ls-files | tail -n 30 | head -1)
-
-test_expect_success "change a file" "
-	echo 'something' >>$file
-"
-
-test_perf_cleanup "v5 update-index file" "
-	git update-index $file
-" "
-	git reset
-"
-
-test_when_finished on the other hand only cleans up when the whole test
-is finished.
-
-> One thing I felt uneasy about the above construct is that it makes
-> cleanupcommand2 responsible for handling cases where not just
-> command2 but also command1 might have failed.
+>> +     echo "initial in dir1" >expected &&
+>> +     git -C dir1 log --format=%s >actual &&
+>> +     test_cmp expected actual
+>> +'
+>> +
+>> +test_expect_success 'Multiple -C options: "-C dir1 -C dir2" is equivalent to "-C dir1/dir2"' '
+>> +     test_create_repo dir1/dir2 &&
+>> +     echo 1 >dir1/dir2/a.txt &&
+>> +     git -C dir1/dir2 add a.txt &&
 >
-> Compared to that, test-when-finished allows you to control what
-> clean-up to do depending on what have already been done, i.e.
+> Because "a.txt" exists in both dir1 and dir1/dir2, this has less
+> chance of catching a bug (if somebody breaks the feature to run it
+> in dir1 not dir1/dir2, "add" will happily say "Oh, I found something
+> to add", instead of saying "Huh? there is no such path".
 >
->         test_when_finished 'undo what command1 would have done' &&
-> 	command1 &&
->         test_when_finished 'undo what command2 would have done' &&
-> 	command2 &&
->         ...
+> If you used b.txt instead, you would catch such a breakage.
 >
-> The second "undo command2" must be prepared for the case where
-> command2 may have failed in the middle, but it can at least rely on
-> command1 having succeeded when it is run.
+> Remember, tests are not about demonstrating how cool the new feature
+> is and/or how well it works in an expected setting.  Imagine ways
+> other people can break your spiffy new feature in later patches, and
+> design tests that are more likely to catch them.
+>
+> The same comment applies throughout the remainder of this script.
 
-When one performance test fails, the testing is aborted and the cleanup
-commands are not executed anymore, leaving the trash directory in the
-failed state.  This consistent with the normal tests with the immediate
-flag passed to them.  (All performance tests have the --immediate flag
-on implicitly).
+Noted, but I my imagination is limited at the moment so I haven't come
+up with new tests to that effect yet ;)
+
+>> +     echo "initial in dir1/dir2" >expected &&
+>> +     git -C dir1/dir2 commit -m "initial in dir1/dir2" &&
+>
+> to reduce possibilities of breaking this test in the future due to
+> typos (e.g. somebody may want to say "initial commit in dir1/dir2"),
+> doing this may be a better idea:
+>
+>         msg="initial in dir1/dir2" &&
+>         echo "$msg" >expected &&
+>         git -C dir1/dir2 commit -m "$msg" &&
+>
+> The same comment applies to the previous one.
+
+Fixed.
+
+nazri
+-- >8 --
+Subject: git: run in a directory given with -C option
+
+This is similar in spirit to "make -C dir ..." and "tar -C dir ...".
+
+It takes more keypresses to invoke git command in a different
+directory without leaving the current directory:
+
+    1. (cd ~/foo && git status)
+       git --git-dir=~/foo/.git --work-dir=~/foo status
+       GIT_DIR=~/foo/.git GIT_WORK_TREE=~/foo git status
+    2. (cd ../..; git grep foo)
+    3. for d in d1 d2 d3; do (cd $d && git svn rebase); done
+
+The methods shown above are acceptable for scripting but are too
+cumbersome for quick command line invocations.
+
+With this new option, the above can be done with fewer keystrokes:
+
+    1. git -C ~/foo status
+    2. git -C ../.. grep foo
+    3. for d in d1 d2 d3; do git -C $d svn rebase; done
+
+A new test script is added to verify the behavior of this option with
+other path-related options like --git-dir and --work-tree.
+
+Signed-off-by: Nazri Ramliy <ayiehere@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git.txt | 16 +++++++++-
+ git.c                 | 13 +++++++-
+ t/t0056-git-C.sh      | 84 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 111 insertions(+), 2 deletions(-)
+ create mode 100755 t/t0056-git-C.sh
+
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index c4f0ed5..5d68d33 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -9,7 +9,7 @@ git - the stupid content tracker
+ SYNOPSIS
+ --------
+ [verse]
+-'git' [--version] [--help] [-c <name>=<value>]
++'git' [--version] [--help] [-C <path>] [-c <name>=<value>]
+     [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+     [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+     [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+@@ -395,6 +395,20 @@ displayed. See linkgit:git-help[1] for more information,
+ because `git --help ...` is converted internally into `git
+ help ...`.
+ 
++-C <path>::
++	Run as if git was started in '<path>' instead of the current working
++	directory.  When multiple `-C` options are given, each subsequent
++	non-absolute `-C <path>` is interpreted relative to the preceding `-C
++	<path>`.
+++
++This option affects options that expect path name like `--git-dir` and
++`--work-tree` in that their interpretations of the path names would be
++made relative to the working directory caused by the `-C` option. For
++example the following invocations are equivalent:
++
++    git --git-dir=a.git --work-tree=b -C c status
++    git --git-dir=c/a.git --work-tree=c/b status
++
+ -c <name>=<value>::
+ 	Pass a configuration parameter to the command. The value
+ 	given will override values from configuration files.
+diff --git a/git.c b/git.c
+index b3893e7..1188979 100644
+--- a/git.c
++++ b/git.c
+@@ -7,7 +7,7 @@
+ #include "commit.h"
+ 
+ const char git_usage_string[] =
+-	"git [--version] [--help] [-c name=value]\n"
++	"git [--version] [--help] [-C <path>] [-c name=value]\n"
+ 	"           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
+ 	"           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]\n"
+ 	"           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
+@@ -165,6 +165,17 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			set_alternate_shallow_file((*argv)[0]);
+ 			if (envchanged)
+ 				*envchanged = 1;
++		} else if (!strcmp(cmd, "-C")) {
++			if (*argc < 2) {
++				fprintf(stderr, "No directory given for -C.\n" );
++				usage(git_usage_string);
++			}
++			if (chdir((*argv)[1]))
++				die_errno("Cannot change to '%s'", (*argv)[1]);
++			if (envchanged)
++				*envchanged = 1;
++			(*argv)++;
++			(*argc)--;
+ 		} else {
+ 			fprintf(stderr, "Unknown option: %s\n", cmd);
+ 			usage(git_usage_string);
+diff --git a/t/t0056-git-C.sh b/t/t0056-git-C.sh
+new file mode 100755
+index 0000000..99c0377
+--- /dev/null
++++ b/t/t0056-git-C.sh
+@@ -0,0 +1,84 @@
++#!/bin/sh
++
++test_description='"-C <path>" option and its effects on other path-related options'
++
++. ./test-lib.sh
++
++test_expect_success '"git -C <path>" runs git from the directory <path>' '
++	test_create_repo dir1 &&
++	echo 1 >dir1/a.txt &&
++	msg="initial in dir1" &&
++	(cd dir1 && git add a.txt && git commit -m "$msg") &&
++	echo "$msg" >expected &&
++	git -C dir1 log --format=%s >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'Multiple -C options: "-C dir1 -C dir2" is equivalent to "-C dir1/dir2"' '
++	test_create_repo dir1/dir2 &&
++	echo 1 >dir1/dir2/b.txt &&
++	git -C dir1/dir2 add b.txt &&
++	msg="initial in dir1/dir2" &&
++	echo "$msg" >expected &&
++	git -C dir1/dir2 commit -m "$msg" &&
++	git -C dir1 -C dir2 log --format=%s >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'Effect on --git-dir option: "-C c --git-dir=a.git" is equivalent to "--git-dir c/a.git"' '
++	mkdir c &&
++	mkdir c/a &&
++	mkdir c/a.git &&
++	(cd c/a.git && git init --bare) &&
++	echo 1 >c/a/a.txt &&
++	git --git-dir c/a.git --work-tree=c/a add a.txt &&
++	git --git-dir c/a.git --work-tree=c/a commit -m "initial" &&
++	git --git-dir=c/a.git log -1 --format=%s >expected &&
++	git -C c --git-dir=a.git log -1 --format=%s >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'Order should not matter: "--git-dir=a.git -C c" is equivalent to "-C c --git-dir=a.git"' '
++	git -C c --git-dir=a.git log -1 --format=%s >expected &&
++	git --git-dir=a.git -C c log -1 --format=%s >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'Effect on --work-tree option: "-C c/a.git --work-tree=../a"  is equivalent to "--work-tree=c/a --git-dir=c/a.git"' '
++	rm c/a/a.txt &&
++	git --git-dir=c/a.git --work-tree=c/a status >expected &&
++	git -C c/a.git --work-tree=../a status >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'Order should not matter: "--work-tree=../a -C c/a.git" is equivalent to "-C c/a.git --work-tree=../a"' '
++	git -C c/a.git --work-tree=../a status >expected &&
++	git --work-tree=../a -C c/a.git status >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'Effect on --git-dir and --work-tree options - "-C c --git-dir=a.git --work-tree=a" is equivalent to "--git-dir=c/a.git --work-tree=c/a"' '
++	git --git-dir=c/a.git --work-tree=c/a status >expected &&
++	git -C c --git-dir=a.git --work-tree=a status >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'Order should not matter: "-C c --git-dir=a.git --work-tree=a" is equivalent to "--git-dir=a.git -C c --work-tree=a"' '
++	git -C c --git-dir=a.git --work-tree=a status >expected &&
++	git --git-dir=a.git -C c --work-tree=a status >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'Order should not matter: "-C c --git-dir=a.git --work-tree=a" is equivalent to "--git-dir=a.git --work-tree=a -C c"' '
++	git -C c --git-dir=a.git --work-tree=a status >expected &&
++	git --git-dir=a.git --work-tree=a -C c status >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'Relative followed by fullpath: "-C ./here -C /there" is equivalent to "-C /there"' '
++	echo "initial in dir1/dir2" >expected &&
++	git -C dir1 -C "$(pwd)/dir1/dir2" log --format=%s >actual &&
++	test_cmp expected actual
++'
++
++test_done
+-- 
+1.8.4.411.g6835a8c
