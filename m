@@ -1,140 +1,75 @@
-From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: RE: git clone silently aborts if stdout gets a broken pipe
-Date: Thu, 19 Sep 2013 09:54:38 +0200
-Message-ID: <A612847CFE53224C91B23E3A5B48BAC798CD91DBA7@xmail3.se.axis.com>
-References: <A612847CFE53224C91B23E3A5B48BAC798CD91DB0B@xmail3.se.axis.com>
- <20130918184551.GC18821@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH jk/config-int-range-check] compat/mingw.h: define PRId64
+Date: Thu, 19 Sep 2013 03:56:10 -0400
+Message-ID: <20130919075610.GB29773@sigill.intra.peff.net>
+References: <523AA4F3.6010406@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 19 09:54:51 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Sep 19 09:56:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMZ4c-0001gu-Rz
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 09:54:51 +0200
+	id 1VMZ67-0004yV-HQ
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 09:56:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752774Ab3ISHyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 03:54:46 -0400
-Received: from ra.se.axis.com ([195.60.68.13]:51173 "EHLO ra.se.axis.com"
+	id S1752813Ab3ISH4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Sep 2013 03:56:20 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33295 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751831Ab3ISHyo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 03:54:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by ra.se.axis.com (Postfix) with ESMTP id 00F9E11EE5;
-	Thu, 19 Sep 2013 09:54:42 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at ra.se.axis.com
-Received: from ra.se.axis.com ([127.0.0.1])
-	by localhost (ra.se.axis.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id QJPrPmhlaSBA; Thu, 19 Sep 2013 09:54:40 +0200 (CEST)
-Received: from boulder.se.axis.com (boulder.se.axis.com [10.0.2.104])
-	by ra.se.axis.com (Postfix) with ESMTP id 3C15E11F73;
-	Thu, 19 Sep 2013 09:54:40 +0200 (CEST)
-Received: from boulder.se.axis.com (localhost [127.0.0.1])
-	by postfix.imss71 (Postfix) with ESMTP id 24F3488C;
-	Thu, 19 Sep 2013 09:54:40 +0200 (CEST)
-Received: from thoth.se.axis.com (thoth.se.axis.com [10.0.2.173])
-	by boulder.se.axis.com (Postfix) with ESMTP id 17D07885;
-	Thu, 19 Sep 2013 09:54:40 +0200 (CEST)
-Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
-	by thoth.se.axis.com (Postfix) with ESMTP id 15B6B3404E;
-	Thu, 19 Sep 2013 09:54:40 +0200 (CEST)
-Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
- ([10.0.5.75]) with mapi; Thu, 19 Sep 2013 09:54:40 +0200
-Thread-Topic: git clone silently aborts if stdout gets a broken pipe
-Thread-Index: Ac60n1XE59zN07nHT/SfIdXJYceOagAacOpg
-In-Reply-To: <20130918184551.GC18821@sigill.intra.peff.net>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, sv-SE
+	id S1752784Ab3ISH4T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 03:56:19 -0400
+Received: (qmail 27316 invoked by uid 102); 19 Sep 2013 07:56:19 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 19 Sep 2013 02:56:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Sep 2013 03:56:10 -0400
+Content-Disposition: inline
+In-Reply-To: <523AA4F3.6010406@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235006>
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBnaXQtb3duZXJAdmdlci5rZXJu
-ZWwub3JnIFttYWlsdG86Z2l0LW93bmVyQHZnZXIua2VybmVsLm9yZ10gT24NCj4gQmVoYWxmIE9m
-IEplZmYgS2luZw0KPiBTZW50OiBkZW4gMTggc2VwdGVtYmVyIDIwMTMgMjA6NDYNCj4gVG86IFBl
-dGVyIEtqZWxsZXJzdGVkdA0KPiBDYzogSnVuaW8gQyBIYW1hbm87IE5ndXllbiBUaGFpIE5nb2Mg
-RHV5OyBnaXRAdmdlci5rZXJuZWwub3JnDQo+IFN1YmplY3Q6IFJlOiBnaXQgY2xvbmUgc2lsZW50
-bHkgYWJvcnRzIGlmIHN0ZG91dCBnZXRzIGEgYnJva2VuIHBpcGUNCj4gDQo+IE9uIFdlZCwgU2Vw
-IDE4LCAyMDEzIGF0IDA2OjUyOjEzUE0gKzAyMDAsIFBldGVyIEtqZWxsZXJzdGVkdCB3cm90ZToN
-Cj4gDQo+ID4gVGhlIGZhaWxpbmcgUGVybCBjb2RlIHVzZWQgYSBjb25zdHJ1Y3QgbGlrZSB0aGlz
-Og0KPiA+DQo+ID4gCUdpdDo6Y29tbWFuZF9vbmVsaW5lKCdjbG9uZScsICR1cmwsICRwYXRoKTsN
-Cj4gPg0KPiA+IFRoZXJlIGlzIG5vIGVycm9yIHJhaXNlZCwgYnV0IHRoZSBkaXJlY3Rvcnkgc3Bl
-Y2lmaWVkIGJ5DQo+ID4gJHBhdGggaXMgbm90IGNyZWF0ZWQuIElmIEkgbG9vayBhdCB0aGUgcHJv
-Y2VzcyB1c2luZyBzdHJhY2UNCj4gPiBJIGNhbiBzZWUgdGhlIGNsb25lIHRha2luZyBwbGFjZSwg
-YnV0IHRoZW4gaXQgc2VlbXMgdG8gZ2V0DQo+ID4gYSBicm9rZW4gcGlwZSBzaW5jZSB0aGUgY29k
-ZSBhYm92ZSBvbmx5IGNhcmVzIGFib3V0IHRoZQ0KPiA+IGZpcnN0IGxpbmUgZnJvbSBzdGRvdXQg
-KGFuZCB3aXRoIHRoZSBhZGRpdGlvbiBvZiAiQ2hlY2tpbmcNCj4gPiBjb25uZWN0aXZpdHkuLi4i
-IGdpdCBjbG9uZSBub3cgb3V0cHV0cyB0d28gbGluZXMgdG8gc3Rkb3V0KS4NCj4gDQo+IEkgdGhp
-bmsgeW91ciBwZXJsIHNjcmlwdCBpcyBzb21ld2hhdCBxdWVzdGlvbmFibGUsIGFzIGl0IGlzIG1h
-a2luZw0KPiBhc3N1bXB0aW9ucyBhYm91dCB0aGUgb3V0cHV0IG9mIGdpdC1jbG9uZSwgYW5kIHlv
-dSB3b3VsZCBkbyBiZXR0ZXIgdG8NCj4gYWNjZXB0IGFyYml0cmFyeS1zaXplZCBvdXRwdXQgDQoN
-CldlbGwsIHRoZSB3aG9sZSBpZGVhIG9mIHVzaW5nIEdpdDo6Y29tbWFuZF9vbmVsaW5lKCkgaXMg
-dGhhdCB3ZSANCmFyZSBvbmx5IGludGVyZXN0ZWQgaW4gdGhlIGZpcnN0IGxpbmUgb2Ygb3V0cHV0
-LCBzaW1pbGFyIHRvIHVzaW5nIA0KInwgaGVhZCAtMSIuIElmIHdlIGhhZCB3YW50ZWQgYWxsIG9m
-IHRoZSBvdXRwdXQgd2Ugd291bGQgaGF2ZSB1c2VkIA0KR2l0Ojpjb21tYW5kKCkgaW5zdGVhZC4g
-U2luY2UgdGhlIEdpdCBQZXJsIG1vZHVsZSBpcyByZWxlYXNlZCBhcyBhIA0KcGFydCBvZiBHaXQs
-IEkgd291bGQgZXhwZWN0IGl0IHRvIHdvcmsgYXMgZG9jdW1lbnRlZCByZWdhcmRsZXNzIG9mIA0K
-d2hpY2ggR2l0IGNvbW1hbmQgaXMgdXNlZCB3aXRoIEdpdDo6Y29tbWFuZF9vbmVsaW5lKCkuDQoN
-CkluIHRoZSBjYXNlIG9mIGdpdCBjbG9uZSB0aGUgb3V0cHV0IHRvIHN0ZG91dCBpcyBwcmV0dHkg
-c21hbGwgc28gDQpyZXRyaWV2aW5nIGFsbCBvZiBpdCB3b3VsZCBvZiBjb3Vyc2Ugbm90IGJlIG11
-Y2ggb3ZlcmhlYWQsIGJ1dCBmb3IgDQpzb21lIG90aGVyIGNvbW1hbmRzIHJldHJpZXZpbmcgYWxs
-IG91dHB1dCB3aGVuIG9ubHkgdGhlIGZpcnN0IGxpbmUgDQppcyB3YW50ZWQgKG9yIG1heWJlIG5v
-dCBldmVuIHRoYXQgb25lKSBzZWVtcyB1bm5lY2Vzc2FyeS4NCg0KSG93ZXZlciwgd2hhdCBzdXJw
-cmlzZWQgbWUgbW9zdCB3YXMgdGhhdCBnaXQgY2xvbmUgZmFpbGVkIHNpbGVudGx5IA0Kd2hlbiBp
-dCBnb3QgYSBicm9rZW4gcGlwZS4gSSBjYW5ub3QgcmVhbGx5IHNlZSB0aGUgcmVhc29uIGZvciAN
-CmFib3J0aW5nIGR1ZSB0byBzdGRvdXQgZ2V0dGluZyBhIGJyb2tlbiBwaXBlIGluIHRoZSBmaXJz
-dCBwbGFjZS4gDQpCdXQgaWYgaXQgaXMsIEkgd291bGQgYXQgbGVhc3QgaGF2ZSBleHBlY3RlZCBh
-biBlcnJvciB3aGljaCBvdXIgDQpzY3JpcHQgd291bGQgaGF2ZSBjYXVnaHQgYW5kIGFib3J0ZWQg
-d2l0aCBhbiBhcHByb3ByaWF0ZSBlcnJvciANCm1lc3NhZ2UuIE5vdyBpdCBpbnN0ZWFkIGZhaWxl
-ZCBsYXRlciB3aGVuIGl0IGFjdHVhbGx5IHRyaWVkIHRvIA0KYWNjZXNzIHRoZSBmaWxlcyBpbiB0
-aGUgcmVwb3NpdG9yeSBpdCB0aG91Z2h0IGl0IGhhZCBjbG9uZWQuLi4NCg0KPiAob3IgYmV0dGVy
-IHlldCwgbGVhdmUgc3Rkb3V0IHBvaW50aW5nIHRvDQo+IHRoZSB1c2VyLCBzbyB0aGV5IGNhbiBz
-ZWUgdGhlIG91dHB1dCwgd2hpY2ggaXMgbWVhbnQgZm9yIHRoZW0pLg0KDQpXZWxsLCBpbiB0aGlz
-IHNwZWNpZmljIGNhc2UgaXQgaXMgYSBzY3JpcHQgYmVpbmcgcnVuIGFzIGEgY3JvbiBqb2IgDQpz
-byBhbnl0aGluZyBzZW50IHRvIHN0ZG91dCB3b3VsZCBjYXVzZSBhbiB1bm5lY2Vzc2FyeSBtYWls
-Lg0KDQo+IFRoYXQgYmVpbmcgc2FpZCwgdGhlIG5ldyBtZXNzYWdlcyBzaG91bGQgYWxtb3N0IGNl
-cnRhaW5seSBnbyB0byBzdGRlcnIuDQoNCkkgY2FuIGJ1dCBhZ3JlZS4NCg0KPiAtLSA+OCAtLQ0K
-PiBTdWJqZWN0OiBbUEFUQ0hdIGNsb25lOiB3cml0ZSAiY2hlY2tpbmcgY29ubmVjdGl2aXR5IiB0
-byBzdGRlcnINCj4gDQo+IEluIGNvbW1pdCAwNzgxYWE0IChjbG9uZTogbGV0IHRoZSB1c2VyIGtu
-b3cgd2hlbg0KPiBjaGVja19ldmVyeXRoaW5nX2Nvbm5lY3RlZCBpcyBydW4sIDIwMTMtMDUtMDMp
-LCB3ZSBzdGFydGVkDQo+IGdpdmluZyB0aGUgdXNlciBhIHByb2dyZXNzIHJlcG9ydCBkdXJpbmcg
-Y2xvbmUuIEhvd2V2ZXIsDQo+IHNpbmNlIHRoZSBhY3R1YWwgd29yayBoYXBwZW5zIGluIGEgc3Vi
-LXByb2Nlc3MsIHdlIGRvIG5vdA0KPiB1c2UgdGhlIHVzdWFsIHByb2dyZXNzIGNvZGUgdGhhdCBj
-b3VudHMgdGhlIG9iamVjdHMsIGJ1dA0KPiByYXRoZXIganVzdCBwcmludCBhIG1lc3NhZ2Ugb3Vy
-c2VsdmVzLg0KPiANCj4gVGhpcyBtZXNzYWdlIGdvZXMgdG8gc3Rkb3V0IHZpYSBwcmludGYsIHdo
-aWNoIGlzIHVubGlrZQ0KPiBvdGhlciBwcm9ncmVzcyBtZXNzYWdlcyAoYm90aCB0aGUgZXllIGNh
-bmR5IHdpdGhpbiBjbG9uZSwNCj4gYW5kIHRoZSAiY2hlY2tpbmcgY29ubmVjdGl2aXR5IiBwcm9n
-cmVzcyBpbiBvdGhlciBjb21tYW5kcykuDQo+IExldCdzIHNlbmQgaXQgdG8gc3RkZXJyIGZvciBj
-b25zaXN0ZW5jeS4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IEplZmYgS2luZyA8cGVmZkBwZWZmLm5l
-dD4NCj4gLS0tDQo+ICBidWlsdGluL2Nsb25lLmMgfCA0ICsrLS0NCj4gIDEgZmlsZSBjaGFuZ2Vk
-LCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvYnVp
-bHRpbi9jbG9uZS5jIGIvYnVpbHRpbi9jbG9uZS5jDQo+IGluZGV4IGNhM2ViNjguLjNjOTE4NDQg
-MTAwNjQ0DQo+IC0tLSBhL2J1aWx0aW4vY2xvbmUuYw0KPiArKysgYi9idWlsdGluL2Nsb25lLmMN
-Cj4gQEAgLTU1MSwxMiArNTUxLDEyIEBAIHN0YXRpYyB2b2lkIHVwZGF0ZV9yZW1vdGVfcmVmcyhj
-b25zdCBzdHJ1Y3QgcmVmICpyZWZzLA0KPiANCj4gIAlpZiAoY2hlY2tfY29ubmVjdGl2aXR5KSB7
-DQo+ICAJCWlmICgwIDw9IG9wdGlvbl92ZXJib3NpdHkpDQo+IC0JCQlwcmludGYoXygiQ2hlY2tp
-bmcgY29ubmVjdGl2aXR5Li4uICIpKTsNCj4gKwkJCWZwcmludGYoc3RkZXJyLCBfKCJDaGVja2lu
-ZyBjb25uZWN0aXZpdHkuLi4gIikpOw0KPiAgCQlpZiAoY2hlY2tfZXZlcnl0aGluZ19jb25uZWN0
-ZWRfd2l0aF90cmFuc3BvcnQoaXRlcmF0ZV9yZWZfbWFwLA0KPiAgCQkJCQkJCSAgICAgIDAsICZy
-bSwgdHJhbnNwb3J0KSkNCj4gIAkJCWRpZShfKCJyZW1vdGUgZGlkIG5vdCBzZW5kIGFsbCBuZWNl
-c3Nhcnkgb2JqZWN0cyIpKTsNCj4gIAkJaWYgKDAgPD0gb3B0aW9uX3ZlcmJvc2l0eSkNCj4gLQkJ
-CXByaW50ZihfKCJkb25lXG4iKSk7DQo+ICsJCQlmcHJpbnRmKHN0ZGVyciwgXygiZG9uZVxuIikp
-Ow0KPiAgCX0NCj4gDQo+ICAJaWYgKHJlZnMpIHsNCj4gLS0NCj4gMS44LjQucmM0LjE2LmcyMjgz
-OTRmDQo+IA0KPiAtLQ0KPiBUbyB1bnN1YnNjcmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUg
-bGluZSAidW5zdWJzY3JpYmUgZ2l0IiBpbg0KPiB0aGUgYm9keSBvZiBhIG1lc3NhZ2UgdG8gbWFq
-b3Jkb21vQHZnZXIua2VybmVsLm9yZw0KPiBNb3JlIG1ham9yZG9tbyBpbmZvIGF0ICBodHRwOi8v
-dmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZvLmh0bWwNCg0KVGhhbmtzIGZvciB0YWtpbmcg
-dGhlIHRpbWUgdG8gcHJvdmlkZSBhIHNvbHV0aW9uIHRvIHRoZSBwcm9ibGVtLg0KDQovL1BldGVy
-DQoNCg==
+On Thu, Sep 19, 2013 at 09:17:07AM +0200, Johannes Sixt wrote:
+
+> From: Johannes Sixt <j6t@kdbg.org>
+> 
+> Provide PRId64 alongside PRIuMAX.
+> 
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+
+Thanks. I had noticed this was the first use of PRId64, but I wasn't
+sure what various implementations would want.
+
+I notice that we also have a fallback PRIuMAX of "llu" in
+git-compat-util.h, but I'm not sure which platforms need that, nor what
+they would want for PRId64. By the explanation in 3efb1f3 and e326bce,
+it looks like the strategy was to just use a "long long" and hope for
+the best. So we might want:
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 9549de6..4438e7c 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -239,6 +239,10 @@ extern char *gitbasename(char *);
+ #define PRIuMAX "llu"
+ #endif
+ 
++#ifndef PRId64
++#define PRId64 "lld"
++#endif
++
+ #ifndef PRIu32
+ #define PRIu32 "u"
+ #endif
+
+as well, but I think I'd rather wait until somebody with an actual
+system that needs it reports in (and tells us what the right value for
+their system is) as opposed to just guessing.
+
+-Peff
