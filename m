@@ -1,403 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 2/2] perf-lib: add test_perf_cleanup target
-Date: Thu, 19 Sep 2013 12:52:50 -0700
-Message-ID: <xmqqtxhgsi5p.fsf@gitster.dls.corp.google.com>
+Date: Thu, 19 Sep 2013 13:11:51 -0700
+Message-ID: <xmqqpps4sha0.fsf@gitster.dls.corp.google.com>
 References: <1379419842-32627-1-git-send-email-t.gummerer@gmail.com>
 	<1379419842-32627-2-git-send-email-t.gummerer@gmail.com>
 	<xmqq7gefz6m0.fsf@gitster.dls.corp.google.com>
 	<87fvt1ghr4.fsf@gmail.com>
 	<xmqqk3icu3u8.fsf@gitster.dls.corp.google.com>
+	<xmqqtxhgsi5p.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, trast@inf.ethz.ch
 To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 19 21:53:03 2013
+X-From: git-owner@vger.kernel.org Thu Sep 19 22:11:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMkHc-0002Cy-Rl
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 21:53:01 +0200
+	id 1VMkZy-0000vH-8d
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 22:11:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752123Ab3ISTw5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 15:52:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62490 "EHLO
+	id S1753283Ab3ISULy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Sep 2013 16:11:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51009 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751988Ab3ISTw4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 15:52:56 -0400
+	id S1752774Ab3ISULx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 16:11:53 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C70543B5F;
-	Thu, 19 Sep 2013 19:52:55 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6300D431C7;
+	Thu, 19 Sep 2013 20:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gr+gFoajkp9J7M14sMRE0yWPi78=; b=kIuYPh
-	hjr5vxJxbdqoVuHQtlX6tc27icfXg27vjphYJfd7Xbk5i7NQOmJ1Nh0fRfsKQUsS
-	bxP2v3npy2VemcF4j6dId8mV9wQcUGOhEYCUx96csJEApNQQ6dWyI4v0YOClp0so
-	2IYD3Ot7ijegW7Of7Jc4kkYN/YonwGpYHa4CI=
+	:content-type; s=sasl; bh=whlUNeyNLbPFhhgAZIRs/XC9vVU=; b=L3wPxS
+	DDfif1Hw2CMW8XoaTiNfpgBpCf4/OSQiOU/WYXNeA+DEJ/v03wpg3manc0WKd1Cq
+	98IeCzABpseEbxStyg4vV8O5tLmY5aG+GIiTsr1fuNH2YC+ZIhQcvdxf1nWXUtmh
+	KBJIplA/4l6TxuISNMOyby/JrRRs23EahHVXU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YmR12nvG8FgeacVHFBSl2G4F38++69eY
-	gt0soqXCUUhOREgaxUwelIwcUYFpxpi3xMbh2EUEjwl3YCl74zRfffxN90DlkTvx
-	NRWMdYCSYr9QcsimqEulGq8ZgG7kHZOVH4XuJ+Xh0NuRW6/QTMhQfVGEQJTIOcxu
-	eIklnth5zN0=
+	:content-type; q=dns; s=sasl; b=fqBH50Vfsprvn84KrwHKr15Ek5Gk4Zl/
+	nO17beadv3CWsyOCPPwW5K3W062BBIcQoBfsXL4CeSgNmA8sczstjUmxnLi6Infd
+	QwRHwPK6dZUhA0cp8ux/wizFW5AU3FapFvx7nHgWMnulcPWLZ4qAJ2OUm3cjQo+h
+	BJokuXmv1rM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D8AF43B5E;
-	Thu, 19 Sep 2013 19:52:55 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5914F431C6;
+	Thu, 19 Sep 2013 20:11:53 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 90A8D43B57;
-	Thu, 19 Sep 2013 19:52:54 +0000 (UTC)
-In-Reply-To: <xmqqk3icu3u8.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 19 Sep 2013 10:19:11 -0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE116431C2;
+	Thu, 19 Sep 2013 20:11:52 +0000 (UTC)
+In-Reply-To: <xmqqtxhgsi5p.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 19 Sep 2013 12:52:50 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1308FAF6-2165-11E3-837E-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B9684B52-2167-11E3-A79F-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235029>
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> I wondered why this clean-up section cannot be an optional parameter
+> to test_perf, but that would not fly well because we won't know if
+> 3-arg form is with one prerequisite and no clean-up, or no prereq
+> with a clean-up, so perhaps adding a new function may be the best
+> you could do.
 >
->> When one performance test fails, the testing is aborted and the cleanup
->> commands are not executed anymore, leaving the trash directory in the
->> failed state.
->
-> Ah, that I overlooked. In that case, the comments in my previous
-> message do not apply.
+> But in the longer term, I think we would be better off ...
 
-Having said that, it was unclear to me why we would want a new
-test_perf_cleanup added.
+In any case, will queue your version as-is, at least for now.
 
-The name is misleading (does it define only clean-up actions?) to
-say the least, and one way of fixing it would be to call it
-test_perf_with_cleanup.
-
-I wondered why this clean-up section cannot be an optional parameter
-to test_perf, but that would not fly well because we won't know if
-3-arg form is with one prerequisite and no clean-up, or no prereq
-with a clean-up, so perhaps adding a new function may be the best
-you could do.
-
-But in the longer term, I think we would be better off to allow two
-styles (one traditional, another modern) and add new features only
-to the "modern" (aka "more easily extensible") form:
-
-	test_perf [PREREQ] BODY
-	test_perf [--prereq PREREQ] [--cleanup CLEANUP] ... BODY
-
-perhaps like this (this is without --cleanup but it should be
-obvious how to add a support for it to the command line parser).
-
-The patch to t0008 is primarily to adjust for test labels that begin
-with double-dashes that will be mistaken as a new-style option, but
-it is unnecessarily big because it uses random custom shell functions
-to hide the real calls to underlying test_expect_success X-<.
-
-
- t/test-lib-functions.sh | 72 ++++++++++++++++++++++++++++++++++++++-----------
- t/perf/perf-lib.sh      | 17 +++++-------
- t/t0008-ignores.sh      | 43 +++++++++++++++--------------
- 3 files changed, 87 insertions(+), 45 deletions(-)
-
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index a7e9aac..10202dc 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -342,20 +342,65 @@ test_declared_prereq () {
- 	return 1
- }
- 
-+test_expect_parse () {
-+	whoami=$1
-+	shift
-+	test_expect_new_style=
-+	while case $# in 0) false ;; esac
-+	do
-+		case "$1" in
-+		--prereq)
-+			test $# -gt 1 ||
-+			error "bug in the test script: --prereq needs a parameter"
-+			test_prereq=$2
-+			shift
-+			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		--*)
-+			error "bug in the test script: unknown option '$1'"
-+			;;
-+		*)
-+			break
-+			;;
-+		esac
-+		test_expect_new_style=yes
-+		shift
-+	done
-+
-+	# Traditional "test_expect_what [PREREQ] BODY"
-+	if test -z "$test_expect_new_style"
-+	then
-+		test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
-+	fi
-+
-+	if test $# != 2
-+	then
-+		if test -z "$test_expect_new_style"
-+		then
-+			error "bug in the test script: not 2 or 3 parameters to $whoami"
-+		else
-+			error "bug in the test script: not 2 parameters to $whoami"
-+		fi
-+	fi
-+	test_label=$1 test_body=$2
-+
-+	export test_prereq
-+}
-+
- test_expect_failure () {
- 	test_start_
--	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
--	test "$#" = 2 ||
--	error "bug in the test script: not 2 or 3 parameters to test-expect-failure"
--	export test_prereq
-+	test_expect_parse test_expect_failure "$@"
- 	if ! test_skip "$@"
- 	then
--		say >&3 "checking known breakage: $2"
--		if test_run_ "$2" expecting_failure
-+		say >&3 "checking known breakage: $test_body"
-+		if test_run_ "$test_body" expecting_failure
- 		then
--			test_known_broken_ok_ "$1"
-+			test_known_broken_ok_ "$test_label"
- 		else
--			test_known_broken_failure_ "$1"
-+			test_known_broken_failure_ "$test_label"
- 		fi
- 	fi
- 	test_finish_
-@@ -363,16 +408,13 @@ test_expect_failure () {
- 
- test_expect_success () {
- 	test_start_
--	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
--	test "$#" = 2 ||
--	error "bug in the test script: not 2 or 3 parameters to test-expect-success"
--	export test_prereq
-+	test_expect_parse test_expect_success "$@"
- 	if ! test_skip "$@"
- 	then
--		say >&3 "expecting success: $2"
--		if test_run_ "$2"
-+		say >&3 "expecting success: $test_body"
-+		if test_run_ "$test_body"
- 		then
--			test_ok_ "$1"
-+			test_ok_ "$test_label"
- 		else
- 			test_failure_ "$@"
- 		fi
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index f4eecaa..6477d38 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -151,23 +151,20 @@ exit $ret' >&3 2>&4
- 
- test_perf () {
- 	test_start_
--	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
--	test "$#" = 2 ||
--	error "bug in the test script: not 2 or 3 parameters to test-expect-success"
--	export test_prereq
-+	test_expect_parse test_perf "$@"
- 	if ! test_skip "$@"
- 	then
- 		base=$(basename "$0" .sh)
- 		echo "$test_count" >>"$perf_results_dir"/$base.subtests
--		echo "$1" >"$perf_results_dir"/$base.$test_count.descr
-+		echo "$test_label" >"$perf_results_dir"/$base.$test_count.descr
- 		if test -z "$verbose"; then
--			printf "%s" "perf $test_count - $1:"
-+			printf "%s" "perf $test_count - $test_label:"
- 		else
--			echo "perf $test_count - $1:"
-+			echo "perf $test_count - $test_label:"
- 		fi
- 		for i in $(test_seq 1 $GIT_PERF_REPEAT_COUNT); do
--			say >&3 "running: $2"
--			if test_run_perf_ "$2"
-+			say >&3 "running: $test_body"
-+			if test_run_perf_ "$test_body"
- 			then
- 				if test -z "$verbose"; then
- 					printf " %s" "$i"
-@@ -183,7 +180,7 @@ test_perf () {
- 		if test -z "$verbose"; then
- 			echo " ok"
- 		else
--			test_ok_ "$1"
-+			test_ok_ "$test_label"
- 		fi
- 		base="$perf_results_dir"/"$perf_results_prefix$(basename "$0" .sh)"."$test_count"
- 		"$TEST_DIRECTORY"/perf/min_time.perl test_time.* >"$base".times
-
-
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index 96f40fe..795de61 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -106,7 +106,7 @@ test_expect_success_multi () {
- 	expect_verbose=$( echo "$expect_all" | grep -v '^::	' )
- 	expect=$( echo "$expect_verbose" | sed -e 's/.*	//' )
- 
--	test_expect_success $prereq "$testname" '
-+	test_expect_success ${prereq:+--prereq $prereq} -- "$testname" '
- 		expect "$expect" &&
- 		eval "$code"
- 	'
-@@ -116,10 +116,11 @@ test_expect_success_multi () {
- 	then
- 		for quiet_opt in '-q' '--quiet'
- 		do
--			test_expect_success $prereq "$testname${quiet_opt:+ with $quiet_opt}" "
--			expect '' &&
--			$code
--		"
-+			test_expect_success ${prereq:+--prereq $prereq} -- \
-+				"$testname${quiet_opt:+ with $quiet_opt}" '
-+				expect "" &&
-+				eval "$code"
-+			'
- 		done
- 		quiet_opt=
- 	fi
-@@ -140,7 +141,9 @@ test_expect_success_multi () {
- 				$code
- 			"
- 			opts="$verbose_opt$non_matching_opt"
--			test_expect_success $prereq "$testname${opts:+ with $opts}" "$test_code"
-+
-+			test_expect_success ${prereq:+--prereq $prereq} -- \
-+				"$testname${opts:+ with $opts}" "$test_code"
- 		done
- 	done
- 	verbose_opt=
-@@ -225,7 +228,7 @@ test_expect_success '-q with multiple args' '
- 	stderr_contains "fatal: --quiet is only valid with a single pathname"
- '
- 
--test_expect_success '--quiet with multiple args' '
-+test_expect_success -- '--quiet with multiple args' '
- 	expect "" &&
- 	test_check_ignore "--quiet one two" 128 &&
- 	stderr_contains "fatal: --quiet is only valid with a single pathname"
-@@ -235,7 +238,7 @@ for verbose_opt in '-v' '--verbose'
- do
- 	for quiet_opt in '-q' '--quiet'
- 	do
--		test_expect_success "$quiet_opt $verbose_opt" "
-+		test_expect_success -- "$quiet_opt $verbose_opt" "
- 			expect '' &&
- 			test_check_ignore '$quiet_opt $verbose_opt foo' 128 &&
- 			stderr_contains 'fatal: cannot have both --quiet and --verbose'
-@@ -243,7 +246,7 @@ do
- 	done
- done
- 
--test_expect_success '--quiet with multiple args' '
-+test_expect_success -- '--quiet with multiple args' '
- 	expect "" &&
- 	test_check_ignore "--quiet one two" 128 &&
- 	stderr_contains "fatal: --quiet is only valid with a single pathname"
-@@ -559,34 +562,34 @@ sed -e 's/^"//' -e 's/\\//' -e 's/"$//' expected-default | \
- sed -e 's/	"/	/' -e 's/\\//' -e 's/"$//' expected-verbose | \
- 	tr ":\t\n" "\0" >expected-verbose0
- 
--test_expect_success '--stdin' '
-+test_expect_success -- '--stdin' '
- 	expect_from_stdin <expected-default &&
- 	test_check_ignore "--stdin" <stdin
- '
- 
--test_expect_success '--stdin -q' '
-+test_expect_success -- '--stdin -q' '
- 	expect "" &&
- 	test_check_ignore "-q --stdin" <stdin
- '
- 
--test_expect_success '--stdin -v' '
-+test_expect_success -- '--stdin -v' '
- 	expect_from_stdin <expected-verbose &&
- 	test_check_ignore "-v --stdin" <stdin
- '
- 
- for opts in '--stdin -z' '-z --stdin'
- do
--	test_expect_success "$opts" "
-+	test_expect_success -- "$opts" "
- 		expect_from_stdin <expected-default0 &&
- 		test_check_ignore '$opts' <stdin0
- 	"
- 
--	test_expect_success "$opts -q" "
-+	test_expect_success -- "$opts -q" "
- 		expect "" &&
- 		test_check_ignore '-q $opts' <stdin0
- 	"
- 
--	test_expect_success "$opts -v" "
-+	test_expect_success -- "$opts -v" "
- 		expect_from_stdin <expected-verbose0 &&
- 		test_check_ignore '-v $opts' <stdin0
- 	"
-@@ -645,7 +648,7 @@ sed -e 's/^"//' -e 's/\\//' -e 's/"$//' expected-default | \
- sed -e 's/	"/	/' -e 's/\\//' -e 's/"$//' expected-verbose | \
- 	tr ":\t\n" "\0" >expected-verbose0
- 
--test_expect_success '--stdin from subdirectory' '
-+test_expect_success -- '--stdin from subdirectory' '
- 	expect_from_stdin <expected-default &&
- 	(
- 		cd a &&
-@@ -653,7 +656,7 @@ test_expect_success '--stdin from subdirectory' '
- 	)
- '
- 
--test_expect_success '--stdin from subdirectory with -v' '
-+test_expect_success -- '--stdin from subdirectory with -v' '
- 	expect_from_stdin <expected-verbose &&
- 	(
- 		cd a &&
-@@ -661,7 +664,7 @@ test_expect_success '--stdin from subdirectory with -v' '
- 	)
- '
- 
--test_expect_success '--stdin from subdirectory with -v -n' '
-+test_expect_success -- '--stdin from subdirectory with -v -n' '
- 	expect_from_stdin <expected-all &&
- 	(
- 		cd a &&
-@@ -671,7 +674,7 @@ test_expect_success '--stdin from subdirectory with -v -n' '
- 
- for opts in '--stdin -z' '-z --stdin'
- do
--	test_expect_success "$opts from subdirectory" '
-+	test_expect_success -- "$opts from subdirectory" '
- 		expect_from_stdin <expected-default0 &&
- 		(
- 			cd a &&
-@@ -679,7 +682,7 @@ do
- 		)
- 	'
- 
--	test_expect_success "$opts from subdirectory with -v" '
-+	test_expect_success -- "$opts from subdirectory with -v" '
- 		expect_from_stdin <expected-verbose0 &&
- 		(
- 			cd a &&
+Thanks.
