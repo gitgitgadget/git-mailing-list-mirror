@@ -1,81 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Sep 2013, #05; Wed, 18)
-Date: Thu, 19 Sep 2013 11:10:39 -0700
-Message-ID: <xmqq7gecu1gg.fsf@gitster.dls.corp.google.com>
-References: <xmqqwqmdu6rg.fsf@gitster.dls.corp.google.com>
-	<vpqob7pt8tj.fsf@anie.imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] completion: improve untracked directory filtering for
+ filename completion
+Date: Thu, 19 Sep 2013 12:31:10 -0700
+Message-ID: <20130919193109.GA9464@google.com>
+References: <CADHXV5=ZVif6xppJgOXRKmqG9bBmAF0=A-sS9TUkH1RHSX9k6g@mail.gmail.com>
+ <1379523968-20668-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Patrick Welche <prlw1@cam.ac.uk>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Sep 19 20:10:48 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Isaac Levy <ilevy@google.com>, git@vger.kernel.org,
+	Manlio Perillo <manlio.perillo@gmail.com>
+To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Sep 19 21:31:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMigh-0000y2-SY
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 20:10:48 +0200
+	id 1VMjwn-0006mI-Ax
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 21:31:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752635Ab3ISSKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 14:10:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65218 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752018Ab3ISSKn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 14:10:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3981143E74;
-	Thu, 19 Sep 2013 18:10:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fdy9lWa3/aHaIdv9aSkeJoOHCS0=; b=yFTkl/
-	Mn0v5AyNnmctrn/bY9ToJ5ZJQqK8rCBdB6Uue79ovlqFjEikwdGoVzX7db+hyvXX
-	u7hSU4Hb9tt1RM58nkKMnryVF/qEIvaV24wPCSMC+mJl5y0KAqnL1TE0F+MK9GoD
-	LVsIZAogCqhS8Vn8gbMAE1fsR7mXF+DKYPAvY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aw4nP65fMufQyofqimbrcXZENvw5v6JA
-	SEkGhRxI79E2lFZA3nsey51/A1qs8oVoWWhiE19M7WTO8puVFZStlh7MZvKV6eSS
-	mITNEeSLE+VB94Ro7wI+WxoIU3uAnacOzLGsjaEqAv4L3Bmo4WMRWuGPnw2HWGEb
-	hgC1C+LjxYY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CB3B43E72;
-	Thu, 19 Sep 2013 18:10:43 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1CB0343E6F;
-	Thu, 19 Sep 2013 18:10:42 +0000 (UTC)
-In-Reply-To: <vpqob7pt8tj.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
-	19 Sep 2013 12:16:56 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CBCBA17E-2156-11E3-97DA-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752417Ab3ISTbS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Sep 2013 15:31:18 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:59732 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751822Ab3ISTbR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 15:31:17 -0400
+Received: by mail-pb0-f42.google.com with SMTP id un15so8825080pbc.1
+        for <git@vger.kernel.org>; Thu, 19 Sep 2013 12:31:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=jO/tBhfCU2Q2lDcOGVqRDvTfU2cYZ3JGkExUdfc9CGg=;
+        b=A5Bp37ZfbhRhAqitQII0FFYhjpvWaU9BdRQCara8jHPXDWFZj9cBFgzIuT1wSrsz0T
+         H5iE+TQs/pyn/wwEgv20VHYFb4A/UKjdeUSSUzH0AJv+iViuhvuA50tBsqRGYR5BQuZN
+         vzQHjnG7WJJDxUedTv6TMEhrehEzpC4AFeDJu9ZMxyJ0MKanOe5Q+8LjzVNil2FfcFe6
+         Os5dgOfYB5anaHG1V1XxDF4P/2TJ/9Jzc99DSI17znG8aHcKEmX5XhNxqF7oeheZS9Dw
+         07Nc2rGyfJgO7Khz61dZN2QYUsMXJ93P5vW9gW1Uv+837A4lR+nWgv3OsRZ1MoV08Qx0
+         CpcQ==
+X-Received: by 10.66.102.100 with SMTP id fn4mr4559492pab.71.1379619077055;
+        Thu, 19 Sep 2013 12:31:17 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id tz3sm10994699pbc.20.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 19 Sep 2013 12:31:16 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1379523968-20668-1-git-send-email-szeder@ira.uka.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235025>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+SZEDER G=E1bor wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+>   $ time __git_index_files "--others --modified"
+>   untracked-dir
 >
->> * mm/rebase-continue-freebsd-WB (2013-09-09) 1 commit
->>   (merged to 'next' on 2013-09-13 at 82e8b91)
->>  + rebase: fix run_specific_rebase's use of "return" on FreeBSD
->>
->>  Work around a bug in FreeBSD shell that caused a regression to "git
->>  rebase" in v1.8.4.  It would be lovely to hear from FreeBSD folks a
->>  success report 
+>   real	0m0.537s
+>   user	0m0.452s
+>   sys	0m0.160s
 >
-> We just did:
+> Eliminate this delay by additionally passing the '--directory
+> --no-empty-directory' options to 'git ls-files' to show only the
+> directory name of non-empty untracked directories instead their whole
+> content:
 >
->   http://thread.gmane.org/gmane.comp.version-control.git/234825/focus=234870
+>   $ time __git_index_files "--others --modified --directory --no-empt=
+y-directory"
+>   untracked-dir
+>
+>   real	0m0.029s
+>   user	0m0.020s
+>   sys	0m0.004s
 
-That only talks about "more" not showing colors.
+Nice.  This is what "git status" uses, too.
 
-    ... goes and looks ...
+> Filename completion for 'git clean' suffers from the same delay, as i=
+t
+> offers untracked files, too.  The fix could be the same, but since it
+> actually makes sense to 'git clean' empty directories, in this case w=
+e
+> only pass the '--directory' option to 'git ls-files'.
 
-Ah, there is another subthread that ends at 234833 that reports
-success; I am guessing from "pkgsrc" that this is either some
-variant of BSD or Solaris?
+Also sensible.
+
+=46or what it's worth,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
