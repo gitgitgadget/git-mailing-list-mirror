@@ -1,127 +1,128 @@
-From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: RE: git clone silently aborts if stdout gets a broken pipe
-Date: Thu, 19 Sep 2013 17:48:47 +0200
-Message-ID: <A612847CFE53224C91B23E3A5B48BAC798CDF1DC31@xmail3.se.axis.com>
-References: <A612847CFE53224C91B23E3A5B48BAC798CD91DB0B@xmail3.se.axis.com>
- <20130918184551.GC18821@sigill.intra.peff.net>
- <A612847CFE53224C91B23E3A5B48BAC798CD91DBA7@xmail3.se.axis.com>
- <20130919083530.GA12597@sigill.intra.peff.net>
+From: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+Subject: Re: git issue / [PATCH] MIPS: fix invalid symbolic link file
+Date: Thu, 19 Sep 2013 09:37:41 -0700
+Message-ID: <xmqqsix0u5re.fsf@gitster.dls.corp.google.com>
+References: <1379596148-32520-1-git-send-email-maddy@linux.vnet.ibm.com>
+	<20130919133920.GA22468@linux-mips.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 19 17:48:57 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Madhavan Srinivasan <maddy-23VcF4HTsmIX0ybBhKVfKdBPR1lH4CV8@public.gmane.org>,
+	Grant Likely <grant.likely-QSEj5FYQhm4dnm+yROfE0A@public.gmane.org>,
+	Rob Herring <rob.herring-bsGFqQB8/DxBDgjK7y7TUQ@public.gmane.org>,
+	devicetree-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
+	steven.hill-1AXoQHu6uovQT0dZR+AlfA@public.gmane.org, mmarek-AlSwsSmVLrQ@public.gmane.org, swarren-DDmLM1+adcrQT0dZR+AlfA@public.gmane.org,
+	linux-mips-6z/3iImG2C8G8FEW9MqTrA@public.gmane.org, linux-kbuild-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
+	james.hogan-1AXoQHu6uovQT0dZR+AlfA@public.gmane.org
+To: Ralf Baechle <ralf-6z/3iImG2C8G8FEW9MqTrA@public.gmane.org>
+X-From: devicetree-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org Thu Sep 19 18:37:49 2013
+Return-path: <devicetree-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+Envelope-to: gldd-devicetree-discuss-2-wOFGN7rlS/M9smdsby/KFg@public.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMgTQ-0001K7-7W
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 17:48:56 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753247Ab3ISPsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 11:48:52 -0400
-Received: from anubis.se.axis.com ([195.60.68.12]:60860 "EHLO
-	anubis.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752780Ab3ISPsv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 11:48:51 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by anubis.se.axis.com (Postfix) with ESMTP id 4B7BA19E31;
-	Thu, 19 Sep 2013 17:48:50 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at anubis.se.axis.com
-Received: from anubis.se.axis.com ([127.0.0.1])
-	by localhost (anubis.se.axis.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 5SWyF1zJsGZR; Thu, 19 Sep 2013 17:48:49 +0200 (CEST)
-Received: from boulder.se.axis.com (boulder.se.axis.com [10.0.2.104])
-	by anubis.se.axis.com (Postfix) with ESMTP id CDFB919E09;
-	Thu, 19 Sep 2013 17:48:48 +0200 (CEST)
-Received: from boulder.se.axis.com (localhost [127.0.0.1])
-	by postfix.imss71 (Postfix) with ESMTP id B78169F4;
-	Thu, 19 Sep 2013 17:48:48 +0200 (CEST)
-Received: from thoth.se.axis.com (thoth.se.axis.com [10.0.2.173])
-	by boulder.se.axis.com (Postfix) with ESMTP id AB5B9445;
-	Thu, 19 Sep 2013 17:48:48 +0200 (CEST)
-Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
-	by thoth.se.axis.com (Postfix) with ESMTP id A96BE3404E;
-	Thu, 19 Sep 2013 17:48:48 +0200 (CEST)
-Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
- ([10.0.5.75]) with mapi; Thu, 19 Sep 2013 17:48:48 +0200
-Thread-Topic: git clone silently aborts if stdout gets a broken pipe
-Thread-Index: Ac61Ez9rizqwyfW6RlWj/Dk+EV6kgAAO1ZjQ
-In-Reply-To: <20130919083530.GA12597@sigill.intra.peff.net>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, sv-SE
-Sender: git-owner@vger.kernel.org
+	(envelope-from <devicetree-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>)
+	id 1VMhEh-0001V3-Ga
+	for gldd-devicetree-discuss-2-wOFGN7rlS/M9smdsby/KFg@public.gmane.org; Thu, 19 Sep 2013 18:37:47 +0200
+Received: (majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org) by vger.kernel.org via listexpand
+	id S1751933Ab3ISQhq (ORCPT
+	<rfc822;gldd-devicetree-discuss-2@m.gmane.org>);
+	Thu, 19 Sep 2013 12:37:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39667 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751157Ab3ISQhp (ORCPT <rfc822;devicetree-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>);
+	Thu, 19 Sep 2013 12:37:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9642F42B53;
+	Thu, 19 Sep 2013 16:37:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AuHW/s+tAUyCoTXvCK6pvXSMNKI=; b=VtrFl2
+	1M3lSYfV0N9XMdNnr3AP8pXcp0N0gILzaE2YsvLZ2BM0vpK9xJECTm1jTPgrYpwI
+	w51KFeN0XUajb+SoDRdiQVvgdSemCt2w0vuaSEAzuHTaPAO8Wy7Ul8vKhs9nFMCr
+	1uUIRh1YZey82fnj2P26vXxv8Tteu2V6wbtmo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vQSBaCat86G2GvYT6Q6VVwSgvHkNSpoc
+	KiYHzoXMP5p77DieMfInR1e+1+hEgY2S+P2CqHIf1XONQqImE8+sWyhEZXn/cslu
+	3g4EN5ZyqPMQQGo8KahwTVeggrUNX+EEuEXjSb9QKuD2vmmtdpsHBYFIFKi7qFip
+	yCPpUhR3vf8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A0D642B52;
+	Thu, 19 Sep 2013 16:37:44 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D393C42B50;
+	Thu, 19 Sep 2013 16:37:43 +0000 (UTC)
+In-Reply-To: <20130919133920.GA22468-6z/3iImG2C8G8FEW9MqTrA@public.gmane.org> (Ralf Baechle's message
+	of "Thu, 19 Sep 2013 15:39:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CEF1B71A-2149-11E3-9DD3-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+Sender: devicetree-owner-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235018>
+List-ID: <devicetree.vger.kernel.org>
+X-Mailing-List: devicetree-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235019>
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBnaXQtb3duZXJAdmdlci5rZXJu
-ZWwub3JnIFttYWlsdG86Z2l0LW93bmVyQHZnZXIua2VybmVsLm9yZ10gT24NCj4gQmVoYWxmIE9m
-IEplZmYgS2luZw0KPiBTZW50OiBkZW4gMTkgc2VwdGVtYmVyIDIwMTMgMTA6MzYNCj4gVG86IFBl
-dGVyIEtqZWxsZXJzdGVkdA0KPiBDYzogSnVuaW8gQyBIYW1hbm87IE5ndXllbiBUaGFpIE5nb2Mg
-RHV5OyBnaXRAdmdlci5rZXJuZWwub3JnDQo+IFN1YmplY3Q6IFJlOiBnaXQgY2xvbmUgc2lsZW50
-bHkgYWJvcnRzIGlmIHN0ZG91dCBnZXRzIGEgYnJva2VuIHBpcGUNCj4gDQo+IE9uIFRodSwgU2Vw
-IDE5LCAyMDEzIGF0IDA5OjU0OjM4QU0gKzAyMDAsIFBldGVyIEtqZWxsZXJzdGVkdCB3cm90ZToN
-Cj4gDQo+ID4gPiBJIHRoaW5rIHlvdXIgcGVybCBzY3JpcHQgaXMgc29tZXdoYXQgcXVlc3Rpb25h
-YmxlLCBhcyBpdCBpcyBtYWtpbmcNCj4gPiA+IGFzc3VtcHRpb25zIGFib3V0IHRoZSBvdXRwdXQg
-b2YgZ2l0LWNsb25lLCBhbmQgeW91IHdvdWxkIGRvIGJldHRlcg0KPiB0bw0KPiA+ID4gYWNjZXB0
-IGFyYml0cmFyeS1zaXplZCBvdXRwdXQNCj4gPg0KPiA+IFdlbGwsIHRoZSB3aG9sZSBpZGVhIG9m
-IHVzaW5nIEdpdDo6Y29tbWFuZF9vbmVsaW5lKCkgaXMgdGhhdCB3ZQ0KPiA+IGFyZSBvbmx5IGlu
-dGVyZXN0ZWQgaW4gdGhlIGZpcnN0IGxpbmUgb2Ygb3V0cHV0LCBzaW1pbGFyIHRvIHVzaW5nDQo+
-ID4gInwgaGVhZCAtMSIuIElmIHdlIGhhZCB3YW50ZWQgYWxsIG9mIHRoZSBvdXRwdXQgd2Ugd291
-bGQgaGF2ZSB1c2VkDQo+ID4gR2l0Ojpjb21tYW5kKCkgaW5zdGVhZC4gU2luY2UgdGhlIEdpdCBQ
-ZXJsIG1vZHVsZSBpcyByZWxlYXNlZCBhcyBhDQo+ID4gcGFydCBvZiBHaXQsIEkgd291bGQgZXhw
-ZWN0IGl0IHRvIHdvcmsgYXMgZG9jdW1lbnRlZCByZWdhcmRsZXNzIG9mDQo+ID4gd2hpY2ggR2l0
-IGNvbW1hbmQgaXMgdXNlZCB3aXRoIEdpdDo6Y29tbWFuZF9vbmVsaW5lKCkuDQo+IA0KPiBJIHRo
-aW5rIGNvbW1hbmRfb25lbGluZSBpcyBleGFjdGx5IGxpa2UgInwgaGVhZCAtMSIgaW4gdGhpcyBj
-YXNlLiBEb2luZw0KPiAiZ2l0IGNsb25lIHwgaGVhZCAtMSIgd291bGQgYWxzbyBmYWlsLCBhbmQg
-c2hvdWxkIG5vdCBiZSB1c2VkLiBJbg0KPiBnZW5lcmFsLCB5b3UgZG8gbm90IHdhbnQgdG8gcHV0
-IGEgbGltaXRpbmcgcGlwZSBvbiBhIGNvbW1hbmQgd2l0aCBzaWRlDQo+IGVmZmVjdHMgYmV5b25k
-IG91dHB1dC4gVGhlIGRlc2lnbiBvZiB1bml4IHBpcGVzIGFuZCBTSUdQSVBFIGlzIHN1Y2ggdGhh
-dA0KPiB5b3UgY2FuIGRvICJnZW5lcmF0ZV9vdXRwdXQgfCBoZWFkIiwgYW5kICJnZW5lcmF0ZV9v
-dXRwdXQiIHdpbGwgZ2V0DQo+IFNJR1BJUEUgYW5kIGRpZSBhZnRlciByZWFsaXppbmcgdGhhdCBp
-dHMgd3JpdGVyIG5vIGxvbmdlciBjYXJlcyBhYm91dA0KPiB0aGUgb3V0cHV0LiBCdXQgaWYgeW91
-ciBjb21tYW5kIGlzIGRvaW5nIHNvbWV0aGluZyBiZXNpZGVzIG91dHB1dCwgdGhhdA0KPiBhc3N1
-bXB0aW9uIGRvZXNuJ3QgaG9sZC4NCg0KQSB2ZXJ5IHZhbGlkIHBvaW50Lg0KDQo+IEFyZ3VhYmx5
-LCAiZ2l0IGNsb25lIiBzaG91bGQgYmUgdGFraW5nIHRoZSBpbml0aWF0aXZlIHRvIGlnbm9yZSBT
-SUdQSVBFDQo+IGl0c2VsZi4gIEl0cyBwcmltYXJ5IGZ1bmN0aW9uIGlzIG5vdCBvdXRwdXQsIGJ1
-dCBkb2luZyB0aGUgY2xvbmUuIElmDQo+IG91dHB1dCBmYWlscywgd2Ugd291bGQgd2FudCB0byBj
-b250aW51ZSB0aGUgY2xvbmUsIG5vdCBkaWUuDQo+IA0KPiBCeSB0aGUgd2F5LCBkaWQgeW91IGFj
-dHVhbGx5IHdhbnQgdG8gY2FwdHVyZSB0aGUgc3Rkb3V0IG9mIGdpdC1jbG9uZSwgb3INCj4gd2Vy
-ZSB5b3UganVzdCB0cnlpbmcgdG8gc3VwcHJlc3MgaXQ/IEJlY2F1c2UgdGhlIGV2ZW50dWFsIHBh
-dGNoIEkgcG9zdGVkDQo+IHNlbmRzIGl0IHRvIHN0ZGVyciwgdW5kZXIgdGhlIGFzc3VtcHRpb24g
-dGhhdCB3aGF0IHVzZWQgdG8gZ28gdG8gc3Rkb3V0DQo+IHNob3VsZCBub3QgYmUgY2FwdHVyZWQg
-YW5kIHBhcnNlZCAoYmVjYXVzZSBpdCBpcyBsb2NhbGl6ZWQgYW5kIHN1YmplY3QNCj4gdG8gY2hh
-bmdlKS4NCg0KTm8sIHdlIHdlcmUgbm90IHJlYWxseSBpbnRlcmVzdGVkIGluIHRoZSBvdXRwdXQg
-dG8gc3Rkb3V0ICh3aGljaCBpcyANCndoeSB0aGUgcmV0dXJuIHZhbHVlIGZyb20gR2l0Ojpjb21t
-YW5kX29uZWxpbmUoKSB3YXMgaWdub3JlZCkuDQoNCj4gPiBIb3dldmVyLCB3aGF0IHN1cnByaXNl
-ZCBtZSBtb3N0IHdhcyB0aGF0IGdpdCBjbG9uZSBmYWlsZWQgc2lsZW50bHkNCj4gPiB3aGVuIGl0
-IGdvdCBhIGJyb2tlbiBwaXBlLg0KPiANCj4gSXQncyBub3QgImdpdCBjbG9uZSIgdGhhdCBpcyBk
-b2luZyB0aGlzLCBJIHRoaW5rLCBidXQgcmF0aGVyIHRoZSBkZXNpZ24NCj4gb2YgY29tbWFuZF9v
-bmVsaW5lLiBJZiBJIGRvOg0KPiANCj4gICAoc2xlZXAgMTsgZ2l0IGNsb25lIC4uLjsgZWNobyA+
-JjIgZXhpdD0kPykgfCBmYWxzZQ0KPiANCj4gdGhlbiBJIHNlZToNCj4gDQo+ICAgZXhpdD0xNDEN
-Cj4gDQo+IFRoYXQgaXMsIGNsb25lIGRpZXMgZnJvbSBTSUdQSVBFIHRyeWluZyB0byB3cml0ZSAi
-Q2xvbmluZyBpbnRvLi4uIi4gQnV0DQo+IGNvbW1hbmRfb25lbGluZSBpcyBzcGVjaWZpY2FsbHkg
-ZGVzaWduZWQgdG8gaWdub3JlIFNJR1BJUEUgZGVhdGgsDQo+IGJlY2F1c2UgeW91IHdvdWxkIHdh
-bnQgc29tZXRoaW5nIGxpa2U6DQo+IA0KPiAgIGNvbW1hbmRfb25lbGluZSgiZ2l0IiwgInJldi1s
-aXN0IiwgIiRBLi4kQiIpOw0KPiANCj4gdG8gZ2l2ZSB5b3UgdGhlIGZpcnN0IGxpbmUsIGFuZCB0
-aGVuIHlvdSBkbyBub3QgY2FyZSBpZiB0aGUgcmVzdCBvZiB0aGUNCj4gcmV2LWxpc3QgZGllcyBk
-dWUgdG8gU0lHUElQRSAoaXQgaXMgYSBnb29kIHRoaW5nLCBiZWNhdXNlIGJ5IGNsb3NpbmcgdGhl
-DQo+IHBpcGUgeW91IGFyZSB0ZWxsaW5nIGl0IHRoYXQgaXRzIG91dHB1dCBpcyBub3QgbmVlZGVk
-KS4gSXQgbWF5IGJlIHRoYXQNCj4gdGhlIGRvY3VtZW50YXRpb24gZm9yIGNvbW1hbmRfb25lbGlu
-ZSBjYW4gYmUgaW1wcm92ZWQgdG8gbWVudGlvbiB0aGlzDQo+IHN1YnRsZXR5Lg0KDQpPaywgYWxs
-IG9mIGl0IG1ha2VzIHNlbnNlIG5vdy4gVGhhbmsgeW91IGZvciB0aGUgZXhwbGFuYXRpb24uDQpJ
-IGhhdmUgY29ycmVjdGVkIG91ciBzY3JpcHQgc28gaXQgbm93IHdvcmtzIGNvcnJlY3RseSB3aXRo
-IA0KZ2l0IDEuOC40IGFzIHdlbGwuDQoNCj4gLVBlZmYNCj4gLS0NCj4gVG8gdW5zdWJzY3JpYmUg
-ZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGdpdCIgaW4NCj4gdGhl
-IGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcNCj4gTW9yZSBt
-YWpvcmRvbW8gaW5mbyBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5o
-dG1sDQoNCi8vUGV0ZXINCg0K
+Ralf Baechle <ralf-6z/3iImG2C8G8FEW9MqTrA@public.gmane.org> writes:
+
+>> diff --git a/arch/mips/boot/dts/include/dt-bindings b/arch/mips/boot/dts/include/dt-bindings
+>> index 68ae388..08c00e4 120000
+>> --- a/arch/mips/boot/dts/include/dt-bindings
+>> +++ b/arch/mips/boot/dts/include/dt-bindings
+>> @@ -1 +1 @@
+>> -../../../../../include/dt-bindings
+>> +../../../../../include/dt-bindings
+>> \ No newline at end of file
+>> -- 
+>> 1.7.10.4
+>
+> I applied your patch - but now git-show shows it as an empty commit and
+>
+>   ls -lb arch/mips/boot/dts/include/dt-bindings
+>
+> still shows the \n at the end of the link target.
+> ...
+> So, I wonder if this is a git bug.
+
+Sounds as if "git am" is losing the important bit of information
+that new content ends with an incomplete line.
+
+However, it does not reproduce for me.
+
+    $ rm -fr /var/tmp/x && mkdir /var/tmp/x && cd /var/tmp/x
+    $ git init
+    $ ln -s 'a
+    ' b
+    $ git add b
+    $ git commit -m initial
+    $ ln -f -s a b
+    $ git add b
+    $ git commit -m fix
+    $ git format-patch -1
+    $ git checkout HEAD^
+    $ git am 0001-*
+    $ git diff HEAD^ HEAD
+    diff --git a/b b/b
+    index 7898192..2e65efe 120000
+    --- a/b
+    +++ b/b
+    @@ -1 +1 @@
+    -a
+    +a
+    \ No newline at end of file
+
+I see the same with v1.7.10 (which may not match your version;
+v1.7.10.4 is what was used by the patch submitter to prepare the
+patch, and you did not say how you are applying the patches in your
+message) and with more recent Git.  There is no such breakage.
+
+I briefly suspected that you might be passing "--whitespace=fix" to
+"am" and that may be incorrectly "fixing" the incomplete line, but
+that is not the case.  I get the same result if I add the option to
+"am" in the above transcript.
+
+How are you applying the patch?  What is your Git version?
+--
+To unsubscribe from this list: send the line "unsubscribe devicetree" in
+the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
