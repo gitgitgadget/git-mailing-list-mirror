@@ -1,75 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] perf-lib: add test_perf_cleanup target
-Date: Thu, 19 Sep 2013 13:11:51 -0700
-Message-ID: <xmqqpps4sha0.fsf@gitster.dls.corp.google.com>
-References: <1379419842-32627-1-git-send-email-t.gummerer@gmail.com>
-	<1379419842-32627-2-git-send-email-t.gummerer@gmail.com>
-	<xmqq7gefz6m0.fsf@gitster.dls.corp.google.com>
-	<87fvt1ghr4.fsf@gmail.com>
-	<xmqqk3icu3u8.fsf@gitster.dls.corp.google.com>
-	<xmqqtxhgsi5p.fsf@gitster.dls.corp.google.com>
+From: Stephen Warren <swarren@wwwdotorg.org>
+Subject: Re: git issue / [PATCH] MIPS: fix invalid symbolic link file
+Date: Thu, 19 Sep 2013 14:36:47 -0600
+Message-ID: <523B605F.8090402@wwwdotorg.org>
+References: <1379596148-32520-1-git-send-email-maddy@linux.vnet.ibm.com> <20130919133920.GA22468@linux-mips.org> <523B555E.2070508@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@inf.ethz.ch
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 19 22:11:59 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Ralf Baechle <ralf@linux-mips.org>,
+	Madhavan Srinivasan <maddy@linux.vnet.ibm.com>,
+	Grant Likely <grant.likely@linaro.org>,
+	Rob Herring <rob.herring@calxeda.com>,
+	devicetree@vger.kernel.org, git@vger.kernel.org,
+	steven.hill@imgtec.com, mmarek@suse.cz, swarren@nvidia.com,
+	linux-mips@linux-mips.org, linux-kbuild@vger.kernel.org,
+	james.hogan@imgtec.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: linux-kbuild-owner@vger.kernel.org Thu Sep 19 22:36:56 2013
+Return-path: <linux-kbuild-owner@vger.kernel.org>
+Envelope-to: glkd-linux-kbuild@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMkZy-0000vH-8d
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 22:11:58 +0200
+	(envelope-from <linux-kbuild-owner@vger.kernel.org>)
+	id 1VMky7-0005mB-2F
+	for glkd-linux-kbuild@plane.gmane.org; Thu, 19 Sep 2013 22:36:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753283Ab3ISULy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 16:11:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51009 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752774Ab3ISULx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 16:11:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6300D431C7;
-	Thu, 19 Sep 2013 20:11:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=whlUNeyNLbPFhhgAZIRs/XC9vVU=; b=L3wPxS
-	DDfif1Hw2CMW8XoaTiNfpgBpCf4/OSQiOU/WYXNeA+DEJ/v03wpg3manc0WKd1Cq
-	98IeCzABpseEbxStyg4vV8O5tLmY5aG+GIiTsr1fuNH2YC+ZIhQcvdxf1nWXUtmh
-	KBJIplA/4l6TxuISNMOyby/JrRRs23EahHVXU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fqBH50Vfsprvn84KrwHKr15Ek5Gk4Zl/
-	nO17beadv3CWsyOCPPwW5K3W062BBIcQoBfsXL4CeSgNmA8sczstjUmxnLi6Infd
-	QwRHwPK6dZUhA0cp8ux/wizFW5AU3FapFvx7nHgWMnulcPWLZ4qAJ2OUm3cjQo+h
-	BJokuXmv1rM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5914F431C6;
-	Thu, 19 Sep 2013 20:11:53 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1752099Ab3ISUgx (ORCPT <rfc822;glkd-linux-kbuild@m.gmane.org>);
+	Thu, 19 Sep 2013 16:36:53 -0400
+Received: from avon.wwwdotorg.org ([70.85.31.133]:33476 "EHLO
+	avon.wwwdotorg.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751797Ab3ISUgx (ORCPT
+	<rfc822;linux-kbuild@vger.kernel.org>);
+	Thu, 19 Sep 2013 16:36:53 -0400
+Received: from severn.wwwdotorg.org (unknown [192.168.65.5])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE116431C2;
-	Thu, 19 Sep 2013 20:11:52 +0000 (UTC)
-In-Reply-To: <xmqqtxhgsi5p.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 19 Sep 2013 12:52:50 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B9684B52-2167-11E3-A79F-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+	by avon.wwwdotorg.org (Postfix) with ESMTPS id 25BE52200C;
+	Thu, 19 Sep 2013 14:36:52 -0600 (MDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by severn.wwwdotorg.org (Postfix) with ESMTPSA id 3BDEEE461B;
+	Thu, 19 Sep 2013 14:36:49 -0600 (MDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130803 Thunderbird/17.0.8
+In-Reply-To: <523B555E.2070508@kdbg.org>
+X-Enigmail-Version: 1.4.6
+X-Virus-Scanned: clamav-milter 0.97.8 at avon.wwwdotorg.org
+X-Virus-Status: Clean
+Sender: linux-kbuild-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235029>
+List-ID: <linux-kbuild.vger.kernel.org>
+X-Mailing-List: linux-kbuild@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235030>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 09/19/2013 01:49 PM, Johannes Sixt wrote:
+> Am 19.09.2013 15:39, schrieb Ralf Baechle:
+>> The original patch that introduced the symlink with the \n is kernel
+>> commit 3b29aa5ba204c62b3ec8f9f5b1ebd6e5d74f75d3 and is archived in
+>> patchwork at http://patchwork.linux-mips.org/patch/5745/  The patch
+>> file contains a \n at the end - but one would expect that from a
+>> patch file that has been transfered via email, so I'm not sure how this
+>> is supposed to work with emailed patches?!?
+> 
+> The mbox file I downloaded from this link looks like this:
+...
+> but it should look like this:
+...
+> Whoever or whatever moved the '\ No newline at end of file' line above
+> the patch text is to blame.
 
-> I wondered why this clean-up section cannot be an optional parameter
-> to test_perf, but that would not fly well because we won't know if
-> 3-arg form is with one prerequisite and no clean-up, or no prereq
-> with a clean-up, so perhaps adding a new function may be the best
-> you could do.
->
-> But in the longer term, I think we would be better off ...
-
-In any case, will queue your version as-is, at least for now.
-
-Thanks.
+That sounds like a patchwork problem; the original copy of the message I
+received looks correct.
