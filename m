@@ -1,94 +1,97 @@
-From: r.ductor@gmail.com
-Subject: On the behavior of checkout <branch> with uncommitted local changes
-Date: Thu, 19 Sep 2013 02:23:11 -0700 (PDT)
-Message-ID: <8904036.vOg3y5OkbU@ipht-ia-004976>
+From: Martin Gregory <marting@adelaideinterim.com.au>
+Subject: re[2]: sparse checkout file with windows line endings doesn't work
+Date: Thu, 19 Sep 2013 18:51:41 +0930
+Organization: AI
+Message-ID: <SDZWVEJZSSNSWDRKPVQvMTg5ODc3NzY1@IBMLT4>
+References: <CACsJy8CRoZYWExHMjwG3ZOv=eJ9irq_mM_bM78ss_DssSq7szw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 19 11:23:18 2013
+Content-Type: multipart/mixed; boundary="nqp=nb64=()OE2pTZ86C"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>,
+	Martin Gregory <marting@adelaideinterim.com.au>
+X-From: git-owner@vger.kernel.org Thu Sep 19 11:24:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMaSE-0001SN-1U
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 11:23:18 +0200
+	id 1VMaTd-0004Z2-AV
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Sep 2013 11:24:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752434Ab3ISJXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 05:23:14 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:42869 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752050Ab3ISJXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 05:23:13 -0400
-Received: by mail-wi0-f173.google.com with SMTP id hq15so7635861wib.12
-        for <git@vger.kernel.org>; Thu, 19 Sep 2013 02:23:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding:content-type;
-        bh=B1UN6oyQWWKPTgKliU3UaQsBcuEY226aL/ZEYQXSNb0=;
-        b=Ykg8UBaQAqXOmettw9FUPPw5/SgcGaKv/E8yDKJNmpTpvpV0HEk0WBuY9+8cMSvQ6e
-         duLgEvJ3cgwVlj1ar5u/ey1+2U1Pvn50llRUzXG0rveHJeEgVnbYQD3wXc8ISfO1scwZ
-         XPd4gwPPPmK6Zan3qBXN/RIp0K6q9wSvGXI4SRnXEbNEb0iIRW5au8+SEZ1vRUgPhEoI
-         I/xmf5QV3NS0oev1wBMrqLn2OKFQsWPJ38QnRw11zgGlfpqJqnKfjpynUH4Ow8xYgfQG
-         Ts0yOVc99cBbeuQBt07iyX5/y2iwFDmAHW9HhwUUaFGX0+aWLhbH8Wna9pZxIlWZXS9u
-         h7wQ==
-X-Received: by 10.180.212.41 with SMTP id nh9mr10818594wic.9.1379582592102;
-        Thu, 19 Sep 2013 02:23:12 -0700 (PDT)
-Received: from ipht-ia-004976.localnet (ipht-ia-004976.extra.cea.fr. [132.166.22.90])
-        by mx.google.com with ESMTPSA id ey4sm8215066wic.11.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 19 Sep 2013 02:23:11 -0700 (PDT)
-User-Agent: KMail/4.10.5 (Linux/3.10-2-amd64; KDE/4.10.5; x86_64; ; )
+	id S1752024Ab3ISJYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Sep 2013 05:24:38 -0400
+Received: from mail-pb0-f47.google.com ([209.85.160.47]:64225 "EHLO
+	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751903Ab3ISJYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 05:24:38 -0400
+Received: by mail-pb0-f47.google.com with SMTP id rr4so8163822pbb.34
+        for <git@vger.kernel.org>; Thu, 19 Sep 2013 02:24:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:subject:to:cc:message-id:in-reply-to
+         :mime-version:organization:content-type;
+        bh=Tp/fDgiWrDFbMW8uJt+HwUqBxifDwFp2b58u9yoeDIQ=;
+        b=QnJJhx8Mbbyn0/Kzbd3b67jvEIDL9Jpl0rhh2gfdTpkaljDqhfrF7aP079IfF0ShLK
+         PrcB7zbi6OFwvp1G1n9jBUMjdRWwcTak3OzZ+GQJe5IL+S0EmBTOaE+zlKk4zEcdF3wq
+         X10NeNVagOirBaelo8MmEm8sYniel5sc6f20+NcVdlWLb8hps+RkJhAbU13CuLS7YknH
+         MLK+sM5GQPIHz/qftDenBARAuMSRClGx6NbdlTyzoKsOh8GOXmnlNo98qOha1w4a3Qym
+         Ttx3f7LPCndHXhGE6hgI19Dl4+MbaFbv4tyxqeXvv8+nDX8Dxi5WBuxMzhm/7SrP7O4m
+         bq2Q==
+X-Gm-Message-State: ALoCoQnt/cZhfc9S21/FERZt0Z2WJ8Oi0pBUtopomiaroiuHG/EEu8AKNRCieicsnOe1Q6r8zab5
+X-Received: by 10.68.6.232 with SMTP id e8mr687836pba.132.1379582677425;
+        Thu, 19 Sep 2013 02:24:37 -0700 (PDT)
+Received: from IBMLT4 ([1.124.254.166])
+        by mx.google.com with ESMTPSA id t2sm7403585pbi.7.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 19 Sep 2013 02:24:36 -0700 (PDT)
+In-Reply-To: <CACsJy8CRoZYWExHMjwG3ZOv=eJ9irq_mM_bM78ss_DssSq7szw@mail.gmail.com>
+X-Mailer: GoldMine [9.2.1.92]
+X-GM-Attachments-Sync-Time: 20130919185427
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235009>
 
-Dear all
+--nqp=nb64=()OE2pTZ86C
+Content-Type: text/plain
 
-I'm not a power git user but I profit of git every day and I like to fully understand what I do.
+Hi Duy,
 
-The man section for git checkout is too vague for my taste. In particular it is not clearly (unambiguously) stated what happens to index and worktree whenever local uncommitted changes are around. I've already rised a similar problem in this mail list [1], but I understand that a man page must be concise.
+>>  And it does work for me with CRLF endings (again tested on Linux). Can
+>>  you send me your sparse-checkout file? Zip it if needed.
 
-On the other hand, I couldn't find any complete information on this behavior: tutorials and books seem to avoid the problem, user posts seems confused ... 
+sparse-checkout created with
 
-To grasp some more information,  I've spent some hours in trials (sorry I'm unable to grasp information browsing the code repository). That resulted in the algorithm below presented.
+echo /CONFIGURATION > .git\info\sparse-checkout
 
-Could anybody authoritative on that subject confirm/correct/discharge my statement? That could be of help for me and may others.
+on Windows.
 
-Nonetheless to say having this kind of pseudocodes available somewhere (e.g. for stash [2] and other tools modifing index and working tree) would make my git experience  (and that of many more people) happier.
+Attached file created with
 
-Thanks to all developers for their efforts.
+tar cvzf sparsecheckout.tar.gz .git/info/sparse-checkout
 
-Regards
-ric
+in gitbash shell on Windows.
 
+Regards,
 
-Notations: let us fix a file and denote
-C0  = its version in the initial commit
-I0   = its version in the initial index
-W0 = its version in the working tree
-C1 = its version in the target commit
-W1= its version in working tree after checkout completed
-I1  = its version in index after checkout completed
+Martin
 
 
-git checkout Branch
+--
+Martin Gregory
+Senior Consultant, Adelaide Interim
+P:   +61 8 7200 5350
+M:   +61 402 410 971
+F:   +61 8 7200 3725
+--nqp=nb64=()OE2pTZ86C
+Content-Type: application/octet-stream; name="sparsecheckout.tar.gz"
+Content-Disposition: attachment; filename="sparsecheckout.tar.gz"
+Content-Transfer-Encoding: base64
 
-if C0=W0=I0,          then: W1=I1=C1;
-if C1=I0,                 then: W1=W0 and I1=C1=I0;
-if C1=C0,                then: W1=W0 and I1=I0;
-otherwise: abort
+H4sIAAAAAAAAC+3OwQqCQBSF4VkHvYMvUM6IjmsJEhcpRD2AmNUQacyM75+4F1qIbf6PC4cD
+d3H2D+ND09370H1q69pd82ybVz94sRw50nE8ZaqnVDKWU59ESqgoUjqJZaK1kCodTwRywQ2z
+BudrGwTiVFtvunz2L7u9TWect7XvrVtj2SrCQ1Uei/x6zi5FVQbbzb8HAQAAAAAAAAAAAAAA
+AAB+8gWfttSrACgAAC==
 
-
-Note: in particular, if W0=I0 !=C0 then (in general) abort
-
-Note: in particular, if C0=I0 and C1=W0 then abort  (...actually why that? no information is lost)
-
-
-REFS
-[1]http://thread.gmane.org/gmane.linux.debian.devel.bugs.general/782914/focus=164647
-[2]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=717088
+--nqp=nb64=()OE2pTZ86C--
