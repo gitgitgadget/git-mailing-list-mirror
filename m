@@ -1,258 +1,68 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] diff: add a config option to control orderfile
-Date: Fri, 20 Sep 2013 00:32:26 +0300
-Message-ID: <20130919213226.GA21291@redhat.com>
-References: <xmqq8uyv1kka.fsf@gitster.dls.corp.google.com>
- <20130917164226.GB20672@redhat.com>
- <xmqqfvt3z7i4.fsf@gitster.dls.corp.google.com>
- <20130917172829.GA21121@redhat.com>
- <xmqq38p3z5kg.fsf@gitster.dls.corp.google.com>
- <20130917201401.GA22000@redhat.com>
- <20130917201604.GA22008@redhat.com>
- <20130917201828.GC16860@sigill.intra.peff.net>
- <20130917203807.GA22059@redhat.com>
- <20130917205615.GA20178@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bisect needing to be at repo top-level?
+Date: Thu, 19 Sep 2013 16:04:31 -0700
+Message-ID: <xmqqpps4qups.fsf@gitster.dls.corp.google.com>
+References: <CAJTo0LZ=bNNUc8O=bDDOp2vudsc_wL+-nqsXW5r1rq3H7M0e7Q@mail.gmail.com>
+	<xmqqbo3rz7ca.fsf@gitster.dls.corp.google.com>
+	<20130917175813.GA14173@blizzard>
+	<xmqqioxzxnjh.fsf@gitster.dls.corp.google.com>
+	<523AF8EA.6080307@optusnet.com.au> <523B7EB9.9050809@optusnet.com.au>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 20 01:03:22 2013
+Cc: Lukas Fleischer <git@cryptocrack.de>,
+	"Burton\, Ross" <ross.burton@intel.com>, git@vger.kernel.org
+To: Ben Aveling <bena.001@optusnet.com.au>
+X-From: git-owner@vger.kernel.org Fri Sep 20 01:04:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMnFl-0002sA-Ty
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Sep 2013 01:03:18 +0200
+	id 1VMnH4-0005p1-TQ
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Sep 2013 01:04:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754253Ab3ISXDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 19:03:14 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:36793 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752386Ab3ISXDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 19:03:13 -0400
-Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r8JMJsvn002891
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Thu, 19 Sep 2013 18:19:55 -0400
-Received: from redhat.com (vpn1-6-18.ams2.redhat.com [10.36.6.18])
-	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id r8JLUCrE017666;
-	Thu, 19 Sep 2013 17:30:12 -0400
-Content-Disposition: inline
-In-Reply-To: <20130917205615.GA20178@sigill.intra.peff.net>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
+	id S1754282Ab3ISXEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Sep 2013 19:04:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54783 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754214Ab3ISXEe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 19:04:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 213B643EAC;
+	Thu, 19 Sep 2013 23:04:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nrpfl+BYeu/praoDXb/kG4fcpCw=; b=lfozqc
+	qO8DMVsuLfIMcZ7/zJ3ANDA0/dcmLUE0nsyciaBVqwjz4OHz9a3T5HXVaKkJV8Ak
+	YYAYF0FORKoFtGcvM4BQ5/oRcGbsFTM+cvgnESoob8x0Axd5ZNK8oo4OW8EOzkB3
+	HgkPkt3zZHyq6NhmIBEnhDC5nRNUZszV5/dEo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f/jkIVJzggVX5i/I1+5aMD+aNKsE9fgL
+	MMfXv9m2GO1hSSb8jlpDEOCWhREo73me9XiAC+ahBN3a4OXc0sQiHqjELRsltskS
+	1+ogJl0jLYL/Oi7eQmf1iBu5cjCg3ZKOHcnEuhRvgQCC8TtVKIhhtYzEOQAEgDhQ
+	ZuOLGSw0QkI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 134EE43EAB;
+	Thu, 19 Sep 2013 23:04:34 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 735D443EA3;
+	Thu, 19 Sep 2013 23:04:33 +0000 (UTC)
+In-Reply-To: <523B7EB9.9050809@optusnet.com.au> (Ben Aveling's message of
+	"Fri, 20 Sep 2013 08:46:17 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D8E6F8DA-217F-11E3-BB10-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235039>
 
-On Tue, Sep 17, 2013 at 04:56:16PM -0400, Jeff King wrote:
-> On Tue, Sep 17, 2013 at 11:38:07PM +0300, Michael S. Tsirkin wrote:
-> 
-> > > A problem with both schemes, though, is that they are not
-> > > backwards-compatible with existing git-patch-id implementations.
-> > 
-> > Could you clarify?
-> > We never send patch IDs on the wire - how isn't this compatible?
-> 
-> I meant that you might be comparing patch-ids generated by different
-> implementations, or across time. There are no dedicated tools to do so,
-> but it is very easy to do so with standard tools like "join".
-> 
-> For example, you can do:
-> 
->   patch_ids() {
->     git rev-list "$1" |
->     git diff-tree --stdin -p |
->     git patch-id |
->     sort
->   }
-> 
->   patch_ids origin..topic1 >us
->   patch_ids origin..topic2 >them
-> 
->   join us them | cut -d' ' -f2-3
-> 
-> to get a list of correlated commits between two branches. If the "them"
-> was on another machine with a different implementation (or is saved from
-> an earlier time), your patch-ids would not match.
-> 
-> It may be esoteric enough not to worry about, though. By far the most
-> common use of patch-ids is going to be in a single "rev-list
-> --cherry-pick" situation where you are trying to omit commits during
-> a rebase.
-> 
-> I am mostly thinking of the problems we had with the "kup" tool, which
-> expected stability across diffs that would be signed by both kernel.org.
-> But as far as I know, they do not use patch-id. More details in case you
-> are curious (including me arguing that we should not care, and it is
-> kup's problem!) are here:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/192331/focus=192424
-> 
-> rerere is mentioned in that thread, but I believe that it does its own
-> hash, and does not rely on patch-id.
-> 
-> -Peff
+Ben Aveling <bena.001@optusnet.com.au> writes:
 
-OK so far I came up with the following.
-Needs documentation and tests obviously.
-But besides that -
-would something like this be enough to address the
-issue Junio raised?
+> Probably also worth pointing out that whether or not the current shell
+> is at toplevel, there can be other processes active in subdirectories.
 
---->
-
-patch-id: make it more stable
-
-Add a new patch-id algorithm making it stable against
-hunk reodering:
-	- prepend header to each hunk (if not there)
-	- calculate SHA1 hash for each hunk separately
-	- sum all hashes to get patch id
-
-Add --order-sensitive to get historical unstable behaviour.
-
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- builtin/patch-id.c | 65 +++++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 50 insertions(+), 15 deletions(-)
-
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 3cfe02d..d1902ff 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -1,17 +1,14 @@
- #include "builtin.h"
- 
--static void flush_current_id(int patchlen, unsigned char *id, git_SHA_CTX *c)
-+static void flush_current_id(int patchlen, unsigned char *id, unsigned char *result)
- {
--	unsigned char result[20];
- 	char name[50];
- 
- 	if (!patchlen)
- 		return;
- 
--	git_SHA1_Final(result, c);
- 	memcpy(name, sha1_to_hex(id), 41);
- 	printf("%s %s\n", sha1_to_hex(result), name);
--	git_SHA1_Init(c);
- }
- 
- static int remove_space(char *line)
-@@ -56,10 +53,30 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
- 	return 1;
- }
- 
--static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct strbuf *line_buf)
-+static void flush_one_hunk(unsigned char *result, git_SHA_CTX *ctx)
- {
--	int patchlen = 0, found_next = 0;
-+	unsigned char hash[20];
-+	unsigned short carry = 0;
-+	int i;
-+
-+	git_SHA1_Final(hash, ctx);
-+	git_SHA1_Init(ctx);
-+	/* 20-byte sum, with carry */
-+	for (i = 0; i < 20; ++i) {
-+		carry += result[i] + hash[i];
-+		result[i] = carry;
-+		carry >>= 8;
-+	}
-+}
-+static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
-+			   struct strbuf *line_buf, int stable)
-+{
-+	int patchlen = 0, found_next = 0, hunks = 0;
- 	int before = -1, after = -1;
-+	git_SHA_CTX ctx, header_ctx;
-+
-+	git_SHA1_Init(&ctx);
-+	hashclr(result);
- 
- 	while (strbuf_getwholeline(line_buf, stdin, '\n') != EOF) {
- 		char *line = line_buf->buf;
-@@ -99,6 +116,18 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
- 			if (!memcmp(line, "@@ -", 4)) {
- 				/* Parse next hunk, but ignore line numbers.  */
- 				scan_hunk_header(line, &before, &after);
-+				if (stable) {
-+					if (hunks) {
-+						flush_one_hunk(result, &ctx);
-+						memcpy(&ctx, &header_ctx,
-+						       sizeof ctx);
-+					} else {
-+						/* Save ctx for next hunk.  */
-+						memcpy(&header_ctx, &ctx,
-+						       sizeof ctx);
-+					}
-+				}
-+				hunks++;
- 				continue;
- 			}
- 
-@@ -108,6 +137,7 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
- 
- 			/* Else we're parsing another header.  */
- 			before = after = -1;
-+			hunks = 0;
- 		}
- 
- 		/* If we get here, we're inside a hunk.  */
-@@ -119,27 +149,27 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
- 		/* Compute the sha without whitespace */
- 		len = remove_space(line);
- 		patchlen += len;
--		git_SHA1_Update(ctx, line, len);
-+		git_SHA1_Update(&ctx, line, len);
- 	}
- 
- 	if (!found_next)
- 		hashclr(next_sha1);
- 
-+	flush_one_hunk(result, &ctx);
-+
- 	return patchlen;
- }
- 
--static void generate_id_list(void)
-+static void generate_id_list(int stable)
- {
--	unsigned char sha1[20], n[20];
--	git_SHA_CTX ctx;
-+	unsigned char sha1[20], n[20], result[20];
- 	int patchlen;
- 	struct strbuf line_buf = STRBUF_INIT;
- 
--	git_SHA1_Init(&ctx);
- 	hashclr(sha1);
- 	while (!feof(stdin)) {
--		patchlen = get_one_patchid(n, &ctx, &line_buf);
--		flush_current_id(patchlen, sha1, &ctx);
-+		patchlen = get_one_patchid(n, result, &line_buf, stable);
-+		flush_current_id(patchlen, sha1, result);
- 		hashcpy(sha1, n);
- 	}
- 	strbuf_release(&line_buf);
-@@ -149,9 +179,14 @@ static const char patch_id_usage[] = "git patch-id < patch";
- 
- int cmd_patch_id(int argc, const char **argv, const char *prefix)
- {
--	if (argc != 1)
-+	int stable;
-+	if (argc == 2 && !strcmp(argv[1], "--order-sensitive"))
-+		stable = 0;
-+	else if (argc == 1)
-+		stable = 1;
-+	else
- 		usage(patch_id_usage);
- 
--	generate_id_list();
-+	generate_id_list(stable);
- 	return 0;
- }
--- 
-MST
+That is not something we have control over anyway.
