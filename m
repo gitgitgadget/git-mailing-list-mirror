@@ -1,84 +1,128 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: why doesn't "git bisect visualize" show all commit ids from the
- bisect log
-Date: Fri, 20 Sep 2013 11:22:32 -0700
-Message-ID: <20130920182232.GA30039@google.com>
-References: <523C8F0C.6050203@gmx.de>
+From: David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: [PATCH] build: add default configuration
+Date: Fri, 20 Sep 2013 13:31:15 -0500
+Message-ID: <4d9893bc-c812-457b-9f40-ebe01d37df53@email.android.com>
+References: <1379423650-1311-1-git-send-email-felipe.contreras@gmail.com> <e8ccfba3-5198-4986-9b9d-1d69b965386f.maildroid@localhost> <CAMP44s35_emnh9Kce433oy1JW66xB2vaN5f5OO7VF1XqoO=YGQ@mail.gmail.com> <ab38a1b5-e354-4e32-8ede-46a401ef8053.maildroid@localhost> <CAMP44s3Q6ummNmLovw0BuGR=yNWfmRFmrg9xb50OawMwKznfBw@mail.gmail.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Toralf =?iso-8859-1?Q?F=F6rster?= <toralf.foerster@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 20 20:22:46 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org,=?ISO-8859-1?Q?Br=E1ulio_Bhavamitra?= <brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: git-users+bncBD6J3AEPVABRB7NI6KIQKGQETGDT5OY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Sep 20 20:31:29 2013
+Return-path: <git-users+bncBD6J3AEPVABRB7NI6KIQKGQETGDT5OY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-pb0-f62.google.com ([209.85.160.62])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VN5Lp-0007YS-4H
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Sep 2013 20:22:45 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752419Ab3ITSWl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Sep 2013 14:22:41 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:50741 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751651Ab3ITSWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Sep 2013 14:22:40 -0400
-Received: by mail-pb0-f49.google.com with SMTP id xb4so689373pbc.8
-        for <git@vger.kernel.org>; Fri, 20 Sep 2013 11:22:40 -0700 (PDT)
+	(envelope-from <git-users+bncBD6J3AEPVABRB7NI6KIQKGQETGDT5OY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1VN5UF-0000hN-Mu
+	for gcggu-git-users@m.gmane.org; Fri, 20 Sep 2013 20:31:28 +0200
+Received: by mail-pb0-f62.google.com with SMTP id md4sf186583pbc.27
+        for <gcggu-git-users@m.gmane.org>; Fri, 20 Sep 2013 11:31:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=1JntgAPABqgCEiGNJj/CUlG4JUe840jG61SodPAzr4k=;
-        b=TRtifbi0YByeqyVv8cBgs6jj98q/k9cFcgRHDBXYPrgVNGRiEkE9Bxu7GNW98sV3JR
-         xUs+zHo2ban9n851bIRU2VLBTq5rylr9tMnIgFJhgn4YtX8NNKf/CI+EaLw+meqEqxYw
-         I+giqIAvd2JmldoNa3Zj3hbBxSDGleGbSSQOEMjJm7TwK1fqiO7+d+aZlwnBmeRkE9E7
-         cylEgcS2b5kLxfDfalVMHnhZtSrBPa1p4sJaJPtKSdrUcIvYO10KYhdR/yVEOtSZomj2
-         Rj6pDdBL7/nZ+hUPYC8LSDpuWv2kgg0v9T5M8EBonq/Nwa8wSA7vKKML0lGOwY93kzWD
-         axJQ==
-X-Received: by 10.68.17.131 with SMTP id o3mr9495309pbd.60.1379701360132;
-        Fri, 20 Sep 2013 11:22:40 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id dk3sm1739261pbc.32.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 20 Sep 2013 11:22:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <523C8F0C.6050203@gmx.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235076>
+        d=googlegroups.com; s=20120806;
+        h=user-agent:in-reply-to:references:mime-version:subject:from:date:to
+         :cc:message-id:x-original-sender:x-original-authentication-results
+         :reply-to:precedence:mailing-list:list-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
+        bh=s+5+gqcm/cdLymoT2Auvev964bEaVCXE1poGxjKLIVc=;
+        b=AYD28ncpKZ6roJo3/lioCDDQXlz/p+xeNsVn0EsdZI3dLt4Vs5lhoCwunSM2iRlCk7
+         /t+cUUkNBaTEhE2I71TNhJVHtrHPR5qFT8cDdRwLO74BI/nZpGXz0ruAoMRPZZ5S/INP
+         At/zwxKUVAwOFffP3Kbwo/vBZYCdD7Rpa3K5fPQwIzAqk0nmtt0+/dpNkjBwDv4F2q6/
+         VOTGL1REgAb64sRjYf1gsj9OPxVQOY2rl16R4jU3lfAgutLtb8hTVqBbz4nao6IceC+P
+         rA1haP3XzqrbUBr6LLL6iFUIXrLcJA5jiYsyQZzK9v+Rpc5Jlww44f27oLWpjOIogKMp
+         bSww==
+X-Received: by 10.49.70.170 with SMTP id n10mr92098qeu.22.1379701886301;
+        Fri, 20 Sep 2013 11:31:26 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.49.87.36 with SMTP id u4ls337368qez.56.gmail; Fri, 20 Sep 2013
+ 11:31:25 -0700 (PDT)
+X-Received: by 10.236.110.168 with SMTP id u28mr1760543yhg.40.1379701885293;
+        Fri, 20 Sep 2013 11:31:25 -0700 (PDT)
+Received: from mail-yh0-x233.google.com (mail-yh0-x233.google.com [2607:f8b0:4002:c01::233])
+        by gmr-mx.google.com with ESMTPS id a49si1597346yhc.5.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 20 Sep 2013 11:31:25 -0700 (PDT)
+Received-SPF: pass (google.com: domain of davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 2607:f8b0:4002:c01::233 as permitted sender) client-ip=2607:f8b0:4002:c01::233;
+Received: by mail-yh0-f51.google.com with SMTP id t59so317918yho.10
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Fri, 20 Sep 2013 11:31:25 -0700 (PDT)
+X-Received: by 10.236.117.106 with SMTP id i70mr8051984yhh.29.1379701885115;
+        Fri, 20 Sep 2013 11:31:25 -0700 (PDT)
+Received: from [172.20.17.174] ([200.10.66.132])
+        by mx.google.com with ESMTPSA id 48sm19830774yhq.11.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 20 Sep 2013 11:31:24 -0700 (PDT)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CAMP44s3Q6ummNmLovw0BuGR=yNWfmRFmrg9xb50OawMwKznfBw-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
+X-Original-Sender: davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 2607:f8b0:4002:c01::233 as
+ permitted sender) smtp.mail=davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235077>
 
-Hi Toralf,
-
-Toralf F=F6rster wrote:
-
-> When run that command immediate after "git bisect start" somebody see=
-s
-> the full commit range as defined in "git bisect start".
+Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+>On Wed, Sep 18, 2013 at 9:30 PM, David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+>wrote:
+>>>On Wed, Sep 18, 2013 at 1:13 PM, David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+>wrote:
+>>>>
+>>>> Will this not conflict with folks that supply their own gitconfig?
+>>
+>>> You mean people that provide their own ETC_GITCONFIG? If you mean
+>> distributions, their packaging would override /etc/gitconfig, if you
+>> mean people that have already a /etc/gitconfig, packaging systems
+>> usually save the old one so they can solve the conflict manually
+>(e.g.
+>> /etc/gitconfig.pacsave). So no, it would not conflict.
+>>
+>> Yuck. Yes, that one. I package my own /etc/gitconfig (as we have long
+>advertised as the "way to do it")
 >
-> However running that command later after few git bisect steps" somebo=
-dy
-> is just presented with the remaining commit interval.
+>You package /etc/gitconfig *outside* the git package? I don't see how
+>that could have been ever advertised as the way to do it.
+
+Okay so how exactly are we supposed to do it?  Duh, rpm is the right choice for redhat systems. 
+
+>Users don't package /etc/gitconfig outside git.
+
+Wrong. Existence proof: me. 
+
+
+>>>> I like the idea. Docs?  Also, should this not be done in the C side
+>so that we don't waste time reading the config, and also prevent users
+>from overriding these?
+>>
+>>> But we want them to be easily readable, and possibly allow
+>> distributions to easily modify them.
+>>
+>> In that case I take it back -- I dont like that approach.  We want
+>consistency, not divergence. This encourages the former.
 >
-> Is this intended ?
+>So you think we have more consistency right now? We don't even have a
+>predefined /etc/gitconfig, that creates more inconsistency, as
+>everybody's configs and aliases are very very different.
+>
+>This patch would definitely make things more consistent.
 
-"git bisect visualize" is meant as a tool to pin down the culprit
-commit that produced a regression.  Sometimes after a few steps the
-problematic commit is obvious, which can save some test cycles.
+We don't need this patch to allow distros to modify aliases. Likewise, allowing the aliases to diverge is less consistent. Do it at a lower level. 
 
-If you want to see the list of commits tested so far, "git bisect log"
-can help.  To see the entire bisection state, even outside the
-regression window, any old "gitk foo..bar" command will do --- the
-bisection state is kept in bisect/* refs that show up in blue.
+I also agree with Junio's notes about "ci". Something short that can add and remove from the index would be nice. 
 
-Can you say a little more about what you're trying to do?  Is the goal
-to have a nice visualization of what "git bisect log" shows?  (I'm not
-aware of any such tool, and I agree it would be a nice thing.)
 
-Hope that helps,
-Jonathan
+-- 
+David
+
+-- 
+You received this message because you are subscribed to the Google Groups "Git for human beings" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit https://groups.google.com/groups/opt_out.
