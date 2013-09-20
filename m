@@ -1,77 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG?] git checkout $commit -- somedir doesn't drop files
-Date: Fri, 20 Sep 2013 15:54:44 -0700
-Message-ID: <xmqq8uyrp0i3.fsf@gitster.dls.corp.google.com>
-References: <20130917201259.GB16860@sigill.intra.peff.net>
-	<xmqq61tzxkgz.fsf@gitster.dls.corp.google.com>
-	<20130917202917.GA20020@sigill.intra.peff.net>
-	<xmqq1u4nxjv2.fsf@gitster.dls.corp.google.com>
-	<20130917212106.GB20178@sigill.intra.peff.net>
-	<xmqqk3ifw1km.fsf@gitster.dls.corp.google.com>
-	<20130917220345.GA22914@sigill.intra.peff.net>
-	<xmqqd2o7w0xc.fsf@gitster.dls.corp.google.com>
-	<20130919074616.GA29773@sigill.intra.peff.net>
-	<xmqqbo3ou1ue.fsf@gitster.dls.corp.google.com>
-	<20130919221323.GA18085@sigill.intra.peff.net>
+Subject: Re: On the behavior of checkout <branch> with uncommitted local changes
+Date: Fri, 20 Sep 2013 15:58:27 -0700
+Message-ID: <xmqq1u4jp0bw.fsf@gitster.dls.corp.google.com>
+References: <8904036.vOg3y5OkbU@ipht-ia-004976>
+	<xmqqfvt0u2q3.fsf@gitster.dls.corp.google.com>
+	<2132571.7BXlKkKRkA@ipht-ia-004976>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Sep 21 00:54:51 2013
+Cc: git@vger.kernel.org
+To: r.ductor@gmail.com
+X-From: git-owner@vger.kernel.org Sat Sep 21 00:58:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VN9b8-0001Mr-Uo
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 00:54:51 +0200
+	id 1VN9ek-0001DP-Ax
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 00:58:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753614Ab3ITWyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Sep 2013 18:54:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38500 "EHLO
+	id S1753407Ab3ITW6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Sep 2013 18:58:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40441 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753297Ab3ITWyq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Sep 2013 18:54:46 -0400
+	id S1752079Ab3ITW6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Sep 2013 18:58:30 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D97F437C8;
-	Fri, 20 Sep 2013 22:54:46 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83C5F439F3;
+	Fri, 20 Sep 2013 22:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p3qUTyQ/wAwRQVmuZYKEE2Ztd6w=; b=e5rCdL
-	06QSj/FqivNyTnPwu1U1t8oxwkuD6TGwX0c9brtej5O6xok+UeKLDGKlfiwghNvd
-	9NHdg4qWEFpISPxRpGzdEf/+mVmhXNJq6csDlN9zReD5+W1gQ71TEnYsWM81Q3iz
-	GSZTb2QthSm/oCLIu/R8ct2jutnG9jWfg14M0=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=zPdM5KJpSaqvL1i4t02laec1dR4=; b=tiWKhoO/MZae0gM9HYjl
+	6p5UujvDQSd6nTyVeZY0n45y86NHVHfp0eHkmFAd7+vb4cJvlUOY7gDxJWhTMAtV
+	7j7N6uT+8MeqYeNczqaiixZh638O1LXqnF+m1rszP5Rdncb70wqoRzcLmTq8U2rP
+	4iYOehZ4Q1ieSOYKtQfFSbY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=j8TMqlgMmapeCFrB/HhOlFmUu6bMlDRF
-	XbEeQfQJZ32AdA8xGH21exBx5kj0JW6t0b//5dgTUPtk26MIpmDzprYIAgF8sslq
-	z9lDHR4/SlTbrvkKJnfDobYrV8aH1VBOVLk3BLxFMfzd/fjwKbcHdk/TXIpFW8vD
-	nYm9XBc5vv8=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=YjIH341CkpbjKdJ1z6CAA4lpq11HWCoigo2fVgSCeXH7w+
+	7DkZRsmoWivwNoAIwAx/thj3GilsP+H51AWFn6Hob2i74abpqw9fsPL9SZAxdGx3
+	/ENXu+0DkzSkuav9uTWP3QOYu1qxuoppOlL4wGuV+5YN/u7QhRcl/jU+JaIfY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BE5C437C6;
-	Fri, 20 Sep 2013 22:54:46 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79C06439F2;
+	Fri, 20 Sep 2013 22:58:29 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B2FA8437C4;
-	Fri, 20 Sep 2013 22:54:45 +0000 (UTC)
-In-Reply-To: <20130919221323.GA18085@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 19 Sep 2013 18:13:23 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E39A0439F0;
+	Fri, 20 Sep 2013 22:58:28 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A4FED24A-2247-11E3-BA03-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2A07E9D6-2248-11E3-B545-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235088>
 
-Jeff King <peff@peff.net> writes:
+r.ductor@gmail.com writes:
 
->      But I think that points to a larger problem, which is that we do
->      not want to just look at the entries that are different between the
->      tree and the index.
+> mmm maybe I'm wrong, but it seems to me that the first statement
+> on the index (above) is oversimplifing.
 
-True.  The unpack-trees API knows how to walk the index and trees in
-parallel, and I tend to agree that it may be a more suitable vehicle
-for this purpose.
+Yes, it was simplified to illustrate the principle, not even trying
+to be exhaustive.
+
+The principle is that we allow you to check out a different branch
+when you have local changes to the working tree and/or to the index,
+as long as we can make the index and the working tree pretend as if
+you reached that locally modified state, starting from a clean state
+of the branch you are checking out.
+
+That is what "your modifications in context" in the description of
+the "-m" option refers to.
+
+It directly follows that a local change to the index at a path is
+carried forward when you check out a different branch, if HEAD and
+the branch you are checking out have the same contents registered at
+the path.
+
+The message you are responding to illustrated that principle by
+talking about changes to the working tree but the same principle
+applies to changes to the index, as changes to the working tree is
+much easier to picture in your mind.
