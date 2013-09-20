@@ -1,101 +1,78 @@
-From: Martin Gregory <marting@adelaideinterim.com.au>
-Subject: re[6]: sparse checkout file with windows line endings doesn't work
-Date: Fri, 20 Sep 2013 11:22:01 +0930
-Organization: AI
-Message-ID: <SDZYTDk4NyMxKC4hPVQvMjM1MDUxNjg3@IBMLT4>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: re[6]: sparse checkout file with windows line endings doesn't work
+Date: Fri, 20 Sep 2013 09:28:39 +0700
+Message-ID: <CACsJy8AzrSPqcXhcLV_q6J-+qZaQMPFfO6eq6C=HvdvcXw+eSw@mail.gmail.com>
 References: <CACsJy8BeT7ZP+ZQah7FR6ogqRNiiDZYP5SEs8J6J=+gEHU5MUg@mail.gmail.com>
+ <SDZYTDk4NyMxKC4hPVQvMjM1MDUxNjg3@IBMLT4>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>,
-	Martin Gregory <marting@adelaideinterim.com.au>
-X-From: git-owner@vger.kernel.org Fri Sep 20 03:58:48 2013
+To: Martin Gregory <marting@adelaideinterim.com.au>
+X-From: git-owner@vger.kernel.org Fri Sep 20 04:29:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMpzb-0006Wo-66
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Sep 2013 03:58:47 +0200
+	id 1VMqT6-00088A-9A
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Sep 2013 04:29:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752067Ab3ITB6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Sep 2013 21:58:43 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:33857 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751876Ab3ITB6m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Sep 2013 21:58:42 -0400
-Received: by mail-pb0-f43.google.com with SMTP id md4so9075810pbc.2
-        for <git@vger.kernel.org>; Thu, 19 Sep 2013 18:58:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:subject:to:cc:message-id:in-reply-to
-         :mime-version:organization:content-type:content-transfer-encoding;
-        bh=PJeAGWG26tpAfOqiNC9h/e471FS1NGa+56Pm+n/0BDQ=;
-        b=RySdWrxhBjZo8s0g6t6+Fs/d7W3a7Jzrz9cSApesaQh8YpQ3NSQ5bnAbBILVXLrYxx
-         1JNt5oavMLnM4zY00NOIeXZqFKiA064XKwZTDLs79k5PXvydV7vcKI7ps6bV5Uq8hwkm
-         HBulwKQZOYsAap7NQgg/rwL2PB8+LP86pEPKd3a+VQ24WTuKxrXquLy8/KSgNVVUPOka
-         D8lsSJosnKW99Sdfryj8D/XnMMs2YKorkfH7pdk65cV0ooEIC4SyQq/WaB1VQMuUz8Go
-         RRbt2YUHdsdyaBSufE16JNU9Ul49NO6jVueRYe/cpClRuVc0FCJRE1neekoVxd7+t4wO
-         lCPw==
-X-Gm-Message-State: ALoCoQnm4/HgbfsRZsl/619UN5z5vZUE0g6HhLjxbhUaE84HLurifnHVr3sl7Fxv0SNGrNZxR8X8
-X-Received: by 10.66.25.205 with SMTP id e13mr432713pag.180.1379642322085;
-        Thu, 19 Sep 2013 18:58:42 -0700 (PDT)
-Received: from IBMLT4 (ppp121-45-31-21.lns20.adl2.internode.on.net. [121.45.31.21])
-        by mx.google.com with ESMTPSA id yh1sm12267059pbc.21.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 19 Sep 2013 18:58:41 -0700 (PDT)
-In-Reply-To: <CACsJy8BeT7ZP+ZQah7FR6ogqRNiiDZYP5SEs8J6J=+gEHU5MUg@mail.gmail.com>
-X-Mailer: GoldMine [9.2.1.92]
+	id S1753351Ab3ITC3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Sep 2013 22:29:12 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:41570 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752067Ab3ITC3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 22:29:11 -0400
+Received: by mail-ob0-f175.google.com with SMTP id uz6so10566989obc.20
+        for <git@vger.kernel.org>; Thu, 19 Sep 2013 19:29:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ZYTkcAoaaiKdUWcuxcm4sj4dW4ZCNNCJ1PY58NZfe3c=;
+        b=GuC36P9qUhMeSee9hxaIztrk4LY2YVUYWEGbdq0p/OuT1MlAgh9+EdMZBK1dBGkWh1
+         cwN/NSqr5N8ekqldezjWj/i9NwB1IMRJiPHf+E+OAb1pmuBNNXjC5DdRPyVmsmLLU3Vr
+         0RpD+l2u3qY3VWFa22j2PwK9yWZ3xnX2GwJHijkOh+fTyPdscherFry9rR3EPykJEq6D
+         HnGiXY/zspVYwqA4hm8Y0tiPrFa9LigY+OInaN89XLxy5a1t4nwtH+XAWILZaxaL01sh
+         AaWuXxWnpQii1qsWvLHK/IuUvXyYT6fx1gh3LaDIbKCVr+JUn1/A1pGRUdD0zZYBXWJf
+         5azw==
+X-Received: by 10.60.51.196 with SMTP id m4mr3809838oeo.1.1379644150264; Thu,
+ 19 Sep 2013 19:29:10 -0700 (PDT)
+Received: by 10.182.49.233 with HTTP; Thu, 19 Sep 2013 19:28:39 -0700 (PDT)
+In-Reply-To: <SDZYTDk4NyMxKC4hPVQvMjM1MDUxNjg3@IBMLT4>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235046>
 
-Thanks Duy for the fast response.
+On Fri, Sep 20, 2013 at 8:52 AM, Martin Gregory
+<marting@adelaideinterim.com.au> wrote:
+> Something that would help is an easier way to debug sparse-checkout rules.
+>
+> When something goes wrong, there appears to be no way to understand what
+> git thinks it's reading.   I'm not sure if such a way, if it existed, would help with
+> trailing spaces, but if you could say
+>
+> git read-tree -muv HEAD
+>
+> and it would say
+>
+> reading '.git\info\sparse-checkout'...
+> rule '/CONFIGURATION ' - no matches
+>
+> that would solve actually two problems:
+>
+> 1) You can see that it thinks there is a space there
+>
+> 2) the config file name is sparse-checkout, with a dash, not sparsecheckout...
+> a mistake I made that had me scratching my head for some time, since everywhere
+> else it doesn't have a dash!
 
-> Anyway there is a trailing space at the
->>  end of the rule. This is the content of your sparse checkout file in C
->>  syntax
->>
->>  "/CONFIGURATION\x20\r\n"
->>
->>  Maybe we could warn about trailing spaces.. Stripping them
->>  automatically is a possibility, but we need an escape hatch for
->>  (crazy?) people who actually have trailing spaces in there paths.
-
-Yuk eh?
-
-I just discovered that if you do
-
-echo /CONFIGURATION      > .git\info\sparse-checkout
-
-in Windows, you get 5 training spaces!
-
-Man, I hate Windows!
-
-Something that would help is an easier way to debug sparse-checkout rules.
-
-When something goes wrong, there appears to be no way to understand what
-git thinks it's reading.   I'm not sure if such a way, if it existed, would help with
-trailing spaces, but if you could say
-
-git read-tree -muv HEAD
-
-and it would say
-
-reading '.git\info\sparse-checkout'...
-rule '/CONFIGURATION ' - no matches
-
-that would solve actually two problems:
-
-1) You can see that it thinks there is a space there
-
-2) the config file name is sparse-checkout, with a dash, not sparsecheckout...
-a mistake I made that had me scratching my head for some time, since everywhere
-else it doesn't have a dash!
-
-Thanks again for your quick help.
-
-Martin
+"git check-ignore" is the closet one to this. Remember sparse-checkout
+and .gitignore share the same syntax, you could feed sparse-checkout
+file to check-ignore. You (or somebody else) may need to improve
+check-ignore a bit, though, to show the quotes because I don't think
+it does now.
+-- 
+Duy
