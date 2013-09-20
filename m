@@ -1,82 +1,74 @@
-From: =?UTF-8?B?c2hpcmlzaCDgpLbgpL/gpLDgpYDgpLc=?= 
-	<shirishag75@gmail.com>
-Subject: Has there been any discussion about resumable clones recently ?
-Date: Fri, 20 Sep 2013 04:48:33 +0530
-Message-ID: <CADdDZRmufDTYYxHeAuPbCUn5iQHruAOXXho5KVOQ6McfSFvPJw@mail.gmail.com>
+From: Patrick Welche <prlw1@cam.ac.uk>
+Subject: Re: What's cooking in git.git (Sep 2013, #05; Wed, 18)
+Date: Fri, 20 Sep 2013 01:04:13 +0100
+Message-ID: <20130920000413.GC482@quark>
+References: <xmqqwqmdu6rg.fsf@gitster.dls.corp.google.com>
+ <vpqob7pt8tj.fsf@anie.imag.fr>
+ <xmqq7gecu1gg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 20 01:18:50 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 20 02:04:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VMnUn-0003Y3-4q
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Sep 2013 01:18:49 +0200
+	id 1VMoCt-0003dL-7H
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Sep 2013 02:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754025Ab3ISXSg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Sep 2013 19:18:36 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:38045 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753689Ab3ISXSg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Sep 2013 19:18:36 -0400
-Received: by mail-lb0-f171.google.com with SMTP id u14so105lbd.16
-        for <git@vger.kernel.org>; Thu, 19 Sep 2013 16:18:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=3lGcUynhRwVwHuZQx+ZkRJRqV5gr8aBWTl1/OpKQmKs=;
-        b=CODRt2FzRUJlPJiqI4EhZISGwlMOQp/eSEESsHSgPzJZA/706Ch4h00Du1IrTBlE82
-         k2lnZuZrgyTxBNynX83hLNpC3ZM5b70/B+ofu/40rqb+u8b3YvWoEj8ycslOV94UmSns
-         joBhxpAaDs1uafvunEtTKsgC0EEmaZl7nAat796oeOdylo16EnWdonOE0/m74oJjtJro
-         HxbQYY13HVNxD8COSthS2kKvV38FF+a6/TU36lQeY4NvzxjCmWXgFAa+242lwY3QdMMW
-         iXppM6gyMpMhdUbKGIJs9YXvFkUhEahLKz6JmdZwyKqLIQ2foofICUmz5dSwf/7g1Xiu
-         BCRw==
-X-Received: by 10.152.116.109 with SMTP id jv13mr3327261lab.30.1379632714504;
- Thu, 19 Sep 2013 16:18:34 -0700 (PDT)
-Received: by 10.112.89.135 with HTTP; Thu, 19 Sep 2013 16:18:33 -0700 (PDT)
+	id S1753728Ab3ITAET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Sep 2013 20:04:19 -0400
+Received: from ppsw-33.csi.cam.ac.uk ([131.111.8.133]:39817 "EHLO
+	ppsw-33.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753559Ab3ITAES (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Sep 2013 20:04:18 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from host-92-20-229-172.as13285.net ([92.20.229.172]:65514 helo=quark)
+	by ppsw-33.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.157]:587)
+	with esmtpsa (LOGIN:prlw1) (TLSv1:DHE-RSA-AES256-SHA:256)
+	id 1VMoCl-0006K8-g8 (Exim 4.80_167-5a66dd3)
+	(return-path <prlw1@cam.ac.uk>); Fri, 20 Sep 2013 01:04:15 +0100
+Content-Disposition: inline
+In-Reply-To: <xmqq7gecu1gg.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235042>
 
-Hi all,
-=46irst of all a big thank you to all for making git. With it being fas=
-t
-and cheap (in relation to bandwidth and sizes for subsequent checkouts
-as well as CPU usage) . Please CC me if somebody does answer this mail
-as I'm not subscribed to the list.
+On Thu, Sep 19, 2013 at 11:10:39AM -0700, Junio C Hamano wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> 
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> >> * mm/rebase-continue-freebsd-WB (2013-09-09) 1 commit
+> >>   (merged to 'next' on 2013-09-13 at 82e8b91)
+> >>  + rebase: fix run_specific_rebase's use of "return" on FreeBSD
+> >>
+> >>  Work around a bug in FreeBSD shell that caused a regression to "git
+> >>  rebase" in v1.8.4.  It would be lovely to hear from FreeBSD folks a
+> >>  success report 
+> >
+> > We just did:
+> >
+> >   http://thread.gmane.org/gmane.comp.version-control.git/234825/focus=234870
+> 
+> That only talks about "more" not showing colors.
+> 
+>     ... goes and looks ...
+> 
+> Ah, there is another subthread that ends at 234833 that reports
+> success; I am guessing from "pkgsrc" that this is either some
+> variant of BSD or Solaris?
 
-The thing I have been failures number of times while trying to clone a
-large repo. The only solution it seems is to ask somebody to make a
-git-bundle and get that bundle via wget or rsync and then unbundle it
-and then hopefully just sync it. The other way is to pray and hope
-that somehow git clones ends in a success.
+Sorry - I unsubscribed in the meantime. My rebase problem was on
+NetBSD, your FreeBSD work around worked for me too, and I added
+your patch to pkgsrc.
 
-Somebody told me that there is/was some recent discussion on getting
-something like :-
+Thanks again,
 
-$ git clone --continue
-
-which is/would be very similar to how wget works so you can continue
-the large file download if the server supports resuming.
-
-Is something similar being worked upon or discussed upon ? If yes,
-please point me out to the discussion as it would be very beneficial
-to people like me who have unstable network connection.
-
-If not, then sorry to take your time.
-
-in gratitude.
---=20
-          Regards,
-          Shirish Agarwal  =E0=A4=B6=E0=A4=BF=E0=A4=B0=E0=A5=80=E0=A4=B7=
- =E0=A4=85=E0=A4=97=E0=A5=8D=E0=A4=B0=E0=A4=B5=E0=A4=BE=E0=A4=B2
-  My quotes in this email licensed under CC 3.0
-http://creativecommons.org/licenses/by-nc/3.0/
-http://flossexperiences.wordpress.com
-065C 6D79 A68C E7EA 52B3  8D70 950D 53FB 729A 8B17
+Patrick
