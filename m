@@ -1,161 +1,138 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH/RFC 1/7] Add support for ruby commands
-Date: Sat, 21 Sep 2013 13:48:09 -0500
-Message-ID: <1379789295-18519-2-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH/RFC 3/7] ruby: add simple wrappers
+Date: Sat, 21 Sep 2013 13:48:11 -0500
+Message-ID: <1379789295-18519-4-git-send-email-felipe.contreras@gmail.com>
 References: <1379789295-18519-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 21 20:53:57 2013
+X-From: git-owner@vger.kernel.org Sat Sep 21 20:54:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNSJZ-0000Wi-7z
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 20:53:57 +0200
+	id 1VNSJf-0000ZE-0Z
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 20:54:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752217Ab3IUSxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Sep 2013 14:53:52 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:53317 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751398Ab3IUSxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Sep 2013 14:53:52 -0400
-Received: by mail-ob0-f179.google.com with SMTP id wn1so2143699obc.10
-        for <git@vger.kernel.org>; Sat, 21 Sep 2013 11:53:51 -0700 (PDT)
+	id S1752482Ab3IUSx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Sep 2013 14:53:58 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:40700 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752391Ab3IUSx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Sep 2013 14:53:57 -0400
+Received: by mail-ob0-f178.google.com with SMTP id uy5so2099962obc.37
+        for <git@vger.kernel.org>; Sat, 21 Sep 2013 11:53:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=pyifpPIAKCl4tvfG58NTyRVs2znVWVn6MP/CQjOSUHg=;
-        b=GrzQIVdfE7KbRznHHfFDFCXhaTEdZ+Iw9ICSjbaf9KAIMY3Pt8XhU6aaM8v8QDGTyK
-         PZoYKAww+y5W+ugc/+r884HksTvLTj2FL5PndsMh40P3P37gixLHAZysXUxSC6/5ZvQL
-         VDxbgvbkmFpFEKyBS1R2VC+WySBkbje3EpMQic4Ab3TkXgs1xvFuwgFc8VbZCZ2m/lpC
-         nwqkAzZj2B9lwiVLrU2swlM0j/9P6ACiiZFsJ/qwmH7pWJqyCQY1KmW3c40Qj/LQHt/3
-         c+J+Tmjz41tSoFck+yEb2NxrT10wIBRJXmU3qujH3IEKgD19UJHosuEG7GNB9XAk188O
-         kh9A==
-X-Received: by 10.60.51.7 with SMTP id g7mr11986064oeo.6.1379789631593;
-        Sat, 21 Sep 2013 11:53:51 -0700 (PDT)
+        bh=DBeDwXHt9rzAGv8+0kfiULP3mZxuVcWTD2EFPPyfNNg=;
+        b=Q89FezDsfc6c50S+rtjXoqbrPpyo5EysV+h8QRgq64At04SLT4e26/eLbKOtuCmimx
+         J8Nrjz8TTSnXSqZT++Z/wWiCPEAeslxgRggZtI5RjXzFkGROuj3C10IKM06Q7FYxL5Pq
+         lYxOUuq2Dvh731PcTWHI8ntI0G5gZJTXDi/sajemTPFWzJEhS4bI4JwEbpOQgwHYmhSY
+         W77gPincwSv+kPLGGXZVQllbSNcjRq1kcEpFc+01uC9b8EwL5zdEgIpq7lD/HlaMtybU
+         UD0tuMeYTdTQaJ3GGXdk9Y9cHTi9MotfEXXKllzoe8ANrmvrQHtUs8cnhFPs2eLCiuw3
+         WyXw==
+X-Received: by 10.60.174.75 with SMTP id bq11mr11639309oec.17.1379789636864;
+        Sat, 21 Sep 2013 11:53:56 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id z5sm8631751obg.13.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id b5sm8620510obj.8.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 21 Sep 2013 11:53:50 -0700 (PDT)
+        Sat, 21 Sep 2013 11:53:56 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1379789295-18519-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235137>
+
+So that we can use for_each_ref() inside Ruby, and provide an example
+script.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Makefile |  4 ++++
- cache.h  |  2 ++
- git.c    |  3 +++
- ruby.c   | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 57 insertions(+)
- create mode 100644 ruby.c
+ Makefile    |  1 +
+ git-refs.rb |  7 +++++++
+ ruby.c      | 27 +++++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+)
+ create mode 100644 git-refs.rb
 
 diff --git a/Makefile b/Makefile
-index 3588ca1..7cbcbcb 100644
+index 138f9bf..8a4e48f 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -899,6 +899,7 @@ LIB_OBJS += ws.o
- LIB_OBJS += wt-status.o
- LIB_OBJS += xdiff-interface.o
- LIB_OBJS += zlib.o
-+LIB_OBJS += ruby.o
+@@ -492,6 +492,7 @@ SCRIPT_PYTHON += git-remote-testpy.py
+ SCRIPT_PYTHON += git-p4.py
  
- BUILTIN_OBJS += builtin/add.o
- BUILTIN_OBJS += builtin/annotate.o
-@@ -1502,6 +1503,9 @@ ifneq (,$(XDL_FAST_HASH))
- 	BASIC_CFLAGS += -DXDL_FAST_HASH
- endif
+ SCRIPT_RUBY += git-rb-setup.rb
++SCRIPT_RUBY += git-refs.rb
  
-+EXTLIBS += $(shell pkg-config --libs ruby-2.0)
-+BASIC_CFLAGS += $(shell pkg-config --cflags ruby-2.0)
-+
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
-diff --git a/cache.h b/cache.h
-index 85b544f..4b1abd4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1393,4 +1393,6 @@ int stat_validity_check(struct stat_validity *sv, const char *path);
-  */
- void stat_validity_update(struct stat_validity *sv, int fd);
- 
-+extern void handle_ruby_command(int argc, const char **argv);
-+
- #endif /* CACHE_H */
-diff --git a/git.c b/git.c
-index 2025f77..0e1d97d 100644
---- a/git.c
-+++ b/git.c
-@@ -499,6 +499,9 @@ static int run_argv(int *argcp, const char ***argv)
- 		/* See if it's an internal command */
- 		handle_internal_command(*argcp, *argv);
- 
-+		/* See if it's a ruby command */
-+		handle_ruby_command(*argcp, *argv);
-+
- 		/* .. then try the external ones */
- 		execv_dashed_external(*argv);
- 
-diff --git a/ruby.c b/ruby.c
+ NO_INSTALL += git-remote-testgit
+ NO_INSTALL += git-remote-testpy
+diff --git a/git-refs.rb b/git-refs.rb
 new file mode 100644
-index 0000000..5701753
+index 0000000..b048714
 --- /dev/null
++++ b/git-refs.rb
+@@ -0,0 +1,7 @@
++#!/usr/bin/env ruby
++
++require_relative 'git-rb-setup'
++
++for_each_ref() do |name, sha1, flags|
++  puts '%s: %s' % [name, sha1_to_hex(sha1)]
++end
+diff --git a/ruby.c b/ruby.c
+index 5701753..7f0cc9d 100644
+--- a/ruby.c
 +++ b/ruby.c
-@@ -0,0 +1,48 @@
-+#include "cache.h"
-+#include "exec_cmd.h"
-+
-+#undef NORETURN
-+#undef PATH_SEP
-+
-+#include <ruby.h>
-+
-+static const char *commands[] = {
-+};
-+
-+static void run_ruby_command(int argc, const char **argv)
+@@ -1,12 +1,38 @@
+ #include "cache.h"
+ #include "exec_cmd.h"
++#include "refs.h"
+ 
+ #undef NORETURN
+ #undef PATH_SEP
+ 
+ #include <ruby.h>
+ 
++static inline VALUE sha1_to_str(const unsigned char *sha1)
 +{
-+	const char *cmd = argv[0];
-+	static char buf[PATH_MAX + 1];
-+	const char *dir;
-+	char *args[argc + 2];
-+	void *node;
-+	VALUE prefix;
-+	int i;
-+
-+	dir = git_exec_path();
-+	snprintf(buf, PATH_MAX, "%s/git-%s.rb", dir, cmd);
-+
-+	ruby_init();
-+
-+	prefix = Qnil;
-+	rb_define_variable("$prefix", &prefix);
-+
-+	args[0] = "git";
-+	args[1] = buf;
-+	for (i = 0; i < argc; i++)
-+		args[i + 2] = (char*)argv[i];
-+	node = ruby_options(argc + 2, args);
-+
-+	exit(ruby_run_node(node));
++	return rb_str_new((const char *)sha1, 20);
 +}
 +
-+void handle_ruby_command(int argc, const char **argv)
++static int for_each_ref_fn(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
 +{
-+	int i;
-+	for (i = 0; i < ARRAY_SIZE(commands); i++) {
-+		if (strcmp(commands[i], argv[0]))
-+			continue;
-+
-+		run_ruby_command(argc, argv);
-+	}
++	VALUE r;
++	r = rb_yield_values(3, rb_str_new2(refname), sha1_to_str(sha1), INT2FIX(flags));
++	return r == Qfalse;
 +}
++
++static VALUE git_rb_for_each_ref(void)
++{
++	int r;
++	r = for_each_ref(for_each_ref_fn, NULL);
++	return INT2FIX(r);
++}
++
++static void git_init(void)
++{
++	rb_define_global_function("for_each_ref", git_rb_for_each_ref, 0);
++}
++
+ static const char *commands[] = {
++	"refs",
+ };
+ 
+ static void run_ruby_command(int argc, const char **argv)
+@@ -23,6 +49,7 @@ static void run_ruby_command(int argc, const char **argv)
+ 	snprintf(buf, PATH_MAX, "%s/git-%s.rb", dir, cmd);
+ 
+ 	ruby_init();
++	git_init();
+ 
+ 	prefix = Qnil;
+ 	rb_define_variable("$prefix", &prefix);
 -- 
 1.8.4-fc
