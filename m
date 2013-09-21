@@ -1,54 +1,64 @@
-From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 0/2] Update 'git remote set-head' doc and uasage
-Date: Sat, 21 Sep 2013 16:51:44 +0100
-Message-ID: <1379778706-5664-1-git-send-email-philipoakley@iee.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: GitList <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 21 17:51:18 2013
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH 00/17] np/pack-v4 updates
+Date: Sat, 21 Sep 2013 12:07:42 -0400 (EDT)
+Message-ID: <alpine.LFD.2.03.1309211205550.312@syhkavp.arg>
+References: <1379771883-10278-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="Boundary_(ID_JLcqlbpZNS99l1EFVgJD/A)"
+Cc: git@vger.kernel.org
+To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 21 18:08:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNPSn-0000AV-Qq
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 17:51:18 +0200
+	id 1VNPjE-0001ms-T7
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 18:08:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752329Ab3IUPur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Sep 2013 11:50:47 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:27069 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751929Ab3IUPuq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Sep 2013 11:50:46 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsGAH6/PVJOl3GZ/2dsb2JhbABbgwcBrlaMb4cjgRoXdIMCIxiBAiSIHLpgj2WEJQOpc4MlOw
-X-IPAS-Result: AvsGAH6/PVJOl3GZ/2dsb2JhbABbgwcBrlaMb4cjgRoXdIMCIxiBAiSIHLpgj2WEJQOpc4MlOw
-X-IronPort-AV: E=Sophos;i="4.90,953,1371078000"; 
-   d="scan'208";a="437596664"
-Received: from host-78-151-113-153.as13285.net (HELO localhost) ([78.151.113.153])
-  by out1.ip03ir2.opaltelecom.net with ESMTP; 21 Sep 2013 16:50:44 +0100
-X-Mailer: git-send-email 1.8.1.msysgit.1
+	id S1752173Ab3IUQIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Sep 2013 12:08:13 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:39817 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751897Ab3IUQIM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Sep 2013 12:08:12 -0400
+Received: from yoda.home ([70.83.209.44]) by VL-VM-MR003.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0MTH00MI4GTNHJ20@VL-VM-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 21 Sep 2013 12:08:11 -0400 (EDT)
+Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
+ with ESMTPSA id 881452DA03F1; Sat, 21 Sep 2013 12:08:11 -0400 (EDT)
+In-reply-to: <1379771883-10278-1-git-send-email-pclouds@gmail.com>
+User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235128>
 
-In Junio's recent patch series ([PATCH v3 0/7] Removing the guesswork
-of HEAD in "clone" $gmane/234950), his first patch updated t5505: 'fix
-"set-head --auto with ambiguous HEAD" test'.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-A quick look at the git remote man page showed that --auto was not
-documented, nor listed in usage stings.
+--Boundary_(ID_JLcqlbpZNS99l1EFVgJD/A)
+Content-type: TEXT/PLAIN; charset=UTF-8
+Content-transfer-encoding: 8BIT
 
-This two patch series fixes the documentation and the usage strings.
+On Sat, 21 Sep 2013, Nguyễn Thái Ngọc Duy wrote:
 
-Philip Oakley (2):
-  Doc: remote set-head long options
-  remote set-head: show long options in usage
+> This contains many bug fixes or cleanups. Also you can now run the
+> test suite with v4 by setting GIT_TEST_OPTS=--packv4. The test suite
+> passes now. pack size limit is not officially not supported with v4.
+> index-pack also learns to convert appended trees to v4 for completing
+> thin packs (still need to convert commits though)
+> 
+> PS. Nico do you still take patches and then send pull requests to
+> Junio occasionally, or should I start to CC Junio?
 
- Documentation/git-remote.txt | 6 +++---
- builtin/remote.c             | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+I'm still willing to act as the middle man if that suits everybody.  
+That gives me the opportunity to review those patches and stay minimally 
+involved.
 
--- 
-1.8.1.msysgit.1
+
+Nicolas
+
+--Boundary_(ID_JLcqlbpZNS99l1EFVgJD/A)--
