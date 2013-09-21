@@ -1,138 +1,175 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Local tag killer
-Date: Sat, 21 Sep 2013 08:42:26 +0200
-Message-ID: <523D3FD2.4090002@alum.mit.edu>
-References: <52327E62.2040301@alum.mit.edu> <CAPc5daXvCf90WYoUWC+DxRyZEQhXGL7Bd_ZJKwfoqxeKt8TADQ@mail.gmail.com> <xmqqd2o3p0nk.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: [PATCH] build: add default configuration
+Date: Sat, 21 Sep 2013 06:07:03 -0500
+Message-ID: <CAMP44s0Aiu9uH_XkRiRRqbi_V_BPZL79BFktHH7yjDhgNi8PFQ@mail.gmail.com>
+References: <1379423650-1311-1-git-send-email-felipe.contreras@gmail.com>
+	<e8ccfba3-5198-4986-9b9d-1d69b965386f.maildroid@localhost>
+	<CAMP44s35_emnh9Kce433oy1JW66xB2vaN5f5OO7VF1XqoO=YGQ@mail.gmail.com>
+	<ab38a1b5-e354-4e32-8ede-46a401ef8053.maildroid@localhost>
+	<CAMP44s3Q6ummNmLovw0BuGR=yNWfmRFmrg9xb50OawMwKznfBw@mail.gmail.com>
+	<4d9893bc-c812-457b-9f40-ebe01d37df53@email.android.com>
+	<523cb7e7a2d70_5010801e84148e8@nysa.mail>
+	<573b085d-d7fd-453e-8f2b-f83ba1f85ef7@email.android.com>
+	<CAMP44s14hn5qvG_88e_7FDx9ExSSu8DsVFUa5uhU-aOzSFy4MQ@mail.gmail.com>
+	<749d06d0-3e17-49bf-8299-86c99c0dd9f5@email.android.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
-	Michael Schubert <mschub@elegosoft.com>,
-	Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 21 08:49:39 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Transfer-Encoding: quoted-printable
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, 
+	=?UTF-8?Q?Br=C3=A1ulio_Bhavamitra?= <brauliobo-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: git-users+bncBDBJVMGGZYNBBWH36WIQKGQEPWK5CXY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Sat Sep 21 13:07:08 2013
+Return-path: <git-users+bncBDBJVMGGZYNBBWH36WIQKGQEPWK5CXY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-ea0-f190.google.com ([209.85.215.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNH0c-0001t7-SZ
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 08:49:39 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752551Ab3IUGtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Sep 2013 02:49:35 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:55035 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752266Ab3IUGte (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Sep 2013 02:49:34 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Sat, 21 Sep 2013 02:49:34 EDT
-X-AuditID: 12074411-b7f3e6d0000034d1-01-523d3fd8b49e
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id C6.36.13521.8DF3D325; Sat, 21 Sep 2013 02:42:32 -0400 (EDT)
-Received: from [192.168.69.9] (p4FDD42BF.dip0.t-ipconnect.de [79.221.66.191])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r8L6gRPl001755
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 21 Sep 2013 02:42:29 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130804 Thunderbird/17.0.8
-In-Reply-To: <xmqqd2o3p0nk.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAKsWRmVeSWpSXmKPExsUixO6iqHvD3jbI4MVWCYvpXatZLLqudDNZ
-	NPReYbaYd3cXk8XTzkoHVo9L614yeRz6M4Xd49LL72weFy8pe3zeJBfAGsVtk5RYUhacmZ6n
-	b5fAnfFwRTtTwT+piq7WS0wNjM9Euxg5OSQETCS2nbzFDmGLSVy4t56ti5GLQ0jgMqPEz3sH
-	mUESQgJnmSSerlTsYuTg4BXQlujtLAAJswioSqxrecUKYrMJ6Eos6mlmArFFBcIkdkyfyAZi
-	8woISpyc+YQFxBYRUJOY2HaIBWQ+s8B2Ronb+yaCLRYWkJVYu/ksE8Ti+YwS3/ZMAuvgFLCW
-	+HX1LdhUZgEdiXd9D5ghbHmJ7W/nME9gFJiFZMksJGWzkJQtYGRexSiXmFOaq5ubmJlTnJqs
-	W5ycmJeXWqRrqpebWaKXmlK6iRES4oI7GGeclDvEKMDBqMTD+zDEJkiINbGsuDL3EKMkB5OS
-	KK+HpW2QEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHee3eAynlTEiurUovyYVLSHCxK4rx8S9T9
-	hATSE0tSs1NTC1KLYLIyHBxKEryH7ICGChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZk
-	xINiNb4YGK0gKR6gvc9tgNp5iwsSc4GiEK2nGHU5mjat+sooxJKXn5cqJc57HGSHAEhRRmke
-	3ApYQnvFKA70sTDvDZAqHmAyhJv0CmgJE9CSUwusQJaUJCKkpBoYF717F5nBkhe0alu052OB
-	CVGTFUI3t93e/ecDc/KHjFWVAoJOc5h+L9ruLRfTkfRSxCjj8/XcJ5ohJyJ1C8VX 
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235094>
+	(envelope-from <git-users+bncBDBJVMGGZYNBBWH36WIQKGQEPWK5CXY-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1VNL1m-0003d6-55
+	for gcggu-git-users@m.gmane.org; Sat, 21 Sep 2013 13:07:06 +0200
+Received: by mail-ea0-f190.google.com with SMTP id h14sf159585eak.7
+        for <gcggu-git-users@m.gmane.org>; Sat, 21 Sep 2013 04:07:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:x-original-sender:x-original-authentication-results:reply-to
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        bh=wlEM5LfSVRUcl5qwJT6Ph54YstKdt11bssqmdnG99iM=;
+        b=aaK0G6s2zhrT1Xa15gETaV18qk/uvsjsQVoL0X1OqC0UQy+GUGcS6NcsI2GAtI8J0v
+         5m3lJixnixqPPsfxZcofS4KW5MIBGxPL8NpDtC62Zrdtpu1O7CLxs7Wev26FlIqARDDX
+         0c1R4Qi7Y6E9otpQAJXnVWAqFIt9Hu0BY0xBzKCYOzX1CkJmRFDJk0iZ4xTDtj5vCfB5
+         HooeEh/48M/GBvGrqawP+jbFOQK2oMIkozmS5UtrzkG0V0SJMw+CZJDnruFKQtku4RFN
+         C+elCMRRT4eh0huo5ak1tKVYsDhaqyXH4G6JFDGWwvq4tBixwL+/IaoTvXJmppyELnyT
+         kTfA==
+X-Received: by 10.180.85.168 with SMTP id i8mr251354wiz.9.1379761625892;
+        Sat, 21 Sep 2013 04:07:05 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.180.10.3 with SMTP id e3ls352035wib.38.gmail; Sat, 21 Sep 2013
+ 04:07:04 -0700 (PDT)
+X-Received: by 10.204.230.12 with SMTP id jk12mr223bkb.8.1379761624316;
+        Sat, 21 Sep 2013 04:07:04 -0700 (PDT)
+Received: from mail-la0-x22d.google.com (mail-la0-x22d.google.com [2a00:1450:4010:c03::22d])
+        by gmr-mx.google.com with ESMTPS id qy6si1238316bkb.3.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 21 Sep 2013 04:07:04 -0700 (PDT)
+Received-SPF: pass (google.com: domain of felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 2a00:1450:4010:c03::22d as permitted sender) client-ip=2a00:1450:4010:c03::22d;
+Received: by mail-la0-f45.google.com with SMTP id eh20so1139295lab.18
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Sat, 21 Sep 2013 04:07:04 -0700 (PDT)
+X-Received: by 10.152.37.103 with SMTP id x7mr1349975laj.28.1379761623979;
+ Sat, 21 Sep 2013 04:07:03 -0700 (PDT)
+Received: by 10.114.91.169 with HTTP; Sat, 21 Sep 2013 04:07:03 -0700 (PDT)
+In-Reply-To: <749d06d0-3e17-49bf-8299-86c99c0dd9f5-2ueSQiBKiTY7tOexoI0I+QC/G2K4zDHf@public.gmane.org>
+X-Original-Sender: felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates
+ 2a00:1450:4010:c03::22d as permitted sender) smtp.mail=felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org;
+       dkim=pass header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235095>
 
-On 09/21/2013 12:51 AM, Junio C Hamano wrote:
-> Junio C Hamano <gitster-vger@pobox.com> writes:
-> 
->> I also agree that the documentation is misstated; "remote-tracking branch"
->> may have been a convenient and well understood phrase for whoever wrote
->> that part, but the --prune is designed to cull extra refs in the
->> hierarchies into
->> which refs would be fetched if counterparts existed on the other side, so
->> culling tags that do not exist on the remote side should also be described.
-> 
-> (gleaning-leftovers mode)
+On Sat, Sep 21, 2013 at 1:33 AM, David Aguilar <davvid-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+> Felipe Contreras <felipe.contreras-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+>>I know 'git ci' is perfectly fine shortcut to 'git commit'.
+>>
+>>Either way, it doesn't matter. Even if we agree that /etc/gitconfig.d
+>>is what we want, or we add an /usr/share/git/config, Junio is not
+>>going to apply any patch, even if it's what most users want.
+>
+> Please stop making personal attacks that add nothing to your argument. No=
+ one cares.  Let it be.
 
-Thanks for following up on this with your proposed documentation patch.
- I have been researching and experimenting, and still find the use of
-fetch confusing with respect to tags.  I think the problem is primarily
-that the behavior is awkward, and that it would be better to change the
-behavior than to document the awkward behavior.
+There are no personal attacks here. A personal attack would be 'X is a
+moron', or 'X doesn't know what he is talking about', I don't see any
+of that.
 
-I must have read an old version of the documentation, from which it
-seemed that "git fetch --tags" fetches all tags from the remote *in
-addition to* the references and tags that would otherwise be fetched.
-This seems like a handy and safe feature, and I wish that this were
-indeed the effect of "--tags".
+This is a fact, do you see anybody besides you and me commenting about
+the subject? More specifically, do you see Junio making any comment?
 
-But I see that the documentation for "--tags" has been changed and now
-states explicitly that "--tags" is equivalent to specifying
-"refs/tags/*:refs/tags/*" on the command line, overriding any configured
-refspecs.  This doesn't seem like useful behavior; why would I want to
-fetch tags from a remote without also updating the configured refspecs?
- And contrariwise, how can I fetch the configured refspecs *and* all
-tags at the same time in a single fetch?
+> Let's move this in a more constructive direction then, no?
+>
+> How about working on documenting the new aliases and add a knob to the Ma=
+kefile so that we can choose whether or not to install the stock config?
 
-OK, one way to do it is to configure an explicit refspec for fetching
-the tags:
+Sure, but document these aliases where? If you mean document them in
+the man page of each command (e.g. git commit, alias: ci), then sure,
+that's fine by me.
 
-[remote "origin"]
-	url = [...]
-	fetch = +refs/heads/*:refs/remotes/origin/*
-	fetch = refs/tags/*:refs/tags/*
+Adding a know to the Makefile I think doesn't make sense, because a
+packager would do.
 
-[Here is one oddity: even if the tags refspec doesn't have a "+" prefix,
-"git fetch" will do non-ff updates to tags, presumably because of the
-implicit tag-fetching behavior.]
+% make NO_DEFAULT_CONFIG=3Dy install
 
-But if I use this configuration and type "git fetch --prune", then any
-local tags that are not present on the remote will be killed.
+Which is not very different from:
 
-In short, when local tags are in use, or tags that are in one remote but
-not another [1], then the current Git implementation makes it impossible to
+% make install
+% rm -f $DESTDIR/etc/gitconfig
 
-- Configure "fetch.prune" or "remote.$REMOTE.prune" without preventing
-the use of "fetch --tags"
+> I'm not trying to fight this patch -- the idea is nice. Most users and di=
+stros probably won't change stock aliases, so your energy may be better spe=
+nt getting consensus on what the stock aliases could be.
 
-- Configure default fetching of all tags (via a refspec or via
-remote.$REMOTE.tagopt) without preventing the use of "fetch --prune"
+Thanks for stating so, unfortunately, I don't think it really matters
+because this is a change, and the Git project is not welcome to
+change.
 
-- Configure "fetch.prune" or "remote.$REMOTE.prune" and the default
-fetching of all tags (via a refspec or via remote.$REMOTE.tagopt) at the
-same time.
+> Would it not be better to have these aliases, plus/minus one or two, then=
+ none at all?
 
-This is unfortunate.
+Yes, but you don't see anybody advocating for that at all, do you?
 
-I think it would be preferable if "--prune" would *not* affect tags, and
-if there were an extra option like "--prune-tags" that would have to be
-used explicitly to cause tags to be pruned.  Would somebody object to
-such a change?
+> ...
+> Yes I know about .rpmsave files. For rpm, it'll refuse to upgrade Git sin=
+ce this new file will conflict with an existing package.
 
-Michael
+In your case, yes, not in the normal case, where /etc/gitconfig is not
+provided by a package.
 
-[1] In fact, the scenario that bit my colleague was as follows: he had
-just built a software release, which creates a new commit and a release
-tag.  When he tried to push the commit, there was a non-ff failure due
-to an upstream change.  So he ran "git fetch --prune" to get the
-upstream change, and this caused the release tag (which hadn't been
-pushed yet) to be lost.
+> That's easier to deal with because the config package can then be indepen=
+dently modified to install its file to eg git.d/foo.conf in the directory i=
+nclude example.  That would then allow the upgrade, and at no point did the=
+ intended config ever get lost.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+It might be easier to deal with, but it would still require an intervention=
+.
+
+> Puppet users, for example, may end up with rpmsave turds on their systems=
+, though. When you are managing lots of machines this can be very annoying =
+-- that's why I mentioned it.  Don't bother arguing this point any further.=
+ It's boring.
+
+It can be very annoying, but your /etc/gitconfig.d solution doesn't
+help in that regard.
+
+Either way, the move from 'git-foo' to 'git foo' was very annoying as
+well, but we all agreed it was the right thing to do (most of us),
+fortunately in this case I think the people that have a /etc/gitconfig
+are significantly less.
+
+> ...
+> In summary -- makefile knob, please, and at least mention the stock alias=
+es somewhere in the docs so that the users can know to read /etc/gitconfig =
+if they want to know more.  Who knows, maybe it will get applied, but it de=
+finitively won't if all you do is whine about it.
+
+It won't get applied, I'll do the modifications, and you'll see.
+
+--=20
+Felipe Contreras
+
+--=20
+You received this message because you are subscribed to the Google Groups "=
+Git for human beings" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit https://groups.google.com/groups/opt_out.
