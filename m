@@ -1,121 +1,118 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH/RFC 0/7] Support for Ruby
-Date: Sat, 21 Sep 2013 21:29:05 +0000
-Message-ID: <20130921212904.GA235845@vauxhall.crustytoothpaste.net>
-References: <1379789295-18519-1-git-send-email-felipe.contreras@gmail.com>
+From: Keshav Kini <keshav.kini@gmail.com>
+Subject: [BUG?] inconsistent `git reflog show` output, possibly `git fsck` output
+Date: Sat, 21 Sep 2013 17:16:01 -0500
+Message-ID: <871u4hzusr.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5vNYLRcllDrimb99"
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 21 23:29:32 2013
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 22 00:16:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNUk5-0008HT-6G
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 23:29:29 +0200
+	id 1VNVTO-0004Rk-9w
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Sep 2013 00:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719Ab3IUV3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Sep 2013 17:29:13 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:60443 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751567Ab3IUV3M (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Sep 2013 17:29:12 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9A65E80001;
-	Sat, 21 Sep 2013 21:29:10 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1379789295-18519-1-git-send-email-felipe.contreras@gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.11-rc7-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751862Ab3IUWQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Sep 2013 18:16:14 -0400
+Received: from plane.gmane.org ([80.91.229.3]:52978 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751846Ab3IUWQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Sep 2013 18:16:13 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1VNVTH-0004Px-W9
+	for git@vger.kernel.org; Sun, 22 Sep 2013 00:16:11 +0200
+Received: from cpe-72-179-6-119.austin.res.rr.com ([72.179.6.119])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 22 Sep 2013 00:16:11 +0200
+Received: from keshav.kini by cpe-72-179-6-119.austin.res.rr.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 22 Sep 2013 00:16:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: cpe-72-179-6-119.austin.res.rr.com
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Cancel-Lock: sha1:ypb1CaNn4CF2S8PYL+2lTpR0tac=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235149>
+
+Hello,
+
+When trying out Roberto Tyley's BFG Repo-Cleaner program [1], I managed
+to put a git repository in the following state:
+
+    [2] fs@erdos /tmp/bfg-test-repo $ cat .git/logs/HEAD
+    0000000000000000000000000000000000000000 00afb9f9a0c87dba4a203413358984e9f4fa5ffb Keshav Kini <keshav.kini@gmail.com> 1379746570 -0500	clone: from /home/fs/work/x86
+    [2] fs@erdos /tmp/bfg-test-repo $ git rev-parse HEAD
+    a29caa4646698bcf2273cc60d3d612593b4ced8f
+    [2] fs@erdos /tmp/bfg-test-repo $ git reflog | cat
+    a29caa4 (HEAD, refs/remotes/origin/HEAD, refs/remotes/origin/32-bit-accesses, refs/heads/32-bit-accesses) HEAD@{0}: clone: from /home/fs/work/x86
+    [2] fs@erdos /tmp/bfg-test-repo $ git fsck
+    Checking object directories: 100% (256/256), done.
+    Checking objects: 100% (6635/6635), done.
+    [2] fs@erdos /tmp/bfg-test-repo $ echo $?
+    0
+
+This situation came about because the BFG Repo-Cleaner doesn't write new
+reflog entries after creating its new objects and moving refs around.
+But that aside, I think how git handles the situation might be a bug.
+
+As you can see, HEAD is currently at a29caa46, but the reflog's data
+file .git/logs/HEAD doesn't describe how it came to be at a29caa46. The
+single reflog entry describes how the HEAD pointer was initialized to
+00afb9f9 when I cloned the repository from /home/fs/work/x86 .
+
+By the wording of the `git reflog` man page, I would assume that the
+lines displayed by `git reflog show HEAD` would correspond to a chain of
+reflog entries, where the short commit ID at the beginning of each line
+would represent the second field of the reflog entry in question, and
+the first field of the reflog entry would correspond to the short commit
+ID at the beginning of the line directly below. For example, if `git
+reflog show HEAD` displayed this:
+
+    0123456 [stuff] foo
+    789abcd [stuff] bar
+    ef01234 [stuff] baz
+
+Then I would expect the reflog data file for HEAD to look something like
+this, where '.' represents an unknown hex digit:
+
+    789abcd................................. 0123456................................. [stuff]
+    ef01234................................. 789abcd................................. [stuff]
+    ........................................ ef01234................................. [stuff]
+
+However, in this example, the short commit ID shown in `git reflog show`
+doesn't even appear in the reflog data file!
+
+It seems to me that one of two things should be the case. Either 1) it
+should be considered impossible to have a reflog for a ref X which
+doesn't contain a chain of commits leading up to the current location of
+X; or 2) if reflogs are allowed not to form an unbroken chain of commits
+leading to X, then `git reflog show` should at least make sure to
+actually display a commit ID corresponding to the second field of each
+reflog entry it reads, and not some other commit ID.
+
+In the first case, the bug is that `git fsck` doesn't catch the
+supposedly impossible situation that exists in the repository I've
+described in this email. In the second case, the bug is that `git reflog
+show` has bad output.
+
+I'm reporting this because I was having difficulty figuring out why `git
+gc` was not collecting the commit 00afb9f. The reason turned out to be
+that it was mentioned in a reflog and thus not getting pruned, which
+would have been much easier to discover had the output of `git reflog
+show` mentioned 00afb9f at all.
+
+Please let me know what you think.
+
+Thanks,
+    Keshav
 
 
---5vNYLRcllDrimb99
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, Sep 21, 2013 at 01:48:08PM -0500, Felipe Contreras wrote:
-> Hi,
->=20
-> It was discussed before that there was a need to replace Git scripts
-> from perl and sh that utilize the 'git' binary to do everything they
-> need, which requires many forks, and that creates problems on
-> platforms like Windows.
->=20
-> This is a first step meant to show how a solution using Ruby would look l=
-ike.
->=20
-> Other alternatives just don't cut it. Shell scripts are too simple, and
-> invariably require forks. Perl could use Git's internal C code, but it's =
-syntax
-> is too cumbersome and it's loosing more and more popularity. Python and R=
-uby
-> are the only modern languages that could fit all the needs, but Python's =
-syntax
-> is not ideal, specially considering the background of the Git community, =
-and
-> also, Ruby's C extensibility is simply superb.
->=20
-> This patch series introduces Ruby bindings for Git's C internal library, =
-and
-> add example commands to show how it could be used, and how it resembles t=
-he
-> original C code, shell code, and perl code. Basically, Ruby fits like a g=
-love.
-
-A couple of things: first, I'm not opposed in principle to using Ruby
-for git.  As you say, it's a good language and it has much nicer C
-bindings.
-
-As Junio has also pointed out in the past, there are people who aren't
-able to use Ruby in the same way that they are Perl and Python.  If it's
-announced now, Git 2.0 might be a good time to start accepting Ruby
-scripts, as that will give people time to plan for its inclusion.
-
-On a more technical note, my objection to your binding implementation is
-that fundamentally, Ruby is an object-oriented language, but your
-bindings don't take advantage of that; they're completely procedural.  I
-realize most of the git codebase is as well, but that's because it's
-written in C.  It seems a shame not to take advantage of what the
-language offers, especially since I know others are going to want to
-take advantage of the provided bindings.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---5vNYLRcllDrimb99
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBCgAGBQJSPg+gAAoJEL9TXYEfUvaLt4cP/16IKNz0A+a3IeNUpmYyJXTn
-YGvJrV0j1vRADnxGpBJKvS4tijNID0pbCGK4Ygb+/ku2LgBVkExLBKJ9pWilsRXA
-8cRf6NpRw/C9hJe29bzNhFxBh7miCwGoPuPwZQhhO4+yEWmEQogX5bZ+7SrXRkjn
-MQvMGdgN7BDrRzAEWDbUvtrqDgsAbvVfNppNIoBde4+Edg2Gk/GCz48vrGDTFLGs
-tGPJWkgMdnu7EOk2lTgdU3V1PmooP2HjS/lGpZ2QQ6mYpGtrvBJjQJTLmHWFuAkA
-tIfc3lRPJwSDwMIG2UWCscl4Ag/4HVpiQLDyLEIKbvvJ3KQxVKqX7ZHDu3qTbMWN
-xRk9nnP64apvE3n8P1HL+lUoj5tjYS08ETFmZ3IKuDNtrMvipd7Y+GpzTdKxNEgH
-E/Wbd8b1vQG1AT6gjYwBk0TTnCenk/vXS+ZJtGIF5U0wU9wCGIZ473Mm+/DSOLiv
-F+6YH/ZksBMWG4MmgA9lZ7OrcZ3+cC5heCKIF/3x9dl2jEc1PWcWK763AgRDewiK
-xlOL4vAD0EQzVziEJu93O+LluvrIcPOyvpgkpwlDUfT0SNjmuuQMjJusNKhmEuGt
-TW95W7lqc/bUSiZeZD3LXRaYrGUXPlhovTHsihA6/XR0PsLWuYQk+i7AkAbPPMyr
-v+18/+mdYCtWAteGNaHn
-=jqGn
------END PGP SIGNATURE-----
-
---5vNYLRcllDrimb99--
+[1] http://rtyley.github.io/bfg-repo-cleaner/
