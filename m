@@ -1,118 +1,109 @@
-From: Keshav Kini <keshav.kini@gmail.com>
-Subject: [BUG?] inconsistent `git reflog show` output, possibly `git fsck` output
-Date: Sat, 21 Sep 2013 17:16:01 -0500
-Message-ID: <871u4hzusr.fsf@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH/RFC 0/7] Support for Ruby
+Date: Sat, 21 Sep 2013 17:52:05 -0500
+Message-ID: <CAMP44s3Shdg40go-WyGV8QKwEGoXg8hvEe8tetMyxvx5Sb7evw@mail.gmail.com>
+References: <1379789295-18519-1-git-send-email-felipe.contreras@gmail.com>
+	<20130921212904.GA235845@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 22 00:16:21 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Sun Sep 22 00:52:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNVTO-0004Rk-9w
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Sep 2013 00:16:18 +0200
+	id 1VNW2A-00051a-57
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Sep 2013 00:52:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751862Ab3IUWQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Sep 2013 18:16:14 -0400
-Received: from plane.gmane.org ([80.91.229.3]:52978 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751846Ab3IUWQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Sep 2013 18:16:13 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1VNVTH-0004Px-W9
-	for git@vger.kernel.org; Sun, 22 Sep 2013 00:16:11 +0200
-Received: from cpe-72-179-6-119.austin.res.rr.com ([72.179.6.119])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 22 Sep 2013 00:16:11 +0200
-Received: from keshav.kini by cpe-72-179-6-119.austin.res.rr.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 22 Sep 2013 00:16:11 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: cpe-72-179-6-119.austin.res.rr.com
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-Cancel-Lock: sha1:ypb1CaNn4CF2S8PYL+2lTpR0tac=
+	id S1752030Ab3IUWwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Sep 2013 18:52:09 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:58563 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751823Ab3IUWwH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Sep 2013 18:52:07 -0400
+Received: by mail-lb0-f173.google.com with SMTP id o14so1652346lbi.32
+        for <git@vger.kernel.org>; Sat, 21 Sep 2013 15:52:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=0T1Zcm3rG2LgqbF8stnIMFFpTiy4bhBMSFEVn8IT1jU=;
+        b=uOX3pE5wJIAeQB4t04GERHNQmSAz0Vn3kkaXj6lPvbC8TNUY0YPtDn1OrGd9Rn9Jhz
+         DucrUSegeyhoj3P9Zjs5KG8rN3kr2rKTb7dgfYbHPNJxYp03AONdBqlPfctWaSh3LCfw
+         V/lojv03pZSfGDRo+6zvwF1CqdtIK3jTAQRpSL8+MBGQnfISxQ84aJp+xI4MxAzRDMd9
+         VJ22QPlbBS1uvLuYv253t39Bg6FznMFx12xg7inGrWQ1w/CHAkeC0l7NT6S06FPRLjQh
+         e3SyiUuLvc9ugpLq3gpYiReAJHeY7W5Qv0cBjMTVfwPdUc6yK7nLsnAQvls2I7m5US4s
+         WkgA==
+X-Received: by 10.152.44.225 with SMTP id h1mr12827968lam.15.1379803925255;
+ Sat, 21 Sep 2013 15:52:05 -0700 (PDT)
+Received: by 10.114.91.230 with HTTP; Sat, 21 Sep 2013 15:52:05 -0700 (PDT)
+In-Reply-To: <20130921212904.GA235845@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235150>
 
-Hello,
+On Sat, Sep 21, 2013 at 4:29 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Sat, Sep 21, 2013 at 01:48:08PM -0500, Felipe Contreras wrote:
+>> Hi,
+>>
+>> It was discussed before that there was a need to replace Git scripts
+>> from perl and sh that utilize the 'git' binary to do everything they
+>> need, which requires many forks, and that creates problems on
+>> platforms like Windows.
+>>
+>> This is a first step meant to show how a solution using Ruby would look like.
+>>
+>> Other alternatives just don't cut it. Shell scripts are too simple, and
+>> invariably require forks. Perl could use Git's internal C code, but it's syntax
+>> is too cumbersome and it's loosing more and more popularity. Python and Ruby
+>> are the only modern languages that could fit all the needs, but Python's syntax
+>> is not ideal, specially considering the background of the Git community, and
+>> also, Ruby's C extensibility is simply superb.
+>>
+>> This patch series introduces Ruby bindings for Git's C internal library, and
+>> add example commands to show how it could be used, and how it resembles the
+>> original C code, shell code, and perl code. Basically, Ruby fits like a glove.
+>
+> A couple of things: first, I'm not opposed in principle to using Ruby
+> for git.  As you say, it's a good language and it has much nicer C
+> bindings.
+>
+> As Junio has also pointed out in the past, there are people who aren't
+> able to use Ruby in the same way that they are Perl and Python.  If it's
+> announced now, Git 2.0 might be a good time to start accepting Ruby
+> scripts, as that will give people time to plan for its inclusion.
 
-When trying out Roberto Tyley's BFG Repo-Cleaner program [1], I managed
-to put a git repository in the following state:
+Yes, and there are people who aren't able to use Perl/Python in the
+same way they use Ruby. That's why I tried to show why Ruby makes a
+perfect choice.
 
-    [2] fs@erdos /tmp/bfg-test-repo $ cat .git/logs/HEAD
-    0000000000000000000000000000000000000000 00afb9f9a0c87dba4a203413358984e9f4fa5ffb Keshav Kini <keshav.kini@gmail.com> 1379746570 -0500	clone: from /home/fs/work/x86
-    [2] fs@erdos /tmp/bfg-test-repo $ git rev-parse HEAD
-    a29caa4646698bcf2273cc60d3d612593b4ced8f
-    [2] fs@erdos /tmp/bfg-test-repo $ git reflog | cat
-    a29caa4 (HEAD, refs/remotes/origin/HEAD, refs/remotes/origin/32-bit-accesses, refs/heads/32-bit-accesses) HEAD@{0}: clone: from /home/fs/work/x86
-    [2] fs@erdos /tmp/bfg-test-repo $ git fsck
-    Checking object directories: 100% (256/256), done.
-    Checking objects: 100% (6635/6635), done.
-    [2] fs@erdos /tmp/bfg-test-repo $ echo $?
-    0
+> On a more technical note, my objection to your binding implementation is
+> that fundamentally, Ruby is an object-oriented language, but your
+> bindings don't take advantage of that; they're completely procedural.  I
+> realize most of the git codebase is as well, but that's because it's
+> written in C.  It seems a shame not to take advantage of what the
+> language offers, especially since I know others are going to want to
+> take advantage of the provided bindings.
 
-This situation came about because the BFG Repo-Cleaner doesn't write new
-reflog entries after creating its new objects and moving refs around.
-But that aside, I think how git handles the situation might be a bug.
+For the moment the bindings are only for Git commands, so the primary
+users are Git developers, that's why I tried to leave them close to
+the current C/shell/perl code.
 
-As you can see, HEAD is currently at a29caa46, but the reflog's data
-file .git/logs/HEAD doesn't describe how it came to be at a29caa46. The
-single reflog entry describes how the HEAD pointer was initialized to
-00afb9f9 when I cloned the repository from /home/fs/work/x86 .
+Having said that, it does use a little bit of object-oriented stuff:
 
-By the wording of the `git reflog` man page, I would assume that the
-lines displayed by `git reflog show HEAD` would correspond to a chain of
-reflog entries, where the short commit ID at the beginning of each line
-would represent the second field of the reflog entry in question, and
-the first field of the reflog entry would correspond to the short commit
-ID at the beginning of the line directly below. For example, if `git
-reflog show HEAD` displayed this:
+  commit = lookup_commit_reference(sha1)
+  p commit.buffer
 
-    0123456 [stuff] foo
-    789abcd [stuff] bar
-    ef01234 [stuff] baz
+Now, if anybody has ideas into how the bindings could be more object
+oriented, I'm all ears, but unfortunately what I foresee is that
+nobody will consider this proposal seriously.
 
-Then I would expect the reflog data file for HEAD to look something like
-this, where '.' represents an unknown hex digit:
+Cheers.
 
-    789abcd................................. 0123456................................. [stuff]
-    ef01234................................. 789abcd................................. [stuff]
-    ........................................ ef01234................................. [stuff]
-
-However, in this example, the short commit ID shown in `git reflog show`
-doesn't even appear in the reflog data file!
-
-It seems to me that one of two things should be the case. Either 1) it
-should be considered impossible to have a reflog for a ref X which
-doesn't contain a chain of commits leading up to the current location of
-X; or 2) if reflogs are allowed not to form an unbroken chain of commits
-leading to X, then `git reflog show` should at least make sure to
-actually display a commit ID corresponding to the second field of each
-reflog entry it reads, and not some other commit ID.
-
-In the first case, the bug is that `git fsck` doesn't catch the
-supposedly impossible situation that exists in the repository I've
-described in this email. In the second case, the bug is that `git reflog
-show` has bad output.
-
-I'm reporting this because I was having difficulty figuring out why `git
-gc` was not collecting the commit 00afb9f. The reason turned out to be
-that it was mentioned in a reflog and thus not getting pruned, which
-would have been much easier to discover had the output of `git reflog
-show` mentioned 00afb9f at all.
-
-Please let me know what you think.
-
-Thanks,
-    Keshav
-
-
-[1] http://rtyley.github.io/bfg-repo-cleaner/
+-- 
+Felipe Contreras
