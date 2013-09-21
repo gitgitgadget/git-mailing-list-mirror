@@ -1,77 +1,74 @@
-From: Ram Rachum <ram@rachum.com>
-Subject: Using alternate working directory
-Date: Sun, 22 Sep 2013 00:04:24 +0300
-Message-ID: <523E09D8.8090808@rachum.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] diff: add a config option to control orderfile
+Date: Sun, 22 Sep 2013 00:08:39 +0300
+Message-ID: <20130921210839.GA21974@redhat.com>
+References: <20130831194425.GA14706@redhat.com>
+ <xmqqioyhu8wd.fsf@gitster.dls.corp.google.com>
+ <20130903210815.GB24480@redhat.com>
+ <20130915074900.GA30438@redhat.com>
+ <20130915080830.GA30465@redhat.com>
+ <xmqq8uyv1kka.fsf@gitster.dls.corp.google.com>
+ <20130917164226.GB20672@redhat.com>
+ <xmqqfvt3z7i4.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 21 23:04:35 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 21 23:06:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNULz-00056x-HT
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 23:04:35 +0200
+	id 1VNUNo-0005fb-Bl
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 23:06:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461Ab3IUVE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Sep 2013 17:04:28 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:58661 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751380Ab3IUVE2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Sep 2013 17:04:28 -0400
-Received: by mail-wi0-f171.google.com with SMTP id hm2so847347wib.4
-        for <git@vger.kernel.org>; Sat, 21 Sep 2013 14:04:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=mnmlwhnKKz2QQwCDn/sc1m+3rRy6sI22iJeseeOoClc=;
-        b=G62WVtMWXNA+4Hak4vfLRltiReZqWsBfvaRJ+ghb5XCATzpHq4Exx2o5V+pjrkZQUl
-         WtUWPzcVn0/FsQ4BYRWDO4GVrjWm1db9ADN94LhzPwwNLEDSa5UFVRmwh1ZC4BoJXW9o
-         zDh2UbsisN0pg7bs797dHYh38IyDVFwehau4nWvnqIlUgU15AKZ5ctt2IDLfLw7NMVV2
-         gysRcDoe3NcyzR66qmRAkj9fTADLueynXDtRkOsHfYrFLRUyZ6iS0MzQPjCWm9c34qX5
-         OhXmmrTH43W6JPZqCZ1ND1n/o55IFW8vcAO37ok1PFzGRgTvXHZTbOHpdtTqe1ctvWDe
-         zDHA==
-X-Received: by 10.180.9.69 with SMTP id x5mr7529497wia.41.1379797467126;
-        Sat, 21 Sep 2013 14:04:27 -0700 (PDT)
-Received: from [192.168.1.100] ([109.226.59.239])
-        by mx.google.com with ESMTPSA id mb7sm14511120wic.10.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 21 Sep 2013 14:04:26 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+	id S1751528Ab3IUVGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Sep 2013 17:06:25 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:20923 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751462Ab3IUVGY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Sep 2013 17:06:24 -0400
+Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r8LL6M0Y006592
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sat, 21 Sep 2013 17:06:23 -0400
+Received: from redhat.com (vpn1-6-218.ams2.redhat.com [10.36.6.218])
+	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id r8LL6LT5023660;
+	Sat, 21 Sep 2013 17:06:21 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqfvt3z7i4.fsf@gitster.dls.corp.google.com>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235147>
 
-Hi everybody!
+On Tue, Sep 17, 2013 at 10:24:19AM -0700, Junio C Hamano wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
+> 
+> > So might it not be useful to tweak patch id to
+> > sort the diff, making it a bit more stable?
+> 
+> That is one thing that needs to be done, I think.  But it would be
+> unfortunate if we have to do that unconditionally, though, as we may
+> be "buffering" many hundred kilobytes of patch text in core.  If we
+> can do so without regressing the streaming performance for the most
+> common case of not using the orderfile on the generating side (hence
+> not having to sort on the receiving end), it would be ideal.  I am
+> not sure offhand how much code damage we are talking about, though.
+> 
+> > I'll be glad to help do this if you tell me what these parts are.
+> > anything else besides fixing besides the stand-alone patch id?
+> 
+> Off the top of my head I do not think of one (but that is not a
+> guarantee that there isn't any).
 
-I need some help with Git.
+Okay so I did this by reworking the internal algorithm used by the
+stand-alone patch-id (hope you've seen this mail).
+Now, a question: does it matter whether the algorithm used by diff_get_patch_id
+is different?
+Does something rely on them being the same?
 
-I'm making a script `gm` which lets me merge one branch into another 
-without having either checked out. It works for some cases but not all. 
-I'm trying to make it work for more cases.
-
-I concluded that the best way to do it would be by using an alternate, 
-temporary working directory instead of the repo itself.
-
-This is my script:
-
-     https://gist.github.com/cool-RR/6575042
-
-Now, the problem is that when I try it, it gives these errors:
-
-     git checkout-index: my_file is not in the cache and then error:
-     my_file: cannot add to the index - missing --add option?
-
-Anyone has any idea what to do?
-
-P.S. I've also asked this on Stack Overflow, so whoever comes up with an 
-answer can claim his 150 imaginary internet points on that question.
-
-
-Thanks,
-Ram.
+If yes, we'd have to change diff_get_patch_id as well.
