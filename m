@@ -1,138 +1,454 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH/RFC 3/7] ruby: add simple wrappers
-Date: Sat, 21 Sep 2013 13:48:11 -0500
-Message-ID: <1379789295-18519-4-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH/RFC 4/7] ruby: rewrite 'request-pull'
+Date: Sat, 21 Sep 2013 13:48:12 -0500
+Message-ID: <1379789295-18519-5-git-send-email-felipe.contreras@gmail.com>
 References: <1379789295-18519-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 21 20:54:03 2013
+X-From: git-owner@vger.kernel.org Sat Sep 21 20:54:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNSJf-0000ZE-0Z
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 20:54:03 +0200
+	id 1VNSJj-0000bM-EG
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 20:54:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752482Ab3IUSx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Sep 2013 14:53:58 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:40700 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752391Ab3IUSx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Sep 2013 14:53:57 -0400
-Received: by mail-ob0-f178.google.com with SMTP id uy5so2099962obc.37
-        for <git@vger.kernel.org>; Sat, 21 Sep 2013 11:53:56 -0700 (PDT)
+	id S1752531Ab3IUSyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Sep 2013 14:54:00 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:42226 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752391Ab3IUSx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Sep 2013 14:53:59 -0400
+Received: by mail-ob0-f179.google.com with SMTP id wn1so2083518obc.24
+        for <git@vger.kernel.org>; Sat, 21 Sep 2013 11:53:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DBeDwXHt9rzAGv8+0kfiULP3mZxuVcWTD2EFPPyfNNg=;
-        b=Q89FezDsfc6c50S+rtjXoqbrPpyo5EysV+h8QRgq64At04SLT4e26/eLbKOtuCmimx
-         J8Nrjz8TTSnXSqZT++Z/wWiCPEAeslxgRggZtI5RjXzFkGROuj3C10IKM06Q7FYxL5Pq
-         lYxOUuq2Dvh731PcTWHI8ntI0G5gZJTXDi/sajemTPFWzJEhS4bI4JwEbpOQgwHYmhSY
-         W77gPincwSv+kPLGGXZVQllbSNcjRq1kcEpFc+01uC9b8EwL5zdEgIpq7lD/HlaMtybU
-         UD0tuMeYTdTQaJ3GGXdk9Y9cHTi9MotfEXXKllzoe8ANrmvrQHtUs8cnhFPs2eLCiuw3
-         WyXw==
-X-Received: by 10.60.174.75 with SMTP id bq11mr11639309oec.17.1379789636864;
-        Sat, 21 Sep 2013 11:53:56 -0700 (PDT)
+        bh=//5CosY2Y5Yt0sGCVheW0Efyqrhjq2ekizep7e7Ul44=;
+        b=QlCDmECsUT9wZTZqZ8ckRon73aigRxq9zzdC9AnC+2kqzP+qmYfVbXnPSa7AQun+so
+         FQD/TlEvTOxaWzboUaliCM5AgsyKosYhkgDc3IFH65WA5aTM3jSzWx4oNzBrsc3LAvEq
+         ZgaIgP5Otj1XPBtH5GD7ZrdOarm8CljokfG8Gm+20y9aMGcg8uDh5c72NLN/6+C9iorZ
+         YLcK1W9oaeB6y0trtTDFzi6FuDQRsfXs9BHEiGf739pUKmQk0MD+nsVH8Sfr+en6r83u
+         6eSClQp8mcH2N9ZOsU12a/JDJ2kFF/lg+MSGNKaL2YRN4nXWwhjZiGOeS0UQhPG/NOts
+         ebOA==
+X-Received: by 10.182.71.82 with SMTP id s18mr11761085obu.9.1379789639478;
+        Sat, 21 Sep 2013 11:53:59 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id b5sm8620510obj.8.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id r6sm8642337obi.14.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 21 Sep 2013 11:53:56 -0700 (PDT)
+        Sat, 21 Sep 2013 11:53:58 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1379789295-18519-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235137>
-
-So that we can use for_each_ref() inside Ruby, and provide an example
-script.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235138>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Makefile    |  1 +
- git-refs.rb |  7 +++++++
- ruby.c      | 27 +++++++++++++++++++++++++++
- 3 files changed, 35 insertions(+)
- create mode 100644 git-refs.rb
+ Makefile            |   2 +-
+ git-rb-setup.rb     |  25 ++++++++
+ git-request-pull.rb | 153 +++++++++++++++++++++++++++++++++++++++++++++++++
+ git-request-pull.sh | 162 ----------------------------------------------------
+ ruby.c              |   1 +
+ 5 files changed, 180 insertions(+), 163 deletions(-)
+ create mode 100644 git-request-pull.rb
+ delete mode 100755 git-request-pull.sh
 
 diff --git a/Makefile b/Makefile
-index 138f9bf..8a4e48f 100644
+index 8a4e48f..cb6bb4e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -492,6 +492,7 @@ SCRIPT_PYTHON += git-remote-testpy.py
- SCRIPT_PYTHON += git-p4.py
+@@ -465,7 +465,6 @@ SCRIPT_SH += git-quiltimport.sh
+ SCRIPT_SH += git-rebase.sh
+ SCRIPT_SH += git-remote-testgit.sh
+ SCRIPT_SH += git-repack.sh
+-SCRIPT_SH += git-request-pull.sh
+ SCRIPT_SH += git-stash.sh
+ SCRIPT_SH += git-submodule.sh
+ SCRIPT_SH += git-web--browse.sh
+@@ -493,6 +492,7 @@ SCRIPT_PYTHON += git-p4.py
  
  SCRIPT_RUBY += git-rb-setup.rb
-+SCRIPT_RUBY += git-refs.rb
+ SCRIPT_RUBY += git-refs.rb
++SCRIPT_RUBY += git-request-pull.rb
  
  NO_INSTALL += git-remote-testgit
  NO_INSTALL += git-remote-testpy
-diff --git a/git-refs.rb b/git-refs.rb
+diff --git a/git-rb-setup.rb b/git-rb-setup.rb
+index 969278a..f3a2c99 100644
+--- a/git-rb-setup.rb
++++ b/git-rb-setup.rb
+@@ -9,3 +9,28 @@ end
+ def sha1_to_hex(sha1)
+   sha1.unpack('H*').first
+ end
++
++def pager(msg)
++  pager = ENV['GIT_PAGER'] || `git var GIT_PAGER`.chomp
++  system("echo -n '#{msg}' | #{pager}")
++end
++
++class CommandError < RuntimeError
++
++  attr_reader :command, :output
++
++  def initialize(command, output)
++     @command = command
++     @output = output
++  end
++
++  def to_s
++    Array(@command).join(' ').inspect
++  end
++
++end
++
++def run(cmd)
++  system(cmd)
++  raise CommandError.new(cmd, nil) unless $?.success?
++end
+diff --git a/git-request-pull.rb b/git-request-pull.rb
 new file mode 100644
-index 0000000..b048714
+index 0000000..b6d0156
 --- /dev/null
-+++ b/git-refs.rb
-@@ -0,0 +1,7 @@
++++ b/git-request-pull.rb
+@@ -0,0 +1,153 @@
 +#!/usr/bin/env ruby
 +
 +require_relative 'git-rb-setup'
 +
-+for_each_ref() do |name, sha1, flags|
-+  puts '%s: %s' % [name, sha1_to_hex(sha1)]
++patch = ''
++
++ARGV.shift
++
++def usage
++  pager <<EOF
++usage: git request-pull [options] start url [end]
++
++    -p                    show patch text as well
++
++EOF
++  exit 1
 +end
++
++until ARGV.empty?
++  case ARGV.first
++  when '-p'
++    patch = '-p'
++  when '--'
++    ARGV.shift
++    break
++  when /^-/
++    usage
++  else
++    break
++  end
++  ARGV.shift
++end
++
++base = ARGV[0]
++url = ARGV[1]
++head = ARGV[2] || 'HEAD'
++status = 0
++branch_name = nil
++
++headref = `git symbolic-ref -q "#{head}"`.chomp
++
++if system(%[git show-ref -q --verify "#{headref}"])
++  branch_name = headref.gsub(/^refs\/heads\//, '')
++  if branch_name == headref ||
++    ! system(%[git config "branch.#{branch_name}.description" >/dev/null])
++    branch_name = nil
++  end
++end
++
++tag_name = `git describe --exact "#{head}^0" 2>/dev/null`.chomp
++
++usage unless base or url
++
++baserev = `git rev-parse --verify --quiet "#{base}"^0`.chomp
++die "Not a valid revision: #{base}" if baserev.empty?
++
++headrev = `git rev-parse --verify --quiet "#{head}"^0`.chomp
++die "Not a valid revision: #{head}" if headrev.empty?
++
++merge_base = `git merge-base #{baserev} #{headrev}`.chomp
++die "No commits in common between #{base} and #{head}" unless $?.success?
++
++# $head is the token given from the command line, and $tag_name, if
++# exists, is the tag we are going to show the commit information for.
++# If that tag exists at the remote and it points at the commit, use it.
++# Otherwise, if a branch with the same name as $head exists at the remote
++# and their values match, use that instead.
++#
++# Otherwise find a random ref that matches $headrev.
++find_matching_ref='
++  sub abbr {
++    my $ref = shift;
++    if ($ref =~ s|^refs/heads/|| || $ref =~ s|^refs/tags/|tags/|) {
++      return $ref;
++    } else {
++      return $ref;
++    }
++  }
++
++  my ($tagged, $branch, $found);
++  while (<STDIN>) {
++    my ($sha1, $ref, $deref) = /^(\S+)\s+(\S+?)(\^\{\})?$/;
++    next unless ($sha1 eq $ARGV[1]);
++    $found = abbr($ref);
++    if ($deref && $ref eq "tags/$ARGV[2]") {
++      $tagged = $found;
++      last;
++    }
++    if ($ref =~ m|/\Q$ARGV[0]\E$|) {
++      $exact = $found;
++    }
++  }
++  if ($tagged) {
++    print "$tagged\n";
++  } elsif ($exact) {
++    print "$exact\n";
++  } elsif ($found) {
++    print "$found\n";
++  }
++'
++
++ref = `git ls-remote "#{url}" | perl -e '#{find_matching_ref}' "#{head}" "#{headrev}" "#{tag_name}"`.chomp
++url = `git ls-remote --get-url "#{url}"`.chomp
++
++begin
++  run(%[git show -s --format='The following changes since commit %H:
++
++  %s (%ci)
++
++are available in the git repository at:
++' #{merge_base}])
++  puts "  #{url}" + (ref.empty? ? "" : " #{ref}")
++  run(%[git show -s --format='
++for you to fetch changes up to %H:
++
++  %s (%ci)
++
++----------------------------------------------------------------' #{headrev}])
++
++  if branch_name
++    puts "(from the branch description for #{branch_name} local branch)"
++    puts
++    run(%[git config "branch.#{branch_name}.description"])
++  end
++
++  if not tag_name.empty?
++    if ref.empty? || ref != "tags/#{tag_name}"
++      $stderr.puts "warn: You locally have #{tag_name} but it does not (yet)"
++      $stderr.puts "warn: appear to be at #{url}"
++      $stderr.puts "warn: Do you want to push it there, perhaps?"
++    end
++    run(%[git cat-file tag "#{tag_name}" | sed -n -e '1,/^$/d' -e '/^-----BEGIN PGP /q' -e p])
++    puts
++  end
++
++  if branch_name or not tag_name.empty?
++    puts "----------------------------------------------------------------"
++  end
++
++  run(%[git shortlog ^#{baserev} #{headrev}])
++  run(%[git diff -M --stat --summary #{patch} #{merge_base}..#{headrev}])
++
++  if ref.empty?
++    $stderr.puts "warn: No branch of #{url} is at:"
++    run("git show -s --format='warn:   %h: %s' #{headrev} >&2")
++    $stderr.puts "warn: Are you sure you pushed '#{head}' there?"
++    status = 1
++  end
++rescue CommandError
++  status = 1
++end
++
++exit status
+diff --git a/git-request-pull.sh b/git-request-pull.sh
+deleted file mode 100755
+index ebf1269..0000000
+--- a/git-request-pull.sh
++++ /dev/null
+@@ -1,162 +0,0 @@
+-#!/bin/sh
+-# Copyright 2005, Ryan Anderson <ryan@michonline.com>
+-#
+-# This file is licensed under the GPL v2, or a later version
+-# at the discretion of Linus Torvalds.
+-
+-USAGE='<start> <url> [<end>]'
+-LONG_USAGE='Summarizes the changes between two commits to the standard output,
+-and includes the given URL in the generated summary.'
+-SUBDIRECTORY_OK='Yes'
+-OPTIONS_KEEPDASHDASH=
+-OPTIONS_SPEC='git request-pull [options] start url [end]
+---
+-p    show patch text as well
+-'
+-
+-. git-sh-setup
+-
+-GIT_PAGER=
+-export GIT_PAGER
+-
+-patch=
+-while	case "$#" in 0) break ;; esac
+-do
+-	case "$1" in
+-	-p)
+-		patch=-p ;;
+-	--)
+-		shift; break ;;
+-	-*)
+-		usage ;;
+-	*)
+-		break ;;
+-	esac
+-	shift
+-done
+-
+-base=$1 url=$2 head=${3-HEAD} status=0 branch_name=
+-
+-headref=$(git symbolic-ref -q "$head")
+-if git show-ref -q --verify "$headref"
+-then
+-	branch_name=${headref#refs/heads/}
+-	if test "z$branch_name" = "z$headref" ||
+-		! git config "branch.$branch_name.description" >/dev/null
+-	then
+-		branch_name=
+-	fi
+-fi
+-
+-tag_name=$(git describe --exact "$head^0" 2>/dev/null)
+-
+-test -n "$base" && test -n "$url" || usage
+-
+-baserev=$(git rev-parse --verify --quiet "$base"^0)
+-if test -z "$baserev"
+-then
+-    die "fatal: Not a valid revision: $base"
+-fi
+-
+-headrev=$(git rev-parse --verify --quiet "$head"^0)
+-if test -z "$headrev"
+-then
+-    die "fatal: Not a valid revision: $head"
+-fi
+-
+-merge_base=$(git merge-base $baserev $headrev) ||
+-die "fatal: No commits in common between $base and $head"
+-
+-# $head is the token given from the command line, and $tag_name, if
+-# exists, is the tag we are going to show the commit information for.
+-# If that tag exists at the remote and it points at the commit, use it.
+-# Otherwise, if a branch with the same name as $head exists at the remote
+-# and their values match, use that instead.
+-#
+-# Otherwise find a random ref that matches $headrev.
+-find_matching_ref='
+-	sub abbr {
+-		my $ref = shift;
+-		if ($ref =~ s|^refs/heads/|| || $ref =~ s|^refs/tags/|tags/|) {
+-			return $ref;
+-		} else {
+-			return $ref;
+-		}
+-	}
+-
+-	my ($tagged, $branch, $found);
+-	while (<STDIN>) {
+-		my ($sha1, $ref, $deref) = /^(\S+)\s+(\S+?)(\^\{\})?$/;
+-		next unless ($sha1 eq $ARGV[1]);
+-		$found = abbr($ref);
+-		if ($deref && $ref eq "tags/$ARGV[2]") {
+-			$tagged = $found;
+-			last;
+-		}
+-		if ($ref =~ m|/\Q$ARGV[0]\E$|) {
+-			$exact = $found;
+-		}
+-	}
+-	if ($tagged) {
+-		print "$tagged\n";
+-	} elsif ($exact) {
+-		print "$exact\n";
+-	} elsif ($found) {
+-		print "$found\n";
+-	}
+-'
+-
+-ref=$(git ls-remote "$url" | perl -e "$find_matching_ref" "$head" "$headrev" "$tag_name")
+-
+-url=$(git ls-remote --get-url "$url")
+-
+-git show -s --format='The following changes since commit %H:
+-
+-  %s (%ci)
+-
+-are available in the git repository at:
+-' $merge_base &&
+-echo "  $url${ref+ $ref}" &&
+-git show -s --format='
+-for you to fetch changes up to %H:
+-
+-  %s (%ci)
+-
+-----------------------------------------------------------------' $headrev &&
+-
+-if test -n "$branch_name"
+-then
+-	echo "(from the branch description for $branch_name local branch)"
+-	echo
+-	git config "branch.$branch_name.description"
+-fi &&
+-
+-if test -n "$tag_name"
+-then
+-	if test -z "$ref" || test "$ref" != "tags/$tag_name"
+-	then
+-		echo >&2 "warn: You locally have $tag_name but it does not (yet)"
+-		echo >&2 "warn: appear to be at $url"
+-		echo >&2 "warn: Do you want to push it there, perhaps?"
+-	fi
+-	git cat-file tag "$tag_name" |
+-	sed -n -e '1,/^$/d' -e '/^-----BEGIN PGP /q' -e p
+-	echo
+-fi &&
+-
+-if test -n "$branch_name" || test -n "$tag_name"
+-then
+-	echo "----------------------------------------------------------------"
+-fi &&
+-
+-git shortlog ^$baserev $headrev &&
+-git diff -M --stat --summary $patch $merge_base..$headrev || status=1
+-
+-if test -z "$ref"
+-then
+-	echo "warn: No branch of $url is at:" >&2
+-	git show -s --format='warn:   %h: %s' $headrev >&2
+-	echo "warn: Are you sure you pushed '$head' there?" >&2
+-	status=1
+-fi
+-exit $status
 diff --git a/ruby.c b/ruby.c
-index 5701753..7f0cc9d 100644
+index 7f0cc9d..733215a 100644
 --- a/ruby.c
 +++ b/ruby.c
-@@ -1,12 +1,38 @@
- #include "cache.h"
- #include "exec_cmd.h"
-+#include "refs.h"
+@@ -33,6 +33,7 @@ static void git_init(void)
  
- #undef NORETURN
- #undef PATH_SEP
- 
- #include <ruby.h>
- 
-+static inline VALUE sha1_to_str(const unsigned char *sha1)
-+{
-+	return rb_str_new((const char *)sha1, 20);
-+}
-+
-+static int for_each_ref_fn(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
-+{
-+	VALUE r;
-+	r = rb_yield_values(3, rb_str_new2(refname), sha1_to_str(sha1), INT2FIX(flags));
-+	return r == Qfalse;
-+}
-+
-+static VALUE git_rb_for_each_ref(void)
-+{
-+	int r;
-+	r = for_each_ref(for_each_ref_fn, NULL);
-+	return INT2FIX(r);
-+}
-+
-+static void git_init(void)
-+{
-+	rb_define_global_function("for_each_ref", git_rb_for_each_ref, 0);
-+}
-+
  static const char *commands[] = {
-+	"refs",
+ 	"refs",
++	"request-pull",
  };
  
  static void run_ruby_command(int argc, const char **argv)
-@@ -23,6 +49,7 @@ static void run_ruby_command(int argc, const char **argv)
- 	snprintf(buf, PATH_MAX, "%s/git-%s.rb", dir, cmd);
- 
- 	ruby_init();
-+	git_init();
- 
- 	prefix = Qnil;
- 	rb_define_variable("$prefix", &prefix);
 -- 
 1.8.4-fc
