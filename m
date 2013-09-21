@@ -1,71 +1,56 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH 15/17] t5300: avoid testing ofs-delta with --packv4
-Date: Sat, 21 Sep 2013 12:46:54 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309211237530.312@syhkavp.arg>
-References: <1379771883-10278-1-git-send-email-pclouds@gmail.com>
- <1379771883-10278-16-git-send-email-pclouds@gmail.com>
+From: Adam Spiers <git@adamspiers.org>
+Subject: tools for making upstreaming / backporting easier in git
+Date: Sat, 21 Sep 2013 18:25:19 +0100
+Message-ID: <20130921172519.GB20610@pacific.linksys.moosehall>
+References: <20130427132118.GA25295@pacific.linksys.moosehall>
+ <20130429133205.GA4672@pacific.linksys.moosehall>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_kb5IDwTIWg1PrKJJT9Oyvw)"
-Cc: git@vger.kernel.org
-To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 21 18:47:08 2013
+Content-Type: text/plain; charset=us-ascii
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 21 19:25:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNQKp-0004If-SZ
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 18:47:08 +0200
+	id 1VNQvz-0006ct-1V
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 19:25:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751979Ab3IUQqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Sep 2013 12:46:55 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:62156 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751225Ab3IUQqz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Sep 2013 12:46:55 -0400
-Received: from xanadu.home ([70.83.209.44]) by VL-VM-MR006.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MTH00IJ9IM6LSA0@VL-VM-MR006.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 21 Sep 2013 12:46:54 -0400 (EDT)
-In-reply-to: <1379771883-10278-16-git-send-email-pclouds@gmail.com>
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
-Content-id: <alpine.LFD.2.03.1309211238580.312@syhkavp.arg>
+	id S1753252Ab3IURZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Sep 2013 13:25:24 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:47983 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753236Ab3IURZV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Sep 2013 13:25:21 -0400
+Received: from localhost (5.1.a.c.3.5.0.d.1.6.3.6.d.0.0.1.0.d.3.7.6.a.1.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:11a6:73d0:100d:6361:d053:ca15])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 9343A2E4EA
+	for <git@vger.kernel.org>; Sat, 21 Sep 2013 18:25:19 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <20130429133205.GA4672@pacific.linksys.moosehall>
+X-OS: GNU/Linux
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235131>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi all,
 
---Boundary_(ID_kb5IDwTIWg1PrKJJT9Oyvw)
-Content-id: <alpine.LFD.2.03.1309211238581.312@syhkavp.arg>
-Content-type: TEXT/PLAIN; CHARSET=VISCII
-Content-transfer-encoding: 8BIT
+Back in April, I announced a couple of scripts I'd written to wrap
+around git-cherry and git-notes, which help when you have more than a
+trivial number of commits to upstream / backport from one branch to
+another.  Since then I've improved these scripts, and also written a
+higher-level CLI which should make the whole process pretty easy.
 
-On Sat, 21 Sep 2013, Nguy­n Thái Ng÷c Duy wrote:
+Yesterday I finally finished a blog post with all the details:
 
-> 
-> Signed-off-by: Nguy­n Thái Ng÷c Duy <pclouds@gmail.com>
-> ---
->  t/t5300-pack-object.sh | 39 ++++++++++++++++++++++-----------------
->  1 file changed, 22 insertions(+), 17 deletions(-)
-[...]
+  http://blog.adamspiers.org/2013/09/19/easier-upstreaming-with-git/
 
-This, in combination with patch 10/17, is making the test suite to test 
-either packv4 or non packv4, and never both.  I think this is not a good 
-approach.
+These tools worked pretty well for me and my team, but no doubt some
+people will have ideas how to improve them, or have different
+techniques for tackling the problem.  Either way, I hope this is of
+interest, and I'd be very interested to hear what people think!
 
-Instead we should have packv2 specific tests to enforce --pack-version=2 
-when using pack-objects and create a duplicate of those tests for 
---pack-version=4 when that makes sense.  For tests that are mostly 
-common, the test could be factored out into a function with a pack 
-version argument.  Then, most tests could be always run twice: once for 
-packv2 and again for packv4.  Not doing so makes it more risky to 
-regress packv2 when testing improvements to packv4 support.
-
-
-Nicolas
-
---Boundary_(ID_kb5IDwTIWg1PrKJJT9Oyvw)--
+Cheers,
+Adam
