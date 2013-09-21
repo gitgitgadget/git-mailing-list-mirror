@@ -1,80 +1,69 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 2/2] remote: fix trivial memory leak
-Date: Sat, 21 Sep 2013 09:09:23 -0500
-Message-ID: <1379772563-11000-3-git-send-email-felipe.contreras@gmail.com>
-References: <1379772563-11000-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 21 16:15:23 2013
+From: Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH V3 1/2] doc: command line interface (cli) dot-repository dwimmery
+Date: Sat, 21 Sep 2013 16:11:08 +0100
+Message-ID: <1379776269-4496-2-git-send-email-philipoakley@iee.org>
+References: <1379776269-4496-1-git-send-email-philipoakley@iee.org>
+Cc: Jonathan Nieder <jrnieder@gmail.com>
+To: GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 21 17:10:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNNxx-00011Z-Bn
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 16:15:21 +0200
+	id 1VNOpS-0007pg-J5
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 17:10:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752395Ab3IUOPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Sep 2013 10:15:13 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:49341 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752173Ab3IUOOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Sep 2013 10:14:54 -0400
-Received: by mail-ob0-f178.google.com with SMTP id uy5so1982198obc.9
-        for <git@vger.kernel.org>; Sat, 21 Sep 2013 07:14:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=PNSaGxy/OC2GligOEdt0H8MC+t89w3mG6mvyk0mfJEA=;
-        b=EgCahDsb+izzlA5lv8Su/CApwvnFKQW8OM8MpGXROuWs1iraFAKqaC3GwwWEJxHGFe
-         oKrnvU+qPV+IDgCRGMNi9wjHWgY46uLTjSxLLoGpuJWzp7Q0ZRXWGcFic66hwkqc6QRP
-         h+0VvmLT6YrSvGeFD8C/Ovi/Q5xgY2sqkTj0Xc2x0SzItwRrGOjjHRpWYqAyCdOPw6zR
-         cflNWp62pLZIBs2NuKWOqvLvgIjMOluFY/wwhpvnmu8vcq6UdPRB8pUDOmG3gI3tmfk6
-         9fbuUTZrAcmAx0rnqKvB6CMFfNGrFEvSz1DqmYl37Gep7ixYx3KAtxMh1iWseyzStiV8
-         hlgA==
-X-Received: by 10.60.118.41 with SMTP id kj9mr1990962oeb.31.1379772893470;
-        Sat, 21 Sep 2013 07:14:53 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id d3sm7500295oek.5.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 21 Sep 2013 07:14:52 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.2.gac946cf.dirty
-In-Reply-To: <1379772563-11000-1-git-send-email-felipe.contreras@gmail.com>
+	id S1752619Ab3IUPKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Sep 2013 11:10:12 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:52297 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752353Ab3IUPKL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Sep 2013 11:10:11 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ArwGAGG2PVJOl3GZ/2dsb2JhbABbgweuWJQSgRoXdIImAQVWIxAISTkeBgESiAm6fI9lB4QeA6lzgyU7
+X-IPAS-Result: ArwGAGG2PVJOl3GZ/2dsb2JhbABbgweuWJQSgRoXdIImAQVWIxAISTkeBgESiAm6fI9lB4QeA6lzgyU7
+X-IronPort-AV: E=Sophos;i="4.90,952,1371078000"; 
+   d="scan'208";a="442604118"
+Received: from host-78-151-113-153.as13285.net (HELO localhost) ([78.151.113.153])
+  by out1.ip01ir2.opaltelecom.net with ESMTP; 21 Sep 2013 16:10:09 +0100
+X-Mailer: git-send-email 1.8.1.msysgit.1
+In-Reply-To: <1379776269-4496-1-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235122>
 
-There's no need to set the default remote name beforehand, only to be
-overridden later on, and causing a memory leak, we can do it after the
-configuration has been handled.
+The Git cli will accept dot '.' (period) as the relative path,
+and thus the current repository. Explain this action.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- remote.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/remote.c b/remote.c
-index efcba93..654e7f5 100644
---- a/remote.c
-+++ b/remote.c
-@@ -480,7 +480,6 @@ static void read_config(void)
- 	int flag;
- 	if (default_remote_name) /* did this already */
- 		return;
--	default_remote_name = xstrdup("origin");
- 	current_branch = NULL;
- 	head_ref = resolve_ref_unsafe("HEAD", sha1, 0, &flag);
- 	if (head_ref && (flag & REF_ISSYMREF) &&
-@@ -489,6 +488,8 @@ static void read_config(void)
- 			make_branch(head_ref + strlen("refs/heads/"), 0);
- 	}
- 	git_config(handle_config, NULL);
-+	if (!default_remote_name)
-+		default_remote_name = xstrdup("origin");
- 	alias_all_urls();
- }
+This updates 431260cc8dd
+
+ Documentation/gitcli.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+index b065c0e..50e4ce0 100644
+--- a/Documentation/gitcli.txt
++++ b/Documentation/gitcli.txt
+@@ -58,10 +58,10 @@ the paths in the index that match the pattern to be checked out to your
+ working tree.  After running `git add hello.c; rm hello.c`, you will _not_
+ see `hello.c` in your working tree with the former, but with the latter
+ you will.
+-+
+-Just as the filesystem '.' (period) refers to the current directory,
+-using a '.' as a repository name in Git (a dot-repository) is a relative
+-path for your current repository.
++
++ * Just as the filesystem '.' (period) refers to the current directory,
++   using a '.' as a repository name in Git (a dot-repository) is a relative
++   path and hence will be your current repository.
  
+ Here are the rules regarding the "flags" that you should follow when you are
+ scripting Git:
 -- 
-1.8.4.2.gac946cf.dirty
+1.8.1.msysgit.1
