@@ -1,154 +1,101 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2] Add core.mode configuration
-Date: Sat, 21 Sep 2013 08:12:13 -0500
-Message-ID: <1379769133-31732-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 21 15:17:58 2013
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 00/17] np/pack-v4 updates
+Date: Sat, 21 Sep 2013 20:57:46 +0700
+Message-ID: <1379771883-10278-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sat Sep 21 15:54:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNN4N-0003vT-D0
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 15:17:55 +0200
+	id 1VNNeA-0007mY-Gk
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Sep 2013 15:54:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923Ab3IUNRj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Sep 2013 09:17:39 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:40725 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751807Ab3IUNRi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Sep 2013 09:17:38 -0400
-Received: by mail-ob0-f173.google.com with SMTP id vb8so1854798obc.4
-        for <git@vger.kernel.org>; Sat, 21 Sep 2013 06:17:37 -0700 (PDT)
+	id S1751984Ab3IUNyn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Sep 2013 09:54:43 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:38361 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751929Ab3IUNyn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Sep 2013 09:54:43 -0400
+Received: by mail-pd0-f174.google.com with SMTP id y13so1480320pdi.19
+        for <git@vger.kernel.org>; Sat, 21 Sep 2013 06:54:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=rZSxfN3Nx5/6qV9ouG0pimB3Fai1cZyFcTm/P1yKd3U=;
-        b=XmJsC8q/p5XwtcshBMI66c2N7ssbuwr0ZA8QgvQaOZw8bHldiCSBelU6Li3Nozix3+
-         kB9h6RA0iIimCBNJ1FE8u9NLXRV3hZVnzBzW2mL/ohaYg4aKgX/yq8F9xwKUTbpJ71hL
-         w/REilH9FCeMcfiuhHKr7T4CQiX+PuWb9ETDg/XzdtBK9m3H5q12UBmuQq7lYd9TiOd2
-         NWrtmVzI95mwyQc6YoBm4TCYprJI/FEOpzDEva54XZ/q9dgU39SkY2r39gVwWawESa4r
-         Htmq4rRwK1Vl1HK2zankTJlVDPpVY4ZDt9iJcXoXq2NUatngvGuThx+hb18JUrLm+/bt
-         IIPg==
-X-Received: by 10.60.44.240 with SMTP id h16mr10599884oem.2.1379769457891;
-        Sat, 21 Sep 2013 06:17:37 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id j9sm7447676oef.8.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 21 Sep 2013 06:17:37 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.3.g9a9e30e.dirty
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=BID3JZHQBzlmRywtXu3zTgTJGld23w28+FikOB8TuPM=;
+        b=CYknLMUdKJO4KFfvBipMyr0MK/+KW7A+o18wJSHmdsBOmkILZn8wdyzDoNGtKleoLs
+         WgTyRAy6wfrjDh2K9dGCwc9ACEY564jRbW82hCG+dCemwy4siuhrXGwvQ+lp/bpRwWZq
+         9hiBtyrAmIfPaT4lFQvi0593l0A4w59/DYrjalBbD5SGWtznk/qC+amQHNFh3zE1SUAP
+         99rf+CIK//WdBjjC5bx5NOrb0OLEhaV13EEhiodvAJRyw63Htmw1s0W3DAirDMqPIf3b
+         FDk5mPpKyswttRjbg2Uhs4//h3iUJ8xS19RbblS4qa+Hw9HydVhnpf/20rjawRVMGc/k
+         0qUA==
+X-Received: by 10.66.248.161 with SMTP id yn1mr14822886pac.0.1379771682442;
+        Sat, 21 Sep 2013 06:54:42 -0700 (PDT)
+Received: from lanh ([115.73.252.65])
+        by mx.google.com with ESMTPSA id yh1sm22177641pbc.21.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 21 Sep 2013 06:54:41 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 21 Sep 2013 20:58:04 +0700
+X-Mailer: git-send-email 1.8.2.83.gc99314b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235101>
 
-So that we can specify general modes of operation, specifically, add the
-'next' mode, which makes Git pre v2.0 behave as Git v2.0.
+This contains many bug fixes or cleanups. Also you can now run the
+test suite with v4 by setting GIT_TEST_OPTS=3D--packv4. The test suite
+passes now. pack size limit is not officially not supported with v4.
+index-pack also learns to convert appended trees to v4 for completing
+thin packs (still need to convert commits though)
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- builtin/add.c | 13 +++++++++----
- cache.h       |  6 ++++++
- config.c      | 13 +++++++++++++
- environment.c |  1 +
- 4 files changed, 29 insertions(+), 4 deletions(-)
+PS. Nico do you still take patches and then send pull requests to
+Junio occasionally, or should I start to CC Junio?
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 8266a9c..95a396d 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -483,14 +483,16 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	 */
- 	memset(&update_data, 0, sizeof(update_data));
- 	if (!take_worktree_changes && addremove_explicit < 0)
--		update_data.warn_add_would_remove = 1;
-+		if (git_mode == MODE_CURRENT)
-+			update_data.warn_add_would_remove = 1;
- 
- 	if (!take_worktree_changes && addremove_explicit < 0 && argc)
- 		/*
- 		 * Turn "git add pathspec..." to "git add -A pathspec..."
- 		 * in Git 2.0 but not yet
- 		 */
--		; /* addremove = 1; */
-+		if (git_mode != MODE_CURRENT)
-+			addremove = 1;
- 
- 	if (!show_only && ignore_missing)
- 		die(_("Option --ignore-missing can only be used together with --dry-run"));
-@@ -503,10 +505,13 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		short_option_with_implicit_dot = "-u";
- 	}
- 	if (option_with_implicit_dot && !argc) {
--		static const char *here[2] = { ".", NULL };
-+		static const char *here[2] = { ":/", NULL };
- 		argc = 1;
- 		argv = here;
--		implicit_dot = 1;
-+		if (git_mode == MODE_CURRENT) {
-+			here[0] = ".";
-+			implicit_dot = 1;
-+		}
- 	}
- 
- 	add_new_files = !take_worktree_changes && !refresh_only;
-diff --git a/cache.h b/cache.h
-index 85b544f..f28240f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -627,9 +627,15 @@ enum push_default_type {
- 	PUSH_DEFAULT_UNSPECIFIED
- };
- 
-+enum git_mode {
-+	MODE_CURRENT = 0,
-+	MODE_NEXT
-+};
-+
- extern enum branch_track git_branch_track;
- extern enum rebase_setup_type autorebase;
- extern enum push_default_type push_default;
-+extern enum git_mode git_mode;
- 
- enum object_creation_mode {
- 	OBJECT_CREATION_USES_HARDLINKS = 0,
-diff --git a/config.c b/config.c
-index e13a7b6..f0e0370 100644
---- a/config.c
-+++ b/config.c
-@@ -831,6 +831,19 @@ static int git_default_core_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.mode")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		else if (!strcmp(value, "current"))
-+			git_mode = MODE_CURRENT;
-+		else if (!strcmp(value, "next")) {
-+			git_mode = MODE_NEXT;
-+			push_default = PUSH_DEFAULT_SIMPLE;
-+		} else
-+			die("wrong mode '%s'", value);
-+		return 0;
-+	}
-+
- 	/* Add other config variables here and to Documentation/config.txt. */
- 	return 0;
- }
-diff --git a/environment.c b/environment.c
-index 5398c36..751e14d 100644
---- a/environment.c
-+++ b/environment.c
-@@ -62,6 +62,7 @@ int merge_log_config = -1;
- int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
- struct startup_info *startup_info;
- unsigned long pack_size_limit_cfg;
-+enum git_mode git_mode = MODE_CURRENT;
- 
- /*
-  * The character that begins a commented line in user-editable file
--- 
-1.8.4.3.g9a9e30e.dirty
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (17):
+  fixup! index-pack: record all delta bases in v4 (tree and ref-delta)
+  fixup! packv4-parse.c: add tree offset caching
+  fixup! pack-objects: support writing pack v4
+  fixup! pack-objects: recognize v4 as pack source
+  fixup! index-pack: support completing thin packs v4
+  fixup! pack v4: move packv4-create.c to libgit.a
+  fixup! index-pack, pack-objects: allow creating .idx v2 with .pack v4
+  fixup! pack v4: code to obtain a SHA1 from a sha1ref
+  fixup! pack-objects: add --version to specify written pack version
+  test-lib.sh: add --packv4 for running the tests with pack v4 as defau=
+lt
+  packv4-parse: accept ref-delta as base of pv4-tree
+  pack-objects: do not add type OBJ_NONE to objects[] in pack v4
+  index-pack: encode appended trees using v4 format in pack v4
+  t5302: disable sealth corruption tests when run with --packv4
+  t5300: avoid testing ofs-delta with --packv4
+  pack-objects: disable pack size limit feature on pack v4
+  t5303: adapt the tests to run with --packv4
+
+ .gitignore                            |  1 +
+ Documentation/git-pack-objects.txt    |  4 +++
+ builtin/index-pack.c                  | 49 +++++++++++++++++++++++++++=
++++-----
+ builtin/pack-objects.c                | 35 ++++++++++++++++++++-----
+ packv4-create.c                       | 20 ++++++++++++++
+ packv4-create.h                       |  2 ++
+ packv4-parse.c                        | 25 +++++++++++-------
+ sha1_file.c                           |  4 ++-
+ t/t5300-pack-object.sh                | 47 ++++++++++++++++++---------=
+------
+ t/t5302-pack-index.sh                 | 24 ++++++++---------
+ t/t5303-pack-corruption-resilience.sh | 16 ++++++------
+ t/test-lib.sh                         | 10 +++++++
+ 12 files changed, 173 insertions(+), 64 deletions(-)
+
+--=20
+1.8.2.83.gc99314b
