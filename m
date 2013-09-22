@@ -1,75 +1,162 @@
-From: Jonathon Mah <jmah@me.com>
-Subject: Re: [PATCH 2/2] grep: use slash for path delimiter, not colon
-Date: Sun, 22 Sep 2013 12:15:21 -0700
-Message-ID: <99F7DE7C-A8D7-4EDF-B9C5-8DB143BFDB53@me.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: phil.hord@gmail.com, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Sep 22 22:15:29 2013
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: suspected bug(s) in git-cvsexportcommit.perl
+Date: Sun, 22 Sep 2013 23:26:23 +0200 (CEST)
+Message-ID: <134834661.2525155.1379885183181.JavaMail.zimbra@dewire.com>
+References: <FCEE4469EE8B234199968ECA9B0661E230EB7623@STNEEX10MB01.stone.ne.gov>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: David Loyall <david.loyall@nebraska.gov>
+X-From: git-owner@vger.kernel.org Sun Sep 22 23:26:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNq40-0008Cu-Mf
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Sep 2013 22:15:29 +0200
+	id 1VNrAp-0001FQ-3B
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Sep 2013 23:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752137Ab3IVUPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Sep 2013 16:15:25 -0400
-Received: from nk11p08mm-asmtp002.mac.com ([17.158.58.247]:61020 "EHLO
-	nk11p08mm-asmtp002.mac.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752093Ab3IVUPY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Sep 2013 16:15:24 -0400
-X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Sep 2013 16:15:24 EDT
-Received: from [192.168.120.59]
- (c-50-136-133-171.hsd1.ca.comcast.net [50.136.133.171])
- by nk11p08mm-asmtp002.mac.com
- (Oracle Communications Messaging Server 7u4-27.08(7.0.4.27.7) 64bit (built Aug
- 22 2013)) with ESMTPSA id <0MTJ00GLPK5LOF20@nk11p08mm-asmtp002.mac.com> for
- git@vger.kernel.org; Sun, 22 Sep 2013 19:15:24 +0000 (GMT)
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.10.8794,1.0.431,0.0.0000
- definitions=2013-09-22_02:2013-09-22,2013-09-22,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=7.0.1-1308280000 definitions=main-1309220127
-X-Mailer: Apple Mail (2.1510)
+	id S1752313Ab3IVV0a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Sep 2013 17:26:30 -0400
+Received: from zimbra.dewire.com ([83.140.172.131]:49905 "EHLO
+	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752137Ab3IVV03 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Sep 2013 17:26:29 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id C2DD781986;
+	Sun, 22 Sep 2013 23:26:27 +0200 (CEST)
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id MJH2uDfZrlYp; Sun, 22 Sep 2013 23:26:23 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id 9B59381964;
+	Sun, 22 Sep 2013 23:26:23 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at dewire.se
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id rFZDSnQ5D16D; Sun, 22 Sep 2013 23:26:23 +0200 (CEST)
+Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
+	by zimbra.dewire.com (Postfix) with ESMTP id 7EE87818DC;
+	Sun, 22 Sep 2013 23:26:23 +0200 (CEST)
+In-Reply-To: <FCEE4469EE8B234199968ECA9B0661E230EB7623@STNEEX10MB01.stone.ne.gov>
+X-Originating-IP: [78.69.107.197]
+X-Mailer: Zimbra 8.0.4_GA_5737 (ZimbraWebClient - FF23 (Mac)/8.0.4_GA_5737)
+Thread-Topic: suspected bug(s) in git-cvsexportcommit.perl
+Thread-Index: Ac60oWFMdyCnVn4fRIitg3ZlauVqcTELbiCS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235171>
-
-> >     HEAD:/some/path/to/foo.txt
-> >     HEAD:some/path/to/foo.txt
-> 
-> With my patch it prints the latter.
-> 
-> This is because get_sha1_with_context("HEAD:"...) returns an empty
-> 'path' string.  The code decides to use ':' as the delimiter in that
-> case, but it sees there already is one at the end of "HEAD:".
-
-A few days ago I came across the same "surprising" output of git-grep, tried to adjust the code to print "git show"-able object names, and ran into similar subtleties. I just found this thread, and Jeff's code handles more cases than mine did (I didn't try Phil's initial patch), but I can add some more test cases with non-showable output (again related to git-grep's path scoping):
-
-$ git grep -l cache HEAD:./ | head -1
-HEAD:./:.gitignore
-
-$ cd Documentation
-$ git grep -l cache HEAD | head -1
-HEAD:CodingGuidelines
-
-$ git grep -l cache HEAD:Documentation/CodingGuidelines
-../HEAD:Documentation/CodingGuidelines
-(woah!)
-
-Sorry that I don't yet have anything useful to suggest! But I can tell the story of my use case:
-
-I have a large repository (1.6GB bare) which I don't work on, but which contains code that I need to refer to. A checkout is ~600MB and 27k files, which I'd like to avoid (it's redundant data, and would slow down backups of my drive). I found myself "git-grep"ping through parts of the tree, looking through the results, and then "git-show"ing interesting files. Having a real object name in the grep output allows copy-and-paste of the object path.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235172>
 
 
 
-Jonathon Mah
-me@JonathonMah.com
+----- Ursprungligt meddelande -----
+> Fr=C3=A5n: "David Loyall" <david.loyall@nebraska.gov>
+> Till: git@vger.kernel.org
+> Skickat: onsdag, 18 sep 2013 21:00:46
+> =C3=84mne: suspected bug(s) in git-cvsexportcommit.perl
+>=20
+> Hello.
+>=20
+> I don't believe that git-cvsexportcommit.perl is working properly.
+>=20
+> First off, invocations of "git-apply" fail on my system.=C2=A0 "git a=
+pply" works.
+> =C2=A0 (The aforementioned script uses the former.)
+
+git-apply is only available from scripts invoked by the git wrapper. Sa=
+me applies
+to all the other git<dash>-scripts.
+=20
+> Second, please have a look at this output (specific strings have been
+> replaced with 'foo')
+>=20
+> hobbes@metalbaby:~/src/foo$ git cvsexportcommit -v
+> fecc8b4bb3d91d204f4eb3ebd112f6cec6004819
+> Applying to CVS commit fecc8b4bb3d91d204f4eb3ebd112f6cec6004819 from =
+parent
+> 695a544fbdcf7e0614c35d1dab9a3eac0cc57b4c
+> Checking if patch will apply
+> cvs status: nothing known about `WebContent/WEB-INF/lib/commons-lang-=
+2.6.jar'
+> cvs status: nothing known about
+> `WebContent/WEB-INF/lib/commons-configuration-1.9.jar'
+> cvs status: nothing known about `JavaSource/foo/ConfigManager.java'
+> cvs status: nothing known about `JavaSource/config.xml'
+> Huh? Status 'Unknown' reported for unexpected file 'no file
+> commons-lang-2.6.jar'
+> Huh? Status 'Unknown' reported for unexpected file 'no file
+> commons-configuration-1.9.jar'
+> Huh? Status 'Unknown' reported for unexpected file 'no file
+> ConfigManager.java'
+> Huh? Status 'Unknown' reported for unexpected file 'no file config.xm=
+l'
+> Applying
+> <stdin>:7: trailing whitespace.
+> <?xml version=3D"1.0" encoding=3D"UTF-8" ?>
+> <stdin>:8: trailing whitespace.
+> <config>
+> <stdin>:9: trailing whitespace.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 <masterthread>
+> <stdin>:10: trailing whitespace.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <queuemappings>
+> <stdin>:11: trailing whitespace.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <=
+mapping threadtype=3D"foo"
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s=
+ervice=3D"foo"
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a=
+ction=3D"foo_test" />
+> error: patch failed: JavaSource/foo/QueueMapping.java:67
+> error: JavaSource/foo/QueueMapping.java: patch does not apply
+> Context reduced to (2/2) to apply fragment at 43
+> cannot patch at /usr/lib/git-core/git-cvsexportcommit line 333.
+> hobbes@metalbaby:~/src/foo$
+
+Your CVS directory is not up to date or you are, in some other way,
+trying to export something that does not match the content of your CVS
+directory. Keep in mind that you cannot export any commit, it must be=20
+possible to apply the changes in the commit to the CVS checkout, much
+as patch(1) would.
+
+The -u flag to cvsexportcommit will perform an update from CVS
+for you, unless you want to do it manually.
+
+> Even after I altered my copy of the script to invoke 'git apply' in t=
+wo
+> places, I still get the erroneous "unknown" lines.=C2=A0 My suspicion=
+ is that it
+> has something to do with the $basename stuff, but, who am I kidding? =
+I don't
+> grok perl.
+>
+> I haven't yet explored the error lines after "Applying".
+
+Same explanation as for the Unknown status. It's not that the status is=
+ not
+known. The status is "Uknown", as in "CVS does not know about the file"=
+=2E
+
+> So, what do I want?=C2=A0 I want somebody to test git-cvsexportcommit=
+=2Eperl.=C2=A0 If it
+> passes tests, then I'd like help creating a test that it does fail. (=
+Perhaps
+> my workspace can help.  Perhaps it is as simple as the presence of a =
+new
+> file in a subdirectory.)
+
+-- robin
