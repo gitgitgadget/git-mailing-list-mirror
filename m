@@ -1,131 +1,116 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
 Subject: Re: [PATCH/RFC 0/7] Support for Ruby
-Date: Sun, 22 Sep 2013 00:36:51 -0500
-Message-ID: <523e81f338f1e_547c41e7c166be@nysa.mail>
+Date: Sun, 22 Sep 2013 09:31:20 +0200
+Message-ID: <20130922073120.GC13262@paksenarrion.iveqy.com>
 References: <1379789295-18519-1-git-send-email-felipe.contreras@gmail.com>
  <20130921212904.GA235845@vauxhall.crustytoothpaste.net>
  <CAMP44s3Shdg40go-WyGV8QKwEGoXg8hvEe8tetMyxvx5Sb7evw@mail.gmail.com>
  <20130921235647.GC235845@vauxhall.crustytoothpaste.net>
+ <523e81f338f1e_547c41e7c166be@nysa.mail>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 22 07:58:46 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 22 09:24:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNcgs-00054G-NR
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Sep 2013 07:58:43 +0200
+	id 1VNe1n-0005YX-Vi
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Sep 2013 09:24:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752339Ab3IVF60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Sep 2013 01:58:26 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:55950 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752205Ab3IVF6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Sep 2013 01:58:25 -0400
-Received: by mail-ob0-f172.google.com with SMTP id gq1so2436709obb.31
-        for <git@vger.kernel.org>; Sat, 21 Sep 2013 22:58:24 -0700 (PDT)
+	id S1752192Ab3IVHYD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Sep 2013 03:24:03 -0400
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:43363 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751125Ab3IVHYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Sep 2013 03:24:01 -0400
+Received: by mail-lb0-f178.google.com with SMTP id z5so1846599lbh.9
+        for <git@vger.kernel.org>; Sun, 22 Sep 2013 00:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=qcAgcTQtEUSIwv1HcNcb2qagD087pGHrL8/6ys92KO8=;
-        b=TOIY008xrtOTG9XxenX0ojhoIG3AwMN234zICNaI1I3/r9IhrVDd0/H3v5ZlzeieL5
-         wJOEmTfOjEqCk/DHhJCnfltERi1rd6t0i0oUXKLCV9Yz8bZz19mbLR737OBYMvzVQtlU
-         2uN9URg6Esm5Brltz54mGcRDMQeoXEEZ5iG9sI2/riuKFW58Hw0ninp7td1tMDGKA50j
-         NjYz6u93LCdMrJuEZOfiycwEi5sVgRp/WjA54JQEnL6X/MfgxAYf4ey8ZfY9CgBx/rQC
-         vsQHKwW1xcplHBtyFkk2B/tVwNF2c4650YcKPhWwzUfB80yvmrekiuW7rD1B5lq1RhMy
-         XHcA==
-X-Received: by 10.182.99.231 with SMTP id et7mr13864120obb.10.1379829504862;
-        Sat, 21 Sep 2013 22:58:24 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id d3sm8576459oek.5.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 21 Sep 2013 22:58:24 -0700 (PDT)
-In-Reply-To: <20130921235647.GC235845@vauxhall.crustytoothpaste.net>
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ufYNRAH6bnGE2pLRhzK1SY3+ABXA0dBL5kNTe6TYqyw=;
+        b=FOUq01KfK7+z9iIROY5f0RVdI0oscxfaVr7kUjkS7FWc+mm1TTmmQvC27k1Hxuh1Y/
+         +MCIQXlHnXaAZDSialOZ7wemeEQU9bLO1PcJOKu6jGTyBAHZfKaSGSX7pyEIcD2sX7R5
+         CCCx19peU8hRzUAsWxWih1GGUGEpzh/dHRGly4PJkiGnh1vbimqH7l0Hc2dII5GguukY
+         oXb/3GnIEX15XHNuX5ivjNelFJF3kXYSUpsc8Lq9WqjgKpsWMzpxqtLTFq56C8sQsbuS
+         3uIUjQ+FZSDlLrDHcTO9RfnNXAtn80Tw3T1n9ksQV5EEnzAH3gChe62yvg5aW/+Vf5Tp
+         wWVA==
+X-Received: by 10.112.14.3 with SMTP id l3mr553774lbc.27.1379834639624;
+        Sun, 22 Sep 2013 00:23:59 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (c83-250-237-167.bredband.comhem.se. [83.250.237.167])
+        by mx.google.com with ESMTPSA id kx1sm9685631lac.7.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 22 Sep 2013 00:23:58 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1VNe8W-0001r1-SU; Sun, 22 Sep 2013 09:31:20 +0200
+Content-Disposition: inline
+In-Reply-To: <523e81f338f1e_547c41e7c166be@nysa.mail>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235160>
 
-brian m. carlson wrote:
-> On Sat, Sep 21, 2013 at 05:52:05PM -0500, Felipe Contreras wrote:
-> > On Sat, Sep 21, 2013 at 4:29 PM, brian m. carlson
-> > <sandals@crustytoothpaste.net> wrote:
-> > > As Junio has also pointed out in the past, there are people who aren't
-> > > able to use Ruby in the same way that they are Perl and Python.  If it's
-> > > announced now, Git 2.0 might be a good time to start accepting Ruby
-> > > scripts, as that will give people time to plan for its inclusion.
-> > 
-> > Yes, and there are people who aren't able to use Perl/Python in the
-> > same way they use Ruby. That's why I tried to show why Ruby makes a
-> > perfect choice.
-> 
-> I'm not arguing against Ruby.  As I said, it's a nice language.  I'm
-> just saying that Ruby is not as common as Perl and Python.
+On Sun, Sep 22, 2013 at 12:36:51AM -0500, Felipe Contreras wrote:
+> > I think it's a bad idea to introduce an entirely new runtime, espec=
+ially
+> > one known to occasionally blow up on less-common architectures, wit=
+hout
+> > some advance notice.
+>=20
+> This is just FUD. What do you mean blow up on less-common architectur=
+es? Do you
+> have actual evidence or can we just dismiss that as a baseless argume=
+nt?
+>=20
+> > For example, at work I would not be able to deploy a git using Ruby
+> > immediately because Git is an RPM and Ruby is compiled from source,=
+ if it is
+> > even present at all.
+>=20
+> Again, what do you mean? In all the distributions I've seen, vim is c=
+ompiled
+> with Ruby support by default, so unless you think vim is an essoteric=
+ package,
+> libruby is almost definetly packaged and available.
 
-In my books Perl is only a tiny bit more common than Ruby.
+It would actually be usefull to know stats on where git is runned. In m=
+y
+world of embedded computing, ruby support definitely isn't a standard,
+nor is glibc.
 
-http://www.tiobe.com/content/paperinfo/tpci/index.html
+As for architecture speaking I think it's important that git works on
+ARM since that architecture increases on the server market. I've no ide=
+a
+if this is a problem with ruby or not.
 
-> I think it's a bad idea to introduce an entirely new runtime, especially
-> one known to occasionally blow up on less-common architectures, without
-> some advance notice.
+>=20
+> > Also, the only Python script that is shipped with Git is git-p4, wh=
+ich
+> > is essentially optional, since most git users probably do not use
+> > Perforce. Otherwise, all the scripts in git are shell or Perl.
+>=20
+> Neither perl, nor shell, nor python scripts solve the forking problem=
+=2E My
+> proposal does.
 
-This is just FUD. What do you mean blow up on less-common architectures? Do you
-have actual evidence or can we just dismiss that as a baseless argument?
+It does, and so does Lua, which can be bundled with git and used in the
+configuration files as well and is pure ansi C. However bundling
+something has it bad sides too. At least this will solve the dependency
+problem. So let the language war begin =3D).
 
-> For example, at work I would not be able to deploy a git using Ruby
-> immediately because Git is an RPM and Ruby is compiled from source, if it is
-> even present at all.
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
 
-Again, what do you mean? In all the distributions I've seen, vim is compiled
-with Ruby support by default, so unless you think vim is an essoteric package,
-libruby is almost definetly packaged and available.
-
-> Also, the only Python script that is shipped with Git is git-p4, which
-> is essentially optional, since most git users probably do not use
-> Perforce. Otherwise, all the scripts in git are shell or Perl.
-
-Neither perl, nor shell, nor python scripts solve the forking problem. My
-proposal does.
-
-> So this would be adding a significant additional dependency to core git, one
-> which is likely not installed on many systems.
-
-Another claim without a shred of evidence. It's the other way around, it's
-likely already installed, and it would not be an additional dependency if the
-current scripts get phased out in favor Ruby ones, or even better, C code.
-
-> Of the systems in the Debian popularity contest, 41% have git installed and
-> 23% have ruby1.8 installed, with only 16% having the default ruby installed.
-
-Plus the 17% of ruby1.9.1, you get 41%, exactly the same as Git.
-
-But we don't need ruby, all we need is libruby, which is 47%.
-
-> > Now, if anybody has ideas into how the bindings could be more object
-> > oriented, I'm all ears, but unfortunately what I foresee is that
-> > nobody will consider this proposal seriously.
-> 
-> My concern is that the Ruby code will end up not being idiomatic, and
-> people will view it as bizarre and unmaintainable.
-
-There is no such thing as idiomatic Ruby code. In Ruby there's no single best
-way to do something, there's many ways to do the same thing.
-
-> for_each_ref could end up being something like REPOSITORY.refs.each,
-> which would be more idiomatic.
-
-And how do you propose to achieve that if the C code doesn't support that?
-
-Do you have in mind the C code that would achieve that, or are you just saying?
-
--- 
-Felipe Contreras
+tel: 0733-608274
+e-post: iveqy@iveqy.com
