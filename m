@@ -1,75 +1,114 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: What's cooking in git.git (Sep 2013, #07; Mon, 23)
-Date: Mon, 23 Sep 2013 23:24:20 +0200
-Message-ID: <5240B184.8060101@googlemail.com>
-References: <20130923211047.GD9464@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] diff: add a config option to control orderfile
+Date: Mon, 23 Sep 2013 14:37:29 -0700
+Message-ID: <20130923213729.GE9464@google.com>
+References: <xmqqfvt3z7i4.fsf@gitster.dls.corp.google.com>
+ <20130917172829.GA21121@redhat.com>
+ <xmqq38p3z5kg.fsf@gitster.dls.corp.google.com>
+ <20130917201401.GA22000@redhat.com>
+ <20130917201604.GA22008@redhat.com>
+ <20130917201828.GC16860@sigill.intra.peff.net>
+ <20130917203807.GA22059@redhat.com>
+ <20130917205615.GA20178@sigill.intra.peff.net>
+ <20130919213226.GA21291@redhat.com>
+ <20130923210915.GA11202@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 23 23:23:44 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Sep 23 23:37:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VODbc-0006lv-JP
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 23:23:44 +0200
+	id 1VODp7-0005hm-4p
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 23:37:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753256Ab3IWVXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 17:23:40 -0400
-Received: from mail-ee0-f43.google.com ([74.125.83.43]:63629 "EHLO
-	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752630Ab3IWVXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 17:23:39 -0400
-Received: by mail-ee0-f43.google.com with SMTP id e52so2018110eek.2
-        for <git@vger.kernel.org>; Mon, 23 Sep 2013 14:23:38 -0700 (PDT)
+	id S1753998Ab3IWVhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 17:37:35 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:42161 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753434Ab3IWVhe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 17:37:34 -0400
+Received: by mail-pd0-f177.google.com with SMTP id y10so3730317pdj.22
+        for <git@vger.kernel.org>; Mon, 23 Sep 2013 14:37:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=iGaeGQmpL2iPcLhRM/tRibiIOUi241U+b1k2A5IGQaY=;
-        b=qSja5yvrvszxRV6SegxXlAjwXUSFvjeWB+VDMYqexbc27Ii/cFCu0LgD1dKZfb2UmM
-         FhyQrC277eIOGk1NT2Wf/vb8j97i6EHk5R3p7D9Gp/bUrpKgI2It8u07/ewwBRmBVyF1
-         k2R3gkytEiFOlVnyuMC1b9/+Bei4+pToKeKb+XcOe63uIm5Es/u9GcBcYhSPfg6GTCRk
-         4pD4FSR/ReVE1fsRyGfZ7tEFDUT7SO1TRCQoggYv6ANX7EWZAn6PJ+ajxiGS/w/G7kQ/
-         92mbw1eJ6Hyblphck8AD5+pt5evDybM/DW9GGyyJkbgHpJ9a8Xa2XZZTsjaggogXuKpq
-         KTEw==
-X-Received: by 10.14.208.194 with SMTP id q42mr40218260eeo.31.1379971418512;
-        Mon, 23 Sep 2013 14:23:38 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id h52sm45833050eez.3.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 23 Sep 2013 14:23:37 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <20130923211047.GD9464@google.com>
-X-Enigmail-Version: 1.5.2
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=PepJCaPSzTl6+e32lBoUgVntO7UV5FhTsuZT+yVJUZI=;
+        b=GbKJXX1ILkrDs8CAtZoX0uGSlKS7vU13Qd4ur2NQwNkgsZIhBU21pJ4ij6qeW3TzKz
+         dZuHvOZwtIOkPw/CTwpGovVgOxeW/ZAQ/DLNNi0tJC2HzdMoheLR664mhPDdW00w12M9
+         /cT3y3A17mvZwOX52HRJb3eSjljmLGp1sTbOqRRRhz8o6ZERZaZzCUtwucAa4WHv+cmY
+         EFrLTzo0H4HPghqIekeo74gmk9oQOHtWtYSjtnGaElORSdy8W7WyJISv+8ekm3gduczC
+         WGU3ZH4Wdqh+eoQN9ZuHqBTIP128CwKUAeAARIu6VDC47TYIHqm1Cv7q6AzucBA2FUK7
+         ywYg==
+X-Received: by 10.68.244.168 with SMTP id xh8mr25142727pbc.3.1379972253133;
+        Mon, 23 Sep 2013 14:37:33 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id ar1sm36269721pbc.34.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 23 Sep 2013 14:37:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130923210915.GA11202@redhat.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235248>
 
-On 09/23/2013 11:10 PM, Jonathan Nieder wrote:
-> You can find the changes described here in the integration branches at
-> 
->     https://repo.or.cz/r/git/jrn.git
-> 
-> I am still catching up on patches sent since last week.  If I have
-> missed yours, do not despair, but feel free to send me a reminder to
-> look at it.
+Hi,
 
-How would I get these changes?
-A plain 
-	git fetch https://repo.or.cz/r/git/jrn.git
-doesn't work, as it yields:
-fatal: unable to access 'https://repo.or.cz/r/git/jrn.git/': server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
+Michael S. Tsirkin wrote:
+>> On Tue, Sep 17, 2013 at 04:56:16PM -0400, Jeff King wrote:
 
-So I'll try without security:
-	$ env GIT_SSL_NO_VERIFY=true git fetch https://repo.or.cz/r/git/jrn.git
-	fatal: Couldn't find remote ref HEAD
-	Unexpected end of command stream
+>>>>> A problem with both schemes, though, is that they are not
+>>>>> backwards-compatible with existing git-patch-id implementations.
+[...]
+>>> It may be esoteric enough not to worry about, though.
 
-I guess I'm doing it not quite right, so please enlighten me.
-Thanks,
-Stefan
+Yeah, I think it would be okay.  Details of the diff generation
+algorithm have changed from time to time anyway (and broken things,
+as you mentioned) and we make no guarantee about this.
+
+[...]
+>> patch-id: make it more stable
+>>
+>> Add a new patch-id algorithm making it stable against
+>> hunk reodering:
+>> 	- prepend header to each hunk (if not there)
+>> 	- calculate SHA1 hash for each hunk separately
+>> 	- sum all hashes to get patch id
+>>
+>> Add --order-sensitive to get historical unstable behaviour.
+
+The --order-sensitive option seems confusing.  How do I use it to
+replicate a historical patch-id?  If I record all options that might
+have influenced ordering (which are those?) then am I guaranteed to
+get a reproducible result?  
+
+So I would prefer either of the following over the above:
+
+ a) When asked to compute the patch-id of a seekable file, use the
+    current streaming implementation until you notice a filename that
+    is out of order.  Then start over with sorted hunks (for example
+    building a table of offsets within the patch for each hunk to
+    support this).
+
+    When asked to compute the patch-id of an unseekable file, stream
+    to a temporary file under $GIT_DIR to get a seekable file.
+
+ b) Unconditionally use the new patch-id definition that is stable
+    under permutation of hunks.  If and when someone complains that
+    this invalidates their old patch-ids, they can work on adding a
+    nice interface for getting the old-style patch-ids.  I suspect it
+    just wouldn't come up.
+
+Of course I can easily be wrong.  Thanks for a clear patch that makes
+the choices easy to reasonable about.
+
+Thoughts?
+Jonathan
