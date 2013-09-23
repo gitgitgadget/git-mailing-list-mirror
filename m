@@ -1,78 +1,81 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: [PATCH 07/15] contrib/git-credential-gnome-keyring.c: ensure
- buffer is non-empty before accessing
-Date: Mon, 23 Sep 2013 00:43:18 -0500
-Message-ID: <523fd4f6965ad_b79d67e786506@nysa.mail>
-References: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
- <1379912891-12277-8-git-send-email-drafnel@gmail.com>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Save notes state when releasing
+Date: Mon, 23 Sep 2013 09:25:05 +0200
+Message-ID: <CAC9WiBiOAediWzgLsjcH=gorwtzrUSHumZQ3f8xk3gsestyXMw@mail.gmail.com>
+References: <CAC9WiBh3ha61M789DL==Nch30P_mvGwDLODqNzwaAbmHtyhPkQ@mail.gmail.com>
+	<20130920103401.GB21684@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: pah@qo.cx, Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 23 07:49:06 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Sep 23 09:25:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNz18-0008ON-AH
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 07:49:06 +0200
+	id 1VO0WM-0006iS-Lj
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 09:25:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753169Ab3IWFtC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 01:49:02 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:46308 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752630Ab3IWFtB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 01:49:01 -0400
-Received: by mail-ob0-f179.google.com with SMTP id wn1so3061367obc.38
-        for <git@vger.kernel.org>; Sun, 22 Sep 2013 22:49:00 -0700 (PDT)
+	id S1752779Ab3IWHZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 03:25:07 -0400
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:63219 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752335Ab3IWHZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 03:25:06 -0400
+Received: by mail-vc0-f169.google.com with SMTP id ib11so1956471vcb.0
+        for <git@vger.kernel.org>; Mon, 23 Sep 2013 00:25:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=+Jv8O90KA1WMrgBHj0jk+FERqflA910zC32vLBcvHKg=;
-        b=mr8dHwoRepP7mfg7hCW1Yv877bHpoxaPQEYEjzUL3U0D6pd9h/qtqkK/eE/+JPADsX
-         KRPFWwBIaTa4cV8Tlki8eeiQDoDjBXsRgfFIfiI/jFnUbpun3mK34fhkRHIKOmnsQ/uD
-         esReAWc1nfMD4oDknWq1TrjDtbIsWgk5mPcrWpUoMYqdED0SmyAqjvhQZwuE4JJtTPxE
-         W9gBi9dmVQb16XHEfarYXQXcIqLOe/jTdYVUqTZvg8T660qeDnxrVCTBn4KlWNrfaBF5
-         2RjasKTz48tHcQSQwdEMoOjFrAXPsE4V8rHLvdHAdoZIdPd7LcDtgKSXekar+C83t92g
-         9NxQ==
-X-Received: by 10.182.29.233 with SMTP id n9mr305426obh.38.1379915340537;
-        Sun, 22 Sep 2013 22:49:00 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id u3sm11850164oeq.3.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 22 Sep 2013 22:48:59 -0700 (PDT)
-In-Reply-To: <1379912891-12277-8-git-send-email-drafnel@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=4bwZwCFtZkCG1F1hImUiEBmU9KTrYumsJJg20w6bcwA=;
+        b=jgW6rxpCrJsR986DIy9lDZVt97YShbKa6sxBvx3tmlMrhcpvJ3hwut6CGTXu8IbyQ4
+         TRanpvy6S0le/Vit4VuZqzWXf9FK1ARNuL8OC4YHqa+vG4k7z6YfrIfpa6ehuFfCR5xK
+         oxshYaAjvmjc0JruQshkB0Bc5h0neGbwndcyPMTxIUfxpfi3ZpVsWKSKbkJwSYLjzF6+
+         VvY+DRN9Qegqz6gK2+tC3SKq/5kEydf/UcDOmklAG7qN8/gtNl3XHrjfzFqk7Wu+Si8u
+         mi8aqcUBhWLx7UBFB9UNbdoY5oA27PFfBiPJFBkusc8lHQLLUN9Qe6M2XKm2V47CGXmn
+         9p7w==
+X-Received: by 10.59.9.138 with SMTP id ds10mr20996807ved.5.1379921105450;
+ Mon, 23 Sep 2013 00:25:05 -0700 (PDT)
+Received: by 10.58.8.169 with HTTP; Mon, 23 Sep 2013 00:25:05 -0700 (PDT)
+In-Reply-To: <20130920103401.GB21684@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235202>
 
-Brandon Casey wrote:
-> Ensure buffer length is non-zero before attempting to access the last
-> element.
-> 
-> Signed-off-by: Brandon Casey <drafnel@gmail.com>
-> ---
->  contrib/credential/gnome-keyring/git-credential-gnome-keyring.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-> index 1081224..8ae2eab 100644
-> --- a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-> +++ b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-> @@ -315,7 +315,7 @@ static int credential_read(struct credential *c)
->  	{
->  		line_len = strlen(buf);
->  
-> -		if(buf[line_len-1]=='\n')
-> +		if(line_len && buf[line_len-1] == '\n')
+On Fri, Sep 20, 2013 at 12:34 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Sep 20, 2013 at 07:38:17AM +0200, Francis Moreau wrote:
+>
+>> I'm using notes in my project. I'm wondering if it's possible to save
+>> the state of the notes when I'm releasing/tagging a new version of my
+>> project so I can restore the saved notes state if I checkout back the
+>> old release.
+>>
+>> Therefore I would be able to inspect notes (which may have been
+>> removed or modified after the release) as they were when the release
+>> happened.
+>
+> The notes are stored as git trees, so you can point a "tag" ref at a
+> particular state, just as you would with a normal branch. The "git tag"
+> command expects to create refs under "refs/tags", whereas "git notes"
+> expects to find notes under "refs/notes". The simplest thing is to just
+> use "git update-ref" rather than "git tag" to create the pointer. Like:
+>
+>   $ git update-ref refs/notes/v1.0 refs/notes/commits
+>
+> and then you can always view the v1.0 notes as:
+>
+>   $ git --notes=v1.0 log
+>
+> You can even set the notes.displayRef config to always show v1.0 notes
+> when they are available for a commit. Though if they are a subset of the
+> current notes, you would expect to see duplicates. Depending on what you
+> are storing in your notes, you may want to clean out your notes tree
+> after the release.
 
-The style is if ().
-
+Thank you Jeff, that's what I was needing.
 -- 
-Felipe Contreras
+Francis
