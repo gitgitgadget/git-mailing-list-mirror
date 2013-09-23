@@ -1,90 +1,262 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] git-remote-mediawiki: bugfix for pages w/ >500 revisions
-Date: Mon, 23 Sep 2013 16:17:46 -0400
-Message-ID: <CAPig+cSVeJX2wHo7TTJe2oa+_pD7EPdmMo_BGO_Bj-ZKgRD6wA@mail.gmail.com>
-References: <1379957175-8606-1-git-send-email-benoit.person@gmail.fr>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] diff: add a config option to control orderfile
+Date: Tue, 24 Sep 2013 00:09:15 +0300
+Message-ID: <20130923210915.GA11202@redhat.com>
+References: <20130917164226.GB20672@redhat.com>
+ <xmqqfvt3z7i4.fsf@gitster.dls.corp.google.com>
+ <20130917172829.GA21121@redhat.com>
+ <xmqq38p3z5kg.fsf@gitster.dls.corp.google.com>
+ <20130917201401.GA22000@redhat.com>
+ <20130917201604.GA22008@redhat.com>
+ <20130917201828.GC16860@sigill.intra.peff.net>
+ <20130917203807.GA22059@redhat.com>
+ <20130917205615.GA20178@sigill.intra.peff.net>
+ <20130919213226.GA21291@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Benoit Person <benoit.person@gmail.fr>
-To: Benoit Person <benoit.person@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 23 22:17:55 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Sep 23 23:07:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOCZu-0005AM-5D
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 22:17:54 +0200
+	id 1VODLm-0006Zb-LQ
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 23:07:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753657Ab3IWURt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 16:17:49 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:54270 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753653Ab3IWURs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 16:17:48 -0400
-Received: by mail-la0-f52.google.com with SMTP id ev20so2826941lab.39
-        for <git@vger.kernel.org>; Mon, 23 Sep 2013 13:17:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=VWJSHDrcMAYx5bnBvOvAzSS+dBLPP0+hoxE0T56ZLWg=;
-        b=e7MAFOOtDKR4+Vkh/YBrVgVSthbgaJnifTu5dp3f04s4f1+H/TB+fGrGdVqvUvH2+J
-         AXhV9ZigJzdi3LCS40GBWfowyw23WZFl2c/XfI9QDV8N24g55su+qz38Gg0G62iewcg/
-         mGOJMKLQ9tEUaUrv+Lko5pmgcJb0BS/pL22Rz3cW53O2IL5oNf0j5CLmR8Ne1YDqkZP7
-         o4sdP7ipYWNBckYCjflLHcVEj6LmBU/X2ssShXhClEoHrXDlaYeAhgTHt2yWU76srjub
-         xKvQzWJXnpVXueqMvw/2rL7wLHJhbNNT0uZV/6FOy/p51eU9qXmoGgJkkdL7AZoVNluK
-         rsYA==
-X-Received: by 10.112.158.225 with SMTP id wx1mr2723649lbb.37.1379967466938;
- Mon, 23 Sep 2013 13:17:46 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Mon, 23 Sep 2013 13:17:46 -0700 (PDT)
-In-Reply-To: <1379957175-8606-1-git-send-email-benoit.person@gmail.fr>
-X-Google-Sender-Auth: b0SIRZ14RCcwi-kTgPmudEn5c08
+	id S1753666Ab3IWVHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 17:07:15 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:33450 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753204Ab3IWVHK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 17:07:10 -0400
+Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r8NL6waq029433
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Mon, 23 Sep 2013 17:06:58 -0400
+Received: from redhat.com (vpn1-6-85.ams2.redhat.com [10.36.6.85])
+	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id r8NL6unf001543;
+	Mon, 23 Sep 2013 17:06:57 -0400
+Content-Disposition: inline
+In-Reply-To: <20130919213226.GA21291@redhat.com>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235240>
 
-On Mon, Sep 23, 2013 at 1:26 PM, Benoit Person <benoit.person@gmail.com> wrote:
-> diff --git a/contrib/mw-to-git/t/t9365-continuing-queries.sh b/contrib/mw-to-git/t/t9365-continuing-queries.sh
-> new file mode 100755
-> index 0000000..6fb5df4
-> --- /dev/null
-> +++ b/contrib/mw-to-git/t/t9365-continuing-queries.sh
-> @@ -0,0 +1,24 @@
-> +#!/bin/sh
-> +
-> +test_description='Test the Git Mediawiki remote helper: queries w/ more than 500 results'
-> +
-> +. ./test-gitmw-lib.sh
-> +. ./push-pull-tests.sh
-> +. $TEST_DIRECTORY/test-lib.sh
-> +
-> +test_check_precond
-> +
-> +test_expect_success 'creating page w/ >500 revisions' '
-> +       wiki_reset &&
-> +       for i in $(seq 1 501)
+On Fri, Sep 20, 2013 at 12:32:26AM +0300, Michael S. Tsirkin wrote:
+> On Tue, Sep 17, 2013 at 04:56:16PM -0400, Jeff King wrote:
+> > On Tue, Sep 17, 2013 at 11:38:07PM +0300, Michael S. Tsirkin wrote:
+> > 
+> > > > A problem with both schemes, though, is that they are not
+> > > > backwards-compatible with existing git-patch-id implementations.
+> > > 
+> > > Could you clarify?
+> > > We never send patch IDs on the wire - how isn't this compatible?
+> > 
+> > I meant that you might be comparing patch-ids generated by different
+> > implementations, or across time. There are no dedicated tools to do so,
+> > but it is very easy to do so with standard tools like "join".
+> > 
+> > For example, you can do:
+> > 
+> >   patch_ids() {
+> >     git rev-list "$1" |
+> >     git diff-tree --stdin -p |
+> >     git patch-id |
+> >     sort
+> >   }
+> > 
+> >   patch_ids origin..topic1 >us
+> >   patch_ids origin..topic2 >them
+> > 
+> >   join us them | cut -d' ' -f2-3
+> > 
+> > to get a list of correlated commits between two branches. If the "them"
+> > was on another machine with a different implementation (or is saved from
+> > an earlier time), your patch-ids would not match.
+> > 
+> > It may be esoteric enough not to worry about, though. By far the most
+> > common use of patch-ids is going to be in a single "rev-list
+> > --cherry-pick" situation where you are trying to omit commits during
+> > a rebase.
+> > 
+> > I am mostly thinking of the problems we had with the "kup" tool, which
+> > expected stability across diffs that would be signed by both kernel.org.
+> > But as far as I know, they do not use patch-id. More details in case you
+> > are curious (including me arguing that we should not care, and it is
+> > kup's problem!) are here:
+> > 
+> >   http://thread.gmane.org/gmane.comp.version-control.git/192331/focus=192424
+> > 
+> > rerere is mentioned in that thread, but I believe that it does its own
+> > hash, and does not rely on patch-id.
+> > 
+> > -Peff
+> 
+> OK so far I came up with the following.
+> Needs documentation and tests obviously.
+> But besides that -
+> would something like this be enough to address the
+> issue Junio raised?
 
-s/seq/test_seq/
+Ping. Junio could you comment on this please?
 
-d17cf5f3a32f07bf (tests: Introduce test_seq;  2012-08-03)
-
-> +       do
-> +               echo "creating revision $i"
-
-Do you want to end this line with '&&'?
-
-> +               wiki_editpage foo "revision $i<br/>" true
-> +       done
-> +'
+> --->
+> 
+> patch-id: make it more stable
+> 
+> Add a new patch-id algorithm making it stable against
+> hunk reodering:
+> 	- prepend header to each hunk (if not there)
+> 	- calculate SHA1 hash for each hunk separately
+> 	- sum all hashes to get patch id
+> 
+> Add --order-sensitive to get historical unstable behaviour.
+> 
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>  builtin/patch-id.c | 65 +++++++++++++++++++++++++++++++++++++++++-------------
+>  1 file changed, 50 insertions(+), 15 deletions(-)
+> 
+> diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+> index 3cfe02d..d1902ff 100644
+> --- a/builtin/patch-id.c
+> +++ b/builtin/patch-id.c
+> @@ -1,17 +1,14 @@
+>  #include "builtin.h"
+>  
+> -static void flush_current_id(int patchlen, unsigned char *id, git_SHA_CTX *c)
+> +static void flush_current_id(int patchlen, unsigned char *id, unsigned char *result)
+>  {
+> -	unsigned char result[20];
+>  	char name[50];
+>  
+>  	if (!patchlen)
+>  		return;
+>  
+> -	git_SHA1_Final(result, c);
+>  	memcpy(name, sha1_to_hex(id), 41);
+>  	printf("%s %s\n", sha1_to_hex(result), name);
+> -	git_SHA1_Init(c);
+>  }
+>  
+>  static int remove_space(char *line)
+> @@ -56,10 +53,30 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
+>  	return 1;
+>  }
+>  
+> -static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct strbuf *line_buf)
+> +static void flush_one_hunk(unsigned char *result, git_SHA_CTX *ctx)
+>  {
+> -	int patchlen = 0, found_next = 0;
+> +	unsigned char hash[20];
+> +	unsigned short carry = 0;
+> +	int i;
 > +
-> +test_expect_success 'cloning page w/ >500 revisions' '
-> +       git clone mediawiki::'"$WIKI_URL"' mw_dir
-> +'
+> +	git_SHA1_Final(hash, ctx);
+> +	git_SHA1_Init(ctx);
+> +	/* 20-byte sum, with carry */
+> +	for (i = 0; i < 20; ++i) {
+> +		carry += result[i] + hash[i];
+> +		result[i] = carry;
+> +		carry >>= 8;
+> +	}
+> +}
+> +static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
+> +			   struct strbuf *line_buf, int stable)
+> +{
+> +	int patchlen = 0, found_next = 0, hunks = 0;
+>  	int before = -1, after = -1;
+> +	git_SHA_CTX ctx, header_ctx;
 > +
-> +test_done
-> --
+> +	git_SHA1_Init(&ctx);
+> +	hashclr(result);
+>  
+>  	while (strbuf_getwholeline(line_buf, stdin, '\n') != EOF) {
+>  		char *line = line_buf->buf;
+> @@ -99,6 +116,18 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+>  			if (!memcmp(line, "@@ -", 4)) {
+>  				/* Parse next hunk, but ignore line numbers.  */
+>  				scan_hunk_header(line, &before, &after);
+> +				if (stable) {
+> +					if (hunks) {
+> +						flush_one_hunk(result, &ctx);
+> +						memcpy(&ctx, &header_ctx,
+> +						       sizeof ctx);
+> +					} else {
+> +						/* Save ctx for next hunk.  */
+> +						memcpy(&header_ctx, &ctx,
+> +						       sizeof ctx);
+> +					}
+> +				}
+> +				hunks++;
+>  				continue;
+>  			}
+>  
+> @@ -108,6 +137,7 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+>  
+>  			/* Else we're parsing another header.  */
+>  			before = after = -1;
+> +			hunks = 0;
+>  		}
+>  
+>  		/* If we get here, we're inside a hunk.  */
+> @@ -119,27 +149,27 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+>  		/* Compute the sha without whitespace */
+>  		len = remove_space(line);
+>  		patchlen += len;
+> -		git_SHA1_Update(ctx, line, len);
+> +		git_SHA1_Update(&ctx, line, len);
+>  	}
+>  
+>  	if (!found_next)
+>  		hashclr(next_sha1);
+>  
+> +	flush_one_hunk(result, &ctx);
+> +
+>  	return patchlen;
+>  }
+>  
+> -static void generate_id_list(void)
+> +static void generate_id_list(int stable)
+>  {
+> -	unsigned char sha1[20], n[20];
+> -	git_SHA_CTX ctx;
+> +	unsigned char sha1[20], n[20], result[20];
+>  	int patchlen;
+>  	struct strbuf line_buf = STRBUF_INIT;
+>  
+> -	git_SHA1_Init(&ctx);
+>  	hashclr(sha1);
+>  	while (!feof(stdin)) {
+> -		patchlen = get_one_patchid(n, &ctx, &line_buf);
+> -		flush_current_id(patchlen, sha1, &ctx);
+> +		patchlen = get_one_patchid(n, result, &line_buf, stable);
+> +		flush_current_id(patchlen, sha1, result);
+>  		hashcpy(sha1, n);
+>  	}
+>  	strbuf_release(&line_buf);
+> @@ -149,9 +179,14 @@ static const char patch_id_usage[] = "git patch-id < patch";
+>  
+>  int cmd_patch_id(int argc, const char **argv, const char *prefix)
+>  {
+> -	if (argc != 1)
+> +	int stable;
+> +	if (argc == 2 && !strcmp(argv[1], "--order-sensitive"))
+> +		stable = 0;
+> +	else if (argc == 1)
+> +		stable = 1;
+> +	else
+>  		usage(patch_id_usage);
+>  
+> -	generate_id_list();
+> +	generate_id_list(stable);
+>  	return 0;
+>  }
+> -- 
+> MST
+> 
