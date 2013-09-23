@@ -1,131 +1,99 @@
 From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 14/15] contrib/git-credential-gnome-keyring.c: support ancient gnome-keyring
-Date: Sun, 22 Sep 2013 22:08:10 -0700
-Message-ID: <1379912891-12277-15-git-send-email-drafnel@gmail.com>
+Subject: [PATCH 10/15] contrib/git-credential-gnome-keyring.c: use secure memory for reading passwords
+Date: Sun, 22 Sep 2013 22:08:06 -0700
+Message-ID: <1379912891-12277-11-git-send-email-drafnel@gmail.com>
 References: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
 Cc: pah@qo.cx, Brandon Casey <drafnel@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 23 07:09:31 2013
+X-From: git-owner@vger.kernel.org Mon Sep 23 07:09:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNyOp-00026d-3b
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 07:09:31 +0200
+	id 1VNyOt-00028Z-DE
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 07:09:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753297Ab3IWFJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 01:09:25 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:41321 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752694Ab3IWFJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 01:09:22 -0400
-Received: by mail-pa0-f52.google.com with SMTP id kl14so1814512pab.39
-        for <git@vger.kernel.org>; Sun, 22 Sep 2013 22:09:22 -0700 (PDT)
+	id S1753246Ab3IWFJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 01:09:17 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:45786 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753234Ab3IWFJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 01:09:16 -0400
+Received: by mail-pd0-f169.google.com with SMTP id r10so2761889pdi.14
+        for <git@vger.kernel.org>; Sun, 22 Sep 2013 22:09:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SECaFc/88RYUhJE0BUH4NlwSW3ZhHv8Hznhv4xTJb6o=;
-        b=VtIAXEM8Av+ipfyoGLdBiRx7Ad76e85NqIGqI9F9cHR2OEg9J/85CDLGc26P2e/g0m
-         4R8JaUKElJJFu8+VM8CVNlnJOBrWwggF6599Yxl5ktJOfFKcq6iQrZdXLfU8jjwAbalX
-         oj0IINuBSbdMVuDN8mmsSj5cWtPj16xK74fO4X5evbr5trYSX4UFhV4Wz71uIjN6ydc3
-         M3bfIIUDwT7rf6TOpXF6JSPEuSdcBlbmSkbamiHCcqZoeccjIGPYsnuW31dmtpJUFTwX
-         9kq3LX2lC3lp05ortouEv9ddgzp3uq665XKgMf5OGjG9Y7FfnUFsOjSpPXL2Ml8AHWBV
-         aBzw==
-X-Received: by 10.68.225.42 with SMTP id rh10mr19951pbc.176.1379912962381;
-        Sun, 22 Sep 2013 22:09:22 -0700 (PDT)
+        bh=Q78FHQNMGKNg2h48Dtkp6hRnf2qNjTyoYIMqD5tnwso=;
+        b=uWbNJ2+ydU9Q5XqDf2HpIcHRQ3HA10dj0HCgzaa7RvPWrpHXqzkZsdFwdBWhJ4GAUs
+         qOvx5RknvNYeD18/a2xtp9qimztBwqZzcGaUyzq/TUhax6eeHw/tN39l9UDiJwuOfqrq
+         Kv8PSTVjHHLSOugZs1WH7vQY09wXFbxe3dYAU0+F/KcxiAJ1z4ZL00grKUxZK8x0CIYT
+         7/kaoG3DmlOO0UIYNx7PYh1wAEnaIf4JAiuOa+bHQgazs0JsChjaLC7poe440/dkBUs/
+         tWErY27+Fnwti0YvGM7pwR7MlhChZqTMSNeqwqGSwg/Iov5WHCsA3OmU6yJJcCs5stqz
+         34GA==
+X-Received: by 10.66.246.229 with SMTP id xz5mr5900453pac.128.1379912955802;
+        Sun, 22 Sep 2013 22:09:15 -0700 (PDT)
 Received: from charliebrown.hsd1.ca.comcast.net (c-98-248-40-161.hsd1.ca.comcast.net. [98.248.40.161])
         by mx.google.com with ESMTPSA id sb9sm31437553pbb.0.1969.12.31.16.00.00
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 22 Sep 2013 22:09:21 -0700 (PDT)
+        Sun, 22 Sep 2013 22:09:15 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4.489.g545bc72
 In-Reply-To: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235194>
 
-The gnome-keyring lib distributed with RHEL 5.X is ancient and does
-not provide a few of the functions/defines that more recent versions
-do, but mostly the API is the same.  Let's provide the missing bits
-via macro definitions and function implementation.
+gnome-keyring provides functions to allocate non-pageable memory (if
+possible).  Let's use them to allocate memory that may be used to hold
+secure data read from the keyring.
 
 Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
- .../gnome-keyring/git-credential-gnome-keyring.c   | 58 ++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ .../credential/gnome-keyring/git-credential-gnome-keyring.c  | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-index 6fa1278..f8f4df9 100644
+index ff2f48c..94a65b2 100644
 --- a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
 +++ b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-@@ -28,8 +28,66 @@
- #include <stdlib.h>
- #include <glib.h>
- #include <gnome-keyring.h>
-+
-+#ifdef GNOME_KEYRING_DEFAULT
-+
-+   /* Modern gnome-keyring */
-+
- #include <gnome-keyring-memory.h>
+@@ -289,12 +289,14 @@ static void credential_clear(struct credential *c)
  
-+#else
+ static int credential_read(struct credential *c)
+ {
+-	char    buf[1024];
++	char    *buf;
+ 	size_t line_len;
+-	char   *key      = buf;
++	char   *key;
+ 	char   *value;
+ 
+-	while (fgets(buf, sizeof(buf), stdin))
++	key = buf = gnome_keyring_memory_alloc(1024);
 +
-+   /*
-+    * Support ancient gnome-keyring, circ. RHEL 5.X.
-+    * GNOME_KEYRING_DEFAULT seems to have been introduced with Gnome 2.22,
-+    * and the other features roughly around Gnome 2.20, 6 months before.
-+    * Ubuntu 8.04 used Gnome 2.22 (I think).  Not sure any distro used 2.20.
-+    * So the existence/non-existence of GNOME_KEYRING_DEFAULT seems like
-+    * a decent thing to use as an indicator.
-+    */
++	while (fgets(buf, 1024, stdin))
+ 	{
+ 		line_len = strlen(buf);
+ 
+@@ -307,6 +309,7 @@ static int credential_read(struct credential *c)
+ 		value = strchr(buf,'=');
+ 		if(!value) {
+ 			warning("invalid credential line: %s", key);
++			gnome_keyring_memory_free(buf);
+ 			return -1;
+ 		}
+ 		*value++ = '\0';
+@@ -339,6 +342,9 @@ static int credential_read(struct credential *c)
+ 		 * learn new lines, and the helpers are updated to match.
+ 		 */
+ 	}
 +
-+#define GNOME_KEYRING_DEFAULT NULL
++	gnome_keyring_memory_free(buf);
 +
-+/*
-+ * ancient gnome-keyring returns DENIED when an entry is not found.
-+ * Setting NO_MATCH to DENIED will prevent us from reporting denied
-+ * errors during get and erase operations, but we will still report
-+ * DENIED errors during a store.
-+ */
-+#define GNOME_KEYRING_RESULT_NO_MATCH GNOME_KEYRING_RESULT_DENIED
-+
-+#define gnome_keyring_memory_alloc g_malloc
-+#define gnome_keyring_memory_free gnome_keyring_free_password
-+#define gnome_keyring_memory_strdup g_strdup
-+
-+static const char* gnome_keyring_result_to_message(GnomeKeyringResult result)
-+{
-+	switch (result) {
-+	case GNOME_KEYRING_RESULT_OK:
-+		return "OK";
-+	case GNOME_KEYRING_RESULT_DENIED:
-+		return "Denied";
-+	case GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON:
-+		return "No Keyring Daemon";
-+	case GNOME_KEYRING_RESULT_ALREADY_UNLOCKED:
-+		return "Already UnLocked";
-+	case GNOME_KEYRING_RESULT_NO_SUCH_KEYRING:
-+		return "No Such Keyring";
-+	case GNOME_KEYRING_RESULT_BAD_ARGUMENTS:
-+		return "Bad Arguments";
-+	case GNOME_KEYRING_RESULT_IO_ERROR:
-+		return "IO Error";
-+	case GNOME_KEYRING_RESULT_CANCELLED:
-+		return "Cancelled";
-+	case GNOME_KEYRING_RESULT_ALREADY_EXISTS:
-+		return "Already Exists";
-+	default:
-+		return "Unknown Error";
-+	}
-+}
-+
-+#endif
-+
- /*
-  * This credential struct and API is simplified from git's credential.{h,c}
-  */
+ 	return 0;
+ }
+ 
 -- 
 1.8.4.489.g545bc72
