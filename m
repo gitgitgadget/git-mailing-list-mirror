@@ -1,111 +1,83 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/9] transport-helper: add 'force' to 'export' helpers
-Date: Sun, 22 Sep 2013 21:39:27 -0500
-Message-ID: <523fa9df8ed1b_5c910e3e801fa@nysa.mail>
-References: <1377789808-2213-1-git-send-email-felipe.contreras@gmail.com>
- <1377789808-2213-2-git-send-email-felipe.contreras@gmail.com>
- <523FAA59.6040200@bbn.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Richard Hansen <rhansen@bbn.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 23 04:55:32 2013
+From: Brandon Casey <drafnel@gmail.com>
+Subject: [PATCH 00/15] Make Gnome Credential helper more Gnome-y and support ancient distros
+Date: Sun, 22 Sep 2013 22:07:56 -0700
+Message-ID: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
+Cc: pah@qo.cx, Brandon Casey <drafnel@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 23 07:08:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNwJ9-00044m-6O
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 04:55:31 +0200
+	id 1VNyOF-0001pI-VO
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 07:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753153Ab3IWCzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Sep 2013 22:55:23 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:41811 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753191Ab3IWCzP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Sep 2013 22:55:15 -0400
-Received: by mail-oa0-f45.google.com with SMTP id o17so161652oag.32
-        for <git@vger.kernel.org>; Sun, 22 Sep 2013 19:55:15 -0700 (PDT)
+	id S1753100Ab3IWFIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 01:08:52 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:62686 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753078Ab3IWFIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 01:08:51 -0400
+Received: by mail-pd0-f180.google.com with SMTP id y10so2740719pdj.39
+        for <git@vger.kernel.org>; Sun, 22 Sep 2013 22:08:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-type:content-transfer-encoding;
-        bh=jega4jXD+UohuQ2TLPsoAtmlUk3pZfmrk6yBUNesDo8=;
-        b=bowqmyh8GZ6vpOlRuRYXXYW+eyYwBNu1vwBuNGougPuySVoo3P++lQbCCDJOKdPKzx
-         iPlxDPbaihwSqvJWaxXJ1qF9MsSr8SNhz8uORz6yGwUO3UaAFf9RGcpC2wLYXdGJ+ouP
-         sXSR9bO+mpl65DdkwWJqXfv0kiWzxgFXKVn1xniCbVr86woYGnfuUwSxQVOkdYDEAasp
-         cgBIvv1eSYM11laKqiP5TeCCcfWerHYDiZ7vOqrbgd3SNirYbO+Bobun+3WJllHHHN8j
-         jHYy78h6IZKs82DT427G7D1InV9tPNIsJOzJYhY6RPonW7nu/jXYGaJA6sIzhG+rjlnh
-         ux6Q==
-X-Received: by 10.60.62.101 with SMTP id x5mr17663178oer.24.1379904915214;
-        Sun, 22 Sep 2013 19:55:15 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id r3sm11346764oep.2.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 22 Sep 2013 19:55:14 -0700 (PDT)
-In-Reply-To: <523FAA59.6040200@bbn.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=jwqd8pyXCab9dFoCvJQAgn2Y1U4nsC9ssKxA4Hvg9Dc=;
+        b=aIWjlNe5RXd4l/btaxUXM356Yxe4OCu/uSJM8Ldi260wmPNWRdLNAxJHnJsRssYgxb
+         27EaD1n1uG6ITPpql25wAkT+mquYTovqyKK2Kd270qdg7+QVj7Hl0/IOPRIj0rVvEeRy
+         w61j+WnIwop3smrjBnmekJb6vc0OqJLFauw0WqEJahhs4r4CNxOoq3dKTVL1n1tvdGje
+         Ac2bg91P/CS5oSyQgSgRpTn/tlefTfQLKAK8PcQstJq6eKydvReHjP9VsxpAj1DPfNa9
+         14NC1vVZaUxB2Iyam3D74k44eOtltwQ+SpDpl79q0PAe9K091f0354YjQ88C+BTFiFKD
+         jFYA==
+X-Received: by 10.68.179.98 with SMTP id df2mr21906589pbc.38.1379912931161;
+        Sun, 22 Sep 2013 22:08:51 -0700 (PDT)
+Received: from charliebrown.hsd1.ca.comcast.net (c-98-248-40-161.hsd1.ca.comcast.net. [98.248.40.161])
+        by mx.google.com with ESMTPSA id sb9sm31437553pbb.0.1969.12.31.16.00.00
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 22 Sep 2013 22:08:50 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.489.g545bc72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235185>
 
-Richard Hansen wrote:
-> On 2013-08-29 11:23, Felipe Contreras wrote:
-> > Otherwise they cannot know when to force the push or not (other than
-> > hacks).
-> > 
-> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > ---
-> >  transport-helper.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> > 
-> > diff --git a/transport-helper.c b/transport-helper.c
-> > index 63cabc3..62051a6 100644
-> > --- a/transport-helper.c
-> > +++ b/transport-helper.c
-> > @@ -814,6 +814,9 @@ static int push_refs_with_export(struct transport *transport,
-> >  			die("helper %s does not support dry-run", data->name);
-> >  	}
-> >  
-> > +	if (flags & TRANSPORT_PUSH_FORCE)
-> > +		set_helper_option(transport, "force", "true");
-> 
-> Should the return value of set_helper_option() be checked?
+A few cleanups, followed by improved usage of the glib library (no need
+to reinvent the wheel when glib provides the necessary functionality), and
+then the addition of support for RHEL 4.x and 5.x.
 
-Yeah, it would make sense. I guess we want to die() if the user does
-'git push -f' and the remote helper doesn't support that.
+Brandon Casey (15):
+  contrib/git-credential-gnome-keyring.c: remove unnecessary
+    pre-declarations
+  contrib/git-credential-gnome-keyring.c: remove unused die() function
+  contrib/git-credential-gnome-keyring.c: add static where applicable
+  contrib/git-credential-gnome-keyring.c: exit non-zero when called
+    incorrectly
+  contrib/git-credential-gnome-keyring.c: set Gnome application name
+  contrib/git-credential-gnome-keyring.c: strlen() returns size_t, not
+    ssize_t
+  contrib/git-credential-gnome-keyring.c: ensure buffer is non-empty
+    before accessing
+  contrib/git-credential-gnome-keyring.c: use gnome helpers in
+    keyring_object()
+  contrib/git-credential-gnome-keyring.c: use secure memory functions
+    for passwds
+  contrib/git-credential-gnome-keyring.c: use secure memory for reading
+    passwords
+  contrib/git-credential-gnome-keyring.c: use glib memory allocation
+    functions
+  contrib/git-credential-gnome-keyring.c: use glib messaging functions
+  contrib/git-credential-gnome-keyring.c: report failure to store
+    password
+  contrib/git-credential-gnome-keyring.c: support ancient gnome-keyring
+  contrib/git-credential-gnome-keyring.c: support really ancient
+    gnome-keyring
 
-> Also, should there be a #define TRANS_OPT_FORCE "force" with
-
-I don't see the point of that. Defines are useful when you want to change the
-value string, so you don't have to change the string everywhere, but we
-definitely don't want to do that, as that would break backwards compatibility,
-so TRANS_OPT_KEEP would always be "keep" so it's just a way to tire our
-fingers.
-
-> TRANS_OPT_FORCE added to boolean_options[]?
-
-I don't see how that would help us, the only thing that would achieve is to map:
-
-
-  set_helper_option(transport, "force", 1);
-
-to
-
-  set_helper_option(transport, "force", "true");
-
-But we are already doing that.
-
-Moreover, the code is already doing something similar for all the other options.
-
-  set_helper_option(t, "progress", t->progress ? "true" : "false");
-  set_helper_option(t, "verbosity", buf);
-  set_helper_option(transport, "servpath", exec);
-  set_helper_option(transport, "dry-run", "true");
+ contrib/credential/gnome-keyring/Makefile          |   4 +-
+ .../gnome-keyring/git-credential-gnome-keyring.c   | 280 ++++++++++++---------
+ 2 files changed, 158 insertions(+), 126 deletions(-)
 
 -- 
-Felipe Contreras
+1.8.4.489.g545bc72
