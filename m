@@ -1,83 +1,89 @@
 From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 00/15] Make Gnome Credential helper more Gnome-y and support ancient distros
-Date: Sun, 22 Sep 2013 22:07:56 -0700
-Message-ID: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
+Subject: [PATCH 01/15] contrib/git-credential-gnome-keyring.c: remove unnecessary pre-declarations
+Date: Sun, 22 Sep 2013 22:07:57 -0700
+Message-ID: <1379912891-12277-2-git-send-email-drafnel@gmail.com>
+References: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
 Cc: pah@qo.cx, Brandon Casey <drafnel@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 23 07:08:56 2013
+X-From: git-owner@vger.kernel.org Mon Sep 23 07:09:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNyOF-0001pI-VO
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 07:08:56 +0200
+	id 1VNyOS-0001wD-M2
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 07:09:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753100Ab3IWFIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 01:08:52 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:62686 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753078Ab3IWFIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 01:08:51 -0400
-Received: by mail-pd0-f180.google.com with SMTP id y10so2740719pdj.39
-        for <git@vger.kernel.org>; Sun, 22 Sep 2013 22:08:51 -0700 (PDT)
+	id S1753160Ab3IWFJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 01:09:03 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:42527 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753137Ab3IWFJC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 01:09:02 -0400
+Received: by mail-pa0-f46.google.com with SMTP id fa1so3086263pad.5
+        for <git@vger.kernel.org>; Sun, 22 Sep 2013 22:09:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=jwqd8pyXCab9dFoCvJQAgn2Y1U4nsC9ssKxA4Hvg9Dc=;
-        b=aIWjlNe5RXd4l/btaxUXM356Yxe4OCu/uSJM8Ldi260wmPNWRdLNAxJHnJsRssYgxb
-         27EaD1n1uG6ITPpql25wAkT+mquYTovqyKK2Kd270qdg7+QVj7Hl0/IOPRIj0rVvEeRy
-         w61j+WnIwop3smrjBnmekJb6vc0OqJLFauw0WqEJahhs4r4CNxOoq3dKTVL1n1tvdGje
-         Ac2bg91P/CS5oSyQgSgRpTn/tlefTfQLKAK8PcQstJq6eKydvReHjP9VsxpAj1DPfNa9
-         14NC1vVZaUxB2Iyam3D74k44eOtltwQ+SpDpl79q0PAe9K091f0354YjQ88C+BTFiFKD
-         jFYA==
-X-Received: by 10.68.179.98 with SMTP id df2mr21906589pbc.38.1379912931161;
-        Sun, 22 Sep 2013 22:08:51 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=r35CmGSkSUH8As/5Oqr0UHn0pEH8/bbhHxfcY2wIRAE=;
+        b=JJql9JHGmqk8gNtt9x9/djvgApReytNE4dlbOKWR3Shy5zDYHF4K22iGopMqG2Eddc
+         AuodcErwTbtyKeylk1ZIeaZNckSMXPmb4QHn/RJHOR1UYXw88kWb+g9Yc57+Y0CQXc2l
+         O8ra3y6IH1rGkXZuKRHmiIaQ+c5T4BvOwMCDkJazshqg7csuyXajY/DZdPwUmEl88Dfb
+         wqAW0Uk8C0gPTuIc8fEcXJ+cQa8Q/LptkBWJSvVhcGnHvqQ0ia89LrOpotwwzcnrOyPR
+         +Z+U58baHtAU+bldBPKIjuS+Q6AwMmV0QvwuAvpCuenDiKMj3IcJ8unTnQlGia7EIJxb
+         9n4w==
+X-Received: by 10.66.136.131 with SMTP id qa3mr22856282pab.77.1379912941026;
+        Sun, 22 Sep 2013 22:09:01 -0700 (PDT)
 Received: from charliebrown.hsd1.ca.comcast.net (c-98-248-40-161.hsd1.ca.comcast.net. [98.248.40.161])
         by mx.google.com with ESMTPSA id sb9sm31437553pbb.0.1969.12.31.16.00.00
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 22 Sep 2013 22:08:50 -0700 (PDT)
+        Sun, 22 Sep 2013 22:09:00 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4.489.g545bc72
+In-Reply-To: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235186>
 
-A few cleanups, followed by improved usage of the glib library (no need
-to reinvent the wheel when glib provides the necessary functionality), and
-then the addition of support for RHEL 4.x and 5.x.
+These are all defined before they are used, so it is not necessary to
+pre-declare them.  Remove the pre-declarations.
 
-Brandon Casey (15):
-  contrib/git-credential-gnome-keyring.c: remove unnecessary
-    pre-declarations
-  contrib/git-credential-gnome-keyring.c: remove unused die() function
-  contrib/git-credential-gnome-keyring.c: add static where applicable
-  contrib/git-credential-gnome-keyring.c: exit non-zero when called
-    incorrectly
-  contrib/git-credential-gnome-keyring.c: set Gnome application name
-  contrib/git-credential-gnome-keyring.c: strlen() returns size_t, not
-    ssize_t
-  contrib/git-credential-gnome-keyring.c: ensure buffer is non-empty
-    before accessing
-  contrib/git-credential-gnome-keyring.c: use gnome helpers in
-    keyring_object()
-  contrib/git-credential-gnome-keyring.c: use secure memory functions
-    for passwds
-  contrib/git-credential-gnome-keyring.c: use secure memory for reading
-    passwords
-  contrib/git-credential-gnome-keyring.c: use glib memory allocation
-    functions
-  contrib/git-credential-gnome-keyring.c: use glib messaging functions
-  contrib/git-credential-gnome-keyring.c: report failure to store
-    password
-  contrib/git-credential-gnome-keyring.c: support ancient gnome-keyring
-  contrib/git-credential-gnome-keyring.c: support really ancient
-    gnome-keyring
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
+ .../credential/gnome-keyring/git-credential-gnome-keyring.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
- contrib/credential/gnome-keyring/Makefile          |   4 +-
- .../gnome-keyring/git-credential-gnome-keyring.c   | 280 ++++++++++++---------
- 2 files changed, 158 insertions(+), 126 deletions(-)
-
+diff --git a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
+index f2cdefe..15b0a1c 100644
+--- a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
++++ b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
+@@ -46,11 +46,6 @@ struct credential
+ #define CREDENTIAL_INIT \
+   { NULL,NULL,0,NULL,NULL,NULL }
+ 
+-void credential_init(struct credential *c);
+-void credential_clear(struct credential *c);
+-int  credential_read(struct credential *c);
+-void credential_write(const struct credential *c);
+-
+ typedef int (*credential_op_cb)(struct credential*);
+ 
+ struct credential_operation
+@@ -62,14 +57,6 @@ struct credential_operation
+ #define CREDENTIAL_OP_END \
+   { NULL,NULL }
+ 
+-/*
+- * Table with operation callbacks is defined in concrete
+- * credential helper implementation and contains entries
+- * like { "get", function_to_get_credential } terminated
+- * by CREDENTIAL_OP_END.
+- */
+-struct credential_operation const credential_helper_ops[];
+-
+ /* ---------------- common helper functions ----------------- */
+ 
+ static inline void free_password(char *password)
 -- 
 1.8.4.489.g545bc72
