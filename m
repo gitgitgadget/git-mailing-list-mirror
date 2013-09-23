@@ -1,81 +1,138 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: Save notes state when releasing
-Date: Mon, 23 Sep 2013 09:25:05 +0200
-Message-ID: <CAC9WiBiOAediWzgLsjcH=gorwtzrUSHumZQ3f8xk3gsestyXMw@mail.gmail.com>
-References: <CAC9WiBh3ha61M789DL==Nch30P_mvGwDLODqNzwaAbmHtyhPkQ@mail.gmail.com>
-	<20130920103401.GB21684@sigill.intra.peff.net>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH/RFC 1/5] add a hashtable implementation that supports
+ O(1) removal
+Date: Mon, 23 Sep 2013 11:16:45 +0200
+Message-ID: <524006FD.2010604@gmail.com>
+References: <522FAAC4.2080601@gmail.com> <522FAB19.3080704@gmail.com> <xmqqtxhqrjzf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 23 09:25:30 2013
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 23 11:16:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VO0WM-0006iS-Lj
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 09:25:27 +0200
+	id 1VO2GC-0006CN-1C
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 11:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752779Ab3IWHZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 03:25:07 -0400
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:63219 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752335Ab3IWHZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 03:25:06 -0400
-Received: by mail-vc0-f169.google.com with SMTP id ib11so1956471vcb.0
-        for <git@vger.kernel.org>; Mon, 23 Sep 2013 00:25:05 -0700 (PDT)
+	id S1753512Ab3IWJQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 05:16:47 -0400
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:35895 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753020Ab3IWJQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 05:16:46 -0400
+Received: by mail-wg0-f45.google.com with SMTP id y10so2838010wgg.0
+        for <git@vger.kernel.org>; Mon, 23 Sep 2013 02:16:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4bwZwCFtZkCG1F1hImUiEBmU9KTrYumsJJg20w6bcwA=;
-        b=jgW6rxpCrJsR986DIy9lDZVt97YShbKa6sxBvx3tmlMrhcpvJ3hwut6CGTXu8IbyQ4
-         TRanpvy6S0le/Vit4VuZqzWXf9FK1ARNuL8OC4YHqa+vG4k7z6YfrIfpa6ehuFfCR5xK
-         oxshYaAjvmjc0JruQshkB0Bc5h0neGbwndcyPMTxIUfxpfi3ZpVsWKSKbkJwSYLjzF6+
-         VvY+DRN9Qegqz6gK2+tC3SKq/5kEydf/UcDOmklAG7qN8/gtNl3XHrjfzFqk7Wu+Si8u
-         mi8aqcUBhWLx7UBFB9UNbdoY5oA27PFfBiPJFBkusc8lHQLLUN9Qe6M2XKm2V47CGXmn
-         9p7w==
-X-Received: by 10.59.9.138 with SMTP id ds10mr20996807ved.5.1379921105450;
- Mon, 23 Sep 2013 00:25:05 -0700 (PDT)
-Received: by 10.58.8.169 with HTTP; Mon, 23 Sep 2013 00:25:05 -0700 (PDT)
-In-Reply-To: <20130920103401.GB21684@sigill.intra.peff.net>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=dVWjPE8A5jFklJatTLWOYY10bnz/AfOXWT+XAhsRH2Q=;
+        b=HPsiXmJNLmBT/1Ytw+81JVj2sywdGVz2S2K6rkb6Zz9bmGdn9/ZFFh1Ar4QgL5hNDt
+         Kn7ZrJ4rGEU2I5nd8HxSK0aANaIx74qXew3m0MPAtXwfYaq2F+VcAlKz5gan2cf44SS/
+         8ZjNbGfp0B8eHX3SCxcH5cvv8H0vrSEt5XR7E3A7cU6CxTgJmmf5pYGSa/8BbB/FJORA
+         /ihH1OHEIa+2b8QGTRe2fjL66VzGxBK8pLS4Snz9OtuMg5afYKrng+QkhWqO8LRmbxUo
+         Wgla3DvBHuiJOdfnEtJaIVVmDLTQG37y3oZ+X8JwkTic67LtnqyrSvC1Rgv4w3I6yK1z
+         zPcQ==
+X-Received: by 10.180.20.77 with SMTP id l13mr12641641wie.40.1379927805715;
+        Mon, 23 Sep 2013 02:16:45 -0700 (PDT)
+Received: from [10.1.100.51] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id jf2sm24179598wic.2.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 23 Sep 2013 02:16:45 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <xmqqtxhqrjzf.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235203>
 
-On Fri, Sep 20, 2013 at 12:34 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Sep 20, 2013 at 07:38:17AM +0200, Francis Moreau wrote:
->
->> I'm using notes in my project. I'm wondering if it's possible to save
->> the state of the notes when I'm releasing/tagging a new version of my
->> project so I can restore the saved notes state if I checkout back the
->> old release.
->>
->> Therefore I would be able to inspect notes (which may have been
->> removed or modified after the release) as they were when the release
->> happened.
->
-> The notes are stored as git trees, so you can point a "tag" ref at a
-> particular state, just as you would with a normal branch. The "git tag"
-> command expects to create refs under "refs/tags", whereas "git notes"
-> expects to find notes under "refs/notes". The simplest thing is to just
-> use "git update-ref" rather than "git tag" to create the pointer. Like:
->
->   $ git update-ref refs/notes/v1.0 refs/notes/commits
->
-> and then you can always view the v1.0 notes as:
->
->   $ git --notes=v1.0 log
->
-> You can even set the notes.displayRef config to always show v1.0 notes
-> when they are available for a commit. Though if they are a subset of the
-> current notes, you would expect to see duplicates. Depending on what you
-> are storing in your notes, you may want to clean out your notes tree
-> after the release.
+Sorry for the delay, I've been on vacation...
 
-Thank you Jeff, that's what I was needing.
--- 
-Francis
+Am 12.09.2013 01:56, schrieb Junio C Hamano:
+> Karsten Blees <karsten.blees@gmail.com> writes:
+> 
+>> +#define FNV32_BASE ((unsigned int) 0x811c9dc5)
+>> +#define FNV32_PRIME ((unsigned int) 0x01000193)
+>> + ...
+>> +static inline unsigned int bucket(const hashmap *map, const hashmap_entry *key)
+>> +{
+>> +	return key->hash & (map->tablesize - 1);
+>> +}
+> 
+> As tablesize would hopefully be reasonably small, not worrying about
+> platforms' "unsigned int" being 64-bit (in which case it would be
+> more appropriate to compute with FNV64_PRIME) should be fine.
+> 
+>> +static inline hashmap_entry **find_entry(const hashmap *map,
+>> +		const hashmap_entry *key)
+>> +{
+>> +	hashmap_entry **e = &map->table[bucket(map, key)];
+>> +	while (*e && !entry_equals(map, *e, key))
+>> +		e = &(*e)->next;
+>> +	return e;
+>> +}
+> 
+> (mental note) This finds the location the pointer to the entry is
+> stored, not the entry itself.
+> 
+
+Will rename to find_entry_ptr to make this clear
+
+>> +void *hashmap_get(const hashmap *map, const void *key)
+>> +{
+>> +	return *find_entry(map, key);
+>> +}
+> 
+> ... which is consistent with this, and more importantly, it is
+> crucial for hashmap_remove()'s implementation, because...
+> 
+>> +void *hashmap_remove(hashmap *map, const void *key)
+>> +{
+>> +	hashmap_entry *old;
+>> +	hashmap_entry **e = find_entry(map, key);
+>> +	if (!*e)
+>> +		return NULL;
+>> +
+>> +	/* remove existing entry */
+>> +	old = *e;
+>> +	*e = old->next;
+> 
+> ... this wants to update the linked list in place.
+> 
+> Looking good.
+> 
+> I however wonder if the singly linked linear chain is a really good
+> alternative for the access pattern of the hashes we use, though.
+
+I don't think it will make a big difference in lookup performance, especially with good hash codes (such as the first bytes of a sha1). In theory, chaining should be slightly faster, because entries are strictly confined to their buckets (i.e. no extraneous entries need to be traversed when looking up an entry). With uniform hash distribution, chaining should require (1 + loadfactor) comparisons to find an entry, while open addressing requires (1/(1 - loadfactor)) [1]. I'll add a performance test for lookups, though.
+
+[1] http://en.wikipedia.org/wiki/Hash_table#Performance_analysis
+
+> Do we really want to trigger growth on the bucket load factor, not the
+> length of the longest chain, for example?
+> 
+
+With good hashes and a load factor < 1, the longest 'chain' is 1. We only get chains in case of collisions, which however cannot necessarily be resolved by resizing. E.g. in the worst case, all entries have the same hash code, which deforms the hash table into a long linked list in a single bucket. Resizing won't change that.
+
+An alternative would be to resize on the number of used buckets instead of total entries. I.e. with exceptionally bad hash codes and lots of collisions, we at least don't waste memory by making the table unnecessarily large. However, I don't think this is worth the extra effort.
+
+>> +	old->next = NULL;
+>> +
+>> +	/* fix size and rehash if appropriate */
+>> +	map->size--;
+>> +	if (map->tablesize > HASHMAP_INITIAL_SIZE &&
+>> +		map->size * HASHMAP_SHRINK_AT < map->tablesize)
+>> +		rehash(map, map->tablesize >> HASHMAP_GROW);
+> 
+> Please align the first two lines so that the first non-whitespace on
+> the second line of the condition part of the "if" statement
+> (i.e. 'm') aligns with the first non-whitespace inside the '(' open
+> parenthesis (i.e. 'm').
+> 
+
+Will do.
