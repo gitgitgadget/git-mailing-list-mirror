@@ -1,78 +1,132 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH 07/15] contrib/git-credential-gnome-keyring.c: ensure
- buffer is non-empty before accessing
-Date: Mon, 23 Sep 2013 10:21:28 -0700
-Message-ID: <CA+sFfMc9xzPvR55gxriFd_dxPra4kvB6+2MRnq5haQTwPwUnLw@mail.gmail.com>
-References: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
-	<1379912891-12277-8-git-send-email-drafnel@gmail.com>
-	<523fd4f6965ad_b79d67e786506@nysa.mail>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>, pah@qo.cx
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 23 19:21:34 2013
+From: Benoit Person <benoit.person@gmail.com>
+Subject: [PATCH v2] git-remote-mediawiki: bugfix for pages w/ >500 revisions
+Date: Mon, 23 Sep 2013 19:26:15 +0200
+Message-ID: <1379957175-8606-1-git-send-email-benoit.person@gmail.fr>
+Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Benoit Person <benoit.person@gmail.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 23 19:26:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VO9pG-0004MV-7L
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 19:21:34 +0200
+	id 1VO9uD-0006ga-Kt
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 19:26:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856Ab3IWRVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 13:21:30 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:65530 "EHLO
+	id S1752938Ab3IWR0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 13:26:37 -0400
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:40179 "EHLO
 	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751555Ab3IWRV3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 13:21:29 -0400
-Received: by mail-wg0-f47.google.com with SMTP id f12so3441482wgh.14
-        for <git@vger.kernel.org>; Mon, 23 Sep 2013 10:21:28 -0700 (PDT)
+	with ESMTP id S1752866Ab3IWR0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 13:26:37 -0400
+Received: by mail-wg0-f47.google.com with SMTP id f12so3447216wgh.14
+        for <git@vger.kernel.org>; Mon, 23 Sep 2013 10:26:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ksZY9WYIdcCl+EdVFbIwIIm8XesMhJycFFgmL2XIkX0=;
-        b=O9HYhsgIeD+1nlxwWdjoCONKAeiYqzzjUZytrQ+AOy5NwH/XVgVwVqzKk53nr+VCag
-         apoa9pm02ZF9zFw1IOpQEJT7hpp56b4Is1bRX5dcelP/GGvGoo8x8t9mY5VYP05ib6rm
-         fffwKS/AwCeM793BP5CBZ86FGb7oMpIcY4WQlqz6l5kZyZZrtlg1cAEE7pz7B6FY/dHc
-         IVyfvY78Z08XQ6uOo6DTU4ZqdBJp6+Toid6ZuSmKdKr9V0dVUdkjJmBMQS5tNmpTJtxF
-         NoRJtJxTcrVuBzEaZu+xYbTnnlX2TLuOEyknXT7CJkCsEfxNjVUsUjYjdKqPAFrUHGL3
-         1YHw==
-X-Received: by 10.180.160.178 with SMTP id xl18mr14497496wib.61.1379956888625;
- Mon, 23 Sep 2013 10:21:28 -0700 (PDT)
-Received: by 10.194.85.168 with HTTP; Mon, 23 Sep 2013 10:21:28 -0700 (PDT)
-In-Reply-To: <523fd4f6965ad_b79d67e786506@nysa.mail>
+        h=from:to:cc:subject:date:message-id;
+        bh=6co0vi0eGHZXcOxv3jrN1XMjW0suS4irlCYPoZC7DbY=;
+        b=E4dNc4Y4iS4r/aVeDjvSDi5S2WpW4q32tMcvZBzozcTi+guGNTagrEtxgVeqw4B8gY
+         y2DO42SHxb0graCdH0ti1BUsfU9rEz4Yrg7TEJMzoPh0Y47XtMj9+DDXt/nFfnJJQS9A
+         Kendl3Uts2rLiJ2p8p9+jvGVJV6YdUMUdzLYC9fRus7G8z4IjkF9rIFp4tD63NwjUTSZ
+         J20v+wBYNbuvntHh/fSHyY5+FrB9BvMXL4/QqSsLDvg51hfZansCeYP9FkSouOFpzy6z
+         mQ4IYuqb9LQv3MWkn1KN8l4Nb+74Jcbkf0tMJ4/i6DnKJ71syyhPblNypCuX2muiwv0U
+         RXAA==
+X-Received: by 10.194.240.197 with SMTP id wc5mr18859835wjc.23.1379957195830;
+        Mon, 23 Sep 2013 10:26:35 -0700 (PDT)
+Received: from localhost.localdomain (ip-145.net-81-220-163.rev.numericable.fr. [81.220.163.145])
+        by mx.google.com with ESMTPSA id b13sm27018290wic.9.1969.12.31.16.00.00
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 23 Sep 2013 10:26:35 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235209>
 
-Thanks.
+Mediawiki introduces a new API for queries w/ more than 500 results in
+version 1.21. That change triggered an infinite loop while cloning a
+mediawiki with such a page.
 
-On Sun, Sep 22, 2013 at 10:43 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Brandon Casey wrote:
->> Ensure buffer length is non-zero before attempting to access the last
->> element.
->>
->> Signed-off-by: Brandon Casey <drafnel@gmail.com>
->> ---
->>  contrib/credential/gnome-keyring/git-credential-gnome-keyring.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
->> index 1081224..8ae2eab 100644
->> --- a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
->> +++ b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
->> @@ -315,7 +315,7 @@ static int credential_read(struct credential *c)
->>       {
->>               line_len = strlen(buf);
->>
->> -             if(buf[line_len-1]=='\n')
->> +             if(line_len && buf[line_len-1] == '\n')
->
-> The style is if ().
->
-> --
-> Felipe Contreras
+The latest API renamed and moved the "continuing" information in the
+response, necessary to build the next query. The code failed to retrieve
+that information but still detected that it was in a "continuing
+query". As a result, it launched the same query over and over again.
+
+If a "continuing" information is detected in the response (old or new),
+the next query is updated accordingly. If not, we quit assuming it's not
+a continuing query.
+
+Signed-off-by: Benoit Person <benoit.person@gmail.fr>
+Reported-by: Benjamin Cathey
+---
+ contrib/mw-to-git/git-remote-mediawiki.perl     | 14 ++++++++++++--
+ contrib/mw-to-git/t/t9365-continuing-queries.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 2 deletions(-)
+ create mode 100755 contrib/mw-to-git/t/t9365-continuing-queries.sh
+
+diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
+index c9a4805..f1db5d2 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki.perl
++++ b/contrib/mw-to-git/git-remote-mediawiki.perl
+@@ -625,6 +625,9 @@ sub fetch_mw_revisions_for_page {
+ 		rvstartid => $fetch_from,
+ 		rvlimit => 500,
+ 		pageids => $id,
++
++		# let the mediawiki know that we support the latest API
++		continue => '',
+ 	};
+ 
+ 	my $revnum = 0;
+@@ -640,8 +643,15 @@ sub fetch_mw_revisions_for_page {
+ 			push(@page_revs, $page_rev_ids);
+ 			$revnum++;
+ 		}
+-		last if (!$result->{'query-continue'});
+-		$query->{rvstartid} = $result->{'query-continue'}->{revisions}->{rvstartid};
++
++		if ($result->{'query-continue'}) { # For legacy APIs
++			$query->{rvstartid} = $result->{'query-continue'}->{revisions}->{rvstartid};
++		} elsif ($result->{continue}) { # For newer APIs
++			$query->{rvstartid} = $result->{continue}->{rvcontinue};
++			$query->{continue} = $result->{continue}->{continue};
++		} else {
++			last;
++		}
+ 	}
+ 	if ($shallow_import && @page_revs) {
+ 		print {*STDERR} "  Found 1 revision (shallow import).\n";
+diff --git a/contrib/mw-to-git/t/t9365-continuing-queries.sh b/contrib/mw-to-git/t/t9365-continuing-queries.sh
+new file mode 100755
+index 0000000..6fb5df4
+--- /dev/null
++++ b/contrib/mw-to-git/t/t9365-continuing-queries.sh
+@@ -0,0 +1,24 @@
++#!/bin/sh
++
++test_description='Test the Git Mediawiki remote helper: queries w/ more than 500 results'
++
++. ./test-gitmw-lib.sh
++. ./push-pull-tests.sh
++. $TEST_DIRECTORY/test-lib.sh
++
++test_check_precond
++
++test_expect_success 'creating page w/ >500 revisions' '
++	wiki_reset &&
++	for i in $(seq 1 501)
++	do
++		echo "creating revision $i"
++		wiki_editpage foo "revision $i<br/>" true
++	done
++'
++
++test_expect_success 'cloning page w/ >500 revisions' '
++	git clone mediawiki::'"$WIKI_URL"' mw_dir
++'
++
++test_done
+-- 
+1.8.4.GIT
