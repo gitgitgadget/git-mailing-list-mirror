@@ -1,35 +1,35 @@
 From: Brandon Casey <bcasey@nvidia.com>
-Subject: [PATCH v2 07/16] contrib/git-credential-gnome-keyring.c: ensure buffer is non-empty before accessing
-Date: Mon, 23 Sep 2013 11:49:08 -0700
-Message-ID: <1379962157-1338-8-git-send-email-bcasey@nvidia.com>
+Subject: [PATCH v2 08/16] contrib/git-credential-gnome-keyring.c: set Gnome application name
+Date: Mon, 23 Sep 2013 11:49:09 -0700
+Message-ID: <1379962157-1338-9-git-send-email-bcasey@nvidia.com>
 References: <1379962157-1338-1-git-send-email-bcasey@nvidia.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: <john@szakmeister.net>, <pah@qo.cx>, <felipe.contreras@gmail.com>,
 	Brandon Casey <drafnel@gmail.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 23 20:50:18 2013
+X-From: git-owner@vger.kernel.org Mon Sep 23 20:50:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOBD7-0007u1-CE
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 20:50:17 +0200
+	id 1VOBDA-0007xz-Ov
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 20:50:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753678Ab3IWSuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 14:50:03 -0400
-Received: from hqemgate15.nvidia.com ([216.228.121.64]:14681 "EHLO
-	hqemgate15.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752635Ab3IWSt0 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753669Ab3IWSuC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 14:50:02 -0400
+Received: from hqemgate14.nvidia.com ([216.228.121.143]:9061 "EHLO
+	hqemgate14.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753232Ab3IWSt0 (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 23 Sep 2013 14:49:26 -0400
-Received: from hqnvupgp08.nvidia.com (Not Verified[216.228.121.13]) by hqemgate15.nvidia.com
-	id <B52408d0d0001>; Mon, 23 Sep 2013 11:48:45 -0700
+Received: from hqnvupgp07.nvidia.com (Not Verified[216.228.121.13]) by hqemgate14.nvidia.com
+	id <B52408d200002>; Mon, 23 Sep 2013 11:49:05 -0700
 Received: from hqemhub01.nvidia.com ([172.20.12.94])
-  by hqnvupgp08.nvidia.com (PGP Universal service);
-  Mon, 23 Sep 2013 11:45:52 -0700
+  by hqnvupgp07.nvidia.com (PGP Universal service);
+  Mon, 23 Sep 2013 11:49:25 -0700
 X-PGP-Universal: processed;
-	by hqnvupgp08.nvidia.com on Mon, 23 Sep 2013 11:45:52 -0700
+	by hqnvupgp07.nvidia.com on Mon, 23 Sep 2013 11:49:25 -0700
 Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub01.nvidia.com
  (172.20.150.30) with Microsoft SMTP Server id 8.3.327.1; Mon, 23 Sep 2013
  11:49:25 -0700
@@ -39,31 +39,60 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235231>
 
 From: Brandon Casey <drafnel@gmail.com>
 
-Ensure buffer length is non-zero before attempting to access the last
-element.
+Since this is a Gnome application, let's set the application name to
+something reasonable.  This will be displayed in Gnome dialog boxes
+e.g. the one that prompts for the user's keyring password.
+
+We add an include statement for glib.h and add the glib-2.0 cflags and
+libs to the compilation arguments, but both of these are really noops
+since glib is already a dependency of gnome-keyring.
 
 Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
- contrib/credential/gnome-keyring/git-credential-gnome-keyring.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/credential/gnome-keyring/Makefile                       | 4 ++--
+ contrib/credential/gnome-keyring/git-credential-gnome-keyring.c | 3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
+diff --git a/contrib/credential/gnome-keyring/Makefile b/contrib/credential/gnome-keyring/Makefile
+index e6561d8..c3c7c98 100644
+--- a/contrib/credential/gnome-keyring/Makefile
++++ b/contrib/credential/gnome-keyring/Makefile
+@@ -8,8 +8,8 @@ CFLAGS = -g -O2 -Wall
+ -include ../../../config.mak.autogen
+ -include ../../../config.mak
+ 
+-INCS:=$(shell pkg-config --cflags gnome-keyring-1)
+-LIBS:=$(shell pkg-config --libs gnome-keyring-1)
++INCS:=$(shell pkg-config --cflags gnome-keyring-1 glib-2.0)
++LIBS:=$(shell pkg-config --libs gnome-keyring-1 glib-2.0)
+ 
+ SRCS:=$(MAIN).c
+ OBJS:=$(SRCS:.c=.o)
 diff --git a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-index b9bb794..0d2c55e 100644
+index 0d2c55e..43b19dd 100644
 --- a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
 +++ b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-@@ -314,7 +314,7 @@ static int credential_read(struct credential *c)
- 	{
- 		line_len = strlen(buf);
+@@ -28,6 +28,7 @@
+ #include <stdarg.h>
+ #include <stdlib.h>
+ #include <errno.h>
++#include <glib.h>
+ #include <gnome-keyring.h>
  
--		if (buf[line_len-1]=='\n')
-+		if (line_len && buf[line_len-1] == '\n')
- 			buf[--line_len]='\0';
+ /*
+@@ -399,6 +400,8 @@ int main(int argc, char *argv[])
+ 		exit(EXIT_FAILURE);
+ 	}
  
- 		if (!line_len)
++	g_set_application_name("Git Credential Helper");
++
+ 	/* lookup operation callback */
+ 	while (try_op->name && strcmp(argv[1], try_op->name))
+ 		try_op++;
 -- 
 1.8.4.rc4.6.g5555d19
 
