@@ -1,7 +1,7 @@
 From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 10/15] contrib/git-credential-gnome-keyring.c: use secure memory for reading passwords
-Date: Sun, 22 Sep 2013 22:08:06 -0700
-Message-ID: <1379912891-12277-11-git-send-email-drafnel@gmail.com>
+Subject: [PATCH 11/15] contrib/git-credential-gnome-keyring.c: use glib memory allocation functions
+Date: Sun, 22 Sep 2013 22:08:07 -0700
+Message-ID: <1379912891-12277-12-git-send-email-drafnel@gmail.com>
 References: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
 Cc: pah@qo.cx, Brandon Casey <drafnel@gmail.com>
 To: git@vger.kernel.org
@@ -11,89 +11,164 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNyOt-00028Z-DE
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 07:09:35 +0200
+	id 1VNyOt-00028Z-V8
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 07:09:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753246Ab3IWFJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1753326Ab3IWFJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 01:09:32 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:55124 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753234Ab3IWFJR (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 23 Sep 2013 01:09:17 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:45786 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753234Ab3IWFJQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 01:09:16 -0400
-Received: by mail-pd0-f169.google.com with SMTP id r10so2761889pdi.14
-        for <git@vger.kernel.org>; Sun, 22 Sep 2013 22:09:15 -0700 (PDT)
+Received: by mail-pd0-f170.google.com with SMTP id x10so2770596pdj.29
+        for <git@vger.kernel.org>; Sun, 22 Sep 2013 22:09:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Q78FHQNMGKNg2h48Dtkp6hRnf2qNjTyoYIMqD5tnwso=;
-        b=uWbNJ2+ydU9Q5XqDf2HpIcHRQ3HA10dj0HCgzaa7RvPWrpHXqzkZsdFwdBWhJ4GAUs
-         qOvx5RknvNYeD18/a2xtp9qimztBwqZzcGaUyzq/TUhax6eeHw/tN39l9UDiJwuOfqrq
-         Kv8PSTVjHHLSOugZs1WH7vQY09wXFbxe3dYAU0+F/KcxiAJ1z4ZL00grKUxZK8x0CIYT
-         7/kaoG3DmlOO0UIYNx7PYh1wAEnaIf4JAiuOa+bHQgazs0JsChjaLC7poe440/dkBUs/
-         tWErY27+Fnwti0YvGM7pwR7MlhChZqTMSNeqwqGSwg/Iov5WHCsA3OmU6yJJcCs5stqz
-         34GA==
-X-Received: by 10.66.246.229 with SMTP id xz5mr5900453pac.128.1379912955802;
-        Sun, 22 Sep 2013 22:09:15 -0700 (PDT)
+        bh=VNGV/kCwrUEsfVL2mIFrBCEcsiIzbbTGz3V0Oeq97Tg=;
+        b=yleEEYm+AFEo62gwhM7t30LlihCjnxcXgFbDc6UIF+hKWJbIVWQ6F16vMFRzxwt7+I
+         3+N7fLmktDTB+sACfj/s5UpbtemXQA+ZozDKlNIle2q/K9uBewqQDFABfXR5JOnbLwWd
+         aeA5LRW92sr+qrn0hCRxw84BqQEYZIM1p5ewozrUw2+CTHKGp+rQtHmk0CMIhyxT35F1
+         xqKFN5Ky6tztFOdixq9i0tnHrHvSb8dmzzhF+URRbvzCiIwYmWa9A2NkchkjiudAa7V4
+         AJisJ028OCo2RPFl2Ze5J78IU7RguZP7Asfy7qSL5uOvku0QKSpkB2dQJUr/iqXpt2r5
+         /Iug==
+X-Received: by 10.68.171.193 with SMTP id aw1mr6011084pbc.131.1379912957320;
+        Sun, 22 Sep 2013 22:09:17 -0700 (PDT)
 Received: from charliebrown.hsd1.ca.comcast.net (c-98-248-40-161.hsd1.ca.comcast.net. [98.248.40.161])
         by mx.google.com with ESMTPSA id sb9sm31437553pbb.0.1969.12.31.16.00.00
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 22 Sep 2013 22:09:15 -0700 (PDT)
+        Sun, 22 Sep 2013 22:09:16 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4.489.g545bc72
 In-Reply-To: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235195>
 
-gnome-keyring provides functions to allocate non-pageable memory (if
-possible).  Let's use them to allocate memory that may be used to hold
-secure data read from the keyring.
+Rather than roll our own, let's use the memory allocation/free routines
+provided by glib.
 
 Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
- .../credential/gnome-keyring/git-credential-gnome-keyring.c  | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ .../gnome-keyring/git-credential-gnome-keyring.c   | 48 ++++++++--------------
+ 1 file changed, 16 insertions(+), 32 deletions(-)
 
 diff --git a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-index ff2f48c..94a65b2 100644
+index 94a65b2..5b10e3e 100644
 --- a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
 +++ b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-@@ -289,12 +289,14 @@ static void credential_clear(struct credential *c)
- 
- static int credential_read(struct credential *c)
- {
--	char    buf[1024];
-+	char    *buf;
- 	size_t line_len;
--	char   *key      = buf;
-+	char   *key;
- 	char   *value;
- 
--	while (fgets(buf, sizeof(buf), stdin))
-+	key = buf = gnome_keyring_memory_alloc(1024);
-+
-+	while (fgets(buf, 1024, stdin))
- 	{
- 		line_len = strlen(buf);
- 
-@@ -307,6 +309,7 @@ static int credential_read(struct credential *c)
- 		value = strchr(buf,'=');
- 		if(!value) {
- 			warning("invalid credential line: %s", key);
-+			gnome_keyring_memory_free(buf);
- 			return -1;
- 		}
- 		*value++ = '\0';
-@@ -339,6 +342,9 @@ static int credential_read(struct credential *c)
- 		 * learn new lines, and the helpers are updated to match.
- 		 */
- 	}
-+
-+	gnome_keyring_memory_free(buf);
-+
- 	return 0;
+@@ -27,7 +27,6 @@
+ #include <string.h>
+ #include <stdarg.h>
+ #include <stdlib.h>
+-#include <errno.h>
+ #include <glib.h>
+ #include <gnome-keyring.h>
+ #include <gnome-keyring-memory.h>
+@@ -83,21 +82,6 @@ static inline void error(const char *fmt, ...)
+ 	va_end(ap);
  }
  
+-static inline void die_errno(int err)
+-{
+-	error("%s", strerror(err));
+-	exit(EXIT_FAILURE);
+-}
+-
+-static inline char *xstrdup(const char *str)
+-{
+-	char *ret = strdup(str);
+-	if (!ret)
+-		die_errno(errno);
+-
+-	return ret;
+-}
+-
+ /* ----------------- GNOME Keyring functions ----------------- */
+ 
+ /* create a special keyring option string, if path is given */
+@@ -134,7 +118,7 @@ static int keyring_get(struct credential *c)
+ 				c->port,
+ 				&entries);
+ 
+-	free(object);
++	g_free(object);
+ 
+ 	if (result == GNOME_KEYRING_RESULT_NO_MATCH)
+ 		return EXIT_SUCCESS;
+@@ -154,7 +138,7 @@ static int keyring_get(struct credential *c)
+ 	c->password = gnome_keyring_memory_strdup(password_data->password);
+ 
+ 	if (!c->username)
+-		c->username = xstrdup(password_data->user);
++		c->username = g_strdup(password_data->user);
+ 
+ 	gnome_keyring_network_password_list_free(entries);
+ 
+@@ -192,7 +176,7 @@ static int keyring_store(struct credential *c)
+ 				c->password,
+ 				&item_id);
+ 
+-	free(object);
++	g_free(object);
+ 	return EXIT_SUCCESS;
+ }
+ 
+@@ -226,7 +210,7 @@ static int keyring_erase(struct credential *c)
+ 				c->port,
+ 				&entries);
+ 
+-	free(object);
++	g_free(object);
+ 
+ 	if (result == GNOME_KEYRING_RESULT_NO_MATCH)
+ 		return EXIT_SUCCESS;
+@@ -278,10 +262,10 @@ static void credential_init(struct credential *c)
+ 
+ static void credential_clear(struct credential *c)
+ {
+-	free(c->protocol);
+-	free(c->host);
+-	free(c->path);
+-	free(c->username);
++	g_free(c->protocol);
++	g_free(c->host);
++	g_free(c->path);
++	g_free(c->username);
+ 	gnome_keyring_memory_free(c->password);
+ 
+ 	credential_init(c);
+@@ -315,22 +299,22 @@ static int credential_read(struct credential *c)
+ 		*value++ = '\0';
+ 
+ 		if (!strcmp(key, "protocol")) {
+-			free(c->protocol);
+-			c->protocol = xstrdup(value);
++			g_free(c->protocol);
++			c->protocol = g_strdup(value);
+ 		} else if (!strcmp(key, "host")) {
+-			free(c->host);
+-			c->host = xstrdup(value);
++			g_free(c->host);
++			c->host = g_strdup(value);
+ 			value = strrchr(c->host,':');
+ 			if (value) {
+ 				*value++ = '\0';
+ 				c->port = atoi(value);
+ 			}
+ 		} else if (!strcmp(key, "path")) {
+-			free(c->path);
+-			c->path = xstrdup(value);
++			g_free(c->path);
++			c->path = g_strdup(value);
+ 		} else if (!strcmp(key, "username")) {
+-			free(c->username);
+-			c->username = xstrdup(value);
++			g_free(c->username);
++			c->username = g_strdup(value);
+ 		} else if (!strcmp(key, "password")) {
+ 			gnome_keyring_memory_free(c->password);
+ 			c->password = gnome_keyring_memory_strdup(value);
 -- 
 1.8.4.489.g545bc72
