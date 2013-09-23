@@ -1,89 +1,138 @@
 From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 01/15] contrib/git-credential-gnome-keyring.c: remove unnecessary pre-declarations
-Date: Sun, 22 Sep 2013 22:07:57 -0700
-Message-ID: <1379912891-12277-2-git-send-email-drafnel@gmail.com>
+Subject: [PATCH 03/15] contrib/git-credential-gnome-keyring.c: add static where applicable
+Date: Sun, 22 Sep 2013 22:07:59 -0700
+Message-ID: <1379912891-12277-4-git-send-email-drafnel@gmail.com>
 References: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
 Cc: pah@qo.cx, Brandon Casey <drafnel@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 23 07:09:09 2013
+X-From: git-owner@vger.kernel.org Mon Sep 23 07:09:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VNyOS-0001wD-M2
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 07:09:09 +0200
+	id 1VNyOY-0001yp-Um
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 07:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753160Ab3IWFJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 01:09:03 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:42527 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753137Ab3IWFJC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 01:09:02 -0400
-Received: by mail-pa0-f46.google.com with SMTP id fa1so3086263pad.5
-        for <git@vger.kernel.org>; Sun, 22 Sep 2013 22:09:01 -0700 (PDT)
+	id S1753186Ab3IWFJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 01:09:06 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:48500 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753137Ab3IWFJE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 01:09:04 -0400
+Received: by mail-pa0-f54.google.com with SMTP id kx10so3135372pab.27
+        for <git@vger.kernel.org>; Sun, 22 Sep 2013 22:09:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=r35CmGSkSUH8As/5Oqr0UHn0pEH8/bbhHxfcY2wIRAE=;
-        b=JJql9JHGmqk8gNtt9x9/djvgApReytNE4dlbOKWR3Shy5zDYHF4K22iGopMqG2Eddc
-         AuodcErwTbtyKeylk1ZIeaZNckSMXPmb4QHn/RJHOR1UYXw88kWb+g9Yc57+Y0CQXc2l
-         O8ra3y6IH1rGkXZuKRHmiIaQ+c5T4BvOwMCDkJazshqg7csuyXajY/DZdPwUmEl88Dfb
-         wqAW0Uk8C0gPTuIc8fEcXJ+cQa8Q/LptkBWJSvVhcGnHvqQ0ia89LrOpotwwzcnrOyPR
-         +Z+U58baHtAU+bldBPKIjuS+Q6AwMmV0QvwuAvpCuenDiKMj3IcJ8unTnQlGia7EIJxb
-         9n4w==
-X-Received: by 10.66.136.131 with SMTP id qa3mr22856282pab.77.1379912941026;
-        Sun, 22 Sep 2013 22:09:01 -0700 (PDT)
+        bh=6ILmQSaoG8GOq+6+95w+tvF1wIdMZnXuZ74saTu4C6M=;
+        b=obbBsKQV0+sTnuQyIdu1fWyYwZX07mdRxlHxAQrwY/4p9LvPor1As2q/nhnxuf6Q03
+         4CWPGOzn9T3W519GjuK//Jg/9mCPnFuLjnznvKM5qLtIMFQApM2KGyN9+TKvSSPnDL4L
+         J/5/9uSzXeAQRv1WcihXKLg8n7C5JNmMJzbArN8U5A12GIYQJTgnfhydw2BREGI4OnjW
+         SF7V+YKznT0PNAztgQ8O3pv75GBW3Qe2hWNopDQ0SL/0TLpsHjyf5KqvLZgftg72f3g+
+         ls34ktXLh0+UxhAvPZ5GSQdqww/OoDSeRLs7T1o/KvTas/PGG/on17Kd0AVI5u4DbxnE
+         yNEw==
+X-Received: by 10.66.66.161 with SMTP id g1mr10964pat.175.1379912944334;
+        Sun, 22 Sep 2013 22:09:04 -0700 (PDT)
 Received: from charliebrown.hsd1.ca.comcast.net (c-98-248-40-161.hsd1.ca.comcast.net. [98.248.40.161])
         by mx.google.com with ESMTPSA id sb9sm31437553pbb.0.1969.12.31.16.00.00
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 22 Sep 2013 22:09:00 -0700 (PDT)
+        Sun, 22 Sep 2013 22:09:03 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4.489.g545bc72
 In-Reply-To: <1379912891-12277-1-git-send-email-drafnel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235187>
 
-These are all defined before they are used, so it is not necessary to
-pre-declare them.  Remove the pre-declarations.
+Mark global variable and functions as static.
 
 Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
- .../credential/gnome-keyring/git-credential-gnome-keyring.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ .../gnome-keyring/git-credential-gnome-keyring.c       | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-index f2cdefe..15b0a1c 100644
+index 4334f23..ad23dbf 100644
 --- a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
 +++ b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-@@ -46,11 +46,6 @@ struct credential
- #define CREDENTIAL_INIT \
-   { NULL,NULL,0,NULL,NULL,NULL }
+@@ -128,7 +128,7 @@ static char* keyring_object(struct credential *c)
+ 	return object;
+ }
  
--void credential_init(struct credential *c);
--void credential_clear(struct credential *c);
--int  credential_read(struct credential *c);
--void credential_write(const struct credential *c);
--
- typedef int (*credential_op_cb)(struct credential*);
+-int keyring_get(struct credential *c)
++static int keyring_get(struct credential *c)
+ {
+ 	char* object = NULL;
+ 	GList *entries;
+@@ -178,7 +178,7 @@ int keyring_get(struct credential *c)
+ }
  
- struct credential_operation
-@@ -62,14 +57,6 @@ struct credential_operation
- #define CREDENTIAL_OP_END \
-   { NULL,NULL }
  
--/*
-- * Table with operation callbacks is defined in concrete
-- * credential helper implementation and contains entries
-- * like { "get", function_to_get_credential } terminated
-- * by CREDENTIAL_OP_END.
-- */
--struct credential_operation const credential_helper_ops[];
--
- /* ---------------- common helper functions ----------------- */
+-int keyring_store(struct credential *c)
++static int keyring_store(struct credential *c)
+ {
+ 	guint32 item_id;
+ 	char  *object = NULL;
+@@ -212,7 +212,7 @@ int keyring_store(struct credential *c)
+ 	return EXIT_SUCCESS;
+ }
  
- static inline void free_password(char *password)
+-int keyring_erase(struct credential *c)
++static int keyring_erase(struct credential *c)
+ {
+ 	char  *object = NULL;
+ 	GList *entries;
+@@ -277,7 +277,7 @@ int keyring_erase(struct credential *c)
+  * Table with helper operation callbacks, used by generic
+  * credential helper main function.
+  */
+-struct credential_operation const credential_helper_ops[] =
++static struct credential_operation const credential_helper_ops[] =
+ {
+ 	{ "get",   keyring_get   },
+ 	{ "store", keyring_store },
+@@ -287,12 +287,12 @@ struct credential_operation const credential_helper_ops[] =
+ 
+ /* ------------------ credential functions ------------------ */
+ 
+-void credential_init(struct credential *c)
++static void credential_init(struct credential *c)
+ {
+ 	memset(c, 0, sizeof(*c));
+ }
+ 
+-void credential_clear(struct credential *c)
++static void credential_clear(struct credential *c)
+ {
+ 	free(c->protocol);
+ 	free(c->host);
+@@ -303,7 +303,7 @@ void credential_clear(struct credential *c)
+ 	credential_init(c);
+ }
+ 
+-int credential_read(struct credential *c)
++static int credential_read(struct credential *c)
+ {
+ 	char    buf[1024];
+ 	ssize_t line_len = 0;
+@@ -358,14 +358,14 @@ int credential_read(struct credential *c)
+ 	return 0;
+ }
+ 
+-void credential_write_item(FILE *fp, const char *key, const char *value)
++static void credential_write_item(FILE *fp, const char *key, const char *value)
+ {
+ 	if (!value)
+ 		return;
+ 	fprintf(fp, "%s=%s\n", key, value);
+ }
+ 
+-void credential_write(const struct credential *c)
++static void credential_write(const struct credential *c)
+ {
+ 	/* only write username/password, if set */
+ 	credential_write_item(stdout, "username", c->username);
 -- 
 1.8.4.489.g545bc72
