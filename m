@@ -1,135 +1,87 @@
 From: Brandon Casey <bcasey@nvidia.com>
-Subject: [PATCH v2 13/16] contrib/git-credential-gnome-keyring.c: use glib messaging functions
-Date: Mon, 23 Sep 2013 11:49:14 -0700
-Message-ID: <1379962157-1338-14-git-send-email-bcasey@nvidia.com>
+Subject: [PATCH v2 01/16] contrib/git-credential-gnome-keyring.c: remove unnecessary pre-declarations
+Date: Mon, 23 Sep 2013 11:49:02 -0700
+Message-ID: <1379962157-1338-2-git-send-email-bcasey@nvidia.com>
 References: <1379962157-1338-1-git-send-email-bcasey@nvidia.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: <john@szakmeister.net>, <pah@qo.cx>, <felipe.contreras@gmail.com>,
 	Brandon Casey <drafnel@gmail.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 23 20:49:57 2013
+X-From: git-owner@vger.kernel.org Mon Sep 23 20:50:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOBCf-0007aR-Om
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 20:49:50 +0200
+	id 1VOBCy-0007oY-Il
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 20:50:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753565Ab3IWStm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 14:49:42 -0400
-Received: from hqemgate15.nvidia.com ([216.228.121.64]:14686 "EHLO
-	hqemgate15.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753342Ab3IWSt0 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753330Ab3IWSt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 23 Sep 2013 14:49:26 -0400
-Received: from hqnvupgp08.nvidia.com (Not Verified[216.228.121.13]) by hqemgate15.nvidia.com
-	id <B52408d0e0001>; Mon, 23 Sep 2013 11:48:46 -0700
+Received: from hqemgate14.nvidia.com ([216.228.121.143]:9049 "EHLO
+	hqemgate14.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752867Ab3IWStZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 14:49:25 -0400
+Received: from hqnvupgp07.nvidia.com (Not Verified[216.228.121.13]) by hqemgate14.nvidia.com
+	id <B52408d1f0000>; Mon, 23 Sep 2013 11:49:03 -0700
 Received: from hqemhub01.nvidia.com ([172.20.12.94])
-  by hqnvupgp08.nvidia.com (PGP Universal service);
-  Mon, 23 Sep 2013 11:45:53 -0700
+  by hqnvupgp07.nvidia.com (PGP Universal service);
+  Mon, 23 Sep 2013 11:49:24 -0700
 X-PGP-Universal: processed;
-	by hqnvupgp08.nvidia.com on Mon, 23 Sep 2013 11:45:53 -0700
+	by hqnvupgp07.nvidia.com on Mon, 23 Sep 2013 11:49:24 -0700
 Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub01.nvidia.com
  (172.20.150.30) with Microsoft SMTP Server id 8.3.327.1; Mon, 23 Sep 2013
- 11:49:26 -0700
+ 11:49:24 -0700
 X-Mailer: git-send-email 1.8.4.rc4.6.g5555d19
 In-Reply-To: <1379962157-1338-1-git-send-email-bcasey@nvidia.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235225>
 
 From: Brandon Casey <drafnel@gmail.com>
 
-Rather than roll our own, let's use the messaging functions provided
-by glib.
+These are all defined before they are used, so it is not necessary to
+pre-declare them.  Remove the pre-declarations.
 
 Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
- .../gnome-keyring/git-credential-gnome-keyring.c   | 33 +++-------------------
- 1 file changed, 4 insertions(+), 29 deletions(-)
+ .../credential/gnome-keyring/git-credential-gnome-keyring.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
 diff --git a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-index 273c43b..b70bd53 100644
+index f2cdefe..15b0a1c 100644
 --- a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
 +++ b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-@@ -25,7 +25,6 @@
+@@ -46,11 +46,6 @@ struct credential
+ #define CREDENTIAL_INIT \
+   { NULL,NULL,0,NULL,NULL,NULL }
  
- #include <stdio.h>
- #include <string.h>
--#include <stdarg.h>
- #include <stdlib.h>
- #include <glib.h>
- #include <gnome-keyring.h>
-@@ -58,30 +57,6 @@ struct credential_operation
+-void credential_init(struct credential *c);
+-void credential_clear(struct credential *c);
+-int  credential_read(struct credential *c);
+-void credential_write(const struct credential *c);
+-
+ typedef int (*credential_op_cb)(struct credential*);
+ 
+ struct credential_operation
+@@ -62,14 +57,6 @@ struct credential_operation
  #define CREDENTIAL_OP_END \
    { NULL,NULL }
  
--/* ---------------- common helper functions ----------------- */
+-/*
+- * Table with operation callbacks is defined in concrete
+- * credential helper implementation and contains entries
+- * like { "get", function_to_get_credential } terminated
+- * by CREDENTIAL_OP_END.
+- */
+-struct credential_operation const credential_helper_ops[];
 -
--static inline void warning(const char *fmt, ...)
--{
--	va_list ap;
--
--	va_start(ap, fmt);
--	fprintf(stderr, "warning: ");
--	vfprintf(stderr, fmt, ap);
--	fprintf(stderr, "\n" );
--	va_end(ap);
--}
--
--static inline void error(const char *fmt, ...)
--{
--	va_list ap;
--
--	va_start(ap, fmt);
--	fprintf(stderr, "error: ");
--	vfprintf(stderr, fmt, ap);
--	fprintf(stderr, "\n" );
--	va_end(ap);
--}
--
- /* ----------------- GNOME Keyring functions ----------------- */
+ /* ---------------- common helper functions ----------------- */
  
- /* create a special keyring option string, if path is given */
-@@ -127,7 +102,7 @@ static int keyring_get(struct credential *c)
- 		return EXIT_SUCCESS;
- 
- 	if (result != GNOME_KEYRING_RESULT_OK) {
--		error("%s",gnome_keyring_result_to_message(result));
-+		g_critical("%s", gnome_keyring_result_to_message(result));
- 		return EXIT_FAILURE;
- 	}
- 
-@@ -220,7 +195,7 @@ static int keyring_erase(struct credential *c)
- 
- 	if (result != GNOME_KEYRING_RESULT_OK)
- 	{
--		error("%s",gnome_keyring_result_to_message(result));
-+		g_critical("%s", gnome_keyring_result_to_message(result));
- 		return EXIT_FAILURE;
- 	}
- 
-@@ -234,7 +209,7 @@ static int keyring_erase(struct credential *c)
- 
- 	if (result != GNOME_KEYRING_RESULT_OK)
- 	{
--		error("%s",gnome_keyring_result_to_message(result));
-+		g_critical("%s", gnome_keyring_result_to_message(result));
- 		return EXIT_FAILURE;
- 	}
- 
-@@ -292,7 +267,7 @@ static int credential_read(struct credential *c)
- 
- 		value = strchr(buf,'=');
- 		if (!value) {
--			warning("invalid credential line: %s", key);
-+			g_warning("invalid credential line: %s", key);
- 			gnome_keyring_memory_free(buf);
- 			return -1;
- 		}
+ static inline void free_password(char *password)
 -- 
 1.8.4.rc4.6.g5555d19
 
