@@ -1,166 +1,193 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH/RFC 0/7] Support for Ruby
-Date: Mon, 23 Sep 2013 13:17:30 -0500
-Message-ID: <524085ba39049_3a6f81e84193b3@nysa.mail>
-References: <1379789295-18519-1-git-send-email-felipe.contreras@gmail.com>
- <20130921212904.GA235845@vauxhall.crustytoothpaste.net>
- <CAMP44s3Shdg40go-WyGV8QKwEGoXg8hvEe8tetMyxvx5Sb7evw@mail.gmail.com>
- <20130921235647.GC235845@vauxhall.crustytoothpaste.net>
- <CAPc5daWa0BPXdrYqek=WzixVVfh0DvHhxjtOh2LW6bgR0MAOPw@mail.gmail.com>
+From: Brandon Casey <bcasey@nvidia.com>
+Subject: [PATCH v2 00/16] Make Gnome Credential helper more Gnome-y and support ancient distros
+Date: Mon, 23 Sep 2013 11:49:01 -0700
+Message-ID: <1379962157-1338-1-git-send-email-bcasey@nvidia.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Mon Sep 23 20:33:12 2013
+Content-Type: text/plain
+Cc: <john@szakmeister.net>, <pah@qo.cx>, <felipe.contreras@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 23 20:49:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOAwZ-0006kW-Rj
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 20:33:12 +0200
+	id 1VOBCM-0007St-D8
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 20:49:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753432Ab3IWSdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 14:33:07 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:46232 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752866Ab3IWSdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 14:33:05 -0400
-Received: by mail-oa0-f46.google.com with SMTP id k14so941556oag.19
-        for <git@vger.kernel.org>; Mon, 23 Sep 2013 11:33:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=CNuQ7tc0uqp1x+DOfkP9AvnllRps/wL8qT1Yql3WRMw=;
-        b=F2SHTrqspF68GclEmMAePx2YNpySmjPsdJdIQES1r1OTjh7U6vvDXa3eXizRfP5YHg
-         Xcd+Olr9WEG3ci5oZD+CVsnCrMkwON8C5XvPND21ssX0MExR+7D2zyOjbUhKzxl/6TPz
-         g1cYZ5/D3aul1S7H05K7Gb6x8DI3mYAXDRzMryI3zv0mrrWCXmBG7NewdLlNWAaHGICq
-         Abp/ygMEzO8MWy2DhJSmwBoVYn3LuworunQBx/IoIilwlqPqubK5OqUXurDz7jBBpBI/
-         hUI1YKdKIvNiCrcYIs8tPfneYhLYAgh5fArro3OPjMquNT32lhnA5L/yox9xQTCCAi4O
-         9bEQ==
-X-Received: by 10.182.75.201 with SMTP id e9mr7614785obw.28.1379961184283;
-        Mon, 23 Sep 2013 11:33:04 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id r6sm15151450obi.14.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 23 Sep 2013 11:33:03 -0700 (PDT)
-In-Reply-To: <CAPc5daWa0BPXdrYqek=WzixVVfh0DvHhxjtOh2LW6bgR0MAOPw@mail.gmail.com>
+	id S1753204Ab3IWStZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 14:49:25 -0400
+Received: from hqemgate15.nvidia.com ([216.228.121.64]:14672 "EHLO
+	hqemgate15.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752635Ab3IWStY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 14:49:24 -0400
+Received: from hqnvupgp08.nvidia.com (Not Verified[216.228.121.13]) by hqemgate15.nvidia.com
+	id <B52408d0c0000>; Mon, 23 Sep 2013 11:48:44 -0700
+Received: from hqemhub01.nvidia.com ([172.20.12.94])
+  by hqnvupgp08.nvidia.com (PGP Universal service);
+  Mon, 23 Sep 2013 11:45:51 -0700
+X-PGP-Universal: processed;
+	by hqnvupgp08.nvidia.com on Mon, 23 Sep 2013 11:45:51 -0700
+Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub01.nvidia.com
+ (172.20.150.30) with Microsoft SMTP Server id 8.3.327.1; Mon, 23 Sep 2013
+ 11:49:24 -0700
+X-Mailer: git-send-email 1.8.4.rc4.6.g5555d19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235215>
 
-Junio C Hamano wrote:
-> [on vacaion, with only gmail webmail UI; please excuse me if this message comes
-> out badly formatted or gets dropped by vger.kernel.org]
-> 
-> On Sat, Sep 21, 2013 at 4:56 PM, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > On Sat, Sep 21, 2013 at 05:52:05PM -0500, Felipe Contreras wrote:
-> >> On Sat, Sep 21, 2013 at 4:29 PM, brian m. carlson
-> >> <sandals@crustytoothpaste.net> wrote:
-> >> > As Junio has also pointed out in the past, there are people who aren't
-> >> > able to use Ruby in the same way that they are Perl and Python.  If it's
-> >> > announced now, Git 2.0 might be a good time to start accepting Ruby
-> >> > scripts, as that will give people time to plan for its inclusion.
-> 
-> In the very beginning, the codebase and development community of Git was
-> very small. In order to give usability and also easy availability of minimally
-> sufficient features, we used shell and Perl for quicker turn-around and
-> implementation and included these Porcelain scripts written in higher level
-> languages in the same package as the core Git.
-> 
-> We should look at use of shell and Perl as necessary evil in that context,
-> not as an enabler for people who do not want to write in C. It is no longer
-> 2005 and the "enabler" side has a much more suited project for it these days.
-> 
-> Namely, it is better served by various language-binding efforts around libgit2.
-> Binding that takes advantage of each specific language is better done over
-> there, I think. Cf. http://www.youtube.com/watch?v=4ZWqr6iih3s
+From: Brandon Casey <drafnel@gmail.com>
 
-If libgit2 is so good as a library to interact with Git repositories, why isn't
-Git using it?
+Mostly unchanged.
 
-Because it's not. It is a necessary evil due to the fact that Git developers
-neglected to write code in a reusable manner so other people could utilize
-libgit. So somebody else had to step up, so now we have two code-bases.
+Inserts a patch to fix the style issues for block statements.
+i.e. use "if ()" instead of "if()"
 
-> If anything, I think the core side should be focused on three things
-> (in addition
-> to bug-fixes, of course) in the longer term:
-> 
->  - Defining and implementing necessary improvements to the core on-file and
->    on-the-wire data structures and the protocols to serve as the canonical
->    implementation.
-> 
->  - Moving away from higher-level scripting languages such as shell and Perl.
->    Recent "clean --interactive" may have added some code that could be
->    reused for a rewrite of "add -i" (which I think is in Perl), for example.
->    The minimum "You need to have these to use Git" should be made more
->    portable by doing *less* in shell or Perl, not by adding more in the higher-
->    level languages, and certainly not by adding other languages, be it Ruby or
->    Lua.
-> 
->  - Giving solid interface to the outside world, e.g. remote-helpers, credential-
->    helpers API, and let the users and developers that want to use them do their
->    own projects, without adding things to contrib/.
+A couple early patches were reordered to improve logical flow.
 
-It's interesting how none of these goals reflect what the users want:
+Updated the comment in the last patch to hopefully improve clarity
+wrt RHEL 4.X
 
-https://www.survs.com/results/QPESOB10/ME8UTHXM4M
+The only functional change is in 14/16 "report failure to store".
+We should accept GNOME_KEYRING_RESULT_CANCELLED as a successful
+return and _not_ produce an error message.
 
-1. Better user-interface
-2. Better documentation
-3. GUI tools
+Interdiff follows...
 
-Do you deny this is what users want? Or you just don't care?
+Brandon Casey (16):
+  contrib/git-credential-gnome-keyring.c: remove unnecessary
+    pre-declarations
+  contrib/git-credential-gnome-keyring.c: remove unused die() function
+  contrib/git-credential-gnome-keyring.c: *style* use "if ()" not "if()"
+    etc.
+  contrib/git-credential-gnome-keyring.c: add static where applicable
+  contrib/git-credential-gnome-keyring.c: exit non-zero when called
+    incorrectly
+  contrib/git-credential-gnome-keyring.c: strlen() returns size_t, not
+    ssize_t
+  contrib/git-credential-gnome-keyring.c: ensure buffer is non-empty
+    before accessing
+  contrib/git-credential-gnome-keyring.c: set Gnome application name
+  contrib/git-credential-gnome-keyring.c: use gnome helpers in
+    keyring_object()
+  contrib/git-credential-gnome-keyring.c: use secure memory functions
+    for passwds
+  contrib/git-credential-gnome-keyring.c: use secure memory for reading
+    passwords
+  contrib/git-credential-gnome-keyring.c: use glib memory allocation
+    functions
+  contrib/git-credential-gnome-keyring.c: use glib messaging functions
+  contrib/git-credential-gnome-keyring.c: report failure to store
+    password
+  contrib/git-credential-gnome-keyring.c: support ancient gnome-keyring
+  contrib/git-credential-gnome-keyring.c: support really ancient
+    gnome-keyring
 
-I'm not trying to antagonize you, I just truly don't understand how something
-so obvious for so many users just doesn't even factor into your decision making
-as what needs to be done.
+ contrib/credential/gnome-keyring/Makefile          |   4 +-
+ .../gnome-keyring/git-credential-gnome-keyring.c   | 301 ++++++++++++---------
+ 2 files changed, 169 insertions(+), 136 deletions(-)
 
-> In other words, now the Git user and developer community are strong
-> and thriving,
-> we should strive to make the core smaller, not larger, and encourage people to
-> form more third party communities that specialise in the areas the
-> participant of
-> these communities are stronger than those who are involved in the core
-> (e.g. like
-> myself, Peff, Nico, Jonathan, etc.). For programs that talk remote-helper or
-> credential-helper protocols, for example, it is wasteful to have them
-> in our contrib/
-> and have the changes to them go through my tree, with the same coding style
-> standard applied to the core, which would in the longer term only add
-> unnecessary overhead to what they want to do and what their effort supply the
-> users with.
+---
 
-Of course, we can make the core smaller, by replacing all the perl/shell
-scripts with ruby ones.
+diff --git a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
+index ce2ddee..635c96b 100644
+--- a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
++++ b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
+@@ -50,7 +50,7 @@
+ 
+ /*
+  * ancient gnome-keyring returns DENIED when an entry is not found.
+- * Setting NO_MATCH to DENIED will prevent us from reporting denied
++ * Setting NO_MATCH to DENIED will prevent us from reporting DENIED
+  * errors during get and erase operations, but we will still report
+  * DENIED errors during a store.
+  */
+@@ -87,8 +87,8 @@ static const char* gnome_keyring_result_to_message(GnomeKeyringResult result)
+ }
+ 
+ /*
+- * Just a guess to support RHEL 4.X.
+- * Glib 2.8 was roughly Gnome 2.12 ?
++ * Support really ancient gnome-keyring, circ. RHEL 4.X.
++ * Just a guess for the Glib version.  Glib 2.8 was roughly Gnome 2.12 ?
+  * Which was released with gnome-keyring 0.4.3 ??
+  */
+ #if GLIB_MAJOR_VERSION == 2 && GLIB_MINOR_VERSION < 8
+@@ -162,7 +162,7 @@ static char* keyring_object(struct credential *c)
+ 	if (!c->path)
+ 		return NULL;
+ 
+-	if(c->port)
++	if (c->port)
+ 		return g_strdup_printf("%s:%hd/%s", c->host, c->port, c->path);
+ 
+ 	return g_strdup_printf("%s/%s", c->host, c->path);
+@@ -251,7 +251,8 @@ static int keyring_store(struct credential *c)
+ 
+ 	g_free(object);
+ 
+-	if (result != GNOME_KEYRING_RESULT_OK) {
++	if (result != GNOME_KEYRING_RESULT_OK &&
++	    result != GNOME_KEYRING_RESULT_CANCELLED) {
+ 		g_critical("%s", gnome_keyring_result_to_message(result));
+ 		return EXIT_FAILURE;
+ 	}
+@@ -363,14 +364,14 @@ static int credential_read(struct credential *c)
+ 	{
+ 		line_len = strlen(buf);
+ 
+-		if(line_len && buf[line_len-1] == '\n')
++		if (line_len && buf[line_len-1] == '\n')
+ 			buf[--line_len]='\0';
+ 
+-		if(!line_len)
++		if (!line_len)
+ 			break;
+ 
+ 		value = strchr(buf,'=');
+-		if(!value) {
++		if (!value) {
+ 			g_warning("invalid credential line: %s", key);
+ 			gnome_keyring_memory_free(buf);
+ 			return -1;
+@@ -432,9 +433,9 @@ static void usage(const char *name)
+ 
+ 	basename = (basename) ? basename + 1 : name;
+ 	fprintf(stderr, "usage: %s <", basename);
+-	while(try_op->name) {
++	while (try_op->name) {
+ 		fprintf(stderr,"%s",(try_op++)->name);
+-		if(try_op->name)
++		if (try_op->name)
+ 			fprintf(stderr,"%s","|");
+ 	}
+ 	fprintf(stderr,"%s",">\n");
+@@ -455,15 +456,15 @@ int main(int argc, char *argv[])
+ 	g_set_application_name("Git Credential Helper");
+ 
+ 	/* lookup operation callback */
+-	while(try_op->name && strcmp(argv[1], try_op->name))
++	while (try_op->name && strcmp(argv[1], try_op->name))
+ 		try_op++;
+ 
+ 	/* unsupported operation given -- ignore silently */
+-	if(!try_op->name || !try_op->op)
++	if (!try_op->name || !try_op->op)
+ 		goto out;
+ 
+ 	ret = credential_read(&cred);
+-	if(ret)
++	if (ret)
+ 		goto out;
+ 
+ 	/* perform credential operation */
 
-Sure, it would be better if all the scripts were rewritten in C, but that has
-been going on for years, and there's no end in sight, and not that much
-progress at all.
-
-So, it's fair to say that the rewrite to C is just not going to happen any time
-soon, and if we accept that, we should accept that an interim solution is
-needed, because Windows users are important and they are hurting right now, and
-that solution could definitely be Ruby.
-
-Rewriting scripts to C is hard, rewriting them to Ruby is easy, and one of the
-advantages of rewriting to Ruby, is that having the C->Ruby bindings available
-would make it easy to replace part of the scripts chunk by chunk, so we could
-have a half Ruby, half C script, and eventually 100% C.
-
-This is a practical solution, it's a realistic path to move forward, not one
-based on wishful thinking and intentions that never get realized.
-
-Once again, the perfect being the enemy of the good in the Git project, even
-when the good leads to perfect.
-
--- 
-Felipe Contreras
+-----------------------------------------------------------------------------------
+This email message is for the sole use of the intended recipient(s) and may contain
+confidential information.  Any unauthorized review, use, disclosure or distribution
+is prohibited.  If you are not the intended recipient, please contact the sender by
+reply email and destroy all copies of the original message.
+-----------------------------------------------------------------------------------
