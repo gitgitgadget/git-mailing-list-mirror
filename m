@@ -1,135 +1,126 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 2/3] perf-lib: add cleanup option
-Date: Mon, 23 Sep 2013 23:08:45 +0200
-Message-ID: <1379970526-27997-3-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH v2 3/3] p0003-index.sh: add perf test for the index formats
+Date: Mon, 23 Sep 2013 23:08:46 +0200
+Message-ID: <1379970526-27997-4-git-send-email-t.gummerer@gmail.com>
 References: <xmqqtxhgsi5p.fsf@gitster.dls.corp.google.com>
  <1379970526-27997-1-git-send-email-t.gummerer@gmail.com>
 Cc: trast@inf.ethz.ch, git@vger.kernel.org, t.gummerer@gmail.com
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Sep 23 23:10:01 2013
+X-From: git-owner@vger.kernel.org Mon Sep 23 23:10:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VODOK-0007ut-KM
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 23:10:01 +0200
+	id 1VODOU-00081A-N9
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Sep 2013 23:10:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920Ab3IWVJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 17:09:55 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:38589 "EHLO
+	id S1753962Ab3IWVKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 17:10:03 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:45084 "EHLO
 	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753603Ab3IWVJy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 17:09:54 -0400
-Received: by mail-pb0-f52.google.com with SMTP id wz12so3682530pbc.11
-        for <git@vger.kernel.org>; Mon, 23 Sep 2013 14:09:54 -0700 (PDT)
+	with ESMTP id S1753947Ab3IWVKB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 17:10:01 -0400
+Received: by mail-pb0-f52.google.com with SMTP id wz12so3662059pbc.39
+        for <git@vger.kernel.org>; Mon, 23 Sep 2013 14:10:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mBuZuq/1K+BvMbI1gUCC2NuluhK+52sTrhegoJkeeek=;
-        b=N3LrZLY3q2o3v+tXxtdWAa3+Pw/tm0wIxmgkIHi2XFn/yH8Wa9ofnoDvmfQrebZQiO
-         OBM08fAlp+/SZU3FKmBMfhi5iR2ShcEZV9TLOFeQ7Mv6b9d6e+fHZCVL0JMCifiImgKh
-         KFCOZDdVv150BhiYEbsgOWrpCMNX6TSFYYi8yiaim+EyAVnKb5xkNgDJIBxTV/7vTnur
-         Ikyjg5gLMDAU7dJtuVOgsXnk56Vpd0PxJJhTaq7xHzP5TMFaLVIQ1qiTDh08vLlnb3fb
-         qHLBajV0j2wihqg/KLWc49NNToFApEqlouu1KP8dngDaXtyvOCjbz8BZ32DTjoikW3vi
-         bd4Q==
-X-Received: by 10.68.134.202 with SMTP id pm10mr25598093pbb.2.1379970593986;
-        Mon, 23 Sep 2013 14:09:53 -0700 (PDT)
+        bh=fotHCECoJubk/Ap8ZQge6gKrtsTM4XzIW3puGIip/Uk=;
+        b=VgUQitwVtEK0y+W7im8c1opwRM+E7o/K62CZM+jODf+l+jfvjAUhis7v/5j4wJBblm
+         QYUm11jJW0nGFwXuzXe87Qu0YVDw2CFxqgA2c6hJKbEDuZ1d6GXNP6dyo4A0695iK7xb
+         YFxcUSxQ/X9yxANPB9xLUZl5cGcermW4Gaufyw+iwOUfZx5DtGEma6hdzmO/59Vu1gme
+         xP2IcNln6/eJvdRl2ef97ddG+pdUXMLYpQ/7IqX5KgxW8huG5ujk8YxzBXYJ8J5RHBRD
+         uIOoEz4TGxOuDrPxRsbU7gIRVGqYEpNo/ZQRY/BWnE7WlAjT3qC048kAlaRhR0R8qhF7
+         lYvQ==
+X-Received: by 10.68.114.36 with SMTP id jd4mr6149050pbb.31.1379970599709;
+        Mon, 23 Sep 2013 14:09:59 -0700 (PDT)
 Received: from localhost ([216.18.212.218])
-        by mx.google.com with ESMTPSA id sn4sm31645873pbc.37.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id kd1sm40352284pab.20.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 23 Sep 2013 14:09:53 -0700 (PDT)
+        Mon, 23 Sep 2013 14:09:59 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.4.1241.g1ce9896
 In-Reply-To: <1379970526-27997-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235244>
 
-Add a --cleanup for the performance tests.  This option can be used to
-clean up the tested repository after each time the performance tests are
-run.  The option can be specified for normal tests too, although it will
-not do anything for them.  Use test_when_finished for those tests.
+From: Thomas Rast <trast@inf.ethz.ch>
 
+Add a performance test for index version [23]/4 by using
+git update-index --index-version=x, thus testing both the reader
+and the writer speed of all index formats.
+
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- t/perf/README           | 11 ++++++++++-
- t/perf/perf-lib.sh      | 15 +++++++++++++++
- t/test-lib-functions.sh |  6 ++++++
- 3 files changed, 31 insertions(+), 1 deletion(-)
+ t/perf/p0003-index.sh | 56 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+ create mode 100755 t/perf/p0003-index.sh
 
-diff --git a/t/perf/README b/t/perf/README
-index 21abbaf..73a1d1c 100644
---- a/t/perf/README
-+++ b/t/perf/README
-@@ -123,7 +123,7 @@ tests, use
- 		command2
- 	'
- 
--	test_perf [--prereq <prereq>] [--] 'descriptive string' '
-+	test_perf [--prereq <prereq>] [--cleanup <cleanup>] [--] 'descriptive string' '
- 		command1 &&
- 		command2
- 	'
-@@ -133,6 +133,15 @@ tests are only executed if the prerequisite is fulfilled.  The modern
- version also allows to distinguish the message from the description
- and test script with --, in case the message starts with --.
- 
-+cleanup is another optional parameter to test_perf, which is executed
-+after every run of the performance test.  It can specify actions to
-+bring the repository to the original state, in order to be able to
-+execute the exact same test multiple times, e.g:
+diff --git a/t/perf/p0003-index.sh b/t/perf/p0003-index.sh
+new file mode 100755
+index 0000000..f2308c0
+--- /dev/null
++++ b/t/perf/p0003-index.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
 +
-+	test_perf --cleanup 'git reset' 'test performance of git add' '
-+		  git add $somefile
-+	'
++test_description="Tests index versions [23]/4/5"
 +
- test_perf spawns a subshell, for lack of better options.  This means
- that
- 
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index 6477d38..8ace4a3 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -176,6 +176,21 @@ test_perf () {
- 				test_failure_ "$@"
- 				break
- 			fi
-+			if ! test -z "$cleanup_action"; then
-+				say >&3 "cleaning up: $cleanup_action"
-+				if test_run_ "$cleanup_action"
-+				then
-+					if test -z "$verbose"; then
-+						printf " c%s" "$i"
-+					else
-+						echo "* cleaning up run $i/$GIT_PERF_REPEAT_COUNT:"
-+					fi
-+				else
-+					test -z $verbose && echo
-+					test_failure_ "$@"
-+					break
-+				fi
-+			fi
- 		done
- 		if test -z "$verbose"; then
- 			echo " ok"
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 473b21d..4bad14f 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -360,6 +360,12 @@ test_expect_parse () {
- 			test_prereq=$2
- 			shift
- 			;;
-+		--cleanup)
-+			test $# -gt 1 ||
-+			error "bug in the test script: --cleanup needs a parameter"
-+			cleanup_action=$2
-+			shift
-+			;;
- 		--)
- 			shift
- 			break
++. ./perf-lib.sh
++
++test_perf_large_repo
++test_checkout_worktree
++
++test_expect_success "convert to v3" "
++	git update-index --index-version=2
++"
++subdir=$(git ls-files | sed 's#/[^/]*$##' | grep -v '^$' | uniq | tail -n 30 | head -1)
++file=$(git ls-files | tail -n 100 | head -1)
++
++test_expect_success "modify a file" "
++	echo 'foo bar' >>$file
++"
++
++test_perf "v[23]: update-index" "
++	git update-index --index-version=2 >/dev/null
++"
++
++test_perf "v[23]: grep nonexistent -- subdir" "
++	test_must_fail git grep nonexistent -- $subdir >/dev/null
++"
++
++test_perf "v[23]: ls-files -- subdir" "
++	git ls-files $subdir >/dev/null
++"
++
++test_perf --cleanup "git reset" "v[23]: update-index -- file" "
++	git update-index $file
++"
++
++test_expect_success "convert to v4" "
++	git update-index --index-version=4
++"
++
++test_perf "v4: update-index" "
++	git update-index --index-version=4 >/dev/null
++"
++
++test_perf "v4: grep nonexistent -- subdir" "
++	test_must_fail git grep nonexistent -- $subdir >/dev/null
++"
++
++test_perf "v4: ls-files -- subdir" "
++	git ls-files $subdir >/dev/null
++"
++
++test_perf --cleanup "git reset" "v4: update-index -- file" "
++	git update-index $file
++"
++
++test_done
 -- 
 1.8.3.4.1241.g1ce9896
