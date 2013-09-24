@@ -1,107 +1,89 @@
-From: Jona Christopher Sahnwaldt <jc@sahnwaldt.de>
-Subject: "git checkout foo" is getting confused by folder named "foo"
-Date: Tue, 24 Sep 2013 23:07:53 +0200
-Message-ID: <CAEQewpqLcDJPo2gUWPk-xc3OitdTC4gH2tnyqaURiQ77BApNog@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] diff: add a config option to control orderfile
+Date: Tue, 24 Sep 2013 14:31:16 -0700
+Message-ID: <20130924213116.GQ9464@google.com>
+References: <20130917201604.GA22008@redhat.com>
+ <20130917201828.GC16860@sigill.intra.peff.net>
+ <20130917203807.GA22059@redhat.com>
+ <20130917205615.GA20178@sigill.intra.peff.net>
+ <20130919213226.GA21291@redhat.com>
+ <20130923210915.GA11202@redhat.com>
+ <20130923213729.GE9464@google.com>
+ <20130924055419.GA11208@redhat.com>
+ <20130924193610.GO9464@google.com>
+ <20130924201515.GB23319@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 24 23:08:19 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Sep 24 23:31:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOZqE-0000U2-Cn
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 23:08:18 +0200
+	id 1VOaCb-0007qQ-Cs
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 23:31:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754635Ab3IXVIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Sep 2013 17:08:14 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:49190 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754302Ab3IXVIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Sep 2013 17:08:13 -0400
-Received: by mail-pa0-f48.google.com with SMTP id bj1so4226415pad.35
-        for <git@vger.kernel.org>; Tue, 24 Sep 2013 14:08:13 -0700 (PDT)
+	id S1754606Ab3IXVbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Sep 2013 17:31:21 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:37340 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754494Ab3IXVbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Sep 2013 17:31:20 -0400
+Received: by mail-pd0-f173.google.com with SMTP id p10so5146164pdj.4
+        for <git@vger.kernel.org>; Tue, 24 Sep 2013 14:31:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to:content-type;
-        bh=TAcuaHElvO1Rq57GxKBrxbDZTCm3EXJdYyba4GqV4xA=;
-        b=f0CvQsXzewLVZl1vhsOzL++fgkWaS/fEpE93jWVeWGR66NRqzlcfMiF2+7PTCvYqfh
-         BXnvT7Htz6QJn74UWRT/3LaZEX1eMvgMO090H9EExU+Jxtz/gprJvfDlpasuVhYMZU2V
-         CfEng0WxFBd7vGunjCedZ8+moAd7kIktJZgqh5OQ6Rgom7rrxA5m7DwIeER63t7A3LXz
-         mHRfml+OrlCb+C9KM5EYjpNDgv52Gpn9iWijI0kl2/hD3jnogt2OKFM015Hc3tO44SE9
-         oBJGKqpTYD9WVxFZBARnpDdq85anmLJAzO456tI0RcmV4IgiD0lNmZNJWjI6gtgfVRJc
-         32yw==
-X-Received: by 10.66.146.42 with SMTP id sz10mr30603082pab.100.1380056893369;
- Tue, 24 Sep 2013 14:08:13 -0700 (PDT)
-Received: by 10.66.229.70 with HTTP; Tue, 24 Sep 2013 14:07:53 -0700 (PDT)
-X-Google-Sender-Auth: KIZz57Z82uNHGzsveepTbCsk_ls
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=58s4d9EcF21FCH2/g42jfxJqNwa1MM3S+kXRaTShfJg=;
+        b=d8mx3Uf9c6E1k91OTDcltb4kG507cLkFehd1qr9Hhu7JNYH/pRqb7RrywIIbf81M73
+         buDYWJEiowj+F1FgImbOcN1lqq49fPymEpNpfBTFuZaWskpuaGm52LRHK7KHzyK6tiNT
+         eIw7J5REd5hlwn5x/MVEJAn7s0d0jzlgFJTWqJObSalRfEJIitG+y+bbL1ksr8xs97w3
+         24lneAqtWD10xsraZ+LNgJWFG66Up1DUxeXH8ej4t1vYwhV47BGnlli8OqZ9m8QfyReN
+         OXW9jDI+f6X14Qw7p0ykYj7gtY8L7ZchJWdVClgOQlzOGaGamJTXYNuxRtLF0HkKTrmS
+         1Blw==
+X-Received: by 10.66.250.138 with SMTP id zc10mr30803619pac.72.1380058280001;
+        Tue, 24 Sep 2013 14:31:20 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id ha10sm43046752pbc.23.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 24 Sep 2013 14:31:19 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20130924201515.GB23319@redhat.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235318>
 
-Hi,
+Michael S. Tsirkin wrote:
+>>> On Mon, Sep 23, 2013 at 02:37:29PM -0700, Jonathan Nieder wrote:
 
-maybe this has already been reported, but I didn't find it in the mail archive.
+>>>>                       Then start over with sorted hunks (for example
+>>>>     building a table of offsets within the patch for each hunk to
+>>>>     support this).
+[...]
+> Well, then the result is not compatible with what
+> original patch-id would produce.
 
-If I understand correctly, after I clone a repo, I should be able to
-switch to branch foo just by running
+Nope, I meant sorting to produce what the original patch-id would
+produce for a diff with the default sorting order.  The result is a
+patch-id that can be compared with patch-ids from earlier versions of
+git as long as -O<orderfile> was not used (which was already not
+compatible with reliable use of patch-id).
 
-git checkout foo
+[...]
+> Just making sure: is it correct that there's no requirement to use same
+> algorithm between patch-ids.c and builtin/patch-id.c ?
 
-This doesn't seem to work if a folder called "foo" exists in the root
-of the repo.
+I think so, as long as Documentation/git-cherry.txt is updated to stop
+pretending 'git cherry' calls 'git patch-id' and the two get comments
+about it, though it seems simpler to keep them roughly the same.
+(They already differ in handling of binary files.)
 
-I got the same behavior with git 1.8.3.2 on a Mac and git 1.7.9.5 on Linux.
-
-Steps to reproduce:
-
-git clone https://github.com/dbpedia/extraction-framework.git
-cd extraction-framework/
-
-First the happy path - there is a remote branch "live-dev", but no
-folder "extraction-framework/live-dev":
-
-git checkout live-dev
-
-Response:
-
-Branch live-dev set up to track remote branch live-dev from origin.
-Switched to a new branch 'live-dev'
-
-Fine! Now the unhappy path - there is a branch "wiktionary", but also
-a folder "extraction-framework/wiktionary":
-
-git checkout wiktionary
-
-Nothing - no response, no changes to working tree. .git/index seems to
-be modified though.
-
-Slightly different - cd to some folder, try checkout again:
-
-cd mappings
-git checkout wiktionary
-
-Response:
-
-error: pathspec 'wiktionary' did not match any file(s) known to git.
-
-
-My workaround is that when I switch to a branch for the first time, I
-have to call
-
-git checkout -t -b wiktionary --track origin/wiktionary
-
-Response:
-
-Branch wiktionary set up to track remote branch wiktionary from origin.
-Switched to a new branch 'wiktionary'
-
-Looks good. After that, I can switch back and forth between branches
-just by git checkout wiktionary / git checkout master.
-
-
-Cheers,
-Christopher
+Thanks,
+Jonathan
