@@ -1,77 +1,73 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] build: add default aliases
-Date: Tue, 24 Sep 2013 01:37:12 -0400
-Message-ID: <20130924053712.GA6114@sigill.intra.peff.net>
-References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
- <20130924045325.GD2766@sigill.intra.peff.net>
- <CAMP44s1tirA5w91L2YomaduZVkqL3=n1j79eoueB6XeGuyY3Mw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] fetch: add missing documentation
+Date: Tue, 24 Sep 2013 01:40:53 -0400
+Message-ID: <20130924054053.GA6192@sigill.intra.peff.net>
+References: <1379772563-11000-1-git-send-email-felipe.contreras@gmail.com>
+ <1379772563-11000-2-git-send-email-felipe.contreras@gmail.com>
+ <20130924050343.GF2766@sigill.intra.peff.net>
+ <CAMP44s1FFTS=wOcWBfqg3zt3TO-aM83oXHcGwBcwvt_HnXrn8g@mail.gmail.com>
+ <20130924053023.GA5875@sigill.intra.peff.net>
+ <CAMP44s1ezYMSuQRMp_SY1HqLiuyuf0tjuf3Fn6fXF2drODZ_iw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+Cc: git@vger.kernel.org
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 24 07:37:23 2013
+X-From: git-owner@vger.kernel.org Tue Sep 24 07:41:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOLJJ-00063i-WD
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 07:37:22 +0200
+	id 1VOLMs-00083O-Id
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 07:41:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750730Ab3IXFhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Sep 2013 01:37:17 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53173 "EHLO peff.net"
+	id S1750716Ab3IXFk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Sep 2013 01:40:58 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53201 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750706Ab3IXFhQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Sep 2013 01:37:16 -0400
-Received: (qmail 552 invoked by uid 102); 24 Sep 2013 05:37:15 -0000
+	id S1750706Ab3IXFk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Sep 2013 01:40:57 -0400
+Received: (qmail 748 invoked by uid 102); 24 Sep 2013 05:40:56 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 Sep 2013 00:37:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Sep 2013 01:37:12 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 Sep 2013 00:40:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Sep 2013 01:40:53 -0400
 Content-Disposition: inline
-In-Reply-To: <CAMP44s1tirA5w91L2YomaduZVkqL3=n1j79eoueB6XeGuyY3Mw@mail.gmail.com>
+In-Reply-To: <CAMP44s1ezYMSuQRMp_SY1HqLiuyuf0tjuf3Fn6fXF2drODZ_iw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235267>
 
-On Tue, Sep 24, 2013 at 12:32:46AM -0500, Felipe Contreras wrote:
+On Tue, Sep 24, 2013 at 12:36:38AM -0500, Felipe Contreras wrote:
 
-> > You are making things more consistent for people who already define
-> > those aliases in the same way (they are available everywhere, even if
-> > they have not moved their config to a new installation), but less so for
-> > people who define them differently. Rather than get an obvious:
-> >
-> >   git: 'co' is not a git command. See 'git --help'.
-> >
-> > the result will be subtly different (especially so in the case of
-> > "commit" versus "commit -a").
+> > Yeah, it's not a term we use elsewhere, so it's not great. Probably
+> > "default remote" would be better, or even just say "branch.*.remote for
+> > the current branch" or something.
 > 
-> Before:
-> 
-> # machine A: git ci
-> git: 'ca' is not a git command. See 'git --help'.
-> 
-> # machine B: git ci
-> commits
-> 
-> After:
-> 
-> # machine A: git ci
-> no changes added to commit (use "git add" and/or "git commit -a")
-> 
-> # machine B: git ci
-> commits
+> Yeah, general users don't know what you are talking about when you say that.
 
-That is the output if there are no files to commit. What about while
-resolving a merge, or after using "git add" on a path? In that case we
-create a commit, but it is subtly different than what the user intended.
+Right, I understand your complaint and agree that those terms are
+potentially confusing.
 
-I think for the merge case, it is probably OK, as the "surprise" should
-always go in the safe direction (user expects "commit -a", gets
-"commit", and commit balks). But the other omits intended files from the
-commit.
+> > I dunno. I don't particularly like any of those, but I really dislike
+> > the imprecision of "upstream branch" in this case.
+> 
+> For most users it's the remote configured by:
+> 
+> % git branch --set-upstream-to foo
+> % git checkout -b foo origin/foo
+> % git checkout -t -b foo bar
+> 
+> So when they read "upstream branch" they know from where it got configured.
+
+Yes, but it is also wrong, in the sense that the upstream branch is
+unrelated. You are giving breadcrumbs to users who know "upstream
+branch" as a concept and nothing else, but you are misleading users who
+know that branch.*.remote exists.
+
+I was hoping you might suggest something that can help both users by
+being both precise and giving the appropriate breadcrumbs.
 
 -Peff
