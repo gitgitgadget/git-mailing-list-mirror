@@ -1,67 +1,71 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] build: add default aliases
-Date: Tue, 24 Sep 2013 00:53:25 -0400
-Message-ID: <20130924045325.GD2766@sigill.intra.peff.net>
-References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
+Subject: Re: Using alternate working directory
+Date: Tue, 24 Sep 2013 01:00:11 -0400
+Message-ID: <20130924050011.GE2766@sigill.intra.peff.net>
+References: <523E09D8.8090808@rachum.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 24 06:53:35 2013
+Cc: git@vger.kernel.org
+To: Ram Rachum <ram@rachum.com>
+X-From: git-owner@vger.kernel.org Tue Sep 24 07:00:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOKcv-0000CF-EL
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 06:53:33 +0200
+	id 1VOKjV-0003nJ-Ev
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 07:00:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750757Ab3IXEx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Sep 2013 00:53:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52863 "EHLO peff.net"
+	id S1750724Ab3IXFAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Sep 2013 01:00:16 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52911 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750706Ab3IXEx3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Sep 2013 00:53:29 -0400
-Received: (qmail 30626 invoked by uid 102); 24 Sep 2013 04:53:28 -0000
+	id S1750706Ab3IXFAP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Sep 2013 01:00:15 -0400
+Received: (qmail 30927 invoked by uid 102); 24 Sep 2013 05:00:15 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 23 Sep 2013 23:53:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Sep 2013 00:53:25 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 Sep 2013 00:00:15 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Sep 2013 01:00:11 -0400
 Content-Disposition: inline
-In-Reply-To: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
+In-Reply-To: <523E09D8.8090808@rachum.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235258>
 
-On Sat, Sep 21, 2013 at 02:20:21PM -0500, Felipe Contreras wrote:
+On Sun, Sep 22, 2013 at 12:04:24AM +0300, Ram Rachum wrote:
 
-> For now simply add a few common aliases.
+> I'm making a script `gm` which lets me merge one branch into another
+> without having either checked out. It works for some cases but not
+> all. I'm trying to make it work for more cases.
 > 
->   co = checkout
->   ci = commit
->   rb = rebase
->   st = status
+> I concluded that the best way to do it would be by using an
+> alternate, temporary working directory instead of the repo itself.
 
-Are these the best definitions of those shortcuts? It seems[1] that some
-people define "ci" as "commit -a", and some people define "st" as
-"status -s" or even "status -sb".
+Yes, otherwise you will be stomping all over the working tree of
+whatever branch _is_ checked out.
 
-You are making things more consistent for people who already define
-those aliases in the same way (they are available everywhere, even if
-they have not moved their config to a new installation), but less so for
-people who define them differently. Rather than get an obvious:
+> This is my script:
+> 
+>     https://gist.github.com/cool-RR/6575042
+> 
+> Now, the problem is that when I try it, it gives these errors:
+> 
+>     git checkout-index: my_file is not in the cache and then error:
+>     my_file: cannot add to the index - missing --add option?
+> 
+> Anyone has any idea what to do?
 
-  git: 'co' is not a git command. See 'git --help'.
+Your script is quite similar to the one that is used server-side at
+GitHub to generate the "this can be merged" button for each pull
+request. So it should work in principle.
 
-the result will be subtly different (especially so in the case of
-"commit" versus "commit -a").
+Just a guess, but using a relative path for the temporary index file
+might be a problem. read-tree will operate from $GIT_DIR as its working
+directory, for example, but I think the git-merge-one-file script will
+be at the top-level of $GIT_WORK_TREE. Meaning that all of the
+sub-commands it runs will see an empty index.
 
 -Peff
-
-[1] https://github.com/search?q=%22ci+%3D+commit+-a%22+path%3A.gitconfig&type=Code
-
-    https://github.com/search?q=%22st+%3D+status+-s%22&type=Code
-
-    https://github.com/search?q=%22st+%3D+status+-sb%22&type=Code
