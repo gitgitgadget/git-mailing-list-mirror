@@ -1,73 +1,78 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v2 0/5] New hash table implementation
-Date: Tue, 24 Sep 2013 19:16:10 +0800
-Message-ID: <CALUzUxqX=zgkQg84jYQABKa=Lq=7BUee6824H+Xfye4XBnUZqA@mail.gmail.com>
-References: <522FAAC4.2080601@gmail.com> <52416058.90008@gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Local tag killer
+Date: Tue, 24 Sep 2013 09:22:32 -0400
+Message-ID: <52419218.3020902@xiplink.com>
+References: <52327E62.2040301@alum.mit.edu> <CAPc5daXvCf90WYoUWC+DxRyZEQhXGL7Bd_ZJKwfoqxeKt8TADQ@mail.gmail.com> <xmqqd2o3p0nk.fsf@gitster.dls.corp.google.com> <523D3FD2.4090002@alum.mit.edu> <20130924075119.GD7257@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 24 13:16:41 2013
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>,
+	Michael Schubert <mschub@elegosoft.com>,
+	Johan Herland <johan@herland.net>
+To: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Sep 24 15:31:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOQbh-0003cx-2t
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 13:16:41 +0200
+	id 1VOSiO-00084T-Ne
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 15:31:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856Ab3IXLQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Sep 2013 07:16:31 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:58561 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752784Ab3IXLQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Sep 2013 07:16:30 -0400
-Received: by mail-ie0-f176.google.com with SMTP id as1so8637842iec.21
-        for <git@vger.kernel.org>; Tue, 24 Sep 2013 04:16:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=40Rjhzdt2i/FUjbyjj9Tv9aBEQ/bQwJdkiveDy4SU5w=;
-        b=LHv9h/qEy13HbMKSkvvrJucyRheTaDCFh+pNhPHVoUhGw++XPmqGMTenY9Jdc7kbm9
-         iuOYuOQ8Kfst1+xx5vOH6qdk+YQL+k4cooaJibwERevx1r4s9yiqz8jvF9f63xgnJTv+
-         cTrVsrE+ipbNlLYfJdUFp+xVkEAejbL39fAD/NONd4UYgRsuFy6zwmC8utL2Z6SEYHJG
-         4Q+/3S1SYMD71MwX51ZFCGa01siRDHFh1ZMkwv3x2lU5ewWT2P/7noCukavGlpG6Nf4x
-         L3cnSFs6ldR6jnAW7xLtMlP0dgtWUk66l8+UpL4sKhDwxD4TeYfv1XlosXEgwXT9Vaws
-         k5gw==
-X-Received: by 10.43.106.198 with SMTP id dv6mr9023788icc.51.1380021390204;
- Tue, 24 Sep 2013 04:16:30 -0700 (PDT)
-Received: by 10.64.93.34 with HTTP; Tue, 24 Sep 2013 04:16:10 -0700 (PDT)
-In-Reply-To: <52416058.90008@gmail.com>
+	id S1751138Ab3IXNbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Sep 2013 09:31:40 -0400
+Received: from smtp138.ord.emailsrvr.com ([173.203.6.138]:57486 "EHLO
+	smtp138.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750766Ab3IXNbj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Sep 2013 09:31:39 -0400
+X-Greylist: delayed 545 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Sep 2013 09:31:39 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp10.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 6D46B3703C7;
+	Tue, 24 Sep 2013 09:22:33 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp10.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id C11313702DD;
+	Tue, 24 Sep 2013 09:22:32 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <20130924075119.GD7257@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235302>
 
-Hi Karsten,
-
-On Tue, Sep 24, 2013 at 5:50 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
+On 13-09-24 03:51 AM, Jeff King wrote:
+> On Sat, Sep 21, 2013 at 08:42:26AM +0200, Michael Haggerty wrote:
 >
->         |       add        |  get 100% hits  |    get 10% hits
->         |  hash  | hashmap | hash  | hashmap |  hash   | hashmap
-> --------+--------+---------+-------+---------+---------+--------
-> FNV     | 14.815 |   2.345 | 3.059 |   1.642 |   4.085 |   0.976
-> FNV  x2 | 14.409 |   2.706 | 2.888 |   1.959 |   3.905 |   1.393
-> i       |  7.432 |   1.593 | 1.364 |   1.142 | 413.023 |   0.589
-> i    x2 |  9.169 |   1.866 | 1.427 |   1.163 |   0.757 |   0.670
-> i/10    |  1.800 |   1.555 | 5.365 |   6.465 |  32.918 |   1.052
-> i/10 x2 |  1.892 |   1.555 | 5.386 |   6.474 |   1.123 |   1.206
+>> I think it would be preferable if "--prune" would *not* affect tags, and
+>> if there were an extra option like "--prune-tags" that would have to be
+>> used explicitly to cause tags to be pruned.  Would somebody object to
+>> such a change?
 >
-> Tests can be reproduced with 'time echo "perfhash[map] <method> 1000" | ./test-hashmap', see test-hashmap.c for definition of method flags.
+> I think most of this problem is the way that we fetch tags straight into
+> the refs/tags hierarchy. You would not do:
+>
+>    [remote "origin"]
+>    fetch = +refs/heads/*:refs/heads/*
+>    prune = true
+>
+> unless you wanted to be a pure-mirror, because you would hose your local
+> changes any time you fetched. But that is _exactly_ what we do with a
+> refs/tags/*:refs/tags/* fetch.
+>
+> If we instead moved to a default fetch refspec more like:
+>
+>    [remote "origin"]
+>    fetch = +refs/*:refs/remotes/origin/refs/*
 
-I'm not sure if I'm reading the numbers right, but they look impressive!
+I'm all for such a change.
 
-If it's not too much trouble, could you put together an API document,
-along the lines of Documentation/technical/api-hash.txt? I could give
-a stab at replacing patience and histogram diff's hash implementation
-with yours.
+You no doubt recall the lengthy discussion about remote ref namespaces 
+back in 2011 [1].  That arose while planning for 1.8, but my feeble 
+recollection is that the change was considered too disruptive.  It seems 
+2.0 would be a better home for such work.
 
--- 
-Cheers,
-Ray Chuan
+		M.
+
+[1] 
+http://thread.gmane.org/gmane.comp.version-control.git/165799/focus=166729
