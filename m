@@ -1,590 +1,842 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v2 0/5] New hash table implementation
-Date: Tue, 24 Sep 2013 11:50:16 +0200
-Message-ID: <52416058.90008@gmail.com>
-References: <522FAAC4.2080601@gmail.com>
+Subject: [PATCH v2 1/5] add a hashtable implementation that supports O(1)
+ removal
+Date: Tue, 24 Sep 2013 11:51:24 +0200
+Message-ID: <5241609C.1010406@gmail.com>
+References: <522FAAC4.2080601@gmail.com> <52416058.90008@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 24 11:50:26 2013
+X-From: git-owner@vger.kernel.org Tue Sep 24 11:51:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOPGD-0002VG-N3
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 11:50:26 +0200
+	id 1VOPHI-0003FP-3Q
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 11:51:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753965Ab3IXJuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Sep 2013 05:50:20 -0400
-Received: from mail-we0-f176.google.com ([74.125.82.176]:38973 "EHLO
-	mail-we0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751769Ab3IXJuS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Sep 2013 05:50:18 -0400
-Received: by mail-we0-f176.google.com with SMTP id u56so4226362wes.21
-        for <git@vger.kernel.org>; Tue, 24 Sep 2013 02:50:16 -0700 (PDT)
+	id S1753550Ab3IXJv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Sep 2013 05:51:27 -0400
+Received: from mail-wg0-f43.google.com ([74.125.82.43]:34259 "EHLO
+	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751272Ab3IXJv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Sep 2013 05:51:26 -0400
+Received: by mail-wg0-f43.google.com with SMTP id z12so4383503wgg.22
+        for <git@vger.kernel.org>; Tue, 24 Sep 2013 02:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:subject:references
          :in-reply-to:content-type:content-transfer-encoding;
-        bh=6LnnnTanx1BuyD6XWBBIlMyAbQ+pfvasGh9WHDeot1c=;
-        b=ALZj/Cgpl0dJKu17MUgdFtbUque9P7ilfnvM7CiJbTen6I6jYGNs47wvap7Uj1QSct
-         UY5UTSfIRZkOSVrFqO4Act04aHLrDP5nKtMjbE/dubJSIhUoBtbPsgHh+wdg6UBUb5Kr
-         bVeOCQ/P0vVryqy+cppD2lR1l9WnVp4z6TIrFCScz1lpmxnR9eMMEkwHbkhPSxrml1iC
-         3e7B275bxKiqOf0f6f3ON1Ar3xki4cFl4+XEL1vnb+qkzChnhQ4+WhrDwL4jSMgjNr6V
-         CRrgfOBvAs9Cgm/tDVj1YT3EP3d/OXxj+9s7SZoYf3gssFgVitO2A4suQeK8YIYvEZDX
-         3DsQ==
-X-Received: by 10.180.221.38 with SMTP id qb6mr17091293wic.8.1380016216839;
-        Tue, 24 Sep 2013 02:50:16 -0700 (PDT)
+        bh=37YlqQ0QFwj4ggjUjqQbSqau1Zs7KY6xeZ7IdLcseQc=;
+        b=PrJoxU5KOJBnQ/qcCa9eiCmZ7XeIq0QmFoByjwowCjy+ePO9NovV5pfaI0U1iYJavW
+         bH6qSIrigHOOLziS0edXD2NCM+RHTiBJwYcWIfWT3ufW4a5aF0vXmnFDmf/IrEDtmvc7
+         eLe0GXLKLT7w6ZLderfvtbX6F/InbZDm38HTvzGxkLtcXiMXJRdQbUlvdCyb1WdD1m8P
+         JF2sMYRmiAoMxelSYlyLsFcRh3HHE2L/dT/JFB7j3ItZUwcX4Cf3oEtguEhYIfQAHqIA
+         s+rwDFgRnXWqEpw2stL8FTwPob/CJw+67nsAyUzwpstJHUbnAoXSelsYSEMr4KfQo37/
+         4Ceg==
+X-Received: by 10.180.89.147 with SMTP id bo19mr17467125wib.3.1380016284944;
+        Tue, 24 Sep 2013 02:51:24 -0700 (PDT)
 Received: from [10.1.100.51] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id li9sm5799168wic.4.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id i8sm5801187wiy.6.1969.12.31.16.00.00
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 24 Sep 2013 02:50:16 -0700 (PDT)
+        Tue, 24 Sep 2013 02:51:24 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <522FAAC4.2080601@gmail.com>
+In-Reply-To: <52416058.90008@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235291>
 
-Also here: https://github.com/kblees/git/tree/kb/hashmap-v2
+The existing hashtable implementation (in hash.[ch]) uses open addressing
+(i.e. resolve hash collisions by distributing entries across the table).
+Thus, removal is difficult to implement with less than O(n) complexity.
+Resolving collisions of entries with identical hashes (e.g. via chaining)
+is left to the client code.
 
-Changes since initial version:
-- removed struct typedefs
-- clarified documentation of hashmap_entry
-- renamed find_entry -> find_entry_ptr
-- added performance tests for lookup
+Add a hashtable implementation that supports O(1) removal and is slightly
+easier to use due to builtin entry chaining.
 
+Supports all basic operations init, free, get, add, remove and iteration.
 
-I've also tried to resize the table based on the number of used buckets (instead of total entries). However, this doesn't work with hash functions that produce 'gaps'. E.g. a hash function that returns only even numbers would fill only every second bucket (i.e. max. 50% buckets used), and the 80% resize threshold is never reached.
+Also includes ready-to-use hash functions based on the public domain FNV-1
+algorithm (http://www.isthe.com/chongo/tech/comp/fnv).
 
+The per-entry data structure (hashmap_entry) is piggybacked in front of
+the client's data structure to save memory. See test-hashmap.c for usage
+examples.
 
-Regarding performance, I have to admit that the difference between the two implementations is far greater than I had anticipated. The following times (in seconds) are from Linux x64 (Debian Sarge) on a Core i7 860 @2.8GHz. All tests have been run with 1,000 rounds of 100,000 entries each.
+The hashtable is resized by a factor of four when 80% full. With these
+settings, average memory consumption is about 2/3 of hash.[ch], and
+insertion is about twice as fast due to less frequent resizing.
 
-The 'get 10% hits' test does 100,000 lookups on a table with 10,000 entries (i.e. 90% unsuccessful lookups).
+Lookups are also slightly faster, because entries are strictly confined to
+their bucket (i.e. no data of other buckets needs to be traversed).
 
-The rows denote different hash functions with different qualities:
-- FNV: FNV-1 hash on stringified loop counter (i.e. fnv1(itoa(i))), as
-  an example of a high quality / low collision hash
-- i: just the loop counter (i.e. 0, 1, 2,...), guaranteed collision free
-- i/10: every 10 entries share the same hash code, lots of collisions
-
-The i and i/10 tests show that open addressing suffers badly from clustering, i.e. with adjacent hash codes, it degrades to linear search. The *2 versions provide for some space between used buckets to better compare it to the chaining version.
-
-
-        |       add        |  get 100% hits  |    get 10% hits
-        |  hash  | hashmap | hash  | hashmap |  hash   | hashmap
---------+--------+---------+-------+---------+---------+--------
-FNV     | 14.815 |   2.345 | 3.059 |   1.642 |   4.085 |   0.976
-FNV  x2 | 14.409 |   2.706 | 2.888 |   1.959 |   3.905 |   1.393
-i       |  7.432 |   1.593 | 1.364 |   1.142 | 413.023 |   0.589
-i    x2 |  9.169 |   1.866 | 1.427 |   1.163 |   0.757 |   0.670
-i/10    |  1.800 |   1.555 | 5.365 |   6.465 |  32.918 |   1.052
-i/10 x2 |  1.892 |   1.555 | 5.386 |   6.474 |   1.123 |   1.206
-
-Tests can be reproduced with 'time echo "perfhash[map] <method> 1000" | ./test-hashmap', see test-hashmap.c for definition of method flags.
-
-
-Karsten Blees (5):
-  add a hashtable implementation that supports O(1) removal
-  buitin/describe.c: use new hash map implementation
-  diffcore-rename.c: move code around to prepare for the next patch
-  diffcore-rename.c: simplify finding exact renames
-  diffcore-rename.c: use new hash map implementation
-
+Signed-off-by: Karsten Blees <blees@dcon.de>
+---
  Makefile           |   3 +
- builtin/describe.c |  53 ++++----
- diffcore-rename.c  | 185 ++++++++++------------------
  hashmap.c          | 211 +++++++++++++++++++++++++++++++
  hashmap.h          | 200 ++++++++++++++++++++++++++++++
  t/t0011-hashmap.sh | 236 +++++++++++++++++++++++++++++++++++
  test-hashmap.c     | 354 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 7 files changed, 1092 insertions(+), 150 deletions(-)
+ 5 files changed, 1004 insertions(+)
  create mode 100644 hashmap.c
  create mode 100644 hashmap.h
  create mode 100755 t/t0011-hashmap.sh
  create mode 100644 test-hashmap.c
 
-
----
-git diff kb/hashmap..kb/hashmap-v2:
-
-diff --git a/builtin/describe.c b/builtin/describe.c
-index bbc7159..5db5d89 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -25,7 +25,7 @@ static int longformat;
- static int first_parent;
- static int abbrev = -1; /* unspecified */
- static int max_candidates = 10;
--static hashmap names;
-+static struct hashmap names;
- static int have_util;
- static const char *pattern;
- static int always;
-@@ -38,7 +38,7 @@ static const char *diff_index_args[] = {
- 
- 
- struct commit_name {
--	hashmap_entry entry;
-+	struct hashmap_entry entry;
- 	unsigned char peeled[20];
- 	struct tag *tag;
- 	unsigned prio:2; /* annotated tag = 2, tag = 1, head = 0 */
-@@ -280,7 +280,7 @@ static void describe(const char *arg, int last_one)
- 		fprintf(stderr, _("searching to describe %s\n"), arg);
- 
- 	if (!have_util) {
--		hashmap_iter iter;
-+		struct hashmap_iter iter;
- 		struct commit *c;
- 		struct commit_name *n = hashmap_iter_first(&names, &iter);
- 		for (; n; n = hashmap_iter_next(&iter)) {
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 6271af9..2e70d31 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -243,7 +243,7 @@ static int score_compare(const void *a_, const void *b_)
- }
- 
- struct file_similarity {
--	hashmap_entry entry;
-+	struct hashmap_entry entry;
- 	int index;
- 	struct diff_filespec *filespec;
- };
-@@ -260,7 +260,7 @@ static unsigned int hash_filespec(struct diff_filespec *filespec)
- 	return hash;
- }
- 
--static int find_identical_files(hashmap *srcs,
-+static int find_identical_files(struct hashmap *srcs,
- 				int dst_index,
- 				struct diff_options *options)
- {
-@@ -310,7 +310,7 @@ static int find_identical_files(hashmap *srcs,
- 	return renames;
- }
- 
--static void insert_file_table(hashmap *table, int index, struct diff_filespec *filespec)
-+static void insert_file_table(struct hashmap *table, int index, struct diff_filespec *filespec)
- {
- 	struct file_similarity *entry = xmalloc(sizeof(*entry));
- 
-@@ -331,7 +331,7 @@ static void insert_file_table(hashmap *table, int index, struct diff_filespec *f
- static int find_exact_renames(struct diff_options *options)
- {
- 	int i, renames;
--	hashmap file_table;
-+	struct hashmap file_table;
- 
- 	/* Add all sources to the hash table */
- 	hashmap_init(&file_table, NULL, rename_src_nr);
+diff --git a/Makefile b/Makefile
+index 3588ca1..e6ad011 100644
+--- a/Makefile
++++ b/Makefile
+@@ -562,6 +562,7 @@ TEST_PROGRAMS_NEED_X += test-date
+ TEST_PROGRAMS_NEED_X += test-delta
+ TEST_PROGRAMS_NEED_X += test-dump-cache-tree
+ TEST_PROGRAMS_NEED_X += test-genrandom
++TEST_PROGRAMS_NEED_X += test-hashmap
+ TEST_PROGRAMS_NEED_X += test-index-version
+ TEST_PROGRAMS_NEED_X += test-line-buffer
+ TEST_PROGRAMS_NEED_X += test-match-trees
+@@ -681,6 +682,7 @@ LIB_H += gpg-interface.h
+ LIB_H += graph.h
+ LIB_H += grep.h
+ LIB_H += hash.h
++LIB_H += hashmap.h
+ LIB_H += help.h
+ LIB_H += http.h
+ LIB_H += kwset.h
+@@ -811,6 +813,7 @@ LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+ LIB_OBJS += grep.o
+ LIB_OBJS += hash.o
++LIB_OBJS += hashmap.o
+ LIB_OBJS += help.o
+ LIB_OBJS += hex.o
+ LIB_OBJS += ident.o
 diff --git a/hashmap.c b/hashmap.c
-index 686ee6f..75a8578 100644
---- a/hashmap.c
+new file mode 100644
+index 0000000..75a8578
+--- /dev/null
 +++ b/hashmap.c
-@@ -58,28 +58,29 @@ unsigned int memihash(const void *buf, size_t len)
- /* shrink if < 16.6% full (to 66.6%) */
- #define HASHMAP_SHRINK_AT 6
- 
--static inline int entry_equals(const hashmap *map, const hashmap_entry *e1,
--		const hashmap_entry *e2)
+@@ -0,0 +1,211 @@
++/*
++ * Generic implementation of hash-based key value mappings.
++ */
++#include "cache.h"
++#include "hashmap.h"
++
++#define FNV32_BASE ((unsigned int) 0x811c9dc5)
++#define FNV32_PRIME ((unsigned int) 0x01000193)
++
++unsigned int strhash(const char *str)
++{
++	unsigned int c, hash = FNV32_BASE;
++	while ((c = (unsigned char) *str++))
++		hash = (hash * FNV32_PRIME) ^ c;
++	return hash;
++}
++
++unsigned int strihash(const char *str)
++{
++	unsigned int c, hash = FNV32_BASE;
++	while ((c = (unsigned char) *str++)) {
++		if (c >= 'a' && c <= 'z')
++			c -= 'a' - 'A';
++		hash = (hash * FNV32_PRIME) ^ c;
++	}
++	return hash;
++}
++
++unsigned int memhash(const void *buf, size_t len)
++{
++	unsigned int hash = FNV32_BASE;
++	unsigned char *ucbuf = (unsigned char*) buf;
++	while (len--) {
++		unsigned int c = *ucbuf++;
++		hash = (hash * FNV32_PRIME) ^ c;
++	}
++	return hash;
++}
++
++unsigned int memihash(const void *buf, size_t len)
++{
++	unsigned int hash = FNV32_BASE;
++	unsigned char *ucbuf = (unsigned char*) buf;
++	while (len--) {
++		unsigned int c = *ucbuf++;
++		if (c >= 'a' && c <= 'z')
++			c -= 'a' - 'A';
++		hash = (hash * FNV32_PRIME) ^ c;
++	}
++	return hash;
++}
++
++#define HASHMAP_INITIAL_SIZE 64
++/* grow / shrink by 2^2 */
++#define HASHMAP_GROW 2
++/* grow if > 80% full (to 20%) */
++#define HASHMAP_GROW_AT 1.25
++/* shrink if < 16.6% full (to 66.6%) */
++#define HASHMAP_SHRINK_AT 6
++
 +static inline int entry_equals(const struct hashmap *map,
 +		const struct hashmap_entry *e1, const struct hashmap_entry *e2)
- {
- 	return (e1 == e2) || (e1->hash == e2->hash && !(*map->cmpfn)(e1, e2));
- }
- 
--static inline unsigned int bucket(const hashmap *map, const hashmap_entry *key)
++{
++	return (e1 == e2) || (e1->hash == e2->hash && !(*map->cmpfn)(e1, e2));
++}
++
 +static inline unsigned int bucket(const struct hashmap *map,
 +		const struct hashmap_entry *key)
- {
- 	return key->hash & (map->tablesize - 1);
- }
- 
--static void rehash(hashmap *map, unsigned int newsize)
++{
++	return key->hash & (map->tablesize - 1);
++}
++
 +static void rehash(struct hashmap *map, unsigned int newsize)
- {
- 	unsigned int i, oldsize = map->tablesize;
--	hashmap_entry **oldtable = map->table;
++{
++	unsigned int i, oldsize = map->tablesize;
 +	struct hashmap_entry **oldtable = map->table;
- 
- 	map->tablesize = newsize;
--	map->table = xcalloc(sizeof(hashmap_entry*), map->tablesize);
++
++	map->tablesize = newsize;
 +	map->table = xcalloc(sizeof(struct hashmap_entry*), map->tablesize);
- 	for (i = 0; i < oldsize; i++) {
--		hashmap_entry *e = oldtable[i];
++	for (i = 0; i < oldsize; i++) {
 +		struct hashmap_entry *e = oldtable[i];
- 		while (e) {
--			hashmap_entry *next = e->next;
++		while (e) {
 +			struct hashmap_entry *next = e->next;
- 			unsigned int b = bucket(map, e);
- 			e->next = map->table[b];
- 			map->table[b] = e;
-@@ -89,10 +90,10 @@ static void rehash(hashmap *map, unsigned int newsize)
- 	free(oldtable);
- }
- 
--static inline hashmap_entry **find_entry(const hashmap *map,
--		const hashmap_entry *key)
++			unsigned int b = bucket(map, e);
++			e->next = map->table[b];
++			map->table[b] = e;
++			e = next;
++		}
++	}
++	free(oldtable);
++}
++
 +static inline struct hashmap_entry **find_entry_ptr(const struct hashmap *map,
 +		const struct hashmap_entry *key)
- {
--	hashmap_entry **e = &map->table[bucket(map, key)];
++{
 +	struct hashmap_entry **e = &map->table[bucket(map, key)];
- 	while (*e && !entry_equals(map, *e, key))
- 		e = &(*e)->next;
- 	return e;
-@@ -103,7 +104,7 @@ static int always_equal(const void *unused1, const void *unused2)
- 	return 0;
- }
- 
--void hashmap_init(hashmap *map, hashmap_cmp_fn equals_function,
++	while (*e && !entry_equals(map, *e, key))
++		e = &(*e)->next;
++	return e;
++}
++
++static int always_equal(const void *unused1, const void *unused2)
++{
++	return 0;
++}
++
 +void hashmap_init(struct hashmap *map, hashmap_cmp_fn equals_function,
- 		size_t initial_size)
- {
- 	map->size = 0;
-@@ -113,16 +114,16 @@ void hashmap_init(hashmap *map, hashmap_cmp_fn equals_function,
- 	initial_size *= HASHMAP_GROW_AT;
- 	while (initial_size > map->tablesize)
- 		map->tablesize <<= HASHMAP_GROW;
--	map->table = xcalloc(sizeof(hashmap_entry*), map->tablesize);
++		size_t initial_size)
++{
++	map->size = 0;
++	map->cmpfn = equals_function ? equals_function : always_equal;
++	/* calculate initial table size and allocate the table */
++	map->tablesize = HASHMAP_INITIAL_SIZE;
++	initial_size *= HASHMAP_GROW_AT;
++	while (initial_size > map->tablesize)
++		map->tablesize <<= HASHMAP_GROW;
 +	map->table = xcalloc(sizeof(struct hashmap_entry*), map->tablesize);
- }
- 
--void hashmap_free(hashmap *map, hashmap_free_fn free_function)
++}
++
 +void hashmap_free(struct hashmap *map, hashmap_free_fn free_function)
- {
- 	if (!map || !map->table)
- 		return;
- 	if (free_function) {
--		hashmap_iter iter;
--		hashmap_entry *e;
++{
++	if (!map || !map->table)
++		return;
++	if (free_function) {
 +		struct hashmap_iter iter;
 +		struct hashmap_entry *e;
- 		hashmap_iter_init(map, &iter);
- 		while ((e = hashmap_iter_next(&iter)))
- 			(*free_function)(e);
-@@ -131,26 +132,26 @@ void hashmap_free(hashmap *map, hashmap_free_fn free_function)
- 	memset(map, 0, sizeof(*map));
- }
- 
--void *hashmap_get(const hashmap *map, const void *key)
++		hashmap_iter_init(map, &iter);
++		while ((e = hashmap_iter_next(&iter)))
++			(*free_function)(e);
++	}
++	free(map->table);
++	memset(map, 0, sizeof(*map));
++}
++
 +void *hashmap_get(const struct hashmap *map, const void *key)
- {
--	return *find_entry(map, key);
++{
 +	return *find_entry_ptr(map, key);
- }
- 
--void *hashmap_get_next(const hashmap *map, const void *entry)
++}
++
 +void *hashmap_get_next(const struct hashmap *map, const void *entry)
- {
--	hashmap_entry *e = ((hashmap_entry*) entry)->next;
++{
 +	struct hashmap_entry *e = ((struct hashmap_entry*) entry)->next;
- 	for (; e; e = e->next)
- 		if (entry_equals(map, entry, e))
- 			return e;
- 	return NULL;
- }
- 
--void hashmap_add(hashmap *map, void *entry)
++	for (; e; e = e->next)
++		if (entry_equals(map, entry, e))
++			return e;
++	return NULL;
++}
++
 +void hashmap_add(struct hashmap *map, void *entry)
- {
- 	unsigned int b = bucket(map, entry);
- 
- 	/* add entry */
--	((hashmap_entry*) entry)->next = map->table[b];
++{
++	unsigned int b = bucket(map, entry);
++
++	/* add entry */
 +	((struct hashmap_entry*) entry)->next = map->table[b];
- 	map->table[b] = entry;
- 
- 	/* fix size and rehash if appropriate */
-@@ -159,10 +160,10 @@ void hashmap_add(hashmap *map, void *entry)
- 		rehash(map, map->tablesize << HASHMAP_GROW);
- }
- 
--void *hashmap_remove(hashmap *map, const void *key)
++	map->table[b] = entry;
++
++	/* fix size and rehash if appropriate */
++	map->size++;
++	if (map->size * HASHMAP_GROW_AT > map->tablesize)
++		rehash(map, map->tablesize << HASHMAP_GROW);
++}
++
 +void *hashmap_remove(struct hashmap *map, const void *key)
- {
--	hashmap_entry *old;
--	hashmap_entry **e = find_entry(map, key);
++{
 +	struct hashmap_entry *old;
 +	struct hashmap_entry **e = find_entry_ptr(map, key);
- 	if (!*e)
- 		return NULL;
- 
-@@ -174,28 +175,28 @@ void *hashmap_remove(hashmap *map, const void *key)
- 	/* fix size and rehash if appropriate */
- 	map->size--;
- 	if (map->tablesize > HASHMAP_INITIAL_SIZE &&
--		map->size * HASHMAP_SHRINK_AT < map->tablesize)
++	if (!*e)
++		return NULL;
++
++	/* remove existing entry */
++	old = *e;
++	*e = old->next;
++	old->next = NULL;
++
++	/* fix size and rehash if appropriate */
++	map->size--;
++	if (map->tablesize > HASHMAP_INITIAL_SIZE &&
 +	    map->size * HASHMAP_SHRINK_AT < map->tablesize)
- 		rehash(map, map->tablesize >> HASHMAP_GROW);
- 	return old;
- }
- 
--void *hashmap_put(hashmap *map, void *entry)
++		rehash(map, map->tablesize >> HASHMAP_GROW);
++	return old;
++}
++
 +void *hashmap_put(struct hashmap *map, void *entry)
- {
--	hashmap_entry *old = hashmap_remove(map, entry);
++{
 +	struct hashmap_entry *old = hashmap_remove(map, entry);
- 	hashmap_add(map, entry);
- 	return old;
- }
- 
--void hashmap_iter_init(hashmap *map, hashmap_iter *iter)
++	hashmap_add(map, entry);
++	return old;
++}
++
 +void hashmap_iter_init(struct hashmap *map, struct hashmap_iter *iter)
- {
- 	iter->map = map;
- 	iter->tablepos = 0;
- 	iter->next = NULL;
- }
- 
--void *hashmap_iter_next(hashmap_iter *iter)
++{
++	iter->map = map;
++	iter->tablepos = 0;
++	iter->next = NULL;
++}
++
 +void *hashmap_iter_next(struct hashmap_iter *iter)
- {
--	hashmap_entry *current = iter->next;
++{
 +	struct hashmap_entry *current = iter->next;
- 	for (;;) {
- 		if (current) {
- 			iter->next = current->next;
++	for (;;) {
++		if (current) {
++			iter->next = current->next;
++			return current;
++		}
++
++		if (iter->tablepos >= iter->map->tablesize)
++			return NULL;
++
++		current = iter->map->table[iter->tablepos++];
++	}
++}
 diff --git a/hashmap.h b/hashmap.h
-index 59f8489..98c4ebc 100644
---- a/hashmap.h
+new file mode 100644
+index 0000000..98c4ebc
+--- /dev/null
 +++ b/hashmap.h
-@@ -40,15 +40,15 @@ extern unsigned int memhash(const void *buf, size_t len);
- extern unsigned int memihash(const void *buf, size_t len);
- 
- /*
-- * Hashmap entry data structure, intended to be used as first member of user
-- * data structures. Consists of a pointer and an int. Ideally it should be
-- * followed by an int-sized member to prevent unused memory on 64-bit systems
-- * due to alignment.
+@@ -0,0 +1,200 @@
++#ifndef HASHMAP_H
++#define HASHMAP_H
++
++/*
++ * Generic implementation of hash-based key value mappings.
++ * Supports basic operations get, add/put, remove and iteration.
++ *
++ * Also contains a set of ready-to-use hash functions for strings, using the
++ * FNV-1 algorithm (see http://www.isthe.com/chongo/tech/comp/fnv).
++ */
++
++/*
++ * Case-sensitive FNV-1 hash of 0-terminated string.
++ * str: the string
++ * returns hash code
++ */
++extern unsigned int strhash(const char *buf);
++
++/*
++ * Case-insensitive FNV-1 hash of 0-terminated string.
++ * str: the string
++ * returns hash code
++ */
++extern unsigned int strihash(const char *buf);
++
++/*
++ * Case-sensitive FNV-1 hash of a memory block.
++ * buf: start of the memory block
++ * len: length of the memory block
++ * returns hash code
++ */
++extern unsigned int memhash(const void *buf, size_t len);
++
++/*
++ * Case-insensitive FNV-1 hash of a memory block.
++ * buf: start of the memory block
++ * len: length of the memory block
++ * returns hash code
++ */
++extern unsigned int memihash(const void *buf, size_t len);
++
++/*
 + * Hashmap entry data structure, must be used as first member of user data
 + * structures. Consists of a pointer and an int. Ideally it should be followed
 + * by an int-sized member to prevent unused memory on 64-bit systems due to
 + * alignment.
-  */
--typedef struct hashmap_entry {
++ */
 +struct hashmap_entry {
- 	struct hashmap_entry *next;
- 	unsigned int hash;
--} hashmap_entry;
++	struct hashmap_entry *next;
++	unsigned int hash;
 +};
- 
- /*
-  * User-supplied function to test two hashmap entries for equality, shall
-@@ -67,20 +67,20 @@ typedef void (*hashmap_free_fn)(void *entry);
- /*
-  * Hashmap data structure, use with hashmap_* functions.
-  */
--typedef struct hashmap {
--	hashmap_entry **table;
++
++/*
++ * User-supplied function to test two hashmap entries for equality, shall
++ * return 0 if the entries are equal. This function is always called with
++ * non-NULL parameters that have the same hash code. When looking up an entry,
++ * the key parameter to hashmap_get and hashmap_remove is always passed as
++ * second argument.
++ */
++typedef int (*hashmap_cmp_fn)(const void *entry, const void *entry_or_key);
++
++/*
++ * User-supplied function to free a hashmap entry.
++ */
++typedef void (*hashmap_free_fn)(void *entry);
++
++/*
++ * Hashmap data structure, use with hashmap_* functions.
++ */
 +struct hashmap {
 +	struct hashmap_entry **table;
- 	hashmap_cmp_fn cmpfn;
- 	unsigned int size, tablesize;
--} hashmap;
++	hashmap_cmp_fn cmpfn;
++	unsigned int size, tablesize;
 +};
- 
- /*
-  * Hashmap iterator data structure, use with hasmap_iter_* functions.
-  */
--typedef struct hashmap_iter {
--	hashmap *map;
--	hashmap_entry *next;
++
++/*
++ * Hashmap iterator data structure, use with hasmap_iter_* functions.
++ */
 +struct hashmap_iter {
 +	struct hashmap *map;
 +	struct hashmap_entry *next;
- 	unsigned int tablepos;
--} hashmap_iter;
++	unsigned int tablepos;
 +};
- 
- /*
-  * Initializes a hashmap_entry structure.
-@@ -90,9 +90,9 @@ typedef struct hashmap_iter {
-  */
- static inline void hashmap_entry_init(void *entry, int hash, int key_only)
- {
--	hashmap_entry *e = entry;
++
++/*
++ * Initializes a hashmap_entry structure.
++ * entry: pointer to the entry to initialize
++ * hash: hash code of the entry
++ * key_only: true if entry is a key-only structure, see hashmap_entry_is_key
++ */
++static inline void hashmap_entry_init(void *entry, int hash, int key_only)
++{
 +	struct hashmap_entry *e = entry;
- 	e->hash = hash;
--	e->next = key_only ? (hashmap_entry*) -1 : NULL;
++	e->hash = hash;
 +	e->next = key_only ? (struct hashmap_entry*) -1 : NULL;
- }
- 
- /*
-@@ -108,8 +108,8 @@ static inline void hashmap_entry_init(void *entry, int hash, int key_only)
-  */
- static inline int hashmap_entry_is_key(const void *entry)
- {
--	const hashmap_entry *e = entry;
--	return e->next == (hashmap_entry*) -1;
++}
++
++/*
++ * Checks if hashmap_entry was initialized with the key_only flag. This is
++ * useful if the entry structure is variable-sized (e.g. ending in a FLEX_ARRAY)
++ * and the key is part of the variable portion. To prevent dynamic allocation of
++ * a full-fledged entry structure for each lookup, a smaller, statically sized
++ * structure can be used as key (i.e. replacing the FLEX_ARRAY member with a
++ * char pointer). The hashmap_cmp_fn comparison function can then check whether
++ * entry_or_key is a full-fledged entry or a key-only structure.
++ * entry: pointer to the entry to check
++ * returns 0 for key-value entries and non-0 for key-only entries
++ */
++static inline int hashmap_entry_is_key(const void *entry)
++{
 +	const struct hashmap_entry *e = entry;
 +	return e->next == (struct hashmap_entry*) -1;
- }
- 
- /*
-@@ -119,7 +119,7 @@ static inline int hashmap_entry_is_key(const void *entry)
-  *  NULL, entries are considered equal if their hash codes are equal.
-  * initial_size: optional number of initial entries, 0 if unknown
-  */
--extern void hashmap_init(hashmap *map, hashmap_cmp_fn equals_function,
++}
++
++/*
++ * Initializes a hashmap structure.
++ * map: hashmap to initialize
++ * equals_function: optional function to test equality of hashmap entries. If
++ *  NULL, entries are considered equal if their hash codes are equal.
++ * initial_size: optional number of initial entries, 0 if unknown
++ */
 +extern void hashmap_init(struct hashmap *map, hashmap_cmp_fn equals_function,
- 		size_t initial_size);
- 
- /*
-@@ -127,7 +127,7 @@ extern void hashmap_init(hashmap *map, hashmap_cmp_fn equals_function,
-  * map: hashmap to free
-  * free_function: optional function to free the hashmap entries
-  */
--extern void hashmap_free(hashmap *map, hashmap_free_fn free_function);
++		size_t initial_size);
++
++/*
++ * Frees a hashmap structure and allocated memory.
++ * map: hashmap to free
++ * free_function: optional function to free the hashmap entries
++ */
 +extern void hashmap_free(struct hashmap *map, hashmap_free_fn free_function);
- 
- /*
-  * Returns the hashmap entry for the specified key, or NULL if not found.
-@@ -135,7 +135,7 @@ extern void hashmap_free(hashmap *map, hashmap_free_fn free_function);
-  * key: key of the entry to look up
-  * returns matching hashmap entry, or NULL if not found
-  */
--extern void *hashmap_get(const hashmap *map, const void *key);
++
++/*
++ * Returns the hashmap entry for the specified key, or NULL if not found.
++ * map: the hashmap
++ * key: key of the entry to look up
++ * returns matching hashmap entry, or NULL if not found
++ */
 +extern void *hashmap_get(const struct hashmap *map, const void *key);
- 
- /*
-  * Returns the next equal hashmap entry if the map contains duplicates (see
-@@ -144,7 +144,7 @@ extern void *hashmap_get(const hashmap *map, const void *key);
-  * entry: current entry, obtained via hashmap_get or hashmap_get_next
-  * returns next equal hashmap entry, or NULL if not found
-  */
--extern void *hashmap_get_next(const hashmap *map, const void *entry);
++
++/*
++ * Returns the next equal hashmap entry if the map contains duplicates (see
++ * hashmap_add).
++ * map: the hashmap
++ * entry: current entry, obtained via hashmap_get or hashmap_get_next
++ * returns next equal hashmap entry, or NULL if not found
++ */
 +extern void *hashmap_get_next(const struct hashmap *map, const void *entry);
- 
- /*
-  * Adds a hashmap entry. This allows to add duplicate entries (i.e. separate
-@@ -152,7 +152,7 @@ extern void *hashmap_get_next(const hashmap *map, const void *entry);
-  * map: the hashmap
-  * entry: the entry to add
-  */
--extern void hashmap_add(hashmap *map, void *entry);
++
++/*
++ * Adds a hashmap entry. This allows to add duplicate entries (i.e. separate
++ * values with the same key according to hashmap_cmp_fn).
++ * map: the hashmap
++ * entry: the entry to add
++ */
 +extern void hashmap_add(struct hashmap *map, void *entry);
- 
- /*
-  * Adds or replaces a hashmap entry.
-@@ -160,7 +160,7 @@ extern void hashmap_add(hashmap *map, void *entry);
-  * entry: the entry to add or replace
-  * returns previous entry, or NULL if the entry is new
-  */
--extern void *hashmap_put(hashmap *map, void *entry);
++
++/*
++ * Adds or replaces a hashmap entry.
++ * map: the hashmap
++ * entry: the entry to add or replace
++ * returns previous entry, or NULL if the entry is new
++ */
 +extern void *hashmap_put(struct hashmap *map, void *entry);
- 
- /*
-  * Removes a hashmap entry matching the specified key.
-@@ -168,21 +168,21 @@ extern void *hashmap_put(hashmap *map, void *entry);
-  * key: key of the entry to remove
-  * returns removed entry, or NULL if not found
-  */
--extern void *hashmap_remove(hashmap *map, const void *key);
++
++/*
++ * Removes a hashmap entry matching the specified key.
++ * map: the hashmap
++ * key: key of the entry to remove
++ * returns removed entry, or NULL if not found
++ */
 +extern void *hashmap_remove(struct hashmap *map, const void *key);
- 
- /*
-  * Initializes a hashmap iterator structure.
-  * map: the hashmap
-  * iter: hashmap iterator structure
-  */
--extern void hashmap_iter_init(hashmap *map, hashmap_iter *iter);
++
++/*
++ * Initializes a hashmap iterator structure.
++ * map: the hashmap
++ * iter: hashmap iterator structure
++ */
 +extern void hashmap_iter_init(struct hashmap *map, struct hashmap_iter *iter);
- 
- /**
-  * Returns the next hashmap entry.
-  * iter: hashmap iterator
-  * returns next entry, or NULL if there are no more entries
-  */
--extern void *hashmap_iter_next(hashmap_iter *iter);
++
++/**
++ * Returns the next hashmap entry.
++ * iter: hashmap iterator
++ * returns next entry, or NULL if there are no more entries
++ */
 +extern void *hashmap_iter_next(struct hashmap_iter *iter);
- 
- /**
-  * Initializes a hashmap iterator and returns the first hashmap entry.
-@@ -190,8 +190,8 @@ extern void *hashmap_iter_next(hashmap_iter *iter);
-  * iter: hashmap iterator
-  * returns first entry, or NULL if there are no entries
-  */
--static inline void *hashmap_iter_first(hashmap *map,
--		hashmap_iter *iter)
++
++/**
++ * Initializes a hashmap iterator and returns the first hashmap entry.
++ * map: the hashmap
++ * iter: hashmap iterator
++ * returns first entry, or NULL if there are no entries
++ */
 +static inline void *hashmap_iter_first(struct hashmap *map,
 +		struct hashmap_iter *iter)
- {
- 	hashmap_iter_init(map, iter);
- 	return hashmap_iter_next(iter);
++{
++	hashmap_iter_init(map, iter);
++	return hashmap_iter_next(iter);
++}
++
++#endif
+diff --git a/t/t0011-hashmap.sh b/t/t0011-hashmap.sh
+new file mode 100755
+index 0000000..6c699d5
+--- /dev/null
++++ b/t/t0011-hashmap.sh
+@@ -0,0 +1,236 @@
++#!/bin/sh
++
++test_description='test hashmap and string hash functions'
++. ./test-lib.sh
++
++test_hashmap() {
++	echo "$1" | test-hashmap $3 > actual &&
++	echo "$2" > expect &&
++	test_cmp expect actual
++}
++
++test_expect_success 'hash functions' '
++
++test_hashmap "hash key1" "2215982743 2215982743 116372151 116372151" &&
++test_hashmap "hash key2" "2215982740 2215982740 116372148 116372148" &&
++test_hashmap "hash fooBarFrotz" "1383912807 1383912807 3189766727 3189766727" &&
++test_hashmap "hash foobarfrotz" "2862305959 2862305959 3189766727 3189766727"
++
++'
++
++test_expect_success 'put' '
++
++test_hashmap "put key1 value1
++put key2 value2
++put fooBarFrotz value3
++put foobarfrotz value4
++size" "NULL
++NULL
++NULL
++NULL
++64 4"
++
++'
++
++test_expect_success 'put (case insensitive)' '
++
++test_hashmap "put key1 value1
++put key2 value2
++put fooBarFrotz value3
++size" "NULL
++NULL
++NULL
++64 3" ignorecase
++
++'
++
++test_expect_success 'replace' '
++
++test_hashmap "put key1 value1
++put key1 value2
++put fooBarFrotz value3
++put fooBarFrotz value4
++size" "NULL
++value1
++NULL
++value3
++64 2"
++
++'
++
++test_expect_success 'replace (case insensitive)' '
++
++test_hashmap "put key1 value1
++put Key1 value2
++put fooBarFrotz value3
++put foobarfrotz value4
++size" "NULL
++value1
++NULL
++value3
++64 2" ignorecase
++
++'
++
++test_expect_success 'get' '
++
++test_hashmap "put key1 value1
++put key2 value2
++put fooBarFrotz value3
++put foobarfrotz value4
++get key1
++get key2
++get fooBarFrotz
++get notInMap" "NULL
++NULL
++NULL
++NULL
++value1
++value2
++value3
++NULL"
++
++'
++
++test_expect_success 'get (case insensitive)' '
++
++test_hashmap "put key1 value1
++put key2 value2
++put fooBarFrotz value3
++get Key1
++get keY2
++get foobarfrotz
++get notInMap" "NULL
++NULL
++NULL
++value1
++value2
++value3
++NULL" ignorecase
++
++'
++
++test_expect_success 'add' '
++
++test_hashmap "add key1 value1
++add key1 value2
++add fooBarFrotz value3
++add fooBarFrotz value4
++get key1
++get fooBarFrotz
++get notInMap" "value2
++value1
++value4
++value3
++NULL"
++
++'
++
++test_expect_success 'add (case insensitive)' '
++
++test_hashmap "add key1 value1
++add Key1 value2
++add fooBarFrotz value3
++add foobarfrotz value4
++get key1
++get Foobarfrotz
++get notInMap" "value2
++value1
++value4
++value3
++NULL" ignorecase
++
++'
++
++test_expect_success 'remove' '
++
++test_hashmap "put key1 value1
++put key2 value2
++put fooBarFrotz value3
++remove key1
++remove key2
++remove notInMap
++size" "NULL
++NULL
++NULL
++value1
++value2
++NULL
++64 1"
++
++'
++
++test_expect_success 'remove (case insensitive)' '
++
++test_hashmap "put key1 value1
++put key2 value2
++put fooBarFrotz value3
++remove Key1
++remove keY2
++remove notInMap
++size" "NULL
++NULL
++NULL
++value1
++value2
++NULL
++64 1" ignorecase
++
++'
++
++test_expect_success 'iterate' '
++
++test_hashmap "put key1 value1
++put key2 value2
++put fooBarFrotz value3
++iterate" "NULL
++NULL
++NULL
++key2 value2
++key1 value1
++fooBarFrotz value3"
++
++'
++
++test_expect_success 'iterate (case insensitive)' '
++
++test_hashmap "put key1 value1
++put key2 value2
++put fooBarFrotz value3
++iterate" "NULL
++NULL
++NULL
++fooBarFrotz value3
++key2 value2
++key1 value1" ignorecase
++
++'
++
++test_expect_success 'grow / shrink' '
++
++	rm -f in &&
++	rm -f expect &&
++	for n in $(test_seq 51)
++	do
++		echo put key$n value$n >> in &&
++		echo NULL >> expect
++	done &&
++	echo size >> in &&
++	echo 64 51 >> expect &&
++	echo put key52 value52 >> in &&
++	echo NULL >> expect
++	echo size >> in &&
++	echo 256 52 >> expect &&
++	for n in $(test_seq 10)
++	do
++		echo remove key$n >> in &&
++		echo value$n >> expect
++	done &&
++	echo size >> in &&
++	echo 64 42 >> expect &&
++	cat in | test-hashmap > out &&
++	test_cmp expect out
++
++'
++
++test_done
 diff --git a/test-hashmap.c b/test-hashmap.c
-index a4b3440..de94c6d 100644
---- a/test-hashmap.c
+new file mode 100644
+index 0000000..de94c6d
+--- /dev/null
 +++ b/test-hashmap.c
-@@ -2,113 +2,197 @@
- #include "hashmap.h"
- #include <stdio.h>
- 
--typedef struct test_entry
+@@ -0,0 +1,354 @@
++#include "cache.h"
++#include "hashmap.h"
++#include <stdio.h>
++
 +struct test_entry
- {
--	hashmap_entry ent;
++{
 +	struct hashmap_entry ent;
- 	/* key and value as two \0-terminated strings */
- 	char key[FLEX_ARRAY];
--} test_entry;
++	/* key and value as two \0-terminated strings */
++	char key[FLEX_ARRAY];
 +};
- 
--typedef struct test_key
++
 +struct test_key
- {
--	hashmap_entry ent;
++{
 +	struct hashmap_entry ent;
- 	char *key;
--} test_key;
++	char *key;
 +};
- 
--static const char *get_key(const test_entry *e)
++
 +static const char *get_key(const struct test_entry *e)
- {
--	return hashmap_entry_is_key(e) ? ((test_key*) e)->key : e->key;
++{
 +	return hashmap_entry_is_key(e) ? ((struct test_key*) e)->key : e->key;
- }
- 
--static const char *get_value(const test_entry *e)
++}
++
 +static const char *get_value(const struct test_entry *e)
- {
- 	return e->key + strlen(e->key) + 1;
- }
- 
--static int test_entry_cmp(const test_entry *e1, const test_entry *e2)
++{
++	return e->key + strlen(e->key) + 1;
++}
++
 +static int test_entry_cmp(const struct test_entry *e1,
 +		const struct test_entry *e2)
- {
- 	return strcmp(e1->key, get_key(e2));
- }
- 
--static int test_entry_cmp_icase(const test_entry *e1, const test_entry *e2)
++{
++	return strcmp(e1->key, get_key(e2));
++}
++
 +static int test_entry_cmp_icase(const struct test_entry *e1,
 +		const struct test_entry *e2)
- {
- 	return strcasecmp(e1->key, get_key(e2));
- }
- 
--static test_entry *alloc_test_entry(int hash, char *key, int klen, char *value,
--		int vlen)
++{
++	return strcasecmp(e1->key, get_key(e2));
++}
++
 +static struct test_entry *alloc_test_entry(int hash, char *key, int klen,
 +		char *value, int vlen)
- {
--	test_entry *entry = malloc(sizeof(test_entry) + klen + vlen + 2);
++{
 +	struct test_entry *entry = malloc(sizeof(struct test_entry) + klen
 +			+ vlen + 2);
- 	hashmap_entry_init(entry, hash, 0);
- 	memcpy(entry->key, key, klen + 1);
- 	memcpy(entry->key + klen + 1, value, vlen + 1);
- 	return entry;
- }
- 
++	hashmap_entry_init(entry, hash, 0);
++	memcpy(entry->key, key, klen + 1);
++	memcpy(entry->key + klen + 1, value, vlen + 1);
++	return entry;
++}
++
 +#define HASH_METHOD_FNV 0
 +#define HASH_METHOD_I 1
 +#define HASH_METHOD_IDIV10 2
@@ -618,34 +870,26 @@ index a4b3440..de94c6d 100644
 +	return hash;
 +}
 +
- /*
-  * Test insert performance of hashmap.[ch]
-- * Usage: time echo "perfhashmap size rounds" | test-hashmap
++/*
++ * Test insert performance of hashmap.[ch]
 + * Usage: time echo "perfhashmap method rounds" | test-hashmap
-  */
--static void perf_hashmap(unsigned int size, unsigned int rounds)
++ */
 +static void perf_hashmap(unsigned int method, unsigned int rounds)
- {
--	hashmap map;
++{
 +	struct hashmap map;
- 	char buf[16];
--	test_entry **entries;
++	char buf[16];
 +	struct test_entry **entries;
 +	unsigned int *hashes;
- 	unsigned int i, j;
- 
--	entries = malloc(size * sizeof(test_entry*));
--	for (i = 0; i < size; i++) {
++	unsigned int i, j;
++
 +	entries = malloc(TEST_SIZE * sizeof(struct test_entry*));
 +	hashes = malloc(TEST_SIZE * sizeof(int));
 +	for (i = 0; i < TEST_SIZE; i++) {
- 		snprintf(buf, sizeof(buf), "%i", i);
- 		entries[i] = alloc_test_entry(0, buf, strlen(buf), "", 0);
++		snprintf(buf, sizeof(buf), "%i", i);
++		entries[i] = alloc_test_entry(0, buf, strlen(buf), "", 0);
 +		hashes[i] = hash(method, i, entries[i]->key);
- 	}
- 
--	for (j = 0; j < rounds; j++) {
--		// initialize the map
++	}
++
 +	if (method & TEST_ADD) {
 +		/* test adding to the map */
 +		for (j = 0; j < rounds; j++) {
@@ -661,19 +905,15 @@ index a4b3440..de94c6d 100644
 +		}
 +	} else {
 +		/* test map lookups */
- 		hashmap_init(&map, (hashmap_cmp_fn) test_entry_cmp, 0);
- 
--		// add entries
--		for (i = 0; i < size; i++) {
--			unsigned int hash = strhash(entries[i]->key);
--			hashmap_entry_init(entries[i], hash, 0);
++		hashmap_init(&map, (hashmap_cmp_fn) test_entry_cmp, 0);
++
 +		/* fill the map (sparsely if specified) */
 +		j = (method & TEST_SPARSE) ? TEST_SIZE / 10 : TEST_SIZE;
 +		for (i = 0; i < j; i++) {
 +			hashmap_entry_init(entries[i], hashes[i], 0);
- 			hashmap_add(&map, entries[i]);
- 		}
- 
++			hashmap_add(&map, entries[i]);
++		}
++
 +		for (j = 0; j < rounds; j++) {
 +			for (i = 0; i < TEST_SIZE; i++) {
 +				struct test_key k;
@@ -683,47 +923,37 @@ index a4b3440..de94c6d 100644
 +			}
 +		}
 +
- 		hashmap_free(&map, NULL);
- 	}
- }
- 
--typedef struct hash_entry
++		hashmap_free(&map, NULL);
++	}
++}
++
 +struct hash_entry
- {
- 	struct hash_entry *next;
- 	char key[FLEX_ARRAY];
--} hash_entry;
++{
++	struct hash_entry *next;
++	char key[FLEX_ARRAY];
 +};
- 
- /*
-  * Test insert performance of hash.[ch]
-- * Usage: time echo "perfhashtable size rounds" | test-hashmap
++
++/*
++ * Test insert performance of hash.[ch]
 + * Usage: time echo "perfhash method rounds" | test-hashmap
-  */
--static void perf_hashtable(unsigned int size, unsigned int rounds)
++ */
 +static void perf_hash(unsigned int method, unsigned int rounds)
- {
- 	struct hash_table map;
- 	char buf[16];
--	hash_entry **entries, **res;
++{
++	struct hash_table map;
++	char buf[16];
 +	struct hash_entry **entries, **res, *entry;
 +	unsigned int *hashes;
- 	unsigned int i, j;
- 
--	entries = malloc(size * sizeof(hash_entry*));
--	for (i = 0; i < size; i++) {
++	unsigned int i, j;
++
 +	entries = malloc(TEST_SIZE * sizeof(struct hash_entry*));
 +	hashes = malloc(TEST_SIZE * sizeof(int));
 +	for (i = 0; i < TEST_SIZE; i++) {
- 		snprintf(buf, sizeof(buf), "%i", i);
--		entries[i] = malloc(sizeof(hash_entry) + strlen(buf) + 1);
++		snprintf(buf, sizeof(buf), "%i", i);
 +		entries[i] = malloc(sizeof(struct hash_entry) + strlen(buf) + 1);
- 		strcpy(entries[i]->key, buf);
++		strcpy(entries[i]->key, buf);
 +		hashes[i] = hash(method, i, entries[i]->key);
- 	}
- 
--	for (j = 0; j < rounds; j++) {
--		// initialize the map
++	}
++
 +	if (method & TEST_ADD) {
 +		/* test adding to the map */
 +		for (j = 0; j < rounds; j++) {
@@ -745,24 +975,21 @@ index a4b3440..de94c6d 100644
 +		}
 +	} else {
 +		/* test map lookups */
- 		init_hash(&map);
- 
--		// add entries
--		for (i = 0; i < size; i++) {
--			unsigned int hash = strhash(entries[i]->key);
--			res = (hash_entry**) insert_hash(hash, entries[i], &map);
++		init_hash(&map);
++
 +		/* fill the map (sparsely if specified) */
 +		j = (method & TEST_SPARSE) ? TEST_SIZE / 10 : TEST_SIZE;
 +		for (i = 0; i < j; i++) {
 +			res = (struct hash_entry**) insert_hash(hashes[i],
 +					entries[i], &map);
- 			if (res) {
- 				entries[i]->next = *res;
- 				*res = entries[i];
-@@ -117,7 +201,19 @@ static void perf_hashtable(unsigned int size, unsigned int rounds)
- 			}
- 		}
- 
++			if (res) {
++				entries[i]->next = *res;
++				*res = entries[i];
++			} else {
++				entries[i]->next = NULL;
++			}
++		}
++
 +		for (j = 0; j < rounds; j++) {
 +			for (i = 0; i < TEST_SIZE; i++) {
 +				entry = lookup_hash(hashes[i], &map);
@@ -774,73 +1001,145 @@ index a4b3440..de94c6d 100644
 +			}
 +		}
 +
- 		free_hash(&map);
++		free_hash(&map);
 +
- 	}
- }
- 
-@@ -133,13 +229,13 @@ static void perf_hashtable(unsigned int size, unsigned int rounds)
-  * iterate -> key1 value1\nkey2 value2\n...
-  * size -> tablesize numentries
-  *
-- * perfhashmap size rounds -> hashmap.[ch]: add <size> entries <rounds> times
-- * perfhashtable size rounds -> hash.[ch]: add <size> entries <rounds> times
++	}
++}
++
++#define DELIM " \t\r\n"
++
++/*
++ * Read stdin line by line and print result of commands to stdout:
++ *
++ * hash key -> strhash(key) memhash(key) strihash(key) memihash(key)
++ * put key value -> NULL / old value
++ * get key -> NULL / value
++ * remove key -> NULL / old value
++ * iterate -> key1 value1\nkey2 value2\n...
++ * size -> tablesize numentries
++ *
 + * perfhashmap method rounds -> test hashmap.[ch] performance
 + * perfhash method rounds -> test hash.[ch] performance
-  */
- int main(int argc, char *argv[])
- {
- 	char line[1024];
--	hashmap map;
++ */
++int main(int argc, char *argv[])
++{
++	char line[1024];
 +	struct hashmap map;
- 	int icase;
- 
- 	/* init hash map */
-@@ -151,7 +247,7 @@ int main(int argc, char *argv[])
- 	while (fgets(line, sizeof(line), stdin)) {
- 		char *cmd, *p1 = NULL, *p2 = NULL;
- 		int l1 = 0, l2 = 0, hash = 0;
--		test_entry *entry;
++	int icase;
++
++	/* init hash map */
++	icase = argc > 1 && !strcmp("ignorecase", argv[1]);
++	hashmap_init(&map, (hashmap_cmp_fn) (icase ? test_entry_cmp_icase
++			: test_entry_cmp), 0);
++
++	/* process commands from stdin */
++	while (fgets(line, sizeof(line), stdin)) {
++		char *cmd, *p1 = NULL, *p2 = NULL;
++		int l1 = 0, l2 = 0, hash = 0;
 +		struct test_entry *entry;
- 
- 		/* break line into command and up to two parameters */
- 		cmd = strtok(line, DELIM);
-@@ -197,7 +293,7 @@ int main(int argc, char *argv[])
- 		} else if (!strcmp("get", cmd) && l1) {
- 
- 			/* setup static key */
--			test_key key;
++
++		/* break line into command and up to two parameters */
++		cmd = strtok(line, DELIM);
++		/* ignore empty lines */
++		if (!cmd || *cmd == '#')
++			continue;
++
++		p1 = strtok(NULL, DELIM);
++		if (p1) {
++			l1 = strlen(p1);
++			hash = icase ? strihash(p1) : strhash(p1);
++			p2 = strtok(NULL, DELIM);
++			if (p2)
++				l2 = strlen(p2);
++		}
++
++		if (!strcmp("hash", cmd) && l1) {
++
++			/* print results of different hash functions */
++			printf("%u %u %u %u\n", strhash(p1), memhash(p1, l1),
++					strihash(p1), memihash(p1, l1));
++
++		} else if (!strcmp("add", cmd) && l1 && l2) {
++
++			/* create entry with key = p1, value = p2 */
++			entry = alloc_test_entry(hash, p1, l1, p2, l2);
++
++			/* add to hashmap */
++			hashmap_add(&map, entry);
++
++		} else if (!strcmp("put", cmd) && l1 && l2) {
++
++			/* create entry with key = p1, value = p2 */
++			entry = alloc_test_entry(hash, p1, l1, p2, l2);
++
++			/* add / replace entry */
++			entry = hashmap_put(&map, entry);
++
++			/* print and free replaced entry, if any */
++			puts(entry ? get_value(entry) : "NULL");
++			free(entry);
++
++		} else if (!strcmp("get", cmd) && l1) {
++
++			/* setup static key */
 +			struct test_key key;
- 			hashmap_entry_init(&key, hash, 1);
- 			key.key = p1;
- 
-@@ -215,7 +311,7 @@ int main(int argc, char *argv[])
- 		} else if (!strcmp("remove", cmd) && l1) {
- 
- 			/* setup static key */
--			test_key key;
++			hashmap_entry_init(&key, hash, 1);
++			key.key = p1;
++
++			/* lookup entry in hashmap */
++			entry = hashmap_get(&map, &key);
++
++			/* print result */
++			if (!entry)
++				puts("NULL");
++			while (entry) {
++				puts(get_value(entry));
++				entry = hashmap_get_next(&map, entry);
++			}
++
++		} else if (!strcmp("remove", cmd) && l1) {
++
++			/* setup static key */
 +			struct test_key key;
- 			hashmap_entry_init(&key, hash, 1);
- 			key.key = p1;
- 
-@@ -228,7 +324,7 @@ int main(int argc, char *argv[])
- 
- 		} else if (!strcmp("iterate", cmd)) {
- 
--			hashmap_iter iter;
++			hashmap_entry_init(&key, hash, 1);
++			key.key = p1;
++
++			/* remove entry from hashmap */
++			entry = hashmap_remove(&map, &key);
++
++			/* print result and free entry*/
++			puts(entry ? get_value(entry) : "NULL");
++			free(entry);
++
++		} else if (!strcmp("iterate", cmd)) {
++
 +			struct hashmap_iter iter;
- 			hashmap_iter_init(&map, &iter);
- 			while ((entry = hashmap_iter_next(&iter)))
- 				printf("%s %s\n", get_key(entry), get_value(entry));
-@@ -242,9 +338,9 @@ int main(int argc, char *argv[])
- 
- 			perf_hashmap(atoi(p1), atoi(p2));
- 
--		} else if (!strcmp("perfhashtable", cmd) && l1 && l2) {
++			hashmap_iter_init(&map, &iter);
++			while ((entry = hashmap_iter_next(&iter)))
++				printf("%s %s\n", get_key(entry), get_value(entry));
++
++		} else if (!strcmp("size", cmd)) {
++
++			/* print table sizes */
++			printf("%u %u\n", map.tablesize, map.size);
++
++		} else if (!strcmp("perfhashmap", cmd) && l1 && l2) {
++
++			perf_hashmap(atoi(p1), atoi(p2));
++
 +		} else if (!strcmp("perfhash", cmd) && l1 && l2) {
- 
--			perf_hashtable(atoi(p1), atoi(p2));
++
 +			perf_hash(atoi(p1), atoi(p2));
- 
- 		} else {
- 
++
++		} else {
++
++			printf("Unknown command %s\n", cmd);
++
++		}
++	}
++
++	hashmap_free(&map, free);
++	return 0;
++}
+-- 
+1.8.4.5.gef01589.dirty
