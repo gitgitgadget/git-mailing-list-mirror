@@ -1,120 +1,101 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] diff: add a config option to control orderfile
-Date: Tue, 24 Sep 2013 08:54:19 +0300
-Message-ID: <20130924055419.GA11208@redhat.com>
-References: <20130917172829.GA21121@redhat.com>
- <xmqq38p3z5kg.fsf@gitster.dls.corp.google.com>
- <20130917201401.GA22000@redhat.com>
- <20130917201604.GA22008@redhat.com>
- <20130917201828.GC16860@sigill.intra.peff.net>
- <20130917203807.GA22059@redhat.com>
- <20130917205615.GA20178@sigill.intra.peff.net>
- <20130919213226.GA21291@redhat.com>
- <20130923210915.GA11202@redhat.com>
- <20130923213729.GE9464@google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/2] fetch: add missing documentation
+Date: Tue, 24 Sep 2013 00:57:36 -0500
+Message-ID: <CAMP44s3QfkvXjgmhWPXN7qonbEPpvJFyVm82EBOMSjX7ng3OQg@mail.gmail.com>
+References: <1379772563-11000-1-git-send-email-felipe.contreras@gmail.com>
+	<1379772563-11000-2-git-send-email-felipe.contreras@gmail.com>
+	<20130924050343.GF2766@sigill.intra.peff.net>
+	<CAMP44s1FFTS=wOcWBfqg3zt3TO-aM83oXHcGwBcwvt_HnXrn8g@mail.gmail.com>
+	<20130924053023.GA5875@sigill.intra.peff.net>
+	<CAMP44s1ezYMSuQRMp_SY1HqLiuyuf0tjuf3Fn6fXF2drODZ_iw@mail.gmail.com>
+	<20130924054053.GA6192@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 24 07:52:14 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 24 07:57:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOLXh-0005eJ-Rn
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 07:52:14 +0200
+	id 1VOLcz-00005Z-VJ
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 07:57:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750742Ab3IXFwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Sep 2013 01:52:09 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:40842 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750710Ab3IXFwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Sep 2013 01:52:08 -0400
-Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r8O5q2fI028173
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 24 Sep 2013 01:52:03 -0400
-Received: from redhat.com (vpn1-6-85.ams2.redhat.com [10.36.6.85])
-	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id r8O5q0qE013400;
-	Tue, 24 Sep 2013 01:52:01 -0400
-Content-Disposition: inline
-In-Reply-To: <20130923213729.GE9464@google.com>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
+	id S1750720Ab3IXF5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Sep 2013 01:57:38 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:57967 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750706Ab3IXF5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Sep 2013 01:57:37 -0400
+Received: by mail-lb0-f169.google.com with SMTP id z5so3423908lbh.14
+        for <git@vger.kernel.org>; Mon, 23 Sep 2013 22:57:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=WP7O1Xuk1nc7fXjjli3BgoXEcD+piw+BfHhNXt/nOA8=;
+        b=kvR5QgN97L6QNzpzwlvteHxIUVT5va0y48Ii+Lo7/U2l6Ke9nvV7h5U2woeKJFb/0y
+         AKRtEXYVLBpiMiQxT11cJnQvCm5XEF1po5GMMS8Zb2whoS0iaMr+IHtMWTGv8TiMCVTd
+         OnJk+KvSQt8tAVmjF3bNtKoLrzX/VVA+6rW72ixXKGBMtFpG2p+Ve/8YfJZ5hnyx1BU+
+         NNS370EYS6/IxtnkSTaZBcRCkRd9akga09HP2jVwLy7voz6R3FKYGqsO/GpTBWlyS+Qp
+         RspBt6c7VQZ6N8VrhRLiv2qcis28iZe11PhC4TJuEUF8oj03jFCYwGICoxgtQzpWZ8CT
+         HL7w==
+X-Received: by 10.112.28.109 with SMTP id a13mr23160362lbh.3.1380002256499;
+ Mon, 23 Sep 2013 22:57:36 -0700 (PDT)
+Received: by 10.114.91.230 with HTTP; Mon, 23 Sep 2013 22:57:36 -0700 (PDT)
+In-Reply-To: <20130924054053.GA6192@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235271>
 
-On Mon, Sep 23, 2013 at 02:37:29PM -0700, Jonathan Nieder wrote:
-> Hi,
-> 
-> Michael S. Tsirkin wrote:
-> >> On Tue, Sep 17, 2013 at 04:56:16PM -0400, Jeff King wrote:
-> 
-> >>>>> A problem with both schemes, though, is that they are not
-> >>>>> backwards-compatible with existing git-patch-id implementations.
-> [...]
-> >>> It may be esoteric enough not to worry about, though.
-> 
-> Yeah, I think it would be okay.  Details of the diff generation
-> algorithm have changed from time to time anyway (and broken things,
-> as you mentioned) and we make no guarantee about this.
-> 
-> [...]
-> >> patch-id: make it more stable
-> >>
-> >> Add a new patch-id algorithm making it stable against
-> >> hunk reodering:
-> >> 	- prepend header to each hunk (if not there)
-> >> 	- calculate SHA1 hash for each hunk separately
-> >> 	- sum all hashes to get patch id
-> >>
-> >> Add --order-sensitive to get historical unstable behaviour.
-> 
-> The --order-sensitive option seems confusing.  How do I use it to
-> replicate a historical patch-id?
+On Tue, Sep 24, 2013 at 12:40 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Sep 24, 2013 at 12:36:38AM -0500, Felipe Contreras wrote:
+>
+>> > Yeah, it's not a term we use elsewhere, so it's not great. Probably
+>> > "default remote" would be better, or even just say "branch.*.remote for
+>> > the current branch" or something.
+>>
+>> Yeah, general users don't know what you are talking about when you say that.
+>
+> Right, I understand your complaint and agree that those terms are
+> potentially confusing.
+>
+>> > I dunno. I don't particularly like any of those, but I really dislike
+>> > the imprecision of "upstream branch" in this case.
+>>
+>> For most users it's the remote configured by:
+>>
+>> % git branch --set-upstream-to foo
+>> % git checkout -b foo origin/foo
+>> % git checkout -t -b foo bar
+>>
+>> So when they read "upstream branch" they know from where it got configured.
+>
+> Yes, but it is also wrong, in the sense that the upstream branch is
+> unrelated. You are giving breadcrumbs to users who know "upstream
+> branch" as a concept and nothing else, but you are misleading users who
+> know that branch.*.remote exists.
 
-You supply a historical diff to it :)
+No, I'm not. The users that know branch.*.remote exists know why it
+exists. The part where it is explained, 'git config --help', is
+perfectly clear: "When on branch <name>, it tells 'git fetch' and 'git
+push' which remote to fetch from/push to.". So what does
+branch.<name>.remote does, if not precisely what the documentation
+says?
 
-> If I record all options that might
-> have influenced ordering (which are those?) then am I guaranteed to
-> get a reproducible result?  
+This is not a rhetorical question, I'm actually expecting you to
+answer, if a user knows that branch.<name>.remote exists, how would
+the above confuse him?
 
-Maybe not. But if you have a patch on disk, you will get
-old hash from it with --order-sensitive.
+> I was hoping you might suggest something that can help both users by
+> being both precise and giving the appropriate breadcrumbs.
 
-> So I would prefer either of the following over the above:
-> 
->  a) When asked to compute the patch-id of a seekable file, use the
->     current streaming implementation until you notice a filename that
->     is out of order.  Then start over with sorted hunks (for example
->     building a table of offsets within the patch for each hunk to
->     support this).
-> 
->     When asked to compute the patch-id of an unseekable file, stream
->     to a temporary file under $GIT_DIR to get a seekable file.
+This is documentation for a Git porcelain command,
+branch.<name>.remote is an implementation detail, and it's irrelevant
+in the documentation at this level.
 
-This can be computed in one pass: just keep two checksums around.
-
-But the result won't be stable: if you get same patch from two
-people one is ordered, the other isn't, you get two different checksums.
-
-What are we trying to achieve here?
-
-
->  b) Unconditionally use the new patch-id definition that is stable
->     under permutation of hunks.  If and when someone complains that
->     this invalidates their old patch-ids, they can work on adding a
->     nice interface for getting the old-style patch-ids.  I suspect it
->     just wouldn't come up.
-
-That's certainly easy to implement.
-
-> Of course I can easily be wrong.  Thanks for a clear patch that makes
-> the choices easy to reasonable about.
-> 
-> Thoughts?
-> Jonathan
+-- 
+Felipe Contreras
