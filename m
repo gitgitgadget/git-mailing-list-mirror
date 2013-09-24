@@ -1,83 +1,83 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2013, #07; Mon, 23)
-Date: Mon, 23 Sep 2013 17:12:31 -0700
-Message-ID: <4EC9B557-98E7-4796-8789-CD59AF099CC5@gmail.com>
-References: <20130923211047.GD9464@google.com> <5240B184.8060101@googlemail.com> <20130923215456.GG9464@google.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Stefan Beller <stefanbeller@googlemail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 24 02:12:39 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 00/16] Make Gnome Credential helper more Gnome-y and
+ support ancient distros
+Date: Mon, 23 Sep 2013 23:49:32 -0400
+Message-ID: <20130924034932.GB2766@sigill.intra.peff.net>
+References: <1379962157-1338-1-git-send-email-bcasey@nvidia.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, john@szakmeister.net, pah@qo.cx,
+	felipe.contreras@gmail.com, Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <bcasey@nvidia.com>
+X-From: git-owner@vger.kernel.org Tue Sep 24 05:49:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOGF4-0002h7-8X
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 02:12:38 +0200
+	id 1VOJd7-0008UL-0B
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 05:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423Ab3IXAMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Sep 2013 20:12:34 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:42112 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752662Ab3IXAMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Sep 2013 20:12:34 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rq2so3829973pbb.19
-        for <git@vger.kernel.org>; Mon, 23 Sep 2013 17:12:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=N9DwLbUva3HDUVDDnnGvzWOzHTgzP1YZtaE9BApY45I=;
-        b=0+ZQjc24Q5ahOA8n12SIw/H7rFdE7zPPJT5jella23vVs9KZcXL8qVrcCI1Lb9dlOR
-         Zj4kaR3jluSSPNQMz92mz1CB3VjIgUFb2y8JAJmMrjQkd215WSJuwBJ8tKT6HwZTssto
-         BS2NXuJOgnXjs8skjSgU/KhssN+myye7nNFYMQCr3NBcIwAlM+kO+WS+ghsNmt/g7TcF
-         nCzou0Qpi2X4WjAc2lay/e55DSQVlFo/uu/gtsCjBZ8P5zP72H2jL/7fM7ZCGCIi9/iN
-         9vRlu6cK8uDmIVDIDLzuiR5NYHJ4mdy+IdKLcpwW4uHoPtKxgn56yFN1D+NP7cLQH9b6
-         XPIw==
-X-Received: by 10.68.113.99 with SMTP id ix3mr3505356pbb.180.1379981553594;
-        Mon, 23 Sep 2013 17:12:33 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id go4sm36808998pbb.15.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 23 Sep 2013 17:12:32 -0700 (PDT)
-In-Reply-To: <20130923215456.GG9464@google.com>
-X-Mauler: Craptastic (2.936)
+	id S1753476Ab3IXDth (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Sep 2013 23:49:37 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52444 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753448Ab3IXDtg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Sep 2013 23:49:36 -0400
+Received: (qmail 27242 invoked by uid 102); 24 Sep 2013 03:49:35 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 23 Sep 2013 22:49:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Sep 2013 23:49:32 -0400
+Content-Disposition: inline
+In-Reply-To: <1379962157-1338-1-git-send-email-bcasey@nvidia.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235254>
 
-On Sep 23, 2013, at 14:54, Jonathan Nieder wrote:
-> Stefan Beller wrote:
->
->> 	git fetch https://repo.or.cz/r/git/jrn.git
->> doesn't work, as it yields:
->> fatal: unable to access 'https://repo.or.cz/r/git/jrn.git/': server  
->> certificate verification failed. CAfile: /etc/ssl/certs/ca- 
->> certificates.crt CRLfile: none
->
-> Ah, figured it out.  [1] http://repo.or.cz/h/rootcert.html explains.
+On Mon, Sep 23, 2013 at 11:49:01AM -0700, Brandon Casey wrote:
 
-The four possible fetch URLs are also listed on the http://repo.or.cz/w/git/jrn.git 
-  page:
+> Brandon Casey (16):
+>   contrib/git-credential-gnome-keyring.c: remove unnecessary
+>     pre-declarations
+> [...]
 
-   git://repo.or.cz/git/jrn.git
+Thanks, I think this is a good change. There were patches[1] from
+Philipp about a year ago that went in the opposite direction, factoring
+out common credential functions to be used by several helpers. We ended
+up not merging them, because porting the wincred helper to the generic
+implementation introduced complications.
 
-   http://repo.or.cz/r/git/jrn.git
+And that was part of the reason for splitting out the helpers in the
+first place: to let them worry about their own individual
+system-specific quirks (and take advantage of system-specific helpers).
+IOW, to make the gnome helper more gnome-y than git-y. And your patches
+go in that direction, which I think is sane.
 
-   ssh://repo.or.cz/srv/git/git/jrn.git
+[1] http://thread.gmane.org/gmane.comp.version-control.git/204154/focus=204157
 
-   https://repo.or.cz/r/git/jrn.git
+>   contrib/git-credential-gnome-keyring.c: report failure to store
+>     password
 
-As Jonathan has pointed out, fetching over https may require some  
-additional setup as explained above [1].
+Your subject lines are rather on the long side. I wonder if they would
+be more readable as just:
 
-Fetching using ssh can be accomplished without needing to create a  
-user account by using the "mob" user as in the URL "ssh://mob@repo.or.cz/srv/git/git/jrn.git 
-".
+  gnome-keyring: report failure to store password
 
-The git: and http: URLs should work as-is for fetching.
+and so forth. Anyone familiar with git.git knows that the "contrib"
+and "git-credential-" bits are implied by "gnome-keyring". But it's not
+a huge deal either way.
+
+> Inserts a patch to fix the style issues for block statements.
+> i.e. use "if ()" instead of "if()"
+
+There are a ton of other style issues in the existing code (lack of
+whitespace around operators and function arguments, and "char* foo"
+instead of "char *foo" were the two I noticed). As a separate contrib/
+project, I'm not that concerned, and I would say it is up to whoever is
+nominally in charge of maintaining that contrib directory (Philipp or
+John, in this case).
+
+-Peff
