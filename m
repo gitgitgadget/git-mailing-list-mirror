@@ -1,97 +1,107 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] diff: add a config option to control orderfile
-Date: Tue, 24 Sep 2013 23:15:15 +0300
-Message-ID: <20130924201515.GB23319@redhat.com>
-References: <20130917201401.GA22000@redhat.com>
- <20130917201604.GA22008@redhat.com>
- <20130917201828.GC16860@sigill.intra.peff.net>
- <20130917203807.GA22059@redhat.com>
- <20130917205615.GA20178@sigill.intra.peff.net>
- <20130919213226.GA21291@redhat.com>
- <20130923210915.GA11202@redhat.com>
- <20130923213729.GE9464@google.com>
- <20130924055419.GA11208@redhat.com>
- <20130924193610.GO9464@google.com>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: Re: Re-Transmission of blobs?
+Date: Tue, 24 Sep 2013 22:36:51 +0200
+Message-ID: <20130924203651.GH14259@raven.wolf.lan>
+References: <20130911112758.GB14259@raven.wolf.lan>
+ <xmqqsixbth4h.fsf@gitster.dls.corp.google.com>
+ <20130912074241.GC14259@raven.wolf.lan>
+ <20130912092339.GA30702@sigill.intra.peff.net>
+ <20130912103531.GD14259@raven.wolf.lan>
+ <20130912194453.GD32069@sigill.intra.peff.net>
+ <20130913100934.GE14259@raven.wolf.lan>
+ <20130916215536.GB5477@sigill.intra.peff.net>
+ <20130920092715.GG14259@raven.wolf.lan>
+ <20130924073613.GC7257@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 24 22:13:13 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 24 22:40:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOYyu-0005Ow-KX
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 22:13:12 +0200
+	id 1VOZP9-0006uo-2G
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 22:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754197Ab3IXUNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Sep 2013 16:13:07 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:61161 "EHLO mx1.redhat.com"
+	id S1754508Ab3IXUkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Sep 2013 16:40:11 -0400
+Received: from quechua.inka.de ([193.197.184.2]:51857 "EHLO mail.inka.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753091Ab3IXUNH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Sep 2013 16:13:07 -0400
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id r8OKCwwB013278
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 24 Sep 2013 16:12:58 -0400
-Received: from redhat.com (vpn1-6-23.ams2.redhat.com [10.36.6.23])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id r8OKCuPs027957;
-	Tue, 24 Sep 2013 16:12:57 -0400
+	id S1753005Ab3IXUkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Sep 2013 16:40:10 -0400
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1VOZOz-00019Z-3K; Tue, 24 Sep 2013 22:40:09 +0200
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 0B475761BF; Tue, 24 Sep 2013 22:36:51 +0200 (CEST)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20130924193610.GO9464@google.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+In-Reply-To: <20130924073613.GC7257@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235316>
 
-On Tue, Sep 24, 2013 at 12:36:10PM -0700, Jonathan Nieder wrote:
-> Michael S. Tsirkin wrote:
-> > On Mon, Sep 23, 2013 at 02:37:29PM -0700, Jonathan Nieder wrote:
-> 
-> >>  a) When asked to compute the patch-id of a seekable file, use the
-> >>     current streaming implementation until you notice a filename that
-> >>     is out of order.  Then start over with sorted hunks (for example
-> >>     building a table of offsets within the patch for each hunk to
-> >>     support this).
-> >>
-> >>     When asked to compute the patch-id of an unseekable file, stream
-> >>     to a temporary file under $GIT_DIR to get a seekable file.
-> >
-> > This can be computed in one pass: just keep two checksums around.
-> >
-> > But the result won't be stable: if you get same patch from two
-> > people one is ordered, the other isn't, you get two different checksums.
-> 
-> Sorry for the lack of clarity.  In this case (a), I meant "sort the
-> diff hunks and use the *old* patch-id definition with sorted hunks,
+On Tue, Sep 24, 2013 at 03:36:13AM -0400, Jeff King wrote:
+> On Fri, Sep 20, 2013 at 11:27:15AM +0200, Josef Wolf wrote:
 
-Well, then the result is not compatible with what
-original patch-id would produce.
-Basically you are either not stable or not compatible :)
+> > Even without asking, we can assume with great probability that
+> > origin/somebranch is available at origin.
+> Bear in mind that the transfer process does not know about
+> cherry-picking at all.
 
-> which produces a stable result but requires random access.
-> 
-> However:
-> 
-> [...]
-> >>  b) Unconditionally use the new patch-id definition that is stable
-> >>     under permutation of hunks.  If and when someone complains that
-> >>     this invalidates their old patch-ids, they can work on adding a
-> >>     nice interface for getting the old-style patch-ids.  I suspect it
-> >>     just wouldn't come up.
-> >
-> > That's certainly easy to implement.
-> 
-> Yes, (b) seems like the best option to me, for what it's worth.
-> 
-> Thanks again,
-> Jonathan
+It dosn't need to know.
 
-OK, thanks.
+> It only sees the other side's tips and traverses.
 
-Just making sure: is it correct that there's no requirement to use same
-algorithm between patch-ids.c and builtin/patch-id.c ?
+The sender side knows with high probability that origin/somebranch is avalable
+at the receivig side (unless it was deleted). And since the file in question
+is part of the tree at the tip of origin/somebranch, we can deduce that the
+file is available on the other side (unless it was deleted).
+
+> > And the file in question happens to reside in the tree at the very tip
+> > of origin/somebranch, not in some of its ancestors. In this case,
+> > there's no need to search the history at all. And even in this pretty
+> > simple case, the algorithm seems to fail for some reason.
+> 
+> Correct. And in the current code, we should be looking at the tip tree
+> for your case.  However, the usual reason to do so is to mark those
+> objects as a "preferred base" in pack-objects for doing deltas. I wonder
+> if we are not correctly noticing the case that an object is both
+> requested to be sent and marked as a preferred base (in which case we
+> should drop it from our sending list).
+
+Further, it seems that the marking as preferred base had no effect, since the
+delta should have been zero in this case. Or is this mechanism deactivated for
+binary data (/dev/zero in this case)?
+
+> If that's the problem, it should be easy to fix cheaply. It would not
+> work in the general case, but it would for your specific example. But
+> since it costs nothing, there's no reason not to.
+> 
+> I'll see if I can investigate using the example script you posted.
+
+Thanks!
+
+> I meant "we do the optimization during history traversal that avoids
+> going into sub-trees we have already seen". We do _not_ do the full
+> history traversal for a partial push.
+
+OK. I see. Maybe a config option to request a full traversal would be a
+reasonable compromise? That way CPU could be traded against bandwidth for
+repositories that happen to have slow/unreliable/expensive connections.
+
+> Yes, that would be nice. However, in the common cases it would make
+> things much worse. A clone of linux.git has ~3.5M objects.
+
+Of course, if there's nothing you can drop, any attempt to drop objects will
+add to overhead. That's similar to compressing compressed files. This will
+enlarge the original file. Would that be a reasonable argument to get rid of
+all attempts to compress files?
+
+-- 
+Josef Wolf
+jw@raven.inka.de
