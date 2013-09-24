@@ -1,85 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] grep: use slash for path delimiter, not colon
-Date: Tue, 24 Sep 2013 02:57:51 -0400
-Message-ID: <20130924065751.GD5875@sigill.intra.peff.net>
-References: <99F7DE7C-A8D7-4EDF-B9C5-8DB143BFDB53@me.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3] build: add default aliases
+Date: Tue, 24 Sep 2013 01:59:21 -0500
+Message-ID: <CAMP44s0RPgVOo4qN-Nb2Mqkemk53gi_pu7Ft25e3gtFciNOEgw@mail.gmail.com>
+References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
+	<20130924045325.GD2766@sigill.intra.peff.net>
+	<CAMP44s1tirA5w91L2YomaduZVkqL3=n1j79eoueB6XeGuyY3Mw@mail.gmail.com>
+	<20130924053712.GA6114@sigill.intra.peff.net>
+	<CAMP44s1-AXKRz4pqQsyCMLZgnxmxTaoeBGt8aNDFM0ttDTmBRQ@mail.gmail.com>
+	<20130924061830.GB6114@sigill.intra.peff.net>
+	<CAMP44s3ee_SmY=NOeMW31D4E01-Ft9qY5wa9VhRQWrY0fo7S=A@mail.gmail.com>
+	<20130924064604.GA7257@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: phil.hord@gmail.com, "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jonathon Mah <jmah@me.com>
-X-From: git-owner@vger.kernel.org Tue Sep 24 08:58:01 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 24 08:59:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOMZL-0000ER-Hr
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 08:57:59 +0200
+	id 1VOMak-0000yH-T4
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 08:59:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750752Ab3IXG5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Sep 2013 02:57:55 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53720 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750716Ab3IXG5z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Sep 2013 02:57:55 -0400
-Received: (qmail 5121 invoked by uid 102); 24 Sep 2013 06:57:54 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 Sep 2013 01:57:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Sep 2013 02:57:51 -0400
-Content-Disposition: inline
-In-Reply-To: <99F7DE7C-A8D7-4EDF-B9C5-8DB143BFDB53@me.com>
+	id S1750763Ab3IXG7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Sep 2013 02:59:23 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:32908 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716Ab3IXG7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Sep 2013 02:59:22 -0400
+Received: by mail-la0-f52.google.com with SMTP id ev20so3257603lab.39
+        for <git@vger.kernel.org>; Mon, 23 Sep 2013 23:59:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=uyylvce02V8Y1HuYxkVUmx/Wy+RZd013GqNoXp4xuEI=;
+        b=GKFhzlD4nXcnDnrQaYD+3RU2VVoLhcTS+NZV2iyaSKttEpw+dpgOt9Hdy7AnuhASFT
+         4k6v9XhQqZn4tf7g37SPA9VgTI5tQdmjgyPq7Brrkmbxn4VeggIN1ZefA9X6FXH7ktuz
+         MbLPuH04hoWbp7rxLhru+PRu6JeElGikzIvJPk3ovnQE/Ghho4wD4dtgIsgRUPX53sjV
+         W2m056Ry9IOCCXhCXNgZJ/FQgtFjmQSTekFLU8RQt95/tUKmHmLar1/8IR0hCLdcCSA0
+         Wp6G/vTfCIR38DU5AE0WLxX9KX8GzLcCIUNM6knBL7XUZm8OVSns3819DWw3SKiQa0wH
+         yKFw==
+X-Received: by 10.152.116.7 with SMTP id js7mr23773190lab.11.1380005961525;
+ Mon, 23 Sep 2013 23:59:21 -0700 (PDT)
+Received: by 10.114.91.230 with HTTP; Mon, 23 Sep 2013 23:59:21 -0700 (PDT)
+In-Reply-To: <20130924064604.GA7257@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235279>
 
-On Sun, Sep 22, 2013 at 12:15:21PM -0700, Jonathon Mah wrote:
+On Tue, Sep 24, 2013 at 1:46 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Sep 24, 2013 at 01:41:19AM -0500, Felipe Contreras wrote:
+>
+>> > People who have different aliases for
+>> > the same terms are unaffected on existing boxes, but slightly hindered
+>> > on new boxes as the aliases do something else.
+>>
+>> Less hindered than in the current situation.
+>
+> I do not agree, but I've already explained my reasoning.  I think we
+> must agree to disagree on this.
+>
+>> cvs ci = cvs commit
+>> cvs co = cvs checkout
+>>
+>> svn ci = svn commit
+>> svn co = svn checkout
+>>
+>> hg ci = hg commit
+>> hg co = hg checkout
+>>
+>> And somehow you think this is not natural and sensible?
+>>
+>> git ci = git commit
+>> git co = git checkout
+>>
+>> I think it's as clear as day.
+>
+> If it is natural, sensible, and as clear as day, then why do people
+> alias the commands to something besides what you show?
 
-> A few days ago I came across the same "surprising" output of git-grep,
-> tried to adjust the code to print "git show"-able object names, and
-> ran into similar subtleties. I just found this thread, and Jeff's code
-> handles more cases than mine did (I didn't try Phil's initial patch),
-> but I can add some more test cases with non-showable output (again
-> related to git-grep's path scoping):
-> 
+For the same reason people would do alias.commit='commit -a' if it was possible.
 
-If you haven't read the side thread starting at [1], there are some
-arguments that git-grep is doing the right thing already.  I think there
-are a few issues at play here:
+[1] http://article.gmane.org/gmane.comp.version-control.git/147517
 
-> $ git grep -l cache HEAD:./ | head -1
-> HEAD:./:.gitignore
-
-As you show, using a colon separator from a tree-ish that contains a
-partial path looks bad.  The downside of turning this into a slash,
-though, is that you lose the information of the tree-ish. See [2].
-
-> $ cd Documentation
-> $ git grep -l cache HEAD | head -1
-> HEAD:CodingGuidelines
-
-Grepping from a subdirectory produces relative paths that look like real
-tree:path specifications, but aren't. Showing the full path would
-potentially be cluttering if you are in a deep directory.  These days we
-have the "./" syntax, though, so we could perhaps output:
-
-  HEAD:./CodingGuidelines
-
-which is succinct but can be used to access the path in the tree (and
-makes more clear to the user that we have only grepped in the current
-subdirectory).
-
-> $ git grep -l cache HEAD:Documentation/CodingGuidelines
-> ../HEAD:Documentation/CodingGuidelines
-> (woah!)
-
-That one just seems nonsensical and buggy to me. We should not be
-applying ".." at all to a blob spec like this.
-
--Peff
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/232892/focus=232980
-
-[2] http://thread.gmane.org/gmane.comp.version-control.git/232892/focus=233004
+-- 
+Felipe Contreras
