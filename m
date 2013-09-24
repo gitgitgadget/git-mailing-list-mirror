@@ -1,149 +1,149 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Re-Transmission of blobs?
-Date: Tue, 24 Sep 2013 03:36:13 -0400
-Message-ID: <20130924073613.GC7257@sigill.intra.peff.net>
-References: <xmqqsixcy395.fsf@gitster.dls.corp.google.com>
- <20130911112758.GB14259@raven.wolf.lan>
- <xmqqsixbth4h.fsf@gitster.dls.corp.google.com>
- <20130912074241.GC14259@raven.wolf.lan>
- <20130912092339.GA30702@sigill.intra.peff.net>
- <20130912103531.GD14259@raven.wolf.lan>
- <20130912194453.GD32069@sigill.intra.peff.net>
- <20130913100934.GE14259@raven.wolf.lan>
- <20130916215536.GB5477@sigill.intra.peff.net>
- <20130920092715.GG14259@raven.wolf.lan>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/2] fetch: add missing documentation
+Date: Tue, 24 Sep 2013 02:41:37 -0500
+Message-ID: <CAMP44s3potrCHyj8QYVfqBjsOqxh0xnuSfrK92enVWKND11CeA@mail.gmail.com>
+References: <1379772563-11000-1-git-send-email-felipe.contreras@gmail.com>
+	<1379772563-11000-2-git-send-email-felipe.contreras@gmail.com>
+	<20130924050343.GF2766@sigill.intra.peff.net>
+	<CAMP44s1FFTS=wOcWBfqg3zt3TO-aM83oXHcGwBcwvt_HnXrn8g@mail.gmail.com>
+	<20130924053023.GA5875@sigill.intra.peff.net>
+	<CAMP44s1ezYMSuQRMp_SY1HqLiuyuf0tjuf3Fn6fXF2drODZ_iw@mail.gmail.com>
+	<20130924054053.GA6192@sigill.intra.peff.net>
+	<CAMP44s3QfkvXjgmhWPXN7qonbEPpvJFyVm82EBOMSjX7ng3OQg@mail.gmail.com>
+	<20130924061043.GA6678@sigill.intra.peff.net>
+	<CAMP44s23FMeZP=xum1X9bvHuKVo=j8O=8_8DVNgXq9F7Cpsr7A@mail.gmail.com>
+	<20130924065454.GB7257@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 24 09:36:23 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 24 09:41:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VONAU-000517-3s
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 09:36:22 +0200
+	id 1VONFf-00009K-E0
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Sep 2013 09:41:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751340Ab3IXHgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Sep 2013 03:36:18 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53967 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750724Ab3IXHgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Sep 2013 03:36:17 -0400
-Received: (qmail 7731 invoked by uid 102); 24 Sep 2013 07:36:17 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 Sep 2013 02:36:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Sep 2013 03:36:13 -0400
-Content-Disposition: inline
-In-Reply-To: <20130920092715.GG14259@raven.wolf.lan>
+	id S1750749Ab3IXHlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Sep 2013 03:41:39 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:58580 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750724Ab3IXHlj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Sep 2013 03:41:39 -0400
+Received: by mail-lb0-f170.google.com with SMTP id w7so3614310lbi.29
+        for <git@vger.kernel.org>; Tue, 24 Sep 2013 00:41:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+amv4wUuGnMR1HkCGa1oMgiLQ/x6nwSz3G9h1XQAx9s=;
+        b=lB7cugeFxcCljgZp02w6McgB7x378AugFYkeeDcHaFgL+S55pFXTxd5yUtCsYOo63i
+         BqrOqM6+gnjwgnHzVObM23qjnNfycRvlrR/88fZqLyXBLDdQmRo+CFYpKmXmr+9/m5St
+         mq2/B51sdk8kBauecAG09EzG2NhEnE0RvNpouRgfby+/PMXWFIq8drHR5nPEERoBPEP9
+         Jn40Ivf2vx1Q+qymq7vPD9BBCwltMVy2czpLIsayLvZ5GjoLx7QHAsVH9DFz2j5I17W8
+         MIGG/M1rlxTwniKg/9ohB7Bapk5DpQUL3IOpeMvsJTXbZWi0qJ4R0A52F98AN6YqDNKh
+         v7gg==
+X-Received: by 10.112.168.170 with SMTP id zx10mr23215675lbb.0.1380008497491;
+ Tue, 24 Sep 2013 00:41:37 -0700 (PDT)
+Received: by 10.114.91.230 with HTTP; Tue, 24 Sep 2013 00:41:37 -0700 (PDT)
+In-Reply-To: <20130924065454.GB7257@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235281>
 
-On Fri, Sep 20, 2013 at 11:27:15AM +0200, Josef Wolf wrote:
+On Tue, Sep 24, 2013 at 1:54 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Sep 24, 2013 at 01:31:48AM -0500, Felipe Contreras wrote:
+>
+>> > I don't think it is the end of the world if we say "upstream branch". I
+>> > was hoping to find a term that could be both friendly and accurate.
+>> >
+>> > And failing that, I hoped you might say "I see what you are saying, but
+>> > I cannot think of a term that is more precise that does not sacrifice
+>> > friendliness". But as I seem incapable of even communicating the issue
+>> > to you, I'm giving up. It is not worth wasting more time on it.
+>>
+>> And I was hoping you wouldn't use rhetorical warfare and label things
+>> as "inaccurate", "imprecise", "breadcrumbs".
+>
+> FWIW, the term "breadcrumbs" was meant as a _good_ thing. I meant that
+> you are using a term that will link the user to other concepts that use
+> the same term (like "branch --set-upstream-to"), and that is something
+> we would like to keep.
 
-> > Yes. If you know that the receiver has commit X, and you want to know if
-> > it has some blob Y, the only way to know for sure is to look at every
-> > tree of every commit reachable from X, and see whether any of them
-> > references Y.
-> 
-> Jeff, in my original example, I did a cherry-pick from origin/somebranch.
+"breadcrumbs" implies it's not the full thing the user expects. While
+in some cases it might indeed lead the user to further concepts, it's
+also likely the user already knows what "upstream branch" means, in
+which case it's not a "breadcrumb", it's the full meal.
 
-Sorry, I thought we were talking about the general case, not your
-specific example.
+It's as misleading as saying Atlas Shrugged is a light read, sure, it
+might be to some people, but it's certainly not the case for
+everybody, so saying so is not an actual fact.
 
-> Even without asking, we can assume with great probability that
-> origin/somebranch is available at origin.
+> As for the others, I find your accusation of rhetorical warfare
+> ridiculous. Insulting your patch with non-constructive insults would be
+> rhetorical.
 
-Bear in mind that the transfer process does not know about
-cherry-picking at all. It only sees the other side's tips and traverses.
+That actually wouldn't be rhetorical. If you say "I think this is
+crap", that would simply be stating an opinion, and everyone would
+understand that, saying "This is imprecise" is rhetorical, because you
+convey an opinion as a fact, and it's actually much more damaging than
+the former, because people wouldn't read it as an opinion, which is
+precisely what rhetoric is about: persuation, rightly or not.
 
-> And the file in question happens to reside in the tree at the very tip
-> of origin/somebranch, not in some of its ancestors. In this case,
-> there's no need to search the history at all. And even in this pretty
-> simple case, the algorithm seems to fail for some reason.
+Even worst, you might believe it yourself.
 
-Correct. And in the current code, we should be looking at the tip tree
-for your case.  However, the usual reason to do so is to mark those
-objects as a "preferred base" in pack-objects for doing deltas. I wonder
-if we are not correctly noticing the case that an object is both
-requested to be sent and marked as a preferred base (in which case we
-should drop it from our sending list).
+> Saying "I think it has a flaw, here are my reasons, and I
+> hope we can come up with a solution that does not have that flaw without
+> weakening the other properties" is collaboration.
 
-If that's the problem, it should be easy to fix cheaply. It would not
-work in the general case, but it would for your specific example. But
-since it costs nothing, there's no reason not to.
+But you didn't say you *thought* there was a flaw, you said there was
+a flaw, specifically, you said it was imprecise.
 
-I'll see if I can investigate using the example script you posted.
+USA didn't say "Well, uhm, we think Iraq has weapons of mass
+destruction", they said "Iraq has weapons of mass destruction, and
+it's not a question of _if_ they are going to use them, but _when_".
+These two statements cause a very different reaction from the
+listener, thanks to the art of rhetoric.
 
-> > Yes, you do not have to recurse into sub-trees (or commits) you have
-> > already seen. And we already do that optimization.
-> 
-> Why is the file re-transmitted, then?
+> I do not know why you and I have so much trouble communicating on even
+> basic things. I am willing to accept that it is entirely my fault. But
+> that does not change the fact that I often find it a waste of time, and
+> I plan to do less of it by ending my involvement in threads that seem to
+> be unproductive.
 
-I meant "we do the optimization during history traversal that avoids
-going into sub-trees we have already seen". We do _not_ do the full
-history traversal for a partial push.
+I think it's very clear, you think your opinions are worth a hundred
+times more than my opinions. Actually, it's even worst, you think your
+opinions are facts. What kind of person challenges facts? only stupid
+little brats on the Internet, or morons, right? But when two equals
+have a difference of opinion, it's just that.
 
-> With a little change in the protocol, a very simple optimization could be
-> implemented, avoiding the complicated bitmap strategy you were talking about:
-> [...]
-> In the last step, instead of sending a packfile, the sending side should send
-> a list of the SHA's which would be included in this packfile. The receiving
-> side would then be able to request all the objects it needs to get up-to-date.
+If you accepted that my opinion weighs as much has yours, and that
+when we differ it might be you the one that is wrong, as much as it
+might be me, things would go very differently.
 
-I think you have a mis-impression of the problem bitmaps are trying to
-solve, mostly because it is not the problem you presented in your
-thread (but your problem is one that bitmaps can help).
+>> At this porcelain level, branch.<name>.remote does not exist, so
+>> "upstream branch" is accurate. Period.
+>
+> I do not agree with your first sentence at all.
 
-Consider what the sending side has to do to come up with that list of
-objects to send. It has to traverse history to do it, looking at each
-tree of each commit that is going to be sent. That effort is
-proportional to the amount of history we are going to send. For a small
-push or fetch, it is not much. For a clone, it can be quite a lot (tens
-of seconds of CPU time per clone). Bitmaps drastically reduce the amount
-of CPU required.
+> And your second one is purely rhetorical.
 
-Bitmaps can _also_ solve other problems, like letting us be more
-thorough in realizing which objects the other side has (without spending
-effort on an expensive traversal). If that were the only thing they did,
-it might not be worth it. But we basically get that for "free" by
-solving the other problem.
+Exactly. You used rhetoric to convey your opinions as facts, so I used
+it to the same effect.
 
-So I do not think such a protocol extension is an argument against
-pack bitmaps; you would want them with or without the protocol change.
+> I can elaborate if you really care, but I have a feeling you do not.
 
-> I think this change would be considerably simpler than the reachability bitmap
-> you are talking about. And it would avoid all those time consuming traversals
-> through the history and the tree. And it would omit _all_ redundant
-> retransmissions. Even in the case when sender and receiver do not have _any_
-> common heads at all, _no_ files at all would be retransmitted unnecessarily.
+If you are going to present your opinion as facts, then no, I do not care.
 
-Yes, that would be nice. However, in the common cases it would make
-things much worse. A clone of linux.git has ~3.5M objects. That's 70MB
-of sha1s that the server tells the client "tell me which of these you
-need", and then another 70MB for the client to say "yep, I need all of
-them".  You could have the client instead say "here are the few I
-_don't_ need", which would save the second half in the common cases.
+If you are going to explain why you *personally* *think* *in your
+opinion* that branch.<name>.remote is a porcelain level concept,  then
+sure, I would be interested in hearing why. But first I would like for
+you do an exercise and find out where exactly does this high level
+concept lands in the ProGit book.
 
-And of course it would be smaller for a smaller fetch/push. Just looking
-at "git rev-list --objects --all --since=1.week.ago" in the kernel,
-there are ~77K new objects. So over the course of a week, we use an
-extra 1.5MB of bandwidth. How many objects did we save ourselves from
-sending, and how big were they (keep in mind they will typically be
-deltas against object you already have anyway)?
-
-The answer would depend on your cherry-picking and reverting habits. But
-I would guess in a normal workflow that you would not come close to
-breaking even.
-
-There are, of course, cases where the user _knows_ there is a huge
-object that the other side has, and they do not want to have to send it
-again. For that case, it would be useful to have something like the
-protocol you described as an optional extension to turn on. Of course,
-somebody has to implement it. :)
-
--Peff
+-- 
+Felipe Contreras
