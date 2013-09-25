@@ -1,7 +1,7 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH v3] build: add default aliases
-Date: Wed, 25 Sep 2013 16:55:39 +0200
-Message-ID: <vpqr4cdt0gk.fsf@anie.imag.fr>
+Date: Wed, 25 Sep 2013 10:08:33 -0500
+Message-ID: <CAMP44s3qv==GZt7BYMc-FuQvVoNGf3kkGAGzk=-=F4A8KZojKQ@mail.gmail.com>
 References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
 	<CAEBDL5WQLx4rsN+yRs62fgTBWkuAhCSWDRkoCc8M_akpSqMKvg@mail.gmail.com>
 	<CAMP44s3nQv97B2=mq-mn8S41sMA43qRfr+nC7eQ=Jft=zRgTRw@mail.gmail.com>
@@ -9,59 +9,61 @@ References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
 	<CAMP44s2j_ra_Tk_s-tjwwvX=T8y=bKPTaUdOQk1jD8QpUm+-zA@mail.gmail.com>
 	<CAEBDL5X1QRLaTvxhEu4e5_NE5fEWc6fd60YJyA8wye4d4T3wpQ@mail.gmail.com>
 	<CAMP44s2EtgXXdfa+QtUmmRh6wZ1fD8YTWtzLJ2mN6y_6faMM_g@mail.gmail.com>
+	<vpqr4cdt0gk.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
 	David Aguilar <davvid@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 25 16:56:15 2013
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 25 17:08:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOqVh-0003xK-6D
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 16:56:13 +0200
+	id 1VOqhj-0005M3-Sd
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 17:08:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755730Ab3IYO4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Sep 2013 10:56:09 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:45731 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755443Ab3IYO4I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Sep 2013 10:56:08 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8PEtbNd031178
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 25 Sep 2013 16:55:37 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VOqV9-0000P2-Ei; Wed, 25 Sep 2013 16:55:39 +0200
-In-Reply-To: <CAMP44s2EtgXXdfa+QtUmmRh6wZ1fD8YTWtzLJ2mN6y_6faMM_g@mail.gmail.com>
-	(Felipe Contreras's message of "Wed, 25 Sep 2013 09:29:03 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 25 Sep 2013 16:55:38 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r8PEtbNd031178
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1380725742.77875@g/NHmyeQr384CtkbnuzHGg
+	id S1755975Ab3IYPIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Sep 2013 11:08:36 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:53845 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755457Ab3IYPIf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Sep 2013 11:08:35 -0400
+Received: by mail-la0-f51.google.com with SMTP id es20so5143597lab.10
+        for <git@vger.kernel.org>; Wed, 25 Sep 2013 08:08:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=IaTUVgSLvaRaVTcC60onigwOAtTn3oVxkIjeq0tqmfI=;
+        b=oUrImzNiWOpNGrLBgh7xXsVBECWQbfcD/ishIq9vdNI3ao3ksZBdbXO3lyybYqFV+Y
+         praQQHJOjbRf9XdVJFA9rcfbLPQKi27Ecp3blwZ+YV/cbHCZYsl3NOsWYmFKcQ8Q/Tit
+         +bJIx93M2nkQeZqOn1kzmVi6k/i1RPOm9NOVuIfiUr0i1ReZZY9FY2G4MmnG4eNnimBU
+         aNfaVmy7zcuAklSWHA8Kwqa1KZPq0lqtksa4iMP9lhtGjrVOVVWYzAPbPZXjX+ix5WNO
+         LDwxXqaKknVRce7Vn4SHLvlb+3bfszqu2HBUzRFBSN04sPJAzduYffHO9tJLg2dzEIhK
+         Dfdg==
+X-Received: by 10.152.120.228 with SMTP id lf4mr1484886lab.44.1380121713908;
+ Wed, 25 Sep 2013 08:08:33 -0700 (PDT)
+Received: by 10.114.91.230 with HTTP; Wed, 25 Sep 2013 08:08:33 -0700 (PDT)
+In-Reply-To: <vpqr4cdt0gk.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235351>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Wed, Sep 25, 2013 at 9:55 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> But let me help you; you can't mention one, because there isn't any.
+>
+> Or because you didn't really look. Read the release notes of every Git
+> release these days, there's a big section about ongoing backward
+> incompatible changes.
 
-> But let me help you; you can't mention one, because there isn't any.
-
-Or because you didn't really look. Read the release notes of every Git
-release these days, there's a big section about ongoing backward
-incompatible changes.
+I said *important* changes from the common user's point of view.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Felipe Contreras
