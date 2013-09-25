@@ -1,146 +1,90 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 2/2] checkout: proper error message on 'git checkout
- foo bar --'
-Date: Wed, 25 Sep 2013 15:43:06 -0700
-Message-ID: <20130925224306.GC9464@google.com>
-References: <1380137471-26972-1-git-send-email-Matthieu.Moy@imag.fr>
- <1380137471-26972-2-git-send-email-Matthieu.Moy@imag.fr>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: Local tag killer
+Date: Wed, 25 Sep 2013 18:54:10 -0400 (EDT)
+Message-ID: <alpine.LFD.2.03.1309251834210.312@syhkavp.arg>
+References: <52327E62.2040301@alum.mit.edu>
+ <CAPc5daXvCf90WYoUWC+DxRyZEQhXGL7Bd_ZJKwfoqxeKt8TADQ@mail.gmail.com>
+ <xmqqd2o3p0nk.fsf@gitster.dls.corp.google.com> <523D3FD2.4090002@alum.mit.edu>
+ <20130924075119.GD7257@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-	jc@sahnwaldt.de
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Sep 26 00:43:17 2013
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?ISO-8859-15?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	Michael Schubert <mschub@elegosoft.com>,
+	Johan Herland <johan@herland.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 26 00:54:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOxng-00016g-GS
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 00:43:16 +0200
+	id 1VOxyK-0001mS-Nw
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 00:54:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755178Ab3IYWnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Sep 2013 18:43:12 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:59713 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754819Ab3IYWnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Sep 2013 18:43:11 -0400
-Received: by mail-pa0-f51.google.com with SMTP id kp14so438375pab.24
-        for <git@vger.kernel.org>; Wed, 25 Sep 2013 15:43:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=BLjI1HT8WdY+bt7uEEEbTOj5vs2tkTwnmvv7IpkD0BI=;
-        b=yK52YO8Tj1SyVk34Ni0vCyzRK3nAaHmXDIKr/UWiE+7hkrwuLeSPkE76/Tv9N7bSyC
-         I90rb07NqLfFuEZvDiH2U7zzX7KdfDKvNrBjAWxa1QWycgRfDHgKrGG+ZeXe0w87MwEg
-         SlxR6Qiekn6L/Hn9JhxOxCXN2gCHIWvGpHmSb1V+3C10pI2swo5B8W2Bmh0itHjqcrjy
-         DnK6hxQ+xBm1ef8MxxdRcrSwBePreFD543amybd1lqonx/5MU9PbwcOBhOwuZgSPT+EB
-         bAUK9H5syzZ8bWCRHfaCg+mP7bTX78QdQdU4n/C8RyOavHGQk0WDPf6rz2LwrPtrjiPe
-         POqA==
-X-Received: by 10.66.118.71 with SMTP id kk7mr1833820pab.14.1380148989999;
-        Wed, 25 Sep 2013 15:43:09 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id oh2sm50072404pbb.3.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 25 Sep 2013 15:43:09 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1380137471-26972-2-git-send-email-Matthieu.Moy@imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755373Ab3IYWyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Sep 2013 18:54:12 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:15598 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753991Ab3IYWyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Sep 2013 18:54:12 -0400
+Received: from yoda.home ([70.83.209.44]) by VL-VM-MR006.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0MTP00CNIEABZ840@VL-VM-MR006.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 25 Sep 2013 18:54:11 -0400 (EDT)
+Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
+ with ESMTPSA id C728E2DA045F; Wed, 25 Sep 2013 18:54:10 -0400 (EDT)
+In-reply-to: <20130924075119.GD7257@sigill.intra.peff.net>
+User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235379>
 
-Hi,
+On Tue, 24 Sep 2013, Jeff King wrote:
 
-Matthieu Moy wrote:
+> On Sat, Sep 21, 2013 at 08:42:26AM +0200, Michael Haggerty wrote:
+> 
+> > I think it would be preferable if "--prune" would *not* affect tags, and
+> > if there were an extra option like "--prune-tags" that would have to be
+> > used explicitly to cause tags to be pruned.  Would somebody object to
+> > such a change?
+> 
+> I think most of this problem is the way that we fetch tags straight into
+> the refs/tags hierarchy. You would not do:
+> 
+>   [remote "origin"]
+>   fetch = +refs/heads/*:refs/heads/*
+>   prune = true
+> 
+> unless you wanted to be a pure-mirror, because you would hose your local
+> changes any time you fetched. But that is _exactly_ what we do with a
+> refs/tags/*:refs/tags/* fetch.
+> 
+> If we instead moved to a default fetch refspec more like:
+> 
+>   [remote "origin"]
+>   fetch = +refs/*:refs/remotes/origin/refs/*
+> 
+> Then everything would Just Work. If you prune what the other side has
+> locally, that's fine. All you're doing is pruning your view of what he
+> has, not anything you've done locally.
+> 
+> The tricky part is tweaking the lookup rules so that "origin/master"
+> still works, and that looking for "v1.0" checks both refs/tags and
+> refs/remotes/*/refs/tags. And of course managing backwards
+> compatibility. :)
 
-> error: pathspec 'foo' did not match any file(s) known to git.
-> error: pathspec 'bar' did not match any file(s) known to git.
-> error: pathspec '--' did not match any file(s) known to git.
->
-> This patch fixes it by walking through the argument list to find the
-> "--", and now complains about the number of references given.
+Cheers !!!
 
-Good catch.  Just some nits below.
+I remember participating to a discussion about this like 2.5 years ago:
 
-[...]
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -882,6 +882,7 @@ static int parse_branchname_arg(int argc, const char **argv,
->  	unsigned char branch_rev[20];
->  	const char *arg;
->  	int has_dash_dash;
-> +	int i;
->  
->  	/*
->  	 * case 1: git checkout <ref> -- [<paths>]
-> @@ -925,7 +926,15 @@ static int parse_branchname_arg(int argc, const char **argv,
->  		return 1;
->  
->  	arg = argv[0];
-> -	has_dash_dash = (argc > 1) && !strcmp(argv[1], "--");
-> +	has_dash_dash = 0;
-> +	for (i = 0; i < argc; i++) {
-> +		if (!strcmp(argv[i], "--")) {
-> +			has_dash_dash = i;
-> +			break;
-> +		}
-> +	}
-> +	if (has_dash_dash >= 2)
-> +		die(_("only one reference expected, %d given."), has_dash_dash);
+http://news.gmane.org/group/gmane.comp.version-control.git/thread=165799
 
-(The argv[0] == "--" case is handled a few lines above.)
+The flat tag namespace remains my major annoyance with git IMHO.
 
-At first I skipped the loop and read this as "if (there are two or more
-'--' arguments)".  How about doing one of the following to make it
-easier to read quickly?
 
- (a) rename has_dash_dash here to dash_dash_pos, or
- (b) put the check in the loop, like so:
-
-	has_dash_dash = 0;
-	for (i = 0; i < ...) {
-		if (strcmp(argv[i], "--"))
-			continue;
-		if (i == 0)	/* case (2) */
-			return 1;
-		if (i > 1)
-			die(_("only one reference expected ...);
-
-		has_dash_dash = 1;
-		break;
-	}
-
-[...]
-> --- a/t/t2010-checkout-ambiguous.sh
-> +++ b/t/t2010-checkout-ambiguous.sh
-> @@ -47,4 +47,10 @@ test_expect_success 'disambiguate checking out from a tree-ish' '
->  	git diff --exit-code --quiet
->  '
->  
-> +test_expect_success C_LOCALE_OUTPUT 'accurate error message with more than one ref' '
-> +	test_must_fail git checkout HEAD master -- 2>actual &&
-> +	echo "fatal: only one reference expected, 2 given." >expect &&
-> +	test_cmp expect actual
-
-Nits:
-
- - if we change this from 'fatal' to 'error' or reword the message as
-   part of a libification some day, it would be a nuisance to have to
-   update this test.  Maybe a 'grep' could make it more flexible.
-
- - most of the test (though not the interesting part) can run in the
-   !C_LOCALE_OUTPUT case if you use test_i18ncmp or test_i18ngrep
-
- - even the check for "2" can run in the !C_LOCALE_OUTPUT case. :)
-   e.g. something like
-
-	test_must_fail ... 2>actual &&
-	grep 2 actual &&
-	test_i18ngrep "one reference expected, 2 given" actual
-
-Thanks,
-Jonathan
+Nicolas
