@@ -1,75 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: breakage in revision traversal with pathspec
-Date: Wed, 25 Sep 2013 05:12:59 -0400
-Message-ID: <20130925091259.GA5844@sigill.intra.peff.net>
-References: <xmqq38pcwc21.fsf@gitster.dls.corp.google.com>
- <5230AD23.2050009@bracey.fi>
- <20130911182444.GD4326@google.com>
- <5230C6E3.3080406@bracey.fi>
- <xmqqa9jjrrfb.fsf@gitster.dls.corp.google.com>
- <xmqq38p0sdeb.fsf@gitster.dls.corp.google.com>
- <20130920033541.GC15101@sigill.intra.peff.net>
- <xmqqioxwqec0.fsf@gitster.dls.corp.google.com>
- <20130920051107.GA17609@sigill.intra.peff.net>
- <xmqqeh8jqt38.fsf@gitster.dls.corp.google.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] sample pre-commit hook: Use --bool when retrieving config var
+Date: Wed, 25 Sep 2013 12:10:58 +0200
+Message-ID: <CALKQrgc_5PhN-PsnCPnxcoN+zNKGo1CEJZw0CZzPXvu6aG23uA@mail.gmail.com>
+References: <1380009176-10490-1-git-send-email-johan@herland.net>
+	<20130924192259.GN9464@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Kevin Bracey <kevin@bracey.fi>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 25 11:13:10 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 25 12:11:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOl9g-0000jz-MA
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 11:13:09 +0200
+	id 1VOm3q-0002hB-Gw
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 12:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751944Ab3IYJNE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Sep 2013 05:13:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35709 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750949Ab3IYJND (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Sep 2013 05:13:03 -0400
-Received: (qmail 25513 invoked by uid 102); 25 Sep 2013 09:13:02 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Sep 2013 04:13:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Sep 2013 05:12:59 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqeh8jqt38.fsf@gitster.dls.corp.google.com>
+	id S1755157Ab3IYKLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Sep 2013 06:11:06 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:38706 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754831Ab3IYKLF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Sep 2013 06:11:05 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1VOm3j-0007lm-2L
+	for git@vger.kernel.org; Wed, 25 Sep 2013 12:11:03 +0200
+Received: from mail-pd0-f172.google.com ([209.85.192.172])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1VOm3i-0001Yd-Ls
+	for git@vger.kernel.org; Wed, 25 Sep 2013 12:11:02 +0200
+Received: by mail-pd0-f172.google.com with SMTP id z10so5883680pdj.3
+        for <git@vger.kernel.org>; Wed, 25 Sep 2013 03:10:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=z10Rn/txqar5F0O/RR5C0gfTXTLBQD8zJ2HhtuMxuKQ=;
+        b=TqfxoNs1tZiDmrzQNMVmCV9AjORM0nxEi1UE3ADnsmy5EnB4mMCKFFo8pfveesnpnF
+         /i7lk3q/8K2gG8JVbBSwS0ZLkqYS8NlGHCtGFxiY7g7+h0ckU7ZBe6c5JV0DSL90iFVw
+         vd+nrUDfztFRJsNqKHLs84qd1C4TEQFZ62/b4h3CVXo5oacGG4fqZqaYd0zqA6ySRNRK
+         xU9D7Om4+Xyy+rAyIfowZNL+44v0f6MMUXPiyM8iK8z8uiwlg20G240Xr4/YjcsTlO6o
+         emFgu2coNcRka3vC1PSFw8fXCOucy3a2VhQTjHhyV284FvoXNb8/smpeYLVIh6yosRMp
+         10wA==
+X-Received: by 10.68.211.73 with SMTP id na9mr22563124pbc.92.1380103858554;
+ Wed, 25 Sep 2013 03:10:58 -0700 (PDT)
+Received: by 10.70.24.226 with HTTP; Wed, 25 Sep 2013 03:10:58 -0700 (PDT)
+In-Reply-To: <20130924192259.GN9464@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235340>
 
-On Fri, Sep 20, 2013 at 10:51:55AM -0700, Junio C Hamano wrote:
+On Tue, Sep 24, 2013 at 9:22 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Johan Herland wrote:
+>> Signed-off-by: Johan Herland <johan@herland.net>
+>
+> Thanks.
+>
+> What symptoms does this alleviate?  Is this to allow configurations like
+>
+>         [hooks]
+>                 allowNonAscii = 1
+>
+> and
+>
+>         [hooks]
+>                 allowNonAscii
+>
+> to do the expected thing, or is it something more subtle than that?
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > My original question was going to be: why bother peeling at all if we
-> > are just going to push the outer objects, anyway?
-> >
-> > And after staring at it, I somehow convinced myself that the answer was
-> > that you were pushing both. But that is not the case. Sorry for the
-> > noise.
-> 
-> But that is still a valid point, and the patch to avoid peeling for
-> non symmetric diff does not look too bad, either.
-> 
->  revision.c               | 59 ++++++++++++++++++++++++++++++------------------
->  t/t6000-rev-list-misc.sh |  8 +++++++
->  2 files changed, 45 insertions(+), 22 deletions(-)
+Nothing subtle. Just what you list. And for consistency with the other
+sample hooks' use of "git config".
 
-FWIW, the flow of this version makes more sense to me. It also allows
-things like:
+...Johan
 
-  git rev-list --objects $blob..$tree
-
-which I cannot see anybody actually wanting, but it somehow seems
-simpler to me to say "A..B" is syntactic sugar for "^B A", without
-qualifying "except that A and B must be commit-ishes".
-
--Peff
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
