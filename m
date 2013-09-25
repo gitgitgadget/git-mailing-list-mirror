@@ -1,139 +1,154 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] checkout: allow dwim for branch creation for "git checkout $branch --"
-Date: Wed, 25 Sep 2013 15:52:07 +0200
-Message-ID: <vpqob7huhyw.fsf@anie.imag.fr>
-References: <1380113349-19838-1-git-send-email-Matthieu.Moy@imag.fr>
-	<CACsJy8AbBrVSz=p+ARxvR_QXtku1BxbtQPv7pz_QCveeUEtwCQ@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3] build: add default aliases
+Date: Wed, 25 Sep 2013 09:29:03 -0500
+Message-ID: <CAMP44s2EtgXXdfa+QtUmmRh6wZ1fD8YTWtzLJ2mN6y_6faMM_g@mail.gmail.com>
+References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
+	<CAEBDL5WQLx4rsN+yRs62fgTBWkuAhCSWDRkoCc8M_akpSqMKvg@mail.gmail.com>
+	<CAMP44s3nQv97B2=mq-mn8S41sMA43qRfr+nC7eQ=Jft=zRgTRw@mail.gmail.com>
+	<CAEBDL5V1kyRwtKSM+L_E_XbJRauvdmOLc+g2acbixt0+pd6_ag@mail.gmail.com>
+	<CAMP44s2j_ra_Tk_s-tjwwvX=T8y=bKPTaUdOQk1jD8QpUm+-zA@mail.gmail.com>
+	<CAEBDL5X1QRLaTvxhEu4e5_NE5fEWc6fd60YJyA8wye4d4T3wpQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>, jc@sahnwaldt.de
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 25 15:52:24 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Wed Sep 25 16:29:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOpVr-0004w8-B4
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 15:52:19 +0200
+	id 1VOq5Y-0007yk-JL
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 16:29:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755515Ab3IYNwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Sep 2013 09:52:15 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43953 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755425Ab3IYNwO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Sep 2013 09:52:14 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8PDq5dE016839
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 25 Sep 2013 15:52:05 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VOpVf-00084D-Ae; Wed, 25 Sep 2013 15:52:07 +0200
-In-Reply-To: <CACsJy8AbBrVSz=p+ARxvR_QXtku1BxbtQPv7pz_QCveeUEtwCQ@mail.gmail.com>
-	(Duy Nguyen's message of "Wed, 25 Sep 2013 20:22:39 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 25 Sep 2013 15:52:05 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r8PDq5dE016839
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1380721929.27617@0z/oapsA5yBmry21AG+q8Q
+	id S1755549Ab3IYO3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Sep 2013 10:29:06 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:62153 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754886Ab3IYO3F (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Sep 2013 10:29:05 -0400
+Received: by mail-lb0-f179.google.com with SMTP id x18so5058454lbi.24
+        for <git@vger.kernel.org>; Wed, 25 Sep 2013 07:29:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=OHSw4XG/oVDhC/jG0T5TTLW1pQc3R+L8FjFJrM3yYSs=;
+        b=sqwo2Pi0q+F+172L08LM5ni+Kfop/i5Uu7anvXRwrh2/Cin19DKyt5BjaKSitZIsUT
+         TUaD6mgegegQj3c1CgJ087gwJ3It1qHD1+Lswo8v3wNfeDYmweDae9nzImy3JpSMZbdE
+         6CxvvM4Zm7vVpA2bdP0/yQg7IFFFHEH1oN1oF5ENnR2KnJa5U1/zhv9HWh5aD0to7MpK
+         L7M59IB3SMD0ZJ9ss50XoDwxQV/Jspd8bcwCNUfjQEalKjWx7sxyZOeimcu7wUTaoct/
+         Zfq7YradroliMhmVHPyQJjbOVSYilzYlfPilBHF4hRndoLYZ9AiKHmjARRNwRI7VdbAM
+         OD7A==
+X-Received: by 10.152.120.37 with SMTP id kz5mr30086435lab.21.1380119343246;
+ Wed, 25 Sep 2013 07:29:03 -0700 (PDT)
+Received: by 10.114.91.230 with HTTP; Wed, 25 Sep 2013 07:29:03 -0700 (PDT)
+In-Reply-To: <CAEBDL5X1QRLaTvxhEu4e5_NE5fEWc6fd60YJyA8wye4d4T3wpQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235348>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+n
 
-> has_dash_dash is calculated as (argc > 1) && !strcmp(argv[1], "--"),
-> so when argc == 1, the has_dash_dash must be zero, the "&&
-> !has_dash_dash" is redundant.
+On Wed, Sep 25, 2013 at 8:33 AM, John Szakmeister <john@szakmeister.net> wrote:
+> On Tue, Sep 24, 2013 at 10:35 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> On Tue, Sep 24, 2013 at 6:06 AM, John Szakmeister <john@szakmeister.net> wrote:
+> [snip]
+>>> There's nothing objective about "Nobody every (sic) agrees changes are
+>>> good".  If it were true, no changes would get in.
+>>
+>> It is true, where by "changes" I mean "changes from common user's
+>> point of view", actually, a tiny amount of then do sneak in, so let me
+>> be precise: "Virtually nobody ever agrees important changes from the
+>> common user's point of view are good".
+>>
+>> So now that I'm being clear, do tell, name one important change in Git
+>> from the user's point of view that happened in the last two years.
+>
+> Credential helpers.
 
-Yes, but I'd rather not have to read the detailed definition of
-has_dash_dash to understand the code. With my version, the name of the
-variable is actually sufficient to understand.
+That's not a change, that's a new feature, and it could hardly be
+called important.
 
-> But it makes me wonder what we do with "git checkout abc def -- xyz".
+By change I mean something that was one way before, and it's a
+different way now.
 
-Ouch. Both old and new say
+But let me help you; you can't mention one, because there isn't any.
 
-$ git checkout foo bar --
-error: pathspec 'foo' did not match any file(s) known to git.
-error: pathspec 'bar' did not match any file(s) known to git.
-error: pathspec '--' did not match any file(s) known to git.
+>>> Also, you don't know that any of those changes would benefit "99% of
+>>> all users".  It's a guess or an estimate but it's not based on
+>>> anything concrete.  It might be a good guess--and in this case, I
+>>> think it is--but it's not a concrete fact.  Don't make it sound like
+>>> it is.
+>>
+>> Sure, it's not a concrete fact, but the actual probability most likely
+>> follows a beta distribution with alpha=15 and beta=1. Is that more
+>> precise for you?
+>
+> It's not about precision, it's that you don't have any actual facts to
+> stand on but you speak like you do.  Then when someone questions it,
+> you accuse them of being against fixes for the user.  I wish you'd
+> stop it and do something more constructive to help move things along.
 
-Fortunately, this is easy to fix, by adding this on top (or before, it
-doesn't matter):
+I have as many facts as you or anybody does.
 
-commit 060cf582f5e848c5ca57231d293943a5489c5433 (HEAD, master)
-Author: Matthieu Moy <Matthieu.Moy@imag.fr>
-Date:   Wed Sep 25 15:41:34 2013 +0200
+If I cannot use the claim that 99% (or any overwhelming number) of
+users would benefit, then nobody can make the claim that X amount of
+users would be affected negatively, because the actual number can be
+close to or equal to 0. But one claim is more likely than the other.
 
-    checkout: proper error message on 'git checkout foo bar --'
-    
-    The previous code was detecting the presence of "--" by looking only at
-    argument 1. As a result, "git checkout foo bar --" was interpreted as an
-    ambiguous file/revision list, and errored out with:
-    
-    error: pathspec 'foo' did not match any file(s) known to git.
-    error: pathspec 'bar' did not match any file(s) known to git.
-    error: pathspec '--' did not match any file(s) known to git.
-    
-    This patch fixes it by walking through the argument list to find the
-    "--", and now complains about the number of references given.
+As for doing something more constructive to help move things along,
+what you don't get is that there is nothing to do to move things
+along. I send the patches, the patches are good, the patches should be
+applied. That's what any decently run project would do, concentrate on
+the technical side.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index a5a12f6..d958d60 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -882,6 +882,7 @@ static int parse_branchname_arg(int argc, const char **argv,
-        unsigned char branch_rev[20];
-        const char *arg;
-        int has_dash_dash;
-+       int i;
- 
-        /*
-         * case 1: git checkout <ref> -- [<paths>]
-@@ -925,7 +926,15 @@ static int parse_branchname_arg(int argc, const char **argv,
-                return 1;
- 
-        arg = argv[0];
--       has_dash_dash = (argc > 1) && !strcmp(argv[1], "--");
-+       has_dash_dash = 0;
-+       for (i = 0; i < argc; i++) {
-+               if (!strcmp(argv[i], "--")) {
-+                       has_dash_dash = i;
-+                       break;
-+               }
-+       }
-+       if (has_dash_dash >= 2)
-+               die("only one reference expected, %d given.", has_dash_dash);
- 
-        if (!strcmp(arg, "-"))
-                arg = "@{-1}";
-diff --git a/t/t2010-checkout-ambiguous.sh b/t/t2010-checkout-ambiguous.sh
-index 7cc0a35..2836a3e 100755
---- a/t/t2010-checkout-ambiguous.sh
-+++ b/t/t2010-checkout-ambiguous.sh
-@@ -47,4 +47,10 @@ test_expect_success 'disambiguate checking out from a tree-ish' '
-        git diff --exit-code --quiet
- '
- 
-+test_expect_success 'accurate error message with more than one ref' '
-+       test_must_fail git checkout HEAD master -- 2>actual &&
-+       echo "fatal: only one reference expected, 2 given." >expect &&
-+       test_cmp expect actual
-+'
-+
- test_done
+Do you think if I hold hands with the people involved and we all sing
+Kumbaya things would move along? Well it shouldn't, if the patches are
+good the patches are good. What should move things along is the
+technical merits of the patch.
 
-I'll resend, together with tweaks to the first patch.
+>>>> If you don't agree my comment is accurate, that's one thing, but
+>>>> labeling it as an attack is another.
+>>>
+>>> Don't turn it around.  A number of your patches and emails poke at the
+>>> community of the Git project and you know it.  It's simply not helping
+>>> the situation.
+>>
+>> Show me a patch that "pokes" at the community. All my patches have
+>> technical descriptions, and help improve Git.
+>
+> You're filtering what I said again.  Take a look at the first message
+> is this thread.
+>
+> I'll agree the patches themselves have been free of this, but the
+> cover letters--which I consider to be part of the patch--and ensuing
+> conversation has not.  If you need another example, look at the cover
+> letter for your transport helper patches.
+
+I don't consider the cover letter part of the patch. And the
+conversation is irrelevant, all the users care about is the code.
+
+Not introducing a good feature for users because a developer said a
+nasty word (which I haven't) in the cover letter of the patch series
+is ridiculous.
+
+>>>> I would admit I was wrong if an /etc/gitconfig is indeed shipped by
+>>>> default, and agree that the Git project is indeed welcome to change,
+>>>> but that's not going to happen.
+>>>
+>>> And there it is again.  Predicting the future now?  Objectively and
+>>> accurately?  Please stop.
+>>
+>> Yes I am. Feel free to go back to this mail and tell me I was wrong
+>> when they do what I said they won't.
+>
+> I have no need for that, and I'm done talking to you about any of this.
+
+Doesn't matter, because it's not going to happen.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Felipe Contreras
