@@ -1,69 +1,99 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3] build: add default aliases
-Date: Wed, 25 Sep 2013 10:08:33 -0500
-Message-ID: <CAMP44s3qv==GZt7BYMc-FuQvVoNGf3kkGAGzk=-=F4A8KZojKQ@mail.gmail.com>
-References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
-	<CAEBDL5WQLx4rsN+yRs62fgTBWkuAhCSWDRkoCc8M_akpSqMKvg@mail.gmail.com>
-	<CAMP44s3nQv97B2=mq-mn8S41sMA43qRfr+nC7eQ=Jft=zRgTRw@mail.gmail.com>
-	<CAEBDL5V1kyRwtKSM+L_E_XbJRauvdmOLc+g2acbixt0+pd6_ag@mail.gmail.com>
-	<CAMP44s2j_ra_Tk_s-tjwwvX=T8y=bKPTaUdOQk1jD8QpUm+-zA@mail.gmail.com>
-	<CAEBDL5X1QRLaTvxhEu4e5_NE5fEWc6fd60YJyA8wye4d4T3wpQ@mail.gmail.com>
-	<CAMP44s2EtgXXdfa+QtUmmRh6wZ1fD8YTWtzLJ2mN6y_6faMM_g@mail.gmail.com>
-	<vpqr4cdt0gk.fsf@anie.imag.fr>
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: [Bug] git show crashes with deepened shallow clone
+Date: Wed, 25 Sep 2013 17:10:08 +0200
+Message-ID: <5242FCD0.8050900@atlas-elektronik.com>
+References: <5242F78C.5060607@atlas-elektronik.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
-	David Aguilar <davvid@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 25 17:08:43 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 25 17:10:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOqhj-0005M3-Sd
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 17:08:40 +0200
+	id 1VOqjL-0006bQ-1K
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 17:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755975Ab3IYPIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Sep 2013 11:08:36 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:53845 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755457Ab3IYPIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Sep 2013 11:08:35 -0400
-Received: by mail-la0-f51.google.com with SMTP id es20so5143597lab.10
-        for <git@vger.kernel.org>; Wed, 25 Sep 2013 08:08:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=IaTUVgSLvaRaVTcC60onigwOAtTn3oVxkIjeq0tqmfI=;
-        b=oUrImzNiWOpNGrLBgh7xXsVBECWQbfcD/ishIq9vdNI3ao3ksZBdbXO3lyybYqFV+Y
-         praQQHJOjbRf9XdVJFA9rcfbLPQKi27Ecp3blwZ+YV/cbHCZYsl3NOsWYmFKcQ8Q/Tit
-         +bJIx93M2nkQeZqOn1kzmVi6k/i1RPOm9NOVuIfiUr0i1ReZZY9FY2G4MmnG4eNnimBU
-         aNfaVmy7zcuAklSWHA8Kwqa1KZPq0lqtksa4iMP9lhtGjrVOVVWYzAPbPZXjX+ix5WNO
-         LDwxXqaKknVRce7Vn4SHLvlb+3bfszqu2HBUzRFBSN04sPJAzduYffHO9tJLg2dzEIhK
-         Dfdg==
-X-Received: by 10.152.120.228 with SMTP id lf4mr1484886lab.44.1380121713908;
- Wed, 25 Sep 2013 08:08:33 -0700 (PDT)
-Received: by 10.114.91.230 with HTTP; Wed, 25 Sep 2013 08:08:33 -0700 (PDT)
-In-Reply-To: <vpqr4cdt0gk.fsf@anie.imag.fr>
+	id S1755877Ab3IYPKN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Sep 2013 11:10:13 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:21916 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755427Ab3IYPKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Sep 2013 11:10:12 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id 1C30E101D2
+	for <git@vger.kernel.org>; Wed, 25 Sep 2013 17:10:11 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mail96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5mUHg-cA18Hw for <git@vger.kernel.org>;
+	Wed, 25 Sep 2013 17:10:10 +0200 (CEST)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP
+	for <git@vger.kernel.org>; Wed, 25 Sep 2013 17:10:10 +0200 (CEST)
+Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 3709E2716A
+	for <git@vger.kernel.org>; Wed, 25 Sep 2013 17:10:10 +0200 (CEST)
+Received: from [10.200.54.97] (10.200.54.97) by MSSRVS1.atlas.de
+ (10.200.101.71) with Microsoft SMTP Server (TLS) id 8.3.279.1; Wed, 25 Sep
+ 2013 17:10:10 +0200
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <5242F78C.5060607@atlas-elektronik.com>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235352>
 
-On Wed, Sep 25, 2013 at 9:55 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> But let me help you; you can't mention one, because there isn't any.
->
-> Or because you didn't really look. Read the release notes of every Git
-> release these days, there's a big section about ongoing backward
-> incompatible changes.
+Am 25.09.2013 16:47, schrieb Stefan N=C3=A4we:
+> Just a quick report since I don't have time to bisect now (will do la=
+ter
+> if no other gitster is faster...)
 
-I said *important* changes from the common user's point of view.
+Seems to be somewhere between v1.8.3.1 (OK) and v1.8.3.2 (not OK) !!
 
--- 
-Felipe Contreras
+
+>=20
+> When I execute the below script 'git show' crashes. 'git log --onelin=
+e -2' gives
+> for example:
+>=20
+>   3808bade5b76c4663ac4a3f751dc9f1ed0b08f2e three
+>   error: Could not read 1e8777edeb2b7e757f74c789e679fc6c71073897
+>   fatal: Failed to traverse parents of commit 0aa4ef86004f5bb29f67e97=
+1d7963f5cf430c668
+>=20
+> gdb backtrace of one run is attached.
+> It happens on 32-bit Debian (5.0.10), 64-bit openSUSE (12.2), and Win=
+dows XP with git 1.8.4
+> on all systems.
+>=20
+> The help of 'git fetch' says:
+>=20
+>   --depth=3D<depth>
+>=20
+>       Deepen or shorten the history of a shallow repository created b=
+y git clone with
+>       --depth=3D<depth> option (see git-clone(1)) to the specified nu=
+mber of commits from
+>       the tip of each remote branch history. Tags for the deepened co=
+mmits are not fetched.
+> ---------------------------------------------------------------------=
+----------^^^^^^^^^
+>=20
+> But that's not true. The tag 'two' (from the script below) gets fetch=
+ed when
+> deepening the repository.
+
+v1.8.3.1 fetches the tag also.
+
+
+Stefan
+--=20
+----------------------------------------------------------------
+/dev/random says: Pobody's Nerfect!
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6=
+e696b2e636f6d'.decode('hex')"
