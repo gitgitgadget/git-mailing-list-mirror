@@ -1,73 +1,64 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3] build: add default aliases
-Date: Wed, 25 Sep 2013 11:36:34 -0500
-Message-ID: <CAMP44s3AtmJ7juRvfk4+StBqskv0tvukaLv9wMD0ymGVinOXGw@mail.gmail.com>
-References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
-	<CAEBDL5WQLx4rsN+yRs62fgTBWkuAhCSWDRkoCc8M_akpSqMKvg@mail.gmail.com>
-	<CAMP44s3nQv97B2=mq-mn8S41sMA43qRfr+nC7eQ=Jft=zRgTRw@mail.gmail.com>
-	<CAEBDL5V1kyRwtKSM+L_E_XbJRauvdmOLc+g2acbixt0+pd6_ag@mail.gmail.com>
-	<CAMP44s2j_ra_Tk_s-tjwwvX=T8y=bKPTaUdOQk1jD8QpUm+-zA@mail.gmail.com>
-	<CAEBDL5X1QRLaTvxhEu4e5_NE5fEWc6fd60YJyA8wye4d4T3wpQ@mail.gmail.com>
-	<CAMP44s2EtgXXdfa+QtUmmRh6wZ1fD8YTWtzLJ2mN6y_6faMM_g@mail.gmail.com>
-	<vpqr4cdt0gk.fsf@anie.imag.fr>
-	<CAMP44s3qv==GZt7BYMc-FuQvVoNGf3kkGAGzk=-=F4A8KZojKQ@mail.gmail.com>
-	<vpqk3i5szng.fsf@anie.imag.fr>
-	<CAMP44s05ggre-ZcURLyTyYsFG1_f=gVDW-dj2LsNK8_tGTqyyg@mail.gmail.com>
-	<vpqy56ksx8y.fsf@anie.imag.fr>
+From: Stefan =?utf-8?b?TsOkd2U=?= <stefan.naewe@gmail.com>
+Subject: Re: [Bug] git show crashes with deepened shallow clone
+Date: Wed, 25 Sep 2013 18:08:31 +0000 (UTC)
+Message-ID: <loom.20130925T200459-360@post.gmane.org>
+References: <5242F78C.5060607@atlas-elektronik.com> <524300FF.5000801@atlas-elektronik.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
-	David Aguilar <davvid@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 25 18:37:01 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 25 20:09:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOs5E-00064L-81
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 18:37:00 +0200
+	id 1VOtWD-000343-PO
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 20:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750989Ab3IYQgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Sep 2013 12:36:37 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:61686 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750845Ab3IYQgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Sep 2013 12:36:36 -0400
-Received: by mail-lb0-f173.google.com with SMTP id o14so72627lbi.4
-        for <git@vger.kernel.org>; Wed, 25 Sep 2013 09:36:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=f/dO9YKK0tJwPT1S3MmjIIN6jAcpmCiv0K/AMNKEkUg=;
-        b=NOdHydEXlDOPI0LFmnFMl9uqdMzTtYfOe+bAhUWQLDZiG6EINiEhZJx4c5onrSng2g
-         72G87kUvN8ggzAEKoOOZoohRLSM1Er3qN5vqhWudXCWm66lQFHUZIVL2QeD5pmFAaaSP
-         t1cthr+MXb0T4hrsmSbOdn6i0UhTNYD/9/11pn26jilyJUUX/R30ITj1y82l4ZHN8W5Q
-         Fvi8sXV2Y97+P3hji0R+4apvJk+nevC1vdO2IwjzqtaVvAfJjwbfeOAc2s9xT6S15ZCk
-         XhOYbmrMc/N2goZxIu25cBB1YywdhFbRXN94fZKXEWje2jhosO6ix1c5hrCUOhi2LzWi
-         Y4KA==
-X-Received: by 10.112.89.100 with SMTP id bn4mr137027lbb.16.1380126994566;
- Wed, 25 Sep 2013 09:36:34 -0700 (PDT)
-Received: by 10.114.91.230 with HTTP; Wed, 25 Sep 2013 09:36:34 -0700 (PDT)
-In-Reply-To: <vpqy56ksx8y.fsf@anie.imag.fr>
+	id S1751515Ab3IYSIx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Sep 2013 14:08:53 -0400
+Received: from plane.gmane.org ([80.91.229.3]:34377 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750783Ab3IYSIx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Sep 2013 14:08:53 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1VOtW6-0002v8-2N
+	for git@vger.kernel.org; Wed, 25 Sep 2013 20:08:50 +0200
+Received: from dslb-088-071-039-164.pools.arcor-ip.net ([88.71.39.164])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 Sep 2013 20:08:50 +0200
+Received: from stefan.naewe by dslb-088-071-039-164.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 Sep 2013 20:08:50 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 88.71.39.164 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235361>
 
-On Wed, Sep 25, 2013 at 11:05 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> Last time I checked nothing has changed, the default remains
->> push.default=matching.
->
-> LOL.
+Stefan N=C3=A4we <stefan.naewe <at> atlas-elektronik.com> writes:
 
-I'd take that as an admission that you don't have any examples of
-important changes in the past two years, at least.
+> Am 25.09.2013 16:47, schrieb Stefan N=C3=A4we:
+> This is what it gives me if I use my script (slightly modified=20
+> to also run make) with 'git bisect run':
+>=20
+> 6035d6aad8ca11954c0d7821f6f3e7c047039c8f is the first bad commit
 
--- 
-Felipe Contreras
+And to answer myself once more:
+
+That's fixed in
+
+   6da8bdc fetch-pack: do not remove .git/shallow file when --depth is =
+not specified"
+
+Sorry for all the noise.
+
+Stefan
