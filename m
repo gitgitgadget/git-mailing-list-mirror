@@ -1,173 +1,116 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2 1/2] checkout: allow dwim for branch creation for "git checkout $branch --"
-Date: Wed, 25 Sep 2013 21:31:10 +0200
-Message-ID: <1380137471-26972-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: pclouds@gmail.com, jc@sahnwaldt.de,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Sep 25 21:31:47 2013
+From: Jona Christopher Sahnwaldt <jc@sahnwaldt.de>
+Subject: Re: "git checkout foo" is getting confused by folder named "foo"
+Date: Wed, 25 Sep 2013 21:36:52 +0200
+Message-ID: <CAEQewpoRhGGnc7HMES1nNbduiRP-qLF4hKBJhRKy7CjMzXnGNg@mail.gmail.com>
+References: <CAEQewpqLcDJPo2gUWPk-xc3OitdTC4gH2tnyqaURiQ77BApNog@mail.gmail.com>
+ <CAJDDKr64ou+gO7WJLFZ4zOSv+VCbkiW7nKuZa9=5_fiSqGUeyQ@mail.gmail.com>
+ <CAEQewpqbf-sWSt0GS9eXQNi0yFz5-23NcO2JWKO4OgSFv3SXdA@mail.gmail.com>
+ <vpqzjr1ujyn.fsf@anie.imag.fr> <CAEQewpoD2VRVtpEyG121TqAptoYfEXxt57CCthBX_EfN7LU0fQ@mail.gmail.com>
+ <vpqzjr0pvfn.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: David Aguilar <davvid@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 25 21:37:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOuoH-00070b-Eb
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 21:31:41 +0200
+	id 1VOutj-0003W8-Oo
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 21:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754919Ab3IYTbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Sep 2013 15:31:31 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36991 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752755Ab3IYTb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Sep 2013 15:31:26 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r8PJVE0L029089
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 25 Sep 2013 21:31:14 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1VOuns-0003ij-Dh; Wed, 25 Sep 2013 21:31:16 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1VOuns-00072G-3M; Wed, 25 Sep 2013 21:31:16 +0200
-X-Mailer: git-send-email 1.8.4.474.g128a96c
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 25 Sep 2013 21:31:14 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r8PJVE0L029089
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1380742276.27107@Z+iydQxPIPlHCdXy2aWNaQ
+	id S1753708Ab3IYThN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Sep 2013 15:37:13 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:64309 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751961Ab3IYThM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Sep 2013 15:37:12 -0400
+Received: by mail-pd0-f175.google.com with SMTP id q10so116498pdj.34
+        for <git@vger.kernel.org>; Wed, 25 Sep 2013 12:37:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=FZVVY7HziyCSFrhQ63foX9ZSPrC00niByo5drASp/AU=;
+        b=psWycxH9r6iguvszRwGBOJh4ZfY7jGm3XqzpZLd5E+eB2n8qCgvhzAnuytGLu4HKu1
+         PTgPa272laoN94SzSqQzDIgA7HMsot8CuKblNbvPwjkvLaxQgt/pfRoM3N94b/XpK2hR
+         Gr2GvTdIJes9NDSxk8LCdmv+pBuu3ZUIDWcPL5PbRLWaOeEqLdWvzVM3uzxv+HnBmZPG
+         RmfjpP6cXM+j8GKwL6kYYcH9pcm2bxKilc8T1S01PGKpSsCMxvnOJ/BBhAbTJbtdRzoI
+         xwCqp7sY1zAb1wi/B5PAheqsWSgga2OxR2Pyriyp7zzVwEgILC28vxXUfLMlI3Y7qhCs
+         Zjuw==
+X-Received: by 10.66.146.42 with SMTP id sz10mr1060308pab.100.1380137832099;
+ Wed, 25 Sep 2013 12:37:12 -0700 (PDT)
+Received: by 10.66.229.70 with HTTP; Wed, 25 Sep 2013 12:36:52 -0700 (PDT)
+In-Reply-To: <vpqzjr0pvfn.fsf@anie.imag.fr>
+X-Google-Sender-Auth: TTN4OVqtTnwMWI1pV5rZB0h66G4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235371>
 
-The "--" notation disambiguates files and branches, but as a side-effect
-of the previous implementation, also disabled the branch auto-creation
-when $branch does not exist.
+On 25 September 2013 21:12, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+> Jona Christopher Sahnwaldt <jc@sahnwaldt.de> writes:
+>
+>> Hi everyone,
+>>
+>> tl;dr: The short form "git checkout foo" is a mess. There's simply too
+>> much "DWIM" magic going on. There are no comprehensible rules how it
+>> decides if "foo" is a pathspec or a refspec.
+>
+> There is a very simple rule:
+>
+> What's on the left hand side of -- are refs, what's on the right hand
+> side are paths.
+>
+> When you don't use --, then Git tries to guess, and fails whenever
+> there's an ambiguity.
 
-A possible scenario is then:
+That's the case I'm concerned with. And I think the guessing confuses
+users in many cases. It certainly has confused me.
 
-git checkout $branch
-=> fails if $branch is both a ref and a file, and suggests --
+>
+>>> OK, what happens is that "git checkout wiktionary" is actually a
+>>> shorthand for "git checkout -b wiktionary --track origin/wiktionary".
+>>
+>> No, it isn't.
+>
+> What I meant was that the short form advised by people were _meant_ to
+> be a shorthand.
+>
+>> Let's consider several scenarios:
+>
+> I don't get your point. Is the overly long list a way of complaining?
 
-git checkout $branch --
-=> refuses to create the $branch
+It's a way of showing that human beings can't understand git's
+guesswork. :-) It was also a (failed) attempt to understand the rules
+of this heuristic. And an attempt to show the developers that the
+rules have gotten out of hand.
 
-This patch allows the second form to create $branch, and since the -- is
-provided, it does not look for file named $branch.
+> Are you suggesting a change?
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Since v1: added a paragraph in the block comment.
+Yes, I think the rules for the "short form" (the guessing when there's
+no --) should be made simpler, or maybe the guessing should be dropped
+altogether. I don't know. I don't know git well enough to be able to
+be more specific. I just find the current behavior very confusing.
 
- builtin/checkout.c       | 38 ++++++++++++++++++++++++++++++--------
- t/t2024-checkout-dwim.sh | 22 ++++++++++++++++++++++
- 2 files changed, 52 insertions(+), 8 deletions(-)
+> What do you think about the change I'm proposing?
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 0f57397..a5a12f6 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -863,6 +863,14 @@ static const char *unique_tracking_name(const char *name, unsigned char *sha1)
- 	return NULL;
- }
- 
-+static int error_invalid_ref(const char *arg, int has_dash_dash, int argcount)
-+{
-+	if (has_dash_dash)
-+		die(_("invalid reference: %s"), arg);
-+	else
-+		return argcount;
-+}
-+
- static int parse_branchname_arg(int argc, const char **argv,
- 				int dwim_new_local_branch_ok,
- 				struct branch_info *new,
-@@ -881,6 +889,12 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	 *   <ref> must be a valid tree, everything after the '--' must be
- 	 *   a path.
- 	 *
-+	 *   A sub-case of (1) is "git checkout <ref> --". In this
-+	 *   case, checkout behaves like case (3), except that it does
-+	 *   not attempt to understand <ref> as a file (hence, the
-+	 *   short-hand to create branch <ref> works even if <ref>
-+	 *   exists as a filename).
-+	 *
- 	 * case 2: git checkout -- [<paths>]
- 	 *
- 	 *   everything after the '--' must be paths.
-@@ -916,20 +930,28 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	if (!strcmp(arg, "-"))
- 		arg = "@{-1}";
- 
--	if (get_sha1_mb(arg, rev)) {
--		if (has_dash_dash)          /* case (1) */
--			die(_("invalid reference: %s"), arg);
--		if (dwim_new_local_branch_ok &&
--		    !check_filename(NULL, arg) &&
--		    argc == 1) {
-+	if (get_sha1_mb(arg, rev)) { /* case (1)? */
-+		int try_dwim = dwim_new_local_branch_ok;
-+
-+		if (check_filename(NULL, arg) && !has_dash_dash)
-+			try_dwim = 0;
-+		/*
-+		 * Accept "git checkout foo" and "git checkout foo --"
-+		 * as candidates for dwim.
-+		 */
-+		if (!(argc == 1 && !has_dash_dash) &&
-+		    !(argc == 2 && has_dash_dash))
-+			try_dwim = 0;
-+
-+		if (try_dwim) {
- 			const char *remote = unique_tracking_name(arg, rev);
- 			if (!remote)
--				return argcount;
-+				return error_invalid_ref(arg, has_dash_dash, argcount);
- 			*new_branch = arg;
- 			arg = remote;
- 			/* DWIMmed to create local branch */
- 		} else {
--			return argcount;
-+			return error_invalid_ref(arg, has_dash_dash, argcount);
- 		}
- 	}
- 
-diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
-index 094b92e..d9afdb2 100755
---- a/t/t2024-checkout-dwim.sh
-+++ b/t/t2024-checkout-dwim.sh
-@@ -164,4 +164,26 @@ test_expect_success 'checkout of branch from a single remote succeeds #4' '
- 	test_branch_upstream eggs repo_d eggs
- '
- 
-+test_expect_success 'checkout of branch with a file having the same name fails' '
-+	git checkout -B master &&
-+	test_might_fail git branch -D spam &&
-+
-+	>spam &&
-+	test_must_fail git checkout spam &&
-+	test_must_fail git checkout spam &&
-+	test_must_fail git rev-parse --verify refs/heads/spam &&
-+	test_branch master
-+'
-+
-+test_expect_success 'checkout <branch> -- succeeds, even if a file with the same name exists' '
-+	git checkout -B master &&
-+	test_might_fail git branch -D spam &&
-+
-+	>spam &&
-+	git checkout spam -- &&
-+	test_branch spam &&
-+	test_cmp_rev refs/remotes/extra_dir/repo_c/extra_dir/spam HEAD &&
-+	test_branch_upstream spam repo_c spam
-+'
-+
- test_done
--- 
-1.8.4.474.g128a96c
+I don't know. It looks like it's not really addressing my specific
+problem, because as far as I understand it only applies when there is
+a --. But again, I don't know git well enough.
+
+Anyway, thanks for your work. I'm sorry I can't provide more useful
+input. This "short form" of checkout is just a small feature. I guess
+I'm bikeshedding here.
+
+Cheers,
+JC
+
+
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
