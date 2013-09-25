@@ -1,99 +1,78 @@
-From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
-Subject: Re: [Bug] git show crashes with deepened shallow clone
-Date: Wed, 25 Sep 2013 17:10:08 +0200
-Message-ID: <5242FCD0.8050900@atlas-elektronik.com>
-References: <5242F78C.5060607@atlas-elektronik.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3] build: add default aliases
+Date: Wed, 25 Sep 2013 17:13:07 +0200
+Message-ID: <vpqk3i5szng.fsf@anie.imag.fr>
+References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
+	<CAEBDL5WQLx4rsN+yRs62fgTBWkuAhCSWDRkoCc8M_akpSqMKvg@mail.gmail.com>
+	<CAMP44s3nQv97B2=mq-mn8S41sMA43qRfr+nC7eQ=Jft=zRgTRw@mail.gmail.com>
+	<CAEBDL5V1kyRwtKSM+L_E_XbJRauvdmOLc+g2acbixt0+pd6_ag@mail.gmail.com>
+	<CAMP44s2j_ra_Tk_s-tjwwvX=T8y=bKPTaUdOQk1jD8QpUm+-zA@mail.gmail.com>
+	<CAEBDL5X1QRLaTvxhEu4e5_NE5fEWc6fd60YJyA8wye4d4T3wpQ@mail.gmail.com>
+	<CAMP44s2EtgXXdfa+QtUmmRh6wZ1fD8YTWtzLJ2mN6y_6faMM_g@mail.gmail.com>
+	<vpqr4cdt0gk.fsf@anie.imag.fr>
+	<CAMP44s3qv==GZt7BYMc-FuQvVoNGf3kkGAGzk=-=F4A8KZojKQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 25 17:10:19 2013
+Content-Type: text/plain
+Cc: John Szakmeister <john@szakmeister.net>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 25 17:13:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VOqjL-0006bQ-1K
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 17:10:19 +0200
+	id 1VOqmC-0000Wb-Nm
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Sep 2013 17:13:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755877Ab3IYPKN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Sep 2013 11:10:13 -0400
-Received: from mail96.atlas.de ([194.156.172.86]:21916 "EHLO mail96.atlas.de"
+	id S1756097Ab3IYPNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Sep 2013 11:13:13 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:46213 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755427Ab3IYPKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Sep 2013 11:10:12 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id 1C30E101D2
-	for <git@vger.kernel.org>; Wed, 25 Sep 2013 17:10:11 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mail96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5mUHg-cA18Hw for <git@vger.kernel.org>;
-	Wed, 25 Sep 2013 17:10:10 +0200 (CEST)
-Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP
-	for <git@vger.kernel.org>; Wed, 25 Sep 2013 17:10:10 +0200 (CEST)
-Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id 3709E2716A
-	for <git@vger.kernel.org>; Wed, 25 Sep 2013 17:10:10 +0200 (CEST)
-Received: from [10.200.54.97] (10.200.54.97) by MSSRVS1.atlas.de
- (10.200.101.71) with Microsoft SMTP Server (TLS) id 8.3.279.1; Wed, 25 Sep
- 2013 17:10:10 +0200
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <5242F78C.5060607@atlas-elektronik.com>
-X-Enigmail-Version: 1.5.2
+	id S1756093Ab3IYPNM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Sep 2013 11:13:12 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8PFD61c003296
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 25 Sep 2013 17:13:06 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VOqm4-0000Z3-2u; Wed, 25 Sep 2013 17:13:08 +0200
+In-Reply-To: <CAMP44s3qv==GZt7BYMc-FuQvVoNGf3kkGAGzk=-=F4A8KZojKQ@mail.gmail.com>
+	(Felipe Contreras's message of "Wed, 25 Sep 2013 10:08:33 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 25 Sep 2013 17:13:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r8PFD61c003296
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1380726787.40317@kItn35V9r8fZX7P67G5Rzw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235353>
 
-Am 25.09.2013 16:47, schrieb Stefan N=C3=A4we:
-> Just a quick report since I don't have time to bisect now (will do la=
-ter
-> if no other gitster is faster...)
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Seems to be somewhere between v1.8.3.1 (OK) and v1.8.3.2 (not OK) !!
+> On Wed, Sep 25, 2013 at 9:55 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> But let me help you; you can't mention one, because there isn't any.
+>>
+>> Or because you didn't really look. Read the release notes of every Git
+>> release these days, there's a big section about ongoing backward
+>> incompatible changes.
+>
+> I said *important* changes from the common user's point of view.
 
+Call me fool, but I do consider the default behavior of "git push" as
+something important, indeed.
 
->=20
-> When I execute the below script 'git show' crashes. 'git log --onelin=
-e -2' gives
-> for example:
->=20
->   3808bade5b76c4663ac4a3f751dc9f1ed0b08f2e three
->   error: Could not read 1e8777edeb2b7e757f74c789e679fc6c71073897
->   fatal: Failed to traverse parents of commit 0aa4ef86004f5bb29f67e97=
-1d7963f5cf430c668
->=20
-> gdb backtrace of one run is attached.
-> It happens on 32-bit Debian (5.0.10), 64-bit openSUSE (12.2), and Win=
-dows XP with git 1.8.4
-> on all systems.
->=20
-> The help of 'git fetch' says:
->=20
->   --depth=3D<depth>
->=20
->       Deepen or shorten the history of a shallow repository created b=
-y git clone with
->       --depth=3D<depth> option (see git-clone(1)) to the specified nu=
-mber of commits from
->       the tip of each remote branch history. Tags for the deepened co=
-mmits are not fetched.
-> ---------------------------------------------------------------------=
-----------^^^^^^^^^
->=20
-> But that's not true. The tag 'two' (from the script below) gets fetch=
-ed when
-> deepening the repository.
-
-v1.8.3.1 fetches the tag also.
-
-
-Stefan
---=20
-----------------------------------------------------------------
-/dev/random says: Pobody's Nerfect!
-python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6=
-e696b2e636f6d'.decode('hex')"
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
