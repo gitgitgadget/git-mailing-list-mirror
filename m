@@ -1,79 +1,99 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] merge-recursive: fix parsing of "diff-algorithm" option
-Date: Thu, 26 Sep 2013 21:02:48 +0100
-Message-ID: <689bf88b6f1d33e123cc786042cc6dba23464351.1380225743.git.john@keeping.me.uk>
-Cc: Luke Noel-Storr <luke.noel-storr@integrate.co.uk>,
-	Michal Privoznik <mprivozn@redhat.com>,
-	John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 26 22:03:15 2013
+From: Anders Kaseorg <andersk@MIT.EDU>
+Subject: [PATCH] git submodule foreach: Skip eval for more than one
+ argument
+Date: Thu, 26 Sep 2013 16:10:15 -0400 (EDT)
+Message-ID: <alpine.DEB.2.00.1309261605330.20647@dr-wily.mit.edu>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 26 22:15:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VPHmL-0002nw-Nx
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 22:03:14 +0200
+	id 1VPHyC-0006jf-Mp
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 22:15:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751133Ab3IZUDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Sep 2013 16:03:10 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:36322 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750854Ab3IZUDH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Sep 2013 16:03:07 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 015C022B60;
-	Thu, 26 Sep 2013 21:03:06 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id x-rfXH7xFlw7; Thu, 26 Sep 2013 21:03:01 +0100 (BST)
-Received: from river.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 9C61822BA7;
-	Thu, 26 Sep 2013 21:02:55 +0100 (BST)
-X-Mailer: git-send-email 1.8.4.566.g73d370b
+	id S1753970Ab3IZUPX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Sep 2013 16:15:23 -0400
+Received: from dmz-mailsec-scanner-5.mit.edu ([18.7.68.34]:48508 "EHLO
+	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753559Ab3IZUPV convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Sep 2013 16:15:21 -0400
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Sep 2013 16:15:21 EDT
+X-AuditID: 12074422-b7ef78e000000935-14-524494ac1433
+Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
+	by dmz-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 2B.5C.02357.CA494425; Thu, 26 Sep 2013 16:10:20 -0400 (EDT)
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id r8QKAIaD010162;
+	Thu, 26 Sep 2013 16:10:19 -0400
+Received: from localhost (dr-wily.mit.edu [18.181.0.233])
+	(authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id r8QKAGGW019138
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 26 Sep 2013 16:10:17 -0400
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsUixG6nrrtmikuQwfulfBZdV7qZLBp6rzBb
+	zLu7i8mB2ePSy+9sHhcvKXt83iQXwBzFZZOSmpNZllqkb5fAlbHsl11BO1fFoZY7jA2MOzm6
+	GDk5JARMJI58Pc8CYYtJXLi3ng3EFhLYxyhxpMu3i5ELyN7IKNHYd5kZwtnGJPF75Tb2LkYO
+	DhYBbYl7H2pBGtgE1CTmbpjMDmKLANkT2w6BDWUWsJJ419rKCGILC/hJ/Jk0E2wBr4CjxN5p
+	C8BsUQFdib2HzrBDxAUlTs58AtWrLnHg00VGCFtb4v7NNrYJjPyzkJTNQlI2C0nZAkbmVYyy
+	KblVurmJmTnFqcm6xcmJeXmpRbqmermZJXqpKaWbGMHB6aK0g/HnQaVDjAIcjEo8vAIZLkFC
+	rIllxZW5hxglOZiURHkTJwKF+JLyUyozEosz4otKc1KLDzFKcDArifCujwXK8aYkVlalFuXD
+	pKQ5WJTEeW9x2AcJCaQnlqRmp6YWpBbBZGU4OJQkeAWAUSgkWJSanlqRlplTgpBm4uAEGc4D
+	NFwIpIa3uCAxtzgzHSJ/ilFRSpxXDyQhAJLIKM2D64Ulj1eM4kCvCPM+mQxUxQNMPHDdr4AG
+	MwENduhwAhlckoiQkmpgdAvK0BeVObCzsmN7DmfQprnqjGuFxL0fOyddbGWcEllmrSTB57bk
+	wcffp+J+9XI+9DX6qnfi1q5jG+P+HBNZt+G5yhl398yPheZTUlnrpOZ+zX754u9Gvm1PJZnP
+	Kh/++2a64rJjF99Iah6aVSBce815z/s5VgtOze9/dp89fZ7k3ei+n51695RYijMS 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235430>
 
-The "diff-algorithm" option to the recursive merge strategy takes the
-name of the algorithm as an option, but it uses strcmp on the option
-string to check if it starts with "diff-algorithm=", meaning that this
-options cannot actually be used.
+=E2=80=98eval "$@"=E2=80=99 created an extra layer of shell interpretat=
+ion, which was
+probably not expected by a user who passed multiple arguments to git
+submodule foreach:
 
-Fix this by switching to prefixcmp.  At the same time, clarify the
-following line by using strlen instead of a hard-coded length, which
-also makes it consistent with nearby code.
+$ git grep "'"
+[searches for single quotes]
+$ git submodule foreach git grep "'"
+Entering '[submodule]'
+/usr/lib/git-core/git-submodule: 1: eval: Syntax error: Unterminated qu=
+oted string
+Stopping at '[submodule]'; script returned non-zero status.
 
-Reported-by: Luke Noel-Storr <luke.noel-storr@integrate.co.uk>
-Signed-off-by: John Keeping <john@keeping.me.uk>
+To fix this, if the user passed more than one argument, just execute
+"$@" directly instead of passing it to eval.
+
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
 ---
- merge-recursive.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ git-submodule.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 40eb840..dbb7104 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2069,8 +2069,8 @@ int parse_merge_opt(struct merge_options *o, const char *s)
- 		o->xdl_opts = DIFF_WITH_ALG(o, PATIENCE_DIFF);
- 	else if (!strcmp(s, "histogram"))
- 		o->xdl_opts = DIFF_WITH_ALG(o, HISTOGRAM_DIFF);
--	else if (!strcmp(s, "diff-algorithm=")) {
--		long value = parse_algorithm_value(s+15);
-+	else if (!prefixcmp(s, "diff-algorithm=")) {
-+		long value = parse_algorithm_value(s + strlen("diff-algorithm="));
- 		if (value < 0)
- 			return -1;
- 		/* clear out previous settings */
--- 
-1.8.4.566.g73d370b
+diff --git a/git-submodule.sh b/git-submodule.sh
+index c17bef1..3381864 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -545,7 +545,12 @@ cmd_foreach()
+ 				sm_path=3D$(relative_path "$sm_path") &&
+ 				# we make $path available to scripts ...
+ 				path=3D$sm_path &&
+-				eval "$@" &&
++				if [ $# -eq 1 ]
++				then
++					eval "$1"
++				else
++					"$@"
++				fi &&
+ 				if test -n "$recursive"
+ 				then
+ 					cmd_foreach "--recursive" "$@"
+--=20
+1.8.4
