@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 08/10] send-pack: support pack v4
-Date: Thu, 26 Sep 2013 09:26:47 +0700
-Message-ID: <1380162409-18224-9-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 09/10] repack: add --pack-version and fall back to core.preferredPackVersion
+Date: Thu, 26 Sep 2013 09:26:48 +0700
+Message-ID: <1380162409-18224-10-git-send-email-pclouds@gmail.com>
 References: <1380162409-18224-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,128 +11,173 @@ Cc: Nicolas Pitre <nico@fluxnic.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 26 04:27:58 2013
+X-From: git-owner@vger.kernel.org Thu Sep 26 04:28:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VP1J5-00033U-62
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 04:27:55 +0200
+	id 1VP1JH-0003EA-Lp
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 04:28:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755553Ab3IZC1u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Sep 2013 22:27:50 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:58627 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751827Ab3IZC1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Sep 2013 22:27:48 -0400
-Received: by mail-pa0-f53.google.com with SMTP id kq14so631062pab.40
-        for <git@vger.kernel.org>; Wed, 25 Sep 2013 19:27:47 -0700 (PDT)
+	id S1755178Ab3IZC1z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Sep 2013 22:27:55 -0400
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:61066 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751827Ab3IZC1y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Sep 2013 22:27:54 -0400
+Received: by mail-pb0-f48.google.com with SMTP id ma3so472579pbc.21
+        for <git@vger.kernel.org>; Wed, 25 Sep 2013 19:27:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=lAkqy4JTyani2d5cfnfbUck5j/WRRHvafmRRZ9ykjZY=;
-        b=kCUFqnU+wV036P5G6taGAOv3L3lVgHk5v1NnejA3Xe+sgQmmaTsAWGOR7eSKZU/fes
-         BoHC0tl/ZmMEPQmEpr0Cgm4XLhIJCdSVXIZP44EwVi2kdD9y9rTus2WWxNtmvb6uTDRR
-         bprQk58mn+sh0PYa+RNtNngVGvXh+FXQhk+81+CXwiiNkMEGieIRB5ZMBFMJNIjFk7jd
-         jQmeFQ4oqQIDy31hbEPRz0mzHiT4KQZgeHMcs5UiJKNjb7zASPYk3ZIL6rgERfwmn7km
-         FXI6kpJoHeMvlf/HQlWDJ14EqnLivHlqvtrg964FGecxtq2XjqzXEd69I3RQb3YIzLPp
-         b5Aw==
-X-Received: by 10.66.196.110 with SMTP id il14mr2533346pac.130.1380162467899;
-        Wed, 25 Sep 2013 19:27:47 -0700 (PDT)
+        bh=qeBnXS2+rzobmGRLRQAxCrUePKlwcdn/R9jZ3F4dsW8=;
+        b=ubtE6XJdVvjjXhiFGXfFMlUmnLkFjchINIMVfiR1JIfV3e2w16BDjTON//t6OFadDL
+         cjgfswqQ2IlMcvFMlf8wLMZEobP0fvTfqFUc71PCFdRGm7jbXDGR3B0FRWz4tJ0tBShs
+         ijUH/lRTEav0jzdk5D4LHwsAiR83Z+pnkq/YUS8tqP4I+w0Nxxz5p3AaSN1xFnNKj3OK
+         eyC5mc/QTdVom2fSr2bC5/3NB//b1b40vYPpLTQf+xvWSwgD/7SQJbWZVI2nbCA/xgYR
+         xn/Mk0JEFi3EXSz8uT++t/1KmjZ/DvKuXtSDDEYcAm4zarIMLIjvkPqkuDoMKXzIJBE0
+         qGFA==
+X-Received: by 10.68.224.38 with SMTP id qz6mr14703657pbc.156.1380162473755;
+        Wed, 25 Sep 2013 19:27:53 -0700 (PDT)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPSA id om2sm50801145pbc.30.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id fi4sm44948752pbc.28.1969.12.31.16.00.00
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 25 Sep 2013 19:27:47 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 26 Sep 2013 09:27:42 +0700
+        Wed, 25 Sep 2013 19:27:53 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 26 Sep 2013 09:27:48 +0700
 X-Mailer: git-send-email 1.8.2.82.gc24b958
 In-Reply-To: <1380162409-18224-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235396>
 
-Contrary to the fetch direction, whether send-pack sends packv4 is
-totally controlled by the server. This is in favor of lowering load at
-the server side. More logic may be added later to allow the client to
-stick to v2 even if the server requests v4.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- send-pack.c           |  5 +++++
- send-pack.h           |  1 +
- t/t5516-fetch-push.sh | 12 ++++++++++++
- 3 files changed, 18 insertions(+)
+ Documentation/git-repack.txt |  6 +++++-
+ git-repack.sh                |  8 +++++++-
+ t/t7700-repack.sh            | 35 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 47 insertions(+), 2 deletions(-)
 
-diff --git a/send-pack.c b/send-pack.c
-index 7d172ef..977c14b 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -44,6 +44,7 @@ static int pack_objects(int fd, struct ref *refs, str=
-uct extra_have_objects *ext
- 		NULL,
- 		NULL,
- 		NULL,
-+		NULL,
- 	};
- 	struct child_process po;
- 	int i;
-@@ -57,6 +58,8 @@ static int pack_objects(int fd, struct ref *refs, str=
-uct extra_have_objects *ext
- 		argv[i++] =3D "-q";
- 	if (args->progress)
- 		argv[i++] =3D "--progress";
-+	if (args->packv4)
-+		argv[i++] =3D "--version=3D4";
- 	memset(&po, 0, sizeof(po));
- 	po.argv =3D argv;
- 	po.in =3D -1;
-@@ -205,6 +208,8 @@ int send_pack(struct send_pack_args *args,
- 		quiet_supported =3D 1;
- 	if (server_supports("agent"))
- 		agent_supported =3D 1;
-+	if (server_supports("packv4"))
-+		args->packv4 =3D 1;
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.tx=
+t
+index 4c1aff6..c43eb4a 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -9,7 +9,7 @@ git-repack - Pack unpacked objects in a repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [--window=3D<n>] =
+[--depth=3D<n>]
++'git repack' [options]
 =20
- 	if (!remote_refs) {
- 		fprintf(stderr, "No refs in common and none specified; doing nothing=
-=2E\n"
-diff --git a/send-pack.h b/send-pack.h
-index 05d7ab1..cda770c 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -11,6 +11,7 @@ struct send_pack_args {
- 		use_thin_pack:1,
- 		use_ofs_delta:1,
- 		dry_run:1,
-+		packv4:1,
- 		stateless_rpc:1;
- };
+ DESCRIPTION
+ -----------
+@@ -110,6 +110,10 @@ other objects in that pack they already have local=
+ly.
+ 	The default is unlimited, unless the config variable
+ 	`pack.packSizeLimit` is set.
 =20
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 4691d51..d0c116f 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1172,4 +1172,16 @@ test_expect_success 'push --follow-tag only push=
-es relevant tags' '
- 	test_cmp expect actual
- '
++--pack-version=3D<version>::
++	Force the version for the generated pack.
++	Valid values are 2 and 4. Default value is specified by
++	core.preferredPackVersion setting. See linkgit:git-config[1].
 =20
-+test_expect_success 'push pack v4' '
+ Configuration
+ -------------
+diff --git a/git-repack.sh b/git-repack.sh
+index 7579331..0d898eb 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -21,12 +21,13 @@ window=3D         size of the window used for delta=
+ compression
+ window-memory=3D  same as the above, but limit memory size instead of =
+entries count
+ depth=3D          limits the maximum delta depth
+ max-pack-size=3D  maximum size of each packfile
++pack-version=3D   format version of the output pack
+ "
+ SUBDIRECTORY_OK=3D'Yes'
+ . git-sh-setup
+=20
+ no_update_info=3D all_into_one=3D remove_redundant=3D unpack_unreachab=
+le=3D
+-local=3D no_reuse=3D extra=3D
++local=3D no_reuse=3D extra=3D packver=3D
+ while test $# !=3D 0
+ do
+ 	case "$1" in
+@@ -43,6 +44,8 @@ do
+ 	-l)	local=3D--local ;;
+ 	--max-pack-size|--window|--window-memory|--depth)
+ 		extra=3D"$extra $1=3D$2"; shift ;;
++	--pack-version)
++		packver=3D"$2"; shift ;;
+ 	--) shift; break;;
+ 	*)	usage ;;
+ 	esac
+@@ -92,6 +95,9 @@ esac
+=20
+ mkdir -p "$PACKDIR" || exit
+=20
++[ -n "$packver" ] || packver=3D"`git config --int core.preferredPackVe=
+rsion`"
++[ -n "$packver" ] && args=3D"$args --version=3D$packver"
++
+ args=3D"$args $local ${GIT_QUIET:+-q} $no_reuse$extra"
+ names=3D$(git pack-objects --keep-true-parents --honor-pack-keep --non=
+-empty --all --reflog $args </dev/null "$PACKTMP") ||
+ 	exit 1
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index d954b84..8383e1b 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -164,5 +164,40 @@ test_expect_success 'objects made unreachable by g=
+rafts only are kept' '
+ 	git cat-file -t $H1
+ 	'
+=20
++test_expect_success 'repack respects core.preferredPackVersion' '
 +	git init pv4 &&
-+	git --git-dir pv4/.git config core.preferredPackVersion 4 &&
-+	git --git-dir pv4/.git config transfer.unpackLimit 1 &&
-+	git push pv4 HEAD:refs/heads/head &&
-+	P=3D`ls pv4/.git/objects/pack/pack-*.pack` &&
-+	# Offset 4 is pack version
-+	test-dump ntohl "$P" 4 >ver.actual &&
-+	echo 4 >ver.expected &&
-+	test_cmp ver.expected ver.actual
++	(
++		unset GIT_TEST_PACKV4 &&
++		cd pv4 &&
++		test_commit one &&
++		test_commit two &&
++		test_commit three &&
++		git config core.preferredPackVersion 4 &&
++		git repack -ad &&
++		P=3D`ls .git/objects/pack/pack-*.pack` &&
++		# Offset 4 is pack version
++		test-dump ntohl "$P" 4 >ver.actual &&
++		echo 4 >ver.expected &&
++		test_cmp ver.expected ver.actual
++	)
++'
++
++test_expect_success 'repack --pack-version=3D4' '
++	git init pv4.2 &&
++	(
++		unset GIT_TEST_PACKV4 &&
++		cd pv4.2 &&
++		test_commit one &&
++		test_commit two &&
++		test_commit three &&
++		git repack -ad --pack-version=3D4 &&
++		P=3D`ls .git/objects/pack/pack-*.pack` &&
++		# Offset 4 is pack version
++		test-dump ntohl "$P" 4 >ver.actual &&
++		echo 4 >ver.expected &&
++		test_cmp ver.expected ver.actual
++	)
 +'
 +
  test_done
+=20
 --=20
 1.8.2.82.gc24b958
