@@ -1,106 +1,126 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 1/2] checkout: allow dwim for branch creation for "git checkout $branch --"
-Date: Thu, 26 Sep 2013 11:03:24 +0200
-Message-ID: <vpqa9j0kl9f.fsf@anie.imag.fr>
-References: <1380137471-26972-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20130925223334.GB9464@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-	jc@sahnwaldt.de
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 26 11:05:15 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v3 2/2] checkout: proper error message on 'git checkout foo bar --'
+Date: Thu, 26 Sep 2013 11:08:06 +0200
+Message-ID: <1380186486-8220-2-git-send-email-Matthieu.Moy@imag.fr>
+References: <1380186486-8220-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: pclouds@gmail.com, jc@sahnwaldt.de, jrnieder@gmail.com,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Sep 26 11:08:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VP7Va-000280-TX
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 11:05:15 +0200
+	id 1VP7Yc-0004wh-8Q
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 11:08:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755965Ab3IZJFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Sep 2013 05:05:10 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50652 "EHLO shiva.imag.fr"
+	id S1755862Ab3IZJIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Sep 2013 05:08:18 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38774 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755551Ab3IZJFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Sep 2013 05:05:06 -0400
+	id S1753313Ab3IZJIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Sep 2013 05:08:17 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r8Q93OYW031591
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8Q98Bth027581
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 26 Sep 2013 11:03:24 +0200
+	Thu, 26 Sep 2013 11:08:11 +0200
 Received: from anie.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1VP7Tp-0001uL-8Q; Thu, 26 Sep 2013 11:03:25 +0200
-In-Reply-To: <20130925223334.GB9464@google.com> (Jonathan Nieder's message of
-	"Wed, 25 Sep 2013 15:33:34 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 26 Sep 2013 11:03:27 +0200 (CEST)
+	(envelope-from <moy@imag.fr>)
+	id 1VP7YS-0001xL-IG; Thu, 26 Sep 2013 11:08:12 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1VP7YS-00029h-7z; Thu, 26 Sep 2013 11:08:12 +0200
+X-Mailer: git-send-email 1.8.4.474.g128a96c
+In-Reply-To: <1380186486-8220-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 26 Sep 2013 11:08:11 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r8Q93OYW031591
+X-MailScanner-ID: r8Q98Bth027581
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1380791010.09829@s76N+x1QegqMmP9BXNECwg
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1380791292.26835@QdxK+2R420F5corwNyEK1w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235408>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+The previous code was detecting the presence of "--" by looking only at
+argument 1. As a result, "git checkout foo bar --" was interpreted as an
+ambiguous file/revision list, and errored out with:
 
-> 	case 3: git checkout <something> [--]
->
-> 	  If <something> is a commit, [...]
->
-> 	  If <something> is _not_ a commit, either "--" is present or
-> 	  <something> is not a path, no -t nor -b was given, and [...]
->
-> 	  Otherwise, if "--" is present, treat it like case (1).
->
-> 	  Otherwise behave like case (4).
+error: pathspec 'foo' did not match any file(s) known to git.
+error: pathspec 'bar' did not match any file(s) known to git.
+error: pathspec '--' did not match any file(s) known to git.
 
-Actually, no. Below, we have
+This patch fixes it by walking through the argument list to find the
+"--", and now complains about the number of references given.
 
-		/*
-		 * Do not complain the most common case
-		 *	git checkout branch
-		 * even if there happen to be a file called 'branch';
-		 * it would be extremely annoying.
-		 */
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Again, Jonathan's comments (partly) applied since v2.
 
-Which is a subcase of (3). The guess done in (3) is permissive, and the
-one done with more arguments (4) is strict.
+ builtin/checkout.c            | 21 ++++++++++++++++-----
+ t/t2010-checkout-ambiguous.sh |  6 ++++++
+ 2 files changed, 22 insertions(+), 5 deletions(-)
 
-> 	case 4: git checkout <something> <paths>
->
-> 	  The first argument must not be ambiguous.
-
-I wasn't very convinced by your version at first, but I gave it a try.
-I'm not sure the comment is actually better now, but I think it exposes
-the complexity of the guess, and the difficulty to map the code and the
-comment more. Other people should take this as an incentive to improve
-the situation (but I'm really getting short of Git time budget, sorry).
-
-> Then can come the "invalid reference" check for case (1):
->
-> 		} else if (has_dash_dash)	/* case (1) */
-> 			die(...);
->
-> Then case (4).
->
-> 		else	/* case (4) */
-> 			return argcount;
-
-Actually, the comments are wrong here. The comment <-> code mapping is
-more complex than this. At this point of the code, you know that the
-first argument is not a commit, and that dwim has been ruled-out. But
-that may be case 3 also:
-
-git checkout --no-guess <non-branch> [--]
-
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 9edd9c3..ef6b56a 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -880,7 +880,9 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	int argcount = 0;
+ 	unsigned char branch_rev[20];
+ 	const char *arg;
+-	int has_dash_dash;
++	int dash_dash_pos;
++	int has_dash_dash = 0;
++	int i;
+ 
+ 	/*
+ 	 * case 1: git checkout <ref> -- [<paths>]
+@@ -924,11 +926,20 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	if (!argc)
+ 		return 0;
+ 
+-	if (!strcmp(argv[0], "--"))	/* case (2) */
+-		return 1;
+-
+ 	arg = argv[0];
+-	has_dash_dash = (argc > 1) && !strcmp(argv[1], "--");
++	dash_dash_pos = -1;
++	for (i = 0; i < argc; i++) {
++		if (!strcmp(argv[i], "--")) {
++			dash_dash_pos = i;
++			break;
++		}
++	}
++	if (dash_dash_pos == 0)
++		return 1; /* case (2) */
++	else if (dash_dash_pos == 1)
++		has_dash_dash = 1; /* case (3) or (1) */
++	else if (dash_dash_pos >= 2)
++		die(_("only one reference expected, %d given."), dash_dash_pos);
+ 
+ 	if (!strcmp(arg, "-"))
+ 		arg = "@{-1}";
+diff --git a/t/t2010-checkout-ambiguous.sh b/t/t2010-checkout-ambiguous.sh
+index 7cc0a35..87bdf9c 100755
+--- a/t/t2010-checkout-ambiguous.sh
++++ b/t/t2010-checkout-ambiguous.sh
+@@ -47,4 +47,10 @@ test_expect_success 'disambiguate checking out from a tree-ish' '
+ 	git diff --exit-code --quiet
+ '
+ 
++test_expect_success 'accurate error message with more than one ref' '
++	test_must_fail git checkout HEAD master -- 2>actual &&
++	grep 2 actual &&
++	test_i18ngrep "one reference expected, 2 given" actual
++'
++
+ test_done
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.8.4.474.g128a96c
