@@ -1,121 +1,79 @@
-From: Manish Gill <mgill25@outlook.com>
-Subject: Re: Problem switching branches in submodule
-Date: Fri, 27 Sep 2013 00:59:02 +0530
-Message-ID: <BLU0-SMTP2754312DA341C7F3254F325B8280@phx.gbl>
-References: <BLU0-SMTP17403D5452DA1619FEFCCBAB8280@phx.gbl> <20130926180852.GF9464@google.com> <BLU0-SMTP36066CF18FF63C9BD84AC48B8280@phx.gbl> <20130926184830.GG9464@google.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature";
-	boundary="9S9pbpbK4I35LcuDtBIK9su8tQWWFs6dv"
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 26 21:29:53 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH] merge-recursive: fix parsing of "diff-algorithm" option
+Date: Thu, 26 Sep 2013 21:02:48 +0100
+Message-ID: <689bf88b6f1d33e123cc786042cc6dba23464351.1380225743.git.john@keeping.me.uk>
+Cc: Luke Noel-Storr <luke.noel-storr@integrate.co.uk>,
+	Michal Privoznik <mprivozn@redhat.com>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 26 22:03:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VPHG1-0001YL-CI
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 21:29:49 +0200
+	id 1VPHmL-0002nw-Nx
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 22:03:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753385Ab3IZT3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Sep 2013 15:29:45 -0400
-Received: from blu0-omc3-s31.blu0.hotmail.com ([65.55.116.106]:35630 "EHLO
-	blu0-omc3-s31.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752041Ab3IZT3o (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Sep 2013 15:29:44 -0400
-Received: from BLU0-SMTP275 ([65.55.116.73]) by blu0-omc3-s31.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Thu, 26 Sep 2013 12:29:18 -0700
-X-TMN: [SMf41bfubbRZa935AeqnB+jCtPls4EdN]
-X-Originating-Email: [mgill25@outlook.com]
-Received: from [192.168.1.106] ([120.56.147.88]) by BLU0-SMTP275.blu0.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
-	 Thu, 26 Sep 2013 12:29:16 -0700
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130106 Thunderbird/17.0.2
-In-Reply-To: <20130926184830.GG9464@google.com>
-X-Enigmail-Version: 1.5.2
-X-OriginalArrivalTime: 26 Sep 2013 19:29:16.0486 (UTC) FILETIME=[B0673660:01CEBAEE]
+	id S1751133Ab3IZUDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Sep 2013 16:03:10 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:36322 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750854Ab3IZUDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Sep 2013 16:03:07 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 015C022B60;
+	Thu, 26 Sep 2013 21:03:06 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id x-rfXH7xFlw7; Thu, 26 Sep 2013 21:03:01 +0100 (BST)
+Received: from river.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id 9C61822BA7;
+	Thu, 26 Sep 2013 21:02:55 +0100 (BST)
+X-Mailer: git-send-email 1.8.4.566.g73d370b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235429>
 
---9S9pbpbK4I35LcuDtBIK9su8tQWWFs6dv
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+The "diff-algorithm" option to the recursive merge strategy takes the
+name of the algorithm as an option, but it uses strcmp on the option
+string to check if it starts with "diff-algorithm=", meaning that this
+options cannot actually be used.
 
-On 09/27/2013 12:18 AM, Jonathan Nieder wrote:
-> Manish Gill wrote:
->> Jonathan Nieder wrote:
->=20
->>> What is the exact command you use to get the above output?
->>
->> git checkout <branch_name>
->=20
-> Is <branch_name> a normal branch, a remote-tracking branch, or a
-> branch that doesn't exist yet?
+Fix this by switching to prefixcmp.  At the same time, clarify the
+following line by using strlen instead of a hard-coded length, which
+also makes it consistent with nearby code.
 
-Local branch that was supposed to track a remote branch.
+Reported-by: Luke Noel-Storr <luke.noel-storr@integrate.co.uk>
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ merge-recursive.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
->=20
-> [...]
->> I should mention what *exactly* happened that led to this. I was tryin=
-g
->> to publish my branch on Launchpad (using git-remote-bzr). At some poin=
-t,
->> I had the genius idea to remote the extra stuff from the config file a=
-nd
->> just try with the bzr:: remote as origin, and instead of doing it via
->> the console, I just replaced the config file.
->>
->> Annnnyway, I just restored my backed up config file for that submodule=
-
->> in the middle of writing this and seems like things seem to work now.
->=20
-> If you happen to have a copy of the old config file or remember what it=
-
-> said, that could be helpful (especially if you can still reproduce the
-> problem in case we come up with a fix).
-
-Config file which was NOT working:
-http://bpaste.net/show/oaWG3TQarH3BrdjDj5be/
-
-Working config restored from backup:
-http://bpaste.net/show/nF3ap5fDEAwL9NyqdCmD/
->=20
-> Did the config file have a [core] worktree setting or something similar=
-?
-
-Looks like the working one had it and the other didn't. Adding the
-"worktree" setting seems to fix the problem. But shouldn't this work
-uniformly in the repo? Removing the [core] worktree gives the same
-error, but only in directories inside the repo. Checkout still works on
-the top-level. Seems a bit strange I guess.
->=20
-> Hmm,
-> Jonathan
->=20
-
-
-
---9S9pbpbK4I35LcuDtBIK9su8tQWWFs6dv
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQEcBAEBAgAGBQJSRIsFAAoJEDTnrae/jUU9xMwH/jqSrUea2LQZoWOFvpbM2mxR
-TPVvcT+dfBame0/2D0sWbMpEO4of2P67YDxDV6n9czCx/YRngAPB42sDjBN0lXp0
-Rd7bEKsJ4tuQdT8lBcO2VDxgd9XEja1Kbc/O3MLXPaUxHMbovbHDcTLHq3D0qU45
-Zfac77quCNNAsG9DPzCecK3QTshyOE60FLlT1b5kGNp+lXwbW66cNZlke+StOuMD
-zmzy5LeD/8W2M7wbce9+EIhGFSO4zl5cNmPMDzAUvgT+QshgG0HbEdMXOKBXl69C
-EodM+1NL+ZvsCGWkATspl4d+2SpL77Q56p5vl2wa5JM+R1qes1pwr1o4W2k7WP0=
-=xupE
------END PGP SIGNATURE-----
-
---9S9pbpbK4I35LcuDtBIK9su8tQWWFs6dv--
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 40eb840..dbb7104 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -2069,8 +2069,8 @@ int parse_merge_opt(struct merge_options *o, const char *s)
+ 		o->xdl_opts = DIFF_WITH_ALG(o, PATIENCE_DIFF);
+ 	else if (!strcmp(s, "histogram"))
+ 		o->xdl_opts = DIFF_WITH_ALG(o, HISTOGRAM_DIFF);
+-	else if (!strcmp(s, "diff-algorithm=")) {
+-		long value = parse_algorithm_value(s+15);
++	else if (!prefixcmp(s, "diff-algorithm=")) {
++		long value = parse_algorithm_value(s + strlen("diff-algorithm="));
+ 		if (value < 0)
+ 			return -1;
+ 		/* clear out previous settings */
+-- 
+1.8.4.566.g73d370b
