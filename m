@@ -1,78 +1,62 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 00/10] pack v4 UI support
-Date: Thu, 26 Sep 2013 12:09:49 +0700
-Message-ID: <CACsJy8De9mMvSpnzHuq+XG+Pfi5QD1fY44uHT8hNQZN6sU-hgg@mail.gmail.com>
-References: <1380162409-18224-1-git-send-email-pclouds@gmail.com> <alpine.LFD.2.03.1309260031290.312@syhkavp.arg>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: What's cooking in git.git (Sep 2013, #08; Wed, 25)
+Date: Thu, 26 Sep 2013 08:10:21 +0200
+Message-ID: <5243CFCD.6090604@web.de>
+References: <20130925234121.GD9464@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Sep 26 07:10:31 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>, Tvangeste <i.4m.l33t@yandex.ru>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	msysGit <msysgit@googlegroups.com>,
+	=?ISO-8859-1?Q?Torsten_B=F6gershau?= =?ISO-8859-1?Q?sen?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Sep 26 08:10:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VP3qP-0006JW-Dc
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 07:10:29 +0200
+	id 1VP4mY-0005PS-Sq
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 08:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754306Ab3IZFKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Sep 2013 01:10:23 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:65001 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751198Ab3IZFKW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Sep 2013 01:10:22 -0400
-Received: by mail-ob0-f179.google.com with SMTP id wn1so1333793obc.10
-        for <git@vger.kernel.org>; Wed, 25 Sep 2013 22:10:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=awfsC3nq+Hs2GQ8+0Vsnyv9ACUsZ99/wRntE49bSTjU=;
-        b=yHKzSWYpZS4xEKicuAmTSsy6XsiziVrsfIwcZ3TqmP1R5O0Id2wFvBsMClKEVw3yHp
-         sn46mOMueGX+NdTG/jjiYGKagf0z07YZejY+P9q1No8V/JT28hQOac+8tgEuWoLbeMr0
-         zxtqjNTV+CSHWqcOL61+UmRDlkGEdTuIgrgT2s35DguJCGT6//bFcbHBEceoMeoQ3HrW
-         mw1ZbkdnBz5h6QtzpBRI2xv/ZHw1RpX0l45D7GQ39NO5c8bHg0U9FApF0JnYqOQM4bV6
-         egkjroqTsrE0ICy208aiRWd1NJBt6YRdcMt6EZIF0VAHmlf52o1GbTKPw9NafJPSKrAx
-         +VCQ==
-X-Received: by 10.182.225.129 with SMTP id rk1mr3284obc.73.1380172221260; Wed,
- 25 Sep 2013 22:10:21 -0700 (PDT)
-Received: by 10.182.49.233 with HTTP; Wed, 25 Sep 2013 22:09:49 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.03.1309260031290.312@syhkavp.arg>
+	id S1751940Ab3IZGKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Sep 2013 02:10:31 -0400
+Received: from mout.web.de ([212.227.15.14]:60589 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751077Ab3IZGKa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Sep 2013 02:10:30 -0400
+Received: from [192.168.2.107] ([79.223.124.27]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0Ma2YF-1V9roa3BkN-00Lmg6 for <git@vger.kernel.org>;
+ Thu, 26 Sep 2013 08:10:28 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <20130925234121.GD9464@google.com>
+X-Provags-ID: V03:K0:91lyrovnYgMDnq5gLrgJFetD6KgZdeO+dtvzJyM68MQOS/UAAX4
+ C58VSKyUpvwJVmZwZyY/PUywA+tuD2/2Rv6jpkXEDsZE57xVLi0bJmtlKn8XL4LcJbSIjkZ
+ b3kslTbsc+yTuOuy/PrXXHAo/irpw9p6P0AW3/w27YOL+JjQyF6Jxonp4Gg+TBP212mSYFN
+ 0Hg317h18QP0I8mVA5u1Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235401>
 
-On Thu, Sep 26, 2013 at 11:51 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
->> Multi-base tree support is not part of "packv4" capability. Let's see
->> if such support comes before the series is merged to master. If so we
->> can drop that line from protocol-capabilities.txt. Otherwise a new
->> capability can be added for multi-base trees.
->
-> What is that for?  Multi-base trees are not created yet, but the code to
-> parse them is already there.  So I don't see the point of having a
-> capability in the protocol for this.
+> * jx/relative-path-regression-fix (2013-09-20) 3 commits
+>  - Use simpler relative_path when set_git_dir
+>  - relative_path should honor dos-driver-prefix
+>  - test: use unambigous leading path (/foo) for mingw
+> 
+>  Waiting for the review to settle.
+Is this V3, which is both fixing a regression
+and adding support for UNC path ?
 
-pv4_get_tree() can. index-pack cannot.
+My understanding is that V2
+commit 5a515ecc086dd8d0b74b0aff1248f4d1dc87f556
+jx/relative-path-regression-fix
+git://github.com/gitster/git.git
 
->> Another capability could be added for sending the actual number of
->> objects in a thin pack for more accurate display in index-pack. Low
->> priority in my opinion.
->
-> That just cannot be communicated during capability exchange.  This
-> number is known only after object enumeration.  Hence my suggestion of a
-> ['T', 'H', 'I', 'N', htonl(<number_of_sent_objects>)] special header
-> prepended to the actual pack on the wire.  And that has to be decided
-> before formalizing the pack v4 capability.  That makes it a somewhat
-> higher priority.
 
-The capability is to let the server know the client understands ['T',
-'H', 'I', 'N' ..]. The server can choose not to send it later, but
-that's ok. Hence the new capability. I'm somewhat reluctant to do it
-because of peeking code in fetch-pack and receive-pack and some
-refactoring may be needed first. But I could certainly put it on
-higher priority.
--- 
-Duy
+is only fixing the regression and 
+could be merged into next, master and possibly maint.
