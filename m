@@ -1,108 +1,95 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH] repack: Add --version parameter
-Date: Thu, 26 Sep 2013 10:32:29 +0200
-Message-ID: <1380184349-26380-1-git-send-email-stefanbeller@googlemail.com>
-References: <1380162409-18224-10-git-send-email-pclouds@gmail.com>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: pclouds@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 26 10:32:41 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 2/2] checkout: proper error message on 'git checkout foo bar --'
+Date: Thu, 26 Sep 2013 10:59:10 +0200
+Message-ID: <vpqk3i4klgh.fsf@anie.imag.fr>
+References: <1380137471-26972-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1380137471-26972-2-git-send-email-Matthieu.Moy@imag.fr>
+	<20130925224306.GC9464@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
+	jc@sahnwaldt.de
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 26 10:59:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VP702-0005gz-D6
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 10:32:38 +0200
+	id 1VP7Q6-0005CZ-Tu
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Sep 2013 10:59:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756299Ab3IZIcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Sep 2013 04:32:33 -0400
-Received: from mail-ee0-f54.google.com ([74.125.83.54]:42015 "EHLO
-	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754502Ab3IZIcb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Sep 2013 04:32:31 -0400
-Received: by mail-ee0-f54.google.com with SMTP id e53so366469eek.27
-        for <git@vger.kernel.org>; Thu, 26 Sep 2013 01:32:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=uOZk49PX/UXtPDT63vHVl5R9nGh9tsYuUAr3FZaf/rM=;
-        b=zTzN2c55Q/kmuSggnH8puRcDFfhMZ7w4DWB4RDbKXPH8S4YGiqnjncKKbJoN8ngCpQ
-         AZSZ2Dc6T6apimoFSeTJzPyzxN7XCQa/OBDZnTibOCfavTs0HT1bC58e/BRbX3KZu7C+
-         NW9E4BFim93GEyQVdDnywpOlmr3zdfM9gIPLwq5n5CLCtCD9iNKXS8NGPvxvKU040gfD
-         /9ae9P44z/rmOpZ8S1Fz1IQ6EwgqAv4o8E4kQFLZIxbYz8Yp2FdDD+CIpy7+ajoUyLLx
-         ELBYOnSjAlKUnd5J4anDyomRH1D+KcWRk8PIbwW9TtmDYNLs4illp7CtS2C0yAUR/DA2
-         ES8g==
-X-Received: by 10.14.210.8 with SMTP id t8mr61954082eeo.39.1380184349841;
-        Thu, 26 Sep 2013 01:32:29 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id a1sm1289656eem.1.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 26 Sep 2013 01:32:29 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.474.g128a96c
-In-Reply-To: <1380162409-18224-10-git-send-email-pclouds@gmail.com>
+	id S1751993Ab3IZI73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Sep 2013 04:59:29 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50471 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753505Ab3IZI70 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Sep 2013 04:59:26 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r8Q8x9tI029790
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 26 Sep 2013 10:59:09 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VP7Pi-0001oa-KK; Thu, 26 Sep 2013 10:59:10 +0200
+In-Reply-To: <20130925224306.GC9464@google.com> (Jonathan Nieder's message of
+	"Wed, 25 Sep 2013 15:43:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 26 Sep 2013 10:59:11 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r8Q8x9tI029790
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1380790754.37929@rFgtE8C63uAxIciXwI0bhw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235405>
 
-This is just a direct translation of
-http://article.gmane.org/gmane.comp.version-control.git/235396
-So I don't consider this is ready for inclusion.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Some notes:
-We need to have more error checking, repack shall be 0, 2 or 4 but nothing
-else. If 0 is given, no argument is passed to pack-objects, in case of
-2 or 4 --version=<n> is passed.
+>  (a) rename has_dash_dash here to dash_dash_pos, or
+>  (b) put the check in the loop, like so:
 
-Do we really want to call it "--version"? This parameter sounds so much
-like questioning for the program version, similar to
-	git --version
-	1.8.4
-So I'd rather use "--repack-version".
----
- builtin/repack.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+I agree with (a), but not with (b). I think separating the computation
+of the position and the diagnosis makes it clearer.
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 3e56614..fd05e9a 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -9,6 +9,7 @@
- #include "argv-array.h"
- 
- static int delta_base_offset = 1;
-+static int pack_version;
- static char *packdir, *packtmp;
- 
- static const char *const git_repack_usage[] = {
-@@ -22,6 +23,9 @@ static int repack_config(const char *var, const char *value, void *cb)
- 		delta_base_offset = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "core.preferredPackVersion")) {
-+		pack_version = git_config_int(var, value);
-+	}
- 	return git_default_config(var, value, cb);
- }
- 
-@@ -165,6 +169,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				N_("limits the maximum delta depth")),
- 		OPT_INTEGER(0, "max-pack-size", &max_pack_size,
- 				N_("maximum size of each packfile")),
-+		OPT_INTEGER(0, "pack-version", &pack_version,
-+				N_("format version of the output pack")),
- 		OPT_END()
- 	};
- 
-@@ -220,6 +226,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		argv_array_push(&cmd_args,  "--quiet");
- 	if (delta_base_offset)
- 		argv_array_push(&cmd_args,  "--delta-base-offset");
-+	if (pack_version)
-+		argv_array_pushf(&cmd_args, "--version=%u", pack_version);
- 
- 	argv_array_push(&cmd_args, packtmp);
- 
+I reworked the code a bit, the diagnosis part now looks like
+
+	if (dash_dash_pos == 0)
+		return 1; /* case (2) */
+	else if (dash_dash_pos == 1)
+		has_dash_dash = 1; /* case (3) or (1) */
+	else if (dash_dash_pos >= 2)
+		die(_("only one reference expected, %d given."), dash_dash_pos);
+
+>> +test_expect_success C_LOCALE_OUTPUT 'accurate error message with more than one ref' '
+>> +	test_must_fail git checkout HEAD master -- 2>actual &&
+>> +	echo "fatal: only one reference expected, 2 given." >expect &&
+>> +	test_cmp expect actual
+>
+> Nits:
+>
+>  - if we change this from 'fatal' to 'error' or reword the message as
+>    part of a libification some day, it would be a nuisance to have to
+>    update this test.  Maybe a 'grep' could make it more flexible.
+>
+>  - most of the test (though not the interesting part) can run in the
+>    !C_LOCALE_OUTPUT case if you use test_i18ncmp or test_i18ngrep
+>
+>  - even the check for "2" can run in the !C_LOCALE_OUTPUT case. :)
+>    e.g. something like
+>
+> 	test_must_fail ... 2>actual &&
+> 	grep 2 actual &&
+> 	test_i18ngrep "one reference expected, 2 given" actual
+
+OK, I buy your version. Thanks,
+
 -- 
-1.8.4.474.g128a96c
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
