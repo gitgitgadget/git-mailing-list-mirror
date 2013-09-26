@@ -1,79 +1,79 @@
-From: Morten Stenshorne <mstensho@opera.com>
-Subject: Bug: [hostname:port]:repo.git notation no longer works (for ssh)
-Date: Fri, 27 Sep 2013 10:07:26 +0200
-Message-ID: <87vc1mg01t.fsf@aeneas.oslo.osa>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 27 10:19:54 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2] RelNotes/1.8.5: direct script writers to "git status --porcelain"
+Date: Thu, 26 Sep 2013 20:33:40 +0200
+Message-ID: <1380220420-27064-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <loom.20130926T201754-563@post.gmane.org>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Sep 27 10:25:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VPTHE-0003vO-RI
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Sep 2013 10:19:53 +0200
+	id 1VPTN1-0001ND-Fv
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Sep 2013 10:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752655Ab3I0ITs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Sep 2013 04:19:48 -0400
-Received: from smtp.opera.com ([213.236.208.81]:35164 "EHLO smtp.opera.com"
+	id S1752409Ab3I0IZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Sep 2013 04:25:47 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:39751 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751953Ab3I0ITr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Sep 2013 04:19:47 -0400
-X-Greylist: delayed 763 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Sep 2013 04:19:46 EDT
-Received: from aeneas.oslo.osa (gw-idc-bgp-c.opera.com [213.236.208.19])
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id r8R871K7012124
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 27 Sep 2013 08:07:01 GMT
-Received: from aeneas.oslo.osa (localhost [127.0.0.1])
-	by aeneas.oslo.osa (8.14.4/8.14.4/Debian-4) with ESMTP id r8R87QlY030015
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Sep 2013 10:07:26 +0200
-Received: (from mstensho@localhost)
-	by aeneas.oslo.osa (8.14.4/8.14.4/Submit) id r8R87Qas030014;
-	Fri, 27 Sep 2013 10:07:26 +0200
-X-Authentication-Warning: aeneas.oslo.osa: mstensho set sender to mstensho@opera.com using -f
-X-mstensho: sent-copy
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+	id S1751813Ab3I0IZq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Sep 2013 04:25:46 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8R8Pd5f016806
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 27 Sep 2013 10:25:39 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1VPTMp-0004M7-Vv; Fri, 27 Sep 2013 10:25:40 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1VPTMp-0007p8-M1; Fri, 27 Sep 2013 10:25:39 +0200
+X-Mailer: git-send-email 1.8.4.474.g128a96c
+In-Reply-To: <loom.20130926T201754-563@post.gmane.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 27 Sep 2013 10:25:39 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r8R8Pd5f016806
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1380875141.11064@0MGzjw22p05jv5zOo7UZvg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235445>
 
-I've just upgraded to Debian testing (jessie), and with that I got a
-brand new (for me) git version:
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Jakub Narebski <jnareb@gmail.com> writes:
 
-    $ git --version
-    git version 1.8.4.rc3
+> Perhaps "to use instead ..." would be easier to understand than
+> proposed "to use ..., instead." (with "..." being one line long).
 
-Some of my repos I use an ssh tunnel to reach, so when I want to reach a
-repo forwarded to local port 2223, using the ssh protocol, the following
-used to work (.git/config) in older git versions:
+Actually, I had the version below staged, but forgot to "commit
+--amend" before sending. Should be clear enough.
 
-    [remote "exp"]
-            url = [localhost:2223]:blink.git
-            fetch = +refs/heads/*:refs/remotes/exp/*
+ Documentation/RelNotes/1.8.5.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
-However, now I get this message:
-
-    $ git fetch exp
-    fatal: ':blink.git' does not appear to be a git repository
-    fatal: Could not read from remote repository.
-
-    Please make sure you have the correct access rights
-    and the repository exists.
-
-If I don't go via the ssh tunnel (I finally have some VPN stuff these
-days, so I don't really need the tunnel thing anymore, but that's going
-to be a lot of remotes to update, so I'd prefer it just worked like it
-used to):
-
--            url = [localhost:2223]:blink.git
-+            url = git:blink.git
-
-... it works fine.
-
+diff --git a/Documentation/RelNotes/1.8.5.txt b/Documentation/RelNotes/1.8.5.txt
+index ac5c3fa..e295266 100644
+--- a/Documentation/RelNotes/1.8.5.txt
++++ b/Documentation/RelNotes/1.8.5.txt
+@@ -96,6 +96,9 @@ UI, Workflows & Features
+ 
+  * "git status" now omits the prefix to make its output a comment in a
+    commit log editor, which is not necessary for human consumption.
++   Scripts that parse the output of "git status" are advised to use
++   "git status --porcelain" instead. Its format is both easier to
++   parse and stable.
+ 
+  * Make "foo^{tag}" to peel a tag to itself, i.e. no-op., and fail if
+    "foo" is not a tag.  "git rev-parse --verify v1.0^{tag}" would be
 -- 
----- Morten Stenshorne, developer, Opera Software ASA ----
------------------- http://www.opera.com/ -----------------
+1.8.4.474.g128a96c
