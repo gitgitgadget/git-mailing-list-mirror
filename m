@@ -1,130 +1,86 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] git submodule foreach: Skip eval for more than one argument
-Date: Fri, 27 Sep 2013 10:48:44 +0200
-Message-ID: <CALKQrgfhUEE+E5KsAWbP_zj6tozk+V=qvNU1PX9Z73Vu8unTiQ@mail.gmail.com>
-References: <alpine.DEB.2.00.1309261605330.20647@dr-wily.mit.edu>
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: Bug: [hostname:port]:repo.git notation no longer works (for ssh)
+Date: Fri, 27 Sep 2013 10:55:04 +0200
+Message-ID: <524547E8.4070406@atlas-elektronik.com>
+References: <87vc1mg01t.fsf@aeneas.oslo.osa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Anders Kaseorg <andersk@mit.edu>
-X-From: git-owner@vger.kernel.org Fri Sep 27 10:48:58 2013
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: Morten Stenshorne <mstensho@opera.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 27 10:55:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VPTjN-0007mY-Qr
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Sep 2013 10:48:58 +0200
+	id 1VPTpS-0005aK-Gm
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Sep 2013 10:55:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752908Ab3I0Isx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Sep 2013 04:48:53 -0400
-Received: from mail12.copyleft.no ([188.94.218.224]:46586 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751934Ab3I0Isv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Sep 2013 04:48:51 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1VPTjF-0007OT-Gg
-	for git@vger.kernel.org; Fri, 27 Sep 2013 10:48:49 +0200
-Received: from mail-pb0-f46.google.com ([209.85.160.46])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1VPTjF-0008Up-5i
-	for git@vger.kernel.org; Fri, 27 Sep 2013 10:48:49 +0200
-Received: by mail-pb0-f46.google.com with SMTP id rq2so2282175pbb.19
-        for <git@vger.kernel.org>; Fri, 27 Sep 2013 01:48:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=12J5blpzHBylJZrx9p30BcNe6tuHmgHBYHsRbkuyUFg=;
-        b=hxlroXQdwGMdpYlmtAyoF/A0guPdPbeDzfK09uK4y7AoL7NLtAr/iJLczys8wxoOiP
-         Eg+pgrKMGSY6Up+APSjwUK3zCiIsbHBNfMOcrivvVpyKN9OTx12GyaxwM5FTwE0E+UIP
-         nIR5vZjHveVUGPDu2ScvUYmIKKr+DtcGq6XMbqTjiNsz4k6WRBkU9+nr7ehavqG/j4Dd
-         Zavp+fOtqv2A4aHaM0vwH8Glk8Jf/0D6ldne5sd31ShYWKHflU+9RvZI/pE1DtPCa466
-         V21xPr5roquNaCNPS+yti4IgLdLr2YxdmSAisdXkw7m2ZWTAKBJqLt7JqhM9XturOmKf
-         3dAA==
-X-Received: by 10.66.218.98 with SMTP id pf2mr10315871pac.120.1380271724810;
- Fri, 27 Sep 2013 01:48:44 -0700 (PDT)
-Received: by 10.70.24.226 with HTTP; Fri, 27 Sep 2013 01:48:44 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1309261605330.20647@dr-wily.mit.edu>
+	id S1752155Ab3I0IzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Sep 2013 04:55:10 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:10984 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751605Ab3I0IzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Sep 2013 04:55:07 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id 0954210939;
+	Fri, 27 Sep 2013 10:55:06 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mail96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id XTTWySlUOsXE; Fri, 27 Sep 2013 10:55:05 +0200 (CEST)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Fri, 27 Sep 2013 10:55:05 +0200 (CEST)
+Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 0743227169;
+	Fri, 27 Sep 2013 10:55:04 +0200 (CEST)
+Received: from [10.200.54.97] (10.200.54.97) by MSSRVS1.atlas.de
+ (10.200.101.71) with Microsoft SMTP Server (TLS) id 8.3.279.1; Fri, 27 Sep
+ 2013 10:55:04 +0200
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <87vc1mg01t.fsf@aeneas.oslo.osa>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235449>
 
-On Thu, Sep 26, 2013 at 10:10 PM, Anders Kaseorg <andersk@mit.edu> wrot=
-e:
-> =E2=80=98eval "$@"=E2=80=99 created an extra layer of shell interpret=
-ation, which was
-> probably not expected by a user who passed multiple arguments to git
-> submodule foreach:
->
-> $ git grep "'"
-> [searches for single quotes]
-> $ git submodule foreach git grep "'"
-> Entering '[submodule]'
-> /usr/lib/git-core/git-submodule: 1: eval: Syntax error: Unterminated =
-quoted string
-> Stopping at '[submodule]'; script returned non-zero status.
->
-> To fix this, if the user passed more than one argument, just execute
-> "$@" directly instead of passing it to eval.
->
-> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+Am 27.09.2013 10:07, schrieb Morten Stenshorne:
+> I've just upgraded to Debian testing (jessie), and with that I got a
+> brand new (for me) git version:
+> 
+>     $ git --version
+>     git version 1.8.4.rc3
+> 
+> Some of my repos I use an ssh tunnel to reach, so when I want to reach a
+> repo forwarded to local port 2223, using the ssh protocol, the following
+> used to work (.git/config) in older git versions:
+> 
+>     [remote "exp"]
+>             url = [localhost:2223]:blink.git
+>             fetch = +refs/heads/*:refs/remotes/exp/*
+> 
+> However, now I get this message:
+> 
+>     $ git fetch exp
+>     fatal: ':blink.git' does not appear to be a git repository
+>     fatal: Could not read from remote repository.
 
-The change looks good, and the existing tests (in t7407) pass. :-)
+I wonder why that worked (especially the "[...]") at all ?
+I thought specifying a port for a SSH connection was always only
+possible when using
 
-Two comments, however:
+       ssh://user@host:port/path/to/repo.git
+- or -
+       ssh://user@host:port/~user/path/to/repo.git
 
-1. Please add the use case you mention above as a new test case, so
-that we can easily catch future regressions.
+At least that's what I always read out of the git-clone man page.
 
-2. If we are unlucky there might be existing users that work around
-the existing behavior by adding an extra level of quoting (i.e. doing
-the equivalent of git submodule foreach git grep "\'" in your example
-above). Will their workaround break as a result of your change? Is
-that acceptable?
-
-
-Have fun! :)
-
-=2E..Johan
-
-> ---
->  git-submodule.sh | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index c17bef1..3381864 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -545,7 +545,12 @@ cmd_foreach()
->                                 sm_path=3D$(relative_path "$sm_path")=
- &&
->                                 # we make $path available to scripts =
-=2E..
->                                 path=3D$sm_path &&
-> -                               eval "$@" &&
-> +                               if [ $# -eq 1 ]
-> +                               then
-> +                                       eval "$1"
-> +                               else
-> +                                       "$@"
-> +                               fi &&
->                                 if test -n "$recursive"
->                                 then
->                                         cmd_foreach "--recursive" "$@=
-"
-> --
-> 1.8.4
->
-
---=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+Stefan
+-- 
+----------------------------------------------------------------
+/dev/random says: Don't ask me, I have random access memory.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
