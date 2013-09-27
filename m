@@ -1,79 +1,98 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] RelNotes/1.8.5: direct script writers to "git status --porcelain"
-Date: Thu, 26 Sep 2013 20:33:40 +0200
-Message-ID: <1380220420-27064-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <loom.20130926T201754-563@post.gmane.org>
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Sep 27 10:25:52 2013
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Question about "git log --cherry"
+Date: Fri, 27 Sep 2013 10:28:05 +0200
+Message-ID: <CAC9WiBgzWXhoEuD1adwD+SwFScSwH+JFBLRq=26G5k8JxFysEg@mail.gmail.com>
+References: <CAC9WiBjLqdqSKgLv_M6FPx3a2J-+ZKAQnk9OGn3h5SfqSpiT3g@mail.gmail.com>
+	<20130926202153.GC27238@serenity.lan>
+	<CAC9WiBjykt5qj2sRtTK=VHp0B5x===7oqVP7VRC6BOdCMTn9yg@mail.gmail.com>
+	<20130927081113.GE27238@serenity.lan>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri Sep 27 10:28:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VPTN1-0001ND-Fv
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Sep 2013 10:25:51 +0200
+	id 1VPTPJ-0003i7-FU
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Sep 2013 10:28:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752409Ab3I0IZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Sep 2013 04:25:47 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:39751 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751813Ab3I0IZq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Sep 2013 04:25:46 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r8R8Pd5f016806
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 27 Sep 2013 10:25:39 +0200
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1VPTMp-0004M7-Vv; Fri, 27 Sep 2013 10:25:40 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1VPTMp-0007p8-M1; Fri, 27 Sep 2013 10:25:39 +0200
-X-Mailer: git-send-email 1.8.4.474.g128a96c
-In-Reply-To: <loom.20130926T201754-563@post.gmane.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 27 Sep 2013 10:25:39 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r8R8Pd5f016806
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1380875141.11064@0MGzjw22p05jv5zOo7UZvg
+	id S1753134Ab3I0I2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Sep 2013 04:28:09 -0400
+Received: from mail-vb0-f45.google.com ([209.85.212.45]:65384 "EHLO
+	mail-vb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751878Ab3I0I2G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Sep 2013 04:28:06 -0400
+Received: by mail-vb0-f45.google.com with SMTP id e15so1604499vbg.4
+        for <git@vger.kernel.org>; Fri, 27 Sep 2013 01:28:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dz5VBT+2rJF7zHr6qYTszFiOMjLWy6sBU4hPZKWqkSg=;
+        b=AebN4x7lDpnPj++aOKGvXwpeBPelDJtD0NcmqyEIuzNCgW0BOF9duxrTtSGLPfLrVH
+         gNDsqfLVJrHpoWN4620hUIvGMkBNUIMjFH+tcREGq/DKYgEe4mBJsgg5gq9wQLmml9OI
+         uTkh1QVNJ8yLTjT0ztk+4dxf4Jn8LsGNK2E1V6C8+fpE3HA1z2hZD7wXrxPPOkGE/SlN
+         6wRBhdxDnK8XsVd+xru35D0ID8lL2mmZ5T+xpZvZ6CkDobPuYHfirESa6t7oQoXJAy5t
+         Cr+w6qEYodFpabAReKU7dlkwR06q9eMedhkUblzYTs22r6zF5m46NQDlKJWjON1LBhI3
+         vKdQ==
+X-Received: by 10.221.27.73 with SMTP id rp9mr174530vcb.29.1380270485234; Fri,
+ 27 Sep 2013 01:28:05 -0700 (PDT)
+Received: by 10.58.8.169 with HTTP; Fri, 27 Sep 2013 01:28:05 -0700 (PDT)
+In-Reply-To: <20130927081113.GE27238@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235446>
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Jakub Narebski <jnareb@gmail.com> writes:
+On Fri, Sep 27, 2013 at 10:11 AM, John Keeping <john@keeping.me.uk> wrote:
+> On Fri, Sep 27, 2013 at 07:09:03AM +0200, Francis Moreau wrote:
+>> Hi,
+>>
+>> On Thu, Sep 26, 2013 at 10:21 PM, John Keeping <john@keeping.me.uk> wrote:
+>> > On Thu, Sep 26, 2013 at 06:35:57PM +0200, Francis Moreau wrote:
+>> >> I'm trying to use "git log --cherry ..." in order to display new, kept
+>> >> and removed commits between two branches A and B.
+>> >>
+>> >> So commits which are only in B are considered new and should be marked
+>> >> with '+'. Commits which are in both branches are marked with '=' but
+>> >> only commit in branch B are shown. Eventually commits which are in A
+>> >> but not in B anymore should be marked with '-'.
+>> >>
+>> >> So far I found this solution:
+>> >>
+>> >>   $ git log --cherry-mark --right-only A...B
+>> >>   $ git log --cherry-pick  --left-only   A...B
+>> >>
+>> >> but I have to call twice git-log. This can be annoying since depending
+>> >> on A and B, calling git-log can take time.
+>> >>
+>> >> Is there another option that I'm missing which would do the job but
+>> >> with only one call to git-log ?
+>> >
+>> > Does this do what you want?
+>> >
+>> >     git log --cherry-mark --left-right A...B |
+>> >     sed -e '/^commit / {
+>> >         y/<>/-+/
+>> >     }'
+>>
+>> Nope because --left-right shows common commits (with '=' mark) that
+>> belong to A *and* B, and I'd like to have only the ones in B.
+>
+> I think the only way you can address this is to post-process the result,
+> I don't know any way to remove a left side commit only if it is
+> patch-identical to a right side commit.
+>
+> It should be relatively easy to filter out any '=' commits that are in
+> the output of "git rev-list --left-only A...B".
 
-> Perhaps "to use instead ..." would be easier to understand than
-> proposed "to use ..., instead." (with "..." being one line long).
+yes that's what I'm doing but I was wondering if that's possible to do
+that with only one run of git-log/git-rev-list.
 
-Actually, I had the version below staged, but forgot to "commit
---amend" before sending. Should be clear enough.
-
- Documentation/RelNotes/1.8.5.txt | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/Documentation/RelNotes/1.8.5.txt b/Documentation/RelNotes/1.8.5.txt
-index ac5c3fa..e295266 100644
---- a/Documentation/RelNotes/1.8.5.txt
-+++ b/Documentation/RelNotes/1.8.5.txt
-@@ -96,6 +96,9 @@ UI, Workflows & Features
- 
-  * "git status" now omits the prefix to make its output a comment in a
-    commit log editor, which is not necessary for human consumption.
-+   Scripts that parse the output of "git status" are advised to use
-+   "git status --porcelain" instead. Its format is both easier to
-+   parse and stable.
- 
-  * Make "foo^{tag}" to peel a tag to itself, i.e. no-op., and fail if
-    "foo" is not a tag.  "git rev-parse --verify v1.0^{tag}" would be
+Thanks
 -- 
-1.8.4.474.g128a96c
+Francis
