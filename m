@@ -1,66 +1,72 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/3] for-each-ref: introduce %(upstream:track[short])
-Date: Fri, 27 Sep 2013 20:03:35 +0530
-Message-ID: <CALkWK0noW8iJWZan6EpX3Qar866AKm-HUGqWE_U9JubSmWu0yQ@mail.gmail.com>
-References: <1380283828-25420-1-git-send-email-artagnon@gmail.com>
- <1380283828-25420-4-git-send-email-artagnon@gmail.com> <52459570.4030301@viscovery.net>
+From: Morten Stenshorne <mstensho@opera.com>
+Subject: Re: Bug: [hostname:port]:repo.git notation no longer works (for ssh)
+Date: Fri, 27 Sep 2013 16:43:04 +0200
+Message-ID: <8738oqz5on.fsf@aeneas.oslo.osa>
+References: <87vc1mg01t.fsf@aeneas.oslo.osa>
+	<CABURp0pNcLEELwg-putH_Wtab-gTrMXTB7uGPMZSLfgXnFttew@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Sep 27 16:34:25 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 27 16:42:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VPZ7g-0000SY-Qd
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Sep 2013 16:34:25 +0200
+	id 1VPZFm-0000Wq-SD
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Sep 2013 16:42:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753946Ab3I0OeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Sep 2013 10:34:18 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:37179 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753939Ab3I0OeQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Sep 2013 10:34:16 -0400
-Received: by mail-ie0-f179.google.com with SMTP id e14so3982683iej.24
-        for <git@vger.kernel.org>; Fri, 27 Sep 2013 07:34:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=S8fRYZuWI8+q7uT973/uH95dW4hleGBlFkYDGqH0rhE=;
-        b=O5qkE4aYlLpxHZL8XdVuCqzqhbIjdfiih0vvsPMA5Yv2429NTbdEX7Gs8AVY6LuHDG
-         GOZYLV13qboTcfwSxxjAPMyCSCkLyGyEw+vQ5eBIyH1LUVAVoIs/ouGq3L31Eq3Gd4gr
-         1oRQazdUk1SK2J1yKl9Dy0sT9ozwngl1JE5VWVnmpok9eZGMuD8E2xeEQ/2JXRK9Qsbt
-         zkbla2h72H5kNXa9ngpenVWfkH49FkE74FSo12enEKVOPEC6fKRQSrO1g6ahjr8HmQwl
-         NXitRAHRyJltRT1JkXIHKY72TSfk23bEEdL3/SezufqLI4e55uNltlatBLbrSlIHFM3U
-         fz9Q==
-X-Received: by 10.50.73.74 with SMTP id j10mr2547847igv.50.1380292455258; Fri,
- 27 Sep 2013 07:34:15 -0700 (PDT)
-Received: by 10.64.73.36 with HTTP; Fri, 27 Sep 2013 07:33:35 -0700 (PDT)
-In-Reply-To: <52459570.4030301@viscovery.net>
+	id S1753961Ab3I0Omm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Sep 2013 10:42:42 -0400
+Received: from smtp.opera.com ([213.236.208.81]:56086 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753503Ab3I0Omm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Sep 2013 10:42:42 -0400
+Received: from aeneas.oslo.osa (gw-idc-bgp-c.opera.com [213.236.208.19])
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id r8REgcAt003824
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 27 Sep 2013 14:42:39 GMT
+Received: from aeneas.oslo.osa (localhost [127.0.0.1])
+	by aeneas.oslo.osa (8.14.4/8.14.4/Debian-4) with ESMTP id r8REh4DX000621
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Sep 2013 16:43:04 +0200
+Received: (from mstensho@localhost)
+	by aeneas.oslo.osa (8.14.4/8.14.4/Submit) id r8REh4FO000620;
+	Fri, 27 Sep 2013 16:43:04 +0200
+X-Authentication-Warning: aeneas.oslo.osa: mstensho set sender to mstensho@opera.com using -f
+X-mstensho: sent-copy
+In-Reply-To: <CABURp0pNcLEELwg-putH_Wtab-gTrMXTB7uGPMZSLfgXnFttew@mail.gmail.com>
+	(Phil Hord's message of "Fri, 27 Sep 2013 10:31:35 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235466>
 
-Johannes Sixt wrote:
->> +                             else if (!num_ours) {
->> +                                     sprintf(buf, "[behind %d]", num_theirs);
->> +                                     v->s = xstrdup(buf);
->> +                             } else if (!num_theirs) {
->> +                                     sprintf(buf, "[ahead %d]", num_ours);
->> +                                     v->s = xstrdup(buf);
->> +                             } else {
->> +                                     sprintf(buf, "[ahead %d, behind %d]",
->> +                                             num_ours, num_theirs);
->> +                                     v->s = xstrdup(buf);
->> +                             }
+Phil Hord <phil.hord@gmail.com> writes:
+
+> On Fri, Sep 27, 2013 at 4:07 AM, Morten Stenshorne <mstensho@opera.com> wrote:
+>> If I don't go via the ssh tunnel (I finally have some VPN stuff these
+>> days, so I don't really need the tunnel thing anymore, but that's going
+>> to be a lot of remotes to update, so I'd prefer it just worked like it
+>> used to):
+>>
+>> -            url = [localhost:2223]:blink.git
+>> +            url = git:blink.git
+>>
+>> ... it works fine.
 >
-> These strdupped strings are leaked, right?
+>
+> Until you get a proper fix, I wonder if this will help:
+>
+>   git config --global --add url."git:".insteadOf  "[localhost:2223]:"
+>
+> See "git help config" for details on the insteadOf config setting.
 
-Yes, there's a minor leakage; there are quite a few instances of this
-in the rest of the file. Do you see an easy fix?
+Yes, that works. Thanks!
+
+-- 
+---- Morten Stenshorne, developer, Opera Software ASA ----
+------------------ http://www.opera.com/ -----------------
