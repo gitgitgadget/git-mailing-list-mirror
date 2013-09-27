@@ -1,94 +1,78 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] clone: tighten "local paths with colons" check a bit
-Date: Fri, 27 Sep 2013 20:48:13 +0700
-Message-ID: <1380289693-593-1-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Bug: [hostname:port]:repo.git notation no longer works (for ssh)
+Date: Fri, 27 Sep 2013 20:48:18 +0700
+Message-ID: <CACsJy8CURVVpdGGJgpG2abJ3yo+fEnbeXS1Dug4zPCJ=zMLxmQ@mail.gmail.com>
+References: <87vc1mg01t.fsf@aeneas.oslo.osa> <524547E8.4070406@atlas-elektronik.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Niedier <jrnieder@gmail.com>,
-	Morten Stenshorne <mstensho@opera.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 27 15:45:11 2013
+Cc: Morten Stenshorne <mstensho@opera.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+X-From: git-owner@vger.kernel.org Fri Sep 27 15:48:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VPYM1-0001Uo-Ex
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Sep 2013 15:45:09 +0200
+	id 1VPYPe-0005OP-26
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Sep 2013 15:48:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753756Ab3I0Noy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Sep 2013 09:44:54 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:62542 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752624Ab3I0Nov (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Sep 2013 09:44:51 -0400
-Received: by mail-pa0-f50.google.com with SMTP id fb1so2813682pad.37
-        for <git@vger.kernel.org>; Fri, 27 Sep 2013 06:44:50 -0700 (PDT)
+	id S1754069Ab3I0Nsu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Sep 2013 09:48:50 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:48132 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753845Ab3I0Nst convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Sep 2013 09:48:49 -0400
+Received: by mail-oa0-f41.google.com with SMTP id n10so2068208oag.0
+        for <git@vger.kernel.org>; Fri, 27 Sep 2013 06:48:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=uq6AieO1re1ft2w3qe9QOtibrgTAn7yXpuxnxC1Tz5Q=;
-        b=PTFSZhwCgLkC0f81keG7YskcxcJcSqNT5wniUNvnLEjT1BsbybEQcksvbU0hFilXcG
-         bQ5TK38xa4m16kBKvo+LE2CC2JV4sVQzK1NHJtfYZvWRPYm1ul3WJxm9DNVhGtFF0j2P
-         CDrgMO59lKLftnBlOqXndtROUYRdk3zxUJ6t0n/WGzn+H5wGc9n6NJkWTGsmUMp/lkwo
-         pBJsPVCXLVZ63sf0/wUVs+4Kff+FGF1v15uLWZlKhk76kbVR0nhaV1AgYKft62GID8sR
-         3z50U9sWaNaoVOTsdy1QLiFlauWxgkGItHVpUvF7zjCGWhygmL9vd//u+vPJTaPJUEsp
-         V1xQ==
-X-Received: by 10.68.224.131 with SMTP id rc3mr1855236pbc.204.1380289490471;
-        Fri, 27 Sep 2013 06:44:50 -0700 (PDT)
-Received: from lanh ([115.73.244.34])
-        by mx.google.com with ESMTPSA id yg3sm12710839pab.16.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 27 Sep 2013 06:44:48 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Fri, 27 Sep 2013 20:48:18 +0700
-X-Mailer: git-send-email 1.8.2.83.gc99314b
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=TyQkn5w5NOaYHl4k+93s+h46rXL562xJ5aUHXmOLe2E=;
+        b=FYVEoB58LdMmD0cY2FXM3WqlYD5pfDcPFFTw4uydgxW9Age6mAjXjc3L2s/KsjAoBQ
+         hTkSc9y6/DVnww16og5UJ5osI5goExMPggan3pd0iPJ2H5ony5p1Z7GmttbEc0EZgIn+
+         2LEGOP3suTXMnu9lbkAjshrTZHT/2Xw6pFm/9ZIka8p8GxhPl7wUQzasuXNNcHVQI8Ga
+         q5rBNrLDY6m8XVpzTdy7MYw5EGgPhCdO1WcrWSnNjA3SlvBeoBfLp2F4iaHPQ8pr4Ypy
+         DO+cdUwBGD1hjY+AAQtxxhYP0nMs/7svtd0s+EpQE190vJO5tN274/urzGlwLhRcjM2a
+         8S8A==
+X-Received: by 10.60.50.168 with SMTP id d8mr579739oeo.77.1380289728699; Fri,
+ 27 Sep 2013 06:48:48 -0700 (PDT)
+Received: by 10.182.49.233 with HTTP; Fri, 27 Sep 2013 06:48:18 -0700 (PDT)
+In-Reply-To: <524547E8.4070406@atlas-elektronik.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235460>
 
-commit 6000334 (clone: allow cloning local paths with colons in them -
-2013-05-04) is added to make it possible to specify a path that has
-colons in it without file://, e.g. ../foo:bar/somewhere. But the check
-is a bit loose.
+On Fri, Sep 27, 2013 at 3:55 PM, Stefan N=C3=A4we
+<stefan.naewe@atlas-elektronik.com> wrote:
+>>     [remote "exp"]
+>>             url =3D [localhost:2223]:blink.git
+>>             fetch =3D +refs/heads/*:refs/remotes/exp/*
+>>
+>> However, now I get this message:
+>>
+>>     $ git fetch exp
+>>     fatal: ':blink.git' does not appear to be a git repository
+>>     fatal: Could not read from remote repository.
+>
+> I wonder why that worked (especially the "[...]") at all ?
+> I thought specifying a port for a SSH connection was always only
+> possible when using
+>
+>        ssh://user@host:port/path/to/repo.git
+> - or -
+>        ssh://user@host:port/~user/path/to/repo.git
+>
+> At least that's what I always read out of the git-clone man page.
 
-Consider the url '[foo]:bar', the '[]' unwrapping code will turn the
-string to 'foo\0:bar'. The effect of this new string is the same as
-'foo/:bar' to the expression "path < strchrnul(host, '/')", which
-mistakes it as a sign of local paths while it's actually not.
-
-Make sure we only check so when no protocol is specified and the url
-is not started with '['.
-
-Noticed-by: Morten Stenshorne <mstensho@opera.com>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- I wanted to add a test then realized there were no ssh tests in the
- test suite. So laziness won :p
-
- connect.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/connect.c b/connect.c
-index a0783d4..303f850 100644
---- a/connect.c
-+++ b/connect.c
-@@ -551,7 +551,7 @@ struct child_process *git_connect(int fd[2], const =
-char *url_orig,
- 	path =3D strchr(end, c);
- 	if (path && !has_dos_drive_prefix(end)) {
- 		if (c =3D=3D ':') {
--			if (path < strchrnul(host, '/')) {
-+			if (host !=3D url || path < strchrnul(host, '/')) {
- 				protocol =3D PROTO_SSH;
- 				*path++ =3D '\0';
- 			} else /* '/' in the host part, assume local path */
+[] is used to wrap ipv6 and because we don't know if it's actually
+ipv6 or v4, we accept it in both cases, so [abc] can be used in place
+"host" above. No [host:port]:path won't work because "host:port" is
+considered host name. But [host or ip]:path may work (that is after I
+fix my bug).
 --=20
-1.8.2.83.gc99314b
+Duy
