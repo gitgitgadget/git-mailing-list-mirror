@@ -1,119 +1,127 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 02/44] ruby: add support for internal ruby programs
-Date: Sat, 28 Sep 2013 17:03:27 -0500
-Message-ID: <1380405849-13000-3-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 04/44] request-pull: fix for specific branch
+Date: Sat, 28 Sep 2013 17:03:29 -0500
+Message-ID: <1380405849-13000-5-git-send-email-felipe.contreras@gmail.com>
 References: <1380405849-13000-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 29 00:10:14 2013
+X-From: git-owner@vger.kernel.org Sun Sep 29 00:10:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQ2iH-0002jN-Ji
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 00:10:09 +0200
+	id 1VQ2iQ-0002qV-53
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 00:10:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755179Ab3I1WKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Sep 2013 18:10:06 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:59853 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755163Ab3I1WKC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Sep 2013 18:10:02 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uz6so4102273obc.5
-        for <git@vger.kernel.org>; Sat, 28 Sep 2013 15:10:02 -0700 (PDT)
+	id S1755197Ab3I1WKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Sep 2013 18:10:13 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:44279 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755104Ab3I1WKI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Sep 2013 18:10:08 -0400
+Received: by mail-oa0-f52.google.com with SMTP id n2so3053219oag.11
+        for <git@vger.kernel.org>; Sat, 28 Sep 2013 15:10:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ja8No33md/8ovAE187FbnJJ5cQTX0199dZ3A5v0GuRg=;
-        b=RtfioTUF1n+OSWvToIKYDZAbBFXH4srDzH33UstgYUZ0CRPUMch6nBc2rq4xeI4opJ
-         CWb7wh8SZtvhFYYpoB8LFDIyQxKBa0rIUgOvERw8hOc36ebGXfHSdSFz97P5BQBf467S
-         lHqWYBJgASQh1Em+g0lpkKCmLWmASZqUF5Wu+ORXyTKFcVzPBdIlbs3S+wvurGc0JkY2
-         twxnLzP9w4YKxwACKSjPG9duszyvp+SyeKlTSJBeD8V70KgayJqJNW6nrsjaxaHaTc0o
-         KeDL5dM39A3cHYk9mc3BkyAFxuh5Yc8TWeU/YtjpvpoFE9xKA8Ioup/NQiAbUCZmi7fK
-         /Rrw==
-X-Received: by 10.60.52.81 with SMTP id r17mr12518417oeo.3.1380406202189;
-        Sat, 28 Sep 2013 15:10:02 -0700 (PDT)
+        bh=19xr5bj9zIdGzBelCHWjKraZ9ik06UvW03aZL4+ECBU=;
+        b=CfKRQTEu0GJKnEtimedSkn+GW2SVtodGZE9nyePTK7S0jILuOcwDVIFaZYwCzAaNcp
+         A0B7uNgI2VpaV5XP/JGajZXXAAUQR2RYhw4n1zuO6GnKV5mwQRMzFgKEwlFGY7Pkh191
+         gsJgDQ5LDvZwpR6BbBMtTMxy0eLknPlyPxFzIomWg2zEQOtuTvP2NHB9OxTST44YxUeT
+         nDp4Qm86b0H55oJRABvtfbZmsZjH65SBjapHT7YG1EKzHojTEryaUrN3PP/2Op5c4OpD
+         TNOJtjOclGVFfl1fwMfTDtTzEx5oYGQ7Ff/Sg5PHW3DIt8iVdjwNQelLxKM4C5r4vn5n
+         157A==
+X-Received: by 10.182.22.226 with SMTP id h2mr12437003obf.8.1380406208150;
+        Sat, 28 Sep 2013 15:10:08 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id bq4sm19539471obb.1.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id d3sm25434897oek.5.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 28 Sep 2013 15:10:01 -0700 (PDT)
+        Sat, 28 Sep 2013 15:10:07 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1380405849-13000-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235524>
+
+Wether we use a symbolic ref, or we specify the branch directly
+shouldn't really matter, we would want the branch description either
+way.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Makefile |  9 +++++++++
- ruby.c   | 19 ++++++++++++++++++-
- 2 files changed, 27 insertions(+), 1 deletion(-)
+ git-request-pull.sh     | 13 +++++--------
+ t/t5150-request-pull.sh | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+), 8 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 2fdee15..27e61c0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -429,6 +429,7 @@ BASIC_LDFLAGS =
- # Guard against environment variables
- BUILTIN_OBJS =
- BUILT_INS =
-+RUBY_PROGRAMS =
- COMPAT_CFLAGS =
- COMPAT_OBJS =
- XDIFF_OBJS =
-@@ -493,6 +494,8 @@ SCRIPT_PYTHON += git-p4.py
+diff --git a/git-request-pull.sh b/git-request-pull.sh
+index 6348dac..3c9a982 100755
+--- a/git-request-pull.sh
++++ b/git-request-pull.sh
+@@ -37,15 +37,12 @@ done
  
- SCRIPT_RUBY += git-rb-setup.rb
+ base=$1 url=$2 head=${3-HEAD} status=0 branch_name=
  
-+PROGRAMS += $(RUBY_PROGRAMS)
+-headref=$(git symbolic-ref -q "$head")
+-if git show-ref -q --verify "$headref"
++headref=$(git rev-parse -q --verify --symbolic-full-name "$head")
++branch_name=${headref#refs/heads/}
++if test "z$branch_name" = "z$headref" ||
++	! git config "branch.$branch_name.description" >/dev/null
+ then
+-	branch_name=${headref#refs/heads/}
+-	if test "z$branch_name" = "z$headref" ||
+-		! git config "branch.$branch_name.description" >/dev/null
+-	then
+-		branch_name=
+-	fi
++	branch_name=
+ fi
+ 
+ tag_name=$(git describe --exact "$head^0" 2>/dev/null)
+diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
+index 54f41bf..a9ee96a 100755
+--- a/t/t5150-request-pull.sh
++++ b/t/t5150-request-pull.sh
+@@ -249,4 +249,36 @@ test_expect_success 'pull request when pushed tag' '
+ 	! grep "You locally have .* but it does not (yet)" err
+ '
+ 
++test_expect_success 'pull request with branch description' '
++	test_when_finished "(cd local && git checkout - && git branch -D for-upstream)" &&
++	rm -fr downstream.git &&
++	git init --bare downstream.git &&
++	(
++		cd local &&
++		git checkout -b for-upstream master &&
++		git config branch.for-upstream.description "Branch for upstream$LF" &&
++		git push origin for-upstream &&
++		git request-pull initial origin >../request
++	) &&
++	cat request &&
++	grep "(from the branch description for for-upstream local branch)" request &&
++	grep "Branch for upstream" request
++'
 +
- NO_INSTALL += git-remote-testgit
- NO_INSTALL += git-remote-testpy
- 
-@@ -1754,6 +1757,12 @@ $(BUILT_INS): git$X
- 	ln -s $< $@ 2>/dev/null || \
- 	cp $< $@
- 
-+$(RUBY_PROGRAMS): git-ruby$X
-+	$(QUIET_BUILT_IN)$(RM) $@ && \
-+	ln $< $@ 2>/dev/null || \
-+	ln -s $< $@ 2>/dev/null || \
-+	cp $< $@
++test_expect_success 'pull request with branch description from rev' '
++	test_when_finished "(cd local && git checkout - && git branch -D for-upstream)" &&
++	rm -fr downstream.git &&
++	git init --bare downstream.git &&
++	(
++		cd local &&
++		git checkout -b for-upstream master &&
++		git config branch.for-upstream.description "Branch for upstream$LF" &&
++		git push origin for-upstream &&
++		git request-pull initial origin for-upstream >../request
++	) &&
++	cat request &&
++	grep "(from the branch description for for-upstream local branch)" request &&
++	grep "Branch for upstream" request
++'
 +
- common-cmds.h: ./generate-cmdlist.sh command-list.txt
- 
- common-cmds.h: $(wildcard Documentation/git-*.txt)
-diff --git a/ruby.c b/ruby.c
-index ee6a0e7..339e376 100644
---- a/ruby.c
-+++ b/ruby.c
-@@ -52,5 +52,22 @@ static int run_ruby_command(const char *cmd, int argc, const char **argv)
- 
- int main(int argc, const char **argv)
- {
--	return run_ruby_command(argv[1], argc, argv);
-+	if (!strcmp(argv[0], "git-ruby")) {
-+		return run_ruby_command(argv[1], argc, argv);
-+	} else {
-+		const char *cmd = argv[0];
-+		static char buf[PATH_MAX + 1];
-+		const char *args[argc + 1];
-+		int i;
-+
-+		snprintf(buf, PATH_MAX, "%s/%s.rb",
-+				git_exec_path(), basename((char *)cmd));
-+
-+		args[0] = "git";
-+		args[1] = buf;
-+		for (i = 0; i < argc - 1; i++)
-+			args[i + 2] = (char *)argv[i + 1];
-+
-+		return run_ruby_command(cmd, argc + 1, args);
-+	}
- }
+ test_done
 -- 
 1.8.4-fc
