@@ -1,162 +1,139 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v2 3/3] for-each-ref: introduce %(upstream:track[short])
-Date: Sat, 28 Sep 2013 08:29:21 +0530
-Message-ID: <1380337161-803-4-git-send-email-artagnon@gmail.com>
-References: <1380337161-803-1-git-send-email-artagnon@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 28 05:06:58 2013
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] gc: remove gc.pid file at end of execution
+Date: Sat, 28 Sep 2013 10:42:41 +0700
+Message-ID: <CACsJy8Ax1YypAnVb0FAQPsvvZixq0aJHP=ahfMaXn26KTaN1VA@mail.gmail.com>
+References: <1380187098-8519-1-git-send-email-Matthieu.Moy@imag.fr> <20130928003319.GR9464@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 28 05:43:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VPkrw-00077y-LI
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Sep 2013 05:06:57 +0200
+	id 1VPlRI-0001kV-Gm
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Sep 2013 05:43:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754673Ab3I1DGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Sep 2013 23:06:42 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:61865 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754675Ab3I1DGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Sep 2013 23:06:23 -0400
-Received: by mail-pd0-f174.google.com with SMTP id y13so3346053pdi.19
-        for <git@vger.kernel.org>; Fri, 27 Sep 2013 20:06:22 -0700 (PDT)
+	id S1754673Ab3I1DnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Sep 2013 23:43:12 -0400
+Received: from mail-oa0-f51.google.com ([209.85.219.51]:45045 "EHLO
+	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754660Ab3I1DnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Sep 2013 23:43:11 -0400
+Received: by mail-oa0-f51.google.com with SMTP id h16so2576125oag.24
+        for <git@vger.kernel.org>; Fri, 27 Sep 2013 20:43:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4bBd58UBraw3dxzaAcDhrbFcFhnXTpR2b54FNRFXDDY=;
-        b=c4o/gLow/D+VDnxNe2zXzgimUSwKOs+al+YgoOk7uDlo9pNyIeupZFh1tgAST2kfn6
-         Gw9djoTHXPz3prJzcAezAK/wSF1K2UAb8LUYVeySVsiN9WmL3X73kkHpeZP8Qq+qjo+M
-         v0zBAa31HofDrkgdaKxtuzQrzu3zNut7CIts80SC/jEcmn4QahkEieq46ZmjQ35e57PT
-         bICKz3yLdKV5tjEFx1n3yJeIJWzQ9DJTPO2mSu6T/7PQ58Bxk4MlpgEugBgC2hCKzpuH
-         YYDD4M8TTxCsO4Fw05EP7H0HKuBDQC90DJ6x2PmD8euMOB5dSRILP4HQrDGNg9ReIvkL
-         YPmg==
-X-Received: by 10.68.197.3 with SMTP id iq3mr10641557pbc.113.1380337582769;
-        Fri, 27 Sep 2013 20:06:22 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.156.52])
-        by mx.google.com with ESMTPSA id hx1sm11880794pbb.35.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 27 Sep 2013 20:06:22 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.477.g4cae6f5
-In-Reply-To: <1380337161-803-1-git-send-email-artagnon@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ul/hXj4fCnM1LxzPCvHnYVI3xPNzAhr3ueh1hjDOlp8=;
+        b=rhAfHH+B4+wqDnvJY2MLzv6ksv6Odwg3VfUZsM4EInnGkT+mgVgooqfCuUMQpj+awg
+         4AvHq0fUnfRYdjmDkEIuMFy8y3uduN8Z1tjD9y4X1GUiIneP9yuPFAbmVoIlQ/EoWpsi
+         tWk2xvWKAsmFk5tMJUDIxF+DjR5+CDaoZqXE99XE30pJJCK+7Ci7d2N/pjc4BAaVXTLO
+         eqEODlDEJMKPRIhLa8bBBf9a9oxG4QPWQKlXwU3Tps5u5tzOf0hMst56wN3TImkQAsZM
+         /Wklz/tcg72F5zGhXmbSwYXlgwM+Nw6/wWR4PYv3bOX9iy+z+9Kxx/41n+sOCOmgQAjx
+         IlSA==
+X-Received: by 10.182.44.134 with SMTP id e6mr8872167obm.14.1380339791107;
+ Fri, 27 Sep 2013 20:43:11 -0700 (PDT)
+Received: by 10.182.49.233 with HTTP; Fri, 27 Sep 2013 20:42:41 -0700 (PDT)
+In-Reply-To: <20130928003319.GR9464@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235487>
 
-Introduce %(upstream:track) to display "[ahead M, behind N]" and
-%(upstream:trackshort) to display "=", ">", "<", or "<>"
-appropriately (inspired by contrib/completion/git-prompt.sh).
+On Sat, Sep 28, 2013 at 7:33 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Matthieu Moy wrote:
+>
+>> This file isn't really harmful, but isn't useful either, and can create
+>> minor annoyance for the user:
+>
+> Would something like the following make sense, to ensure the gc.pid file is
+> always removed on normal exit?
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+> diff --git c/builtin/gc.c i/builtin/gc.c
+> index 6e0d81a..fbbc144 100644
+> --- c/builtin/gc.c
+> +++ i/builtin/gc.c
+> @@ -14,6 +14,7 @@
+>  #include "cache.h"
+>  #include "parse-options.h"
+>  #include "run-command.h"
+> +#include "sigchain.h"
+>  #include "argv-array.h"
+>
+>  #define FAILED_RUN "failed to run %s"
+> @@ -167,6 +168,21 @@ static int need_to_gc(void)
+>         return 1;
+>  }
+>
+> +static char *pidfile;
+> +
+> +static void remove_pidfile(void)
+> +{
+> +       if (pidfile)
+> +               unlink(pidfile);
+> +}
+> +
+> +static void remove_pidfile_on_signal(int signo)
+> +{
+> +       remove_pidfile();
+> +       sigchain_pop(signo);
+> +       raise(signo);
+> +}
+> +
+>  /* return NULL on success, else hostname running the gc */
+>  static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+>  {
+> @@ -179,13 +195,19 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+>         FILE *fp;
+>         int fd, should_exit;
+>
+> +       if (pidfile)
+> +               /* already locked */
+> +               return NULL;
+> +
+>         if (gethostname(my_host, sizeof(my_host)))
+>                 strcpy(my_host, "unknown");
+>
+> -       fd = hold_lock_file_for_update(&lock, git_path("gc.pid"),
+> +       pidfile = git_pathdup("gc.pid");
+> +
+> +       fd = hold_lock_file_for_update(&lock, pidfile,
+>                                        LOCK_DIE_ON_ERROR);
+>         if (!force) {
+> -               fp = fopen(git_path("gc.pid"), "r");
+> +               fp = fopen(pidfile, "r");
+>                 memset(locking_host, 0, sizeof(locking_host));
+>                 should_exit =
+>                         fp != NULL &&
+> @@ -208,6 +230,7 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+>                 if (should_exit) {
+>                         if (fd >= 0)
+>                                 rollback_lock_file(&lock);
+> +                       pidfile = NULL;
+>                         *ret_pid = pid;
+>                         return locking_host;
+>                 }
+> @@ -219,6 +242,9 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+>         strbuf_release(&sb);
 
-Now you can use the following format in for-each-ref:
+It may be a bit simpler to delay setting pidfile until we get here.
+lock.filename still contains gc.pid until commit_lock_file is called.
 
-  %C(green)%(refname:short)%C(reset)%(upstream:trackshort)
-
-to display refs with terse tracking information.
-
-Note that :track and :trackshort only work with "upstream", and error
-out when used with anything else.
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Documentation/git-for-each-ref.txt |  6 +++++-
- builtin/for-each-ref.c             | 39 ++++++++++++++++++++++++++++++++++++--
- 2 files changed, 42 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index bb9c4c1..3ef6aa8 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -93,7 +93,11 @@ objectname::
- upstream::
- 	The name of a local ref which can be considered ``upstream''
- 	from the displayed ref. Respects `:short` in the same way as
--	`refname` above.
-+	`refname` above.  Additionally respects `:track` to show
-+	"[ahead N, behind M]" and `:trackshort` to show the terse
-+	version (like the prompt) ">", "<", "<>", or "=".  Has no
-+	effect if the ref does not have tracking information
-+	associated with it.
- 
- HEAD::
- 	Used to indicate the currently checked out branch.  Is '*' if
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index b841545..7d5c174 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -648,6 +648,7 @@ static void populate_value(struct refinfo *ref)
- 		int deref = 0;
- 		const char *refname;
- 		const char *formatp;
-+		struct branch *branch;
- 
- 		if (*name == '*') {
- 			deref = 1;
-@@ -659,7 +660,6 @@ static void populate_value(struct refinfo *ref)
- 		else if (!prefixcmp(name, "symref"))
- 			refname = ref->symref ? ref->symref : "";
- 		else if (!prefixcmp(name, "upstream")) {
--			struct branch *branch;
- 			/* only local branches may have an upstream */
- 			if (prefixcmp(ref->refname, "refs/heads/"))
- 				continue;
-@@ -686,6 +686,7 @@ static void populate_value(struct refinfo *ref)
- 		} else if (!strcmp(name, "HEAD")) {
- 			const char *head;
- 			unsigned char sha1[20];
-+
- 			head = resolve_ref_unsafe("HEAD", sha1, 1, NULL);
- 			if (!strcmp(ref->refname, head))
- 				v->s = "*";
-@@ -698,11 +699,45 @@ static void populate_value(struct refinfo *ref)
- 		formatp = strchr(name, ':');
- 		/* look for "short" refname format */
- 		if (formatp) {
-+			int num_ours, num_theirs;
-+
- 			formatp++;
- 			if (!strcmp(formatp, "short"))
- 				refname = shorten_unambiguous_ref(refname,
- 						      warn_ambiguous_refs);
--			else
-+			else if (!strcmp(formatp, "track") &&
-+				!prefixcmp(name, "upstream")) {
-+				char buf[40];
-+
-+				stat_tracking_info(branch, &num_ours, &num_theirs);
-+				if (!num_ours && !num_theirs)
-+					v->s = "";
-+				else if (!num_ours) {
-+					sprintf(buf, "[behind %d]", num_theirs);
-+					v->s = xstrdup(buf);
-+				} else if (!num_theirs) {
-+					sprintf(buf, "[ahead %d]", num_ours);
-+					v->s = xstrdup(buf);
-+				} else {
-+					sprintf(buf, "[ahead %d, behind %d]",
-+						num_ours, num_theirs);
-+					v->s = xstrdup(buf);
-+				}
-+				continue;
-+			} else if (!strcmp(formatp, "trackshort") &&
-+				!prefixcmp(name, "upstream")) {
-+
-+				stat_tracking_info(branch, &num_ours, &num_theirs);
-+				if (!num_ours && !num_theirs)
-+					v->s = "=";
-+				else if (!num_ours)
-+					v->s = "<";
-+				else if (!num_theirs)
-+					v->s = ">";
-+				else
-+					v->s = "<>";
-+				continue;
-+			} else
- 				die("unknown %.*s format %s",
- 				    (int)(formatp - name), name, formatp);
- 		}
+>         commit_lock_file(&lock);
+>
+> +       sigchain_push_common(remove_pidfile_on_signal);
+> +       atexit(remove_pidfile);
+> +
+>         return NULL;
+>  }
 -- 
-1.8.4.477.g4cae6f5
+Duy
