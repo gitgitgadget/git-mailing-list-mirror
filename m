@@ -1,183 +1,358 @@
-From: Wataru Noguchi <wnoguchi.0727@gmail.com>
-Subject: [PATCH] mingw-multibyte: fix memory acces violation and
- path length limits.
-Date: Sun, 29 Sep 2013 06:17:16 +0900
-Message-ID: <1380403036-20413-1-git-send-email-wnoguchi.0727@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Local tag killer
+Date: Sat, 28 Sep 2013 23:42:59 +0200
+Message-ID: <CALKQrgeJn1J4ntE_2Lr7Et+Oao=vB1FE6nLfaFJOvLHJLzG9tA@mail.gmail.com>
+References: <52327E62.2040301@alum.mit.edu>
+	<CAPc5daXvCf90WYoUWC+DxRyZEQhXGL7Bd_ZJKwfoqxeKt8TADQ@mail.gmail.com>
+	<xmqqd2o3p0nk.fsf@gitster.dls.corp.google.com>
+	<523D3FD2.4090002@alum.mit.edu>
+	<20130924075119.GD7257@sigill.intra.peff.net>
+	<alpine.LFD.2.03.1309251834210.312@syhkavp.arg>
+	<5246C975.1050504@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Cc: Wataru Noguchi <wnoguchi.0727@gmail.com>,
-	msysgit@googlegroups.com
-To: git@vger.kernel.org
-X-From: msysgit+bncBDD7TRGTWYIBB2UOTWJAKGQETOBFBAY@googlegroups.com Sat Sep 28 23:17:35 2013
-Return-path: <msysgit+bncBDD7TRGTWYIBB2UOTWJAKGQETOBFBAY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ye0-f190.google.com ([209.85.213.190])
+Content-Type: text/plain; charset=UTF-8
+Cc: Nicolas Pitre <nico@fluxnic.net>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>,
+	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	Michael Schubert <mschub@elegosoft.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Sep 28 23:43:17 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDD7TRGTWYIBB2UOTWJAKGQETOBFBAY@googlegroups.com>)
-	id 1VQ1tL-0007Ru-NB
-	for gcvm-msysgit@m.gmane.org; Sat, 28 Sep 2013 23:17:31 +0200
-Received: by mail-ye0-f190.google.com with SMTP id m13sf844854yen.27
-        for <gcvm-msysgit@m.gmane.org>; Sat, 28 Sep 2013 14:17:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        bh=LFX8zpncn/dFw/g2nDhaXUX5rEOIzRRFEkLVQLmgbf4=;
-        b=jw2q6MqEa/e1vch5ZNhWk/B0OmKCaAp36RN8kRExudRTCFVwNwtZX6QLJOcHafF4zO
-         sxtn/B3VJkj70ZralQS2Hz+FTxByVge/3hmvfEhYi5bZcm5P6BJgwsoYz5sTIe7pIYTc
-         5ihgpqtj9blM2O+xbDOSw/duZzJyViqC+fHELeT2sTCY6qnvuuNXoLkv7my+MNbYbZXZ
-         cSEybZIehdiKvBRN3BuiaYli986V+p6uOgkAsSdpHkhhk1qidwFbjY6mbl/c2HTZ7G2K
-         sOqyZw6F0uu15xkXbQd13wyNo0Rp9SOD3QXi7MgT4fMEP9OEgd2zPI3lSNKSJOsZTR72
-         qCzA==
-X-Received: by 10.50.110.6 with SMTP id hw6mr285752igb.13.1380403050861;
-        Sat, 28 Sep 2013 14:17:30 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.136.170 with SMTP id qb10ls998429igb.37.gmail; Sat, 28 Sep
- 2013 14:17:30 -0700 (PDT)
-X-Received: by 10.66.148.8 with SMTP id to8mr15984860pab.0.1380403050095;
-        Sat, 28 Sep 2013 14:17:30 -0700 (PDT)
-Received: from mail-pd0-x22b.google.com (mail-pd0-x22b.google.com [2607:f8b0:400e:c02::22b])
-        by gmr-mx.google.com with ESMTPS id dk16si2448336pac.0.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 28 Sep 2013 14:17:30 -0700 (PDT)
-Received-SPF: pass (google.com: domain of wnoguchi.0727@gmail.com designates 2607:f8b0:400e:c02::22b as permitted sender) client-ip=2607:f8b0:400e:c02::22b;
-Received: by mail-pd0-f171.google.com with SMTP id g10so4002484pdj.16
-        for <msysgit@googlegroups.com>; Sat, 28 Sep 2013 14:17:30 -0700 (PDT)
-X-Received: by 10.66.196.110 with SMTP id il14mr19187244pac.130.1380403049950;
-        Sat, 28 Sep 2013 14:17:29 -0700 (PDT)
-Received: from localhost.localdomain (p4168-ipbf905akatuka.ibaraki.ocn.ne.jp. [219.114.17.168])
-        by mx.google.com with ESMTPSA id aq1sm16975709pbc.9.1969.12.31.16.00.00
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 28 Sep 2013 14:17:29 -0700 (PDT)
-X-Mailer: git-send-email 1.8.1.2
-X-Original-Sender: wnoguchi.0727@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of wnoguchi.0727@gmail.com designates 2607:f8b0:400e:c02::22b
- as permitted sender) smtp.mail=wnoguchi.0727@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235507>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VQ2ID-0000a4-3T
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Sep 2013 23:43:13 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755074Ab3I1VnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Sep 2013 17:43:08 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:51318 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754733Ab3I1VnH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Sep 2013 17:43:07 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1VQ2I4-0006HG-C2
+	for git@vger.kernel.org; Sat, 28 Sep 2013 23:43:04 +0200
+Received: from mail-pd0-f175.google.com ([209.85.192.175])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1VQ2I3-000Juh-NI
+	for git@vger.kernel.org; Sat, 28 Sep 2013 23:43:04 +0200
+Received: by mail-pd0-f175.google.com with SMTP id q10so3998540pdj.20
+        for <git@vger.kernel.org>; Sat, 28 Sep 2013 14:42:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=2rOjXGvmNLLRDd9VPa4m3Buv7ZuL/vSMcQ2lvBG02q0=;
+        b=Pb5JjMOWGImtcHoOLtVmSb9WCePOVde36GqO7Q/fMrUNJIk94Mg1lJaAZlN7B1ZKeB
+         NT5d1VWf8nCzNwVjUi4oaDEj1wPjJn1b1PWdWHhtRxDP4uo57+OLhHkKxtYlThMSBWnG
+         ZBJ765AUN2ndzp1rbCtIBo4l1/OQzjoaO0uU7uXWbaVO+OCq13BG/aM1sNeLRAuNKi2x
+         Y1hCx5hiiLVnGyfGyrhloNrpzTAgqaXvT7HYWagHUwKEQUvP0myQHa9ORsmZ1PYstEEa
+         foMe2RFrr36qf3efCMqUT4/DmgBqG6JS/GKUv3YGfYwX84EuuDnRLVh9DjcUV91YZ/1l
+         /skw==
+X-Received: by 10.66.227.194 with SMTP id sc2mr19392230pac.41.1380404579639;
+ Sat, 28 Sep 2013 14:42:59 -0700 (PDT)
+Received: by 10.70.24.226 with HTTP; Sat, 28 Sep 2013 14:42:59 -0700 (PDT)
+In-Reply-To: <5246C975.1050504@alum.mit.edu>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235508>
 
-fix: Git for Windows crashes when clone Japanese multibyte repository.
+On Sat, Sep 28, 2013 at 2:20 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> I just reviewed that old thread to determine its relevance to the
+> present discussion.  For the benefit of the other readers, here is a
+> summary of the main points that I got out of it.
 
-Reproduce condition:
+I want to thank you immensely for the summary below. It really helps me
+clear my own thoughts on this topic, and is an excellent base for
+discussing how to advance on it.
 
-- Japanese Base Encoding is Shift-JIS.
-- It happens Japanese multibyte directory name and too-long directory path
-- Linux(ex. Ubuntu 13.04 amd64) can clone normally.
-- example repository is here:
+> The main proposal under discussion was that of Johan Herland:
+>
+>     http://article.gmane.org/gmane.comp.version-control.git/165885
+>
+> Nicolas made the two best arguments for the necessity of
+> separate tag namespaces per remote in *some* form:
+>
+>> The extraordinary misfeature of the tag namespace at the moment
+>> comes from the fact that whenever you add a remote repo to fetch,
+>> and do fetch it, then your flat tag namespace gets polluted with all
+>> the tags the remote might have.  If you decide to delete some of
+>> those remote branches, the tags that came with it are still there
+>> and indistinguishable from other tags making it a real pain to sort
+>> out.
+>>
+>> -- http://article.gmane.org/gmane.comp.version-control.git/166108
+>
+> and
+>
+>> Let's take the OpenOffice vs LibreOffice as an example.  What if I
+>> want both in my repository so I can easily perform diffs between
+>> those independent branches?  They may certainly end up producing
+>> releases with the same version numbers (same tag name) but different
+>> content (different tag references).
+>>
+>> -- http://article.gmane.org/gmane.comp.version-control.git/166749
 
-git clone https://github.com/wnoguchi/mingw-checkout-crash.git
+I'd also like to mention my initial motivation for the proposal: a
+natural way to organize other types of remote refs (notes, replace
+refs, etc.). The separate tag namespace came about as a natural
+(and IMHO quite useful) consequence of the proposed reorganization
+of refs/remotes/*.
 
-- The reproduce crash repository contains following file only.
-  - following directory and file name is encoded for this commit log.
-  - actually file name is decoded.]
-  %E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%=
-E3%83%AA%201-long-long-long-dirname/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%87%E3=
-%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%202-long-long-long-dirname/%E6%9=
-7%A5%E6%9C%AC%E8%AA%9E%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%A=
-A%203-long-long-long-dirname/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%87%E3%82%A3%=
-E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%204-long-long-long-dirname/%E6%97%A5%E6=
-%9C%AC%E8%AA%9E%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%205-l=
-ong-long-long-dirname/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB%E3%81%8A%E8%AA%A=
-D%E3%81%BF%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84.txt
-- only one commit.
+> Other discussion and open issues regarding a ref namespace reorg:
+>
+> * What exactly would be the ambiguity rules for references with the same
+>   name that appear in multiple remotes' namespaces?
+>
+>   * Are references to two annotated tags considered the same if they
+>     refer to the same SHA-1, even if the annotated tags are different?
+>     What about an annotated vs an unannotated tag?  The consensus
+>     seemed to be "no".
+>
+>   * Do they depend on how the reference is being used?  Yes, sometimes
+>     only a SHA-1 is needed, in which case multiple agreeing references
+>     shouldn't be a problem.  Other times the DWIM caller needs the
+>     full refname (e.g., "git push" pushes to different locations
+>     depending on whether the source is a branch or tag), in which case
+>     the rules would have to be more nuanced.
 
-Cause:
+Could we try to classify all ref lookups as either ref _name_ lookups
+(in which case only a single, matching full refname is acceptable), or
+ref _value_ lookups (in which case multiple matching names are allowed,
+as long as they all point to the same SHA-1)? There are some complicated
+cases (e.g. describe) which needs more thought, but if we can agree on
+a mechanism for dealing with all the simpler cases, that might help
+inform how to deal with the complicated ones.
 
-- convert_attrs() in convert.c: if (!ccheck[0].attr) but ccheck[0].attr alw=
-ays not NULL.
-  thus git_check_attr() in attr.c (check[i].attr->attr_nr) cause access vio=
-lation.
-- checkout_entry() in entry.c: static char path[PATH_MAX + 1]; declared.
-  But its size is 261 on MinGW environment.
-  This length is Windows full path limits. But for relative path is too sho=
-rt.
+>   * Should the same ambiguity rules be applied to other references
+>     (e.g., branches)?
 
-This commit fixes:
+IMHO, yes.
 
-- convert_attrs() in convert.c: initialize ccheck[0].attr with NULL.
-- git-compat-util.h: redifine PATH_MAX value to 4096 when MinGW environment=
-.
+>   * What if a branch and a tag have the same name?
 
-Signed-off-by: Wataru Noguchi <wnoguchi.0727@gmail.com>
----
- convert.c         |  5 +++++
- git-compat-util.h | 10 ++++++++++
- 2 files changed, 15 insertions(+)
+IMHO, it depends on the context of the lookup. Some commands (e.g.
+branch, tag) are clearly only interested in one ref type, and should
+not care about other ref types at all.
 
-diff --git a/convert.c b/convert.c
-index 11a95fc..5eaa206 100644
---- a/convert.c
-+++ b/convert.c
-@@ -724,6 +724,11 @@ static void convert_attrs(struct conv_attrs *ca, const=
- char *path)
- {
- 	int i;
- 	static struct git_attr_check ccheck[NUM_CONV_ATTRS];
-+=09
-+	if (NUM_CONV_ATTRS !=3D 0) {
-+		ccheck[0].attr =3D NULL;
-+		ccheck[0].value =3D NULL;
-+	}
-=20
- 	if (!ccheck[0].attr) {
- 		for (i =3D 0; i < NUM_CONV_ATTRS; i++)
-diff --git a/git-compat-util.h b/git-compat-util.h
-index a31127f..ba02c69 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -237,6 +237,16 @@ extern char *gitbasename(char *);
- #ifndef PATH_MAX
- #define PATH_MAX 4096
- #endif
-+#ifdef GIT_WINDOWS_NATIVE
-+/* Git for Windows checkout PATH_MAX is reduce to 260.
-+ * but if checkout relative long path name, its length too short.
-+ * thus, expand length.
-+ */
-+#ifdef PATH_MAX
-+#undef PATH_MAX
-+#endif
-+#define PATH_MAX 4096
-+#endif
-=20
- #ifndef PRIuMAX
- #define PRIuMAX "llu"
---=20
-1.8.1.2
+For other lookups (e.g. rev-list, rev-parse), IMHO it depends on
+whether they're looking up ref _names_ or ref _values_. In the former
+case, ambiguity is always an error, while in the latter case it's not,
+provided they agree on the SHA-1 (although maybe warning about
+ambiguity might be appropriate in some contexts).
 
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
+>     * Nicolas Pitre suggested that usually they should be accepted if
+>       they have the same value, and if the refname matters then the
+>       branch should take precedence (with a warning).
+>
+>     * Peff pointed out that currently dwim_ref prefers tags, but that
+>       Junio has said that that behavior was arbitrary [and by
+>       implication could be changed].  He suggested:
+>
+>       > For dwim_ref, it prefers the tag and issues a warning. For
+>       > git-push, it complains about the ambiguity and dies. For git
+>       > checkout, we prefer the head. For git-tag, we prefer the tag
+>       > (though I think that only matters for "git tag -d").
+>       >
+>       > -- http://article.gmane.org/gmane.comp.version-control.git/166290
+>
+> * What should "name-rev", "describe", "--decorate" output?  See
+>   discussion here:
+>
+>       http://article.gmane.org/gmane.comp.version-control.git/165911
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+AFAICS, "name-rev" and "--decorate" are the simple cases: Use the
+shortest possible name which is still completely unambiguous in the
+current repo.
 
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+For "describe", we want to use a tag name with no prefix (i.e. only
+"$tag", not "$remote/$tag" or "$remote/tags/$tag" etc.). We also
+probably want to prefer tags from some remotes over tags from other
+remotes. Maybe something like:
+
+  git describe --tags-from $remote
+
+where the default behavior (i.e. given no --tags-from) would be to
+assume
+
+  --tags-from $(branch.$current.remote)
+  --tags-from origin
+  --tags-from . # local tags
+
+or some combination of those.
+
+> * "fetch" should probably warn if it ends up fetching a tag with the
+>   same name (according to the refname disambiguation rules) but value
+>   that conflicts with an existing tag in a different namespace.
+>
+> * Do we need some pathspec modifier (e.g., "~") to specify that the
+>   corresponding references should be auto-followed in the manner
+>   currently done for refs/tags/*?  Or is auto-following maybe not
+>   needed at all anymore?:
+>
+>       http://article.gmane.org/gmane.comp.version-control.git/160726
+>
+>   Junio thought, and Johan agreed, that tag auto-following should still
+>   be done for repositories that use the old ref namespace format.  But
+>   perhaps this could be special-cased via a config setting rather than
+>   built into the refspec syntax.
+
+When using separate remote tag namespaces, I believe tag auto-following
+is no longer needed. Instead the default refspec would simply fetch all
+tags into the remote tag namespace.
+
+As for the config setting, I have thought much about whether it is
+possible to introduce remote ref namespaces while retaining backwards
+compatibility, all _without_ having an explicit config switch. However,
+I have more or less arrived at the conclusion that a "clean break" with
+a config switch that selects either old or new ref layouts (and
+associated semantics/behavior) is preferable.
+
+> * How would somebody (e.g., an interim maintainer) suck down tags from
+>   a project into his own refs/tags/* namespace?  (Would it even be
+>   necessary?)
+
+I'm not convinced it would be necessary. I have yet to see a case where
+a (suitably unambiguous) remote tag would not fulfill the same purpose
+as the equivalent local tag. The only exception is for dealing with
+ambiguous remote tags, where a local tag could be created to serve as a
+tie-breaker.
+
+>   Should there be a tool for this?  [It seems to me that something like
+>
+>       git fetch . refs/remotes/origin/tags/*:refs/tags/*
+>
+>   would do the trick, as long as pruning were turned off.]
+
+AFAICS, that fetch command should work (and should IMHO be unaffected
+by fetch.prune or remote.$remote.prune in the configuration).
+
+> * What special handling (if any) is required for
+>   refs/remotes/$REMOTE/HEAD?
+>
+>   * According to Junio, HEAD is meant to indicate which branch is the
+>     "main" branch of the remote.  It is not transferred via the
+>     protocol, but rather guessed at by the client's "clone" process:
+>
+>         http://article.gmane.org/gmane.comp.version-control.git/166694
+>         http://article.gmane.org/gmane.comp.version-control.git/166740
+
+IMHO, if we want HEAD to accurately represent the "main" branch of the
+remote, then we must also extend the protocol to contain it, so that it
+does not go stale or suffer at the mercy of "guesswork".
+
+> * How would this help somebody who wants to fetch content from multiple
+>   projects (e.g., git, gitk, gitgui) into a single repo?  There might
+>   be tags with the same names but very different meanings, and it would
+>   be awkward if there were ambiguity warnings all over the place.
+>   [Would it work to configure the fetching repo something like
+>
+>   [remote "gitk-origin"]
+>           fetch = refs/tags/*:refs/remotes/gitk-origin/tags/gitk/*
+>
+>   and to refer to a hypothetical gitk tag "v1.2.3" as "gitk/1.2.3"?
+>   Admittedly this is somewhat ambiguous with the proposed DWIM pattern
+>   <REMOTE>/<TAGNAME>.]
+
+Only if you also had a remote called "gitk". ;)
+
+An alternative way to solve the problem of many ambiguity warnings:
+If we define the rules so that local tags always override remote tags,
+you could simply fetch the tags from your preferred remote into your
+local tag namespace (as discussed above).
+
+Personally, I would rather set up the configuration like this:
+
+  [remote "gitk"]
+          fetch = refs/tags/*:refs/remotes/gitk/tags/*
+
+(i.e. keeping the default refspec) and then use "gitk/v1.2.3",
+"git/v.1.2.3", "gitgui/v1.2.3" to disambiguate between the tags.
+
+> * It might be nice to have a command like
+>
+>       git push $REMOTE --interactive
+>
+>   that allows the user to choose interactively which branches/tags to
+>   push
+>
+>   -- http://article.gmane.org/gmane.comp.version-control.git/166700
+
+I like that idea, but I think it's somewhat peripheral to the ref
+namespace discussion.
+
+> I hope that saves somebody the time of reading the whole thread
+> (though admittedly my summary is not especially short either).
+>
+>
+> As far as I can tell, the division of tags into remote-specific
+> namespaces would be another way of preventing the problem of tags being
+> pruned too aggressively.  But given that such a big change would be a
+> huge development effort, implementing something like the following
+> might be a quicker fix and would not conflict with a hypothetical
+> future ref namespace reorganization:
+>
+> 1. Limit "git fetch --prune" to only pruning references that are under
+>    refs/remotes/*
+>
+> 2. Add a new option --prune-tags that removes the above limitation
+>
+> 3. And the above two changes would make this one possible: Change the
+>    meaning of the --tags option to mean "fetch all tags *in addition
+>    to* (rather than *instead of*) the references that would otherwise
+>    be fetched".
+
+Agreed. The ref namespace topic clearly dwarfs the issue that started
+this thread.
+
+> @Johan, I know that you were working on the ref-namespace issue at
+> GitMerge.  Did your work get anywhere? Are you still working on it?
+
+I posted a couple of patch series dealing with _some_ preliminary
+issues and adding some initial behavior changes. The first one was
+parked in 'pu':
+
+  https://git.kernel.org/cgit/git/git.git/commit/?h=pu&id=07e56ed
+
+but has since been stuck in limbo, since we decided to roll it into
+the larger series:
+
+  http://article.gmane.org/gmane.comp.version-control.git/225137
+
+The larger series was last posted here:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/223981
+
+Since then, regrettably, not much has happened. I've now rebased the
+series (still unfinished) onto v1.8.4 (no conflicts, still passes all
+tests), and pushed it to my GitHub account:
+
+  https://github.com/jherland/git/commits/peers-resurrect
+
+That said, there are probably things in that series I'd like to revise,
+e.g. introducing the config switch controlling new vs. old behavior as
+early as possible, and reverting back to using refs/remotes/* instead
+of refs/peers/*.
+
+> Have you documented somewhere any new insights that you have gained
+> about the problem space?
+
+I think this (hideously long) reply should cover it...
+
+
+Have fun! :)
+
+...Johan
+
+--
+Johan Herland, <johan@herland.net>
+www.herland.net
