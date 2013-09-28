@@ -1,283 +1,519 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 35/44] ruby: add RevInfo and DiffOptions
-Date: Sat, 28 Sep 2013 17:04:00 -0500
-Message-ID: <1380405849-13000-36-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 34/44] shortlog: split builtin from common code
+Date: Sat, 28 Sep 2013 17:03:59 -0500
+Message-ID: <1380405849-13000-35-git-send-email-felipe.contreras@gmail.com>
 References: <1380405849-13000-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 29 00:11:55 2013
+X-From: git-owner@vger.kernel.org Sun Sep 29 00:11:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQ2jw-000423-46
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 00:11:52 +0200
+	id 1VQ2jv-000423-8S
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 00:11:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755370Ab3I1WLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Sep 2013 18:11:47 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:47268 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755355Ab3I1WLo (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755362Ab3I1WLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sat, 28 Sep 2013 18:11:44 -0400
-Received: by mail-ob0-f181.google.com with SMTP id gq1so4112868obb.40
-        for <git@vger.kernel.org>; Sat, 28 Sep 2013 15:11:44 -0700 (PDT)
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:47334 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755355Ab3I1WLm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Sep 2013 18:11:42 -0400
+Received: by mail-oa0-f43.google.com with SMTP id f4so3018519oah.2
+        for <git@vger.kernel.org>; Sat, 28 Sep 2013 15:11:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Z7zcA1SwDcaWtBMJnsYz+g6jmBOUUncajZU+u/+rnHI=;
-        b=x564mLHKWl9uWCoauUp6krduA44TmhBY2uR8NyQCMoN88xKHMURdqFix7jt3Kso9e4
-         p+bpT4Dyk2rDhEDFV5vD+OFmwoo34hp9JGorjhyMb1xeW4+/OYsywbzxcYCEMWOeWBVg
-         h9U8mWTknDsQwq8YuFRz3Ufa+Axk8zZSy+OvCpKXbNC4r7ksQ3P1J2ZFRJmNW687OR29
-         K0U9PDXVjBgNbn53I2kagBPnXTpF8JvPZe62ZwzVi2ATtV9fW76k6h76W2uFi8B/NuUt
-         aVfVIVmQdyVhnT7u+hVL4g2Jmclhablq5MLOjoNcaPeAJqRo0nK7GKXjAoL6jeD+1smT
-         Hxmg==
-X-Received: by 10.60.117.225 with SMTP id kh1mr12301937oeb.15.1380406304290;
-        Sat, 28 Sep 2013 15:11:44 -0700 (PDT)
+        bh=HuP67jiYz1MLVEBOv9R4ph29VuKbnxkwPb/jya4EVSQ=;
+        b=oHz1Cj5XHYMErSK8aQVoDw/Jlhv2fvhZJxjiORRA3W47A5XIT3jxiq70ev/pEMAqPy
+         60C/8Gr0Sguky+IJZmKMEp7c4mYzCiZULflmIY/+4kFgoRd6pJdsNC/x124uKbe0vRCp
+         //qMvIRBVvzje8mU8S1lTTKTkJel/Z3A1EYieINO6B4prEpBSo8IyL2QiY7yz2nAnYnn
+         47idEBBbKDAyZMs3SpoSajwJ+CiOZFDESSqHFBp8z/pGoUy8K6DguOB/3FVZCbHSFX1v
+         ciwINXpBsNHmr1QfnwzLrS7dGgjVwr7txSdhZ4azAiCJIPJ/Ph50pDrQlOU5IS9PUP4G
+         NILQ==
+X-Received: by 10.60.118.70 with SMTP id kk6mr12445439oeb.22.1380406301839;
+        Sat, 28 Sep 2013 15:11:41 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id xx9sm19517230obc.6.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id ru3sm19538918obc.2.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 28 Sep 2013 15:11:43 -0700 (PDT)
+        Sat, 28 Sep 2013 15:11:40 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1380405849-13000-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235556>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
 
 Notes:
-    This time we use an initializer and alloc function, so we could do:
-    
-     ri = Git::RevInfo.new()
-     ri.setup(args)
-    
-    Or:
-    
-     ri = Git::RevInfo.setup(args)
-    
-    The effect is the same.
-    
-    Also, we use the extremely useful 'method_missing' method, which allows us to
-    do the binding at run-time, saving us precious finger typing time and code,
-    with price of a bit of performance loss, which is not that important in a
-    script like this.
-    
-    We could do something fancier like saving the Ruby internal identifiers in an
-    array to map them to a C enum, or we could even generate the missing methods at
-    run-time, but for now let's stick to the simpler option and just make it work
-    with the less possible code.
+    Somebody forgot to do this.
 
- ruby.c | 165 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 165 insertions(+)
+ Makefile           |   1 +
+ builtin/shortlog.c | 184 +----------------------------------------------------
+ shortlog.c         | 181 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ shortlog.h         |   6 ++
+ 4 files changed, 189 insertions(+), 183 deletions(-)
+ create mode 100644 shortlog.c
 
-diff --git a/ruby.c b/ruby.c
-index 360515f..d9ee985 100644
---- a/ruby.c
-+++ b/ruby.c
-@@ -5,6 +5,8 @@
+diff --git a/Makefile b/Makefile
+index 44b4cd5..709c087 100644
+--- a/Makefile
++++ b/Makefile
+@@ -880,6 +880,7 @@ LIB_OBJS += sha1-lookup.o
+ LIB_OBJS += sha1_file.o
+ LIB_OBJS += sha1_name.o
+ LIB_OBJS += shallow.o
++LIB_OBJS += shortlog.o
+ LIB_OBJS += sideband.o
+ LIB_OBJS += sigchain.o
+ LIB_OBJS += strbuf.o
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 1434f8f..f84c6f8 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -1,11 +1,8 @@
+ #include "builtin.h"
+ #include "cache.h"
  #include "commit.h"
- #include "remote.h"
- #include "transport.h"
-+#include "revision.h"
-+#include "diff.h"
+-#include "diff.h"
+ #include "string-list.h"
+ #include "revision.h"
+-#include "utf8.h"
+-#include "mailmap.h"
+ #include "shortlog.h"
+ #include "parse-options.h"
  
- #undef NORETURN
- #undef PATH_SEP
-@@ -17,6 +19,8 @@ static VALUE git_rb_commit_list;
- static VALUE git_rb_remote;
- static VALUE git_rb_transport;
- static VALUE git_rb_ref;
-+static VALUE git_rb_rev_info;
-+static VALUE git_rb_diff_opt;
+@@ -14,81 +11,6 @@ static char const * const shortlog_usage[] = {
+ 	NULL
+ };
  
- static inline VALUE sha1_to_str(const unsigned char *sha1)
+-static int compare_by_number(const void *a1, const void *a2)
+-{
+-	const struct string_list_item *i1 = a1, *i2 = a2;
+-	const struct string_list *l1 = i1->util, *l2 = i2->util;
+-
+-	if (l1->nr < l2->nr)
+-		return 1;
+-	else if (l1->nr == l2->nr)
+-		return 0;
+-	else
+-		return -1;
+-}
+-
+-static void insert_one_record(struct shortlog *log,
+-			      const char *author,
+-			      const char *oneline)
+-{
+-	const char *dot3 = log->common_repo_prefix;
+-	char *buffer, *p;
+-	struct string_list_item *item;
+-	const char *mailbuf, *namebuf;
+-	size_t namelen, maillen;
+-	const char *eol;
+-	struct strbuf subject = STRBUF_INIT;
+-	struct strbuf namemailbuf = STRBUF_INIT;
+-	struct ident_split ident;
+-
+-	if (split_ident_line(&ident, author, strlen(author)))
+-		return;
+-
+-	namebuf = ident.name_begin;
+-	mailbuf = ident.mail_begin;
+-	namelen = ident.name_end - ident.name_begin;
+-	maillen = ident.mail_end - ident.mail_begin;
+-
+-	map_user(&log->mailmap, &mailbuf, &maillen, &namebuf, &namelen);
+-	strbuf_add(&namemailbuf, namebuf, namelen);
+-
+-	if (log->email)
+-		strbuf_addf(&namemailbuf, " <%.*s>", (int)maillen, mailbuf);
+-
+-	item = string_list_insert(&log->list, namemailbuf.buf);
+-	if (item->util == NULL)
+-		item->util = xcalloc(1, sizeof(struct string_list));
+-
+-	/* Skip any leading whitespace, including any blank lines. */
+-	while (*oneline && isspace(*oneline))
+-		oneline++;
+-	eol = strchr(oneline, '\n');
+-	if (!eol)
+-		eol = oneline + strlen(oneline);
+-	if (!prefixcmp(oneline, "[PATCH")) {
+-		char *eob = strchr(oneline, ']');
+-		if (eob && (!eol || eob < eol))
+-			oneline = eob + 1;
+-	}
+-	while (*oneline && isspace(*oneline) && *oneline != '\n')
+-		oneline++;
+-	format_subject(&subject, oneline, " ");
+-	buffer = strbuf_detach(&subject, NULL);
+-
+-	if (dot3) {
+-		int dot3len = strlen(dot3);
+-		if (dot3len > 5) {
+-			while ((p = strstr(buffer, dot3)) != NULL) {
+-				int taillen = strlen(p) - dot3len;
+-				memcpy(p, "/.../", 5);
+-				memmove(p + 5, p + dot3len, taillen + 1);
+-			}
+-		}
+-	}
+-
+-	string_list_append(item->util, buffer);
+-}
+-
+ static void read_from_stdin(struct shortlog *log)
  {
-@@ -277,6 +281,107 @@ static VALUE git_rb_read_sha1_file(VALUE self, VALUE sha1, VALUE type)
- 	return rb_ary_new3(2, rb_str_new(buffer, size), INT2FIX(g_type));
+ 	char author[1024], oneline[1024];
+@@ -103,51 +25,10 @@ static void read_from_stdin(struct shortlog *log)
+ 		while (fgets(oneline, sizeof(oneline), stdin) &&
+ 		       oneline[0] == '\n')
+ 			; /* discard blanks */
+-		insert_one_record(log, author + 8, oneline);
++		shortlog_insert_one_record(log, author + 8, oneline);
+ 	}
  }
  
-+static VALUE git_rb_rev_info_alloc(VALUE class)
+-void shortlog_add_commit(struct shortlog *log, struct commit *commit)
+-{
+-	const char *author = NULL, *buffer;
+-	struct strbuf buf = STRBUF_INIT;
+-	struct strbuf ufbuf = STRBUF_INIT;
+-
+-	pp_commit_easy(CMIT_FMT_RAW, commit, &buf);
+-	buffer = buf.buf;
+-	while (*buffer && *buffer != '\n') {
+-		const char *eol = strchr(buffer, '\n');
+-
+-		if (eol == NULL)
+-			eol = buffer + strlen(buffer);
+-		else
+-			eol++;
+-
+-		if (!prefixcmp(buffer, "author "))
+-			author = buffer + 7;
+-		buffer = eol;
+-	}
+-	if (!author)
+-		die(_("Missing author: %s"),
+-		    sha1_to_hex(commit->object.sha1));
+-	if (log->user_format) {
+-		struct pretty_print_context ctx = {0};
+-		ctx.fmt = CMIT_FMT_USERFORMAT;
+-		ctx.abbrev = log->abbrev;
+-		ctx.subject = "";
+-		ctx.after_subject = "";
+-		ctx.date_mode = DATE_NORMAL;
+-		ctx.output_encoding = get_log_output_encoding();
+-		pretty_print_commit(&ctx, commit, &ufbuf);
+-		buffer = ufbuf.buf;
+-	} else if (*buffer) {
+-		buffer++;
+-	}
+-	insert_one_record(log, author, !*buffer ? "<none>" : buffer);
+-	strbuf_release(&ufbuf);
+-	strbuf_release(&buf);
+-}
+-
+ static void get_from_rev(struct rev_info *rev, struct shortlog *log)
+ {
+ 	struct commit *commit;
+@@ -175,9 +56,6 @@ static int parse_uint(char const **arg, int comma, int defval)
+ }
+ 
+ static const char wrap_arg_usage[] = "-w[<width>[,<indent1>[,<indent2>]]]";
+-#define DEFAULT_WRAPLEN 76
+-#define DEFAULT_INDENT1 6
+-#define DEFAULT_INDENT2 9
+ 
+ static int parse_wrap_args(const struct option *opt, const char *arg, int unset)
+ {
+@@ -205,18 +83,6 @@ static int parse_wrap_args(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
+-void shortlog_init(struct shortlog *log)
+-{
+-	memset(log, 0, sizeof(*log));
+-
+-	read_mailmap(&log->mailmap, &log->common_repo_prefix);
+-
+-	log->list.strdup_strings = 1;
+-	log->wrap = DEFAULT_WRAPLEN;
+-	log->in1 = DEFAULT_INDENT1;
+-	log->in2 = DEFAULT_INDENT2;
+-}
+-
+ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+ {
+ 	static struct shortlog log;
+@@ -277,51 +143,3 @@ parse_done:
+ 	shortlog_output(&log);
+ 	return 0;
+ }
+-
+-static void add_wrapped_shortlog_msg(struct strbuf *sb, const char *s,
+-				     const struct shortlog *log)
+-{
+-	strbuf_add_wrapped_text(sb, s, log->in1, log->in2, log->wrap);
+-	strbuf_addch(sb, '\n');
+-}
+-
+-void shortlog_output(struct shortlog *log)
+-{
+-	int i, j;
+-	struct strbuf sb = STRBUF_INIT;
+-
+-	if (log->sort_by_number)
+-		qsort(log->list.items, log->list.nr, sizeof(struct string_list_item),
+-			compare_by_number);
+-	for (i = 0; i < log->list.nr; i++) {
+-		struct string_list *onelines = log->list.items[i].util;
+-
+-		if (log->summary) {
+-			printf("%6d\t%s\n", onelines->nr, log->list.items[i].string);
+-		} else {
+-			printf("%s (%d):\n", log->list.items[i].string, onelines->nr);
+-			for (j = onelines->nr - 1; j >= 0; j--) {
+-				const char *msg = onelines->items[j].string;
+-
+-				if (log->wrap_lines) {
+-					strbuf_reset(&sb);
+-					add_wrapped_shortlog_msg(&sb, msg, log);
+-					fwrite(sb.buf, sb.len, 1, stdout);
+-				}
+-				else
+-					printf("      %s\n", msg);
+-			}
+-			putchar('\n');
+-		}
+-
+-		onelines->strdup_strings = 1;
+-		string_list_clear(onelines, 0);
+-		free(onelines);
+-		log->list.items[i].util = NULL;
+-	}
+-
+-	strbuf_release(&sb);
+-	log->list.strdup_strings = 1;
+-	string_list_clear(&log->list, 1);
+-	clear_mailmap(&log->mailmap);
+-}
+diff --git a/shortlog.c b/shortlog.c
+new file mode 100644
+index 0000000..89a839f
+--- /dev/null
++++ b/shortlog.c
+@@ -0,0 +1,181 @@
++#include "cache.h"
++#include "shortlog.h"
++#include "commit.h"
++#include "mailmap.h"
++#include "utf8.h"
++
++void shortlog_init(struct shortlog *log)
 +{
-+	struct rev_info *revs;
-+	return Data_Make_Struct(class, struct rev_info, NULL, free, revs);
++	memset(log, 0, sizeof(*log));
++
++	read_mailmap(&log->mailmap, &log->common_repo_prefix);
++
++	log->list.strdup_strings = 1;
++	log->wrap = DEFAULT_WRAPLEN;
++	log->in1 = DEFAULT_INDENT1;
++	log->in2 = DEFAULT_INDENT2;
 +}
 +
-+static VALUE git_rb_rev_info_init(VALUE self, VALUE prefix)
++void shortlog_insert_one_record(struct shortlog *log,
++		const char *author,
++		const char *oneline)
 +{
-+	struct rev_info *revs;
-+	Data_Get_Struct(self, struct rev_info, revs);
-+	init_revisions(revs, str_to_cstr(prefix));
-+	return self;
-+}
++	const char *dot3 = log->common_repo_prefix;
++	char *buffer, *p;
++	struct string_list_item *item;
++	const char *mailbuf, *namebuf;
++	size_t namelen, maillen;
++	const char *eol;
++	struct strbuf subject = STRBUF_INIT;
++	struct strbuf namemailbuf = STRBUF_INIT;
++	struct ident_split ident;
 +
-+static VALUE git_rb_rev_info_setup(VALUE self, VALUE args, VALUE opts)
-+{
-+	struct rev_info *revs;
-+	const char *argv[RARRAY_LEN(args) + 2];
-+	int i, r;
++	if (split_ident_line(&ident, author, strlen(author)))
++		return;
 +
-+	argv[0] = "";
-+	Data_Get_Struct(self, struct rev_info, revs);
-+	for (i = 0; i < RARRAY_LEN(args); i++)
-+		argv[i + 1] = RSTRING_PTR(RARRAY_PTR(args)[i]);
-+	argv[i + 1] = NULL;
-+	r = setup_revisions(RARRAY_LEN(args) + 1, argv, revs, NULL);
-+	return INT2FIX(r - 1);
-+}
++	namebuf = ident.name_begin;
++	mailbuf = ident.mail_begin;
++	namelen = ident.name_end - ident.name_begin;
++	maillen = ident.mail_end - ident.mail_begin;
 +
-+static VALUE git_rb_rev_info_single_setup(VALUE class, VALUE prefix, VALUE args, VALUE opts)
-+{
-+	struct rev_info *revs;
-+	VALUE self;
-+	self = Data_Make_Struct(class, struct rev_info, NULL, free, revs);
-+	init_revisions(revs, str_to_cstr(prefix));
-+	git_rb_rev_info_setup(self, args, opts);
-+	return self;
-+}
++	map_user(&log->mailmap, &mailbuf, &maillen, &namebuf, &namelen);
++	strbuf_add(&namemailbuf, namebuf, namelen);
 +
-+static VALUE git_rb_rev_info_each_revision(VALUE self, VALUE args, VALUE opts)
-+{
-+	struct commit *commit;
-+	struct rev_info *revs;
++	if (log->email)
++		strbuf_addf(&namemailbuf, " <%.*s>", (int)maillen, mailbuf);
 +
-+	Data_Get_Struct(self, struct rev_info, revs);
-+	if (prepare_revision_walk(revs))
-+		return Qnil;
-+	while ((commit = get_revision(revs))) {
-+		VALUE c;
-+		c = Data_Wrap_Struct(git_rb_commit, NULL, NULL, commit);
-+		rb_yield(c);
++	item = string_list_insert(&log->list, namemailbuf.buf);
++	if (item->util == NULL)
++		item->util = xcalloc(1, sizeof(struct string_list));
++
++	/* Skip any leading whitespace, including any blank lines. */
++	while (*oneline && isspace(*oneline))
++		oneline++;
++	eol = strchr(oneline, '\n');
++	if (!eol)
++		eol = oneline + strlen(oneline);
++	if (!prefixcmp(oneline, "[PATCH")) {
++		char *eob = strchr(oneline, ']');
++		if (eob && (!eol || eob < eol))
++			oneline = eob + 1;
 +	}
-+	return Qnil;
++	while (*oneline && isspace(*oneline) && *oneline != '\n')
++		oneline++;
++	format_subject(&subject, oneline, " ");
++	buffer = strbuf_detach(&subject, NULL);
++
++	if (dot3) {
++		int dot3len = strlen(dot3);
++		if (dot3len > 5) {
++			while ((p = strstr(buffer, dot3)) != NULL) {
++				int taillen = strlen(p) - dot3len;
++				memcpy(p, "/.../", 5);
++				memmove(p + 5, p + dot3len, taillen + 1);
++			}
++		}
++	}
++
++	string_list_append(item->util, buffer);
 +}
 +
-+static VALUE git_rb_rev_info_diffopt(VALUE self)
++void shortlog_add_commit(struct shortlog *log, struct commit *commit)
 +{
-+	struct rev_info *revs;
++	const char *author = NULL, *buffer;
++	struct strbuf buf = STRBUF_INIT;
++	struct strbuf ufbuf = STRBUF_INIT;
 +
-+	Data_Get_Struct(self, struct rev_info, revs);
-+	return Data_Wrap_Struct(git_rb_diff_opt, NULL, NULL, &revs->diffopt);
++	pp_commit_easy(CMIT_FMT_RAW, commit, &buf);
++	buffer = buf.buf;
++	while (*buffer && *buffer != '\n') {
++		const char *eol = strchr(buffer, '\n');
++
++		if (eol == NULL)
++			eol = buffer + strlen(buffer);
++		else
++			eol++;
++
++		if (!prefixcmp(buffer, "author "))
++			author = buffer + 7;
++		buffer = eol;
++	}
++	if (!author)
++		die(_("Missing author: %s"),
++		    sha1_to_hex(commit->object.sha1));
++	if (log->user_format) {
++		struct pretty_print_context ctx = {0};
++		ctx.fmt = CMIT_FMT_USERFORMAT;
++		ctx.abbrev = log->abbrev;
++		ctx.subject = "";
++		ctx.after_subject = "";
++		ctx.date_mode = DATE_NORMAL;
++		ctx.output_encoding = get_log_output_encoding();
++		pretty_print_commit(&ctx, commit, &ufbuf);
++		buffer = ufbuf.buf;
++	} else if (*buffer) {
++		buffer++;
++	}
++	shortlog_insert_one_record(log, author, !*buffer ? "<none>" : buffer);
++	strbuf_release(&ufbuf);
++	strbuf_release(&buf);
 +}
 +
-+static VALUE git_rb_diff_opt_new(VALUE class)
++static int compare_by_number(const void *a1, const void *a2)
 +{
-+	struct diff_options *opt;
-+	VALUE self;
-+	self = Data_Make_Struct(class, struct diff_options, NULL, free, opt);
++	const struct string_list_item *i1 = a1, *i2 = a2;
++	const struct string_list *l1 = i1->util, *l2 = i2->util;
 +
-+	diff_setup(opt);
-+
-+	return self;
-+}
-+
-+static VALUE git_rb_diff_opt_method_missing(int argc, VALUE *argv, VALUE self)
-+{
-+	struct diff_options *opt;
-+	ID id;
-+
-+	id = rb_to_id(argv[0]);
-+	Data_Get_Struct(self, struct diff_options, opt);
-+
-+	if (id == rb_intern("stat_width="))
-+		opt->stat_width = NUM2INT(argv[1]);
-+	else if (id == rb_intern("stat_graph_width="))
-+		opt->stat_graph_width = NUM2INT(argv[1]);
-+	else if (id == rb_intern("output_format="))
-+		opt->output_format = NUM2INT(argv[1]);
-+	else if (id == rb_intern("detect_rename="))
-+		opt->detect_rename = NUM2INT(argv[1]);
-+	else if (id == rb_intern("flags="))
-+		opt->flags = NUM2INT(argv[1]);
-+	else if (id == rb_intern("output_format"))
-+		return INT2FIX(opt->output_format);
-+	else if (id == rb_intern("flags"))
-+		return INT2FIX(opt->flags);
++	if (l1->nr < l2->nr)
++		return 1;
++	else if (l1->nr == l2->nr)
++		return 0;
 +	else
-+		return rb_call_super(argc, argv);
-+	return Qnil;
++		return -1;
 +}
 +
- static void git_ruby_init(void)
- {
- 	VALUE mod;
-@@ -296,6 +401,53 @@ static void git_ruby_init(void)
++static void add_wrapped_shortlog_msg(struct strbuf *sb, const char *s,
++				     const struct shortlog *log)
++{
++	strbuf_add_wrapped_text(sb, s, log->in1, log->in2, log->wrap);
++	strbuf_addch(sb, '\n');
++}
++
++void shortlog_output(struct shortlog *log)
++{
++	int i, j;
++	struct strbuf sb = STRBUF_INIT;
++
++	if (log->sort_by_number)
++		qsort(log->list.items, log->list.nr, sizeof(struct string_list_item),
++			compare_by_number);
++	for (i = 0; i < log->list.nr; i++) {
++		struct string_list *onelines = log->list.items[i].util;
++
++		if (log->summary) {
++			printf("%6d\t%s\n", onelines->nr, log->list.items[i].string);
++		} else {
++			printf("%s (%d):\n", log->list.items[i].string, onelines->nr);
++			for (j = onelines->nr - 1; j >= 0; j--) {
++				const char *msg = onelines->items[j].string;
++
++				if (log->wrap_lines) {
++					strbuf_reset(&sb);
++					add_wrapped_shortlog_msg(&sb, msg, log);
++					fwrite(sb.buf, sb.len, 1, stdout);
++				}
++				else
++					printf("      %s\n", msg);
++			}
++			putchar('\n');
++		}
++
++		onelines->strdup_strings = 1;
++		string_list_clear(onelines, 0);
++		free(onelines);
++		log->list.items[i].util = NULL;
++	}
++
++	strbuf_release(&sb);
++	log->list.strdup_strings = 1;
++	string_list_clear(&log->list, 1);
++	clear_mailmap(&log->mailmap);
++}
+diff --git a/shortlog.h b/shortlog.h
+index 54bc07c..cf14d8b 100644
+--- a/shortlog.h
++++ b/shortlog.h
+@@ -3,6 +3,10 @@
  
- 	rb_define_global_const("DEFAULT_ABBREV", INT2FIX(DEFAULT_ABBREV));
+ #include "string-list.h"
  
-+	rb_define_global_const("DIFF_FORMAT_RAW", INT2FIX(DIFF_FORMAT_RAW));
-+	rb_define_global_const("DIFF_FORMAT_DIFFSTAT", INT2FIX(DIFF_FORMAT_DIFFSTAT));
-+	rb_define_global_const("DIFF_FORMAT_NUMSTAT", INT2FIX(DIFF_FORMAT_NUMSTAT));
-+	rb_define_global_const("DIFF_FORMAT_SUMMARY", INT2FIX(DIFF_FORMAT_SUMMARY));
-+	rb_define_global_const("DIFF_FORMAT_PATCH", INT2FIX(DIFF_FORMAT_PATCH));
-+	rb_define_global_const("DIFF_FORMAT_SHORTSTAT", INT2FIX(DIFF_FORMAT_SHORTSTAT));
-+	rb_define_global_const("DIFF_FORMAT_DIRSTAT", INT2FIX(DIFF_FORMAT_DIRSTAT));
-+	rb_define_global_const("DIFF_FORMAT_NAME", INT2FIX(DIFF_FORMAT_NAME));
-+	rb_define_global_const("DIFF_FORMAT_NAME_STATUS", INT2FIX(DIFF_FORMAT_NAME_STATUS));
-+	rb_define_global_const("DIFF_FORMAT_CHECKDIFF", INT2FIX(DIFF_FORMAT_CHECKDIFF));
-+	rb_define_global_const("DIFF_FORMAT_NO_OUTPUT", INT2FIX(DIFF_FORMAT_NO_OUTPUT));
-+	rb_define_global_const("DIFF_FORMAT_CALLBACK", INT2FIX(DIFF_FORMAT_CALLBACK));
++#define DEFAULT_WRAPLEN 76
++#define DEFAULT_INDENT1 6
++#define DEFAULT_INDENT2 9
 +
-+	rb_define_global_const("DIFF_DETECT_RENAME", INT2FIX(DIFF_DETECT_RENAME));
-+	rb_define_global_const("DIFF_DETECT_COPY", INT2FIX(DIFF_DETECT_COPY));
-+
-+	rb_define_global_const("DIFF_OPT_RECURSIVE", INT2FIX(DIFF_OPT_RECURSIVE));
-+	rb_define_global_const("DIFF_OPT_TREE_IN_RECURSIVE", INT2FIX(DIFF_OPT_TREE_IN_RECURSIVE));
-+	rb_define_global_const("DIFF_OPT_BINARY", INT2FIX(DIFF_OPT_BINARY));
-+	rb_define_global_const("DIFF_OPT_TEXT", INT2FIX(DIFF_OPT_TEXT));
-+	rb_define_global_const("DIFF_OPT_FULL_INDEX", INT2FIX(DIFF_OPT_FULL_INDEX));
-+	rb_define_global_const("DIFF_OPT_SILENT_ON_REMOVE", INT2FIX(DIFF_OPT_SILENT_ON_REMOVE));
-+	rb_define_global_const("DIFF_OPT_FIND_COPIES_HARDER", INT2FIX(DIFF_OPT_FIND_COPIES_HARDER));
-+	rb_define_global_const("DIFF_OPT_FOLLOW_RENAMES", INT2FIX(DIFF_OPT_FOLLOW_RENAMES));
-+	rb_define_global_const("DIFF_OPT_RENAME_EMPTY", INT2FIX(DIFF_OPT_RENAME_EMPTY));
-+	rb_define_global_const("DIFF_OPT_HAS_CHANGES", INT2FIX(DIFF_OPT_HAS_CHANGES));
-+	rb_define_global_const("DIFF_OPT_QUICK", INT2FIX(DIFF_OPT_QUICK));
-+	rb_define_global_const("DIFF_OPT_NO_INDEX", INT2FIX(DIFF_OPT_NO_INDEX));
-+	rb_define_global_const("DIFF_OPT_ALLOW_EXTERNAL", INT2FIX(DIFF_OPT_ALLOW_EXTERNAL));
-+	rb_define_global_const("DIFF_OPT_EXIT_WITH_STATUS", INT2FIX(DIFF_OPT_EXIT_WITH_STATUS));
-+	rb_define_global_const("DIFF_OPT_REVERSE_DIFF", INT2FIX(DIFF_OPT_REVERSE_DIFF));
-+	rb_define_global_const("DIFF_OPT_CHECK_FAILED", INT2FIX(DIFF_OPT_CHECK_FAILED));
-+	rb_define_global_const("DIFF_OPT_RELATIVE_NAME", INT2FIX(DIFF_OPT_RELATIVE_NAME));
-+	rb_define_global_const("DIFF_OPT_IGNORE_SUBMODULES", INT2FIX(DIFF_OPT_IGNORE_SUBMODULES));
-+	rb_define_global_const("DIFF_OPT_DIRSTAT_CUMULATIVE", INT2FIX(DIFF_OPT_DIRSTAT_CUMULATIVE));
-+	rb_define_global_const("DIFF_OPT_DIRSTAT_BY_FILE", INT2FIX(DIFF_OPT_DIRSTAT_BY_FILE));
-+	rb_define_global_const("DIFF_OPT_ALLOW_TEXTCONV", INT2FIX(DIFF_OPT_ALLOW_TEXTCONV));
-+	rb_define_global_const("DIFF_OPT_DIFF_FROM_CONTENTS", INT2FIX(DIFF_OPT_DIFF_FROM_CONTENTS));
-+	rb_define_global_const("DIFF_OPT_SUBMODULE_LOG", INT2FIX(DIFF_OPT_SUBMODULE_LOG));
-+	rb_define_global_const("DIFF_OPT_DIRTY_SUBMODULES", INT2FIX(DIFF_OPT_DIRTY_SUBMODULES));
-+	rb_define_global_const("DIFF_OPT_IGNORE_UNTRACKED_IN_SUBMODULES", INT2FIX(DIFF_OPT_IGNORE_UNTRACKED_IN_SUBMODULES));
-+	rb_define_global_const("DIFF_OPT_IGNORE_DIRTY_SUBMODULES", INT2FIX(DIFF_OPT_IGNORE_DIRTY_SUBMODULES));
-+	rb_define_global_const("DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG", INT2FIX(DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG));
-+	rb_define_global_const("DIFF_OPT_DIRSTAT_BY_LINE", INT2FIX(DIFF_OPT_DIRSTAT_BY_LINE));
-+	rb_define_global_const("DIFF_OPT_FUNCCONTEXT", INT2FIX(DIFF_OPT_FUNCCONTEXT));
-+	rb_define_global_const("DIFF_OPT_PICKAXE_IGNORE_CASE", INT2FIX(DIFF_OPT_PICKAXE_IGNORE_CASE));
-+
- 	rb_define_global_function("setup_git_directory", git_rb_setup_git_directory, 0);
- 	rb_define_global_function("for_each_ref", git_rb_for_each_ref, 0);
- 	rb_define_global_function("dwim_ref", git_rb_dwim_ref, 1);
-@@ -334,6 +486,19 @@ static void git_ruby_init(void)
- 	rb_define_method(git_rb_ref, "each", git_rb_ref_each, 0);
- 	rb_define_method(git_rb_ref, "name", git_rb_ref_name, 0);
- 	rb_define_method(git_rb_ref, "old_sha1", git_rb_ref_old_sha1, 0);
-+
-+	git_rb_rev_info = rb_define_class_under(mod, "RevInfo", rb_cData);
-+	rb_include_module(git_rb_rev_info, rb_mEnumerable);
-+	rb_define_alloc_func(git_rb_rev_info, git_rb_rev_info_alloc);
-+	rb_define_method(git_rb_rev_info, "initialize", git_rb_rev_info_init, 1);
-+	rb_define_singleton_method(git_rb_rev_info, "setup", git_rb_rev_info_single_setup, 3);
-+	rb_define_method(git_rb_rev_info, "setup", git_rb_rev_info_setup, 2);
-+	rb_define_method(git_rb_rev_info, "each", git_rb_rev_info_each_revision, 0);
-+	rb_define_method(git_rb_rev_info, "diffopt", git_rb_rev_info_diffopt, 0);
-+
-+	git_rb_diff_opt = rb_define_class_under(mod, "DiffOptions", rb_cData);
-+	rb_define_singleton_method(git_rb_diff_opt, "new", git_rb_diff_opt_new, 0);
-+	rb_define_method(git_rb_diff_opt, "method_missing", git_rb_diff_opt_method_missing, -1);
- }
+ struct shortlog {
+ 	struct string_list list;
+ 	int summary;
+@@ -25,6 +29,8 @@ void shortlog_init(struct shortlog *log);
  
- static int run_ruby_command(const char *cmd, int argc, const char **argv)
+ void shortlog_add_commit(struct shortlog *log, struct commit *commit);
+ 
++void shortlog_insert_one_record(struct shortlog *log, const char *author, const char *oneline);
++
+ void shortlog_output(struct shortlog *log);
+ 
+ #endif
 -- 
 1.8.4-fc
