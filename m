@@ -1,186 +1,170 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 8/9] remote-curl: store url as a strbuf
-Date: Sat, 28 Sep 2013 04:35:25 -0400
-Message-ID: <20130928083525.GC2782@sigill.intra.peff.net>
+Subject: [PATCH 9/9] remote-curl: rewrite base url from info/refs redirects
+Date: Sat, 28 Sep 2013 04:35:35 -0400
+Message-ID: <20130928083535.GD2782@sigill.intra.peff.net>
 References: <20130928082956.GA22610@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: "Kyle J. McKay" <mackyle@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 28 10:35:34 2013
+X-From: git-owner@vger.kernel.org Sat Sep 28 10:35:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VPpzx-0005Fm-9K
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Sep 2013 10:35:33 +0200
+	id 1VPq06-0005OQ-V5
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Sep 2013 10:35:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754959Ab3I1If3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Sep 2013 04:35:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35177 "EHLO peff.net"
+	id S1754964Ab3I1Ifi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Sep 2013 04:35:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35181 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754942Ab3I1If1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Sep 2013 04:35:27 -0400
-Received: (qmail 8909 invoked by uid 102); 28 Sep 2013 08:35:27 -0000
+	id S1754960Ab3I1Ifh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Sep 2013 04:35:37 -0400
+Received: (qmail 8926 invoked by uid 102); 28 Sep 2013 08:35:37 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 28 Sep 2013 03:35:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 28 Sep 2013 04:35:25 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 28 Sep 2013 03:35:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 28 Sep 2013 04:35:35 -0400
 Content-Disposition: inline
 In-Reply-To: <20130928082956.GA22610@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235498>
 
-We use a strbuf to generate the string containing the remote
-URL, but then detach it to a bare pointer. This makes it
-harder to later manipulate the URL, as we have forgotten the
-length (and the allocation semantics are not as clear).
+For efficiency and security reasons, an earlier commit in
+this series taught http_get_* to re-write the base url based
+on redirections we saw while making a specific request.
 
-Let's instead keep the strbuf around. As a bonus, this
-eliminates a confusing double-use of the "buf" strbuf in
-main(). Prior to this, it was used both for constructing the
-url, and for reading commands from stdin.
+This commit wires that option into the info/refs request,
+meaning that a redirect from
 
-The downside is that we have to update each call site to
-refer to "url.buf" rather than just "url" when they want the
-C string.
+    http://example.com/foo.git/info/refs
+
+to
+
+    https://example.com/bar.git/info/refs
+
+will behave as if "https://example.com/bar.git" had been
+provided to git in the first place.
+
+The tests bear some explanation. We introduce two new
+hierearchies into the httpd test config:
+
+  1. Requests to /smart-redir-limited will work only for the
+     initial info/refs request, but not any subsequent
+     requests. As a result, we can confirm whether the
+     client is re-rooting its requests after the initial
+     contact, since otherwise it will fail (it will ask for
+     "repo.git/git-upload-pack", which is not redirected).
+
+  2. Requests to smart-redir-auth will redirect, and require
+     auth after the redirection. Since we are using the
+     redirected base for further requests, we also update
+     the credential struct, in order not to mislead the user
+     (or credential helpers) about which credential is
+     needed. We can therefore check the GIT_ASKPASS prompts
+     to make sure we are prompting for the new location.
+     Because we have neither multiple servers nor https
+     support in our test setup, we can only redirect between
+     paths, meaning we need to turn on
+     credential.useHttpPath to see the difference.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- remote-curl.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ remote-curl.c           |  4 ++++
+ t/lib-httpd.sh          |  3 ++-
+ t/lib-httpd/apache.conf |  2 ++
+ t/t5551-http-fetch.sh   | 11 +++++++++++
+ 4 files changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/remote-curl.c b/remote-curl.c
-index 7fb092f..5add2cb 100644
+index 5add2cb..c9b891a 100644
 --- a/remote-curl.c
 +++ b/remote-curl.c
-@@ -12,7 +12,8 @@ static struct remote *remote;
- #include "credential.h"
+@@ -207,6 +207,7 @@ static struct discovery* discover_refs(const char *service, int for_push)
+ 	struct strbuf type = STRBUF_INIT;
+ 	struct strbuf buffer = STRBUF_INIT;
+ 	struct strbuf refs_url = STRBUF_INIT;
++	struct strbuf effective_url = STRBUF_INIT;
+ 	struct discovery *last = last_discovery;
+ 	int http_ret, maybe_smart = 0;
+ 	struct http_get_options options;
+@@ -228,6 +229,8 @@ static struct discovery* discover_refs(const char *service, int for_push)
  
- static struct remote *remote;
--static const char *url; /* always ends with a trailing slash */
-+/* always ends with a trailing slash */
-+static struct strbuf url = STRBUF_INIT;
+ 	memset(&options, 0, sizeof(options));
+ 	options.content_type = &type;
++	options.effective_url = &effective_url;
++	options.base_url = &url;
+ 	options.no_cache = 1;
+ 	options.keep_error = 1;
  
- struct options {
- 	int verbosity;
-@@ -131,7 +132,8 @@ static struct ref *parse_info_refs(struct discovery *heads)
- 			mid = &data[i];
- 		if (data[i] == '\n') {
- 			if (mid - start != 40)
--				die("%sinfo/refs not valid: is this a git repository?", url);
-+				die("%sinfo/refs not valid: is this a git repository?",
-+				    url.buf);
- 			data[i] = 0;
- 			ref_name = mid + 1;
- 			ref = xmalloc(sizeof(struct ref) +
-@@ -150,7 +152,7 @@ static struct ref *parse_info_refs(struct discovery *heads)
- 	}
+@@ -287,6 +290,7 @@ static struct discovery* discover_refs(const char *service, int for_push)
+ 	strbuf_release(&refs_url);
+ 	strbuf_release(&exp);
+ 	strbuf_release(&type);
++	strbuf_release(&effective_url);
+ 	strbuf_release(&buffer);
+ 	last_discovery = last;
+ 	return last;
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 54dbbfe..ad8f1ef 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -204,7 +204,8 @@ expect_askpass() {
+ }
  
- 	ref = alloc_ref("HEAD");
--	if (!http_fetch_ref(url, ref) &&
-+	if (!http_fetch_ref(url.buf, ref) &&
- 	    !resolve_remote_symref(ref, refs)) {
- 		ref->next = refs;
- 		refs = ref;
-@@ -213,11 +215,11 @@ static struct discovery* discover_refs(const char *service, int for_push)
- 		return last;
- 	free_discovery(last);
+ expect_askpass() {
+-	dest=$HTTPD_DEST
++	dest=$HTTPD_DEST${3+/$3}
++
+ 	{
+ 		case "$1" in
+ 		none)
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index 397c480..3a03e82 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -110,6 +110,8 @@ RewriteRule ^/smart-redir-temp/(.*)$ /smart/$1 [R=302]
+ RewriteEngine on
+ RewriteRule ^/smart-redir-perm/(.*)$ /smart/$1 [R=301]
+ RewriteRule ^/smart-redir-temp/(.*)$ /smart/$1 [R=302]
++RewriteRule ^/smart-redir-auth/(.*)$ /auth/smart/$1 [R=301]
++RewriteRule ^/smart-redir-limited/(.*)/info/refs$ /smart/$1/info/refs [R=301]
  
--	strbuf_addf(&refs_url, "%sinfo/refs", url);
--	if ((!prefixcmp(url, "http://") || !prefixcmp(url, "https://")) &&
-+	strbuf_addf(&refs_url, "%sinfo/refs", url.buf);
-+	if ((!prefixcmp(url.buf, "http://") || !prefixcmp(url.buf, "https://")) &&
- 	     git_env_bool("GIT_SMART_HTTP", 1)) {
- 		maybe_smart = 1;
--		if (!strchr(url, '?'))
-+		if (!strchr(url.buf, '?'))
- 			strbuf_addch(&refs_url, '?');
- 		else
- 			strbuf_addch(&refs_url, '&');
-@@ -235,13 +237,13 @@ static struct discovery* discover_refs(const char *service, int for_push)
- 		break;
- 	case HTTP_MISSING_TARGET:
- 		show_http_message(&type, &buffer);
--		die("repository '%s' not found", url);
-+		die("repository '%s' not found", url.buf);
- 	case HTTP_NOAUTH:
- 		show_http_message(&type, &buffer);
--		die("Authentication failed for '%s'", url);
-+		die("Authentication failed for '%s'", url.buf);
- 	default:
- 		show_http_message(&type, &buffer);
--		die("unable to access '%s': %s", url, curl_errorstr);
-+		die("unable to access '%s': %s", url.buf, curl_errorstr);
- 	}
+ <IfDefine SSL>
+ LoadModule ssl_module modules/mod_ssl.so
+diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
+index 8196af1..fb16833 100755
+--- a/t/t5551-http-fetch.sh
++++ b/t/t5551-http-fetch.sh
+@@ -113,6 +113,10 @@ test_expect_success 'follow redirects (302)' '
+ 	git clone $HTTPD_URL/smart-redir-temp/repo.git --quiet repo-t
+ '
  
- 	last= xcalloc(1, sizeof(*last_discovery));
-@@ -607,7 +609,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
- 	rpc->out = client.out;
- 	strbuf_init(&rpc->result, 0);
++test_expect_success 'redirects re-root further requests' '
++	git clone $HTTPD_URL/smart-redir-limited/repo.git repo-redir-limited
++'
++
+ test_expect_success 'clone from password-protected repository' '
+ 	echo two >expect &&
+ 	set_askpass user@host &&
+@@ -146,6 +150,13 @@ test_expect_success 'no-op half-auth fetch does not require a password' '
+ 	expect_askpass none
+ '
  
--	strbuf_addf(&buf, "%s%s", url, svc);
-+	strbuf_addf(&buf, "%s%s", url.buf, svc);
- 	rpc->service_url = strbuf_detach(&buf, NULL);
- 
- 	strbuf_addf(&buf, "Content-Type: application/x-%s-request", svc);
-@@ -659,7 +661,7 @@ static int fetch_dumb(int nr_heads, struct ref **to_fetch)
- 	for (i = 0; i < nr_heads; i++)
- 		targets[i] = xstrdup(sha1_to_hex(to_fetch[i]->old_sha1));
- 
--	walker = get_http_walker(url);
-+	walker = get_http_walker(url.buf);
- 	walker->get_all = 1;
- 	walker->get_tree = 1;
- 	walker->get_history = 1;
-@@ -706,7 +708,7 @@ static int fetch_git(struct discovery *heads,
- 		depth_arg = strbuf_detach(&buf, NULL);
- 		argv[argc++] = depth_arg;
- 	}
--	argv[argc++] = url;
-+	argv[argc++] = url.buf;
- 	argv[argc++] = NULL;
- 
- 	for (i = 0; i < nr_heads; i++) {
-@@ -804,7 +806,7 @@ static int push_dav(int nr_spec, char **specs)
- 		argv[argc++] = "--dry-run";
- 	if (options.verbosity > 1)
- 		argv[argc++] = "--verbose";
--	argv[argc++] = url;
-+	argv[argc++] = url.buf;
- 	for (i = 0; i < nr_spec; i++)
- 		argv[argc++] = specs[i];
- 	argv[argc++] = NULL;
-@@ -837,7 +839,7 @@ static int push_git(struct discovery *heads, int nr_spec, char **specs)
- 	argv_array_push(&args, options.progress ? "--progress" : "--no-progress");
- 	for_each_string_list_item(cas_option, &cas_options)
- 		argv_array_push(&args, cas_option->string);
--	argv_array_push(&args, url);
-+	argv_array_push(&args, url.buf);
- 	for (i = 0; i < nr_spec; i++)
- 		argv_array_push(&args, specs[i]);
- 
-@@ -918,14 +920,12 @@ int main(int argc, const char **argv)
- 	remote = remote_get(argv[1]);
- 
- 	if (argc > 2) {
--		end_url_with_slash(&buf, argv[2]);
-+		end_url_with_slash(&url, argv[2]);
- 	} else {
--		end_url_with_slash(&buf, remote->url[0]);
-+		end_url_with_slash(&url, remote->url[0]);
- 	}
- 
--	url = strbuf_detach(&buf, NULL);
--
--	http_init(remote, url, 0);
-+	http_init(remote, url.buf, 0);
- 
- 	do {
- 		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
++test_expect_success 'redirects send auth to new location' '
++	set_askpass user@host &&
++	git -c credential.useHttpPath=true \
++	  clone $HTTPD_URL/smart-redir-auth/repo.git repo-redir-auth &&
++	expect_askpass both user@host auth/smart/repo.git
++'
++
+ test_expect_success 'disable dumb http on server' '
+ 	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
+ 		config http.getanyfile false
 -- 
 1.8.4.rc3.19.g9da5bf6
