@@ -1,99 +1,188 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: [msysGit] [PATCH] mingw-multibyte: fix memory acces violation
- and path length limits.
-Date: Sun, 29 Sep 2013 13:01:35 +0200
-Message-ID: <5248088F.2060902@googlemail.com>
-References: <1380403036-20413-1-git-send-email-wnoguchi.0727@gmail.com> <alpine.DEB.1.00.1309290112380.1191@s15462909.onlinehome-server.info> <524796DC.5020302@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] builtin/push.c: Add `--notes` option
+Date: Sun, 29 Sep 2013 13:59:43 +0200
+Message-ID: <CALKQrgcdk8==Qf3z9yuxu=9BBmFJ-8Dj+WZALXoc9j+GAKqEgg@mail.gmail.com>
+References: <1379679608-72475-1-git-send-email-rodolphe.belouin@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="h8mSG6fUkMeGRcG2bwaauFxTF1bubx9ie"
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Wataru Noguchi <wnoguchi.0727@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Sep 29 13:01:55 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>
+To: Rodolphe Belouin <rodolphe.belouin@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 29 14:00:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQEl6-0002fp-AB
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 13:01:52 +0200
+	id 1VQFfG-0002js-HS
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 13:59:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751103Ab3I2LBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Sep 2013 07:01:37 -0400
-Received: from mail-ee0-f49.google.com ([74.125.83.49]:57330 "EHLO
-	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890Ab3I2LBf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Sep 2013 07:01:35 -0400
-Received: by mail-ee0-f49.google.com with SMTP id d41so2084079eek.36
-        for <git@vger.kernel.org>; Sun, 29 Sep 2013 04:01:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type;
-        bh=ad/tx4Plv37mJ1KzI2wZlgCIxnYVGhls8w/C4o8TpP0=;
-        b=sjHBlYbIhRMhAoHaiUZJUCV/boAsMFYWftSsdiTYqmGggj5j6KynJ9YtaY10gw0V33
-         RlJ7MnYXgt9xs5DmrJDVETVKMZubSiGyaG3ACcDbUBOyTQ1mUBpg3zGB4LAkGVxRVORE
-         OfCckiE9tKtzj7AcyNcIhkWFYymufR8g5Z6HzO7SxhOOn10/quh7iQHGUHRdBrTthj8u
-         Mt71lstRC00FUyyBNxQXlVAb7rt/3eX36uVb8OG3OXoY6sVvmPPuLQaFKpWbB3s7/Hmt
-         UYhK93VCJ++ewUe0hg2rCacPFcayDLJRYJvU+viYiYdbKP+RSHIZpfwq8BdNT3e1QynZ
-         DOCA==
-X-Received: by 10.14.213.68 with SMTP id z44mr11344eeo.70.1380452493871;
-        Sun, 29 Sep 2013 04:01:33 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id h45sm38236495eeg.5.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 29 Sep 2013 04:01:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <524796DC.5020302@gmail.com>
-X-Enigmail-Version: 1.5.2
+	id S1751233Ab3I2L7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Sep 2013 07:59:51 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:53010 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751159Ab3I2L7t (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Sep 2013 07:59:49 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1VQFf9-00057m-K7
+	for git@vger.kernel.org; Sun, 29 Sep 2013 13:59:47 +0200
+Received: from mail-pd0-f172.google.com ([209.85.192.172])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1VQFf9-0006km-Bg
+	for git@vger.kernel.org; Sun, 29 Sep 2013 13:59:47 +0200
+Received: by mail-pd0-f172.google.com with SMTP id z10so4476959pdj.3
+        for <git@vger.kernel.org>; Sun, 29 Sep 2013 04:59:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5mKuYKJYotn5WLFVwXNpgHRQym0tYviU6/KoWAo3TLQ=;
+        b=lpRxtjsHw+kP3Guh7IgMHrpYH2+wR0W+u477TtSyIVxTxYmLxAQg0yvyfxfJWzEBDx
+         goUrir9f7AnKewKAvjhVk0ltPzKuXDPzMZvtXlk9w2Xz0GxHFlF1hgqbBefc52faU1dF
+         PWi26JZq9YK28ULavDtRqfPtjcCU/5DlihKaKIzKNEu8IPjOm3BuLiJ8nzknWi7z7vCn
+         TMU1GuJ6nH8/xV9Y4GiPr5gWLg0TxUXtRtywj5gH/I4ZQW+YBCcIRjRmLb6KFjIhNICe
+         +7x4LH16AkuHV1PPed49EdUSZMmGMgfmDHz0sZvg453Nwa3vhUSbqVZ6YgWjcacZhW3D
+         tz6A==
+X-Received: by 10.67.14.231 with SMTP id fj7mr22324776pad.115.1380455983438;
+ Sun, 29 Sep 2013 04:59:43 -0700 (PDT)
+Received: by 10.70.24.226 with HTTP; Sun, 29 Sep 2013 04:59:43 -0700 (PDT)
+In-Reply-To: <1379679608-72475-1-git-send-email-rodolphe.belouin@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235597>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---h8mSG6fUkMeGRcG2bwaauFxTF1bubx9ie
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Fri, Sep 20, 2013 at 2:20 PM, Rodolphe Belouin
+<rodolphe.belouin@gmail.com> wrote:
+> Make the user able to call `git push --notes` instead of
+> `git push refs/notes/*`
 
-On 09/29/2013 04:56 AM, Wataru Noguchi wrote:
->=20
-> - gcc optimization level is O2.(fail)
-> - gcc O0, O1 works fine.
+I'm sorry for not replying to this earlier. I'm unsure how much of the
+earlier discussions around pushing and pulling notes you have
+followed, but the short story is that (as demontrated by the script in
+[1]) pushing and pulling notes is not as simple as it might initially
+seem.
 
-Maybe you could try to compile with
-STACK found at http://css.csail.mit.edu/stack/
-That tool is designed to find
-Optimization-unstable code.
+Notes behave more like branches than tags (in that we expect them to
+change over time, and we (often) want to collaborate on advancing
+them). In order to support distributed collaboration on branches, we
+have remote-tracking branches (remotes/$remote/$branch) and associated
+behavior in git, which keeps track of the state of other repos, and
+supports the integration of remote and local changes. That
+infrastructure does not yet exist for notes.
+
+As a result, collaborating on notes quickly becomes painful when you
+have to fetch "magic" refspecs and manually orchestrate the
+integration of remote and local notes changes (as shown in [1]).
+
+The proposed solution for this is to reorganize the refs/remotes/
+hierarchy to allow for remote-tracking notes in addition to
+remote-tracking branches (and also other kinds of remote-tracking
+refs). However this reorganization is itself a big project and will
+not be completed in the short term.
+
+So, how does this apply to your patch?
+
+There is (AFAICS) nothing wrong with the patch itself (except maybe
+some added tests would be nice...), but we must consider its
+implications and how it guides the use of notes.
+
+First, as you state in the commit message, this allows use of a simple
+option instead of a supplying a refspec. And as long as you are the
+only person pushing notes into that repo (and you only fast-forward),
+this should work well, and lower the barrier for exchanging notes with
+a remote repo.
+
+However, as soon as you start collaborating with others, you will need
+to integrate their changes, and that's where current Git stops
+providing any help: You are left to do the manual integration shown in
+[1]. This integration requires you to know about and juggle refspecs
+quite intimately, and it could even be argued that the simplicity of
+"git push --notes" tricks an unsuspecting user into a future manual
+integration regime that is probably outside most git users' comfort
+zone...
+
+That said, if there is consensus that "push --notes" is valuable in
+the short term (before the larger remote refs reorg is complete), and
+that it won't set a user interface precedent that will obviously be
+broken by said reorg, then I am not opposed to this patch.
 
 
+Hope this helps,
+
+...Johan
 
 
---h8mSG6fUkMeGRcG2bwaauFxTF1bubx9ie
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+[1]:
+#!/bin/sh
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+set -e
 
-iQIcBAEBAgAGBQJSSAiPAAoJEJQCPTzLflhqvFQQAIFN3tMPZh10T4+G/VgaBoq3
-M/BZ2UV8Ooc4gnZ5ycDp5lrG7j6ewncQK7JWYdVYjmYdG9MYH8rMmMeexKtvoqyl
-RtdQeWcmZGOTq0DGiBtF5mbh4EcyTxaB01MnRpFcOIlH+R4pas3JtmwKi0kUz/dT
-F2ZlYDjRRcb0lIiKT9PxUM5sW0KQx4Dmxrfi+UfoyB0FBOaJj/JdTSuUvcHIAtHg
-v4RuCEm0SgKhDvYGA0gvIapfByPQAD4wuamp+y0dGILPsuXb0AVwIOoV5Q0ICmCd
-Y0WdJiReuFEyWtxVLVhai/M4RFm5yAHG0xqPDxnUXvqAQyjSxXV+0yIjP+4ZeTXR
-FrlFwiv8HQ9RQRXZ3oFv78cljnwq7XkQPlbl8qz7Hw5/juYatMaLN7wm0srxLQ8L
-BdAyaDohxvA0JV9vslzg/VvkX0QPEr1Cblsjgi0PNHohWTBKaBq47K4YDGEPqGuj
-mJ0YoH7tSNO37DD87IqPN5ODBaALJLbKoQ6Ao0cyAPGDdKufTIIaFYR8RnrKXpH/
-zBCmWut4zglZMlMTx+sWa5ufWV7C8zNSVrAOj3sF/ccxLXpy7to9/uf6vzqMOtAM
-JiggDeFlgvhgInQtwnjOdzZMaMIqIrq+IW+QO7qUXP5pI33fhshDhvlllRNVpp/a
-BfuQUMUWIxN+phukv5LT
-=BR38
------END PGP SIGNATURE-----
+rm -rf notes_test_area
+mkdir notes_test_area
+cd notes_test_area
 
---h8mSG6fUkMeGRcG2bwaauFxTF1bubx9ie--
+# Prepare server with initial note
+git init server
+cd server
+echo foo>foo
+git add foo
+git commit -m foo
+git notes add -m "Initial note on foo"
+echo bar >>foo
+git commit -a -m bar
+cd ..
+
+# Clone two clients and transfer notes
+git clone server clientA
+cd clientA
+git fetch origin refs/notes/commits:refs/notes/commits
+cd ..
+
+git clone server clientB
+cd clientB
+git fetch origin refs/notes/commits:refs/notes/commits
+cd ..
+
+# Add notes in both clients
+cd clientA
+git notes add -m "clientA's note on bar"
+cd ../clientB
+git notes add -m "clientB's note on bar"
+cd ..
+
+# Push notes from clientA
+cd clientA
+git push origin 'refs/notes/*' # This works
+cd ..
+
+# Push notes from clientB
+cd clientB
+git push origin 'refs/notes/*' || echo "This command fails!"
+# Must merge changes from origin's refs/notes/commits into our own
+# refs/notes/commits, but there is no built-in machinery to do so.
+# Do it manually instead:
+git fetch origin refs/notes/commits:refs/notes/commits_from_origin
+git notes merge commits_from_origin || echo "Oops, conflict!"
+# Conflict in .git/NOTES_MERGE_WORKTREE/$SHA1. Resolve manually
+commit=$(git rev-parse HEAD)
+echo "clientA's and clientB's notes on bar" >
+".git/NOTES_MERGE_WORKTREE/$commit"
+# Commit conflict resolution to finalize notes merge
+git notes merge --commit
+# Remove temporary placeholder for origin's notes
+git update-ref -d refs/notes/commits_from_origin
+# Now we can finally try to push again
+git push origin 'refs/notes/*' # This works
+cd ..
+
+# Behold the end result
+cd server
+git log --graph -p -c refs/notes/commits
+cd ..
+
+echo "done"
