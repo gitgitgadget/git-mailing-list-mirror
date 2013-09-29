@@ -1,86 +1,80 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] clone: local URLs are not for ssh
-Date: Sun, 29 Sep 2013 07:33:38 +0700
-Message-ID: <CACsJy8B-wA=bX6+E6O6UvX2vEtOwnR1PCMZNoi-q0x_jacB89Q@mail.gmail.com>
-References: <201309282137.21802.tboegi@web.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] rebase -i: respect to core.abbrev
+Date: Sat, 28 Sep 2013 22:49:02 -0400
+Message-ID: <CAPig+cTpSTrcPBa+Xs5Lw6bQ5TvSHqEh1tnEoZS6eX8Z9GTm4w@mail.gmail.com>
+References: <1380384435-20846-1-git-send-email-kirill.shutemov@linux.intel.com>
+	<20130928211013.54361E0090@blue.fi.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Sep 29 02:34:16 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+X-From: git-owner@vger.kernel.org Sun Sep 29 04:49:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQ4xj-0006op-Iw
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 02:34:15 +0200
+	id 1VQ74X-00084o-Tx
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 04:49:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755263Ab3I2AeK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Sep 2013 20:34:10 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:47253 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755198Ab3I2AeJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Sep 2013 20:34:09 -0400
-Received: by mail-ob0-f182.google.com with SMTP id wo20so4229461obc.13
-        for <git@vger.kernel.org>; Sat, 28 Sep 2013 17:34:08 -0700 (PDT)
+	id S1753674Ab3I2CtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Sep 2013 22:49:06 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:46469 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753588Ab3I2CtF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Sep 2013 22:49:05 -0400
+Received: by mail-la0-f46.google.com with SMTP id eh20so3343890lab.33
+        for <git@vger.kernel.org>; Sat, 28 Sep 2013 19:49:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=PQMwCIO55C9M2uCcPjSPdIBbioviUkNVpo3w2YKL1yA=;
-        b=RDtK1QeOKvS+uGwzZmf7lSUsbLz9NeKUK3qVHZtlZh+GXotLvYdR77Gf0NzY5Yfuhj
-         PumXi/Jfk/xrxWWAjVXyz+0DOB/JE5sydIEKQztB1S7sSFicebrn6Iq9M9lj+pLTlHB0
-         stVACT+QhXg1CtqAX/SZ0HpPHBxT4QY6slB5ng/VAU+CTmJ4k5or/vPn74sg+TdWkIu2
-         Oie+JXp0sOwDzXaMTDpj+9fnc8HbXFW9VgRR1aevdsqktxjrWM0fTN2ovq30E6TMIeSy
-         xYpnHQNzPYs6U/TWdktDp9g8i9o+pSNyB9XMN6Fw2G7hauDTnPyblkVvT1LFlFeDYUIP
-         xQCw==
-X-Received: by 10.182.106.4 with SMTP id gq4mr12883820obb.4.1380414848808;
- Sat, 28 Sep 2013 17:34:08 -0700 (PDT)
-Received: by 10.182.49.233 with HTTP; Sat, 28 Sep 2013 17:33:38 -0700 (PDT)
-In-Reply-To: <201309282137.21802.tboegi@web.de>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=HhI4KPBDQAmuRDBlEHLzeIM4qtTOxPx3fulurpsWDNk=;
+        b=ZAdcE08Qwqqr6SywiMBOPH2gvTyCucBT5HrPilDb7Stw46bJMi1hARpTG8Fo/XS1wG
+         3lOZgIGIwEt9/rDOWcWjDvIsBRn+OJUKpWBJ7VH/Yn31w4GsQzPM9DZ/KnaTH1zmTU+6
+         hYiOkBnSQxhw+FCNFXT4TYZBOUpt5/1DISp4sKjvCk/VzAUutPsjZX9lJb1TYr77rfpo
+         WFkgND8XsfxXtczT4PcQcY6ETfi7WTVOw7Z3dDH5/co399ERs0hK8k0WAiSiiMeQ5xMe
+         w14tQ6JL/4TecVYF8Vx/nzd+WuSKS1TkTmc0abLEKUwaSZxG4Qu+o/gIb4MgwalvpKSH
+         gsTw==
+X-Received: by 10.152.120.73 with SMTP id la9mr12962747lab.3.1380422942722;
+ Sat, 28 Sep 2013 19:49:02 -0700 (PDT)
+Received: by 10.114.182.236 with HTTP; Sat, 28 Sep 2013 19:49:02 -0700 (PDT)
+In-Reply-To: <20130928211013.54361E0090@blue.fi.intel.com>
+X-Google-Sender-Auth: t2o6mKi3MEkkYFhlipprZwV0mOY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235573>
 
-On Sun, Sep 29, 2013 at 2:37 AM, Torsten B=C3=B6gershausen <tboegi@web.=
-de> wrote:
-> "git clone /foo/bar:baz" or "git clone ../foo/bar:baz"
-> are meant to clone from the local file system, and not to clone
-> from a remote server over git-over-ssh.
-
-I don't think this is necessary. Commit 6000334 should detect both
-cases fine because both have a slash before the first colon.
-
+On Sat, Sep 28, 2013 at 5:10 PM, Kirill A. Shutemov
+<kirill.shutemov@linux.intel.com> wrote:
+> collapse_todo_ids() uses `git rev-parse --short=7' to abbrev commit ids.
+> Let's drop argument from --short to use default (7) or config value
+> instead.
 >
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 > ---
->  connect.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  git-rebase--interactive.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/connect.c b/connect.c
-> index a80ebd3..b382032 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -550,7 +550,8 @@ struct child_process *git_connect(int fd[2], cons=
-t char *url_orig,
->                 end =3D host;
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 10bf318d0d..3c6bed9a28 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -713,7 +713,7 @@ expand_todo_ids() {
+>  }
 >
->         path =3D strchr(end, c);
-> -       if (path && !has_dos_drive_prefix(end)) {
-> +       if (path && !has_dos_drive_prefix(end) &&
-> +           url[0] !=3D '/' && url[0] !=3D '.' ) {
->                 if (c =3D=3D ':') {
->                         if (path < strchrnul(host, '/')) {
->                                 protocol =3D PROTO_SSH;
+>  collapse_todo_ids() {
+> -       transform_todo_ids --short=7
+> +       transform_todo_ids --short
+
+Thanks, I was going to suggest this exact simplification upon reading v1.
+
+Acked-by: Eric Sunshine <sunshine@sunshineco.com>
+
+>  }
+>
+>  # Rearrange the todo list that has both "pick sha1 msg" and
 > --
-> 1.8.4.457.g424cb08
->
-
-
-
---=20
-Duy
+>  Kirill A. Shutemov
