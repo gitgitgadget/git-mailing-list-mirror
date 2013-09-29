@@ -1,122 +1,88 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] build: fix installation of scripts
-Date: Sun, 29 Sep 2013 11:53:06 -0500
-Message-ID: <1380473586-4245-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 29 18:59:07 2013
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 6/9] http: update base URLs when we see redirects
+Date: Sun, 29 Sep 2013 18:54:08 +0000
+Message-ID: <20130929185408.GB18384@vauxhall.crustytoothpaste.net>
+References: <20130928082956.GA22610@sigill.intra.peff.net>
+ <20130928083405.GA2782@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rS8CxjVDS/+yyDmU"
+Cc: git@vger.kernel.org, "Kyle J. McKay" <mackyle@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 29 20:54:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQKKp-0006a6-62
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 18:59:07 +0200
+	id 1VQM8L-0006FR-LX
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 20:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754269Ab3I2Q6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Sep 2013 12:58:51 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:41619 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753995Ab3I2Q6t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Sep 2013 12:58:49 -0400
-Received: by mail-oa0-f43.google.com with SMTP id f4so3306625oah.2
-        for <git@vger.kernel.org>; Sun, 29 Sep 2013 09:58:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=ThZ/+o+XItFlHw6Kw56VvhCGz+bE1DLA/w3RU2dNnHE=;
-        b=VwYEgEZxaqFG+Lf74y4VOoYDVou5AaB1boHIkM9nk0GextP2cscR8ooyOaH+jNoo5G
-         86n1OV1EWCY0RPlwD+Km4zSTSGRjfH9PSCefHTj082clcJWTQc+vXqyi4fLYiuRctHDJ
-         eQJy2PKePcSSTpzUz19HxlC4Tt8lEE8b9WugFxE+yVKMlFL6QxHfphoaeutw/Y6Kgupp
-         oXF+Dea6G4CzR5r3Qfu97hy969PK3h0Zucv31nUlkZvpJLPWGUAkyykx2eAUh4OeoLA3
-         WYngOg+QV+AxxcvgsjNdBvNVeu57T9tNPYWXIs03CSlqIlOe18yjZPgQKAFWAbW7/9FL
-         3VCQ==
-X-Received: by 10.60.65.227 with SMTP id a3mr15816288oet.13.1380473929232;
-        Sun, 29 Sep 2013 09:58:49 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id u3sm31054319oeq.3.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 29 Sep 2013 09:58:48 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4-fc
+	id S1754891Ab3I2SyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Sep 2013 14:54:18 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:60631 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754734Ab3I2SyR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Sep 2013 14:54:17 -0400
+Received: from vauxhall.crustytoothpaste.net (wsip-184-177-1-73.no.no.cox.net [184.177.1.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 36E4C28074;
+	Sun, 29 Sep 2013 18:54:14 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20130928083405.GA2782@sigill.intra.peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.11-rc4-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235602>
 
-They need the gitexecdir.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
+--rS8CxjVDS/+yyDmU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Otherwise this makes it difficult to package contrib scripts in certain
-distributions.
+On Sat, Sep 28, 2013 at 04:34:05AM -0400, Jeff King wrote:
+> Subsequent requests will not be for "info/refs", but for
+> other paths relative to the base. We must ask the caller to
+> pass in the original base, and we must pass the redirected
+> base back to the caller (so that it can generte more URLs
 
-For example, if you have a proper Makefile in contrib:
+s/generte/generate/
 
----
-TESTS := $(wildcard test*.sh)
-SCRIPTS := $(wildcard git-remote-*.py)
+> from it). Furthermore, we need to feed the new base to the
+> credential code, so that requests to credential helpers (or
+> to the user) match the URL we will be requesting.
 
-export T := $(addprefix $(CURDIR)/,$(TESTS))
-export MAKE := $(MAKE) -e
-export PATH := $(CURDIR):$(PATH)
-export TEST_LINT := test-lint-executable test-lint-shell-syntax
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-export SCRIPT_PYTHON := $(addprefix $(CURDIR)/,$(SCRIPTS))
+--rS8CxjVDS/+yyDmU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-all: $(SCRIPTS)
-	$(MAKE) -C ../.. build-python-script
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-install:
-	$(MAKE) -C ../.. install-python-script
+iQIcBAEBCgAGBQJSSHdQAAoJEL9TXYEfUvaLX4oP/ifP9Fbuy21Pf7beo/JLjQi0
+d7f5TADYzwftZWpAvFhjMpDpkr9dJ4m30qCTUKAyeRJLSesRTded7QTc70CI5Qan
+DBTH14XSmz6+69ozNAtskfczmArsFNhN15r/Jq1JbPUquIzv8ZvJQbRc9RafYLhP
+RD7XyWGeEWzqJai8QraIvej7MHc2KDoUFLjeXm52fw+6cGI/DF6g/sZGMNGx3u0d
+taLlUkF1OaG88wWENFEtaf4MRhd8NA+KqDMPCORqXBgDT9WQvG/VXZZ6YHm3IRGR
+kAQROsU67HkjPHkVqcXqZyVmux/v+Nv7jR6IDB4lZgvU0anWm+gyVixGKOGCYP/k
+jXX4ARWcu+hUIrl2JzOrhKG+qnulv88AW3VZZspRzSYOIV7zZP+FVuSa38ZTwPjP
+wq4nezVT4tE2PtlFnjyx2hPyXDcQui8sQZo3tZec4idWdJHwb3ApmhAgqwl96ybp
+pNSOGOJ5KrWeLZjzs+qY1XrERoWKlJb6HAOtvrc+sOJf4bFekXpX5THpLLDWAY7G
+XCQmGgjHkmF28Oszv8+4GnIv3a0aEJez30HdlyVBqthCNBrdkE1Kb2lK0L2De1N3
+zcmbzKN7u1WFRUqAsMjCc3ZX8NDxI9f/UU3/azHG6gRGOxAaX6GWBMRRLu9Gs9vi
+Gl6TP/g8eiDT/YP4oYMl
+=VRBw
+-----END PGP SIGNATURE-----
 
-test: all
-	$(MAKE) -C ../../t $@
-
-$(TESTS): all
-	$(MAKE) -C ../../t $(CURDIR)/$@
-
-.PHONY: all install test $(TESTS)
----
-
-A packager might create a git-bzr package that does this:
-
-% make -C contrib/remote-helpers install
-
-But that would fail, unless this patch is applied.
-
-Distributions like Arch Linux don't have a concept of multiple binary packages
-from a single source package, so there would need to be a separate PKGBUILD
-(akin to spec file) for git-bzr. In addition this package might not be
-official, but part of the user maintained AUR. Similarly, other distributions
-might want to package git-bzr separetly, for example from launchpad.
-
- Makefile | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 3588ca1..e51b92e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -511,12 +511,14 @@ build-perl-script: $(SCRIPT_PERL_GEN)
- build-sh-script: $(SCRIPT_SH_GEN)
- build-python-script: $(SCRIPT_PYTHON_GEN)
- 
--.PHONY: install-perl-script install-sh-script install-python-script
--install-sh-script: $(SCRIPT_SH_INS)
-+.PHONY: install-gitexecdir install-perl-script install-sh-script install-python-script
-+install-gitexecdir:
-+	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-+install-sh-script: $(SCRIPT_SH_INS) | install-gitexecdir
- 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
--install-perl-script: $(SCRIPT_PERL_INS)
-+install-perl-script: $(SCRIPT_PERL_INS) | install-gitexecdir
- 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
--install-python-script: $(SCRIPT_PYTHON_INS)
-+install-python-script: $(SCRIPT_PYTHON_INS) | install-gitexecdir
- 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
- 
- .PHONY: clean-perl-script clean-sh-script clean-python-script
--- 
-1.8.4-fc
+--rS8CxjVDS/+yyDmU--
