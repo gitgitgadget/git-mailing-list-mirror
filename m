@@ -1,87 +1,122 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] Makefile: suppress false positive warnings of empty format
- string.
-Date: Sun, 29 Sep 2013 16:23:54 +0100
-Message-ID: <5248460A.40005@ramsay1.demon.co.uk>
-References: <7vfvvkpt2k.fsf@alter.siamese.dyndns.org>	<1380456534-7582-1-git-send-email-stefanbeller@googlemail.com> <CAMP44s069BUJiv1K3a2nkwT1A8fo=Vn0+8WFePHqBg_PBx_17g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>,
-	Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 29 17:24:03 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] build: fix installation of scripts
+Date: Sun, 29 Sep 2013 11:53:06 -0500
+Message-ID: <1380473586-4245-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 29 18:59:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQIqo-0006Mn-Ph
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 17:24:03 +0200
+	id 1VQKKp-0006a6-62
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 18:59:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753672Ab3I2PX7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Sep 2013 11:23:59 -0400
-Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:51956 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753472Ab3I2PX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Sep 2013 11:23:58 -0400
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 38E02A64E99;
-	Sun, 29 Sep 2013 16:23:56 +0100 (BST)
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 052DDA64E95;
-	Sun, 29 Sep 2013 16:23:56 +0100 (BST)
-Received: from [192.168.254.2] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
-	Sun, 29 Sep 2013 16:23:55 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <CAMP44s069BUJiv1K3a2nkwT1A8fo=Vn0+8WFePHqBg_PBx_17g@mail.gmail.com>
-X-MDF-HostID: 8
+	id S1754269Ab3I2Q6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Sep 2013 12:58:51 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:41619 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753995Ab3I2Q6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Sep 2013 12:58:49 -0400
+Received: by mail-oa0-f43.google.com with SMTP id f4so3306625oah.2
+        for <git@vger.kernel.org>; Sun, 29 Sep 2013 09:58:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=ThZ/+o+XItFlHw6Kw56VvhCGz+bE1DLA/w3RU2dNnHE=;
+        b=VwYEgEZxaqFG+Lf74y4VOoYDVou5AaB1boHIkM9nk0GextP2cscR8ooyOaH+jNoo5G
+         86n1OV1EWCY0RPlwD+Km4zSTSGRjfH9PSCefHTj082clcJWTQc+vXqyi4fLYiuRctHDJ
+         eQJy2PKePcSSTpzUz19HxlC4Tt8lEE8b9WugFxE+yVKMlFL6QxHfphoaeutw/Y6Kgupp
+         oXF+Dea6G4CzR5r3Qfu97hy969PK3h0Zucv31nUlkZvpJLPWGUAkyykx2eAUh4OeoLA3
+         WYngOg+QV+AxxcvgsjNdBvNVeu57T9tNPYWXIs03CSlqIlOe18yjZPgQKAFWAbW7/9FL
+         3VCQ==
+X-Received: by 10.60.65.227 with SMTP id a3mr15816288oet.13.1380473929232;
+        Sun, 29 Sep 2013 09:58:49 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id u3sm31054319oeq.3.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 29 Sep 2013 09:58:48 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4-fc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235601>
 
-On 29/09/13 16:07, Felipe Contreras wrote:
-> On Sun, Sep 29, 2013 at 7:08 AM, Stefan Beller
-> <stefanbeller@googlemail.com> wrote:
->> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
->> ---
->>  Makefile | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/Makefile b/Makefile
->> index de3d72c..60afa51 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -349,7 +349,7 @@ GIT-VERSION-FILE: FORCE
->>
->>  # CFLAGS and LDFLAGS are for the users to override from the command line.
->>
->> -CFLAGS = -g -O2 -Wall
->> +CFLAGS = -g -O2 -Wall -Wno-format-zero-length
-> 
-> Oh yes please.
-> 
-> However, somebody mentioned that this might break compilers other than
-> gcc, but perhaps we can do what Linux does:
+They need the gitexecdir.
 
-I simply added:
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
 
-    CFLAGS+=-Wno-format-zero-length
+Otherwise this makes it difficult to package contrib scripts in certain
+distributions.
 
-to my config.mak file. I had originally intended to do so conditionally,
-depending on the compiler being gcc, but I found that clang and tcc just
-ignored it ...
+For example, if you have a proper Makefile in contrib:
 
-> cc-disable-warning = $(call try-run,\
-> $(CC) $(CFLAGS) -W$(strip $(1)) -c -x c /dev/null -o "$$TMP",-Wno-$(strip $(1)))
-> 
-> CFLAGS = -g -O2 -Wall $(call cc-disable-warning,format-zero-length,)
+---
+TESTS := $(wildcard test*.sh)
+SCRIPTS := $(wildcard git-remote-*.py)
 
-ATB,
-Ramsay Jones
+export T := $(addprefix $(CURDIR)/,$(TESTS))
+export MAKE := $(MAKE) -e
+export PATH := $(CURDIR):$(PATH)
+export TEST_LINT := test-lint-executable test-lint-shell-syntax
+
+export SCRIPT_PYTHON := $(addprefix $(CURDIR)/,$(SCRIPTS))
+
+all: $(SCRIPTS)
+	$(MAKE) -C ../.. build-python-script
+
+install:
+	$(MAKE) -C ../.. install-python-script
+
+test: all
+	$(MAKE) -C ../../t $@
+
+$(TESTS): all
+	$(MAKE) -C ../../t $(CURDIR)/$@
+
+.PHONY: all install test $(TESTS)
+---
+
+A packager might create a git-bzr package that does this:
+
+% make -C contrib/remote-helpers install
+
+But that would fail, unless this patch is applied.
+
+Distributions like Arch Linux don't have a concept of multiple binary packages
+from a single source package, so there would need to be a separate PKGBUILD
+(akin to spec file) for git-bzr. In addition this package might not be
+official, but part of the user maintained AUR. Similarly, other distributions
+might want to package git-bzr separetly, for example from launchpad.
+
+ Makefile | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 3588ca1..e51b92e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -511,12 +511,14 @@ build-perl-script: $(SCRIPT_PERL_GEN)
+ build-sh-script: $(SCRIPT_SH_GEN)
+ build-python-script: $(SCRIPT_PYTHON_GEN)
+ 
+-.PHONY: install-perl-script install-sh-script install-python-script
+-install-sh-script: $(SCRIPT_SH_INS)
++.PHONY: install-gitexecdir install-perl-script install-sh-script install-python-script
++install-gitexecdir:
++	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++install-sh-script: $(SCRIPT_SH_INS) | install-gitexecdir
+ 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+-install-perl-script: $(SCRIPT_PERL_INS)
++install-perl-script: $(SCRIPT_PERL_INS) | install-gitexecdir
+ 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+-install-python-script: $(SCRIPT_PYTHON_INS)
++install-python-script: $(SCRIPT_PYTHON_INS) | install-gitexecdir
+ 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 
+ .PHONY: clean-perl-script clean-sh-script clean-python-script
+-- 
+1.8.4-fc
