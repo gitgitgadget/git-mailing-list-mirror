@@ -1,93 +1,63 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 6/9] http: update base URLs when we see redirects
-Date: Sun, 29 Sep 2013 15:50:29 -0400
-Message-ID: <CAPig+cQzStMzjONbxm3bhSYZ0AG+67ViQR1UBdqAYnvEnLyWGA@mail.gmail.com>
-References: <20130928082956.GA22610@sigill.intra.peff.net>
-	<20130928083405.GA2782@sigill.intra.peff.net>
-	<CAPig+cQVQ6iY8onvb--88W0XHofC815NZHTb=L744hANtT8mVQ@mail.gmail.com>
-	<20130929193245.GB17644@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, "Kyle J. McKay" <mackyle@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Sep 29 21:50:47 2013
+From: Keshav Kini <keshav.kini@gmail.com>
+Subject: [PATCH v2 0/4] git-svn.txt: miscellaneous changes
+Date: Sun, 29 Sep 2013 18:45:56 -0500
+Message-ID: <1380498360-18387-1-git-send-email-keshav.kini@gmail.com>
+References: <1379971145-8971-1-git-send-email-keshav.kini@gmail.com>
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Keshav Kini <keshav.kini@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 30 01:46:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQN0x-0005WJ-77
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Sep 2013 21:50:47 +0200
+	id 1VQQgz-0000Ct-Hv
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Sep 2013 01:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756358Ab3I2Tug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Sep 2013 15:50:36 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:44326 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755723Ab3I2Tub (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Sep 2013 15:50:31 -0400
-Received: by mail-lb0-f174.google.com with SMTP id w6so3765183lbh.5
-        for <git@vger.kernel.org>; Sun, 29 Sep 2013 12:50:30 -0700 (PDT)
+	id S1752930Ab3I2XqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Sep 2013 19:46:22 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:34971 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752210Ab3I2XqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Sep 2013 19:46:21 -0400
+Received: by mail-ob0-f175.google.com with SMTP id uz6so4609923obc.34
+        for <git@vger.kernel.org>; Sun, 29 Sep 2013 16:46:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=XE32b9M51Tj0eZ3yUbhzPhwBMjOkcbX3G8MIb9gtHNg=;
-        b=nNvI/pJCdTPwJBsGBp45hXLzRdBOaO+SfFLoGVlmotkP1sJ19Vl9QJSHQuo+t8DoB8
-         9qsuE6txpkWtaZ/EyVCqoVZn/xs5JXcUl6tAsl4QNEWj/DN0P7/U+KXDJtjtbfE7yPUZ
-         hhlZwspSme3Hx5SumECa6XSkcoHSyt5nOqrJKWKaC9ebxJhmwtVX3fYPd3+wnj2c43Qr
-         27OJjM5Kg2BTBQluamNW1rOf0+zmbFzh7iDrMxWeJ9CU2ZTkNy7EznQ1l8Sgb+9j1tWZ
-         vNzLssotAPZLzqnDM4mTcXYYFi5vZnCgYj5oixRuJujrUFde//ngCCxtOaQiu3figRcW
-         EpfA==
-X-Received: by 10.152.120.73 with SMTP id la9mr16322937lab.3.1380484230013;
- Sun, 29 Sep 2013 12:50:30 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Sun, 29 Sep 2013 12:50:29 -0700 (PDT)
-In-Reply-To: <20130929193245.GB17644@sigill.intra.peff.net>
-X-Google-Sender-Auth: n4Po-sYygcJ6czRtvTErdUQ9RCY
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=GX6OVVQeWlEIv7LxrmkrTNTodedQ32I6MKkE0UPAXRA=;
+        b=maWGAPItUQmNhdqnJueF2uBWom0wXIxaz8rogp6bCBlvtgL0fErtZ8DtH2h7Fgsh1d
+         SsziPgyy+hktm4R5CUDXL+PRfrRzRVvTkWt0w3UOijflrAz5c3Z3OGGZC70wA+pBT3Z5
+         jslcqXPa1GGlUZPj/lxilZozE5vLLFRZIIY1mse/tXck1DwVbNHtxwRrk2fHXbV/I/d0
+         vYYVrp60WeIfV6e7BYBVvxAOeYplyWzjHpQper3QQKSExTjGmw9pBFTdndTSdmdexydj
+         gHCSniEKwykV7EPxeiBh0QHw1prlvOV0rHQ2XJuptnWo3xmSs9LDkFEAyUUJcCu76gk8
+         h/Ug==
+X-Received: by 10.182.246.39 with SMTP id xt7mr17303598obc.16.1380498380452;
+        Sun, 29 Sep 2013 16:46:20 -0700 (PDT)
+Received: from localhost (cpe-72-179-6-119.austin.res.rr.com. [72.179.6.119])
+        by mx.google.com with ESMTPSA id xx9sm25700408obc.6.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 29 Sep 2013 16:46:19 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2
+In-Reply-To: <1379971145-8971-1-git-send-email-keshav.kini@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235608>
 
-On Sun, Sep 29, 2013 at 3:32 PM, Jeff King <peff@peff.net> wrote:
-> On Sun, Sep 29, 2013 at 03:26:45PM -0400, Eric Sunshine wrote:
->
->> On Sat, Sep 28, 2013 at 4:34 AM, Jeff King <peff@peff.net> wrote:
->> > diff --git a/http.c b/http.c
->> > index 65a0048..8775b5c 100644
->> > --- a/http.c
->> > +++ b/http.c
->> > @@ -921,11 +921,71 @@ static int http_request_reauth(const char *url,
->> > +static int update_url_from_redirect(struct strbuf *base,
->> > +                                   const char *asked,
->> > +                                   const struct strbuf *got)
->> > +{
->> > +       const char *tail;
->> > +       size_t tail_len;
->> > +
->> > +       if (!strcmp(asked, got->buf))
->> > +               return 0;
->> > +
->> > +       if (strncmp(asked, base->buf, base->len))
->> > +               die("BUG: update_url_from_redirect: %s is not a superset of %s",
->> > +                   asked, base->buf);
->>
->> Is there something non-obvious going on here? die(...,base->buf) takes
->> advantage of the terminating NUL promised by strbuf, but then
->> strncmp(...,base->buf,base->len) is used rather than the simpler
->> strcmp(...,base->buf).
->
-> Yes, we are not checking for equality, but rather making sure that
-> "asked" begins with "base->buf". It might be more clearly written as:
+I'm not sure if this was the best way to split my changes into commits.
+Please let me know if it wasn't.
 
-Ah right, I knew that that was the intention but had a synapse
-misfire. Sorry for the noise.
+Keshav Kini (4):
+  git-svn.txt: fix AsciiDoc formatting error
+  git-svn.txt: reword description of gc command
+  git-svn.txt: replace .git with $GIT_DIR
+  git-svn.txt: elaborate on rev_map files
 
->
->   if (prefixcmp(asked, base->buf))
->
-> I was trying to take advantage of the fact that we know base->len
-> already, but this it not a particularly performance-critical code path.
-> We can afford the extra strlen that prefixcmp will do.
->
-> -Peff
+ Documentation/git-svn.txt | 46 +++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 33 insertions(+), 13 deletions(-)
+
+-- 
+1.8.3.2
