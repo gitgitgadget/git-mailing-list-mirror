@@ -1,70 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Makefile: suppress false positive warnings of empty
- format string.
-Date: Mon, 30 Sep 2013 17:34:32 -0400
-Message-ID: <20130930213432.GA19498@sigill.intra.peff.net>
-References: <7vfvvkpt2k.fsf@alter.siamese.dyndns.org>
- <1380456534-7582-1-git-send-email-stefanbeller@googlemail.com>
- <20130929190017.GA2482@elie.Belkin>
- <20130930201429.GA14433@sigill.intra.peff.net>
- <20130930212636.GY9464@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] rebase -i: respect to core.abbrev
+Date: Mon, 30 Sep 2013 14:36:05 -0700
+Message-ID: <20130930213605.GZ9464@google.com>
+References: <1380384435-20846-1-git-send-email-kirill.shutemov@linux.intel.com>
+ <20130928211013.54361E0090@blue.fi.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <stefanbeller@googlemail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 30 23:34:48 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+X-From: git-owner@vger.kernel.org Mon Sep 30 23:36:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQl79-0005Ii-OL
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Sep 2013 23:34:48 +0200
+	id 1VQl8Z-0006ON-IJ
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Sep 2013 23:36:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755530Ab3I3Vef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Sep 2013 17:34:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58728 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754855Ab3I3Vee (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Sep 2013 17:34:34 -0400
-Received: (qmail 755 invoked by uid 102); 30 Sep 2013 21:34:35 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 30 Sep 2013 16:34:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Sep 2013 17:34:32 -0400
+	id S1755528Ab3I3VgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Sep 2013 17:36:11 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:60203 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755415Ab3I3VgK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Sep 2013 17:36:10 -0400
+Received: by mail-pb0-f42.google.com with SMTP id un15so6154433pbc.29
+        for <git@vger.kernel.org>; Mon, 30 Sep 2013 14:36:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=e0Atc9EQR1fvmC52ZI5LdOBn2bghdmr5kJJ+609h3/g=;
+        b=KbtIwvxjsx7lEG1HlNJcgHBQRJRC0RjN/GdyIUmcNKyMTUvqX6PChcsJGwcmFM0ob7
+         xosyuvLB/0kv/QkRQKXrPIqE6Z0Qf+0C0dPK/j8xB+yXTZRyonzrtxeaayNy9LPS0Klv
+         Q9LQZqY5rgcXx6kCXnjtLbnz3TzkloSllaG+q9SAHfXBCE8bgFKgEVGemgbbyFnChEJB
+         kIEqaj2fal7skTx4VJ6TdjDTQ0lywUW2ix1bu2ixa3b0LcPyUxK2oN9G9p3ew9wMFD64
+         fk/ga5MOm9tBu9P+SWxDThWUeV3eMzooKUc61Ag9qs5e0j5hQyJA/KrGzGChg8yIB9h0
+         OtBQ==
+X-Received: by 10.66.140.40 with SMTP id rd8mr30221950pab.119.1380576969966;
+        Mon, 30 Sep 2013 14:36:09 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id im2sm2671739pbd.31.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 30 Sep 2013 14:36:09 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20130930212636.GY9464@google.com>
+In-Reply-To: <20130928211013.54361E0090@blue.fi.intel.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235630>
 
-On Mon, Sep 30, 2013 at 02:26:36PM -0700, Jonathan Nieder wrote:
+Kirill A. Shutemov wrote:
 
-> Jeff King wrote:
-> 
-> >                                            I think we'd be better off to
-> > simply mark up the few callsites. Workarounds are here:
-> >
-> >   http://article.gmane.org/gmane.comp.version-control.git/230026
-> 
-> Yeah, that looks okay (ugly but tolerable).  It's tempting to do
-> something like
-> 
-> 	-	status_printf_ln(s, GIT_COLOR_NORMAL, "");
-> 	+	status_nl(s, GIT_COLOR_NORMAL);
-> 
-> and
-> 
-> 	-	status_printf(s, color(WT_STATUS_HEADER, s), "");
-> 	+	status_start_line(s, color(WT_STATUS_HEADER, s));
-> 
-> to make the intent clearer.  Sane?
+> collapse_todo_ids() uses `git rev-parse --short=7' to abbrev commit ids.
+> Let's drop argument from --short to use default (7) or config value
+> instead.
 
-Yeah, I hinted at adding wrappers like this in the earlier thread but
-didn't actually try it.  I think the approach is reasonable, as I doubt
-the wrappers should require too much refactoring.
+Since the todo ids are expanded immediately after the editor exits,
+there is not much risk of accidental hash collision due to new
+objects, so this should be safe.
 
--Peff
+Thanks, both.
