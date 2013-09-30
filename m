@@ -1,86 +1,75 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Local tag killer
-Date: Mon, 30 Sep 2013 11:52:47 -0400 (EDT)
-Message-ID: <alpine.LFD.2.03.1309301138200.6331@syhkavp.arg>
-References: <52327E62.2040301@alum.mit.edu>
- <CAPc5daXvCf90WYoUWC+DxRyZEQhXGL7Bd_ZJKwfoqxeKt8TADQ@mail.gmail.com>
- <xmqqd2o3p0nk.fsf@gitster.dls.corp.google.com> <523D3FD2.4090002@alum.mit.edu>
- <20130924075119.GD7257@sigill.intra.peff.net>
- <alpine.LFD.2.03.1309251834210.312@syhkavp.arg>
- <5246C975.1050504@alum.mit.edu>
- <CALKQrgeJn1J4ntE_2Lr7Et+Oao=vB1FE6nLfaFJOvLHJLzG9tA@mail.gmail.com>
- <5247ACB9.40208@alum.mit.edu> <52499797.9030100@xiplink.com>
+From: Marc Strapetz <marc.strapetz@syntevo.com>
+Subject: Re: Git counterpart to SVN bugtraq properties?
+Date: Mon, 30 Sep 2013 18:54:35 +0200
+Message-ID: <5249ACCB.5090007@syntevo.com>
+References: <51E69612.6020201@syntevo.com> <20130717133357.GB2337@serenity.lan>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	=?ISO-8859-15?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
-	Michael Schubert <mschub@elegosoft.com>
-To: Marc Branchaud <mbranchaud@xiplink.com>
-X-From: git-owner@vger.kernel.org Mon Sep 30 17:52:57 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Mon Sep 30 19:00:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQfmG-0003lX-J1
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Sep 2013 17:52:52 +0200
+	id 1VQgpb-0005QA-1W
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Sep 2013 19:00:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755019Ab3I3Pwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Sep 2013 11:52:49 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:43850 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754486Ab3I3Pws (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Sep 2013 11:52:48 -0400
-Received: from xanadu.home ([70.83.209.44]) by VL-VM-MR004.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0MTY00GUM43ZGX50@VL-VM-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 30 Sep 2013 11:52:47 -0400 (EDT)
-In-reply-to: <52499797.9030100@xiplink.com>
-User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+	id S1755201Ab3I3RAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Sep 2013 13:00:16 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.32]:55801 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754934Ab3I3RAP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Sep 2013 13:00:15 -0400
+X-Greylist: delayed 331 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Sep 2013 13:00:15 EDT
+Received: from [91.113.179.170] (helo=[192.168.92.3])
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <marc.strapetz@syntevo.com>)
+	id 1VQgk1-0001ls-HP; Mon, 30 Sep 2013 18:54:37 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <20130717133357.GB2337@serenity.lan>
+X-Enigmail-Version: 1.5.2
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235617>
 
-On Mon, 30 Sep 2013, Marc Branchaud wrote:
-
-> Why would there be ambiguity warnings?  The fetch command shouldn't issue any
-> warnings, since all the remotes' names get safely tucked away in distinct
-> namespaces.
+On 17.07.2013 15:33, John Keeping wrote:
+> On Wed, Jul 17, 2013 at 03:03:14PM +0200, Marc Strapetz wrote:
+>> I'm looking for a specification or guidelines on how a Git client should
+>> integrate with bug tracking systems. For SVN, one can use
+>> bugtraq-properties [1] to specify e.g. the issue tracker URL or how to
+>> parse the bug ID from a commit message. AFAIU, there is nothing
+>> comparable for Git [2]? If that's actually the case, is someone
+>> interested in working out a similar specification for Git?
+>>
+>> [1] http://code.google.com/p/tortoisesvn/source/browse/tags/version_1.2.0/doc/issuetrackers.txt
+>>
+>> [2] http://stackoverflow.com/questions/17545548
 > 
-> Are we talking about DWIM warnings?  Aside from git-describe I don't see why
-> such warnings would be a problem.  To DWIM-resolve a tag name look in
-> refs/tags/* and refs/remotes/*/tags/* -- much like it's done for branches
-> already.  If a tag name has multiple matches then it's ambiguous.  Git could
-> be clever and check for matching SHA1 values, but why bother?  It almost
-> seems like a disservice to silently disambiguate such names.  I would think a
-> user would prefer to know about any possible ambiguities, rather than have
-> some suddenly appear (and maybe also disappear).
+> The Git way to record the issue ID as a footer in the commit message.
+> See for example [1].  Although I'm not aware of any standard for naming
+> this footer.
+> 
+> In terms of recording the URL and other data, I think you'd want a
+> dotfile in the repository (perhaps .bugzilla).  This shoudld probably be
+> in the gitconfig format, like .gitmodules.
+> 
+> I think "all" it needs is to draw up a spec for the names of keys and
+> format of their values, along with the format of footer(s) identifying
+> issues associated with a commit and to persuade UI developers to support
+> it... ;-)
 
-Consider that I have in my Linux kernel tree:
+Finally, I've created a minimal spec which is sufficient to parse and
+display issue IDs:
 
-- a remote branch corresponding to Linus' master tree
+https://github.com/mstrap/bugtraq/blob/master/specification.txt
 
-- multiple remote branches corresponding to Linux stable branches
+I'd appreciate comments and pull requests.
 
-- a remote for linux-next which is a repo constantly being rebased
-
-Now all those repositories share the mainline tags from Linus' repo and 
-they add some more of they own which are not shared.  So if they all 
-have a v3.11 tag that resolve to the same SHA1, then there is 
-effectively no ambiguity at all and git should not warn at all.
-
-*However* if one of those v3.11 tags does not agree with the others 
-_then_ I want to be warned about it.
-
-So having multiple matching tags that do resolve to the same SHA1 across 
-different remote repositories _is_ the norm and should work 
-transparently.
-
-
-Nicolas
+-Marc
