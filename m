@@ -1,101 +1,55 @@
-From: Marc Strapetz <marc.strapetz@syntevo.com>
-Subject: Re: Git counterpart to SVN bugtraq properties?
-Date: Tue, 01 Oct 2013 14:24:18 +0200
-Message-ID: <524ABEF2.1060008@syntevo.com>
-References: <51E69612.6020201@syntevo.com> <20130717133357.GB2337@serenity.lan> <5249ACCB.5090007@syntevo.com> <20130930185513.GS9464@google.com> <CACXt3y82u3KtR7cq5Kyb1PDi1aq7095uO2-eGQTLq0yDuNZ73Q@mail.gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Local tag killer
+Date: Tue, 01 Oct 2013 08:45:57 -0400
+Message-ID: <524AC405.3040209@xiplink.com>
+References: <52327E62.2040301@alum.mit.edu> <CAPc5daXvCf90WYoUWC+DxRyZEQhXGL7Bd_ZJKwfoqxeKt8TADQ@mail.gmail.com> <xmqqd2o3p0nk.fsf@gitster.dls.corp.google.com> <523D3FD2.4090002@alum.mit.edu> <20130924075119.GD7257@sigill.intra.peff.net> <alpine.LFD.2.03.1309251834210.312@syhkavp.arg> <5246C975.1050504@alum.mit.edu> <CALKQrgeJn1J4ntE_2Lr7Et+Oao=vB1FE6nLfaFJOvLHJLzG9tA@mail.gmail.com> <5247ACB9.40208@alum.mit.edu> <52499797.9030100@xiplink.com> <alpine.LFD.2.03.1309301138200.6331@syhkavp.arg> <5249CDF7.4050904@xiplink.com> <alpine.LFD.2.03.1309301527270.6331@syhkavp.arg> <5249E9C8.1070700@xiplink.com> <alpine.LFD.2.03.1309301839080.6331@syhkavp.arg> <524A3BB6.9060808@xiplink.com> <alpine.LFD.2.03.1309302323190.6331@syhkavp.arg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	John Keeping <john@keeping.me.uk>, git@vger.kernel.org
-To: James Sharpe <mail@jsharpe.net>
-X-From: git-owner@vger.kernel.org Tue Oct 01 14:24:41 2013
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>,
+	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	Michael Schubert <mschub@elegosoft.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Tue Oct 01 14:51:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQz0L-0007Pn-5j
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Oct 2013 14:24:41 +0200
+	id 1VQzQR-0001nN-UU
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Oct 2013 14:51:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751861Ab3JAMYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Oct 2013 08:24:25 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.31.36]:47790 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751780Ab3JAMYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Oct 2013 08:24:24 -0400
-Received: from [217.91.110.92] (helo=[192.168.93.201])
-	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <marc.strapetz@syntevo.com>)
-	id 1VQz01-0004IE-Kx; Tue, 01 Oct 2013 14:24:21 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <CACXt3y82u3KtR7cq5Kyb1PDi1aq7095uO2-eGQTLq0yDuNZ73Q@mail.gmail.com>
-X-Enigmail-Version: 1.5.2
-X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
+	id S1753376Ab3JAMvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Oct 2013 08:51:33 -0400
+Received: from smtp146.ord.emailsrvr.com ([173.203.6.146]:57152 "EHLO
+	smtp146.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753357Ab3JAMvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Oct 2013 08:51:31 -0400
+X-Greylist: delayed 331 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Oct 2013 08:51:31 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp27.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 031DF2A813F;
+	Tue,  1 Oct 2013 08:45:59 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp27.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id A26FD2A8443;
+	Tue,  1 Oct 2013 08:45:58 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <alpine.LFD.2.03.1309302323190.6331@syhkavp.arg>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235658>
 
-On 30.09.2013 21:42, James Sharpe wrote:
-> You could also use git notes to store the information. The advantage
-> there is they can be added to commits without changing the history.
-> Gerrit and jenkins can auto generate this sort of metadata via plugins.
+On 13-09-30 11:28 PM, Nicolas Pitre wrote:
+>
+> But with my proposal, you'd get a message saying that the tag "baz" is
+> ambigous, and that you'd have to use either "libfoo/baz" or
+> "libbar/baz".
 
-git notes could be the preferred storage for issues IDs when the client
-wants to add this kind of meta information on Commit. This would
-actually solve one weak point of SVN bugtraq properties where you can
-just specify to prepend or append an issue ID to the commit message
-(i.e. silently altering the commit message).
+Yes, and that's good.  I agree with your proposal.  Sorry if that wasn't 
+clear.
 
--Marc
-
-
-> 
-> On 30 Sep 2013 20:02, "Jonathan Nieder" <jrnieder@gmail.com
-> <mailto:jrnieder@gmail.com>> wrote:
-> 
->     Hi,
-> 
->     Marc Strapetz wrote:
->     >> On Wed, Jul 17, 2013 at 03:03:14PM +0200, Marc Strapetz wrote:
-> 
->     >>> I'm looking for a specification or guidelines on how a Git
->     client should
->     >>> integrate with bug tracking systems.
->     [...]
->     > Finally, I've created a minimal spec which is sufficient to parse and
->     > display issue IDs:
->     >
->     > https://github.com/mstrap/bugtraq/blob/master/specification.txt
-> 
->     Neat. :)
-> 
->     It reminds me a little of Gerrit's commentlink functionality, though
->     that tries to solve a different / more generic problem (automatic
->     linking in commit messages in general, not just to bug trackers):
->     https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#_a_id_commentlink_a_section_commentlink
-> 
->     Some projects use more than one bug tracker.  For example, a distro
->     might have its own bug tracking system and also sometimes make commits
->     that refer to the upstream bug tracker.  I don't think that's
->     important to necessarily address in the first version of a project
->     like this, but thought I should mention it to help plans for the
->     future.
-> 
->     Gerrit keeps its configuration in a file named "project.config" in the
->     tree associated to the refs/meta/config commit so a single
->     configuration can be applied to the entire repository.  Which
->     .gitbugtraq file should take effect in a repository with multiple
->     branches?
-> 
->     Hope that helps,
->     Jonathan
->     --
->     To unsubscribe from this list: send the line "unsubscribe git" in
->     the body of a message to majordomo@vger.kernel.org
->     <mailto:majordomo@vger.kernel.org>
->     More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+		M.
