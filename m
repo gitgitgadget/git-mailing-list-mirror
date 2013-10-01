@@ -1,71 +1,74 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3] build: add default aliases
-Date: Tue, 1 Oct 2013 08:12:37 +0700
-Message-ID: <CACsJy8De8uER-=N4DonycE9i0cOG-mvcx+bRnQ=Gxt4X9_1TfQ@mail.gmail.com>
-References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
- <20130924045325.GD2766@sigill.intra.peff.net> <20130924183958.GK9464@google.com>
- <CAMP44s0UcP5AhWrm7vjBDLvY6CupzL03kys1YXs9cpGJNxkBBA@mail.gmail.com>
- <52479C04.8060000@alum.mit.edu> <20130930193343.GW9464@google.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Local tag killer
+Date: Mon, 30 Sep 2013 23:04:22 -0400
+Message-ID: <524A3BB6.9060808@xiplink.com>
+References: <52327E62.2040301@alum.mit.edu> <CAPc5daXvCf90WYoUWC+DxRyZEQhXGL7Bd_ZJKwfoqxeKt8TADQ@mail.gmail.com> <xmqqd2o3p0nk.fsf@gitster.dls.corp.google.com> <523D3FD2.4090002@alum.mit.edu> <20130924075119.GD7257@sigill.intra.peff.net> <alpine.LFD.2.03.1309251834210.312@syhkavp.arg> <5246C975.1050504@alum.mit.edu> <CALKQrgeJn1J4ntE_2Lr7Et+Oao=vB1FE6nLfaFJOvLHJLzG9tA@mail.gmail.com> <5247ACB9.40208@alum.mit.edu> <52499797.9030100@xiplink.com> <alpine.LFD.2.03.1309301138200.6331@syhkavp.arg> <5249CDF7.4050904@xiplink.com> <alpine.LFD.2.03.1309301527270.6331@syhkavp.arg> <5249E9C8.1070700@xiplink.com> <alpine.LFD.2.03.1309301839080.6331@syhkavp.arg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Aguilar <davvid@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 01 03:13:19 2013
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>,
+	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	Michael Schubert <mschub@elegosoft.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Tue Oct 01 05:04:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQoWa-00018w-CB
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Oct 2013 03:13:16 +0200
+	id 1VQqGQ-0003Zf-G2
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Oct 2013 05:04:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755105Ab3JABNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Sep 2013 21:13:09 -0400
-Received: from mail-oa0-f49.google.com ([209.85.219.49]:39153 "EHLO
-	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754816Ab3JABNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Sep 2013 21:13:08 -0400
-Received: by mail-oa0-f49.google.com with SMTP id i4so4283679oah.22
-        for <git@vger.kernel.org>; Mon, 30 Sep 2013 18:13:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=fzscRHHoAIXLNUvm/oliN2RwTSeFiZNUgiCEksd8Glk=;
-        b=Ey7rzONWOYV15UVfIka10hHgL5GSF3VlxSnuMzx5NK0tpQZ1MtxDPTqxooCBA5wfoP
-         dh6z0Wg2ShdVyYhL4+Ns/uleyaVYasxuLCgpwS5Z7R4aiIbgQm1AYINC1wvpp3B19cCw
-         F5fW+9bTDk56ur1odkkQnJ3RUiaClAua2QlXsyo9GX+ZeRDDdeRsB3jCTGQYbP9pz/j2
-         qngYF0sDZ4zTcFvGBOe9/urHDBxDh+miUpAtVY/LVT7fByj4gwU03lQ5DlMEJrXc09v5
-         ZQqYZvWZi6dIBhkGo5HH67Wyp3DPxRtAWsn7kDe5ve7kzvQKIGAfKD02e1VZqZT4RRcD
-         VdXg==
-X-Received: by 10.60.133.71 with SMTP id pa7mr3974762oeb.44.1380589987946;
- Mon, 30 Sep 2013 18:13:07 -0700 (PDT)
-Received: by 10.76.131.130 with HTTP; Mon, 30 Sep 2013 18:12:37 -0700 (PDT)
-In-Reply-To: <20130930193343.GW9464@google.com>
+	id S1755378Ab3JADE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Sep 2013 23:04:26 -0400
+Received: from smtp154.ord.emailsrvr.com ([173.203.6.154]:60859 "EHLO
+	smtp154.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755251Ab3JADEZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Sep 2013 23:04:25 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp20.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 303321C013C;
+	Mon, 30 Sep 2013 23:04:24 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp20.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 851AD1C00DB;
+	Mon, 30 Sep 2013 23:04:23 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <alpine.LFD.2.03.1309301839080.6331@syhkavp.arg>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235638>
 
-On Tue, Oct 1, 2013 at 2:33 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Michael Haggerty wrote:
+On 13-09-30 06:44 PM, Nicolas Pitre wrote:
+> On Mon, 30 Sep 2013, Marc Branchaud wrote:
 >
->> That being said, independent of aliases, there are many other config
->> settings that can affect commands that might be used in documentation or
->> scripts, and which also could be the source of errors for the non-vigilent.
+>> On 13-09-30 04:08 PM, Nicolas Pitre wrote:
+>>> Again, in the cases where there is actually a SHA1 conflict between all
+>>> possible tags that match a tag short-end then listing them and asking the
+>>> user to be more explicit is the right thing to do.  But that should be a
+>>> very rare case in practice, and designing for making this case easy is
+>>> the wrong approach.
+>>>
+>>> Instead, the common case of multiple remotes with duplicated tag names
+>>> referring to the same thing _and/or_ multiple remotes with distinct tags
+>>> names is what should be made easy to use with no extra steps.
+>>
+>> Again, I don't think that's the common case.  I think it's just as likely for
+>> there to be multiple remotes with duplicate tag names that refer to different
+>> objects.
 >
-> Yep, this is a problem, too (I'm looking at you, "git push").  We try
-> to avoid this problem or balance it against convenience by being
-> careful when adding new configuration, but sometimes we slip up.
+> Why do you say so?  I'm curious to know what kind of work flow would do
+> that in practice.
 
-I think the problem is we start pushing too much on the porcelain
-front and forget about plumbing. "git push" is for human, but I don't
-think there's an equivalent for scripts. "git branch --list" vs "git
-for-each-ref" is a good example.
--- 
-Duy
+The use case I have in mind is where a project makes use of other 
+projects, for example an application that uses some libraries.  The 
+application's repository could contain the full histories of the 
+libraries, each subtree-merged into a different directory.
+
+So maybe that's not so common these days, but the current flat tag 
+namespace makes it pretty much impractical.
+
+		M.
