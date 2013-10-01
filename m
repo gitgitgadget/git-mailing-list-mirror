@@ -1,175 +1,189 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v3 02/11] buitin/describe.c: use new hash map implementation
-Date: Tue, 01 Oct 2013 11:35:20 +0200
-Message-ID: <524A9758.2040201@gmail.com>
+Subject: [PATCH v3 03/11] diffcore-rename.c: move code around to prepare for
+ the next patch
+Date: Tue, 01 Oct 2013 11:36:03 +0200
+Message-ID: <524A9783.8020107@gmail.com>
 References: <524A96FF.5090604@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
 Cc: Karsten Blees <karsten.blees@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 01 11:35:27 2013
+X-From: git-owner@vger.kernel.org Tue Oct 01 11:36:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQwMX-0003hq-Tf
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Oct 2013 11:35:26 +0200
+	id 1VQwNH-0004GG-8h
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Oct 2013 11:36:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752862Ab3JAJfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Oct 2013 05:35:22 -0400
-Received: from mail-ea0-f176.google.com ([209.85.215.176]:55761 "EHLO
-	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752775Ab3JAJfV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Oct 2013 05:35:21 -0400
-Received: by mail-ea0-f176.google.com with SMTP id q16so3280568ead.35
-        for <git@vger.kernel.org>; Tue, 01 Oct 2013 02:35:20 -0700 (PDT)
+	id S1753161Ab3JAJgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Oct 2013 05:36:07 -0400
+Received: from mail-ea0-f177.google.com ([209.85.215.177]:44593 "EHLO
+	mail-ea0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753134Ab3JAJgF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Oct 2013 05:36:05 -0400
+Received: by mail-ea0-f177.google.com with SMTP id f15so3183226eak.8
+        for <git@vger.kernel.org>; Tue, 01 Oct 2013 02:36:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=ZXh6rWkbZf9SbCSq2QkoPZ4vFf4CHyIVBqH13+brfq8=;
-        b=i2SmGi90koV1CZ4CGCgD7NUd90oswzh6jqTCOqlwK1XOsjKMknpbrDJv4VyYVmHyiQ
-         fKG65+j2muxEGPP4Pff8hU9O7KIdB5apttp5+eQ4ZR/Pmn/ETohiLrCIlMS7GVsJhbld
-         8aZRLJuwIa5AJUWo9AAy5f/lfoHVwaAY31JE2k7DySxfWIAwrmIRQ5c830nn34r4CYFU
-         AmA9f20WaPlOEmYtvmhvtICISUP64hT0muhb31ki3XQV/2Vkn8QDdDTVd9ToiNYkVdXW
-         vJO5I6OkjXbDh75XPIRoYuV1HNFPEJ54U9r0CQpLGCsV5tKhByrEBptqlwXecyT1WNB6
-         MRbA==
-X-Received: by 10.14.241.74 with SMTP id f50mr45119844eer.29.1380620120516;
-        Tue, 01 Oct 2013 02:35:20 -0700 (PDT)
+        bh=YL+MDjS/ZXTf+9y0zpK3dFQ14cLrWKMf5QX3WrbbHcY=;
+        b=nsKCliufMuZGw8y4ecYE1ixucEmqwm46A/AhaEsUgzzl2SJyyVJQl9Svy8Am1/75Ai
+         sKQRFXLGmrwyJwBWrucYZFYf4CR+EU4H+tHXNnT/x/ppczl2E7olFDSmk2+7d4iaW1fM
+         7EF4G1ZlR4YdSE1HR8UBwrVYLpSca+FvB1PI0luro4w6tSOP2P1qMjyQYb3XkIyw0HgX
+         JqGz9uEwtp4I3OAGKxOL5rvOtVlqQbHZGbWxuokONrvqyZH1TjeDLN71Ehl3IiZm5Xi6
+         xGK2snqDmvKRzjun5JSYDDd89vKYVid6u0MvdOVThDti3+FbSNhowQkdia6dEVNXqxPq
+         Mivg==
+X-Received: by 10.14.99.196 with SMTP id x44mr784563eef.83.1380620163777;
+        Tue, 01 Oct 2013 02:36:03 -0700 (PDT)
 Received: from [10.1.100.51] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id i1sm11143842eeg.0.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id f49sm11088370eec.7.1969.12.31.16.00.00
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 01 Oct 2013 02:35:20 -0700 (PDT)
+        Tue, 01 Oct 2013 02:36:03 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
 In-Reply-To: <524A96FF.5090604@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235647>
+
+No actual code changes, just move hash_filespec up and outdent part of
+find_identical_files.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 ---
- builtin/describe.c | 53 ++++++++++++++++++++++++-----------------------------
- 1 file changed, 24 insertions(+), 29 deletions(-)
+ diffcore-rename.c | 98 +++++++++++++++++++++++++++----------------------------
+ 1 file changed, 49 insertions(+), 49 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 7d73722..ae8d32c 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -6,7 +6,7 @@
- #include "exec_cmd.h"
- #include "parse-options.h"
- #include "diff.h"
--#include "hash.h"
-+#include "hashmap.h"
- #include "argv-array.h"
- 
- #define SEEN		(1u<<0)
-@@ -25,7 +25,7 @@ static int longformat;
- static int first_parent;
- static int abbrev = -1; /* unspecified */
- static int max_candidates = 10;
--static struct hash_table names;
-+static struct hashmap names;
- static int have_util;
- static const char *pattern;
- static int always;
-@@ -38,7 +38,7 @@ static const char *diff_index_args[] = {
- 
- 
- struct commit_name {
--	struct commit_name *next;
-+	struct hashmap_entry entry;
- 	unsigned char peeled[20];
- 	struct tag *tag;
- 	unsigned prio:2; /* annotated tag = 2, tag = 1, head = 0 */
-@@ -50,6 +50,12 @@ static const char *prio_names[] = {
- 	"head", "lightweight", "annotated",
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 6c7a72f..008a60c 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -248,6 +248,18 @@ struct file_similarity {
+ 	struct file_similarity *next;
  };
  
-+static int commit_name_cmp(const struct commit_name *cn1,
-+		const struct commit_name *cn2, const void *peeled)
++static unsigned int hash_filespec(struct diff_filespec *filespec)
 +{
-+	return hashcmp(cn1->peeled, peeled ? peeled : cn2->peeled);
++	unsigned int hash;
++	if (!filespec->sha1_valid) {
++		if (diff_populate_filespec(filespec, 0))
++			return 0;
++		hash_sha1_file(filespec->data, filespec->size, "blob", filespec->sha1);
++	}
++	memcpy(&hash, filespec->sha1, sizeof(hash));
++	return hash;
 +}
 +
- static inline unsigned int hash_sha1(const unsigned char *sha1)
- {
- 	unsigned int hash;
-@@ -59,21 +65,9 @@ static inline unsigned int hash_sha1(const unsigned char *sha1)
- 
- static inline struct commit_name *find_commit_name(const unsigned char *peeled)
- {
--	struct commit_name *n = lookup_hash(hash_sha1(peeled), &names);
--	while (n && !!hashcmp(peeled, n->peeled))
--		n = n->next;
--	return n;
--}
+ static int find_identical_files(struct file_similarity *src,
+ 				struct file_similarity *dst,
+ 				struct diff_options *options)
+@@ -258,46 +270,46 @@ static int find_identical_files(struct file_similarity *src,
+ 	 * Walk over all the destinations ...
+ 	 */
+ 	do {
+-		struct diff_filespec *target = dst->filespec;
+-		struct file_similarity *p, *best;
+-		int i = 100, best_score = -1;
 -
--static int set_util(void *chain, void *data)
--{
--	struct commit_name *n;
--	for (n = chain; n; n = n->next) {
--		struct commit *c = lookup_commit_reference_gently(n->peeled, 1);
--		if (c)
--			c->util = n;
--	}
--	return 0;
-+	struct commit_name key;
-+	hashmap_entry_init(&key, hash_sha1(peeled));
-+	return hashmap_get(&names, &key, peeled);
+-		/*
+-		 * .. to find the best source match
+-		 */
+-		best = NULL;
+-		for (p = src; p; p = p->next) {
+-			int score;
+-			struct diff_filespec *source = p->filespec;
+-
+-			/* False hash collision? */
+-			if (hashcmp(source->sha1, target->sha1))
+-				continue;
+-			/* Non-regular files? If so, the modes must match! */
+-			if (!S_ISREG(source->mode) || !S_ISREG(target->mode)) {
+-				if (source->mode != target->mode)
+-					continue;
+-			}
+-			/* Give higher scores to sources that haven't been used already */
+-			score = !source->rename_used;
+-			if (source->rename_used && options->detect_rename != DIFF_DETECT_COPY)
+-				continue;
+-			score += basename_same(source, target);
+-			if (score > best_score) {
+-				best = p;
+-				best_score = score;
+-				if (score == 2)
+-					break;
+-			}
++	struct diff_filespec *target = dst->filespec;
++	struct file_similarity *p, *best;
++	int i = 100, best_score = -1;
+ 
+-			/* Too many identical alternatives? Pick one */
+-			if (!--i)
+-				break;
++	/*
++	 * .. to find the best source match
++	 */
++	best = NULL;
++	for (p = src; p; p = p->next) {
++		int score;
++		struct diff_filespec *source = p->filespec;
++
++		/* False hash collision? */
++		if (hashcmp(source->sha1, target->sha1))
++			continue;
++		/* Non-regular files? If so, the modes must match! */
++		if (!S_ISREG(source->mode) || !S_ISREG(target->mode)) {
++			if (source->mode != target->mode)
++				continue;
+ 		}
+-		if (best) {
+-			record_rename_pair(dst->index, best->index, MAX_SCORE);
+-			renames++;
++		/* Give higher scores to sources that haven't been used already */
++		score = !source->rename_used;
++		if (source->rename_used && options->detect_rename != DIFF_DETECT_COPY)
++			continue;
++		score += basename_same(source, target);
++		if (score > best_score) {
++			best = p;
++			best_score = score;
++			if (score == 2)
++				break;
+ 		}
++
++		/* Too many identical alternatives? Pick one */
++		if (!--i)
++			break;
++	}
++	if (best) {
++		record_rename_pair(dst->index, best->index, MAX_SCORE);
++		renames++;
++	}
+ 	} while ((dst = dst->next) != NULL);
+ 	return renames;
+ }
+@@ -343,18 +355,6 @@ static int find_same_files(void *ptr, void *data)
+ 	return ret;
  }
  
- static int replace_name(struct commit_name *e,
-@@ -118,16 +112,10 @@ static void add_to_known_names(const char *path,
- 	struct tag *tag = NULL;
- 	if (replace_name(e, prio, sha1, &tag)) {
- 		if (!e) {
--			void **pos;
- 			e = xmalloc(sizeof(struct commit_name));
- 			hashcpy(e->peeled, peeled);
--			pos = insert_hash(hash_sha1(peeled), e, &names);
--			if (pos) {
--				e->next = *pos;
--				*pos = e;
--			} else {
--				e->next = NULL;
--			}
-+			hashmap_entry_init(e, hash_sha1(peeled));
-+			hashmap_add(&names, e);
- 			e->path = NULL;
- 		}
- 		e->tag = tag;
-@@ -292,7 +280,14 @@ static void describe(const char *arg, int last_one)
- 		fprintf(stderr, _("searching to describe %s\n"), arg);
- 
- 	if (!have_util) {
--		for_each_hash(&names, set_util, NULL);
-+		struct hashmap_iter iter;
-+		struct commit *c;
-+		struct commit_name *n = hashmap_iter_first(&names, &iter);
-+		for (; n; n = hashmap_iter_next(&iter)) {
-+			c = lookup_commit_reference_gently(n->peeled, 1);
-+			if (c)
-+				c->util = n;
-+		}
- 		have_util = 1;
- 	}
- 
-@@ -463,9 +458,9 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 		return cmd_name_rev(args.argc, args.argv, prefix);
- 	}
- 
--	init_hash(&names);
-+	hashmap_init(&names, (hashmap_cmp_fn) commit_name_cmp, 0);
- 	for_each_rawref(get_name, NULL);
--	if (!names.nr && !always)
-+	if (!names.size && !always)
- 		die(_("No names found, cannot describe anything."));
- 
- 	if (argc == 0) {
+-static unsigned int hash_filespec(struct diff_filespec *filespec)
+-{
+-	unsigned int hash;
+-	if (!filespec->sha1_valid) {
+-		if (diff_populate_filespec(filespec, 0))
+-			return 0;
+-		hash_sha1_file(filespec->data, filespec->size, "blob", filespec->sha1);
+-	}
+-	memcpy(&hash, filespec->sha1, sizeof(hash));
+-	return hash;
+-}
+-
+ static void insert_file_table(struct hash_table *table, int src_dst, int index, struct diff_filespec *filespec)
+ {
+ 	void **pos;
 -- 
 1.8.4.11.g4f52745.dirty
