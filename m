@@ -1,87 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Makefile: suppress false positive warnings of empty
- format string.
-Date: Mon, 30 Sep 2013 19:23:50 -0400
-Message-ID: <20130930232349.GB23218@sigill.intra.peff.net>
-References: <7vfvvkpt2k.fsf@alter.siamese.dyndns.org>
- <1380456534-7582-1-git-send-email-stefanbeller@googlemail.com>
- <20130929190017.GA2482@elie.Belkin>
- <20130930201429.GA14433@sigill.intra.peff.net>
- <5249EF59.4080607@googlemail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3] build: add default aliases
+Date: Tue, 1 Oct 2013 08:12:37 +0700
+Message-ID: <CACsJy8De8uER-=N4DonycE9i0cOG-mvcx+bRnQ=Gxt4X9_1TfQ@mail.gmail.com>
+References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
+ <20130924045325.GD2766@sigill.intra.peff.net> <20130924183958.GK9464@google.com>
+ <CAMP44s0UcP5AhWrm7vjBDLvY6CupzL03kys1YXs9cpGJNxkBBA@mail.gmail.com>
+ <52479C04.8060000@alum.mit.edu> <20130930193343.GW9464@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 01 01:23:57 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Aguilar <davvid@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 01 03:13:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VQmom-0008HP-Kj
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Oct 2013 01:23:56 +0200
+	id 1VQoWa-00018w-CB
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Oct 2013 03:13:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755175Ab3I3XXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Sep 2013 19:23:52 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59471 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753024Ab3I3XXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Sep 2013 19:23:52 -0400
-Received: (qmail 13078 invoked by uid 102); 30 Sep 2013 23:23:52 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 30 Sep 2013 18:23:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Sep 2013 19:23:50 -0400
-Content-Disposition: inline
-In-Reply-To: <5249EF59.4080607@googlemail.com>
+	id S1755105Ab3JABNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Sep 2013 21:13:09 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:39153 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754816Ab3JABNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Sep 2013 21:13:08 -0400
+Received: by mail-oa0-f49.google.com with SMTP id i4so4283679oah.22
+        for <git@vger.kernel.org>; Mon, 30 Sep 2013 18:13:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=fzscRHHoAIXLNUvm/oliN2RwTSeFiZNUgiCEksd8Glk=;
+        b=Ey7rzONWOYV15UVfIka10hHgL5GSF3VlxSnuMzx5NK0tpQZ1MtxDPTqxooCBA5wfoP
+         dh6z0Wg2ShdVyYhL4+Ns/uleyaVYasxuLCgpwS5Z7R4aiIbgQm1AYINC1wvpp3B19cCw
+         F5fW+9bTDk56ur1odkkQnJ3RUiaClAua2QlXsyo9GX+ZeRDDdeRsB3jCTGQYbP9pz/j2
+         qngYF0sDZ4zTcFvGBOe9/urHDBxDh+miUpAtVY/LVT7fByj4gwU03lQ5DlMEJrXc09v5
+         ZQqYZvWZi6dIBhkGo5HH67Wyp3DPxRtAWsn7kDe5ve7kzvQKIGAfKD02e1VZqZT4RRcD
+         VdXg==
+X-Received: by 10.60.133.71 with SMTP id pa7mr3974762oeb.44.1380589987946;
+ Mon, 30 Sep 2013 18:13:07 -0700 (PDT)
+Received: by 10.76.131.130 with HTTP; Mon, 30 Sep 2013 18:12:37 -0700 (PDT)
+In-Reply-To: <20130930193343.GW9464@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235637>
 
-On Mon, Sep 30, 2013 at 11:38:33PM +0200, Stefan Beller wrote:
+On Tue, Oct 1, 2013 at 2:33 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Michael Haggerty wrote:
+>
+>> That being said, independent of aliases, there are many other config
+>> settings that can affect commands that might be used in documentation or
+>> scripts, and which also could be the source of errors for the non-vigilent.
+>
+> Yep, this is a problem, too (I'm looking at you, "git push").  We try
+> to avoid this problem or balance it against convenience by being
+> careful when adding new configuration, but sometimes we slip up.
 
-> > To be honest, I'm surprised that "-Wall" doesn't create problems for
-> > older "cc" implementations. We've had patches for compiling with
-> > antique SUNWspro and MIPSpro compilers, and I sort of assumed that those
-> > don't handle "-Wall". But maybe they do. Or maybe people doing that just
-> > set CFLAGS themselves.
-> 
-> Well actually I do think people are encouraged to play around with their
-> CFLAGS as much as they like. I do add link time optimisation usually.
-
-Oh, absolutely. I didn't mean to give the impression that you should not
-tweak CFLAGS. That's what it's there for. I just meant that I do not
-recall seeing complaints from people on such compilers, so either it
-actually works, or they are savvy enough to tweak CFLAGS without making
-a complaint. Or they no longer exist. The patches I'm thinking of were
-from 2008, and the compilers and systems were old then.
-
-> However I do have the strong opinion that any serious project should
-> compile without any warning/error with the standard compilers of
-> the current time. That's why I started an attempt again to have
-> -Wno-format-zero-length in there by default. Most of the people (I
-> assume so) are using gcc. So it should build fine there without any
-> warnings.
-
-Yeah, I'd agree it is a good goal.
-
-> Sure it should build without errors as well on other architectures, so
-> I do understand the issue to check if we're really using gcc and can
-> omit this flag if using another compiler.
-
-Right, agreed.
-
-> and here
-> http://thread.gmane.org/gmane.comp.version-control.git/230806
-
-Thanks, I didn't recall that one.
-
-I still think if we are going to start doing gcc auto-detection in the
-Makefile, it is slightly less ugly to just tweak the few callsites to
-prevent the warning in the first place. I think gcc is being silly to
-warn about, but it is the path of least resistance and maintenance.
-
--Peff
+I think the problem is we start pushing too much on the porcelain
+front and forget about plumbing. "git push" is for human, but I don't
+think there's an equivalent for scripts. "git branch --list" vs "git
+for-each-ref" is a good example.
+-- 
+Duy
