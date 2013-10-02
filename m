@@ -1,88 +1,101 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: Bug? Files are losing history after subtree merge
-Date: Wed, 2 Oct 2013 22:44:17 +0200
-Message-ID: <CAN0XMOJqmia4uTvOTBk75FcidD2hn6NbWf6a5R5GXPk1iDz4gQ@mail.gmail.com>
-References: <1380741617-14593-1-git-send-email-ralf.thielow@gmail.com>
-	<vpqsiwjlarx.fsf@anie.imag.fr>
-	<CAN0XMO+y3Cwsz5LwbmzHBe31Rf-RwMykynLmvmqUsxY8f+1dsQ@mail.gmail.com>
-	<vpqy56bjuen.fsf@anie.imag.fr>
+From: Coder Coder5000 <coder5000@gmail.com>
+Subject: [PATCH] push: Enhance unspecified push default warning
+Date: Wed, 2 Oct 2013 16:48:55 -0400
+Message-ID: <CAKYC+eLGS6ocdE7CTV25E2xMRaHijmQbFBc3tAyx3cNpXfC_sg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Oct 02 22:44:29 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 02 22:49:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VRTHY-0008MW-6B
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Oct 2013 22:44:28 +0200
+	id 1VRTMD-0004au-04
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Oct 2013 22:49:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410Ab3JBUoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Oct 2013 16:44:19 -0400
-Received: from mail-we0-f171.google.com ([74.125.82.171]:46862 "EHLO
-	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754280Ab3JBUoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Oct 2013 16:44:18 -0400
-Received: by mail-we0-f171.google.com with SMTP id p61so1631881wes.2
-        for <git@vger.kernel.org>; Wed, 02 Oct 2013 13:44:17 -0700 (PDT)
+	id S1754063Ab3JBUtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Oct 2013 16:49:01 -0400
+Received: from mail-oa0-f67.google.com ([209.85.219.67]:58444 "EHLO
+	mail-oa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754027Ab3JBUs4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Oct 2013 16:48:56 -0400
+Received: by mail-oa0-f67.google.com with SMTP id i4so324356oah.6
+        for <git@vger.kernel.org>; Wed, 02 Oct 2013 13:48:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=CCcgZsbuI4kQZ41qjjgc0ON40TIrg8Rt5FqwUYjba2E=;
-        b=Zft0+5YT/B/jlsFDCmDWp2yVwzUIc73KJSAkbDaEHS4hwcK2F34LLU4d9ifcXGMWgY
-         VM+zWEaxjtFLrWk92fmqOdu0AkGXAyoV3hobI74rcJ42BL4p7LVMBlDrMf+MDBugps//
-         sXlPpmMX4Fuq7K3xjnwFDNDmWyG5dGbpt++d5Ql/r1uW+nXd7Pldz6Pztb6B8GRzWOoC
-         +FBLyRSFpUL2CVsqG1zCuNnUwZ664G0t7Wv7njl4q00sOeH/cPYts1NxcQz2cx3ZNS4X
-         SK7n4yga6vzq7wdOiM0qnipPncJl7M2/WTgYmEYO3TmrOrN0EL+o7iJggzUX/GpKZBPa
-         3H4A==
-X-Received: by 10.180.73.109 with SMTP id k13mr3678400wiv.35.1380746657623;
- Wed, 02 Oct 2013 13:44:17 -0700 (PDT)
-Received: by 10.194.165.163 with HTTP; Wed, 2 Oct 2013 13:44:17 -0700 (PDT)
-In-Reply-To: <vpqy56bjuen.fsf@anie.imag.fr>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=8x26e2LWt0xfhilF/4mb5Wu9tUAkgLqR9bOtysnKyQc=;
+        b=mfiD6DGh48pTr+fSRAx6BmHdV0u7RKHQApJLKQycnEyxMFHGXzNa9gjRtq0hel3zAY
+         jMbx9lnx9yChxX5DbhJza6jz7Ngpd8CQiNrFfD6TxJ25kLcnIXutkA2kWMkIC+9Vk2bR
+         rNhx0UGyOrNQNvtjn0fpD6ZcYCZY/b/nLjtSHoZOvF0riYEnQJGQGz9Ture13Rycgpsd
+         uaLu+XiSn2o7HMmOpRn4pJ3AgB3r0KbSm8ZHyOg6XqL6cZ0TvltU1l4GnGY6Z+XncsTL
+         DO6W2xcqeudruBVCFcDBlpKYrVzlhlzfDg434UaNNpflNgurRosgDXOhDXSzuiocI/V9
+         aPcQ==
+X-Received: by 10.60.80.167 with SMTP id s7mr6560951oex.38.1380746936052; Wed,
+ 02 Oct 2013 13:48:56 -0700 (PDT)
+Received: by 10.76.80.134 with HTTP; Wed, 2 Oct 2013 13:48:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235675>
 
-On Wed, Oct 2, 2013 at 10:21 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Ralf Thielow <ralf.thielow@gmail.com> writes:
->
->> Thanks for explanation.
->> I knew the history of the repo is there, but the history of single files
->> (and the ability to look at it)
->
-> There is no such thing as "single file history" in Git. Git knows about
-> the history of the project, and knows which files were there at each
-> commit. Then, some commands can walk through history following the
-> history of a file. "git blame" is very good at it, and should work with
-> subtree merges. "git log --follow" is a quick hack that nobody bothered
-> to fix up to now (sadly).
->
+When the unset push.default warning message is displayed
+this may be the first time many users encounter push.default.
+Modified the warning message to explain in a compact
+manner what push.default is and why it is being changed in
+Git 2.0.  Also provided additional information to help users
+decide if this change will affect their workflow.
 
-Yeah
-From a user perspective there is a "single file history", isn't it? And in
-this case the history is gone. At least in the subtree case...
+Signed-off-by: Greg Jacobson <coder5000@gmail.com>
+---
+ builtin/push.c | 9 +++++++++
+ po/git.pot     | 8 ++++++++
+ 2 files changed, 17 insertions(+)
 
-> You can use workarounds like
->
->   git log -- '*git-gui.sh'
->
-
-"My" users are using gui tools, so there's sadly no chance to change the
-commands.
-I just wanted to mention the issue but I've worked around it so it's
-no problem anymore.
-
-> (from the toplevel), to view each commit that touched a file whose name
-> ends with git-gui.sh. It won't follow actual renames, and may show false
-> positive if you have several files with the same basename. But it may
-> help.
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+diff --git a/builtin/push.c b/builtin/push.c
+index 7b1b66c..eb7a721 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -174,6 +174,15 @@ N_("push.default is unset; its implicit value is
+changing in\n"
+    "\n"
+    "  git config --global push.default simple\n"
+    "\n"
++   "When push.default is set to matching git will push all local branches\n"
++   "to the remote branches with the same (matching) name.  This will no\n"
++   "longer be the default in Git 2.0 because a branch could be\n"
++   "unintentionally pushed to a remote.\n"
++   "\n"
++   "In Git 2.0 the new push.default of simple will push only the current\n"
++   "branch to the same remote branch used by git pull.   A push will\n"
++   "only succeed if the remote and local branches have the same name.\n"
++   "\n"
+    "See 'git help config' and search for 'push.default' for further
+information.\n"
+    "(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode\n"
+    "'current' instead of 'simple' if you sometimes use older versions
+of Git)");
+diff --git a/po/git.pot b/po/git.pot
+index c91e197..6025a54 100644
+--- a/po/git.pot
++++ b/po/git.pot
+@@ -7240,6 +7240,14 @@ msgid ""
+ "\n"
+ "  git config --global push.default simple\n"
+ "\n"
++"When push.default is set to matching git will push all local branches\n"
++"to the remote branches with the same (matching) name.  This will no\n"
++"longer be the default in Git 2.0 because a branch could be\n"
++"unintentionally pushed to a remote.\n"
++"\n"
++"In Git 2.0 the new push.default of simple will push only the current\n"
++"branch to the same remote branch used by git pull.   A push will\n"
++"only succeed if the remote and local branches have the same name.\n"
+ "See 'git help config' and search for 'push.default' for further "
+ "information.\n"
+ "(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode\n"
+-- 
+1.8.4.474.g128a96c.dirty
