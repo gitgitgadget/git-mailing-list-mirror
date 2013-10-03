@@ -1,58 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [RFC/PATCH] git svn: Set default --prefix='origin/' if --prefix
- is not given
-Date: Thu, 3 Oct 2013 19:01:39 +0000
-Message-ID: <20131003190139.GA8710@dcvr.yhbt.net>
-References: <CALKQrgeXAtWeTedqkVtcTAUgbsBA9U6rbqUntu_ArmPgL9R3pg@mail.gmail.com>
- <1380581194-5269-1-git-send-email-johan@herland.net>
- <20131001040752.GA882@dcvr.yhbt.net>
- <CALKQrgf0tBN9ymZ0Yq6iW95dwayhJC1a_9LZBagW6B_hBo5owA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git mailing list <git@vger.kernel.org>,
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Oct 03 21:01:45 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH] Documentation/Makefile: make AsciiDoc dblatex dir configurable
+Date: Thu,  3 Oct 2013 20:17:32 +0100
+Message-ID: <6c148f88f6efb7c5d7a9a03f8383b47f939b36ec.1380827852.git.john@keeping.me.uk>
+Cc: Miklos Vajna <vmiklos@suse.cz>, John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 03 21:17:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VRo9g-0000nL-Id
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Oct 2013 21:01:44 +0200
+	id 1VRoPI-0005YE-HH
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Oct 2013 21:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754806Ab3JCTBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Oct 2013 15:01:40 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:51838 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754397Ab3JCTBk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Oct 2013 15:01:40 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 923051F523;
-	Thu,  3 Oct 2013 19:01:39 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <CALKQrgf0tBN9ymZ0Yq6iW95dwayhJC1a_9LZBagW6B_hBo5owA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755031Ab3JCTRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Oct 2013 15:17:48 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:58824 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754991Ab3JCTRs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Oct 2013 15:17:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 6A82BCDA60B;
+	Thu,  3 Oct 2013 20:17:47 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=ham
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6dFsz8m8uBQ4; Thu,  3 Oct 2013 20:17:46 +0100 (BST)
+Received: from river.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id D3A92CDA605;
+	Thu,  3 Oct 2013 20:17:41 +0100 (BST)
+X-Mailer: git-send-email 1.8.4.566.g73d370b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235690>
 
-Johan Herland <johan@herland.net> wrote:
-> On Tue, Oct 1, 2013 at 6:07 AM, Eric Wong <normalperson@yhbt.net> wrote:
-> > How about we put a big warning of impending change in there for now and
-> > wait until git 1.9/2.0 to make the actual change?
-> 
-> Sounds sensible. What should the warning look like, and where should
-> it be placed? I'm thinking that if you run git svn init/clone without
-> --prefix, there should be a verbose warning explaining (a) the trouble
-> you're likely to encounter when using no prefix, and (b) the upcoming
-> change in default prefix. Obviuosly, there should be a corresponding
-> note in the git-svn manual page. Any other places in git.git that
-> warrants changing? Hopefully this should be sufficient to trigger
-> corresponding adjustments in third-party tools + docs ahead of the
-> actual change in 1.9/2.0.
+On my system this is in /usr/share/asciidoc/dblatex not
+/etc/asciidoc/dblatex.  Extract this portion of the path to a variable
+so that is can be set in config.mak.
 
-Probably, yes.  I don't remember off the top of my head if there's
-other places, but init/clone should be a good enough start.
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ Documentation/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 0cfdc36..4f13a23 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -103,6 +103,7 @@ MAKEINFO = makeinfo
+ INSTALL_INFO = install-info
+ DOCBOOK2X_TEXI = docbook2x-texi
+ DBLATEX = dblatex
++ASCIIDOC_DBLATEX_DIR = /etc/asciidoc/dblatex
+ ifndef PERL_PATH
+ 	PERL_PATH = /usr/bin/perl
+ endif
+@@ -354,7 +355,7 @@ user-manual.texi: user-manual.xml
+ 
+ user-manual.pdf: user-manual.xml
+ 	$(QUIET_DBLATEX)$(RM) $@+ $@ && \
+-	$(DBLATEX) -o $@+ -p /etc/asciidoc/dblatex/asciidoc-dblatex.xsl -s /etc/asciidoc/dblatex/asciidoc-dblatex.sty $< && \
++	$(DBLATEX) -o $@+ -p $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.xsl -s $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.sty $< && \
+ 	mv $@+ $@
+ 
+ gitman.texi: $(MAN_XML) cat-texi.perl
+-- 
+1.8.4.566.g73d370b
