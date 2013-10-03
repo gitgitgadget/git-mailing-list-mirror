@@ -1,86 +1,74 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Using filter-branch without messing up the working copy
-Date: Thu, 3 Oct 2013 11:07:09 -0400
-Message-ID: <201310031507.r93F79ci003282@hobgoblin.ariadne.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 03 17:14:35 2013
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] mingw-multibyte: fix memory acces violation and path
+ length limits.
+Date: Thu, 3 Oct 2013 19:25:51 +0200
+Message-ID: <CALWbr2zDi6XjMCRimUHu2=1qrA_=3ATq+50KBa1aNoBf4X_L9g@mail.gmail.com>
+References: <1380403036-20413-1-git-send-email-wnoguchi.0727@gmail.com>
+	<alpine.DEB.1.00.1309290112380.1191@s15462909.onlinehome-server.info>
+	<524796DC.5020302@gmail.com>
+	<5249AE2A.3050302@web.de>
+	<524ACFAE.4040701@gmail.com>
+	<524C9D8F.2090107@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>, msysgit@googlegroups.com
+To: Wataru Noguchi <wnoguchi.0727@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 03 19:25:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VRkbl-0000nW-Np
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Oct 2013 17:14:30 +0200
+	id 1VRmey-0006ZG-83
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Oct 2013 19:25:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754958Ab3JCPOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Oct 2013 11:14:22 -0400
-Received: from qmta11.westchester.pa.mail.comcast.net ([76.96.59.211]:56404
-	"EHLO QMTA11.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754956Ab3JCPOT (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Oct 2013 11:14:19 -0400
-X-Greylist: delayed 427 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Oct 2013 11:14:19 EDT
-Received: from omta23.westchester.pa.mail.comcast.net ([76.96.62.74])
-	by QMTA11.westchester.pa.mail.comcast.net with comcast
-	id YbCh1m0021c6gX85Bf7Bql; Thu, 03 Oct 2013 15:07:11 +0000
-Received: from hobgoblin.ariadne.com ([24.34.72.61])
-	by omta23.westchester.pa.mail.comcast.net with comcast
-	id Yf7A1m0151KKtkw3jf7Bvj; Thu, 03 Oct 2013 15:07:11 +0000
-Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
-	by hobgoblin.ariadne.com (8.14.7/8.14.7) with ESMTP id r93F799h003283
-	for <git@vger.kernel.org>; Thu, 3 Oct 2013 11:07:10 -0400
-Received: (from worley@localhost)
-	by hobgoblin.ariadne.com (8.14.7/8.14.7/Submit) id r93F79ci003282;
-	Thu, 3 Oct 2013 11:07:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1380812831;
-	bh=Qq23EtaKXxGE7Mhla4IrXAno9RnEQENP9vQqA5jDnH0=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=QXZW5LOFixMApJD2JT7tzkJNBoJAWrqBQNyiuHYYbo/dpotH07DmgJYtPUjatI3kc
-	 cLC8E+VDWREMv8PW2YsbG0JaYOYAn8r35GbVXDvrGIu11ExPJuo4DQcdwTB+So98nA
-	 5sSjHaGMpFPsBZUecnRLdHld5o2mjIYOAQoLrnFLHx9a0DO4iRn6TQsmnraZ0/mn0T
-	 Zsj3KIaSBkUWY6lAPcXN6vAJyAwX4CozNboEDybEjq1mKngpuFn9WD/M37TcRP0yqf
-	 W6fNZF/nCNnPdWtJs88GhB0JnEekQ9qhMWsRsgGmcNSo8aWhWO2cLDHW3mVyPkP4Et
-	 L0Y3y7JTu2R8Q==
+	id S1754232Ab3JCRZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Oct 2013 13:25:52 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:65095 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753981Ab3JCRZv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Oct 2013 13:25:51 -0400
+Received: by mail-qa0-f53.google.com with SMTP id k4so206612qaq.5
+        for <git@vger.kernel.org>; Thu, 03 Oct 2013 10:25:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=JXcMS/i7i4xKHWE9pFlEYEiUOil0qaZjkukDEcKx6as=;
+        b=t0tSd3JIjfAp4iLpFRf52UiUGeofWNLuxCAcM1W/xC67WifpH4VXd9J9BUQzXsR152
+         kiNMZdN1yRNo1zk9+xdF92rb1kjM6FqR2ZZlHA/dawstLbjKKrW4/R4YWx637aFpaXEG
+         YyI7Xs4Js/qamfdVf2Gt25scnyZUCGCiAqQeAuS4lyl5TffE5CS1TPK72FDQy+LeIgga
+         3Ih81VH9ObIKPb7R0me0LzNeWY+Ok4zAVoFrv9iYNdNk9M2rUmKxq+olc29leYjtQGs7
+         qX8ltDN2iCor9Kv1cMkOgP08l8pHb9zbZhJjWb6p8ImOkvjYhzo/WG6Iq0fxD7qIS1R4
+         J3Sg==
+X-Received: by 10.49.71.45 with SMTP id r13mr11119336qeu.33.1380821151187;
+ Thu, 03 Oct 2013 10:25:51 -0700 (PDT)
+Received: by 10.49.104.211 with HTTP; Thu, 3 Oct 2013 10:25:51 -0700 (PDT)
+In-Reply-To: <524C9D8F.2090107@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235685>
 
-I'm working on using "git filter-branch" to remove the history of a
-large file from my repository so as to reduce the size of the
-repository.  This pattern of use is effective for me:
+I've not followed the thread so much but, in that
+entry.c::checkout_entry,() we do:
 
-1. $ git filter-branch --index-filter 'git rm --cached --ignore-unmatch core.4563' HEAD
+memcpy(path, state->base_dir, len);
+strcpy(path + len, ce->name);
 
-2. edit .git/packed-refs to remove the line
-   "c6589bef2c776277407686a3a81c5a76bfe41ba2 refs/original/refs/heads/hobgoblin"
-(so that there is no reference to the old HEAD)
+which can of course result in memory violation if PATH is not long enough.
 
-3. git gc --quiet --aggressive
-
-The difficulty I am having is that I do not want to disturb the
-working copy while doing this.  The working copy is my entire home
-directory, because I am using the repository as a historical backup
-system for my home directory.  Currently, Git will not execute
-filter-branch if there are unstaged changes in the working copy,
-despite the fact that "git filter-branch --index-filter" does not
-touch the working copy itself.  (In this case, the file to be deleted,
-"core.4563", is not now in the working copy.)
-
-A further difficulty is that the repository is "remote", the .git
-directory is not in my home directory, and core.worktree is
-"/home/worley".
-
-The best set of steps I have found that accomplishes my goals is to
-(1) "disconnect" the repository from the working copy by removing the
-core.worktree value, (2) use "git checkout -q -f master" to create in
-the repository's location an entire copy of my home directory, (3)
-perform the above filtering steps, (4) "reconnect" the repository by
-adding the core.worktree value, and (5) deleting the temporary working
-copy files.
-
-Surely there is a better way than this.
-
-Dale
+On Thu, Oct 3, 2013 at 12:26 AM, Wataru Noguchi <wnoguchi.0727@gmail.com> wrote:
+> Hi,
+>
+> At last, I foundfollowing Makefile optimization suppression works fine in my
+> case.
+>
+> CFLAGS = -g -O2 -fno-inline-small-functions -Wall
+>
+> Following optimization option cause crash,
+>
+> -finline-small-functions
