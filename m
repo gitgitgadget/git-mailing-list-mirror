@@ -1,102 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add: add --bulk to index all objects into a pack file
-Date: Wed, 02 Oct 2013 23:43:45 -0700
-Message-ID: <xmqqsiwin9b2.fsf@gitster.dls.corp.google.com>
-References: <1380772811-15415-1-git-send-email-pclouds@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] push: Enhance unspecified push default warning
+Date: Thu, 03 Oct 2013 08:48:22 +0200
+Message-ID: <vpqr4c2kfyh.fsf@anie.imag.fr>
+References: <CAKYC+eLGS6ocdE7CTV25E2xMRaHijmQbFBc3tAyx3cNpXfC_sg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 03 08:43:57 2013
+To: Coder Coder5000 <coder5000@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 03 08:48:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VRcde-0002fm-Q5
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Oct 2013 08:43:55 +0200
+	id 1VRci9-0007BD-N8
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Oct 2013 08:48:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753766Ab3JCGnu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Oct 2013 02:43:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60209 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752899Ab3JCGns convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Oct 2013 02:43:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 084E740D1D;
-	Thu,  3 Oct 2013 06:43:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Bx+MS2TG3XpH
-	/koynBCtf7sDwPk=; b=xc2yWL6EF5JUUIOEUD2+BRKPV3IPRCecYUqpjBaIqLoh
-	fqts1/hVvHOqpwcCWm7EmDrvol6S6wZkyIKfmvxrsksV0qYW1TmvjXHPU/86fd7U
-	IYn4RJdpsNhVfFmuz6IyQKtGZod1H60iWFVWCzbM3DfZRwCiIgdR+BIllVy21Ec=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=eKpHQW
-	Ow8v8vDJbKIjnoKv+vE0vfl40zylqPL3SgtJOO9z2JVnfV8C1IV9pw1V3o7Q5uDX
-	npI07nUqlIRoDZPo+OYRN00jOT8Zaps65d4w/hg4e0QS/s7HDsphXOBdPYodXP7R
-	8ZbabYnF6HtBfGl4dytU2yg/bLFsJw0ExiUls=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFB8B40D1C;
-	Thu,  3 Oct 2013 06:43:47 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 64DD840D13;
-	Thu,  3 Oct 2013 06:43:47 +0000 (UTC)
-In-Reply-To: <1380772811-15415-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 3 Oct
- 2013 11:00:11 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 27B30DE2-2BF7-11E3-81E4-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753749Ab3JCGsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Oct 2013 02:48:30 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:44543 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752898Ab3JCGs3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Oct 2013 02:48:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r936mMDB020881
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 3 Oct 2013 08:48:22 +0200
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1VRchz-0000c3-9q; Thu, 03 Oct 2013 08:48:23 +0200
+In-Reply-To: <CAKYC+eLGS6ocdE7CTV25E2xMRaHijmQbFBc3tAyx3cNpXfC_sg@mail.gmail.com>
+	(Coder Coder's message of "Wed, 2 Oct 2013 16:48:55 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 03 Oct 2013 08:48:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r936mMDB020881
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1381387706.31708@Xw25FzjE1h/UtkIkTO25Ng
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235682>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Coder Coder5000 <coder5000@gmail.com> writes:
+^^^^^^^^^^^^^^^
+Please, use your real identity in your From: field (git send-email may
+help).
 
-> The use case is
->
->     tar -xzf bigproject.tar.gz
->     cd bigproject
->     git init
->     git add .
->     # git grep or something
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -174,6 +174,15 @@ N_("push.default is unset; its implicit value is
+> changing in\n"
+>     "\n"
+>     "  git config --global push.default simple\n"
+>     "\n"
+> +   "When push.default is set to matching git will push all local branches\n"
+> +   "to the remote branches with the same (matching) name.  This will no\n"
+> +   "longer be the default in Git 2.0 because a branch could be\n"
+> +   "unintentionally pushed to a remote.\n"
+> +   "\n"
+> +   "In Git 2.0 the new push.default of simple will push only the current\n"
+> +   "branch to the same remote branch used by git pull.   A push will\n"
+> +   "only succeed if the remote and local branches have the same name.\n"
+> +   "\n"
 
-Two obvious thoughts, and a half.
+It is becoming a monster-warning, but I think this is a good change.
+People who still see the warning are those who did not upgrade for a
+while (and therefore probably the ones needing the most explanation).
+And it's meant to be a one-time warning anyway.
 
- (1) This particular invocation of "git add" can easily detect that
-     it is run in a repository with no $GIT_INDEX_FILE yet, which is
-     the most typical case for a big initial import.  It could even
-     ask if the current branch is unborn if you wanted to make the
-     heuristic more specific to this use case.  Perhaps it would
-     make sense to automatically plug the bulk import machinery in
-     such a case without an option?
+Judging by the question asked on stackoverflow
+( http://stackoverflow.com/questions/13148066/warning-push-default-is-unset-its-implicit-value-is-changing-in-git-2-0 )
+and its popularity, telling the users to read the docs did not work very
+well.
 
- (2) Imagine performing a dry-run of update_files_in_cache() using a
-     different diff-files callback that is similar to the
-     update_callback() but that uses the lstat(2) data to see how
-     big an import this really is, instead of calling
-     add_file_to_index(), before actually registering the data to
-     the object database.  If you benchmark to see how expensive it
-     is, you may find that such a scheme might be a workable
-     auto-tuning mechanism to trigger this.  Even if it were
-     moderately expensive, when combined with the heuristics above
-     for (1), it might be a worthwhile thing to do only when it is
-     likely to be an initial import.
+Thanks,
 
- (3) Is it always a good idea to send everything to a packfile on a
-     large addition, or are you often better off importing the
-     initial fileset as loose objects?  If the latter, then the
-     option name "--bulk" may give users a wrong hint "if you are
-     doing a bulk-import, you are bettern off using this option".
-
-This is a very logical extension to what was started at 568508e7
-(bulk-checkin: replace fast-import based implementation,
-2011-10-28), and I like it.  I suspect "--bulk=3D<threashold>" might
-be a better alternative than setting the threshold unconditionally
-to zero, though.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
