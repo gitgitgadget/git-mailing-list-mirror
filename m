@@ -1,141 +1,102 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] add: add --bulk to index all objects into a pack file
-Date: Thu,  3 Oct 2013 11:00:11 +0700
-Message-ID: <1380772811-15415-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add: add --bulk to index all objects into a pack file
+Date: Wed, 02 Oct 2013 23:43:45 -0700
+Message-ID: <xmqqsiwin9b2.fsf@gitster.dls.corp.google.com>
+References: <1380772811-15415-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 03 06:00:25 2013
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 03 08:43:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VRa5R-0003yZ-5H
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Oct 2013 06:00:25 +0200
+	id 1VRcde-0002fm-Q5
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Oct 2013 08:43:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751634Ab3JCEAV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Oct 2013 00:00:21 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:62658 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751357Ab3JCEAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Oct 2013 00:00:20 -0400
-Received: by mail-pb0-f44.google.com with SMTP id xa7so1853152pbc.3
-        for <git@vger.kernel.org>; Wed, 02 Oct 2013 21:00:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=wiqZtndMDNtTsteivRGhNzhvgx+LzFgYMDy6fMGiy0A=;
-        b=R3KwjwRX106rE63mPFoqJJ/Ea/CK0SamkGVoabO/+HmNR3itywWiELuUYRBo8PTAMk
-         nBvTrNUVEWy8JquL2z8G/Wsq0Jq4yW0L4f+ELPOcEDsPp2ZsrAxBaYyrLp6D3Ccxlb7d
-         E7fR+3flVxEkTgDuDV99PwUeVWvXi20K7HbnAb9K0LQ9kfxz+hEgl3/eYVPaJJoiOMgS
-         GRt/8UV1lHKwR6sTG6mgU6r5dxqh+ahPr5BxWWvLdezAsyf7L9yLpCtM4AuuO+UjCw8C
-         DYUWDW4WIM9lEBPkbJztFLnTMyIR96vmQNCJX0BgHJx8C9g1RVADPn7TKu+jDsEkCJ4T
-         UWSg==
-X-Received: by 10.68.254.105 with SMTP id ah9mr6166081pbd.87.1380772819617;
-        Wed, 02 Oct 2013 21:00:19 -0700 (PDT)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPSA id bt1sm5262190pbb.2.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 02 Oct 2013 21:00:19 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 03 Oct 2013 11:00:14 +0700
-X-Mailer: git-send-email 1.8.2.82.gc24b958
+	id S1753766Ab3JCGnu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Oct 2013 02:43:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60209 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752899Ab3JCGns convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Oct 2013 02:43:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 084E740D1D;
+	Thu,  3 Oct 2013 06:43:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Bx+MS2TG3XpH
+	/koynBCtf7sDwPk=; b=xc2yWL6EF5JUUIOEUD2+BRKPV3IPRCecYUqpjBaIqLoh
+	fqts1/hVvHOqpwcCWm7EmDrvol6S6wZkyIKfmvxrsksV0qYW1TmvjXHPU/86fd7U
+	IYn4RJdpsNhVfFmuz6IyQKtGZod1H60iWFVWCzbM3DfZRwCiIgdR+BIllVy21Ec=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=eKpHQW
+	Ow8v8vDJbKIjnoKv+vE0vfl40zylqPL3SgtJOO9z2JVnfV8C1IV9pw1V3o7Q5uDX
+	npI07nUqlIRoDZPo+OYRN00jOT8Zaps65d4w/hg4e0QS/s7HDsphXOBdPYodXP7R
+	8ZbabYnF6HtBfGl4dytU2yg/bLFsJw0ExiUls=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFB8B40D1C;
+	Thu,  3 Oct 2013 06:43:47 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 64DD840D13;
+	Thu,  3 Oct 2013 06:43:47 +0000 (UTC)
+In-Reply-To: <1380772811-15415-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 3 Oct
+ 2013 11:00:11 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 27B30DE2-2BF7-11E3-81E4-CA9B8506CD1E-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235681>
 
-The use case is
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-    tar -xzf bigproject.tar.gz
-    cd bigproject
-    git init
-    git add .
-    # git grep or something
+> The use case is
+>
+>     tar -xzf bigproject.tar.gz
+>     cd bigproject
+>     git init
+>     git add .
+>     # git grep or something
 
-The first add will generate a bunch of loose objects. With --bulk, all
-of them are forced into a single pack instead, less clutter on disk
-and maybe faster object access.
+Two obvious thoughts, and a half.
 
-This is the equivalent of "git -c core.bigFileThreshold=3D0 add ." so
-it's not really a new functionality. Just some convenient and public
-exposure.
+ (1) This particular invocation of "git add" can easily detect that
+     it is run in a repository with no $GIT_INDEX_FILE yet, which is
+     the most typical case for a big initial import.  It could even
+     ask if the current branch is unborn if you wanted to make the
+     heuristic more specific to this use case.  Perhaps it would
+     make sense to automatically plug the bulk import machinery in
+     such a case without an option?
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Interestingly index_stream() seems a bit slower than standard
- index_core(). Perhaps mmap() is faster than a series of read() for
- small files. Room for improvement later.
+ (2) Imagine performing a dry-run of update_files_in_cache() using a
+     different diff-files callback that is similar to the
+     update_callback() but that uses the lstat(2) data to see how
+     big an import this really is, instead of calling
+     add_file_to_index(), before actually registering the data to
+     the object database.  If you benchmark to see how expensive it
+     is, you may find that such a scheme might be a workable
+     auto-tuning mechanism to trigger this.  Even if it were
+     moderately expensive, when combined with the heuristics above
+     for (1), it might be a worthwhile thing to do only when it is
+     likely to be an initial import.
 
- Documentation/git-add.txt |  6 ++++++
- builtin/add.c             | 10 +++++++++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ (3) Is it always a good idea to send everything to a packfile on a
+     large addition, or are you often better off importing the
+     initial fileset as loose objects?  If the latter, then the
+     option name "--bulk" may give users a wrong hint "if you are
+     doing a bulk-import, you are bettern off using this option".
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 48754cb..36a77f6 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -160,6 +160,12 @@ today's "git add <pathspec>...", ignoring removed =
-files.
- 	be ignored, no matter if they are already present in the work
- 	tree or not.
-=20
-+--bulk::
-+	Normally new objects are indexed and stored in loose format,
-+	one file per new object in "$GIT_DIR/objects". This option
-+	forces putting all objects into a single new pack. This may
-+	be useful when you need to add a lot of files initially.
-+
- \--::
- 	This option can be used to separate command-line options from
- 	the list of files, (useful when filenames might be mistaken
-diff --git a/builtin/add.c b/builtin/add.c
-index 226f758..40cbb71 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -336,7 +336,7 @@ static struct lock_file lock_file;
- static const char ignore_error[] =3D
- N_("The following paths are ignored by one of your .gitignore files:\n=
-");
-=20
--static int verbose, show_only, ignored_too, refresh_only;
-+static int verbose, show_only, ignored_too, refresh_only, bulk_index;
- static int ignore_add_errors, intent_to_add, ignore_missing;
-=20
- #define ADDREMOVE_DEFAULT 0 /* Change to 1 in Git 2.0 */
-@@ -368,6 +368,7 @@ static struct option builtin_add_options[] =3D {
- 	OPT_BOOL( 0 , "refresh", &refresh_only, N_("don't add, only refresh t=
-he index")),
- 	OPT_BOOL( 0 , "ignore-errors", &ignore_add_errors, N_("just skip file=
-s which cannot be added because of errors")),
- 	OPT_BOOL( 0 , "ignore-missing", &ignore_missing, N_("check if - even =
-missing - files are ignored in dry run")),
-+	OPT_BOOL( 0 , "bulk", &bulk_index, N_("pack all objects instead of cr=
-eating loose ones")),
- 	OPT_END(),
- };
-=20
-@@ -560,6 +561,13 @@ int cmd_add(int argc, const char **argv, const cha=
-r *prefix)
- 		free(seen);
- 	}
-=20
-+	if (bulk_index)
-+		/*
-+		 * Pretend all blobs are "large" files, forcing them
-+		 * all into a pack
-+		 */
-+		big_file_threshold =3D 0;
-+
- 	plug_bulk_checkin();
-=20
- 	if ((flags & ADD_CACHE_IMPLICIT_DOT) && prefix) {
---=20
-1.8.2.82.gc24b958
+This is a very logical extension to what was started at 568508e7
+(bulk-checkin: replace fast-import based implementation,
+2011-10-28), and I like it.  I suspect "--bulk=3D<threashold>" might
+be a better alternative than setting the threshold unconditionally
+to zero, though.
