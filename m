@@ -1,82 +1,71 @@
-From: Greg Jacobson <coder5000@gmail.com>
-Subject: [PATCH v3] push: Enhance unspecified push default warning
-Date: Fri, 4 Oct 2013 10:20:07 -0400
-Message-ID: <CAKYC+eKCsRbF=6HtcY8ZtaafTDpbMFJ1tyWbaZDKrmbzdnOoUw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Duy Nguyen <pclouds@gmail.com>, philipoakley@iee.org
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 04 16:20:28 2013
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: [PATCH] clone: do not segfault when specifying a nonexistent branch
+Date: Fri,  4 Oct 2013 16:20:59 +0200
+Message-ID: <1380896459-6451-1-git-send-email-stefanbeller@googlemail.com>
+References: <524EC896.3050703@opensoftware.pl>
+Cc: Stefan Beller <stefanbeller@googlemail.com>
+To: gitster@pobox.com, ralf.thielow@gmail.com,
+	robert.mitwicki@opensoftware.pl, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 04 16:21:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VS6Es-0004mu-Qi
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Oct 2013 16:20:19 +0200
+	id 1VS6FX-0005NQ-BA
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Oct 2013 16:20:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754883Ab3JDOUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Oct 2013 10:20:11 -0400
-Received: from mail-oa0-f48.google.com ([209.85.219.48]:52910 "EHLO
-	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754395Ab3JDOUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Oct 2013 10:20:08 -0400
-Received: by mail-oa0-f48.google.com with SMTP id m6so3945523oag.7
-        for <git@vger.kernel.org>; Fri, 04 Oct 2013 07:20:08 -0700 (PDT)
+	id S1754884Ab3JDOU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Oct 2013 10:20:56 -0400
+Received: from mail-ea0-f177.google.com ([209.85.215.177]:58668 "EHLO
+	mail-ea0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754395Ab3JDOUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Oct 2013 10:20:55 -0400
+Received: by mail-ea0-f177.google.com with SMTP id f15so1789978eak.8
+        for <git@vger.kernel.org>; Fri, 04 Oct 2013 07:20:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=koIkcD6c0I1OCWGqbmO+3+BGIB7DBT/QQmNpz4F7L3I=;
-        b=G5xH9Fmze/V28zOSTrvXwZlTi6UQfAW6bVmrIg4+UyiOX3e/D6ml6lN6sxHsAc+iVo
-         HkPPVjZ3HjdiU1WsJe0kSfMq+lChqErn3rSW9i1vqPu02r0HyXT/MB6d6duqTnLY19B2
-         GrW34cLYv4lwkSnyGjKScPK24vkIlI0CViFBIhm4nHcGsMjEqsimmkz8EuODZXiPSjiJ
-         JX5yVwrjWsIPEkEOJXtxLwh4Dr9bYtcYsuV+6zTn1r06vtacYxQ4HuvrgxBWrUKiH+4d
-         iriUx90J3KSb8wnVVzpvLZ+eZLnPNBXPxyU3d2/9u49VlaOF0q3hZJ/mpMTCM7Vk6Dqb
-         E5Ig==
-X-Received: by 10.60.78.227 with SMTP id e3mr21991550oex.5.1380896407998; Fri,
- 04 Oct 2013 07:20:07 -0700 (PDT)
-Received: by 10.76.80.134 with HTTP; Fri, 4 Oct 2013 07:20:07 -0700 (PDT)
+        d=googlemail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=gGl7Kp15ZLRKfnNyEdFIc04Tv9WGCo7LxYAqv5v4TRA=;
+        b=wVhLdLtopzoNM+QAppQSqQUY434Cof9TAIs7LqUorKyI5pvpI9RMcXyqdMsdgx1g6U
+         ssvdL2jHEIILk/oDLKAe0UYmEYNXgrJf1dOc/Ps2e1/OkxHujc1vL2N2TFm7KDSnTgdd
+         VFFwxphRwDfMT5cKLDUUA0fnbe+sExKslRncRwVsfWyEt4Ofa8Cv6Yelf5oRhZExxSpr
+         T/jhsMbCRuxw3nbxKZFzo3vZWotbVT5hT3RM5wBileUjkEIeO1sA5bcyq0Mg8PkiU/6t
+         4AIsw9WjFSLxDZBsSDj2rVGJok8YQeSck6JL6ADRZNdp7HwFAPeruxPwloTPiD6iFtYd
+         flhg==
+X-Received: by 10.14.178.195 with SMTP id f43mr1230eem.138.1380896454088;
+        Fri, 04 Oct 2013 07:20:54 -0700 (PDT)
+Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id r48sm28562147eev.14.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 04 Oct 2013 07:20:53 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.1.469.gb38b9db
+In-Reply-To: <524EC896.3050703@opensoftware.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235714>
 
-When the unset push.default warning message is displayed
-this may be the first time many users encounter push.default.
-Modified the warning message to explain in a compact
-manner what push.default is and why it is being changed in
-Git 2.0.  Also provided additional information to help users
-decide if this change will affect their workflow.
+I think we should emit a warning additionally?
 
-Signed-off-by: Greg Jacobson <coder5000@gmail.com>
+Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
 ---
- builtin/push.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ builtin/clone.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 7b1b66c..5393e28 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -174,6 +174,15 @@ N_("push.default is unset; its implicit value is
-changing in\n"
-    "\n"
-    "  git config --global push.default simple\n"
-    "\n"
-+   "When push.default is set to 'matching', git will push all local branches\n"
-+   "to the remote branches with the same (matching) name.  This will no\n"
-+   "longer be the default in Git 2.0 because a branch could be\n"
-+   "unintentionally pushed to a remote.\n"
-+   "\n"
-+   "In Git 2.0 the new push.default of 'simple' will push only the current\n"
-+   "branch to the same remote branch used by git pull.   A push will\n"
-+   "only succeed if the remote and local branches have the same name.\n"
-+   "\n"
-    "See 'git help config' and search for 'push.default' for further
-information.\n"
-    "(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode\n"
-    "'current' instead of 'simple' if you sometimes use older versions
-of Git)");
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 0aff974..b764ad0 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -688,7 +688,7 @@ static void write_refspec_config(const char* src_ref_prefix,
+ 
+ 	if (option_mirror || !option_bare) {
+ 		if (option_single_branch && !option_mirror) {
+-			if (option_branch) {
++			if (option_branch && our_head_points_at) {
+ 				if (strstr(our_head_points_at->name, "refs/tags/"))
+ 					strbuf_addf(&value, "+%s:%s", our_head_points_at->name,
+ 						our_head_points_at->name);
 -- 
-1.8.4.474.g128a96c.dirty
+1.8.4.1.469.gb38b9db
