@@ -1,96 +1,81 @@
-From: Paul Sokolovsky <pmiscml@gmail.com>
-Subject: Re: git rebase is confused about commits w/o textual changes (e.g.
- chmod's)
-Date: Fri, 4 Oct 2013 23:45:30 +0300
-Message-ID: <20131004234530.3d3a54cc@x34f>
-References: <20130924225648.48af3f4e@x34f>
-	<20130927222807.GA18384@vauxhall.crustytoothpaste.net>
-	<20130928023244.1ce16dc5@x34f>
-	<20131004202853.GB4165@vauxhall.crustytoothpaste.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] clone: do not segfault when specifying a nonexistent branch
+Date: Sat, 5 Oct 2013 06:55:30 +0700
+Message-ID: <CACsJy8BX_fWdsCGa4jnh4CbkSMxp7btOFjwzB9K0eRtjUR_F-Q@mail.gmail.com>
+References: <524EC896.3050703@opensoftware.pl> <1380896459-6451-1-git-send-email-stefanbeller@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Fri Oct 04 22:45:42 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	robert.mitwicki@opensoftware.pl,
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 05 01:56:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VSCFp-0006OP-To
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Oct 2013 22:45:42 +0200
+	id 1VSFEF-0003jk-Lf
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Oct 2013 01:56:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754477Ab3JDUpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Oct 2013 16:45:35 -0400
-Received: from mail-ee0-f49.google.com ([74.125.83.49]:60162 "EHLO
-	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754437Ab3JDUpe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Oct 2013 16:45:34 -0400
-Received: by mail-ee0-f49.google.com with SMTP id d41so2023544eek.22
-        for <git@vger.kernel.org>; Fri, 04 Oct 2013 13:45:33 -0700 (PDT)
+	id S1752518Ab3JDX4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Oct 2013 19:56:04 -0400
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:64335 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752313Ab3JDX4C (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Oct 2013 19:56:02 -0400
+Received: by mail-oa0-f53.google.com with SMTP id i7so4662771oag.40
+        for <git@vger.kernel.org>; Fri, 04 Oct 2013 16:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=goZ6bl1rgcdLX6hub68FntqPeCzv+lxcsLErFlfGqIs=;
-        b=LivyrN9YqFPZ9KHLwpnoJ9aZyFEN2gkGDzR/fHcT8FC6DzOLtfs6kEZPXOixnWg65V
-         GDM02VLsFcL9kr5DPqcpL8hU31zTd1U6LZjAIcSk1bS/CFjPm6spWvhLwq8l68rDncA0
-         Y3/yRZdPNvwrWsJDxl15egsX+ySwx5beWsXYRrdnsY4B4dt+Xr2O92ln1+6bV1oTzmx7
-         HxiDk+lGjoe85a2RIPGWjbz0CMGYERX6WhhGRzYSPNGAOWZiEaRhJxgsUpIxQAKPNjvv
-         wbzIsHJSixkiCb8ZBKXLL82tyKh3PIFiOpDnC/thiTmEl+VK4R2T8quNEx2RrJ3wdfJ2
-         +XzA==
-X-Received: by 10.15.98.194 with SMTP id bj42mr24858586eeb.12.1380919533371;
-        Fri, 04 Oct 2013 13:45:33 -0700 (PDT)
-Received: from x34f ([95.15.202.117])
-        by mx.google.com with ESMTPSA id r48sm31882048eev.14.1969.12.31.16.00.00
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Fri, 04 Oct 2013 13:45:32 -0700 (PDT)
-In-Reply-To: <20131004202853.GB4165@vauxhall.crustytoothpaste.net>
-X-Mailer: Claws Mail 3.9.1 (GTK+ 2.24.10; i686-pc-linux-gnu)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qOownOykmVblwilrYFf47qcMvhY1As0z7ibqAKyiuXw=;
+        b=W/t6VB4iputt0EkTil6IFHsOIttkNnCrdw/wy5/FtsgZoXncn+el2AGwuaD27goCrK
+         iywOtdIk4hV/DyV/+CqlDKYFBWUMy/qzc5X3BuWYVeYhVZO1pH5hLgW/Q0BxbX/6K21z
+         c7KSvkq/KYo8X6ysSAHP+f9W4NJADqFEerduU7P4lPKH/wJEKQfvKIsoeF1A1uLaY5C2
+         QM7z86J1uZ/tIdP06syS7d6tQfjeMaG4eiXwuMBu2XOz/OB49fk4HnWNoUnT6mIY9o9/
+         TKNSsmA9rqHAjUIVpFmi1EpsanDk80MqvVfgFZ5vTTMq9PgyvFAqKTtXUYfjXT8NLrlU
+         bn/w==
+X-Received: by 10.60.80.8 with SMTP id n8mr25691298oex.33.1380930961027; Fri,
+ 04 Oct 2013 16:56:01 -0700 (PDT)
+Received: by 10.76.131.130 with HTTP; Fri, 4 Oct 2013 16:55:30 -0700 (PDT)
+In-Reply-To: <1380896459-6451-1-git-send-email-stefanbeller@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235719>
 
-Hello,
+On Fri, Oct 4, 2013 at 9:20 PM, Stefan Beller
+<stefanbeller@googlemail.com> wrote:
+> I think we should emit a warning additionally?
+>
+> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
 
-On Fri, 4 Oct 2013 20:28:54 +0000
-"brian m. carlson" <sandals@crustytoothpaste.net> wrote:
+I think it's nice to credit Robert for reporting the fault in the
+commit message (something like "reported-by:" or "noticed-by:"...)
 
-> On Sat, Sep 28, 2013 at 02:32:44AM +0300, Paul Sokolovsky wrote:
-> > $ git --version
-> > git version 1.8.4
-> > 
-> > Specifically from Ubuntu PPA:
-> > http://ppa.launchpad.net/git-core/ppa/ubuntu
-> > 
-> > 
-> > Script to reproduce the issue is:
-> > https://gist.github.com/pfalcon/6736632 , based on a real-world
-> > case of merging histories of a fork created from a flat tree
-> > snapshot with the original project it was created from.
-> 
-> Okay, as I suspected, the rebase would have resulted in an empty
-> commit. In this particular case, the commit being rebased changed the
-> permissions on the files, but those permissions are already correct,
-> so the commit really is empty, even considering permissions.  It
-> looks like git is doing the right thing here.
+> ---
+>  builtin/clone.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 0aff974..b764ad0 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -688,7 +688,7 @@ static void write_refspec_config(const char* src_ref_prefix,
+>
+>         if (option_mirror || !option_bare) {
+>                 if (option_single_branch && !option_mirror) {
+> -                       if (option_branch) {
+> +                       if (option_branch && our_head_points_at) {
+>                                 if (strstr(our_head_points_at->name, "refs/tags/"))
+>                                         strbuf_addf(&value, "+%s:%s", our_head_points_at->name,
+>                                                 our_head_points_at->name);
 
-Hmm, ok, thanks for investigation!
-
-But then, about this empty commit handling behavior by rebase.
-Low-level developer in me understands the current behavior - if we
-expect changes, but there're none, then it as well may be something
-wrong, so let's not play smartass, but tell user outright what's
-happening. But higher-level user in me knows that rebase is pretty
-trusty nowadays, and real-world cause of empty commits during
-rebase is that the change is already upstream. So, can we have
-something like --skip-empty? Then some good time later, we can talk
-about changing defaults ;-).
-
-
+This prevents the segfault, but what about remote.*.fetch? Should we
+setup standard refspec for fetch or..?
 -- 
-Best regards,
- Paul                          mailto:pmiscml@gmail.com
+Duy
