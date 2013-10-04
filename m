@@ -1,80 +1,97 @@
-From: Pascal MALAISE <malaise@magic.fr>
-Subject: Bug? Unexpected outputs of git pull on stdout v.s. stderr
-Date: Fri, 04 Oct 2013 19:18:49 +0200
-Message-ID: <524EF879.1020607@magic.fr>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: git rebase is confused about commits w/o textual changes (e.g.
+ chmod's)
+Date: Fri, 4 Oct 2013 20:28:54 +0000
+Message-ID: <20131004202853.GB4165@vauxhall.crustytoothpaste.net>
+References: <20130924225648.48af3f4e@x34f>
+ <20130927222807.GA18384@vauxhall.crustytoothpaste.net>
+ <20130928023244.1ce16dc5@x34f>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 04 19:19:16 2013
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7ZAtKRhVyVSsbBD2"
+Cc: git@vger.kernel.org
+To: Paul Sokolovsky <pmiscml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 04 22:29:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VS924-0005Ry-3j
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Oct 2013 19:19:16 +0200
+	id 1VSBzm-0001zk-Ri
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Oct 2013 22:29:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751150Ab3JDRS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Oct 2013 13:18:58 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:60297 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750983Ab3JDRS6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Oct 2013 13:18:58 -0400
-Received: from telemaque (unknown [78.224.49.155])
-	(Authenticated sender: pascal.malaise)
-	by smtp1-g21.free.fr (Postfix) with ESMTPA id 3F9EC94020E
-	for <git@vger.kernel.org>; Fri,  4 Oct 2013 19:18:51 +0200 (CEST)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by telemaque (Postfix) with ESMTP id 9AEC584AD9
-	for <git@vger.kernel.org>; Fri,  4 Oct 2013 19:18:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.0
-X-Enigmail-Version: 1.5.2
+	id S1753595Ab3JDU3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Oct 2013 16:29:01 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:60762 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753184Ab3JDU3A (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Oct 2013 16:29:00 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5C7C52807C;
+	Fri,  4 Oct 2013 20:28:57 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20130928023244.1ce16dc5@x34f>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.11-rc7-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235716>
-
-Hello,
-
-git --version
--> git version 1.7.9.5
-on linux
-
-A 'git pull' operation exits with 1 (which is normal) but generates the
-following output and error flows:
-
-stdout:
-Auto-merging c/makefile
-CONFLICT (content): Merge conflict in c/makefile
-Auto-merging c/x_color.c
-Auto-merging c/x_export.c
-CONFLICT (content): Merge conflict in c/x_export.c
-...
-CONFLICT (content): Merge conflict in c/x_line.h
-Automatic merge failed; fix conflicts and then commit the result.
-
-stderr:
-From /home/malaise/ada
-* branch            Xft        -> FETCH_HEAD
-
-With option -q the Error flow is empty and the Output is as before.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235717>
 
 
-I would expect that the text:
-> From /home/malaise/ada
-> * branch            Xft        -> FETCH_HEAD
-is part of stdout and suppressed with option -q
+--7ZAtKRhVyVSsbBD2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-And that the message:
-> Automatic merge failed; fix conflicts and then commit the result.
-is part of stderr (and kept with option -q).
+On Sat, Sep 28, 2013 at 02:32:44AM +0300, Paul Sokolovsky wrote:
+> $ git --version
+> git version 1.8.4
+>=20
+> Specifically from Ubuntu PPA:
+> http://ppa.launchpad.net/git-core/ppa/ubuntu
+>=20
+>=20
+> Script to reproduce the issue is:
+> https://gist.github.com/pfalcon/6736632 , based on a real-world case of
+> merging histories of a fork created from a flat tree snapshot with
+> the original project it was created from.
 
+Okay, as I suspected, the rebase would have resulted in an empty commit.
+In this particular case, the commit being rebased changed the permissions
+on the files, but those permissions are already correct, so the commit
+really is empty, even considering permissions.  It looks like git is
+doing the right thing here.
 
-Or did I miss something?
-Thank you.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
--- 
-Couldn't eradicate windows from my PC but I caged it in a vmware.
-Pascal MALAISE
+--7ZAtKRhVyVSsbBD2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iQIcBAEBCgAGBQJSTyUFAAoJEL9TXYEfUvaL9AoQAJWssKlAs1d6fGO5f9UUPEj5
+WgwpxqtaoVLFnaEeFLcKxPsZ7UQmd40Dq73NonjFpl7XxhcWCdrYWk3pnfehhNyy
+u3teXU2/9lOyqln8sLnbqgIZ4RC21BVeQVlWWdM2a21vJ6LV+NTAU72UzQE4Hpwz
+dEC1uaoYkzTzYXRFp/vp7B3JbrSoGt9FVCv8/umYAyagoJ6mHdluRFDq+RanMAS/
+4jjaQzsh18qpOC7AXIPkF2sCCPFB0fGRsYDwfKlfkVt0NghFX5gRBgFFxz3qA2qK
+bK1KLNgLzuF/nBURouJQjMoiFVfK99Z4C6okQF2prx7tHh4fJzL+yWICULjIJTx+
+4KyUtOeLitVPT+5s6Ma+NhnOTkkBeHJ+2ErFoB37QGBZU6E3ytTPd3ag97+IhI2+
+ZsNKWT+UU1dMbUIyXhIHqbqVcZLsbwc8xhSExD43g9Mx9C9dSBr9E5YXMBsDxILJ
+SFrXaw65e31xK7lCpPRFpXGFjCFLl4ebdmbOO5PKW+Zpr7R0jpB1p+N4JWOV7ro/
+wYm0lvHo9/gHsZpUNkt3zdqfeEC42nqpXSNQCd6qErDGWQsF5KIvCunyhVeR0DDn
+aXRpsPW6LTofxwG50ORW5ru25EAekOK5+S4ImSxDBk/m9ZluCdAbgH5fmGfa2+5x
+tgho3Y1PBiyrUiJx0rKc
+=KKdZ
+-----END PGP SIGNATURE-----
+
+--7ZAtKRhVyVSsbBD2--
