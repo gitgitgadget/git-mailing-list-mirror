@@ -1,121 +1,245 @@
-From: Stefan Saasen <ssaasen@atlassian.com>
-Subject: [PATCH] mergetools/diffmerge: support DiffMerge as a git mergetool
-Date: Sat,  5 Oct 2013 01:29:01 -0700
-Message-ID: <1380961741-85909-1-git-send-email-ssaasen@atlassian.com>
-Cc: davvid@gmail.com, Stefan Saasen <ssaasen@atlassian.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 05 10:30:04 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: Wataru Noguchi <wnoguchi.0727@gmail.com>
+Subject: Re: [PATCH] mingw-multibyte: fix memory acces violation and
+ path length limits.
+Date: Sat, 05 Oct 2013 20:39:58 +0900
+Message-ID: <524FFA8E.70009@gmail.com>
+References: <1380403036-20413-1-git-send-email-wnoguchi.0727@gmail.com> <alpine.DEB.1.00.1309290112380.1191@s15462909.onlinehome-server.info> <524796DC.5020302@gmail.com> <5249AE2A.3050302@web.de> <524ACFAE.4040701@gmail.com> <524C9D8F.2090107@gmail.com> <CALWbr2zDi6XjMCRimUHu2=1qrA_=3ATq+50KBa1aNoBf4X_L9g@mail.gmail.com> <CABPQNSaqjKPGAQ4EKBSk+bQP2WMksc6M0YQxSkB91UrnFF28xQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Cc: Antoine Pelisse <apelisse@gmail.com>, =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?=
+ <l.s.r@web.de>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+ git <git@vger.kernel.org>,
+ msysGit <msysgit@googlegroups.com>
+To: kusmabite@gmail.com
+X-From: msysgit+bncBDD7TRGTWYIBBEXVX6JAKGQEU5FOLSA@googlegroups.com Sat Oct 05 13:40:04 2013
+Return-path: <msysgit+bncBDD7TRGTWYIBBEXVX6JAKGQEU5FOLSA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-vb0-f60.google.com ([209.85.212.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VSNFT-0000Qe-HH
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Oct 2013 10:30:03 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751411Ab3JEI3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Oct 2013 04:29:43 -0400
-Received: from na3sys009aog128.obsmtp.com ([74.125.149.141]:44465 "HELO
-	na3sys009aog128.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751302Ab3JEI3k (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Oct 2013 04:29:40 -0400
-X-Greylist: delayed 64366 seconds by postgrey-1.27 at vger.kernel.org; Sat, 05 Oct 2013 04:29:40 EDT
-Received: from mail-pa0-f47.google.com ([209.85.220.47]) (using TLSv1) by na3sys009aob128.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUk/N9LWInI7kun6oqpyHgMTKezlqyDRK@postini.com; Sat, 05 Oct 2013 01:29:40 PDT
-Received: by mail-pa0-f47.google.com with SMTP id kp14so5106592pab.20
-        for <git@vger.kernel.org>; Sat, 05 Oct 2013 01:29:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=4sLyHpGOI8qIFLtaye8PFTW+HTogG7KjwQZppMaT/zs=;
-        b=CqqfofXGJHh/HtlPyHlq25lOa1WGocSNLK1IzjG5ya1cQXWs1mBrsryhfprqF9HG7N
-         59e9AU0czmbRs+Jz9xit6P08aaYzdyaCckU1qK2tNhJUek/ibv44wZFpIWVXsrS4EPl+
-         BQGLjHe7dIuAO/YqlDDil+UsustIBuZN7hRK4BbXOYzU7vvPbr16UUAj1f4jIFQqKz/y
-         xrW4Jsa2hAlDFZbdoBzidxZzD6w3XtfAxuWGAw17AWekGbMgKkGtxP7TFPOysguQ6YiH
-         CbBkc1heKnvfeHcyrZasW+bHVH6loUVDTEIF90JHrB6j/pyhuQ8CwhOmiGtkvXqC7HVX
-         r9Ow==
-X-Gm-Message-State: ALoCoQk/ggvLPkGzB1uYLLi6tQI5dk+5rqK2kb6SionfRCneRMQCbmzBf7NVGhRgY9POJ8Vd4hK3/XHJlt8BC1JB+qjkU386jtiDlKMtfBeP7Z2R7fhH6AvHzoW4/b6BMkaf8iAvBWzimcw/Kuc/2l1H0w9rUm+xYQ==
-X-Received: by 10.66.142.132 with SMTP id rw4mr20481267pab.6.1380961779719;
-        Sat, 05 Oct 2013 01:29:39 -0700 (PDT)
-X-Received: by 10.66.142.132 with SMTP id rw4mr20481259pab.6.1380961779610;
-        Sat, 05 Oct 2013 01:29:39 -0700 (PDT)
-Received: from monteiths.local ([69.38.217.3])
-        by mx.google.com with ESMTPSA id yo2sm23751826pab.8.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 05 Oct 2013 01:29:39 -0700 (PDT)
-Received: by monteiths.local (Postfix, from userid 501)
-	id 524EB1E85B67; Sat,  5 Oct 2013 01:29:04 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.475.g3a5bb13
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235725>
+	(envelope-from <msysgit+bncBDD7TRGTWYIBBEXVX6JAKGQEU5FOLSA@googlegroups.com>)
+	id 1VSQDL-0003m2-SO
+	for gcvm-msysgit@m.gmane.org; Sat, 05 Oct 2013 13:40:04 +0200
+Received: by mail-vb0-f60.google.com with SMTP id g17sf1041416vbg.15
+        for <gcvm-msysgit@m.gmane.org>; Sat, 05 Oct 2013 04:40:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=+xftF4ua2lvu1RD54XMna1rYfamXYRtVeN0s1IPko2s=;
+        b=q6YZ7GEQVE8nDXgewxEbGsLHZsUveMMsXGkEGgnvo2585Vpl65Hs0DMgngGf2msIS4
+         kw5V0PiCPkK9KESfZ0O69DohN76HrTF12T0mz+LhTbm8vdK46phUP2uwmDmamxBxAHgD
+         YiYsNTJll6DOqr+iCOq22LFzpZt/6gLaAJMJddX96gzoSwhrUzvYTaoCIF2krnh6IG3j
+         1gfV/t5ozhZQNvHIdY8xRaO92cfXv/ZIW/0htAIcNcZUYeLHEjbIvntLksam+LxHChIo
+         HOEjZSX8nl66gHStDlFqNJt7gHjQ0JtO8chSf0/BgOg8lwmoP/oxhE+FOSCgUw0XMNbN
+         cbdA==
+X-Received: by 10.50.170.228 with SMTP id ap4mr485554igc.16.1380973202878;
+        Sat, 05 Oct 2013 04:40:02 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.118.97 with SMTP id kl1ls1856404igb.35.canary; Sat, 05 Oct
+ 2013 04:40:02 -0700 (PDT)
+X-Received: by 10.66.27.42 with SMTP id q10mr4594943pag.14.1380973202127;
+        Sat, 05 Oct 2013 04:40:02 -0700 (PDT)
+Received: from mail-pa0-x231.google.com (mail-pa0-x231.google.com [2607:f8b0:400e:c03::231])
+        by gmr-mx.google.com with ESMTPS id ax8si2490332pbd.0.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 05 Oct 2013 04:40:02 -0700 (PDT)
+Received-SPF: pass (google.com: domain of wnoguchi.0727@gmail.com designates 2607:f8b0:400e:c03::231 as permitted sender) client-ip=2607:f8b0:400e:c03::231;
+Received: by mail-pa0-f49.google.com with SMTP id ld10so5273445pab.36
+        for <msysgit@googlegroups.com>; Sat, 05 Oct 2013 04:40:02 -0700 (PDT)
+X-Received: by 10.66.67.6 with SMTP id j6mr1026819pat.165.1380973201882;
+        Sat, 05 Oct 2013 04:40:01 -0700 (PDT)
+Received: from [192.168.1.39] (p4168-ipbf905akatuka.ibaraki.ocn.ne.jp. [219.114.17.168])
+        by mx.google.com with ESMTPSA id qf7sm24874970pac.14.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 05 Oct 2013 04:40:00 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+In-Reply-To: <CABPQNSaqjKPGAQ4EKBSk+bQP2WMksc6M0YQxSkB91UrnFF28xQ@mail.gmail.com>
+X-Original-Sender: wnoguchi.0727@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of wnoguchi.0727@gmail.com designates 2607:f8b0:400e:c03::231
+ as permitted sender) smtp.mail=wnoguchi.0727@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235726>
 
-DiffMerge is a non-free (but gratis) tool that supports OS X, Windows and Linux.
+Hi,
 
-    See http://www.sourcegear.com/diffmerge/
+I put following printf logs.
 
-DiffMerge includes a script `/usr/bin/diffmerge` that can be used to launch the
-graphical compare tool.
+int checkout_entry(struct cache_entry *ce,
+		   const struct checkout *state, char *topath)
+{
+	static char path[PATH_MAX + 1];
+	struct stat st;
+	int len = state->base_dir_len;
 
-This change adds mergetool support for DiffMerge and adds 'diffmerge' as an
-option to the mergetool help.
+	if (topath)
+		return write_entry(ce, topath, state, 1);
 
-Signed-off-by: Stefan Saasen <ssaasen@atlassian.com>
----
- contrib/completion/git-completion.bash |  2 +-
- git-mergetool--lib.sh                  |  2 +-
- mergetools/diffmerge                   | 15 +++++++++++++++
- 3 files changed, 17 insertions(+), 2 deletions(-)
- create mode 100644 mergetools/diffmerge
+	memcpy(path, state->base_dir, len);
+	fprintf(stderr, "path: %s\n", path);
+	fprintf(stderr, "len: %d\n", len);
+	strcpy(path + len, ce->name);
+	len += ce_namelen(ce);
+	fprintf(stderr, "path: %s\n", path);
+	fprintf(stderr, "len: %d\n", len);
+	fprintf(stderr, "path_max: %d\n", PATH_MAX);
+	
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e1b7313..07b0ba5 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1188,7 +1188,7 @@ _git_diff ()
- 	__git_complete_revlist_file
- }
- 
--__git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
-+__git_mergetools_common="diffuse diffmerge ecmerge emerge kdiff3 meld opendiff
- 			tkdiff vimdiff gvimdiff xxdiff araxis p4merge bc3 codecompare
- "
- 
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index feee6a4..6d0fa3b 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -250,7 +250,7 @@ list_merge_tool_candidates () {
- 		else
- 			tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
- 		fi
--		tools="$tools gvimdiff diffuse ecmerge p4merge araxis bc3 codecompare"
-+		tools="$tools gvimdiff diffuse diffmerge ecmerge p4merge araxis bc3 codecompare"
- 	fi
- 	case "${VISUAL:-$EDITOR}" in
- 	*vim*)
-diff --git a/mergetools/diffmerge b/mergetools/diffmerge
-new file mode 100644
-index 0000000..85ac720
---- /dev/null
-+++ b/mergetools/diffmerge
-@@ -0,0 +1,15 @@
-+diff_cmd () {
-+	"$merge_tool_path" "$LOCAL" "$REMOTE" >/dev/null 2>&1
-+}
-+
-+merge_cmd () {
-+	if $base_present
-+	then
-+		"$merge_tool_path" --merge --result="$MERGED" \
-+			"$LOCAL" "$BASE" "$REMOTE"
-+	else
-+		"$merge_tool_path" --merge \
-+			--result="$MERGED" "$LOCAL" "$REMOTE"
-+	fi
-+	status=$?
-+}
+--------------------------------------------------------------------------------------
+
+
+crash result
+
+wnoguchi@WIN-72R9044R72V /usr/tmp (master)
+$ git clone https://github.com/wnoguchi/mingw-checkout-crash.git a2
+Cloning into 'a2'...
+remote: Counting objects: 8, done.
+remote: Compressing objects: 100% (7/7), done.
+remote: Total 8 (delta 0), reused 8 (delta 0)
+Unpacking objects: 100% (8/8), done.
+Checking connectivity... done
+path:
+len: 0
+path: dummy 1-long-long-long-dirname/dummy 2-long-long
+-long-dirname/dummy 3-long-long-long-dirname/dummy 4-l
+ong-long-long-dirname/dummy 5-long-long-long-dirname/aaaaaaaaaaaa.txt
+len: 302
+path_max: 259
+
+crash!!
+
+--------------------------------------------------------------------------------------
+
+build with
+
+CFLAGS = -g -O2 -fno-inline-small-functions -Wall
+
+
+wnoguchi@WIN-72R9044R72V /usr/tmp (master)
+$ git clone https://github.com/wnoguchi/mingw-checkout-crash.git a3
+Cloning into 'a3'...
+remote: Counting objects: 8, done.
+remote: Compressing objects: 100% (7/7), done.
+remote: Total 8 (delta 0), reused 8 (delta 0)
+Unpacking objects: 100% (8/8), done.
+Checking connectivity... done
+path:
+len: 0
+path: dummy 1-long-long-long-dirname/dummy 2-long-long
+-long-dirname/dummy 3-long-long-long-dirname/dummy 4-l
+ong-long-long-dirname/dummy 5-long-long-long-dirname/aaaaaaaaaaaa.txt
+len: 302
+path_max: 259
+
+Warning: Your console font probably doesn't support Unicode. If you experience s
+trange characters in the output, consider switching to a TrueType font such as L
+ucida Console!
+
+works fine.
+
+------------------------------------------------------------------------------------
+
+this result means actual path byte length over run path buffer?
+
+	static char path[PATH_MAX + 1];
+
+hmmm...
+
+I'm not sure why -fno-inline-small-functions works.
+
+
+(2013/10/04 2:36), Erik Faye-Lund wrote:
+> On Thu, Oct 3, 2013 at 7:25 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
+>> I've not followed the thread so much but, in that
+>> entry.c::checkout_entry,() we do:
+>>
+>> memcpy(path, state->base_dir, len);
+>> strcpy(path + len, ce->name);
+>>
+>> which can of course result in memory violation if PATH is not long enough.
+>>
+>
+> ...aaand you're spot on. The following patch illustrates it:
+>
+> $ /git/git-clone.exe mingw-checkout-crash.git
+> Cloning into 'mingw-checkout-crash'...
+> done.
+> fatal: argh, this won't work!
+> warning: Clone succeeded, but checkout failed.
+> You can inspect what was checked out with 'git status'
+> and retry the checkout with 'git checkout -f HEAD'
+>
+> ---
+>
+> diff --git a/entry.c b/entry.c
+> index acc892f..505638e 100644
+> --- a/entry.c
+> +++ b/entry.c
+> @@ -244,6 +244,9 @@ int checkout_entry(struct cache_entry *ce,
+>    if (topath)
+>    return write_entry(ce, topath, state, 1);
+>
+> + if (len > PATH_MAX || len + strlen(ce->name) > PATH_MAX)
+> + die("argh, this won't work!");
+> +
+>    memcpy(path, state->base_dir, len);
+>    strcpy(path + len, ce->name);
+>    len += ce_namelen(ce);
+>
+>
+>> On Thu, Oct 3, 2013 at 12:26 AM, Wataru Noguchi <wnoguchi.0727@gmail.com> wrote:
+>>> Hi,
+>>>
+>>> At last, I foundfollowing Makefile optimization suppression works fine in my
+>>> case.
+>>>
+>>> CFLAGS = -g -O2 -fno-inline-small-functions -Wall
+>>>
+>>> Following optimization option cause crash,
+>>>
+>>> -finline-small-functions
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
 -- 
-1.8.4.475.g3a5bb13
+================================
+   Wataru Noguchi
+   wnoguchi.0727@gmail.com
+   http://wnoguchi.github.io/
+================================
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
