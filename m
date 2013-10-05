@@ -1,245 +1,90 @@
-From: Wataru Noguchi <wnoguchi.0727@gmail.com>
-Subject: Re: [PATCH] mingw-multibyte: fix memory acces violation and
- path length limits.
-Date: Sat, 05 Oct 2013 20:39:58 +0900
-Message-ID: <524FFA8E.70009@gmail.com>
-References: <1380403036-20413-1-git-send-email-wnoguchi.0727@gmail.com> <alpine.DEB.1.00.1309290112380.1191@s15462909.onlinehome-server.info> <524796DC.5020302@gmail.com> <5249AE2A.3050302@web.de> <524ACFAE.4040701@gmail.com> <524C9D8F.2090107@gmail.com> <CALWbr2zDi6XjMCRimUHu2=1qrA_=3ATq+50KBa1aNoBf4X_L9g@mail.gmail.com> <CABPQNSaqjKPGAQ4EKBSk+bQP2WMksc6M0YQxSkB91UrnFF28xQ@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] clone: local URLs are not for ssh
+Date: Sat, 05 Oct 2013 21:48:37 +0200
+Message-ID: <52506D15.9040206@web.de>
+References: <201309282137.21802.tboegi@web.de> <CACsJy8B-wA=bX6+E6O6UvX2vEtOwnR1PCMZNoi-q0x_jacB89Q@mail.gmail.com> <524C6885.8020602@web.de> <CACsJy8DjPiwpMvLe2p+dGBdpU6iTg2my7tddBsQwLnHiHdG8wQ@mail.gmail.com> <20131003013127.GA7917@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Cc: Antoine Pelisse <apelisse@gmail.com>, =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?=
- <l.s.r@web.de>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
- git <git@vger.kernel.org>,
- msysGit <msysgit@googlegroups.com>
-To: kusmabite@gmail.com
-X-From: msysgit+bncBDD7TRGTWYIBBEXVX6JAKGQEU5FOLSA@googlegroups.com Sat Oct 05 13:40:04 2013
-Return-path: <msysgit+bncBDD7TRGTWYIBBEXVX6JAKGQEU5FOLSA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vb0-f60.google.com ([209.85.212.60])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 05 21:48:56 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDD7TRGTWYIBBEXVX6JAKGQEU5FOLSA@googlegroups.com>)
-	id 1VSQDL-0003m2-SO
-	for gcvm-msysgit@m.gmane.org; Sat, 05 Oct 2013 13:40:04 +0200
-Received: by mail-vb0-f60.google.com with SMTP id g17sf1041416vbg.15
-        for <gcvm-msysgit@m.gmane.org>; Sat, 05 Oct 2013 04:40:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=+xftF4ua2lvu1RD54XMna1rYfamXYRtVeN0s1IPko2s=;
-        b=q6YZ7GEQVE8nDXgewxEbGsLHZsUveMMsXGkEGgnvo2585Vpl65Hs0DMgngGf2msIS4
-         kw5V0PiCPkK9KESfZ0O69DohN76HrTF12T0mz+LhTbm8vdK46phUP2uwmDmamxBxAHgD
-         YiYsNTJll6DOqr+iCOq22LFzpZt/6gLaAJMJddX96gzoSwhrUzvYTaoCIF2krnh6IG3j
-         1gfV/t5ozhZQNvHIdY8xRaO92cfXv/ZIW/0htAIcNcZUYeLHEjbIvntLksam+LxHChIo
-         HOEjZSX8nl66gHStDlFqNJt7gHjQ0JtO8chSf0/BgOg8lwmoP/oxhE+FOSCgUw0XMNbN
-         cbdA==
-X-Received: by 10.50.170.228 with SMTP id ap4mr485554igc.16.1380973202878;
-        Sat, 05 Oct 2013 04:40:02 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.118.97 with SMTP id kl1ls1856404igb.35.canary; Sat, 05 Oct
- 2013 04:40:02 -0700 (PDT)
-X-Received: by 10.66.27.42 with SMTP id q10mr4594943pag.14.1380973202127;
-        Sat, 05 Oct 2013 04:40:02 -0700 (PDT)
-Received: from mail-pa0-x231.google.com (mail-pa0-x231.google.com [2607:f8b0:400e:c03::231])
-        by gmr-mx.google.com with ESMTPS id ax8si2490332pbd.0.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 05 Oct 2013 04:40:02 -0700 (PDT)
-Received-SPF: pass (google.com: domain of wnoguchi.0727@gmail.com designates 2607:f8b0:400e:c03::231 as permitted sender) client-ip=2607:f8b0:400e:c03::231;
-Received: by mail-pa0-f49.google.com with SMTP id ld10so5273445pab.36
-        for <msysgit@googlegroups.com>; Sat, 05 Oct 2013 04:40:02 -0700 (PDT)
-X-Received: by 10.66.67.6 with SMTP id j6mr1026819pat.165.1380973201882;
-        Sat, 05 Oct 2013 04:40:01 -0700 (PDT)
-Received: from [192.168.1.39] (p4168-ipbf905akatuka.ibaraki.ocn.ne.jp. [219.114.17.168])
-        by mx.google.com with ESMTPSA id qf7sm24874970pac.14.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 05 Oct 2013 04:40:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <CABPQNSaqjKPGAQ4EKBSk+bQP2WMksc6M0YQxSkB91UrnFF28xQ@mail.gmail.com>
-X-Original-Sender: wnoguchi.0727@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of wnoguchi.0727@gmail.com designates 2607:f8b0:400e:c03::231
- as permitted sender) smtp.mail=wnoguchi.0727@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235726>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VSXqS-0005ZS-Dc
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Oct 2013 21:48:56 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752378Ab3JETsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Oct 2013 15:48:41 -0400
+Received: from mout-xforward.web.de ([82.165.159.35]:61657 "EHLO
+	mout-xforward.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752328Ab3JETsl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Oct 2013 15:48:41 -0400
+X-Greylist: delayed 47929 seconds by postgrey-1.27 at vger.kernel.org; Sat, 05 Oct 2013 15:48:40 EDT
+Received: from [192.168.209.26] ([217.208.218.204]) by smtp.web.de (mrweb102)
+ with ESMTPA (Nemesis) id 0MgO8g-1V88u03I8s-00Nm2Z for <git@vger.kernel.org>;
+ Sat, 05 Oct 2013 21:48:39 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <20131003013127.GA7917@sigill.intra.peff.net>
+X-Provags-ID: V03:K0:3ohxzwvdprhAYlq8AAdDZBPiTyti3gX4vTBsNewer6/Y1xadOWS
+ Ipc/una1ehvIaJtyUoM2bAymlqJoHfaY8+U0IRE6B9HD4iWU+y7fbJKtW2BCSMBnN2/9VWP
+ U4Wjivk0/3M01N92VmUh+vt1tEC0CccUE+PL75NAe+e0KuzcCvJcG9WthX6VqFqztHf4ynE
+ bK0iyup6clsDUZX7fMbqA==
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235728>
 
-Hi,
-
-I put following printf logs.
-
-int checkout_entry(struct cache_entry *ce,
-		   const struct checkout *state, char *topath)
-{
-	static char path[PATH_MAX + 1];
-	struct stat st;
-	int len = state->base_dir_len;
-
-	if (topath)
-		return write_entry(ce, topath, state, 1);
-
-	memcpy(path, state->base_dir, len);
-	fprintf(stderr, "path: %s\n", path);
-	fprintf(stderr, "len: %d\n", len);
-	strcpy(path + len, ce->name);
-	len += ce_namelen(ce);
-	fprintf(stderr, "path: %s\n", path);
-	fprintf(stderr, "len: %d\n", len);
-	fprintf(stderr, "path_max: %d\n", PATH_MAX);
-	
-
---------------------------------------------------------------------------------------
-
-
-crash result
-
-wnoguchi@WIN-72R9044R72V /usr/tmp (master)
-$ git clone https://github.com/wnoguchi/mingw-checkout-crash.git a2
-Cloning into 'a2'...
-remote: Counting objects: 8, done.
-remote: Compressing objects: 100% (7/7), done.
-remote: Total 8 (delta 0), reused 8 (delta 0)
-Unpacking objects: 100% (8/8), done.
-Checking connectivity... done
-path:
-len: 0
-path: dummy 1-long-long-long-dirname/dummy 2-long-long
--long-dirname/dummy 3-long-long-long-dirname/dummy 4-l
-ong-long-long-dirname/dummy 5-long-long-long-dirname/aaaaaaaaaaaa.txt
-len: 302
-path_max: 259
-
-crash!!
-
---------------------------------------------------------------------------------------
-
-build with
-
-CFLAGS = -g -O2 -fno-inline-small-functions -Wall
-
-
-wnoguchi@WIN-72R9044R72V /usr/tmp (master)
-$ git clone https://github.com/wnoguchi/mingw-checkout-crash.git a3
-Cloning into 'a3'...
-remote: Counting objects: 8, done.
-remote: Compressing objects: 100% (7/7), done.
-remote: Total 8 (delta 0), reused 8 (delta 0)
-Unpacking objects: 100% (8/8), done.
-Checking connectivity... done
-path:
-len: 0
-path: dummy 1-long-long-long-dirname/dummy 2-long-long
--long-dirname/dummy 3-long-long-long-dirname/dummy 4-l
-ong-long-long-dirname/dummy 5-long-long-long-dirname/aaaaaaaaaaaa.txt
-len: 302
-path_max: 259
-
-Warning: Your console font probably doesn't support Unicode. If you experience s
-trange characters in the output, consider switching to a TrueType font such as L
-ucida Console!
-
-works fine.
-
-------------------------------------------------------------------------------------
-
-this result means actual path byte length over run path buffer?
-
-	static char path[PATH_MAX + 1];
-
-hmmm...
-
-I'm not sure why -fno-inline-small-functions works.
-
-
-(2013/10/04 2:36), Erik Faye-Lund wrote:
-> On Thu, Oct 3, 2013 at 7:25 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
->> I've not followed the thread so much but, in that
->> entry.c::checkout_entry,() we do:
+On 2013-10-03 03.31, Jeff King wrote:
+> On Thu, Oct 03, 2013 at 08:01:23AM +0700, Nguyen Thai Ngoc Duy wrote:
+> 
+>>> Sorry for the noise, I noticed it when I was trying to construct test cases.
+>>>
+>>> What do we think about adding this at the end of t5505:
 >>
->> memcpy(path, state->base_dir, len);
->> strcpy(path + len, ce->name);
->>
->> which can of course result in memory violation if PATH is not long enough.
->>
->
-> ...aaand you're spot on. The following patch illustrates it:
->
-> $ /git/git-clone.exe mingw-checkout-crash.git
-> Cloning into 'mingw-checkout-crash'...
-> done.
-> fatal: argh, this won't work!
-> warning: Clone succeeded, but checkout failed.
-> You can inspect what was checked out with 'git status'
-> and retry the checkout with 'git checkout -f HEAD'
->
-> ---
->
-> diff --git a/entry.c b/entry.c
-> index acc892f..505638e 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -244,6 +244,9 @@ int checkout_entry(struct cache_entry *ce,
->    if (topath)
->    return write_entry(ce, topath, state, 1);
->
-> + if (len > PATH_MAX || len + strlen(ce->name) > PATH_MAX)
-> + die("argh, this won't work!");
-> +
->    memcpy(path, state->base_dir, len);
->    strcpy(path + len, ce->name);
->    len += ce_namelen(ce);
->
->
->> On Thu, Oct 3, 2013 at 12:26 AM, Wataru Noguchi <wnoguchi.0727@gmail.com> wrote:
->>> Hi,
->>>
->>> At last, I foundfollowing Makefile optimization suppression works fine in my
->>> case.
->>>
->>> CFLAGS = -g -O2 -fno-inline-small-functions -Wall
->>>
->>> Following optimization option cause crash,
->>>
->>> -finline-small-functions
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>> As usual more tests are usually better. But is t5505-remote.sh the
+>> best place? That file seems about "git remote"..
+> 
+> Yeah, agreed. How about at the end of t5601, after the ssh wrapper I set
+> up here:
+> 
+>   http://article.gmane.org/gmane.comp.version-control.git/235473
 
+Thanks for the review & pointer.
+To get it working, a little tweak was needed here, please see below.
 
--- 
-================================
-   Wataru Noguchi
-   wnoguchi.0727@gmail.com
-   http://wnoguchi.github.io/
-================================
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+diff --git a/t/t5602-clone-remote-exec.sh b/t/t5602-clone-remote-exec.sh
+index d232e94..37464aa 100755
+--- a/t/t5602-clone-remote-exec.sh
++++ b/t/t5602-clone-remote-exec.sh
+@@ -62,21 +62,20 @@ expect_ssh () {
+ 
+ test_expect_success 'cloning myhost:src uses ssh' '
+        clear_ssh &&
+-       git clone myhost:src ssh-clone &&
++       ! git clone myhost:src ssh-clone &&
+        expect_ssh myhost src
+ '
+ 
+-test_expect_success NOT_MINGW,NOT_CYGWIN 'clone local path foo:bar' '
++test_expect_success SYMLINKS,NOT_MINGW,NOT_CYGWIN 'clone local path foo:bar' '
+        clear_ssh &&
+-       cp -R src "foo:bar" &&
+-       git clone "./foo:bar" foobar
+-       git clone "./foo:bar" foobar &&
++       ln -s src "foo:bar" &&
++       ! git clone "./foo:bar" foobar &&
+        expect_ssh none
+ '
+ 
+ test_expect_success 'bracketed hostnames are still ssh' '
+        clear_ssh &&
+-       git clone "[myhost:123]:src" ssh-bracket-clone &&
++       ! git clone "[myhost:123]:src" ssh-bracket-clone &&
+        expect_ssh myhost:123 src
+ '
