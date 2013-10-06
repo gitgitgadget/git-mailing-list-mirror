@@ -1,98 +1,80 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: GSS-Negotiate authentication requires that all data fit into
- postbuffer
-Date: Sun, 6 Oct 2013 17:50:00 +0000
-Message-ID: <20131006174959.GE3460@vauxhall.crustytoothpaste.net>
-References: <20131006004236.GB3460@vauxhall.crustytoothpaste.net>
- <20131006105013.GA24950@LK-Perkele-VII>
- <alpine.DEB.2.00.1310061658330.6366@tvnag.unkk.fr>
- <20131006152908.GD3460@vauxhall.crustytoothpaste.net>
- <alpine.DEB.2.00.1310061737000.6366@tvnag.unkk.fr>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH 0/6] miscellaneous patches
+Date: Sun, 06 Oct 2013 21:47:34 +0100
+Message-ID: <5251CC66.30004@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xJK8B5Wah2CMJs8h"
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org
-To: Daniel Stenberg <daniel@haxx.se>
-X-From: git-owner@vger.kernel.org Sun Oct 06 19:50:38 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 06 22:47:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VSsTU-0003je-3Z
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Oct 2013 19:50:36 +0200
+	id 1VSvEt-0006JZ-7X
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Oct 2013 22:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753990Ab3JFRuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Oct 2013 13:50:11 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:60941 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753892Ab3JFRuK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Oct 2013 13:50:10 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	id S1754513Ab3JFUrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Oct 2013 16:47:39 -0400
+Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:37725 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754394Ab3JFUri (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Oct 2013 16:47:38 -0400
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id E05636FBA29;
+	Sun,  6 Oct 2013 21:47:36 +0100 (BST)
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id B26016FB8C8;
+	Sun,  6 Oct 2013 21:47:36 +0100 (BST)
+Received: from [192.168.254.7] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id EB68D2807A;
-	Sun,  6 Oct 2013 17:50:05 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.00.1310061737000.6366@tvnag.unkk.fr>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.11-trunk-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
+	Sun,  6 Oct 2013 21:47:36 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.0
+X-MDF-HostID: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235744>
 
 
---xJK8B5Wah2CMJs8h
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi Jonathan,
 
-On Sun, Oct 06, 2013 at 05:38:24PM +0200, Daniel Stenberg wrote:
-> On Sun, 6 Oct 2013, brian m. carlson wrote:
->=20
-> >If there's a way to make Apache with mod_auth_kerb do that with
-> >curl, then it doesn't require a change to git, and I'm happy to
-> >make it on my end. But using the curl command line client, I don't
-> >see an Expect: 100-continue anywhere during the connection using
-> >Debian's curl 7.32.0-1.  Do I need to send a certain amount of
-> >data to see that behavior?
->=20
-> Correct, curl will enable "Expect: 100-continue" if the post size is
-> > 1024 bytes.
+These patches don't have too much in common, hence the subject
+line, except perhaps that 4 of them fix sparse warnings.
 
-I've been able to reproduce this behavior with the curl command line
-client, but it looks like we disable Expect: 100-continue in git since
-some proxy servers are too stupid to understand it, according to commit
-959dfcf.
+Note that the fourth patch is actually a simplified version of
+an earlier RFC patch. Junio didn't like the idea of using a
+build variable (GIT_TEST_HIGHLIGHT_BIN) to set the path to the
+'correct' highlight tool. see:
+http://article.gmane.org/gmane.comp.version-control.git/234138
 
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+Having recently had to re-configure Thunderbird, I noticed that
+the documentation needed updating. (actually, I was sure that I
+had sent a similar patch, years ago, when I last did this! :-P )
 
---xJK8B5Wah2CMJs8h
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+ATB,
+Ramsay Jones
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
+Ramsay Jones (6):
+  config.c: Fix a sparse warning
+  refs.c: Fix a sparse warning
+  wrapper.c: Fix a sparse warning
+  t9500-*.sh: Fix highlight test hang on Linux Mint
+  git-format-patch.txt: Add to Thunderbird configuration
+  sparse: Fix some "using sizeof on a function" warnings
 
-iQIcBAEBCgAGBQJSUaLHAAoJEL9TXYEfUvaLQsQQAMfsnJTw1+IHr352aXjKTZPw
-ThFiv4WVykt8tVh97SxlLeQE0y4+h9Ccsbit7CnMyyWWr2DgYjcfZUbLJlcvLnu1
-yuHboNLzCIEtKVN0XH0XLSEiG2LPmnDQgmT5a9c0iZE8aTSD4bYBRen9KDvMB8Ip
-NuAw9jAAAZ1U9cgcT5jZeD+8733JAhdbLYPvKPbFz46Ln0Vtm8WYEcNBRlzn+0vO
-w23p5IUvobXswmMk3rgt5Qmx/v1biMyJ3xr9Ik9D49h0bTCb/pMsBC73mXFVAWh2
-/fkxNjF3ccYQOqsSFBcwXlgxDdXKljbLEDNsqZcU0/goIl1n6JCBMW1qBExWtyQR
-LbsUaPVqAcaeh8GDdj2J26ICHHtd8vnnAIEHEjjBEkeYJV2ADYgC0ekhSktaALlv
-UH7Chn/XA2UDrV6fjoDDx41dATDND0mZOVFWEAV7KE/KlIb09Ofglb+Tev3EE0VE
-WuP/psGRdfSdg9MM68BA4QzAlKHG45+Ni6/Ru0X5pT6j0mw/lxJSgLN3ZbAPyD2Z
-Zp0TUTyjIM8L1d/bAet8h2OM31yk5A/CXwCAGg6QVE0E5tIt1n2bXiRcr5MVAWR/
-FGGMgvBU2N46lQmC+D/PDPOtiIEvI3kdHg23EqAd8qchUUDAbhXFCntCZdIVZS+2
-K9XmvvmQ/w5BpaqMjg1n
-=d10B
------END PGP SIGNATURE-----
+ Documentation/git-format-patch.txt     | 3 ++-
+ Makefile                               | 3 +++
+ config.c                               | 2 +-
+ refs.c                                 | 2 +-
+ t/t9500-gitweb-standalone-no-errors.sh | 6 ++++--
+ wrapper.c                              | 2 ++
+ 6 files changed, 13 insertions(+), 5 deletions(-)
 
---xJK8B5Wah2CMJs8h--
+-- 
+1.8.4
