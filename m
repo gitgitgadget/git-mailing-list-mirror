@@ -1,100 +1,88 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: gitk next/prev buttons
-Date: Tue, 8 Oct 2013 12:36:19 -0700
-Message-ID: <20131008193618.GE9464@google.com>
-References: <524A33E5.7090001@threeamdesign.com.au>
- <525445FB.6000806@xiplink.com>
+Subject: Re: [PATCH] git-credential-netrc: fix uninitialized warning
+Date: Tue, 8 Oct 2013 12:41:47 -0700
+Message-ID: <20131008194147.GF9464@google.com>
+References: <87zjqjx25g.fsf@flea.lifelogs.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Lucas Sandery [three am design]" <lucas@threeamdesign.com.au>,
-	git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Tue Oct 08 21:36:31 2013
+Cc: git@vger.kernel.org
+To: Ted Zlatanov <tzz@lifelogs.com>
+X-From: git-owner@vger.kernel.org Tue Oct 08 21:42:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTd53-0005kI-Qp
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 21:36:30 +0200
+	id 1VTdAM-0000VU-UQ
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 21:41:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755931Ab3JHTg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Oct 2013 15:36:27 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:46099 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754787Ab3JHTgX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Oct 2013 15:36:23 -0400
-Received: by mail-pa0-f52.google.com with SMTP id kl14so9272231pab.39
-        for <git@vger.kernel.org>; Tue, 08 Oct 2013 12:36:23 -0700 (PDT)
+	id S1755503Ab3JHTly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Oct 2013 15:41:54 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:37367 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754600Ab3JHTlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Oct 2013 15:41:53 -0400
+Received: by mail-pd0-f176.google.com with SMTP id q10so9001882pdj.7
+        for <git@vger.kernel.org>; Tue, 08 Oct 2013 12:41:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=bzGgza6mUkOuS0iyobsvR9TeamHZSUgkTnVm0wxdXk8=;
-        b=m+u/7FC1PtKEzsdp1IxfPCdHYduCnjBpxJGlnJZWepUtRm/5RMg/FMgnIqiiY+TNSy
-         ORaXRp2lzgpOHfKHan++ZLue5CGni9Ua/4YO94WBIVM7sfbN+ch56gnklfm6KGvqiCpo
-         pfWjYUJ+EydeWvHRmacOOWbxFIaOrH8CIaeUWg069h5nOVWSG/WS2doEnPPHHkPx71V8
-         44TJ2dbjhaexNiGnbEzCpSktcJfjvIYv3CbjMu6QZ6DN5sxVifYuyAo7nmd5lnM+aQuo
-         4awid4xD6R7scWj/0qjp1u4/gjto+cXCfmW367l45KkmkmylqF71H0K2hXpMwdlY2oZ6
-         4VeA==
-X-Received: by 10.68.185.68 with SMTP id fa4mr3870913pbc.136.1381260983034;
-        Tue, 08 Oct 2013 12:36:23 -0700 (PDT)
+        bh=JJGbYgIqY2bNi7JZUQcOSFmX+EevojQ3ED5X0Q2KEHY=;
+        b=F6M6J1mKIhD9gEsEm9AzO6Pc74xLsNk1UlL2jUIVAqOol553+QoVW9WHys08aO9PAz
+         oGtTQ7YrX6k7eqoOsc2a3aZ9az73bSbmzdxrhRItJC3aiY2bbbV/yksEeFmh5aSaELau
+         RO8bUHs126vH1+Ps4S8girgV/QRKCx7qCS0qpsJFfkcET0AwI0oRsJ7F+GpKe1woyjkb
+         vVFTionVcDhLbqYUFGmVHWCPrOLmByhlPW3LDQCaBmwjYv5BoNNXvJCDRnPB799eUBeK
+         BWXG74A66KNU9SWlyx7I8haqp1P6QeebZRkUWchYxLpDjGvx7wluCFz85+yb4THZ2Tc7
+         7pZw==
+X-Received: by 10.68.26.202 with SMTP id n10mr3701764pbg.97.1381261313433;
+        Tue, 08 Oct 2013 12:41:53 -0700 (PDT)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id so2sm41842167pbc.5.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id xe9sm49404810pab.0.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 08 Oct 2013 12:36:22 -0700 (PDT)
+        Tue, 08 Oct 2013 12:41:52 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <525445FB.6000806@xiplink.com>
+In-Reply-To: <87zjqjx25g.fsf@flea.lifelogs.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235785>
 
 Hi,
 
-Marc Branchaud wrote:
-> On 13-09-30 10:31 PM, Lucas Sandery [three am design] wrote:
+Ted Zlatanov wrote:
 
->> The "next" and "prev" buttons are lacking consistency and logic. For LTR
->> languages previous is almost always on the left, and next on the right. The
->> words are contradictory, "next" actually goes to backwards chronologically,
->> and "prev" goes forward. Could the positions of the buttons be switched and
->> the text be replaced with "earlier" and "later"? This would make the
->> reference time not just order, and would mean the updated UI would not be
->> confused with the previous one.
->
-> I agree with you here (I like "older" and "newer" myself).
->
-> In theory gitk accepts the same arguments as "git rev-list", and in theory
-> you should be able to use things like --reverse to get the commits in a
-> different order.
->
-> However, in practice I don't think anyone futzes with the ordering much with
-> gitk.  gitk even ignores the --reverse and --timestamp options, and I've had
-> a hard time getting gitk to display commits in an order where "older" and
-> "newer" would not make sense.
+> Simple patch to avoid unitialized warning and log what we'll do.
 
-In a branchy history, it is possible for the next matching commit to
-actually be newer.  I think the intent of the buttons is "find the
-next result, looking down or up in the list of commits in the upper
-pane".  Is there some other wording that would convey this better?
+Sign-off?
 
->> Also, the arrow-only next/previous buttons (beside the commit ID) should
->> really point up and down. Horizontal directions are ambiguous for navigation
->> of a vertical list.
->
-> Here I don't agree.  These arrows are purely about history navigation.  They
-> don't have anything to do with "up" or "down" in the list.  In that sense
-> they're more like the arrows in your web browser.
+[...]
+> --- a/contrib/credential/netrc/git-credential-netrc
+> +++ b/contrib/credential/netrc/git-credential-netrc
+> @@ -369,7 +369,10 @@ sub find_netrc_entry {
+>  	{
+>  		my $entry_text = join ', ', map { "$_=$entry->{$_}" } keys %$entry;
+>  		foreach my $check (sort keys %$query) {
+> -			if (defined $query->{$check}) {
+> +			if (!defined $entry->{$check}) {
+> +			       log_debug("OK: entry has no $check token, so any value satisfies check $check");
+> +			}
+> +			elsif (defined $query->{$check}) {
 
-True.  It might make sense to make the analogy to a web browser
-clearer by using thicker arrows or triangles --- care to mock up icons
-to replace the current ones?
+Style: elsewhere this file seems to use cuddled elses:
 
-The icons are in the gitk source file (search for "bm_left_data") in
-xpm format.
+	} elsif (...) {
 
-Hope that helps,
+Or more simply, would it make sense to wrap both 'defined' checks into
+a single "if", like so?
+
+		if (defined $entry->{$check} && defined $query->{$check}) {
+			...
+		} else {
+			log_debug(...);
+		}
+
+Thanks and hope that helps,
 Jonathan
