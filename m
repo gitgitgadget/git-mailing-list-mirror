@@ -1,98 +1,66 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: GSS-Negotiate authentication requires that all data fit into
- postbuffer
-Date: Mon, 7 Oct 2013 22:56:07 +0000
-Message-ID: <20131007225607.GA30156@vauxhall.crustytoothpaste.net>
-References: <20131006004236.GB3460@vauxhall.crustytoothpaste.net>
- <20131006105013.GA24950@LK-Perkele-VII>
- <alpine.DEB.2.00.1310061658330.6366@tvnag.unkk.fr>
- <20131006152908.GD3460@vauxhall.crustytoothpaste.net>
- <alpine.DEB.2.00.1310061737000.6366@tvnag.unkk.fr>
- <20131006174959.GE3460@vauxhall.crustytoothpaste.net>
- <20131007120241.GC5792@sigill.intra.peff.net>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH] send-pack: don't send a thin pack when the server doesn't support it
+Date: Tue,  8 Oct 2013 10:44:44 +0200
+Message-ID: <1381221884-27048-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VS++wcV0S1rZb1Fb"
-Cc: Daniel Stenberg <daniel@haxx.se>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 08 00:56:24 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 08 10:51:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTJix-0000BG-Tf
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 00:56:24 +0200
+	id 1VTT17-0000vb-6n
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 10:51:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511Ab3JGW4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Oct 2013 18:56:19 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:60959 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751197Ab3JGW4S (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Oct 2013 18:56:18 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DE4F760001;
-	Mon,  7 Oct 2013 22:56:10 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20131007120241.GC5792@sigill.intra.peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.11-trunk-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754319Ab3JHIvl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Oct 2013 04:51:41 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:58595 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752956Ab3JHIvi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Oct 2013 04:51:38 -0400
+X-Greylist: delayed 412 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Oct 2013 04:51:38 EDT
+Received: from cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by hessy.dwim.me (Postfix) with ESMTPA id 89315805FA
+	for <git@vger.kernel.org>; Tue,  8 Oct 2013 10:44:45 +0200 (CEST)
+Received: (nullmailer pid 27086 invoked by uid 1000);
+	Tue, 08 Oct 2013 08:44:44 -0000
+X-Mailer: git-send-email 1.8.4.561.g1c3d45d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235766>
 
+Not every server out there supports fixing thin packs, so let's send
+them a full pack.
 
---VS++wcV0S1rZb1Fb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
 
-On Mon, Oct 07, 2013 at 08:02:41AM -0400, Jeff King wrote:
-> Yeah, instead we try to make two separate requests, and assume that the
-> first one clears the path for any further requests. Of course that
-> doesn't work for auth methods that actually negotiate for each request.
->=20
-> We should probably make the "Expect" suppression optional for people who
-> know they have working systems. It would be nice to trigger it
-> automatically when people are using something like GSS, but that
-> decision happens at the curl layer.
+It's not always possible to support thin packs (sometimes there isn't
+even an object database to grab bases out of). And in any case git
+shouldn't create thin packs if the server hasn't said it knows how to
+fix them, as per the point of the extension.
 
-Yeah, that's what I ultimately determined would be the best choice.
-Technically, we could respawn the process, but that would be a
-logistical nightmare and extremely inefficient for large transfers.
+ send-pack.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/send-pack.c b/send-pack.c
+index 7d172ef..7b88ac8 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -205,6 +205,8 @@ int send_pack(struct send_pack_args *args,
+ 		quiet_supported =3D 1;
+ 	if (server_supports("agent"))
+ 		agent_supported =3D 1;
++	if (!server_supports("thin-pack"))
++		args->use_thin_pack =3D 0;
+=20
+ 	if (!remote_refs) {
+ 		fprintf(stderr, "No refs in common and none specified; doing nothing=
+=2E\n"
 --=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---VS++wcV0S1rZb1Fb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAEBCgAGBQJSUzwHAAoJEL9TXYEfUvaLnrAP+wWwt29UMUydkpqXo9CSF4mh
-dU4y6C22++ft6mi/FwZvhRTvMF0VhDN5Ph6crgjnZcBOIq2A5sioYfkt+yr3BA+8
-ydo2YW0a+WXzEi2YDSVihSsWqahk5RxHpefjzJ6YdHQKtqvH12ZupnWBTWJyCXaz
-GdYE+5qU4BAHGah4jrmbWDNHHLE+0OwQMq41vzV1tHScK8ij1MNcQ/mhf2tkeWf2
-1oQHYHksvzAzOQI8Avwxlm5h1TloDXsgOPZH+qkv1dRLWGt+8B332+qCf3v2SJha
-/vH5sRKBDKltOlwJqKaMxQzr9/URXObzP+uQkFtqVeUQ7JvrWTpWSzptAFDLhicE
-sOQX6zXxORDZa6/QZJdJp5FLanFJdhFDjL9VjV6eqeIGxwRB5CMEDtGMOiwBGsX0
-QcOLo/LFzdXYgdGs6ruF0pWxtRV3CEcdf+KnOdgEramTVNhNpX2AkNQ+kLJPcT4T
-lF/nQGARZbnxeVItNgDpPKSJFjWPGZPrP4NJEQgY5AWz4OvdWjQYCp8dSwy8rlts
-XxgIG1msU41XEV983wXCkvdiC7WAbGm8ZlnVpDESZwg8AJijE2MnefHm1qUc72ZY
-UKYT5TS7Eo4CYdq/ShVe8sAzxZXVaVeUdY3XwqgJx6aym9H8LSZ289hUVlGFS2oS
-Kwv6sdNqsdNwc7l6XJZf
-=cHQa
------END PGP SIGNATURE-----
-
---VS++wcV0S1rZb1Fb--
+1.8.4.561.g1c3d45d
