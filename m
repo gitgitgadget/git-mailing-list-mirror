@@ -1,68 +1,63 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 2/2] Update documentation for http.continue option
-Date: Tue,  8 Oct 2013 20:48:07 +0000
-Message-ID: <1381265287-39331-3-git-send-email-sandals@crustytoothpaste.net>
-References: <1381265287-39331-1-git-send-email-sandals@crustytoothpaste.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: [PATCH] gitk: Rename "next" and "prev" buttons to "older" and "newer".
+Date: Tue,  8 Oct 2013 16:49:21 -0400
+Message-ID: <1381265361-10147-1-git-send-email-marcnarc@xiplink.com>
+References: <525445FB.6000806@xiplink.com>
+Cc: lucas@threeamdesign.com.au, paulus@samba.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 08 22:48:33 2013
+X-From: git-owner@vger.kernel.org Tue Oct 08 22:58:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTeCj-0003PS-Nb
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 22:48:30 +0200
+	id 1VTeMJ-0008TY-NA
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 22:58:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756533Ab3JHUsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Oct 2013 16:48:21 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:60988 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756256Ab3JHUsR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Oct 2013 16:48:17 -0400
-Received: from vauxhall.crustytoothpaste.net (vauxhall.local [172.16.2.247])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 703032807F;
-	Tue,  8 Oct 2013 20:48:16 +0000 (UTC)
-X-Mailer: git-send-email 1.8.4.236.g382490f.dirty
-In-Reply-To: <1381265287-39331-1-git-send-email-sandals@crustytoothpaste.net>
+	id S1754857Ab3JHU6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Oct 2013 16:58:19 -0400
+Received: from IP-192-252-130-194.static.fibrenoire.ca ([192.252.130.194]:16410
+	"EHLO cubert.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753479Ab3JHU6T (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Oct 2013 16:58:19 -0400
+X-Greylist: delayed 538 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Oct 2013 16:58:19 EDT
+Received: from xiplink.com (rincewind.xiplink.com [10.10.1.32])
+	by cubert.xiplink.com (Postfix) with ESMTP id 00F0860184;
+	Tue,  8 Oct 2013 16:49:19 -0400 (EDT)
+X-Mailer: git-send-email 1.8.4.dirty
+In-Reply-To: <525445FB.6000806@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235796>
 
-Explain the reason for and behavior of the new http.continue option, and that it
-is enabled by default.  Furthermore, explain that it is required for large
-GSS-Negotiate requests but incompatible with some proxies.
-
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+Users often find that "next" and "prev" do the opposite of what they
+expect.  For example, "next" moves to the next match down the list, but
+that is almost always backwards in time.  Renaming "next" to "older"
+and "prev" to "newer" makes it clear where the buttons will take the user.
 ---
- Documentation/config.txt | 9 +++++++++
- 1 file changed, 9 insertions(+)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index fca7749..5fff2b2 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1516,6 +1516,15 @@ http.postBuffer::
- 	massive pack file locally.  Default is 1 MiB, which is
- 	sufficient for most requests.
+(Apologies to Lucas and Paul -- my previous patch email didn't include
+the git list.)
+
+ gitk | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gitk b/gitk
+index 5cd00d8..e610010 100755
+--- a/gitk
++++ b/gitk
+@@ -2244,8 +2244,8 @@ proc makewindow {} {
  
-+http.continue::
-+	Ensure that authentication succeeds before sending the pack data when
-+	POSTing data using the smart HTTP transport.  This is done by
-+	requesting a 100 Continue response.  For requests larger than
-+	'http.postBuffer', this is required when using GSS-Negotiate
-+	(Kerberos) authentication over HTTP.  However, some proxies do not
-+	handle the protocol exchange gracefully; for them, this option must be
-+	disabled.  Defaults to enabled.
-+
- http.lowSpeedLimit, http.lowSpeedTime::
- 	If the HTTP transfer speed is less than 'http.lowSpeedLimit'
- 	for longer than 'http.lowSpeedTime' seconds, the transfer is aborted.
+     # build up the bottom bar of upper window
+     ${NS}::label .tf.lbar.flabel -text "[mc "Find"] "
+-    ${NS}::button .tf.lbar.fnext -text [mc "next"] -command {dofind 1 1}
+-    ${NS}::button .tf.lbar.fprev -text [mc "prev"] -command {dofind -1 1}
++    ${NS}::button .tf.lbar.fnext -text [mc "older"] -command {dofind 1 1}
++    ${NS}::button .tf.lbar.fprev -text [mc "newer"] -command {dofind -1 1}
+     ${NS}::label .tf.lbar.flab2 -text " [mc "commit"] "
+     pack .tf.lbar.flabel .tf.lbar.fnext .tf.lbar.fprev .tf.lbar.flab2 \
+ 	-side left -fill y
 -- 
-1.8.4.rc3
+1.8.4.dirty
