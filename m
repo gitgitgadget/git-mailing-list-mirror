@@ -1,94 +1,94 @@
-From: Shlomit Afgin <shlomit.afgin@weizmann.ac.il>
-Subject: Error in creating git over http
-Date: Tue, 8 Oct 2013 15:05:22 +0000
-Message-ID: <51123DD1BF2E03418A1296748DA730927454504A@ibwmbx03>
-References: <51123DD1BF2E03418A1296748DA730927454460F@ibwmbx03>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] blame: add color
+Date: Tue, 08 Oct 2013 08:16:38 -0700
+Message-ID: <xmqqob6zn67d.fsf@gitster.dls.corp.google.com>
+References: <1381241929-23378-1-git-send-email-christopherarges@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 08 17:05:32 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Chris J Arges <christopherarges@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 08 17:16:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTYqn-0007CD-Fg
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 17:05:29 +0200
+	id 1VTZ1j-00051P-Jo
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 17:16:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754569Ab3JHPFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Oct 2013 11:05:25 -0400
-Received: from sentinel1-in.weizmann.ac.il ([132.76.60.31]:14116 "EHLO
-	Sentinel1-in.weizmann.ac.il" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751339Ab3JHPFZ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 8 Oct 2013 11:05:25 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AkUFAPodVFKETARK/2dsb2JhbABZgwc4UsEjgR4WbYIuBTpRASoUQiUCBBuHfgyZDZgriRSMYIIxOIMfgQQDmTCQUYMkgio
-X-IronPort-AV: E=Sophos;i="4.90,1056,1371070800"; 
-   d="scan'208";a="3076796"
-Received: from doar.weizmann.ac.il ([132.77.4.35])
-  by Sentinel1-out.weizmann.ac.il with ESMTP; 08 Oct 2013 17:05:23 +0200
-Received: from smtp.weizmann.ac.il (ibwhbxv02.wismain.weizmann.ac.il [132.76.4.74])
-	by doar.weizmann.ac.il (8.13.8/8.13.8) with ESMTP id r98G4s94026315
-	for <git@vger.kernel.org>; Tue, 8 Oct 2013 18:04:54 +0200
-Received: from IBWMBX03.wismain.weizmann.ac.il ([132.76.4.77]) by
- IBWHBXV02.wismain.weizmann.ac.il ([132.77.160.74]) with mapi id
- 14.02.0318.004; Tue, 8 Oct 2013 18:05:23 +0300
-Thread-Topic: Error in creating git over http
-Thread-Index: AQHOxDJDbgBV697Y0k2SOI9i0dnZMZnq5zcA
-In-Reply-To: <51123DD1BF2E03418A1296748DA730927454460F@ibwmbx03>
-Accept-Language: en-US, he-IL
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/14.3.6.130613
-x-originating-ip: [132.77.26.178]
-Content-ID: <EABD3DC2B9BC8242953106EF6E5EA4E8@weizmann.ac.il>
+	id S1754230Ab3JHPQn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Oct 2013 11:16:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37738 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752452Ab3JHPQn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Oct 2013 11:16:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41493481C0;
+	Tue,  8 Oct 2013 15:16:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GuUCoAZN7eXXkfaBaDs7wXqDhCk=; b=Wl0SIY
+	QioxDb5+p1H7/TpUDP00EfcB/BppnXRXHe6ygd8NLMgL1raJ4brC4JGPQctV45aZ
+	PVznQQIDjwxDCxishc6ZGIdrJZmSZz1S3gk6e6Rlpg/jpEv7JX+uC92OjjWDHEy2
+	oAvrJuE3FaJYUlSiu+njX2w3rHUstFdIh4Ryo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lvCHXIwbgPlyWcxkEqBxW1HTjA7ElO5b
+	zaVZNP/egf2iF7mgK5OFmfvOsUp/lMWbkS16GHRy2sXTGdcnqpciRWVvfMPH99mV
+	2jNjWcmAIbK39x7RdK7w+fhZ2JXu6vWu3rysakst+0TcSMCNkrW+Jd+aFZUBF8wq
+	+GHFuRXsKdA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E9C1481BF;
+	Tue,  8 Oct 2013 15:16:42 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 850F3481B4;
+	Tue,  8 Oct 2013 15:16:40 +0000 (UTC)
+In-Reply-To: <1381241929-23378-1-git-send-email-christopherarges@gmail.com>
+	(Chris J. Arges's message of "Tue, 8 Oct 2013 09:18:49 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A1FB1552-302C-11E3-A5D7-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235780>
 
+Chris J Arges <christopherarges@gmail.com> writes:
 
-I'm trying to set a http git server.
+> Add colorized text for git blame when color.interactive is enabled.
 
-I do the following on the git server:
-       cd /var/www/html/
-git clone --bare  /path/to/dir/ gitproject.git
-cd gitproject.git/
-mv hooks/post-update.sample hooks/post-update
-chmod a+x hooks/post-update
+It does not make any sense to tie this to color.interactive at all,
+at least to me.  The "check color.blame and if absent fall back to
+color.ui", which is the usual pattern, would be more appropriate.
 
-on the local machine run:
-git clone http://server.name/gitproject.git
+> +static char blame_colors[][COLOR_MAXLEN] = {
+> +	GIT_COLOR_RESET,
+> +	GIT_COLOR_NORMAL,	/* PLAIN */
+> +	GIT_COLOR_YELLOW,	/* COMMIT */
+> +	GIT_COLOR_BOLD,		/* NAME */
+> +	GIT_COLOR_CYAN,		/* LINE */
+> +	GIT_COLOR_GREEN,	/* TIME */
+> +};
 
-I got the error:
-"Initialized empty Git repository in /local/path/gitproject/.git/
-fatal: http://server.name/gitproject.git/info/refs not found: did you run
-git update-server-info on the server?"
+Unlike "git grep", where some pieces of a single line are more
+interesting (i.e. the exact text matching the pattern given) than
+others (i.e. other text on the same line), and "git diff", where
+some lines have different meanings from others (i.e. hunk header,
+deleted lines, added lines, context lines), the output from "git
+blame" is already columnar and it is obvious to the reader of the
+output that everything on the leftmost part of all lines is commit
+object name, without distraction of extra colours; I do not see much
+point in painting the output into vertical stripes of colours.
 
-
-I saw that the file does not exist,  it seem that the file post-update is
-not execute.
-
-I run it on the git server:
-git update-server-info
-
-Now the info/ref is created.
-
-On local machine I run again :
-git clone http://server.name/gitproject.git
-
-Now I get the error:
-  Initialized empty Git repository in /local/path/gitproject/.git/
-error: The requested URL returned error: 403 (curl_result = 22, http_code
-= 403, sha1 = 9d83b83df9fbc75ecd754264f95793fca93ccf93)
-error: Unable to find 9d83b83df9fbc75ecd754264f95793fca93ccf93 under
-http://server.name/gitproject.git
-Cannot obtain needed object 9d83b83df9fbc75ecd754264f95793fca93ccf93
-
-
-What I'm doing wrong?
-Any ideas are welcome.
-Thanks.
+It may make more sense to assign one colour to each blame origin
+(i.e. <commit, path> pair), to make it clear that first five lines
+came from the same origin that is different from the two lines that
+follow, etc., showing horizontal stripes of colours. If we were to
+go that route, I suspect that it would be too distracting to paint
+the whole line (like "git diff" does for added or deleted
+lines). Perhaps paint only the commit object name part in different
+colors to show which lines form a group that came from the same
+origin?  The way "git show-branch" paints its output might give an
+inspiration.
