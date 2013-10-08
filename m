@@ -1,83 +1,87 @@
-From: Carlos Martin Nieto <cmn@elego.de>
-Subject: Re: [PATCH] send-pack: don't send a thin pack when the server doesn't support it
-Date: Tue, 08 Oct 2013 12:58:33 +0200
-Message-ID: <87li242fmu.fsf@flaca.cmartin.tk>
-References: <1381221884-27048-1-git-send-email-cmn@elego.de>
-	<CACsJy8AQ-719sbUfJW98q_HYit7ePfB6oN3v7XTX6fvC7HnixA@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] send-pack: don't send a thin pack when the server doesn't
+ support it
+Date: Tue, 8 Oct 2013 18:29:09 +0700
+Message-ID: <CACsJy8AHAbDuz3yhsjJfRQUGg1zzx6qqoAf=1oNhbX1xPVithg@mail.gmail.com>
+References: <1381221884-27048-1-git-send-email-cmn@elego.de> <CACsJy8AQ-719sbUfJW98q_HYit7ePfB6oN3v7XTX6fvC7HnixA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 08 13:06:55 2013
+To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Tue Oct 08 13:29:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTV7u-0005z5-IR
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 13:06:54 +0200
+	id 1VTVU3-0007E6-4M
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 13:29:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752694Ab3JHLGl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Oct 2013 07:06:41 -0400
-Received: from hessy.cmartin.tk ([78.47.67.53]:58628 "EHLO hessy.dwim.me"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751958Ab3JHLGk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Oct 2013 07:06:40 -0400
-X-Greylist: delayed 482 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Oct 2013 07:06:40 EDT
-Received: from cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by hessy.dwim.me (Postfix) with ESMTPA id 6F1D4805FA;
-	Tue,  8 Oct 2013 12:58:34 +0200 (CEST)
-Received: (nullmailer pid 8637 invoked by uid 1000);
-	Tue, 08 Oct 2013 10:58:33 -0000
+	id S1754273Ab3JHL3n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Oct 2013 07:29:43 -0400
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:34720 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752488Ab3JHL3k convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Oct 2013 07:29:40 -0400
+Received: by mail-oa0-f53.google.com with SMTP id i7so7357927oag.40
+        for <git@vger.kernel.org>; Tue, 08 Oct 2013 04:29:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=hTEP/HjpZMqgF1WwiCVb0HOr6lzBXDK5wm/RRHGBrj4=;
+        b=JQhXy9SetLxMSJukuAlsQ25yyTEfgcd+x64UyKYdut9u0TVlpj16T46nRcgAQ50uFW
+         YvrZBear208pasGvTj/PO1Kr7kMm55qhSxocQs5SM9Rs3ZP45blTmfSnsY+Yslr3qZs6
+         OTSnqJrtirfkfAvoJ9dIRtDwcV+oNqzNTSZvA4rQZIJTWS0e1VpKDnPu6Tk18i9KP8Fc
+         ezs7ETk+nvn7ue2ffpegJaCD0OYM0dQKdVSJUC90Qxp6djNhuB2sZC3RDm4dUD3BX6hM
+         kj1tHWsXAkfRPzmKQNlHqroqZl2gdqH3OX7cE6vVPqp8LitVa6SxyJ2LZGCV9byHva46
+         pG6w==
+X-Received: by 10.182.117.195 with SMTP id kg3mr822863obb.17.1381231779938;
+ Tue, 08 Oct 2013 04:29:39 -0700 (PDT)
+Received: by 10.76.131.130 with HTTP; Tue, 8 Oct 2013 04:29:09 -0700 (PDT)
 In-Reply-To: <CACsJy8AQ-719sbUfJW98q_HYit7ePfB6oN3v7XTX6fvC7HnixA@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 8 Oct 2013 16:44:49 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235770>
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-On Tue, 2013-10-08 at 16:44 +0700, Duy Nguyen wrote:
->On Tue, Oct 8, 2013 at 3:44 PM, Carlos Mart=C3=ADn Nieto <cmn@elego.de=
-> wrote:
-> > diff --git a/send-pack.c b/send-pack.c
-> > index 7d172ef..7b88ac8 100644
-> > --- a/send-pack.c
-> > +++ b/send-pack.c
-> > @@ -205,6 +205,8 @@ int send_pack(struct send_pack_args *args,
-> >                 quiet_supported =3D 1;
-> >         if (server_supports("agent"))
-> >                 agent_supported =3D 1;
-> > +       if (!server_supports("thin-pack"))
-> > +               args->use_thin_pack =3D 0;
->=20
+On Tue, Oct 8, 2013 at 4:44 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Oct 8, 2013 at 3:44 PM, Carlos Mart=C3=ADn Nieto <cmn@elego.d=
+e> wrote:
+>> diff --git a/send-pack.c b/send-pack.c
+>> index 7d172ef..7b88ac8 100644
+>> --- a/send-pack.c
+>> +++ b/send-pack.c
+>> @@ -205,6 +205,8 @@ int send_pack(struct send_pack_args *args,
+>>                 quiet_supported =3D 1;
+>>         if (server_supports("agent"))
+>>                 agent_supported =3D 1;
+>> +       if (!server_supports("thin-pack"))
+>> +               args->use_thin_pack =3D 0;
+>
 > Hmm.. I think this introduces a regression in C Git because
 > receive-pack never advertises "thin-pack" and so "git push" from now
 > on will never send thin packs. It's too late now to add thin-pack to
->=20
-Oh, I'd never noticed that when looking though the network traffic. Thi=
-s seems like something that breaks the compatibility that git otherwise=
- tries so hard to maintain. How did it happen that it's fine for the cl=
-ient to assume that the server supports thin packs?
+> receive-pack
 
-receive-pack, perhaps a new extension "no-thin-pack" for those
-> servers? Alternatively, just run git push --no-thin (you'll need
-> f7c815c (push: respect --no-thin - 2013-08-12) though).
->=20
-Yeah, I had an older version in my PATH and was bitten by that when
-testing. Having --no-thin and the server's index-pack fail with missing
-bases is quite worrying when you're the one who wrote most of the
-server-side code.
+Or maybe it's not that late. How about you go with your patch and add
+thin-pack capability to receive-pack too?
 
-Having to remember to run 'git push --no-thin' when pushing to one
-particular project is pretty bad experience as a user and I was hoping
-to avoid this with newer gits. We could advertise a "no-thin-pack"
-extension if a patch to support that would be accepted into mainline
-git.
+When new "git push" is used against old server, thin pack is disabled.
+But that's not a big deal (I hope). The difference is traffic
+increases a bit more, but cpu consumption on the server side is also a
+bit less. Pushes are usually small, unless you do initial push, which
+is complete anyway. So a bit more or less does not really matter in
+practice.
 
-Cheers,
-   cmn
+We could mitigate the regression a bit by checking agent string and
+enable thin-pack for those versions even if thin-pack is not
+advertises. That goes back to v1.7.12. We may do the same for some
+other popular git servers. And this hack is maintained like 3-4 years,
+enough time for new versions to be deployed, then removed.
+
+Hmm?
+--=20
+Duy
