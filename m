@@ -1,154 +1,100 @@
-From: Tony Finch <dot@dotat.at>
-Subject: A workflow for local patch maintenance
-Date: Tue, 8 Oct 2013 19:12:22 +0100
-Message-ID: <alpine.LSU.2.00.1310081906250.5715@hermes-2.csi.cam.ac.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: gitk next/prev buttons
+Date: Tue, 8 Oct 2013 12:36:19 -0700
+Message-ID: <20131008193618.GE9464@google.com>
+References: <524A33E5.7090001@threeamdesign.com.au>
+ <525445FB.6000806@xiplink.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 08 20:35:31 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "Lucas Sandery [three am design]" <lucas@threeamdesign.com.au>,
+	git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Tue Oct 08 21:36:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTc82-0006dM-B0
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 20:35:30 +0200
+	id 1VTd53-0005kI-Qp
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Oct 2013 21:36:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754011Ab3JHSfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Oct 2013 14:35:25 -0400
-Received: from ppsw-32.csi.cam.ac.uk ([131.111.8.132]:45426 "EHLO
-	ppsw-32.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752957Ab3JHSfY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Oct 2013 14:35:24 -0400
-X-Greylist: delayed 1379 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Oct 2013 14:35:24 EDT
-X-Cam-AntiVirus: no malware found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:51583)
-	by ppsw-32.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.156]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1VTble-0001J2-2V (Exim 4.80_167-5a66dd3) for git@vger.kernel.org
-	(return-path <fanf2@hermes.cam.ac.uk>); Tue, 08 Oct 2013 19:12:22 +0100
-Received: from fanf2 by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local id 1VTble-0001xY-NG (Exim 4.72) for git@vger.kernel.org
-	(return-path <fanf2@hermes.cam.ac.uk>); Tue, 08 Oct 2013 19:12:22 +0100
-X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1755931Ab3JHTg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Oct 2013 15:36:27 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:46099 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754787Ab3JHTgX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Oct 2013 15:36:23 -0400
+Received: by mail-pa0-f52.google.com with SMTP id kl14so9272231pab.39
+        for <git@vger.kernel.org>; Tue, 08 Oct 2013 12:36:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=bzGgza6mUkOuS0iyobsvR9TeamHZSUgkTnVm0wxdXk8=;
+        b=m+u/7FC1PtKEzsdp1IxfPCdHYduCnjBpxJGlnJZWepUtRm/5RMg/FMgnIqiiY+TNSy
+         ORaXRp2lzgpOHfKHan++ZLue5CGni9Ua/4YO94WBIVM7sfbN+ch56gnklfm6KGvqiCpo
+         pfWjYUJ+EydeWvHRmacOOWbxFIaOrH8CIaeUWg069h5nOVWSG/WS2doEnPPHHkPx71V8
+         44TJ2dbjhaexNiGnbEzCpSktcJfjvIYv3CbjMu6QZ6DN5sxVifYuyAo7nmd5lnM+aQuo
+         4awid4xD6R7scWj/0qjp1u4/gjto+cXCfmW367l45KkmkmylqF71H0K2hXpMwdlY2oZ6
+         4VeA==
+X-Received: by 10.68.185.68 with SMTP id fa4mr3870913pbc.136.1381260983034;
+        Tue, 08 Oct 2013 12:36:23 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id so2sm41842167pbc.5.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 08 Oct 2013 12:36:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <525445FB.6000806@xiplink.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235784>
 
-This is a copy of an article I published at
-http://fanf.livejournal.com/128282.html
-I'm sending a copy here because I'm interested to know what other ways
-there might be of handling this situation.
+Hi,
 
---
+Marc Branchaud wrote:
+> On 13-09-30 10:31 PM, Lucas Sandery [three am design] wrote:
 
-We often need to patch the software that we run in order to fix bugs
-quickly rather than wait for an official release, or to add functionality
-that we need. In many cases we have to maintain a locally-developed patch
-for a significant length of time, across multiple upstream releases,
-either because it is not yet ready for incorporation into a stable
-upstream version, or because it is too specific to our setup so will not
-be suitable for passing upstream without significant extra work.
+>> The "next" and "prev" buttons are lacking consistency and logic. For LTR
+>> languages previous is almost always on the left, and next on the right. The
+>> words are contradictory, "next" actually goes to backwards chronologically,
+>> and "prev" goes forward. Could the positions of the buttons be switched and
+>> the text be replaced with "earlier" and "later"? This would make the
+>> reference time not just order, and would mean the updated UI would not be
+>> confused with the previous one.
+>
+> I agree with you here (I like "older" and "newer" myself).
+>
+> In theory gitk accepts the same arguments as "git rev-list", and in theory
+> you should be able to use things like --reverse to get the commits in a
+> different order.
+>
+> However, in practice I don't think anyone futzes with the ordering much with
+> gitk.  gitk even ignores the --reverse and --timestamp options, and I've had
+> a hard time getting gitk to display commits in an order where "older" and
+> "newer" would not make sense.
 
-I have been experimenting with a git workflow in which I have a feature
-branch per patch. (Usually there is only one patch for each change we
-make.) To move them on to a new feature release, I tag the feature branch
-heads (to preserve history), rebase them onto the new release version, and
-octopus merge them to create a new deployment version. This is rather
-unsatisfactory, because there is a lot of tedious per-branch work, and I
-would prefer to have branches recording the development of our patches
-rather than a series of tags.
+In a branchy history, it is possible for the next matching commit to
+actually be newer.  I think the intent of the buttons is "find the
+next result, looking down or up in the list of commits in the upper
+pane".  Is there some other wording that would convey this better?
 
-Here is a git workflow suggested by Ian Jackson which I am trying out
-instead. I don't yet have much experience with it; I am writing it down
-now as a form of documentation.
+>> Also, the arrow-only next/previous buttons (beside the commit ID) should
+>> really point up and down. Horizontal directions are ambiguous for navigation
+>> of a vertical list.
+>
+> Here I don't agree.  These arrows are purely about history navigation.  They
+> don't have anything to do with "up" or "down" in the list.  In that sense
+> they're more like the arrows in your web browser.
 
-There are three branches:
+True.  It might make sense to make the analogy to a web browser
+clearer by using thicker arrows or triangles --- care to mock up icons
+to replace the current ones?
 
-upstream, which is where public releases live
-working, which is where development happens
-deployment, which is what we run
+The icons are in the gitk source file (search for "bm_left_data") in
+xpm format.
 
-Which branch corresponds to upstream may change over time, for instance
-when we move from one stable version to the next one.
-
-The working branch exists on the developer's workstation and is not
-normally published. There might be multiple working branches for
-work-in-progress. They get rebased a lot.
-
-Starting from an upstream version, a working branch will have a number of
-mature patches. The developer works on top of these in
-commit-early-commit-often mode, without worrying about order of changes or
-cleanliness. Every so often we use git rebase --interactive to tidy up the
-patch set. Often we'll use the "squash" command to combine new commits
-with the mature patches that they amend. Sometimes it will be rebased onto
-a new upstream version.
-
-When the working branch is ready, we use the commands below to update the
-deployment branch. The aim is to make it look like updates from the
-working branch are repeatedly merged into the deployment branch. This is
-so that we can push updated versions of the patch set to a server without
-having to use --force, and pulling updates into a checked out version is
-just a fast-forward. However this isn't a normal merge since the tree at
-the head of deployment always matches the most recent good version of
-working. (This is similar to what stg publish does.) Diagramatically,
-
-     |
-    1.1
-     | \
-     |  `A---B-- 1.1-patched
-     |    \       |
-     |     \      |
-     |      `C-- 1.1-revised
-     |            |
-    2.0           |
-     | \          |
-     |  `-C--D-- 2.0-patched
-     |            |
-    3.1           |
-     | \          |
-     |  `-C--E-- 3.1-patched
-     |            |
-  upstream        |
-              deployment
-
-The horizontal-ish lines are different rebased versions of the patch set.
-Letters represent patches and numbers represent version tags. The tags on
-the deployment branch are for the install scripts so I probably won't need
-one on every update.
-
-Ideally we would be able to do this with the following commands:
-
-    $ git checkout deployment
-    $ git merge -s theirs working
-
-However there is an "ours" merge strategy but not a "theirs" merge
-strategy. Johannes Sixt described how to simulate git merge -s theirs in a
-post to the git mailing list in 2010.
-http://article.gmane.org/gmane.comp.version-control.git/163631
-So the commands are:
-
-    $ git checkout deployment
-    $ git merge --no-commit -s ours working
-    $ git read-tree -m -u working
-    $ git commit -m "Update to $(git describe working)"
-
-Mark Wooding suggested the following more plumbing-based version, which
-unlike the above does not involve switching to the deployment branch.
-
-    $ d=$(git rev-parse deployment)
-    $ w=$(git rev-parse working)
-    $ c=$(echo "Update to $(git describe working)" |
-          git commit-tree -p $d -p $w working^{tree})
-    $ git update-ref deployment $c $d
-    $ unset c d w
-
-Tony.
--- 
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-Forties, Cromarty: East, veering southeast, 4 or 5, occasionally 6 at first.
-Rough, becoming slight or moderate. Showers, rain at first. Moderate or good,
-occasionally poor at first.
+Hope that helps,
+Jonathan
