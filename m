@@ -1,94 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] checkout: do not die when leaving broken detached HEAD
-Date: Tue, 8 Oct 2013 10:00:06 -0400
-Message-ID: <20131008140005.GE7650@sigill.intra.peff.net>
-References: <20131008134843.GA7530@sigill.intra.peff.net>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH] clone: do not segfault when specifying a nonexistent branch
+Date: Wed, 9 Oct 2013 18:38:02 +0200
+Message-ID: <CAN0XMOLRt=kJPNhNDSfY_oMV90Xp=_wY=yf0OhiAcaShhWLCnA@mail.gmail.com>
+References: <524EC896.3050703@opensoftware.pl>
+	<1380896459-6451-1-git-send-email-stefanbeller@googlemail.com>
+	<CACsJy8BX_fWdsCGa4jnh4CbkSMxp7btOFjwzB9K0eRtjUR_F-Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 09 18:37:53 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <stefanbeller@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	robert.mitwicki@opensoftware.pl,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 09 18:38:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTwlf-0001zL-La
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 18:37:48 +0200
+	id 1VTwm9-0002Nv-Uj
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 18:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754952Ab3JIQhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Oct 2013 12:37:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46330 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754702Ab3JIQhQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Oct 2013 12:37:16 -0400
-Received: (qmail 22925 invoked by uid 102); 8 Oct 2013 14:00:07 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 08 Oct 2013 09:00:07 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Oct 2013 10:00:06 -0400
-Content-Disposition: inline
-In-Reply-To: <20131008134843.GA7530@sigill.intra.peff.net>
+	id S1753042Ab3JIQiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Oct 2013 12:38:06 -0400
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:40631 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751769Ab3JIQiE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Oct 2013 12:38:04 -0400
+Received: by mail-wg0-f47.google.com with SMTP id f12so1176358wgh.14
+        for <git@vger.kernel.org>; Wed, 09 Oct 2013 09:38:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=LSkEieCc5IEnEai+YFxFBNeC5AdJqtYjJuganhmZI9w=;
+        b=YKHKdzUgWrXjrEwyEdOFPl8+GMEDRxyLfh3mFzOm42lCWbImsu0RNC+Ozh0hKrzdY2
+         FuRdlik5DUrSpAKfd5Ze6JuR5cVN+/0cjOXhTy28hhctLxGWJPsGlfeV8b3rJ0/9csRc
+         emGclDcPCvTuNFItVtsAfHLxSLmPzuA37uMHRUk1CCyrXcZ2lBPUV3oH6ct6kocv+s9N
+         NbA7R14C3Q3qG0a4VoBiy+lR3jGxe/3yqtGyyHHp3QTwEd/gzzTpScWVtrJ4N2Flm9a3
+         EIF0GZ0wptYA7FezSe0U6bO0PTBrrCi+ssF5k2ukJiIzG2hx+ECkiddfJ4PlNvX+Ttf3
+         Qo6A==
+X-Received: by 10.180.10.8 with SMTP id e8mr3468841wib.65.1381336683024; Wed,
+ 09 Oct 2013 09:38:03 -0700 (PDT)
+Received: by 10.194.165.163 with HTTP; Wed, 9 Oct 2013 09:38:02 -0700 (PDT)
+In-Reply-To: <CACsJy8BX_fWdsCGa4jnh4CbkSMxp7btOFjwzB9K0eRtjUR_F-Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235829>
 
-If we move away from a detached HEAD that has broken or
-corrupted commits, we might die in two places:
+On Sat, Oct 5, 2013 at 1:55 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Fri, Oct 4, 2013 at 9:20 PM, Stefan Beller
+> <stefanbeller@googlemail.com> wrote:
+>> I think we should emit a warning additionally?
+>>
+>> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+>
+> I think it's nice to credit Robert for reporting the fault in the
+> commit message (something like "reported-by:" or "noticed-by:"...)
+>
+>> ---
+>>  builtin/clone.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/builtin/clone.c b/builtin/clone.c
+>> index 0aff974..b764ad0 100644
+>> --- a/builtin/clone.c
+>> +++ b/builtin/clone.c
+>> @@ -688,7 +688,7 @@ static void write_refspec_config(const char* src_ref_prefix,
+>>
+>>         if (option_mirror || !option_bare) {
+>>                 if (option_single_branch && !option_mirror) {
+>> -                       if (option_branch) {
+>> +                       if (option_branch && our_head_points_at) {
+>>                                 if (strstr(our_head_points_at->name, "refs/tags/"))
+>>                                         strbuf_addf(&value, "+%s:%s", our_head_points_at->name,
+>>                                                 our_head_points_at->name);
+>
+> This prevents the segfault, but what about remote.*.fetch? Should we
+> setup standard refspec for fetch or..?
+> --
+> Duy
 
-  1. Printing the "old HEAD was..." message.
+This segfault only happens when cloning an empty repository and only with option
+"--single-branch". Or do I miss something?
 
-  2. Printing the list of orphaned commits.
+If we call "git clone" for a non-empty repository with a non-existing branch
+using "[--single-branch] --branch foo" then Git will abort with a message that
+the branch doesn't exist in upstream.
 
-In both cases, we ignore the return value of parse_commit
-and feed the resulting commit to the pretty-print machinery,
-which will die() upon failing to read the commit object
-itself.
+In an empty upstream repo the branch doesn't exist, either. So why not
+abort with
+the same message? That would be consistent. Otherwise I'd just
+override the options
+"--single-branch" and "--branch" to "not set".
 
-Since both cases are ancillary to the real operation being
-performed, let's be more robust and keep going. This lets
-user more easily checkout away from broken history.
-
-Note that the call in describe_detached_head is also used to
-describe the new commit we are moving to. We would want to
-die in that case, but that is already handled much earlier,
-when we parse the commit to get the tree to move to.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/checkout.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 34a2e43..1df55c0 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -380,8 +380,8 @@ static void describe_detached_head(const char *msg, struct commit *commit)
- static void describe_detached_head(const char *msg, struct commit *commit)
- {
- 	struct strbuf sb = STRBUF_INIT;
--	parse_commit(commit);
--	pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
-+	if (!parse_commit(commit))
-+		pp_commit_easy(CMIT_FMT_ONELINE, commit, &sb);
- 	fprintf(stderr, "%s %s... %s\n", msg,
- 		find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV), sb.buf);
- 	strbuf_release(&sb);
-@@ -677,12 +677,12 @@ static void describe_one_orphan(struct strbuf *sb, struct commit *commit)
- 
- static void describe_one_orphan(struct strbuf *sb, struct commit *commit)
- {
--	parse_commit(commit);
- 	strbuf_addstr(sb, "  ");
- 	strbuf_addstr(sb,
- 		find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV));
- 	strbuf_addch(sb, ' ');
--	pp_commit_easy(CMIT_FMT_ONELINE, commit, sb);
-+	if (!parse_commit(commit))
-+		pp_commit_easy(CMIT_FMT_ONELINE, commit, sb);
- 	strbuf_addch(sb, '\n');
- }
- 
--- 
-1.8.4.1.4.gf327177
+Ralf
