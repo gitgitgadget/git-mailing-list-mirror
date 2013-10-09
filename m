@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 5/9] pv4_tree_desc: allow decode_entries to return v4 trees, one at a time
-Date: Wed,  9 Oct 2013 21:46:12 +0700
-Message-ID: <1381329976-32082-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 6/9] pv4_tree_desc: complete interface
+Date: Wed,  9 Oct 2013 21:46:13 +0700
+Message-ID: <1381329976-32082-7-git-send-email-pclouds@gmail.com>
 References: <1381329976-32082-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,168 +11,214 @@ Cc: git@vger.kernel.org,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Wed Oct 09 16:43:36 2013
+X-From: git-owner@vger.kernel.org Wed Oct 09 16:43:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTuz5-0007UJ-KB
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 16:43:31 +0200
+	id 1VTuzI-0007dY-7l
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 16:43:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755637Ab3JIOn0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Oct 2013 10:43:26 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:42201 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754165Ab3JIOnZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Oct 2013 10:43:25 -0400
-Received: by mail-pd0-f176.google.com with SMTP id q10so1007288pdj.21
-        for <git@vger.kernel.org>; Wed, 09 Oct 2013 07:43:23 -0700 (PDT)
+	id S1755663Ab3JIOna convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Oct 2013 10:43:30 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:64664 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755642Ab3JIOn3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Oct 2013 10:43:29 -0400
+Received: by mail-pb0-f49.google.com with SMTP id xb4so982141pbc.8
+        for <git@vger.kernel.org>; Wed, 09 Oct 2013 07:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=wAUQNl87FNckcgPrcIzxA4y1xjfTS89s21dIv+mp1E8=;
-        b=rPbNylZWi1mp9Lh3QlrICT8W3+f81Vnm2kIHozPUvFy03xahDc/DedR47ql1E10C6N
-         xxg6ZJWSXHfDEKh0HfV7f5c7ZAOuRuFK4JFTxkfxVclKeyByEdEHGQkTlbwj11wwCEGk
-         7NgxPXvQF2cbkTiyizZ53THQim9HHYKPd6s9+eRVQo5SOf3QY1zgU4ZIvxsevD+OqEnJ
-         iB7KkzHM0PqMEKcmRKXK3JPNMO0cSfvX8RONi42Amm+tyDaH6XSAl7H5JOAy7KREYZEX
-         mBPULc3JRzM90dqPZ9nrMBjb9rgcPPvL2AB42nSKE1xYBpNKDSE/Jw5Qqaa0sO1Dx84S
-         AJBw==
-X-Received: by 10.66.162.167 with SMTP id yb7mr10092191pab.16.1381329801753;
-        Wed, 09 Oct 2013 07:43:21 -0700 (PDT)
+        bh=mmdhuzP5DHR8BTdXhZR25WdLfyfqNK3QWvRaXInO968=;
+        b=Bxvtq1lX60Ke1NqGPqE6m8jscqv4p983w0TJ0JAmKNAn0RsTH2Ec6lV/nZa9gxiO8D
+         sBpHSi0iXJuSP6aEsCHbsaBSHq+3oz27cnlA0mz5stYU+93xWrTVTrFG4UNwr+06lVij
+         eZiDGrdBlFT4XWfrjOJMKBzYh6hRuBbizTtIM6Fa73OEFvbyutCsESNfnfrJUmHuRG+J
+         0Xsq5zvRecBW4Ew0ZSlHfGqFwf7vhCKBgqXk3ly+n4biGCisOBRbyJus22VLM3W5KzW/
+         FNhQWUQOEzPFb+96x0kNMk4tUXRaNwG1c3mhP/hnN7yHLBWf15+AzkueXRYTxoQTNVr2
+         ChZA==
+X-Received: by 10.66.25.102 with SMTP id b6mr9774736pag.129.1381329808389;
+        Wed, 09 Oct 2013 07:43:28 -0700 (PDT)
 Received: from lanh ([115.73.225.201])
-        by mx.google.com with ESMTPSA id iu7sm47021298pbc.45.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id a6sm439827pbr.17.1969.12.31.16.00.00
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 09 Oct 2013 07:43:21 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 09 Oct 2013 21:47:03 +0700
+        Wed, 09 Oct 2013 07:43:27 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 09 Oct 2013 21:47:10 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1381329976-32082-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235819>
 
-When PV4_TREE_CANONICAL is passed, decode_entries() generates <count>
-tree entries in canonical format. When this flag is not passed _and_
-count is 1, decode_entries fills struct name_entry and saves
-sha1_index.
+Best "explained" with an example
+
+  void walk(const unsigned char *sha1)
+  {
+    struct pv4_tree_desc desc;
+    /*
+     * Start pv4_tree_desc from an SHA-1. If it's a v4 tree, v4 walker
+     * will be used. Otherwise v2 is walked.
+     */
+    pv4_tree_desc_from_sha1(&desc, sha1, 0);
+    recurse(&desc);
+    pv4_release_tree_desc(&desc);
+  }
+
+  void recurse(struct pv4_tree_desc *desc)
+  {
+    /*
+     * Then you can go over entries, one by one, similar to the
+     * current tree walker. Current entry is in desc->v2.entry.
+     * Pathlen in desc->pathlen. Do not use tree_entry_len() because
+     * that one is only correct for v2 entries
+     */
+    while (pv4_get_entry(desc)) {
+      printf("%s %s\n", sha1_to_hex(desc->v2.entry.sha1),
+             desc->v2.entry.path);
+
+      /*
+       * Once you have an initialized pv4_tree_desc you may skip the
+       * SHA-1 lookup step if the next tree is in the same pack.
+       */
+      if (S_ISDIR(desc->v2.entry.mode)) {
+        struct pv4_tree_desc new_desc;
+        pv4_tree_desc_from_entry(&new_desc, desc);
+        recurse(&new_desc);
+
+        /* Finally release everything */
+        pv4_release_tree_desc(&new_desc);
+      }
+    }
+  }
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- packv4-parse.c | 44 ++++++++++++++++++++++++++++++++++++++++++--
- packv4-parse.h | 10 ++++++++++
- 2 files changed, 52 insertions(+), 2 deletions(-)
+ packv4-parse.c | 80 ++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ packv4-parse.h | 12 +++++++++
+ 2 files changed, 92 insertions(+)
 
 diff --git a/packv4-parse.c b/packv4-parse.c
-index f5c486e..f222456 100644
+index f222456..7d257af 100644
 --- a/packv4-parse.c
 +++ b/packv4-parse.c
-@@ -365,6 +365,12 @@ static int copy_canonical_tree_entries(struct pv4_=
-tree_desc *v4, off_t offset,
- 	while (start--)
- 		update_tree_entry(desc);
-=20
-+	if (!(v4->flags & PV4_TREE_CANONICAL)) {
-+		v4->sha1_index =3D 0;
-+		v4->pathlen =3D tree_entry_len(&desc->entry);
+@@ -732,3 +732,83 @@ unsigned long pv4_unpack_object_header_buffer(cons=
+t unsigned char *base,
+ 	*sizep =3D val >> 4;
+ 	return cp - base;
+ }
++
++int pv4_tree_desc_from_sha1(struct pv4_tree_desc *desc,
++			    const unsigned char *sha1,
++			    unsigned flags)
++{
++	unsigned long size;
++	enum object_type type;
++	void *data;
++	struct object_info oi;
++
++	assert(!(flags & ~0xff) &&
++	       "you are not supposed to set these from outside!");
++
++	memset(desc, 0, sizeof(*desc));
++	strbuf_init(&desc->buf, 0);
++
++	memset(&oi, 0, sizeof(oi));
++	if (!sha1_object_info_extended(sha1, &oi) &&
++	    oi.whence =3D=3D OI_PACKED &&
++	    oi.u.packed.real_type =3D=3D OBJ_PV4_TREE &&
++	    oi.u.packed.pack->version >=3D 4) {
++		desc->p =3D oi.u.packed.pack;
++		desc->obj_offset =3D oi.u.packed.offset;
++		desc->flags =3D flags;
 +		return 0;
 +	}
 +
- 	from =3D desc->buffer;
- 	while (count--)
- 		update_tree_entry(desc);
-@@ -462,6 +468,33 @@ static int generate_tree_entry(struct pv4_tree_des=
-c *desc,
- 	return 0;
- }
-=20
-+static int get_tree_entry_v4(struct pv4_tree_desc *desc,
-+			     const unsigned char **bufp,
-+			     int what)
-+{
-+	const unsigned char *path;
-+
-+	path =3D get_pathref(desc->p, what >> 1, &desc->pathlen);
-+	if (!path)
++	data =3D read_sha1_file(sha1, &type, &size);
++	if (!data || type !=3D OBJ_TREE) {
++		free(data);
 +		return -1;
-+	desc->v2.entry.mode =3D (path[0] << 8) | path[1];
-+	desc->v2.entry.path =3D (const char *)path + 2;
-+
-+	if (**bufp) {
-+		desc->sha1_index =3D decode_varint(bufp);
-+		if (desc->sha1_index < 1 ||
-+		    desc->sha1_index - 1 > desc->p->num_objects)
-+			return error("bad index in get_sha1ref");
-+		desc->v2.entry.sha1 =3D desc->p->sha1_table + (desc->sha1_index - 1)=
- * 20;
-+	} else {
-+		desc->sha1_index =3D 0;
-+		desc->v2.entry.sha1 =3D *bufp + 1;
-+		*bufp +=3D 21;
 +	}
-+
++	desc->flags =3D flags;
++	desc->flags |=3D PV4_TREE_CANONICAL;
++	init_tree_desc(&desc->v2, data, size);
++	/*
++	 * we can attach to strbuf because read_sha1_file always
++	 * appends NUL at the end
++	 */
++	strbuf_attach(&desc->buf, data, size, size + 1);
 +	return 0;
 +}
 +
- static int decode_entries(struct pv4_tree_desc *desc, off_t obj_offset=
-,
- 			  unsigned int start, unsigned int count)
- {
-@@ -561,8 +594,14 @@ static int decode_entries(struct pv4_tree_desc *de=
-sc, off_t obj_offset,
- 			/*
- 			 * This is an actual tree entry to recreate.
- 			 */
--			if (generate_tree_entry(desc, &scp, what))
--				return -1;
-+			if (desc->flags & PV4_TREE_CANONICAL) {
-+				if (generate_tree_entry(desc, &scp, what))
-+					return -1;
-+			} else if (count =3D=3D 1) {
-+				if (get_tree_entry_v4(desc, &scp, what))
-+					return -1;
-+			} else
-+				die("generating multiple v4 entries is not supported");
- 			count--;
- 			curpos++;
- 		} else if (what & 1) {
-@@ -668,6 +707,7 @@ void *pv4_get_tree(struct packed_git *p, struct pac=
-k_window **w_curs,
- 	int ret;
-=20
- 	memset(&desc, 0, sizeof(desc));
-+	desc.flags =3D PV4_TREE_CANONICAL;
- 	desc.p =3D p;
- 	desc.w_curs =3D *w_curs;
- 	strbuf_init(&desc.buf, size);
++int pv4_tree_desc_from_entry(struct pv4_tree_desc *desc,
++			     const struct pv4_tree_desc *src,
++			     unsigned flags)
++{
++	if (!src->sha1_index)
++		return pv4_tree_desc_from_sha1(desc,
++					       src->v2.entry.sha1,
++					       flags);
++	assert(!(flags & ~0xff) &&
++	       "you are not supposed to set these from outside!");
++	memset(desc, 0, sizeof(*desc));
++	strbuf_init(&desc->buf, 0);
++	desc->p =3D src->p;
++	desc->obj_offset =3D
++		nth_packed_object_offset(desc->p, src->sha1_index - 1);
++	desc->flags =3D flags;
++	return 0;
++}
++
++void pv4_release_tree_desc(struct pv4_tree_desc *desc)
++{
++	strbuf_release(&desc->buf);
++	unuse_pack(&desc->w_curs);
++}
++
++int pv4_tree_entry(struct pv4_tree_desc *desc)
++{
++	if (desc->flags & PV4_TREE_CANONICAL) {
++		if (!desc->v2.size)
++			return 0;
++		if (desc->start)
++			update_tree_entry(&desc->v2);
++		desc->start++;
++		return 1;
++	}
++	return !decode_entries(desc, desc->obj_offset, desc->start++, 1);
++}
 diff --git a/packv4-parse.h b/packv4-parse.h
-index 04b9a59..fe0ea38 100644
+index fe0ea38..874f57c 100644
 --- a/packv4-parse.h
 +++ b/packv4-parse.h
-@@ -24,10 +24,20 @@ void *pv4_get_commit(struct packed_git *p, struct p=
-ack_window **w_curs,
- void *pv4_get_tree(struct packed_git *p, struct pack_window **w_curs,
- 		   off_t obj_offset, unsigned long size);
-=20
-+/*
-+ * These are private flags, never pass them directly to
-+ * pv4_tree_desc_*
-+ */
-+#define PV4_TREE_CANONICAL   0x800
-+
- struct pv4_tree_desc {
-+	unsigned flags;
-+
+@@ -36,6 +36,8 @@ struct pv4_tree_desc {
  	/* v4 entry */
  	struct packed_git *p;
  	struct pack_window *w_curs;
-+	unsigned int sha1_index;
-+	int pathlen;
++	off_t obj_offset;
++	unsigned start;
+ 	unsigned int sha1_index;
+ 	int pathlen;
 =20
- 	/* v2 entry */
- 	struct tree_desc v2;
+@@ -46,4 +48,14 @@ struct pv4_tree_desc {
+ 	struct strbuf buf;
+ };
+=20
++int pv4_tree_desc_from_sha1(struct pv4_tree_desc *desc,
++			    const unsigned char *sha1,
++			    unsigned flags);
++int pv4_tree_desc_from_entry(struct pv4_tree_desc *desc,
++			     const struct pv4_tree_desc *src,
++			     unsigned flags);
++void pv4_release_tree_desc(struct pv4_tree_desc *desc);
++
++int pv4_tree_entry(struct pv4_tree_desc *desc);
++
+ #endif
 --=20
 1.8.2.83.gc99314b
