@@ -1,89 +1,86 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC/PATCHv2 2/3] git-svn: Warn about changing default for
- --prefix in Git v2.0
-Date: Tue, 8 Oct 2013 21:34:45 -0400
-Message-ID: <CAPig+cRAg4NpAsUWGQPsLcaFmDn61POv1pdHKCrSyQbM0KgM4A@mail.gmail.com>
-References: <20131003190139.GA8710@dcvr.yhbt.net>
-	<1381015833-696-1-git-send-email-johan@herland.net>
-	<1381015833-696-2-git-send-email-johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, tfnico@gmail.com,
-	Eric Wong <normalperson@yhbt.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Oct 09 03:34:56 2013
+From: "Paolo G. Giarrusso" <p.giarrusso@gmail.com>
+Subject: [PATCH] git-subtree: Avoid using echo -n even indirectly
+Date: Wed,  9 Oct 2013 05:57:25 +0200
+Message-ID: <1381291045-98372-1-git-send-email-p.giarrusso@gmail.com>
+Cc: "Paolo G. Giarrusso" <p.giarrusso@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 09 05:57:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTift-0002NA-RL
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 03:34:54 +0200
+	id 1VTkuC-0000IF-Dn
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 05:57:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756877Ab3JIBev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Oct 2013 21:34:51 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:35547 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755962Ab3JIBes (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Oct 2013 21:34:48 -0400
-Received: by mail-lb0-f175.google.com with SMTP id y6so197536lbh.20
-        for <git@vger.kernel.org>; Tue, 08 Oct 2013 18:34:45 -0700 (PDT)
+	id S1754190Ab3JID5f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Oct 2013 23:57:35 -0400
+Received: from mail-ea0-f175.google.com ([209.85.215.175]:51079 "EHLO
+	mail-ea0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752860Ab3JID5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Oct 2013 23:57:35 -0400
+Received: by mail-ea0-f175.google.com with SMTP id m14so87750eaj.34
+        for <git@vger.kernel.org>; Tue, 08 Oct 2013 20:57:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=3rAF6+PXlL+2wuTsIvWtGLwY+1eDn5DFZFNrAJ0f1Iw=;
-        b=qAsgjqC5yU7rL/jIK/aJQ6UDCdzeSbztl53zghtsFumWt9D1658xUg4uRTAsc05MRv
-         xxNBJni0g90KXJ8rZxSMroQyXuGfoUSM/aLla5A2ai96Y0dEWYM0JvO+cia4L9xblo1k
-         bIskWRnkwoVQ3etAAYg9nxT6VTVY0dCgFpb5qtEwAng5XpcWGRFDDJ8ep0TEeBVKglDA
-         jkVvTqycXMnYKCny9mHv6xpQW4afBHSw7tMK8sa0lr6i0guOQTdaxnOwpsjnfwlaYPdW
-         4d0tKvgmXN5iF7tEkmNABbH+LpVakhARZU6GVH+IuRKKBsm2OPGEOr32hUXYYPweVoKz
-         S8pw==
-X-Received: by 10.152.203.233 with SMTP id kt9mr3878367lac.29.1381282485566;
- Tue, 08 Oct 2013 18:34:45 -0700 (PDT)
-Received: by 10.114.182.236 with HTTP; Tue, 8 Oct 2013 18:34:45 -0700 (PDT)
-In-Reply-To: <1381015833-696-2-git-send-email-johan@herland.net>
-X-Google-Sender-Auth: r5aIfwxrJCK7prFyvn3aWZjYXxk
+        h=from:to:cc:subject:date:message-id;
+        bh=s9+VMZxnz++XwVFQPiemLyLOIUzEemkQX+300gLa+kc=;
+        b=gPQcJRmvMTkdOIN5hlUFvSlA53RQB3p48otwtv0cZ1CWaZgHy150LChgPWEb9S80Xk
+         1JRmSonf3qZbprdYMkkVOvcdQUOkIXZhDysdyb+B1gcgRI+OdSwFZh+7SlsbuNJEt4mn
+         wUUhn7QCg/hULWc/x0OTbWfPc2JTXiIc5u25HZNZPOaq4ISv+KxwLE+LjmOBvpbFQ+mB
+         07pqjocg4IjT4snWYkUvK7j+1Q4mto7Ult4DYhEY8MWHNzZXA3V1YC5LqXYI8I2+R0Pu
+         F/cb/n3Gp2VznP+rUiGgf3mTmxE4VJIPB23L/ztBaHNmugluYyf5AqvXp+29RK2mo8Xm
+         bfXQ==
+X-Received: by 10.14.37.4 with SMTP id x4mr8121347eea.16.1381291053726;
+        Tue, 08 Oct 2013 20:57:33 -0700 (PDT)
+Received: from localhost.localdomain (dslb-188-097-072-161.pools.arcor-ip.net. [188.97.72.161])
+        by mx.google.com with ESMTPSA id x47sm83509267eea.16.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 08 Oct 2013 20:57:33 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235800>
 
-On Sat, Oct 5, 2013 at 7:30 PM, Johan Herland <johan@herland.net> wrote:
-> diff --git a/t/t9117-git-svn-init-clone.sh b/t/t9117-git-svn-init-clone.sh
-> index b7ef9e2..1c8d049 100755
-> --- a/t/t9117-git-svn-init-clone.sh
-> +++ b/t/t9117-git-svn-init-clone.sh
-> @@ -52,4 +52,71 @@ test_expect_success 'clone to target directory with --stdlayout' '
->         rm -rf target
->         '
->
-> +test_expect_success 'clone without -s/-T/-b/-t does not warn' '
-> +       test ! -d trunk &&
-> +       git svn clone "$svnrepo"/project/trunk 2>warning &&
-> +       test_must_fail grep -q prefix warning &&
-> +       rm -rf trunk &&
-> +       rm -f warning
-> +       '
-> +
-> +test_svn_configured_prefix () {
-> +       prefix=$1
+Since say uses echo, this uses echo -n, which is not portable - see
+19c3c5fdcb35b66b792534c5dc4e8d87a3952d2a.
 
-Did you want to maintain the &&-chain here?
+Without this commit, the output looks like:
 
-> +       cat >expect <<EOF
+...
+-n 1891/    1936 (1883)
+-n 1892/    1936 (1884)
+-n 1893/    1936 (1885)
+...
 
-And here?
+Signed-off-by: Paolo G. Giarrusso <p.giarrusso@gmail.com>
+---
 
-> +project/trunk:refs/remotes/${prefix}trunk
-> +project/branches/*:refs/remotes/${prefix}*
-> +project/tags/*:refs/remotes/${prefix}tags/*
-> +EOF
-> +       test ! -f actual &&
-> +       git --git-dir=project/.git config svn-remote.svn.fetch >>actual &&
-> +       git --git-dir=project/.git config svn-remote.svn.branches >>actual &&
-> +       git --git-dir=project/.git config svn-remote.svn.tags >>actual &&
-> +       test_cmp expect actual &&
-> +       rm -f expect actual
-> +}
+Please CC me on replies, as I am not subscribed to this mailing list.
+I am tracking this submission via https://github.com/git/git/pull/61, which I'll
+duly close myself when the discussion is resolved.
+
+ contrib/subtree/git-subtree.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 7d7af03..ebfb78f 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -592,7 +592,9 @@ cmd_split()
+ 	eval "$grl" |
+ 	while read rev parents; do
+ 		revcount=$(($revcount + 1))
+-		say -n "$revcount/$revmax ($createcount)
+"
++		if [ -z "$quiet" ]; then
++			printf "%s" "$revcount/$revmax ($createcount)
+" >&2
++		fi
+ 		debug "Processing commit: $rev"
+ 		exists=$(cache_get $rev)
+ 		if [ -n "$exists" ]; then
+-- 
+1.8.4
