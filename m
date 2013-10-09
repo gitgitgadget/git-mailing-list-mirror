@@ -1,94 +1,91 @@
-From: Paolo Giarrusso <p.giarrusso@gmail.com>
-Subject: Re: Fwd: [PATCH] git-subtree: Avoid using echo -n even indirectly
-Date: Wed, 9 Oct 2013 14:03:24 +0200
-Message-ID: <CAAcnjCQCJYbYUkTK+ZM6xFe=u1mj9iHetaG--yg3Qzn0_Ty0hg@mail.gmail.com>
-References: <1381291045-98372-1-git-send-email-p.giarrusso@gmail.com>
- <CALUzUxovH5MTP1_DMigRx1Hp+X6v3_YdLK2vSG4KwRLNSDHN-w@mail.gmail.com>
- <CAAcnjCT1bdR+9kDW=q_326OhiSMm3_j-yOh0-ayTkObK3bZ3bQ@mail.gmail.com>
- <CAAcnjCQ+c=8wYZkqS7VzZ_bDDDkSwdQ3qdz77osrSpKDS9ON7Q@mail.gmail.com> <vpqy562y9b8.fsf@anie.imag.fr>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFC/PATCHv2 1/3] Documentation/git-svn: Promote the use of
+ --prefix in docs + examples
+Date: Wed, 9 Oct 2013 14:06:51 +0200
+Message-ID: <CALKQrgf1CHm7Wnxh6iyF4yieSCcKa8_mfUPxw+mY1OTDja7ing@mail.gmail.com>
+References: <20131003190139.GA8710@dcvr.yhbt.net>
+	<1381015833-696-1-git-send-email-johan@herland.net>
+	<CAPig+cQfWSY=NdynKOcrVrjoncjz_sNsJ40EpTMmp4FbyLZKmg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Oct 09 14:03:53 2013
+Cc: Git List <git@vger.kernel.org>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Oct 09 14:07:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTsUa-0002Wi-T5
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 14:03:53 +0200
+	id 1VTsXn-0004fa-Ml
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 14:07:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753372Ab3JIMDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Oct 2013 08:03:48 -0400
-Received: from mail-la0-f49.google.com ([209.85.215.49]:33295 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753368Ab3JIMDr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Oct 2013 08:03:47 -0400
-Received: by mail-la0-f49.google.com with SMTP id ev20so579251lab.22
-        for <git@vger.kernel.org>; Wed, 09 Oct 2013 05:03:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+	id S1757422Ab3JIMHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Oct 2013 08:07:00 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:37163 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753162Ab3JIMG5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Oct 2013 08:06:57 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1VTsXY-000083-Bf
+	for git@vger.kernel.org; Wed, 09 Oct 2013 14:06:56 +0200
+Received: from mail-pb0-f53.google.com ([209.85.160.53])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1VTsXY-000111-3k
+	for git@vger.kernel.org; Wed, 09 Oct 2013 14:06:56 +0200
+Received: by mail-pb0-f53.google.com with SMTP id up15so805004pbc.26
+        for <git@vger.kernel.org>; Wed, 09 Oct 2013 05:06:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=hsGw/+3GQy2BtADz2GjiQufp882ctlh0zqSOLXEp8jI=;
-        b=gm0ge8HYDGlDPF0+OiXoxpmcjMgTyUrkN9OdYj4iBzG6vcECCX3aukOCwEGNHDouIX
-         GgWQcQsGLbvWgeXM9BfrE6VPWddsnLT31djSPyyue2Q7jfRwlqejlF58UfeOrvRmZh10
-         wnzcBA0ewZNJDVP4p6LCkmh/7fgbDhE80TiMwQMjm5BsJQu8uBgU6XvDzCGHAg32mSc9
-         ff5841J94fZX+mVNwfU7M+dCLTnRf1biEuojisvOEw2t0mIIPhUAN8XxrsQj02sUFKjG
-         DPdwpmGgCkq9w5S7M3sOtaPS5EA2Io7kCT5nZ14ihG2YAWiOM+6tA8e6XbLNNGsFY1UM
-         CiMA==
-X-Received: by 10.112.168.35 with SMTP id zt3mr6966705lbb.11.1381320225722;
- Wed, 09 Oct 2013 05:03:45 -0700 (PDT)
-Received: by 10.112.190.102 with HTTP; Wed, 9 Oct 2013 05:03:24 -0700 (PDT)
-In-Reply-To: <vpqy562y9b8.fsf@anie.imag.fr>
+        bh=Z4M3z44hQgCyOIz2wWos9p889zzw4VOlT/Xg8zRSXtY=;
+        b=Zv1mo4MhnFIKHKLAV09enuipJx2OZZ7WoH+k7uc5TAY+FlHpgHPXnd82kn6A+C25Tc
+         OmIIL0x6PlnW05HNO+DmxD5NXPvT3UfdDeuO5MTvZnX1z7XDWzGNcqeDpm6TvCcyKzZC
+         3Bn6dNAs15C3F3AQeYy/z96taDryXR8JqrRMvDKYjtC9KgOLtMppqX9q1fS9YEOBHDVg
+         51rutmoYYpInN63IGLKAaM8RJfBbwYXcGbOcfG8Iq8NCRZL0PajDH1GQSe2E5tP+kbJS
+         JOFlLvSy9hRYpw5WZ/bFSG0fm6SLbM5TIpW1BKTXFygK9fOatJrfPW3AggehPBu8XGwe
+         YQXA==
+X-Received: by 10.68.191.193 with SMTP id ha1mr2784407pbc.166.1381320411993;
+ Wed, 09 Oct 2013 05:06:51 -0700 (PDT)
+Received: by 10.70.24.226 with HTTP; Wed, 9 Oct 2013 05:06:51 -0700 (PDT)
+In-Reply-To: <CAPig+cQfWSY=NdynKOcrVrjoncjz_sNsJ40EpTMmp4FbyLZKmg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235809>
 
-On Wed, Oct 9, 2013 at 1:26 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Paolo Giarrusso <p.giarrusso@gmail.com> writes:
+On Wed, Oct 9, 2013 at 3:33 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sat, Oct 5, 2013 at 7:30 PM, Johan Herland <johan@herland.net> wrote:
+>> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+>> index 4dd3bcb..da00671 100644
+>> --- a/Documentation/git-svn.txt
+>> +++ b/Documentation/git-svn.txt
+>> @@ -973,6 +979,15 @@ without giving any repository layout options.  If the full history with
+>>  branches and tags is required, the options '--trunk' / '--branches' /
+>>  '--tags' must be used.
+>>
+>> +When using the options for describing the repository layout (--trunk,
+>> +--tags, --branches, --stdlayout), please also specify the --prefix
+>> +option (e.g. '--prefix=origin/') to cause your SVN-tracking refs to be
+>> +placed at refs/remotes/origin/* rather than the default refs/remotes/*.
+>> +The former is more compatible with the layout of Git's "regular"
+>> +remote-tracking refs (refs/remotes/$remote/*), and may potentially
+>> +prevent similarly named SVN branches and Git remotes from clobbering
+>> +eachother.
 >
->> Otherwise, one could
->> change say to use printf, but that's more invasive.
->
-> "invasive" in the sense that it impacts indirectly more callers, but are
-> there really cases where "echo" is needed when calling "say"? Aren't
-> there other potential bugs when arbitrary strings are passed to "say",
-> that would be fixed by using printf once and for all?
+> s/eachother/each other/
 
-(1) Changing the implementation of say to use printf "%s\n" would be
-trivial, and I think would address your concerns.
+Thanks, will fix.
 
-But I was concerned about code duplication; one could additionally
-make say reusable in this single call site, instead of inlining and
-customizing it by replacing the "\n" with "\r". But for that, you need
-to either
-(2) add an explicit \n to all callers (invasive & error prone), or
-(3) make `say` parse the `-n` option and conditionally add "\n" to the
-format string or to a final argument, if -n is not specified; this
-would affect no current caller, but complicate the implementation of
-say. Doing that for just one call site has too much potential for
-breakage, so I'm not sure I'd do it. (I'm not even sure on what should
-`say` do when `-n` is not the first argument).
+...Johan
 
-Options (1), (2) and (3) are mutually alternative; my favorite is (1).
-
-I can see your points about opportunity, especially after looking at
-the commit message of the patch of yours you linked.
-
-> The patch would look like the one I did in 89b0230a20 (Wed Aug 7 2013,
-> die_with_status: use "printf '%s\n'", not "echo").
-
-I see your point. But note that using printf like in die_with_status
-after that commit wouldn't be reusable here in all call sites, because
-it always prints a newline.
-
-Cheers,
 -- 
-Paolo G. Giarrusso - Ph.D. Student, Philipps-University Marburg
-http://www.informatik.uni-marburg.de/~pgiarrusso/
+Johan Herland, <johan@herland.net>
+www.herland.net
