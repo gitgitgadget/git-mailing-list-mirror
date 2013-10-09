@@ -1,99 +1,165 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] clone: do not segfault when specifying a nonexistent branch
-Date: Wed, 9 Oct 2013 18:38:02 +0200
-Message-ID: <CAN0XMOLRt=kJPNhNDSfY_oMV90Xp=_wY=yf0OhiAcaShhWLCnA@mail.gmail.com>
-References: <524EC896.3050703@opensoftware.pl>
-	<1380896459-6451-1-git-send-email-stefanbeller@googlemail.com>
-	<CACsJy8BX_fWdsCGa4jnh4CbkSMxp7btOFjwzB9K0eRtjUR_F-Q@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [BAD PATCH 0/9] v4-aware tree walker API
+Date: Wed, 09 Oct 2013 12:51:26 -0400 (EDT)
+Message-ID: <alpine.LFD.2.03.1310091137310.3023@syhkavp.arg>
+References: <1381329976-32082-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <stefanbeller@googlemail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	robert.mitwicki@opensoftware.pl,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 09 18:38:26 2013
+Content-Type: multipart/mixed; boundary="Boundary_(ID_Gq8vJT5pw5JbgkZqlGKjnw)"
+Cc: git@vger.kernel.org
+To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 09 18:51:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTwm9-0002Nv-Uj
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 18:38:18 +0200
+	id 1VTwyz-0002j3-3W
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 18:51:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042Ab3JIQiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Oct 2013 12:38:06 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:40631 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751769Ab3JIQiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Oct 2013 12:38:04 -0400
-Received: by mail-wg0-f47.google.com with SMTP id f12so1176358wgh.14
-        for <git@vger.kernel.org>; Wed, 09 Oct 2013 09:38:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=LSkEieCc5IEnEai+YFxFBNeC5AdJqtYjJuganhmZI9w=;
-        b=YKHKdzUgWrXjrEwyEdOFPl8+GMEDRxyLfh3mFzOm42lCWbImsu0RNC+Ozh0hKrzdY2
-         FuRdlik5DUrSpAKfd5Ze6JuR5cVN+/0cjOXhTy28hhctLxGWJPsGlfeV8b3rJ0/9csRc
-         emGclDcPCvTuNFItVtsAfHLxSLmPzuA37uMHRUk1CCyrXcZ2lBPUV3oH6ct6kocv+s9N
-         NbA7R14C3Q3qG0a4VoBiy+lR3jGxe/3yqtGyyHHp3QTwEd/gzzTpScWVtrJ4N2Flm9a3
-         EIF0GZ0wptYA7FezSe0U6bO0PTBrrCi+ssF5k2ukJiIzG2hx+ECkiddfJ4PlNvX+Ttf3
-         Qo6A==
-X-Received: by 10.180.10.8 with SMTP id e8mr3468841wib.65.1381336683024; Wed,
- 09 Oct 2013 09:38:03 -0700 (PDT)
-Received: by 10.194.165.163 with HTTP; Wed, 9 Oct 2013 09:38:02 -0700 (PDT)
-In-Reply-To: <CACsJy8BX_fWdsCGa4jnh4CbkSMxp7btOFjwzB9K0eRtjUR_F-Q@mail.gmail.com>
+	id S1753828Ab3JIQv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Oct 2013 12:51:29 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:43413 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752914Ab3JIQv2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Oct 2013 12:51:28 -0400
+Received: from yoda.home ([66.130.143.177]) by VL-VM-MR005.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0MUE0042XUTRNN10@VL-VM-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 09 Oct 2013 12:51:27 -0400 (EDT)
+Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
+ with ESMTPSA id ED9CB2DA04B2; Wed, 09 Oct 2013 12:51:26 -0400 (EDT)
+In-reply-to: <1381329976-32082-1-git-send-email-pclouds@gmail.com>
+User-Agent: Alpine 2.03 (LFD 1266 2009-07-14)
+Content-id: <alpine.LFD.2.03.1310091216170.3023@syhkavp.arg>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235830>
 
-On Sat, Oct 5, 2013 at 1:55 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Fri, Oct 4, 2013 at 9:20 PM, Stefan Beller
-> <stefanbeller@googlemail.com> wrote:
->> I think we should emit a warning additionally?
->>
->> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
->
-> I think it's nice to credit Robert for reporting the fault in the
-> commit message (something like "reported-by:" or "noticed-by:"...)
->
->> ---
->>  builtin/clone.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/builtin/clone.c b/builtin/clone.c
->> index 0aff974..b764ad0 100644
->> --- a/builtin/clone.c
->> +++ b/builtin/clone.c
->> @@ -688,7 +688,7 @@ static void write_refspec_config(const char* src_ref_prefix,
->>
->>         if (option_mirror || !option_bare) {
->>                 if (option_single_branch && !option_mirror) {
->> -                       if (option_branch) {
->> +                       if (option_branch && our_head_points_at) {
->>                                 if (strstr(our_head_points_at->name, "refs/tags/"))
->>                                         strbuf_addf(&value, "+%s:%s", our_head_points_at->name,
->>                                                 our_head_points_at->name);
->
-> This prevents the segfault, but what about remote.*.fetch? Should we
-> setup standard refspec for fetch or..?
-> --
-> Duy
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This segfault only happens when cloning an empty repository and only with option
-"--single-branch". Or do I miss something?
+--Boundary_(ID_Gq8vJT5pw5JbgkZqlGKjnw)
+Content-id: <alpine.LFD.2.03.1310091216171.3023@syhkavp.arg>
+Content-type: TEXT/PLAIN; CHARSET=VISCII
+Content-transfer-encoding: 8BIT
 
-If we call "git clone" for a non-empty repository with a non-existing branch
-using "[--single-branch] --branch foo" then Git will abort with a message that
-the branch doesn't exist in upstream.
+On Wed, 9 Oct 2013, Nguy­n Thái Ng÷c Duy wrote:
 
-In an empty upstream repo the branch doesn't exist, either. So why not
-abort with
-the same message? That would be consistent. Otherwise I'd just
-override the options
-"--single-branch" and "--branch" to "not set".
+> I know I still have a lot of holes to plug, but this was more
+> interesting because we could see some encouraging numbers.
+> Unfortunately the result is disappointing. Maybe I did it in a stupid
+> way and need to restart with a totally different way.
+> 
+> "rev-list --objects" on v2 takes 4 secs, v4 with current walker 11s
+> and the new walker 16s (worst!).
 
-Ralf
+Clear indication that something is wrong if the intermediate step of 
+converting to the canonical object representation is faster than your 
+attempt at a native pv4 walker.
+
+However here's the numbers I get here after a fresh clone of git.git
+
+$ time git revlist --objects --all > /dev/null
+
+real    0m2.619s
+user    0m2.577s
+sys     0m0.033s
+$ mkdir orig
+$ mv .git/objects/pack/pack-* orig/
+$ ../../git/test-packv4 orig/pack-*.pack .git/objects/pack/pack-foo.pack
+Scanning objects: 100% (162785/162785), done.
+Writing objects: 100% (162785/162785), done.
+$ time git rev-list --objects --all > /dev/null
+
+real    0m6.210s
+user    0m6.140s
+sys     0m0.027s
+
+[installing git with your latest patches applied here]
+
+$ time git rev-list --objects --all > /dev/null
+
+real    0m20.409s
+user    0m20.337s
+sys     0m0.029s
+
+So... I get even *worse* numbers relative to v2 than you do!
+
+Now let's mitigate the deep delta chaining effect in the tree encoding:
+
+$ rm .git/objects/pack/pack-foo.*
+$ ../../git/test-packv4 --min-tree-copy=50 orig/pack-*.pack .git/objects/pack/pack-foo.pack
+Scanning objects: 100% (162785/162785), done.
+Writing objects: 100% (162785/162785), done.
+$ time git rev-list --objects --all > /dev/null
+
+real    0m9.451s
+user    0m9.393s
+sys     0m0.036s
+
+Using --min-tree-copy=50 produces a pack which is still smaller than 
+pack v2 but any tree copy sequence must refer to a minimum of 50 
+entries.  This significantly reduces the CPU usage in decode_entries() 
+by reducing the needless chaining effect I mentioned here:
+
+http://article.gmane.org/gmane.comp.version-control.git/234975
+
+Now let's keep that pack and back out your patches.
+
+[installing git with your latest patches reverted here]
+
+$ time git rev-list --objects --all > /dev/null
+
+real    0m3.751s
+user    0m3.711s
+sys     0m0.029s
+
+So I shoved almost 2.5 seconds of runtime here.  Not the half of the 
+original runtime, but still significant.
+
+Let's push the chaining theory even further:
+
+$ rm .git/objects/pack/pack-foo.*
+$ ../../git/test-packv4 --min-tree-copy=100 orig/pack-*.pack .git/objects/pack/pack-foo.pack
+Scanning objects: 100% (162785/162785), done.
+Writing objects: 100% (162785/162785), done.
+$ time git rev-list --objects --all > /dev/null
+
+real    0m3.445s
+user    0m3.406s
+sys     0m0.029s
+
+With --min-tree-copy=100 the resulting pack gets somewhat larger than 
+the v2 equivalent, but still smaller if we take into account the size of 
+both the pack and index files.  However the runtime benefit is no more 
+significant.
+
+So, there are 2 conclusions here:
+
+1: The current tree delta euristic is inefficient for pack v4.
+
+2- Something must be very wrong in your latest patches as they make it
+   close to 3 times more expensive than without them.
+
+> The only bit I haven't done is avoid checking if a tree is already
+> examined, if so do not bother with copy sequences referring to it.
+> That should cut down the number of decode_entries but not sure how
+> much because there's no relation between tree traversing order and how
+> copy sequences are made.
+
+I'm sure it would help mitigate the deep delta chaining effect as well.
+
+> Maybe we could make an exception and allow the tree walker to pass
+> pv4_tree_cache* directly to decode_entries so it does not need to do
+> the first lookup every time..
+> 
+> Suggestions?
+
+I'll try to have a look at your patches in more details soon.
+
+
+Nicolas
+
+--Boundary_(ID_Gq8vJT5pw5JbgkZqlGKjnw)--
