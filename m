@@ -1,98 +1,88 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC/PATCHv2 2/3] git-svn: Warn about changing default for
- --prefix in Git v2.0
-Date: Wed, 9 Oct 2013 14:18:11 +0200
-Message-ID: <CALKQrgd3wPEwK2vHkFPgt2hXASwB0ypAjzvnR8fV-WAgjggdqg@mail.gmail.com>
-References: <20131003190139.GA8710@dcvr.yhbt.net>
-	<1381015833-696-1-git-send-email-johan@herland.net>
-	<1381015833-696-2-git-send-email-johan@herland.net>
-	<CAPig+cRAg4NpAsUWGQPsLcaFmDn61POv1pdHKCrSyQbM0KgM4A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Oct 09 14:18:35 2013
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: [PATCH] checkout tests: enable test with complex relative path
+Date: Wed,  9 Oct 2013 16:35:11 +0200
+Message-ID: <1381329311-5920-1-git-send-email-stefanbeller@googlemail.com>
+Cc: Stefan Beller <stefanbeller@googlemail.com>
+To: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com
+X-From: git-owner@vger.kernel.org Wed Oct 09 16:35:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VTsic-0003rY-6l
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 14:18:22 +0200
+	id 1VTur5-0001kW-8T
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Oct 2013 16:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752292Ab3JIMSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Oct 2013 08:18:18 -0400
-Received: from mail12.copyleft.no ([188.94.218.224]:37192 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751769Ab3JIMSR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Oct 2013 08:18:17 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1VTsiV-0000jF-DT
-	for git@vger.kernel.org; Wed, 09 Oct 2013 14:18:15 +0200
-Received: from mail-pd0-f175.google.com ([209.85.192.175])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1VTsiV-0001Lf-4f
-	for git@vger.kernel.org; Wed, 09 Oct 2013 14:18:15 +0200
-Received: by mail-pd0-f175.google.com with SMTP id q10so825101pdj.20
-        for <git@vger.kernel.org>; Wed, 09 Oct 2013 05:18:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=oCf/c0DO0WumBxhTVJ9XZNfnzeAYLb2XdtjIeIxQJkk=;
-        b=T3xBkHH17x8MVtibsabGdw2XEf3bGXrN8Vvm3OfzGsunv87jHk9yut52CQSB8EgivH
-         kWMZg+BBSPR77gU2ngnhjM72YP3I/4Vz+a2wAbGD4lCezvoo7TTdVH7aBIlH32RAU7vt
-         dezu2pqLlrqXWByJN2dHu5gcyOO8DW5Kz43B2xSzszKyy4bp8YYC6YRhM3tBEJf5a0Sf
-         9QVO4VN/21C+wnCkpiThD30wrYS0iRs5efYuVcan+sDNOlL0E/NZgRGZMVDELleDh2M5
-         qEt+FMq5Smt9+y3PcWTjpeRJhKaDqh7sMSW3D6rD6rZm8WnyyR8gmWpdom29K/DMwJf/
-         NeUQ==
-X-Received: by 10.66.159.132 with SMTP id xc4mr9220352pab.27.1381321091209;
- Wed, 09 Oct 2013 05:18:11 -0700 (PDT)
-Received: by 10.70.24.226 with HTTP; Wed, 9 Oct 2013 05:18:11 -0700 (PDT)
-In-Reply-To: <CAPig+cRAg4NpAsUWGQPsLcaFmDn61POv1pdHKCrSyQbM0KgM4A@mail.gmail.com>
+	id S1754075Ab3JIOfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Oct 2013 10:35:07 -0400
+Received: from mail-ee0-f43.google.com ([74.125.83.43]:51703 "EHLO
+	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752770Ab3JIOfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Oct 2013 10:35:06 -0400
+Received: by mail-ee0-f43.google.com with SMTP id e52so462668eek.30
+        for <git@vger.kernel.org>; Wed, 09 Oct 2013 07:35:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=MDzaKzlo5bamjW1tKmANH/BnUs2L3QJDpKwrEXFun1M=;
+        b=R7S8C9u7/i0yemEa6iqG+MeEHJ7OJDFAo+fHwOk/C///yLsQt1wkfqWmZ1r1ZM+ag9
+         RJvZQENzl+uD6LN8bih4Cdre4+XhI3D4xZ0EP2cWl0xyTIIyCMPfaNO65Q6RSW0oizmX
+         8cKUzJgJrQKYVr2p+IdaMgvJj1JsB0d5v56S2pPac4l/6i8vA+FxuY4rPr66sMgRP+t4
+         dOGZgPhzOZAVInuSmTg6tB/m3hRMshefvj6DpkYcqg9WEoiRXb5JRCdJlmyj0/7NWSZq
+         6HL3e0Fz2SqBbWYLRWupNtHaA0jFxg3UD7xkwvxhFuPvyn0pfDu3gn0h2CyEj+vhmsi4
+         qvHA==
+X-Received: by 10.15.81.137 with SMTP id x9mr661914eey.77.1381329304194;
+        Wed, 09 Oct 2013 07:35:04 -0700 (PDT)
+Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id f49sm89512605eec.7.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 09 Oct 2013 07:35:03 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.1.471.g53f64e4.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235812>
 
-On Wed, Oct 9, 2013 at 3:34 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sat, Oct 5, 2013 at 7:30 PM, Johan Herland <johan@herland.net> wrote:
->> diff --git a/t/t9117-git-svn-init-clone.sh b/t/t9117-git-svn-init-clone.sh
->> index b7ef9e2..1c8d049 100755
->> --- a/t/t9117-git-svn-init-clone.sh
->> +++ b/t/t9117-git-svn-init-clone.sh
->> @@ -52,4 +52,71 @@ test_expect_success 'clone to target directory with --stdlayout' '
->>         rm -rf target
->>         '
->>
->> +test_expect_success 'clone without -s/-T/-b/-t does not warn' '
->> +       test ! -d trunk &&
->> +       git svn clone "$svnrepo"/project/trunk 2>warning &&
->> +       test_must_fail grep -q prefix warning &&
->> +       rm -rf trunk &&
->> +       rm -f warning
->> +       '
->> +
->> +test_svn_configured_prefix () {
->> +       prefix=$1
->
-> Did you want to maintain the &&-chain here?
->
->> +       cat >expect <<EOF
->
-> And here?
+This test was put in, but commented out in fed1b5ca (2007-11-09,
+git-checkout: Test for relative path use.)
+It's been a while since 2007 and the intended test case works now.
+(I could not find the enabling commit in ls-files however.)
 
-Yes, will add && in both places. Thanks.
+The code in question however did not change into the sub directory,
+so we still need to add a 'cd'. Also a test for the file content has been
+added. This is already part of the other tests for checkout.
 
-...Johan
+Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+---
+ t/t2008-checkout-subdir.sh | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
+diff --git a/t/t2008-checkout-subdir.sh b/t/t2008-checkout-subdir.sh
+index 3e098ab..399655f 100755
+--- a/t/t2008-checkout-subdir.sh
++++ b/t/t2008-checkout-subdir.sh
+@@ -58,13 +58,14 @@ test_expect_success 'checkout with simple prefix' '
+ 
+ '
+ 
+-# This is not expected to work as ls-files was not designed
+-# to deal with such.  Enable it when ls-files is updated.
+-: test_expect_success 'checkout with complex relative path' '
+-
+-	rm file1 &&
+-	git checkout HEAD -- ../dir1/../dir1/file1 && test -f ./file1
+-
++test_expect_success 'checkout with complex relative path' '
++	(
++		cd dir1 &&
++		rm file1 &&
++		git checkout HEAD -- ../dir1/../dir1/file1 &&
++		test -f file1 &&
++		test "hello" = "$(cat file1)"
++	)
+ '
+ 
+ test_expect_success 'relative path outside tree should fail' \
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.8.4.1.471.g53f64e4.dirty
