@@ -1,113 +1,155 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 1/2] http: add option to enable 100 Continue responses
-Date: Thu, 10 Oct 2013 01:14:28 -0700
-Message-ID: <CAJo=hJtBapzmF7BEawwRGJ0NKH1W0J5P4c4iGK6G_==gZahhgg@mail.gmail.com>
-References: <1381265287-39331-1-git-send-email-sandals@crustytoothpaste.net>
- <1381265287-39331-2-git-send-email-sandals@crustytoothpaste.net>
- <20131009193054.GA3767@sigill.intra.peff.net> <CAJo=hJvyorMjFYZnVwz4iZr88ewor6LuqOE-mpt4LsPyoddBqg@mail.gmail.com>
- <20131009213742.GA8362@sigill.intra.peff.net> <20131010013547.GA62549@vauxhall.crustytoothpaste.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] mergetools/diffmerge: support DiffMerge as a git mergetool
+Date: Thu, 10 Oct 2013 04:21:10 -0700
+Message-ID: <31ead18e-0098-4ec8-b8f4-1275580fbc1f@email.android.com>
+References: <1380961741-85909-1-git-send-email-ssaasen@atlassian.com> <CAJDDKr6vyt-UgO-p2HxxAdpQnGy+=zwpc9TUpK5LL54LrjNEGg@mail.gmail.com> <CADoxLGMxi7CvKHD2-UFEh4=kkF_8Oker4o7YivsB2tSosXJ+Jw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Thu Oct 10 10:14:59 2013
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Stefan Saasen <ssaasen@atlassian.com>
+X-From: git-owner@vger.kernel.org Thu Oct 10 13:21:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUBOb-0001Uf-W8
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 10:14:58 +0200
+	id 1VUEJ3-0002gt-Jz
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 13:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753016Ab3JJIOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Oct 2013 04:14:53 -0400
-Received: from mail-wg0-f42.google.com ([74.125.82.42]:60167 "EHLO
-	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752251Ab3JJIOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Oct 2013 04:14:50 -0400
-Received: by mail-wg0-f42.google.com with SMTP id m15so8800848wgh.1
-        for <git@vger.kernel.org>; Thu, 10 Oct 2013 01:14:48 -0700 (PDT)
+	id S1752911Ab3JJLVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Oct 2013 07:21:15 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:36172 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752861Ab3JJLVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Oct 2013 07:21:14 -0400
+Received: by mail-pd0-f170.google.com with SMTP id x10so2471231pdj.1
+        for <git@vger.kernel.org>; Thu, 10 Oct 2013 04:21:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NyXRH/mtf/jRnkbuws8llqUYHrJqgiBDmiREj4vO8l8=;
-        b=TE+XQ/rs+wtCM4ztk6iuow3fgQfVWyC2y9BA3208kK/TsPvYvs3PVIx0n2fwYQHEQJ
-         Clw9vOe0vVKECsVRhDtVAX7ifEGhi284rdf40LiRcl9hqYlylzG4DzD7Gqrbe+3cHWs6
-         NSSUcObMax73FpzQ0d68U+O1/z9hPeeEjjC7o=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=NyXRH/mtf/jRnkbuws8llqUYHrJqgiBDmiREj4vO8l8=;
-        b=CA4+RdVV5Vb8KJeNFmjDkidUnpFbr4MYxdj0s09PkPoiYhDSraM7eezMfcYZWfMO+u
-         NxQarnrfU127bvPazoZPQ2YJ7lovVUnaH4DNjkI9QRkeHMpaHWgWM+eVd8T5m+mb3LHi
-         tzU17qOQjIaf+BFcGVZqBlnTHpZphH+OQr1bFmPYAlH+H66HFU0E5A/nzOyzPwR+UugY
-         Rtcric1WjrhDd1OFXX9In0VU5cblTQ9P5HRoVDza2qYwo5NiWAEDAIKhNWoNuZsDVONA
-         OO9M/fgcijxUWZg2x9hKwq4U3jCxQszwDfDqfMTQpdHjq4FbkpvZi8mJHGAQrX+hHQTS
-         IH2Q==
-X-Gm-Message-State: ALoCoQnr7PuIcbHuYDrGhBATrdkttiR3fNHLOrvQxeQKO+ol07PbAMINXyFqTRsR7ZAxP1ugIBXY
-X-Received: by 10.194.24.168 with SMTP id v8mr11023265wjf.28.1381392888477;
- Thu, 10 Oct 2013 01:14:48 -0700 (PDT)
-Received: by 10.227.204.72 with HTTP; Thu, 10 Oct 2013 01:14:28 -0700 (PDT)
-In-Reply-To: <20131010013547.GA62549@vauxhall.crustytoothpaste.net>
+        d=gmail.com; s=20120113;
+        h=user-agent:in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding:subject:from:date:to:cc:message-id;
+        bh=WL2IKUhNu5ZBTaOlffx2Ml8kDMQmNr6L2mftpgJMO6k=;
+        b=NfhbTcvc8FhOU40j+4yp4T9X6GWe8gfy3XqvIkU/dmM+xuZfzdAhQ9gNo253Mlkoyw
+         wMddqyfKCOYQFqiZ4dXMOC9ZFueZAzmNrGfiOL+/FTOeQrQcG1AQQB3rnb+1VbzSeD88
+         Sq4YgR5KGXqKglcjlnNhX8+jlGxZIkzE2el/wZngh1NOagd6fVxxQokUqjvE39ZF7UO4
+         TNvGa/IUfDkwCAT/fJpmyC9jRf2PMljxLtn/tKqXpJYPC5BYyLkUNUWT4iKswF1ebMWk
+         j3hduW+aHVns1J1VHb/8Dcp3CpVQMoyiMgAuzM/Xfil1r4OhgGEj70t+4I32TpazXRN8
+         dVjA==
+X-Received: by 10.68.170.68 with SMTP id ak4mr645949pbc.202.1381404073459;
+        Thu, 10 Oct 2013 04:21:13 -0700 (PDT)
+Received: from [192.168.1.30] (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id yo2sm61830553pab.8.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 10 Oct 2013 04:21:12 -0700 (PDT)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CADoxLGMxi7CvKHD2-UFEh4=kkF_8Oker4o7YivsB2tSosXJ+Jw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235859>
 
-On Wed, Oct 9, 2013 at 6:35 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Wed, Oct 09, 2013 at 05:37:42PM -0400, Jeff King wrote:
->> On Wed, Oct 09, 2013 at 02:19:36PM -0700, Shawn O. Pearce wrote:
->> > 206b099 was written because the Google web servers for
->> > android.googlesource.com and code.google.com do not support
->> > 100-continue semantics. This caused the client to stall a full 1
->> > second before each POST exchange. If ancestor negotiation required
->> > O(128) have lines to be advertised I think this was 2 or 4 POSTs,
->> > resulting in 2-4 second stalls above the other latency of the network
->> > and the server.
->>
->> Yuck.
+Stefan Saasen <ssaasen@atlassian.com> wrote:
+>Thanks for the review David, much appreciated.
 >
-> Shame on Google.  Of all people, they should be able to implement HTTP
-> 1.1 properly.
+>> I think this line was already too long in its current form.  Would
+>you mind
+>> splitting up this long line?
+>
+>I've updated the patch and had a look at how to avoid repeating the
+>list of
+>available merge/difftools.
+>
+>> ... follow it up with a change that generalizes the "list
+>> of tools" thing so that it can be reused here, possibly.  The
+>> show_tool_help() function, as used by "git difftool --tool-help" and
+>> "git mergetool --tool-help", might be a good place to look for
+>> inspiration.
+>
+>> We were able to eliminate duplication in the docs (see the handling
+>> for $(mergetools_txt) in Documentation/Makefile) so it'd be nice if
+>we
+>> could do the same for git-completion.bash, somehow.
+>
+>I can think of a number of approaches and I would like to get some
+>feedback.
+>
+>Firstly I think a similar solution to how the duplication is avoided in
+>the
+>documentation can't be easily applied to the completion script. Looking
+>at the
+>script itself (and/or usage docs like
+>http://git-scm.com/book/en/Git-Basics-Tips-and-Tricks) the recommended
+>way of
+>using it is by copying the script as-is. That means there won't be a
+>build step
+>we could rely on unless I've overlooked something?
+>
+>That leaves a different approach (run- vs. build time) where I can
+>think of two
+>possible solutions.
+>The first would be similar to what is being done at the moment by
+>looking at
+>the MERGE_TOOLS_DIR and in addition considering any custom merge tools
+>configured. I'm working with the premise that it is a reasonable
+>assumption
+>that users of the git completion script have a git installation
+>available even
+>though they may have gotten the script by other means.
+>For users to still be able to install the script by simply copying it
+>to any location
+>on the filesystem the list generation function(s) would either have to
+>be sourced
+>from the git installation or duplicated. I suppose the former would
+>need to
+>take into account that the completion script doesn't necessarily
+>matches the
+>installed version of git with some potential brittleness around
+>relying on external
+>files and directories. The latter doesn't buy us anything as it
+>duplicates even
+>more code than the current list of available mergetools.
+>
+>The second approach would be to do something similar to resolving the
+>merge
+>strategies (in __git_list_merge_strategies) by parsing the output of
+>the `git
+>merge tool --tools-help` option with a very similar disadvantage that
+>it relies
+>on the textual output of the help command and doesn't work outside of a
+>git
+>repository.
+>
+>
+>I'm currently leaning towards the last approach as it seems less
+>reliant on
+>implementation details but it doesn't look ideal either and I may be
+>missing
+>another approach that would be better suited.
 
-Heh. =)
-
-If a large enough percentage of users are stuck behind a proxy that
-doesn't support 100-continue, it is hard to rely on that part of HTTP
-1.1. You need to build the work-around for them anyway, so you might
-as well just make everyone use the work-around and assume 100-continue
-does not exist.
-
-100-continue is frequently used when there is a large POST body, but
-those suck for users on slow or unstable connections. Typically the
-POST cannot be resumed where the connection was broken. To be friendly
-to users on less reliable connections than your gigabit office
-ethernet, you need to design the client side with some sort of
-chunking and gracefully retrying. So Git is really doing it all wrong.
-:-)
-
-Properly using 100-continue adds a full RTT to any request using it.
-If the RTT time for an end-user to server is already 100-160ms on the
-public Internet, using 100-continue just added an extra 160ms of
-latency to whatever the operation was. That is hardly useful to
-anyone. During that RTT the server has resources tied up associated
-with that client connection. For your 10-person workgroup server this
-is probably no big deal; at scale it can be a daunting additional
-resource load.
-
-Etc.
+I agree that this seems like the way to go. Perhaps we can add git mergetool/difftool --list-tools which can print the available tools so that the completion can use it. 
 
 
-Even if you want to live in the fairy land where all servers support
-100-continue, I'm not sure clients should pay that 100-160ms latency
-penalty during ancestor negotiation. Do 5 rounds of negotiation and
-its suddenly an extra half second for `git fetch`, and that is a
-fairly well connected client. Let me know how it works from India to a
-server on the west coast of the US, latency might be more like 200ms,
-and 5 rounds is now 1 full second of additional lag.
+>
+>> It might be worth leaving the git-completion.bash bits alone in this
+>> first patch and follow it up with a change that generalizes the "list
+>> of tools" thing so that it can be reused here, possibly.
+>
+>To decouple this and adding the diffmerge merge tool option, I'd rather
+>keep the
+>git-completion change part of the patch. That way the patch is self
+>contained
+>and covers the change including the completion using the current
+>approach and
+>doesn't rely on the duplication change. Any concerns around that,
+>otherwise I'll
+>resend the patch with only the long line fixed?
+
+That sounds good, we can keep these as separate patches. 
+
+Thanks,
+
+-- 
+David
