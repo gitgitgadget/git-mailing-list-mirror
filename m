@@ -1,118 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: A workflow for local patch maintenance
-Date: Thu, 10 Oct 2013 13:36:28 -0400
-Message-ID: <20131010173628.GB24782@sigill.intra.peff.net>
-References: <alpine.LSU.2.00.1310081906250.5715@hermes-2.csi.cam.ac.uk>
- <20131010013343.GB14429@sigill.intra.peff.net>
- <alpine.LSU.2.00.1310100927270.3100@hermes-2.csi.cam.ac.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] checkout tests: enable test with complex relative path
+Date: Thu, 10 Oct 2013 10:54:28 -0700
+Message-ID: <20131010175428.GN9464@google.com>
+References: <1381329311-5920-1-git-send-email-stefanbeller@googlemail.com>
+ <20131009193952.GL9464@google.com>
+ <52565F96.8010809@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Tony Finch <dot@dotat.at>
-X-From: git-owner@vger.kernel.org Thu Oct 10 19:36:36 2013
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 10 19:54:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUKA8-000663-6A
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 19:36:36 +0200
+	id 1VUKRZ-0001b4-HW
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 19:54:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755727Ab3JJRgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Oct 2013 13:36:32 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47045 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753647Ab3JJRgb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Oct 2013 13:36:31 -0400
-Received: (qmail 6114 invoked by uid 102); 10 Oct 2013 17:36:31 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 Oct 2013 12:36:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Oct 2013 13:36:28 -0400
+	id S1756058Ab3JJRyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Oct 2013 13:54:33 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:42096 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755802Ab3JJRyd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Oct 2013 13:54:33 -0400
+Received: by mail-pa0-f54.google.com with SMTP id kx10so3105316pab.13
+        for <git@vger.kernel.org>; Thu, 10 Oct 2013 10:54:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=2dpw2mMPXak9ZUHw/SDaff6qzR2mN2bGukDtg6ViGKI=;
+        b=mg+IuR5yAOzGEukbHV8RuP7lrMmPBCxm0caxaAXOpXPP7UMXG5tCv5c6BN2sg2CBof
+         qWX1l/sKWtfebIXXUduABtV81uu1HeBSrVqdnGAfvmiHJiMAgIKQIp2cczTAoIeWUqJq
+         LaHUeGirMheSyBRLf9aO+ax8y3P/dmQl7oABXf+hIzA9zEPUifI7FjVOgaCCEt1NCDGP
+         1KQ061dhYUQz1e245xpvyi4jzxMBEMOo+WfJygCSXAAU4Zuq+NLSqcX0hrYo7XA3F6tG
+         BX+NmzkPZtxgPxVuwyuKUr0elg8PCokbNWVa1FcFCQ1smUC6aoGpMi4EkIeP6JI10eOu
+         7Tog==
+X-Received: by 10.67.30.100 with SMTP id kd4mr17288285pad.24.1381427672707;
+        Thu, 10 Oct 2013 10:54:32 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id so2sm54569234pbc.5.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 10 Oct 2013 10:54:31 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.2.00.1310100927270.3100@hermes-2.csi.cam.ac.uk>
+In-Reply-To: <52565F96.8010809@googlemail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235872>
 
-On Thu, Oct 10, 2013 at 05:53:57PM +0100, Tony Finch wrote:
+Stefan Beller wrote:
+> On 10/09/2013 09:39 PM, Jonathan Nieder wrote:
+>> Stefan Beller wrote:
 
-> Our aim is to get as many patches into the upstream version as we can,
-> which is why my starting point is a clean rebased patch series. I am also
-> thinking that this will help me to know when a patch can be dropped from
-> the series because upstream have incorporated something like it. If
-> upstream works like git upstream (incorporating patches verbatim after
-> they pass review) then git can handle this automatically, but if the patch
-> gets re-worked it might be easier for me to drop it when rebasing rather
-> than resolve conflicts. I'm also thinking that for packages which we
-> update relatively infrequently, having a clean patch series makes it
-> easier to review whether they are all still necessary when updating. But
-> perhaps I am too wedded to manual patch management...
+>>> This test was put in, but commented out in fed1b5ca (2007-11-09,
+>>> git-checkout: Test for relative path use.)
+>>> It's been a while since 2007 and the intended test case works now.
+>>> (I could not find the enabling commit in ls-files however.)
+>>
+>> Bisects to v1.5.5-rc0~184^2~3 (setup: sanitize absolute and funny paths
+>> in get_pathspec(), 2008-01-28).  Thanks.
+>
+> Do you want me to resend a reworded patch, or could you amend that
+> information to this patch?
 
-I am in a similar situation to you. At GitHub, we run more-or-less stock
-git on our backend, but often make bug-fixes or enhancements that are
-intended for upstream, but which we want to start using before the next
-release.
-
-We used to keep the patches as series, and rebase them on newer versions
-of git from time to time. These days we use the workflow I described
-earlier. The specific things we wanted to fix were:
-
-  1. It was a giant pain to work on or modify a patch series.
-
-  2. It did not scale well beyond one person handling the patches
-     and rebasing. Now people more or less work on our forked repository
-     as they would normally, and don't have to care; merging from
-     upstream is just another feature (that happens to bring in a ton of
-     commits :) ).
-
-  3. The pain in doing the big rebase-test-deploy cycle meant that we
-     often delayed it, keeping us several versions behind upstream.
-     This is bad not only for the end product (you aren't getting other
-     bugfixes from upstream as quickly), but also because the longer you
-     wait to rebase or merge, the more painful it generally is.
-
-That being said, there are some new downsides, as you noted:
-
-  1. Resolving conflicts between your version and the reworked upstream
-     version can be a pain.
-
-  2. If your local development does not happen in a clean series, it can
-     be hard to create a clean series for upstream, and/or revert in
-     favor of upstream when necessary.
-
-I don't have silver bullets for either, unfortunately. To mitigate
-problem 1, I will sometimes revert a local topic before doing the
-upstream merge, if I know it has been reworked. You can do this right
-before merging. Or, as soon as you see that upstream is taking a
-reworked version, you can revert what you have locally and apply the
-upstream fix. This latter has the advantage of doing it much closer to
-the actual development time, so handling any irregularities is easier.
-But it is not always a possibility if upstream's reworking involved
-building on other changes that you do not want to grab. :)
-
-For problem 2, it helps if you can do development with topic branches as
-git.git does, with aggressive rebasing while a topic is in development,
-and then merging to master once it is mature.  Then at least your "git
-log --first-parent" view of "master" shows you which topics you made,
-and the topics themselves are relatively clean. Sometimes you end up
-needing to make changes to a topic after it is mature, and the ordering
-is not exactly what you would send upstream (e.g., for a pure patch
-series going to upstream, you would not fix the bug on top, you would
-squash the fix into an earlier commit). I mostly just handle this
-manually, and it doesn't come up too often (and in many cases, by the
-time you have the "bugfix on top" locally, upstream has also already
-applied the original patches, and they want it as a bugfix on top, too).
-
-We can no longer easily say "this is stock git, with patches X-Y-Z on
-top" (we can get the set of commits we have that git does not have, of
-course, but there's no easy way to say "these ones aren't relevant
-anymore"). But we've found it's not all _that_ important. With a
-rebasing strategy, you really want to know so that you don't
-accidentally drop a patch that is necessary. But with a merge strategy,
-you cannot accidentally drop a patch (you might botch the conflict
-resolution, of course, but that is a bit harder).
-
--Peff
+Added locally, along with a couple of other nits.  Will push out soon,
+and then a sanity check on the result would be much appreciated.
