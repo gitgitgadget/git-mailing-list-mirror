@@ -1,64 +1,65 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Same test-path-utils behaves differently on different
- Windows systems
-Date: Thu, 10 Oct 2013 22:04:48 +0200
-Message-ID: <52570860.3060503@kdbg.org>
-References: <CAHGBnuNaVWxa2kNqf3n9GmZZxFryLfJqKB5TxmDK5BiG5x53VQ@mail.gmail.com> <CAHGBnuORD-nTaYVVMt5WJhFnHU4oj0=5WiLXMAMa2Y4mz-vNXg@mail.gmail.com> <5256EA82.7020504@kdbg.org> <CAHGBnuO8ATSQu6HpJTm8bBg0akm+LUsZGRFoZPhzs89q7gTWqQ@mail.gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: Windows performance / threading file access
+Date: Thu, 10 Oct 2013 22:19:13 +0200
+Message-ID: <52570BC1.2040208@gmail.com>
+References: <CAHOQ7J_ZZ=7j-5ULd7Tdvbiqg4inhwi+fue_w6WAtNRkvZSwsg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: worldhello.net@gmail.com, 
- Thomas Braun <thomas.braun@virtuell-zuhause.de>,
- Git Mailing List <git@vger.kernel.org>, 
- msysGit Mailinglist <msysgit@googlegroups.com>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: msysgit+bncBCJYV6HBKQIOHEG4SICRUBDWRYX3S@googlegroups.com Thu Oct 10 22:04:52 2013
-Return-path: <msysgit+bncBCJYV6HBKQIOHEG4SICRUBDWRYX3S@googlegroups.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Cc: msysGit <msysgit@googlegroups.com>, 
+ Karsten Blees <karsten.blees@gmail.com>
+To: Stefan Zager <szager@google.com>, git@vger.kernel.org
+X-From: msysgit+bncBDZMLEGXWQLBBRUX3SJAKGQE536X7XA@googlegroups.com Thu Oct 10 22:19:19 2013
+Return-path: <msysgit+bncBDZMLEGXWQLBBRUX3SJAKGQE536X7XA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f62.google.com ([209.85.215.62])
+Received: from mail-lb0-f192.google.com ([209.85.217.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIOHEG4SICRUBDWRYX3S@googlegroups.com>)
-	id 1VUMTc-0001p1-HP
-	for gcvm-msysgit@m.gmane.org; Thu, 10 Oct 2013 22:04:52 +0200
-Received: by mail-la0-f62.google.com with SMTP id ep20sf288774lab.17
-        for <gcvm-msysgit@m.gmane.org>; Thu, 10 Oct 2013 13:04:52 -0700 (PDT)
+	(envelope-from <msysgit+bncBDZMLEGXWQLBBRUX3SJAKGQE536X7XA@googlegroups.com>)
+	id 1VUMhb-0002YG-2J
+	for gcvm-msysgit@m.gmane.org; Thu, 10 Oct 2013 22:19:19 +0200
+Received: by mail-lb0-f192.google.com with SMTP id z5sf293266lbh.29
+        for <gcvm-msysgit@m.gmane.org>; Thu, 10 Oct 2013 13:19:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:x-original-sender
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe:content-type;
-        bh=R4HKZqn/9rLtgwsAc8G5G4IxcMHWZ9fCMMmBcOZigFI=;
-        b=MeUq/6TK4n9FoYZDim9HXP9KG3vIp4QqNF8T2uLanHGaIggfeQe1/ILf8lU5aKj/84
-         20l/7xdI2fGU4a/kEQzf4BeiUbN04EtXqvMxBnmUxPjRu5o5oOWO+X/JB43gF/jPyyC1
-         Bnlw/5y2UxhPscMcUrzzig3mBp2X8TrdKpW2MDKX7JZMvXYMEkuDkDrpP9LyAqoL2cGg
-         XlvuWYLLwmrSEkY/orWKdnyu3R+crcWQ1ItVf5RjHFjch4Bq6Gws3KGf7mv8dTwar4ck
-         GVjD/E0Dyu+6Idg22LkPn8IdgwIlMT+BRofmZveqWj7kWt3lVAbbYAnXHOQykkqzIgZE
-         oaXw==
-X-Received: by 10.180.19.100 with SMTP id d4mr1034wie.20.1381435492205;
-        Thu, 10 Oct 2013 13:04:52 -0700 (PDT)
+        bh=76vDLpAZVbp13usba2767pyU+c+RhFPwjkLbOpvVZpA=;
+        b=m+6XRdJaqhLbp5a9l3IrjnNO2U3fYiWVCYEKKThzynLGFrRdyLPUfoXtd5hyYJwRof
+         HtHRAkPR6naYZlIwXRiplXJV3njryyltDSwHXM/G/yvidYuYIElKRsuPYV3HJPM2JAdv
+         6hnYylL/4w2xQUGanuX2KzxcHS7yoeOSuT+/zfMm900BRgPJqprs0OMJiSgGN/JS2+9U
+         y/x57bkRBEJMOc98YlcSO+d5RKdZL5+6IxMyugC3+K+uQdKgv+LO+EURLCIHFjljzJe8
+         l/bmUAY6DvJ4gIcjTBUDbjI5oDvsrtwedKJqegJoDgCgI7xVoev6rTm1GToyaN0/AGiq
+         DpHA==
+X-Received: by 10.152.3.104 with SMTP id b8mr76211lab.35.1381436358718;
+        Thu, 10 Oct 2013 13:19:18 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.205.6 with SMTP id lc6ls29050wic.25.gmail; Thu, 10 Oct
- 2013 13:04:51 -0700 (PDT)
-X-Received: by 10.15.99.195 with SMTP id bl43mr10391020eeb.3.1381435491474;
-        Thu, 10 Oct 2013 13:04:51 -0700 (PDT)
-Received: from bsmtp.bon.at (bsmtp5.bon.at. [195.3.86.187])
-        by gmr-mx.google.com with ESMTPS id a1si1341302ees.1.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 10 Oct 2013 13:04:51 -0700 (PDT)
-Received-SPF: neutral (google.com: 195.3.86.187 is neither permitted nor denied by best guess record for domain of j6t@kdbg.org) client-ip=195.3.86.187;
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 3CBA2CDF8C;
-	Thu, 10 Oct 2013 22:04:50 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 4E2CC19F646;
-	Thu, 10 Oct 2013 22:04:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <CAHGBnuO8ATSQu6HpJTm8bBg0akm+LUsZGRFoZPhzs89q7gTWqQ@mail.gmail.com>
-X-Original-Sender: j6t@kdbg.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: 195.3.86.187 is neither permitted nor denied by best guess
- record for domain of j6t@kdbg.org) smtp.mail=j6t@kdbg.org
+Received: by 10.152.45.42 with SMTP id j10ls222644lam.41.gmail; Thu, 10 Oct
+ 2013 13:19:18 -0700 (PDT)
+X-Received: by 10.112.56.148 with SMTP id a20mr5274363lbq.8.1381436357968;
+        Thu, 10 Oct 2013 13:19:17 -0700 (PDT)
+Received: from mail-bk0-x22c.google.com (mail-bk0-x22c.google.com [2a00:1450:4008:c01::22c])
+        by gmr-mx.google.com with ESMTPS id qy6si4064588bkb.3.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 10 Oct 2013 13:19:17 -0700 (PDT)
+Received-SPF: pass (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4008:c01::22c as permitted sender) client-ip=2a00:1450:4008:c01::22c;
+Received: by mail-bk0-f44.google.com with SMTP id mz10so1211845bkb.31
+        for <msysgit@googlegroups.com>; Thu, 10 Oct 2013 13:19:17 -0700 (PDT)
+X-Received: by 10.204.55.137 with SMTP id u9mr3757289bkg.28.1381436357838;
+        Thu, 10 Oct 2013 13:19:17 -0700 (PDT)
+Received: from [192.168.188.20] (p5DDB14BE.dip0.t-ipconnect.de. [93.219.20.190])
+        by mx.google.com with ESMTPSA id ny10sm28316122bkb.17.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 10 Oct 2013 13:19:17 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <CAHOQ7J_ZZ=7j-5ULd7Tdvbiqg4inhwi+fue_w6WAtNRkvZSwsg@mail.gmail.com>
+X-Original-Sender: sschuberth@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4008:c01::22c
+ as permitted sender) smtp.mail=sschuberth@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -69,30 +70,67 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235879>
 
-Am 10.10.2013 21:47, schrieb Sebastian Schuberth:
-> So the obvious thing would be to replace /a/b/ with
-> /foo/bar/ in the tests, but that just masks the problem, or?
+Please keep in mind to CC the msysgit mailing list for Windows-specific 
+stuff. I'm also CC'ing Karsten who has worked on performance 
+improvements for Git for Windows in the past.
 
-The strange behavior is not a problem in Git, it is a problem of MSYS.
-Using /foo/bar instead of /a/b in Git's test suite is a reasonable
-work-around.
+Thanks for bringing this up!
 
-If you mean that you get ../../C:/something from the relative_path
-computation, that *is* a problem in Git, which is addressed by the topic
-jx/relative-path-regression-fix.
+-- 
+Sebastian Schuberth
 
-> PS: I'm also quite unhappy about naming the function "mingw_path". The
-> path mangling comes from MSYS, not MinGW, so if at all it should be
-> named msys_path. But as the code for the "mingw_path" function does
-> nothing either MSYS or MinGW related but just prints argv[2] as it was
-> passed to main() it should probably simply called "print_path".
 
-You have a point here. If it were to change, "echo_path" would be my
-preference.
+> Hi folks,
+>
+> I don't follow the mailing list carefully, so forgive me if this has
+> been discussed before, but:
+>
+> I've noticed that when working with a very large repository using msys
+> git, the initial checkout of a cloned repository is excruciatingly
+> slow (80%+ of total clone time).  The root cause, I think, is that git
+> does all the file access serially, and that's really slow on Windows.
+>
+> Has anyone considered threading file access to speed this up?  In
+> particular, I've got my eye on this loop in unpack-trees.c:
+>
+> static struct checkout state;
+> static int check_updates(struct unpack_trees_options *o)
+> {
+>          unsigned cnt = 0, total = 0;
+>          struct progress *progress = NULL;
+>          struct index_state *index = &o->result;
+>          int i;
+>          int errs = 0;
+>
+>          ...
+>
+>          for (i = 0; i < index->cache_nr; i++) {
+>                  struct cache_entry *ce = index->cache[i];
+>
+>                  if (ce->ce_flags & CE_UPDATE) {
+>                          display_progress(progress, ++cnt);
+>                          ce->ce_flags &= ~CE_UPDATE;
+>                          if (o->update && !o->dry_run) {
+>                                  errs |= checkout_entry(ce, &state, NULL);
+>                          }
+>                  }
+>          }
+>          stop_progress(&progress);
+>          if (o->update)
+>                  git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
+>          return errs != 0;
+> }
+>
+>
+> Any thoughts on adding threading around the call to checkout_entry?
+>
+>
+> Thanks in advance,
+>
+> Stefan
 
--- Hannes
 
 -- 
 -- 
