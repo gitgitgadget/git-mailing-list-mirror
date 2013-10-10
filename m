@@ -1,65 +1,91 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] git-prompt.sh: show the upstream abbrev name
-Date: Thu, 10 Oct 2013 15:58:13 +0200
-Message-ID: <20131010135813.GF19704@goldbirke>
-References: <1381411933-20600-1-git-send-email-jcarsique@nuxeo.com>
+From: Alexander Kurz <alexander.kurz@heliocentris.com>
+Subject: [PATCH] Fix: Handle ampersand in branch names properly
+Date: Thu, 10 Oct 2013 16:19:55 +0200
+Message-ID: <5256B78B.6050801@heliocentris.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Simon Oosthoek <s.oosthoek@xs4all.nl>,
-	"Eduardo R . D'Avila" <erdavila@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Julien Carsique <julien.carsique@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 10 15:58:41 2013
+Content-Type: multipart/mixed;
+	boundary="------------010008060902020804010709"
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 10 16:20:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUGlA-00081R-PP
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 15:58:37 +0200
+	id 1VUH64-000785-CG
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 16:20:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754328Ab3JJN6d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Oct 2013 09:58:33 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:60263 "EHLO
+	id S1755427Ab3JJOUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Oct 2013 10:20:00 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:55058 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753016Ab3JJN6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Oct 2013 09:58:32 -0400
-Received: from localhost6.localdomain6 (f050225105.adsl.alicedsl.de [78.50.225.105])
-	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
-	id 0LiGlL-1W7Oyr0TkR-00n9Ud; Thu, 10 Oct 2013 15:58:14 +0200
-Content-Disposition: inline
-In-Reply-To: <1381411933-20600-1-git-send-email-jcarsique@nuxeo.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:w1jV5iXz5cajr9xTjEBl8eY2xZvZi6xmxLnTr82PSwb
- ANapmduY44jLi01ufBqRJ/Pu0bYp/BnFql5/20dt0VBi6oopB2
- 6EhA+37B+aYYbSy36o2JV1nN7hQZ7i45wqp9TcSYOR6Io37D00
- ugTYy1XCudeG26B9hey0xIgTJvzoMIx7WSWNOIrRgMky4JpaFl
- 52I49YjQ0E79uuIzZWvyrQ+iKSjH/NgCPzmjoPrkAT0im2FCrl
- etnq02+1bdwPjLVSZjSQliZxmFSkBPGzDQ4ygMdlCjLOIeOQWi
- 4QfQIY0It3KcjMq+jgkqGEWei/vYJKXR8RnwEz4beZV8NuoJKN
- iaMhUA8WfqT30+PcemUbuCA8xg9wm1+z8uatCVV/c
+	with ESMTP id S1755263Ab3JJOT7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Oct 2013 10:19:59 -0400
+Received: from srvhelioex.Heliocentris.com (vpn.heliocentris.fta-berlin.de [141.16.91.70])
+	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
+	id 0MITed-1VV6Is27jT-00494X; Thu, 10 Oct 2013 16:19:57 +0200
+Received: from [192.168.22.58] (192.168.22.58) by srvhelioex.Heliocentris.com
+ (172.16.56.99) with Microsoft SMTP Server id 8.2.255.0; Thu, 10 Oct 2013
+ 16:19:51 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
+X-PMWin-Version: 3.1.3.0, Antivirus-Engine: 3.47.3, Antivirus-Data: 4.93G
+X-PureMessage: [Scanned]
+X-Provags-ID: V02:K0:s0x95nJKlQ0oj/xPZDNhv8Y1L3Td0a0vgzFho9im3Va
+ ccg0Tu81+aSxsGiRWo3MaSrk+BMneq+QmRo9cOIU4L0B24/m0w
+ eCynQPRS6kD4mras4MeXtFtxCdmLhU7eTEkUmYR4D9Ta5OaSSw
+ 6aSMjxvH9Gi0u3PoHewy6VeNbwJ9DBApRH6zAQlfyuG8Seev42
+ tF9Lf9DZPENr8TI+8n+f6HIphUNLJVjiKud2CS7MfFJ9LuH7Z3
+ 5yC0MEuGiIpNpNOHbtKLfRI0i+eP+q06GuJIzlswoc4VtakP5G
+ urSu4bIyOH//07f3fydzEXHHydWqqM1VDvYK5U3VK1BgphBYdL
+ Em2wTA2j0XVL0NVlqk8V2jNAw+3ZwE+NZ4IeDoHY8TtRUPVPoX
+ NTC87xjioqovg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235863>
 
-Hi,
+--------------010008060902020804010709
+Content-Type: text/plain; charset="ISO-8859-15"; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Oct 10, 2013 at 03:32:13PM +0200, Julien Carsique wrote:
-> @@ -204,6 +206,9 @@ __git_ps1_show_upstream ()
->  		*)	    # diverged from upstream
->  			p=3D" u+${count#*	}-${count%	*}" ;;
->  		esac
-> +		if [[ -n "$count" && -n "$name" ]]; then
-> +			p+=3D" $(git rev-parse --abbrev-ref "$upstream" 2>/dev/null)"
+Hello git maintainer crew,
+  recently I stumbled about gitweb generating improper HTML after 
+somebody merged from a branch contining an ampersand, e.g. branch 
+name=fixes&features.
+  Thanks, Alexander Kurz
 
-The '+=3D' operator is not supported in all Bash versions we care about=
-=2E
-Please write this as p=3D"$p $(...)".
+--------------010008060902020804010709
+Content-Type: text/x-diff;
+	name="0001-Fix-Handle-ampersand-in-branch-names-properly.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="0001-Fix-Handle-ampersand-in-branch-names-properly.patch"
 
-Thanks,
-G=E1bor
+>From beccd85ba8b8421213056883f31365f33d6e4490 Mon Sep 17 00:00:00 2001
+From: kurz <kurz@DP-KURZ.heliocentris.com>
+Date: Thu, 10 Oct 2013 16:09:46 +0200
+Subject: [PATCH] Fix: Handle ampersand in branch names properly
+
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 68c77f6..2963b1d 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2026,7 +2026,7 @@ sub format_ref_marker {
+ 				-href => href(
+ 					action=>$dest_action,
+ 					hash=>$dest
+-				)}, $name);
++				)}, esc_attr($name));
+ 
+ 			$markers .= " <span class=\"".esc_attr($class)."\" title=\"".esc_attr($ref)."\">" .
+ 				$link . "</span>";
+-- 
+1.7.10.4
+
+
+--------------010008060902020804010709--
