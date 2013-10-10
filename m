@@ -1,114 +1,107 @@
 From: Karsten Blees <karsten.blees@gmail.com>
 Subject: Re: Feature Request: gitignore recursion
-Date: Thu, 10 Oct 2013 09:59:13 +0200
-Message-ID: <52565E51.7050401@gmail.com>
-References: <CACsJy8CHcyDrzieX1Ps3LU2UxCP+QJdv9+5BXZj9Mw2bMs5v3w@mail.gmail.com>
+Date: Thu, 10 Oct 2013 09:59:38 +0200
+Message-ID: <52565E6A.2020907@gmail.com>
+References: <20131007134141.GA23026@lanh>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: pclouds@gmail.com, alljeep@gmail.com
-X-From: git-owner@vger.kernel.org Thu Oct 10 09:59:22 2013
+Cc: Git List <git@vger.kernel.org>, alljeep@gmail.com,
+	Jeff King <peff@peff.net>
+To: pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Thu Oct 10 09:59:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUB9S-0008B3-Py
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 09:59:19 +0200
+	id 1VUB9y-0008Uw-Vr
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 09:59:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753480Ab3JJH7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Oct 2013 03:59:14 -0400
-Received: from mail-ea0-f182.google.com ([209.85.215.182]:59662 "EHLO
-	mail-ea0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751647Ab3JJH7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Oct 2013 03:59:14 -0400
-Received: by mail-ea0-f182.google.com with SMTP id o10so947118eaj.13
-        for <git@vger.kernel.org>; Thu, 10 Oct 2013 00:59:13 -0700 (PDT)
+	id S1755176Ab3JJH7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Oct 2013 03:59:40 -0400
+Received: from mail-ee0-f50.google.com ([74.125.83.50]:50176 "EHLO
+	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755165Ab3JJH7i (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Oct 2013 03:59:38 -0400
+Received: by mail-ee0-f50.google.com with SMTP id d51so947217eek.9
+        for <git@vger.kernel.org>; Thu, 10 Oct 2013 00:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=zwP12mSsqC+J0BY6CuKoUTvS5d8SOJcj0mjDW6oycCY=;
-        b=aY6HxsMIZS0uWUagLNj6SaIIE/FXVL/9h7yfI3Xkq+l5g3cpk6z7rKWrcniGGzmYiP
-         8Mninqypl0xZQa5KUCO21DFrnZm1KGUXMipuRqrEoEbbo7qQhSiqzDGU6ZccxbpwYaAG
-         VVGMN5gd2mc3X+Vj6gMb8mL/x8PGYCiZUJVW1x+72EoialccsGYwNF17S6poXzmvmkFK
-         cppWWR1/ssUCaodaCNh1HbCjCllo81647mFJuO/rmtW8AanzX40fwkgZ3SXqYVg7l3kB
-         wWUdo/eWH3loxczqyB4QP3JIwW1q8H/eEf4I1D1geOpCMGHsLH5jlafBHjQtqwPIfFqy
-         28fg==
-X-Received: by 10.14.122.132 with SMTP id t4mr18818539eeh.20.1381391953116;
-        Thu, 10 Oct 2013 00:59:13 -0700 (PDT)
+        bh=D1BUKVQnKHauZTN9j1hqMKbuKYECsNj8KHcERBTyOUk=;
+        b=svMmhhYQ5SmaTT7fUyWg0FjCjBlr5kWnHJ+1lfnn3o5oBr3jFSiX4MGChFIZuIz+7J
+         N5fNhi2FW+It7RjNgROztW/XHLEkPBBLb09bpREGnMi5sWPwqsPJ1DsqjSpi1VUZ5oQE
+         aznN97G5boINFJ7hBow8a2bRd526fTm0zz9nlBekzO5yyoF24rtBlg65HIVaSeC9HMAL
+         rG2+TG2v1+YcfZAN30F9v0S+o+i8ECiFIKVSfrzvCrFzi1TPsH3E3edpfEIjFRDTqZAz
+         Z0saUE9A5CgYGQB2PUNf8Rr/U9g3VqgjPdCgVTW+as6u3GMQfCn3qUOgRIFndXfNLDPf
+         kv1Q==
+X-Received: by 10.14.0.193 with SMTP id 41mr336798eeb.88.1381391977665;
+        Thu, 10 Oct 2013 00:59:37 -0700 (PDT)
 Received: from [10.1.100.51] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id r48sm98376178eev.14.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id b45sm98304974eef.4.1969.12.31.16.00.00
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 10 Oct 2013 00:59:12 -0700 (PDT)
+        Thu, 10 Oct 2013 00:59:37 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <CACsJy8CHcyDrzieX1Ps3LU2UxCP+QJdv9+5BXZj9Mw2bMs5v3w@mail.gmail.com>
+In-Reply-To: <20131007134141.GA23026@lanh>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235856>
 
-> On Mon, Oct 7, 2013 at 5:23 AM, AJ <allj...@gmail.com> wrote:
->> I'm hoping to get the following feature implemented into git.
->>
->> Add the ability to recursively include using:
->> !/my_dir/**/*
-> 
-> 
-> You can do that since v1.8.2. Actually the pattern should be
-> 
-> !/my_dir/**
-> 
+> On Mon, Oct 07, 2013 at 07:24:11AM -0400, Jeff King wrote:
+>> However, one thing I expected to work but didn't is:
+>> 
+>>   echo '*' >.gitignore
+>>   echo '!*' >my_dir/.gitignore
+>> 
+>> That _does_ work for attributes, like:
+>> 
+>>   echo '* foo=one' >.gitattributes
+>>   echo '* foo=two' >my_dir/.gitattributes
+>> 
+>> where the more-specific file takes precedence. It works because we keep
+>> an attribute stack, and look from most-specific directory to least.
 
-Another solution to include just one specific directory:
+Note that this doesn't work either:
 
-  /*
-  !/wp-content
-  /wp-content/*
-  !/wp-content/themes
+  echo '*' >.gitignore
+  echo '!my_dir/*' >>.gitignore
 
-Note the "/*", instead of "*" which matches everything everywhere.
+The problem isn't that git doesn't read 'my_dir/.gitignore'. Git simply doesn't recurse into excluded directories, so patterns on excluded content have no effect.
 
+IMO this behavior is reasonable, as there is no way to check whether a negative pattern will match within an excluded untracked directory without scanning the directory.
 
-> Checkout gitignore man page for more information.
-> 
-
-The compiled version reads like this:
-
-"A trailing "/" matches everything inside. For example, "abc/" matches all files inside directory "abc"..."
-
+What about this instead?
 
 --- 8< ---
-Subject: [PATCH] gitignore.txt: fix documentation of "**" patterns
+Subject: [PATCH] gitignore.txt: clarify recursive nature of excluded directories
 
-"**" means bold in ASCIIDOC, so we need to escape it.
+Additionally, precedence of negated patterns is exactly as outlined in
+the description, we don't need to repeat this.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 ---
- Documentation/gitignore.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/gitignore.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 54e334e..f971960 100644
+index f971960..a64a65d 100644
 --- a/Documentation/gitignore.txt
 +++ b/Documentation/gitignore.txt
-@@ -113,12 +113,12 @@ full pathname may have special meaning:
+@@ -79,8 +79,9 @@ PATTERN FORMAT
  
-  - A leading "`**`" followed by a slash means match in all
-    directories. For example, "`**/foo`" matches file or directory
--   "`foo`" anywhere, the same as pattern "`foo`". "**/foo/bar"
-+   "`foo`" anywhere, the same as pattern "`foo`". "`**/foo/bar`"
-    matches file or directory "`bar`" anywhere that is directly
-    under directory "`foo`".
+  - An optional prefix "`!`" which negates the pattern; any
+    matching file excluded by a previous pattern will become
+-   included again.  If a negated pattern matches, this will
+-   override lower precedence patterns sources.
++   included again. It is not possible to re-include a file if a parent
++   directory of that file is excluded (i.e. excluding a directory
++   will recursively and irrevocably exclude the entire content).
+    Put a backslash ("`\`") in front of the first "`!`" for patterns
+    that begin with a literal "`!`", for example, "`\!important!.txt`".
  
-- - A trailing "/**" matches everything inside. For example,
--   "abc/**" matches all files inside directory "abc", relative
-+ - A trailing "`/**`" matches everything inside. For example,
-+   "`abc/**`" matches all files inside directory "`abc`", relative
-    to the location of the `.gitignore` file, with infinite depth.
- 
-  - A slash followed by two consecutive asterisks then a slash
 -- 
 1.8.4.msysgit.1
