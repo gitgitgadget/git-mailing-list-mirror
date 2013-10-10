@@ -1,57 +1,67 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Andrew Ardill <andrew.ardill@gmail.com>
 Subject: Re: [ANNOUNCE] git-related-0.1
-Date: Thu, 10 Oct 2013 16:44:57 -0500
-Message-ID: <CAMP44s2g_PL5z9KssOc2O10gRPNQKW7kfJDUteF-RXaqF0hMJA@mail.gmail.com>
+Date: Fri, 11 Oct 2013 09:24:39 +1100
+Message-ID: <CAH5451=LPy5ybu6n457NPcnf=Bbsv4jNyiO6ve=-T0qXJwq_bA@mail.gmail.com>
 References: <CAMP44s0wPzV6FkfON4zazkOWqTB0qbpdEtruHD01NybtiK6-Og@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 10 23:45:07 2013
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 11 00:25:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUO2Y-0006BM-So
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 23:45:03 +0200
+	id 1VUOfg-0006AI-Am
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Oct 2013 00:25:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757557Ab3JJVo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Oct 2013 17:44:59 -0400
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:47648 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755543Ab3JJVo6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Oct 2013 17:44:58 -0400
-Received: by mail-lb0-f181.google.com with SMTP id u14so2625333lbd.40
-        for <git@vger.kernel.org>; Thu, 10 Oct 2013 14:44:57 -0700 (PDT)
+	id S1756288Ab3JJWZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Oct 2013 18:25:21 -0400
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:38837 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755772Ab3JJWZU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Oct 2013 18:25:20 -0400
+Received: by mail-vc0-f176.google.com with SMTP id ik5so184601vcb.21
+        for <git@vger.kernel.org>; Thu, 10 Oct 2013 15:25:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=s3xD6zEkQRRR/AZ8hp3290+CZJ2fGyXd25ugNLFABOU=;
-        b=Syy+HTdFD434xp+aHvuszYn9SbP5Q09e16h29eyqnbEOerOGNiCcsGhjsZmO2WhOwB
-         Z1UFJLvcx1GWsTrMKyZfz/J7RtTQoDsTyivy9OoAdPycUduDKy1rfW7HgWf7zzQpSa/V
-         TF11OiFz94GIDKeN7DO878n9xqrFuGze0cPQQrsGZvgisvAff/fA9XVPTuA3d/SYtuUT
-         dFIKg1eVd8Iwj3OLIk4TtkXjmOQwNRFidoEzKz/jEpRH6jqSxWYd3dSATKuK8fWOek7d
-         +VNEEEDIYZdlUFBoeEaBmP+qDhj6J/o107eai56pkHxywOsgXarawd0qZdayDyqkkYwk
-         R3Yw==
-X-Received: by 10.152.170.166 with SMTP id an6mr13134209lac.20.1381441497288;
- Thu, 10 Oct 2013 14:44:57 -0700 (PDT)
-Received: by 10.114.91.230 with HTTP; Thu, 10 Oct 2013 14:44:57 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=wj6TX1CwZr+YGmGdoC1WqC7UJhwlObLmRAKfJ+Z2r3k=;
+        b=bbf7XHfwh5T05L7Hm6O2ZShnXTnP7PIXmeOoSNttMz8dtr1SJay/5Qgh61kGOo9MNG
+         9YqfPFAv7eGAHbtJTD41ULz5+e2vUlqxlorJUARl5bo9MY+cCFv+5rybB0sNBLGG4ASx
+         dRQvXtjQI3Ow8T7e9xNXGB2F9jBiXkJhVP54xSRzi2XP0n5ojWZnX94+4v+9zkO26czz
+         EIT7KMSqcM531Y7QqOGrRq+WjWZDwaqGUYt3SAhw+enNelpSBqwdfodJFwyKRZIJ/AbB
+         bTASokPsloPn6ofeHjxSRB22+4ncGjCZmrTvQeUVBoeIb1wmRH47ZqJfnFGmoSiYW/iZ
+         Rt1g==
+X-Received: by 10.52.35.20 with SMTP id d20mr12115120vdj.33.1381443919352;
+ Thu, 10 Oct 2013 15:25:19 -0700 (PDT)
+Received: by 10.220.58.197 with HTTP; Thu, 10 Oct 2013 15:24:39 -0700 (PDT)
 In-Reply-To: <CAMP44s0wPzV6FkfON4zazkOWqTB0qbpdEtruHD01NybtiK6-Og@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235888>
 
-On Thu, Oct 10, 2013 at 4:43 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
+On 11 October 2013 08:43, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> After gathering all the relevant
+> people, it groups them to show what exactly was their role when the
+> participated in the development of the relevant commit, and on how
+> many relevant commits they participated.
 
-> Just put git-related in your PATH, and enjoy :)
+It looks like you group by emails, any idea if anyone purposefully
+uses the same email but a different name? I don't know if the email is
+assumed to be the unique identifier, or if the name/email pair is,
+however I think the typical use case is definitely to group by email
+so it's a useful default behaviour.
 
-And of course I forgot the link:
+> They are only displayed if
+> they pass a minimum threshold of participation.
 
-https://github.com/felipec/git-related
+Out of interest, how is the threshold determined and is it configurable?
 
--- 
-Felipe Contreras
+Regards,
+
+Andrew Ardill
