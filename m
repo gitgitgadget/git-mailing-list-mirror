@@ -1,122 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: A workflow for local patch maintenance
-Date: Thu, 10 Oct 2013 12:18:27 -0700
-Message-ID: <20131010191827.GO9464@google.com>
-References: <alpine.LSU.2.00.1310081906250.5715@hermes-2.csi.cam.ac.uk>
- <20131010013343.GB14429@sigill.intra.peff.net>
- <alpine.LSU.2.00.1310100927270.3100@hermes-2.csi.cam.ac.uk>
- <20131010173628.GB24782@sigill.intra.peff.net>
+From: Amit Bakshi <ambakshi@gmail.com>
+Subject: Re: git-archive and submodules
+Date: Thu, 10 Oct 2013 12:22:50 -0700
+Message-ID: <CAFGOX=WL8GEpZc1b0Rcqt_tMyOzL-nB20Jj=7PArOh82T34JoA@mail.gmail.com>
+References: <CALKBF2gwVr0rPn0y8=cvwqOsUb7eQPH7EdK5U+gfZMzh=RpiKw@mail.gmail.com>
+	<4F911A2C.4070306@web.de>
+	<CALKBF2jzL5-mHaVi1erA=EiF_DALF1Rvwv7yB5CfdEdQa2ZhBg@mail.gmail.com>
+	<49D85565-3932-4B03-9568-E5CB75F39B9E@deepdarc.com>
+	<loom.20131010T160446-236@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Tony Finch <dot@dotat.at>
-X-From: git-owner@vger.kernel.org Thu Oct 10 21:18:36 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Damien Regad <dregad@mantisbt.org>
+X-From: git-owner@vger.kernel.org Thu Oct 10 21:22:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VULkq-0006BN-5s
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 21:18:36 +0200
+	id 1VULp1-0000Tl-F0
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 21:22:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757455Ab3JJTSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Oct 2013 15:18:32 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:35403 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752896Ab3JJTSb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Oct 2013 15:18:31 -0400
-Received: by mail-pa0-f48.google.com with SMTP id bj1so3213686pad.35
-        for <git@vger.kernel.org>; Thu, 10 Oct 2013 12:18:30 -0700 (PDT)
+	id S1756246Ab3JJTWv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Oct 2013 15:22:51 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:48595 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753313Ab3JJTWv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Oct 2013 15:22:51 -0400
+Received: by mail-pa0-f42.google.com with SMTP id lj1so3230985pab.29
+        for <git@vger.kernel.org>; Thu, 10 Oct 2013 12:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=TJtAt0e1/KFc6xkcDW0W0cnsXNr26O3rROX2xv0kfpU=;
-        b=l6kx/VzXW1AwwKdjuHKOrvVEQ4GU/v8wgQuO6HQO/4aGC5sj2PHYVJnMdy+4nIQ3kf
-         rx5NW+R5nVmip4I+74XV4s0/6JQZfMj9r+wBMqzq7FZ3OYnZ0v4AnEcpeq72K3aP35C2
-         nj1y1kY2PTy0Dr+QTixs7k+2nnlA1uINNvpy8206rZHpu+aaLDUShuvxwBATu8toMltQ
-         UZ98ddNwo0HWqcx6o9mf8/jIj1HQG+2nemwlmZKXOQvuKCXHUdKSk33Udg/QlDURFTKY
-         9KA75JshU3dyoodrt5No8WYFGAMSh7N1GehcfcM5b7U1T3pRNdGO1iK5/gp4NapIIcjl
-         fUnQ==
-X-Received: by 10.68.225.9 with SMTP id rg9mr2760934pbc.122.1381432710738;
-        Thu, 10 Oct 2013 12:18:30 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id zq10sm64509562pab.6.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 10 Oct 2013 12:18:29 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20131010173628.GB24782@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Q8PHC4qe10VBs1uw0iwSbTjm49i+g3rZAHxMN0kEr8Y=;
+        b=eb162YkSul7omUdAjh4h9Nb1n3jl9S52VoKfuHbW0r7oebRYoTMNutFXXoHhvcYWJY
+         6E6WvqesdXmnFonYaxBMFRO15f1Rcue/VDTMo7yEgHAwIMoNk1aDr7uHTUS+xhuqALnD
+         3ugWimAULdPbTr9TVOYsojm2kmzoe9aO9yMUSZLJt4mg338SqKiJWbXpsdqhXbhTS42j
+         4gxfGtRCa0yYhm1BCidjIqB4c1SNJ69sCEnJMrYXdIb/eYMkMzRWK8ESgJcBEW2gmysD
+         AtfwNxu94EyYTmrY3oabjQsCRpYfL7sEPBYvU5/HeA7PSZfZP1eNONZqyEUIYvZT1oZX
+         GlXg==
+X-Received: by 10.68.26.202 with SMTP id n10mr15606494pbg.97.1381432970767;
+ Thu, 10 Oct 2013 12:22:50 -0700 (PDT)
+Received: by 10.70.35.140 with HTTP; Thu, 10 Oct 2013 12:22:50 -0700 (PDT)
+In-Reply-To: <loom.20131010T160446-236@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235876>
 
-Jeff King wrote:
+I wrote a simple bash script that does git-archive recursively with
+submodules. It first does a full mirror clone of the repo and
+submodules, so that subsequent calls are faster.
 
->   3. The pain in doing the big rebase-test-deploy cycle meant that we
->      often delayed it, keeping us several versions behind upstream.
->      This is bad not only for the end product (you aren't getting other
->      bugfixes from upstream as quickly), but also because the longer you
->      wait to rebase or merge, the more painful it generally is.
+https://github.com/ambakshi/git-archiver
+
+
+Amit
+
+
+On Thu, Oct 10, 2013 at 7:09 AM, Damien Regad <dregad@mantisbt.org> wro=
+te:
+> Robert Quattlebaum <darco <at> deepdarc.com> writes:
+>> I got too busy to continue working to get it included. Please feel f=
+ree to
+> pick up where I left off.
+>>
+>> On Apr 20, 2012, at 2:32 PM, Andr=E9 Caron <andre.l.caron <at> gmail=
+=2Ecom> wrote:
+>> > Since you've touched this only last year, I'd like to know where y=
+ou
+>> > were at and I can see if I can pick up where you left off (unless =
+you
+>> > want to finish yourself).
 >
-> That being said, there are some new downsides, as you noted:
+> Greetings
 >
->   1. Resolving conflicts between your version and the reworked upstream
->      version can be a pain.
+> I was just wondering whether there been any progress on this topic si=
+nce
+> last year... Andr=E9 ?
 >
->   2. If your local development does not happen in a clean series, it can
->      be hard to create a clean series for upstream, and/or revert in
->      favor of upstream when necessary.
-
-That suggests a possible hybrid approach: use a normal merge-heavy
-workflow day to day, but occasionally clean up, for example by
-rebasing against upstream.
-
-That doesn't address the question of "how do I preserve old versions
-of my patchset after a rebase", though.
-
-The msysgit project uses a script called merging-rebase.sh[1] to
-keep their patches current on top of the shifting target of git's
-"next".  It's similar to your "merge -s theirs" approach.  It has some
-problems (once you get past the current version of the patch stack,
-history mining is complicated by all the old versions of the patch
-stack) but for their day-to-day development it works ok.
-
-There is an interesting approach that involves only merging and never
-rebasing, while still being able to create a presentable patch series
-when you're done.  The idea is to keep each patch meant for upstream
-consumption in a separate (specially named) branch, with tracked files
-like ".topmsg" containing its commit message, dependencies, and other
-metadata.  There is a tool called 'tg' (TopGit) for working with this
-kind of repo[2].  The Hurd uses it for their binutils and glibc
-patches.
-
-Another tool for maintaining a public patch stack, this time using a
-"quilt"-style workflow instead of aggressively using native git
-commands, is guilt[3], used for example to maintain the ext4 patch
-queue.
-
-In practice I tend to find all these too formal, and just keep one
-branch that moves forward and is never rebased and a separate branch
-that is constantly rebased with commits explaining all my changes to
-the upstream code.  E.g., see [4].  This probably only works when the
-patch stack is not very large.
-
-Jonathan
-
-[1] https://github.com/msysgit/msysgit/blob/master/share/msysGit/merging-rebase.sh
-[2] https://github.com/greenrd/topgit#readme
-[3] http://repo.or.cz/w/guilt.git
-[4] git://repo.or.cz/xz/debian.git
-
-    Here the constantly-rebased branch is not even published, since
-    it is easy to re-create by applying the patches.
-
-    The constantly-advancing branch is "master", which consists of
-    patched upstream source + extra metadata in the debian/
-    subdirectory.
-
-    The constantly-rebased branch can be revived by applying the
-    patches from debian/diff/ to the "upstream" branch.
+> Cheers
+> Damien
+>
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
