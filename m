@@ -1,132 +1,87 @@
-From: Shlomit Afgin <shlomit.afgin@weizmann.ac.il>
-Subject: Re: Error in creating git over http
-Date: Thu, 10 Oct 2013 05:25:42 +0000
-Message-ID: <51123DD1BF2E03418A1296748DA730927454C9B2@ibwmbx03>
-References: <20131010010616.GA14429@sigill.intra.peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: fix signed commit parsing
+Date: Thu, 10 Oct 2013 06:57:55 +0000
+Message-ID: <20131010065755.GA2413@dcvr.yhbt.net>
+References: <1380552374-26103-1-git-send-email-boklm@mars-attacks.org>
+ <20130930190404.GU9464@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 10 07:25:52 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Vigier <boklm@mars-attacks.org>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 10 08:58:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VU8kx-0007rc-EQ
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 07:25:51 +0200
+	id 1VUAC8-0003KO-KU
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 08:58:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752112Ab3JJFZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Oct 2013 01:25:47 -0400
-Received: from sentinel1-in.weizmann.ac.il ([132.76.60.31]:37299 "EHLO
-	Sentinel1-in.weizmann.ac.il" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752090Ab3JJFZr convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Oct 2013 01:25:47 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ai4FAEw5VlKETARJ/2dsb2JhbABagwc4UsEZgR4WgxkBAQEBAzo/EgEIDgoKFEIlAgQOBQiHfgywIokUjGGCMzEHgx+BBAOZMpBSgySCKg
-X-IronPort-AV: E=Sophos;i="4.90,1069,1371070800"; 
-   d="scan'208";a="3131837"
-Received: from doar.weizmann.ac.il ([132.77.4.35])
-  by Sentinel1-out.weizmann.ac.il with ESMTP; 10 Oct 2013 07:25:43 +0200
-Received: from smtp.weizmann.ac.il (ibwhbxv01.wismain.weizmann.ac.il [132.76.4.73])
-	by doar.weizmann.ac.il (8.13.8/8.13.8) with ESMTP id r9A6PDPb017575;
-	Thu, 10 Oct 2013 08:25:14 +0200
-Received: from IBWMBX03.wismain.weizmann.ac.il ([132.76.4.77]) by
- IBWHBXV01.wismain.weizmann.ac.il ([132.77.160.73]) with mapi id
- 14.02.0318.004; Thu, 10 Oct 2013 07:25:43 +0200
-Thread-Topic: Error in creating git over http
-Thread-Index: AQHOxDJDbgBV697Y0k2SOI9i0dnZMZnq5zcAgAIH8oCAAHrEgA==
-In-Reply-To: <20131010010616.GA14429@sigill.intra.peff.net>
-Accept-Language: en-US, he-IL
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/14.3.6.130613
-x-originating-ip: [132.77.26.178]
-Content-ID: <EF259AEA9222FD49AB2227BDF1DEF39E@weizmann.ac.il>
+	id S1754289Ab3JJG54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Oct 2013 02:57:56 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:37044 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751647Ab3JJG54 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Oct 2013 02:57:56 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7F8C1F728;
+	Thu, 10 Oct 2013 06:57:55 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20130930190404.GU9464@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235852>
 
+Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Nicolas Vigier wrote:
+> 
+> > When parsing a commit object, git-svn wrongly think that a line
+> > containing spaces means the end of headers and the start of the commit
+> > message. In case of signed commit, the gpgsig entry contains a line with
+> > one space, so "git svn dcommit" will include part of the signature in
+> > the commit message.
+> >
+> > An example of such problem :
+> > http://svnweb.mageia.org/treasurer?view=revision&revision=86
+> >
+> > This commit changes the regex to only match an empty line as separator
+> > between the headers and the commit message.
+> >
+> > Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
+> 
+> Good catch.  For what it's worth,
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Thanks for your answer.
+Thanks both.  I've signed-off, added Jonathan's reviewed-by and
+queued this up in my master.  Currently at:
 
-I did not know about "dumb" and "smart" I will read on those in the future.
+The following changes since commit 128a96c98442524c7f2eeef4757b1e48445f24ce:
 
-I found in google that the problem of Error: 403 can be solved.
-I run on the git server, in the directory that had the repository: 'git
-gc' which do git cleanup and the problem solved.
+  Update draft release notes to 1.8.5 for the fifth batch of topics (2013-09-20 12:42:02 -0700)
 
-Thanks you very much.
+are available in the git repository at:
 
+  git://git.bogomips.org/git-svn.git master
 
+for you to fetch changes up to 945b9c14ffd3e11c916ee2b2428a0b2be9645829:
 
+  git-svn.txt: elaborate on rev_map files (2013-10-10 06:56:12 +0000)
 
-On 10/10/13 3:06 AM, "Jeff King" <peff@peff.net> wrote:
+----------------------------------------------------------------
+Keshav Kini (4):
+      git-svn.txt: fix AsciiDoc formatting error
+      git-svn.txt: reword description of gc command
+      git-svn.txt: replace .git with $GIT_DIR
+      git-svn.txt: elaborate on rev_map files
 
->On Tue, Oct 08, 2013 at 03:05:22PM +0000, Shlomit Afgin wrote:
->
->> I do the following on the git server:
->>        cd /var/www/html/
->> git clone --bare  /path/to/dir/ gitproject.git
->> cd gitproject.git/
->> mv hooks/post-update.sample hooks/post-update
->> chmod a+x hooks/post-update
->
->OK, so on the next push, the info/refs file should be updated. Note that
->this file is only necessary if you want to run the "dumb" http protocol
->(i.e., the less efficient one that does not require git on the server).
->
->You didn't say whether you are trying to set up a "dumb" or "smart"
->git-http server. These days you almost certainly want to set up a
->"smart" one, and you do not need to care about info/refs or running
->update-server-info.
->
->> on the local machine run:
->> git clone http://server.name/gitproject.git
->> 
->> I got the error:
->> "Initialized empty Git repository in /local/path/gitproject/.git/
->> fatal: http://server.name/gitproject.git/info/refs not found: did you
->>run
->> git update-server-info on the server?"
->> 
->> I saw that the file does not exist,  it seem that the file post-update
->>is
->> not execute.
->
->Yes, if you didn't push yet, then it won't have been created.
->
->> I run it on the git server:
->> git update-server-info
->> 
->> Now the info/ref is created.
->
->OK, good.
->
->> On local machine I run again :
->> git clone http://server.name/gitproject.git
->> 
->> Now I get the error:
->>   Initialized empty Git repository in /local/path/gitproject/.git/
->> error: The requested URL returned error: 403 (curl_result = 22,
->>http_code
->> = 403, sha1 = 9d83b83df9fbc75ecd754264f95793fca93ccf93)
->> error: Unable to find 9d83b83df9fbc75ecd754264f95793fca93ccf93 under
->> http://server.name/gitproject.git
->> Cannot obtain needed object 9d83b83df9fbc75ecd754264f95793fca93ccf93
->
->403 is an HTTP "Forbidden". Have you configured your web server to allow
->access to the project? Have you marked the repository as
->git-daemon-export-ok, as described in "git help http-backend" (or set
->GIT_HTTP_EXPORT_ALL in the environment)? Is there anything interesting
->in the webserver's error logs?
->
->If it is still not working after checking those things, can you show us
->how you have configured your webserver (presumably apache?).
->
->-Peff
+Nicolas Vigier (1):
+      git-svn: fix signed commit parsing
+
+ Documentation/git-svn.txt | 46 +++++++++++++++++++++++++++++++++-------------
+ git-svn.perl              |  2 +-
+ 2 files changed, 34 insertions(+), 14 deletions(-)
+-- 
+Eric Wong
