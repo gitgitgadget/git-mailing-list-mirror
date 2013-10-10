@@ -1,116 +1,103 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Same test-path-utils behaves differently on different
- Windows systems
-Date: Thu, 10 Oct 2013 19:57:22 +0200
-Message-ID: <5256EA82.7020504@kdbg.org>
-References: <CAHGBnuNaVWxa2kNqf3n9GmZZxFryLfJqKB5TxmDK5BiG5x53VQ@mail.gmail.com> <CAHGBnuORD-nTaYVVMt5WJhFnHU4oj0=5WiLXMAMa2Y4mz-vNXg@mail.gmail.com>
+From: Stefan Zager <szager@google.com>
+Subject: Windows performance / threading file access
+Date: Thu, 10 Oct 2013 11:18:12 -0700
+Message-ID: <CAHOQ7J_ZZ=7j-5ULd7Tdvbiqg4inhwi+fue_w6WAtNRkvZSwsg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: worldhello.net@gmail.com, 
- Thomas Braun <thomas.braun@virtuell-zuhause.de>,
- Git Mailing List <git@vger.kernel.org>, 
- msysGit Mailinglist <msysgit@googlegroups.com>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: msysgit+bncBCJYV6HBKQIIJVO3SICRUBG5IBS64@googlegroups.com Thu Oct 10 19:57:27 2013
-Return-path: <msysgit+bncBCJYV6HBKQIIJVO3SICRUBG5IBS64@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f56.google.com ([209.85.215.56])
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 10 20:18:18 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIIJVO3SICRUBG5IBS64@googlegroups.com>)
-	id 1VUKUH-0003NJ-9A
-	for gcvm-msysgit@m.gmane.org; Thu, 10 Oct 2013 19:57:25 +0200
-Received: by mail-la0-f56.google.com with SMTP id ep20sf265390lab.1
-        for <gcvm-msysgit@m.gmane.org>; Thu, 10 Oct 2013 10:57:25 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VUKoT-0000Xh-Pa
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 20:18:18 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756730Ab3JJSSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Oct 2013 14:18:14 -0400
+Received: from mail-qa0-f45.google.com ([209.85.216.45]:52561 "EHLO
+	mail-qa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755719Ab3JJSSN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Oct 2013 14:18:13 -0400
+Received: by mail-qa0-f45.google.com with SMTP id k4so6477955qaq.11
+        for <git@vger.kernel.org>; Thu, 10 Oct 2013 11:18:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=ooeCmDpAYR8VWYlgT4mhBYCWfQSHK6nsv0Xrln0ez8I=;
-        b=NmnRAEzdDfyMstvYlrSWKgm+7/V9c9UT+5k2fppaJPuFrJsg7xjHoV1ETPPtC64Nzb
-         yXNCfYaV1tlb3IGHFlhqLn0VUpONYxRtku3aI2iVWPwCEbwpl5aHN2ak0E4DIS/Z15R6
-         p+ID15eRSOEgY8NvkK+i9H7Qn5F+eOMQSVJawqlMdDkPxwmGu1VZT1puR+ZV4YaUqU2V
-         VOlzMXTT5czTwgKqwvzf7Sby4ZyWRxElOcsWPo2umKmcSldDqdDfAbzjM+hoose9FwB5
-         lKcNNwdYm1LD+y5tVGoWe6D6m4+Ufbht+huKWpqbW1bHMnMFAGaizIOIPKkLZgZoIvXV
-         QqVg==
-X-Received: by 10.152.4.41 with SMTP id h9mr68147lah.8.1381427844974;
-        Thu, 10 Oct 2013 10:57:24 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.115.177 with SMTP id jp17ls174927lab.66.gmail; Thu, 10 Oct
- 2013 10:57:24 -0700 (PDT)
-X-Received: by 10.152.26.201 with SMTP id n9mr2041862lag.8.1381427844242;
-        Thu, 10 Oct 2013 10:57:24 -0700 (PDT)
-Received: from bsmtp.bon.at (bsmtp5.bon.at. [195.3.86.187])
-        by gmr-mx.google.com with ESMTP id a1si1232962ees.1.1969.12.31.16.00.00;
-        Thu, 10 Oct 2013 10:57:24 -0700 (PDT)
-Received-SPF: neutral (google.com: 195.3.86.187 is neither permitted nor denied by best guess record for domain of j6t@kdbg.org) client-ip=195.3.86.187;
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9D54D130050;
-	Thu, 10 Oct 2013 19:57:23 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 6BCCE19F646;
-	Thu, 10 Oct 2013 19:57:22 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <CAHGBnuORD-nTaYVVMt5WJhFnHU4oj0=5WiLXMAMa2Y4mz-vNXg@mail.gmail.com>
-X-Original-Sender: j6t@kdbg.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: 195.3.86.187 is neither permitted nor denied by best guess
- record for domain of j6t@kdbg.org) smtp.mail=j6t@kdbg.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235873>
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=G2ZkqI1BTQeIx8HYTEgfn6UAkeHqnuF+MMswepfmAC8=;
+        b=akNQtTKUP1DBI5gIosxo5HVSxjlMoCP8F60OZv3w+8sDlHrQS6rbC8BVarcB3XspQA
+         tM8C7YSALD+uji04nh1dLo9laG+EFXybwNa++dnXRIkCSkrmOQGSpgv88ti+1F9N/Y0H
+         A7c737hIw6kXJq3q6O/K8CvY/DBwzG4hUGAZVVQF93LUa8BGIJ2lzGUlDYb5DCwe+H2w
+         sGHVJQTXZYcTHGnwgBcximOGHfsroCYT21c/UVAbYEjBdX2BERaE7cIbYwY/5yk6eAs5
+         358k9L/fvlbxiSFEeyTLAv6kg+TSLGK3FsLJ0ZqWrFnO9fpTw1z0Ag8gc8CYMPOsRBMY
+         K+RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=G2ZkqI1BTQeIx8HYTEgfn6UAkeHqnuF+MMswepfmAC8=;
+        b=D6BYwLLpol2ffGCpbEqKOqHd8oPCUviU5mxc8K8pf2sgNDfp6CLjNUGjZjHTZneciz
+         jgR4L7kHDagZBHn8uep9HrFD4ngaeNEj8fgQwQKQijb+oxDOHRFOnkLQ0CIiCMSWHJfB
+         rm01ri3ccMDqCcVtuuR0WuhZXp/pAXpvhRbGfUm52sPfctJTxccnivRLOYNV4yPoP2Da
+         fxeUl3Hms2MfkVSK8udGeawqSPgOhvh4/qAbYWF5C7zQcWx6LJ8imD6SHxG33TgkFEMW
+         rc76pJv28Nxg7gBGm8wwmYHLye2mu5nrNb42qsfRCIZUfUxO2UL5vIBRXqQiasWyoMhJ
+         A19A==
+X-Gm-Message-State: ALoCoQlVo/aziPgJr5CqNyaavIwnHRh4chtcaXi87iXDQLXmVjoFRiLCvoPK5UGcq/iuZ2YjywjSqhywCTNJKNwvrumoDuKxHl59++b71VtHmQrnuIU3VvVA3VrnCMnTzX2OwE0ppnEr7csrR/JlTnOL98I//ddsUlMncnveUFdBztxIITHGWuOOWWxoiyPq50pG7l0qMQix
+X-Received: by 10.229.174.3 with SMTP id r3mr12932864qcz.10.1381429092455;
+ Thu, 10 Oct 2013 11:18:12 -0700 (PDT)
+Received: by 10.229.178.4 with HTTP; Thu, 10 Oct 2013 11:18:12 -0700 (PDT)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235874>
 
-Am 10.10.2013 17:52, schrieb Sebastian Schuberth:
-> Hi again,
-> 
-> the problem can also be reproduced in an easier way, independently of
-> mingwGitDevEnv and using the mingw_path function instead of
-> relative_path. If I install msysGit 1.8.4 from [1] and run
-> test-path-utils I get this on Windows Server 2008 R2 64-bit:
-> 
-> $ test-path-utils mingw_path /a/b/
-> a:/b/
-> 
-> But if I install [1] on my local Windows 8 64-bit I get:
-> 
-> $ test-path-utils mingw_path /a/b/
-> C:/msysgit/msysGit/a/b/
+Hi folks,
 
-Interesting. I guess that you get consistent behavior when the first
-path component is not merely a single letter, e.g., /foo/bar.
+I don't follow the mailing list carefully, so forgive me if this has
+been discussed before, but:
 
-Do you have a drive a: configured somewhere in your MSYS environment on
-the 2k8r2 machine? See /etc/fstab. Do you have a floppy drive in that
-machine?
+I've noticed that when working with a very large repository using msys
+git, the initial checkout of a cloned repository is excruciatingly
+slow (80%+ of total clone time).  The root cause, I think, is that git
+does all the file access serially, and that's really slow on Windows.
 
--- Hannes
+Has anyone considered threading file access to speed this up?  In
+particular, I've got my eye on this loop in unpack-trees.c:
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+static struct checkout state;
+static int check_updates(struct unpack_trees_options *o)
+{
+        unsigned cnt = 0, total = 0;
+        struct progress *progress = NULL;
+        struct index_state *index = &o->result;
+        int i;
+        int errs = 0;
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+        ...
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+        for (i = 0; i < index->cache_nr; i++) {
+                struct cache_entry *ce = index->cache[i];
+
+                if (ce->ce_flags & CE_UPDATE) {
+                        display_progress(progress, ++cnt);
+                        ce->ce_flags &= ~CE_UPDATE;
+                        if (o->update && !o->dry_run) {
+                                errs |= checkout_entry(ce, &state, NULL);
+                        }
+                }
+        }
+        stop_progress(&progress);
+        if (o->update)
+                git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
+        return errs != 0;
+}
+
+
+Any thoughts on adding threading around the call to checkout_entry?
+
+
+Thanks in advance,
+
+Stefan
