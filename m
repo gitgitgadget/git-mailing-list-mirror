@@ -1,107 +1,67 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: Feature Request: gitignore recursion
-Date: Thu, 10 Oct 2013 09:59:38 +0200
-Message-ID: <52565E6A.2020907@gmail.com>
-References: <20131007134141.GA23026@lanh>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH] checkout tests: enable test with complex relative path
+Date: Thu, 10 Oct 2013 10:04:38 +0200
+Message-ID: <52565F96.8010809@googlemail.com>
+References: <1381329311-5920-1-git-send-email-stefanbeller@googlemail.com> <20131009193952.GL9464@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, alljeep@gmail.com,
-	Jeff King <peff@peff.net>
-To: pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu Oct 10 09:59:52 2013
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 10 10:04:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUB9y-0008Uw-Vr
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 09:59:51 +0200
+	id 1VUBEb-0003Hf-Cy
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 10:04:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755176Ab3JJH7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Oct 2013 03:59:40 -0400
-Received: from mail-ee0-f50.google.com ([74.125.83.50]:50176 "EHLO
-	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755165Ab3JJH7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Oct 2013 03:59:38 -0400
-Received: by mail-ee0-f50.google.com with SMTP id d51so947217eek.9
-        for <git@vger.kernel.org>; Thu, 10 Oct 2013 00:59:37 -0700 (PDT)
+	id S1755553Ab3JJIEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Oct 2013 04:04:30 -0400
+Received: from mail-ee0-f48.google.com ([74.125.83.48]:40587 "EHLO
+	mail-ee0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751737Ab3JJIE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Oct 2013 04:04:27 -0400
+Received: by mail-ee0-f48.google.com with SMTP id l10so944831eei.35
+        for <git@vger.kernel.org>; Thu, 10 Oct 2013 01:04:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=googlemail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=D1BUKVQnKHauZTN9j1hqMKbuKYECsNj8KHcERBTyOUk=;
-        b=svMmhhYQ5SmaTT7fUyWg0FjCjBlr5kWnHJ+1lfnn3o5oBr3jFSiX4MGChFIZuIz+7J
-         N5fNhi2FW+It7RjNgROztW/XHLEkPBBLb09bpREGnMi5sWPwqsPJ1DsqjSpi1VUZ5oQE
-         aznN97G5boINFJ7hBow8a2bRd526fTm0zz9nlBekzO5yyoF24rtBlg65HIVaSeC9HMAL
-         rG2+TG2v1+YcfZAN30F9v0S+o+i8ECiFIKVSfrzvCrFzi1TPsH3E3edpfEIjFRDTqZAz
-         Z0saUE9A5CgYGQB2PUNf8Rr/U9g3VqgjPdCgVTW+as6u3GMQfCn3qUOgRIFndXfNLDPf
-         kv1Q==
-X-Received: by 10.14.0.193 with SMTP id 41mr336798eeb.88.1381391977665;
-        Thu, 10 Oct 2013 00:59:37 -0700 (PDT)
-Received: from [10.1.100.51] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id b45sm98304974eef.4.1969.12.31.16.00.00
+        bh=gMBGtZjOu4CynOacCUhj1xWslZYzy7ZkUaGgUO5v1sM=;
+        b=zZJv5EH0KXxtvheK0mdfF3jXgAUYrineLCPMkWjVkZ04Y/bpOB68df17pcQ+l6npfs
+         HtwfW7/l6J3qdg1Dc6LvNy/VfTBIxPkMvZYyjT9FEzE2kj/qDAVGfzy9kKH0BkBUOrju
+         vwaIOVycZZcc5+9xu5P1yn0qQvudmFe1jS5WA+G09Rnyw6f8B9ozsigNLX9ctPDJrpbp
+         nRdvUJLipZPOXvQNqIHVNpNU/6TvN94iz9eInYtXFq8JDC+wRbsm4y3jGkXxQzSsnrrp
+         Dw8DUilk7Dn+hLbVYbIjwizICSdPOOhyv7KU5LZ7aSyydOS4rK3ZmyDsudgpdQ/T1Jgb
+         wTqg==
+X-Received: by 10.14.101.6 with SMTP id a6mr767525eeg.81.1381392266526;
+        Thu, 10 Oct 2013 01:04:26 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id m54sm98366725eex.2.1969.12.31.16.00.00
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 10 Oct 2013 00:59:37 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <20131007134141.GA23026@lanh>
+        Thu, 10 Oct 2013 01:04:25 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <20131009193952.GL9464@google.com>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235857>
 
-> On Mon, Oct 07, 2013 at 07:24:11AM -0400, Jeff King wrote:
->> However, one thing I expected to work but didn't is:
->> 
->>   echo '*' >.gitignore
->>   echo '!*' >my_dir/.gitignore
->> 
->> That _does_ work for attributes, like:
->> 
->>   echo '* foo=one' >.gitattributes
->>   echo '* foo=two' >my_dir/.gitattributes
->> 
->> where the more-specific file takes precedence. It works because we keep
->> an attribute stack, and look from most-specific directory to least.
+On 10/09/2013 09:39 PM, Jonathan Nieder wrote:
+> Stefan Beller wrote:
+> 
+>> This test was put in, but commented out in fed1b5ca (2007-11-09,
+>> git-checkout: Test for relative path use.)
+>> It's been a while since 2007 and the intended test case works now.
+>> (I could not find the enabling commit in ls-files however.)
+> 
+> Bisects to v1.5.5-rc0~184^2~3 (setup: sanitize absolute and funny paths
+> in get_pathspec(), 2008-01-28).  Thanks.
+> 
 
-Note that this doesn't work either:
-
-  echo '*' >.gitignore
-  echo '!my_dir/*' >>.gitignore
-
-The problem isn't that git doesn't read 'my_dir/.gitignore'. Git simply doesn't recurse into excluded directories, so patterns on excluded content have no effect.
-
-IMO this behavior is reasonable, as there is no way to check whether a negative pattern will match within an excluded untracked directory without scanning the directory.
-
-What about this instead?
-
---- 8< ---
-Subject: [PATCH] gitignore.txt: clarify recursive nature of excluded directories
-
-Additionally, precedence of negated patterns is exactly as outlined in
-the description, we don't need to repeat this.
-
-Signed-off-by: Karsten Blees <blees@dcon.de>
----
- Documentation/gitignore.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index f971960..a64a65d 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -79,8 +79,9 @@ PATTERN FORMAT
- 
-  - An optional prefix "`!`" which negates the pattern; any
-    matching file excluded by a previous pattern will become
--   included again.  If a negated pattern matches, this will
--   override lower precedence patterns sources.
-+   included again. It is not possible to re-include a file if a parent
-+   directory of that file is excluded (i.e. excluding a directory
-+   will recursively and irrevocably exclude the entire content).
-    Put a backslash ("`\`") in front of the first "`!`" for patterns
-    that begin with a literal "`!`", for example, "`\!important!.txt`".
- 
--- 
-1.8.4.msysgit.1
+Do you want me to resend a reworded patch, or could you amend that
+information to this patch?
