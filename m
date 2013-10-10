@@ -1,90 +1,73 @@
-From: Dan Fabulich <dan@fabulich.com>
-Subject: Bug report: OS X git-merge deletes recapitalized files when rename detection fails
-Date: Thu, 10 Oct 2013 15:46:34 -0700
-Message-ID: <83737702-F966-457E-A77D-85CCD06FFECA@fabulich.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 11 00:46:40 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [ANNOUNCE] git-related-0.1
+Date: Thu, 10 Oct 2013 18:04:13 -0500
+Message-ID: <CAMP44s0CpqaBndtbwBiGaQo4PF2=tRTNO+L_rx38wnyuwivDZg@mail.gmail.com>
+References: <CAMP44s0wPzV6FkfON4zazkOWqTB0qbpdEtruHD01NybtiK6-Og@mail.gmail.com>
+	<CAH5451=LPy5ybu6n457NPcnf=Bbsv4jNyiO6ve=-T0qXJwq_bA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 11 01:04:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUP0C-0002Ow-EP
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Oct 2013 00:46:40 +0200
+	id 1VUPHI-0004gP-0r
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Oct 2013 01:04:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752495Ab3JJWqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Oct 2013 18:46:35 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:59787 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751857Ab3JJWqf convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Oct 2013 18:46:35 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 9FC89223DD
-	for <git@vger.kernel.org>; Thu, 10 Oct 2013 18:46:33 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Thu, 10 Oct 2013 18:46:33 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=from:content-type
-	:content-transfer-encoding:subject:message-id:date:to
-	:mime-version; s=smtpout; bh=FXAVMa0kteXsqds/CX/2iAKEG7g=; b=EIm
-	FJcn0B1BryylyewsHsPt89JVP2zaUuwaQLdkioDzJGWcULoNXlgXaALYB3l9kQ1i
-	o2fNf2ibFfrfAiQUQE2QSuWt1ehkUOmWaxuiS052q3MxSo0wr6LhCY3poSY9E6wx
-	8BoPl5AUIp7RYRUfEnP1mvf4DwRVIzVoggnRMJxE=
-X-Sasl-enc: xtvA4D60tF3HHtTZ5WmJNgAtCuyGXf2oNIMz9XgtySog 1381445193
-Received: from [10.5.8.42] (unknown [206.15.64.254])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 1F38EC00E80
-	for <git@vger.kernel.org>; Thu, 10 Oct 2013 18:46:33 -0400 (EDT)
-X-Mailer: Apple Mail (2.1510)
+	id S1751870Ab3JJXEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Oct 2013 19:04:16 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:39981 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751712Ab3JJXEP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Oct 2013 19:04:15 -0400
+Received: by mail-lb0-f179.google.com with SMTP id x18so2682211lbi.24
+        for <git@vger.kernel.org>; Thu, 10 Oct 2013 16:04:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jDE3PazxCCUxTaMB/4oqzFDyzUkcN+Q7JFRfY+jPbeY=;
+        b=xoC/fInVidtOrtUDPKxWfWy/smeMFNdcWfkhi/f5JxqNcfUwn++ekaWaGi5sCPjTLI
+         GoBW2qNQqeBvF9clgcLw4C4dd623QN1GbWVUyaZJqV5S1BPyl7DAhj3S/koTz1J/d2GE
+         21f2Te5crhwJkauCT7pGgQ4+1pKzVcJ8YaMVa4H0IuUTsuk4BaZHd43VAGnjvgJF7NNK
+         zhcQbgWuCQ0AMHAL28wT07pJ/h4xkUb4mFiYR/RzdG8Pf7oe071JOGegVUBVuYgkFj2r
+         p/J1B+dQeFJchsjxA2+I6433RJt2yvqtdcpQK5sLG6D4FDlzIbEIv8F7VcGpCTD/9Flm
+         yIbA==
+X-Received: by 10.152.203.233 with SMTP id kt9mr13398061lac.29.1381446253986;
+ Thu, 10 Oct 2013 16:04:13 -0700 (PDT)
+Received: by 10.114.91.230 with HTTP; Thu, 10 Oct 2013 16:04:13 -0700 (PDT)
+In-Reply-To: <CAH5451=LPy5ybu6n457NPcnf=Bbsv4jNyiO6ve=-T0qXJwq_bA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235890>
 
-On case-insensitive filesystems, git-merge deletes files that were recapitalized in another branch if rename detection fails.
+On Thu, Oct 10, 2013 at 5:24 PM, Andrew Ardill <andrew.ardill@gmail.com> wrote:
+> On 11 October 2013 08:43, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+>> After gathering all the relevant
+>> people, it groups them to show what exactly was their role when the
+>> participated in the development of the relevant commit, and on how
+>> many relevant commits they participated.
+>
+> It looks like you group by emails, any idea if anyone purposefully
+> uses the same email but a different name? I don't know if the email is
+> assumed to be the unique identifier, or if the name/email pair is,
+> however I think the typical use case is definitely to group by email
+> so it's a useful default behaviour.
 
-To repro: Run this script with git 1.8.4 on a case-insensitive filesystem. It repros for me on the default HFS filesystem on OS X 10.8, and also on Win7 NTFS.
+Yes, I think I described that in the announcement. It was a feature
+somebody requested, and it was easy to implement.
 
-#!/bin/sh -x
-# create git repo
-git --version
-rm -rf caps
-git init caps
-cd caps
-git config --get core.ignorecase
-# commit empty file called "file"
-echo file > file
-git add .
-git commit -am "initial commit"
-# create branch called "branch"
-git branch branch
-# rename "file" to "File"
-# using --force per http://stackoverflow.com/questions/6899582
-git mv --force file File
-echo "completely different content" > File
-git commit -am "renamed to File"
-# switch to branch, make a non-conflicting commit
-git checkout branch
-echo newfile > newfile
-git add .
-git commit -am "branch commit"
-# merge master into branch, commit merge
-git merge --verbose --commit --no-edit master
-ls File
-git status
+>> They are only displayed if
+>> they pass a minimum threshold of participation.
+>
+> Out of interest, how is the threshold determined and is it configurable?
 
-Actual: At the end of the script, the renamed File has been deleted by git-merge. "ls: File: No such file or directory" According to git-status, the deletion is not yet staged.
+The threshold by default is 10%, but it's configurable with --min-percent.
 
-Expected: There should be no untracked changes at the end of this script. The script runs as expected on Linux or case-sensitive HFS.
-
--Dan Fabulich
-
-P.S. On case-insensitive HFS, git-init will automatically set core.ignorecase to true. For the sake of the experiment, I also tried setting core.ignorecase to false in the test repository.
-
-When I did that, I was unable to even checkout the "branch" branch without using --force. ("The following untracked working tree files would be overwritten by checkout: file" But git-status reported no untracked changes.)
-
-And then, once I did use force to switch to the branch, I was unable to merge from master at all. ("The following untracked working tree files would be overwritten by merge: File" But again, git-status reported no untracked changes.)
+-- 
+Felipe Contreras
