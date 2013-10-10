@@ -1,92 +1,127 @@
-From: Amit Bakshi <ambakshi@gmail.com>
-Subject: Re: git-archive and submodules
-Date: Thu, 10 Oct 2013 12:22:50 -0700
-Message-ID: <CAFGOX=WL8GEpZc1b0Rcqt_tMyOzL-nB20Jj=7PArOh82T34JoA@mail.gmail.com>
-References: <CALKBF2gwVr0rPn0y8=cvwqOsUb7eQPH7EdK5U+gfZMzh=RpiKw@mail.gmail.com>
-	<4F911A2C.4070306@web.de>
-	<CALKBF2jzL5-mHaVi1erA=EiF_DALF1Rvwv7yB5CfdEdQa2ZhBg@mail.gmail.com>
-	<49D85565-3932-4B03-9568-E5CB75F39B9E@deepdarc.com>
-	<loom.20131010T160446-236@post.gmane.org>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: Same test-path-utils behaves differently on different
+ Windows systems
+Date: Thu, 10 Oct 2013 21:47:49 +0200
+Message-ID: <CAHGBnuO8ATSQu6HpJTm8bBg0akm+LUsZGRFoZPhzs89q7gTWqQ@mail.gmail.com>
+References: <CAHGBnuNaVWxa2kNqf3n9GmZZxFryLfJqKB5TxmDK5BiG5x53VQ@mail.gmail.com>
+	<CAHGBnuORD-nTaYVVMt5WJhFnHU4oj0=5WiLXMAMa2Y4mz-vNXg@mail.gmail.com>
+	<5256EA82.7020504@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Damien Regad <dregad@mantisbt.org>
-X-From: git-owner@vger.kernel.org Thu Oct 10 21:22:56 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: worldhello.net@gmail.com, Thomas Braun <thomas.braun@virtuell-zuhause.de>, 
+	Git Mailing List <git@vger.kernel.org>, msysGit Mailinglist <msysgit@googlegroups.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: msysgit+bncBDZMLEGXWQLBBZMI3SJAKGQEVXJAVYI@googlegroups.com Thu Oct 10 21:47:50 2013
+Return-path: <msysgit+bncBDZMLEGXWQLBBZMI3SJAKGQEVXJAVYI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ea0-f191.google.com ([209.85.215.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VULp1-0000Tl-F0
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Oct 2013 21:22:55 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756246Ab3JJTWv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Oct 2013 15:22:51 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:48595 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753313Ab3JJTWv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Oct 2013 15:22:51 -0400
-Received: by mail-pa0-f42.google.com with SMTP id lj1so3230985pab.29
-        for <git@vger.kernel.org>; Thu, 10 Oct 2013 12:22:50 -0700 (PDT)
+	(envelope-from <msysgit+bncBDZMLEGXWQLBBZMI3SJAKGQEVXJAVYI@googlegroups.com>)
+	id 1VUMD8-0007rl-By
+	for gcvm-msysgit@m.gmane.org; Thu, 10 Oct 2013 21:47:50 +0200
+Received: by mail-ea0-f191.google.com with SMTP id o10sf277873eaj.18
+        for <gcvm-msysgit@m.gmane.org>; Thu, 10 Oct 2013 12:47:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=googlegroups.com; s=20120806;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Q8PHC4qe10VBs1uw0iwSbTjm49i+g3rZAHxMN0kEr8Y=;
-        b=eb162YkSul7omUdAjh4h9Nb1n3jl9S52VoKfuHbW0r7oebRYoTMNutFXXoHhvcYWJY
-         6E6WvqesdXmnFonYaxBMFRO15f1Rcue/VDTMo7yEgHAwIMoNk1aDr7uHTUS+xhuqALnD
-         3ugWimAULdPbTr9TVOYsojm2kmzoe9aO9yMUSZLJt4mg338SqKiJWbXpsdqhXbhTS42j
-         4gxfGtRCa0yYhm1BCidjIqB4c1SNJ69sCEnJMrYXdIb/eYMkMzRWK8ESgJcBEW2gmysD
-         AtfwNxu94EyYTmrY3oabjQsCRpYfL7sEPBYvU5/HeA7PSZfZP1eNONZqyEUIYvZT1oZX
-         GlXg==
-X-Received: by 10.68.26.202 with SMTP id n10mr15606494pbg.97.1381432970767;
- Thu, 10 Oct 2013 12:22:50 -0700 (PDT)
-Received: by 10.70.35.140 with HTTP; Thu, 10 Oct 2013 12:22:50 -0700 (PDT)
-In-Reply-To: <loom.20131010T160446-236@post.gmane.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235876>
+         :cc:x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=ykUv7oCdSyKxJtaZB81pEPcdlrR0KvC+6x8lEP0Bfgc=;
+        b=FOPvAzkwXZOyXw7XOtq1MOTAWBHw/XH74GdjCZb90fMyWKmsAZmYjbSSs/mNzwbzJc
+         XPBitz4UAcxa3Kb5+eKtRh8BuQucQefW7PDeawxvQ08PxbXy1k4ETZ5U/+IeTLRsef9E
+         nqFoK400fX0hU0U7UqWiPEYCTLBz2Y0TrM+53K+rflCkrKthZr2uxSqadPoypiDLTZbC
+         mZAh3ByJrF/VgV4cA1bc8sxaydCuluKyVSkvYu65yPhlP4h8kWTKV+G6kVGpH9t2H3Hl
+         7tNNFgFpnaP6D5XQeQ2J8B3PclF7ZERvqxCPk1A7MP8+54IrQK8EB6nfac24Fpx6rJJw
+         mlow==
+X-Received: by 10.152.23.3 with SMTP id i3mr76648laf.14.1381434470094;
+        Thu, 10 Oct 2013 12:47:50 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.170.134 with SMTP id am6ls210133lac.22.gmail; Thu, 10 Oct
+ 2013 12:47:49 -0700 (PDT)
+X-Received: by 10.112.50.175 with SMTP id d15mr5291005lbo.12.1381434469473;
+        Thu, 10 Oct 2013 12:47:49 -0700 (PDT)
+Received: from mail-lb0-x233.google.com (mail-lb0-x233.google.com [2a00:1450:4010:c04::233])
+        by gmr-mx.google.com with ESMTPS id qy6si4055196bkb.3.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 10 Oct 2013 12:47:49 -0700 (PDT)
+Received-SPF: pass (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4010:c04::233 as permitted sender) client-ip=2a00:1450:4010:c04::233;
+Received: by mail-lb0-x233.google.com with SMTP id x18so2600988lbi.10
+        for <msysgit@googlegroups.com>; Thu, 10 Oct 2013 12:47:49 -0700 (PDT)
+X-Received: by 10.152.243.42 with SMTP id wv10mr2968760lac.39.1381434469322;
+ Thu, 10 Oct 2013 12:47:49 -0700 (PDT)
+Received: by 10.114.5.161 with HTTP; Thu, 10 Oct 2013 12:47:49 -0700 (PDT)
+In-Reply-To: <5256EA82.7020504@kdbg.org>
+X-Original-Sender: sschuberth@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4010:c04::233
+ as permitted sender) smtp.mail=sschuberth@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235877>
 
-I wrote a simple bash script that does git-archive recursively with
-submodules. It first does a full mirror clone of the repo and
-submodules, so that subsequent calls are faster.
+On Thu, Oct 10, 2013 at 7:57 PM, Johannes Sixt <j6t@kdbg.org> wrote:
 
-https://github.com/ambakshi/git-archiver
-
-
-Amit
-
-
-On Thu, Oct 10, 2013 at 7:09 AM, Damien Regad <dregad@mantisbt.org> wro=
-te:
-> Robert Quattlebaum <darco <at> deepdarc.com> writes:
->> I got too busy to continue working to get it included. Please feel f=
-ree to
-> pick up where I left off.
+>> test-path-utils I get this on Windows Server 2008 R2 64-bit:
 >>
->> On Apr 20, 2012, at 2:32 PM, Andr=E9 Caron <andre.l.caron <at> gmail=
-=2Ecom> wrote:
->> > Since you've touched this only last year, I'd like to know where y=
-ou
->> > were at and I can see if I can pick up where you left off (unless =
-you
->> > want to finish yourself).
+>> $ test-path-utils mingw_path /a/b/
+>> a:/b/
+>>
+>> But if I install [1] on my local Windows 8 64-bit I get:
+>>
+>> $ test-path-utils mingw_path /a/b/
+>> C:/msysgit/msysGit/a/b/
 >
-> Greetings
->
-> I was just wondering whether there been any progress on this topic si=
-nce
-> last year... Andr=E9 ?
->
-> Cheers
-> Damien
->
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Interesting. I guess that you get consistent behavior when the first
+> path component is not merely a single letter, e.g., /foo/bar.
+
+You're right! With /foo/bar on W2k8r2 I get
+
+$ test-path-utils mingw_path /foo/bar/
+C:/msysgit184/msysgit/foo/bar/
+
+> Do you have a drive a: configured somewhere in your MSYS environment on
+> the 2k8r2 machine? See /etc/fstab. Do you have a floppy drive in that
+> machine?
+
+Again you're correct. The W2k8r2 machine actually is a VM, providing a
+floppy drive "A:". So the obvious thing would be to replace /a/b/ with
+/foo/bar/ in the tests, but that just masks the problem, or?
+
+PS: I'm also quite unhappy about naming the function "mingw_path". The
+path mangling comes from MSYS, not MinGW, so if at all it should be
+named msys_path. But as the code for the "mingw_path" function does
+nothing either MSYS or MinGW related but just prints argv[2] as it was
+passed to main() it should probably simply called "print_path".
+
+-- 
+Sebastian Schuberth
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
