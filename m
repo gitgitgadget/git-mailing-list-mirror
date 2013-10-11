@@ -1,53 +1,49 @@
-From: "jones.noamle" <lenoam@gmail.com>
-Subject: BUG - git clean
-Date: Fri, 11 Oct 2013 14:53:08 -0400
-Message-ID: <52584914.6030103@gmail.com>
+From: "jones.noamle@gmail.com" <jones.noamle@gmail.com>
+Subject: Bug in git clean
+Date: Fri, 11 Oct 2013 15:05:27 -0400
+Message-ID: <CAMUDzVQqUT91OTbC21pke6jzF8kWBZJAvnyvHhrt-O3=y5bJLQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 11 20:53:24 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 11 21:05:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUhq0-0006dQ-CU
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Oct 2013 20:53:24 +0200
+	id 1VUi26-0006av-T3
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Oct 2013 21:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752772Ab3JKSxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Oct 2013 14:53:17 -0400
-Received: from mail-qe0-f52.google.com ([209.85.128.52]:56966 "EHLO
-	mail-qe0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752628Ab3JKSxN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Oct 2013 14:53:13 -0400
-Received: by mail-qe0-f52.google.com with SMTP id w7so3612596qeb.11
-        for <git@vger.kernel.org>; Fri, 11 Oct 2013 11:53:12 -0700 (PDT)
+	id S1756085Ab3JKTFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Oct 2013 15:05:49 -0400
+Received: from mail-pb0-f54.google.com ([209.85.160.54]:52382 "EHLO
+	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755999Ab3JKTFs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Oct 2013 15:05:48 -0400
+Received: by mail-pb0-f54.google.com with SMTP id ro12so4638762pbb.41
+        for <git@vger.kernel.org>; Fri, 11 Oct 2013 12:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=hUxmw7ySXFuVhNPrDwk6hLD1Q/bcqcxQ1lpQK1pLqqI=;
-        b=DjvcwcKfl7AKQLuZlGUeUymwLfRUek7+DVRHBFBcICdaegMFXE9I1Ku+tew+fF68Bo
-         rinF5uOHiHpC8QsKInYmvAKOgVDzV8b5Oj+cBNhHgoaS9SkJIhwr4iblverJDQ5p/C50
-         6q763S4YgSVka3chxLYJZjDCJJyDTy9KkcgEbyjHtiY1mjl/gdWIvsoXTFXHhMi/anTA
-         iYrT9ZFzmSePhjjOLkQ31r5omvyksTaL5PQzUlxBpg/bLVr6LimT6lpAhaO3o0B6p0IU
-         HoyeP9XoLSVm03bWl3LMT5bCrHWtU5gchFlor24e5BUQHC644sbvgCDCgCIviiFcq3Dy
-         sD8g==
-X-Received: by 10.229.73.6 with SMTP id o6mr32943021qcj.2.1381517589875;
-        Fri, 11 Oct 2013 11:53:09 -0700 (PDT)
-Received: from [127.0.0.1] (static-71-183-108-28.nycmny.fios.verizon.net. [71.183.108.28])
-        by mx.google.com with ESMTPSA id h6sm99902084qej.4.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Oct 2013 11:53:08 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=8R7Kqf9miQy0rIbZ4fPNWVaSMulUPhKbOFTxksxRxWs=;
+        b=XS1H3YqbPJg7rLapQdVuRrrGLfXPsWy0DCytj71l8kLBE/0bpXfpPgoOx24b68U2Hz
+         WAeiMQlhXGBGSaHJ1knJPafW9AzzbBNpREVMfgCxpF6UlC+8yabmeqvSiqZMZRxft29b
+         jmrWYSMIsB+TlRBTeFXzjvq1wZqJw2ERtHfwptGJa/uXRDazBZACtK6OChUJRfUg8wI/
+         QFrtqn3nUAt1evjKGu3NhqxOKVgB7C2dcRDRALCpr+A4LGV9HpLlpLVJfw/w+iTWlXf5
+         KiaipJHNku2eixj7UdR1nhtWWcjgBNBgbp44c7+tSqJBl2wUh9N5A24wUOebyFQ0jkd8
+         GvYw==
+X-Received: by 10.68.244.2 with SMTP id xc2mr21731663pbc.58.1381518347948;
+ Fri, 11 Oct 2013 12:05:47 -0700 (PDT)
+Received: by 10.66.83.1 with HTTP; Fri, 11 Oct 2013 12:05:27 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235920>
 
-Passing to git clean wrong (non-existent) paths together with valid 
+Hi.
+
+Passing to git clean wrong (non-existent) paths together with valid
 ones, causes it to delete stuff that it shouldn't.
 Am I right?
 Script to reproduce:
@@ -86,5 +82,8 @@ git version 1.7.9.5
 
 ---------------------------------------------------------------------
 
+Tested on linux (version 1.7.9.5) and cygwin (1.7.9)
+
 Thanks!
-Noam
+Noam Lewis
+Hadas Nahon
