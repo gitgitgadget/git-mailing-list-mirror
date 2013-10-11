@@ -1,87 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 2/2] Update documentation for http.continue option
-Date: Fri, 11 Oct 2013 16:50:52 -0700
-Message-ID: <20131011235052.GV9464@google.com>
-References: <1381530945-90590-1-git-send-email-sandals@crustytoothpaste.net>
- <1381530945-90590-3-git-send-email-sandals@crustytoothpaste.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 1/5] pull: rename pull.rename to pull.mode
+Date: Fri, 11 Oct 2013 18:54:13 -0500
+Message-ID: <52588fa5c7d1c_5dc4c2be74274fa@nysa.mail>
+References: <1378689796-19305-1-git-send-email-felipe.contreras@gmail.com>
+ <1378689796-19305-2-git-send-email-felipe.contreras@gmail.com>
+ <522E3C6A.3070409@bbn.com>
+ <CAMP44s1OyST3S1HEdS38WPsjq6w9SekuwT4DRUgVvduATox9tw@mail.gmail.com>
+ <523B51A1.7030409@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Sat Oct 12 01:51:02 2013
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>,
+	John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
+	Philip Oakley <philipoakley@iee.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+To: Richard Hansen <rhansen@bbn.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 12 02:01:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUmU1-0002LV-Ph
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 01:51:02 +0200
+	id 1VUme0-0000YF-Ms
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 02:01:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752582Ab3JKXu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Oct 2013 19:50:57 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:37290 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752129Ab3JKXu4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Oct 2013 19:50:56 -0400
-Received: by mail-pd0-f169.google.com with SMTP id r10so4961313pdi.14
-        for <git@vger.kernel.org>; Fri, 11 Oct 2013 16:50:56 -0700 (PDT)
+	id S1754204Ab3JLABL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Oct 2013 20:01:11 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:60687 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753218Ab3JLABH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Oct 2013 20:01:07 -0400
+Received: by mail-oa0-f42.google.com with SMTP id g12so3013232oah.29
+        for <git@vger.kernel.org>; Fri, 11 Oct 2013 17:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=KtCG/KKfRacCcqxMYOfBfR+B9NrfwT4zz/10wnMp438=;
-        b=HJG8aaE2qMDHcyjgeAFqadL9+Hy1YqEs79e7haMcDen/SxobVGiqeIiYumabpW9pNE
-         vEiBoso+VixlLIKYKQc91ZJhji5FNJJTLTrMiQzZD1KFS2l15/VPP76XeqIvoFxh1xVi
-         NCLLAWGoXT0Lt6xmom1/pxTFv/NWsy3nM1U0G/uHwcqkQWQLYWFR/fllwZBBa/nMRjfc
-         nokKR9nIs44Ty7YENgSwBwkN0A2UQvMHBVHQr/D7ptq0uQbIW43K+snjKcnfrSawzzPD
-         0GMKdMfeK5R8e4/7flxAR7VGNKNbQTQlQCN97JQrUhMtBjoSInbv3WQ2NUZqMCJZvlJd
-         t45A==
-X-Received: by 10.66.251.1 with SMTP id zg1mr17613307pac.160.1381535456273;
-        Fri, 11 Oct 2013 16:50:56 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id xe9sm73196927pab.0.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 11 Oct 2013 16:50:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1381530945-90590-3-git-send-email-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=WtepYnmaegrG7rEsycePP3XpvoPqOrjAxeegmQ89xCw=;
+        b=Ynw/TE2gPCRMD3ldQK8g3BfhjugzJj9M/japyE+gbMA/3aRSVJwrnad2GzpWNeeBKD
+         j1C89aGvOJcNsrb9vj7u4wkj3vcsdfQfSJR0ZavLGJv6/e5EcUjQ+027WuaaAXxinbf3
+         j1+r6N3D8N4FaGdOlSBy2HBO5W6giKKzRFqmQLgLvRzJKavRatkmrv2JtB/5dJzf0qQ5
+         sk5xCji1mRJUIWDrWhesUvOwrtDiECkpwwiLIOyX8mlDAnpYev7rLVBSRyGr+7cjMGdy
+         tEuuFOjJroALGq2ksR4df7RBVfKvqEmP+fZfXgghw4Xgg7gllLAII5XCcgrVS6rjENMQ
+         k18Q==
+X-Received: by 10.182.44.167 with SMTP id f7mr16415939obm.3.1381536066804;
+        Fri, 11 Oct 2013 17:01:06 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id rl1sm99063288oeb.7.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 11 Oct 2013 17:01:05 -0700 (PDT)
+In-Reply-To: <523B51A1.7030409@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235928>
 
-brian m. carlson wrote:
+Richard Hansen wrote:
+> On 2013-09-09 18:49, Felipe Contreras wrote:
+> > On Mon, Sep 9, 2013 at 4:23 PM, Richard Hansen <rhansen@bbn.com> wrote:
+> >> On 2013-09-08 21:23, Felipe Contreras wrote:
+> >>> The old configurations still work, but get deprecated.
+> >>
+> >> Should some tests for the deprecated configs be added?  We wouldn't want
+> >> to accidentally break those.
+> > 
+> > Probably, but Junio is not picking this patch anyway.
+> 
+> It sounds to me like he would with some mods:
+> http://thread.gmane.org/gmane.comp.version-control.git/233554/focus=234488
 
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1516,6 +1516,15 @@ http.postBuffer::
->  	massive pack file locally.  Default is 1 MiB, which is
->  	sufficient for most requests.
->  
-> +http.continue::
-> +	Ensure that authentication succeeds before sending the pack data when
-> +	POSTing data using the smart HTTP transport.  This is done by
-> +	requesting a 100 Continue response.  For requests larger than
-> +	'http.postBuffer', this is required when using GSS-Negotiate
-> +	(Kerberos) authentication over HTTP.  However, some proxies do not
-> +	handle the protocol exchange gracefully; for them, this option must be
-> +	disabled.  Defaults to disabled.
+The modifications are already in this series.
 
-It's not only your company's proxy that might mishandle 100-continue
-but the target server's reverse proxy (or from the point of view of
-the user, the target server), right?
-
-I think the wording could be clearer about the impact of the setting
-("some proxies and reverse proxies" or something).
-
-Perhaps this should be conditional on the authentication method used,
-so affected people could still contact broken servers without having
-different configuration per server and without having to wait a second
-for the timeout.
-
-Thanks,
-Jonathan
+-- 
+Felipe Contreras
