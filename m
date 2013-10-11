@@ -1,124 +1,119 @@
-From: James <purpleidea@gmail.com>
-Subject: [BUG] git stash doesn't use --index as default
-Date: Fri, 11 Oct 2013 00:57:10 -0400
-Message-ID: <1381467430.4130.38.camel@freed.purpleidea.com>
+From: Stefan Zager <szager@google.com>
+Subject: Re: Windows performance / threading file access
+Date: Thu, 10 Oct 2013 22:35:47 -0700
+Message-ID: <CAHOQ7J_sNnajm9M+QUd-QwkQGP2vOidzAW5_5EzsdwBGTDCnSA@mail.gmail.com>
+References: <CAHOQ7J_ZZ=7j-5ULd7Tdvbiqg4inhwi+fue_w6WAtNRkvZSwsg@mail.gmail.com>
+	<52570BC1.2040208@gmail.com>
+	<52574B90.3070309@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-vFoi33qjRe3I9KKKrrLa"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 11 06:57:25 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org,
+	msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 11 07:35:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUUmw-0002Cb-Sn
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Oct 2013 06:57:23 +0200
+	id 1VUVOD-000819-OE
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Oct 2013 07:35:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752578Ab3JKE5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Oct 2013 00:57:14 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:61539 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751040Ab3JKE5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Oct 2013 00:57:12 -0400
-Received: by mail-ie0-f171.google.com with SMTP id at1so7350840iec.30
-        for <git@vger.kernel.org>; Thu, 10 Oct 2013 21:57:11 -0700 (PDT)
+	id S1752272Ab3JKFft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Oct 2013 01:35:49 -0400
+Received: from mail-vb0-f52.google.com ([209.85.212.52]:65078 "EHLO
+	mail-vb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752047Ab3JKFfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Oct 2013 01:35:48 -0400
+Received: by mail-vb0-f52.google.com with SMTP id f12so2335038vbg.25
+        for <git@vger.kernel.org>; Thu, 10 Oct 2013 22:35:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:subject:from:to:date:content-type:mime-version;
-        bh=4zxYQEiANVUIcnlBLJtfOCum1sl2ahdWfrfcn9Fru54=;
-        b=olssv5eTcQ59cLpya8GHkXGTQGrffYz3M4TpAZZJzdT62aDRm1vmFZZCwiuCHelt8S
-         16W5GAw9jegsHQEN44WAu9IwfaQVryzITpd5yU3vhzpDhtLDUnMyawptSSEgAOs8RrIb
-         S67aGuKJCoKOZuiLluGAtr2iEcBnmqHPQ5OylU052ZfUXGN8QdloQo5b1WEOQtLWqd7x
-         WyE+8C90oXLBeLKCOoTgRgDej2rmIHRC/4h/MU1knbwdtnuXwPlV+yIcNCaqWpIoRLUH
-         sGVzGKauXy6o7X39oGm4E8ccrHgFpEULrfcCLtohlZO6DxCqHxr7c5j6Tk/gdNmgIUiX
-         K5dw==
-X-Received: by 10.50.67.105 with SMTP id m9mr1321509igt.34.1381467431776;
-        Thu, 10 Oct 2013 21:57:11 -0700 (PDT)
-Received: from [192.168.101.101] ([199.180.99.42])
-        by mx.google.com with ESMTPSA id x6sm1557506igb.3.2013.10.10.21.57.10
-        for <git@vger.kernel.org>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Thu, 10 Oct 2013 21:57:11 -0700 (PDT)
-X-Mailer: Evolution 3.8.5 (3.8.5-2.fc19) 
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ri7N6BerCC22gtiFx9CFmA4tbZ+kI1c9yxnGVJiQJc4=;
+        b=jEsG63X5lmj/jB6DvaLm1k6RCJJ5N4UMXPxmcDM9hWcYtxfyu5+ngx0yWztIBzsYdv
+         EIf5MR6gKy00n9BuOHM2gWgDy2K/3Rp5Gyd4ySxIRIseDIthPTucSF1Gtv3BeOLfz3/d
+         JBRokz/mJ9bQahQr5Ed6kXTnCwWenh4dhT3k+czk19yuEdpBLuR/cHgOEqYU/gsxj3HE
+         ib/Af1Otw6knvGVTR/HyM0/DO+tUQheYkJIhEzC/Kld9BD7AmbA4DHlNQSVltx9+4BIw
+         UpmjCs/wJLS+0lmxvye6RKfFrQZluIj+slo+XE4czbt5td4WsxLg2pZQjiX7qFes+0+0
+         yWEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=ri7N6BerCC22gtiFx9CFmA4tbZ+kI1c9yxnGVJiQJc4=;
+        b=FkVMlmEMk1nDy2Vj3OwZTS4MVCEDfuEee6vWY6cx8O6kbNq+7EwWJazVaP5iUrxp9Y
+         iD1LNyrW6FRThvSTQomMiSwjMjBxPexvH66mempMbn7hUOPc80p+ltHj48J3TdpgZ/HD
+         6HcY4GY/3nGDbrB3nr5w4Kxn9UjDBA9AUMu997hY/tggV84lRmfT7gkw2Avf/3P7TK/h
+         y3zg2fS21EmqETvIU5UYaQx0najQ5JN0mtXmu83VUnDX+moMycvpHKQzUcluDnNSelTK
+         Ho/m00jUtdrDdNtgVSrMl/N27jD93MHXGj+SAa7IXTWXLzs8ll4paiJJAsh2OTwngSML
+         1k9w==
+X-Gm-Message-State: ALoCoQkeExLe9AUloazq8f4PCe+tW0zvS+ZfvqQhaVkpw9lEm3pE9pJGxof+2vWZrNF4UG62pLDQXDsHfnTvHh3u39+Pr+MuE/TtpxKnPVFE1SE9sIj0RIWtaIbMNZteBMRJkyQSXr98Muf28+4T9kzJexMXSWglbKzAPfTg2Xu0AMJOyP7Cn2yzGH40vNLNu3de/1f0Bm6w
+X-Received: by 10.220.181.136 with SMTP id by8mr20046876vcb.11.1381469748039;
+ Thu, 10 Oct 2013 22:35:48 -0700 (PDT)
+Received: by 10.52.115.165 with HTTP; Thu, 10 Oct 2013 22:35:47 -0700 (PDT)
+In-Reply-To: <52574B90.3070309@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235893>
 
+On Thu, Oct 10, 2013 at 5:51 PM, Karsten Blees <karsten.blees@gmail.com>wrote:
 
---=-vFoi33qjRe3I9KKKrrLa
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> >> I've noticed that when working with a very large repository using msys
+> >> git, the initial checkout of a cloned repository is excruciatingly
+> >> slow (80%+ of total clone time).  The root cause, I think, is that git
+> >> does all the file access serially, and that's really slow on Windows.
+> >>
+>
+> What exactly do you mean by "excruciatingly slow"?
+>
+> I just ran a few tests with a big repo (WebKit, ~2GB, ~200k files). A full
+> checkout with git 1.8.4 on my SSD took 52s on Linux and 81s on Windows.
+> Xcopy /s took ~4 minutes (so xcopy is much slower than git). On a 'real' HD
+> (WD Caviar Green) the Windows checkout took ~9 minutes.
 
-As discussed on #git irc:
+I'm using blink for my test, which should be more or less indistinguishable
+from WebKit.  I'm using a standard spinning disk, no SSD.  For my purposes,
+I need to optimize this for "standard"-ish hardware, not best-in-class.
 
-git init
-vim file1
-vim file2
-git add file1
-git add file2
-git commit -m 'foo'
-vim file1
-vim file2
-vim file3
-vim file4
-git add -p file1 # add part of file1, use 'e' to change code too.
-git add file2 # add all of file2
-git add file3
-git stash # do a stash
+For my test, I first run 'git clone -n <repo>', and then measure the
+running time of 'git checkout --force HEAD'.  On linux, the checkout
+command runs in 0:12; on Windows, it's about 3:30.
 
-hack hack hack
-git add, commit.
+> If your numbers are much slower, check for overeager virus scanners and
+> probably the infamous "User Account Control" (On Vista/7 (8?), the
+> luafv.sys driver slows down things on the system drive even with UAC turned
+> off in control panel. The driver can be disabled with "sc config luafv
+> start= disabled" + reboot. Reenable with "sc config luafv start= auto").
 
-git stash apply
-# whoa! all my changes to index are gone!
+I confess that I am pretty ignorant about Windows, so I'll have to research
+these.
 
-fail fail... :( sad sad.
+>> Has anyone considered threading file access to speed this up?  In
+> >> particular, I've got my eye on this loop in unpack-trees.c:
+> >>
+>
+> Its probably worth a try, however, in my experience, doing disk IO in
+> parallel tends to slow things down due to more disk seeks.
 
-git reset HEAD
-git stash apply --index
+> I'd rather try to minimize seeks, ...
+>
 
-# phew, there are my changes.
-git stash apply --index # the --index should be the default!
+In my experience, modern disk controllers are very very good at this; it
+rarely, if ever, makes sense to try and outsmart them.
 
-# WORSE:
-if you:
-git stash pop
-then DATA LOSS. (because you forgot the --index)
+But, from talking to Windows-savvy people, I believe the issue is not disk
+seek time, but rather the fact that Windows doesn't cache file stat
+information.  Instead, it goes all the way to the source of truth (i.e.,
+the physical disk) every time it stats a file or directory.  That's what
+causes the checkout to be so slow: all those file stats run serially.
 
-Made this super clear. #git agrees this is a bug, if only a UI default
-bug. Pretty serious though.
+Does that sound right?  I'm prepared to be wrong about this; but if no one
+has tried it, then it's probably at least worth an experiment.
 
-Cheers,
+Thanks,
 
-James
-
-PS: please cc me on replies, as I'm not subscribed to list.
-
-
---=-vFoi33qjRe3I9KKKrrLa
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAABAgAGBQJSV4UmAAoJEKDo88AkCQ1mi2MQAIgC+bki5QNuDVMZGsmJvVzN
-BnY2ahEhvIsESRMkTBiszb+SUS33rqxorQeGrk2GUf7/+rlZpzlxfi5CHOjkZDMC
-fkloQK4GOv6AvTJq/lYFGL2xrdEZ4F/YomvgI8RfXe+KzRDXcSObcDCF+ZMnKx12
-67mgN6vi5OHoN1cDNGwKMme7EuuQ91Qb1rHfXbDxPz/3EBqXwswi3fxEcNjabqKa
-UL0A+oKIUh/y/Hm117QSxeDILMcAXYGQMEjFDAXGflo0h0kK2cxk7kTtVGmXbY5k
-W2R+C6jA82JglpIM5WLxj2RuxJ3+EI+DnSgBNIiR8N4w0dM8CkD0dfxuN8y8IUsQ
-cdu2XuzjSpcrKqAVSams4mBKf3nBU49cU/BG0Mmp5mElh4xx+cMYFPLSJkiW7dgo
-+eKkvg7tJDcchhCLsovI+h5Kh+7CAPdfCF/Sp3da7lfxglhml7x9JYO2+6i18KDr
-Tg4IQp1bffhQ4S03lpwZaSS4Oy15JxDYo+T65DbZuDliH+Z/gkRqNAtMODpOeYjr
-cI+xjjAdn832OXP0xvFEprkI2TOrpYTMWPendx3DhYheec67u5a6s5NxhLG0dlLG
-lXYeRJjX9Y7dLmHLpKN+lRgFUJKnHCjMdGxVFfG/H+6cSp0TuwWDAbKM4HNqRNHw
-MNFKUmgmpUrU+92/MhGK
-=Kv1D
------END PGP SIGNATURE-----
-
---=-vFoi33qjRe3I9KKKrrLa--
+Stefan
