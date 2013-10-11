@@ -1,89 +1,83 @@
-From: "jones.noamle@gmail.com" <jones.noamle@gmail.com>
-Subject: Bug in git clean
-Date: Fri, 11 Oct 2013 15:05:27 -0400
-Message-ID: <CAMUDzVQqUT91OTbC21pke6jzF8kWBZJAvnyvHhrt-O3=y5bJLQ@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] howto/setup-git-server-over-http.txt: Fix asciidoc formatting
+Date: Fri, 11 Oct 2013 20:38:36 +0100
+Message-ID: <525853BC.7090501@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 11 21:05:55 2013
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 11 21:38:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUi26-0006av-T3
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Oct 2013 21:05:55 +0200
+	id 1VUiY2-0002uX-3M
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Oct 2013 21:38:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756085Ab3JKTFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Oct 2013 15:05:49 -0400
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:52382 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755999Ab3JKTFs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Oct 2013 15:05:48 -0400
-Received: by mail-pb0-f54.google.com with SMTP id ro12so4638762pbb.41
-        for <git@vger.kernel.org>; Fri, 11 Oct 2013 12:05:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=8R7Kqf9miQy0rIbZ4fPNWVaSMulUPhKbOFTxksxRxWs=;
-        b=XS1H3YqbPJg7rLapQdVuRrrGLfXPsWy0DCytj71l8kLBE/0bpXfpPgoOx24b68U2Hz
-         WAeiMQlhXGBGSaHJ1knJPafW9AzzbBNpREVMfgCxpF6UlC+8yabmeqvSiqZMZRxft29b
-         jmrWYSMIsB+TlRBTeFXzjvq1wZqJw2ERtHfwptGJa/uXRDazBZACtK6OChUJRfUg8wI/
-         QFrtqn3nUAt1evjKGu3NhqxOKVgB7C2dcRDRALCpr+A4LGV9HpLlpLVJfw/w+iTWlXf5
-         KiaipJHNku2eixj7UdR1nhtWWcjgBNBgbp44c7+tSqJBl2wUh9N5A24wUOebyFQ0jkd8
-         GvYw==
-X-Received: by 10.68.244.2 with SMTP id xc2mr21731663pbc.58.1381518347948;
- Fri, 11 Oct 2013 12:05:47 -0700 (PDT)
-Received: by 10.66.83.1 with HTTP; Fri, 11 Oct 2013 12:05:27 -0700 (PDT)
+	id S1757378Ab3JKTin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Oct 2013 15:38:43 -0400
+Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:52765 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756637Ab3JKTik (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Oct 2013 15:38:40 -0400
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id C95507C1E6;
+	Fri, 11 Oct 2013 20:38:38 +0100 (BST)
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 9A0007C1CF;
+	Fri, 11 Oct 2013 20:38:38 +0100 (BST)
+Received: from [192.168.254.8] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
+	Fri, 11 Oct 2013 20:38:38 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.0
+X-MDF-HostID: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235921>
 
-Hi.
 
-Passing to git clean wrong (non-existent) paths together with valid
-ones, causes it to delete stuff that it shouldn't.
-Am I right?
-Script to reproduce:
+The text contains two 'grep' invocations which include the 'start
+of line' regular expression character '^'. Asciidoc mis-interprets
+this use of '^' as a superscript request. In order to fix this
+formatting problem, use backticks (`) to quote the text of the
+affected 'grep' command invocations.
 
-mkdir test
-cd test
-git init .
-mkdir ba
-mkdir ba/ca
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-# So far so good.
-# Should clean directory "ba/ca"
-git clean -dn -- ba/ca
+Hi Jonathan,
 
-# Should clean "ba/ca" and ignore non-existent "j"
-# Instead, it wants to delete "ba" totally.
-git clean -dn -- ba/ca j
+    $ git grep '\^' Documentation/howto
 
-git --version
+pointed me to some other candidates, but only this one needed a
+similar fix ... :-D
 
----------------------------------------------------------------------
-Output:
+ATB,
+Ramsay Jones
 
-+ mkdir test
-+ cd test
-+ git init .
-Initialized empty Git repository in /home/notroot/test/.git/
-+ mkdir ba
-+ mkdir ba/ca
-+ git clean -dn -- ba/ca
-Would remove ba/ca/
-+ git clean -dn -- ba/ca j
-Would remove ba/
-+ git --version
-git version 1.7.9.5
+ Documentation/howto/setup-git-server-over-http.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
----------------------------------------------------------------------
-
-Tested on linux (version 1.7.9.5) and cygwin (1.7.9)
-
-Thanks!
-Noam Lewis
-Hadas Nahon
+diff --git a/Documentation/howto/setup-git-server-over-http.txt b/Documentation/howto/setup-git-server-over-http.txt
+index 7f4943e..981cbdd 100644
+--- a/Documentation/howto/setup-git-server-over-http.txt
++++ b/Documentation/howto/setup-git-server-over-http.txt
+@@ -81,8 +81,8 @@ Initialize a bare repository
+     $ git --bare init
+ 
+ 
+-Change the ownership to your web-server's credentials. Use "grep ^User
+-httpd.conf" and "grep ^Group httpd.conf" to find out:
++Change the ownership to your web-server's credentials. Use `"grep ^User
++httpd.conf"` and `"grep ^Group httpd.conf"` to find out:
+ 
+     $ chown -R www.www .
+ 
+-- 
+1.8.4
