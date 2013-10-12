@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH try2 06/14] stash: add --stage option to save
-Date: Sat, 12 Oct 2013 02:04:48 -0500
-Message-ID: <1381561488-20294-15-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH try2 05/14] rm: add --staged option
+Date: Sat, 12 Oct 2013 02:04:42 -0500
+Message-ID: <1381561488-20294-9-git-send-email-felipe.contreras@gmail.com>
 References: <1381561488-20294-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>,
@@ -14,111 +14,89 @@ Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:11:52 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:11:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtMa-0004MJ-9f
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:11:48 +0200
+	id 1VUtMX-0004MJ-43
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753828Ab3JLHLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:11:35 -0400
-Received: from mail-oa0-f52.google.com ([209.85.219.52]:43327 "EHLO
-	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753816Ab3JLHLb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:11:31 -0400
-Received: by mail-oa0-f52.google.com with SMTP id n2so3106425oag.39
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:31 -0700 (PDT)
+	id S1753638Ab3JLHLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:11:16 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:65324 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753595Ab3JLHLO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:11:14 -0400
+Received: by mail-oa0-f41.google.com with SMTP id n10so3156292oag.0
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3LKQoqt6c9wcyKwxavDlNf6Zs5ainVLBM9c7zQ+Jw0M=;
-        b=HgmZUC5w3tmz71Qz7aHNdxz+zqIhopdnRpUUHrVtZAC1tdgmal2uWPFjDweX9wzwdW
-         aoZqu1DgPWYvOxekoCCi5hs+zM4BcEq53NE282hhAukEFLUBR0afWZTqgmW34NO+Wu3U
-         DYQ9Tp9rETwrAVY6+OdU+8OdrSIw7LKj0zXp1tcVuY1Fzb/EilUCQ20sBkpRh/FIZebH
-         iGUKomtE56r0LiWxZVezKHLqXNcotVhFtAz46waP30C99ZFwiiGOmTQpCHrA0boHX/kd
-         OWTYe/e0s83QIR+utw+6K9JEh6dH8oNx1aJbaglJvH6rWtErlCAAqPX/Zg0yJJQCM7ed
-         MjrA==
-X-Received: by 10.182.40.134 with SMTP id x6mr17793184obk.31.1381561891192;
-        Sat, 12 Oct 2013 00:11:31 -0700 (PDT)
+        bh=cgGNg6iL73Z/eeNgkG+FPWDUhJKSkw8Boo6R9JoegUQ=;
+        b=pzvl1cSpdTTrnN+mUBY3kq4vdR2jjrw8Zm38YU6Gay69lY4Dzgjuj9xTxZK1B/aP+m
+         9SStgQiS3NMjUgGGk3Kb2MK6cvNdTh/yySssXDbNp6uVlPsFLgjG0c3laguEwvXS4Ric
+         cQv2+l4jweoEJcbI3msA1BK5k9ItVHza8ZTqjQM+tUtbNymuJKbzB9cXvoGary1ZK7EN
+         fagHLd4e2hk76pYgbaVEJjJbcK5E8UAScp8re0CZnwaWTzyPK/pAY7PzZ7ApdSipcD0Q
+         bXCaL2BG0oZAXc3uj3JMCdmrMrI9sQ0XNNL6UaNmpxfTMgXnopU8UdIH/hXq7TCYXIU+
+         Lpmw==
+X-Received: by 10.182.18.9 with SMTP id s9mr10352457obd.15.1381561873506;
+        Sat, 12 Oct 2013 00:11:13 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id tz10sm28644848obc.10.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id j9sm101391112oef.8.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:11:30 -0700 (PDT)
+        Sat, 12 Oct 2013 00:11:12 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381561488-20294-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235976>
 
---no-stage is synonym for --keep-index.
+Synonym for --cached.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-stash.txt | 6 +++---
- git-stash.sh                | 8 +++++++-
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ Documentation/git-rm.txt | 5 ++++-
+ builtin/rm.c             | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index db7e803..75b4cc6 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 'git stash' drop [-q|--quiet] [<stash>]
- 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
- 'git stash' branch <branchname> [<stash>]
--'git stash' [save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
-+'git stash' [save [-p|--patch] [-k|--[no-]keep-index|--[no-]stage] [-q|--quiet]
- 	     [-u|--include-untracked] [-a|--all] [<message>]]
- 'git stash' clear
- 'git stash' create [<message>]
-@@ -44,7 +44,7 @@ is also possible).
- OPTIONS
- -------
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index 1d876c2..156b40d 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -8,7 +8,7 @@ git-rm - Remove files from the working tree and from the index
+ SYNOPSIS
+ --------
+ [verse]
+-'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>...
++'git rm' [-f | --force] [-n] [-r] [--cached | --staged] [--ignore-unmatch] [--quiet] [--] <file>...
  
--save [-p|--patch] [--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
-+save [-p|--patch] [--[no-]keep-index|--[no-]stage] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
+ DESCRIPTION
+ -----------
+@@ -60,6 +60,9 @@ OPTIONS
+ 	Working tree files, whether modified or not, will be
+ 	left alone.
  
- 	Save your local modifications to a new 'stash', and run `git reset
- 	--hard` to revert them.  The <message> part is optional and gives
-@@ -54,7 +54,7 @@ save [-p|--patch] [--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--
- 	subcommand from making an unwanted stash.
- +
- If the `--keep-index` option is used, all changes already added to the
--index are left intact.
-+index are left intact. Same with `--no-stage`, which is a snynonym.
- +
- If the `--include-untracked` option is used, all untracked files are also
- stashed and then cleaned up with `git clean`, leaving the working directory
-diff --git a/git-stash.sh b/git-stash.sh
-index 1e541a2..47220d0 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -7,7 +7,7 @@ USAGE="list [<options>]
-    or: $dashless drop [-q|--quiet] [<stash>]
-    or: $dashless ( pop | apply ) [--index] [-q|--quiet] [<stash>]
-    or: $dashless branch <branchname> [<stash>]
--   or: $dashless [save [--patch] [-k|--[no-]keep-index] [-q|--quiet]
-+   or: $dashless [save [--patch] [-k|--[no-]keep-index|--[no-]stage] [-q|--quiet]
- 		       [-u|--include-untracked] [-a|--all] [<message>]]
-    or: $dashless clear"
++--staged::
++	Synonym for --cached.
++
+ --ignore-unmatch::
+ 	Exit with a zero status even if no files matched.
  
-@@ -204,6 +204,12 @@ save_stash () {
- 		--no-keep-index)
- 			keep_index=n
- 			;;
-+		--stage)
-+			keep_index=n
-+			;;
-+		--no-stage)
-+			keep_index=t
-+			;;
- 		-p|--patch)
- 			patch_mode=t
- 			# only default to keep if we don't already have an override
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 0df0b4d..919911f 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -268,6 +268,7 @@ static struct option builtin_rm_options[] = {
+ 	OPT__DRY_RUN(&show_only, N_("dry run")),
+ 	OPT__QUIET(&quiet, N_("do not list removed files")),
+ 	OPT_BOOLEAN( 0 , "cached",         &index_only, N_("only remove from the index")),
++	OPT_BOOLEAN( 0 , "staged",         &index_only, N_("only remove from the index")),
+ 	OPT__FORCE(&force, N_("override the up-to-date check")),
+ 	OPT_BOOLEAN('r', NULL,             &recursive,  N_("allow recursive removal")),
+ 	OPT_BOOLEAN( 0 , "ignore-unmatch", &ignore_unmatch,
 -- 
 1.8.4-fc
