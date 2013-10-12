@@ -1,88 +1,73 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 1/5] pull: rename pull.rename to pull.mode
-Date: Sat, 12 Oct 2013 01:21:28 -0500
-Message-ID: <CAMP44s1i3bxGtvMS38j3Tk5gKAZEHSKf5MBF2qJ_ReBApA1u7Q@mail.gmail.com>
-References: <1378689796-19305-1-git-send-email-felipe.contreras@gmail.com>
-	<1378689796-19305-2-git-send-email-felipe.contreras@gmail.com>
-	<522E3C6A.3070409@bbn.com>
-	<CAMP44s1OyST3S1HEdS38WPsjq6w9SekuwT4DRUgVvduATox9tw@mail.gmail.com>
-	<20130910022152.GA17154@sigill.intra.peff.net>
-	<CAMP44s1FfQ-1pAK8T1cmiZk4i17HnpvzPwuZrzHiiXSmGzbrRw@mail.gmail.com>
-	<vpqmwnljdmn.fsf@anie.imag.fr>
-	<52589027a4851_5dc4c2be742754f@nysa.mail>
-	<20131012005035.GA27939@sigill.intra.peff.net>
-	<CAMP44s2y0UZ9uS8xtG2WDD=k5pHSG+K+_WM2dj-DVaUDy4djdA@mail.gmail.com>
-	<20131012012515.GA1778@sigill.intra.peff.net>
-	<CAMP44s3669E7JyEjP_ErYt7JN2eHv0mX4+p_=ZP4_LDatnw2vg@mail.gmail.com>
-	<5258D2D3.9030704@bbn.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>,
-	John Keeping <john@keeping.me.uk>,
-	Philip Oakley <philipoakley@iee.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Sat Oct 12 08:21:43 2013
+Subject: [PATCH try2 0/2] branch: improve verbose option
+Date: Sat, 12 Oct 2013 02:00:27 -0500
+Message-ID: <1381561229-19947-1-git-send-email-felipe.contreras@gmail.com>
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:06:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUsa3-0006b8-9W
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 08:21:39 +0200
+	id 1VUtHX-0001Bb-F1
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:06:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752350Ab3JLGVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 02:21:31 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:32863 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751393Ab3JLGV3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 02:21:29 -0400
-Received: by mail-la0-f42.google.com with SMTP id ep20so4238978lab.1
-        for <git@vger.kernel.org>; Fri, 11 Oct 2013 23:21:28 -0700 (PDT)
+	id S1752214Ab3JLHGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:06:31 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:43007 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750711Ab3JLHGb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:06:31 -0400
+Received: by mail-ob0-f178.google.com with SMTP id uz6so3435874obc.37
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:06:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=PSMovsFmiNtpRH/BIGfOfg5T0eW43Yo0hD1uFDNyo+s=;
-        b=O/F+ZewvuFOKCn6jobt5NnyIh78EkA8Zq2VL6EjRYcMpo2OG2pzDL5lkUO039fu3GA
-         5Kfu/ocuAtNOw3jH6+UiZ+RPZWzJ/Jxl8ehGSSW8kFY/SjS4oW8JqJvFEUyD8xuDc8DK
-         sFERG3/yw25gV8mLQKJRCgTUGV+/CwJEN1VQ6fMdMrEVW859iVDLsa063vEvM8bBPMMA
-         JlxoHgJyBDDZaIJlF4DcecyVjVP7qLFPK/xjn+J1NE6RLxif1Lv31pvKXDLW2m3uV4B4
-         J296+4bIrvjryKT+R3vxeMnT4NVf4HnJnfh+OpO/EyVm7mZVTvSPVlypJ7mMjO6WGgB9
-         pbOg==
-X-Received: by 10.152.28.7 with SMTP id x7mr858893lag.26.1381558888117; Fri,
- 11 Oct 2013 23:21:28 -0700 (PDT)
-Received: by 10.114.91.230 with HTTP; Fri, 11 Oct 2013 23:21:28 -0700 (PDT)
-In-Reply-To: <5258D2D3.9030704@bbn.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=ClEREHmswQ43sYlguVXsYCpE6Y1bRhhboqmSVO5XaJM=;
+        b=mV+lwkAnrv6Xi8ak7kvKwWtzIaKY+OPmCPT6LF9AYrtmQt/lffwldvQNOvK2I4DYrj
+         VX95mdH2WEX/g0WE/uEkpqve4TLT6lYNoT+ynDJpV9X1Krqzzt8okSbDuSiUymTQrEXn
+         /Dn2rpUwaIhOh/JPKPM4aMg09F9V/5eIaCwvTVavm+VcPS10llZDXFJnu3M7jC+d+BM1
+         5McA3JG9KmMmF3BXcemF9CfIArP1GesdkSZ4KHEk6mGaTqgK5cOzxydnYT4jnCGLXlOt
+         5NUcFFVlCnryEw4deBGGtNxmGhvHm777eIc8/IDOHwSRCqnQUVfOkFzj7tWNBXNQz0Kc
+         pyeQ==
+X-Received: by 10.182.129.201 with SMTP id ny9mr17884114obb.0.1381561590518;
+        Sat, 12 Oct 2013 00:06:30 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id s9sm28616638obu.4.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 12 Oct 2013 00:06:29 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4-fc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235945>
 
-On Fri, Oct 11, 2013 at 11:40 PM, Richard Hansen <rhansen@bbn.com> wrote:
-> On 2013-10-11 22:08, Felipe Contreras wrote:
->> I'm fine with 'echo "warning: foo" >&2', but still, if you really
->> cared about consistency, there would be a warn() function
->
-> So add one!  It's only one simple line:
->
->     warning() { printf %s\\n "warning: $*" >&2; }
+This has been discussed before:
 
-It probably should be
+http://thread.gmane.org/gmane.comp.version-control.git/224489
 
-warning () {
-  printf 'warning: %s\n' "$*" >&2
-}
+but in the spirit of the perfect being the enemy of the good, nothing got done.
 
-But why don't _you_ do it? I have enough patches being ignored to add
-more to the list, specially for something I care nothing about.
+This series makes 'git branch -v' much faster, and gives us the most important
+information; the configured upstream tracking branch. Showing ahead/behind is
+not as important, specially considering that currently 'git branch -v' doesn't
+show the branch we are comparing the ahead/behind to.
 
-> So much discussion for something so trivial...
+Strictly speaking it's a regression, but nobody would complain, and if somebody
+does, it should be easy to revert if needed.
 
-Trivial things are what cause more discussion.
+Felipe Contreras (2):
+  branch: trivial cleanup
+  branch: reorganize verbose options
+
+ builtin/branch.c         | 33 +++++++++++++++------------------
+ t/t6040-tracking-info.sh |  8 ++++----
+ 2 files changed, 19 insertions(+), 22 deletions(-)
 
 -- 
-Felipe Contreras
+1.8.4-fc
