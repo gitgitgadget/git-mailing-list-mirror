@@ -1,10 +1,8 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH try2 5/8] branch: allow configuring the publish branch
-Date: Sat, 12 Oct 2013 02:06:01 -0500
-Message-ID: <1381561561-20459-9-git-send-email-felipe.contreras@gmail.com>
-References: <1381561561-20459-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Matthieu Moy <matthieu.moy@imag.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
+Subject: [PATCH v10 14/15] contrib: related: add option to show commits
+Date: Sat, 12 Oct 2013 02:06:09 -0500
+Message-ID: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Duy Nguyen <pclouds@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:40 2013
@@ -13,238 +11,121 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtNK-0004uk-7j
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:34 +0200
+	id 1VUtNK-0004uk-Oe
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754037Ab3JLHMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:12:25 -0400
-Received: from mail-oa0-f42.google.com ([209.85.219.42]:46643 "EHLO
-	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754022Ab3JLHMX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:12:23 -0400
-Received: by mail-oa0-f42.google.com with SMTP id g12so3119986oah.1
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:22 -0700 (PDT)
+	id S1754048Ab3JLHM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:12:28 -0400
+Received: from mail-oa0-f50.google.com ([209.85.219.50]:34395 "EHLO
+	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754022Ab3JLHM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:12:26 -0400
+Received: by mail-oa0-f50.google.com with SMTP id j1so3067115oag.23
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tSv4R6fT85BD4mMCh94M7qHFf4eC0onLjYxzPows1g0=;
-        b=I+vjALt4YCCx2DeX1qAmA9Mre7MfPdWNMWxJIdSo/FkAe4oLEzfBXwtAASxwMjGJtp
-         HZQBk1yVjjNg23+keGB02FHJ9Lh4rJFatyJwTpA1JjUJDcxNGGgRvwW2D5IdAwd259YW
-         jiehJZ+3xRhgG8M56aST1ds5v2BBDSCfjFw4uc5yR4bKH89b5OcqeOfmkSv+bO4yvO7h
-         YKI1mkTnpahReeWZXzZIMK1JUjXuWDOP1AgSxqMoWLXrrOqkyIfYKNz6dw2ZjICBUKZ+
-         E97GNI66HMgEb8dk2iM0WPnDnF7Sg43IAmnAaWQSocBI4Zo9SH7ZPHjjy4y1l4KYXZ3I
-         xlgQ==
-X-Received: by 10.60.62.101 with SMTP id x5mr17811522oer.24.1381561942916;
-        Sat, 12 Oct 2013 00:12:22 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=dv73BQabrEEVS6sYKuS7TSUKHZiZk7V6+bdzH/8NpR0=;
+        b=vl0eLVwR8tPJFfgenNBzEvLG6pi1ss8dpHzkg6tsHMQNGMDGkcE7ErMaDv25qZ/ygj
+         FBaMgmZrlgfomfQyhciGTV3Rc3Z8b6aaNqx/+dkBIf4V30fGfjP9KORsqBvcLZgbygTz
+         zrKE90Zi72jtb4NnYoFQR2fWBSR3bB1L6ubuUgLmYl6pDHfB5FwhXQc5pjPsMANE6AFh
+         wgjsxIs5ZAubeMEhU6r92NQtpQlC0m4km4NKMIVwg7eszvtfDRDRVB0KnLIzYSj0KYKp
+         WRblrJiVDMDHn6/6JAxnHgXHRrywEdKKpPucOBLliXjKfrPKRl/rI/C81p+FZWDRXm3U
+         SUmA==
+X-Received: by 10.60.80.8 with SMTP id n8mr17665121oex.33.1381561945681;
+        Sat, 12 Oct 2013 00:12:25 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id wd7sm28635856obc.3.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id rl1sm101382909oeb.7.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:12:22 -0700 (PDT)
+        Sat, 12 Oct 2013 00:12:24 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
-In-Reply-To: <1381561561-20459-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235992>
+
+Instead of showing the authors and signers, show the commits themselves.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-branch.txt | 11 +++++++++
- branch.c                     | 43 ++++++++++++++++++++++++++++++++++
- branch.h                     |  2 ++
- builtin/branch.c             | 56 ++++++++++++++++++++++++++++++++++++++++----
- 4 files changed, 108 insertions(+), 4 deletions(-)
+ contrib/related/git-related    | 23 +++++++++++++++++++++++
+ contrib/related/test-related.t | 10 ++++++++++
+ 2 files changed, 33 insertions(+)
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index b7cb625..1bf9b2a 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -14,7 +14,9 @@ SYNOPSIS
- 	[(--merged | --no-merged | --contains) [<commit>]] [<pattern>...]
- 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
- 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
-+'git branch' (--set-publish-to=<publish> | -p <publish>) [<branchname>]
- 'git branch' --unset-upstream [<branchname>]
-+'git branch' --unset-publish [<branchname>]
- 'git branch' (-m | -M) [<oldbranch>] <newbranch>
- 'git branch' (-d | -D) [-r] <branchname>...
- 'git branch' --edit-description [<branchname>]
-@@ -189,6 +191,15 @@ start-point is either a local or remote-tracking branch.
- 	Remove the upstream information for <branchname>. If no branch
- 	is specified it defaults to the current branch.
+diff --git a/contrib/related/git-related b/contrib/related/git-related
+index d6b44c7..b9c8619 100755
+--- a/contrib/related/git-related
++++ b/contrib/related/git-related
+@@ -7,6 +7,7 @@ $since = '5-years-ago'
+ $min_percent = 10
+ $files = []
+ $rev_args = []
++$show_commits = false
  
-+-p <publish>::
-+--set-publish-to=<publish>::
-+	Set up <branchname>'s publish tracking information. If no
-+	<branchname> is specified, then it defaults to the current branch.
-+
-+--unset-publish::
-+	Remove the publish information for <branchname>. If no branch
-+	is specified it defaults to the current branch.
-+
- --edit-description::
- 	Open an editor and edit the text to explain what the branch is
- 	for, to be used by various other commands (e.g. `request-pull`).
-diff --git a/branch.c b/branch.c
-index c5c6984..02495e3 100644
---- a/branch.c
-+++ b/branch.c
-@@ -144,6 +144,49 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
- 	return 0;
- }
+ $mailmaps = {}
+ $mailmaps_complex = {}
+@@ -128,6 +129,10 @@ opts.on('d', 'since', 'How far back to search for relevant commits') do |v|
+   $since = v
+ end
  
-+void install_branch_publish(const char *name, const char *remote, const char *remote_ref)
-+{
-+	struct strbuf key = STRBUF_INIT;
++opts.on('c', 'commits', 'List commits instead of persons') do |v|
++  $show_commits = v
++end
 +
-+	if (!remote && !strcmp(name, remote_ref + 11) && !prefixcmp(remote_ref, "refs/heads")) {
-+		warning(_("Not setting branch %s as its own publish branch."), name);
-+		return;
-+	}
-+
-+	strbuf_addf(&key, "branch.%s.pushremote", name);
-+	git_config_set(key.buf, remote ? remote : ".");
-+
-+	strbuf_reset(&key);
-+	strbuf_addf(&key, "branch.%s.push", name);
-+	git_config_set(key.buf, remote_ref);
-+
-+	strbuf_release(&key);
-+}
-+
-+int setup_publish(const char *name, const char *ref)
-+{
-+	struct tracking tracking;
-+	const char *remote, *remote_ref;
-+
-+	memset(&tracking, 0, sizeof(tracking));
-+	tracking.spec.dst = (char*)ref;
-+	if (for_each_remote(find_tracked_branch, &tracking))
-+		return 1;
-+
-+	if (tracking.matches > 1)
-+		return error(_("Not tracking: ambiguous information for ref %s"),
-+				ref);
-+
-+	remote = tracking.remote;
-+	remote_ref = tracking.src ? tracking.src : ref;
-+
-+	install_branch_publish(name, remote, remote_ref);
-+
-+	free(tracking.src);
-+
-+	return 0;
-+}
-+
- struct branch_desc_cb {
- 	const char *config_name;
- 	const char *value;
-diff --git a/branch.h b/branch.h
-index 64173ab..c9b6aa9 100644
---- a/branch.h
-+++ b/branch.h
-@@ -51,5 +51,7 @@ extern void install_branch_config(int flag, const char *local, const char *origi
-  * Read branch description
-  */
- extern int read_branch_desc(struct strbuf *, const char *branch_name);
-+extern int setup_publish(const char *name, const char *ref);
-+extern void install_branch_publish(const char *name, const char *remote, const char *remote_ref);
+ opts.parse
  
- #endif
-diff --git a/builtin/branch.c b/builtin/branch.c
-index baa1d31..cf33e1c 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -778,8 +778,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	int delete = 0, rename = 0, force_create = 0, list = 0;
- 	int verbose = 0, abbrev = -1, detached = 0;
- 	int reflog = 0, edit_description = 0;
--	int quiet = 0, unset_upstream = 0;
--	const char *new_upstream = NULL;
-+	int quiet = 0, unset_upstream = 0, unset_publish = 0;
-+	const char *new_upstream = NULL, *publish = NULL;
- 	enum branch_track track;
- 	int kinds = REF_LOCAL_BRANCH;
- 	struct commit_list *with_commit = NULL;
-@@ -794,7 +794,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_SET_INT( 0, "set-upstream",  &track, N_("change upstream info"),
- 			BRANCH_TRACK_OVERRIDE),
- 		OPT_STRING('u', "set-upstream-to", &new_upstream, "upstream", "change the upstream info"),
-+		OPT_STRING('p', "set-publish-to", &publish, "publish", "change the publish info"),
- 		OPT_BOOLEAN(0, "unset-upstream", &unset_upstream, "Unset the upstream info"),
-+		OPT_BOOLEAN(0, "unset-publish", &unset_publish, "Unset the publish info"),
- 		OPT__COLOR(&branch_use_color, N_("use colored output")),
- 		OPT_SET_INT('r', "remotes",     &kinds, N_("act on remote-tracking branches"),
- 			REF_REMOTE_BRANCH),
-@@ -863,13 +865,15 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
- 			     0);
+ class Person
+@@ -238,6 +243,10 @@ class Commits
+     @items.each(&block)
+   end
  
--	if (!delete && !rename && !edit_description && !new_upstream && !unset_upstream && argc == 0)
-+	if (!delete && !rename && !edit_description && !new_upstream && !publish &&
-+			!unset_upstream && !unset_publish && argc == 0)
- 		list = 1;
++  def list
++    @items.keys
++  end
++
+   def import
+     return if @items.empty?
+     File.popen(%w[git cat-file --batch], 'r+') do |p|
+@@ -339,6 +348,20 @@ else
+ end
+ commits.import
  
- 	if (with_commit || merge_filter != NO_FILTER)
- 		list = 1;
++if $show_commits
++  cmd = nil
++  case $show_commits
++  when 'raw'
++    puts commits.list
++  when 'full'
++    cmd = %w[git log --patch --no-walk]
++  else
++    cmd = %w[git log --oneline --no-walk]
++  end
++  system(*cmd + commits.list) if cmd
++  exit 0
++end
++
+ persons = Persons.new
  
--	if (!!delete + !!rename + !!force_create + !!list + !!new_upstream + !!unset_upstream > 1)
-+	if (!!delete + !!rename + !!force_create + !!list + !!new_upstream + !!publish +
-+			!!unset_upstream + !! unset_publish > 1)
- 		usage_with_options(builtin_branch_usage, options);
+ persons.sort.reverse.each do |person|
+diff --git a/contrib/related/test-related.t b/contrib/related/test-related.t
+index fa8c1a7..f357e30 100755
+--- a/contrib/related/test-related.t
++++ b/contrib/related/test-related.t
+@@ -94,4 +94,14 @@ test_expect_success "mailmap" "
+ 	test_cmp expected actual
+ "
  
- 	if (abbrev == -1)
-@@ -975,6 +979,50 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		strbuf_addf(&buf, "branch.%s.merge", branch->name);
- 		git_config_set_multivar(buf.buf, NULL, NULL, 1);
- 		strbuf_release(&buf);
-+	} else if (publish) {
-+		struct branch *branch = branch_get(argv[0]);
-+		char *real_ref = NULL;
-+		unsigned char sha1[20];
++test_expect_success "commits" "
++	git related -craw -1 master | git log --format='%s' --no-walk --stdin > actual &&
++	cat > expected <<-EOF &&
++	four
++	three
++	one
++	EOF
++	test_cmp expected actual
++"
 +
-+		if (argc > 1)
-+			die(_("too many branches to set new publish branch"));
-+
-+		if (!branch) {
-+			if (!argc || !strcmp(argv[0], "HEAD"))
-+				die(_("could not set publish branch of HEAD when "
-+				      "it does not point to any branch."));
-+			die(_("no such branch '%s'"), argv[0]);
-+		}
-+
-+		if (!ref_exists(branch->refname))
-+			die(_("branch '%s' does not exist"), branch->name);
-+
-+		if (dwim_ref(publish, strlen(publish), sha1, &real_ref) != 1 ||
-+				setup_publish(branch->name, real_ref))
-+			die(_("Cannot setup publish branch to '%s'."), publish);
-+	} else if (unset_publish) {
-+		struct branch *branch = branch_get(argv[0]);
-+		struct strbuf buf = STRBUF_INIT;
-+
-+		if (argc > 1)
-+			die(_("too many branches to unset publish branch"));
-+
-+		if (!branch) {
-+			if (!argc || !strcmp(argv[0], "HEAD"))
-+				die(_("could not unset publish branch of HEAD when "
-+				      "it does not point to any branch."));
-+			die(_("no such branch '%s'"), argv[0]);
-+		}
-+
-+		if (!branch->push_name)
-+			die(_("Branch '%s' has no publish information"), branch->name);
-+
-+		strbuf_addf(&buf, "branch.%s.pushremote", branch->name);
-+		git_config_set_multivar(buf.buf, NULL, NULL, 1);
-+		strbuf_reset(&buf);
-+		strbuf_addf(&buf, "branch.%s.push", branch->name);
-+		git_config_set_multivar(buf.buf, NULL, NULL, 1);
-+		strbuf_release(&buf);
- 	} else if (argc > 0 && argc <= 2) {
- 		struct branch *branch = branch_get(argv[0]);
- 		int branch_existed = 0, remote_tracking = 0;
+ test_done
 -- 
 1.8.4-fc
